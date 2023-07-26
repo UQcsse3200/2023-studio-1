@@ -1,4 +1,4 @@
-# UQ Game Engine
+# UQ 2023 Studio 1
 
 ## Description
 
