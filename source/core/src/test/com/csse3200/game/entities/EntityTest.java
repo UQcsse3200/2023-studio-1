@@ -174,6 +174,14 @@ class EntityTest {
     verify(component, times(0)).update();
   }
 
+  @Test
+  void testThatShouldFail() {
+    Entity entity = new Entity();
+    Vector2 pos = new Vector2(5f, -5f);
+    entity.setPosition(pos);
+    assertEquals(Vector2.Zero, entity.getPosition());
+  }
+
   static class TestComponent1 extends Component {}
 
   static class TestComponent2 extends Component {}
