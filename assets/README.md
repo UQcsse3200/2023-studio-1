@@ -1,4 +1,4 @@
-# Deco2800/Assets
+# CSSE3200/Assets
 This is a place to hold raw assets that are not directly loaded by the game. This includes:
 - Image/texture/animation projects in Photoshop, Aseprite, etc.
 - Audio projects for sound effects or music.
