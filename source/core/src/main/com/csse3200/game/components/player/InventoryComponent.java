@@ -4,53 +4,56 @@ import com.csse3200.game.components.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A component intended to be used by the player to track their inventory.
  *
- * Currently only stores the gold amount but can be extended for more advanced functionality such as storing items.
- * Can also be used as a more generic component for other entities.
+ * Currently untested, but forms the basis for the UI which will be implemented soon:tm:
  */
 public class InventoryComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
-  private int gold;
+  private final List<Item> inventory = new ArrayList<Item>();
 
-  public InventoryComponent(int gold) {
-    setGold(gold);
+  public InventoryComponent(List<Item> items) {
+    setInventory(items);
   }
 
   /**
-   * Returns the player's gold.
+   * Returns the player's inventory.
    *
-   * @return entity's health
+   * @return player's inventory
    */
-  public int getGold() {
-    return this.gold;
+  public List<Item> getInventory() {
+    return this.inventory;
   }
 
   /**
    * Returns if the player has a certain amount of gold.
-   * @param gold required amount of gold
-   * @return player has greater than or equal to the required amount of gold
+   * @param item item to be checked
+   * @return boolean representing if the item is on the character
    */
-  public Boolean hasGold(int gold) {
-    return this.gold >= gold;
+  public Boolean hasItem(Item item) {
+    return this.inventory.contains(item);
   }
 
   /**
-   * Sets the player's gold. Gold has a minimum bound of 0.
+   * Sets the player's inventory.
    *
-   * @param gold gold
+   * @param items items to be added to inventory
    */
-  public void setGold(int gold) {
-    this.gold = Math.max(gold, 0);
-    logger.debug("Setting gold to {}", this.gold);
+  public void setInventory(List<Item> items) {
+    this.inventory.addAll(items);
+    logger.debug("Setting inventory to {}", this.inventory.toString());
   }
 
   /**
-   * Adds to the player's gold. The amount added can be negative.
-   * @param gold gold to add
+   * Adds an item to the Player's inventory
+   * @param item item to add
+   * @return boolean representing if the item was added successfully
    */
-  public void addGold(int gold) {
-    setGold(this.gold + gold);
+  public boolean addItem(Item item) {
+      return this.inventory.add(item);
   }
 }
