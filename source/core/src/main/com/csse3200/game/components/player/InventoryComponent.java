@@ -56,4 +56,25 @@ public class InventoryComponent extends Component {
   public boolean addItem(Item item) {
       return this.inventory.add(item);
   }
+
+  /**
+   * Removes an item from the Player's Inventory
+   * @param item item to be removed
+   * @return boolean representing if the item was removed successfully
+   */
+  public boolean removeItem(Item item) {
+    return this.inventory.remove(item);
+  }
+
+  public boolean updateItemCount(Item item, int count){
+    try {
+      Item newItem = new Item(item.getItemName(), item.getItemId(),count);
+      this.inventory.remove(item);
+      this.inventory.add(newItem);
+    } catch (Exception e) {
+      logger.error("Unable to update item count. Error- ",e);
+      return false;
+    }
+    return true;
+  }
 }

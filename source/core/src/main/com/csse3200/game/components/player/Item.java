@@ -6,6 +6,7 @@ public class Item extends Component {
     private final String itemName;
     private final String itemId;
 
+    private int itemCount;
     /**
      * Basic Item Class
      * @param name user facing name for item
@@ -14,6 +15,13 @@ public class Item extends Component {
     public Item(String name, String id) {
         itemName = name;
         itemId = id;
+        itemCount = 0;
+    }
+
+    public Item(String name, String id, int count) {
+        itemName = name;
+        itemId = id;
+        itemCount = count;
     }
 
     public String getItemName() {
@@ -22,5 +30,14 @@ public class Item extends Component {
 
     public String getItemId() {
         return itemId;
+    }
+
+    public int getItemCount() {
+        return itemCount;
+    }
+
+    public boolean setItemCount(int updatedItemCount) {
+        itemCount = updatedItemCount;
+        return true;
     }
 }
