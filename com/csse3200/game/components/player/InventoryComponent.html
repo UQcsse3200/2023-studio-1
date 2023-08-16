@@ -81,8 +81,7 @@ loadScripts(document, 'script');</script>
 <span class="extends-implements">extends <a href="../Component.html" title="class in com.csse3200.game.components">Component</a></span></div>
 <div class="block">A component intended to be used by the player to track their inventory.
 
- Currently only stores the gold amount but can be extended for more advanced functionality such as storing items.
- Can also be used as a more generic component for other entities.</div>
+ Currently untested, but forms the basis for the UI which will be implemented soon:tm:</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -103,7 +102,7 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int)" class="member-name-link">InventoryComponent</a><wbr>(int&nbsp;gold)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.util.List)" class="member-name-link">InventoryComponent</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Item.html" title="class in com.csse3200.game.components.player">Item</a>&gt;&nbsp;items)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -119,25 +118,30 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addGold(int)" class="member-name-link">addGold</a><wbr>(int&nbsp;gold)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addItem(com.csse3200.game.components.player.Item)" class="member-name-link">addItem</a><wbr>(<a href="Item.html" title="class in com.csse3200.game.components.player">Item</a>&nbsp;item)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Adds to the player's gold.</div>
+<div class="block">Adds an item to the Player's inventory</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getGold()" class="member-name-link">getGold</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Item.html" title="class in com.csse3200.game.components.player">Item</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getInventory()" class="member-name-link">getInventory</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the player's gold.</div>
+<div class="block">Returns the player's inventory.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasGold(int)" class="member-name-link">hasGold</a><wbr>(int&nbsp;gold)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasItem(com.csse3200.game.components.player.Item)" class="member-name-link">hasItem</a><wbr>(<a href="Item.html" title="class in com.csse3200.game.components.player">Item</a>&nbsp;item)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns if the player has a certain amount of gold.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setGold(int)" class="member-name-link">setGold</a><wbr>(int&nbsp;gold)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeItem(com.csse3200.game.components.player.Item)" class="member-name-link">removeItem</a><wbr>(<a href="Item.html" title="class in com.csse3200.game.components.player">Item</a>&nbsp;item)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the player's gold.</div>
+<div class="block">Removes an item from the Player's Inventory</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setInventory(java.util.List)" class="member-name-link">setInventory</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Item.html" title="class in com.csse3200.game.components.player">Item</a>&gt;&nbsp;items)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the player's inventory.</div>
 </div>
 </div>
 </div>
@@ -160,9 +164,9 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(int)">
+<section class="detail" id="&lt;init&gt;(java.util.List)">
 <h3>InventoryComponent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">InventoryComponent</span><wbr><span class="parameters">(int&nbsp;gold)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">InventoryComponent</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Item.html" title="class in com.csse3200.game.components.player">Item</a>&gt;&nbsp;items)</span></div>
 </section>
 </li>
 </ul>
@@ -174,48 +178,63 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="getGold()">
-<h3>getGold</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getGold</span>()</div>
-<div class="block">Returns the player's gold.</div>
+<section class="detail" id="getInventory()">
+<h3>getInventory</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Item.html" title="class in com.csse3200.game.components.player">Item</a>&gt;</span>&nbsp;<span class="element-name">getInventory</span>()</div>
+<div class="block">Returns the player's inventory.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>entity's health</dd>
+<dd>player's inventory</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="hasGold(int)">
-<h3>hasGold</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></span>&nbsp;<span class="element-name">hasGold</span><wbr><span class="parameters">(int&nbsp;gold)</span></div>
+<section class="detail" id="hasItem(com.csse3200.game.components.player.Item)">
+<h3>hasItem</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></span>&nbsp;<span class="element-name">hasItem</span><wbr><span class="parameters">(<a href="Item.html" title="class in com.csse3200.game.components.player">Item</a>&nbsp;item)</span></div>
 <div class="block">Returns if the player has a certain amount of gold.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>gold</code> - required amount of gold</dd>
+<dd><code>item</code> - item to be checked</dd>
 <dt>Returns:</dt>
-<dd>player has greater than or equal to the required amount of gold</dd>
+<dd>boolean representing if the item is on the character</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="setGold(int)">
-<h3>setGold</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setGold</span><wbr><span class="parameters">(int&nbsp;gold)</span></div>
-<div class="block">Sets the player's gold. Gold has a minimum bound of 0.</div>
+<section class="detail" id="setInventory(java.util.List)">
+<h3>setInventory</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setInventory</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Item.html" title="class in com.csse3200.game.components.player">Item</a>&gt;&nbsp;items)</span></div>
+<div class="block">Sets the player's inventory.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>gold</code> - gold</dd>
+<dd><code>items</code> - items to be added to inventory</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="addGold(int)">
-<h3>addGold</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addGold</span><wbr><span class="parameters">(int&nbsp;gold)</span></div>
-<div class="block">Adds to the player's gold. The amount added can be negative.</div>
+<section class="detail" id="addItem(com.csse3200.game.components.player.Item)">
+<h3>addItem</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">addItem</span><wbr><span class="parameters">(<a href="Item.html" title="class in com.csse3200.game.components.player">Item</a>&nbsp;item)</span></div>
+<div class="block">Adds an item to the Player's inventory</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>gold</code> - gold to add</dd>
+<dd><code>item</code> - item to add</dd>
+<dt>Returns:</dt>
+<dd>boolean representing if the item was added successfully</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="removeItem(com.csse3200.game.components.player.Item)">
+<h3>removeItem</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">removeItem</span><wbr><span class="parameters">(<a href="Item.html" title="class in com.csse3200.game.components.player">Item</a>&nbsp;item)</span></div>
+<div class="block">Removes an item from the Player's Inventory</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>item</code> - item to be removed</dd>
+<dt>Returns:</dt>
+<dd>boolean representing if the item was removed successfully</dd>
 </dl>
 </section>
 </li>
