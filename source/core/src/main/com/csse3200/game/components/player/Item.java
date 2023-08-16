@@ -156,7 +156,7 @@ public class Item extends Component {
 
     /**
      * Sets the item name of the item
-     * @param String name of the item
+     * @param name string name of the item
      */
     public void setItemName(String name) {
         itemName = name;
