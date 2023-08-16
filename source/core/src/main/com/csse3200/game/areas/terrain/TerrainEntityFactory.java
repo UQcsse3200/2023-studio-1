@@ -9,8 +9,10 @@ import com.csse3200.game.entities.Entity;
 public abstract class TerrainEntityFactory {
 
   /**
-   * Creates terrain entity
-   * @return terrain entity
+   * Creates a terrain entity
+   * @param x x-position of the entity to be created
+   * @param y y-position of the entity to be created
+   * @return created entity
    */
   public abstract Entity CreateTerrainEntity(int x, int y);
 }
