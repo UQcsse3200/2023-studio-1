@@ -19,8 +19,7 @@ public class Item extends Component {
     public enum ItemType {
         TOOL,
         ARMOUR,
-        CONSUMABLE,
-        PLANT
+        CONSUMABLE
     }
 
     /**
