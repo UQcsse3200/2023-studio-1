@@ -29,18 +29,22 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.W:
         walkDirection.add(Vector2Utils.UP);
         triggerWalkEvent();
+        triggerAnimationWalkStartEvent("up");
         return true;
       case Keys.A:
         walkDirection.add(Vector2Utils.LEFT);
         triggerWalkEvent();
+        triggerAnimationWalkStartEvent("left");
         return true;
       case Keys.S:
         walkDirection.add(Vector2Utils.DOWN);
         triggerWalkEvent();
+        triggerAnimationWalkStartEvent("down");
         return true;
       case Keys.D:
         walkDirection.add(Vector2Utils.RIGHT);
         triggerWalkEvent();
+        triggerAnimationWalkStartEvent("right");
         return true;
       case Keys.SPACE:
         entity.getEvents().trigger("attack");
@@ -83,8 +87,23 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private void triggerWalkEvent() {
     if (walkDirection.epsilonEquals(Vector2.Zero)) {
       entity.getEvents().trigger("walkStop");
+      triggerAnimationWalkStopEvent();
     } else {
       entity.getEvents().trigger("walk", walkDirection);
     }
+  }
+
+  /**
+   * Triggers a player walking animation event for the given direction.
+   */
+  private void triggerAnimationWalkStartEvent(String direction) {
+    entity.getEvents().trigger("animationWalkStart", direction);
+  }
+
+  /**
+   * Triggers a player walking animation stop event.
+   */
+  private void triggerAnimationWalkStopEvent() {
+    entity.getEvents().trigger("animationWalkStop");
   }
 }
