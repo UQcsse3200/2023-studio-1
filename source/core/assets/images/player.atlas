@@ -1,0 +1,40 @@
+box_boy_leaf_sprite.png
+size: 1640, 550
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+walk_left
+  rotate: false
+  xy: 0, 0
+  size: 410, 550
+  orig: 410, 550
+  offset: 0, 0
+  index: 0
+walk_right
+  rotate: false
+  xy: 410, 0
+  size: 410, 550
+  orig: 410, 550
+  offset: 0, 0
+  index: 0
+walk_down
+  rotate: false
+  xy: 820, 0
+  size: 410, 550
+  orig: 410, 550
+  offset: 0, 0
+  index: 0
+walk_up
+  rotate: false
+  xy: 1230, 0
+  size: 410, 550
+  orig: 410, 550
+  offset: 0, 0
+  index: 0
+default
+  rotate: false
+  xy: 820, 0
+  size: 410, 550
+  orig: 410, 550
+  offset: 0, 0
+  index: 0
