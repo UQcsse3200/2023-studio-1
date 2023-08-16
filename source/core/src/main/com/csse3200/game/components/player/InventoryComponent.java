@@ -65,16 +65,4 @@ public class InventoryComponent extends Component {
   public boolean removeItem(Item item) {
     return this.inventory.remove(item);
   }
-
-  public boolean updateItemCount(Item item, int count){
-    try {
-      Item newItem = new Item(item.getItemName(), item.getItemId(),count);
-      this.inventory.remove(item);
-      this.inventory.add(newItem);
-    } catch (Exception e) {
-      logger.error("Unable to update item count. Error- ",e);
-      return false;
-    }
-    return true;
-  }
 }
