@@ -1,0 +1,68 @@
+ghost.png
+size: 3600, 1036
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+idle
+  rotate: false
+  xy: 0, 0
+  size: 400, 518
+  orig: 400, 518
+  offset: 0, 0
+  index: 0
+idle
+  rotate: false
+  xy: 400, 0
+  size: 400, 518
+  orig: 400, 518
+  offset: 0, 0
+  index: 1
+idle
+  rotate: false
+  xy: 800, 0
+  size: 400, 518
+  orig: 400, 518
+  offset: 0, 0
+  index: 2
+idle
+  rotate: false
+  xy: 1200, 0
+  size: 400, 518
+  orig: 400, 518
+  offset: 0, 0
+  index: 3
+idle
+  rotate: false
+  xy: 1600, 0
+  size: 400, 518
+  orig: 400, 518
+  offset: 0, 0
+  index: 4
+idle
+  rotate: false
+  xy: 2000, 0
+  size: 400, 518
+  orig: 400, 518
+  offset: 0, 0
+  index: 5
+idle
+  rotate: false
+  xy: 2400, 0
+  size: 400, 518
+  orig: 400, 518
+  offset: 0, 0
+  index: 6
+idle
+  rotate: false
+  xy: 2800, 0
+  size: 400, 518
+  orig: 400, 518
+  offset: 0, 0
+  index: 7
+default
+  rotate: false
+  xy: 3200, 0
+  size: 400, 518
+  orig: 400, 518
+  offset: 0, 0
+  index: 0

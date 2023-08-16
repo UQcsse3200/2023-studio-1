@@ -85,6 +85,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       entity.getEvents().trigger("walkStop");
     } else {
       entity.getEvents().trigger("walk", walkDirection);
+
     }
   }
 }

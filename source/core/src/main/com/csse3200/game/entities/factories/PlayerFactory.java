@@ -1,5 +1,7 @@
 package com.csse3200.game.entities.factories;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
@@ -13,6 +15,7 @@ import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -26,6 +29,7 @@ public class PlayerFactory {
   private static final PlayerConfig stats =
       FileLoader.readClass(PlayerConfig.class, "configs/player.json");
 
+
   /**
    * Create a player entity.
    * @return entity
@@ -33,9 +37,10 @@ public class PlayerFactory {
   public static Entity createPlayer() {
     InputComponent inputComponent =
         ServiceLocator.getInputService().getInputFactory().createForPlayer();
-
+    AnimationRenderComponent animator = new AnimationRenderComponent( ServiceLocator.getResourceService().getAsset("images/ghost.atlas", TextureAtlas.class));
     Entity player =
         new Entity()
+            .addComponent(animator)
             .addComponent(new TextureRenderComponent("images/box_boy_leaf.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent())
@@ -45,7 +50,7 @@ public class PlayerFactory {
             .addComponent(new InventoryComponent(stats.gold))
             .addComponent(inputComponent)
             .addComponent(new PlayerStatsDisplay());
-
+    animator.addAnimation("float", 0.1f ,Animation.PlayMode.LOOP);
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
     player.getComponent(TextureRenderComponent.class).scaleEntity();

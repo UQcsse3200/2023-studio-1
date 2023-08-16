@@ -1,11 +1,13 @@
 package com.csse3200.game.components.player;
 
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 
 /**
  * Action component for interacting with the player. Player events should be initialised in create()
@@ -17,21 +19,26 @@ public class PlayerActions extends Component {
   private PhysicsComponent physicsComponent;
   private Vector2 walkDirection = Vector2.Zero.cpy();
   private boolean moving = false;
-
+  AnimationRenderComponent animator;
   @Override
   public void create() {
     physicsComponent = entity.getComponent(PhysicsComponent.class);
     entity.getEvents().addListener("walk", this::walk);
     entity.getEvents().addListener("walkStop", this::stopWalking);
-    entity.getEvents().addListener("attack", this::attack);
+    entity.getEvents().addListener("attack", this::attack);// Only need to add animation once per entity
+    animator = this.entity.getComponent(AnimationRenderComponent.class);
   }
 
   @Override
   public void update() {
     if (moving) {
       updateSpeed();
+      playIdleAnimation();
+    } else {
+
+      }
     }
-  }
+
 
   private void updateSpeed() {
     Body body = physicsComponent.getBody();
@@ -51,7 +58,11 @@ public class PlayerActions extends Component {
     this.walkDirection = direction;
     moving = true;
   }
+  private void playIdleAnimation() {
+    // Trigger idle animation here
+    animator.startAnimation("float");
 
+  }
   /**
    * Stops the player from walking.
    */
