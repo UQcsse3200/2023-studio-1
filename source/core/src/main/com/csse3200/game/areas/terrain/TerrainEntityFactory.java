@@ -12,5 +12,5 @@ public abstract class TerrainEntityFactory {
    * Creates terrain entity
    * @return terrain entity
    */
-  public abstract Entity CreateTerrainEntity();
+  public abstract Entity CreateTerrainEntity(int x, int y);
 }
