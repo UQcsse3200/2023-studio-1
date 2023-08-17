@@ -10,7 +10,6 @@ public class ItemComponent extends Component {
      * @param itemDescription user facing description for item
      * @param price price of item
      * @param sellable is the item sellable. true if sellable false otherwise
-     * @param itemTexturePath path to the texture of the item
      * @param itemId unique id of the item
      * 
      */
@@ -19,21 +18,18 @@ public class ItemComponent extends Component {
     private final String itemId;
     private int price; // Price of item
     private final boolean sellable; // is the item sellable
-    private final String itemTexturePath; 
 
 
     /**
      * Constructor for Item
      * @param itemName user facing name for item  
-     * @param itemTexturePath path to the texture of the item as String
      */
-    public ItemComponent(String itemName, String itemTexturePath) {
+    public ItemComponent(String itemName) {
         this.itemName = itemName; 
         this.itemId = generateUniqueID(); // Generate a unique ID for the item
         this.itemDescription = "" ; //default description
         this.price = 0;
         this.sellable = false; //default sellable 
-        this.itemTexturePath = itemTexturePath;
     }
 
     /**
@@ -41,13 +37,12 @@ public class ItemComponent extends Component {
      * @param itemName user facing name 
      * @param price sellable price of the item
      */
-    public ItemComponent(String itemName,  int price, String itemTexturePath) {
+    public ItemComponent(String itemName,  int price) {
         this.itemName = itemName; 
         this.itemId = generateUniqueID(); // Generate a unique ID for the item
         this.itemDescription = "" ; //default description
         this.price = price;
         this.sellable = true;
-        this.itemTexturePath = itemTexturePath;
     }
 
     /**
@@ -55,12 +50,11 @@ public class ItemComponent extends Component {
      * @param itemName user facing name for item  
      * @param itemDescription user facing description for item
      */
-    public ItemComponent(String itemName, String itemDescription, String itemTexturePath) {
+    public ItemComponent(String itemName, String itemDescription) {
         this.itemName = itemName; 
         this.itemId = generateUniqueID(); // Generate a unique ID for the item
         this.itemDescription = itemDescription ; //default description
         this.sellable = false; //default sellable
-        this.itemTexturePath = itemTexturePath;
     }
 
     /**
@@ -69,23 +63,15 @@ public class ItemComponent extends Component {
      * @param itemDescription user facing description for item
      * @param price price of item
      */
-    public ItemComponent(String itemName, String itemDescription, int price, String itemTexturePath) {
+    public ItemComponent(String itemName, String itemDescription, int price) {
         this.itemName = itemName; 
         this.itemId = generateUniqueID(); // Generate a unique ID for the item
         this.itemDescription = itemDescription ; //default description
         this.price = price;
         this.sellable = true;
-        this.itemTexturePath = itemTexturePath;
     }
 
 
-    /**
-     * Returns the path to the texture of the item
-     * @return String path for texture of the item
-     */
-    public String getPath() {
-        return itemTexturePath;
-    }
 
     /** 
      * Returns the price of the item
