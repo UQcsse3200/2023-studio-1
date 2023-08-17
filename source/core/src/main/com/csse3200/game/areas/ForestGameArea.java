@@ -6,10 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.NPCFactory;
-import com.csse3200.game.entities.factories.ObstacleFactory;
-import com.csse3200.game.entities.factories.PlayerFactory;
-import com.csse3200.game.entities.factories.TractorFactory;
+import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
 import com.csse3200.game.services.ResourceService;
@@ -18,12 +15,17 @@ import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.tools.Tool;
+
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
   private static final int NUM_TREES = 7;
   private static final int NUM_GHOSTS = 2;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
+
+  private static final GridPoint2 TOOL_SPAWN = new GridPoint2(15, 10);// temp!!!
+  private static final GridPoint2 TOOL_SPAWN2 = new GridPoint2(15, 15);// temp!!!
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
     "images/tree.png",
@@ -39,6 +41,11 @@ public class ForestGameArea extends GameArea {
     "images/iso_grass_2.png",
     "images/iso_grass_3.png",
     "images/tractor.png"
+    "images/iso_grass_3.png",
+    "images/tool_shovel.png",
+    "images/tool_hoe.png",
+    "images/tool_scythe.png",
+    "images/tool_watering_can.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas", "images/tractor.atlas"
@@ -74,6 +81,10 @@ public class ForestGameArea extends GameArea {
     Entity tractor = spawnTractor();
     //spawnGhosts();
     //spawnGhostKing();
+    spawnTool(ToolType.TEST_TOOL); // temp - spawns a test tool
+    spawnTool(ToolType.HOE); // temp - spawns a hoe
+    spawnGhosts();
+    spawnGhostKing();
 
     //playMusic();
   }
@@ -135,6 +146,24 @@ public class ForestGameArea extends GameArea {
     Entity newTractor = TractorFactory.createTractor();
     spawnEntityAt(newTractor, PLAYER_SPAWN, true, true);
     return newTractor;
+  }
+
+  private Entity spawnTool(ToolType tool) {
+    Entity newTool;
+    switch (tool) {
+      case HOE:
+        newTool = ItemFactory.createHoe();
+        spawnEntityAt(newTool, TOOL_SPAWN2, true, true);
+        break;
+      case TEST_TOOL:
+        newTool = ItemFactory.createShovel();
+        spawnEntityAt(newTool, TOOL_SPAWN, true, true);
+        break;
+      default:
+        newTool = ItemFactory.createShovel();
+        spawnEntityAt(newTool, TOOL_SPAWN, true, true);
+    }
+    return newTool;
   }
 
   private void spawnGhosts() {
