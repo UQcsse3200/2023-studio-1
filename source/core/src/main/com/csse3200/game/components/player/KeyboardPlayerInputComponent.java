@@ -11,7 +11,7 @@ import com.csse3200.game.utils.math.Vector2Utils;
  * This input handler only uses keyboard input.
  */
 public class KeyboardPlayerInputComponent extends InputComponent {
-  private final Vector2 walkDirection = Vector2.Zero.cpy();
+  private final Vector2 moveDirection = Vector2.Zero.cpy();
 
   public KeyboardPlayerInputComponent() {
     super(5);
@@ -27,27 +27,30 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public boolean keyDown(int keycode) {
     switch (keycode) {
       case Keys.W:
-        walkDirection.add(Vector2Utils.UP);
-        triggerWalkEvent();
+        moveDirection.add(Vector2Utils.UP);
+        triggerMoveEvent();
         triggerAnimationWalkStartEvent("up");
         return true;
       case Keys.A:
-        walkDirection.add(Vector2Utils.LEFT);
-        triggerWalkEvent();
+        moveDirection.add(Vector2Utils.LEFT);
+        triggerMoveEvent();
         triggerAnimationWalkStartEvent("left");
         return true;
       case Keys.S:
-        walkDirection.add(Vector2Utils.DOWN);
-        triggerWalkEvent();
+        moveDirection.add(Vector2Utils.DOWN);
+        triggerMoveEvent();
         triggerAnimationWalkStartEvent("down");
         return true;
       case Keys.D:
-        walkDirection.add(Vector2Utils.RIGHT);
-        triggerWalkEvent();
+        moveDirection.add(Vector2Utils.RIGHT);
+        triggerMoveEvent();
         triggerAnimationWalkStartEvent("right");
         return true;
       case Keys.SPACE:
         entity.getEvents().trigger("attack");
+        return true;
+      case Keys.SHIFT_LEFT:
+        entity.getEvents().trigger("run");
         return true;
       default:
         return false;
@@ -64,44 +67,47 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public boolean keyUp(int keycode) {
     switch (keycode) {
       case Keys.W:
-        walkDirection.sub(Vector2Utils.UP);
-        triggerWalkEvent();
+        moveDirection.sub(Vector2Utils.UP);
+        triggerMoveEvent();
         return true;
       case Keys.A:
-        walkDirection.sub(Vector2Utils.LEFT);
-        triggerWalkEvent();
+        moveDirection.sub(Vector2Utils.LEFT);
+        triggerMoveEvent();
         return true;
       case Keys.S:
-        walkDirection.sub(Vector2Utils.DOWN);
-        triggerWalkEvent();
+        moveDirection.sub(Vector2Utils.DOWN);
+        triggerMoveEvent();
         return true;
       case Keys.D:
-        walkDirection.sub(Vector2Utils.RIGHT);
-        triggerWalkEvent();
+        moveDirection.sub(Vector2Utils.RIGHT);
+        triggerMoveEvent();
+        return true;
+      case Keys.SHIFT_LEFT:
+        entity.getEvents().trigger("runStop");
         return true;
       default:
         return false;
     }
   }
 
-  private void triggerWalkEvent() {
-    if (walkDirection.epsilonEquals(Vector2.Zero)) {
-      entity.getEvents().trigger("walkStop");
+  private void triggerMoveEvent() {
+    if (moveDirection.epsilonEquals(Vector2.Zero)) {
+      entity.getEvents().trigger("moveStop");
       triggerAnimationWalkStopEvent();
     } else {
-      entity.getEvents().trigger("walk", walkDirection);
+      entity.getEvents().trigger("move", moveDirection);
     }
   }
 
   /**
-   * Triggers a player walking animation event for the given direction.
+   * Triggers a player moving animation event for the given direction.
    */
   private void triggerAnimationWalkStartEvent(String direction) {
     entity.getEvents().trigger("animationWalkStart", direction);
   }
 
   /**
-   * Triggers a player walking animation stop event.
+   * Triggers a player moving animation stop event.
    */
   private void triggerAnimationWalkStopEvent() {
     entity.getEvents().trigger("animationWalkStop");
