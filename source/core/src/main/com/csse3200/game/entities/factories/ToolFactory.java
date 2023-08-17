@@ -9,11 +9,9 @@ public class ToolFactory {
 
     // Base tool to build upon
     public static Entity createBaseTool() {
-        Entity tool = new Entity()
-                .addComponent(new PhysicsComponent())  /* not sure what this does but we'll need it.*/
+        return new Entity()
+                .addComponent(new PhysicsComponent())
                 .addComponent(new ColliderComponent());
-
-        return tool;
     }
 
     //TODO: do we need to config physics component?
@@ -22,19 +20,13 @@ public class ToolFactory {
     public static Entity createTestTool() {
         Entity testTool = createBaseTool()
                 .addComponent(new TextureRenderComponent("images/tool_shovel.png"));
-        //testTool.getComponent(TextureRenderComponent.class).scaleEntity();  // dont know what this does
-        testTool.scaleHeight(1f); // scales the Entity!, this could be scaleWidth too
+        testTool.scaleHeight(1f); // scales the entity to height 1
         return testTool;
     }
 
     // Hoe tool
     public static Entity createHoe() {
-        Entity hoe = createBaseTool()
+        return  createBaseTool()
                 .addComponent(new TextureRenderComponent("images/tool_hoe.png"));
-        // do some more stuff here...
-        /* add more components to build on baseTool:
-
-         */
-        return hoe;
     }
 }
