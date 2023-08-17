@@ -35,10 +35,7 @@ public class ItemFactory {
                 .addComponent(new TextureRenderComponent("images/tool_hoe.png"));
         // do some more stuff here...
         /* add more components to build on baseTool:
-
          */
         return hoe;
     }
-
-
 }
