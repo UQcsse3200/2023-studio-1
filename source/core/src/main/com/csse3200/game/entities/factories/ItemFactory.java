@@ -17,7 +17,7 @@ public class ItemFactory {
                 .addComponent(new PhysicsComponent())
                 .addComponent(new ColliderComponent())
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.DEFAULT))
-                .addComponent(new ItemComponent());
+                .addComponent(new ItemComponent("shovel", "images/tool_shovel.png"));
         return item;
     }
 }
