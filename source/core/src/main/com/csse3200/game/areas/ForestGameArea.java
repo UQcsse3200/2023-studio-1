@@ -9,6 +9,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
+import com.csse3200.game.entities.factories.TractorFactory;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
 import com.csse3200.game.services.ResourceService;
@@ -36,10 +37,11 @@ public class ForestGameArea extends GameArea {
     "images/hex_grass_3.png",
     "images/iso_grass_1.png",
     "images/iso_grass_2.png",
-    "images/iso_grass_3.png"
+    "images/iso_grass_3.png",
+    "images/tractor.png"
   };
   private static final String[] forestTextureAtlases = {
-    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas"
+    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas", "images/tractor.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -67,12 +69,13 @@ public class ForestGameArea extends GameArea {
     displayUI();
 
     spawnTerrain();
-    spawnTrees();
+    //spawnTrees();
     player = spawnPlayer();
-    spawnGhosts();
-    spawnGhostKing();
+    Entity tractor = spawnTractor();
+    //spawnGhosts();
+    //spawnGhostKing();
 
-    playMusic();
+    //playMusic();
   }
 
   private void displayUI() {
@@ -126,6 +129,12 @@ public class ForestGameArea extends GameArea {
     Entity newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     return newPlayer;
+  }
+
+  private Entity spawnTractor() {
+    Entity newTractor = TractorFactory.createTractor();
+    spawnEntityAt(newTractor, PLAYER_SPAWN, true, true);
+    return newTractor;
   }
 
   private void spawnGhosts() {
