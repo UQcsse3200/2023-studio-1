@@ -77,10 +77,11 @@ public class ForestGameArea extends GameArea {
     spawnTerrain();
     spawnTrees();
     player = spawnPlayer();
-    spawnTool(ToolType.TEST_TOOL); // temp - spawns a test tool
-    spawnTool(ToolType.HOE); // temp - spawns a hoe
-    spawnGhosts();
-    spawnGhostKing();
+    spawnChickens(); // TODO: temp
+//    spawnTool(ToolType.TEST_TOOL); // temp - spawns a test tool
+//    spawnTool(ToolType.HOE); // temp - spawns a hoe
+//    spawnGhosts();
+//    spawnGhostKing();
 
     playMusic();
   }
@@ -154,6 +155,17 @@ public class ForestGameArea extends GameArea {
         spawnEntityAt(newTool, TOOL_SPAWN, true, true);
     }
     return newTool;
+  }
+
+  private void spawnChickens() { // TODO: Temp
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < 10; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity chicken = NPCFactory.createChicken();
+      spawnEntityAt(chicken, randomPos, true, true);
+    }
   }
 
   private void spawnGhosts() {

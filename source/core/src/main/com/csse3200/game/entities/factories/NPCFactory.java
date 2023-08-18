@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.npc.ChickenAnimationController;
 import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.tasks.ChaseTask;
@@ -87,6 +88,35 @@ public class NPCFactory {
 
     ghostKing.getComponent(AnimationRenderComponent.class).scaleEntity();
     return ghostKing;
+  }
+
+  /**
+   * Creates a chicken entity TODO: abstract base animal entity? , also put constants in config or json file
+   * @return chicken entity
+   */
+  public static Entity createChicken() {
+    AnimationRenderComponent animator = new AnimationRenderComponent(
+            ServiceLocator.getResourceService().getAsset("images/animals/chicken.atlas", TextureAtlas.class));
+    animator.addAnimation("idleLeft", Float.MAX_VALUE, Animation.PlayMode.LOOP);
+    animator.addAnimation("idleRight", Float.MAX_VALUE, Animation.PlayMode.LOOP);
+    animator.addAnimation("moveLeft", 0.4f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation("moveRight", 0.4f, Animation.PlayMode.LOOP);
+//    animator.addAnimation("runLeft", 0.2f, Animation.PlayMode.LOOP_REVERSED);
+//    animator.addAnimation("runRight", 0.2f, Animation.PlayMode.LOOP);
+
+    AITaskComponent aiTaskComponent = new AITaskComponent()
+            .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+
+    Entity chicken = new Entity()
+            .addComponent(new PhysicsComponent())
+            .addComponent(new PhysicsMovementComponent())
+            .addComponent(new ColliderComponent())
+            .addComponent(aiTaskComponent)
+            .addComponent(animator)
+            .addComponent(new ChickenAnimationController());
+
+//    PhysicsUtils.setScaledCollider(chicken, 0.9f, 0.4f);
+    return chicken;
   }
 
   /**
