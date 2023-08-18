@@ -18,12 +18,17 @@ public class ChickenAnimationController extends Component {
         animator = this.entity.getComponent(AnimationRenderComponent.class);
 
         entity.getEvents().addListener("changeDirection", this::setDirection);
-        entity.getEvents().addListener("walk", this::animateWander);
+        entity.getEvents().addListener("walk", this::animateWalk);
+        entity.getEvents().addListener("run", this::animateRun);
         entity.getEvents().addListener("idle", this::animateIdle);
     }
 
-    void animateWander() {
+    void animateWalk() {
         animator.startAnimation("walk_" + direction);
+    }
+
+    void animateRun() {
+        animator.startAnimation("run_" + direction);
     }
 
     void animateIdle() { animator.startAnimation("idle_" + direction);}

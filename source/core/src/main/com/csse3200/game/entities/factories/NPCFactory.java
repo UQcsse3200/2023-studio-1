@@ -97,12 +97,12 @@ public class NPCFactory {
   public static Entity createChicken() {
     AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/animals/chicken.atlas", TextureAtlas.class));
-    animator.addAnimation("idle_left", Float.MAX_VALUE, Animation.PlayMode.LOOP);
-    animator.addAnimation("idle_right", Float.MAX_VALUE, Animation.PlayMode.LOOP);
-    animator.addAnimation("walk_left", 0.4f, Animation.PlayMode.LOOP_REVERSED);
-    animator.addAnimation("walk_right", 0.4f, Animation.PlayMode.LOOP);
-//    animator.addAnimation("runLeft", 0.2f, Animation.PlayMode.LOOP_REVERSED);
-//    animator.addAnimation("runRight", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle_left", Float.MAX_VALUE);
+    animator.addAnimation("idle_right", Float.MAX_VALUE);
+    animator.addAnimation("walk_left", 0.2f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation("walk_right", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("run_left", 0.1f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation("run_right", 0.1f, Animation.PlayMode.LOOP);
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
