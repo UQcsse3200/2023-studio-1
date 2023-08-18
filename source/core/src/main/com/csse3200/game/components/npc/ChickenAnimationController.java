@@ -10,21 +10,25 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
  */
 public class ChickenAnimationController extends Component {
     AnimationRenderComponent animator;
+    String direction = "right";
 
     @Override
     public void create() {
         super.create();
         animator = this.entity.getComponent(AnimationRenderComponent.class);
 
-
-
-        entity.getEvents().addListener("wanderStart", this::animateWander);
+        entity.getEvents().addListener("changeDirection", this::setDirection);
+        entity.getEvents().addListener("walk", this::animateWander);
         entity.getEvents().addListener("idle", this::animateIdle);
     }
 
     void animateWander() {
-        animator.startAnimation("moveRight");
+        animator.startAnimation("walk_" + direction);
     }
 
-    void animateIdle() { animator.startAnimation("idleRight");}
+    void animateIdle() { animator.startAnimation("idle_" + direction);}
+
+    void setDirection(String direction){
+        this.direction = direction;
+    }
 }

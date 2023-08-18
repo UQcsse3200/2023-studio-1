@@ -97,10 +97,10 @@ public class NPCFactory {
   public static Entity createChicken() {
     AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/animals/chicken.atlas", TextureAtlas.class));
-    animator.addAnimation("idleLeft", Float.MAX_VALUE, Animation.PlayMode.LOOP);
-    animator.addAnimation("idleRight", Float.MAX_VALUE, Animation.PlayMode.LOOP);
-    animator.addAnimation("moveLeft", 0.4f, Animation.PlayMode.LOOP_REVERSED);
-    animator.addAnimation("moveRight", 0.4f, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle_left", Float.MAX_VALUE, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle_right", Float.MAX_VALUE, Animation.PlayMode.LOOP);
+    animator.addAnimation("walk_left", 0.4f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation("walk_right", 0.4f, Animation.PlayMode.LOOP);
 //    animator.addAnimation("runLeft", 0.2f, Animation.PlayMode.LOOP_REVERSED);
 //    animator.addAnimation("runRight", 0.2f, Animation.PlayMode.LOOP);
 
@@ -115,7 +115,7 @@ public class NPCFactory {
             .addComponent(animator)
             .addComponent(new ChickenAnimationController());
 
-//    PhysicsUtils.setScaledCollider(chicken, 0.9f, 0.4f);
+    PhysicsUtils.setScaledCollider(chicken, 0.9f, 0.4f);
     return chicken;
   }
 
