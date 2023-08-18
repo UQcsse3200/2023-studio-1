@@ -1,7 +1,7 @@
 package com.csse3200.game.entities.factories;
 import com.csse3200.game.components.items.ItemComponent;
-import com.csse3200.game.components.items.tools.FarmActionComponent;
-import com.csse3200.game.components.items.tools.FarmFunction;
+import com.csse3200.game.components.items.tools.FarmAbilityComponent;
+import com.csse3200.game.components.items.tools.FarmAbilities;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
@@ -26,7 +26,7 @@ public class ItemFactory {
    */
   public static Entity createBaseTool() {
     Entity baseTool = createBaseItem()
-            .addComponent(new FarmActionComponent());
+            .addComponent(new FarmAbilityComponent(FarmAbilities.NONE));
     // will add basic tool properties here
     return baseTool;
   }
@@ -40,7 +40,7 @@ public class ItemFactory {
     Entity shovel = createBaseTool()
             .addComponent(new TextureRenderComponent("images/tool_shovel.png"))
             .addComponent(new ItemComponent("shovel", "Shovel for removing items"));
-    shovel.getComponent(FarmActionComponent.class).setAction(FarmFunction.DIG);
+    shovel.getComponent(FarmAbilityComponent.class).setAbility(FarmAbilities.DIG);
     //shovel.scaleHeight(1f); // scales the Entity!, this could be scaleWidth too
     return shovel;
   }
@@ -53,9 +53,23 @@ public class ItemFactory {
   public static Entity createHoe() {
     Entity hoe = createBaseTool()
             .addComponent(new TextureRenderComponent("images/tool_hoe.png"))
-            .addComponent(new ItemComponent("shovel", "Hoe for tilling ground"));
-    hoe.getComponent(FarmActionComponent.class).setAction(FarmFunction.TILL);
+            .addComponent(new ItemComponent("hoe", "Hoe for tilling ground"));
+    hoe.getComponent(FarmAbilityComponent.class).setAbility(FarmAbilities.TILL);
     //hoe.scaleHeight(1f); // scales the Entity!, this could be scaleWidth too
     return hoe;
+  }
+
+  /**
+   * Creates a watering-can item
+   *
+   * @return watering can
+   */
+  public static Entity createWateringcan() {
+    Entity watering_can = createBaseTool()
+            .addComponent(new TextureRenderComponent("images/watering_can.png"))
+            .addComponent(new ItemComponent("watering can", "Watering can for watering things"));
+    watering_can.getComponent(FarmAbilityComponent.class).setAbility(FarmAbilities.WATER);
+    //hoe.scaleHeight(1f); // scales the Entity!, this could be scaleWidth too
+    return watering_can;
   }
 }
