@@ -1,6 +1,8 @@
 package com.csse3200.game.components.player;
 
 import com.csse3200.game.components.Component;
+import com.csse3200.game.entities.Entity;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,9 +16,9 @@ import java.util.List;
  */
 public class InventoryComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
-  private final List<Item> inventory = new ArrayList<Item>();
+  private final List<Entity> inventory = new ArrayList<Entity>();
 
-  public InventoryComponent(List<Item> items) {
+  public InventoryComponent(List<Entity> items) {
     setInventory(items);
   }
 
@@ -25,7 +27,7 @@ public class InventoryComponent extends Component {
    *
    * @return player's inventory
    */
-  public List<Item> getInventory() {
+  public List<Entity> getInventory() {
     return this.inventory;
   }
 
@@ -34,7 +36,7 @@ public class InventoryComponent extends Component {
    * @param item item to be checked
    * @return boolean representing if the item is on the character
    */
-  public Boolean hasItem(Item item) {
+  public Boolean hasItem(Entity item) {
     return this.inventory.contains(item);
   }
 
@@ -43,7 +45,7 @@ public class InventoryComponent extends Component {
    *
    * @param items items to be added to inventory
    */
-  public void setInventory(List<Item> items) {
+  public void setInventory(List<Entity> items) {
     this.inventory.addAll(items);
     logger.debug("Setting inventory to {}", this.inventory.toString());
   }
@@ -53,7 +55,7 @@ public class InventoryComponent extends Component {
    * @param item item to add
    * @return boolean representing if the item was added successfully
    */
-  public boolean addItem(Item item) {
+  public boolean addItem(Entity item) {
       return this.inventory.add(item);
   }
 
@@ -62,7 +64,7 @@ public class InventoryComponent extends Component {
    * @param item item to be removed
    * @return boolean representing if the item was removed successfully
    */
-  public boolean removeItem(Item item) {
+  public boolean removeItem(Entity item) {
     return this.inventory.remove(item);
   }
 }

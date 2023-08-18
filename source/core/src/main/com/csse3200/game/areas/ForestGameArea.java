@@ -141,15 +141,15 @@ public class ForestGameArea extends GameArea {
     Entity newTool;
     switch (tool) {
       case HOE:
-        newTool = ToolFactory.createHoe();
+        newTool = ItemFactory.createHoe();
         spawnEntityAt(newTool, TOOL_SPAWN2, true, true);
         break;
       case TEST_TOOL:
-        newTool = ToolFactory.createTestTool();
+        newTool = ItemFactory.createShovel();
         spawnEntityAt(newTool, TOOL_SPAWN, true, true);
         break;
       default:
-        newTool = ToolFactory.createTestTool();
+        newTool = ItemFactory.createShovel();
         spawnEntityAt(newTool, TOOL_SPAWN, true, true);
     }
     return newTool;

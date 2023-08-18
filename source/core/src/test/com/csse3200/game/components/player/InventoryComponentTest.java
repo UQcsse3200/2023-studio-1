@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 class InventoryComponentTest {
   @Test
   void shouldAdditem() {
-    InventoryComponent inventory = new InventoryComponent(new ArrayList<Item>());
-    assertEquals(new ArrayList<Item>(), inventory.getInventory());
+    InventoryComponent inventory = new InventoryComponent(new ArrayList<>());
+    assertEquals(new ArrayList<>(), inventory.getInventory());
   }
 }
