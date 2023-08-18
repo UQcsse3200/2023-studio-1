@@ -1,9 +1,10 @@
 package com.csse3200.game.areas.terrain;
 
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.physics.components.ColliderComponent;
+import com.csse3200.game.rendering.TextureRenderComponent;
 
-public class TerrainCropTileFactory implements
-    TerrainEntityFactory {
+public class TerrainCropTileFactory implements TerrainEntityFactory {
 
   /**
    * Creates a terrain entity
@@ -14,6 +15,9 @@ public class TerrainCropTileFactory implements
    */
   @Override
   public Entity CreateTerrainEntity(int x, int y) {
-    return null;
+    Entity tile = new Entity()
+        .addComponent(new ColliderComponent())
+        .addComponent(new TextureRenderComponent("images/tool_shovel.png"));
+    return tile;
   }
 }
