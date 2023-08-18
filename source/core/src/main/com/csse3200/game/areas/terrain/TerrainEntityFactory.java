@@ -6,7 +6,7 @@ import com.csse3200.game.entities.Entity;
 /**
  * Abstract factory that is inherited by factories that create Terrain Entities
  */
-public abstract class TerrainEntityFactory {
+public interface TerrainEntityFactory {
 
   /**
    * Creates a terrain entity
@@ -14,5 +14,5 @@ public abstract class TerrainEntityFactory {
    * @param y y-position of the entity to be created
    * @return created entity
    */
-  public abstract Entity CreateTerrainEntity(int x, int y);
+  public Entity CreateTerrainEntity(int x, int y);
 }
