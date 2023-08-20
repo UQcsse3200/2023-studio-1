@@ -29,15 +29,14 @@ public class TerrainCropTileFactory implements TerrainEntityFactory {
     logger.debug("Creating crop tile at position ({},{})", x, y);
 
     Entity tile = new Entity()
+        .addComponent(new ColliderComponent())
         // TODO Change Sprite used in RenderComponent - waiting on #27
         .addComponent(new TextureRenderComponent("images/tool_shovel.png"))
         .addComponent(new CropTileComponent(1,1));
         // TODO Set CropTileComponent params to values in  CropTileConfig class
 
-    // Adds ColliderComponent as sensor and not physics collider
-    ColliderComponent sensor = new ColliderComponent();
-    sensor.setSensor(true);
-    tile.addComponent(sensor);
+    // Sets ColliderComponent to sensor and not physics collider
+    tile.getComponent(ColliderComponent.class).setSensor(true);
 
     tile.setPosition(x, y);
     logger.debug("Registering crop tile {} with entity service", tile);
