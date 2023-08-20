@@ -1,5 +1,6 @@
 package com.csse3200.game.areas.terrain;
 
+import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.CropTileConfig;
 import com.csse3200.game.files.FileLoader;
@@ -22,11 +23,22 @@ public class TerrainCropTileFactory{
    *
    * @param x x-position of the entity to be created
    * @param y y-position of the entity to be created
-   * @return created entity
+   * @return created crop tile entity
+   */
+  public static Entity CreateTerrainEntity(float x, float y) {
+    Vector2 position = new Vector2(x, y);
+    return CreateTerrainEntity(position);
+  }
+
+  /**
+   * Creates a crop tile entity
+   *
+   * @param position position of the entity to be created
+   * @return created crop tile entity
    */
 
-  public static Entity CreateTerrainEntity(float x, float y) {
-    logger.debug("Creating crop tile at position ({},{})", x, y);
+  public static Entity CreateTerrainEntity(Vector2 position) {
+    logger.debug("Creating crop tile at position {}}", position);
 
     Entity tile = new Entity()
         .addComponent(new ColliderComponent())
@@ -38,7 +50,7 @@ public class TerrainCropTileFactory{
     // Sets ColliderComponent to sensor and not physics collider
     tile.getComponent(ColliderComponent.class).setSensor(true);
 
-    tile.setPosition(x, y);
+    tile.setPosition(position);
     logger.debug("Registering crop tile {} with entity service", tile);
     ServiceLocator.getEntityService().register(tile);
 
