@@ -14,5 +14,5 @@ public interface TerrainEntityFactory {
    * @param y y-position of the entity to be created
    * @return created entity
    */
-  public Entity CreateTerrainEntity(int x, int y);
+  public Entity CreateTerrainEntity(float x, float y);
 }
