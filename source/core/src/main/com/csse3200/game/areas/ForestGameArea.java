@@ -40,7 +40,7 @@ public class ForestGameArea extends GameArea {
     "images/iso_grass_1.png",
     "images/iso_grass_2.png",
     "images/iso_grass_3.png",
-    "images/tractor.png"
+    "images/tractor.png",
     "images/iso_grass_3.png",
     "images/tool_shovel.png",
     "images/tool_hoe.png",
@@ -143,7 +143,7 @@ public class ForestGameArea extends GameArea {
   }
 
   private Entity spawnTractor() {
-    Entity newTractor = TractorFactory.createTractor();
+    Entity newTractor = TractorFactory.createTractor(player);
     spawnEntityAt(newTractor, PLAYER_SPAWN, true, true);
     return newTractor;
   }

@@ -3,11 +3,13 @@ package com.csse3200.game.components.tractor;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.utils.math.Vector2Utils;
 
 public class KeyboardTractorInputComponent extends InputComponent {
     private final Vector2 walkDirection = Vector2.Zero.cpy();
+    private TractorActions actions;
 
     public KeyboardTractorInputComponent() {
         super(5);
@@ -21,30 +23,37 @@ public class KeyboardTractorInputComponent extends InputComponent {
      */
     @Override
     public boolean keyDown(int keycode) {
-        switch (keycode) {
-            case Input.Keys.UP:
-                walkDirection.add(Vector2Utils.UP);
-                triggerWalkEvent();
-                triggerAnimationMoveStartEvent("up");
-                return true;
-            case Input.Keys.LEFT:
-                walkDirection.add(Vector2Utils.LEFT);
-                triggerWalkEvent();
-                triggerAnimationMoveStartEvent("left");
-                return true;
-            case Input.Keys.DOWN:
-                walkDirection.add(Vector2Utils.DOWN);
-                triggerWalkEvent();
-                triggerAnimationMoveStartEvent("down");
-                return true;
-            case Input.Keys.RIGHT:
-                walkDirection.add(Vector2Utils.RIGHT);
-                triggerWalkEvent();
-                triggerAnimationMoveStartEvent("right");
-                return true;
-            default:
-                return false;
+        if (!actions.isMuted()) {
+            switch (keycode) {
+                case Input.Keys.W:
+                    walkDirection.add(Vector2Utils.UP);
+                    triggerWalkEvent();
+                    triggerAnimationMoveStartEvent("up");
+                    return true;
+                case Input.Keys.A:
+                    walkDirection.add(Vector2Utils.LEFT);
+                    triggerWalkEvent();
+                    triggerAnimationMoveStartEvent("left");
+                    return true;
+                case Input.Keys.S:
+                    walkDirection.add(Vector2Utils.DOWN);
+                    triggerWalkEvent();
+                    triggerAnimationMoveStartEvent("down");
+                    return true;
+                case Input.Keys.D:
+                    walkDirection.add(Vector2Utils.RIGHT);
+                    triggerWalkEvent();
+                    triggerAnimationMoveStartEvent("right");
+                    return true;
+                case Input.Keys.F:
+                    walkDirection.sub(Vector2.Zero);
+                    triggerExitEvent();
+                    return true;
+                default:
+                    return false;
+            }
         }
+        return false;
     }
 
     /**
@@ -55,26 +64,29 @@ public class KeyboardTractorInputComponent extends InputComponent {
      */
     @Override
     public boolean keyUp(int keycode) {
-        switch (keycode) {
-            case Input.Keys.UP:
-                walkDirection.sub(Vector2Utils.UP);
-                triggerWalkEvent();
-                return true;
-            case Input.Keys.LEFT:
-                walkDirection.sub(Vector2Utils.LEFT);
-                triggerWalkEvent();
-                return true;
-            case Input.Keys.DOWN:
-                walkDirection.sub(Vector2Utils.DOWN);
-                triggerWalkEvent();
-                return true;
-            case Input.Keys.RIGHT:
-                walkDirection.sub(Vector2Utils.RIGHT);
-                triggerWalkEvent();
-                return true;
-            default:
-                return false;
+        if (!actions.isMuted()) {
+            switch (keycode) {
+                case Input.Keys.W:
+                    walkDirection.sub(Vector2Utils.UP);
+                    triggerWalkEvent();
+                    return true;
+                case Input.Keys.A:
+                    walkDirection.sub(Vector2Utils.LEFT);
+                    triggerWalkEvent();
+                    return true;
+                case Input.Keys.S:
+                    walkDirection.sub(Vector2Utils.DOWN);
+                    triggerWalkEvent();
+                    return true;
+                case Input.Keys.D:
+                    walkDirection.sub(Vector2Utils.RIGHT);
+                    triggerWalkEvent();
+                    return true;
+                default:
+                    return false;
+            }
         }
+        return false;
     }
 
     private void triggerWalkEvent() {
@@ -98,5 +110,14 @@ public class KeyboardTractorInputComponent extends InputComponent {
      */
     private void triggerAnimationMoveStopEvent() {
         entity.getEvents().trigger("stopMoving", "Tool");
+    }
+
+
+    private void triggerExitEvent() {
+        entity.getEvents().trigger("exitTractor");
+    }
+
+    public void setActions(TractorActions actions) {
+        this.actions = actions;
     }
 }

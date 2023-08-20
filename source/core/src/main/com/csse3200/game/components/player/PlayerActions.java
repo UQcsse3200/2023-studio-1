@@ -4,6 +4,8 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.tractor.TractorActions;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -13,10 +15,12 @@ import com.csse3200.game.services.ServiceLocator;
  */
 public class PlayerActions extends Component {
   private static final Vector2 MAX_SPEED = new Vector2(3f, 3f); // Metres per second
+  private Entity tractor;
 
   private PhysicsComponent physicsComponent;
   private Vector2 walkDirection = Vector2.Zero.cpy();
   private boolean moving = false;
+  private boolean muted = true;
 
   @Override
   public void create() {
@@ -24,6 +28,7 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("walk", this::walk);
     entity.getEvents().addListener("walkStop", this::stopWalking);
     entity.getEvents().addListener("attack", this::attack);
+    entity.getEvents().addListener("enterTractor", this::enterTractor);
   }
 
   @Override
@@ -67,5 +72,34 @@ public class PlayerActions extends Component {
   void attack() {
     Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
     attackSound.play();
+  }
+
+  /**
+   * Sets tractor to the tractor entity, can be used to calculate distances and mute inputs
+   * @param tractor
+   */
+  public void setTractor(Entity tractor) {
+    this.tractor = tractor;
+  }
+
+  /**
+   * Makes the player get into tractor.
+   */
+  void enterTractor() {
+    muted = true;
+    tractor.getComponent(TractorActions.class).setMuted(false);
+    this.entity.setPosition(new Vector2(-10,-10));
+  }
+
+  /**
+   * When in the tractor inputs should be muted, this handles that.
+   * @return if the players inputs should be muted
+   */
+  public boolean isMuted() {
+    return muted;
+  }
+
+  public void setMuted(boolean muted) {
+    this.muted = muted;
   }
 }
