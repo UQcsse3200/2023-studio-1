@@ -78,5 +78,4 @@ class InventoryComponentTest {
     InventoryComponent inventory = new InventoryComponent(new ArrayList<Item>());
     assertEquals(new ArrayList<Item>(), inventory.getInventory());
   }
-
 }
