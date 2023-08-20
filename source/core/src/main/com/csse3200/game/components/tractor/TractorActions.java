@@ -14,7 +14,7 @@ public class TractorActions extends Component {
     private PhysicsComponent physicsComponent;
     private Vector2 walkDirection = Vector2.Zero.cpy();
     private boolean moving = false;
-    private boolean muted;
+    private boolean muted = true;
 
     @Override
     public void create() {

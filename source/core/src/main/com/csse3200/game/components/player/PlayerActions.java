@@ -20,7 +20,7 @@ public class PlayerActions extends Component {
   private PhysicsComponent physicsComponent;
   private Vector2 walkDirection = Vector2.Zero.cpy();
   private boolean moving = false;
-  private boolean muted = true;
+  private boolean muted = false;
 
   @Override
   public void create() {
