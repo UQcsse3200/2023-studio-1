@@ -10,7 +10,7 @@ import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TerrainCropTileFactory implements TerrainEntityFactory {
+public class TerrainCropTileFactory{
 
   private static final Logger logger = LoggerFactory.getLogger(TerrainCropTileFactory.class);
 
@@ -24,8 +24,8 @@ public class TerrainCropTileFactory implements TerrainEntityFactory {
    * @param y y-position of the entity to be created
    * @return created entity
    */
-  @Override
-  public Entity CreateTerrainEntity(float x, float y) {
+
+  public static Entity CreateTerrainEntity(float x, float y) {
     logger.debug("Creating crop tile at position ({},{})", x, y);
 
     Entity tile = new Entity()
