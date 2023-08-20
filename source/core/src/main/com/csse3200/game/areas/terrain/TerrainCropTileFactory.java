@@ -15,15 +15,17 @@ public class TerrainCropTileFactory implements TerrainEntityFactory {
    * @return created entity
    */
   @Override
-  public Entity CreateTerrainEntity(int x, int y) {
+  public Entity CreateTerrainEntity(float x, float y) {
     Entity tile = new Entity()
         .addComponent(new ColliderComponent())
         .addComponent(new TextureRenderComponent("images/tool_shovel.png"));
+
 
     // Implement crop tile component
     // Change sprite used in texture
     // Load in tile config
 
+    tile.setPosition(x, y);
     PhysicsUtils.setScaledCollider(tile, 1.0f, 1.0f);
 
     return tile;
