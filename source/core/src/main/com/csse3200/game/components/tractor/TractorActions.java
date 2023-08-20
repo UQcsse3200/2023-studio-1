@@ -68,10 +68,13 @@ public class TractorActions extends Component {
      * Makes the player get into tractor.
      */
     void exitTractor() {
-        muted = true;
-        player.getComponent(PlayerActions.class).setMuted(false);
-        player.setEnabled(true);
-        player.setPosition(this.entity.getPosition());
+      this.stopMoving();
+      this.move(Vector2.Zero);
+
+      muted = true;
+      player.getComponent(PlayerActions.class).setMuted(false);
+      player.setEnabled(true);
+      player.setPosition(this.entity.getPosition());
     }
 
     /**
