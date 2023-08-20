@@ -6,6 +6,7 @@ import com.csse3200.game.entities.configs.CropTileConfig;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
+import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -42,10 +43,13 @@ public class TerrainCropTileFactory{
 
     Entity tile = new Entity()
         .addComponent(new ColliderComponent())
+        .addComponent(new PhysicsComponent())
         // TODO Change Sprite used in RenderComponent - waiting on #27
         .addComponent(new TextureRenderComponent("images/tool_shovel.png"))
         .addComponent(new CropTileComponent(1,1));
         // TODO Set CropTileComponent params to values in  CropTileConfig class
+
+
 
     // Sets ColliderComponent to sensor and not physics collider
     tile.getComponent(ColliderComponent.class).setSensor(true);
