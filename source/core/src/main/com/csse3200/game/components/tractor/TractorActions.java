@@ -27,7 +27,7 @@ public class TractorActions extends Component {
 
     @Override
     public void update() {
-        if (moving) {
+        if (this.moving) {
             updateSpeed();
         }
     }
@@ -48,7 +48,7 @@ public class TractorActions extends Component {
      */
     void move(Vector2 direction) {
         this.walkDirection = direction;
-        moving = true;
+        this.moving = true;
     }
 
     /**
@@ -56,8 +56,16 @@ public class TractorActions extends Component {
      */
     void stopMoving() {
         this.walkDirection = Vector2.Zero.cpy();
+        this.moving = false;
         updateSpeed();
-        moving = false;
+    }
+
+    /**
+     * Checks if the player/tractor is moving.
+     * @return true if moving else false
+     */
+    public boolean isMoving() {
+        return this.moving;
     }
 
     public void setPlayer(Entity player) {
