@@ -61,6 +61,12 @@ public class CropTileComponentTest {
         assertEquals(1.0, cropTile4.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
         cropTile4.getEvents().trigger("water", 0.5f);
         assertEquals(0.55387, cropTile4.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
+        Entity dryTile = new Entity().addComponent(new CropTileComponent(0.0f, 1.0f));
+        dryTile.create();
+        dryTile.getEvents().trigger("water", 1.0f);
+        assertEquals(1.0, dryTile.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
+        dryTile.getEvents().trigger("water", 1.0f);
+        assertEquals(-1.0, dryTile.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
     }
 
     @Test
