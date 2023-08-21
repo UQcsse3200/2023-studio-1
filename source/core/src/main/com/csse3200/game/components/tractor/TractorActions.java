@@ -3,6 +3,7 @@ package com.csse3200.game.components.tractor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsComponent;
@@ -69,11 +70,9 @@ public class TractorActions extends Component {
      */
     void exitTractor() {
       this.stopMoving();
-      this.move(Vector2.Zero);
-
-      muted = true;
       player.getComponent(PlayerActions.class).setMuted(false);
-      player.setEnabled(true);
+      muted = true;
+      player.getComponent(KeyboardPlayerInputComponent.class).setWalkDirection(entity.getComponent(KeyboardTractorInputComponent.class).getWalkDirection());
       player.setPosition(this.entity.getPosition());
     }
 

@@ -120,4 +120,12 @@ public class KeyboardTractorInputComponent extends InputComponent {
     public void setActions(TractorActions actions) {
         this.actions = actions;
     }
+
+    public Vector2 getWalkDirection() {
+        return walkDirection;
+    }
+
+    public void setWalkDirection(Vector2 direction) {
+        this.walkDirection.set(direction);
+    }
 }

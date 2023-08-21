@@ -125,4 +125,12 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public void setActions(PlayerActions actions) {
     this.actions = actions;
   }
+
+  public Vector2 getWalkDirection() {
+    return walkDirection;
+  }
+
+  public void setWalkDirection(Vector2 direction) {
+    this.walkDirection.set(direction);
+  }
 }
