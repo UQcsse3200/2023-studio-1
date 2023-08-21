@@ -72,13 +72,20 @@ public class ItemComponent extends Component {
     }
 
 
-
     /** 
      * Returns the price of the item
      * @return int price of item
      */
     public int getPrice() {
         return price;
+    }
+
+    /**
+     * Sets the price of the item
+     * @param price int price of item
+     */
+    public void setPrice(int price) {
+        this.price = price;
     }
 
 
@@ -113,6 +120,14 @@ public class ItemComponent extends Component {
      */
     public String getItemDescription() {
         return itemDescription;
+    }
+
+    /**
+     * Sets the price of the item
+     * @param description string description of the item
+     */
+    public void setItemDescription(String description) {
+        itemDescription = description;
     }
 
     /**
