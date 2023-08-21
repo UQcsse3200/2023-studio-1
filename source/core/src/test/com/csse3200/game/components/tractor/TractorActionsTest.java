@@ -36,8 +36,11 @@ class TractorActionsTest {
         tractorActions.move(direction);
         
         assertTrue(tractorActions.isMoving()); // Check if moving after move() is called
-    }
 
+        //TODO this throws error null pointer error
+        // tractorActions.stopMoving();
+        // assertEquals(false, tractorActions.isMoving()); // Check if moving after stopMoving() is called
+    }
 
 
 }

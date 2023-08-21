@@ -56,8 +56,8 @@ public class TractorActions extends Component {
      */
     void stopMoving() {
         this.walkDirection = Vector2.Zero.cpy();
-        this.moving = false;
         updateSpeed();
+        this.moving = false;
     }
 
     /**
