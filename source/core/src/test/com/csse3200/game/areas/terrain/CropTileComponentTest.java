@@ -21,28 +21,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 @ExtendWith(GameExtension.class)
 public class CropTileComponentTest {
 
-    void shouldKnowWaterLevel() {
-        Entity cropTile =
+    @Test
+    void shouldGiveExpectedGrowthRate() {
+        Entity cropTile1 =
                 new Entity()
-                        .addComponent(new CropTileComponent(50, 50))
-                        .addComponent(new PhysicsComponent())
-                        .addComponent(new ColliderComponent());
-    }
+                        .addComponent(new CropTileComponent(1f, 0.5f));
+        assertEquals(0.5, cropTile1.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
 
-    void shouldKnowSoilQuality() {
-        Entity cropTile =
-                new Entity()
-                        .addComponent(new CropTileComponent(50, 50))
-                        .addComponent(new PhysicsComponent())
-                        .addComponent(new ColliderComponent());
-    }
-
-    void shouldFertilise() {
-        Entity cropTile =
-                new Entity()
-                        .addComponent(new CropTileComponent(50, 50))
-                        .addComponent(new PhysicsComponent())
-                        .addComponent(new ColliderComponent());
     }
 
 }
