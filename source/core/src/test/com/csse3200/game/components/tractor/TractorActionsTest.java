@@ -9,6 +9,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.TractorFactory;
 import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.physics.PhysicsService;
+import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import com.csse3200.game.entities.Entity;
@@ -24,22 +27,21 @@ class TractorActionsTest {
     tractorActions.setMuted(true);
     assertTrue(tractorActions.isMuted());
     tractorActions.setMuted(false);
-    assertTrue(!tractorActions.isMuted());
+    assertFalse(tractorActions.isMuted());
   }
 
     @Test
     void testMove() {
+        ServiceLocator.registerPhysicsService(new PhysicsService());
         TractorActions tractorActions = new TractorActions();
+        tractorActions.setPhysicsComponent(new PhysicsComponent());
         assertFalse(tractorActions.isMoving()); // Initial state
         
         Vector2 direction = new Vector2(1, 1);
         tractorActions.move(direction);
-        
         assertTrue(tractorActions.isMoving()); // Check if moving after move() is called
-
-        //TODO this throws error null pointer error
-        // tractorActions.stopMoving();
-        // assertEquals(false, tractorActions.isMoving()); // Check if moving after stopMoving() is called
+        tractorActions.stopMoving();
+        assertFalse(tractorActions.isMoving()); // Check if moving after stopMoving() is called
     }
 
 

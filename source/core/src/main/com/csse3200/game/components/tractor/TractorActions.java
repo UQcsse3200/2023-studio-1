@@ -103,4 +103,12 @@ public class TractorActions extends Component {
     public Vector2 getTractorLocation() {
         return entity.getPosition();
     }
+
+    /**
+     * ONLY USE FOR TESTING PURPOSES
+     * @param comp
+     */
+    public void setPhysicsComponent(PhysicsComponent comp) {
+        this.physicsComponent = comp;
+    }
 }
