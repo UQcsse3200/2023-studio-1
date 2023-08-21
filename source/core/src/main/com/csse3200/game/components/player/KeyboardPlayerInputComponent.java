@@ -52,7 +52,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           entity.getEvents().trigger("attack");
           return true;
         case Keys.F:
-          walkDirection.sub(Vector2.Zero);
           triggerEnterEvent();
           return true;
         default:
