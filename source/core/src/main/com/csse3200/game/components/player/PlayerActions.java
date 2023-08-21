@@ -87,6 +87,10 @@ public class PlayerActions extends Component {
    * Makes the player get into tractor.
    */
   void enterTractor() {
+    //check within 5 units of tractor 
+    if (this.entity.getPosition().dst(tractor.getPosition()) > 5) {
+      return;
+    }
     this.stopWalking();
     muted = true;
     tractor.getComponent(TractorActions.class).setMuted(false);

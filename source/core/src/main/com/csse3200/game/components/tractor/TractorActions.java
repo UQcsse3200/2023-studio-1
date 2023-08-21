@@ -87,4 +87,12 @@ public class TractorActions extends Component {
     public void setMuted(boolean muted) {
         this.muted = muted;
     }
+
+    /**
+     * Gets the location of the tractor
+     * @return the location of the tractor as Vector2
+     */
+    public Vector2 getTractorLocation() {
+        return entity.getPosition();
+    }
 }
