@@ -80,6 +80,14 @@ public class ItemComponent extends Component {
         return price;
     }
 
+    /**
+     * Sets the price of the item
+     * @param price int price of item
+     */
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
 
     /**
      * Returns selalble bool of item
@@ -112,6 +120,14 @@ public class ItemComponent extends Component {
      */
     public String getItemDescription() {
         return itemDescription;
+    }
+
+    /**
+     * Sets the price of the item
+     * @param description string description of the item
+     */
+    public void setItemDescription(String description) {
+        itemDescription = description;
     }
 
     /**
