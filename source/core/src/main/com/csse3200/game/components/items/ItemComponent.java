@@ -72,7 +72,6 @@ public class ItemComponent extends Component {
     }
 
 
-
     /** 
      * Returns the price of the item
      * @return int price of item
