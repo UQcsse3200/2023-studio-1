@@ -101,7 +101,7 @@ public class CropTileComponent extends Component {
      * whether the tile has been fertilised.
      */
     public double getGrowthRate(float idealWaterAmount) {
-        double waterMultiplier = Math.exp(Math.pow(Math.abs(waterContent - idealWaterAmount), idealWaterFalloffSharpness)) - 1 / MathUtils.E;
+        double waterMultiplier = 1 / (Math.exp(Math.pow(Math.abs(waterContent - idealWaterAmount), idealWaterFalloffSharpness))) - 1 / MathUtils.E;
         waterMultiplier *= 1 / (1 - 1 / MathUtils.E);
         waterMultiplier = (waterMultiplier - waterDamageThreshold) / (1 - waterDamageThreshold);
         waterMultiplier = waterMultiplier > 0 ? Math.pow(waterMultiplier, idealWaterFalloffTolerance) : -1.0;
