@@ -21,7 +21,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(GameExtension.class)
 public class CropTileComponentTest {
-    private Entity cropTile1, cropTile2, cropTile3, cropTile4, cropTile5, cropTile6;
+    private Entity cropTile1, cropTile2, cropTile3, cropTile4, cropTile5;
     @BeforeEach
     public void init() {
         cropTile1 = new Entity().addComponent(new CropTileComponent(1f, 0.5f));
