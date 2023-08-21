@@ -71,7 +71,20 @@ public class CropTileComponentTest {
         cropTile4.getEvents().trigger("fertilise");
         cropTile5.getEvents().trigger("fertilise");
         assertEquals(1, cropTile1.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
-        assertEquals(1, cropTile2.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
+        assertEquals(0.55387, cropTile2.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
+        assertEquals(2.0, cropTile3.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
+        assertEquals(-1.0, cropTile4.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
+        assertEquals(0, cropTile5.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
+        /* Fertilising twice should not do anything */
+        cropTile1.getEvents().trigger("fertilise");
+        cropTile2.getEvents().trigger("fertilise");
+        cropTile3.getEvents().trigger("fertilise");
+        cropTile4.getEvents().trigger("fertilise");
+        cropTile5.getEvents().trigger("fertilise");
+        assertEquals(1, cropTile1.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
+        assertEquals(0.55387, cropTile2.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
+        assertEquals(2.0, cropTile3.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
+        assertEquals(-1.0, cropTile4.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
         assertEquals(0, cropTile5.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
     }
 
