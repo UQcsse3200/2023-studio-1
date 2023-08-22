@@ -1,0 +1,22 @@
+{
+  "cosmicCob": {
+    "health": 100,
+    "name": "Cosmic Cob",
+    "type": "FOOD",
+    "description": "Nutritious space corn!",
+    "tastiness": 1000
+  },
+  "aloeVera": {
+    "health": 50,
+    "name": "Aloe Vera",
+    "type": "HEALTH",
+    "description": "Produces gel that can be used for healing"
+  },
+  "hammerPlant": {
+    "health": 10,
+    "name": "Hammer Plant",
+    "type": "REPAIR",
+    "description": "Repairs plants within its healing radius",
+    "healingRadius": 100
+  }
+}

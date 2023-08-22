@@ -1,0 +1,100 @@
+package com.csse3200.game.entities.factories;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.components.plants.PlantComponent;
+import com.csse3200.game.entities.configs.plants.FoodPlantConfig;
+import com.csse3200.game.entities.configs.plants.HealthPlantConfig;
+import com.csse3200.game.entities.configs.plants.PlantConfigs;
+import com.csse3200.game.entities.configs.plants.RepairPlantConfig;
+import com.csse3200.game.files.FileLoader;
+import com.csse3200.game.physics.PhysicsLayer;
+import com.csse3200.game.physics.PhysicsUtils;
+import com.csse3200.game.physics.components.ColliderComponent;
+import com.csse3200.game.physics.components.HitboxComponent;
+import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.rendering.TextureRenderComponent;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+
+/**
+ * Factory to create plant entities.
+ *
+ * <p>Predefined plant properties are loaded from a config file stored as a json file and should
+ * have the properties stored in the PlantConfig classes
+ */
+public class PlantFactory {
+    private static final PlantConfigs stats =
+            FileLoader.readClass(PlantConfigs.class, "configs/plant.json");
+
+    /**
+     * Creates a generic plant to be used as a base for more specific plant creation methods.
+     *
+     * @return entity
+     */
+    private static Entity createBasePlant() {
+
+        Entity plant = new Entity()
+                .addComponent(new PhysicsComponent())
+                .addComponent(new ColliderComponent())
+                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+        plant.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+
+        return  plant;
+    }
+
+    /**
+     * Creates a cosmicCob entity that is a Food type plant.
+     *
+     * @return entity
+     */
+    public static Entity createCosmicCob() {
+        FoodPlantConfig config = stats.cosmicCob;
+
+        Entity plant = createBasePlant()
+                .addComponent(new TextureRenderComponent("images/test_cactus.png"))
+                .addComponent(new PlantComponent(config.health, config.name, config.type,
+                        config.description, config.tastiness));
+
+        plant.getComponent(TextureRenderComponent.class).scaleEntity();
+        plant.scaleHeight(1f);
+        PhysicsUtils.setScaledCollider(plant, 0.5f, 0.2f);
+        return plant;
+    }
+
+    /**
+     * Creates an AloeVera entity that is a health type plant.
+     *
+     * @return entity
+     */
+    public static Entity createAloeVera() {
+        HealthPlantConfig config = stats.aloeVera;
+
+        Entity plant = createBasePlant()
+                .addComponent(new TextureRenderComponent("images/test_cactus.png"))
+                .addComponent(new PlantComponent(config.health, config.name, config.type,
+                        config.description));
+
+        plant.getComponent(TextureRenderComponent.class).scaleEntity();
+        plant.scaleHeight(1f);
+        PhysicsUtils.setScaledCollider(plant, 0.5f, 0.2f);
+        return plant;
+    }
+
+    /**
+     * Creates a HammerPlant entity that is a repair type plant.
+     *
+     * @return entity
+     */
+    public static Entity createHammerPlant() {
+        RepairPlantConfig config = stats.hammerPlant;
+
+        Entity plant = createBasePlant()
+                .addComponent(new TextureRenderComponent("images/test_cactus.png"))
+                .addComponent(new PlantComponent(config.health, config.name, config.type,
+                        config.description, config.healingRadius));
+
+        plant.getComponent(TextureRenderComponent.class).scaleEntity();
+        plant.scaleHeight(1f);
+        PhysicsUtils.setScaledCollider(plant, 0.5f, 0.2f);
+        return plant;
+    }
+}
