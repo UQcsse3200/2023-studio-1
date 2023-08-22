@@ -29,4 +29,14 @@ public class TouchInputFactory extends InputFactory{
     logger.debug("Creating terminal input handler");
     return new TouchTerminalInputComponent();
   }
+  /**
+   * Creates an input handler for the inventory
+   *
+   * @return Inventory input handler
+   */
+  @Override
+  public InputComponent createForInventory() {
+    logger.debug("Creating terminal input handler");
+    return new TouchTerminalInputComponent();
+  }
 }
