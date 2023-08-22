@@ -131,10 +131,10 @@ public class NPCFactory {
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/animals/cow.atlas", TextureAtlas.class));
-    animator.addAnimation("idle_left", 0.1f);
-    animator.addAnimation("idle_right", 0.1f);
-    animator.addAnimation("walk_left", 0.2f, Animation.PlayMode.LOOP_REVERSED);
-    animator.addAnimation("walk_right", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle_left", 0.25f, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle_right", 0.5f, Animation.PlayMode.LOOP);
+    animator.addAnimation("walk_left", 0.25f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation("walk_right", 0.25f, Animation.PlayMode.LOOP);
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
