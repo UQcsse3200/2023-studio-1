@@ -144,7 +144,7 @@ public class NPCFactory {
             .addComponent(animator)
             .addComponent(new AnimalAnimationController());
 
-    cow.scaleHeight(1.5f);
+//    cow.scaleHeight(1.2f);//TODO make this bigger and make the hitbox grow accordingly
     return cow;
   }
 
@@ -160,7 +160,7 @@ public class NPCFactory {
             .addComponent(new PhysicsMovementComponent())
             .addComponent(new ColliderComponent());
 
-        PhysicsUtils.setScaledCollider(animal, 0.9f, 0.4f); //TODO: Is this needed?
+        PhysicsUtils.setScaledCollider(animal, 0.9f, 0.4f);
     return animal;
   }
 
