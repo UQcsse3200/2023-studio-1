@@ -8,7 +8,7 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
  * of the events is triggered.
  * TODO: figure out if we need only AnimalAnimationController instead of each animal
  */
-public class ChickenAnimationController extends Component {
+public class AnimalAnimationController extends Component {
     AnimationRenderComponent animator;
     String direction = "right";
     private static final String WALK_PREFIX = "walk";
