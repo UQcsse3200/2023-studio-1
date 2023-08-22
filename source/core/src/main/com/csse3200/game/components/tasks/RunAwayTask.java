@@ -10,28 +10,28 @@ import com.csse3200.game.physics.raycast.RaycastHit;
 import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.services.ServiceLocator;
 
-/** Chases a target entity until they get too far away or line of sight is lost */
-public class ChaseTask extends DefaultTask implements PriorityTask {
+/** Runs from a target entity until they get too far away or line of sight is lost */
+public class RunAwayTask extends DefaultTask implements PriorityTask {
   private final Entity target;
   private final int priority;
   private final float viewDistance;
-  private final float maxChaseDistance;
+  private final float maxRunDistance;
   private final PhysicsEngine physics;
   private final DebugRenderer debugRenderer;
   private final RaycastHit hit = new RaycastHit();
   private MovementTask movementTask;
 
   /**
-   * @param target The entity to chase.
+   * @param target The entity to run from.
    * @param priority Task priority when chasing (0 when not chasing).
    * @param viewDistance Maximum distance from the entity at which chasing can start.
-   * @param maxChaseDistance Maximum distance from the entity while chasing before giving up.
+   * @param maxRunDistance Maximum distance from the entity while chasing before giving up.
    */
-  public ChaseTask(Entity target, int priority, float viewDistance, float maxChaseDistance) {
+  public RunAwayTask(Entity target, int priority, float viewDistance, float maxRunDistance) {
     this.target = target;
     this.priority = priority;
     this.viewDistance = viewDistance;
-    this.maxChaseDistance = maxChaseDistance;
+    this.maxRunDistance = maxRunDistance;
     physics = ServiceLocator.getPhysicsService().getPhysics();
     debugRenderer = ServiceLocator.getRenderService().getDebug();
   }
@@ -39,16 +39,26 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
   @Override
   public void start() {
     super.start();
-    movementTask = new MovementTask(target.getPosition());
+    Vector2 targetVec = new Vector2();
+    targetVec.x = owner.getEntity().getPosition().x +
+            (owner.getEntity().getPosition().x - target.getPosition().x);
+    targetVec.y = owner.getEntity().getPosition().y +
+            (owner.getEntity().getPosition().y - target.getPosition().y);
+    movementTask = new MovementTask(targetVec);
     movementTask.create(owner);
     movementTask.start();
-    
-    this.owner.getEntity().getEvents().trigger("chaseStart");
+
+    this.owner.getEntity().getEvents().trigger("runAwayStart");
   }
 
   @Override
   public void update() {
-    movementTask.setTarget(target.getPosition());
+    Vector2 targetVec = new Vector2();
+    targetVec.x = owner.getEntity().getPosition().x +
+            (owner.getEntity().getPosition().x - target.getPosition().x);
+    targetVec.y = owner.getEntity().getPosition().y +
+            (owner.getEntity().getPosition().y - target.getPosition().y);
+    movementTask.setTarget(targetVec);
     movementTask.update();
     if (movementTask.getStatus() != Status.ACTIVE) {
       movementTask.start();
@@ -76,7 +86,7 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
 
   private int getActivePriority() {
     float dst = getDistanceToTarget();
-    if (dst > maxChaseDistance || !isTargetVisible()) {
+    if (dst > maxRunDistance || !isTargetVisible()) {
       return -1; // Too far, stop chasing
     }
     return priority;
