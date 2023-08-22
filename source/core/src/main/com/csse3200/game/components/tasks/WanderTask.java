@@ -50,7 +50,7 @@ public class WanderTask extends DefaultTask implements PriorityTask {
     movementTask.start();
     currentTask = movementTask;
 
-    this.owner.getEntity().getEvents().trigger("wanderStart");
+    this.owner.getEntity().getEvents().trigger("wanderStart"); //TODO: What does this do/ is it needed?
     this.owner.getEntity().getEvents().trigger("walk");
   }
 

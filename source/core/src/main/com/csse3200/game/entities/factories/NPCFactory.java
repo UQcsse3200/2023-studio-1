@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.npc.ChickenAnimationController;
+import com.csse3200.game.components.npc.AnimalAnimationController;
 import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.tasks.ChaseTask;
@@ -92,10 +92,12 @@ public class NPCFactory {
   }
 
   /**
-   * Creates a chicken entity TODO: abstract base animal entity? , also put constants in config or json file
+   * Creates a chicken entity
    * @return chicken entity
    */
   public static Entity createChicken(Entity target) {
+    Entity chicken = createBaseAnimal();
+
     AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/animals/chicken.atlas", TextureAtlas.class));
     animator.addAnimation("idle_left", Float.MAX_VALUE);
@@ -109,16 +111,56 @@ public class NPCFactory {
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
             .addTask(new RunAwayTask(target, 10, 2f, 4f));
 
-    Entity chicken = new Entity()
-            .addComponent(new PhysicsComponent())
-            .addComponent(new PhysicsMovementComponent())
-            .addComponent(new ColliderComponent())
+    chicken
             .addComponent(aiTaskComponent)
             .addComponent(animator)
-            .addComponent(new ChickenAnimationController());
+            .addComponent(new AnimalAnimationController());
 
-    PhysicsUtils.setScaledCollider(chicken, 0.9f, 0.4f);
+
     return chicken;
+  }
+
+  /**
+   * Creates a cow entity
+   * @return cow entity
+   */
+  public static Entity createCow() {
+    Entity cow = createBaseAnimal();
+
+    AnimationRenderComponent animator = new AnimationRenderComponent(
+            ServiceLocator.getResourceService().getAsset("images/animals/cow.atlas", TextureAtlas.class));
+    animator.addAnimation("idle_left", 0.1f);
+    animator.addAnimation("idle_right", 0.1f);
+    animator.addAnimation("walk_left", 0.2f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation("walk_right", 0.2f, Animation.PlayMode.LOOP);
+
+    AITaskComponent aiTaskComponent = new AITaskComponent()
+            .addTask(new WanderTask(new Vector2(3f, 3f), 3f));
+
+    cow
+            .addComponent(aiTaskComponent)
+            .addComponent(animator)
+            .addComponent(new AnimalAnimationController());
+
+    cow.scaleHeight(1.5f);
+    return cow;
+  }
+
+  /**
+   * Creates a generic animal to be used as a base entity by more specific animal creation methods.
+   *
+   *
+   * @return entity
+   */
+  //TODO: flesh this out
+  private static Entity createBaseAnimal() {
+    Entity animal = new Entity()
+            .addComponent(new PhysicsComponent())
+            .addComponent(new PhysicsMovementComponent())
+            .addComponent(new ColliderComponent());
+
+    //    PhysicsUtils.setScaledCollider(chicken, 0.9f, 0.4f); TODO: Is this needed?
+    return animal;
   }
 
   /**
