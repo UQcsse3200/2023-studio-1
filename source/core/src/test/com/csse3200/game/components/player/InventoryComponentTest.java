@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -16,7 +17,7 @@ class InventoryComponentTest {
   private InventoryComponent inventory;
 
   /**
-   * Sets the player's inventory. Sets up an example inventory
+   * Sets up the player's inventory with example items
    */
   @BeforeEach
   void setUp() {
@@ -27,11 +28,12 @@ class InventoryComponentTest {
   }
 
   /**
-   * Tests the inventory size method
+   * Tests the getInventory method
    */
   @Test
   void testGetInventory() {
-    assertEquals(2, inventory.getInventory().size());
+    InventoryComponent inventory = new InventoryComponent(new ArrayList<Item>());
+    assertEquals(new ArrayList<Item>(), inventory.getInventory());
   }
 
   /**
@@ -68,14 +70,5 @@ class InventoryComponentTest {
   void testUpdateItemCount() {
     assertTrue(inventory.updateItemCount(new Item("Sword", 1, 1), 2));
     assertEquals(2, inventory.getInventory().get(0).getItemCount());
-  }
-
-  /**
-   * Tests the getInventory method
-   */
-  @Test
-  void testGetInventory() {
-    InventoryComponent inventory = new InventoryComponent(new ArrayList<Item>());
-    assertEquals(new ArrayList<Item>(), inventory.getInventory());
   }
 }
