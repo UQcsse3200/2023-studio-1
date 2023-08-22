@@ -149,10 +149,9 @@ public class NPCFactory {
   /**
    * Creates a generic animal to be used as a base entity by more specific animal creation methods.
    *
-   *
    * @return entity
    */
-  //TODO: flesh this out
+  //TODO: flesh this out. Need to add certain components in a certain order (i think).
   private static Entity createBaseAnimal() {
     Entity animal = new Entity()
             .addComponent(new PhysicsComponent())

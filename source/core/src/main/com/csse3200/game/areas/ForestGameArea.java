@@ -79,8 +79,11 @@ public class ForestGameArea extends GameArea {
     spawnTerrain();
     spawnTrees();
     player = spawnPlayer();
-    spawnChickens(); // TODO: temp
-    spawnCows(); //TODO: temp
+
+    // TODO: temp spawn mechanics
+    spawnChickens();
+    spawnCows();
+
 //    spawnTool(ToolType.TEST_TOOL); // temp - spawns a test tool
 //    spawnTool(ToolType.HOE); // temp - spawns a hoe
 //    spawnGhosts();
@@ -160,7 +163,8 @@ public class ForestGameArea extends GameArea {
     return newTool;
   }
 
-  private void spawnChickens() { // TODO: Temp
+  // TODO: Temp spawn mechanics
+  private void spawnChickens() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
@@ -171,7 +175,8 @@ public class ForestGameArea extends GameArea {
     }
   }
 
-  private void spawnCows() { // TODO: Temp
+  // TODO: Temp spawn mechanics
+  private void spawnCows() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
