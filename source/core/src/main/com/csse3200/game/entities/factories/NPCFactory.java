@@ -12,6 +12,7 @@ import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.RunAwayTask;
 import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.configs.BaseAnimalConfig;
 import com.csse3200.game.entities.configs.BaseEntityConfig;
 import com.csse3200.game.entities.configs.GhostKingConfig;
 import com.csse3200.game.entities.configs.NPCConfigs;
@@ -97,6 +98,7 @@ public class NPCFactory {
    */
   public static Entity createChicken(Entity target) {
     Entity chicken = createBaseAnimal();
+    BaseAnimalConfig config = configs.cow;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/animals/chicken.atlas", TextureAtlas.class));
@@ -125,6 +127,7 @@ public class NPCFactory {
    */
   public static Entity createCow() {
     Entity cow = createBaseAnimal();
+    BaseAnimalConfig config = configs.chicken;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/animals/cow.atlas", TextureAtlas.class));
@@ -157,7 +160,7 @@ public class NPCFactory {
             .addComponent(new PhysicsMovementComponent())
             .addComponent(new ColliderComponent());
 
-    //    PhysicsUtils.setScaledCollider(chicken, 0.9f, 0.4f); TODO: Is this needed?
+        PhysicsUtils.setScaledCollider(animal, 0.9f, 0.4f); //TODO: Is this needed?
     return animal;
   }
 
