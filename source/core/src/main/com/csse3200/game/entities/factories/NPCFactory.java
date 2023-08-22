@@ -117,7 +117,7 @@ public class NPCFactory {
             .addComponent(animator)
             .addComponent(new ChickenAnimationController());
 
-    PhysicsUtils.setScaledCollider(chicken, 0.9f, 0.4f);
+    PhysicsUtils.setScaledCollider(chicken, 0.8f, 0.4f);
     return chicken;
   }
 
