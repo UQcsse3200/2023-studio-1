@@ -116,7 +116,6 @@ public class NPCFactory {
             .addComponent(animator)
             .addComponent(new AnimalAnimationController());
 
-
     return chicken;
   }
 
@@ -135,7 +134,7 @@ public class NPCFactory {
     animator.addAnimation("walk_right", 0.2f, Animation.PlayMode.LOOP);
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
-            .addTask(new WanderTask(new Vector2(3f, 3f), 3f));
+            .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
 
     cow
             .addComponent(aiTaskComponent)

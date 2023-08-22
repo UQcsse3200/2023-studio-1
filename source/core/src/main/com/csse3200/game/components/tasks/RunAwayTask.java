@@ -48,7 +48,7 @@ public class RunAwayTask extends DefaultTask implements PriorityTask {
     movementTask.create(owner);
     movementTask.start();
 
-    this.owner.getEntity().getEvents().trigger("runAwayStart");
+    this.owner.getEntity().getEvents().trigger("run");
   }
 
   @Override
