@@ -38,7 +38,7 @@ class WanderTaskTest {
 
     // Register callbacks
     EventListener0 callback = mock(EventListener0.class);
-    entity.getEvents().addListener("walk", callback);
+    entity.getEvents().addListener("wanderStart", callback);
 
     wanderTask.start();
 

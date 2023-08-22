@@ -11,6 +11,9 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
 public class ChickenAnimationController extends Component {
     AnimationRenderComponent animator;
     String direction = "right";
+    private static final String WALK_PREFIX = "walk";
+    private static final String RUN_PREFIX = "run";
+    private static final String IDLE_PREFIX = "idle";
 
     @Override
     public void create() {
@@ -24,14 +27,14 @@ public class ChickenAnimationController extends Component {
     }
 
     void animateWalk() {
-        animator.startAnimation("walk_" + direction);
+        animator.startAnimation(WALK_PREFIX + "_" + direction);
     }
 
     void animateRun() {
-        animator.startAnimation("run_" + direction);
+        animator.startAnimation(RUN_PREFIX + "_" + direction);
     }
 
-    void animateIdle() { animator.startAnimation("idle_" + direction);}
+    void animateIdle() { animator.startAnimation(IDLE_PREFIX + "_" + direction);}
 
     void setDirection(String direction){
         this.direction = direction;
