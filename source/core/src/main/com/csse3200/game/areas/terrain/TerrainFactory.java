@@ -53,7 +53,7 @@ public class TerrainFactory {
    * @param terrainType Terrain to create
    * @return Terrain component which renders the terrain
    */
-  public TerrainComponent createTerrain(TerrainType terrainType) {
+  public TerrainComponent createTerrain(TerrainType terrainType) {                      // WILL NEED TO REVAMP THIS FUNCTION
     ResourceService resourceService = ServiceLocator.getResourceService();
     switch (terrainType) {
       case FOREST_DEMO:
@@ -120,6 +120,35 @@ public class TerrainFactory {
     // Add some grass and rocks
     fillTilesAtRandom(layer, MAP_SIZE, grassTuftTile, TUFT_TILE_COUNT);
     fillTilesAtRandom(layer, MAP_SIZE, rockTile, ROCK_TILE_COUNT);
+
+    tiledMap.getLayers().add(layer);
+    return tiledMap;
+  }
+
+  /**
+   * Will be used to create a TiledMap for the SpaceGame.
+   *
+   * Will probably need some variables from our planned MapClass
+   *
+   * @return
+   */
+  private TiledMap createSpaceGameTiles(GridPoint2 tileSize) {
+    TiledMap tiledMap = new TiledMap(); // MapClass will likely be an extension of TiledMap
+    // MapClass will either instantiate the grid, or the grid is set after instantiation
+
+    // layer is used for rendering?
+    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
+
+    // for loop to set tiles in layer, either in different function
+    /**
+     * for (int x = 0; x < MAP_SIZE.x; x++) {           // can use MapClass constants instead of MAP_SIZE, but they should be the same
+     *       for (int y = 0; y < MAP_SIZE.y; y++) {
+     *         Cell cell = new Cell();
+     *         cell.setTile(tile);                      // The tile will either need to be grabbed from the MapClass, or generated from data in the MapClass
+     *         layer.setCell(x, y, cell);
+     *       }
+     *     }
+     */
 
     tiledMap.getLayers().add(layer);
     return tiledMap;
