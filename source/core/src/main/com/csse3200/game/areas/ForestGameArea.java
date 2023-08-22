@@ -8,6 +8,7 @@ import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
+import com.csse3200.game.entities.factories.PlantFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
@@ -37,7 +38,10 @@ public class ForestGameArea extends GameArea {
     "images/hex_grass_3.png",
     "images/iso_grass_1.png",
     "images/iso_grass_2.png",
-    "images/iso_grass_3.png"
+    "images/iso_grass_3.png",
+    "images/test_cactus.png",
+    "images/corn_temp.png",
+    "images/aloe_temp.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
@@ -49,6 +53,10 @@ public class ForestGameArea extends GameArea {
   private final TerrainFactory terrainFactory;
 
   private Entity player;
+
+  private Entity cosmicCorn;
+  private Entity aloeVera;
+
 
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
@@ -70,6 +78,9 @@ public class ForestGameArea extends GameArea {
     spawnTerrain();
     spawnTrees();
     player = spawnPlayer();
+    cosmicCorn = spawnCornPlant(15, 15);
+    aloeVera = spawnAloePlant(17,15);
+
     spawnGhosts();
     spawnGhostKing();
 
@@ -127,6 +138,17 @@ public class ForestGameArea extends GameArea {
     Entity newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     return newPlayer;
+  }
+
+  private Entity spawnCornPlant(int x, int y) {
+    Entity newPlant = PlantFactory.createCosmicCob();
+    spawnEntityAt(newPlant, new GridPoint2(x, y), true, true);
+    return newPlant;
+  }
+  private Entity spawnAloePlant(int x, int y) {
+    Entity newPlant = PlantFactory.createAloeVera();
+    spawnEntityAt(newPlant, new GridPoint2(x, y), true, true);
+    return newPlant;
   }
 
   private void spawnGhosts() {
