@@ -9,6 +9,7 @@ import com.csse3200.game.components.npc.ChickenAnimationController;
 import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.tasks.ChaseTask;
+import com.csse3200.game.components.tasks.RunAwayTask;
 import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.BaseEntityConfig;
@@ -94,7 +95,7 @@ public class NPCFactory {
    * Creates a chicken entity TODO: abstract base animal entity? , also put constants in config or json file
    * @return chicken entity
    */
-  public static Entity createChicken() {
+  public static Entity createChicken(Entity target) {
     AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/animals/chicken.atlas", TextureAtlas.class));
     animator.addAnimation("idle_left", Float.MAX_VALUE);
@@ -105,7 +106,8 @@ public class NPCFactory {
     animator.addAnimation("run_right", 0.1f, Animation.PlayMode.LOOP);
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
-            .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+            .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
+            .addTask(new RunAwayTask(target, 10, 2f, 4f));
 
     Entity chicken = new Entity()
             .addComponent(new PhysicsComponent())
