@@ -128,11 +128,11 @@ public class TerrainFactory {
   /**
    * Will be used to create a TiledMap for the SpaceGame.
    *
-   * Will probably need some variables from our planned MapClass
+   * Will probably need some variables from our planned MapClass (Unless if this instantiates the MapClass)
    *
    * @return
    */
-  private TiledMap createSpaceGameTiles(GridPoint2 tileSize) {
+  private TiledMap createSpaceGameTiles(GridPoint2 tileSize) { // Will probably need more variables than this
     TiledMap tiledMap = new TiledMap(); // MapClass will likely be an extension of TiledMap
     // MapClass will either instantiate the grid, or the grid is set after instantiation
 
