@@ -35,6 +35,21 @@
     "name": "Atomic Algae",
     "type": "Production",
     "oxygenRate": 10,
-    "waterConsumption": 10
+    "waterConsumption": 10,
+    "healingRadius": 100
+  },
+  "atropaBelladonna": {
+    "health": 200,
+    "name": "Deadly Nightshade",
+    "type": "Deadly",
+    "description": "Grows deadly poisonous berries",
+    "damageRadius": 7
+  },
+  "nicotianaTabacum": {
+    "health": 20,
+    "name": "Tobacco",
+    "type": "Deadly",
+    "description": "Toxic addicted plant leaves",
+    "damageRadius": 10
   }
 }
