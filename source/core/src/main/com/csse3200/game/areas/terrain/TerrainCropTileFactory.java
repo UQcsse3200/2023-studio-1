@@ -39,7 +39,7 @@ public class TerrainCropTileFactory{
    */
 
   public static Entity CreateTerrainEntity(Vector2 position) {
-    logger.debug("Creating crop tile at position {}}", position);
+    logger.debug("Creating crop tile at position {}", position);
 
     Entity tile = new Entity()
         .addComponent(new ColliderComponent())
