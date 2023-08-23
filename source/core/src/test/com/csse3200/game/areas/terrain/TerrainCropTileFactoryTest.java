@@ -33,7 +33,7 @@ class TerrainCropTileFactoryTest {
 
   @Test
   public void cropTileComponentDetected() {
-    tile = TerrainCropTileFactory.CreateTerrainEntity(0,0);
+    tile = TerrainCropTileFactory.createTerrainEntity(0,0);
     CropTileComponent cropTileComponent = tile.getComponent(CropTileComponent.class);
     assertNotNull(cropTileComponent);
   }
@@ -41,7 +41,7 @@ class TerrainCropTileFactoryTest {
   @Test
   public void cropTilePositionCorrect() {
     Vector2 position = new Vector2(0,0);
-    tile = TerrainCropTileFactory.CreateTerrainEntity(position);
+    tile = TerrainCropTileFactory.createTerrainEntity(position);
     assertEquals(position, tile.getPosition());
   }
 }

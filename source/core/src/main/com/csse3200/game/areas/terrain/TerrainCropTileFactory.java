@@ -26,9 +26,9 @@ public class TerrainCropTileFactory{
    * @param y y-position of the entity to be created
    * @return created crop tile entity
    */
-  public static Entity CreateTerrainEntity(float x, float y) {
+  public static Entity createTerrainEntity(float x, float y) {
     Vector2 position = new Vector2(x, y);
-    return CreateTerrainEntity(position);
+    return createTerrainEntity(position);
   }
 
   /**
@@ -38,7 +38,7 @@ public class TerrainCropTileFactory{
    * @return created crop tile entity
    */
 
-  public static Entity CreateTerrainEntity(Vector2 position) {
+  public static Entity createTerrainEntity(Vector2 position) {
     logger.debug("Creating crop tile at position {}", position);
 
     Entity tile = new Entity()
