@@ -76,6 +76,10 @@ public class PlayerFactory {
     animator.addAnimation("walk_right", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("walk_down", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("walk_up", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("run_left", 0.05f, Animation.PlayMode.LOOP);
+    animator.addAnimation("run_right", 0.05f, Animation.PlayMode.LOOP);
+    animator.addAnimation("run_down", 0.05f, Animation.PlayMode.LOOP);
+    animator.addAnimation("run_up", 0.05f, Animation.PlayMode.LOOP);
     animator.addAnimation("default", 0.1f, Animation.PlayMode.LOOP);
 
     return animator;
