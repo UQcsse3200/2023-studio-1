@@ -28,9 +28,10 @@ public class Inventory extends Component {
   }
 
   /**
-   * Toggles between the terminal being open and closed.
+   * Toggles between the inventory being open and closed.
    */
   public void toggleIsOpen() {
+    logger.debug("Toggling Inventory");
     if (isOpen) {
       this.setClosed();
     } else {
