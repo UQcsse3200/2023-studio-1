@@ -22,10 +22,10 @@
     "healingRadius": 100,
     "waterConsumption": 10
   },
-  "VenusFlyTrap": {
+  "venusFlyTrap": {
     "health": 100,
     "name": "Space Snapper",
-    "type": "Defence",
+    "type": "DEFENCE",
     "description" : "I eat the fauna!",
     "effectRadius": 1,
     "waterConsumption": 10
@@ -33,7 +33,7 @@
   "waterWeed": {
     "health": 10,
     "name": "Atomic Algae",
-    "type": "Production",
+    "type": "PRODUCTION",
     "oxygenRate": 10,
     "waterConsumption": 10,
     "healingRadius": 100
@@ -41,15 +41,22 @@
   "atropaBelladonna": {
     "health": 200,
     "name": "Deadly Nightshade",
-    "type": "Deadly",
+    "type": "DEADLY",
     "description": "Grows deadly poisonous berries",
     "damageRadius": 7
   },
   "nicotianaTabacum": {
     "health": 20,
     "name": "Tobacco",
-    "type": "Deadly",
+    "type": "DEADLY",
     "description": "Toxic addicted plant leaves",
     "damageRadius": 10
+  },
+  "sunFlower": {
+    "health" : 10,
+    "name": "Horticultural Heater",
+    "type": "PRODUCTION",
+    "description": "Warms up the nearby area",
+    "effectRadius": 5
   }
 }
