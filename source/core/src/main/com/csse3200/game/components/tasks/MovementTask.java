@@ -58,7 +58,7 @@ public class MovementTask extends DefaultTask {
       status = Status.FINISHED;
       logger.debug("Finished moving to {}", target);
     } else {
-      // If direction changes during movement task, animation must be re-triggered with new direction. TODO: writetest
+      // If direction changes during movement task, animation must be re-triggered with new direction.
       if (!Objects.equals(currentDirection, getDirection())) {
         this.currentDirection = getDirection();
         this.owner.getEntity().getEvents().trigger("directionChange", currentDirection);
