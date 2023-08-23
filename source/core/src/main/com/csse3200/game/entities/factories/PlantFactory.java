@@ -1,10 +1,7 @@
 package com.csse3200.game.entities.factories;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.components.plants.PlantComponent;
-import com.csse3200.game.entities.configs.plants.FoodPlantConfig;
-import com.csse3200.game.entities.configs.plants.HealthPlantConfig;
-import com.csse3200.game.entities.configs.plants.PlantConfigs;
-import com.csse3200.game.entities.configs.plants.RepairPlantConfig;
+import com.csse3200.game.entities.configs.plants.*;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
@@ -91,6 +88,25 @@ public class PlantFactory {
                 .addComponent(new TextureRenderComponent("images/test_cactus.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.healingRadius));
+
+        plant.getComponent(TextureRenderComponent.class).scaleEntity();
+        plant.scaleHeight(1f);
+        PhysicsUtils.setScaledCollider(plant, 0.5f, 0.2f);
+        return plant;
+    }
+
+    /**
+     * Creates a AtropaBelladonna entity that is a deadly type plant.
+     *
+     * @return entity
+     */
+
+    public static Entity createAtropaBelladonna() {
+        DeadlyPlantConfig config = stats.atropaBelladonna;
+
+        Entity plant = createBasePlant()
+                .addComponent(new PlantComponent(config.health, config.name, config.type,
+                        config.description, config.damageRadius));
 
         plant.getComponent(TextureRenderComponent.class).scaleEntity();
         plant.scaleHeight(1f);
