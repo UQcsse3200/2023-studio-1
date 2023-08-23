@@ -18,5 +18,19 @@
     "type": "REPAIR",
     "description": "Repairs plants within its healing radius",
     "healingRadius": 100
+  },
+  "atropaBelladonna": {
+    "health": 200,
+    "name": "Deadly Nightshade",
+    "type": "Deadly",
+    "description": "Grows deadly poisonous berries",
+    "damageRadius": 7
+  },
+  "nicotianaTabacum": {
+    "health": 20,
+    "name": "Tobacco",
+    "type": "Deadly",
+    "description": "Toxic addicted plant leaves",
+    "damageRadius": 10
   }
 }
