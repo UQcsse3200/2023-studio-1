@@ -77,6 +77,7 @@ public class PlayerFactory {
     animator.addAnimation("walk_down", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("walk_up", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("default", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("interact", 5f, Animation.PlayMode.NORMAL);
 
     return animator;
   }

@@ -17,6 +17,7 @@ public class PlayerAnimationController extends Component {
         animator = this.entity.getComponent(AnimationRenderComponent.class);
         entity.getEvents().addListener("animationWalkStart", this::animationWalkStart);
         entity.getEvents().addListener("animationWalkStop", this::animationWalkStop);
+        entity.getEvents().addListener("animationInteract", this::animationInteract);
 
         animator.startAnimation("default");
     }
@@ -35,5 +36,12 @@ public class PlayerAnimationController extends Component {
      */
     void animationWalkStop() {
         animator.startAnimation("default");
+    }
+
+    /**
+     * Play the interaction animation
+     */
+    void animationInteract() {
+        animator.startAnimation("interact");
     }
 }

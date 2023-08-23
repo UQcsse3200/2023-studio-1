@@ -46,6 +46,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         triggerWalkEvent();
         triggerAnimationWalkStartEvent("right");
         return true;
+      case Keys.E: // Potentially also interact button later.
+        entity.getEvents().trigger("animationInteract");
+        return true;
       case Keys.SPACE:
         entity.getEvents().trigger("attack");
         return true;
