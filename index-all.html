@@ -312,6 +312,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Create the game area in the world.</div>
 </dd>
+<dt><a href="com/csse3200/game/areas/terrain/CropTileComponent.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/CropTileComponent.html" title="class in com.csse3200.game.areas.terrain">CropTileComponent</a></dt>
+<dd>
+<div class="block">Adds player-triggered events listeners to the entity.</div>
+</dd>
 <dt><a href="com/csse3200/game/components/Component.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/Component.html" title="class in com.csse3200.game.components">Component</a></dt>
 <dd>
 <div class="block">Called when the entity is created and registered.</div>
@@ -436,6 +440,14 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Create a terrain of the given type, using the orientation of the factory.</div>
 </dd>
+<dt><a href="com/csse3200/game/areas/terrain/TerrainCropTileFactory.html#createTerrainEntity(float,float)" class="member-name-link">createTerrainEntity(float, float)</a> - Static method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainCropTileFactory.html" title="class in com.csse3200.game.areas.terrain">TerrainCropTileFactory</a></dt>
+<dd>
+<div class="block">Creates a crop tile entity</div>
+</dd>
+<dt><a href="com/csse3200/game/areas/terrain/TerrainCropTileFactory.html#createTerrainEntity(com.badlogic.gdx.math.Vector2)" class="member-name-link">createTerrainEntity(Vector2)</a> - Static method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainCropTileFactory.html" title="class in com.csse3200.game.areas.terrain">TerrainCropTileFactory</a></dt>
+<dd>
+<div class="block">Creates a crop tile entity</div>
+</dd>
 <dt><a href="com/csse3200/game/entities/factories/ObstacleFactory.html#createTree()" class="member-name-link">createTree()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ObstacleFactory.html" title="class in com.csse3200.game.entities.factories">ObstacleFactory</a></dt>
 <dd>
 <div class="block">Creates a tree entity.</div>
@@ -444,6 +456,21 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Creates an invisible physics wall.</div>
 </dd>
+<dt><a href="com/csse3200/game/areas/terrain/CropTileComponent.html" class="type-name-link" title="class in com.csse3200.game.areas.terrain">CropTileComponent</a> - Class in <a href="com/csse3200/game/areas/terrain/package-summary.html">com.csse3200.game.areas.terrain</a></dt>
+<dd>
+<div class="block">Component which stores information about plots of land on which crops and plants can grow.</div>
+</dd>
+<dt><a href="com/csse3200/game/areas/terrain/CropTileComponent.html#%3Cinit%3E(float,float)" class="member-name-link">CropTileComponent(float, float)</a> - Constructor for class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/CropTileComponent.html" title="class in com.csse3200.game.areas.terrain">CropTileComponent</a></dt>
+<dd>
+<div class="block">Creates a new crop tile component, with a specified initial water content, and an initial soil quality (higher values indicate higher soil
+ quality, meaning better growth rate).</div>
+</dd>
+<dt><a href="com/csse3200/game/entities/configs/CropTileConfig.html" class="type-name-link" title="class in com.csse3200.game.entities.configs">CropTileConfig</a> - Class in <a href="com/csse3200/game/entities/configs/package-summary.html">com.csse3200.game.entities.configs</a></dt>
+<dd>
+<div class="block">Defines the configuration for a crop tile entity.</div>
+</dd>
+<dt><a href="com/csse3200/game/entities/configs/CropTileConfig.html#%3Cinit%3E()" class="member-name-link">CropTileConfig()</a> - Constructor for class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/CropTileConfig.html" title="class in com.csse3200.game.entities.configs">CropTileConfig</a></dt>
+<dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:D">D</h2>
 <dl class="index">
@@ -810,6 +837,16 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/ComponentType.html#getFrom(java.lang.Class)" class="member-name-link">getFrom(Class&lt;? extends Component&gt;)</a> - Static method in class com.csse3200.game.components.<a href="com/csse3200/game/components/ComponentType.html" title="class in com.csse3200.game.components">ComponentType</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/areas/terrain/CropTileComponent.html#getGrowthRate()" class="member-name-link">getGrowthRate()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/CropTileComponent.html" title="class in com.csse3200.game.areas.terrain">CropTileComponent</a></dt>
+<dd>
+<div class="block">Gets the growth rate of the tile, assuming a water content value of 1 yields the maximum
+ growth rate.</div>
+</dd>
+<dt><a href="com/csse3200/game/areas/terrain/CropTileComponent.html#getGrowthRate(float)" class="member-name-link">getGrowthRate(float)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/CropTileComponent.html" title="class in com.csse3200.game.areas.terrain">CropTileComponent</a></dt>
+<dd>
+<div class="block">Gets the growth rate of the tile, specifying the water content of the tile which yields the
+ maximum growth rate.</div>
+</dd>
 <dt><a href="com/csse3200/game/components/CombatStatsComponent.html#getHealth()" class="member-name-link">getHealth()</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/CombatStatsComponent.html" title="class in com.csse3200.game.components">CombatStatsComponent</a></dt>
 <dd>
 <div class="block">Returns the entity's health.</div>
@@ -1028,6 +1065,10 @@ loadScripts(document, 'script');</script>
 <h2 class="title" id="I:I">I</h2>
 <dl class="index">
 <dt><a href="com/csse3200/game/ai/tasks/Task.Status.html#INACTIVE" class="member-name-link">INACTIVE</a> - Enum constant in enum class com.csse3200.game.ai.tasks.<a href="com/csse3200/game/ai/tasks/Task.Status.html" title="enum class in com.csse3200.game.ai.tasks">Task.Status</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/entities/configs/CropTileConfig.html#initialSoilQuality" class="member-name-link">initialSoilQuality</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/CropTileConfig.html" title="class in com.csse3200.game.entities.configs">CropTileConfig</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/entities/configs/CropTileConfig.html#initialWaterContent" class="member-name-link">initialWaterContent</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/CropTileConfig.html" title="class in com.csse3200.game.entities.configs">CropTileConfig</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/input/InputComponent.html" class="type-name-link" title="class in com.csse3200.game.input">InputComponent</a> - Class in <a href="com/csse3200/game/input/package-summary.html">com.csse3200.game.input</a></dt>
 <dd>
@@ -2006,6 +2047,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainComponent.TerrainOrientation.html" class="type-name-link" title="enum class in com.csse3200.game.areas.terrain">TerrainComponent.TerrainOrientation</a> - Enum Class in <a href="com/csse3200/game/areas/terrain/package-summary.html">com.csse3200.game.areas.terrain</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/areas/terrain/TerrainCropTileFactory.html" class="type-name-link" title="class in com.csse3200.game.areas.terrain">TerrainCropTileFactory</a> - Class in <a href="com/csse3200/game/areas/terrain/package-summary.html">com.csse3200.game.areas.terrain</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/areas/terrain/TerrainCropTileFactory.html#%3Cinit%3E()" class="member-name-link">TerrainCropTileFactory()</a> - Constructor for class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainCropTileFactory.html" title="class in com.csse3200.game.areas.terrain">TerrainCropTileFactory</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainFactory.html" class="type-name-link" title="class in com.csse3200.game.areas.terrain">TerrainFactory</a> - Class in <a href="com/csse3200/game/areas/terrain/package-summary.html">com.csse3200.game.areas.terrain</a></dt>
 <dd>
 <div class="block">Factory for creating game terrains.</div>
@@ -2189,6 +2234,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/ai/tasks/Task.html#update()" class="member-name-link">update()</a> - Method in interface com.csse3200.game.ai.tasks.<a href="com/csse3200/game/ai/tasks/Task.html" title="interface in com.csse3200.game.ai.tasks">Task</a></dt>
 <dd>
 <div class="block">Run one frame of the task.</div>
+</dd>
+<dt><a href="com/csse3200/game/areas/terrain/CropTileComponent.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/CropTileComponent.html" title="class in com.csse3200.game.areas.terrain">CropTileComponent</a></dt>
+<dd>
+<div class="block">Decreases water content in the tile by a constant amount.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/CameraComponent.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/CameraComponent.html" title="class in com.csse3200.game.components">CameraComponent</a></dt>
 <dd>&nbsp;</dd>
