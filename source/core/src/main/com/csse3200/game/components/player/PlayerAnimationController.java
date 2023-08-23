@@ -16,6 +16,7 @@ public class PlayerAnimationController extends Component {
 
         animator = this.entity.getComponent(AnimationRenderComponent.class);
         entity.getEvents().addListener("animationWalkStart", this::animationWalkStart);
+        entity.getEvents().addListener("animationRunStart", this::animationRunStart);
         entity.getEvents().addListener("animationWalkStop", this::animationWalkStop);
 
         animator.startAnimation("default");
@@ -27,7 +28,22 @@ public class PlayerAnimationController extends Component {
      * @param direction "left", "right", "down" or "up"
      */
     void animationWalkStart(String direction) {
-        animator.startAnimation(String.format("walk_%s", direction));
+        String animation = String.format("walk_%s", direction);
+        if (!animator.getCurrentAnimation().equals(animation)) {
+            animator.startAnimation(animation);
+        }
+    }
+
+    /**
+     * Starts the player running animation in the given direction.
+     *
+     * @param direction "left", "right", "down" or "up"
+     */
+    void animationRunStart(String direction) {
+        String animation = String.format("run_%s", direction);
+        if (!animator.getCurrentAnimation().equals(animation)) {
+            animator.startAnimation(animation);
+        }
     }
 
     /**

@@ -35,6 +35,32 @@ public class PlayerActions extends Component {
     if (moving) {
       updateSpeed();
     }
+    updateAnimation();
+  }
+
+  /**
+   * Plays the correct animation for the type of player movement.
+   */
+  private void updateAnimation() {
+    if (moveDirection.epsilonEquals(Vector2.Zero)) {
+      // player is not moving
+      entity.getEvents().trigger("animationWalkStop");
+      return;
+    }
+
+    // player is moving
+    String animationName = String.format("animation%sStart", running ? "Run" : "Walk");
+    float direction = moveDirection.angleDeg();
+
+    if (direction < 45) {
+      entity.getEvents().trigger(animationName, "right");
+    } else if (direction < 135) {
+      entity.getEvents().trigger(animationName, "up");
+    } else if (direction < 225) {
+      entity.getEvents().trigger(animationName, "left");
+    } else if (direction < 315) {
+      entity.getEvents().trigger(animationName, "down");
+    }
   }
 
   private void updateSpeed() {
