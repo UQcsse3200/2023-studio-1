@@ -8,5 +8,5 @@ public class PlantConfigs {
     public HealthPlantConfig aloeVera = new HealthPlantConfig();
     public RepairPlantConfig hammerPlant = new RepairPlantConfig();
     public DeadlyPlantConfig atropaBelladonna = new DeadlyPlantConfig();
-
+    public DeadlyPlantConfig nicotianaTabacum = new DeadlyPlantConfig();
 }
