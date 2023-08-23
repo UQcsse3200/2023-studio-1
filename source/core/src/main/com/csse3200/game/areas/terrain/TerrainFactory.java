@@ -21,7 +21,10 @@ import com.csse3200.game.services.ServiceLocator;
 public class TerrainFactory {
   private static final GridPoint2 MAP_SIZE = new GridPoint2(30, 30);
   private static final int TUFT_TILE_COUNT = 30;
-  private static final int ROCK_TILE_COUNT = 30;
+  private static final int GRASS1_TILE_COUNT = 30;
+  private static final int GRASS2_TILE_COUNT = 30;
+  private static final int GRASS3_TILE_COUNT = 30;
+
 
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;
@@ -106,21 +109,35 @@ public class TerrainFactory {
     }
   }
 
+  /**
+   * Get the Cell in TiledMap, use for cell interaction
+   * such as get and set tile, rotating Cell
+   * @param tiledMap the tile map that have the Cell
+   * @param x x coordinate (0 -> MAP_SIZE.x -1)
+   * @param y y coordinate (0 -> MAP_SIZE.y -1)
+   * @return the Cell
+   */
+  private Cell getCell(TiledMap tiledMap , int x, int y) {
+    return ((TiledMapTileLayer)tiledMap.getLayers().get(0)).getCell(0, 2);
+  }
+
+
   private TiledMap createForestDemoTiles(
-      GridPoint2 tileSize, TextureRegion grass, TextureRegion grassTuft, TextureRegion rocks) {
+      GridPoint2 tileSize, TextureRegion grass1, TextureRegion grass2, TextureRegion grass3) {
     TiledMap tiledMap = new TiledMap();
-    TerrainTile grassTile = new TerrainTile(grass, TerrainTile.TerrainCategory.GRASS); // TerrainTile.TerrainCategory.GRASS does not change anything currently
-    TerrainTile grassTuftTile = new TerrainTile(grassTuft, TerrainTile.TerrainCategory.GRASS); // TerrainTile.TerrainCategory.GRASS does not change anything currently
-    TerrainTile rockTile = new TerrainTile(rocks, TerrainTile.TerrainCategory.GRASS); // TerrainTile.TerrainCategory.GRASS does not change anything currently
+    TerrainTile grassTile1 = new TerrainTile(grass1, TerrainTile.TerrainCategory.GRASS); // TerrainTile.TerrainCategory.GRASS does not change anything currently
+    TerrainTile grassTile2 = new TerrainTile(grass2, TerrainTile.TerrainCategory.GRASS); // TerrainTile.TerrainCategory.GRASS does not change anything currently
+    //TerrainTile Desert = new TerrainTile()
+    TerrainTile grassTile3 = new TerrainTile(grass3, TerrainTile.TerrainCategory.GRASS); // TerrainTile.TerrainCategory.GRASS does not change anything currently
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
 
     // Create base grass
-    fillTiles(layer, MAP_SIZE, grassTile);
+    fillTiles(layer, MAP_SIZE, grassTile1);
 
     // Add some grass and rocks
-    fillTilesAtRandom(layer, MAP_SIZE, grassTuftTile, TUFT_TILE_COUNT);
-    fillTilesAtRandom(layer, MAP_SIZE, rockTile, ROCK_TILE_COUNT);
+    fillTile(layer, MAP_SIZE, grassTile2, GRASS2_TILE_COUNT);
 
+    fillTilesAtRandom(layer, MAP_SIZE, grassTile3, GRASS3_TILE_COUNT);
     tiledMap.getLayers().add(layer);
     return tiledMap;
   }
@@ -166,6 +183,28 @@ public class TerrainFactory {
     }
   }
 
+  private static void fillTile(
+          TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile, int amount) {
+    GridPoint2 min = new GridPoint2(0, 0);
+    GridPoint2 max = new GridPoint2(mapSize.x - 1, mapSize.y - 1);
+
+    for (int i = 0; i < mapSize.x; i++) {
+        GridPoint2 tilePos = new GridPoint2(i, 4);
+        Cell cell = layer.getCell(tilePos.x, tilePos.y);
+        cell.setTile(tile);
+    }
+    for (int i = 0; i < mapSize.x; i++) {
+      GridPoint2 tilePos = new GridPoint2(i, mapSize.y -5);
+      Cell cell = layer.getCell(tilePos.x, tilePos.y);
+      cell.setTile(tile);
+    }
+    for (int i = 0; i < mapSize.x; i++) {
+      GridPoint2 tilePos = new GridPoint2(i, (mapSize.y /2));
+      Cell cell = layer.getCell(tilePos.x, tilePos.y);
+      cell.setTile(tile);
+    }
+  }
+
   private static void fillTiles(TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile) {
     for (int x = 0; x < mapSize.x; x++) {
       for (int y = 0; y < mapSize.y; y++) {
@@ -184,6 +223,8 @@ public class TerrainFactory {
   public enum TerrainType {
     FOREST_DEMO,
     FOREST_DEMO_ISO,
-    FOREST_DEMO_HEX
+    FOREST_DEMO_HEX,
+
+    DESERT_DEMO
   }
 }
