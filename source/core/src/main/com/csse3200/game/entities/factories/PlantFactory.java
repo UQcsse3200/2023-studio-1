@@ -105,6 +105,7 @@ public class PlantFactory {
         DeadlyPlantConfig config = stats.atropaBelladonna;
 
         Entity plant = createBasePlant()
+                .addComponent(new TextureRenderComponent("images/belladonna.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.damageRadius));
 
@@ -123,6 +124,7 @@ public class PlantFactory {
         DeadlyPlantConfig config = stats.nicotianaTabacum;
 
         Entity plant = createBasePlant()
+                .addComponent(new TextureRenderComponent("images/tobacco.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.damageRadius));
 
