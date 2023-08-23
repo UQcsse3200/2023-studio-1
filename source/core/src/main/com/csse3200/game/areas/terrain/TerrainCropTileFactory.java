@@ -45,7 +45,7 @@ public class TerrainCropTileFactory{
         .addComponent(new ColliderComponent())
         .addComponent(new PhysicsComponent())
         // TODO Change Sprite used in RenderComponent - waiting on #27
-        .addComponent(new TextureRenderComponent("images/tool_shovel.png"))
+        .addComponent(new TextureRenderComponent("images/cropTile.png"))
         .addComponent(new CropTileComponent(1,1));
         // TODO Set CropTileComponent params to values in  CropTileConfig class
 
