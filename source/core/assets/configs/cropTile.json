@@ -1,1 +1,4 @@
-{}
+{
+  "initialSoilQuality": 1,
+  "initialWaterContent": 1
+}
