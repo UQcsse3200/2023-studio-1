@@ -44,11 +44,8 @@ public class TerrainCropTileFactory{
     Entity tile = new Entity()
         .addComponent(new ColliderComponent())
         .addComponent(new PhysicsComponent())
-        // TODO Change Sprite used in RenderComponent - waiting on #27
         .addComponent(new TextureRenderComponent("images/cropTile.png"))
         .addComponent(new CropTileComponent(stats.initialWaterContent, stats.initialSoilQuality));
-        // TODO Set CropTileComponent params to values in  CropTileConfig class
-
 
 
     // Sets ColliderComponent to sensor and not physics collider
