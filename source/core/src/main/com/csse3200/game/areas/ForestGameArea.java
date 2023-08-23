@@ -44,8 +44,12 @@ public class ForestGameArea extends GameArea {
     "images/tool_hoe.png",
     "images/tool_scythe.png",
     "images/tool_watering_can.png",
+
     "images/animals/chicken.png",
-    "images/animals/cow.png"
+    "images/animals/cow.png",
+
+    "images/cropTile.png"
+
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
@@ -80,7 +84,7 @@ public class ForestGameArea extends GameArea {
     spawnTrees();
     player = spawnPlayer();
 
-    // TODO: temp spawn mechanics
+
     spawnChickens();
     spawnCows();
 
@@ -163,24 +167,24 @@ public class ForestGameArea extends GameArea {
     return newTool;
   }
 
-  // TODO: Temp spawn mechanics
+
   private void spawnChickens() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 4; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity chicken = NPCFactory.createChicken(player);
       spawnEntityAt(chicken, randomPos, true, true);
     }
   }
 
-  // TODO: Temp spawn mechanics
+
   private void spawnCows() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 2; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity cow = NPCFactory.createCow();
       spawnEntityAt(cow, randomPos, true, true);
