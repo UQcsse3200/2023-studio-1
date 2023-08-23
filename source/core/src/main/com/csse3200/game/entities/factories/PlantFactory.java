@@ -69,7 +69,7 @@ public class PlantFactory {
         HealthPlantConfig config = stats.aloeVera;
 
         Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/test_cactus.png"))
+                .addComponent(new TextureRenderComponent("images/aloe_temp.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description));
 
