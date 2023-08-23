@@ -3,6 +3,7 @@ package com.csse3200.game.components.player;
 import com.csse3200.game.extensions.GameExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +23,8 @@ class InventoryComponentTest {
   @BeforeEach
   void setUp() {
     List<Item> items = new ArrayList<>();
-    items.add(new Item("Sword", 1, 1));
-    items.add(new Item("Shield", 2, 1));
+    items.add(new Item("Sword", "1", 1));
+    items.add(new Item("Shield", "2", 1));
     inventory = new InventoryComponent(items);
   }
 
@@ -41,8 +42,8 @@ class InventoryComponentTest {
    */
   @Test
   void testHasItem() {
-    assertTrue(inventory.hasItem(new Item("Sword", 1, 1)));
-    assertFalse(inventory.hasItem(new Item("Ring", 3, 1)));
+    assertTrue(inventory.hasItem(new Item("Sword", "1", 1)));
+    assertFalse(inventory.hasItem(new Item("Ring", "3", 1)));
   }
 
   /**
@@ -50,8 +51,8 @@ class InventoryComponentTest {
    */
   @Test
   void testAddItem() {
-    assertTrue(inventory.addItem(new Item("Ring", 3, 1)));
-    assertTrue(inventory.hasItem(new Item("Ring", 3, 1)));
+    assertTrue(inventory.addItem(new Item("Ring", "3", 1)));
+    assertTrue(inventory.hasItem(new Item("Ring", "3", 1)));
   }
 
   /**
@@ -59,8 +60,8 @@ class InventoryComponentTest {
    */
   @Test
   void testRemoveItem() {
-    assertTrue(inventory.removeItem(new Item("Sword", 1, 1)));
-    assertFalse(inventory.hasItem(new Item("Sword", 1, 1)));
+    assertTrue(inventory.removeItem(new Item("Sword", "1", 1)));
+    assertFalse(inventory.hasItem(new Item("Sword", "1", 1)));
   }
 
   /**
@@ -68,7 +69,8 @@ class InventoryComponentTest {
    */
   @Test
   void testUpdateItemCount() {
-    assertTrue(inventory.updateItemCount(new Item("Sword", 1, 1), 2));
+    System.out.println(inventory.updateItemCount(new Item("Sword", "1", 1), 2))
+    assertTrue(inventory.updateItemCount(new Item("Sword", "1", 1), 2));
     assertEquals(2, inventory.getInventory().get(0).getItemCount());
   }
 }
