@@ -7,6 +7,6 @@ public class PlantConfigs {
     public FoodPlantConfig cosmicCob = new FoodPlantConfig();
     public HealthPlantConfig aloeVera = new HealthPlantConfig();
     public RepairPlantConfig hammerPlant = new RepairPlantConfig();
-
+    public DeadlyPlantConfig atropaBelladonna = new DeadlyPlantConfig();
 
 }
