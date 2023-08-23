@@ -46,7 +46,7 @@ public class TerrainCropTileFactory{
         .addComponent(new PhysicsComponent())
         // TODO Change Sprite used in RenderComponent - waiting on #27
         .addComponent(new TextureRenderComponent("images/cropTile.png"))
-        .addComponent(new CropTileComponent(1,1));
+        .addComponent(new CropTileComponent(stats.initialWaterContent, stats.initialSoilQuality));
         // TODO Set CropTileComponent params to values in  CropTileConfig class
 
 
