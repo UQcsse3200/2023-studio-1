@@ -133,4 +133,24 @@ public class PlantFactory {
         PhysicsUtils.setScaledCollider(plant, 0.5f, 0.2f);
         return plant;
     }
+
+
+    /**
+     * Creates an venusFlyTrap entity that is a defence type plant.
+     *
+     * @return entity
+     */
+    public static Entity createVenusFlyTrap() {
+        DefencePlantConfig config = stats.venusFlyTrap;
+
+        Entity plant = createBasePlant()
+                .addComponent(new TextureRenderComponent("images/test_cactus.png"))
+                .addComponent(new PlantComponent(config.health, config.name, config.type,
+                        config.description, config.effectRadius));
+
+        plant.getComponent(TextureRenderComponent.class).scaleEntity();
+        plant.scaleHeight(1f);
+        PhysicsUtils.setScaledCollider(plant, 0.5f, 0.2f);
+        return plant;
+    }
 }

@@ -12,6 +12,7 @@ public class PlantComponent extends Component {
     private int healingRadius;          // Property of repair plants
 
     private int damageRadius;           // Property of deadly plants
+    private int effectRadius;           // Radius defence plant covers
 
     /**
      * Constructor used for plant types that have no extra properties.
@@ -44,9 +45,9 @@ public class PlantComponent extends Component {
 
         if (this.plantType.equals("REPAIR")) {
             this.healingRadius = number;
-        }
-
-        if (this.plantType.equals("DEADLY")) {
+        } else if (this.plantType.equals("DEFENCE")) {
+            this.effectRadius = number;
+        } else if (this.plantType.equals("DEADLY")) {
             this.damageRadius = number;
         }
     }
@@ -103,5 +104,14 @@ public class PlantComponent extends Component {
      */
     public int getDamageRadius() {
         return this.damageRadius;
+    }
+
+    /**
+     * Returns the radius that a defence plant defends
+     *
+     * @return defence radius of defensive plants
+     */
+    public int getEffectRadius() {
+        return this.effectRadius;
     }
 }

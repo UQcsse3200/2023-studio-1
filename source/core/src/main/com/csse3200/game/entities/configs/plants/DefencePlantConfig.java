@@ -5,4 +5,6 @@ package com.csse3200.game.entities.configs.plants;
  * into the Plant Factory.
  */
 public class DefencePlantConfig extends BasePlantConfig {
+    public int effectRadius = 1;
+
 }
