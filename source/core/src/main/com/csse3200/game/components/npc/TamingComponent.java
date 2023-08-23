@@ -5,7 +5,7 @@ import com.csse3200.game.entities.Entity;
 
 /**
  * This class represents an animals' ability to be tamed by the user.
- * TODO: Discuss ideas on how animals can be fed. Also how will the animls get this taming component.
+ *
  */
 
 public class TamingComponent extends Component {

@@ -145,7 +145,7 @@ public class NPCFactory {
             .addComponent(animator)
             .addComponent(new AnimalAnimationController());
 
-//    cow.scaleHeight(1.2f);//TODO make this bigger and make the hitbox grow accordingly
+//    cow.scaleHeight(1.2f);
     return cow;
   }
 
@@ -154,7 +154,7 @@ public class NPCFactory {
    *
    * @return entity
    */
-  //TODO: flesh this out. Need to add certain components in a certain order (i think).
+  
   private static Entity createBaseAnimal() {
     Entity animal = new Entity()
             .addComponent(new PhysicsComponent())
