@@ -21,7 +21,7 @@ import com.csse3200.game.services.ServiceLocator;
 public class TerrainFactory {
   private static final GridPoint2 MAP_SIZE = new GridPoint2(30, 30);
   private static final int TUFT_TILE_COUNT = 30;
-  private static final int ROCK_TILE_COUNT = 30;
+  private static final int ROCK_TILE_COUNT = 10;
 
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;
