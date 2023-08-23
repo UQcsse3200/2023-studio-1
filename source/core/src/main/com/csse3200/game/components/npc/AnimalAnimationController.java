@@ -7,9 +7,8 @@ import com.csse3200.game.utils.DirectionUtils;
 /**
  * This class listens to events relevant to a chicken entity's state and plays the animation when one
  * of the events is triggered.
- * TODO: figure out if we need only AnimalAnimationController instead of each animal
  */
-public class ChickenAnimationController extends Component {
+public class AnimalAnimationController extends Component {
     AnimationRenderComponent animator;
     private String direction;
     private String currentAnimation;
