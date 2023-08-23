@@ -128,7 +128,7 @@ public class NPCFactory {
    */
   public static Entity createCow() {
     Entity cow = createBaseAnimal();
-    BaseAnimalConfig config = configs.chicken;
+    BaseAnimalConfig config = configs.cow;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/animals/cow.atlas", TextureAtlas.class));
