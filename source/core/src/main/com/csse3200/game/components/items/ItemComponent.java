@@ -3,6 +3,7 @@ package com.csse3200.game.components.items;
 import com.csse3200.game.components.Component;
 import java.util.UUID;
 
+
 public class ItemComponent extends Component {
     /**
      * Item class for all items in the game
@@ -11,6 +12,7 @@ public class ItemComponent extends Component {
      * @param price price of item
      * @param sellable is the item sellable. true if sellable false otherwise
      * @param itemId unique id of the item
+     * @param itemType type of item
      * 
      */
     private String itemName; // User facing name for item. can be customised by user. 
@@ -18,14 +20,17 @@ public class ItemComponent extends Component {
     private final String itemId;
     private int price; // Price of item
     private final boolean sellable; // is the item sellable
+    private final ItemType itemType; // Type of item
 
 
     
     /**
      * Constructor for Item
      * @param itemName user facing name for item  
+     * @param itemType the enum for type of item 
      */
-    public ItemComponent(String itemName) {
+    public ItemComponent(String itemName, ItemType itemType) {
+        this.itemType = itemType;
         this.itemName = itemName; 
         this.itemId = generateUniqueID(); // Generate a unique ID for the item
         this.itemDescription = "" ; //default description
@@ -36,9 +41,11 @@ public class ItemComponent extends Component {
     /**
      * Constructor for Item
      * @param itemName user facing name 
+     * @param itemType the enum for type of item
      * @param price sellable price of the item
      */
-    public ItemComponent(String itemName,  int price) {
+    public ItemComponent(String itemName, ItemType itemType, int price) {
+        this.itemType = itemType;
         this.itemName = itemName; 
         this.itemId = generateUniqueID(); // Generate a unique ID for the item
         this.itemDescription = "" ; //default description
@@ -49,9 +56,11 @@ public class ItemComponent extends Component {
     /**
      * Constructor for Item
      * @param itemName user facing name for item  
+     * @param itemType the enum for type of item
      * @param itemDescription user facing description for item
      */
-    public ItemComponent(String itemName, String itemDescription) {
+    public ItemComponent(String itemName, ItemType itemType, String itemDescription) {
+        this.itemType = itemType;
         this.itemName = itemName; 
         this.itemId = generateUniqueID(); // Generate a unique ID for the item
         this.itemDescription = itemDescription ; //default description
@@ -61,10 +70,12 @@ public class ItemComponent extends Component {
     /**
      * Constructor for Item
      * @param itemName user facing name for item 
+     * @param itemType the enum for type of item
      * @param itemDescription user facing description for item
      * @param price price of item
      */
-    public ItemComponent(String itemName, String itemDescription, int price) {
+    public ItemComponent(String itemName, ItemType itemType, String itemDescription, int price) {
+        this.itemType = itemType;
         this.itemName = itemName; 
         this.itemId = generateUniqueID(); // Generate a unique ID for the item
         this.itemDescription = itemDescription ; //default description
@@ -137,6 +148,14 @@ public class ItemComponent extends Component {
      */
     public void setItemName(String name) {
         itemName = name;
+    }
+
+    /**
+     * Returns the type of the item
+     * @return ItemType enum type of item
+     */
+    public ItemType getItemType() {
+        return itemType;
     }
 
     /**
