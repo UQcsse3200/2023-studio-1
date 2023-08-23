@@ -20,6 +20,7 @@ public class ItemComponent extends Component {
     private final boolean sellable; // is the item sellable
 
 
+    
     /**
      * Constructor for Item
      * @param itemName user facing name for item  
