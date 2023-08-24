@@ -71,6 +71,7 @@ public class ForestGameArea extends GameArea {
   public ForestGameArea(TerrainFactory terrainFactory) {
     super();
     this.terrainFactory = terrainFactory;
+    ServiceLocator.registerGameArea(this);
   }
 
   /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
@@ -88,8 +89,8 @@ public class ForestGameArea extends GameArea {
     spawnChickens();
     spawnCows();
 
-//    spawnTool(ToolType.TEST_TOOL); // temp - spawns a test tool
-//    spawnTool(ToolType.HOE); // temp - spawns a hoe
+    spawnTool(ToolType.TEST_TOOL); // temp - spawns a test tool
+    spawnTool(ToolType.HOE); // temp - spawns a hoe
 //    spawnGhosts();
 //    spawnGhostKing();
 
