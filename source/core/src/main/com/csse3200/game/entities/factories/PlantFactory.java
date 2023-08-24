@@ -44,12 +44,12 @@ public class PlantFactory {
      * @return entity
      */
     public static Entity createCosmicCob() {
-        FoodPlantConfig config = stats.cosmicCob;
+        BasePlantConfig config = stats.cosmicCob;
 
         Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/test_cactus.png"))
+                .addComponent(new TextureRenderComponent("images/corn_temp.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
-                        config.description, config.tastiness));
+                        config.description));
 
         plant.getComponent(TextureRenderComponent.class).scaleEntity();
         plant.scaleHeight(1f);
@@ -63,7 +63,7 @@ public class PlantFactory {
      * @return entity
      */
     public static Entity createAloeVera() {
-        HealthPlantConfig config = stats.aloeVera;
+        BasePlantConfig config = stats.aloeVera;
 
         Entity plant = createBasePlant()
                 .addComponent(new TextureRenderComponent("images/aloe_temp.png"))
@@ -82,12 +82,12 @@ public class PlantFactory {
      * @return entity
      */
     public static Entity createHammerPlant() {
-        RepairPlantConfig config = stats.hammerPlant;
+        BasePlantConfig config = stats.hammerPlant;
 
         Entity plant = createBasePlant()
                 .addComponent(new TextureRenderComponent("images/test_cactus.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
-                        config.description, config.healingRadius));
+                        config.description));
 
         plant.getComponent(TextureRenderComponent.class).scaleEntity();
         plant.scaleHeight(1f);
@@ -102,12 +102,12 @@ public class PlantFactory {
      */
 
     public static Entity createAtropaBelladonna() {
-        DeadlyPlantConfig config = stats.atropaBelladonna;
+        BasePlantConfig config = stats.atropaBelladonna;
 
         Entity plant = createBasePlant()
                 .addComponent(new TextureRenderComponent("images/belladonna.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
-                        config.description, config.damageRadius));
+                        config.description));
 
         plant.getComponent(TextureRenderComponent.class).scaleEntity();
         plant.scaleHeight(1f);
@@ -121,12 +121,12 @@ public class PlantFactory {
      * @return entity
      */
     public static Entity createNicotianaTabacum() {
-        DeadlyPlantConfig config = stats.nicotianaTabacum;
+        BasePlantConfig config = stats.nicotianaTabacum;
 
         Entity plant = createBasePlant()
                 .addComponent(new TextureRenderComponent("images/tobacco.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
-                        config.description, config.damageRadius));
+                        config.description));
 
         plant.getComponent(TextureRenderComponent.class).scaleEntity();
         plant.scaleHeight(1f);
@@ -141,12 +141,12 @@ public class PlantFactory {
      * @return entity
      */
     public static Entity createVenusFlyTrap() {
-        DefencePlantConfig config = stats.venusFlyTrap;
+        BasePlantConfig config = stats.venusFlyTrap;
 
         Entity plant = createBasePlant()
                 .addComponent(new TextureRenderComponent("images/test_cactus.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
-                        config.description, config.effectRadius));
+                        config.description));
 
         plant.getComponent(TextureRenderComponent.class).scaleEntity();
         plant.scaleHeight(1f);

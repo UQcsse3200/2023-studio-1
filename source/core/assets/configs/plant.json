@@ -3,8 +3,7 @@
     "health": 100,
     "name": "Cosmic Cob",
     "type": "FOOD",
-    "description": "Nutritious space corn!",
-    "tastiness": 1000
+    "description": "Nutritious space corn!"
   },
   "aloeVera": {
     "health": 50,
@@ -16,15 +15,13 @@
     "health": 10,
     "name": "Hammer Plant",
     "type": "REPAIR",
-    "description": "Repairs plants within its healing radius",
-    "healingRadius": 100
+    "description": "Repairs plants within its healing radius"
   },
   "venusFlyTrap": {
     "health": 100,
     "name": "Space Snapper",
     "type": "DEFENCE",
-    "description" : "I eat the fauna!",
-    "effectRadius": 1
+    "description" : "I eat the fauna!"
   },
   "waterWeed": {
     "health": 10,
@@ -36,15 +33,13 @@
     "health": 200,
     "name": "Deadly Nightshade",
     "type": "DEADLY",
-    "description": "Grows deadly poisonous berries",
-    "damageRadius": 7
+    "description": "Grows deadly poisonous berries"
   },
   "nicotianaTabacum": {
     "health": 20,
     "name": "Tobacco",
     "type": "DEADLY",
-    "description": "Toxic addicted plant leaves",
-    "damageRadius": 10
+    "description": "Toxic addicted plant leaves"
   },
   "sunFlower": {
     "health" : 10,
