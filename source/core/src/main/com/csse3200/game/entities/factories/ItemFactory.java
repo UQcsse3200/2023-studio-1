@@ -1,5 +1,6 @@
 package com.csse3200.game.entities.factories;
 import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.ColliderComponent;
@@ -26,7 +27,7 @@ public class ItemFactory {
     public static Entity createShovel() {
       Entity shovel = createBaseItem()
               .addComponent(new TextureRenderComponent("images/tool_shovel.png"))
-              .addComponent(new ItemComponent("shovel", "Shovel for removing items"));
+              .addComponent(new ItemComponent("shovel", ItemType.SHOVEL, "Shovel for removing items"));
       //shovel.scaleHeight(1f); // scales the Entity!, this could be scaleWidth too
       return shovel;
   }
@@ -38,7 +39,7 @@ public class ItemFactory {
       public static Entity createHoe() {
         Entity hoe = createBaseItem()
                 .addComponent(new TextureRenderComponent("images/tool_hoe.png"))
-                .addComponent(new ItemComponent("hoe", "A hoe for cultivating soil"));
+                .addComponent(new ItemComponent("hoe", ItemType.HOE));
         return hoe;
     }
 }

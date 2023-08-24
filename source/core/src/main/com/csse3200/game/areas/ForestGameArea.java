@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
+import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.utils.math.GridPoint2Utils;
@@ -41,14 +42,20 @@ public class ForestGameArea extends GameArea {
     "images/iso_grass_2.png",
     "images/iso_grass_3.png",
     "images/tractor.png",
-    "images/iso_grass_3.png",
     "images/tool_shovel.png",
     "images/tool_hoe.png",
     "images/tool_scythe.png",
-    "images/tool_watering_can.png"
+    "images/tool_watering_can.png",
+
+    "images/animals/chicken.png",
+    "images/animals/cow.png",
+
+    "images/cropTile.png"
+
   };
   private static final String[] forestTextureAtlases = {
-    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas", "images/tractor.atlas"
+    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
+          "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -76,13 +83,13 @@ public class ForestGameArea extends GameArea {
     displayUI();
 
     spawnTerrain();
-    //spawnTrees();
+    spawnTrees();
     player = spawnPlayer();
-    Entity tractor = spawnTractor();
+    //Entity tractor = spawnTractor();
     //spawnGhosts();
     //spawnGhostKing();
-    spawnTool(ToolType.TEST_TOOL); // temp - spawns a test tool
-    spawnTool(ToolType.HOE); // temp - spawns a hoe
+    spawnTool(ItemType.SHOVEL); // temp - spawns a test tool
+    spawnTool(ItemType.HOE); // temp - spawns a hoe
     spawnGhosts();
     spawnGhostKing();
 
@@ -148,14 +155,14 @@ public class ForestGameArea extends GameArea {
     return newTractor;
   }
 
-  private Entity spawnTool(ToolType tool) {
+  private Entity spawnTool(ItemType tool) {
     Entity newTool;
     switch (tool) {
       case HOE:
         newTool = ItemFactory.createHoe();
         spawnEntityAt(newTool, TOOL_SPAWN2, true, true);
         break;
-      case TEST_TOOL:
+      case SHOVEL:
         newTool = ItemFactory.createShovel();
         spawnEntityAt(newTool, TOOL_SPAWN, true, true);
         break;
@@ -164,6 +171,30 @@ public class ForestGameArea extends GameArea {
         spawnEntityAt(newTool, TOOL_SPAWN, true, true);
     }
     return newTool;
+  }
+
+
+  private void spawnChickens() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < 4; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity chicken = NPCFactory.createChicken(player);
+      spawnEntityAt(chicken, randomPos, true, true);
+    }
+  }
+
+
+  private void spawnCows() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < 2; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity cow = NPCFactory.createCow();
+      spawnEntityAt(cow, randomPos, true, true);
+    }
   }
 
   private void spawnGhosts() {
