@@ -1,46 +1,19 @@
 package com.csse3200.game.components.player;
 
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.ForestGameArea;
-import com.csse3200.game.areas.GameArea;
-import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.TouchAttackComponent;
-import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.BodyUserData;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
-import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.rendering.RenderComponent;
-import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.nio.file.LinkOption;
-import java.util.ArrayList;
-
 public class ItemPickupComponent extends Component {
-    private short targetLayer;
     private HitboxComponent hitboxComponent;
     private static final Logger logger = LoggerFactory.getLogger(GdxGame.class);
-
-
-    public ItemPickupComponent() {
-        this.targetLayer = PhysicsLayer.ITEM;
-    }
-
-    /**
-     * Create a component which allows the playet to pickup an item.
-     * @param targetLayer The physics layer of the target's collider.
-     */
-    public ItemPickupComponent(short targetLayer) {
-        this.targetLayer = targetLayer;
-    }
 
     @Override
     public void create() {
@@ -51,11 +24,11 @@ public class ItemPickupComponent extends Component {
     private void onCollision(Fixture me, Fixture other) {
 
         if (hitboxComponent.getFixture() != me) {
-            // Not triggered by hitbox, ignore
+            // Not triggered by hit-box, ignore
             return;
         }
 
-        if (!PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits)) {
+        if (!PhysicsLayer.contains(PhysicsLayer.ITEM, other.getFilterData().categoryBits)) {
             // Doesn't match our target layer, ignore
             return;
         }
@@ -63,9 +36,6 @@ public class ItemPickupComponent extends Component {
 
         // Add item to inventory
         this.entity.getComponent(InventoryComponent.class).addItem(target);
-
-        // make it small for inventory:
-        target.scaleHeight(0.5f);
 
         // remove it from game area (map):
         ServiceLocator.getGameArea().removeEntity(target);
