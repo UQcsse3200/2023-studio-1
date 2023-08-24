@@ -187,7 +187,7 @@ public class ForestGameArea extends GameArea {
 
     for (int i = 0; i < 2; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity cow = NPCFactory.createCow();
+      Entity cow = NPCFactory.createCow(player);
       spawnEntityAt(cow, randomPos, true, true);
     }
   }

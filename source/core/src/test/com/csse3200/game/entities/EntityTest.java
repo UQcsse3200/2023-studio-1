@@ -10,9 +10,6 @@ import static org.mockito.Mockito.when;
 
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.npc.TamingComponent;
-import com.csse3200.game.entities.configs.BaseAnimalConfig;
-import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.Test;
