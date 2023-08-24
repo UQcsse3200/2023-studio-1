@@ -42,13 +42,23 @@ public class ItemFactory {
 
   /**
    * Creates a watering-can item
-   *
    * @return watering can
    */
   public static Entity createWateringcan() {
     Entity watering_can = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/watering_can.png"))
+            .addComponent(new TextureRenderComponent("images/tool_watering_can.png"))
             .addComponent(new ItemComponent("watering can", ItemType.WATERING_CAN));
     return watering_can;
+  }
+
+  /**
+   * Creates a scythe item
+   * @return scythe
+   */
+  public static Entity createScythe() {
+    Entity scythe = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/tool_scythe.png"))
+            .addComponent(new ItemComponent("watering can", ItemType.SCYTHE));
+    return scythe;
   }
 }

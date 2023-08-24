@@ -16,17 +16,12 @@ import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.tools.Tool;
-
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
   private static final int NUM_TREES = 7;
   private static final int NUM_GHOSTS = 2;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
-
-  private static final GridPoint2 TOOL_SPAWN = new GridPoint2(15, 10);// temp!!!
-  private static final GridPoint2 TOOL_SPAWN2 = new GridPoint2(15, 15);// temp!!!
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
     "images/tree.png",
@@ -83,14 +78,17 @@ public class ForestGameArea extends GameArea {
     displayUI();
 
     spawnTerrain();
-    spawnTrees();
+    //spawnTrees();   // trees are annoying
     player = spawnPlayer();
 
     spawnChickens();
     spawnCows();
 
-    spawnTool(ItemType.SHOVEL); // temp - spawns a test tool
-    spawnTool(ItemType.HOE); // temp - spawns a hoe
+    // temp tool spawners
+    spawnTool(ItemType.WATERING_CAN);
+    spawnTool(ItemType.SHOVEL);
+    spawnTool(ItemType.SCYTHE);
+    spawnTool(ItemType.HOE);
 
     playMusic();
   }
@@ -129,6 +127,7 @@ public class ForestGameArea extends GameArea {
     // Bottom
     spawnEntityAt(
         ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
+
   }
 
   private void spawnTrees() {
@@ -148,24 +147,32 @@ public class ForestGameArea extends GameArea {
     return newPlayer;
   }
 
-  private Entity spawnTool(ItemType tool) {
+  private void spawnTool(ItemType tool) {
     Entity newTool;
+    // create a random places for tool to spawn
+    GridPoint2 minPos = new GridPoint2(5, 5);
+    GridPoint2 maxPos = new GridPoint2(20, 20);
+    GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+
     switch (tool) {
       case HOE:
         newTool = ItemFactory.createHoe();
-        spawnEntityAt(newTool, TOOL_SPAWN2, true, true);
+        spawnEntityAt(newTool, randomPos, true, true);
         break;
       case SHOVEL:
         newTool = ItemFactory.createShovel();
-        spawnEntityAt(newTool, TOOL_SPAWN, true, true);
+        spawnEntityAt(newTool, randomPos, true, true);
         break;
-      default:
-        newTool = ItemFactory.createShovel();
-        spawnEntityAt(newTool, TOOL_SPAWN, true, true);
+      case SCYTHE:
+        newTool = ItemFactory.createScythe();
+        spawnEntityAt(newTool, randomPos, true, true);
+        break;
+      case WATERING_CAN:
+        newTool = ItemFactory.createWateringcan();
+        spawnEntityAt(newTool, randomPos, true, true);
+        break;
     }
-    return newTool;
   }
-
 
   private void spawnChickens() {
     GridPoint2 minPos = new GridPoint2(0, 0);

@@ -22,7 +22,7 @@ public class ItemActions extends Component {
                 shovel(pos);
                 return true;
             }
-            case SICKLE -> {
+            case SCYTHE -> {
                 harvest(pos);
                 return true;
             }
