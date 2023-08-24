@@ -9,7 +9,7 @@ public class ItemActions extends Component {
 
     @Override
     public void create() {
-        // Just in case we need constructor
+        // Just in case we need constructor for later
     }
 
     boolean use(Vector2 pos, Entity item) {
