@@ -25,15 +25,17 @@ public class CameraComponent extends Component {
   public void update() {
     Vector2 position;
     if (trackEntity != null) {
+      // Since physics body is updated separately from entity position, camera should be set to body if it exists
+      // This avoids glitchy camera behaviour when framerate !=
       PhysicsComponent physicsComponent = trackEntity.getComponent(PhysicsComponent.class);
       if (physicsComponent != null) {
-        position = physicsComponent.getBody().getWorldCenter();
+        entity.setPosition(physicsComponent.getBody().getWorldCenter());
       } else {
-        position = trackEntity.getCenterPosition();
+        entity.setPosition(trackEntity.getCenterPosition());
       }
-    } else {
-      position = entity.getPosition();
     }
+
+    position = entity.getPosition();
     if (!lastPosition.epsilonEquals(entity.getPosition())) {
       camera.position.set(position.x, position.y, 0f);
       lastPosition = position;
@@ -51,10 +53,6 @@ public class CameraComponent extends Component {
 
   public void setTrackEntity(Entity trackEntity) {
     this.trackEntity = trackEntity;
-  }
-
-  public Entity getTrackEntity() {
-    return trackEntity;
   }
 
   public void resize(int screenWidth, int screenHeight, float gameWidth) {
