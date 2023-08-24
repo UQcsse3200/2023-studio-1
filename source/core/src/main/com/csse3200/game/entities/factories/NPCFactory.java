@@ -8,6 +8,7 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.npc.AnimalAnimationController;
 import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.TouchAttackComponent;
+import com.csse3200.game.components.npc.TamingComponent;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.RunAwayTask;
 import com.csse3200.game.components.tasks.WanderTask;
@@ -98,7 +99,7 @@ public class NPCFactory {
    */
   public static Entity createChicken(Entity target) {
     Entity chicken = createBaseAnimal();
-    BaseAnimalConfig config = configs.cow;
+    BaseAnimalConfig config = configs.chicken;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/animals/chicken.atlas", TextureAtlas.class));
@@ -111,12 +112,13 @@ public class NPCFactory {
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-            .addTask(new RunAwayTask(target, 10, 2f, 4f));
+            .addTask(new RunAwayTask(target, 10, 2f, 4f, new Vector2(3f, 3f)));
 
     chicken
             .addComponent(aiTaskComponent)
             .addComponent(animator)
-            .addComponent(new AnimalAnimationController());
+            .addComponent(new AnimalAnimationController())
+            .addComponent(new TamingComponent(config.tameResistance));
 
     PhysicsUtils.setScaledCollider(chicken, 0.8f, 0.4f);
     return chicken;
@@ -143,7 +145,8 @@ public class NPCFactory {
     cow
             .addComponent(aiTaskComponent)
             .addComponent(animator)
-            .addComponent(new AnimalAnimationController());
+            .addComponent(new AnimalAnimationController())
+            .addComponent(new TamingComponent(config.tameResistance));
 
 //    cow.scaleHeight(1.2f);
     return cow;
