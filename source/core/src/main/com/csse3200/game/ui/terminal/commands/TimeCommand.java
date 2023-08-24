@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 
 public class TimeCommand implements Command{
   private static final Logger logger = LoggerFactory.getLogger(TimeCommand.class);
+  private final int MIN_TIME = 0;
+  private final int MAX_TIME= 12;
 
   /**
    * Adjusts the current game time to the specified value
@@ -20,12 +22,26 @@ public class TimeCommand implements Command{
       logger.debug("Invalid arguments received for 'setTime' command: {}", args);
       return false;
     }
-    return false;
+    return true;
   }
 
   Boolean isValid(ArrayList<String> args) {
-    return args.size() == 1;
-    // TODO check whether time given is valid time value
-    // TODO check whether time number value is within correct range
+    if (args.size() != 1) {
+      logger.debug("Only 1 argument is needed and {} were given", args.size());
+      return false;
+    }
+    int time;
+    try {
+      time = Integer.parseInt(args.get(0));
+    } catch (NumberFormatException e) {
+      logger.debug("Argument provided was not a valid integer");
+      return false;
+    }
+    // TODO Clarify with time-team on the duration of the days
+    if (0 > time || time >= 12){
+      logger.debug("Argument given must be between {} and {}", MIN_TIME, MAX_TIME);
+      return false;
+    }
+    return true;
   }
 }
