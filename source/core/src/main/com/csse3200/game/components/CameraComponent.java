@@ -7,20 +7,34 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsComponent;
 
+/**
+ * A component that manages a camera for rendering.
+ */
 public class CameraComponent extends Component {
   private final Camera camera;
   private Vector2 lastPosition;
   private Entity trackEntity;
 
+  /**
+   * Creates a new CameraComponent with a default OrthographicCamera.
+   */
   public CameraComponent() {
     this(new OrthographicCamera());
   }
 
+  /**
+   * Creates a new CameraComponent with a specified camera.
+   *
+   * @param camera The camera to use for rendering.
+   */
   public CameraComponent(Camera camera) {
     this.camera = camera;
     lastPosition = Vector2.Zero.cpy();
   }
 
+  /**
+   * Updates the camera's position based on the tracked entity's position.
+   */
   @Override
   public void update() {
     Vector2 position;
@@ -51,10 +65,20 @@ public class CameraComponent extends Component {
     return camera;
   }
 
+  /**
+   * Sets the entity to track by the camera.
+   *
+   * @param trackEntity The entity to track.
+   */
   public void setTrackEntity(Entity trackEntity) {
     this.trackEntity = trackEntity;
   }
 
+  /**
+   * Gets the entity currently tracked by the camera.
+   *
+   * @return The tracked entity.
+   */
   public Entity getTrackEntity() {
     return trackEntity;
   }

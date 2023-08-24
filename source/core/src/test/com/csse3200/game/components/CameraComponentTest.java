@@ -8,14 +8,12 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+
 @ExtendWith(GameExtension.class)
 public class CameraComponentTest {
     Entity camEntity;
@@ -44,6 +42,7 @@ public class CameraComponentTest {
         cameraComponent.setTrackEntity(entity);
         assertEquals(cameraComponent.getTrackEntity(), entity);
     }
+
     @Test
     void shouldFollowEntity() {
         Vector3 cameraPos;
