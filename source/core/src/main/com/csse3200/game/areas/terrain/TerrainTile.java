@@ -18,6 +18,7 @@ public class TerrainTile implements TiledMapTile {
   private TerrainCategory terrainCategory;
   private boolean isTraversable;
   private boolean isOccupied;
+  private boolean isTillable;
 
   public TerrainTile(TextureRegion textureRegion, TerrainCategory terrainCategory) {
     this.textureRegion = textureRegion;
@@ -165,6 +166,10 @@ public class TerrainTile implements TiledMapTile {
    */
   public void setUnOccupied() {
     this.isOccupied = false;
+  }
+
+  public boolean isTillable(){
+    return this.isTillable;
   }
 
   public enum TerrainCategory { // wanted to name TerrainType but already enum with that name in TerrainFactory
