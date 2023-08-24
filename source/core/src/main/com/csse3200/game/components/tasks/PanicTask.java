@@ -8,12 +8,25 @@ import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.utils.math.RandomUtils;
 import com.csse3200.game.utils.math.Vector2Utils;
 
+/**
+ * A panic task that causes the owner's entity to move randomly within a specified range for a certain duration.
+ * The task is triggered by an event and has a priority that determines its execution order.
+ */
 public class PanicTask extends TimedTask implements PriorityTask {
     private final Vector2 panicRange;
     private final Vector2 panicSpeed;
     private MovementTask movementTask;
     private Vector2 startPos;
 
+    /**
+     * Constructs a PanicTask with the specified parameters.
+     *
+     * @param trigger    The event trigger that activates this task.
+     * @param duration   The duration for which the panic behavior will occur.
+     * @param priority   The priority of the panic task.
+     * @param panicRange The range within which the entity will move randomly.
+     * @param panicSpeed The speed at which the entity will move during panic.
+     */
     public PanicTask(String trigger, float duration, int priority, Vector2 panicRange, Vector2 panicSpeed) {
         super(trigger, duration, priority);
         this.panicSpeed = panicSpeed;
@@ -36,6 +49,7 @@ public class PanicTask extends TimedTask implements PriorityTask {
     public void update() {
         super.update();
 
+        // Once movement finishes, start again
         if (movementTask.getStatus() != Status.ACTIVE) {
             movementTask.setTarget(getRandomPosInRange());
             movementTask.start();
@@ -50,6 +64,11 @@ public class PanicTask extends TimedTask implements PriorityTask {
         movementTask.stop();
     }
 
+    /**
+     * Generates a random position within the specified panic range, centered around the starting position.
+     *
+     * @return A random position within the panic range.
+     */
     private Vector2 getRandomPosInRange() {
         Vector2 halfRange = panicRange.cpy().scl(0.5f);
         Vector2 min = startPos.cpy().sub(halfRange);
