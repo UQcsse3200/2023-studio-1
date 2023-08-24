@@ -2,10 +2,12 @@ package com.csse3200.game.components.tasks;
 
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.DefaultTask;
+import com.csse3200.game.ai.tasks.TaskRunner;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.DirectionUtils;
+import com.csse3200.game.utils.math.Vector2Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +27,7 @@ public class MovementTask extends DefaultTask {
   private Vector2 lastPos;
   private PhysicsMovementComponent movementComponent;
   private String currentDirection;
+  private Vector2 speed = Vector2Utils.ONE;
 
   public MovementTask(Vector2 target) {
     this.target = target;
@@ -37,10 +40,21 @@ public class MovementTask extends DefaultTask {
     this.stopDistance = stopDistance;
   }
 
+  public MovementTask(Vector2 target, Vector2 speed) {
+    this(target);
+    this.speed = speed;
+  }
+
+  @Override
+  public void create(TaskRunner taskRunner) {
+    super.create(taskRunner);
+    this.movementComponent = owner.getEntity().getComponent(PhysicsMovementComponent.class);
+  }
+
   @Override
   public void start() {
     super.start();
-    this.movementComponent = owner.getEntity().getComponent(PhysicsMovementComponent.class);
+    movementComponent.setMaxSpeed(speed);
     movementComponent.setTarget(target);
     movementComponent.setMoving(true);
     logger.debug("Starting movement towards {}", target);
@@ -77,6 +91,7 @@ public class MovementTask extends DefaultTask {
   public void stop() {
     super.stop();
     movementComponent.setMoving(false);
+    movementComponent.setMaxSpeed(Vector2Utils.ONE);
     logger.debug("Stopping movement");
   }
 

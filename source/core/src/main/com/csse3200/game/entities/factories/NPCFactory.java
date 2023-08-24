@@ -112,7 +112,7 @@ public class NPCFactory {
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-            .addTask(new RunAwayTask(target, 10, 2f, 4f));
+            .addTask(new RunAwayTask(target, 10, 2f, 4f, new Vector2(3f, 3f)));
 
     chicken
             .addComponent(aiTaskComponent)
