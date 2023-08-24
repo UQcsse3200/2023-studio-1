@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
+import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.utils.math.GridPoint2Utils;
@@ -85,14 +86,11 @@ public class ForestGameArea extends GameArea {
     spawnTrees();
     player = spawnPlayer();
 
-
     spawnChickens();
     spawnCows();
 
-    spawnTool(ToolType.TEST_TOOL); // temp - spawns a test tool
-    spawnTool(ToolType.HOE); // temp - spawns a hoe
-//    spawnGhosts();
-//    spawnGhostKing();
+    spawnTool(ItemType.SHOVEL); // temp - spawns a test tool
+    spawnTool(ItemType.HOE); // temp - spawns a hoe
 
     playMusic();
   }
@@ -150,14 +148,14 @@ public class ForestGameArea extends GameArea {
     return newPlayer;
   }
 
-  private Entity spawnTool(ToolType tool) {
+  private Entity spawnTool(ItemType tool) {
     Entity newTool;
     switch (tool) {
       case HOE:
         newTool = ItemFactory.createHoe();
         spawnEntityAt(newTool, TOOL_SPAWN2, true, true);
         break;
-      case TEST_TOOL:
+      case SHOVEL:
         newTool = ItemFactory.createShovel();
         spawnEntityAt(newTool, TOOL_SPAWN, true, true);
         break;
