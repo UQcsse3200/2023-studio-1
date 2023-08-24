@@ -25,9 +25,9 @@ public class RunAwayTask extends DefaultTask implements PriorityTask {
 
   /**
    * @param target The entity to run from.
-   * @param priority Task priority when chasing (0 when not chasing).
-   * @param viewDistance Maximum distance from the entity at which chasing can start.
-   * @param maxRunDistance Maximum distance from the entity while chasing before giving up.
+   * @param priority Task priority when running (0 when not chasing).
+   * @param viewDistance Maximum distance from the entity at which running away can start.
+   * @param maxRunDistance Maximum distance from the entity before stopping.
    */
   public RunAwayTask(Entity target, int priority, float viewDistance, float maxRunDistance) {
     this.target = target;
