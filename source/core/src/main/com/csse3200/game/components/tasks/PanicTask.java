@@ -38,7 +38,10 @@ public class PanicTask extends TimedTask implements PriorityTask {
 
         if (movementTask.getStatus() != Status.ACTIVE) {
             movementTask.setTarget(getRandomPosInRange());
+            movementTask.start();
         }
+
+        movementTask.update();
     }
 
     @Override
