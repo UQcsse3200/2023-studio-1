@@ -66,31 +66,8 @@ public class ItemPickupComponent extends Component {
 
         // make it small for inventory:
         target.scaleHeight(0.5f);
-        // TODO: THIS -> ServiceLocator.getGameArea().
+
         // remove it from game area (map):
-
-
-        // remove it from game area
-
-        //target.setEnabled(false);
-
-        //target.getComponent(TextureRenderComponent.class).setEnabled(false);
-
-        // dispose components:
-        //target.getComponent(TextureRenderComponent.class).dispose();
-
-        //target.getComponent(TextureRenderComponent.class).dispose();
-        //target.getComponent(HitboxComponent.class).dispose();
-        //target.dispose();
-
-        System.out.println("picked up: " + target.getComponent(ItemComponent.class).getItemName());
-
-
-        // print debugging
-        //ArrayList<Entity> inv = new ArrayList<>(this.entity.getComponent(InventoryComponent.class).getInventory());
-        //for (Entity i : inv) {
-        //    System.out.print("item:" + i + "\t");
-        //}
-
+        ServiceLocator.getGameArea().removeEntity(target);
     }
 }
