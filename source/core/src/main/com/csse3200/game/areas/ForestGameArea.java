@@ -88,8 +88,8 @@ public class ForestGameArea extends GameArea {
     spawnChickens();
     spawnCows();
 
-//    spawnTool(ToolType.TEST_TOOL); // temp - spawns a test tool
-//    spawnTool(ToolType.HOE); // temp - spawns a hoe
+    spawnTool(ToolType.TEST_TOOL); // temp - spawns a test tool
+    spawnTool(ToolType.HOE); // temp - spawns a hoe
 //    spawnGhosts();
 //    spawnGhostKing();
 

@@ -16,7 +16,7 @@ public class ItemFactory {
   public static Entity createBaseItem() {
     Entity item = new Entity()
             .addComponent(new PhysicsComponent())
-            .addComponent(new ColliderComponent())
+            //.addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ITEM));
     item.scaleHeight(1f); // scales the Entity!, this could be scaleWidth too
     return item;

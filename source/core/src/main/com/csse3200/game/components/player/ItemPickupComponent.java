@@ -53,18 +53,14 @@ public class ItemPickupComponent extends Component {
             // Doesn't match our target layer, ignore
             return;
         }
-
-        // Pickup the item
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
-
-        target.setEnabled(false);
-
-        //ServiceLocator.getEntityService().unregister(target);
-        //target.setPosition(this.entity.getPosition());
-        System.out.println("PICKUP ITEM");
-        logger.debug("Picked up Item: " + other.toString());
 
         // Add item to inventory
         this.entity.getComponent(InventoryComponent.class).addItem(target);
+
+        // Remove entity from the map
+
+
+        logger.debug("Picked up Item: " + target);
     }
 }
