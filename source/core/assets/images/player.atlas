@@ -10,6 +10,13 @@ default
   orig: 16, 32
   offset: 0, 0
   index: 0
+idle
+  rotate: false
+    xy: 0, 128
+    size: 16, 32
+    orig: 16, 32
+    offset: 0, 0
+    index: 0
 walk_right
   rotate: false
   xy: 0, 0

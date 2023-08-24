@@ -34,14 +34,16 @@ public class PlayerActions extends Component {
   public void update() {
     if (moving) {
       updateSpeed();
-      updateAnimation();
+
     }
+    updateAnimation();
   }
 
   /**
    * Plays the correct animation for the type of player movement.
    */
   private void updateAnimation() {
+
     if (moveDirection.epsilonEquals(Vector2.Zero)) {
       // player is not moving
       entity.getEvents().trigger("animationWalkStop");
