@@ -84,15 +84,10 @@ public class ForestGameArea extends GameArea {
     spawnTerrain();
     spawnTrees();
     player = spawnPlayer();
-
-
-    spawnChickens();
-    spawnCows();
-
-//    spawnTool(ToolType.TEST_TOOL); // temp - spawns a test tool
-//    spawnTool(ToolType.HOE); // temp - spawns a hoe
-//    spawnGhosts();
-//    spawnGhostKing();
+    spawnTool(ItemType.SHOVEL); // temp - spawns a test tool
+    spawnTool(ItemType.HOE); // temp - spawns a hoe
+    spawnGhosts();
+    spawnGhostKing();
 
     playMusic();
   }
