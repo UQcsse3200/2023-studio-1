@@ -10,4 +10,6 @@ public class PlantConfigs {
     public DeadlyPlantConfig atropaBelladonna = new DeadlyPlantConfig();
     public DeadlyPlantConfig nicotianaTabacum = new DeadlyPlantConfig();
     public DefencePlantConfig venusFlyTrap = new DefencePlantConfig();
+    public ProductionPlantConfig waterWeed = new ProductionPlantConfig();
+    public ProductionPlantConfig sunFlower = new ProductionPlantConfig();
 }
