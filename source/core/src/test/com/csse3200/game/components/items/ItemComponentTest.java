@@ -28,12 +28,12 @@ class ItemComponentTest {
 
   @Test
   void createItemComponentConstructorDescriptionPrice() {
-    ItemComponent item = new ItemComponent("test", ItemType.SICKLE, "test description", 10);
+    ItemComponent item = new ItemComponent("test", ItemType.SCYTHE, "test description", 10);
     assertEquals("test", item.getItemName());
     assertEquals(10, item.getPrice());
     assertEquals("test description", item.getItemDescription());
     assertEquals(true, item.isSellable());
-    assertEquals(ItemType.SICKLE, item.getItemType());
+    assertEquals(ItemType.SCYTHE, item.getItemType());
   }
 
   @Test
@@ -45,7 +45,7 @@ class ItemComponentTest {
 
   @Test 
   void setPrice() {
-    ItemComponent item = new ItemComponent("test", ItemType.SICKLE);
+    ItemComponent item = new ItemComponent("test", ItemType.SCYTHE);
     item.setPrice(10);
     assertEquals(10, item.getPrice());
   }
