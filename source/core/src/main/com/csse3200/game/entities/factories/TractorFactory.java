@@ -14,6 +14,13 @@ import com.csse3200.game.services.ServiceLocator;
 
 public class TractorFactory {
 
+    /**
+     * Creates an Entity and adds all necessary componenets to make it function as a tractor should
+     *
+     * @param player - a reference to the player that should be allowed to enter and control it
+     *
+     * @return a referenece to the tractor entity
+     */
     public static Entity createTractor(Entity player) {
 
         AnimationRenderComponent animator = setupTractorAnimations();
@@ -38,6 +45,11 @@ public class TractorFactory {
         return tractor;
     }
 
+    /**
+     * Adds all animations to the AnimationRenderComponent for the tractor to use
+     *
+     * @return an AnimationRenderComponent with the tractors animations added.
+     */
     private static AnimationRenderComponent setupTractorAnimations() {
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(

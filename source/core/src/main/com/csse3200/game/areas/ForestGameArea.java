@@ -83,15 +83,16 @@ public class ForestGameArea extends GameArea {
     displayUI();
 
     spawnTerrain();
-    spawnTrees();
+    //spawnTrees();
     player = spawnPlayer();
-    //Entity tractor = spawnTractor();
+    // spawnTractor() needs to be called after player has been spawned as it needs a reference of the player
+    Entity tractor = spawnTractor();
     //spawnGhosts();
     //spawnGhostKing();
-    spawnTool(ItemType.SHOVEL); // temp - spawns a test tool
-    spawnTool(ItemType.HOE); // temp - spawns a hoe
-    spawnGhosts();
-    spawnGhostKing();
+    //spawnTool(ItemType.SHOVEL); // temp - spawns a test tool
+    //spawnTool(ItemType.HOE); // temp - spawns a hoe
+    //spawnGhosts();
+    //spawnGhostKing();
 
     //playMusic();
   }
@@ -149,6 +150,11 @@ public class ForestGameArea extends GameArea {
     return newPlayer;
   }
 
+  /**
+   * Spawns the Tractor Entity be calling upon it's factory
+   *
+   * @return a reference to the tractor
+   */
   private Entity spawnTractor() {
     Entity newTractor = TractorFactory.createTractor(player);
     spawnEntityAt(newTractor, PLAYER_SPAWN, true, true);

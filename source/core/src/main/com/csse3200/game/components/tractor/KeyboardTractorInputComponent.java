@@ -16,7 +16,7 @@ public class KeyboardTractorInputComponent extends InputComponent {
     }
 
     /**
-     * Triggers player events on specific keycodes.
+     * Triggers tractor events on specific keycodes.
      *
      * @return whether the input was processed
      * @see InputProcessor#keyDown(int)
@@ -27,22 +27,22 @@ public class KeyboardTractorInputComponent extends InputComponent {
             switch (keycode) {
                 case Input.Keys.W:
                     walkDirection.add(Vector2Utils.UP);
-                    triggerWalkEvent();
+                    triggerMoveEvent();
                     triggerAnimationMoveStartEvent("up");
                     return true;
                 case Input.Keys.A:
                     walkDirection.add(Vector2Utils.LEFT);
-                    triggerWalkEvent();
+                    triggerMoveEvent();
                     triggerAnimationMoveStartEvent("left");
                     return true;
                 case Input.Keys.S:
                     walkDirection.add(Vector2Utils.DOWN);
-                    triggerWalkEvent();
+                    triggerMoveEvent();
                     triggerAnimationMoveStartEvent("down");
                     return true;
                 case Input.Keys.D:
                     walkDirection.add(Vector2Utils.RIGHT);
-                    triggerWalkEvent();
+                    triggerMoveEvent();
                     triggerAnimationMoveStartEvent("right");
                     return true;
                 case Input.Keys.F:
@@ -57,7 +57,7 @@ public class KeyboardTractorInputComponent extends InputComponent {
     }
 
     /**
-     * Triggers player events on specific keycodes.
+     * Triggers tractor events on specific keycodes.
      *
      * @return whether the input was processed
      * @see InputProcessor#keyUp(int)
@@ -68,19 +68,19 @@ public class KeyboardTractorInputComponent extends InputComponent {
             switch (keycode) {
                 case Input.Keys.W:
                     walkDirection.sub(Vector2Utils.UP);
-                    triggerWalkEvent();
+                    triggerMoveEvent();
                     return true;
                 case Input.Keys.A:
                     walkDirection.sub(Vector2Utils.LEFT);
-                    triggerWalkEvent();
+                    triggerMoveEvent();
                     return true;
                 case Input.Keys.S:
                     walkDirection.sub(Vector2Utils.DOWN);
-                    triggerWalkEvent();
+                    triggerMoveEvent();
                     return true;
                 case Input.Keys.D:
                     walkDirection.sub(Vector2Utils.RIGHT);
-                    triggerWalkEvent();
+                    triggerMoveEvent();
                     return true;
                 default:
                     return false;
@@ -89,7 +89,10 @@ public class KeyboardTractorInputComponent extends InputComponent {
         return false;
     }
 
-    private void triggerWalkEvent() {
+    /**
+     * Triggers the move event for the tractor
+     */
+    private void triggerMoveEvent() {
         if (walkDirection.epsilonEquals(Vector2.Zero)) {
             entity.getEvents().trigger("moveStop");
             triggerAnimationMoveStopEvent();
@@ -99,32 +102,51 @@ public class KeyboardTractorInputComponent extends InputComponent {
     }
 
     /**
-     * Triggers a player walking animation event for the given direction.
+     * Triggers the tractors walking animation event for the given direction.
      */
     private void triggerAnimationMoveStartEvent(String direction) {
         entity.getEvents().trigger("startMoving", direction, "Tool");
     }
 
     /**
-     * Triggers a player walking animation stop event.
+     * Triggers the tractor walking animation stop event.
      */
     private void triggerAnimationMoveStopEvent() {
         entity.getEvents().trigger("stopMoving", "Tool");
     }
 
-
+    /**
+     * Triggers the event to leave the tractor
+     */
     private void triggerExitEvent() {
         entity.getEvents().trigger("exitTractor");
     }
 
+    /**
+     * Should be used to set the action variable to the tractor's TractorAction Component
+     *
+     * @param actions the TractorActions component from the tractor entity
+     */
     public void setActions(TractorActions actions) {
         this.actions = actions;
     }
 
+    /**
+     * Returns the direction the the tractor is moving.
+     * Called walkDirection for consistency with the player
+     *
+     * @return the direction the tractor is moving as a Vector
+     */
     public Vector2 getWalkDirection() {
         return walkDirection;
     }
 
+    /**
+     * Sets the movement direction of the tractor to a given direction.
+     * Used to align player and tractor movement when getting in and out.
+     *
+     * @param direction - The direction to set the walkDirection of the tractor.
+     */
     public void setWalkDirection(Vector2 direction) {
         this.walkDirection.set(direction);
     }
