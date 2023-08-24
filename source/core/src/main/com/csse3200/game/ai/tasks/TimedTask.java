@@ -57,6 +57,9 @@ public class TimedTask extends DefaultTask implements PriorityTask {
         }
     }
 
+    /**
+     * Stops task and sets back to inactive priority
+     */
     @Override
     public void stop() {
         super.stop();
