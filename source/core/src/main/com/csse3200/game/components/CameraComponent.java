@@ -26,7 +26,7 @@ public class CameraComponent extends Component {
     Vector2 position;
     if (trackEntity != null) {
       // Since physics body is updated separately from entity position, camera should be set to body if it exists
-      // This avoids glitchy camera behaviour when framerate !=
+      // This avoids glitchy camera behaviour when framerate != physics timestep
       PhysicsComponent physicsComponent = trackEntity.getComponent(PhysicsComponent.class);
       if (physicsComponent != null) {
         entity.setPosition(physicsComponent.getBody().getWorldCenter());
@@ -53,6 +53,10 @@ public class CameraComponent extends Component {
 
   public void setTrackEntity(Entity trackEntity) {
     this.trackEntity = trackEntity;
+  }
+
+  public Entity getTrackEntity() {
+    return trackEntity;
   }
 
   public void resize(int screenWidth, int screenHeight, float gameWidth) {
