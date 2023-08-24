@@ -79,6 +79,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">CameraComponent</span>
 <span class="extends-implements">extends <a href="Component.html" title="class in com.csse3200.game.components">Component</a></span></div>
+<div class="block">A component that manages a camera for rendering.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -100,9 +101,13 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">CameraComponent</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Creates a new CameraComponent with a default OrthographicCamera.</div>
+</div>
 <div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(com.badlogic.gdx.graphics.Camera)" class="member-name-link">CameraComponent</a><wbr>(com.badlogic.gdx.graphics.Camera&nbsp;camera)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a new CameraComponent with a specified camera.</div>
+</div>
 </div>
 </section>
 </li>
@@ -123,15 +128,25 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.math.Matrix4</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getProjectionMatrix()" class="member-name-link">getProjectionMatrix</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#resize(int,int,float)" class="member-name-link">resize</a><wbr>(int&nbsp;screenWidth,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTrackEntity()" class="member-name-link">getTrackEntity</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the entity currently tracked by the camera.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#resize(int,int,float)" class="member-name-link">resize</a><wbr>(int&nbsp;screenWidth,
  int&nbsp;screenHeight,
  float&nbsp;gameWidth)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTrackEntity(com.csse3200.game.entities.Entity)" class="member-name-link">setTrackEntity</a><wbr>(<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;trackEntity)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the entity to track by the camera.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Called once per frame of the game, and should be used for most component logic.</div>
+<div class="block">Updates the camera's position based on the tracked entity's position.</div>
 </div>
 </div>
 </div>
@@ -157,12 +172,18 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;()">
 <h3>CameraComponent</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CameraComponent</span>()</div>
+<div class="block">Creates a new CameraComponent with a default OrthographicCamera.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(com.badlogic.gdx.graphics.Camera)">
 <h3>CameraComponent</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CameraComponent</span><wbr><span class="parameters">(com.badlogic.gdx.graphics.Camera&nbsp;camera)</span></div>
+<div class="block">Creates a new CameraComponent with a specified camera.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>camera</code> - The camera to use for rendering.</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -177,9 +198,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="update()">
 <h3>update</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">update</span>()</div>
-<div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="Component.html#update()">Component</a></code></span></div>
-<div class="block">Called once per frame of the game, and should be used for most component logic. Not called if
- component is disabled.</div>
+<div class="block">Updates the camera's position based on the tracked entity's position.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="Component.html#update()">update</a></code>&nbsp;in class&nbsp;<code><a href="Component.html" title="class in com.csse3200.game.components">Component</a></code></dd>
@@ -196,6 +215,28 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getCamera()">
 <h3>getCamera</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.graphics.Camera</span>&nbsp;<span class="element-name">getCamera</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setTrackEntity(com.csse3200.game.entities.Entity)">
+<h3>setTrackEntity</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTrackEntity</span><wbr><span class="parameters">(<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;trackEntity)</span></div>
+<div class="block">Sets the entity to track by the camera.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>trackEntity</code> - The entity to track.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getTrackEntity()">
+<h3>getTrackEntity</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">getTrackEntity</span>()</div>
+<div class="block">Gets the entity currently tracked by the camera.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The tracked entity.</dd>
+</dl>
 </section>
 </li>
 <li>
