@@ -53,6 +53,7 @@ public class CropTileComponent extends Component {
         entity.getEvents().addListener("fertilise", this::fertiliseTile);
         entity.getEvents().addListener("plant", this::plantCrop);
         entity.getEvents().addListener("harvest", this::harvestCrop);
+        entity.getEvents().addListener("destroy", this::destroyTile);
     }
 
     /**
@@ -74,6 +75,13 @@ public class CropTileComponent extends Component {
 
     private void fertiliseTile() {
         isFertilised = true;
+    }
+
+    private void destroyTile() {
+        if (isOccupied()) {
+            plant.dispose();
+        }
+        this.dispose();
     }
 
     private void plantCrop(Supplier<Entity> plantFactoryMethod) {
