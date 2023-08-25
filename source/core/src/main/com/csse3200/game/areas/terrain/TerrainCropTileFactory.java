@@ -51,9 +51,6 @@ public class TerrainCropTileFactory{
         .addComponent(new TextureRenderComponent("images/cropTile.png"))
         .addComponent(new CropTileComponent(stats.initialWaterContent, stats.initialSoilQuality));
 
-    // Sets ColliderComponent to sensor and not physics collider
-    tile.getComponent(TextureRenderComponent.class).scaleEntity();
-
     tile.setPosition(position);
     logger.debug("Registering crop tile {} with entity service", tile);
     ServiceLocator.getEntityService().register(tile);
