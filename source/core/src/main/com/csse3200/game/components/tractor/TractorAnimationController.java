@@ -7,6 +7,9 @@ public class TractorAnimationController extends Component {
     AnimationRenderComponent animator;
 
     @Override
+    /**
+     * Creates the tractor animation controller component.
+     */
     public void create() {
         super.create();
         animator = this.entity.getComponent(AnimationRenderComponent.class);
@@ -16,10 +19,21 @@ public class TractorAnimationController extends Component {
         animator.startAnimation("Tractor_Idle_Tool");
     }
 
+    /**
+     * Animates the tractor to stop moving.
+     *
+     * @param tool tool to animate
+     */
     void animateStopMoving(String tool) {
         animator.startAnimation(String.format("Tractor_Idle_%s",tool));
     }
 
+    /**
+     * Animates the tractor to start moving.
+     *
+     * @param direction direction to animate
+     * @param tool tool to animate
+     */
     void animateMoving(String direction, String tool) {
         animator.startAnimation(String.format("Tractor_Move_%s_%s", direction, tool));
     }

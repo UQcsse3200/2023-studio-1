@@ -18,6 +18,9 @@ public class TractorActions extends Component {
     private boolean muted = true;
 
     @Override
+    /**
+     * Creates the tractor actions component.
+     */
     public void create() {
         physicsComponent = entity.getComponent(PhysicsComponent.class);
         entity.getEvents().addListener("move", this::move);
@@ -26,12 +29,18 @@ public class TractorActions extends Component {
     }
 
     @Override
+    /**
+     * Updates the tractor actions component.
+     */
     public void update() {
         if (this.moving) {
             updateSpeed();
         }
     }
 
+    /**
+     * Updates the speed of the tractor.
+     */
     private void updateSpeed() {
         Body body = physicsComponent.getBody();
         Vector2 velocity = body.getLinearVelocity();
