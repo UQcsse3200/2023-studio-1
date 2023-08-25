@@ -28,6 +28,7 @@ public class TerrainFactory {
   private static final GridPoint2 MAP_SIZE = new GridPoint2(30, 30);
   private static final int TUFT_TILE_COUNT = 30;
   private static final int GRASS1_TILE_COUNT = 30;
+  private static final String path = "source/core/assets/configs/Map.txt"; // change this path if u can't open the file
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;
   private static final Map<Character,String> charToTileImageMap;
@@ -51,7 +52,7 @@ public class TerrainFactory {
     tempMapA.put('>',"images/dirtPathRight.png");
     tempMapA.put('<',"images/dirtPathLeft.png");
     tempMapA.put('v',"images/dirtPathBottom.png");
-    tempMapA.put('%',"images/gravel.png");
+    tempMapA.put('%',"images/gravel_1.png");
     tempMapA.put('i',"images/ice_1.png");
     tempMapA.put('I',"images/ice_2.png");
     tempMapA.put('l',"images/lava_1.png");
@@ -139,38 +140,40 @@ public class TerrainFactory {
   public TerrainComponent createTerrain(TerrainType terrainType) {                      // WILL NEED TO REVAMP THIS FUNCTION
     ResourceService resourceService = ServiceLocator.getResourceService();
      ArrayList<TextureRegion> TRList = new ArrayList<TextureRegion>();
-    switch (terrainType) {
-            case FOREST_DEMO:
-
-        TextureRegion orthoGrass =
-            new TextureRegion(resourceService.getAsset("images/grass_1.png", Texture.class));
-        TextureRegion orthoTuft =
-            new TextureRegion(resourceService.getAsset("images/grass_2.png", Texture.class));
-        TextureRegion orthoRocks =
-            new TextureRegion(resourceService.getAsset("images/grass_3.png", Texture.class));
-            TRList.add(orthoGrass);
-            TRList.add(orthoTuft);
-            TRList.add(orthoRocks);
-        return createForestDemoTerrain(0.5f, TRList);
-      /*case FOREST_DEMO_ISO:
-        TextureRegion isoGrass =
-            new TextureRegion(resourceService.getAsset("images/iso_grass_1.png", Texture.class));
-        TextureRegion isoTuft =
-            new TextureRegion(resourceService.getAsset("images/iso_grass_2.png", Texture.class));
-        TextureRegion isoRocks =
-            new TextureRegion(resourceService.getAsset("images/iso_grass_3.png", Texture.class));
-        return createForestDemoTerrain(1f, isoGrass, isoTuft, isoRocks);
-      case FOREST_DEMO_HEX:
-        TextureRegion hexGrass =
-            new TextureRegion(resourceService.getAsset("images/hex_grass_1.png", Texture.class));
-        TextureRegion hexTuft =
-            new TextureRegion(resourceService.getAsset("images/hex_grass_2.png", Texture.class));
-        TextureRegion hexRocks =
-            new TextureRegion(resourceService.getAsset("images/hex_grass_3.png", Texture.class));
-        return createForestDemoTerrain(1f, hexGrass, hexTuft, hexRocks);*/
-      default:
-        return null;
-    }
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('g'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('G'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('f'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('b'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('B'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('c'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('d'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('D'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('s'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('C'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('S'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('/'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('r'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('R'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('^'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('>'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('v'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('%'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('i'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('I'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('l'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('L'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('m'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('M'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('w'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('W'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('!'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('#'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('p'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('P'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('@'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('&'), Texture.class)));
+      TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('+'), Texture.class)));
+      return createForestDemoTerrain(0.5f, TRList);
   }
 
   private TerrainComponent createForestDemoTerrain(
@@ -206,18 +209,44 @@ public class TerrainFactory {
     return ((TiledMapTileLayer)tiledMap.getLayers().get(0)).getCell(x, y);
   }
 
-
   private TiledMap createForestDemoTiles(
       GridPoint2 tileSize, ArrayList<TextureRegion> TRList) {
     TiledMap tiledMap = new TiledMap();
     ArrayList<TerrainTile> TTlist = new ArrayList<TerrainTile>();
-    TerrainTile grassTile1 = new TerrainTile(TRList.get(0), TerrainTile.TerrainCategory.GRASS); // TerrainTile.TerrainCategory.GRASS does not change anything currently
-    TerrainTile grassTile2 = new TerrainTile(TRList.get(1), TerrainTile.TerrainCategory.GRASS); // TerrainTile.TerrainCategory.GRASS does not change anything currently
-    TerrainTile grassTile3 = new TerrainTile(TRList.get(2), TerrainTile.TerrainCategory.GRASS); // TerrainTile.TerrainCategory.GRASS does not change anything currently
-
-    TTlist.add(grassTile1);
-    TTlist.add(grassTile2);
-    TTlist.add(grassTile3);
+    
+    TTlist.add(new TerrainTile(TRList.get(0), charToTileTypeMap.get('g')));
+    TTlist.add(new TerrainTile(TRList.get(1), charToTileTypeMap.get('G')));
+    TTlist.add(new TerrainTile(TRList.get(2), charToTileTypeMap.get('f')));
+    TTlist.add(new TerrainTile(TRList.get(3), charToTileTypeMap.get('b')));
+    TTlist.add(new TerrainTile(TRList.get(4), charToTileTypeMap.get('B')));
+    TTlist.add(new TerrainTile(TRList.get(5), charToTileTypeMap.get('c')));
+    TTlist.add(new TerrainTile(TRList.get(6), charToTileTypeMap.get('d')));
+    TTlist.add(new TerrainTile(TRList.get(7), charToTileTypeMap.get('D')));
+    TTlist.add(new TerrainTile(TRList.get(8), charToTileTypeMap.get('s')));
+    TTlist.add(new TerrainTile(TRList.get(9), charToTileTypeMap.get('C')));
+    TTlist.add(new TerrainTile(TRList.get(10), charToTileTypeMap.get('S')));
+    TTlist.add(new TerrainTile(TRList.get(11), charToTileTypeMap.get('/')));
+    TTlist.add(new TerrainTile(TRList.get(12), charToTileTypeMap.get('r')));
+    TTlist.add(new TerrainTile(TRList.get(13), charToTileTypeMap.get('R')));
+    TTlist.add(new TerrainTile(TRList.get(14), charToTileTypeMap.get('^')));
+    TTlist.add(new TerrainTile(TRList.get(15), charToTileTypeMap.get('>')));
+    TTlist.add(new TerrainTile(TRList.get(16), charToTileTypeMap.get('v')));
+    TTlist.add(new TerrainTile(TRList.get(17), charToTileTypeMap.get('%')));
+    TTlist.add(new TerrainTile(TRList.get(18), charToTileTypeMap.get('i')));
+    TTlist.add(new TerrainTile(TRList.get(19), charToTileTypeMap.get('I')));
+    TTlist.add(new TerrainTile(TRList.get(20), charToTileTypeMap.get('l')));
+    TTlist.add(new TerrainTile(TRList.get(21), charToTileTypeMap.get('L')));
+    TTlist.add(new TerrainTile(TRList.get(22), charToTileTypeMap.get('m')));
+    TTlist.add(new TerrainTile(TRList.get(23), charToTileTypeMap.get('M')));
+    TTlist.add(new TerrainTile(TRList.get(24), charToTileTypeMap.get('w')));
+    TTlist.add(new TerrainTile(TRList.get(25), charToTileTypeMap.get('W')));
+    TTlist.add(new TerrainTile(TRList.get(26), charToTileTypeMap.get('!')));
+    TTlist.add(new TerrainTile(TRList.get(27), charToTileTypeMap.get('#')));
+    TTlist.add(new TerrainTile(TRList.get(28), charToTileTypeMap.get('p')));
+    TTlist.add(new TerrainTile(TRList.get(29), charToTileTypeMap.get('P')));
+    TTlist.add(new TerrainTile(TRList.get(30), charToTileTypeMap.get('@')));
+    TTlist.add(new TerrainTile(TRList.get(31), charToTileTypeMap.get('&')));
+    TTlist.add(new TerrainTile(TRList.get(32), charToTileTypeMap.get('+')));
 
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
 
@@ -225,7 +254,7 @@ public class TerrainFactory {
     //fillTiles(layer, MAP_SIZE, TTlist.get(0));
 
     try {
-      fillTilesWithFile(layer, MAP_SIZE, TTlist, "configs/titleMap.txt");
+      fillTilesWithFile(layer, MAP_SIZE, TTlist, path);
     } catch (FileNotFoundException e) {
       System.out.println("fillTilesWithFile -> File Not Found error!");
     } catch (IOException e) {
@@ -240,13 +269,12 @@ public class TerrainFactory {
     return tiledMap;
   }
 
-  /**
+  /*
    * Will be used to create a TiledMap for the SpaceGame.
    *
    * Will probably need some variables from our planned MapClass (Unless if this instantiates the MapClass)
    *
    * @return
-   */
   private TiledMap createSpaceGameTiles(GridPoint2 tileSize) { // Will probably need more variables than this
     TiledMap tiledMap = new TiledMap(); // MapClass will likely be an extension of TiledMap
     // MapClass will either instantiate the grid, or the grid is set after instantiation
@@ -254,7 +282,7 @@ public class TerrainFactory {
     tiledMap.getLayers().add(layer);
     return tiledMap;
   }
-
+  
   private static void fillTilesAtRandom(
       TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile, int amount) {
     GridPoint2 min = new GridPoint2(0, 0);
@@ -266,7 +294,136 @@ public class TerrainFactory {
       cell.setTile(tile);
     }
   }
+  */
 
+  /**
+   * This function will be used to create a cell for the TiledMap
+   * by using switch case to determine which tile to use
+   * @param point position of the cell
+   * @param line the line of the file that is being read
+   * @param TTList the list of TerrainTiles
+   * @return the cell
+   */
+  private static Cell cellCreator(GridPoint2 point, String line, ArrayList<TerrainTile> TTList) {
+    Cell cell = new Cell();
+          switch (line.charAt(point.x)) {
+            case 'g':
+              cell.setTile(TTList.get(0));
+              break;
+            case 'G':
+              cell.setTile(TTList.get(1));
+              break;
+            case 'f':
+              cell.setTile(TTList.get(2));
+              break;
+            case 'b':
+              cell.setTile(TTList.get(3));
+              break;
+            case 'B':
+              cell.setTile(TTList.get(4));
+              break;
+            case 'c':
+              cell.setTile(TTList.get(5));
+              break;
+            case 'd':
+              cell.setTile(TTList.get(6));
+              break;
+            case 'D':
+              cell.setTile(TTList.get(7));
+              break;
+            case 's':
+              cell.setTile(TTList.get(8));
+              break;
+            case 'C':
+              cell.setTile(TTList.get(9));
+              break;
+            case 'S':
+              cell.setTile(TTList.get(10));
+              break;
+            case '/':
+              cell.setTile(TTList.get(11));
+              break;
+            case 'r':
+              cell.setTile(TTList.get(12));
+              break;
+            case 'R':
+              cell.setTile(TTList.get(13));
+              break;
+            case '^':
+              cell.setTile(TTList.get(14));
+              break;
+            case '>':
+              cell.setTile(TTList.get(15));
+              break;
+            case 'v':
+              cell.setTile(TTList.get(16));
+              break;
+            case '%':
+              cell.setTile(TTList.get(17));
+              break;
+            case 'i':
+              cell.setTile(TTList.get(18));
+              break;
+            case 'I':
+              cell.setTile(TTList.get(19));
+              break;
+            case 'l':
+              cell.setTile(TTList.get(20));
+              break;
+            case 'L':
+              cell.setTile(TTList.get(21));
+              break;
+            case 'm':
+              cell.setTile(TTList.get(22));
+              break;
+            case 'M':
+              cell.setTile(TTList.get(23));
+              break;
+            case 'w':
+              cell.setTile(TTList.get(24));
+              break;
+            case 'W':
+              cell.setTile(TTList.get(25));
+              break;
+            case '!':
+              cell.setTile(TTList.get(26));
+              break;
+            case '#':
+              cell.setTile(TTList.get(27));
+              break;
+            case 'p':
+              cell.setTile(TTList.get(28));
+              break;
+            case 'P':
+              cell.setTile(TTList.get(29));
+              break;
+            case '@':
+              cell.setTile(TTList.get(30));
+              break;
+            case '&':
+              cell.setTile(TTList.get(31));
+              break;
+            case '+':
+              cell.setTile(TTList.get(32));
+              break;
+            default:
+              cell.setTile(null);
+              break;
+          }
+    return cell;
+  }
+
+  /**
+   * This function will be used to fill the TiledMap with tiles
+   * by reading a file
+   * 
+   * @param layer the layer of the TiledMap
+   * @param mapSize the size of the map
+   * @param TTList the list of TerrainTiles
+   * @param path the path of the file
+   * @throws IOException when there is an error reading the file
+   * @throws FileNotFoundException when file is not found
+   */
   private static void fillTilesWithFile(TiledMapTileLayer layer, GridPoint2 mapSize, ArrayList<TerrainTile> TTList, String path) throws IOException,
           FileNotFoundException {
     // open file to read and read each character
@@ -278,29 +435,14 @@ public class TerrainFactory {
         for (x_pos = 0; x_pos < line.length(); x_pos++) {
           //Cell cell = layer.getCell(x_pos, y_pos);
           GridPoint2 point = new GridPoint2(x_pos, y_pos);
-          Cell cell = new Cell();
-          switch (line.charAt(point.x)) {
-            case 'x':
-              cell.setTile(TTList.get(0));
-              System.out.print("x");
-              break;
-            case 'y':
-              cell.setTile(TTList.get(1));
-              System.out.print("y");
-              break;
-            default:
-              cell.setTile(TTList.get(2));
-              System.out.print("e");
-              break;
-          }
-          System.out.println("");
-          layer.setCell(point.x, point.y, cell);
+          layer.setCell(point.x, point.y, cellCreator(point, line, TTList));
         }
     }
-      // closing bufferreader object
+      // closing buffer reader object
       bf.close();
   }
 
+  /* 
   private static void fillTiles(TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile) {
     for (int x = 0; x < mapSize.x; x++) {
       for (int y = 0; y < mapSize.y; y++) {
@@ -310,6 +452,7 @@ public class TerrainFactory {
       }
     }
   }
+  */
 
   /**
    * This enum should contain the different terrains in your game, e.g. forest, cave, home, all with
