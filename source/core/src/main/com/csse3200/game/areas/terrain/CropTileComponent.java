@@ -11,11 +11,10 @@ import com.csse3200.game.services.ServiceLocator;
  */
 public class CropTileComponent extends Component {
 
-    private final float waterDecreaseRate = 0.05f;
-
-    private final float idealWaterFalloffSharpness = 2.0f;
-    private final float idealWaterFalloffTolerance = 1.2f;
-    private final float waterDamageThreshold = 0.1f;
+    private static final float waterDecreaseRate = 0.05f;
+    private static final float idealWaterFalloffSharpness = 2.0f;
+    private static final float idealWaterFalloffTolerance = 1.2f;
+    private static final float waterDamageThreshold = 0.1f;
 
     private float waterContent;
     private final float soilQuality;
@@ -57,7 +56,11 @@ public class CropTileComponent extends Component {
     @Override
     public void update() {
         waterContent -= waterDecreaseRate * ServiceLocator.getTimeSource().getDeltaTime();
-        waterContent = waterContent < 0 ? 0 : (waterContent > 2 ? 2 : waterContent);
+        if (waterContent < 0) {
+            waterContent = 0;
+        } else if (waterContent > 2) {
+            waterContent = 2;
+        }
     }
 
     private void waterTile(float amount) {
