@@ -20,7 +20,6 @@ public class TimeController {
     /** The current hour in the game*/
     private int hour;
 
-
     public TimeController() {
         this.hour = 0;
     }
@@ -44,7 +43,6 @@ public class TimeController {
     public int getHourOfDay() {
         return (int) Math.floor(getTimeOfDay() / 30000);
     }
-
 
     public void update() {
 
