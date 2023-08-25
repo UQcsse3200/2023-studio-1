@@ -1,6 +1,5 @@
 package com.csse3200.game.input;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
-import com.csse3200.game.ui.inventory.KeyboardInventoryInputComponent;
 import com.csse3200.game.ui.terminal.KeyboardTerminalInputComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,15 +28,5 @@ public class KeyboardInputFactory extends InputFactory {
     public InputComponent createForTerminal() {
         logger.debug("Creating terminal input handler");
         return new KeyboardTerminalInputComponent();
-    }
-
-    /**
-     * Creates an input handler for the inventory.
-     *
-     * @return Inventory input handler
-     */
-    public InputComponent createForInventory() {
-        logger.debug("Creating terminal input handler");
-        return new KeyboardInventoryInputComponent();
     }
 }

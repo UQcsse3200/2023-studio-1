@@ -55,11 +55,4 @@ public abstract class InputFactory {
    * @return Terminal input handler
    */
   public abstract InputComponent createForTerminal();
-
-  /**
-   * Creates an input handler for the inventory
-   *
-   * @return Terminal input handler
-   */
-  public abstract InputComponent createForInventory();
 }

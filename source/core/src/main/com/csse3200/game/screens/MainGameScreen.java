@@ -22,8 +22,6 @@ import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
-import com.csse3200.game.ui.inventory.Inventory;
-import com.csse3200.game.ui.inventory.InventoryDisplay;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
@@ -129,10 +127,8 @@ public class MainGameScreen extends ScreenAdapter {
   private void createUI() {
     logger.debug("Creating ui");
     Stage stage = ServiceLocator.getRenderService().getStage();
-    InputComponent terminalInputComponent =
+    InputComponent inputComponent =
         ServiceLocator.getInputService().getInputFactory().createForTerminal();
-    InputComponent inventoryInputComponent =
-            ServiceLocator.getInputService().getInputFactory().createForInventory();
 
     Entity ui = new Entity();
     ui.addComponent(new InputDecorator(stage, 10))
@@ -140,11 +136,8 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(new MainGameActions(this.game))
         .addComponent(new MainGameExitDisplay())
         .addComponent(new Terminal())
-        .addComponent(terminalInputComponent)
-        .addComponent(new TerminalDisplay())
-        .addComponent(new Inventory())
-        .addComponent(inventoryInputComponent)
-        .addComponent(new Inventory());
+        .addComponent(inputComponent)
+        .addComponent(new TerminalDisplay());
 
     ServiceLocator.getEntityService().register(ui);
   }
