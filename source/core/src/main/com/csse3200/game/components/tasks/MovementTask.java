@@ -5,8 +5,11 @@ import com.csse3200.game.ai.tasks.DefaultTask;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.utils.DirectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Objects;
 
 /**
  * Move to a given position, finishing when you get close enough. Requires an entity with a
@@ -21,10 +24,12 @@ public class MovementTask extends DefaultTask {
   private long lastTimeMoved;
   private Vector2 lastPos;
   private PhysicsMovementComponent movementComponent;
+  private String currentDirection;
 
   public MovementTask(Vector2 target) {
     this.target = target;
     this.gameTime = ServiceLocator.getTimeSource();
+    this.currentDirection = DirectionUtils.RIGHT;
   }
 
   public MovementTask(Vector2 target, float stopDistance) {
@@ -41,6 +46,9 @@ public class MovementTask extends DefaultTask {
     logger.debug("Starting movement towards {}", target);
     lastTimeMoved = gameTime.getTime();
     lastPos = owner.getEntity().getPosition();
+
+    this.currentDirection = getDirection();
+    this.owner.getEntity().getEvents().trigger("directionChange", currentDirection);
   }
 
   @Override
@@ -50,6 +58,12 @@ public class MovementTask extends DefaultTask {
       status = Status.FINISHED;
       logger.debug("Finished moving to {}", target);
     } else {
+      // If direction changes during movement task, animation must be re-triggered with new direction.
+      if (!Objects.equals(currentDirection, getDirection())) {
+        this.currentDirection = getDirection();
+        this.owner.getEntity().getEvents().trigger("directionChange", currentDirection);
+      }
+
       checkIfStuck();
     }
   }
@@ -83,5 +97,10 @@ public class MovementTask extends DefaultTask {
 
   private boolean didMove() {
     return owner.getEntity().getPosition().dst2(lastPos) > 0.001f;
+  }
+
+  private String getDirection() {
+    Vector2 currentPosition = owner.getEntity().getPosition();
+    return currentPosition.sub(target).x < 0 ? DirectionUtils.RIGHT : DirectionUtils.LEFT;
   }
 }
