@@ -1,6 +1,7 @@
 package com.csse3200.game.areas.terrain;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
@@ -90,7 +91,9 @@ public class CropTileComponent extends Component {
         }
         plant = plantFactoryMethod.get();
         // Sets position of plant to be the center of the tile
-        plant.setPosition(entity.getCenterPosition());
+        Vector2 plantPosition = entity.getPosition();
+        plantPosition.y += 0.5f;
+        plant.setPosition(plantPosition);
     }
 
     private void harvestCrop() {
