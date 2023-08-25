@@ -21,7 +21,7 @@ public class TimeController {
     private int hour;
 
     private boolean paused;
-    private long pausedTime;
+    private long pausedAt;
 
     public TimeController() {
         this.hour = 0;
@@ -62,12 +62,12 @@ public class TimeController {
 
     public void pause() {
         this.paused = true;
-        this.pausedTime = timeSource.getTime();
+        this.pausedAt = timeSource.getTime();
     }
 
     public void unpause() {
         this.paused = false;
-        timeSource.addPauseOffset(timeSource.getTimeSince(this.pausedTime));
+        timeSource.addPauseOffset(timeSource.getTimeSince(this.pausedAt));
     }
 
     public void setTime(int hour) {

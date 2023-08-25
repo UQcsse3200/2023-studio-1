@@ -87,15 +87,9 @@ public class GameTimeDisplay extends UIComponent {
 
     @Override
     public void draw(SpriteBatch batch) {
-        // draw is handled by the stage.
+        timeController.update();
     }
 
-    /**
-     * Updates the time on the ui.
-     */
-    public void updateTimeDisplayUI(int health) {
-        // Not sure if this will be implemented.
-    }
 
     @Override
     public void dispose() {

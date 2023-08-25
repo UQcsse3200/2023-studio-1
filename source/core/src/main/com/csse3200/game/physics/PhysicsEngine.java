@@ -41,8 +41,6 @@ public class PhysicsEngine implements Disposable {
 
   public void update() {
 
-    //this.timeSource.getTimeController().update();
-
     // Updating physics isn't as easy as triggering an update every frame. Each frame could take a
     // different amount of time to run, but physics simulations are only stable if computed at a
     // consistent frame rate! See: https://gafferongames.com/post/fix_your_timestep/
