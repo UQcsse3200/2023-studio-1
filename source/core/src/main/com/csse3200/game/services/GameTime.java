@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.services.GameTimeDisplay;
+import com.csse3200.game.services.TimeController;
 
 /** Controls the game time */
 public class GameTime {
@@ -12,13 +13,19 @@ public class GameTime {
   private final long startTime;
   private float timeScale = 1f;
 
-  public GameTimeDisplay timeDisplay;
+  public TimeController timeController;
+  //public GameTimeDisplay timeDisplay;
 
   public GameTime() {
+    this.timeController = new TimeController();
+    timeController.setTimeSource(this);
     startTime = TimeUtils.millis();
     logger.debug("Setting game start time to {}", startTime);
   }
 
+  public TimeController getTimeController() {
+    return this.timeController;
+  }
   /**
    * Set the speed of time passing. This affects getDeltaTime()
    *
@@ -47,7 +54,7 @@ public class GameTime {
   public long getTimeSince(long lastTime) {
     return getTime() - lastTime;
   }
-
+/*
   public void setTimeDisplay(GameTimeDisplay timeDisplay) {
     this.timeDisplay = timeDisplay;
   }
@@ -55,5 +62,6 @@ public class GameTime {
   public void update() {
     timeDisplay.update(5);
   }
+  */
 }
 

@@ -54,7 +54,7 @@ public class PhysicsEngine implements Disposable {
       accumulator -= PHYSICS_TIMESTEP;
     }
 
-    //timeSource.update();
+    this.timeSource.getTimeController().update();
 
   }
 

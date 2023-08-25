@@ -11,38 +11,25 @@ import com.csse3200.game.services.GameTime;
 /** Class that is repsonsible updating classes depedent on the time*/
 public class TimeController {
 
-    /** Placeholder for when plants will eventually be added. Plant growth will be dependent on time*/
-    // private List<Plant> activePlants = new ArrayList<>
+    private GameTime timeSource;
 
-    private GameTimeDisplay TimeDisplay;
+    private GameTimeDisplay timeDisplay;
 
-    public void setGameTimeDisplay(GameTimeDisplay timeDisplay) {
-        this.TimeDisplay = timeDisplay;
+    /*
+    public TimeController() {
+        this.timeSource = ServiceLocator.getTimeSource();
+    }
+    */
+
+    public void setTimeSource(GameTime timeSource) {
+        this.timeSource = timeSource;
     }
 
-    public void removeGameTimeDisplay() {
-        this.TimeDisplay = null;
+    public void setTimeDisplay(GameTimeDisplay timeDisplay) {
+        this.timeDisplay = timeDisplay;
     }
 
-    public void updateDisplay() {
-        /** Will update the */
-        this.TimeDisplay.update();
-    }
-
-    public void addPlant(/** Plant plant */) {
-        // activePlants.add(Plant);
-    }
-
-    public void removePlant(/** Plant plant */) {
-        // activePlants.remove(Plant)
-    }
-
-    public void notfiyPlants() {
-        /**
-         for(Plant plant : activePlants)
-         {
-            plant.update();
-         }
-         */
+    public void update() {
+        timeDisplay.update(5);
     }
 }
