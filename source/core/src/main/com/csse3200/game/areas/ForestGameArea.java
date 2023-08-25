@@ -36,6 +36,7 @@ public class ForestGameArea extends GameArea {
     "images/iso_grass_1.png",
     "images/iso_grass_2.png",
     "images/iso_grass_3.png",
+    "images/tractor.png",
     "images/tool_shovel.png",
     "images/tool_hoe.png",
     "images/tool_scythe.png",
@@ -49,7 +50,7 @@ public class ForestGameArea extends GameArea {
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
-          "images/animals/chicken.atlas", "images/animals/cow.atlas"
+          "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -92,7 +93,9 @@ public class ForestGameArea extends GameArea {
     spawnTool(ItemType.SCYTHE);
     spawnTool(ItemType.HOE);
 
-    playMusic();
+    //playMusic();
+
+    spawnTractor();
   }
 
   private void displayUI() {
@@ -148,6 +151,18 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     return newPlayer;
   }
+
+  /**
+   * Spawns the Tractor Entity be calling upon it's factory
+   *
+   * @return a reference to the tractor
+   */
+  private Entity spawnTractor() {
+    Entity newTractor = TractorFactory.createTractor(player);
+    spawnEntityAt(newTractor, PLAYER_SPAWN, true, true);
+    return newTractor;
+  }
+
 
   private void spawnTool(ItemType tool) {
     Entity newTool;
