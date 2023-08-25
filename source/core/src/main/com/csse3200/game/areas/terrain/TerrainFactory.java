@@ -1,9 +1,6 @@
 package com.csse3200.game.areas.terrain;
 
-import java.io.File;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -138,7 +135,7 @@ public class TerrainFactory {
     TerrainTile grassTile1 = new TerrainTile(TRList.get(0), TerrainTile.TerrainCategory.GRASS); // TerrainTile.TerrainCategory.GRASS does not change anything currently
     TerrainTile grassTile2 = new TerrainTile(TRList.get(1), TerrainTile.TerrainCategory.GRASS); // TerrainTile.TerrainCategory.GRASS does not change anything currently
     TerrainTile grassTile3 = new TerrainTile(TRList.get(2), TerrainTile.TerrainCategory.GRASS); // TerrainTile.TerrainCategory.GRASS does not change anything currently
-    
+
     TTlist.add(grassTile1);
     TTlist.add(grassTile2);
     TTlist.add(grassTile3);
@@ -149,7 +146,9 @@ public class TerrainFactory {
     //fillTiles(layer, MAP_SIZE, TTlist.get(0));
 
     try {
-      fillTilesWithFile(layer, MAP_SIZE, TTlist,"source/core/assets/configs/titleMap.txt");
+      fillTilesWithFile(layer, MAP_SIZE, TTlist, "configs/titleMap.txt");
+    } catch (FileNotFoundException e) {
+      System.out.println("fillTilesWithFile -> File Not Found error!");
     } catch (IOException e) {
       System.out.println("fillTilesWithFile -> Readfile error!");
     } catch (Exception e) {
@@ -189,7 +188,8 @@ public class TerrainFactory {
     }
   }
 
-  private static void fillTilesWithFile(TiledMapTileLayer layer, GridPoint2 mapSize, ArrayList<TerrainTile> TTList, String path) throws IOException {
+  private static void fillTilesWithFile(TiledMapTileLayer layer, GridPoint2 mapSize, ArrayList<TerrainTile> TTList, String path) throws IOException,
+          FileNotFoundException {
     // open file to read and read each character
       BufferedReader bf = new BufferedReader(new FileReader(path));
       String line;
