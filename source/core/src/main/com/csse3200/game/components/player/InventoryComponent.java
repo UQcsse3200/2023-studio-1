@@ -17,6 +17,7 @@ import java.util.List;
 public class InventoryComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
   private final List<Entity> inventory = new ArrayList<Entity>();
+  private Entity heldItem = null;
 
   public InventoryComponent(List<Entity> items) {
     setInventory(items);
@@ -33,6 +34,7 @@ public class InventoryComponent extends Component {
 
   /**
    * Returns if the player has a certain amount of gold.
+   *
    * @param item item to be checked
    * @return boolean representing if the item is on the character
    */
@@ -52,19 +54,49 @@ public class InventoryComponent extends Component {
 
   /**
    * Adds an item to the Player's inventory
+   *
    * @param item item to add
    * @return boolean representing if the item was added successfully
    */
   public boolean addItem(Entity item) {
-      return this.inventory.add(item);
+    return this.inventory.add(item);
   }
 
   /**
    * Removes an item from the Player's Inventory
+   *
    * @param item item to be removed
    * @return boolean representing if the item was removed successfully
    */
   public boolean removeItem(Entity item) {
     return this.inventory.remove(item);
   }
+
+  /**
+   * Sets the held item for the Player.
+   *
+   * @param index The index of the item in the inventory to be set as the held item.
+   */
+  public void setHeldItem(int index) {
+    if (index >= 0 && index < inventory.size()) {
+      this.heldItem = inventory.get(index);
+    } else {
+      throw new IndexOutOfBoundsException("Invalid index");
+    }
+  }
+
+  /**
+   * Retrieves the held item of the Player.
+   *
+   * @return The Entity representing the held item.
+   * @throws IllegalStateException If the player is not holding an item.
+   */
+  public Entity getHeldItem() {
+    if (this.heldItem != null) {
+      return this.heldItem;
+    } else {
+      throw new IllegalStateException("Player is not holding an item");
+    }
+  }
 }
+

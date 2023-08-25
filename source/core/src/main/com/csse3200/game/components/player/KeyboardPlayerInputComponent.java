@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.utils.math.Vector2Utils;
+import com.csse3200.game.components.player.InventoryComponent;
 
 /**
  * Input handler for the player for keyboard and touch (mouse) input.
@@ -48,6 +49,36 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         return true;
       case Keys.SPACE:
         entity.getEvents().trigger("attack");
+        return true;
+      case Keys.NUM_0:
+        entity.getComponent(InventoryComponent.class).setHeldItem(0);
+        return true;
+      case Keys.NUM_1:
+        entity.getComponent(InventoryComponent.class).setHeldItem(1);
+        return true;
+      case Keys.NUM_2:
+        entity.getComponent(InventoryComponent.class).setHeldItem(2);
+        return true;
+      case Keys.NUM_3:
+        entity.getComponent(InventoryComponent.class).setHeldItem(3);
+        return true;
+      case Keys.NUM_4:
+        entity.getComponent(InventoryComponent.class).setHeldItem(4);
+        return true;
+      case Keys.NUM_5:
+        entity.getComponent(InventoryComponent.class).setHeldItem(5);
+        return true;
+      case Keys.NUM_6:
+        entity.getComponent(InventoryComponent.class).setHeldItem(6);
+        return true;
+      case Keys.NUM_7:
+        entity.getComponent(InventoryComponent.class).setHeldItem(7);
+        return true;
+      case Keys.NUM_8:
+        entity.getComponent(InventoryComponent.class).setHeldItem(8);
+        return true;
+      case Keys.NUM_9:
+        entity.getComponent(InventoryComponent.class).setHeldItem(9);
         return true;
       default:
         return false;
