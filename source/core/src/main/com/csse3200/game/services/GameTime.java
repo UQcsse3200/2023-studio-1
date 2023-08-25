@@ -13,17 +13,25 @@ public class GameTime {
   private final long startTime;
   private float timeScale = 1f;
 
+  private long pausedTime;
   public TimeController timeController;
 
   public GameTime() {
+
     this.timeController = new TimeController();
     timeController.setTimeSource(this);
+    this.pausedTime = 0;
+
     startTime = TimeUtils.millis();
     logger.debug("Setting game start time to {}", startTime);
   }
 
   public TimeController getTimeController() {
     return this.timeController;
+  }
+
+  public void addPauseOffset(long pauseDuration) {
+    this.pausedTime += pauseDuration;
   }
   /**
    * Set the speed of time passing. This affects getDeltaTime()

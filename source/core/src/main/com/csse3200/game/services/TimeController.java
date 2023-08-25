@@ -21,6 +21,7 @@ public class TimeController {
     private int hour;
 
     private boolean paused;
+    private long pausedTime;
 
     public TimeController() {
         this.hour = 0;
@@ -48,22 +49,27 @@ public class TimeController {
     }
 
     public void update() {
+        if (paused == false) {
+            /** Each day is 12minutes so 720000 milliseconds is one day */
+            int timeInDay = (int) timeSource.getTime() % 720000;
 
-        /** Each day is 12minutes so 720000 milliseconds is one day */
-        int timeInDay = (int) timeSource.getTime() % 720000;
+            /** 30 seconds is each hour so 30000 is one hour */
+            this.hour = (int) Math.floor(timeInDay / 30000);
 
-        /** 30 seconds is each hour so 30000 is one hour */
-        this.hour = (int) Math.floor(timeInDay / 30000);
-
-        timeDisplay.update(this.hour);
+            timeDisplay.update(this.hour);
+        }
     }
 
     public void pause() {
         this.paused = true;
+
+        this.pausedTime = timeSource.getTime();
     }
 
     public void unpause() {
         this.paused = false;
+
+        timeSource.addPauseOffset(timeSource.getTimeSince(this.pausedTime));
     }
 
     public void setTime(int hour) {
