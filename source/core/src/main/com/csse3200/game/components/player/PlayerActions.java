@@ -77,6 +77,7 @@ public class PlayerActions extends Component {
     }
   }
 
+
   private void updateSpeed() {
     Body body = physicsComponent.getBody();
     Vector2 velocity = body.getLinearVelocity();
@@ -96,9 +97,11 @@ public class PlayerActions extends Component {
    * @param direction direction to move in
    */
   void move(Vector2 direction) {
+
     // Store the previous move direction
     this.moveDirection = direction;
     this.prevMoveDirection = moveDirection.angleDeg();
+
     moving = true;
   }
   /**
@@ -111,6 +114,7 @@ public class PlayerActions extends Component {
   }
 
   /**
+<<<<<<< HEAD
    * Increases the velocity of the player when they move.
    */
   void run() {

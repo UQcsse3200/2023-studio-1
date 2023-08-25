@@ -1,10 +1,11 @@
 package com.csse3200.game.components.player;
 
-import com.badlogic.gdx.Input.Keys;
+
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.extensions.GameExtension;
-import com.csse3200.game.input.InputService;
-import com.csse3200.game.physics.PhysicsService;
+
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.ResourceService;
@@ -20,45 +21,88 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+
 
 @ExtendWith(GameExtension.class)
 public class PlayerAnimationControllerTest {
     private Entity player;
 
+    private AnimationRenderComponent animationRenderComponent;
+
     @BeforeEach
     void initialiseTest() {
         ServiceLocator.registerRenderService(new RenderService());
-        ServiceLocator.registerInputService(new InputService());
-        ServiceLocator.registerPhysicsService(new PhysicsService());
-
         ResourceService resourceService = new ResourceService();
         resourceService.loadTextureAtlases(new String[]{"images/player.atlas"});
         resourceService.loadTextures(new String[]{"images/heart.png"});
         resourceService.loadAll();
         ServiceLocator.registerResourceService(resourceService);
 
-        player = MockPlayerFactory.createPlayer();
+        animationRenderComponent = spy(
+                new AnimationRenderComponent(
+                        ServiceLocator.getResourceService().getAsset("images/player.atlas", TextureAtlas.class)
+                )
+        );
+
+        PlayerFactory.setupPlayerAnimator(animationRenderComponent);
+
+        player = new Entity()
+                .addComponent(animationRenderComponent)
+                .addComponent(new PlayerAnimationController());
+
+        player.getComponent(AnimationRenderComponent.class).scaleEntity();
         player.create();
     }
 
-    @ParameterizedTest(name = "{1} animation played correctly")
-    @MethodSource({"testParams"})
-    void shouldPlayCorrectWalkAnimation(int inputKey, String expectedAnimationName) {
-        KeyboardPlayerInputComponent inputComponent = player.getComponent(KeyboardPlayerInputComponent.class);
-        AnimationRenderComponent animationRenderComponent = player.getComponent(AnimationRenderComponent.class);
-
-        inputComponent.keyDown(inputKey);
-        player.update();
+    @ParameterizedTest(name = "{2} animation played correctly on {0} event trigger")
+    @MethodSource({"shouldStartMoveAnimationOnEventTriggerParams"})
+    void shouldStartMoveAnimationOnEventTrigger(String animationEvent, String movementDirection, String expectedAnimationName) {
+        player.getEvents().trigger(animationEvent, movementDirection);
         assertEquals(expectedAnimationName, animationRenderComponent.getCurrentAnimation());
     }
 
-    private static Stream<Arguments> testParams() {
+    private static Stream<Arguments> shouldStartMoveAnimationOnEventTriggerParams() {
         return Stream.of(
-                // (inputKey, expectedAnimationName)
-                arguments(Keys.W, "walk_up"),
-                arguments(Keys.A, "walk_left"),
-                arguments(Keys.S, "walk_down"),
-                arguments(Keys.D, "walk_right")
+                // (animationEvent, movementDirection, expectedAnimationName)
+                arguments("animationWalkStart", "up", "walk_up"),
+                arguments("animationWalkStart", "left", "walk_left"),
+                arguments("animationWalkStart", "down", "walk_down"),
+                arguments("animationWalkStart", "right", "walk_right"),
+                arguments("animationRunStart", "up", "run_up"),
+                arguments("animationRunStart", "left", "run_left"),
+                arguments("animationRunStart", "down", "run_down"),
+                arguments("animationRunStart", "right", "run_right")
+        );
+    }
+
+    @ParameterizedTest(name = "{2} animation isn't reset on subsequent triggers for the same event")
+    @MethodSource({"shouldNotResetAnimationParams"})
+    void shouldNotResetAnimation(String animationEvent, String movementDirection, String expectedAnimationName) {
+        player.getEvents().trigger(animationEvent, movementDirection);
+        assertEquals(expectedAnimationName, animationRenderComponent.getCurrentAnimation());
+        verify(animationRenderComponent).startAnimation(expectedAnimationName);
+
+        // trigger the event again
+        player.getEvents().trigger(animationEvent, movementDirection);
+        assertEquals(expectedAnimationName, animationRenderComponent.getCurrentAnimation());
+        // should still have only been called once
+        verify(animationRenderComponent).startAnimation(expectedAnimationName);
+    }
+
+    private static Stream<Arguments> shouldNotResetAnimationParams() {
+        return Stream.of(
+                // (animationEvent, movementDirection, expectedAnimationName)
+                arguments("animationWalkStart", "up", "walk_up"),
+                arguments("animationWalkStart", "left", "walk_left"),
+                arguments("animationWalkStart", "down", "walk_down"),
+                arguments("animationWalkStart", "right", "walk_right"),
+                arguments("animationRunStart", "up", "run_up"),
+                arguments("animationRunStart", "left", "run_left"),
+                arguments("animationRunStart", "down", "run_down"),
+                arguments("animationRunStart", "right", "run_right")
+
         );
     }
 }
