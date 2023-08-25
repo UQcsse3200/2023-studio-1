@@ -12,6 +12,11 @@ public class Item extends Component {
      * @param name user facing name for item
      * @param id identifier for the item
      */
+    public Item(String name, String id) {
+        itemName = name;
+        itemId = id;
+        itemCount = 0;
+    }
 
     public Item(String name, String id, int count) {
         itemName = name;
