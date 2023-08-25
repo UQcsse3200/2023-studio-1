@@ -23,7 +23,6 @@ public class CropTileComponent extends Component {
     private float waterContent;
     private final float soilQuality;
     private boolean isFertilised;
-    private boolean isOccupied;
     private Entity plant;
 
 
@@ -42,7 +41,6 @@ public class CropTileComponent extends Component {
         this.waterContent = initialWaterContent;
         this.soilQuality = soilQuality;
         this.isFertilised = false;
-        this.isOccupied = false;
         this.plant = null;
     }
 
@@ -79,7 +77,7 @@ public class CropTileComponent extends Component {
     }
 
     private void plantCrop(Supplier<Entity> plantFactoryMethod) {
-        if (plant != null) {
+        if (isOccupied()) {
             return;
         }
         plant = plantFactoryMethod.get();
@@ -88,7 +86,7 @@ public class CropTileComponent extends Component {
     }
 
     private void harvestCrop() {
-        if (plant == null) {
+        if (!isOccupied()) {
             return;
         }
         isFertilised = false;
@@ -127,6 +125,10 @@ public class CropTileComponent extends Component {
         waterMultiplier = (waterMultiplier - waterDamageThreshold) / (1 - waterDamageThreshold);
         waterMultiplier = waterMultiplier > 0 ? Math.pow(waterMultiplier, idealWaterFalloffTolerance) : -1.0;
         return waterMultiplier > 0 ? soilQuality * (isFertilised ? 2 : 1) * waterMultiplier : -1.0;
+    }
+
+    private boolean isOccupied() {
+        return plant != null;
     }
 
 }
