@@ -11,11 +11,11 @@ public class PlantComponent extends Component {
     private String plantType;           // Type of plant (food, health, repair, defence, production)
     private String plantDescription;    // User facing description of the plant
     private int plantAge = 0;           // Age of the plant in days as an integer
-    boolean decay = false;
-    float idealWaterLevel;              // Ideal water level. A factor when determining the growth rate.
-    float currentAge = 0;               // Current age of the plant
-    int growthStage = 0;                // Growth stage starts at 0 for all plants.
-    int adultLifeSpan;                  // How long a crop plant lives before starting to decay from old age.
+    private boolean decay = false;
+    private float idealWaterLevel;              // Ideal water level. A factor when determining the growth rate.
+    private float currentAge = 0;               // Current age of the plant
+    private int growthStage = 0;                // Growth stage starts at 0 for all plants.
+    private int adultLifeSpan;                  // How long a crop plant lives before starting to decay from old age.
 
     /**
      * Constructor used for plant types that have no extra properties.
