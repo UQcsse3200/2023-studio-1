@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TimeCommand implements Command {
+public class SetTimeCommand implements Command {
 
-  private static final Logger logger = LoggerFactory.getLogger(TimeCommand.class);
+  private static final Logger logger = LoggerFactory.getLogger(SetTimeCommand.class);
   private final int MIN_TIME = 0;
-  private final int MAX_TIME = 12;
+  private final int MAX_TIME = 23;
 
   /**
    * Adjusts the current game time to the specified value
@@ -38,8 +38,8 @@ public class TimeCommand implements Command {
       return false;
     }
     // TODO Clarify with time-team on the duration of the days
-    if (0 > time || time >= 12) {
-      logger.debug("Argument given must be between {} and {}", MIN_TIME, MAX_TIME);
+    if (MIN_TIME > time || time > MAX_TIME) {
+      logger.debug("Argument given must be between {} and {} inclusive", MIN_TIME, MAX_TIME);
       return false;
     }
     return true;

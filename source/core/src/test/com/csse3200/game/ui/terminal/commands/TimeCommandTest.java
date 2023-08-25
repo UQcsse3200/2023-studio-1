@@ -19,12 +19,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 @ExtendWith(GameExtension.class)
 class TimeCommandTest {
 
-  TimeCommand command;
+  SetTimeCommand command;
   ArrayList<String> args;
 
   @BeforeEach
   void beforeEach() {
-    command = new TimeCommand();
+    command = new SetTimeCommand();
     args = new ArrayList<>();
     ServiceLocator.clear();
   }
@@ -50,7 +50,7 @@ class TimeCommandTest {
 
   @Test
   public void invalidTimeRange() {
-    args.add("13");
+    args.add("24");
     assertFalse(command.isValid(args));
   }
 
