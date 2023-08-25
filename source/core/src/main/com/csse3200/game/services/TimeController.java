@@ -37,11 +37,11 @@ public class TimeController {
     }
 
     public int getTimeInSeconds() {
-        return (int) timeSource.getTime() / 1000;
+        return (int) timeSource.getActiveTime() / 1000;
     }
 
     public int getTimeOfDay() {
-        return (int) timeSource.getTime() % 720000;
+        return (int) timeSource.getActiveTime() % 720000;
     }
 
     public int getHourOfDay() {
@@ -51,7 +51,7 @@ public class TimeController {
     public void update() {
         if (paused == false) {
             /** Each day is 12minutes so 720000 milliseconds is one day */
-            int timeInDay = (int) timeSource.getTime() % 720000;
+            int timeInDay = (int) timeSource.getActiveTime() % 720000;
 
             /** 30 seconds is each hour so 30000 is one hour */
             this.hour = (int) Math.floor(timeInDay / 30000);
@@ -62,13 +62,11 @@ public class TimeController {
 
     public void pause() {
         this.paused = true;
-
         this.pausedTime = timeSource.getTime();
     }
 
     public void unpause() {
         this.paused = false;
-
         timeSource.addPauseOffset(timeSource.getTimeSince(this.pausedTime));
     }
 

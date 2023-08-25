@@ -58,6 +58,10 @@ public class GameTime {
     return TimeUtils.timeSinceMillis(startTime);
   }
 
+  public long getActiveTime() {
+    return TimeUtils.timeSinceMillis(startTime) - pausedTime;
+  }
+
   public long getTimeSince(long lastTime) {
     return getTime() - lastTime;
   }
