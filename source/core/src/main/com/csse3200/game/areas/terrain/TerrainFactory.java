@@ -49,6 +49,7 @@ public class TerrainFactory {
     tempMapA.put('R',"images/dirt_3.png");
     tempMapA.put('^',"images/dirtPathTop.png");
     tempMapA.put('>',"images/dirtPathRight.png");
+    tempMapA.put('<',"images/dirtPathLeft.png");
     tempMapA.put('v',"images/dirtPathBottom.png");
     tempMapA.put('%',"images/gravel.png");
     tempMapA.put('i',"images/ice_1.png");
@@ -87,6 +88,7 @@ public class TerrainFactory {
     tempMapB.put('R',TerrainTile.TerrainCategory.DIRT);
     tempMapB.put('^', TerrainTile.TerrainCategory.PATH);
     tempMapB.put('>',TerrainTile.TerrainCategory.PATH);
+    tempMapB.put('<',TerrainTile.TerrainCategory.PATH);
     tempMapB.put('v',TerrainTile.TerrainCategory.PATH);
     tempMapB.put('%', TerrainTile.TerrainCategory.GRAVEL);
     tempMapB.put('i', TerrainTile.TerrainCategory.ICE);
