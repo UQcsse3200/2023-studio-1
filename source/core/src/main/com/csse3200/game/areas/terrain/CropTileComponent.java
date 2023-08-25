@@ -2,7 +2,10 @@ package com.csse3200.game.areas.terrain;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
+import java.util.function.Supplier;
+import javax.swing.MenuElement;
 
 /**
  * Component which stores information about plots of land on which crops and plants can grow.
@@ -20,6 +23,8 @@ public class CropTileComponent extends Component {
     private final float soilQuality;
     private boolean isFertilised;
     private boolean isOccupied;
+    private Entity plant;
+
 
     /**
      * Creates a new crop tile component, with a specified initial water content, and an initial soil quality (higher values indicate higher soil
@@ -37,6 +42,7 @@ public class CropTileComponent extends Component {
         this.soilQuality = soilQuality;
         this.isFertilised = false;
         this.isOccupied = false;
+        this.plant = null;
     }
 
     /**
@@ -71,10 +77,13 @@ public class CropTileComponent extends Component {
         isFertilised = true;
     }
 
-    private void plantCrop() {
-        if (!isOccupied) {
-            isOccupied = true;
+    private void plantCrop(Supplier<Entity> plantFactoryMethod) {
+        if (plant != null) {
+            return;
         }
+        plant = plantFactoryMethod.get();
+        // Sets position of plant to be the center of the tile
+        plant.setPosition(entity.getCenterPosition());
     }
 
     private void harvestCrop() {
