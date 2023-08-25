@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.CropTileConfig;
 import com.csse3200.game.files.FileLoader;
+import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
@@ -45,14 +46,13 @@ public class TerrainCropTileFactory{
     logger.debug("Creating crop tile at position {}", position);
 
     Entity tile = new Entity()
-        .addComponent(new ColliderComponent())
+        .addComponent(new ColliderComponent().setSensor(true))
         .addComponent(new PhysicsComponent())
         .addComponent(new TextureRenderComponent("images/cropTile.png"))
         .addComponent(new CropTileComponent(stats.initialWaterContent, stats.initialSoilQuality));
 
-
     // Sets ColliderComponent to sensor and not physics collider
-    tile.getComponent(ColliderComponent.class).setSensor(true);
+    tile.getComponent(TextureRenderComponent.class).scaleEntity();
 
     tile.setPosition(position);
     logger.debug("Registering crop tile {} with entity service", tile);
