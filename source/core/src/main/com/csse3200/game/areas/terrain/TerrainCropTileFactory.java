@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.CropTileConfig;
 import com.csse3200.game.files.FileLoader;
-import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
@@ -18,6 +17,10 @@ public class TerrainCropTileFactory{
 
   private static final CropTileConfig stats =
       FileLoader.readClass(CropTileConfig.class, "configs/cropTile.json");
+
+  private TerrainCropTileFactory() {
+    throw new IllegalStateException("Instantiating static util class");
+  }
 
   /**
    * Creates a crop tile entity
