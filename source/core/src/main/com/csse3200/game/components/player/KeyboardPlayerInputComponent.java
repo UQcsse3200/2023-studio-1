@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.utils.math.Vector2Utils;
+import com.csse3200.game.components.player.InventoryComponent;
 
 /**
  * Input handler for the player for keyboard and touch (mouse) input.
@@ -12,6 +13,7 @@ import com.csse3200.game.utils.math.Vector2Utils;
  */
 public class KeyboardPlayerInputComponent extends InputComponent {
   private final Vector2 walkDirection = Vector2.Zero.cpy();
+  private final int hotKeyOffset = 6;
 
   public KeyboardPlayerInputComponent() {
     super(5);
@@ -48,6 +50,13 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         return true;
       case Keys.SPACE:
         entity.getEvents().trigger("attack");
+        return true;
+      case Keys.NUM:
+        if (keycode == Keys.NUM_0) {
+          handleHotKeySelection(0);
+        } else {
+          handleHotKeySelection(keycode - hotKeyOffset);
+        }
         return true;
       default:
         return false;
@@ -105,5 +114,14 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   private void triggerAnimationWalkStopEvent() {
     entity.getEvents().trigger("animationWalkStop");
+  }
+
+  /**
+   * Sets the players current held item to that in the provided index of the inventory
+   *
+   * @param index of the item the user wants to be holding
+   */
+  private void handleHotKeySelection(int index) {
+    entity.getComponent(InventoryComponent.class).setHeldItem(index);
   }
 }
