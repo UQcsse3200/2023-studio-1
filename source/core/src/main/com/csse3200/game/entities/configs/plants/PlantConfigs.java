@@ -4,12 +4,12 @@ package com.csse3200.game.entities.configs.plants;
  * Defines all plant configs to be loaded by the PlantFactory.
  */
 public class PlantConfigs {
-    public FoodPlantConfig cosmicCob = new FoodPlantConfig();
-    public HealthPlantConfig aloeVera = new HealthPlantConfig();
-    public RepairPlantConfig hammerPlant = new RepairPlantConfig();
-    public DeadlyPlantConfig atropaBelladonna = new DeadlyPlantConfig();
-    public DeadlyPlantConfig nicotianaTabacum = new DeadlyPlantConfig();
-    public DefencePlantConfig venusFlyTrap = new DefencePlantConfig();
-    public ProductionPlantConfig waterWeed = new ProductionPlantConfig();
-    public ProductionPlantConfig sunFlower = new ProductionPlantConfig();
+    public BasePlantConfig cosmicCob = new BasePlantConfig();
+    public BasePlantConfig aloeVera = new BasePlantConfig();
+    public BasePlantConfig hammerPlant = new BasePlantConfig();
+    public BasePlantConfig atropaBelladonna = new BasePlantConfig();
+    public BasePlantConfig nicotianaTabacum = new BasePlantConfig();
+    public BasePlantConfig venusFlyTrap = new BasePlantConfig();
+    public BasePlantConfig waterWeed = new BasePlantConfig();
+    public BasePlantConfig sunFlower = new BasePlantConfig();
 }

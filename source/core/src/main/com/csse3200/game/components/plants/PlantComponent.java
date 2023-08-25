@@ -9,10 +9,7 @@ public class PlantComponent extends Component {
     private String plantName;           // User facing plant name
     private String plantType;           // Type of plant (food, health, repair, defence, production)
     private String plantDescription;    // User facing description of the plant
-    private int healingRadius;          // Property of repair plants
-
-    private int damageRadius;           // Property of deadly plants
-    private int effectRadius;           // Radius defence plant covers
+    boolean decay = false;
 
     /**
      * Constructor used for plant types that have no extra properties.
@@ -30,35 +27,20 @@ public class PlantComponent extends Component {
     }
 
     /**
-     * Constructor for plant types that have an extra property that is an integer.
-     * @param health
-     * @param name
-     * @param plantType
-     * @param plantDescription
-     * @param number - A number corresponding to a specialised plant property
-     */
-    public PlantComponent(int health, String name, String plantType, String plantDescription, int number) {
-        this.plantHealth = health;
-        this.plantName = name;
-        this.plantType = plantType;
-        this.plantDescription = plantDescription;
-
-        if (this.plantType.equals("REPAIR")) {
-            this.healingRadius = number;
-        } else if (this.plantType.equals("DEFENCE")) {
-            this.effectRadius = number;
-        } else if (this.plantType.equals("DEADLY")) {
-            this.damageRadius = number;
-        }
-    }
-
-    /**
      * Returns the current plant health
      *
      * @return current plant health
      */
     public int getPlantHealth() {
         return this.plantHealth;
+    }
+
+    /**
+     * Set the current plant health
+     * @param health
+     */
+    public void setPlantHealth(int health) {
+        this.plantHealth = health;
     }
 
     /**
@@ -89,29 +71,18 @@ public class PlantComponent extends Component {
     }
 
     /**
-     * Returns the healing radius of repair plants
-     *
-     * @return healing radius of repair plants
+     * Set the decay boolean.
+     * @param decay
      */
-    public int getHealingRadius() {
-        return this.healingRadius;
+    public void setDecay(boolean decay) {
+        this.decay = decay;
     }
 
     /**
-     * Returns the damage radius of deadly plants
-     *
-     * @return damage radius of deadly plants
+     * Find out if the plant is decaying or not.
+     * @return If the plant is in a state of decay or not
      */
-    public int getDamageRadius() {
-        return this.damageRadius;
-    }
-
-    /**
-     * Returns the radius that a defence plant defends
-     *
-     * @return defence radius of defensive plants
-     */
-    public int getEffectRadius() {
-        return this.effectRadius;
+    public boolean isDecay() {
+        return this.decay;
     }
 }
