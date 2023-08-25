@@ -11,15 +11,19 @@ import com.csse3200.game.services.GameTime;
 /** Class that is repsonsible updating classes depedent on the time*/
 public class TimeController {
 
+    /** The service for the game time*/
     private GameTime timeSource;
 
+    /** The UI implementation of the clock */
     private GameTimeDisplay timeDisplay;
 
-    /*
+    /** The current hour in the game*/
+    private int hour;
+
+
     public TimeController() {
-        this.timeSource = ServiceLocator.getTimeSource();
+        this.hour = 0;
     }
-    */
 
     public void setTimeSource(GameTime timeSource) {
         this.timeSource = timeSource;
@@ -29,7 +33,27 @@ public class TimeController {
         this.timeDisplay = timeDisplay;
     }
 
+    public int getTimeInSeconds() {
+        return (int) timeSource.getTime() / 1000;
+    }
+
+    public int getTimeOfDay() {
+        return (int) timeSource.getTime() % 720000;
+    }
+
+    public int getHourOfDay() {
+        return (int) Math.floor(getTimeOfDay() / 30000);
+    }
+
+
     public void update() {
-        timeDisplay.update(5);
+
+        /** Each day is 12minutes so 720000 milliseconds is one day */
+        int timeInDay = (int) timeSource.getTime() % 720000;
+
+        /** 30 seconds is each hour so 30000 is one hour */
+        this.hour = (int) Math.floor(timeInDay / 30000);
+
+        timeDisplay.update(this.hour);
     }
 }

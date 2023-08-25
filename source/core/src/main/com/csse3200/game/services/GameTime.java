@@ -14,7 +14,6 @@ public class GameTime {
   private float timeScale = 1f;
 
   public TimeController timeController;
-  //public GameTimeDisplay timeDisplay;
 
   public GameTime() {
     this.timeController = new TimeController();
@@ -54,14 +53,5 @@ public class GameTime {
   public long getTimeSince(long lastTime) {
     return getTime() - lastTime;
   }
-/*
-  public void setTimeDisplay(GameTimeDisplay timeDisplay) {
-    this.timeDisplay = timeDisplay;
-  }
-
-  public void update() {
-    timeDisplay.update(5);
-  }
-  */
 }
 
