@@ -6,11 +6,16 @@ import com.csse3200.game.components.Component;
  */
 public class PlantComponent extends Component {
     private int plantHealth;            // Initial plant health
+    private int maxHealth;              // Maximum health this plant can reach.
     private String plantName;           // User facing plant name
     private String plantType;           // Type of plant (food, health, repair, defence, production)
     private String plantDescription;    // User facing description of the plant
-    private int plantAge;               // Age of the plant in days as an integer
+    private int plantAge = 0;           // Age of the plant in days as an integer
     boolean decay = false;
+    float idealWaterLevel;              // Ideal water level. A factor when determining the growth rate.
+    float currentAge = 0;               // Current age of the plant
+    int growthStage = 0;                // Growth stage starts at 0 for all plants.
+    int adultLifeSpan;                  // How long a crop plant lives before starting to decay from old age.
 
     /**
      * Constructor used for plant types that have no extra properties.
@@ -20,7 +25,8 @@ public class PlantComponent extends Component {
      * @param plantType
      * @param plantDescription
      */
-    public PlantComponent(int health, String name, String plantType, String plantDescription) {
+    public PlantComponent(int health, String name, String plantType, String plantDescription,
+                          float idealWaterLevel, int adultLifeSpan) {
         this.plantHealth = health;
         this.plantName = name;
         this.plantType = plantType;
@@ -43,6 +49,14 @@ public class PlantComponent extends Component {
      */
     public void setPlantHealth(int health) {
         this.plantHealth = health;
+    }
+
+    /**
+     * Increase (or decrease) the plant health by some value
+     * @param value
+     */
+    public void increasePlantHealth(int value) {
+        this.plantHealth += value;
     }
 
     /**
@@ -104,4 +118,62 @@ public class PlantComponent extends Component {
         this.plantAge = age;
     }
 
+    /**
+     * Get the ideal water level of a plant
+     * @return ideal water level
+     */
+    public float getIdealWaterLevel() {
+        return this.idealWaterLevel;
+    }
+
+    /**
+     * Get the current age of a plant
+     * @return current age
+     */
+    public float getCurrentAge() {
+        return this.currentAge;
+    }
+
+    /**
+     * Get the current growth stage of a plant
+     * @return current growth stage
+     */
+    public int getGrowthStage() {
+        return this.growthStage;
+    }
+
+    /**
+     * get the adult life span of a plant
+     * @return adult life span
+     */
+    public int getAdultLifeSpan() {
+        return this.adultLifeSpan;
+    }
+
+    /**
+     * Increment the current growth stage of a plant by 1
+     */
+    public void incrementGrowthStage() {
+        this.growthStage += 1;
+    }
+
+    /**
+     * increase the current age of a plant by some value
+     * @param value
+     */
+    public void increaseCurrentAge(int value) {
+        this.currentAge += value;
+    }
+
+    /**
+     * check if a plant is still alive
+     * @return
+     */
+    public boolean isDead() {
+        if (this.growthStage >= 7) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -9,5 +9,8 @@ public class BasePlantConfig {
     public String name = "none";
     public String type = "none";
     public String description = "none";
-    public int age = 0;
+    public float idealWaterLevel = 0;
+    public int adultLifeSpan = 0;
+
+
 }
