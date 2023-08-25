@@ -6,10 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.NPCFactory;
-import com.csse3200.game.entities.factories.ObstacleFactory;
-import com.csse3200.game.entities.factories.PlantFactory;
-import com.csse3200.game.entities.factories.PlayerFactory;
+import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
 import com.csse3200.game.services.ResourceService;
@@ -18,33 +15,45 @@ import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.tools.Tool;
+
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
   private static final int NUM_TREES = 7;
   private static final int NUM_GHOSTS = 2;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
+
+  private static final GridPoint2 TOOL_SPAWN = new GridPoint2(15, 10);// temp!!!
+  private static final GridPoint2 TOOL_SPAWN2 = new GridPoint2(15, 15);// temp!!!
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
-    "images/box_boy_leaf.png",
-    "images/tree.png",
-    "images/ghost_king.png",
-    "images/ghost_1.png",
-    "images/grass_1.png",
-    "images/grass_2.png",
-    "images/grass_3.png",
-    "images/hex_grass_1.png",
-    "images/hex_grass_2.png",
-    "images/hex_grass_3.png",
-    "images/iso_grass_1.png",
-    "images/iso_grass_2.png",
-    "images/iso_grass_3.png",
-    "images/test_cactus.png",
-    "images/corn_temp.png",
-    "images/aloe_temp.png"
+          "images/tree.png",
+          "images/ghost_king.png",
+          "images/ghost_1.png",
+          "images/grass_1.png",
+          "images/grass_2.png",
+          "images/grass_3.png",
+          "images/hex_grass_1.png",
+          "images/hex_grass_2.png",
+          "images/hex_grass_3.png",
+          "images/iso_grass_1.png",
+          "images/iso_grass_2.png",
+          "images/iso_grass_3.png",
+          "images/tool_shovel.png",
+          "images/tool_hoe.png",
+          "images/tool_scythe.png",
+          "images/tool_watering_can.png",
+
+          "images/animals/chicken.png",
+          "images/animals/cow.png",
+
+          "images/cropTile.png"
+
   };
   private static final String[] forestTextureAtlases = {
-    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
+          "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
+          "images/animals/chicken.atlas", "images/animals/cow.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -53,10 +62,6 @@ public class ForestGameArea extends GameArea {
   private final TerrainFactory terrainFactory;
 
   private Entity player;
-
-  private Entity cosmicCorn;
-  private Entity aloeVera;
-
 
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
@@ -78,13 +83,21 @@ public class ForestGameArea extends GameArea {
     spawnTerrain();
     spawnTrees();
     player = spawnPlayer();
-    cosmicCorn = spawnCornPlant(15, 15);
-    aloeVera = spawnAloePlant(17,15);
 
-    spawnGhosts();
-    spawnGhostKing();
+
+    spawnChickens();
+    spawnCows();
+
+//    spawnTool(ToolType.TEST_TOOL); // temp - spawns a test tool
+//    spawnTool(ToolType.HOE); // temp - spawns a hoe
+//    spawnGhosts();
+//    spawnGhostKing();
 
     playMusic();
+  }
+
+  public Entity getPlayer() {
+    return player;
   }
 
   private void displayUI() {
@@ -105,22 +118,22 @@ public class ForestGameArea extends GameArea {
 
     // Left
     spawnEntityAt(
-        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO, false, false);
+            ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO, false, false);
     // Right
     spawnEntityAt(
-        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
-        new GridPoint2(tileBounds.x, 0),
-        false,
-        false);
+            ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
+            new GridPoint2(tileBounds.x, 0),
+            false,
+            false);
     // Top
     spawnEntityAt(
-        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
-        new GridPoint2(0, tileBounds.y),
-        false,
-        false);
+            ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
+            new GridPoint2(0, tileBounds.y),
+            false,
+            false);
     // Bottom
     spawnEntityAt(
-        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
+            ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
   }
 
   private void spawnTrees() {
@@ -140,15 +153,46 @@ public class ForestGameArea extends GameArea {
     return newPlayer;
   }
 
-  private Entity spawnCornPlant(int x, int y) {
-    Entity newPlant = PlantFactory.createCosmicCob();
-    spawnEntityAt(newPlant, new GridPoint2(x, y), true, true);
-    return newPlant;
+  private Entity spawnTool(ToolType tool) {
+    Entity newTool;
+    switch (tool) {
+      case HOE:
+        newTool = ItemFactory.createHoe();
+        spawnEntityAt(newTool, TOOL_SPAWN2, true, true);
+        break;
+      case TEST_TOOL:
+        newTool = ItemFactory.createShovel();
+        spawnEntityAt(newTool, TOOL_SPAWN, true, true);
+        break;
+      default:
+        newTool = ItemFactory.createShovel();
+        spawnEntityAt(newTool, TOOL_SPAWN, true, true);
+    }
+    return newTool;
   }
-  private Entity spawnAloePlant(int x, int y) {
-    Entity newPlant = PlantFactory.createAloeVera();
-    spawnEntityAt(newPlant, new GridPoint2(x, y), true, true);
-    return newPlant;
+
+
+  private void spawnChickens() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < 4; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity chicken = NPCFactory.createChicken(player);
+      spawnEntityAt(chicken, randomPos, true, true);
+    }
+  }
+
+
+  private void spawnCows() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < 2; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity cow = NPCFactory.createCow();
+      spawnEntityAt(cow, randomPos, true, true);
+    }
   }
 
   private void spawnGhosts() {
