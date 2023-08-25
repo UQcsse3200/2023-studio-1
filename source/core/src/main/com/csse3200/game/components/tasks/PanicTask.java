@@ -50,7 +50,7 @@ public class PanicTask extends TimedTask implements PriorityTask {
         super.update();
 
         // Once movement finishes, start again
-        if (movementTask.getStatus() != Status.ACTIVE) {
+        if (!this.owner.getEntity().getComponent(PhysicsMovementComponent.class).getMoving()) {
             movementTask.setTarget(getRandomPosInRange());
             movementTask.start();
         }

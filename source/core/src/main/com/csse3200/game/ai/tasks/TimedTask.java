@@ -40,6 +40,12 @@ public class TimedTask extends DefaultTask implements PriorityTask {
         this.owner.getEntity().getEvents().addListener(trigger, this::triggerActivePriority);
     }
 
+    @Override
+    public void start() {
+        super.start();
+        runningTime = 0f;
+    }
+
     /**
      * Sets the priority of the task to the active priority when triggered by an event.
      */
@@ -54,6 +60,7 @@ public class TimedTask extends DefaultTask implements PriorityTask {
         // Reset priority if the running time exceeds the duration
         if (runningTime > duration) {
             this.priority = -1;
+            stop();
         }
     }
 

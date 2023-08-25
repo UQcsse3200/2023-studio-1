@@ -74,4 +74,26 @@ public class TimedTaskTest {
         assertEquals(task.getPriority(), -1);
         assertEquals(task.getStatus(), Status.INACTIVE);
     }
+
+    @Test
+    public void testTaskGetsOverruledByHigherPriorityTask() {
+        TimedTask lowPriorityTask = new TimedTask("low", 10f, 1);
+        TimedTask highPriorityTask = new TimedTask("high", 10f, 2);
+
+        entity.addComponent(new AITaskComponent().addTask(lowPriorityTask).addTask(highPriorityTask));
+        entity.create();
+
+        entity.getEvents().trigger("low");
+        entity.update();
+        assertEquals(Status.ACTIVE, lowPriorityTask.getStatus());
+
+        entity.getEvents().trigger("high");
+        entity.update();
+        assertEquals(Status.INACTIVE, lowPriorityTask.getStatus());
+        assertEquals(Status.ACTIVE, highPriorityTask.getStatus());
+
+        entity.getEvents().trigger("low");
+        assertEquals(Status.INACTIVE, lowPriorityTask.getStatus());
+        assertEquals(Status.ACTIVE, highPriorityTask.getStatus());
+    }
 }
