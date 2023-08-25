@@ -1,9 +1,12 @@
 package com.csse3200.game.components.items;
 
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsComponent;
+
+import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
 
 public class ItemActions extends Component {
 
@@ -42,19 +45,36 @@ public class ItemActions extends Component {
         }
     }
 
-    private void water(Vector2 pos) {
 
+    private Entity getTileInfo(Vector2 pos) {
+        // Needs to query the map with given position and return a tile
+        return null;
+    }
+
+    private void water(Vector2 pos) {
+        Entity tile = getTileInfo(pos);
+        // A water amount of 0.5 was recommended by team 7
+        tile.getEvents().trigger("water", 0.5);
+        // Need to reduce watering can capacity (idk how or where this should be)
     }
 
     private void harvest(Vector2 pos) {
-
+        Entity tile = getTileInfo(pos);
+        tile.getEvents().trigger("harvest");
     }
 
     private void shovel(Vector2 pos) {
-
+        Entity tile = getTileInfo(pos);
     }
 
     private void hoe(Vector2 pos) {
+        Entity tile = getTileInfo(pos);
+        if (tile != null) {
+            return;
+        }
+        // Make a new tile
+        tile = createTerrainEntity(pos);
 
+        // Add tile to the map for further actions
     }
 }
