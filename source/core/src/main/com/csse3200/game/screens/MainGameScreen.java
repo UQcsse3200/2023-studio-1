@@ -38,7 +38,30 @@ public class MainGameScreen extends ScreenAdapter {
   private static final String[] mainGameTextures = {
           "images/heart.png",
           "images/time_system_ui/clock_frame.png",
-          "images/time_system_ui/indicator_12.png"
+          "images/time_system_ui/indicator_0.png",
+          "images/time_system_ui/indicator_1.png",
+          "images/time_system_ui/indicator_2.png",
+          "images/time_system_ui/indicator_3.png",
+          "images/time_system_ui/indicator_4.png",
+          "images/time_system_ui/indicator_5.png",
+          "images/time_system_ui/indicator_6.png",
+          "images/time_system_ui/indicator_7.png",
+          "images/time_system_ui/indicator_8.png",
+          "images/time_system_ui/indicator_9.png",
+          "images/time_system_ui/indicator_10.png",
+          "images/time_system_ui/indicator_11.png",
+          "images/time_system_ui/indicator_12.png",
+          "images/time_system_ui/indicator_13.png",
+          "images/time_system_ui/indicator_14.png",
+          "images/time_system_ui/indicator_15.png",
+          "images/time_system_ui/indicator_16.png",
+          "images/time_system_ui/indicator_17.png",
+          "images/time_system_ui/indicator_18.png",
+          "images/time_system_ui/indicator_19.png",
+          "images/time_system_ui/indicator_20.png",
+          "images/time_system_ui/indicator_21.png",
+          "images/time_system_ui/indicator_22.png",
+          "images/time_system_ui/indicator_23.png",
   };
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 
