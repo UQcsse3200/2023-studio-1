@@ -53,6 +53,9 @@ public class PhysicsEngine implements Disposable {
       world.step(PHYSICS_TIMESTEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
       accumulator -= PHYSICS_TIMESTEP;
     }
+
+    //timeSource.update();
+
   }
 
   public Body createBody(BodyDef bodyDef) {

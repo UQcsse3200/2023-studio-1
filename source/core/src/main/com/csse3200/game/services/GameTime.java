@@ -4,12 +4,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.TimeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.csse3200.game.services.GameTimeDisplay;
 
 /** Controls the game time */
 public class GameTime {
   private static Logger logger = LoggerFactory.getLogger(GameTime.class);
   private final long startTime;
   private float timeScale = 1f;
+
+  public GameTimeDisplay timeDisplay;
 
   public GameTime() {
     startTime = TimeUtils.millis();
@@ -43,6 +46,14 @@ public class GameTime {
 
   public long getTimeSince(long lastTime) {
     return getTime() - lastTime;
+  }
+
+  public void setTimeDisplay(GameTimeDisplay timeDisplay) {
+    this.timeDisplay = timeDisplay;
+  }
+
+  public void update() {
+    timeDisplay.update(5);
   }
 }
 

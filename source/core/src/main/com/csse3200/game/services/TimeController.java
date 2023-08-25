@@ -5,6 +5,8 @@ import com.badlogic.gdx.utils.TimeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.services.GameTimeDisplay;
+import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.GameTime;
 
 /** Class that is repsonsible updating classes depedent on the time*/
 public class TimeController {
@@ -23,7 +25,8 @@ public class TimeController {
     }
 
     public void updateDisplay() {
-        this.TimeDisplay.update(5);
+        /** Will update the */
+        this.TimeDisplay.update();
     }
 
     public void addPlant(/** Plant plant */) {
