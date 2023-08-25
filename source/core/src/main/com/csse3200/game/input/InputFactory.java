@@ -1,5 +1,6 @@
 package com.csse3200.game.input;
 
+import com.badlogic.gdx.Input;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,4 +56,6 @@ public abstract class InputFactory {
    * @return Terminal input handler
    */
   public abstract InputComponent createForTerminal();
+
+  public abstract InputComponent createForTractor();
 }
