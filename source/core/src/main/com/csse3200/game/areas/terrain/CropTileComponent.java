@@ -2,6 +2,7 @@ package com.csse3200.game.areas.terrain;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 import java.util.function.Supplier;
@@ -87,8 +88,16 @@ public class CropTileComponent extends Component {
     }
 
     private void harvestCrop() {
+        if (plant == null) {
+            return;
+        }
         isFertilised = false;
-        isOccupied = false;
+        plant.getEvents().trigger("harvest");
+        PlantComponent component = plant.getComponent(PlantComponent.class);
+        // Check if plant was destroyed after harvest
+        if (component == null) {
+            plant = null;
+        }
     }
 
     /**
