@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.csse3200.game.ui.UIComponent;
+import com.csse3200.game.services.TimeController;
 
 /**
  * A ui component for displaying the current game time on the Main Game Screen.
@@ -19,6 +20,8 @@ public class GameTimeDisplay extends UIComponent{
     private Image planetImage;
     private Label timeLabel;
     private int time;
+
+    private TimeController timeController;
 
     /**
      * Creates reusable ui styles and adds actors to the stage.
@@ -43,7 +46,7 @@ public class GameTimeDisplay extends UIComponent{
 
         // Call a getter function to update time.
         // For now, manually changing the time to a value in [0, 23] will set the time correctly.
-        time = 23;
+        time = 12;
 
         clockImage = new Image(ServiceLocator.getResourceService().getAsset(
             "images/time_system_ui/clock_frame.png", Texture.class));
@@ -75,6 +78,11 @@ public class GameTimeDisplay extends UIComponent{
 
         table.add(group).size(200);
         stage.addActor(table);
+    }
+
+    public void update(int time) {
+        this.time = time;
+        addActors();
     }
 
     @Override
