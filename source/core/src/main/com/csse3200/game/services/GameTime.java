@@ -45,3 +45,4 @@ public class GameTime {
     return getTime() - lastTime;
   }
 }
+
