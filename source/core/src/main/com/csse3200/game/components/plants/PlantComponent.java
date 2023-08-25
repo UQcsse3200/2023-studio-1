@@ -26,12 +26,14 @@ public class PlantComponent extends Component {
      * @param plantDescription
      */
     public PlantComponent(int health, String name, String plantType, String plantDescription,
-                          float idealWaterLevel, int adultLifeSpan) {
+                          float idealWaterLevel, int adultLifeSpan, int maxHealth) {
         this.plantHealth = health;
         this.plantName = name;
         this.plantType = plantType;
         this.plantDescription = plantDescription;
-        this.plantAge = 0;
+        this.idealWaterLevel = idealWaterLevel;
+        this.adultLifeSpan = adultLifeSpan;
+        this.maxHealth = maxHealth;
     }
 
     /**
@@ -41,6 +43,10 @@ public class PlantComponent extends Component {
      */
     public int getPlantHealth() {
         return this.plantHealth;
+    }
+
+    public int getMaxHealth() {
+        return this.maxHealth;
     }
 
     /**

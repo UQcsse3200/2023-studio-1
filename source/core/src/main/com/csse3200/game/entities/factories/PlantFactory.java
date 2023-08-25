@@ -49,7 +49,7 @@ public class PlantFactory {
         Entity plant = createBasePlant()
                 .addComponent(new TextureRenderComponent("images/corn_temp.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
-                        config.description, config.idealWaterLevel, config.adultLifeSpan));
+                        config.description, config.idealWaterLevel, config.adultLifeSpan, config.maxHealth));
 
         plant.getComponent(TextureRenderComponent.class).scaleEntity();
         plant.scaleHeight(1f);
@@ -68,7 +68,7 @@ public class PlantFactory {
         Entity plant = createBasePlant()
                 .addComponent(new TextureRenderComponent("images/aloe_temp.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
-                        config.description, config.idealWaterLevel, config.adultLifeSpan));
+                        config.description, config.idealWaterLevel, config.adultLifeSpan, config.maxHealth));
 
         plant.getComponent(TextureRenderComponent.class).scaleEntity();
         plant.scaleHeight(1f);
@@ -87,7 +87,7 @@ public class PlantFactory {
         Entity plant = createBasePlant()
                 .addComponent(new TextureRenderComponent("images/test_cactus.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
-                        config.description, config.idealWaterLevel, config.adultLifeSpan));
+                        config.description, config.idealWaterLevel, config.adultLifeSpan, config.maxHealth));
 
         plant.getComponent(TextureRenderComponent.class).scaleEntity();
         plant.scaleHeight(1f);
@@ -107,7 +107,7 @@ public class PlantFactory {
         Entity plant = createBasePlant()
                 .addComponent(new TextureRenderComponent("images/belladonna.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
-                        config.description, config.idealWaterLevel, config.adultLifeSpan));
+                        config.description, config.idealWaterLevel, config.adultLifeSpan, config.maxHealth));
 
         plant.getComponent(TextureRenderComponent.class).scaleEntity();
         plant.scaleHeight(1f);
@@ -126,7 +126,7 @@ public class PlantFactory {
         Entity plant = createBasePlant()
                 .addComponent(new TextureRenderComponent("images/tobacco.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
-                        config.description, config.idealWaterLevel, config.adultLifeSpan));
+                        config.description, config.idealWaterLevel, config.adultLifeSpan, config.maxHealth));
 
         plant.getComponent(TextureRenderComponent.class).scaleEntity();
         plant.scaleHeight(1f);
@@ -146,7 +146,7 @@ public class PlantFactory {
         Entity plant = createBasePlant()
                 .addComponent(new TextureRenderComponent("images/test_cactus.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
-                        config.description, config.idealWaterLevel, config.adultLifeSpan));
+                        config.description, config.idealWaterLevel, config.adultLifeSpan, config.maxHealth));
 
         plant.getComponent(TextureRenderComponent.class).scaleEntity();
         plant.scaleHeight(1f);

@@ -5,7 +5,8 @@
     "type": "FOOD",
     "description": "Nutritious space corn!",
     "idealWaterLevel": 0.7,
-    "adultLifeSpan": 5
+    "adultLifeSpan": 5,
+    "maxHeath": 300
   },
   "aloeVera": {
     "health": 50,
@@ -13,7 +14,8 @@
     "type": "HEALTH",
     "description": "Produces gel that can be used for healing",
     "idealWaterLevel": 0.7,
-    "adultLifeSpan": 5
+    "adultLifeSpan": 5,
+    "maxHeath": 300
   },
   "hammerPlant": {
     "health": 10,
@@ -21,7 +23,8 @@
     "type": "REPAIR",
     "description": "Repairs plants within its healing radius",
     "idealWaterLevel": 0.7,
-    "adultLifeSpan": 5
+    "adultLifeSpan": 5,
+    "maxHeath": 300
   },
   "venusFlyTrap": {
     "health": 100,
@@ -29,7 +32,8 @@
     "type": "DEFENCE",
     "description" : "I eat the fauna!",
     "idealWaterLevel": 0.7,
-    "adultLifeSpan": 5
+    "adultLifeSpan": 5,
+    "maxHeath": 300
   },
   "waterWeed": {
     "health": 10,
@@ -37,7 +41,8 @@
     "type": "PRODUCTION",
     "description": "Test description",
     "idealWaterLevel": 0.7,
-    "adultLifeSpan": 5
+    "adultLifeSpan": 5,
+    "maxHeath": 300
   },
   "atropaBelladonna": {
     "health": 200,
@@ -45,7 +50,8 @@
     "type": "DEADLY",
     "description": "Grows deadly poisonous berries",
     "idealWaterLevel": 0.7,
-    "adultLifeSpan": 5
+    "adultLifeSpan": 5,
+    "maxHeath": 300
   },
   "nicotianaTabacum": {
     "health": 20,
@@ -53,7 +59,8 @@
     "type": "DEADLY",
     "description": "Toxic addicted plant leaves",
     "idealWaterLevel": 0.7,
-    "adultLifeSpan": 5
+    "adultLifeSpan": 5,
+    "maxHeath": 300
   },
   "sunFlower": {
     "health" : 10,
@@ -61,6 +68,7 @@
     "type": "PRODUCTION",
     "description": "Warms up the nearby area",
     "idealWaterLevel": 0.7,
-    "adultLifeSpan": 5
+    "adultLifeSpan": 5,
+    "maxHeath": 300
   }
 }
