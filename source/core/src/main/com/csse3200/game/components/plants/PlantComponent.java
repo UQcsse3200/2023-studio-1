@@ -9,6 +9,7 @@ public class PlantComponent extends Component {
     private String plantName;           // User facing plant name
     private String plantType;           // Type of plant (food, health, repair, defence, production)
     private String plantDescription;    // User facing description of the plant
+    private int plantAge;               // Age of the plant in days as an integer
     boolean decay = false;
 
     /**
@@ -24,6 +25,7 @@ public class PlantComponent extends Component {
         this.plantName = name;
         this.plantType = plantType;
         this.plantDescription = plantDescription;
+        this.plantAge = 0;
     }
 
     /**
@@ -85,4 +87,21 @@ public class PlantComponent extends Component {
     public boolean isDecay() {
         return this.decay;
     }
+
+    /**
+     * Get this plants current age in days
+     * @return the number of days the plant has existed for
+     */
+    public int getPlantAge() {
+        return this.plantAge;
+    }
+
+    /**
+     * Set this plants age in days
+     * @param age
+     */
+    public void setPlantAge(int age) {
+        this.plantAge = age;
+    }
+
 }

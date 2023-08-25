@@ -9,4 +9,5 @@ public class BasePlantConfig {
     public String name = "none";
     public String type = "none";
     public String description = "none";
+    public int age = 0;
 }
