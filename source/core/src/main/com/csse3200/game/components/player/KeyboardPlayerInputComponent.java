@@ -13,6 +13,7 @@ import com.csse3200.game.components.player.InventoryComponent;
  */
 public class KeyboardPlayerInputComponent extends InputComponent {
   private final Vector2 walkDirection = Vector2.Zero.cpy();
+  private final int hotKeyOffset = 6;
 
   public KeyboardPlayerInputComponent() {
     super(5);
@@ -50,35 +51,12 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.SPACE:
         entity.getEvents().trigger("attack");
         return true;
-      case Keys.NUM_0:
-        entity.getComponent(InventoryComponent.class).setHeldItem(0);
-        return true;
-      case Keys.NUM_1:
-        entity.getComponent(InventoryComponent.class).setHeldItem(1);
-        return true;
-      case Keys.NUM_2:
-        entity.getComponent(InventoryComponent.class).setHeldItem(2);
-        return true;
-      case Keys.NUM_3:
-        entity.getComponent(InventoryComponent.class).setHeldItem(3);
-        return true;
-      case Keys.NUM_4:
-        entity.getComponent(InventoryComponent.class).setHeldItem(4);
-        return true;
-      case Keys.NUM_5:
-        entity.getComponent(InventoryComponent.class).setHeldItem(5);
-        return true;
-      case Keys.NUM_6:
-        entity.getComponent(InventoryComponent.class).setHeldItem(6);
-        return true;
-      case Keys.NUM_7:
-        entity.getComponent(InventoryComponent.class).setHeldItem(7);
-        return true;
-      case Keys.NUM_8:
-        entity.getComponent(InventoryComponent.class).setHeldItem(8);
-        return true;
-      case Keys.NUM_9:
-        entity.getComponent(InventoryComponent.class).setHeldItem(9);
+      case Keys.NUM:
+        if (keycode == Keys.NUM_0) {
+          handleHotKeySelection(0);
+        } else {
+          handleHotKeySelection(keycode - hotKeyOffset);
+        }
         return true;
       default:
         return false;
@@ -136,5 +114,14 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   private void triggerAnimationWalkStopEvent() {
     entity.getEvents().trigger("animationWalkStop");
+  }
+
+  /**
+   * Sets the players current held item to that in the provided index of the inventory
+   *
+   * @param index of the item the user wants to be holding
+   */
+  private void handleHotKeySelection(int index) {
+    entity.getComponent(InventoryComponent.class).setHeldItem(index);
   }
 }
