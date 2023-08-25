@@ -80,7 +80,10 @@ public class PlayerFactory {
     animator.addAnimation("run_right", 0.05f, Animation.PlayMode.LOOP);
     animator.addAnimation("run_down", 0.05f, Animation.PlayMode.LOOP);
     animator.addAnimation("run_up", 0.05f, Animation.PlayMode.LOOP);
-    animator.addAnimation("idle", 0.05f, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle_down", 0.5f, Animation.PlayMode.LOOP_RANDOM);
+    animator.addAnimation("idle_left", 0.5f, Animation.PlayMode.LOOP_RANDOM);
+    animator.addAnimation("idle_up", 0.5f, Animation.PlayMode.LOOP_RANDOM);
+    animator.addAnimation("idle_right", 0.5f, Animation.PlayMode.LOOP_RANDOM);
     animator.addAnimation("default", 0.1f, Animation.PlayMode.LOOP);
 
     return animator;
