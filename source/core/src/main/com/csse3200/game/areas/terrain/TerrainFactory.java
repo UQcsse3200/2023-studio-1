@@ -2,6 +2,9 @@ package com.csse3200.game.areas.terrain;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -25,10 +28,84 @@ public class TerrainFactory {
   private static final GridPoint2 MAP_SIZE = new GridPoint2(30, 30);
   private static final int TUFT_TILE_COUNT = 30;
   private static final int GRASS1_TILE_COUNT = 30;
-
-
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;
+  private static final Map<Character,String> charToTileImageMap;
+  static {
+    Map<Character,String> tempMapA=new HashMap<>();
+    tempMapA.put('g',"images/grass_1.png");
+    tempMapA.put('G',"images/grass_2.png");
+    tempMapA.put('f',"images/grass_3.png");
+    tempMapA.put('b',"images/beach_1.png");
+    tempMapA.put('B',"images/beach_2.png");
+    tempMapA.put('c',"images/beach_3.png");
+    tempMapA.put('d',"images/deepWater_1.png");
+    tempMapA.put('D',"images/deepWater_2.png");
+    tempMapA.put('s',"images/desert_1.png");
+    tempMapA.put('C',"images/desert_2.png");
+    tempMapA.put('S',"images/desert_3.png");
+    tempMapA.put('/',"images/dirt_1.png");
+    tempMapA.put('r',"images/dirt_2.png");
+    tempMapA.put('R',"images/dirt_3.png");
+    tempMapA.put('^',"images/dirtPathTop.png");
+    tempMapA.put('>',"images/dirtPathRight.png");
+    tempMapA.put('v',"images/dirtPathBottom.png");
+    tempMapA.put('%',"images/gravel.png");
+    tempMapA.put('i',"images/ice_1.png");
+    tempMapA.put('I',"images/ice_2.png");
+    tempMapA.put('l',"images/lava_1.png");
+    tempMapA.put('L',"images/lavaGround_1.png");
+    tempMapA.put('m',"images/lavaGround_2.png");
+    tempMapA.put('M',"images/lavaGround_3.png");
+    tempMapA.put('w',"images/water_1.png");
+    tempMapA.put('W',"images/water_2.png");
+    tempMapA.put('!',"images/water_3.png");
+    tempMapA.put('#',"images/flowingWater_1.png");
+    tempMapA.put('p',"images/snow_1.png");
+    tempMapA.put('P',"images/snow_2.png");
+    tempMapA.put('@',"images/snow_3.png");
+    tempMapA.put('&',"images/stone_1.png");
+    tempMapA.put('+',"images/stonePath_1.png");
+    charToTileImageMap = Collections.unmodifiableMap(tempMapA);
+  }
+  private static final Map<Character,TerrainTile.TerrainCategory> charToTileTypeMap;
+  static {
+    Map<Character,TerrainTile.TerrainCategory> tempMapB = new HashMap<>();
+    tempMapB.put('g', TerrainTile.TerrainCategory.GRASS);
+    tempMapB.put('G',TerrainTile.TerrainCategory.GRASS);
+    tempMapB.put('f',TerrainTile.TerrainCategory.GRASS);
+    tempMapB.put('b', TerrainTile.TerrainCategory.BEACHSAND);
+    tempMapB.put('B',TerrainTile.TerrainCategory.BEACHSAND);
+    tempMapB.put('c',TerrainTile.TerrainCategory.BEACHSAND);
+    tempMapB.put('d', TerrainTile.TerrainCategory.DEEPWATER);
+    tempMapB.put('D',TerrainTile.TerrainCategory.DEEPWATER);
+    tempMapB.put('s', TerrainTile.TerrainCategory.DESERT);
+    tempMapB.put('C',TerrainTile.TerrainCategory.DESERT);
+    tempMapB.put('S',TerrainTile.TerrainCategory.DESERT);
+    tempMapB.put('/', TerrainTile.TerrainCategory.DIRT);
+    tempMapB.put('r',TerrainTile.TerrainCategory.DIRT);
+    tempMapB.put('R',TerrainTile.TerrainCategory.DIRT);
+    tempMapB.put('^', TerrainTile.TerrainCategory.PATH);
+    tempMapB.put('>',TerrainTile.TerrainCategory.PATH);
+    tempMapB.put('v',TerrainTile.TerrainCategory.PATH);
+    tempMapB.put('%', TerrainTile.TerrainCategory.GRAVEL);
+    tempMapB.put('i', TerrainTile.TerrainCategory.ICE);
+    tempMapB.put('I',TerrainTile.TerrainCategory.ICE);
+    tempMapB.put('l', TerrainTile.TerrainCategory.LAVA);
+    tempMapB.put('L', TerrainTile.TerrainCategory.LAVAGROUND);
+    tempMapB.put('m',TerrainTile.TerrainCategory.LAVAGROUND);
+    tempMapB.put('M',TerrainTile.TerrainCategory.LAVAGROUND);
+    tempMapB.put('w', TerrainTile.TerrainCategory.SHALLOWWATER);
+    tempMapB.put('W',TerrainTile.TerrainCategory.SHALLOWWATER);
+    tempMapB.put('!',TerrainTile.TerrainCategory.SHALLOWWATER);
+    tempMapB.put('#',TerrainTile.TerrainCategory.FLOWINGWATER);
+    tempMapB.put('p', TerrainTile.TerrainCategory.SNOW);
+    tempMapB.put('P', TerrainTile.TerrainCategory.SNOW);
+    tempMapB.put('@', TerrainTile.TerrainCategory.SNOW);
+    tempMapB.put('&', TerrainTile.TerrainCategory.ROCK);
+    tempMapB.put('+', TerrainTile.TerrainCategory.PATH);
+    charToTileTypeMap = Collections.unmodifiableMap(tempMapB);
+  }
 
   /**
    * Create a terrain factory with Orthogonal orientation

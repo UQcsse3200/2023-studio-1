@@ -49,8 +49,12 @@ public class TerrainTile implements TiledMapTile {
         this.isTraversable = false;
       case LAVA:
         this.isTraversable = false;
-      case MOUNTAIN:
-        this.isTraversable = false;
+      case LAVAGROUND:
+        this.isTraversable = true;
+      case GRAVEL:
+        this.isTraversable=true;
+      case FLOWINGWATER:
+        this.isTraversable=true;
     }
   }
 
@@ -184,6 +188,8 @@ public class TerrainTile implements TiledMapTile {
     DEEPWATER,
     ROCK,
     LAVA,
-    MOUNTAIN
+    LAVAGROUND,
+    GRAVEL,
+    FLOWINGWATER
   }
 }
