@@ -49,7 +49,10 @@ public class PlayerAnimationController extends Component {
     /**
      * Starts the default player animation when they stop walking.
      */
-    void animationWalkStop() {
-        animator.startAnimation("default");
+    void animationWalkStop(String direction) {
+        String animation = String.format("idle_%s", direction);
+        if (!animator.getCurrentAnimation().equals(animation)) {
+            animator.startAnimation(animation);
+        }
     }
 }

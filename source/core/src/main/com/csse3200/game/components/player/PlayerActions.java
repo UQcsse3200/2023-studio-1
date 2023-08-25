@@ -14,6 +14,7 @@ import com.csse3200.game.services.ServiceLocator;
 public class PlayerActions extends Component {
   private static final Vector2 MAX_WALK_SPEED = new Vector2(3f, 3f); // Metres per second
   private static final Vector2 MAX_RUN_SPEED = new Vector2(5f, 5f); // Metres per second
+  private float prevMoveDirection = 300; // Initialize it with a default value
 
   private PhysicsComponent physicsComponent;
   private Vector2 moveDirection = Vector2.Zero.cpy();
@@ -44,7 +45,18 @@ public class PlayerActions extends Component {
   private void updateAnimation() {
     if (moveDirection.epsilonEquals(Vector2.Zero)) {
       // player is not moving
-      entity.getEvents().trigger("animationWalkStop");
+
+      String animationName = "animationWalkStop";
+      float direction = getPrevMoveDirection();
+      if (direction < 45) {
+        entity.getEvents().trigger(animationName, "right");
+      } else if (direction < 135) {
+        entity.getEvents().trigger(animationName, "up");
+      } else if (direction < 225) {
+        entity.getEvents().trigger(animationName, "left");
+      } else if (direction < 315) {
+        entity.getEvents().trigger(animationName, "down");
+      }
       return;
     }
 
@@ -73,16 +85,20 @@ public class PlayerActions extends Component {
     body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
   }
 
+  public float getPrevMoveDirection() {
+    return prevMoveDirection;
+  }
   /**
    * Moves the player towards a given direction.
    *
    * @param direction direction to move in
    */
   void move(Vector2 direction) {
+    // Store the previous move direction
     this.moveDirection = direction;
+    this.prevMoveDirection = moveDirection.angleDeg();
     moving = true;
   }
-
   /**
    * Stops the player from moving.
    */
