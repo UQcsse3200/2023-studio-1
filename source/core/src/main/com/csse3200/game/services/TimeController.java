@@ -20,8 +20,11 @@ public class TimeController {
     /** The current hour in the game*/
     private int hour;
 
+    private boolean paused;
+
     public TimeController() {
         this.hour = 0;
+        this.paused = false;
     }
 
     public void setTimeSource(GameTime timeSource) {
@@ -53,5 +56,17 @@ public class TimeController {
         this.hour = (int) Math.floor(timeInDay / 30000);
 
         timeDisplay.update(this.hour);
+    }
+
+    public void pause() {
+        this.paused = true;
+    }
+
+    public void unpause() {
+        this.paused = false;
+    }
+
+    public void setTime(int hour) {
+        this.hour = hour;
     }
 }
