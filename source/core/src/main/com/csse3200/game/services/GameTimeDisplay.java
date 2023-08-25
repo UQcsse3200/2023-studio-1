@@ -24,7 +24,7 @@ public class GameTimeDisplay extends UIComponent {
     private int time;
 
     private TimeController timeController;
-//    private GameTime timeSource;
+
     /**
      * Creates reusable ui styles and adds actors to the stage.
      */
@@ -34,7 +34,6 @@ public class GameTimeDisplay extends UIComponent {
         addActors();
         this.timeController = ServiceLocator.getTimeSource().getTimeController();
         this.timeController.setTimeDisplay(this);
-        //this.timeSource.setTimeDisplay(this);
     }
 
     /**
