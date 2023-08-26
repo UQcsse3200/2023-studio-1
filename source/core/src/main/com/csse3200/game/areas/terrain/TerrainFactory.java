@@ -27,7 +27,7 @@ public class TerrainFactory {
   private static final GridPoint2 MAP_SIZE = new GridPoint2(30, 30);
   private static final int TUFT_TILE_COUNT = 30;
   private static final int GRASS1_TILE_COUNT = 30;
-  private static final String path = "source/core/assets/configs/Map.txt"; // change this path if u can't open the file
+  private static final String path = "configs/testMap.txt"; // change this path if u can't open the file
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;
   private static final Map<Character,String> charToTileImageMap;
