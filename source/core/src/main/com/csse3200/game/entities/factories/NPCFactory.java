@@ -8,6 +8,7 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.npc.AnimalAnimationController;
 import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.TouchAttackComponent;
+import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.RunAwayTask;
 import com.csse3200.game.components.tasks.WanderTask;
@@ -96,9 +97,9 @@ public class NPCFactory {
    * Creates a chicken entity
    * @return chicken entity
    */
-  public static Entity createChicken(Entity target) {
+  public static Entity createChicken(Entity player) {
     Entity chicken = createBaseAnimal();
-    BaseAnimalConfig config = configs.cow;
+    BaseAnimalConfig config = configs.chicken;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/animals/chicken.atlas", TextureAtlas.class));
@@ -111,12 +112,14 @@ public class NPCFactory {
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-            .addTask(new RunAwayTask(target, 10, 2f, 4f));
+            .addTask(new RunAwayTask(player, 10, 2f, 4f, new Vector2(3f, 3f)));
 
     chicken
             .addComponent(aiTaskComponent)
             .addComponent(animator)
-            .addComponent(new AnimalAnimationController());
+            .addComponent(new AnimalAnimationController())
+            .addComponent(new TamableComponent(player, config.tamingThreshold,
+                    config.tamingProbability, config.favouriteFood));
 
     PhysicsUtils.setScaledCollider(chicken, 0.8f, 0.4f);
     return chicken;
@@ -126,7 +129,7 @@ public class NPCFactory {
    * Creates a cow entity
    * @return cow entity
    */
-  public static Entity createCow() {
+  public static Entity createCow(Entity player) {
     Entity cow = createBaseAnimal();
     BaseAnimalConfig config = configs.cow;
 
@@ -143,7 +146,10 @@ public class NPCFactory {
     cow
             .addComponent(aiTaskComponent)
             .addComponent(animator)
-            .addComponent(new AnimalAnimationController());
+            .addComponent(new AnimalAnimationController())
+            .addComponent(new TamableComponent(
+                    player, config.tamingThreshold,
+                    config.tamingProbability, config.favouriteFood));
 
 //    cow.scaleHeight(1.2f);
     return cow;

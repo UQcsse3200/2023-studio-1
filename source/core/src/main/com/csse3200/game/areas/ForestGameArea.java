@@ -46,7 +46,8 @@ public class ForestGameArea extends GameArea {
     "images/tool_watering_can.png",
     "images/animals/chicken.png",
     "images/animals/cow.png",
-          "images/animals/dog.png"
+          "images/animals/dog.png",
+          "images/cropTile.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
@@ -92,6 +93,10 @@ public class ForestGameArea extends GameArea {
 //    spawnGhostKing();
 
     playMusic();
+  }
+
+  public Entity getPlayer() {
+    return player;
   }
 
   private void displayUI() {
@@ -184,7 +189,7 @@ public class ForestGameArea extends GameArea {
 
     for (int i = 0; i < 2; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity cow = NPCFactory.createCow();
+      Entity cow = NPCFactory.createCow(player);
       spawnEntityAt(cow, randomPos, true, true);
     }
   }
