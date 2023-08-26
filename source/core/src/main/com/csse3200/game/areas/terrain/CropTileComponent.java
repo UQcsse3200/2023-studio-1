@@ -126,6 +126,10 @@ public class CropTileComponent extends Component {
     Vector2 plantPosition = entity.getPosition();
     plantPosition.y += 0.5f;
     plant.setPosition(plantPosition);
+    // Give plant this entity's plant component
+    plant.getComponent(PlantComponent.class).setTile(this);
+
+    ServiceLocator.getEntityService().register(plant);
   }
 
   /**
