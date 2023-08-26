@@ -150,6 +150,33 @@ public class NPCFactory {
   }
 
   /**
+   * Creates a dog entity
+   * @return dog entity
+   */
+  public static Entity createDog() {
+    Entity dog = createBaseAnimal();
+//    BaseAnimalConfig config = configs.cow;
+
+    AnimationRenderComponent animator = new AnimationRenderComponent(
+            ServiceLocator.getResourceService().getAsset("images/animals/dog.atlas", TextureAtlas.class));
+    animator.addAnimation("idle_left", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle_right", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation("walk_left", 0.05f, Animation.PlayMode.LOOP);
+    animator.addAnimation("walk_right", 0.05f, Animation.PlayMode.LOOP);
+
+    AITaskComponent aiTaskComponent = new AITaskComponent()
+            .addTask(new WanderTask(new Vector2(3f, 3f), 1f));
+
+    dog
+            .addComponent(aiTaskComponent)
+            .addComponent(animator)
+            .addComponent(new AnimalAnimationController());
+
+    dog.scaleHeight(1.7f);
+    return dog;
+  }
+
+  /**
    * Creates a generic animal to be used as a base entity by more specific animal creation methods.
    *
    * @return entity

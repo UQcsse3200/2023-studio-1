@@ -45,11 +45,12 @@ public class ForestGameArea extends GameArea {
     "images/tool_scythe.png",
     "images/tool_watering_can.png",
     "images/animals/chicken.png",
-    "images/animals/cow.png"
+    "images/animals/cow.png",
+          "images/animals/dog.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
-          "images/animals/chicken.atlas", "images/animals/cow.atlas"
+          "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/animals/dog.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -83,6 +84,7 @@ public class ForestGameArea extends GameArea {
 
     spawnChickens();
     spawnCows();
+    spawnDogs();
 
 //    spawnTool(ToolType.TEST_TOOL); // temp - spawns a test tool
 //    spawnTool(ToolType.HOE); // temp - spawns a hoe
@@ -184,6 +186,17 @@ public class ForestGameArea extends GameArea {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity cow = NPCFactory.createCow();
       spawnEntityAt(cow, randomPos, true, true);
+    }
+  }
+
+  private void spawnDogs() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < 2; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity dog = NPCFactory.createDog();
+      spawnEntityAt(dog, randomPos, true, true);
     }
   }
 
