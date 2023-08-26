@@ -18,8 +18,25 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
  * have the properties stored in the PlantConfig classes
  */
 public class PlantFactory {
-    private static final PlantConfigs stats =
+    private static PlantConfigs stats =
             FileLoader.readClass(PlantConfigs.class, "configs/plant.json");
+
+    /**
+     * Sets the plant statistics.
+     *
+     * @param newStats The new statistics to be set for the plant.
+     */
+    public static void setStats(PlantConfigs newStats) {
+        stats = newStats;
+    }
+
+    /**
+     * Resets plant statistics to default values from "configs/plant.json" file.
+     */
+    public static void resetStats() {
+        stats = FileLoader.readClass(PlantConfigs.class, "configs/plant.json");
+    }
+
 
     /**
      * Creates a generic plant to be used as a base for more specific plant creation methods.
