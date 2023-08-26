@@ -1,14 +1,11 @@
 package com.csse3200.game.areas.terrain;
 
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 
-import java.util.function.Supplier;
-import javax.swing.MenuElement;
+import java.util.function.Function;
 
 /**
  * Component which stores information about plots of land on which crops and plants can grow.
@@ -69,7 +66,6 @@ public class CropTileComponent extends Component {
 		entity.getEvents().addListener("water", this::waterTile);
 		entity.getEvents().addListener("fertilise", this::fertiliseTile);
 		entity.getEvents().addListener("plant", this::plantCrop);
-		entity.getEvents().addListener("harvest", this::harvestCrop);
 		entity.getEvents().addListener("destroy", this::destroyTile);
 	}
 
@@ -107,9 +103,11 @@ public class CropTileComponent extends Component {
 	 */
 	private void destroyTile() {
 		if (isOccupied()) {
-			plant.dispose();
+			plant.getEvents().trigger("destroyPlant");
+			this.setUnoccupied();
+		} else {
+			this.dispose();
 		}
-		this.dispose();
 	}
 
 	/**
@@ -118,36 +116,12 @@ public class CropTileComponent extends Component {
 	 *
 	 * @param plantFactoryMethod Factory method that is used to create a new plant
 	 */
-	private void plantCrop(Supplier<Entity> plantFactoryMethod) {
+	private void plantCrop(Function<CropTileComponent, Entity> plantFactoryMethod) {
 		if (isOccupied()) {
 			return;
 		}
-		plant = plantFactoryMethod.get();
-		// Sets position of plant to be the center of the tile
-		Vector2 plantPosition = entity.getPosition();
-		plantPosition.y += 0.5f;
-		plant.setPosition(plantPosition);
-		// Give plant this entity's plant component
-		plant.getComponent(PlantComponent.class).setTile(this);
-
+		plant = plantFactoryMethod.apply(this);
 		ServiceLocator.getEntityService().register(plant);
-	}
-
-	/**
-	 * Sends a harvest event to the plant if one exists on the tile. Also checks whether the plant was
-	 * destroyed as a result of harvesting.
-	 */
-	private void harvestCrop() {
-		if (!isOccupied()) {
-			return;
-		}
-		isFertilised = false;
-		plant.getEvents().trigger("harvest");
-		PlantComponent component = plant.getComponent(PlantComponent.class);
-		// Check if plant was destroyed after harvest
-		if (component == null) {
-			plant = null;
-		}
 	}
 
 	/**
@@ -189,6 +163,14 @@ public class CropTileComponent extends Component {
 	 */
 	private boolean isOccupied() {
 		return plant != null;
+	}
+
+	/**
+	 * Sets the tile to be unoccupied.
+	 */
+	public void setUnoccupied() {
+		isFertilised = false;
+		plant = null;
 	}
 
 }
