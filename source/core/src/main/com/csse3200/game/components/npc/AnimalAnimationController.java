@@ -26,6 +26,7 @@ public class AnimalAnimationController extends Component {
         entity.getEvents().addListener("walkStart", this::animateWalk);
         entity.getEvents().addListener("runStart", this::animateRun);
         entity.getEvents().addListener("idleStart", this::animateIdle);
+        entity.getEvents().addListener("followStart", this::animateWalk);
 
         animateIdle();
     }

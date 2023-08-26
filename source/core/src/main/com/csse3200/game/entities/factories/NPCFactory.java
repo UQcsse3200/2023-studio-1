@@ -10,6 +10,7 @@ import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.components.tasks.ChaseTask;
+import com.csse3200.game.components.tasks.FollowTask;
 import com.csse3200.game.components.tasks.RunAwayTask;
 import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.Entity;
@@ -141,7 +142,8 @@ public class NPCFactory {
     animator.addAnimation("walk_right", 0.25f, Animation.PlayMode.LOOP);
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
-            .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+            .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
+            .addTask(new FollowTask(player, 10, 3f, 4f));
 
     cow
             .addComponent(aiTaskComponent)
