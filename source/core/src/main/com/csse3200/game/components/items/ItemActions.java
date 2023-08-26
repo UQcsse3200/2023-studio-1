@@ -41,7 +41,7 @@ public class ItemActions extends Component {
                 return resultStatus;
             }
             case WATERING_CAN -> {
-                resultStatus = water(pos);
+                resultStatus = water(pos, item);
                 return resultStatus;
             }
             default -> {
@@ -65,9 +65,10 @@ public class ItemActions extends Component {
     /**
      * Waters the tile at the given position. 
      * @param pos position of the tile being watered
+     * @param item a reference to a watering can
      * @return if watering was successful return true else return false
      */
-    private boolean water(Vector2 pos) {
+    private boolean water(Vector2 pos, Entity item) {
         Entity tile = getTileAtPosition(pos);
         boolean tileWaterable = isCropTile(tile);
         if (!tileWaterable) {
@@ -77,6 +78,7 @@ public class ItemActions extends Component {
         // A water amount of 0.5 was recommended by team 7
         tile.getEvents().trigger("water", 0.5);
         // TODO Need to reduce watering can capacity (idk how or where this should be)
+        item.getComponent(WateringCanLevelComponent.class).incrementLevel(-5);
         return true;
     }
 
