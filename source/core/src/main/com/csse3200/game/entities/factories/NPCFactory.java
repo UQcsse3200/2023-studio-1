@@ -9,6 +9,7 @@ import com.csse3200.game.components.npc.AnimalAnimationController;
 import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.TamableComponent;
+import com.csse3200.game.components.tasks.FollowTask;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.RunAwayTask;
 import com.csse3200.game.components.tasks.WanderTask;
@@ -151,35 +152,37 @@ public class NPCFactory {
                     player, config.tamingThreshold,
                     config.tamingProbability, config.favouriteFood));
 
-//    cow.scaleHeight(1.2f);
+    cow.scaleHeight(1.8f);
+    PhysicsUtils.setScaledCollider(cow, 0.7f, 0.4f);
     return cow;
   }
 
   /**
-   * Creates a dog entity
-   * @return dog entity
+   * Creates an Astrolotl entity
+   * @return Astrolotl entity
    */
-  public static Entity createDog() {
-    Entity dog = createBaseAnimal();
-//    BaseAnimalConfig config = configs.cow;
+  public static Entity createAstrolotl(Entity player) {
+    Entity astrolotl = createBaseAnimal();
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
-            ServiceLocator.getResourceService().getAsset("images/animals/dog.atlas", TextureAtlas.class));
+            ServiceLocator.getResourceService().getAsset("images/animals/astrolotl.atlas", TextureAtlas.class));
     animator.addAnimation("idle_left", 0.15f, Animation.PlayMode.LOOP);
     animator.addAnimation("idle_right", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("walk_left", 0.05f, Animation.PlayMode.LOOP);
-    animator.addAnimation("walk_right", 0.05f, Animation.PlayMode.LOOP);
+    animator.addAnimation("walk_left", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation("walk_right", 0.15f, Animation.PlayMode.LOOP);
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
-            .addTask(new WanderTask(new Vector2(3f, 3f), 1f));
+            .addTask(new WanderTask(new Vector2(0f, 0f), 2f))
+            .addTask(new FollowTask(player, 10,  4f, new Vector2(2f, 2f)));
 
-    dog
+    astrolotl
             .addComponent(aiTaskComponent)
             .addComponent(animator)
             .addComponent(new AnimalAnimationController());
 
-    dog.scaleHeight(1.7f);
-    return dog;
+    astrolotl.scaleHeight(1.2f);
+    PhysicsUtils.setScaledCollider(astrolotl, 0.9f, 0.4f);
+    return astrolotl;
   }
 
   /**
@@ -187,14 +190,12 @@ public class NPCFactory {
    *
    * @return entity
    */
-  
   private static Entity createBaseAnimal() {
     Entity animal = new Entity()
             .addComponent(new PhysicsComponent())
             .addComponent(new PhysicsMovementComponent())
             .addComponent(new ColliderComponent());
 
-        PhysicsUtils.setScaledCollider(animal, 0.9f, 0.4f);
     return animal;
   }
 
