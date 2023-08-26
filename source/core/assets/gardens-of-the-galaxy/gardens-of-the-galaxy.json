@@ -244,8 +244,6 @@
 		"font": "thin_white",
 		"fontColor": "black",
 		"background": "grey_button_high.9",
-		"cursor": "blue_cursor",
-		"selection": "blue_cursor",
 		"focusedBackground": "blue_button_select.9"
 	}
 },
