@@ -9,7 +9,6 @@ import com.csse3200.game.components.npc.AnimalAnimationController;
 import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.TamableComponent;
-import com.csse3200.game.components.tasks.FollowTask;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.RunAwayTask;
 import com.csse3200.game.components.tasks.WanderTask;
@@ -163,6 +162,7 @@ public class NPCFactory {
    */
   public static Entity createAstrolotl(Entity player) {
     Entity astrolotl = createBaseAnimal();
+    BaseAnimalConfig config = configs.astrolotl;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/animals/astrolotl.atlas", TextureAtlas.class));
@@ -172,13 +172,15 @@ public class NPCFactory {
     animator.addAnimation("walk_right", 0.15f, Animation.PlayMode.LOOP);
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
-            .addTask(new WanderTask(new Vector2(0f, 0f), 2f))
-            .addTask(new FollowTask(player, 10,  4f, new Vector2(2f, 2f)));
+            .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
 
     astrolotl
             .addComponent(aiTaskComponent)
             .addComponent(animator)
-            .addComponent(new AnimalAnimationController());
+            .addComponent(new AnimalAnimationController())
+            .addComponent(new TamableComponent(
+                    player, config.tamingThreshold,
+                    config.tamingProbability, config.favouriteFood));
 
     astrolotl.scaleHeight(1.2f);
     PhysicsUtils.setScaledCollider(astrolotl, 0.9f, 0.4f);
