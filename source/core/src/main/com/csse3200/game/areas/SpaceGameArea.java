@@ -3,6 +3,7 @@ package com.csse3200.game.areas;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
@@ -81,6 +82,7 @@ public class SpaceGameArea extends GameArea {
   private static final String[] forestMusic = {backgroundMusic};
 
   private final TerrainFactory terrainFactory;
+  private final GameMap gameMap;
 
   private Entity player;
 
@@ -92,6 +94,7 @@ public class SpaceGameArea extends GameArea {
   public SpaceGameArea(TerrainFactory terrainFactory) {
     super();
     this.terrainFactory = terrainFactory;
+    this.gameMap = new GameMap(terrainFactory);
   }
 
   /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
@@ -120,7 +123,7 @@ public class SpaceGameArea extends GameArea {
 
   private void spawnTerrain() {
     // Background terrain
-    terrain = terrainFactory.createTerrain(TerrainType.FOREST_DEMO);  // terrain is of TerrainComponent class (for rendering?)
+    terrain = terrainFactory.createTerrain(this.gameMap.getTiledMap());
     spawnEntity(new Entity().addComponent(terrain));                  // Will need to monitor this when changing the createTerrain function
 
     // Terrain walls

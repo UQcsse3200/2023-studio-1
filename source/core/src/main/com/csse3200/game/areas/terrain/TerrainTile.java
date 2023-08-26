@@ -29,32 +29,46 @@ public class TerrainTile implements TiledMapTile {
     switch (terrainCategory) {
       case PATH:
         this.isTraversable = true;
+        this.isTillable = true;
       case BEACHSAND:
         this.isTraversable = true;
+        this.isTillable = false;
       case GRASS:
         this.isTraversable = true;
+        this.isTillable = true;
       case DIRT:
         this.isTraversable = true;
+        this.isTillable = true;
       case SHALLOWWATER:
         this.isTraversable = true;
+        this.isTillable = false;
       case DESERT:
         this.isTraversable = true;
+        this.isTillable = false;
       case SNOW:
         this.isTraversable = true;
+        this.isTillable = false;
       case ICE:
         this.isTraversable = true;
+        this.isTillable = false;
       case DEEPWATER:
         this.isTraversable = false;
+        this.isTillable = false;
       case ROCK:
         this.isTraversable = false;
+        this.isTillable = false;
       case LAVA:
         this.isTraversable = false;
+        this.isTillable = false;
       case LAVAGROUND:
         this.isTraversable = true;
+        this.isTillable = false;
       case GRAVEL:
-        this.isTraversable=true;
+        this.isTraversable = true;
+        this.isTillable = false;
       case FLOWINGWATER:
-        this.isTraversable=true;
+        this.isTraversable = true;
+        this.isTillable = false;
     }
   }
 
@@ -172,6 +186,10 @@ public class TerrainTile implements TiledMapTile {
     this.isOccupied = false;
   }
 
+  /**
+   * returns if the tile is tillable or not
+   * @return returns true if the tile is tillable and false if not
+   */
   public boolean isTillable(){
     return this.isTillable;
   }
