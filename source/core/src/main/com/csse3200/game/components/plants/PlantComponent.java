@@ -9,13 +9,13 @@ public class PlantComponent extends Component {
     private int plantHealth;            // Initial plant health
     private int maxHealth;              // Maximum health this plant can reach.
     private String plantName;           // User facing plant name
-    private String plantType;           // Type of plant (food, health, repair, defence, production)
+    private String plantType;           // Type of plant (food, health, repair, defence, production, deadly)
     private String plantDescription;    // User facing description of the plant
     private int plantAge = 0;           // Age of the plant in days as an integer
     private boolean decay = false;
     private float idealWaterLevel;              // Ideal water level. A factor when determining the growth rate.
-    private float currentAge = 0;               // Current age of the plant
-    private int growthStage = 0;                // Growth stage starts at 0 for all plants.
+    private float currentAge;               // Current age of the plant
+    private int growthStage;                    // Growth stage of a plant.
     private int adultLifeSpan;                  // How long a crop plant lives before starting to decay from old age.
 
     /** The crop tile on which this plant is planted on. */
@@ -145,6 +145,15 @@ public class PlantComponent extends Component {
     }
 
     /**
+     * Sets the current age of a plant
+     * i.e. all plants start at a current age of 0 and
+     * then they start to increase
+     */
+    public void setCurrentAge() {
+        this.currentAge = 0;
+    }
+
+    /**
      * Get the current growth stage of a plant
      * @return current growth stage
      */
@@ -153,11 +162,27 @@ public class PlantComponent extends Component {
     }
 
     /**
+     * Sets the growth stage of a plant.
+     * All plants starts growth stage of 0.
+     */
+    public void setGrowthStage() {
+        this.growthStage = 0;
+    }
+
+    /**
      * get the adult life span of a plant
      * @return adult life span
      */
     public int getAdultLifeSpan() {
         return this.adultLifeSpan;
+    }
+
+    /**
+     * Set the adult life span of a plant.
+     * @param adultLifeSpan
+     */
+    public void setAdultLifeSpan(int adultLifeSpan) {
+        this.adultLifeSpan = adultLifeSpan;
     }
 
     /**
