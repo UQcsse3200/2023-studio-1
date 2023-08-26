@@ -24,10 +24,10 @@ public class PlantComponent extends Component {
     /**
      * Constructor used for plant types that have no extra properties.
      *
-     * @param health
-     * @param name
-     * @param plantType
-     * @param plantDescription
+     * @param health             health of the plant
+     * @param name               name of the plant
+     * @param plantType          type of the plant
+     * @param plantDescription   description of the plant
      */
     public PlantComponent(int health, String name, String plantType, String plantDescription,
                           float idealWaterLevel, int adultLifeSpan, int maxHealth) {
@@ -55,7 +55,7 @@ public class PlantComponent extends Component {
 
     /**
      * Set the current plant health
-     * @param health
+     * @param health    current plant health
      */
     public void setPlantHealth(int health) {
         this.plantHealth = health;
@@ -63,7 +63,7 @@ public class PlantComponent extends Component {
 
     /**
      * Increase (or decrease) the plant health by some value
-     * @param value
+     * @param value     plant health affected value
      */
     public void increasePlantHealth(int value) {
         this.plantHealth += value;
@@ -121,8 +121,8 @@ public class PlantComponent extends Component {
     }
 
     /**
-     * Set this plants age in days
-     * @param age
+     * Set this plant's age in days
+     * @param age   plant's age (in days)
      */
     public void setPlantAge(int age) {
         this.plantAge = age;
@@ -146,7 +146,7 @@ public class PlantComponent extends Component {
 
     /**
      * Sets the current age of a plant
-     * i.e. all plants start at a current age of 0 and
+     * i.e. all plants start at a current age of 0, and
      * then they start to increase
      */
     public void setCurrentAge() {
