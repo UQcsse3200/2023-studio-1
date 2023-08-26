@@ -3,6 +3,7 @@ package com.csse3200.game.components.tasks;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.DefaultTask;
 import com.csse3200.game.ai.tasks.PriorityTask;
+import com.csse3200.game.ai.tasks.TaskRunner;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -21,35 +22,39 @@ public class RunAwayTask extends DefaultTask implements PriorityTask {
   private final DebugRenderer debugRenderer;
   private final RaycastHit hit = new RaycastHit();
   private MovementTask movementTask;
-  private PhysicsMovementComponent movementComponent;
+  private Vector2 runSpeed;
 
   /**
    * @param target The entity to run from.
-   * @param priority Task priority when chasing (0 when not chasing).
-   * @param viewDistance Maximum distance from the entity at which chasing can start.
-   * @param maxRunDistance Maximum distance from the entity while chasing before giving up.
+   * @param priority Task priority when running (0 when not chasing).
+   * @param viewDistance Maximum distance from the entity at which running away can start.
+   * @param maxRunDistance Maximum distance from the entity before stopping.
    */
-  public RunAwayTask(Entity target, int priority, float viewDistance, float maxRunDistance) {
+  public RunAwayTask(Entity target, int priority, float viewDistance, float maxRunDistance, Vector2 runSpeed) {
     this.target = target;
     this.priority = priority;
     this.viewDistance = viewDistance;
     this.maxRunDistance = maxRunDistance;
+    this.runSpeed = runSpeed;
     physics = ServiceLocator.getPhysicsService().getPhysics();
     debugRenderer = ServiceLocator.getRenderService().getDebug();
   }
 
   @Override
+  public void create(TaskRunner taskRunner) {
+    super.create(taskRunner);
+
+  }
+
+  @Override
   public void start() {
-    Vector2 speed = new Vector2(3f, 3f);
-    this.movementComponent = owner.getEntity().getComponent(PhysicsMovementComponent.class);
-    this.movementComponent.setMaxSpeed(speed);
     super.start();
     Vector2 targetVec = new Vector2();
     targetVec.x = owner.getEntity().getPosition().x +
             (owner.getEntity().getPosition().x - target.getPosition().x);
     targetVec.y = owner.getEntity().getPosition().y +
             (owner.getEntity().getPosition().y - target.getPosition().y);
-    movementTask = new MovementTask(targetVec);
+    movementTask = new MovementTask(targetVec, runSpeed);
     movementTask.create(owner);
     movementTask.start();
 
@@ -73,11 +78,9 @@ public class RunAwayTask extends DefaultTask implements PriorityTask {
 
   @Override
   public void stop() {
-    Vector2 speed = new Vector2(1f, 1f);
     super.stop();
     movementTask.stop();
     this.owner.getEntity().getEvents().trigger("runAwayStop");
-    this.movementComponent.setMaxSpeed(speed);
   }
 
   @Override

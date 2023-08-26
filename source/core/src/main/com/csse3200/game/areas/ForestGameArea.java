@@ -45,11 +45,13 @@ public class ForestGameArea extends GameArea {
     "images/tool_scythe.png",
     "images/tool_watering_can.png",
     "images/animals/chicken.png",
-    "images/animals/cow.png"
+    "images/animals/cow.png",
+    "images/cropTile.png",
+    "images/animal/astrolotl.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
-          "images/animals/chicken.atlas", "images/animals/cow.atlas"
+          "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/animals/astrolotl.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -79,10 +81,9 @@ public class ForestGameArea extends GameArea {
     spawnTerrain();
     spawnTrees();
     player = spawnPlayer();
-
-
     spawnChickens();
     spawnCows();
+    spawnAstrolotl();
 
 //    spawnTool(ToolType.TEST_TOOL); // temp - spawns a test tool
 //    spawnTool(ToolType.HOE); // temp - spawns a hoe
@@ -90,6 +91,10 @@ public class ForestGameArea extends GameArea {
 //    spawnGhostKing();
 
     playMusic();
+  }
+
+  public Entity getPlayer() {
+    return player;
   }
 
   private void displayUI() {
@@ -168,22 +173,32 @@ public class ForestGameArea extends GameArea {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 2; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity chicken = NPCFactory.createChicken(player);
       spawnEntityAt(chicken, randomPos, true, true);
     }
   }
 
-
   private void spawnCows() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 minPos = new GridPoint2(2, 2);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
     for (int i = 0; i < 2; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity cow = NPCFactory.createCow();
+      Entity cow = NPCFactory.createCow(player);
       spawnEntityAt(cow, randomPos, true, true);
+    }
+  }
+
+  private void spawnAstrolotl() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < 1; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity astrolotl = NPCFactory.createAstrolotl(player);
+      spawnEntityAt(astrolotl, randomPos, true, true);
     }
   }
 
