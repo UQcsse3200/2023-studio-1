@@ -72,5 +72,6 @@ public class TimeController {
 
     public void setTime(int hour) {
         this.hour = hour;
+        timeDisplay.update(this.hour);
     }
 }
