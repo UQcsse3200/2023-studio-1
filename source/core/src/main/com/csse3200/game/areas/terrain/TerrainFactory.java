@@ -19,7 +19,6 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.areas.terrain.TerrainComponent.TerrainOrientation;
 import com.csse3200.game.components.CameraComponent;
-import com.csse3200.game.utils.math.RandomUtils;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -134,10 +133,10 @@ public class TerrainFactory {
    * Create a terrain of the given type, using the orientation of the factory. This can be extended
    * to add additional game terrains.
    *
-   * @param terrainType Terrain to create
    * @return Terrain component which renders the terrain
    */
-  public TerrainComponent createTerrain(TerrainType terrainType) {                      // WILL NEED TO REVAMP THIS FUNCTION
+  // public TerrainComponent createTerrain(TerrainType terrainType) (old function declaration)
+  public TerrainComponent createTerrain(TiledMap tiledMap) {
     ResourceService resourceService = ServiceLocator.getResourceService();
      ArrayList<TextureRegion> TRList = new ArrayList<TextureRegion>();
       TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('g'), Texture.class)));
@@ -173,13 +172,13 @@ public class TerrainFactory {
       TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('@'), Texture.class)));
       TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('&'), Texture.class)));
       TRList.add(new TextureRegion(resourceService.getAsset(charToTileImageMap.get('+'), Texture.class)));
-      return createForestDemoTerrain(0.5f, TRList);
+      return createGameTerrain(0.5f, TRList, tiledMap);
   }
 
-  private TerrainComponent createForestDemoTerrain(
-      float tileWorldSize, ArrayList<TextureRegion> TRList) {
+  private TerrainComponent createGameTerrain(float tileWorldSize, ArrayList<TextureRegion> TRList, TiledMap tiledMap) {
     GridPoint2 tilePixelSize = new GridPoint2(TRList.get(0).getRegionWidth(), TRList.get(0).getRegionHeight());
-    TiledMap tiledMap = createForestDemoTiles(tilePixelSize, TRList);
+    createGameTiles(tilePixelSize, TRList, tiledMap);
+    //TiledMap tiledMap = createGameTiles(tilePixelSize, TRList);
     TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
@@ -198,20 +197,15 @@ public class TerrainFactory {
   }
 
   /**
-   * Get the Cell in TiledMap, use for cell interaction
-   * such as get and set tile, rotating Cell
-   * @param tiledMap the tile map that have the Cell
-   * @param x x coordinate (0 -> MAP_SIZE.x -1)
-   * @param y y coordinate (0 -> MAP_SIZE.y -1)
-   * @return the Cell
+   * SHOULD CREATE javadoc for what this does
+   *
+   * @param tileSize
+   * @param TRList
+   * @return
    */
-  private Cell getCell(TiledMap tiledMap , int x, int y) {
-    return ((TiledMapTileLayer)tiledMap.getLayers().get(0)).getCell(x, y);
-  }
-
-  private TiledMap createForestDemoTiles(
-      GridPoint2 tileSize, ArrayList<TextureRegion> TRList) {
-    TiledMap tiledMap = new TiledMap();
+  //private TiledMap createGameTiles(GridPoint2 tileSize, ArrayList<TextureRegion> TRList) {
+  private void createGameTiles(GridPoint2 tileSize, ArrayList<TextureRegion> TRList, TiledMap tiledMap) {
+    //TiledMap tiledMap = new TiledMap();
     ArrayList<TerrainTile> TTlist = new ArrayList<TerrainTile>();
     
     TTlist.add(new TerrainTile(TRList.get(0), charToTileTypeMap.get('g')));
@@ -266,25 +260,11 @@ public class TerrainFactory {
     //fillTilesAtRandom(layer, MAP_SIZE, grassTile3, GRASS3_TILE_COUNT);
 
     tiledMap.getLayers().add(layer);
-    return tiledMap;
+    //return tiledMap;
   }
 
   /*
-   * Will be used to create a TiledMap for the SpaceGame.
-   *
-   * Will probably need some variables from our planned MapClass (Unless if this instantiates the MapClass)
-   *
-   * @return
-  private TiledMap createSpaceGameTiles(GridPoint2 tileSize) { // Will probably need more variables than this
-    TiledMap tiledMap = new TiledMap(); // MapClass will likely be an extension of TiledMap
-    // MapClass will either instantiate the grid, or the grid is set after instantiation
-    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
-    tiledMap.getLayers().add(layer);
-    return tiledMap;
-  }
-  
-  private static void fillTilesAtRandom(
-      TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile, int amount) {
+  private static void fillTilesAtRandom(TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile, int amount) {
     GridPoint2 min = new GridPoint2(0, 0);
     GridPoint2 max = new GridPoint2(mapSize.x - 1, mapSize.y - 1);
 
@@ -459,7 +439,7 @@ public class TerrainFactory {
    * the same oerientation. But for demonstration purposes, the base code has the same level in 3
    * different orientations.
    */
-  public enum TerrainType {
+  public enum TerrainType { // should be able to be deleted at some point
     FOREST_DEMO,
     FOREST_DEMO_ISO,
     FOREST_DEMO_HEX,
