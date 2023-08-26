@@ -3,6 +3,7 @@ package com.csse3200.game.components.settingsmenu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.Graphics.Monitor;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
@@ -46,12 +47,19 @@ public class SettingsMenuDisplay extends UIComponent {
   }
 
   private void addActors() {
+
+
     Label title = new Label("Settings", skin, "title");
     Table settingsTable = makeSettingsTable();
     Table menuBtns = makeMenuBtns();
 
+    title.setWidth(Gdx.graphics.getWidth());
+    title.setHeight(Gdx.graphics.getHeight());
+    title.setPosition(0, 0);
+
     rootTable = new Table();
     rootTable.setFillParent(true);
+
 
     rootTable.add(title).expandX().top().padTop(20f);
 
@@ -183,6 +191,7 @@ public class SettingsMenuDisplay extends UIComponent {
     table.add(exitBtn).expandX().left().pad(0f, 15f, 15f, 0f);
     table.add(applyBtn).expandX().right().pad(0f, 0f, 15f, 15f);
     return table;
+
   }
 
   private void applyChanges() {
@@ -215,6 +224,7 @@ public class SettingsMenuDisplay extends UIComponent {
   @Override
   protected void draw(SpriteBatch batch) {
     // draw is handled by the stage
+
   }
 
   @Override

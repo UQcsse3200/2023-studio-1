@@ -7,6 +7,14 @@
     "health": 100,
     "baseAttack": 25,
     "spookyFactor": 7
+  },
+  "cow": {
+    "health": 50,
+    "tameResistance": 1
+  },
+  "chicken": {
+    "health": 10,
+    "tameResistance": 2
   }
 }
 
