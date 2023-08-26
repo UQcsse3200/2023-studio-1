@@ -1,6 +1,7 @@
 package com.csse3200.game.entities.factories;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
+import com.csse3200.game.components.items.WateringCanLevelComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
@@ -47,7 +48,8 @@ public class ItemFactory {
   public static Entity createWateringcan() {
     Entity watering_can = createBaseItem()
             .addComponent(new TextureRenderComponent("images/tool_watering_can.png"))
-            .addComponent(new ItemComponent("watering can", ItemType.WATERING_CAN));
+            .addComponent(new ItemComponent("watering can", ItemType.WATERING_CAN))
+            .addComponent(new WateringCanLevelComponent(150));
     return watering_can;
   }
 
