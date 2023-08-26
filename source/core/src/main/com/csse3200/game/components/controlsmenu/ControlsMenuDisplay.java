@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.GdxGame.ScreenType;
 import com.csse3200.game.services.ServiceLocator;
@@ -35,7 +36,7 @@ public class ControlsMenuDisplay extends UIComponent {
   }
 
   private void addActors() {
-    Label title = new Label("How to Play", skin, "title");
+    Label title = new Label("Controls", skin, "title");
     TextButton returnBtn = new TextButton("Return", skin);
 
     returnBtn.addListener(new ChangeListener() {
@@ -49,33 +50,32 @@ public class ControlsMenuDisplay extends UIComponent {
     Table controlsTbl = makeControlsTable();
 
     rootTable = new Table();
-    rootTable.setFillParent(true);
+    rootTable.setFillParent(true); // Make the table fill the screen
 
-    rootTable.add(title).expandX().top().padTop(20f);
+    rootTable.add(title).expandX().top().padTop(30f); // The title is anchored to the top of the page
 
-    rootTable.row();
+    rootTable.row().padTop(30f); // Padding ensures that there is always space between table and title
 
-    rootTable.add(controlsTbl).padTop(10f);
+    rootTable.add(controlsTbl).expandX().expandY(); // Add the controls table and let it take as much space as needed
 
-    rootTable.row();
+    rootTable.row().padBottom(30f); // Padding ensures that there is always space between table and exit button
 
-    rootTable.add(returnBtn).padTop(20f);
+    rootTable.add(returnBtn).padBottom(30f); // The return button is anchored to the bottom of the page
 
     stage.addActor(rootTable);
   }
 
   private Table makeControlsTable() {
     Table controlsTbl = new Table();
-    controlsTbl.setFillParent(false);
 
     // Set column default heights and widths
     controlsTbl.defaults().height(50f).padTop(20f);
     controlsTbl.columnDefaults(0).width(50f);
-    controlsTbl.columnDefaults(1).padLeft(30f);
+    controlsTbl.columnDefaults(1).padLeft(50f);
 
     // Add the header row
-    Label controlLabel = new Label("Key", skin);
-    Label useLabel = new Label("Usage", skin);
+    Label controlLabel = new Label("Key", skin, "large");
+    Label useLabel = new Label("Usage", skin, "large");
 
     controlsTbl.add(controlLabel);
     controlsTbl.add(useLabel).center();
@@ -92,10 +92,14 @@ public class ControlsMenuDisplay extends UIComponent {
     controls.put("D", "Moves the character downwards");
 
     for (String key : controls.keySet()) {
+      // Start a new row for each control
       controlsTbl.row();
+      // Create a button to represent the key press required
       TextButton keyButton = new TextButton(key, skin);
+      // Create a button to represent the control's description
       Label descriptionLabel = new Label(controls.get(key), skin);
 
+      // Add the buttons to the table
       controlsTbl.add(keyButton).center();
       controlsTbl.add(descriptionLabel).center();
     }
