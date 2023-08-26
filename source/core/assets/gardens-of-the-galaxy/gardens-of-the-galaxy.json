@@ -8,7 +8,7 @@
 	},
 	"thick_white": {
 		"file": "kenvector_future(1).fnt",
-		"scaledSize": -1,
+		"scaledSize": 12,
 		"markupEnabled": false,
 		"flip": false
 	},
@@ -20,7 +20,7 @@
 	},
 	"thin_white": {
 		"file": "kenvector_future_thin_white.fnt",
-		"scaledSize": -1,
+		"scaledSize": 12,
 		"markupEnabled": false,
 		"flip": false
 	},
