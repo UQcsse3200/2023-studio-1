@@ -1,4 +1,5 @@
 package com.csse3200.game.components.plants;
+import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.components.Component;
 
 /**
@@ -16,6 +17,9 @@ public class PlantComponent extends Component {
     private float currentAge = 0;               // Current age of the plant
     private int growthStage = 0;                // Growth stage starts at 0 for all plants.
     private int adultLifeSpan;                  // How long a crop plant lives before starting to decay from old age.
+
+    /** The crop tile on which this plant is planted on. */
+    private CropTileComponent cropTile;
 
     /**
      * Constructor used for plant types that have no extra properties.
@@ -181,5 +185,14 @@ public class PlantComponent extends Component {
         } else {
             return false;
         }
+    }
+
+    /**
+     * Sets the crop tile on which this plant is planted.
+     *
+     * @param cropTile Crop tile this plant is planted on.
+     */
+    public void setTile(CropTileComponent cropTile) {
+        this.cropTile = cropTile;
     }
 }
