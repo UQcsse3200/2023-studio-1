@@ -127,6 +127,12 @@
 	},
 	"thick": {
 		"font": "thick_white"
+	},
+	"small": {
+		"font": "thin_white"
+	},
+	"large": {
+		"font": "thick_white"
 	}
 },
 "ListStyle": {
