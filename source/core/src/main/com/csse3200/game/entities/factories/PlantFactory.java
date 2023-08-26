@@ -10,6 +10,9 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.csse3200.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Factory to create plant entities.
@@ -18,6 +21,9 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
  * have the properties stored in the PlantConfig classes
  */
 public class PlantFactory {
+
+    private static final Logger logger = LoggerFactory.getLogger(PlantFactory.class);
+
     private static PlantConfigs stats =
             FileLoader.readClass(PlantConfigs.class, "configs/plant.json");
 
@@ -52,7 +58,9 @@ public class PlantFactory {
 
         plant.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
 
-        return  plant;
+        logger.debug("Registering plant {} with entity service", plant);
+        ServiceLocator.getEntityService().register(plant);
+        return plant;
     }
 
     /**
