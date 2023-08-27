@@ -101,7 +101,7 @@ public class CropTileComponent extends Component {
 	/**
 	 * Destroys both the tile and any plant that is on it
 	 */
-	private void destroyTile() {
+	public void destroyTile() {
 		if (isOccupied()) {
 			plant.getEvents().trigger("destroyPlant");
 			this.setUnoccupied();
@@ -116,7 +116,7 @@ public class CropTileComponent extends Component {
 	 *
 	 * @param plantFactoryMethod Factory method that is used to create a new plant
 	 */
-	private void plantCrop(Function<CropTileComponent, Entity> plantFactoryMethod) {
+	public void plantCrop(Function<CropTileComponent, Entity> plantFactoryMethod) {
 		if (isOccupied()) {
 			return;
 		}
@@ -161,7 +161,7 @@ public class CropTileComponent extends Component {
 	 *
 	 * @return whether the tile is occupied by the plant
 	 */
-	private boolean isOccupied() {
+	public boolean isOccupied() {
 		return plant != null;
 	}
 
