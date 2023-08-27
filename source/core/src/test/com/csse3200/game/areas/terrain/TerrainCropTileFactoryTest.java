@@ -23,7 +23,7 @@ class TerrainCropTileFactoryTest {
   private static Entity tile;
 
   @BeforeEach
-  void BeforeEach() {
+  void beforeEach() {
     ServiceLocator.clear();
     ServiceLocator.registerResourceService(mock(ResourceService.class));
     ServiceLocator.registerEntityService(new EntityService());
