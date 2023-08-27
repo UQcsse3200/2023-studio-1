@@ -130,6 +130,10 @@ public class TerrainFactory {
     this.orientation = orientation;
   }
 
+  public GridPoint2 getMapSize() {
+    return MAP_SIZE.cpy();
+  }
+
   /**
    * Create a terrain of the given type, using the orientation of the factory. This can be extended
    * to add additional game terrains.
