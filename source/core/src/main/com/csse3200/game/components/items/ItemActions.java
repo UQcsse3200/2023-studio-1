@@ -70,16 +70,27 @@ public class ItemActions extends Component {
     }
 
     /**
-     * Gets the correct position for the player to interact with
+     * Gets the correct position for the player to interact with based off of the mouse position. Will always return 1 tile to the left, right, 
+     * up, down, diagonal left up, diagonal right up, diagonal left down, diagonal right down of the player.
      * @param playerPos the position of the player
      * @param mousePos the position of the mouse
      * @return a vector of the position where the player should hit
      */
     private Vector2 getAdjustedPos(Vector2 playerPos, Vector2 mousePos) {
-        //TODO the if statement stuff to get the correct position
-        return playerPos;
+        int xDelta = 0;
+        int yDelta = 0;
+        if (playerPos.x > mousePos.x){
+          xDelta -= 1;
+        } else if (playerPos.x < mousePos.x) {
+          xDelta += 1;
+        } 
+        if (playerPos.y > mousePos.y) {
+          yDelta -= 1;
+        } else if (playerPos.y < mousePos.y) {
+          yDelta += 1;
+        }
+        return new Vector2(playerPos.x + xDelta, playerPos.y + yDelta); 
     }
-
 
     /**
      * Waters the tile at the given position. 
