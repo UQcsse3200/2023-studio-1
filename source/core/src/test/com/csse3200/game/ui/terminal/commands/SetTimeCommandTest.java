@@ -17,7 +17,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 
 @ExtendWith(GameExtension.class)
-class TimeCommandTest {
+class SetTimeCommandTest {
 
   SetTimeCommand command;
   ArrayList<String> args;
