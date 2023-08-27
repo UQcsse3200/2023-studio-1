@@ -27,55 +27,61 @@ public class SpaceGameArea extends GameArea {
   private static final GridPoint2 TOOL_SPAWN2 = new GridPoint2(15, 15);// temp!!!
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
-    "images/tree.png",
-    "images/ghost_king.png",
-    "images/ghost_1.png",
-    "images/grass_1.png",
-    "images/grass_2.png",
-    "images/grass_3.png",
-    "images/hex_grass_1.png",
-    "images/hex_grass_2.png",
-    "images/hex_grass_3.png",
-    "images/iso_grass_1.png",
-    "images/iso_grass_2.png",
-    "images/iso_grass_3.png",
-    "images/tool_shovel.png",
-    "images/tool_hoe.png",
-    "images/tool_scythe.png",
-    "images/tool_watering_can.png",
-    "images/beach_1.png",
-    "images/beach_2.png",
-    "images/beach_3.png",
-    "images/deepWater_1.png",
-    "images/deepWater_2.png",
-    "images/desert_1.png",
-    "images/desert_2.png",
-    "images/desert_3.png",
-    "images/dirt_1.png",
-    "images/dirt_2.png",
-    "images/dirt_3.png",
-    "images/dirtPathTop.png",
-    "images/dirtPathRight.png",
-    "images/dirtPathBottom.png",
-    "images/gravel_1.png",
-    "images/ice_1.png",
-    "images/ice_2.png",
-    "images/lava_1.png",
-    "images/lavaGround_1.png",
-    "images/lavaGround_2.png",
-    "images/lavaGround_3.png",
-    "images/water_1.png",
-    "images/water_2.png",
-    "images/water_3.png",
-    "images/flowingWater_1.png",
-    "images/snow_1.png",
-    "images/snow_2.png",
-    "images/snow_3.png",
-    "images/stone_1.png",
-    "images/stonePath_1.png"
+          "images/tree.png",
+          "images/ghost_king.png",
+          "images/ghost_1.png",
+          "images/grass_1.png",
+          "images/grass_2.png",
+          "images/grass_3.png",
+          "images/hex_grass_1.png",
+          "images/hex_grass_2.png",
+          "images/hex_grass_3.png",
+          "images/iso_grass_1.png",
+          "images/iso_grass_2.png",
+          "images/iso_grass_3.png",
+          "images/tool_shovel.png",
+
+          "images/tool_hoe.png",
+          "images/tool_scythe.png",
+          "images/tool_watering_can.png",
+          "images/animals/chicken.png",
+          "images/animals/cow.png",
+          "images/cropTile.png",
+
+          "images/beach_1.png",
+          "images/beach_2.png",
+          "images/beach_3.png",
+          "images/deepWater_1.png",
+          "images/deepWater_2.png",
+          "images/desert_1.png",
+          "images/desert_2.png",
+          "images/desert_3.png",
+          "images/dirt_1.png",
+          "images/dirt_2.png",
+          "images/dirt_3.png",
+          "images/dirtPathTop.png",
+          "images/dirtPathRight.png",
+          "images/dirtPathBottom.png",
+          "images/gravel_1.png",
+          "images/ice_1.png",
+          "images/ice_2.png",
+          "images/lava_1.png",
+          "images/lavaGround_1.png",
+          "images/lavaGround_2.png",
+          "images/lavaGround_3.png",
+          "images/water_1.png",
+          "images/water_2.png",
+          "images/water_3.png",
+          "images/flowingWater_1.png",
+          "images/snow_1.png",
+          "images/snow_2.png",
+          "images/snow_3.png",
+          "images/stone_1.png",
+          "images/stonePath_1.png"
   };
   private static final String[] forestTextureAtlases = {
-    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas"
+    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
+          "images/animals/chicken.atlas", "images/animals/cow.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -107,12 +113,20 @@ public class SpaceGameArea extends GameArea {
     spawnTerrain();
     spawnTrees();
     player = spawnPlayer();
-    spawnTool(ToolType.TEST_TOOL); // temp - spawns a test tool
-    spawnTool(ToolType.HOE); // temp - spawns a hoe
-    spawnGhosts();
-    spawnGhostKing();
+
+    spawnChickens();
+    spawnCows();
+
+    //spawnTool(ToolType.TEST_TOOL); // temp - spawns a test tool
+    //spawnTool(ToolType.HOE); // temp - spawns a hoe
+    //spawnGhosts();
+    //spawnGhostKing();
 
     playMusic();
+  }
+
+  public Entity getPlayer() {
+    return player;
   }
 
   private void displayUI() {
@@ -184,6 +198,29 @@ public class SpaceGameArea extends GameArea {
         spawnEntityAt(newTool, TOOL_SPAWN, true, true);
     }
     return newTool;
+  }
+
+  private void spawnChickens() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < 4; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity chicken = NPCFactory.createChicken(player);
+      spawnEntityAt(chicken, randomPos, true, true);
+    }
+  }
+
+
+  private void spawnCows() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < 2; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity cow = NPCFactory.createCow();
+      spawnEntityAt(cow, randomPos, true, true);
+    }
   }
 
   private void spawnGhosts() {

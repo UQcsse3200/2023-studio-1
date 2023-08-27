@@ -62,13 +62,21 @@ public class MainGameScreen extends ScreenAdapter {
     renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
     renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
 
+
     loadAssets();
     createUI();
 
     logger.debug("Initialising main game screen entities");
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
+
     SpaceGameArea spaceGameArea = new SpaceGameArea(terrainFactory);
     spaceGameArea.create();
+    renderer.getCamera().setTrackEntity(spaceGameArea.getPlayer());
+
+    // Switched to spaceGameArea
+    //ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
+    //forestGameArea.create();
+    //renderer.getCamera().setTrackEntity(forestGameArea.getPlayer());
   }
 
   @Override

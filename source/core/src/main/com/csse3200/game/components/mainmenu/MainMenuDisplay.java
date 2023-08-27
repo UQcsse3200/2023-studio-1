@@ -1,5 +1,6 @@
 package com.csse3200.game.components.mainmenu;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -32,10 +33,14 @@ public class MainMenuDisplay extends UIComponent {
     Image title =
         new Image(
             ServiceLocator.getResourceService()
-                .getAsset("images/box_boy_title.png", Texture.class));
+                .getAsset("images/galaxy_home_still.png", Texture.class));
+
+    title.setWidth(Gdx.graphics.getWidth());
+    title.setHeight(Gdx.graphics.getHeight());
+    title.setPosition(0, 0);
 
     TextButton startBtn = new TextButton("Start", skin);
-    TextButton loadBtn = new TextButton("Load", skin);
+    TextButton loadBtn = new TextButton("Controls", skin);
     TextButton settingsBtn = new TextButton("Settings", skin);
     TextButton exitBtn = new TextButton("Exit", skin);
 
@@ -87,6 +92,7 @@ public class MainMenuDisplay extends UIComponent {
     table.row();
     table.add(exitBtn).padTop(15f);
 
+    stage.addActor(title);
     stage.addActor(table);
   }
 

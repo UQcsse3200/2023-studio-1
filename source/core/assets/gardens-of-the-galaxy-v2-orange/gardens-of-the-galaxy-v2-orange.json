@@ -1,0 +1,267 @@
+{
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	pixel-body: {
+		file: pixel-body.fnt
+		scaledSize: 12
+		markupEnabled: false
+		flip: false
+	},
+	pixel-mid: {
+		file: pixel-body.fnt
+		scaledSize: 18
+		markupEnabled: false
+		flip: false
+	},
+	pixel-large: {
+		file: pixel-mid.fnt
+		scaledSize: 24
+		markupEnabled: false
+		flip: false
+	}
+	pixel-title: {
+		file: pixel-title.fnt
+		scaledSize: 32
+		markupEnabled: false
+		flip: false
+	}
+}
+com.badlogic.gdx.graphics.Color: {
+	black: {
+		r: 0
+		g: 0
+		b: 0
+		a: 1
+	}
+	blue: {
+		r: 0.11764706
+		g: 0.654902
+		b: 0.88235295
+		a: 1
+	}
+	darkGrey: {
+		r: 0.3019608
+		g: 0.31764707
+		b: 0.3254902
+		a: 1
+	}
+	lightGrey: {
+		r: 0.94509804
+		g: 0.96862745
+		b: 0.9764706
+		a: 1
+	}
+	orange: {
+		r: 0.9098039
+		g: 0.41568628
+		b: 0.09019608
+		a: 1
+	}
+	white: {
+		r: 0.9843137
+		g: 1
+		b: 1
+		a: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable: {
+	blue_check.9: {
+		patch: blue_check.9
+		minWidth: 24
+		minHeight: 24
+		leftWidth: 9
+		rightWidth: 8
+		topHeight: 9
+		bottomHeight: 8
+	}
+	black_check: {
+		patch: black_check
+		minWidth: 24
+		minHeight: 24
+		leftWidth: 9
+		rightWidth: 8
+		topHeight: 9
+		bottomHeight: 8
+	}
+	red_check: {
+		patch: red_check
+		minWidth: 24
+		minHeight: 24
+		leftWidth: 9
+		rightWidth: 8
+		topHeight: 9
+		bottomHeight: 8
+	}
+	knobRed: {
+		patch: knobRed
+		minWidth: 24
+		minHeight: 24
+		leftWidth: 6
+		rightWidth: 8
+		topHeight: 6
+		bottomHeight: 8
+	}
+	knobBlue.9: {
+		patch: knobBlue.9
+		minWidth: 24
+		minHeight: 24
+		leftWidth: 6
+		rightWidth: 6
+		topHeight: 6
+		bottomHeight: 8
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
+	orange_cursor: {
+		name: white-pixel
+		color: orange
+		minWidth: 2
+		minHeight: 16
+	}
+	blue_cursor: {
+		name: white-pixel
+		color: blue
+		minWidth: 2
+		minHeight: 16
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+	default: {
+		up: red
+		down: red_pressed
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
+	default: {
+		checkboxOn: red_check
+		checkboxOff: black_check
+		font: pixel-body
+		fontColor: black
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
+	default: {
+		up: red
+		down: red_pressed
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
+	default: {
+		font: pixel-body
+		fontColor: white
+		downFontColor: lightGrey
+		up: red
+		down: red_pressed
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: {
+		font: pixel-body
+	}
+	small: {
+		font: pixel-body
+	}
+	large: {
+		font: pixel-mid
+	}
+	title: {
+		font: pixel-title
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
+	default: {
+		font: pixel-body
+		fontColorSelected: white
+		fontColorUnselected: darkGrey
+		selection: red
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
+	default-horizontal: {
+		background: blankProgress
+		knobBefore: orangeProgress
+	}
+	default-vertical: {
+		background: blankProgressV
+		knobBefore: orangeProgressV
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
+	default: {
+		background: grey
+		hScroll: blankProgress
+		hScrollKnob: orangeProgress
+		vScroll: blankProgressV
+		vScrollKnob: orangeProgressV
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
+	default: {
+		font: pixel-body
+		fontColor: black
+		overFontColor: white
+		background: redOutline
+		scrollStyle: default
+		listStyle: default
+		backgroundOver: red
+		backgroundOpen: red
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
+	default-horizontal: {
+		background: blankProgress
+		knob: knobRed
+		knobBefore: orangeProgress
+	}
+	default-vertical: {
+		background: blankProgressV
+		knob: knobRed
+		knobBefore: orangeProgressV
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
+	default-horizontal: {
+		handle: blankProgressV
+	}
+	default-vertical: {
+		handle: blankProgress
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+	default: {
+		font: pixel-mid
+		fontColor: white
+		downFontColor: lightGrey
+		up: red
+		down: red_pressed
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
+	default: {
+		font: pixel-body
+		fontColor: black
+		background: grey
+		focusedBackground: redOutline
+		cursor: orange_cursor
+		selection: orange_cursor
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+	default: {
+		label: default
+		background: red
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Tree$TreeStyle: {
+	default: {
+		plus: plusOrange.9
+		minus: minusRed
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
+	default: {
+		background: metalPanel
+		titleFont: pixel-mid
+		titleFontColor: darkGrey
+	}
+}
+}
