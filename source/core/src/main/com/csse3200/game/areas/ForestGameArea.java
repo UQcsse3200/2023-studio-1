@@ -16,6 +16,8 @@ import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.tools.Tool;
+
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
@@ -42,10 +44,10 @@ public class ForestGameArea extends GameArea {
     "images/tool_scythe.png",
     "images/tool_watering_can.png",
 
-    "images/animals/chicken.png",
-    "images/animals/cow.png",
+          "images/animals/chicken.png",
+          "images/animals/cow.png",
 
-    "images/cropTile.png"
+          "images/cropTile.png"
 
   };
   private static final String[] forestTextureAtlases = {
@@ -84,6 +86,7 @@ public class ForestGameArea extends GameArea {
     //spawnGhostKing();
     player = spawnPlayer();
 
+
     spawnChickens();
     spawnCows();
 
@@ -96,6 +99,10 @@ public class ForestGameArea extends GameArea {
     //playMusic();
 
     spawnTractor();
+  }
+
+  public Entity getPlayer() {
+    return player;
   }
 
   private void displayUI() {
@@ -116,19 +123,19 @@ public class ForestGameArea extends GameArea {
 
     // Left
     spawnEntityAt(
-        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO, false, false);
+            ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO, false, false);
     // Right
     spawnEntityAt(
-        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
-        new GridPoint2(tileBounds.x, 0),
-        false,
-        false);
+            ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
+            new GridPoint2(tileBounds.x, 0),
+            false,
+            false);
     // Top
     spawnEntityAt(
-        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
-        new GridPoint2(0, tileBounds.y),
-        false,
-        false);
+            ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
+            new GridPoint2(0, tileBounds.y),
+            false,
+            false);
     // Bottom
     spawnEntityAt(
         ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
