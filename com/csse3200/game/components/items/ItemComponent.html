@@ -99,21 +99,25 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String)" class="member-name-link">ItemComponent</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;itemName)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,com.csse3200.game.components.items.ItemType)" class="member-name-link">ItemComponent</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;itemName,
+ <a href="ItemType.html" title="enum class in com.csse3200.game.components.items">ItemType</a>&nbsp;itemType)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Constructor for Item</div>
 </div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.String,int)" class="member-name-link">ItemComponent</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;itemName,
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.String,com.csse3200.game.components.items.ItemType,int)" class="member-name-link">ItemComponent</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;itemName,
+ <a href="ItemType.html" title="enum class in com.csse3200.game.components.items">ItemType</a>&nbsp;itemType,
  int&nbsp;price)</code></div>
 <div class="col-last odd-row-color">
 <div class="block">Constructor for Item</div>
 </div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.lang.String)" class="member-name-link">ItemComponent</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;itemName,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,com.csse3200.game.components.items.ItemType,java.lang.String)" class="member-name-link">ItemComponent</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;itemName,
+ <a href="ItemType.html" title="enum class in com.csse3200.game.components.items">ItemType</a>&nbsp;itemType,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;itemDescription)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Constructor for Item</div>
 </div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.lang.String,int)" class="member-name-link">ItemComponent</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;itemName,
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.String,com.csse3200.game.components.items.ItemType,java.lang.String,int)" class="member-name-link">ItemComponent</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;itemName,
+ <a href="ItemType.html" title="enum class in com.csse3200.game.components.items">ItemType</a>&nbsp;itemType,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;itemDescription,
  int&nbsp;price)</code></div>
 <div class="col-last odd-row-color">
@@ -148,20 +152,35 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the name of the item</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPrice()" class="member-name-link">getPrice</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ItemType.html" title="enum class in com.csse3200.game.components.items">ItemType</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getItemType()" class="member-name-link">getItemType</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the type of the item</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPrice()" class="member-name-link">getPrice</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the price of the item</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isSellable()" class="member-name-link">isSellable</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isSellable()" class="member-name-link">isSellable</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns selalble bool of item</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setItemDescription(java.lang.String)" class="member-name-link">setItemDescription</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the price of the item</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setItemName(java.lang.String)" class="member-name-link">setItemName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the item name of the item</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPrice(int)" class="member-name-link">setPrice</a><wbr>(int&nbsp;price)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the price of the item</div>
 </div>
 </div>
 </div>
@@ -184,52 +203,60 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(java.lang.String)">
+<section class="detail" id="&lt;init&gt;(java.lang.String,com.csse3200.game.components.items.ItemType)">
 <h3>ItemComponent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ItemComponent</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;itemName)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ItemComponent</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;itemName,
+ <a href="ItemType.html" title="enum class in com.csse3200.game.components.items">ItemType</a>&nbsp;itemType)</span></div>
 <div class="block">Constructor for Item</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>itemName</code> - user facing name for item</dd>
+<dd><code>itemType</code> - the enum for type of item</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="&lt;init&gt;(java.lang.String,int)">
+<section class="detail" id="&lt;init&gt;(java.lang.String,com.csse3200.game.components.items.ItemType,int)">
 <h3>ItemComponent</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ItemComponent</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;itemName,
+ <a href="ItemType.html" title="enum class in com.csse3200.game.components.items">ItemType</a>&nbsp;itemType,
  int&nbsp;price)</span></div>
 <div class="block">Constructor for Item</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>itemName</code> - user facing name</dd>
+<dd><code>itemType</code> - the enum for type of item</dd>
 <dd><code>price</code> - sellable price of the item</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="&lt;init&gt;(java.lang.String,java.lang.String)">
+<section class="detail" id="&lt;init&gt;(java.lang.String,com.csse3200.game.components.items.ItemType,java.lang.String)">
 <h3>ItemComponent</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ItemComponent</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;itemName,
+ <a href="ItemType.html" title="enum class in com.csse3200.game.components.items">ItemType</a>&nbsp;itemType,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;itemDescription)</span></div>
 <div class="block">Constructor for Item</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>itemName</code> - user facing name for item</dd>
+<dd><code>itemType</code> - the enum for type of item</dd>
 <dd><code>itemDescription</code> - user facing description for item</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="&lt;init&gt;(java.lang.String,java.lang.String,int)">
+<section class="detail" id="&lt;init&gt;(java.lang.String,com.csse3200.game.components.items.ItemType,java.lang.String,int)">
 <h3>ItemComponent</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ItemComponent</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;itemName,
+ <a href="ItemType.html" title="enum class in com.csse3200.game.components.items">ItemType</a>&nbsp;itemType,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;itemDescription,
  int&nbsp;price)</span></div>
 <div class="block">Constructor for Item</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>itemName</code> - user facing name for item</dd>
+<dd><code>itemType</code> - the enum for type of item</dd>
 <dd><code>itemDescription</code> - user facing description for item</dd>
 <dd><code>price</code> - price of item</dd>
 </dl>
@@ -251,6 +278,17 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>int price of item</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setPrice(int)">
+<h3>setPrice</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setPrice</span><wbr><span class="parameters">(int&nbsp;price)</span></div>
+<div class="block">Sets the price of the item</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>price</code> - int price of item</dd>
 </dl>
 </section>
 </li>
@@ -299,6 +337,17 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="setItemDescription(java.lang.String)">
+<h3>setItemDescription</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setItemDescription</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description)</span></div>
+<div class="block">Sets the price of the item</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>description</code> - string description of the item</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="setItemName(java.lang.String)">
 <h3>setItemName</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setItemName</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
@@ -306,6 +355,17 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>name</code> - string name of the item</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getItemType()">
+<h3>getItemType</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ItemType.html" title="enum class in com.csse3200.game.components.items">ItemType</a></span>&nbsp;<span class="element-name">getItemType</span>()</div>
+<div class="block">Returns the type of the item</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>ItemType enum type of item</dd>
 </dl>
 </section>
 </li>
