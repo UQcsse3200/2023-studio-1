@@ -5,6 +5,7 @@ import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
+import java.awt.*;
 
 import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
 
@@ -77,19 +78,28 @@ public class ItemActions extends Component {
      * @return a vector of the position where the player should hit
      */
     private Vector2 getAdjustedPos(Vector2 playerPos, Vector2 mousePos) {
+        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+        int width = (int)size.getWidth();
+        int height = (int)size.getHeight();
+
+        int playerXPos = width/2;
+        int playerYPos = height/2;
+
         int xDelta = 0;
         int yDelta = 0;
-        if (playerPos.x > mousePos.x){
-          xDelta -= 1;
-        } else if (playerPos.x < mousePos.x) {
-          xDelta += 1;
-        } 
-        if (playerPos.y > mousePos.y) {
-          yDelta -= 1;
-        } else if (playerPos.y < mousePos.y) {
-          yDelta += 1;
+
+        if (playerXPos - 24 > mousePos.x){
+            xDelta -= 1;
+        } else if (playerXPos + 24 < mousePos.x) {
+            xDelta += 1;
         }
-        return new Vector2(playerPos.x + xDelta, playerPos.y + yDelta); 
+
+        if (playerYPos + 48 < mousePos.y) {
+            yDelta -= 1;
+        } else if (playerYPos - 48 > mousePos.y) {
+            yDelta += 1;
+        }
+        return new Vector2(playerPos.x + xDelta, playerPos.y + yDelta);
     }
 
     /**

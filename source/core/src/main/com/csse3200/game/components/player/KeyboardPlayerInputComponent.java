@@ -53,14 +53,21 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.F:
           triggerEnterEvent();
           return true;
-        case Keys.E:
-          entity.getEvents().trigger("use", entity.getPosition(), entity.getPosition(), entity.getComponent(InventoryComponent.class).getInHand());
         default:
           return false;
       }
     }
     return false;
   }
+
+  /** @see InputProcessor#touchUp(int, int, int, int) */
+  @Override
+  public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+    Vector2 mousePos = new Vector2(screenX, screenY);
+    entity.getEvents().trigger("use", entity.getPosition(), mousePos, entity.getComponent(InventoryComponent.class).getInHand());
+    return false;
+  }
+
 
   /**
    * Triggers player events on specific keycodes.
