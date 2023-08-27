@@ -1,8 +1,10 @@
 package com.csse3200.game.components.player;
 
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
@@ -26,6 +28,7 @@ public class PlayerActions extends Component {
   private boolean moving = false;
   private boolean running = false;
   private boolean muted = false;
+  private CameraComponent camera;
 
   @Override
   public void create() {
@@ -158,6 +161,7 @@ public class PlayerActions extends Component {
     tractor.getComponent(TractorActions.class).setMuted(false);
     tractor.getComponent(KeyboardTractorInputComponent.class).setWalkDirection(entity.getComponent(KeyboardPlayerInputComponent.class).getWalkDirection());
     this.entity.setPosition(new Vector2(-10,-10));
+    camera.setTrackEntity(tractor);
   }
 
   void use(Vector2 playerPos, Vector2 mousePos, Entity itemInHand) {
@@ -174,5 +178,9 @@ public class PlayerActions extends Component {
 
   public void setMuted(boolean muted) {
     this.muted = muted;
+  }
+
+  public void setCameraVar (CameraComponent cam) {
+    this.camera = cam;
   }
 }

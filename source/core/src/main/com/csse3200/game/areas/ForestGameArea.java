@@ -61,6 +61,7 @@ public class ForestGameArea extends GameArea {
   private final TerrainFactory terrainFactory;
 
   private Entity player;
+  private Entity tractor;
 
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
@@ -98,7 +99,7 @@ public class ForestGameArea extends GameArea {
 
     //playMusic();
 
-    spawnTractor();
+    tractor = spawnTractor();
   }
 
   public Entity getPlayer() {
@@ -276,5 +277,13 @@ public class ForestGameArea extends GameArea {
     super.dispose();
     ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
     this.unloadAssets();
+  }
+
+  /**
+   * Does not set the camera to the Entity instead sets a camera variable inside of scripts
+   * to do that later
+   */
+  public Entity getTractor() {
+    return tractor;
   }
 }

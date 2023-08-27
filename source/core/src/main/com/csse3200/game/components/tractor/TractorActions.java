@@ -1,7 +1,9 @@
 package com.csse3200.game.components.tractor;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.components.player.PlayerActions;
@@ -16,6 +18,7 @@ public class TractorActions extends Component {
     private Vector2 walkDirection = Vector2.Zero.cpy();
     private boolean moving = false;
     private boolean muted = true;
+    private CameraComponent camera;
 
     @Override
     /**
@@ -91,6 +94,7 @@ public class TractorActions extends Component {
       muted = true;
       player.getComponent(KeyboardPlayerInputComponent.class).setWalkDirection(entity.getComponent(KeyboardTractorInputComponent.class).getWalkDirection());
       player.setPosition(this.entity.getPosition());
+      camera.setTrackEntity(player);
     }
 
     /**
@@ -119,5 +123,9 @@ public class TractorActions extends Component {
      */
     public void setPhysicsComponent(PhysicsComponent comp) {
         this.physicsComponent = comp;
+    }
+
+    public void setCameraVar (CameraComponent cam) {
+        this.camera = cam;
     }
 }

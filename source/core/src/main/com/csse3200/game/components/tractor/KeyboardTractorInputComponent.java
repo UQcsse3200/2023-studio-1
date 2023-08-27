@@ -132,7 +132,7 @@ public class KeyboardTractorInputComponent extends InputComponent {
     }
 
     /**
-     * Returns the direction the the tractor is moving.
+     * Returns the direction the tractor is moving.
      * Called walkDirection for consistency with the player
      *
      * @return the direction the tractor is moving as a Vector
