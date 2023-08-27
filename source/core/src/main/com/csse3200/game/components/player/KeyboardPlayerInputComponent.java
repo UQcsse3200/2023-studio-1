@@ -75,11 +75,11 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           triggerMoveEvent();
           return true;
         case Keys.A:
-          moveDirection.sub(Vector2Utils.DOWN);
+          moveDirection.sub(Vector2Utils.LEFT);
           triggerMoveEvent();
           return true;
         case Keys.S:
-          moveDirection.sub(Vector2Utils.RIGHT);
+          moveDirection.sub(Vector2Utils.DOWN);
           triggerMoveEvent();;
           return true;
         case Keys.D:
