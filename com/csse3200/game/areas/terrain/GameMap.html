@@ -120,6 +120,49 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.maps.tiled.TiledMap</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTiledMap()" class="member-name-link">getTiledMap</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="TerrainTile.TerrainCategory.html" title="enum class in com.csse3200.game.areas.terrain">TerrainTile.TerrainCategory</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTileTerrainCategory(int,int)" class="member-name-link">getTileTerrainCategory</a><wbr>(int&nbsp;x,
+ int&nbsp;y)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the terrain category at a specified tile</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isTileOccupied(int,int)" class="member-name-link">isTileOccupied</a><wbr>(int&nbsp;x,
+ int&nbsp;y)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns whether the specified terrain is occupied</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isTileTillable(int,int)" class="member-name-link">isTileTillable</a><wbr>(int&nbsp;x,
+ int&nbsp;y)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns whether the specified terrain is tillable</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isTileTraversable(int,int)" class="member-name-link">isTileTraversable</a><wbr>(int&nbsp;x,
+ int&nbsp;y)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns whether the specified terrain is traversable</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTileOccupied(int,int)" class="member-name-link">setTileOccupied</a><wbr>(int&nbsp;x,
+ int&nbsp;y)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the specified tile as being occupied</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTileTerrainCategory(com.csse3200.game.areas.terrain.TerrainTile.TerrainCategory,int,int)" class="member-name-link">setTileTerrainCategory</a><wbr>(<a href="TerrainTile.TerrainCategory.html" title="enum class in com.csse3200.game.areas.terrain">TerrainTile.TerrainCategory</a>&nbsp;terrainCategory,
+ int&nbsp;x,
+ int&nbsp;y)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the terrainCategory at the specified tile to the provided terrainCategory</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTileUnoccupied(int,int)" class="member-name-link">setTileUnoccupied</a><wbr>(int&nbsp;x,
+ int&nbsp;y)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the specified tile as being unoccupied</div>
+</div>
 </div>
 </div>
 </div>
@@ -181,6 +224,107 @@ loadScripts(document, 'script');</script>
 <dd><code>x</code> - </dd>
 <dd><code>y</code> - </dd>
 <dt>Returns:</dt>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getTileTerrainCategory(int,int)">
+<h3>getTileTerrainCategory</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="TerrainTile.TerrainCategory.html" title="enum class in com.csse3200.game.areas.terrain">TerrainTile.TerrainCategory</a></span>&nbsp;<span class="element-name">getTileTerrainCategory</span><wbr><span class="parameters">(int&nbsp;x,
+ int&nbsp;y)</span></div>
+<div class="block">Returns the terrain category at a specified tile</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>x</code> - x coordinate (0 -> MAP_SIZE.x -1)</dd>
+<dd><code>y</code> - y coordinate (0 -> MAP_SIZE.y -1)</dd>
+<dt>Returns:</dt>
+<dd>the TerrainCategory of the specified tile</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setTileTerrainCategory(com.csse3200.game.areas.terrain.TerrainTile.TerrainCategory,int,int)">
+<h3>setTileTerrainCategory</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTileTerrainCategory</span><wbr><span class="parameters">(<a href="TerrainTile.TerrainCategory.html" title="enum class in com.csse3200.game.areas.terrain">TerrainTile.TerrainCategory</a>&nbsp;terrainCategory,
+ int&nbsp;x,
+ int&nbsp;y)</span></div>
+<div class="block">Sets the terrainCategory at the specified tile to the provided terrainCategory</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>terrainCategory</code> - terrinCategory to set the TerrainTile to</dd>
+<dd><code>x</code> - x coordinate (0 -> MAP_SIZE.x -1)</dd>
+<dd><code>y</code> - y coordinate (0 -> MAP_SIZE.y -1)</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isTileTraversable(int,int)">
+<h3>isTileTraversable</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isTileTraversable</span><wbr><span class="parameters">(int&nbsp;x,
+ int&nbsp;y)</span></div>
+<div class="block">Returns whether the specified terrain is traversable</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>x</code> - x coordinate (0 -> MAP_SIZE.x -1)</dd>
+<dd><code>y</code> - y coordinate (0 -> MAP_SIZE.y -1)</dd>
+<dt>Returns:</dt>
+<dd>true if the tile is traversable and false if not</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isTileOccupied(int,int)">
+<h3>isTileOccupied</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isTileOccupied</span><wbr><span class="parameters">(int&nbsp;x,
+ int&nbsp;y)</span></div>
+<div class="block">Returns whether the specified terrain is occupied</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>x</code> - x coordinate (0 -> MAP_SIZE.x -1)</dd>
+<dd><code>y</code> - y coordinate (0 -> MAP_SIZE.y -1)</dd>
+<dt>Returns:</dt>
+<dd>true if the tile is occupied and false if not</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setTileOccupied(int,int)">
+<h3>setTileOccupied</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTileOccupied</span><wbr><span class="parameters">(int&nbsp;x,
+ int&nbsp;y)</span></div>
+<div class="block">Sets the specified tile as being occupied</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>x</code> - x coordinate (0 -> MAP_SIZE.x -1)</dd>
+<dd><code>y</code> - y coordinate (0 -> MAP_SIZE.y -1)</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setTileUnoccupied(int,int)">
+<h3>setTileUnoccupied</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTileUnoccupied</span><wbr><span class="parameters">(int&nbsp;x,
+ int&nbsp;y)</span></div>
+<div class="block">Sets the specified tile as being unoccupied</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>x</code> - x coordinate (0 -> MAP_SIZE.x -1)</dd>
+<dd><code>y</code> - y coordinate (0 -> MAP_SIZE.y -1)</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isTileTillable(int,int)">
+<h3>isTileTillable</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isTileTillable</span><wbr><span class="parameters">(int&nbsp;x,
+ int&nbsp;y)</span></div>
+<div class="block">Returns whether the specified terrain is tillable</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>x</code> - x coordinate (0 -> MAP_SIZE.x -1)</dd>
+<dd><code>y</code> - y coordinate (0 -> MAP_SIZE.y -1)</dd>
+<dt>Returns:</dt>
+<dd>true if the tile is tillable and false if not</dd>
 </dl>
 </section>
 </li>

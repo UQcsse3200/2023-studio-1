@@ -1161,6 +1161,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainComponent.html#getTileSize()" class="member-name-link">getTileSize()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/areas/terrain/GameMap.html#getTileTerrainCategory(int,int)" class="member-name-link">getTileTerrainCategory(int, int)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
+<dd>
+<div class="block">Returns the terrain category at a specified tile</div>
+</dd>
 <dt><a href="com/csse3200/game/services/GameTime.html#getTime()" class="member-name-link">getTime()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/GameTime.html" title="class in com.csse3200.game.services">GameTime</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/GameTime.html#getTimeSince(long)" class="member-name-link">getTimeSince(long)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/GameTime.html" title="class in com.csse3200.game.services">GameTime</a></dt>
@@ -1363,6 +1367,18 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/items/ItemComponent.html#isSellable()" class="member-name-link">isSellable()</a> - Method in class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a></dt>
 <dd>
 <div class="block">Returns selalble bool of item</div>
+</dd>
+<dt><a href="com/csse3200/game/areas/terrain/GameMap.html#isTileOccupied(int,int)" class="member-name-link">isTileOccupied(int, int)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
+<dd>
+<div class="block">Returns whether the specified terrain is occupied</div>
+</dd>
+<dt><a href="com/csse3200/game/areas/terrain/GameMap.html#isTileTillable(int,int)" class="member-name-link">isTileTillable(int, int)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
+<dd>
+<div class="block">Returns whether the specified terrain is tillable</div>
+</dd>
+<dt><a href="com/csse3200/game/areas/terrain/GameMap.html#isTileTraversable(int,int)" class="member-name-link">isTileTraversable(int, int)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
+<dd>
+<div class="block">Returns whether the specified terrain is traversable</div>
 </dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainTile.html#isTillable()" class="member-name-link">isTillable()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></dt>
 <dd>
@@ -2234,6 +2250,18 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/plants/PlantComponent.html#setTile(com.csse3200.game.areas.terrain.CropTileComponent)" class="member-name-link">setTile(CropTileComponent)</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
 <dd>
 <div class="block">Sets the crop tile on which this plant is planted.</div>
+</dd>
+<dt><a href="com/csse3200/game/areas/terrain/GameMap.html#setTileOccupied(int,int)" class="member-name-link">setTileOccupied(int, int)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
+<dd>
+<div class="block">Sets the specified tile as being occupied</div>
+</dd>
+<dt><a href="com/csse3200/game/areas/terrain/GameMap.html#setTileTerrainCategory(com.csse3200.game.areas.terrain.TerrainTile.TerrainCategory,int,int)" class="member-name-link">setTileTerrainCategory(TerrainTile.TerrainCategory, int, int)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
+<dd>
+<div class="block">Sets the terrainCategory at the specified tile to the provided terrainCategory</div>
+</dd>
+<dt><a href="com/csse3200/game/areas/terrain/GameMap.html#setTileUnoccupied(int,int)" class="member-name-link">setTileUnoccupied(int, int)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
+<dd>
+<div class="block">Sets the specified tile as being unoccupied</div>
 </dd>
 <dt><a href="com/csse3200/game/services/GameTime.html#setTimeScale(float)" class="member-name-link">setTimeScale(float)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/GameTime.html" title="class in com.csse3200.game.services">GameTime</a></dt>
 <dd>
