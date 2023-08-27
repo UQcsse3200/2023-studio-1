@@ -87,7 +87,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">GameTimeDisplay</span>
 <span class="extends-implements">extends <a href="../ui/UIComponent.html" title="class in com.csse3200.game.ui">UIComponent</a></span></div>
-<div class="block">A ui component for displaying the current game time.</div>
+<div class="block">A ui component for displaying the current game time on the Main Game Screen.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -130,7 +130,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Called when the entity is created and registered.</div>
+<div class="block">Creates reusable ui styles and adds actors to the stage.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dispose()" class="member-name-link">dispose</a>()</code></div>
@@ -143,10 +143,8 @@ loadScripts(document, 'script');</script>
 <div class="block">Draw the renderable.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateTimeDisplay()" class="member-name-link">updateTimeDisplay</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Updates the time on the ui.</div>
-</div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update(int)" class="member-name-link">update</a><wbr>(int&nbsp;time)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -197,13 +195,17 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="create()">
 <h3>create</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">create</span>()</div>
-<div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="../components/Component.html#create()">Component</a></code></span></div>
-<div class="block">Called when the entity is created and registered. Initial logic such as calls to GetComponent
- should be made here, not in the constructor which is called before an entity is finished.</div>
+<div class="block">Creates reusable ui styles and adds actors to the stage.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="../ui/UIComponent.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../ui/UIComponent.html" title="class in com.csse3200.game.ui">UIComponent</a></code></dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="update(int)">
+<h3>update</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">update</span><wbr><span class="parameters">(int&nbsp;time)</span></div>
 </section>
 </li>
 <li>
@@ -218,13 +220,6 @@ loadScripts(document, 'script');</script>
 <dt>Parameters:</dt>
 <dd><code>batch</code> - Batch to render to.</dd>
 </dl>
-</section>
-</li>
-<li>
-<section class="detail" id="updateTimeDisplay()">
-<h3>updateTimeDisplay</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateTimeDisplay</span>()</div>
-<div class="block">Updates the time on the ui.</div>
 </section>
 </li>
 <li>
