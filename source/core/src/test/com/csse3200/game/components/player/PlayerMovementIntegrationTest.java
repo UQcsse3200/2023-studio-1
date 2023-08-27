@@ -92,31 +92,19 @@ public class PlayerMovementIntegrationTest {
 
     @ParameterizedTest(name = "default animation played correctly when stopped after {0}")
     @MethodSource({"shouldReturnToDefaultAnimationOnStopParams"})
-    void shouldReturnToDefaultAnimationOnStop(Vector2 moveDirection, boolean isRunning, String expectedAnimationName) {
+    void shouldReturnToDefaultAnimationOnStop(String prevDirection, String expectedAnimation) {
         AnimationRenderComponent animationRenderComponent = player.getComponent(AnimationRenderComponent.class);
-        PlayerActions playerActionsComponent = player.getComponent(PlayerActions.class);
-
-        if (isRunning) player.getEvents().trigger("run");
-        player.getEvents().trigger("move", moveDirection);
-        playerActionsComponent.update();
-        assertEquals(expectedAnimationName, animationRenderComponent.getCurrentAnimation());
-
-        player.getEvents().trigger("moveStop");
-        playerActionsComponent.update();
-        assertEquals("default", animationRenderComponent.getCurrentAnimation());
+        player.getEvents().trigger("animationWalkStop",prevDirection );
+        assertEquals(expectedAnimation, animationRenderComponent.getCurrentAnimation());
     }
 
     private static Stream<Arguments> shouldReturnToDefaultAnimationOnStopParams() {
         return Stream.of(
-                // ((testDescription, moveDirection), isRunning, expectedAnimationName)
-                arguments(named("walking up", Vector2Utils.UP), false, "walk_up"),
-                arguments(named("walking left", Vector2Utils.LEFT), false, "walk_left"),
-                arguments(named("walking down", Vector2Utils.DOWN), false, "walk_down"),
-                arguments(named("walking right", Vector2Utils.RIGHT), false, "walk_right"),
-                arguments(named("running up", Vector2Utils.UP), true, "run_up"),
-                arguments(named("running left", Vector2Utils.LEFT), true, "run_left"),
-                arguments(named("running down", Vector2Utils.DOWN), true, "run_down"),
-                arguments(named("running right", Vector2Utils.RIGHT), true, "run_right")
+                // ((testDescription, prev moveDirection), isRunning, expectedAnimationName)
+                arguments("right", "idle_right"),
+                arguments("down", "idle_down"),
+                arguments("up", "idle_up"),
+                arguments("right", "idle_right")
         );
     }
 }
