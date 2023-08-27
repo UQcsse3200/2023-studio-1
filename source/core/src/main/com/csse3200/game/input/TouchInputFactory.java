@@ -1,6 +1,7 @@
 package com.csse3200.game.input;
 
 import com.csse3200.game.components.player.TouchPlayerInputComponent;
+import com.csse3200.game.components.tractor.TouchTractorInputComponent;
 import com.csse3200.game.ui.terminal.TouchTerminalInputComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,5 +29,11 @@ public class TouchInputFactory extends InputFactory{
   public InputComponent createForTerminal() {
     logger.debug("Creating terminal input handler");
     return new TouchTerminalInputComponent();
+  }
+
+  @Override
+  public InputComponent createForTractor() {
+    logger.debug("Creating tractor input handler");
+    return new TouchTractorInputComponent();
   }
 }

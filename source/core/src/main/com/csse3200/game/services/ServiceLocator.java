@@ -1,5 +1,6 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.physics.PhysicsService;
@@ -23,7 +24,11 @@ public class ServiceLocator {
   private static GameTime timeSource;
   private static InputService inputService;
   private static ResourceService resourceService;
+  private static GameArea gameArea;
 
+  public static GameArea getGameArea() {
+    return gameArea;
+  }
 
   public static EntityService getEntityService() {
     return entityService;
@@ -47,6 +52,11 @@ public class ServiceLocator {
 
   public static ResourceService getResourceService() {
     return resourceService;
+  }
+
+  public static void registerGameArea(GameArea area) {
+    logger.debug("Registering game area {}", area);
+    gameArea = area;
   }
 
   public static void registerEntityService(EntityService service) {
