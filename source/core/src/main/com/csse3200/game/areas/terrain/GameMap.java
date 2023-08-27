@@ -3,7 +3,11 @@ package com.csse3200.game.areas.terrain;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.EventHandler;
+
+import java.util.HashMap;
 
 public class GameMap {
 

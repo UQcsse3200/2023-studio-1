@@ -53,6 +53,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.F:
           triggerEnterEvent();
           return true;
+        case Keys.E:
+          entity.getEvents().trigger("use", entity.getPosition(), entity.getPosition(), entity.getComponent(InventoryComponent.class).getInHand());
         default:
           return false;
       }

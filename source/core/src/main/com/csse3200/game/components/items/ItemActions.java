@@ -1,12 +1,16 @@
 package com.csse3200.game.components.items;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.CropTileComponent;
+import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 
 import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
 
 public class ItemActions extends Component {
+
+    private GameMap map;
 
     @Override
     public void create() {
@@ -20,7 +24,8 @@ public class ItemActions extends Component {
      * @param item item to use/ interact with tile
      * @return if interaction with tile was success return true else return false.
      */
-    public boolean use(Vector2 playerPos, Vector2 mousePos, Entity item) {
+    public boolean use(Vector2 playerPos, Vector2 mousePos, Entity item, GameMap map) {
+        this.map = map;
         ItemComponent type = item.getComponent(ItemComponent.class);
         // Wasn't an item or did not have ItemComponent class
         if (type == null) {
@@ -28,10 +33,11 @@ public class ItemActions extends Component {
         }
         // Add your item here!!!
         boolean resultStatus;
-        Entity tile = getTileAtPosition(playerPos, mousePos);
+        TerrainTile tile = getTileAtPosition(playerPos, mousePos);
         switch (type.getItemType()) {
             case HOE -> {
                 resultStatus = hoe(playerPos, mousePos);
+                System.out.println(resultStatus);
                 return resultStatus;
             }
             case SHOVEL -> {
@@ -52,18 +58,15 @@ public class ItemActions extends Component {
         }
     }
 
-
-
     /**
      * Gets the tile at the given position. else returns null
      * @param playerPos the position of the player
      * @param mousePos the position of the mouse
      * @return Entity of tile at location else returns null
      */
-    private Entity getTileAtPosition(Vector2 playerPos, Vector2 mousePos) {
-        //TODO Needs to query the map with given position and return a tile
+    private TerrainTile getTileAtPosition(Vector2 playerPos, Vector2 mousePos) {
         Vector2 pos = getAdjustedPos(playerPos, mousePos);
-        return null;
+        return map.getTile((int) pos.x, (int) pos.y);
     }
 
     /**
@@ -84,14 +87,14 @@ public class ItemActions extends Component {
      * @param item a reference to a watering can
      * @return if watering was successful return true else return false
      */
-    private boolean water(Entity tile, Entity item) {
-        boolean tileWaterable = isCropTile(tile);
+    private boolean water(TerrainTile tile, Entity item) {
+        boolean tileWaterable = isCropTile(tile.getCropTile());
         if (!tileWaterable) {
             return false;
         }
 
         // A water amount of 0.5 was recommended by team 7
-        tile.getEvents().trigger("water", 0.5);
+        tile.getCropTile().getEvents().trigger("water", 0.5);
         item.getComponent(WateringCanLevelComponent.class).incrementLevel(-5);
         return true;
     }
@@ -101,12 +104,10 @@ public class ItemActions extends Component {
      * @param tile the tile to be interacted with
      * @return if harvesting was successful return true else return false
      */
-    private boolean harvest(Entity tile) {
-        tile.getEvents().trigger("harvest");
-        boolean tileHarvestable = isCropTile(tile);
+    private boolean harvest(TerrainTile tile) {
+        boolean tileHarvestable = isCropTile(tile.getCropTile());
         if (tileHarvestable) {
-            //TODO need to return true on success and harvest here.
-            // Harvest is done above this?
+            tile.getCropTile().getEvents().trigger("harvest");
             return true;
         } 
         return false;
@@ -117,10 +118,11 @@ public class ItemActions extends Component {
      * @param tile the tile to be interacted with
      * @return if shoveling was successful return true else return false
      */
-    private boolean shovel(Entity tile) {
-        //TODO destroy tile at pos. if tile destroyed return true else return false
-        if (tile != null) {
-            tile.getEvents().trigger("destroy");
+    private boolean shovel(TerrainTile tile) {
+        if (tile.getCropTile() != null) {
+            tile.getCropTile().getEvents().trigger("destroy");
+            tile.setUnOccupied();
+            tile.setCropTile(null);
             return true;
         }
         return false;
@@ -134,15 +136,16 @@ public class ItemActions extends Component {
      * @return if hoeing was successful return true else return false
      */
     private boolean hoe(Vector2 playerPos, Vector2 mousePos) {
-        Entity tile = getTileAtPosition(playerPos, mousePos);
-        if (tile != null) {
+        TerrainTile tile = getTileAtPosition(playerPos, mousePos);
+        if (tile.getCropTile() != null || !tile.isTillable()) {
             return false;
         }
         // Make a new tile
-        tile = createTerrainEntity(getAdjustedPos(playerPos, mousePos));
-
-        //TODO Add tile to the map for further actions
-        
+        Vector2 newPos = getAdjustedPos(playerPos, mousePos);
+        System.out.println(newPos);
+        Entity cropTile = createTerrainEntity(newPos);
+        tile.setCropTile(cropTile);
+        tile.setOccupied();
         return true;
     }
 

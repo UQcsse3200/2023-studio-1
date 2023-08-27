@@ -1,4 +1,5 @@
 package com.csse3200.game.entities.factories;
+import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.items.WateringCanLevelComponent;
@@ -15,7 +16,8 @@ public class ItemFactory {
   public static Entity createBaseItem() {
     Entity item = new Entity()
             .addComponent(new PhysicsComponent())
-            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ITEM));
+            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ITEM))
+            .addComponent(new ItemActions());
     return item;
   }
 

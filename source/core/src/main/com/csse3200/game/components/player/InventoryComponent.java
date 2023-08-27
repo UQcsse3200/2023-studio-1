@@ -9,6 +9,9 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.csse3200.game.entities.factories.ItemFactory.createHoe;
+import static com.csse3200.game.entities.factories.ItemFactory.createShovel;
+
 /**
  * A component intended to be used by the player to track their inventory.
  *
@@ -66,5 +69,9 @@ public class InventoryComponent extends Component {
    */
   public boolean removeItem(Entity item) {
     return this.inventory.remove(item);
+  }
+
+  public Entity getInHand() {
+    return createHoe();
   }
 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.ItemActions;
@@ -29,6 +30,7 @@ public class PlayerActions extends Component {
   private boolean running = false;
   private boolean muted = false;
   private CameraComponent camera;
+  private GameMap map;
 
   @Override
   public void create() {
@@ -39,6 +41,7 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("runStop", this::stopRunning);
     entity.getEvents().addListener("attack", this::attack);
     entity.getEvents().addListener("enterTractor", this::enterTractor);
+    entity.getEvents().addListener("use", this::use);
   }
 
   @Override
@@ -165,7 +168,7 @@ public class PlayerActions extends Component {
   }
 
   void use(Vector2 playerPos, Vector2 mousePos, Entity itemInHand) {
-    itemInHand.getComponent(ItemActions.class).use(playerPos, mousePos, itemInHand);
+    itemInHand.getComponent(ItemActions.class).use(playerPos, mousePos, itemInHand, map);
   }
 
   /**
@@ -182,5 +185,9 @@ public class PlayerActions extends Component {
 
   public void setCameraVar (CameraComponent cam) {
     this.camera = cam;
+  }
+
+  public void setGameMap(GameMap map) {
+    this.map = map;
   }
 }
