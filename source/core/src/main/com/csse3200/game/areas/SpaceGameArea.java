@@ -1,59 +1,86 @@
 package com.csse3200.game.areas;
 
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
+import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.*;
-import com.csse3200.game.utils.math.GridPoint2Utils;
-import com.csse3200.game.utils.math.RandomUtils;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.components.gamearea.GameAreaDisplay;
+import com.csse3200.game.utils.math.GridPoint2Utils;
+import com.csse3200.game.utils.math.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.tools.Tool;
-
-/** Forest area for the demo game with trees, a player, and some enemies. */
-public class ForestGameArea extends GameArea {
-  private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
+/** SpaceGameArea is the area used for the initial game version */
+public class SpaceGameArea extends GameArea {
+  private static final Logger logger = LoggerFactory.getLogger(SpaceGameArea.class);
   private static final int NUM_TREES = 7;
-  private static final int NUM_GHOSTS = 2;
+  private static final int NUM_GHOSTS = 5;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
 
   private static final GridPoint2 TOOL_SPAWN = new GridPoint2(15, 10);// temp!!!
   private static final GridPoint2 TOOL_SPAWN2 = new GridPoint2(15, 15);// temp!!!
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
-    "images/tree.png",
-    "images/ghost_king.png",
-    "images/ghost_1.png",
-    "images/grass_1.png",
-    "images/grass_2.png",
-    "images/grass_3.png",
-    "images/hex_grass_1.png",
-    "images/hex_grass_2.png",
-    "images/hex_grass_3.png",
-    "images/iso_grass_1.png",
-    "images/iso_grass_2.png",
-    "images/iso_grass_3.png",
-    "images/tool_shovel.png",
-    "images/tool_hoe.png",
-    "images/tool_scythe.png",
-    "images/tool_watering_can.png",
+          "images/tree.png",
+          "images/ghost_king.png",
+          "images/ghost_1.png",
+          "images/grass_1.png",
+          "images/grass_2.png",
+          "images/grass_3.png",
+          "images/hex_grass_1.png",
+          "images/hex_grass_2.png",
+          "images/hex_grass_3.png",
+          "images/iso_grass_1.png",
+          "images/iso_grass_2.png",
+          "images/iso_grass_3.png",
+          "images/tool_shovel.png",
 
-    "images/animals/chicken.png",
-    "images/animals/cow.png",
+          "images/tool_hoe.png",
+          "images/tool_scythe.png",
+          "images/tool_watering_can.png",
+          "images/animals/chicken.png",
+          "images/animals/cow.png",
+          "images/cropTile.png",
 
-    "images/cropTile.png"
+          "images/beach_1.png",
+          "images/beach_2.png",
+          "images/beach_3.png",
+          "images/deepWater_1.png",
+          "images/deepWater_2.png",
+          "images/desert_1.png",
+          "images/desert_2.png",
+          "images/desert_3.png",
+          "images/dirt_1.png",
+          "images/dirt_2.png",
+          "images/dirt_3.png",
+          "images/dirtPathTop.png",
+          "images/dirtPathRight.png",
+          "images/dirtPathBottom.png",
+          "images/gravel_1.png",
+          "images/ice_1.png",
+          "images/ice_2.png",
+          "images/lava_1.png",
+          "images/lavaGround_1.png",
+          "images/lavaGround_2.png",
+          "images/lavaGround_3.png",
+          "images/water_1.png",
+          "images/water_2.png",
+          "images/water_3.png",
+          "images/flowingWater_1.png",
+          "images/snow_1.png",
+          "images/snow_2.png",
+          "images/snow_3.png",
+          "images/stone_1.png",
+          "images/stonePath_1.png"
   };
-
   private static final String[] forestTextureAtlases = {
-          "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
+    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
           "images/animals/chicken.atlas", "images/animals/cow.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
@@ -61,6 +88,7 @@ public class ForestGameArea extends GameArea {
   private static final String[] forestMusic = {backgroundMusic};
 
   private final TerrainFactory terrainFactory;
+  private final GameMap gameMap;
 
   private Entity player;
 
@@ -69,11 +97,11 @@ public class ForestGameArea extends GameArea {
    * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
    * @requires terrainFactory != null
    */
-  public ForestGameArea(TerrainFactory terrainFactory) {
+  public SpaceGameArea(TerrainFactory terrainFactory) {
     super();
     this.terrainFactory = terrainFactory;
+    this.gameMap = new GameMap(terrainFactory);
   }
-
 
   /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
   @Override
@@ -86,14 +114,13 @@ public class ForestGameArea extends GameArea {
     spawnTrees();
     player = spawnPlayer();
 
-
     spawnChickens();
     spawnCows();
 
-//    spawnTool(ToolType.TEST_TOOL); // temp - spawns a test tool
-//    spawnTool(ToolType.HOE); // temp - spawns a hoe
-//    spawnGhosts();
-//    spawnGhostKing();
+    //spawnTool(ToolType.TEST_TOOL); // temp - spawns a test tool
+    //spawnTool(ToolType.HOE); // temp - spawns a hoe
+    //spawnGhosts();
+    //spawnGhostKing();
 
     playMusic();
   }
@@ -104,16 +131,14 @@ public class ForestGameArea extends GameArea {
 
   private void displayUI() {
     Entity ui = new Entity();
-    // Added the name of the game
-    ui.addComponent(new GameAreaDisplay("Gardens of the Galaxy"));
+    ui.addComponent(new GameAreaDisplay("Box Forest"));
     spawnEntity(ui);
   }
 
   private void spawnTerrain() {
     // Background terrain
-    terrain = terrainFactory.createTerrain(new TiledMap()); // Added new TiledMap to prevent error, WILL NOT WORK IF YOU RUN ForestGameArea, run SpaceGameArea instead
-    // terrain = terrainFactory.createTerrain(TerrainType.FOREST_DEMO);
-    spawnEntity(new Entity().addComponent(terrain));
+    terrain = terrainFactory.createTerrain(this.gameMap.getTiledMap());
+    spawnEntity(new Entity().addComponent(terrain));                  // Will need to monitor this when changing the createTerrain function
 
     // Terrain walls
     float tileSize = terrain.getTileSize();
@@ -122,22 +147,22 @@ public class ForestGameArea extends GameArea {
 
     // Left
     spawnEntityAt(
-            ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO, false, false);
+        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO, false, false);
     // Right
     spawnEntityAt(
-            ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
-            new GridPoint2(tileBounds.x, 0),
-            false,
-            false);
+        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
+        new GridPoint2(tileBounds.x, 0),
+        false,
+        false);
     // Top
     spawnEntityAt(
-            ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
-            new GridPoint2(0, tileBounds.y),
-            false,
-            false);
+        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
+        new GridPoint2(0, tileBounds.y),
+        false,
+        false);
     // Bottom
     spawnEntityAt(
-            ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
+        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
   }
 
   private void spawnTrees() {
@@ -174,7 +199,6 @@ public class ForestGameArea extends GameArea {
     }
     return newTool;
   }
-
 
   private void spawnChickens() {
     GridPoint2 minPos = new GridPoint2(0, 0);

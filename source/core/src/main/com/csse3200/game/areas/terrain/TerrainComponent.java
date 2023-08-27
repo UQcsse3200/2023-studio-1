@@ -48,7 +48,7 @@ public class TerrainComponent extends RenderComponent {
       case ISOMETRIC:
         return new Vector2((x + y) * tileSize / 2, (y - x) * tileSize / 2);
       case ORTHOGONAL:
-        return new Vector2(x * tileSize, y * tileSize);
+        return new Vector2(x *tileSize, y * tileSize);
       default:
         return null;
     }

@@ -1,0 +1,218 @@
+[1mdiff --git a/source/core/src/main/com/csse3200/game/areas/ForestGameArea.java b/source/core/src/main/com/csse3200/game/areas/ForestGameArea.java[m
+[1mindex 0c5bee5..611377d 100644[m
+[1m--- a/source/core/src/main/com/csse3200/game/areas/ForestGameArea.java[m
+[1m+++ b/source/core/src/main/com/csse3200/game/areas/ForestGameArea.java[m
+[36m@@ -43,7 +43,10 @@[m [mpublic class ForestGameArea extends GameArea {[m
+     "images/tool_shovel.png",[m
+     "images/tool_hoe.png",[m
+     "images/tool_scythe.png",[m
+[31m-    "images/tool_watering_can.png"[m
+[32m+[m[32m    "images/tool_watering_can.png",[m
+[32m+[m[32m    "images/dirt_2.png",[m
+[32m+[m[32m    "images/gravel_2.png"[m
+[32m+[m
+   };[m
+   private static final String[] forestTextureAtlases = {[m
+     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas"[m
+[1mdiff --git a/source/core/src/main/com/csse3200/game/areas/terrain/TerrainFactory.java b/source/core/src/main/com/csse3200/game/areas/terrain/TerrainFactory.java[m
+[1mindex dd8a307..7ccf42c 100644[m
+[1m--- a/source/core/src/main/com/csse3200/game/areas/terrain/TerrainFactory.java[m
+[1m+++ b/source/core/src/main/com/csse3200/game/areas/terrain/TerrainFactory.java[m
+[36m@@ -1,5 +1,11 @@[m
+ package com.csse3200.game.areas.terrain;[m
+ [m
+[32m+[m[32mimport java.io.File;[m
+[32m+[m[32mimport java.io.BufferedReader;[m
+[32m+[m[32mimport java.io.FileReader;[m
+[32m+[m[32mimport java.io.IOException;[m
+[32m+[m[32mimport java.util.ArrayList;[m
+[32m+[m
+ import com.badlogic.gdx.graphics.OrthographicCamera;[m
+ import com.badlogic.gdx.graphics.Texture;[m
+ import com.badlogic.gdx.graphics.g2d.TextureRegion;[m
+[36m@@ -19,11 +25,9 @@[m [mimport com.csse3200.game.services.ServiceLocator;[m
+ [m
+ /** Factory for creating game terrains. */[m
+ public class TerrainFactory {[m
+[31m-  private static final GridPoint2 MAP_SIZE = new GridPoint2(60, 60);[m
+[32m+[m[32m  private static final GridPoint2 MAP_SIZE = new GridPoint2(30, 30);[m
+   private static final int TUFT_TILE_COUNT = 30;[m
+   private static final int GRASS1_TILE_COUNT = 30;[m
+[31m-  private static final int GRASS2_TILE_COUNT = 30;[m
+[31m-  private static final int GRASS3_TILE_COUNT = 30;[m
+ [m
+ [m
+   private final OrthographicCamera camera;[m
+[36m@@ -58,16 +62,21 @@[m [mpublic class TerrainFactory {[m
+    */[m
+   public TerrainComponent createTerrain(TerrainType terrainType) {                      // WILL NEED TO REVAMP THIS FUNCTION[m
+     ResourceService resourceService = ServiceLocator.getResourceService();[m
+[32m+[m[32m     ArrayList<TextureRegion> TRList = new ArrayList<TextureRegion>();[m
+     switch (terrainType) {[m
+[31m-      case FOREST_DEMO:[m
+[32m+[m[32m            case FOREST_DEMO:[m
+[32m+[m
+         TextureRegion orthoGrass =[m
+             new TextureRegion(resourceService.getAsset("images/grass_1.png", Texture.class));[m
+         TextureRegion orthoTuft =[m
+             new TextureRegion(resourceService.getAsset("images/grass_2.png", Texture.class));[m
+         TextureRegion orthoRocks =[m
+             new TextureRegion(resourceService.getAsset("images/grass_3.png", Texture.class));[m
+[31m-        return createForestDemoTerrain(0.5f, orthoGrass, orthoTuft, orthoRocks);[m
+[31m-      case FOREST_DEMO_ISO:[m
+[32m+[m[32m            TRList.add(orthoGrass);[m
+[32m+[m[32m            TRList.add(orthoTuft);[m
+[32m+[m[32m            TRList.add(orthoRocks);[m
+[32m+[m[32m        return createForestDemoTerrain(0.5f, TRList);[m
+[32m+[m[32m      /*case FOREST_DEMO_ISO:[m
+         TextureRegion isoGrass =[m
+             new TextureRegion(resourceService.getAsset("images/iso_grass_1.png", Texture.class));[m
+         TextureRegion isoTuft =[m
+[36m@@ -82,16 +91,16 @@[m [mpublic class TerrainFactory {[m
+             new TextureRegion(resourceService.getAsset("images/hex_grass_2.png", Texture.class));[m
+         TextureRegion hexRocks =[m
+             new TextureRegion(resourceService.getAsset("images/hex_grass_3.png", Texture.class));[m
+[31m-        return createForestDemoTerrain(1f, hexGrass, hexTuft, hexRocks);[m
+[32m+[m[32m        return createForestDemoTerrain(1f, hexGrass, hexTuft, hexRocks);*/[m
+       default:[m
+         return null;[m
+     }[m
+   }[m
+ [m
+   private TerrainComponent createForestDemoTerrain([m
+[31m-      float tileWorldSize, TextureRegion grass, TextureRegion grassTuft, TextureRegion rocks) {[m
+[31m-    GridPoint2 tilePixelSize = new GridPoint2(grass.getRegionWidth(), grass.getRegionHeight());[m
+[31m-    TiledMap tiledMap = createForestDemoTiles(tilePixelSize, grass, grassTuft, rocks);[m
+[32m+[m[32m      float tileWorldSize, ArrayList<TextureRegion> TRList) {[m
+[32m+[m[32m    GridPoint2 tilePixelSize = new GridPoint2(TRList.get(0).getRegionWidth(), TRList.get(0).getRegionHeight());[m
+[32m+[m[32m    TiledMap tiledMap = createForestDemoTiles(tilePixelSize, TRList);[m
+     TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);[m
+     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);[m
+   }[m
+[36m@@ -118,26 +127,37 @@[m [mpublic class TerrainFactory {[m
+    * @return the Cell[m
+    */[m
+   private Cell getCell(TiledMap tiledMap , int x, int y) {[m
+[31m-    return ((TiledMapTileLayer)tiledMap.getLayers().get(0)).getCell(0, 2);[m
+[32m+[m[32m    return ((TiledMapTileLayer)tiledMap.getLayers().get(0)).getCell(x, y);[m
+   }[m
+ [m
+ [m
+   private TiledMap createForestDemoTiles([m
+[31m-      GridPoint2 tileSize, TextureRegion grass1, TextureRegion grass2, TextureRegion grass3) {[m
+[32m+[m[32m      GridPoint2 tileSize, ArrayList<TextureRegion> TRList) {[m
+     TiledMap tiledMap = new TiledMap();[m
+[31m-    TerrainTile grassTile1 = new TerrainTile(grass1, TerrainTile.TerrainCategory.GRASS); // TerrainTile.TerrainCategory.GRASS does not change anything currently[m
+[31m-    TerrainTile grassTile2 = new TerrainTile(grass2, TerrainTile.TerrainCategory.GRASS); // TerrainTile.TerrainCategory.GRASS does not change anything currently[m
+[31m-    //TerrainTile Desert = new TerrainTile()[m
+[31m-    TerrainTile grassTile3 = new TerrainTile(grass3, TerrainTile.TerrainCategory.GRASS); // TerrainTile.TerrainCategory.GRASS does not change anything currently[m
+[32m+[m[32m    ArrayList<TerrainTile> TTlist = new ArrayList<TerrainTile>();[m
+[32m+[m[32m    TerrainTile grassTile1 = new TerrainTile(TRList.get(0), TerrainTile.TerrainCategory.GRASS); // TerrainTile.TerrainCategory.GRASS does not change anything currently[m
+[32m+[m[32m    TerrainTile grassTile2 = new TerrainTile(TRList.get(1), TerrainTile.TerrainCategory.GRASS); // TerrainTile.TerrainCategory.GRASS does not change anything currently[m
+[32m+[m[32m    TerrainTile grassTile3 = new TerrainTile(TRList.get(2), TerrainTile.TerrainCategory.GRASS); // TerrainTile.TerrainCategory.GRASS does not change anything currently[m
+[32m+[m[41m    [m
+[32m+[m[32m    TTlist.add(grassTile1);[m
+[32m+[m[32m    TTlist.add(grassTile2);[m
+[32m+[m[32m    TTlist.add(grassTile3);[m
+[32m+[m
+     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);[m
+ [m
+     // Create base grass[m
+[31m-    fillTiles(layer, MAP_SIZE, grassTile1);[m
+[32m+[m[32m    //fillTiles(layer, MAP_SIZE, TTlist.get(0));[m
+[32m+[m
+[32m+[m[32m    try {[m
+[32m+[m[32m      fillTilesWithFile(layer, MAP_SIZE, TTlist,"source/core/assets/configs/titleMap.txt");[m
+[32m+[m[32m    } catch (IOException e) {[m
+[32m+[m[32m      System.out.println("fillTilesWithFile -> Readfile error!");[m
+[32m+[m[32m    } catch (Exception e) {[m
+[32m+[m[32m      System.out.println("fillTilesWithFile -> Testcase error!: " + e);[m
+[32m+[m[32m    }[m
+ [m
+[31m-    // Add some grass and rocks[m
+[31m-    fillTile(layer, MAP_SIZE, grassTile2, GRASS2_TILE_COUNT);[m
+[32m+[m[32m    //fillTilesAtRandom(layer, MAP_SIZE, grassTile3, GRASS3_TILE_COUNT);[m
+ [m
+[31m-    fillTilesAtRandom(layer, MAP_SIZE, grassTile3, GRASS3_TILE_COUNT);[m
+     tiledMap.getLayers().add(layer);[m
+     return tiledMap;[m
+   }[m
+[36m@@ -152,21 +172,7 @@[m [mpublic class TerrainFactory {[m
+   private TiledMap createSpaceGameTiles(GridPoint2 tileSize) { // Will probably need more variables than this[m
+     TiledMap tiledMap = new TiledMap(); // MapClass will likely be an extension of TiledMap[m
+     // MapClass will either instantiate the grid, or the grid is set after instantiation[m
+[31m-[m
+[31m-    // layer is used for rendering?[m
+     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);[m
+[31m-[m
+[31m-    // for loop to set tiles in layer, either in different function[m
+[31m-    /**[m
+[31m-     * for (int x = 0; x < MAP_SIZE.x; x++) {           // can use MapClass constants instead of MAP_SIZE, but they should be the same[m
+[31m-     *       for (int y = 0; y < MAP_SIZE.y; y++) {[m
+[31m-     *         Cell cell = new Cell();[m
+[31m-     *         cell.setTile(tile);                      // The tile will either need to be grabbed from the MapClass, or generated from data in the MapClass[m
+[31m-     *         layer.setCell(x, y, cell);[m
+[31m-     *       }[m
+[31m-     *     }[m
+[31m-     */[m
+[31m-[m
+     tiledMap.getLayers().add(layer);[m
+     return tiledMap;[m
+   }[m
+[36m@@ -183,26 +189,37 @@[m [mpublic class TerrainFactory {[m
+     }[m
+   }[m
+ [m
+[31m-  private static void fillTile([m
+[31m-          TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile, int amount) {[m
+[31m-    GridPoint2 min = new GridPoint2(0, 0);[m
+[31m-    GridPoint2 max = new GridPoint2(mapSize.x - 1, mapSize.y - 1);[m
+[31m-[m
+[31m-    for (int i = 0; i < mapSize.x; i++) {[m
+[31m-        GridPoint2 tilePos = new GridPoint2(i, 4);[m
+[31m-        Cell cell = layer.getCell(tilePos.x, tilePos.y);[m
+[31m-        cell.setTile(tile);[m
+[31m-    }[m
+[31m-    for (int i = 0; i < mapSize.x; i++) {[m
+[31m-      GridPoint2 tilePos = new GridPoint2(i, mapSize.y -5);[m
+[31m-      Cell cell = layer.getCell(tilePos.x, tilePos.y);[m
+[31m-      cell.setTile(tile);[m
+[31m-    }[m
+[31m-    for (int i = 0; i < mapSize.x; i++) {[m
+[31m-      GridPoint2 tilePos = new GridPoint2(i, (mapSize.y /2));[m
+[31m-      Cell cell = layer.getCell(tilePos.x, tilePos.y);[m
+[31m-      cell.setTile(tile);[m
+[32m+[m[32m  private static void fillTilesWithFile(TiledMapTileLayer layer, GridPoint2 mapSize, ArrayList<TerrainTile> TTList, String path) throws IOException {[m
+[32m+[m[32m    // open file to read and read each character[m
+[32m+[m[32m      BufferedReader bf = new BufferedReader(new FileReader(path));[m
+[32m+[m[32m      String line;[m
+[32m+[m[32m      int x_pos = 0, y_pos = 0;[m
+[32m+[m[32m        // checking for end of file[m
+[32m+[m[32m    for (line = bf.readLine(); line != null; x_pos++, line = bf.readLine(), y_pos++) {[m
+[32m+[m[32m        for (x_pos = 0; x_pos < line.length(); x_pos++) {[m
+[32m+[m[32m          //Cell cell = layer.getCell(x_pos, y_pos);[m
+[32m+[m[32m          GridPoint2 point = new GridPoint2(x_pos, y_pos);[m
+[32m+[m[32m          Cell cell = new Cell();[m
+[32m+[m[32m          switch (line.charAt(point.x)) {[m
+[32m+[m[32m            case 'x':[m
+[32m+[m[32m              cell.setTile(TTList.get(0));[m
+[32m+[m[32m              System.out.print("x");[m
+[32m+[m[32m              break;[m
+[32m+[m[32m            case 'y':[m
+[32m+[m[32m              cell.setTile(TTList.get(1));[m
+[32m+[m[32m              System.out.print("y");[m
+[32m+[m[32m              break;[m
+[32m+[m[32m            default:[m
+[32m+[m[32m              cell.setTile(TTList.get(2));[m
+[32m+[m[32m              System.out.print("e");[m
+[32m+[m[32m              break;[m
+[32m+[m[32m          }[m
+[32m+[m[32m          System.out.println("");[m
+[32m+[m[32m          layer.setCell(point.x, point.y, cell);[m
+[32m+[m[32m        }[m
+     }[m
+[32m+[m[32m      // closing bufferreader object[m
+[32m+[m[32m      bf.close();[m
+   }[m
+ [m
+   private static void fillTiles(TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile) {[m
