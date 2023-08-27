@@ -104,9 +104,20 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../events/EventHandler.html" title="class in com.csse3200.game.events">EventHandler</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEventHandler()" class="member-name-link">getEventHandler</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#cellCoordinateToPosition()" class="member-name-link">cellCoordinateToPosition</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">NATHAN/someone else
+      function to convert cell coordinate to position on screen?</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../events/EventHandler.html" title="class in com.csse3200.game.events">EventHandler</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEventHandler()" class="member-name-link">getEventHandler</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.math.GridPoint2</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMapSize()" class="member-name-link">getMapSize</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the size of the map</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="TerrainFactory.html" title="class in com.csse3200.game.areas.terrain">TerrainFactory</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTerrainFactory()" class="member-name-link">getTerrainFactory</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -114,7 +125,8 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTile(int,int)" class="member-name-link">getTile</a><wbr>(int&nbsp;x,
  int&nbsp;y)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">NEED TO MAKE THIS FUNCTION MORE VERSATILE
+<div class="block">NATHAN WORK ON THIS FUNCTION
+   NEED TO MAKE THIS FUNCTION MORE VERSATILE
    such as using position on screen etc.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.maps.tiled.TiledMap</code></div>
@@ -145,22 +157,28 @@ loadScripts(document, 'script');</script>
 <div class="block">Returns whether the specified terrain is traversable</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTileOccupied(int,int)" class="member-name-link">setTileOccupied</a><wbr>(int&nbsp;x,
- int&nbsp;y)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#positionToCellCoordinate()" class="member-name-link">positionToCellCoordinate</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the specified tile as being occupied</div>
+<div class="block">NATHAN WORK ON THIS
+      function to convert position to cell coordinate (possible helper function)</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTileTerrainCategory(com.csse3200.game.areas.terrain.TerrainTile.TerrainCategory,int,int)" class="member-name-link">setTileTerrainCategory</a><wbr>(<a href="TerrainTile.TerrainCategory.html" title="enum class in com.csse3200.game.areas.terrain">TerrainTile.TerrainCategory</a>&nbsp;terrainCategory,
- int&nbsp;x,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTileOccupied(int,int)" class="member-name-link">setTileOccupied</a><wbr>(int&nbsp;x,
  int&nbsp;y)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the terrainCategory at the specified tile to the provided terrainCategory</div>
+<div class="block">Sets the specified tile as being occupied</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTileUnoccupied(int,int)" class="member-name-link">setTileUnoccupied</a><wbr>(int&nbsp;x,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTileTerrainCategory(com.csse3200.game.areas.terrain.TerrainTile.TerrainCategory,int,int)" class="member-name-link">setTileTerrainCategory</a><wbr>(<a href="TerrainTile.TerrainCategory.html" title="enum class in com.csse3200.game.areas.terrain">TerrainTile.TerrainCategory</a>&nbsp;terrainCategory,
+ int&nbsp;x,
  int&nbsp;y)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the terrainCategory at the specified tile to the provided terrainCategory</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTileUnoccupied(int,int)" class="member-name-link">setTileUnoccupied</a><wbr>(int&nbsp;x,
+ int&nbsp;y)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the specified tile as being unoccupied</div>
 </div>
 </div>
@@ -213,11 +231,23 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="getMapSize()">
+<h3>getMapSize</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.math.GridPoint2</span>&nbsp;<span class="element-name">getMapSize</span>()</div>
+<div class="block">Returns the size of the map</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>a copy of the GridPoint2 instance which contains the dimensions of the map</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="getTile(int,int)">
 <h3>getTile</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></span>&nbsp;<span class="element-name">getTile</span><wbr><span class="parameters">(int&nbsp;x,
  int&nbsp;y)</span></div>
-<div class="block">NEED TO MAKE THIS FUNCTION MORE VERSATILE
+<div class="block">NATHAN WORK ON THIS FUNCTION
+   NEED TO MAKE THIS FUNCTION MORE VERSATILE
    such as using position on screen etc. instead of x and y coords which only correlate with the 2d array of cells</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -225,6 +255,22 @@ loadScripts(document, 'script');</script>
 <dd><code>y</code> - </dd>
 <dt>Returns:</dt>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="positionToCellCoordinate()">
+<h3>positionToCellCoordinate</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">positionToCellCoordinate</span>()</div>
+<div class="block">NATHAN WORK ON THIS
+      function to convert position to cell coordinate (possible helper function)</div>
+</section>
+</li>
+<li>
+<section class="detail" id="cellCoordinateToPosition()">
+<h3>cellCoordinateToPosition</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">cellCoordinateToPosition</span>()</div>
+<div class="block">NATHAN/someone else
+      function to convert cell coordinate to position on screen?</div>
 </section>
 </li>
 <li>
