@@ -30,7 +30,8 @@ public class PlantComponent extends Component {
      * @param plantDescription   description of the plant
      */
     public PlantComponent(int health, String name, String plantType, String plantDescription,
-                          float idealWaterLevel, int adultLifeSpan, int maxHealth) {
+                          float idealWaterLevel, int adultLifeSpan, int maxHealth,
+                          CropTileComponent cropTile) {
         this.plantHealth = health;
         this.plantName = name;
         this.plantType = plantType;
@@ -38,6 +39,7 @@ public class PlantComponent extends Component {
         this.idealWaterLevel = idealWaterLevel;
         this.adultLifeSpan = adultLifeSpan;
         this.maxHealth = maxHealth;
+        this.cropTile = cropTile;
     }
 
     /**
@@ -210,14 +212,5 @@ public class PlantComponent extends Component {
         } else {
             return false;
         }
-    }
-
-    /**
-     * Sets the crop tile on which this plant is planted.
-     *
-     * @param cropTile Crop tile this plant is planted on.
-     */
-    public void setTile(CropTileComponent cropTile) {
-        this.cropTile = cropTile;
     }
 }
