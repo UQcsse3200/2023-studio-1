@@ -116,7 +116,7 @@ public class CropTileComponent extends Component {
 	 *
 	 * @param plantFactoryMethod Factory method that is used to create a new plant
 	 */
-	private void plantCrop(Function<CropTileComponent, Entity> plantFactoryMethod) {
+	public void plantCrop(Function<CropTileComponent, Entity> plantFactoryMethod) {
 		if (isOccupied()) {
 			return;
 		}
