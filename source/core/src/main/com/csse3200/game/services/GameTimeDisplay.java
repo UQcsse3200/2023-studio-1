@@ -37,15 +37,19 @@ public class GameTimeDisplay extends UIComponent {
     }
 
     /**
-     * Creates actors, which are the clock frame, planet image, and time label. Adds them
-     * into a Group, and positions them with overlap. Adds this group into a table, then
-     * adds the table to the stage to be written into creation.
+     * Sets the UI display for the time correctly.
      */
     private void addActors() {
         time = 0;
         update(time);
     }
 
+    /**
+     * Creates actors, which are the clock frame, planet image, and time label. Adds them
+     *      * into a Group, and positions them with overlap. Adds this group into a table, then
+     *      * adds the table to the stage to be written into creation.
+     * @param time - the time to set display to.
+     */
     public void update(int time) {
         table = new Table();
         group = new Group();
@@ -88,13 +92,6 @@ public class GameTimeDisplay extends UIComponent {
     @Override
     public void draw(SpriteBatch batch) {
         // draw is handled by the stage.
-    }
-
-    /**
-     * Updates the time on the ui.
-     */
-    public void updateTimeDisplayUI(int health) {
-        // Not sure if this will be implemented.
     }
 
     @Override
