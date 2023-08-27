@@ -18,8 +18,8 @@ public class GameTime {
 
   public GameTime() {
 
-    this.timeController = new TimeController();
-    timeController.setTimeSource(this);
+    this.timeController = new TimeController(this);
+    //timeController.setTimeSource(this);
     this.pausedTime = 0;
 
     startTime = TimeUtils.millis();

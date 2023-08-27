@@ -23,14 +23,15 @@ public class TimeController {
     private boolean paused;
     private long pausedAt;
 
-    public TimeController() {
+    public TimeController(GameTime timeSource) {
+        this.timeSource = timeSource;
         this.hour = 0;
         this.paused = false;
     }
 
-    public void setTimeSource(GameTime timeSource) {
-        this.timeSource = timeSource;
-    }
+    //public void setTimeSource(GameTime timeSource) {
+    //    this.timeSource = timeSource;
+    //}
 
     public void setTimeDisplay(GameTimeDisplay timeDisplay) {
         this.timeDisplay = timeDisplay;
