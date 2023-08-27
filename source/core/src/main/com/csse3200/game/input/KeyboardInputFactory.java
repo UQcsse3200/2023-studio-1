@@ -1,5 +1,6 @@
 package com.csse3200.game.input;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
+import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
 import com.csse3200.game.ui.terminal.KeyboardTerminalInputComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,5 +29,10 @@ public class KeyboardInputFactory extends InputFactory {
     public InputComponent createForTerminal() {
         logger.debug("Creating terminal input handler");
         return new KeyboardTerminalInputComponent();
+    }
+
+    public InputComponent createForTractor() {
+        logger.debug("Creating tractor input handler");
+        return new KeyboardTractorInputComponent();
     }
 }

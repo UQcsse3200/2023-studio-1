@@ -1,9 +1,16 @@
 package com.csse3200.game.components.player;
 
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.items.ItemActions;
+import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
+import com.csse3200.game.components.tractor.TractorActions;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -15,11 +22,15 @@ public class PlayerActions extends Component {
   private static final Vector2 MAX_WALK_SPEED = new Vector2(3f, 3f); // Metres per second
   private static final Vector2 MAX_RUN_SPEED = new Vector2(5f, 5f); // Metres per second
   private float prevMoveDirection = 300; // Initialize it with a default value
+  private Entity tractor;
 
   private PhysicsComponent physicsComponent;
   private Vector2 moveDirection = Vector2.Zero.cpy();
   private boolean moving = false;
   private boolean running = false;
+  private boolean muted = false;
+  private CameraComponent camera;
+  private GameMap map;
 
   @Override
   public void create() {
@@ -29,6 +40,8 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("run", this::run);
     entity.getEvents().addListener("runStop", this::stopRunning);
     entity.getEvents().addListener("attack", this::attack);
+    entity.getEvents().addListener("enterTractor", this::enterTractor);
+    entity.getEvents().addListener("use", this::use);
   }
 
   @Override
@@ -128,5 +141,53 @@ public class PlayerActions extends Component {
   void attack() {
     Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
     attackSound.play();
+  }
+
+  /**
+   * Sets tractor to the tractor entity, can be used to calculate distances and mute inputs
+   * @param tractor
+   */
+  public void setTractor(Entity tractor) {
+    this.tractor = tractor;
+  }
+
+  /**
+   * Makes the player get into tractor.
+   */
+  void enterTractor() {
+    //check within 4 units of tractor
+    if (this.entity.getPosition().dst(tractor.getPosition()) > 4) {
+      return;
+    }
+    this.stopMoving();
+    muted = true;
+    tractor.getComponent(TractorActions.class).setMuted(false);
+    tractor.getComponent(KeyboardTractorInputComponent.class).setWalkDirection(entity.getComponent(KeyboardPlayerInputComponent.class).getWalkDirection());
+    this.entity.setPosition(new Vector2(-10,-10));
+    camera.setTrackEntity(tractor);
+  }
+
+  void use(Vector2 playerPos, Vector2 mousePos, Entity itemInHand) {
+    itemInHand.getComponent(ItemActions.class).use(playerPos, mousePos, itemInHand, map);
+  }
+
+  /**
+   * When in the tractor inputs should be muted, this handles that.
+   * @return if the players inputs should be muted
+   */
+  public boolean isMuted() {
+    return muted;
+  }
+
+  public void setMuted(boolean muted) {
+    this.muted = muted;
+  }
+
+  public void setCameraVar (CameraComponent cam) {
+    this.camera = cam;
+  }
+
+  public void setGameMap(GameMap map) {
+    this.map = map;
   }
 }

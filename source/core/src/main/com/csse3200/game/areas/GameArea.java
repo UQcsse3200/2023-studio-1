@@ -1,5 +1,6 @@
 package com.csse3200.game.areas;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
@@ -45,6 +46,16 @@ public abstract class GameArea implements Disposable {
   }
 
   /**
+   * de-spawn entity at its current position
+   *
+   * @param entity Entity (not yet registered)
+   */
+  protected void deSpawnEntity(Entity entity) {
+    areaEntities.remove(entity);
+    //ServiceLocator.getEntityService().register(entity);
+  }
+
+  /**
    * Spawn entity on a given tile. Requires the terrain to be set first.
    *
    * @param entity Entity (not yet registered)
@@ -66,5 +77,11 @@ public abstract class GameArea implements Disposable {
 
     entity.setPosition(worldPos);
     spawnEntity(entity);
+  }
+
+  public void removeEntity(Entity entity) {
+    entity.setEnabled(false);
+    areaEntities.remove(entity);
+    Gdx.app.postRunnable(entity::dispose); //TODO: What does this do
   }
 }
