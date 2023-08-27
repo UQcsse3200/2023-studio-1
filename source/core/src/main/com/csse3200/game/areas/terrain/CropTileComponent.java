@@ -161,7 +161,7 @@ public class CropTileComponent extends Component {
 	 *
 	 * @return whether the tile is occupied by the plant
 	 */
-	private boolean isOccupied() {
+	public boolean isOccupied() {
 		return plant != null;
 	}
 

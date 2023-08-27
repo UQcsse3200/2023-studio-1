@@ -1,6 +1,6 @@
 package com.csse3200.game.areas.terrain;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -92,6 +92,11 @@ public class CropTileComponentTest {
         assertEquals(2.0, cropTile3.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
         assertEquals(-1.0, cropTile4.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
         assertEquals(0, cropTile5.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
+    }
+
+    @Test
+    public void testIsOccupied1() {
+        assertFalse(cropTile1.getComponent(CropTileComponent.class).isOccupied());
     }
 
 }
