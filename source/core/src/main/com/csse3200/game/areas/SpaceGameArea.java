@@ -4,6 +4,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.areas.terrain.TerrainCropTileFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
@@ -116,6 +117,7 @@ public class SpaceGameArea extends GameArea {
     displayUI();
 
     spawnTerrain();
+    spawnCrop(); // temp
     spawnTrees();
 
     player = spawnPlayer();
@@ -185,6 +187,17 @@ public class SpaceGameArea extends GameArea {
       Entity tree = ObstacleFactory.createTree();
       spawnEntityAt(tree, randomPos, true, false);
     }
+  }
+
+  private Entity spawnCrop() {
+    GridPoint2 pos = new GridPoint2(10, 11);
+    Entity newPlayer = TerrainCropTileFactory.createTerrainEntity(0,0);
+    spawnEntityAt(newPlayer, pos, true, true);
+    Entity newPlayer2 = TerrainCropTileFactory.createTerrainEntity(1,0);
+    spawnEntityAt(newPlayer2, pos, true, true);
+    Entity newPlayer3 = TerrainCropTileFactory.createTerrainEntity(0,1);
+    spawnEntityAt(newPlayer3, pos, true, true);
+    return newPlayer;
   }
 
   private Entity spawnPlayer() {
