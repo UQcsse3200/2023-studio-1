@@ -17,22 +17,22 @@ public class CropTileComponent extends Component {
 	/**
 	 * Default rate that a tile's water level decreases
 	 */
-	private static final float waterDecreaseRate = 0.05f;
+	private static final float WATER_DECREASE_RATE = 0.05f;
 
 	/**
 	 * Ideal water fall off sharpness to calculate growth rate
 	 */
-	private static final float idealWaterFalloffSharpness = 2.0f;
+	private static final float IDEAL_WATER_FALL_OFF_SHARPNESS = 2.0f;
 
 	/**
 	 * How tolerant the growth rate is to the water being different from the ideal value
 	 */
-	private static final float idealWaterFalloffTolerance = 1.2f;
+	private static final float IDEAL_WATER_FALL_OFF_TOLERANCE = 1.2f;
 
 	/**
 	 * Water damage threshold used to calculate growth rate
 	 */
-	private static final float waterDamageThreshold = 0.1f;
+	private static final float WATER_DAMAGE_THRESHOLD = 0.1f;
 
 	private float waterContent;
 	private final float soilQuality;
@@ -74,7 +74,7 @@ public class CropTileComponent extends Component {
 	 */
 	@Override
 	public void update() {
-		waterContent -= waterDecreaseRate * ServiceLocator.getTimeSource().getDeltaTime();
+		waterContent -= WATER_DECREASE_RATE * ServiceLocator.getTimeSource().getDeltaTime();
 		if (waterContent < 0) {
 			waterContent = 0;
 		} else if (waterContent > 2) {
@@ -147,12 +147,12 @@ public class CropTileComponent extends Component {
 	 */
 	public double getGrowthRate(float idealWaterAmount) {
 		double waterMultiplier = 1 / (Math.exp(
-				Math.pow(Math.abs(waterContent - idealWaterAmount), idealWaterFalloffSharpness)))
+				Math.pow(Math.abs(waterContent - idealWaterAmount), IDEAL_WATER_FALL_OFF_SHARPNESS)))
 				- 1 / MathUtils.E;
 		waterMultiplier *= 1 / (1 - 1 / MathUtils.E);
-		waterMultiplier = (waterMultiplier - waterDamageThreshold) / (1 - waterDamageThreshold);
+		waterMultiplier = (waterMultiplier - WATER_DAMAGE_THRESHOLD) / (1 - WATER_DAMAGE_THRESHOLD);
 		waterMultiplier =
-				waterMultiplier > 0 ? Math.pow(waterMultiplier, idealWaterFalloffTolerance) : -1.0;
+				waterMultiplier > 0 ? Math.pow(waterMultiplier, IDEAL_WATER_FALL_OFF_TOLERANCE) : -1.0;
 		return waterMultiplier > 0 ? soilQuality * (isFertilised ? 2 : 1) * waterMultiplier : -1.0;
 	}
 
