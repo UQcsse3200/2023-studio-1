@@ -26,7 +26,6 @@ public class Inventory extends Component {
     }
     @Override
     public void create() {
-
         entity.getEvents().addListener("exit", this::onExit);
     }
 

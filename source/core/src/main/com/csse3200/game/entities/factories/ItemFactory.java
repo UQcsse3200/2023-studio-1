@@ -26,7 +26,7 @@ public class ItemFactory {
     public static Entity createShovel() {
       Entity shovel = createBaseItem()
               .addComponent(new TextureRenderComponent("images/tool_shovel.png"))
-              .addComponent(new ItemComponent("shovel", "Shovel for removing items"));
+              .addComponent(new ItemComponent("shovel", "Shovel for removing items", "images/tool_shovel.png"));
       //shovel.scaleHeight(1f); // scales the Entity!, this could be scaleWidth too
       return shovel;
   }
@@ -38,7 +38,7 @@ public class ItemFactory {
       public static Entity createHoe() {
         Entity hoe = createBaseItem()
                 .addComponent(new TextureRenderComponent("images/tool_hoe.png"))
-                .addComponent(new ItemComponent("hoe", "A hoe for cultivating soil"));
+                .addComponent(new ItemComponent("hoe", "A hoe for cultivating soil", "images/tool_hoe.png"));
         return hoe;
     }
 }

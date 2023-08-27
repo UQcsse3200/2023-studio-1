@@ -45,12 +45,13 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.SPACE:
         entity.getEvents().trigger("attack");
         return true;
-      case Keys.E:
-        //toggle open here
-        return true;
       case Keys.SHIFT_LEFT:
         entity.getEvents().trigger("run");
         return true;
+      case Keys.I:
+        //asdasdasd
+        return true;
+
       default:
         return false;
     }

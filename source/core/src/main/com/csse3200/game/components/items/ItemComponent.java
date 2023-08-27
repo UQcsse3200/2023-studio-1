@@ -18,6 +18,7 @@ public class ItemComponent extends Component {
     private final String itemId;
     private int price; // Price of item
     private final boolean sellable; // is the item sellable
+    private final String path;
 
 
     /**
@@ -29,7 +30,8 @@ public class ItemComponent extends Component {
         this.itemId = generateUniqueID(); // Generate a unique ID for the item
         this.itemDescription = "" ; //default description
         this.price = 0;
-        this.sellable = false; //default sellable 
+        this.sellable = false; //default sellable
+        this.path = "";
     }
 
     /**
@@ -43,6 +45,7 @@ public class ItemComponent extends Component {
         this.itemDescription = "" ; //default description
         this.price = price;
         this.sellable = true;
+        this.path = "";
     }
 
     /**
@@ -55,6 +58,7 @@ public class ItemComponent extends Component {
         this.itemId = generateUniqueID(); // Generate a unique ID for the item
         this.itemDescription = itemDescription ; //default description
         this.sellable = false; //default sellable
+        this.path = "";
     }
 
     /**
@@ -69,6 +73,21 @@ public class ItemComponent extends Component {
         this.itemDescription = itemDescription ; //default description
         this.price = price;
         this.sellable = true;
+        this.path = "";
+    }
+
+    /**
+     * Constructor for Item
+     * @param itemName user facing name for item
+     * @param itemDescription user facing description for item
+     * @param path path for item texture
+     */
+    public ItemComponent(String itemName, String itemDescription, String path) {
+        this.itemName = itemName;
+        this.itemId = generateUniqueID(); // Generate a unique ID for the item
+        this.itemDescription = itemDescription ; //default description
+        this.sellable = false; //default sellable
+        this.path = path;
     }
 
 
@@ -124,10 +143,18 @@ public class ItemComponent extends Component {
     }
 
     /**
+     * Get the item's texture path
+     * @param name string path of the texture
+     */
+    public String getTextureString() { return path; }
+
+    /**
      * Generates a unique ID for the item
      * @return String random unique ID for each item
      */
     private String generateUniqueID() {
         return UUID.randomUUID().toString();
     }
+
+
 }

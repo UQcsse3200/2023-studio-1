@@ -1,69 +1,81 @@
-package com.csse3200.game.components.mainmenu;
+package com.csse3200.game.components.inventory;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * A ui component for displaying the Main menu.
+ * A ui component for displaying player stats, e.g. health.
  */
 public class InventoryDisplay extends UIComponent {
-    private static final Logger logger = LoggerFactory.getLogger(MainMenuDisplay.class);
-    private static final float Z_INDEX = 2f;
-    private Table table;
+  private Table table;
+  private InventoryComponent inventory;
 
-    @Override
-    public void create() {
-        super.create();
-        addActors();
-    }
+  /**
+   * Creates reusable ui styles and adds actors to the stage.
+   */
+  @Override
+  public void create() {
+    super.create();
+    addActors();
 
-    private void addActors() {
-        table = new Table();
-        table.setFillParent(true);
-        Image title =
-                new Image(
-                        ServiceLocator.getResourceService()
-                                .getAsset("images/box_boy_title.png", Texture.class));
+    entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
+  }
 
-        TextButton startBtn = new TextButton("Start", skin);
-        TextButton loadBtn = new TextButton("Load", skin);
-        TextButton settingsBtn = new TextButton("Settings", skin);
-        TextButton exitBtn = new TextButton("Exit", skin);
-        table.add(title);
+  /**
+   * Creates actors and positions them on the stage using a table.
+   * @see Table for positioning options
+   */
+  private void addActors() {
+    Table table = new Table();
+    table.defaults().size(64, 64); // Set the default cell size
+    table.pad(10); // Add some padding around the table
+
+    // Add some items to the table
+    for (int i = 0; i < 16; i++) {
+      // Create an image for the item using a drawable from the skin
+      Image item = new Image(skin.getDrawable("item" + i));
+      // Add the item to the table and fill the cell
+      table.add(item).fill();
+      // Add a new row every 4 items
+      if ((i + 1) % 4 == 0) {
         table.row();
-        table.add(startBtn).padTop(30f);
-        table.row();
-        table.add(loadBtn).padTop(15f);
-        table.row();
-        table.add(settingsBtn).padTop(15f);
-        table.row();
-        table.add(exitBtn).padTop(15f);
-
-        stage.addActor(table);
+      }
     }
 
-    @Override
-    public void draw(SpriteBatch batch) {
-        // draw is handled by the stage
-    }
+    // Create a window for the inventory using the skin
+    Window window = new Window("Inventory", skin);
+    window.pad(20); // Add some padding around the window
+    window.add(table); // Add the table to the window
+    window.pack(); // Pack the window to its preferred size
+    window.setPosition(stage.getWidth() / 2 - window.getWidth() / 2, stage.getHeight() / 2 - window.getHeight() / 2); // Center the window on the stage
 
-    @Override
-    public float getZIndex() {
-        return Z_INDEX;
-    }
+    // Add the window to the stage
+    stage.addActor(window);
+  }
 
-    @Override
-    public void dispose() {
-        table.clear();
-        super.dispose();
-    }
+  @Override
+  public void draw(SpriteBatch batch)  {
+    // draw is handled by the stage
+  }
+
+  /**
+   * Updates the player's health on the ui.
+   * @param health player health
+   */
+  public void updatePlayerHealthUI(int health) {
+    CharSequence text = String.format("Health: %d", health);
+  }
+
+  @Override
+  public void dispose() {
+    super.dispose();
+  }
 }
