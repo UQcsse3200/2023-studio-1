@@ -44,7 +44,7 @@ public class TimeController {
         return (int) timeSource.getActiveTime() % 720000;
     }
 
-    public int getHourOfDay() {
+    public int getHour() {
         return (int) Math.floor(getTimeOfDay() / 30000);
     }
 
@@ -61,13 +61,17 @@ public class TimeController {
     }
 
     public void pause() {
-        this.paused = true;
-        this.pausedAt = timeSource.getTime();
+        if (paused == false) {
+            this.paused = true;
+            this.pausedAt = timeSource.getTime();
+        }
     }
 
     public void unpause() {
-        this.paused = false;
-        timeSource.addPauseOffset(timeSource.getTimeSince(this.pausedAt));
+        if (pausede == true) {
+            this.paused = false;
+            timeSource.addPauseOffset(timeSource.getTimeSince(this.pausedAt));
+        }
     }
 
     public void setTime(int hour) {
