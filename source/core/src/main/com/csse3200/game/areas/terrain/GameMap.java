@@ -50,4 +50,74 @@ public class GameMap {
     public TerrainTile getTile (int x, int y) {
         return (TerrainTile) getCell(x, y).getTile();
     }
+
+    /**
+     * Returns the terrain category at a specified tile
+     * @param x x coordinate (0 -> MAP_SIZE.x -1)
+     * @param y y coordinate (0 -> MAP_SIZE.y -1)
+     * @return the TerrainCategory of the specified tile
+     */
+    public TerrainTile.TerrainCategory getTileTerrainCategory(int x, int y) {
+        return this.getTile(x, y).getTerrainCategory();
+    }
+
+    /**
+     * Sets the terrainCategory at the specified tile to the provided terrainCategory
+     * @param terrainCategory terrinCategory to set the TerrainTile to
+     * @param x x coordinate (0 -> MAP_SIZE.x -1)
+     * @param y y coordinate (0 -> MAP_SIZE.y -1)
+     */
+    public void setTileTerrainCategory(TerrainTile.TerrainCategory terrainCategory, int x, int y) {
+        this.getTile(x, y).setTerrainCategory(terrainCategory);
+    }
+
+    /**
+     * Returns whether the specified terrain is traversable
+     * @param x x coordinate (0 -> MAP_SIZE.x -1)
+     * @param y y coordinate (0 -> MAP_SIZE.y -1)
+     * @return true if the tile is traversable and false if not
+     */
+    public boolean isTileTraversable(int x, int y) {
+        return this.getTile(x, y).isTraversable();
+    }
+
+    /**
+     * Returns whether the specified terrain is occupied
+     * @param x x coordinate (0 -> MAP_SIZE.x -1)
+     * @param y y coordinate (0 -> MAP_SIZE.y -1)
+     * @return true if the tile is occupied and false if not
+     */
+    public boolean isTileOccupied(int x, int y) {
+        return this.getTile(x, y).isOccupied();
+    }
+
+    /**
+     * Sets the specified tile as being occupied
+     * @param x x coordinate (0 -> MAP_SIZE.x -1)
+     * @param y y coordinate (0 -> MAP_SIZE.y -1)
+     */
+    public void setTileOccupied(int x, int y) {
+        this.getTile(x, y).setOccupied();
+    }
+
+    /**
+     * Sets the specified tile as being unoccupied
+     * @param x x coordinate (0 -> MAP_SIZE.x -1)
+     * @param y y coordinate (0 -> MAP_SIZE.y -1)
+     */
+    public void setTileUnoccupied(int x, int y) {
+        this.getTile(x, y).setUnOccupied();
+    }
+
+    /**
+     * Returns whether the specified terrain is tillable
+     * @param x x coordinate (0 -> MAP_SIZE.x -1)
+     * @param y y coordinate (0 -> MAP_SIZE.y -1)
+     * @return true if the tile is tillable and false if not
+     */
+    public boolean isTileTillable(int x, int y) {
+        return this.getTile(x, y).isTillable();
+    }
 }
+
+
