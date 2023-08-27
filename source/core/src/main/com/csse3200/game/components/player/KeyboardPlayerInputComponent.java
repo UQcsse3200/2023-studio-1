@@ -11,7 +11,7 @@ import com.csse3200.game.utils.math.Vector2Utils;
  * This input handler only uses keyboard input.
  */
 public class KeyboardPlayerInputComponent extends InputComponent {
-  private final Vector2 walkDirection = Vector2.Zero.cpy();
+  private final Vector2 moveDirection = Vector2.Zero.cpy();
   private PlayerActions actions;
 
   public KeyboardPlayerInputComponent() {
@@ -29,27 +29,26 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     if (!actions.isMuted()) {
       switch (keycode) {
         case Keys.W:
-          walkDirection.add(Vector2Utils.UP);
-          triggerWalkEvent();
-          triggerAnimationWalkStartEvent("up");
+          moveDirection.add(Vector2Utils.UP);
+          triggerMoveEvent();
           return true;
         case Keys.A:
-          walkDirection.add(Vector2Utils.LEFT);
-          triggerWalkEvent();
-          triggerAnimationWalkStartEvent("left");
+          moveDirection.add(Vector2Utils.LEFT);
+          triggerMoveEvent();
           return true;
         case Keys.S:
-          walkDirection.add(Vector2Utils.DOWN);
-          triggerWalkEvent();
-          triggerAnimationWalkStartEvent("down");
+          moveDirection.add(Vector2Utils.DOWN);
+          triggerMoveEvent();
           return true;
         case Keys.D:
-          walkDirection.add(Vector2Utils.RIGHT);
-          triggerWalkEvent();
-          triggerAnimationWalkStartEvent("right");
+          moveDirection.add(Vector2Utils.RIGHT);
+          triggerMoveEvent();
           return true;
         case Keys.SPACE:
           entity.getEvents().trigger("attack");
+          return true;
+        case Keys.SHIFT_LEFT:
+          entity.getEvents().trigger("run");
           return true;
         case Keys.F:
           triggerEnterEvent();
@@ -72,20 +71,23 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     if (!actions.isMuted()) {
       switch (keycode) {
         case Keys.W:
-          walkDirection.sub(Vector2Utils.UP);
-          triggerWalkEvent();
+          moveDirection.sub(Vector2Utils.UP);
+          triggerMoveEvent();
           return true;
         case Keys.A:
-          walkDirection.sub(Vector2Utils.LEFT);
-          triggerWalkEvent();
+          moveDirection.sub(Vector2Utils.DOWN);
+          triggerMoveEvent();
           return true;
         case Keys.S:
-          walkDirection.sub(Vector2Utils.DOWN);
-          triggerWalkEvent();
+          moveDirection.sub(Vector2Utils.RIGHT);
+          triggerMoveEvent();;
           return true;
         case Keys.D:
-          walkDirection.sub(Vector2Utils.RIGHT);
-          triggerWalkEvent();
+          moveDirection.sub(Vector2Utils.RIGHT);
+          triggerMoveEvent();
+          return true;
+        case Keys.SHIFT_LEFT:
+          entity.getEvents().trigger("runStop");
           return true;
         default:
           return false;
@@ -94,27 +96,12 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     return false;
   }
 
-  private void triggerWalkEvent() {
-    if (walkDirection.epsilonEquals(Vector2.Zero)) {
-      entity.getEvents().trigger("walkStop");
-      triggerAnimationWalkStopEvent();
+  private void triggerMoveEvent() {
+    if (moveDirection.epsilonEquals(Vector2.Zero)) {
+      entity.getEvents().trigger("moveStop");
     } else {
-      entity.getEvents().trigger("walk", walkDirection);
+      entity.getEvents().trigger("move", moveDirection);
     }
-  }
-
-  /**
-   * Triggers a player walking animation event for the given direction.
-   */
-  private void triggerAnimationWalkStartEvent(String direction) {
-    entity.getEvents().trigger("animationWalkStart", direction);
-  }
-
-  /**
-   * Triggers a player walking animation stop event.
-   */
-  private void triggerAnimationWalkStopEvent() {
-    entity.getEvents().trigger("animationWalkStop");
   }
 
   private void triggerEnterEvent() {
@@ -126,10 +113,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   }
 
   public Vector2 getWalkDirection() {
-    return walkDirection;
+    return moveDirection;
   }
 
   public void setWalkDirection(Vector2 direction) {
-    this.walkDirection.set(direction);
+    this.moveDirection.set(direction);
   }
 }

@@ -40,7 +40,7 @@ public class MainMenuDisplay extends UIComponent {
     title.setPosition(0, 0);
 
     TextButton startBtn = new TextButton("Start", skin);
-    TextButton loadBtn = new TextButton("Load", skin);
+    TextButton loadBtn = new TextButton("Controls", skin);
     TextButton settingsBtn = new TextButton("Settings", skin);
     TextButton exitBtn = new TextButton("Exit", skin);
 

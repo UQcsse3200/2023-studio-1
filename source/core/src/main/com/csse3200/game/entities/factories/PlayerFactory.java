@@ -36,7 +36,13 @@ public class PlayerFactory {
   public static Entity createPlayer() {
     InputComponent inputComponent =
         ServiceLocator.getInputService().getInputFactory().createForPlayer();
-    AnimationRenderComponent animator = setupPlayerAnimator();
+
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/player.atlas", TextureAtlas.class)
+            );
+
+    setupPlayerAnimator(animator);
 
     Entity player =
         new Entity()
@@ -60,23 +66,22 @@ public class PlayerFactory {
   }
 
   /**
-   * Creates the player AnimationRenderComponent and registers the
-   * player animations.
-   *
-   * @return the player animator
+   * Registers player animations to the AnimationRenderComponent.
    */
-  private static AnimationRenderComponent setupPlayerAnimator() {
-    AnimationRenderComponent animator =
-            new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/player.atlas", TextureAtlas.class)
-            );
+  public static void setupPlayerAnimator(AnimationRenderComponent animator) {
     animator.addAnimation("walk_left", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("walk_right", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("walk_down", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("walk_up", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("run_left", 0.05f, Animation.PlayMode.LOOP);
+    animator.addAnimation("run_right", 0.05f, Animation.PlayMode.LOOP);
+    animator.addAnimation("run_down", 0.05f, Animation.PlayMode.LOOP);
+    animator.addAnimation("run_up", 0.05f, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle_down", 0.5f, Animation.PlayMode.LOOP_RANDOM);
+    animator.addAnimation("idle_left", 0.5f, Animation.PlayMode.LOOP_RANDOM);
+    animator.addAnimation("idle_up", 0.5f, Animation.PlayMode.LOOP_RANDOM);
+    animator.addAnimation("idle_right", 0.5f, Animation.PlayMode.LOOP_RANDOM);
     animator.addAnimation("default", 0.1f, Animation.PlayMode.LOOP);
-
-    return animator;
   }
 
   private PlayerFactory() {
