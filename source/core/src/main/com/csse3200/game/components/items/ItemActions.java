@@ -67,7 +67,8 @@ public class ItemActions extends Component {
     }
 
     /**
-     * Gets the correct position for the player to interact with
+     * Gets the correct position for the player to interact with based off of the mouse position. Will always return 1 tile to the left, right, 
+     * up, down, diagonal left up, diagonal right up, diagonal left down, diagonal right down of the player.
      * @param playerPos the position of the player
      * @param mousePos the position of the mouse
      * @return a vector of the position where the player should hit
