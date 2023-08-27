@@ -158,7 +158,6 @@ public class ItemActions extends Component {
      */
     private boolean hoe(Vector2 playerPos, Vector2 mousePos) {
         TerrainTile tile = getTileAtPosition(playerPos, mousePos);
-        System.out.println(tile.getTerrainCategory());
         if (tile.getCropTile() != null || !tile.isTillable()) {
             return false;
         }
