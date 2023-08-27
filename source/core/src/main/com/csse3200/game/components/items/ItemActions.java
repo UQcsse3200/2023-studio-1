@@ -73,10 +73,20 @@ public class ItemActions extends Component {
      * @return a vector of the position where the player should hit
      */
     private Vector2 getAdjustedPos(Vector2 playerPos, Vector2 mousePos) {
-        //TODO the if statement stuff to get the correct position
-        return playerPos;
+        int xDelta = 0;
+        int yDelta = 0;
+        if (playerPos.x > mousePos.x){
+          xDelta -= 1;
+        } else if (playerPos.x < mousePos.x) {
+          xDelta += 1;
+        } 
+        if (playerPos.y > mousePos.y) {
+          yDelta -= 1;
+        } else if (playerPos.y < mousePos.y) {
+          yDelta += 1;
+        }
+        return new Vector2(playerPos.x + xDelta, playerPos.y + yDelta); 
     }
-
 
     /**
      * Waters the tile at the given position. 
