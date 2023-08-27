@@ -1,11 +1,11 @@
 package com.csse3200.game.components.items;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
-import java.awt.*;
 
 import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
 
@@ -38,7 +38,6 @@ public class ItemActions extends Component {
         switch (type.getItemType()) {
             case HOE -> {
                 resultStatus = hoe(playerPos, mousePos);
-                System.out.println(resultStatus);
                 return resultStatus;
             }
             case SHOVEL -> {
@@ -78,9 +77,9 @@ public class ItemActions extends Component {
      * @return a vector of the position where the player should hit
      */
     private Vector2 getAdjustedPos(Vector2 playerPos, Vector2 mousePos) {
-        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-        int width = (int)size.getWidth();
-        int height = (int)size.getHeight();
+        int width = Gdx.graphics.getWidth();
+        int height = Gdx.graphics.getHeight();
+
 
         int playerXPos = width/2;
         int playerYPos = height/2;
