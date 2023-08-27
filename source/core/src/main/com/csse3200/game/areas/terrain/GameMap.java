@@ -3,6 +3,7 @@ package com.csse3200.game.areas.terrain;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.events.EventHandler;
 
 public class GameMap {
@@ -30,6 +31,14 @@ public class GameMap {
     }
 
     /**
+     * Returns the size of the map
+     * @return a copy of the GridPoint2 instance which contains the dimensions of the map
+     */
+    public GridPoint2 getMapSize() {
+        return terrainFactory.getMapSize();
+    }
+
+    /**
      * Get the Cell in TiledMap, use for cell interaction
      * such as get and set tile, rotating Cell, and accessing the contents of the cell
      * @param x x coordinate (0 -> MAP_SIZE.x -1)
@@ -40,15 +49,29 @@ public class GameMap {
         return ((TiledMapTileLayer) this.tiledMap.getLayers().get(0)).getCell(x, y);
     }
 
-    /**
-     *                  NEED TO MAKE THIS FUNCTION MORE VERSATILE
+    /**         NATHAN WORK ON THIS FUNCTION
+     *   NEED TO MAKE THIS FUNCTION MORE VERSATILE
      *   such as using position on screen etc. instead of x and y coords which only correlate with the 2d array of cells
      * @param x
      * @param y
      * @return
      */
-    public TerrainTile getTile (int x, int y) {
+    public TerrainTile getTile(int x, int y) {
         return (TerrainTile) getCell(x, y).getTile();
+    }
+
+    /**  NATHAN WORK ON THIS
+     *      function to convert position to cell coordinate (possible helper function)
+     */
+    public void positionToCellCoordinate() {
+        //
+    }
+
+    /**  NATHAN/someone else
+     *      function to convert cell coordinate to position on screen?
+     */
+    public void cellCoordinateToPosition() {
+        //
     }
 
     /**
