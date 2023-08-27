@@ -47,7 +47,7 @@ public class PlantFactory {
     private static Entity createBasePlant() {
         Entity plant = new Entity()
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
-                .addComponent(new ColliderComponent())
+                .addComponent(new ColliderComponent().setSensor(true))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE));
 
         return plant;
