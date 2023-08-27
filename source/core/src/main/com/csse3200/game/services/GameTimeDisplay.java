@@ -87,7 +87,7 @@ public class GameTimeDisplay extends UIComponent {
 
     @Override
     public void draw(SpriteBatch batch) {
-        timeController.update();
+        timeController.updateDisplay();
     }
 
 

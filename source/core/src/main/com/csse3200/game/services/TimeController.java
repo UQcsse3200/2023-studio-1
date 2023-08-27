@@ -48,7 +48,7 @@ public class TimeController {
         return (int) Math.floor(getTimeOfDay() / 30000);
     }
 
-    public void update() {
+    public void updateDisplay() {
         if (paused == false) {
             /** Each day is 12minutes so 720000 milliseconds is one day */
             int timeInDay = (int) timeSource.getActiveTime() % 720000;
@@ -68,7 +68,7 @@ public class TimeController {
     }
 
     public void unpause() {
-        if (pausede == true) {
+        if (paused == true) {
             this.paused = false;
             timeSource.addPauseOffset(timeSource.getTimeSince(this.pausedAt));
         }
