@@ -106,7 +106,7 @@ public class CropTileComponent extends Component {
 			plant.getEvents().trigger("destroyPlant");
 			this.setUnoccupied();
 		} else {
-			this.dispose();
+			entity.dispose();
 		}
 	}
 
