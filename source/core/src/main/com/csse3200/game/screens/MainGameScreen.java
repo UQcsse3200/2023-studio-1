@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ForestGameArea;
+import com.csse3200.game.areas.SpaceGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.Component;
@@ -71,11 +72,17 @@ public class MainGameScreen extends ScreenAdapter {
 
     logger.debug("Initialising main game screen entities");
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-    ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
-    forestGameArea.create();
-    renderer.getCamera().setTrackEntity(forestGameArea.getPlayer());
-    forestGameArea.getPlayer().getComponent(PlayerActions.class).setCameraVar(renderer.getCamera());
-    forestGameArea.getTractor().getComponent(TractorActions.class).setCameraVar(renderer.getCamera());
+
+    SpaceGameArea spaceGameArea = new SpaceGameArea(terrainFactory);
+    spaceGameArea.create();
+    renderer.getCamera().setTrackEntity(spaceGameArea.getPlayer());
+
+    // Switched to spaceGameArea
+    //ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
+    //forestGameArea.create();
+    //renderer.getCamera().setTrackEntity(forestGameArea.getPlayer());
+    //forestGameArea.getPlayer().getComponent(PlayerActions.class).setCameraVar(renderer.getCamera());
+    //forestGameArea.getTractor().getComponent(TractorActions.class).setCameraVar(renderer.getCamera());
   }
 
   @Override
