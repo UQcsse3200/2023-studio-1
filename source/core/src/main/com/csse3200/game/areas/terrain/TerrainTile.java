@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import com.csse3200.game.entities.Entity;
 
 /**
  * Custom terrain tile implementation for tiled map terrain that stores additional properties we
@@ -19,6 +20,7 @@ public class TerrainTile implements TiledMapTile {
   private boolean isTraversable;
   private boolean isOccupied;
   private boolean isTillable;
+  private Entity cropTile = null;
 
   public TerrainTile(TextureRegion textureRegion, TerrainCategory terrainCategory) {
     this.textureRegion = textureRegion;
@@ -30,45 +32,59 @@ public class TerrainTile implements TiledMapTile {
       case PATH:
         this.isTraversable = true;
         this.isTillable = true;
+        break;
       case BEACHSAND:
         this.isTraversable = true;
         this.isTillable = false;
+        break;
       case GRASS:
         this.isTraversable = true;
         this.isTillable = true;
+        break;
       case DIRT:
         this.isTraversable = true;
         this.isTillable = true;
+        break;
       case SHALLOWWATER:
         this.isTraversable = true;
         this.isTillable = false;
+        break;
       case DESERT:
         this.isTraversable = true;
         this.isTillable = false;
+        break;
       case SNOW:
         this.isTraversable = true;
         this.isTillable = false;
+        break;
       case ICE:
         this.isTraversable = true;
         this.isTillable = false;
+        break;
       case DEEPWATER:
         this.isTraversable = false;
         this.isTillable = false;
+        break;
       case ROCK:
         this.isTraversable = false;
         this.isTillable = false;
+        break;
       case LAVA:
         this.isTraversable = false;
         this.isTillable = false;
+        break;
       case LAVAGROUND:
         this.isTraversable = true;
         this.isTillable = false;
+        break;
       case GRAVEL:
         this.isTraversable = true;
         this.isTillable = false;
+        break;
       case FLOWINGWATER:
         this.isTraversable = true;
         this.isTillable = false;
+        break;
     }
   }
 
@@ -209,5 +225,13 @@ public class TerrainTile implements TiledMapTile {
     LAVAGROUND,
     GRAVEL,
     FLOWINGWATER
+  }
+
+  public Entity getCropTile() {
+    return cropTile;
+  }
+
+  public void setCropTile(Entity cropTile) {
+    this.cropTile = cropTile;
   }
 }
