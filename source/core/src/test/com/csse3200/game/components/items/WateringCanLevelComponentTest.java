@@ -23,7 +23,10 @@ public class WateringCanLevelComponentTest {
         wateringCan.setCurrentLevel(25);
         wateringCan.setCapacity(10);
         assertEquals(10, wateringCan.getCapacity());
-        assertEquals(0, wateringCan.getCurrentLevel());
+        assertEquals(10, wateringCan.getCurrentLevel());
+        wateringCan.setCapacity(50);
+        assertEquals(50, wateringCan.getCapacity());
+        assertEquals(10, wateringCan.getCurrentLevel());
     }
 
     @Test
