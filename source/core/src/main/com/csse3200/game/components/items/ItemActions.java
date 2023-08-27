@@ -66,7 +66,7 @@ public class ItemActions extends Component {
      */
     private TerrainTile getTileAtPosition(Vector2 playerPos, Vector2 mousePos) {
         Vector2 pos = getAdjustedPos(playerPos, mousePos);
-        return map.getTile((int) pos.x, (int) pos.y);
+        return map.getTile(Math.round(pos.x), Math.round(pos.y));
     }
 
     /**
@@ -148,12 +148,13 @@ public class ItemActions extends Component {
      */
     private boolean hoe(Vector2 playerPos, Vector2 mousePos) {
         TerrainTile tile = getTileAtPosition(playerPos, mousePos);
+        System.out.println(tile.getTerrainCategory());
         if (tile.getCropTile() != null || !tile.isTillable()) {
             return false;
         }
         // Make a new tile
         Vector2 newPos = getAdjustedPos(playerPos, mousePos);
-        System.out.println(newPos);
+
         Entity cropTile = createTerrainEntity(newPos);
         tile.setCropTile(cropTile);
         tile.setOccupied();
