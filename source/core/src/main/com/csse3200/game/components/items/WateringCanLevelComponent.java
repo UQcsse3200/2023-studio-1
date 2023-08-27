@@ -40,12 +40,18 @@ public class WateringCanLevelComponent extends Component {
 
     /**
      * Update the max the WateringCan can hold to the parameter
+     *  and keep the current level of water
+     *  but adjust current level to max if the water in the can is greater than max capacity
      * 
      * @param newCapacity
      */
     public void setCapacity(float newCapacity){
         capacity = newCapacity;
-        currentLevel = 0;       //reset the amount of water in the can to 0 to avoid errors
+
+        if (currentLevel >= capacity){
+            currentLevel = capacity;    //if the current level is greater than the new capacity
+                                        //then lower the current level to capacity
+        }  
     }
 
     /**
