@@ -1,14 +1,16 @@
 package com.csse3200.game.ui.terminal.commands;
 
 import java.util.ArrayList;
+
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SetTimeCommand implements Command {
 
   private static final Logger logger = LoggerFactory.getLogger(SetTimeCommand.class);
-  private final int MIN_TIME = 0;
-  private final int MAX_TIME = 23;
+  private static final int MIN_TIME = 0;
+  private static final int MAX_TIME = 23;
 
   /**
    * Adjusts the current game time to the specified value
@@ -22,6 +24,7 @@ public class SetTimeCommand implements Command {
       logger.debug("Invalid arguments received for 'setTime' command: {}", args);
       return false;
     }
+    ServiceLocator.getTimeSource().getTimeController().setTime(Integer.parseInt(args.get(0)));
     return true;
   }
 
