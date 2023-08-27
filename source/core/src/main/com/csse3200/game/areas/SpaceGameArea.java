@@ -7,6 +7,7 @@ import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
+import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.services.ResourceService;
@@ -91,6 +92,7 @@ public class SpaceGameArea extends GameArea {
   private final GameMap gameMap;
 
   private Entity player;
+  private Entity tractor;
 
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
@@ -113,12 +115,15 @@ public class SpaceGameArea extends GameArea {
     spawnTerrain();
     spawnTrees();
     player = spawnPlayer();
-
+    tractor = spawnTractor();
     spawnChickens();
     spawnCows();
 
-    //spawnTool(ToolType.TEST_TOOL); // temp - spawns a test tool
-    //spawnTool(ToolType.HOE); // temp - spawns a hoe
+    spawnTool(ItemType.WATERING_CAN);
+    spawnTool(ItemType.SHOVEL);
+    spawnTool(ItemType.SCYTHE);
+    spawnTool(ItemType.HOE);
+
     //spawnGhosts();
     //spawnGhostKing();
 
@@ -182,22 +187,42 @@ public class SpaceGameArea extends GameArea {
     return newPlayer;
   }
 
-  private Entity spawnTool(ToolType tool) {
+  private void spawnTool(ItemType tool) {
     Entity newTool;
+    // create a random places for tool to spawn
+    GridPoint2 minPos = new GridPoint2(5, 5);
+    GridPoint2 maxPos = new GridPoint2(20, 20);
+    GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+
     switch (tool) {
       case HOE:
         newTool = ItemFactory.createHoe();
-        spawnEntityAt(newTool, TOOL_SPAWN2, true, true);
+        spawnEntityAt(newTool, randomPos, true, true);
         break;
-      case TEST_TOOL:
+      case SHOVEL:
         newTool = ItemFactory.createShovel();
-        spawnEntityAt(newTool, TOOL_SPAWN, true, true);
+        spawnEntityAt(newTool, randomPos, true, true);
         break;
-      default:
-        newTool = ItemFactory.createShovel();
-        spawnEntityAt(newTool, TOOL_SPAWN, true, true);
+      case SCYTHE:
+        newTool = ItemFactory.createScythe();
+        spawnEntityAt(newTool, randomPos, true, true);
+        break;
+      case WATERING_CAN:
+        newTool = ItemFactory.createWateringcan();
+        spawnEntityAt(newTool, randomPos, true, true);
+        break;
     }
-    return newTool;
+  }
+
+  /**
+   * Spawns the Tractor Entity be calling upon it's factory
+   *
+   * @return a reference to the tractor
+   */
+  private Entity spawnTractor() {
+    Entity newTractor = TractorFactory.createTractor(player);
+    spawnEntityAt(newTractor, PLAYER_SPAWN, true, true);
+    return newTractor;
   }
 
   private void spawnChickens() {
@@ -279,4 +304,14 @@ public class SpaceGameArea extends GameArea {
     ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
     this.unloadAssets();
   }
+
+  /**
+   * Does not set the camera to the Entity instead sets a camera variable inside of scripts
+   * to do that later
+   */
+  public Entity getTractor() {
+    return tractor;
+  }
+
+
 }

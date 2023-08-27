@@ -81,8 +81,8 @@ public class MainGameScreen extends ScreenAdapter {
     //ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
     //forestGameArea.create();
     //renderer.getCamera().setTrackEntity(forestGameArea.getPlayer());
-    //forestGameArea.getPlayer().getComponent(PlayerActions.class).setCameraVar(renderer.getCamera());
-    //forestGameArea.getTractor().getComponent(TractorActions.class).setCameraVar(renderer.getCamera());
+    spaceGameArea.getPlayer().getComponent(PlayerActions.class).setCameraVar(renderer.getCamera());
+    spaceGameArea.getTractor().getComponent(TractorActions.class).setCameraVar(renderer.getCamera());
   }
 
   @Override
