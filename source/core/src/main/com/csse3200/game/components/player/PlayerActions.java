@@ -4,6 +4,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
@@ -96,6 +97,10 @@ public class PlayerActions extends Component {
     tractor.getComponent(TractorActions.class).setMuted(false);
     tractor.getComponent(KeyboardTractorInputComponent.class).setWalkDirection(entity.getComponent(KeyboardPlayerInputComponent.class).getWalkDirection());
     this.entity.setPosition(new Vector2(-10,-10));
+  }
+
+  void use(Vector2 playerPos, Vector2 mousePos, Entity itemInHand) {
+    itemInHand.getComponent(ItemActions.class).use(playerPos, mousePos, itemInHand);
   }
 
   /**
