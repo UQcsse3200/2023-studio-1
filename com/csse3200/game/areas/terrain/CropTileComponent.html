@@ -105,8 +105,8 @@ loadScripts(document, 'script');</script>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(float,float)" class="member-name-link">CropTileComponent</a><wbr>(float&nbsp;initialWaterContent,
  float&nbsp;soilQuality)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Creates a new crop tile component, with a specified initial water content, and an initial soil quality (higher values indicate higher soil
- quality, meaning better growth rate).</div>
+<div class="block">Creates a new crop tile component, with a specified initial water content, and an initial soil
+ quality (higher values indicate higher soil quality, meaning better growth rate).</div>
 </div>
 </div>
 </section>
@@ -130,8 +130,8 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getGrowthRate()" class="member-name-link">getGrowthRate</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Gets the growth rate of the tile, assuming a water content value of 1 yields the maximum
- growth rate.</div>
+<div class="block">Gets the growth rate of the tile, assuming a water content value of 1 yields the maximum growth
+ rate.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getGrowthRate(float)" class="member-name-link">getGrowthRate</a><wbr>(float&nbsp;idealWaterAmount)</code></div>
@@ -140,8 +140,13 @@ loadScripts(document, 'script');</script>
  maximum growth rate.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setUnoccupied()" class="member-name-link">setUnoccupied</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the tile to be unoccupied.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Decreases water content in the tile by a constant amount.</div>
 </div>
 </div>
@@ -169,16 +174,16 @@ loadScripts(document, 'script');</script>
 <h3>CropTileComponent</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CropTileComponent</span><wbr><span class="parameters">(float&nbsp;initialWaterContent,
  float&nbsp;soilQuality)</span></div>
-<div class="block">Creates a new crop tile component, with a specified initial water content, and an initial soil quality (higher values indicate higher soil
- quality, meaning better growth rate).</div>
+<div class="block">Creates a new crop tile component, with a specified initial water content, and an initial soil
+ quality (higher values indicate higher soil quality, meaning better growth rate).</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>initialWaterContent</code> - The initial amount of water in the crop tile. Value should be
-                            between 0 and 2 inclusive - 0 indicates tile is completely dry,
-                            and 2 indicates tile is flooded, water content of 1 leads to ideal
+                            between 0 and 2 inclusive - 0 indicates tile is completely dry, and
+                            2 indicates tile is flooded, water content of 1 leads to ideal
                             growth rate for most plants</dd>
-<dd><code>soilQuality</code> - The initial soil quality of the crop tile. Higher soil quality increases
-                    the calculated growth rate. Should be greater than 0.</dd>
+<dd><code>soilQuality</code> - The initial soil quality of the crop tile. Higher soil quality
+                            increases the calculated growth rate. Should be greater than 0.</dd>
 </dl>
 </section>
 </li>
@@ -216,13 +221,13 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getGrowthRate()">
 <h3>getGrowthRate</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">getGrowthRate</span>()</div>
-<div class="block">Gets the growth rate of the tile, assuming a water content value of 1 yields the maximum
- growth rate. The calculated growth rate is dependent on the water content and soil quality of
- this tile, and whether it is fertilised.</div>
+<div class="block">Gets the growth rate of the tile, assuming a water content value of 1 yields the maximum growth
+ rate. The calculated growth rate is dependent on the water content and soil quality of this
+ tile, and whether it is fertilised.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>The calculated growth rate of the tile with an ideal water content value of 1, which
- is dependent on water content, soil quality, and whether the tile has been fertilised.</dd>
+<dd>The calculated growth rate of the tile with an ideal water content value of 1, which is
+ dependent on water content, soil quality, and whether the tile has been fertilised.</dd>
 </dl>
 </section>
 </li>
@@ -240,6 +245,13 @@ loadScripts(document, 'script');</script>
 <dd>The calculated growth rate of the tile, dependent on water content, soil quality, and
  whether the tile has been fertilised.</dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setUnoccupied()">
+<h3>setUnoccupied</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setUnoccupied</span>()</div>
+<div class="block">Sets the tile to be unoccupied.</div>
 </section>
 </li>
 </ul>
