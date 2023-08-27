@@ -91,6 +91,15 @@ implements com.badlogic.gdx.maps.tiled.TiledMapTile</span></div>
 <li>
 <section class="nested-class-summary" id="nested-class-summary">
 <h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static enum&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="TerrainTile.TerrainCategory.html" class="type-name-link" title="enum class in com.csse3200.game.areas.terrain">TerrainTile.TerrainCategory</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
 <div class="inherited-list">
 <h2 id="nested-classes-inherited-from-class-com.badlogic.gdx.maps.tiled.TiledMapTile">Nested classes/interfaces inherited from interface&nbsp;com.badlogic.gdx.maps.tiled.TiledMapTile</h2>
 <code>com.badlogic.gdx.maps.tiled.TiledMapTile.BlendMode</code></div>
@@ -104,7 +113,8 @@ implements com.badlogic.gdx.maps.tiled.TiledMapTile</span></div>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.badlogic.gdx.graphics.g2d.TextureRegion)" class="member-name-link">TerrainTile</a><wbr>(com.badlogic.gdx.graphics.g2d.TextureRegion&nbsp;textureRegion)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.badlogic.gdx.graphics.g2d.TextureRegion,com.csse3200.game.areas.terrain.TerrainTile.TerrainCategory)" class="member-name-link">TerrainTile</a><wbr>(com.badlogic.gdx.graphics.g2d.TextureRegion&nbsp;textureRegion,
+ <a href="TerrainTile.TerrainCategory.html" title="enum class in com.csse3200.game.areas.terrain">TerrainTile.TerrainCategory</a>&nbsp;terrainCategory)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -142,9 +152,29 @@ implements com.badlogic.gdx.maps.tiled.TiledMapTile</span></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Not required for game, unimplemented</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.graphics.g2d.TextureRegion</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTextureRegion()" class="member-name-link">getTextureRegion</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="TerrainTile.TerrainCategory.html" title="enum class in com.csse3200.game.areas.terrain">TerrainTile.TerrainCategory</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTerrainCategory()" class="member-name-link">getTerrainCategory</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the terrain tile's terrain category i.e.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.graphics.g2d.TextureRegion</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTextureRegion()" class="member-name-link">getTextureRegion</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isOccupied()" class="member-name-link">isOccupied</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">returns if the tile is occupied by another entity (i.e.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isTillable()" class="member-name-link">isTillable</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">returns if the tile is tillable or not</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isTraversable()" class="member-name-link">isTraversable</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">returns whether a terrainTile is traversable or not</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setBlendMode(com.badlogic.gdx.maps.tiled.TiledMapTile.BlendMode)" class="member-name-link">setBlendMode</a><wbr>(com.badlogic.gdx.maps.tiled.TiledMapTile.BlendMode&nbsp;blendMode)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -152,14 +182,29 @@ implements com.badlogic.gdx.maps.tiled.TiledMapTile</span></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setId(int)" class="member-name-link">setId</a><wbr>(int&nbsp;id)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setOffsetX(float)" class="member-name-link">setOffsetX</a><wbr>(float&nbsp;offsetX)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setOccupied()" class="member-name-link">setOccupied</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">labels the terrain tile as being occupied (terrain tile does not store actually entity occupying it)</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setOffsetX(float)" class="member-name-link">setOffsetX</a><wbr>(float&nbsp;offsetX)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setOffsetY(float)" class="member-name-link">setOffsetY</a><wbr>(float&nbsp;offsetY)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setOffsetY(float)" class="member-name-link">setOffsetY</a><wbr>(float&nbsp;offsetY)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTerrainCategory(com.csse3200.game.areas.terrain.TerrainTile.TerrainCategory)" class="member-name-link">setTerrainCategory</a><wbr>(<a href="TerrainTile.TerrainCategory.html" title="enum class in com.csse3200.game.areas.terrain">TerrainTile.TerrainCategory</a>&nbsp;terrainCategory)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the terrain category of the terrain tile to the specified terrain category</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTextureRegion(com.badlogic.gdx.graphics.g2d.TextureRegion)" class="member-name-link">setTextureRegion</a><wbr>(com.badlogic.gdx.graphics.g2d.TextureRegion&nbsp;textureRegion)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setUnOccupied()" class="member-name-link">setUnOccupied</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">labels the terrain tile as being unoccupied</div>
+</div>
 </div>
 </div>
 </div>
@@ -178,9 +223,10 @@ implements com.badlogic.gdx.maps.tiled.TiledMapTile</span></div>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(com.badlogic.gdx.graphics.g2d.TextureRegion)">
+<section class="detail" id="&lt;init&gt;(com.badlogic.gdx.graphics.g2d.TextureRegion,com.csse3200.game.areas.terrain.TerrainTile.TerrainCategory)">
 <h3>TerrainTile</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">TerrainTile</span><wbr><span class="parameters">(com.badlogic.gdx.graphics.g2d.TextureRegion&nbsp;textureRegion)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">TerrainTile</span><wbr><span class="parameters">(com.badlogic.gdx.graphics.g2d.TextureRegion&nbsp;textureRegion,
+ <a href="TerrainTile.TerrainCategory.html" title="enum class in com.csse3200.game.areas.terrain">TerrainTile.TerrainCategory</a>&nbsp;terrainCategory)</span></div>
 </section>
 </li>
 </ul>
@@ -314,6 +360,75 @@ implements com.badlogic.gdx.maps.tiled.TiledMapTile</span></div>
 <dd><code>getObjects</code>&nbsp;in interface&nbsp;<code>com.badlogic.gdx.maps.tiled.TiledMapTile</code></dd>
 <dt>Returns:</dt>
 <dd>null</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getTerrainCategory()">
+<h3>getTerrainCategory</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="TerrainTile.TerrainCategory.html" title="enum class in com.csse3200.game.areas.terrain">TerrainTile.TerrainCategory</a></span>&nbsp;<span class="element-name">getTerrainCategory</span>()</div>
+<div class="block">Returns the terrain tile's terrain category i.e. GRASS, DIRT etc</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>TerrainCategory of the tile</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setTerrainCategory(com.csse3200.game.areas.terrain.TerrainTile.TerrainCategory)">
+<h3>setTerrainCategory</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTerrainCategory</span><wbr><span class="parameters">(<a href="TerrainTile.TerrainCategory.html" title="enum class in com.csse3200.game.areas.terrain">TerrainTile.TerrainCategory</a>&nbsp;terrainCategory)</span></div>
+<div class="block">Sets the terrain category of the terrain tile to the specified terrain category</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>terrainCategory</code> - new terrain category for terrain tile</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isTraversable()">
+<h3>isTraversable</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isTraversable</span>()</div>
+<div class="block">returns whether a terrainTile is traversable or not</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>True is traversable and False if not</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isOccupied()">
+<h3>isOccupied</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isOccupied</span>()</div>
+<div class="block">returns if the tile is occupied by another entity (i.e. player or NPC) or not</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>returns true of the tile is occupied by an entity and false if not</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setOccupied()">
+<h3>setOccupied</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setOccupied</span>()</div>
+<div class="block">labels the terrain tile as being occupied (terrain tile does not store actually entity occupying it)</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setUnOccupied()">
+<h3>setUnOccupied</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setUnOccupied</span>()</div>
+<div class="block">labels the terrain tile as being unoccupied</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isTillable()">
+<h3>isTillable</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isTillable</span>()</div>
+<div class="block">returns if the tile is tillable or not</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>returns true if the tile is tillable and false if not</dd>
 </dl>
 </section>
 </li>
