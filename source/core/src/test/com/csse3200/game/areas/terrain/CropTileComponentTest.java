@@ -44,7 +44,8 @@ public class CropTileComponentTest {
     public void shouldGiveExpectedGrowthRate() {
         assertEquals(0.5, cropTile1.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
         assertEquals(0.27694, cropTile2.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
-        assertEquals(1.0, cropTile3.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);assertEquals(-1.0, cropTile4.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
+        assertEquals(1.0, cropTile3.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
+        assertEquals(-1.0, cropTile4.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
         assertEquals(0, cropTile5.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
     }
 
@@ -156,6 +157,42 @@ public class CropTileComponentTest {
         assertTrue(cropTile3.getComponent(CropTileComponent.class).isOccupied());
         assertTrue(cropTile4.getComponent(CropTileComponent.class).isOccupied());
         assertTrue(cropTile5.getComponent(CropTileComponent.class).isOccupied());
+    }
+
+    @Test
+    public void testDestroyTile() {
+        ServiceLocator.registerEntityService(new EntityService());
+        Entity entity1 = mock(Entity.class);
+        Function<CropTileComponent, Entity> factoryMethod1 = cropTile1 -> entity1;
+        Function<CropTileComponent, Entity> factoryMethod2 = cropTile2 -> entity1;
+        Function<CropTileComponent, Entity> factoryMethod3 = cropTile3 -> entity1;
+        Function<CropTileComponent, Entity> factoryMethod4 = cropTile4 -> entity1;
+        Function<CropTileComponent, Entity> factoryMethod5 = cropTile5 -> entity1;
+        assertFalse(cropTile1.getComponent(CropTileComponent.class).isOccupied());
+        assertFalse(cropTile2.getComponent(CropTileComponent.class).isOccupied());
+        assertFalse(cropTile3.getComponent(CropTileComponent.class).isOccupied());
+        assertFalse(cropTile4.getComponent(CropTileComponent.class).isOccupied());
+        assertFalse(cropTile5.getComponent(CropTileComponent.class).isOccupied());
+        cropTile1.getComponent(CropTileComponent.class).plantCrop(factoryMethod1);
+        cropTile2.getComponent(CropTileComponent.class).plantCrop(factoryMethod2);
+        cropTile3.getComponent(CropTileComponent.class).plantCrop(factoryMethod3);
+        cropTile4.getComponent(CropTileComponent.class).plantCrop(factoryMethod4);
+        cropTile5.getComponent(CropTileComponent.class).plantCrop(factoryMethod5);
+        cropTile1.getEvents().trigger("destroyPlant");
+        cropTile2.getEvents().trigger("destroyPlant");
+        cropTile3.getEvents().trigger("destroyPlant");
+        cropTile4.getEvents().trigger("destroyPlant");
+        cropTile5.getEvents().trigger("destroyPlant");
+        cropTile1.getComponent(CropTileComponent.class).setUnoccupied();
+        cropTile2.getComponent(CropTileComponent.class).setUnoccupied();
+        cropTile3.getComponent(CropTileComponent.class).setUnoccupied();
+        cropTile4.getComponent(CropTileComponent.class).setUnoccupied();
+        cropTile5.getComponent(CropTileComponent.class).setUnoccupied();
+        assertFalse(cropTile1.getComponent(CropTileComponent.class).isOccupied());
+        assertFalse(cropTile2.getComponent(CropTileComponent.class).isOccupied());
+        assertFalse(cropTile3.getComponent(CropTileComponent.class).isOccupied());
+        assertFalse(cropTile4.getComponent(CropTileComponent.class).isOccupied());
+        assertFalse(cropTile5.getComponent(CropTileComponent.class).isOccupied());
     }
 
 }
