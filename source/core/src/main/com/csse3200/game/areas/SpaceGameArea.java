@@ -85,7 +85,7 @@ public class SpaceGameArea extends GameArea {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
           "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas"
   };
-  private static final String[] forestSounds = {"sounds/Impact4.ogg"};
+  private static final String[] forestSounds = {"sounds/Impact4.ogg", "sounds/car-horn-6408.mp3"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
   private static final String[] forestMusic = {backgroundMusic};
 
@@ -129,7 +129,7 @@ public class SpaceGameArea extends GameArea {
     //spawnGhosts();
     //spawnGhostKing();
 
-    playMusic();
+    //playMusic();
   }
 
   public Entity getPlayer() {
