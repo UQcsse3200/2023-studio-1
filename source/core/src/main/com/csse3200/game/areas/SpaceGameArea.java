@@ -78,11 +78,12 @@ public class SpaceGameArea extends GameArea {
           "images/snow_2.png",
           "images/snow_3.png",
           "images/stone_1.png",
-          "images/stonePath_1.png"
+          "images/stonePath_1.png",
+          "images/tractor.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
-          "images/animals/chicken.atlas", "images/animals/cow.atlas"
+          "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -103,6 +104,7 @@ public class SpaceGameArea extends GameArea {
     super();
     this.terrainFactory = terrainFactory;
     this.gameMap = new GameMap(terrainFactory);
+    ServiceLocator.registerGameArea(this);
   }
 
   /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
