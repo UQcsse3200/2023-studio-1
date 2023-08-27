@@ -51,7 +51,7 @@ public class GameTimeDisplay extends UIComponent {
         group = new Group();
         table.top().left();
         table.setFillParent(true);
-        table.padTop(220f).padLeft(-100f);
+        table.padTop(150f).padLeft(-100f);
 
         clockImage = new Image(ServiceLocator.getResourceService().getAsset(
             "images/time_system_ui/clock_frame.png", Texture.class));
