@@ -111,7 +111,8 @@ public class ForestGameArea extends GameArea {
 
   private void displayUI() {
     Entity ui = new Entity();
-    ui.addComponent(new GameAreaDisplay("Box Forest"));
+    // Added the name of the game
+    ui.addComponent(new GameAreaDisplay("Gardens of the Galaxy"));
     spawnEntity(ui);
   }
 
