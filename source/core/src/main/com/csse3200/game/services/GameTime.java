@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.TimeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.csse3200.game.services.GameTimeDisplay;
+import com.csse3200.game.services.TimeController;
 
 /** Controls the game time */
 public class GameTime {
@@ -11,11 +13,26 @@ public class GameTime {
   private final long startTime;
   private float timeScale = 1f;
 
+  private long pausedTime;
+  public TimeController timeController;
+
   public GameTime() {
+
+    this.timeController = new TimeController();
+    timeController.setTimeSource(this);
+    this.pausedTime = 0;
+
     startTime = TimeUtils.millis();
     logger.debug("Setting game start time to {}", startTime);
   }
 
+  public TimeController getTimeController() {
+    return this.timeController;
+  }
+
+  public void addPauseOffset(long pauseDuration) {
+    this.pausedTime += pauseDuration;
+  }
   /**
    * Set the speed of time passing. This affects getDeltaTime()
    *
@@ -41,7 +58,12 @@ public class GameTime {
     return TimeUtils.timeSinceMillis(startTime);
   }
 
+  public long getActiveTime() {
+    return TimeUtils.timeSinceMillis(startTime) - pausedTime;
+  }
+
   public long getTimeSince(long lastTime) {
     return getTime() - lastTime;
   }
 }
+
