@@ -121,7 +121,20 @@ public class CropTileComponentTest {
     }
 
     @Test
-    public void testSetUnoccupied1() {
+    public void testSetUnoccupiedWhenUnoccupied() {
+        EntityService mockEntityService = mock(EntityService.class);
+        ServiceLocator.registerEntityService(mockEntityService);
+        Entity plant = mock(Entity.class);
+        plant.addComponent(new PlantComponent(
+                1, "name", "type", "desc", 1, 7, 1));
+        Function<CropTileComponent, Entity> plantFactoryMethod = cropTileComponent -> plant;
+        cropTile1.getComponent(CropTileComponent.class).setUnoccupied();
+        cropTile1.getComponent(CropTileComponent.class).setUnoccupied();
+        verify(mockEntityService, never()).register(plant);
+    }
+
+    @Test
+    public void testSetUnoccupiedWhenOccupied() {
         EntityService mockEntityService = mock(EntityService.class);
         ServiceLocator.registerEntityService(mockEntityService);
         Entity plant = mock(Entity.class);
@@ -136,18 +149,6 @@ public class CropTileComponentTest {
         cropTile1.getComponent(CropTileComponent.class).setUnoccupied();
         cropTile1.getEvents().trigger("plant", plantFactoryMethod);
         verify(mockEntityService, times(3)).register(plant);
-    }
-
-    @Test
-    public void testSetUnoccupied2() {
-        EntityService mockEntityService = mock(EntityService.class);
-        ServiceLocator.registerEntityService(mockEntityService);
-        PlantFactory.setStats(FileLoader.readClass(PlantConfigs.class, "source/core/assets/configs/plant.json"));
-        cropTile1.getEvents().trigger("plant", PlantFactory.createAloeVera());
-        //verify(mockEntityService).register(plant);
-        cropTile1.getEvents().trigger("destroy");
-        cropTile1.getComponent(CropTileComponent.class).setUnoccupied();
-        //assertNull(cropTile1.getComponent(CropTileComponent.class).getPlant());
     }
 
     @Test
