@@ -115,6 +115,7 @@ public class MainGameScreen extends ScreenAdapter {
   public void render(float delta) {
     physicsEngine.update();
     ServiceLocator.getEntityService().update();
+    ServiceLocator.getTimeService().update();
     renderer.render();
   }
 
