@@ -19,14 +19,20 @@ public class Inventory extends Component {
 
     }
 
+    public Inventory() {
+
+    }
+
     public boolean isOpen() { return isOpen; }
 
     public void toggleOpen() {
         isOpen = !isOpen;
+        logger.info("Inventory Toggled to "+isOpen);
     }
     @Override
     public void create() {
         entity.getEvents().addListener("exit", this::onExit);
+        entity.getEvents().addListener("inventoryOpen", this::toggleOpen);
     }
 
     /**

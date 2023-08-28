@@ -3,6 +3,7 @@ package com.csse3200.game.components.player;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.components.inventory.Inventory;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.utils.math.Vector2Utils;
 
@@ -52,6 +53,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           return true;
         case Keys.I:
           // inventory tings
+          entity.getEvents().trigger("inventoryOpen");
           return true;
         case Keys.F:
           triggerEnterEvent();
