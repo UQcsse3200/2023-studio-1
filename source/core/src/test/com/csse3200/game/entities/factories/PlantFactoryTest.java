@@ -3,14 +3,27 @@ package com.csse3200.game.entities.factories;
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.plants.BasePlantConfig;
 import com.csse3200.game.entities.configs.plants.PlantConfigs;
 import com.csse3200.game.files.FileLoader;
+import com.csse3200.game.physics.PhysicsEngine;
+import com.csse3200.game.physics.PhysicsLayer;
+import com.csse3200.game.physics.PhysicsService;
+import com.csse3200.game.physics.components.ColliderComponent;
+import com.csse3200.game.physics.components.HitboxComponent;
+import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.Mock;
 
 import java.io.StringReader;
 import java.util.stream.Stream;
@@ -22,6 +35,8 @@ import static org.mockito.Mockito.*;
 public class PlantFactoryTest {
     private PlantConfigs stats;
 
+
+
     @BeforeEach
     public void setUp() {
         Gdx.files = mock(Files.class);
@@ -30,80 +45,82 @@ public class PlantFactoryTest {
         // Return the mocked FileHandle when Gdx.files.local(anyString()) is invoked
         when(Gdx.files.internal(anyString())).thenReturn(mockFileHandle);
         // Return the JSON content when the reader method of the mocked FileHandle is called
-        when(mockFileHandle.reader("UTF-8")).thenReturn(new StringReader("{\n" +
-                "  \"cosmicCob\": {\n" +
-                "    \"health\": 100,\n" +
-                "    \"name\": \"Cosmic Cob\",\n" +
-                "    \"type\": \"FOOD\",\n" +
-                "    \"description\": \"Nutritious space corn!\",\n" +
-                "    \"idealWaterLevel\": 0.7,\n" +
-                "    \"adultLifeSpan\": 5,\n" +
-                "    \"maxHealth\": 300\n" +
-                "  },\n" +
-                "  \"aloeVera\": {\n" +
-                "    \"health\": 50,\n" +
-                "    \"name\": \"Aloe Vera\",\n" +
-                "    \"type\": \"HEALTH\",\n" +
-                "    \"description\": \"Produces gel that can be used for healing\",\n" +
-                "    \"idealWaterLevel\": 0.7,\n" +
-                "    \"adultLifeSpan\": 5,\n" +
-                "    \"maxHealth\": 300\n" +
-                "  },\n" +
-                "  \"hammerPlant\": {\n" +
-                "    \"health\": 10,\n" +
-                "    \"name\": \"Hammer Plant\",\n" +
-                "    \"type\": \"REPAIR\",\n" +
-                "    \"description\": \"Repairs plants within its healing radius\",\n" +
-                "    \"idealWaterLevel\": 0.7,\n" +
-                "    \"adultLifeSpan\": 5,\n" +
-                "    \"maxHealth\": 300\n" +
-                "  },\n" +
-                "  \"venusFlyTrap\": {\n" +
-                "    \"health\": 100,\n" +
-                "    \"name\": \"Space Snapper\",\n" +
-                "    \"type\": \"DEFENCE\",\n" +
-                "    \"description\" : \"I eat the fauna!\",\n" +
-                "    \"idealWaterLevel\": 0.7,\n" +
-                "    \"adultLifeSpan\": 5,\n" +
-                "    \"maxHealth\": 300\n" +
-                "  },\n" +
-                "  \"waterWeed\": {\n" +
-                "    \"health\": 10,\n" +
-                "    \"name\": \"Atomic Algae\",\n" +
-                "    \"type\": \"PRODUCTION\",\n" +
-                "    \"description\": \"Test description\",\n" +
-                "    \"idealWaterLevel\": 0.7,\n" +
-                "    \"adultLifeSpan\": 5,\n" +
-                "    \"maxHealth\": 300\n" +
-                "  },\n" +
-                "  \"atropaBelladonna\": {\n" +
-                "    \"health\": 200,\n" +
-                "    \"name\": \"Deadly Nightshade\",\n" +
-                "    \"type\": \"DEADLY\",\n" +
-                "    \"description\": \"Grows deadly poisonous berries\",\n" +
-                "    \"idealWaterLevel\": 0.7,\n" +
-                "    \"adultLifeSpan\": 5,\n" +
-                "    \"maxHealth\": 300\n" +
-                "  },\n" +
-                "  \"nicotianaTabacum\": {\n" +
-                "    \"health\": 20,\n" +
-                "    \"name\": \"Tobacco\",\n" +
-                "    \"type\": \"DEADLY\",\n" +
-                "    \"description\": \"Toxic addicted plant leaves\",\n" +
-                "    \"idealWaterLevel\": 0.7,\n" +
-                "    \"adultLifeSpan\": 5,\n" +
-                "    \"maxHealth\": 300\n" +
-                "  },\n" +
-                "  \"sunFlower\": {\n" +
-                "    \"health\" : 10,\n" +
-                "    \"name\": \"Horticultural Heater\",\n" +
-                "    \"type\": \"PRODUCTION\",\n" +
-                "    \"description\": \"Warms up the nearby area\",\n" +
-                "    \"idealWaterLevel\": 0.7,\n" +
-                "    \"adultLifeSpan\": 5,\n" +
-                "    \"maxHealth\": 300\n" +
-                "  }\n" +
-                "}\n"));
+        when(mockFileHandle.reader("UTF-8")).thenReturn(new StringReader("""
+                {
+                  "cosmicCob": {
+                    "health": 100,
+                    "name": "Cosmic Cob",
+                    "type": "FOOD",
+                    "description": "Nutritious space corn!",
+                    "idealWaterLevel": 0.7,
+                    "adultLifeSpan": 5,
+                    "maxHealth": 300
+                  },
+                  "aloeVera": {
+                    "health": 50,
+                    "name": "Aloe Vera",
+                    "type": "HEALTH",
+                    "description": "Produces gel that can be used for healing",
+                    "idealWaterLevel": 0.7,
+                    "adultLifeSpan": 5,
+                    "maxHealth": 300
+                  },
+                  "hammerPlant": {
+                    "health": 10,
+                    "name": "Hammer Plant",
+                    "type": "REPAIR",
+                    "description": "Repairs plants within its healing radius",
+                    "idealWaterLevel": 0.7,
+                    "adultLifeSpan": 5,
+                    "maxHealth": 300
+                  },
+                  "venusFlyTrap": {
+                    "health": 100,
+                    "name": "Space Snapper",
+                    "type": "DEFENCE",
+                    "description" : "I eat the fauna!",
+                    "idealWaterLevel": 0.7,
+                    "adultLifeSpan": 5,
+                    "maxHealth": 300
+                  },
+                  "waterWeed": {
+                    "health": 10,
+                    "name": "Atomic Algae",
+                    "type": "PRODUCTION",
+                    "description": "Test description",
+                    "idealWaterLevel": 0.7,
+                    "adultLifeSpan": 5,
+                    "maxHealth": 300
+                  },
+                  "atropaBelladonna": {
+                    "health": 200,
+                    "name": "Deadly Nightshade",
+                    "type": "DEADLY",
+                    "description": "Grows deadly poisonous berries",
+                    "idealWaterLevel": 0.7,
+                    "adultLifeSpan": 5,
+                    "maxHealth": 300
+                  },
+                  "nicotianaTabacum": {
+                    "health": 20,
+                    "name": "Tobacco",
+                    "type": "DEADLY",
+                    "description": "Toxic addicted plant leaves",
+                    "idealWaterLevel": 0.7,
+                    "adultLifeSpan": 5,
+                    "maxHealth": 300
+                  },
+                  "sunFlower": {
+                    "health" : 10,
+                    "name": "Horticultural Heater",
+                    "type": "PRODUCTION",
+                    "description": "Warms up the nearby area",
+                    "idealWaterLevel": 0.7,
+                    "adultLifeSpan": 5,
+                    "maxHealth": 300
+                  }
+                }
+                """));
 
         // Load stats from the JSON using the FileLoader
         stats = FileLoader.readClass(PlantConfigs.class, "configs/plant.json");
@@ -115,7 +132,7 @@ public class PlantFactoryTest {
     @MethodSource("plantConfigProvider")
     public void testPlantConfigsLoadedCorrectly(String plant, int health, String name, String type,
                                                 String description, float water, int life, int maxHealth) {
-        BasePlantConfig actualValues = getHealthValue(plant);
+        BasePlantConfig actualValues = getActualValue(plant);
 
         assertNotNull(actualValues, plant + " is null!");
         assertEquals(health, actualValues.health, "Health value for plant " + plant +
@@ -154,29 +171,47 @@ public class PlantFactoryTest {
     }
 
 
-    private BasePlantConfig getHealthValue(String plant) {
-        // Here, use reflection or any other method to dynamically access the right field
-        // from the `stats` object. This is just a basic example.
-        switch (plant) {
-            case "cosmicCob":
-                return stats.cosmicCob;
-            case "aloeVera":
-                return stats.aloeVera;
-            case "hammerPlant":
-                return stats.hammerPlant;
-            case "venusFlyTrap":
-                return stats.venusFlyTrap;
-            case "waterWeed":
-                return stats.waterWeed;
-            case "atropaBelladonna":
-                return stats.atropaBelladonna;
-            case "nicotianaTabacum":
-                return stats.nicotianaTabacum;
-            case "sunFlower":
-                return stats.sunFlower;
-            default:
-                throw new IllegalArgumentException("Unknown plant name: " + plant);
-        }
+    private BasePlantConfig getActualValue(String plant) {
+        return switch (plant) {
+            case "cosmicCob" -> stats.cosmicCob;
+            case "aloeVera" -> stats.aloeVera;
+            case "hammerPlant" -> stats.hammerPlant;
+            case "venusFlyTrap" -> stats.venusFlyTrap;
+            case "waterWeed" -> stats.waterWeed;
+            case "atropaBelladonna" -> stats.atropaBelladonna;
+            case "nicotianaTabacum" -> stats.nicotianaTabacum;
+            case "sunFlower" -> stats.sunFlower;
+            default -> throw new IllegalArgumentException("Unknown plant name: " + plant);
+        };
+    }
+
+    @Test
+    public void testCreateBasePlant() {
+        PhysicsService mockPhysicsService = mock(PhysicsService.class);
+        PhysicsEngine engine = mock(PhysicsEngine.class);
+        Body body = mock(Body.class);
+
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+
+        ColliderComponent component = new ColliderComponent();
+
+        Entity plant = PlantFactory.createBasePlant();
+        assertNotNull(plant);
+
+        PhysicsComponent physicsComponent = plant.getComponent(PhysicsComponent.class);
+        assertNotNull(physicsComponent, "Plant PhysicsComponent should not be null");
+        assertEquals(BodyDef.BodyType.StaticBody, physicsComponent.getBody().getType(),
+                "Plant physics body type should be StaticBody");
+
+        ColliderComponent colliderComponent = plant.getComponent(ColliderComponent.class);
+        assertNotNull(colliderComponent, "Plant ColliderComponent should not be null");
+        //assertTrue(colliderComponent.getFixture().isSensor(), "Plant collider should be a sensor");
+
+        HitboxComponent hitboxComponent = plant.getComponent(HitboxComponent.class);
+        assertNotNull(hitboxComponent, "Plant HitboxComponent should not be null");
+        //assertTrue(hitboxComponent.getFixture().isSensor(), "Plant Hitbox should be a sensor");
+        assertEquals(PhysicsLayer.OBSTACLE, hitboxComponent.getLayer(),
+                "Plant Hitbox layer should be OBSTACLE");
     }
 
     @AfterEach

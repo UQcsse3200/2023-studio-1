@@ -44,7 +44,7 @@ public class PlantFactory {
      *
      * @return entity
      */
-    private static Entity createBasePlant() {
+    public static Entity createBasePlant() {
         Entity plant = new Entity()
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setSensor(true))
