@@ -43,6 +43,19 @@ public class PlantComponent extends Component {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void create() {
+        super.create();
+
+        // Initialise event listeners.
+        entity.getEvents().addListener("harvest", this::harvest);
+        entity.getEvents().addListener("destroyPlant", this::destroyPlant);
+        entity.getEvents().addListener("attack", (Integer damage) -> increasePlantHealth(-damage));
+    }
+
+    /**
      * Returns the current plant health
      *
      * @return current plant health
@@ -212,5 +225,24 @@ public class PlantComponent extends Component {
         } else {
             return false;
         }
+    }
+
+    /**
+     * Harvests this plant, causing it to drop its produce.
+     *
+     * <p>If this plant is not in a growth stage where is can be harvested, nothing will happen.
+     */
+    private void harvest() {
+        // Stub. When complete will cause the plant to drop items such as seeds and fruits.
+        // If the plant is a one-time use (e.g., carrots), then it will destroy itself.
+        destroyPlant();
+    }
+
+    /**
+     * Destroys this plant.
+     */
+    private void destroyPlant() {
+        cropTile.setUnoccupied();
+        entity.dispose();
     }
 }
