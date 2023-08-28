@@ -1,33 +1,19 @@
 package com.csse3200.game.areas.terrain;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
-import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.areas.terrain.TerrainComponent.TerrainOrientation;
-import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.extensions.GameExtension;
-import com.csse3200.game.physics.PhysicsService;
-import com.csse3200.game.physics.components.ColliderComponent;
-import com.csse3200.game.physics.components.HitboxComponent;
-import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.rendering.DebugRenderer;
-import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.function.Function;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(GameExtension.class)
@@ -49,12 +35,8 @@ public class CropTileComponentTest {
         cropTile5.create();
         cropTile6.create();
         cropTile7.create();
-        /*RenderService renderService = new RenderService();
-        renderService.setDebug(mock(DebugRenderer.class));
-        ServiceLocator.registerRenderService(renderService);*/
         GameTime gameTime = mock(GameTime.class);
         ServiceLocator.registerTimeSource(gameTime);
-        /*ServiceLocator.registerPhysicsService(new PhysicsService());*/
     }
 
     @Test
@@ -135,11 +117,12 @@ public class CropTileComponentTest {
 
     @Test
     public void testSetUnoccupied2() {
-        ServiceLocator.registerEntityService(new EntityService());
+        EntityService mockEntityService = mock(EntityService.class);
+        ServiceLocator.registerEntityService(mockEntityService);
         Entity plant = mock(Entity.class);
         Function<CropTileComponent, Entity> factoryMethod1 = cropTile1 -> plant;
         cropTile1.getEvents().trigger("plant", factoryMethod1);
-        ServiceLocator.getEntityService().register(plant);
+        verify(mockEntityService).register(plant);
         cropTile1.getEvents().trigger("destroyPlant");
         cropTile1.getComponent(CropTileComponent.class).setUnoccupied();
         assertNull(cropTile1.getComponent(CropTileComponent.class).getPlant());
@@ -147,11 +130,12 @@ public class CropTileComponentTest {
 
     @Test
     public void testPlantCrop() {
-        ServiceLocator.registerEntityService(new EntityService());
+        EntityService mockEntityService = mock(EntityService.class);
+        ServiceLocator.registerEntityService(mockEntityService);
         Entity plant = mock(Entity.class);
         Function<CropTileComponent, Entity> factoryMethod1 = cropTile1 -> plant;
         cropTile2.getEvents().trigger("plant", factoryMethod1);
-        ServiceLocator.getEntityService().register(plant);
+        verify(mockEntityService).register(plant);
         assertNotNull(cropTile2.getComponent(CropTileComponent.class).getPlant());
     }
 }
