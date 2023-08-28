@@ -55,7 +55,7 @@ class FollowTaskTest {
     }
 
     @Test
-    void shouldStopAtStoppingDistance() { //TODO
+    void shouldStopAtStoppingDistance() {
         Entity target = new Entity();
         target.setPosition(0, 1f);
         float stoppingDistance = 0.5f;
@@ -108,7 +108,7 @@ class FollowTaskTest {
 
 
     @Test
-    void shouldNotFollowInStoppingDistance() { //TODO
+    void shouldNotFollowInStoppingDistance() {
         Entity target = new Entity();
         target.setPosition(0f, 6f);
 
