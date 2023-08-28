@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.GdxGame.ScreenType;
 import com.csse3200.game.services.ServiceLocator;
@@ -15,8 +14,7 @@ import org.slf4j.LoggerFactory;
 import java.util.LinkedHashMap;
 
 /**
- * Settings menu display and logic. If you bork the settings, they can be changed manually in
- * CSSE3200Game/settings.json under your home directory (This is C:/users/[username] on Windows).
+ * Control menu display and settings.
  */
 public class ControlsMenuDisplay extends UIComponent {
   private static final Logger logger = LoggerFactory.getLogger(ControlsMenuDisplay.class);
