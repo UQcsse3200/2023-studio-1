@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.GdxGame.ScreenType;
+import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.rafaskoberg.gdx.typinglabel.TypingAdapter;
@@ -24,7 +25,14 @@ public class IntroDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(IntroDisplay.class);
     private final GdxGame game;
 
+    private static float textAnimationDuration = 18;
+    private float spaceSpeed = 1;
+    private boolean isMoving = true;
+    private Image background;
+    private Image planet;
     private Table rootTable;
+
+    private TypingLabel storyLabel;
 
     public IntroDisplay(GdxGame game) {
         super();
@@ -38,46 +46,44 @@ public class IntroDisplay extends UIComponent {
     }
 
     private void addActors() {
-        Image background =
+        background =
                 new Image(
                         ServiceLocator.getResourceService()
                                 .getAsset("images/intro_background.png", Texture.class));
 
         background.setPosition(0, 0);
-        background.setHeight(Gdx.graphics.getWidth() * (background.getHeight() / background.getWidth()));
-        background.setWidth(Gdx.graphics.getWidth());
+        float scaledHeight = Gdx.graphics.getWidth() * (background.getHeight() / background.getWidth());
+        background.setHeight(scaledHeight);
 
+        planet =
+                new Image(
+                        ServiceLocator.getResourceService()
+                                .getAsset("images/intro_planet.png", Texture.class));
+        planet.setSize(200, 200);
+        float planetOffset = textAnimationDuration * UserSettings.get().fps;
+        planet.setPosition((float)Gdx.graphics.getWidth()/2, planetOffset, Align.center);
 
         String story = """
-                {WAIT}
+                {WAIT=0.5}
                 Earth as we know it has been ravaged by war and plague.
                 
                 {WAIT}
-                Our reckless pursuit of technology revealed our presence to the greater galaxy,
-                inviting a slew of challengers for a divided Earth to face.
+                A tapestry of battlefields and massacres are all that remain.
+                {WAIT=0.5}
                 
-                {WAIT}
-                These new visitors waged war against us,
-                {WAIT}unleashing terrifying new energy weaponry against our primitive kinetic armaments.
+                Humanity though... {WAIT=1} perseveres.
                 {WAIT}
                 
-                Earth is left a barren landscape,
-                a tapestry of battlefields and massacres are all that remain.
+                We now look to the stars for hope, {WAIT=1} a new place to call home.
                 {WAIT}
                 
-                Humanity though... {WAIT} perseveres.
-                {WAIT}
+                We will find our salvation in Alpha Centauri.
+                {WAIT=1}
                 
-                We now look to the stars for hope, {WAIT} a new place to call home.
-                {WAIT}
-                
-                We will find our salvation in Alpha Centauri,
-                {WAIT}
-                
-                but first we must tame the wild planet that we now call home...{WAIT}
+                {COLOR=green}Your objective, great farmlord, is to tame this wild planet we now call home.{WAIT=1}
                 """;
         String defaultTokens = "{SLOWER}";
-        TypingLabel storyLabel = new TypingLabel(story, skin);
+        storyLabel = new TypingLabel(story, skin);
         storyLabel.setDefaultToken(defaultTokens);
         storyLabel.setAlignment(Align.center);
 
@@ -100,12 +106,13 @@ public class IntroDisplay extends UIComponent {
 
         rootTable = new Table();
         rootTable.setFillParent(true); // Make the table fill the screen
-        rootTable.row();
-        rootTable.add(storyLabel).expandX().center();
+
+        rootTable.add(storyLabel).expandX().center().padTop(150f);
         rootTable.row().padTop(30f);
         rootTable.add(continueButton).bottom().padBottom(30f);
 
         stage.addActor(background);
+        stage.addActor(planet);
         stage.addActor(rootTable);
     }
 
@@ -120,6 +127,10 @@ public class IntroDisplay extends UIComponent {
 
     @Override
     public void update() {
+        if (isMoving && planet.getY(Align.center) >= storyLabel.getY(Align.top) + 150) {
+            planet.setY(planet.getY() - spaceSpeed);
+            background.setY(background.getY() - spaceSpeed);
+        }
         stage.act(ServiceLocator.getTimeSource().getDeltaTime());
     }
 

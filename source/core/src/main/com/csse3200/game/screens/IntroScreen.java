@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 public class IntroScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(ControlsScreen.class);
 
-    private static final String[] introScreenAssets = {"images/intro_background.png"};
+    private static final String[] introScreenAssets = {"images/intro_background.png", "images/intro_planet.png"};
     private final GdxGame game;
     private final Renderer renderer;
 
