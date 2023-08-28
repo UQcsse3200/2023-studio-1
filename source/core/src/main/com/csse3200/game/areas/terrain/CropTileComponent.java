@@ -3,6 +3,7 @@ package com.csse3200.game.areas.terrain;
 import com.badlogic.gdx.math.MathUtils;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.function.Function;
@@ -79,6 +80,13 @@ public class CropTileComponent extends Component {
 			waterContent = 0;
 		} else if (waterContent > 2) {
 			waterContent = 2;
+		}
+
+		// Update the texture of the corresponding entity
+		DynamicTextureRenderComponent currentTexture = entity.getComponent(DynamicTextureRenderComponent.class);
+		if (currentTexture != null) {
+			String texturePath = this.getTexturePath();
+			currentTexture.setTexture(texturePath);
 		}
 	}
 
@@ -171,5 +179,32 @@ public class CropTileComponent extends Component {
 	public void setUnoccupied() {
 		isFertilised = false;
 		plant = null;
+	}
+
+	/**
+	 * Determine the appropriate String for the tile's texture based on fertiliser status and
+	 * water content.
+	 * @return the path to the texture for this CropTileComponent based on its status.
+	 */
+	private String getTexturePath() {
+		String path = "images/cropTile_fertilised.png";
+		if (isFertilised) {
+			if (0 <= waterContent && waterContent < 0.5) {
+				path = "images/cropTile_fertilised.png";
+			} else if (0.5 <= waterContent && waterContent < 1.5) {
+				path = "images/watered_cropTile_fertilised.png";
+			} else if (1.5 <= waterContent && waterContent <= 2) {
+				path = "images/overwatered_cropTile_fertilised.png";
+			}
+		} else {
+			if (0 <= waterContent && waterContent < 0.5) {
+				path = "images/cropTile.png";
+			} else if (0.5 <= waterContent && waterContent < 1.5) {
+				path = "images/watered_cropTile.png";
+			} else if (1.5 <= waterContent && waterContent <= 2) {
+				path = "images/overwatered_cropTile.png";
+			}
+		}
+		return path;
 	}
 }
