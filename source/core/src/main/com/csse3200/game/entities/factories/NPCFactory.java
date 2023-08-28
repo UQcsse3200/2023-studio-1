@@ -174,7 +174,7 @@ public class NPCFactory {
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-            .addTask(new FollowTask(player, 10, 3f, 4f));
+            .addTask(new FollowTask(player, 10, 4f, 4f));
 
     astrolotl
             .addComponent(aiTaskComponent)

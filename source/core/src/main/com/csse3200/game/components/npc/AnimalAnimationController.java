@@ -27,6 +27,7 @@ public class AnimalAnimationController extends Component {
         entity.getEvents().addListener("runStart", this::animateRun);
         entity.getEvents().addListener("idleStart", this::animateIdle);
         entity.getEvents().addListener("followStart", this::animateWalk);
+        entity.getEvents().addListener("followStop", this::animateIdle);
 
         animateIdle();
     }
@@ -50,4 +51,5 @@ public class AnimalAnimationController extends Component {
         this.direction = direction;
         entity.getEvents().trigger(currentAnimation + "Start");
     }
+
 }

@@ -20,6 +20,8 @@ public class FollowTask extends DefaultTask implements PriorityTask {
   private final DebugRenderer debugRenderer;
   private final RaycastHit hit = new RaycastHit();
   private MovementTask movementTask;
+  private boolean isIdle = false;
+  private double STOPPING_DISTANCE = 1.50;
 
   /**
    * @param target The entity to chase.
@@ -49,12 +51,14 @@ public class FollowTask extends DefaultTask implements PriorityTask {
   @Override
   public void update() {
     //Stops follow if entity is too close to target
-    if(getDistanceToTarget() <= 1.50){
+    if(getDistanceToTarget() <= STOPPING_DISTANCE){
       stop();
     } else {
+      this.isIdle = false;
       movementTask.setTarget(target.getPosition());
       movementTask.update();
       if (movementTask.getStatus() != Status.ACTIVE) {
+        this.owner.getEntity().getEvents().trigger("followStart");
         movementTask.start();
       }
     }
@@ -64,7 +68,10 @@ public class FollowTask extends DefaultTask implements PriorityTask {
   public void stop() {
     super.stop();
     movementTask.stop();
-    this.owner.getEntity().getEvents().trigger("followStop");
+    if(!this.isIdle) {
+      this.owner.getEntity().getEvents().trigger("followStop");
+      this.isIdle = true;
+    }
   }
 
   @Override
