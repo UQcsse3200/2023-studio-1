@@ -13,9 +13,13 @@ import com.csse3200.game.utils.math.Vector2Utils;
  * The task is triggered by an event and has a priority that determines its execution order.
  */
 public class PanicTask extends TimedTask implements PriorityTask {
+    /** Range that entity will randomly move during panic state. */
     private final Vector2 panicRange;
+    /** Speed of movement during panic state. */
     private final Vector2 panicSpeed;
+    /** Movement task for panic movement. */
     private MovementTask movementTask;
+    /** Starting position when panic task starts. */
     private Vector2 startPos;
 
     /**
@@ -33,6 +37,9 @@ public class PanicTask extends TimedTask implements PriorityTask {
         this.panicRange = panicRange;
     }
 
+    /**
+     * Starts the panic task by initializing the movement task and triggering the "runStart" event.
+     */
     @Override
     public void start() {
         super.start();
@@ -45,6 +52,9 @@ public class PanicTask extends TimedTask implements PriorityTask {
         this.owner.getEntity().getEvents().trigger("runStart");
     }
 
+    /**
+     * Updates the panic task by checking if movement has finished, and if so, restarting the movement task.
+     */
     @Override
     public void update() {
         super.update();
@@ -58,6 +68,9 @@ public class PanicTask extends TimedTask implements PriorityTask {
         movementTask.update();
     }
 
+    /**
+     * Stops the panic task and the associated movement task.
+     */
     @Override
     public void stop() {
         super.stop();

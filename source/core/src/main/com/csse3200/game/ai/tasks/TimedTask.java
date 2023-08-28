@@ -11,11 +11,17 @@ import com.csse3200.game.services.ServiceLocator;
  * The task will run unless overridden by a task with higher priority.
  */
 public class TimedTask extends DefaultTask implements PriorityTask {
+    /** String to be called to trigger task */
     private final String trigger;
+    /** Length of task run */
     private final float duration;
+    /** Current run time */
     private float runningTime = 0f;
+    /** Current priority, initial is -1 */
     private int priority = -1;
+    /** Active priority that is set when event is triggered */
     private final int activePriority;
+    /** Global time source */
     private GameTime timeSource;
 
     /**
@@ -31,6 +37,10 @@ public class TimedTask extends DefaultTask implements PriorityTask {
         this.activePriority = priority;
     }
 
+    /**
+     * When task is created, attach event listener to task owner.
+     * @param taskRunner Task runner to attach to
+     */
     @Override
     public void create(TaskRunner taskRunner) {
         super.create(taskRunner);
@@ -40,6 +50,9 @@ public class TimedTask extends DefaultTask implements PriorityTask {
         this.owner.getEntity().getEvents().addListener(trigger, this::triggerActivePriority);
     }
 
+    /**
+     * Start task, setting current run time to 0.
+     */
     @Override
     public void start() {
         super.start();
@@ -53,6 +66,9 @@ public class TimedTask extends DefaultTask implements PriorityTask {
         this.priority = activePriority;
     }
 
+    /**
+     * Increment running time every update.
+     */
     @Override
     public void update() {
         runningTime += timeSource.getDeltaTime();
@@ -65,7 +81,7 @@ public class TimedTask extends DefaultTask implements PriorityTask {
     }
 
     /**
-     * Stops task and sets back to inactive priority
+     * Stops task and sets back to inactive priority.
      */
     @Override
     public void stop() {
@@ -74,6 +90,10 @@ public class TimedTask extends DefaultTask implements PriorityTask {
         this.priority = -1;
     }
 
+    /**
+     * Return priority
+     * @return priority
+     */
     @Override
     public int getPriority() {
         return priority;

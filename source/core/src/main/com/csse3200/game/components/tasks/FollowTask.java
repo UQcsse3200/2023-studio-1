@@ -12,15 +12,24 @@ import com.csse3200.game.services.ServiceLocator;
 
 /** Follows a target entity until they get too far away or line of sight is lost */
 public class FollowTask extends DefaultTask implements PriorityTask {
+  /** The entity to chase. */
   private final Entity target;
+  /** Task priority when following (-1 when not following). */
   private final int priority;
+  /** Maximum distance from the entity at which following can start. */
   private final float viewDistance;
+  /** Maximum distance from the entity while chasing before giving up. */
   private final float maxFollowDistance;
+  /** The physics engine for raycasting. */
   private final PhysicsEngine physics;
+  /** The debug renderer for visualization. */
   private final DebugRenderer debugRenderer;
+  /** Raycast hit information. */
   private final RaycastHit hit = new RaycastHit();
+  /** The movement task for following. */
   private MovementTask movementTask;
-  private float stoppingDistance;
+  /** Distance to target before stopping. */
+  private final float stoppingDistance;
 
   /**
    * @param target The entity to follow.
@@ -39,6 +48,9 @@ public class FollowTask extends DefaultTask implements PriorityTask {
     debugRenderer = ServiceLocator.getRenderService().getDebug();
   }
 
+  /**
+   * Starts the follow task by initializing the movement task and triggering the "followStart" event.
+   */
   @Override
   public void start() {
     super.start();
@@ -49,6 +61,9 @@ public class FollowTask extends DefaultTask implements PriorityTask {
     this.owner.getEntity().getEvents().trigger("followStart");
   }
 
+  /**
+   * Updates the follow task by updating the movement task and stopping it if the entity is too close to the target.
+   */
   @Override
   public void update() {
     //Stops follow if entity is too close to target
@@ -64,6 +79,9 @@ public class FollowTask extends DefaultTask implements PriorityTask {
     }
   }
 
+  /**
+   * Stops the follow task and the associated movement task, and triggers the "followStop" event.
+   */
   @Override
   public void stop() {
     super.stop();
@@ -71,6 +89,11 @@ public class FollowTask extends DefaultTask implements PriorityTask {
     this.owner.getEntity().getEvents().trigger("followStop");
   }
 
+  /**
+   * Gets the priority level of the follow task based on the current status and conditions.
+   *
+   * @return The priority level.
+   */
   @Override
   public int getPriority() {
     if (status == Status.ACTIVE) {
@@ -80,10 +103,21 @@ public class FollowTask extends DefaultTask implements PriorityTask {
     return getInactivePriority();
   }
 
+  /**
+   * Calculates the distance between the owner's entity and the target entity.
+   *
+   * @return The distance between the owner's entity and the target entity.
+   */
   private float getDistanceToTarget() {
     return owner.getEntity().getPosition().dst(target.getPosition());
   }
 
+  /**
+   * Determines the priority when the follow task is active based on the distance to the target
+   * and the visibility of the target entity.
+   *
+   * @return The active priority level or -1 if following conditions are not met.
+   */
   private int getActivePriority() {
     float dst = getDistanceToTarget();
     if (dst > maxFollowDistance || !isTargetVisible()) {
@@ -92,6 +126,12 @@ public class FollowTask extends DefaultTask implements PriorityTask {
     return priority;
   }
 
+  /**
+   * Determines the priority when the follow task is inactive based on the distance to the target,
+   * the visibility of the target entity, and the stopping distance.
+   *
+   * @return The inactive priority level or -1 if conditions are not met.
+   */
   private int getInactivePriority() {
     float dst = getDistanceToTarget();
     if (dst < viewDistance && isTargetVisible() && dst > stoppingDistance) {
@@ -100,6 +140,12 @@ public class FollowTask extends DefaultTask implements PriorityTask {
     return -1;
   }
 
+
+  /**
+   * Checks if the target entity is visible from the owner's entity position by performing a raycast.
+   *
+   * @return True if the target entity is visible, false otherwise.
+   */
   private boolean isTargetVisible() {
     Vector2 from = owner.getEntity().getCenterPosition();
     Vector2 to = target.getCenterPosition();
