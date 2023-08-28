@@ -6,7 +6,7 @@
     "description": "Nutritious space corn!",
     "idealWaterLevel": 0.7,
     "adultLifeSpan": 5,
-    "maxHealth": 300
+    "maxHealth": 400
   },
   "aloeVera": {
     "health": 50,
@@ -24,7 +24,7 @@
     "description": "Repairs plants within its healing radius",
     "idealWaterLevel": 0.7,
     "adultLifeSpan": 5,
-    "maxHealth": 300
+    "maxHealth": 200
   },
   "venusFlyTrap": {
     "health": 100,
@@ -33,7 +33,7 @@
     "description" : "I eat the fauna!",
     "idealWaterLevel": 0.7,
     "adultLifeSpan": 5,
-    "maxHealth": 300
+    "maxHealth": 400
   },
   "waterWeed": {
     "health": 10,
@@ -42,7 +42,7 @@
     "description": "Test description",
     "idealWaterLevel": 0.7,
     "adultLifeSpan": 5,
-    "maxHealth": 300
+    "maxHealth": 100
   },
   "atropaBelladonna": {
     "health": 200,
@@ -51,7 +51,7 @@
     "description": "Grows deadly poisonous berries",
     "idealWaterLevel": 0.7,
     "adultLifeSpan": 5,
-    "maxHealth": 300
+    "maxHealth": 200
   },
   "nicotianaTabacum": {
     "health": 20,
@@ -60,7 +60,7 @@
     "description": "Toxic addicted plant leaves",
     "idealWaterLevel": 0.7,
     "adultLifeSpan": 5,
-    "maxHealth": 300
+    "maxHealth": 20
   },
   "sunFlower": {
     "health" : 10,
@@ -69,6 +69,6 @@
     "description": "Warms up the nearby area",
     "idealWaterLevel": 0.7,
     "adultLifeSpan": 5,
-    "maxHealth": 300
+    "maxHealth": 100
   }
 }
