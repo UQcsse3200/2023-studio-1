@@ -6,6 +6,7 @@ import com.csse3200.game.entities.configs.CropTileConfig;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -47,7 +48,7 @@ public class TerrainCropTileFactory {
 		Entity tile = new Entity()
 				.addComponent(new ColliderComponent().setSensor(true))
 				.addComponent(new PhysicsComponent())
-				.addComponent(new TextureRenderComponent("images/cropTile.png"))
+				.addComponent(new DynamicTextureRenderComponent("images/cropTile.png"))
 				.addComponent(new CropTileComponent(stats.initialWaterContent, stats.initialSoilQuality));
 
 		tile.setPosition(position);
