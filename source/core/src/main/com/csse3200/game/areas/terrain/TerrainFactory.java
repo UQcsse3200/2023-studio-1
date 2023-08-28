@@ -384,10 +384,11 @@ public class TerrainFactory {
       bf = new BufferedReader(new FileReader(path2));
     }
       String line;
-      int x_pos = 0, y_pos = 0;
+    //y_pos = 100 and x_pos = 100 lets map generate correctly
+      int x_pos = 0, y_pos = 100;
         // checking for end of file
-    for (line = bf.readLine(); line != null; x_pos++, line = bf.readLine(), y_pos++) {
-        for (x_pos = 0; x_pos < line.length(); x_pos++) {
+    for (line = bf.readLine(); line != null; x_pos++, line = bf.readLine(), y_pos--) {
+        for (x_pos = line.length() - 1; x_pos > 0; x_pos--) {
           //Cell cell = layer.getCell(x_pos, y_pos); // uncomment this if u want to update instead of replace
           GridPoint2 point = new GridPoint2(x_pos, y_pos);
           layer.setCell(point.x, point.y, cellCreator(point, line, TRList));
