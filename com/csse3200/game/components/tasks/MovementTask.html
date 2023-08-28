@@ -115,10 +115,19 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.badlogic.gdx.math.Vector2)" class="member-name-link">MovementTask</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;target)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Creates a movement task with a target position.</div>
+</div>
 <div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(com.badlogic.gdx.math.Vector2,float)" class="member-name-link">MovementTask</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;target,
  float&nbsp;stopDistance)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a movement task with a target position and a specified stop distance.</div>
+</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.badlogic.gdx.math.Vector2,com.badlogic.gdx.math.Vector2)" class="member-name-link">MovementTask</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;target,
+ com.badlogic.gdx.math.Vector2&nbsp;speed)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a movement task with a target position and a specified speed.</div>
+</div>
 </div>
 </section>
 </li>
@@ -134,29 +143,41 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create(com.csse3200.game.ai.tasks.TaskRunner)" class="member-name-link">create</a><wbr>(<a href="../../ai/tasks/TaskRunner.html" title="interface in com.csse3200.game.ai.tasks">TaskRunner</a>&nbsp;taskRunner)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Retrieves the necessary components and initializes the movement task.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.math.Vector2</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSpeed()" class="member-name-link">getSpeed</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Retrieves the movement speed of the entity.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTarget(com.badlogic.gdx.math.Vector2)" class="member-name-link">setTarget</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;target)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets a new target position for the movement task.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#start()" class="member-name-link">start</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Start running this task.</div>
+<div class="block">Starts the movement task by setting up the movement parameters and triggering the start event.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stop()" class="member-name-link">stop</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Stop the task immediately.</div>
+<div class="block">Stops the movement task and resets movement-related parameters.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Run one frame of the task.</div>
+<div class="block">Updates the movement task by checking if the target has been reached and handling movement changes.</div>
 </div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.csse3200.game.ai.tasks.DefaultTask">Methods inherited from class&nbsp;com.csse3200.game.ai.tasks.<a href="../../ai/tasks/DefaultTask.html" title="class in com.csse3200.game.ai.tasks">DefaultTask</a></h3>
-<code><a href="../../ai/tasks/DefaultTask.html#create(com.csse3200.game.ai.tasks.TaskRunner)">create</a>, <a href="../../ai/tasks/DefaultTask.html#getStatus()">getStatus</a></code></div>
+<code><a href="../../ai/tasks/DefaultTask.html#getStatus()">getStatus</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -175,6 +196,11 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;(com.badlogic.gdx.math.Vector2)">
 <h3>MovementTask</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">MovementTask</span><wbr><span class="parameters">(com.badlogic.gdx.math.Vector2&nbsp;target)</span></div>
+<div class="block">Creates a movement task with a target position.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>target</code> - The target position to move towards.</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -182,6 +208,25 @@ loadScripts(document, 'script');</script>
 <h3>MovementTask</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">MovementTask</span><wbr><span class="parameters">(com.badlogic.gdx.math.Vector2&nbsp;target,
  float&nbsp;stopDistance)</span></div>
+<div class="block">Creates a movement task with a target position and a specified stop distance.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>target</code> - The target position to move towards.</dd>
+<dd><code>stopDistance</code> - The distance at which the task is considered finished.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(com.badlogic.gdx.math.Vector2,com.badlogic.gdx.math.Vector2)">
+<h3>MovementTask</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">MovementTask</span><wbr><span class="parameters">(com.badlogic.gdx.math.Vector2&nbsp;target,
+ com.badlogic.gdx.math.Vector2&nbsp;speed)</span></div>
+<div class="block">Creates a movement task with a target position and a specified speed.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>target</code> - The target position to move towards.</dd>
+<dd><code>speed</code> - The movement speed of the entity.</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -193,11 +238,25 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="create(com.csse3200.game.ai.tasks.TaskRunner)">
+<h3>create</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">create</span><wbr><span class="parameters">(<a href="../../ai/tasks/TaskRunner.html" title="interface in com.csse3200.game.ai.tasks">TaskRunner</a>&nbsp;taskRunner)</span></div>
+<div class="block">Retrieves the necessary components and initializes the movement task.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../ai/tasks/Task.html#create(com.csse3200.game.ai.tasks.TaskRunner)">create</a></code>&nbsp;in interface&nbsp;<code><a href="../../ai/tasks/Task.html" title="interface in com.csse3200.game.ai.tasks">Task</a></code></dd>
+<dt>Overrides:</dt>
+<dd><code><a href="../../ai/tasks/DefaultTask.html#create(com.csse3200.game.ai.tasks.TaskRunner)">create</a></code>&nbsp;in class&nbsp;<code><a href="../../ai/tasks/DefaultTask.html" title="class in com.csse3200.game.ai.tasks">DefaultTask</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>taskRunner</code> - The task runner associated with this task.</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="start()">
 <h3>start</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">start</span>()</div>
-<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../ai/tasks/Task.html#start()">Task</a></code></span></div>
-<div class="block">Start running this task. This will usually be called by an AI controller.</div>
+<div class="block">Starts the movement task by setting up the movement parameters and triggering the start event.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../../ai/tasks/Task.html#start()">start</a></code>&nbsp;in interface&nbsp;<code><a href="../../ai/tasks/Task.html" title="interface in com.csse3200.game.ai.tasks">Task</a></code></dd>
@@ -210,8 +269,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="update()">
 <h3>update</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">update</span>()</div>
-<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../ai/tasks/Task.html#update()">Task</a></code></span></div>
-<div class="block">Run one frame of the task. Similar to the update() in Components.</div>
+<div class="block">Updates the movement task by checking if the target has been reached and handling movement changes.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../../ai/tasks/Task.html#update()">update</a></code>&nbsp;in interface&nbsp;<code><a href="../../ai/tasks/Task.html" title="interface in com.csse3200.game.ai.tasks">Task</a></code></dd>
@@ -224,19 +282,34 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="setTarget(com.badlogic.gdx.math.Vector2)">
 <h3>setTarget</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTarget</span><wbr><span class="parameters">(com.badlogic.gdx.math.Vector2&nbsp;target)</span></div>
+<div class="block">Sets a new target position for the movement task.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>target</code> - The new target position.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="stop()">
 <h3>stop</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">stop</span>()</div>
-<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../ai/tasks/Task.html#stop()">Task</a></code></span></div>
-<div class="block">Stop the task immediately. This can be called at any time by the AI controller.</div>
+<div class="block">Stops the movement task and resets movement-related parameters.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../../ai/tasks/Task.html#stop()">stop</a></code>&nbsp;in interface&nbsp;<code><a href="../../ai/tasks/Task.html" title="interface in com.csse3200.game.ai.tasks">Task</a></code></dd>
 <dt>Overrides:</dt>
 <dd><code><a href="../../ai/tasks/DefaultTask.html#stop()">stop</a></code>&nbsp;in class&nbsp;<code><a href="../../ai/tasks/DefaultTask.html" title="class in com.csse3200.game.ai.tasks">DefaultTask</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getSpeed()">
+<h3>getSpeed</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.math.Vector2</span>&nbsp;<span class="element-name">getSpeed</span>()</div>
+<div class="block">Retrieves the movement speed of the entity.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The movement speed vector.</dd>
 </dl>
 </section>
 </li>
