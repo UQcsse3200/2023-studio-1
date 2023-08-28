@@ -170,7 +170,8 @@ public class NPCFactory {
     BaseAnimalConfig config = configs.astrolotl;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
-            ServiceLocator.getResourceService().getAsset("images/animals/astrolotl.atlas", TextureAtlas.class));
+            ServiceLocator.getResourceService().getAsset("images/animals/astrolotl.atlas", TextureAtlas.class)
+            , 20f);
     animator.addAnimation("idle_left", 0.15f, Animation.PlayMode.LOOP);
     animator.addAnimation("idle_right", 0.15f, Animation.PlayMode.LOOP);
     animator.addAnimation("walk_left", 0.15f, Animation.PlayMode.LOOP);
