@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.ui.UIComponent;
 
 import java.util.ArrayList;
@@ -77,7 +76,8 @@ public class InventoryToolbar extends UIComponent {
      * Updates the player's inventory toolbar on the ui.
      */
     public void updateInventory() {
-
+        inventory = entity.getComponent(InventoryDisplay.class).getInventory();
+        // refresh the ui as per the new inventory.
     }
 
     @Override
