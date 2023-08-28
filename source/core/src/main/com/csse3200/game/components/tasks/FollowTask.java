@@ -20,20 +20,21 @@ public class FollowTask extends DefaultTask implements PriorityTask {
   private final DebugRenderer debugRenderer;
   private final RaycastHit hit = new RaycastHit();
   private MovementTask movementTask;
-  private boolean isIdle = false;
-  private double STOPPING_DISTANCE = 1.50;
+  private float stoppingDistance;
 
   /**
-   * @param target The entity to chase.
-   * @param priority Task priority when chasing (0 when not following).
+   * @param target The entity to follow.
+   * @param priority Task priority when following (0 when not following).
    * @param viewDistance Maximum distance from the entity at which following can start.
    * @param maxFollowDistance Maximum distance from the entity while following before giving up.
+   * @param stoppingDistance The distance at which the entity stops following target
    */
-  public FollowTask(Entity target, int priority, float viewDistance, float maxFollowDistance) {
+  public FollowTask(Entity target, int priority, float viewDistance, float maxFollowDistance, float stoppingDistance) {
     this.target = target;
     this.priority = priority;
     this.viewDistance = viewDistance;
     this.maxFollowDistance = maxFollowDistance;
+    this.stoppingDistance = stoppingDistance;
     physics = ServiceLocator.getPhysicsService().getPhysics();
     debugRenderer = ServiceLocator.getRenderService().getDebug();
   }
@@ -51,10 +52,9 @@ public class FollowTask extends DefaultTask implements PriorityTask {
   @Override
   public void update() {
     //Stops follow if entity is too close to target
-    if(getDistanceToTarget() <= STOPPING_DISTANCE){
+    if(getDistanceToTarget() <= stoppingDistance){
       stop();
     } else {
-      this.isIdle = false;
       movementTask.setTarget(target.getPosition());
       movementTask.update();
       if (movementTask.getStatus() != Status.ACTIVE) {
@@ -68,10 +68,7 @@ public class FollowTask extends DefaultTask implements PriorityTask {
   public void stop() {
     super.stop();
     movementTask.stop();
-    if(!this.isIdle) {
-      this.owner.getEntity().getEvents().trigger("followStop");
-      this.isIdle = true;
-    }
+    this.owner.getEntity().getEvents().trigger("followStop");
   }
 
   @Override
@@ -90,14 +87,14 @@ public class FollowTask extends DefaultTask implements PriorityTask {
   private int getActivePriority() {
     float dst = getDistanceToTarget();
     if (dst > maxFollowDistance || !isTargetVisible()) {
-      return -1; // Too far, stop chasing
+      return -1; // Too far, stop following
     }
     return priority;
   }
 
   private int getInactivePriority() {
     float dst = getDistanceToTarget();
-    if (dst < viewDistance && isTargetVisible()) {
+    if (dst < viewDistance && isTargetVisible() && dst > stoppingDistance) {
       return priority;
     }
     return -1;
