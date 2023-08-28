@@ -53,7 +53,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           return true;
         case Keys.I:
           // inventory tings
-          entity.getEvents().trigger("inventoryOpen");
+          entity.getEvents().trigger("toggleInventory");
           return true;
         case Keys.F:
           triggerEnterEvent();

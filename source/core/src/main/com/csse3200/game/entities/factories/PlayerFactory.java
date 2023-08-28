@@ -62,7 +62,6 @@ public class PlayerFactory {
             .addComponent(animator)
             .addComponent(new PlayerAnimationController())
             .addComponent(new ItemPickupComponent())
-                .addComponent(new Inventory())
             .addComponent(new InventoryDisplay());
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
