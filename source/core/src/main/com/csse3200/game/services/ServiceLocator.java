@@ -21,10 +21,9 @@ public class ServiceLocator {
   private static EntityService entityService;
   private static RenderService renderService;
   private static PhysicsService physicsService;
-  private static TimeService timeService;
-  private static GameTime timeSource;
   private static InputService inputService;
   private static ResourceService resourceService;
+  private static TimeService timeService;
   private static GameArea gameArea;
 
   public static GameArea getGameArea() {
@@ -43,16 +42,15 @@ public class ServiceLocator {
     return physicsService;
   }
 
-  public static GameTime getTimeSource() {
-    return timeSource;
-  }
-
   public static InputService getInputService() {
     return inputService;
   }
 
   public static ResourceService getResourceService() {
     return resourceService;
+  }
+  public static TimeService getTimeService() {
+    return timeService;
   }
 
   public static void registerGameArea(GameArea area) {
@@ -80,11 +78,6 @@ public class ServiceLocator {
     timeService = service;
   }
 
-  public static void registerTimeSource(GameTime source) {
-    logger.debug("Registering time source {}", source);
-    timeSource = source;
-  }
-
   public static void registerInputService(InputService source) {
     logger.debug("Registering input service {}", source);
     inputService = source;
@@ -99,7 +92,6 @@ public class ServiceLocator {
     entityService = null;
     renderService = null;
     physicsService = null;
-    timeSource = null;
     inputService = null;
     resourceService = null;
   }
