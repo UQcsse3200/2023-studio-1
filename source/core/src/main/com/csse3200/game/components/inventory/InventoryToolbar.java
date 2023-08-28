@@ -13,11 +13,8 @@ import java.util.ArrayList;
 public class InventoryToolbar extends UIComponent {
 
     private Table table;
-    private InventoryComponent playerInventory;
     private Inventory inventory;
-
     private Window window;
-
     private boolean isOpen;
 
     /**
@@ -30,9 +27,7 @@ public class InventoryToolbar extends UIComponent {
         isOpen = true;
         entity.getEvents().addListener("updateInventory", this::updateInventory);
         entity.getEvents().addListener("toggleInventory",this::toggleOpen);
-        playerInventory = new InventoryComponent(new ArrayList<>());
-        inventory = new Inventory(playerInventory);
-
+        inventory = entity.getComponent(InventoryDisplay.class).getInventory();
     }
 
     /**

@@ -95,6 +95,10 @@ public class InventoryDisplay extends UIComponent {
     CharSequence text = String.format("Health: %d", health);
   }
 
+  public Inventory getInventory(){
+    return this.inventory;
+  }
+
   @Override
   public void dispose() {
     super.dispose();
