@@ -39,6 +39,7 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("moveStop", this::stopMoving);
     entity.getEvents().addListener("run", this::run);
     entity.getEvents().addListener("runStop", this::stopRunning);
+    entity.getEvents().addListener("interact", this::interact);
     entity.getEvents().addListener("attack", this::attack);
     entity.getEvents().addListener("enterTractor", this::enterTractor);
     entity.getEvents().addListener("use", this::use);
@@ -133,6 +134,19 @@ public class PlayerActions extends Component {
    */
   void stopRunning() {
     this.running = false;
+  }
+
+  void interact() {
+    float direction = getPrevMoveDirection();
+    if (direction < 45) {
+      entity.getEvents().trigger("animationInteract", "right");
+    } else if (direction < 135) {
+      entity.getEvents().trigger("animationInteract", "up");
+    } else if (direction < 225) {
+      entity.getEvents().trigger("animationInteract", "left");
+    } else if (direction < 315) {
+      entity.getEvents().trigger("animationInteract", "down");
+    }
   }
 
   /**

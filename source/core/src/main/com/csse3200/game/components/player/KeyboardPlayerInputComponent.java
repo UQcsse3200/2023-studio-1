@@ -53,6 +53,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.F:
           triggerEnterEvent();
           return true;
+        case Keys.E: // Potentially also interact button later.
+          entity.getEvents().trigger("interact");
+          return true;
         default:
           return false;
       }
