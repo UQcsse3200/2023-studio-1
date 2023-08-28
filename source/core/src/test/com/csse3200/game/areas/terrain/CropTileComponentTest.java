@@ -32,7 +32,7 @@ import java.util.function.Function;
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(GameExtension.class)
 public class CropTileComponentTest {
-    private Entity cropTile1, cropTile2, cropTile3, cropTile4, cropTile5;
+    private Entity cropTile1, cropTile2, cropTile3, cropTile4, cropTile5, cropTile6, cropTile7;
     @BeforeEach
     public void init() {
         cropTile1 = new Entity().addComponent(new CropTileComponent(1f, 0.5f));
@@ -40,18 +40,21 @@ public class CropTileComponentTest {
         cropTile3 = new Entity().addComponent(new CropTileComponent(1f, 1.0f));
         cropTile4 = new Entity().addComponent(new CropTileComponent(0f, 1.0f));
         cropTile5 = new Entity().addComponent(new CropTileComponent(1f, 0.0f));
+        cropTile6 = new Entity().addComponent(new CropTileComponent(2.5f, 0.5f));
+        cropTile7 = new Entity().addComponent(new CropTileComponent(-1.0f, 0.5f));
         cropTile1.create();
         cropTile2.create();
         cropTile3.create();
         cropTile4.create();
         cropTile5.create();
+        cropTile6.create();
+        cropTile7.create();
         /*RenderService renderService = new RenderService();
         renderService.setDebug(mock(DebugRenderer.class));
-        ServiceLocator.registerRenderService(renderService);
+        ServiceLocator.registerRenderService(renderService);*/
         GameTime gameTime = mock(GameTime.class);
-        when(gameTime.getDeltaTime()).thenReturn(20f / 1000);
         ServiceLocator.registerTimeSource(gameTime);
-        ServiceLocator.registerPhysicsService(new PhysicsService());*/
+        /*ServiceLocator.registerPhysicsService(new PhysicsService());*/
     }
 
     @Test
@@ -118,6 +121,25 @@ public class CropTileComponentTest {
         ServiceLocator.registerTimeSource(gameTime);
         when(gameTime.getDeltaTime()).thenReturn(20f / 1000);
         cropTile1.update();
+        cropTile6.update();
+        cropTile7.update();
+        assertEquals(-1, cropTile6.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
+        assertEquals(-1, cropTile7.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
+    }
 
+    @Test
+    public void testSetUnoccupied1() {
+        cropTile1.getComponent(CropTileComponent.class).setUnoccupied();
+        assertNull(cropTile1.getComponent(CropTileComponent.class).getPlant());
+    }
+
+    @Test
+    public void testSetUnoccupied2() {
+        ServiceLocator.registerEntityService(new EntityService());
+        Entity plant = mock(Entity.class);
+        ServiceLocator.getEntityService().register(plant);
+        cropTile1.getEvents().trigger("destroyPlant");
+        cropTile1.getComponent(CropTileComponent.class).setUnoccupied();
+        assertNull(cropTile1.getComponent(CropTileComponent.class).getPlant());
     }
 }
