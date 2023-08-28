@@ -3,7 +3,6 @@ package com.csse3200.game.entities.factories;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.inventory.Inventory;
 import com.csse3200.game.components.inventory.InventoryToolbar;
 import com.csse3200.game.components.player.*;
 import com.csse3200.game.components.player.InventoryComponent;

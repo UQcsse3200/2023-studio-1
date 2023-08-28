@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.ui.UIComponent;
 
 import java.util.ArrayList;
@@ -12,9 +13,10 @@ import java.util.ArrayList;
 public class InventoryToolbar extends UIComponent {
 
     private Table table;
-    private Inventory inventory;
     private Window window;
     private boolean isOpen;
+
+    private InventoryComponent inventory;
 
     /**
      * Creates reusable ui styles and adds actors to the stage.
