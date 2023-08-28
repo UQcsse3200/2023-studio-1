@@ -25,7 +25,7 @@ public class GameTimeDisplay extends UIComponent {
     @Override
     public void create() {
         super.create();
-        entity.getEvents().addListener("updateHour", this::updateDisplay);
+        entity.getEvents().addListener("hourUpdate", this::updateDisplay);
         ServiceLocator.getTimeService().registerHourUpdate(entity);
         updateDisplay(ServiceLocator.getTimeService().getDay());
     }
