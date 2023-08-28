@@ -173,8 +173,8 @@ public class CropTileComponent extends Component {
 		plant = null;
 	}
 
-	public float getWaterContent() {
-		return waterContent;
+	public Entity getPlant() {
+		return plant;
 	}
 
 }
