@@ -31,15 +31,25 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+/**
+ * This test class aims to test the PlantFactory which is responsible for
+ * creating different plants in the game.
+ */
 class PlantFactoryTest {
     private PlantConfigs stats;
+
+    // Mocked dependencies
     @Mock
     private static CropTileComponent mockCropTile;
     @Mock
@@ -51,106 +61,53 @@ class PlantFactoryTest {
     @Mock
     private TextureRenderComponent mockRenderComponent;
 
+    /**
+     * Set up required objects and mocked dependencies before each test.
+     */
     @BeforeEach
-    void setUp() {
+    void setUp() throws IOException {
         MockitoAnnotations.openMocks(this);
         ServiceLocator.registerPhysicsService(new PhysicsService());
         ServiceLocator.registerResourceService(mockResourceService);
+
+        // Mock methods and interactions
         when(mockEntity.getComponent(TextureRenderComponent.class)).thenReturn(mockRenderComponent);
         when(mockCropTile.getEntity()).thenReturn(mockEntity);
         when(mockEntity.getPosition()).thenReturn(new Vector2(5, 5));
 
+        // Mocking file handling for the GDX framework
         Gdx.files = mock(Files.class);
         FileHandle mockFileHandle = mock(FileHandle.class);
 
-        // Return the mocked FileHandle when Gdx.files.local(anyString()) is invoked
+        // Loading JSON from the external file
+        String filePath = "configs/plant.json";
+        InputStream inputStream = new FileInputStream(filePath);
+        String jsonContent = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
+
+        // Return the loaded JSON content when the reader method of the mocked FileHandle is called
+        when(mockFileHandle.reader("UTF-8")).thenReturn(new StringReader(jsonContent));
         when(Gdx.files.internal(anyString())).thenReturn(mockFileHandle);
-        // Return the JSON content when the reader method of the mocked FileHandle is called
-        when(mockFileHandle.reader("UTF-8")).thenReturn(new StringReader("""
-                {
-                  "cosmicCob": {
-                    "health": 100,
-                    "name": "Cosmic Cob",
-                    "type": "FOOD",
-                    "description": "Nutritious space corn!",
-                    "idealWaterLevel": 0.7,
-                    "adultLifeSpan": 5,
-                    "maxHealth": 300
-                  },
-                  "aloeVera": {
-                    "health": 50,
-                    "name": "Aloe Vera",
-                    "type": "HEALTH",
-                    "description": "Produces gel that can be used for healing",
-                    "idealWaterLevel": 0.7,
-                    "adultLifeSpan": 5,
-                    "maxHealth": 300
-                  },
-                  "hammerPlant": {
-                    "health": 10,
-                    "name": "Hammer Plant",
-                    "type": "REPAIR",
-                    "description": "Repairs plants within its healing radius",
-                    "idealWaterLevel": 0.7,
-                    "adultLifeSpan": 5,
-                    "maxHealth": 300
-                  },
-                  "venusFlyTrap": {
-                    "health": 100,
-                    "name": "Space Snapper",
-                    "type": "DEFENCE",
-                    "description" : "I eat the fauna!",
-                    "idealWaterLevel": 0.7,
-                    "adultLifeSpan": 5,
-                    "maxHealth": 300
-                  },
-                  "waterWeed": {
-                    "health": 10,
-                    "name": "Atomic Algae",
-                    "type": "PRODUCTION",
-                    "description": "Test description",
-                    "idealWaterLevel": 0.7,
-                    "adultLifeSpan": 5,
-                    "maxHealth": 300
-                  },
-                  "atropaBelladonna": {
-                    "health": 200,
-                    "name": "Deadly Nightshade",
-                    "type": "DEADLY",
-                    "description": "Grows deadly poisonous berries",
-                    "idealWaterLevel": 0.7,
-                    "adultLifeSpan": 5,
-                    "maxHealth": 300
-                  },
-                  "nicotianaTabacum": {
-                    "health": 20,
-                    "name": "Tobacco",
-                    "type": "DEADLY",
-                    "description": "Toxic addicted plant leaves",
-                    "idealWaterLevel": 0.7,
-                    "adultLifeSpan": 5,
-                    "maxHealth": 300
-                  },
-                  "sunFlower": {
-                    "health" : 10,
-                    "name": "Horticultural Heater",
-                    "type": "PRODUCTION",
-                    "description": "Warms up the nearby area",
-                    "idealWaterLevel": 0.7,
-                    "adultLifeSpan": 5,
-                    "maxHealth": 300
-                  }
-                }
-                """));
 
         // Load stats from the JSON using the FileLoader
         stats = FileLoader.readClass(PlantConfigs.class, "configs/plant.json");
         PlantFactory.setStats(stats);
     }
 
+    /**
+     * Test to ensure plant configurations are loaded correctly.
+     *
+     * @param plant        The unique identifier for the plant.
+     * @param health       The health value of the plant.
+     * @param name         The name of the plant.
+     * @param type         The type category of the plant.
+     * @param description  A brief description of the plant's characteristics or purpose.
+     * @param water        The ideal water level for the plant.
+     * @param life         The expected adult lifespan of the plant.
+     * @param maxHealth    The maximum possible health value of the plant.
+     */
     @ParameterizedTest
     @MethodSource("plantConfigProvider")
-    void shouldLoadPlantConfigsCorrectly(String plant, int health, String name, String type,
+    void shouldLoadPlantConfigs(String plant, int health, String name, String type,
                                                 String description, float water, int life,
                                                 int maxHealth) {
         BasePlantConfig actualValues = getActualValue(plant);
@@ -170,27 +127,38 @@ class PlantFactoryTest {
                 + " does not match expected!");
     }
 
+    /**
+     * Data provider for plant configurations.
+     *
+     * @return Stream of Arguments containing plant data.
+     */
     static Stream<Arguments> plantConfigProvider() {
         return Stream.of(
                 Arguments.of("cosmicCob", 100, "Cosmic Cob", "FOOD",
-                        "Nutritious space corn!", (float) 0.7, 5, 300),
+                        "Nutritious space corn!", (float) 0.7, 5, 400),
                 Arguments.of("aloeVera", 50, "Aloe Vera", "HEALTH",
                         "Produces gel that can be used for healing", (float) 0.7, 5, 300),
                 Arguments.of("hammerPlant", 10, "Hammer Plant", "REPAIR",
-                        "Repairs plants within its healing radius", (float) 0.7, 5, 300),
+                        "Repairs plants within its healing radius", (float) 0.7, 5, 200),
                 Arguments.of("venusFlyTrap", 100, "Space Snapper", "DEFENCE",
-                        "I eat the fauna!", (float) 0.7, 5, 300),
+                        "I eat the fauna!", (float) 0.7, 5, 400),
                 Arguments.of("waterWeed", 10, "Atomic Algae", "PRODUCTION",
-                        "Test description", (float) 0.7, 5, 300),
+                        "Test description", (float) 0.7, 5, 100),
                 Arguments.of("atropaBelladonna", 200, "Deadly Nightshade",
-                        "DEADLY", "Grows deadly poisonous berries", (float) 0.7, 5, 300),
+                        "DEADLY", "Grows deadly poisonous berries", (float) 0.7, 5, 200),
                 Arguments.of("nicotianaTabacum", 20, "Tobacco", "DEADLY",
-                        "Toxic addicted plant leaves", (float) 0.7, 5, 300),
+                        "Toxic addicted plant leaves", (float) 0.7, 5, 20),
                 Arguments.of("sunFlower", 10, "Horticultural Heater",
-                        "PRODUCTION", "Warms up the nearby area", (float) 0.7, 5, 300)
+                        "PRODUCTION", "Warms up the nearby area", (float) 0.7, 5, 100)
         );
     }
 
+    /**
+     * Utility method to fetch the actual plant configuration based on the plant name.
+     *
+     * @param plant The name of the plant.
+     * @return      The actual plant configuration.
+     */
     BasePlantConfig getActualValue(String plant) {
         return switch (plant) {
             case "cosmicCob" -> stats.cosmicCob;
@@ -205,6 +173,9 @@ class PlantFactoryTest {
         };
     }
 
+    /**
+     * Test for the creation of a base plant.
+     */
     @Test
     void shouldCreateBasePlant() {
         ServiceLocator.registerPhysicsService(new PhysicsService());
@@ -232,6 +203,11 @@ class PlantFactoryTest {
                 "Plant Hitbox layer should be OBSTACLE");
     }
 
+    /**
+     * Test to ensure texture paths for plants are retrieved correctly.
+     *
+     * @param path The path to the texture.
+     */
     @ParameterizedTest
     @ValueSource(strings = { "images/corn_temp.png", "images/aloe_temp.png",
             "images/test_cactus.png", "images/belladonna.png", "images/tobacco.png",
@@ -258,6 +234,9 @@ class PlantFactoryTest {
         verify(mockResourceService).getAsset(path, Texture.class);
     }
 
+    /**
+     * Clean up and reset after each test.
+     */
     @AfterEach
     void tearDown() {
         PlantFactory.resetStats();
