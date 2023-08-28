@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.events.EventHandler;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GameMap {
@@ -51,29 +52,29 @@ public class GameMap {
         return ((TiledMapTileLayer) this.tiledMap.getLayers().get(0)).getCell(x, y);
     }
 
-    /**         NATHAN WORK ON THIS FUNCTION
-     *   NEED TO MAKE THIS FUNCTION MORE VERSATILE
-     *   such as using position on screen etc. instead of x and y coords which only correlate with the 2d array of cells
-     * @param x
-     * @param y
-     * @return
+    /**
+     * Gets the tile at a coordinate position
+     * @param x x coordinate
+     * @param y y coordinate
+     * @return a TerrainTile
      */
     public TerrainTile getTile(int x, int y) {
         return (TerrainTile) getCell(x, y).getTile();
     }
 
-    /**  NATHAN WORK ON THIS
-     *      function to convert position to cell coordinate (possible helper function)
+    /**
+     * Gets the centre of a tile from a coordinate position
+     * @param x x coordinate
+     * @param y y coordinate
+     * @return a list of x and y pixel value
      */
-    public void positionToCellCoordinate() {
-        //
-    }
-
-    /**  NATHAN/someone else
-     *      function to convert cell coordinate to position on screen?
-     */
-    public void cellCoordinateToPosition() {
-        //
+    public ArrayList<Integer> cellCoordinateToPosition(int x, int y) {
+        ArrayList<Integer> pixelPosition = new ArrayList<>();
+        int xPixel = (16 * x) + 8;
+        int yPixel = (16 * y) + 8;
+        pixelPosition.add(xPixel);
+        pixelPosition.add(yPixel);
+        return pixelPosition;
     }
 
     /**
