@@ -15,6 +15,7 @@ import com.csse3200.game.entities.configs.plants.PlantConfigs;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsService;
+import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
@@ -47,7 +48,7 @@ import static org.mockito.Mockito.*;
  * creating different plants in the game.
  */
 class PlantFactoryTest {
-    static PlantConfigs stats;
+    PlantConfigs stats;
 
     // Mocked dependencies
     @Mock
@@ -181,7 +182,7 @@ class PlantFactoryTest {
      * are properly attached to the created plant entity.
      */
     @Test
-    void shouldCreateBasePlant() {
+    void shouldCreateBasePlantWithExpectedComponents() {
         Entity plant = PlantFactory.createBasePlant();
         assertNotNull(plant);
 
@@ -254,7 +255,7 @@ class PlantFactoryTest {
      */
     @ParameterizedTest
     @MethodSource("plantStatsProvider")
-    void testCreatePlantSetsCorrectProperties(String id, String path, Callable<Entity> createPlant)
+    void plantsShouldSetCorrectProperties(String id, String path, Callable<Entity> createPlant)
             throws Exception {
         BasePlantConfig expectedValues = getActualValue(id);
         String errMsg = "Mismatched value for plant " + id + ": %s";
@@ -277,5 +278,72 @@ class PlantFactoryTest {
                 String.format(errMsg, "adultLifeSpan"));
         assertEquals(expectedValues.maxHealth, plantComponent.getMaxHealth(),
                 String.format(errMsg, "maxHealth"));
+    }
+
+    /**
+     * Tests if the positions of the created plants are correct.
+     *
+     * @param id   The unique identifier for the plant.
+     * @param path The path of the plant's texture in the asset directory.
+     * @param createPlant The method to create the specific plant.
+     * @throws Exception If there's an error during plant creation or verification.
+     */
+    @ParameterizedTest
+    @MethodSource("plantStatsProvider")
+    void shouldSetCorrectPlantPosition(String id, String path, Callable<Entity> createPlant)
+            throws Exception {
+        String errMsg = "Mismatched value for plant " + id + ": %s";
+
+        when(mockResourceService.getAsset(path, Texture.class)).thenReturn(mockTexture);
+        Entity plant = createPlant.call();
+
+        Vector2 expectedPos = new Vector2(5, 5.5f);
+        assertEquals(expectedPos, plant.getPosition(), String.format(errMsg, "position"));
+    }
+
+    /**
+     * Tests that the scaleEntity method of the TextureRenderComponent
+     * is correctly invoked on the plant entity.
+     */
+    @Test
+    void testScaleEntity() {
+        Entity plant = new Entity();
+        TextureRenderComponent mockComponent = mock(TextureRenderComponent.class);
+        plant.addComponent(mockComponent);
+        plant.getComponent(TextureRenderComponent.class).scaleEntity();
+
+        verify(mockComponent, times(1)).scaleEntity();
+    }
+
+    /**
+     * This test checks if the height of the entity is scaled correctly.
+     */
+    @Test
+    void testScaleHeight() {
+        Entity plant = new Entity();
+        plant.setScale(2f, 2f);
+        plant.scaleHeight(1f);
+
+        assertEquals(1f, plant.getScale().y, 0.001);
+    }
+
+    /**
+     * Tests that the setScaledCollider sets the collider of the plant entity correctly.
+     */
+    @Test
+    void testSetScaledCollider() {
+        Entity plant = new Entity();
+        plant.setScale(2f, 2f);
+        ColliderComponent mockCollider = mock(ColliderComponent.class);
+        plant.addComponent(mockCollider);
+
+        PhysicsUtils.setScaledCollider(plant, 0.5f, 0.2f);
+
+        Vector2 expectedScale = new Vector2(1f, 0.4f);
+        verify(mockCollider, times(1)).setAsBoxAligned(
+                eq(expectedScale),
+                eq(PhysicsComponent.AlignX.CENTER),
+                eq(PhysicsComponent.AlignY.BOTTOM)
+        );
     }
 }
