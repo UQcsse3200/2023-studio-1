@@ -3,7 +3,10 @@ package com.csse3200.game.areas.terrain;
 import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.configs.plants.PlantConfigs;
+import com.csse3200.game.entities.factories.PlantFactory;
 import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
@@ -122,21 +125,27 @@ public class CropTileComponentTest {
         EntityService mockEntityService = mock(EntityService.class);
         ServiceLocator.registerEntityService(mockEntityService);
         Entity plant = mock(Entity.class);
-        Function<CropTileComponent, Entity> factoryMethod1 = cropTile1 -> plant;
-        cropTile1.getEvents().trigger("plant", factoryMethod1);
+        plant.addComponent(new PlantComponent(
+                1, "name", "type", "desc", 1, 7, 1));
+        Function<CropTileComponent, Entity> plantFactoryMethod = cropTileComponent -> plant;
+        cropTile1.getEvents().trigger("plant", plantFactoryMethod);
+        verify(mockEntityService).register(plant);
         cropTile1.getComponent(CropTileComponent.class).setUnoccupied();
-        //assertNull(cropTile1.getComponent(CropTileComponent.class).getPlant());
+        cropTile1.getEvents().trigger("plant", plantFactoryMethod);
+        verify(mockEntityService, times(2)).register(plant);
+        cropTile1.getComponent(CropTileComponent.class).setUnoccupied();
+        cropTile1.getEvents().trigger("plant", plantFactoryMethod);
+        verify(mockEntityService, times(3)).register(plant);
     }
 
     @Test
     public void testSetUnoccupied2() {
         EntityService mockEntityService = mock(EntityService.class);
         ServiceLocator.registerEntityService(mockEntityService);
-        Entity plant = mock(Entity.class);
-        Function<CropTileComponent, Entity> factoryMethod1 = cropTile1 -> plant;
-        cropTile1.getEvents().trigger("plant", factoryMethod1);
-        verify(mockEntityService).register(plant);
-        //cropTile1.getEvents().trigger("destroy");
+        PlantFactory.setStats(FileLoader.readClass(PlantConfigs.class, "source/core/assets/configs/plant.json"));
+        cropTile1.getEvents().trigger("plant", PlantFactory.createAloeVera());
+        //verify(mockEntityService).register(plant);
+        cropTile1.getEvents().trigger("destroy");
         cropTile1.getComponent(CropTileComponent.class).setUnoccupied();
         //assertNull(cropTile1.getComponent(CropTileComponent.class).getPlant());
     }
