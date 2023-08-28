@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.components.items.ItemType;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.utils.math.GridPoint2Utils;
@@ -18,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.tools.Tool;
+import java.util.ArrayList;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
@@ -65,6 +67,8 @@ public class ForestGameArea extends GameArea {
   private Entity player;
   private Entity tractor;
 
+  private InventoryComponent inventory;
+
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
    * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
@@ -103,6 +107,9 @@ public class ForestGameArea extends GameArea {
     //playMusic();
 
     tractor = spawnTractor();
+
+    //initialise inventory
+    inventory = new InventoryComponent(new ArrayList<>());
   }
 
   public Entity getPlayer() {
