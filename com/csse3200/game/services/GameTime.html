@@ -122,7 +122,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addPauseOffset(long)" class="member-name-link">addPauseOffset</a><wbr>(long&nbsp;pauseDuration)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the duration of the latest pause period to the cumulative of pause durations in the game so far</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getActiveTime()" class="member-name-link">getActiveTime</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -137,7 +139,9 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="TimeController.html" title="class in com.csse3200.game.services">TimeController</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTimeController()" class="member-name-link">getTimeController</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the TimeController class for this instance of the GameTime service</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTimeSince(long)" class="member-name-link">getTimeSince</a><wbr>(long&nbsp;lastTime)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -195,12 +199,22 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getTimeController()">
 <h3>getTimeController</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="TimeController.html" title="class in com.csse3200.game.services">TimeController</a></span>&nbsp;<span class="element-name">getTimeController</span>()</div>
+<div class="block">Returns the TimeController class for this instance of the GameTime service</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>TimeController</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="addPauseOffset(long)">
 <h3>addPauseOffset</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addPauseOffset</span><wbr><span class="parameters">(long&nbsp;pauseDuration)</span></div>
+<div class="block">Adds the duration of the latest pause period to the cumulative of pause durations in the game so far</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>pauseDuration</code> - : the length of the latest pause period in milliseconds</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -248,6 +262,10 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getActiveTime()">
 <h3>getActiveTime</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">getActiveTime</span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>time passed since the game started in milliseconds excluding paused time</dd>
+</dl>
 </section>
 </li>
 <li>

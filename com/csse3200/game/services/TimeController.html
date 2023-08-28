@@ -77,7 +77,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">TimeController</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
-<div class="block">Class that is repsonsible updating classes depedent on the time</div>
+<div class="block">Repsonsible for controlling and updating classes dependent on the time</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -89,8 +89,10 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">TimeController</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.csse3200.game.services.GameTime)" class="member-name-link">TimeController</a><wbr>(<a href="GameTime.html" title="class in com.csse3200.game.services">GameTime</a>&nbsp;timeSource)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Constructor used to initalise important values and define initial states for the TimeController class</div>
+</div>
 </div>
 </section>
 </li>
@@ -116,22 +118,27 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pause()" class="member-name-link">pause</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Pauses the game</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTime(int)" class="member-name-link">setTime</a><wbr>(int&nbsp;hour)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTimeDisplay(com.csse3200.game.services.GameTimeDisplay)" class="member-name-link">setTimeDisplay</a><wbr>(<a href="GameTimeDisplay.html" title="class in com.csse3200.game.services">GameTimeDisplay</a>&nbsp;timeDisplay)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Logs the current time UI under this TimeController</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTimeSource(com.csse3200.game.services.GameTime)" class="member-name-link">setTimeSource</a><wbr>(<a href="GameTime.html" title="class in com.csse3200.game.services">GameTime</a>&nbsp;timeSource)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#unpause()" class="member-name-link">unpause</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Unpauses the game</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#unpause()" class="member-name-link">unpause</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateDisplay()" class="member-name-link">updateDisplay</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateDisplay()" class="member-name-link">updateDisplay</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Updates the clock and time display by calling the update() method in GameTimeDisplay</div>
+</div>
 </div>
 </div>
 </div>
@@ -150,9 +157,14 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;()">
+<section class="detail" id="&lt;init&gt;(com.csse3200.game.services.GameTime)">
 <h3>TimeController</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">TimeController</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">TimeController</span><wbr><span class="parameters">(<a href="GameTime.html" title="class in com.csse3200.game.services">GameTime</a>&nbsp;timeSource)</span></div>
+<div class="block">Constructor used to initalise important values and define initial states for the TimeController class</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>timeSource</code> - : The current GameTime service for this instance</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -164,51 +176,65 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="setTimeSource(com.csse3200.game.services.GameTime)">
-<h3>setTimeSource</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTimeSource</span><wbr><span class="parameters">(<a href="GameTime.html" title="class in com.csse3200.game.services">GameTime</a>&nbsp;timeSource)</span></div>
-</section>
-</li>
-<li>
 <section class="detail" id="setTimeDisplay(com.csse3200.game.services.GameTimeDisplay)">
 <h3>setTimeDisplay</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTimeDisplay</span><wbr><span class="parameters">(<a href="GameTimeDisplay.html" title="class in com.csse3200.game.services">GameTimeDisplay</a>&nbsp;timeDisplay)</span></div>
+<div class="block">Logs the current time UI under this TimeController</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>timeDisplay</code> - : The class that controls the clock and time display</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getTimeInSeconds()">
 <h3>getTimeInSeconds</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getTimeInSeconds</span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the active time of the game in seconds</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getTimeOfDay()">
 <h3>getTimeOfDay</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getTimeOfDay</span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the time of the day in milliseconds</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getHour()">
 <h3>getHour</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getHour</span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the current hour of the game</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="updateDisplay()">
 <h3>updateDisplay</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateDisplay</span>()</div>
+<div class="block">Updates the clock and time display by calling the update() method in GameTimeDisplay</div>
 </section>
 </li>
 <li>
 <section class="detail" id="pause()">
 <h3>pause</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">pause</span>()</div>
+<div class="block">Pauses the game</div>
 </section>
 </li>
 <li>
 <section class="detail" id="unpause()">
 <h3>unpause</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">unpause</span>()</div>
+<div class="block">Unpauses the game</div>
 </section>
 </li>
 <li>
