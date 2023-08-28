@@ -90,7 +90,7 @@ loadScripts(document, 'script');</script>
  <p>Example usage:
 
  <pre>
-   AnimationRenderComponent animator = new AnimationRenderComponent("player.atlas");
+   AnimationRenderComponent animator = new AnimationRenderComponent("player.atlas", 16f);
    entity.addComponent(animator);
    animator.addAnimation("attack", 0.1f); // Only need to add animation once per entity
    animator.startAnimation("attack");
@@ -122,6 +122,11 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.badlogic.gdx.graphics.g2d.TextureAtlas)" class="member-name-link">AnimationRenderComponent</a><wbr>(com.badlogic.gdx.graphics.g2d.TextureAtlas&nbsp;atlas)</code></div>
 <div class="col-last even-row-color">
+<div class="block">Create the component for a given texture atlas.</div>
+</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(com.badlogic.gdx.graphics.g2d.TextureAtlas,float)" class="member-name-link">AnimationRenderComponent</a><wbr>(com.badlogic.gdx.graphics.g2d.TextureAtlas&nbsp;atlas,
+ float&nbsp;scaleFactor)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Create the component for a given texture atlas.</div>
 </div>
 </div>
@@ -184,7 +189,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#scaleEntity()" class="member-name-link">scaleEntity</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Scale the entity to a width of 1 and a height matching the texture's ratio</div>
+<div class="block">Scale the entity using the texture's ration and configured scale factor</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#startAnimation(java.lang.String)" class="member-name-link">startAnimation</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
@@ -227,6 +232,19 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>atlas</code> - libGDX-supported texture atlas containing desired animations</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(com.badlogic.gdx.graphics.g2d.TextureAtlas,float)">
+<h3>AnimationRenderComponent</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">AnimationRenderComponent</span><wbr><span class="parameters">(com.badlogic.gdx.graphics.g2d.TextureAtlas&nbsp;atlas,
+ float&nbsp;scaleFactor)</span></div>
+<div class="block">Create the component for a given texture atlas.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>atlas</code> - libGDX-supported texture atlas containing desired animations</dd>
+<dd><code>scaleFactor</code> - factor for scaling the atlas region when drawing animations</dd>
 </dl>
 </section>
 </li>
@@ -276,7 +294,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="scaleEntity()">
 <h3>scaleEntity</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">scaleEntity</span>()</div>
-<div class="block">Scale the entity to a width of 1 and a height matching the texture's ratio</div>
+<div class="block">Scale the entity using the texture's ration and configured scale factor</div>
 </section>
 </li>
 <li>
