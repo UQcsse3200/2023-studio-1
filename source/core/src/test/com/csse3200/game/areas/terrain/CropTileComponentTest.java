@@ -13,16 +13,23 @@ import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.rendering.DebugRenderer;
+import com.csse3200.game.rendering.RenderService;
+import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.function.Function;
 
+@ExtendWith(MockitoExtension.class)
 @ExtendWith(GameExtension.class)
 public class CropTileComponentTest {
     private Entity cropTile1, cropTile2, cropTile3, cropTile4, cropTile5;
@@ -38,6 +45,13 @@ public class CropTileComponentTest {
         cropTile3.create();
         cropTile4.create();
         cropTile5.create();
+        RenderService renderService = new RenderService();
+        renderService.setDebug(mock(DebugRenderer.class));
+        ServiceLocator.registerRenderService(renderService);
+        GameTime gameTime = mock(GameTime.class);
+        when(gameTime.getDeltaTime()).thenReturn(20f / 1000);
+        ServiceLocator.registerTimeSource(gameTime);
+        ServiceLocator.registerPhysicsService(new PhysicsService());
     }
 
     @Test
@@ -98,4 +112,13 @@ public class CropTileComponentTest {
         assertEquals(0, cropTile5.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
     }
 
+    @Test
+    public void testUpdate() {
+        cropTile1.update();
+        if(cropTile1.getComponent(CropTileComponent.class).getWaterContent()<0) {
+            assertEquals(cropTile1.getComponent(CropTileComponent.class).getWaterContent(),0);
+        } else if(cropTile1.getComponent(CropTileComponent.class).getWaterContent()>2) {
+            assertEquals(cropTile1.getComponent(CropTileComponent.class).getWaterContent(),2);
+        }
+    }
 }
