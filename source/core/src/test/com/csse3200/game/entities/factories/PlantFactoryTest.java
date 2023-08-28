@@ -13,6 +13,7 @@ import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsService;
+import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
@@ -34,8 +35,6 @@ import static org.mockito.Mockito.*;
 
 public class PlantFactoryTest {
     private PlantConfigs stats;
-
-
 
     @BeforeEach
     public void setUp() {
@@ -170,7 +169,6 @@ public class PlantFactoryTest {
         );
     }
 
-
     private BasePlantConfig getActualValue(String plant) {
         return switch (plant) {
             case "cosmicCob" -> stats.cosmicCob;
@@ -187,13 +185,7 @@ public class PlantFactoryTest {
 
     @Test
     public void testCreateBasePlant() {
-        PhysicsService mockPhysicsService = mock(PhysicsService.class);
-        PhysicsEngine engine = mock(PhysicsEngine.class);
-        Body body = mock(Body.class);
-
         ServiceLocator.registerPhysicsService(new PhysicsService());
-
-        ColliderComponent component = new ColliderComponent();
 
         Entity plant = PlantFactory.createBasePlant();
         assertNotNull(plant);
@@ -204,18 +196,20 @@ public class PlantFactoryTest {
                 "Plant physics body type should be StaticBody");
 
         ColliderComponent colliderComponent = plant.getComponent(ColliderComponent.class);
+        colliderComponent.create();
         assertNotNull(colliderComponent, "Plant ColliderComponent should not be null");
-        //assertTrue(colliderComponent.getFixture().isSensor(), "Plant collider should be a sensor");
+        System.out.println("collider: " + colliderComponent);
+        System.out.println("collider: " + colliderComponent.getFixture());
+        assertTrue(colliderComponent.getFixture().isSensor(), "Plant collider should be a sensor");
 
         HitboxComponent hitboxComponent = plant.getComponent(HitboxComponent.class);
+        hitboxComponent.create();
         assertNotNull(hitboxComponent, "Plant HitboxComponent should not be null");
-        //assertTrue(hitboxComponent.getFixture().isSensor(), "Plant Hitbox should be a sensor");
+        assertTrue(hitboxComponent.getFixture().isSensor(), "Plant Hitbox should be a sensor");
         assertEquals(PhysicsLayer.OBSTACLE, hitboxComponent.getLayer(),
                 "Plant Hitbox layer should be OBSTACLE");
     }
-
-
-
+    
     @AfterEach
     public void tearDown() {
         PlantFactory.resetStats();
