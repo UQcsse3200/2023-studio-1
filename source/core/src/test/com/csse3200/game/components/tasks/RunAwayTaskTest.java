@@ -140,6 +140,39 @@ class RunAwayTaskTest {
     assertTrue(movementTask.getSpeed() == speed);
   }
 
+  @Test
+  void entityStopsChase() {
+    Entity target = new Entity();
+    target.setPosition(0f, 0f);
+
+    Vector2 speed = new Vector2(3f, 3f);
+    AITaskComponent ai = new AITaskComponent().addTask(new RunAwayTask(target, 10, 4, 1, speed));
+    Entity entity = makePhysicsEntity().addComponent(ai);
+    entity.create();
+    entity.setPosition(1f, 0f);
+
+    // Run the game for a few cycles to get far enough away
+    for (int i = 0; i < 40; i++) {
+      entity.earlyUpdate();
+      entity.update();
+      ServiceLocator.getPhysicsService().getPhysics().update();
+    }
+
+    //Get current position
+    float initialDistance = entity.getPosition().dst(target.getPosition());
+
+    //Check if position changes after stop
+    for (int i = 0; i < 10; i++) {
+      entity.earlyUpdate();
+      entity.update();
+      ServiceLocator.getPhysicsService().getPhysics().update();
+    }
+
+    float newDistance = entity.getPosition().dst(target.getPosition());
+
+    assertTrue(newDistance == initialDistance);
+  }
+
   private Entity makePhysicsEntity() {
     return new Entity()
         .addComponent(new PhysicsComponent())
