@@ -182,10 +182,6 @@ public class CropTileComponent extends Component {
 		plant = null;
 	}
 
-	public Entity getPlant() {
-		return plant;
-	}
-
 	/**
 	 * Determine the appropriate String for the tile's texture based on fertiliser status and
 	 * water content.
@@ -212,5 +208,4 @@ public class CropTileComponent extends Component {
 		}
 		return path;
 	}
-
 }

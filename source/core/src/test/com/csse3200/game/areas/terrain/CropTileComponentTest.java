@@ -1,8 +1,12 @@
 package com.csse3200.game.areas.terrain;
 
+import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.configs.plants.PlantConfigs;
+import com.csse3200.game.entities.factories.PlantFactory;
 import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,8 +39,6 @@ public class CropTileComponentTest {
         cropTile5.create();
         cropTile6.create();
         cropTile7.create();
-        GameTime gameTime = mock(GameTime.class);
-        ServiceLocator.registerTimeSource(gameTime);
     }
 
     @Test
@@ -99,6 +101,19 @@ public class CropTileComponentTest {
 
     @Test
     public void testUpdate() {
+        GameTime gameTime = mock(GameTime.class);
+        ServiceLocator.registerTimeSource(gameTime);
+        when(gameTime.getDeltaTime()).thenReturn(400f / 1000);
+        cropTile1.update();
+        cropTile2.update();
+        cropTile3.update();
+        cropTile4.update();
+        cropTile5.update();
+        assertEquals(0.49958, cropTile1.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
+        assertEquals(0.26197, cropTile2.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
+        assertEquals(0.99916, cropTile3.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
+        assertEquals(-1.0, cropTile4.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
+        assertEquals(0, cropTile5.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
         cropTile6.update();
         cropTile7.update();
         assertEquals(-1, cropTile6.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
@@ -106,22 +121,39 @@ public class CropTileComponentTest {
     }
 
     @Test
-    public void testSetUnoccupied1() {
+    public void testSetUnoccupiedWhenUnoccupied() {
+        EntityService mockEntityService = mock(EntityService.class);
+        ServiceLocator.registerEntityService(mockEntityService);
         cropTile1.getComponent(CropTileComponent.class).setUnoccupied();
-        assertNull(cropTile1.getComponent(CropTileComponent.class).getPlant());
+        cropTile1.getComponent(CropTileComponent.class).setUnoccupied();
+        cropTile1.getComponent(CropTileComponent.class).setUnoccupied();
+        verify(mockEntityService, never()).unregister(cropTile1);
+        cropTile1.getEvents().trigger("fertilise");
+        assertEquals(1, cropTile1.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
+        cropTile1.getComponent(CropTileComponent.class).setUnoccupied();
+        assertEquals(0.5, cropTile1.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
     }
 
     @Test
-    public void testSetUnoccupied2() {
+    public void testSetUnoccupiedWhenOccupied() {
         EntityService mockEntityService = mock(EntityService.class);
         ServiceLocator.registerEntityService(mockEntityService);
         Entity plant = mock(Entity.class);
-        Function<CropTileComponent, Entity> factoryMethod1 = cropTile1 -> plant;
-        cropTile1.getEvents().trigger("plant", factoryMethod1);
+        plant.addComponent(new PlantComponent(
+                1, "name", "type", "desc", 1, 7, 1));
+        Function<CropTileComponent, Entity> plantFactoryMethod = cropTileComponent -> plant;
+        cropTile1.getEvents().trigger("plant", plantFactoryMethod);
         verify(mockEntityService).register(plant);
-        cropTile1.getEvents().trigger("destroyPlant");
         cropTile1.getComponent(CropTileComponent.class).setUnoccupied();
-        assertNull(cropTile1.getComponent(CropTileComponent.class).getPlant());
+        cropTile1.getEvents().trigger("plant", plantFactoryMethod);
+        verify(mockEntityService, times(2)).register(plant);
+        cropTile1.getComponent(CropTileComponent.class).setUnoccupied();
+        cropTile1.getEvents().trigger("plant", plantFactoryMethod);
+        cropTile1.getEvents().trigger("fertilise");
+        assertEquals(1, cropTile1.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
+        cropTile1.getComponent(CropTileComponent.class).setUnoccupied();
+        assertEquals(0.5, cropTile1.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
+        verify(mockEntityService, times(3)).register(plant);
     }
 
     @Test
@@ -129,9 +161,32 @@ public class CropTileComponentTest {
         EntityService mockEntityService = mock(EntityService.class);
         ServiceLocator.registerEntityService(mockEntityService);
         Entity plant = mock(Entity.class);
-        Function<CropTileComponent, Entity> factoryMethod1 = cropTile1 -> plant;
-        cropTile2.getEvents().trigger("plant", factoryMethod1);
+        plant.addComponent(new PlantComponent(
+                1, "name", "type", "desc", 1, 7, 1));
+        Function<CropTileComponent, Entity> plantFactoryMethod = cropTileComponent -> plant;
+        cropTile1.getEvents().trigger("plant", plantFactoryMethod);
         verify(mockEntityService).register(plant);
-        assertNotNull(cropTile2.getComponent(CropTileComponent.class).getPlant());
+        //plant should only register once, despite calling plantCrop() twice
+        cropTile1.getEvents().trigger("plant", plantFactoryMethod);
+        verify(mockEntityService).register(plant);
+    }
+
+    @Test
+    public void testDestroyTile() {
+        EntityService mockEntityService = mock(EntityService.class);
+        ServiceLocator.registerEntityService(mockEntityService);
+        Entity plant = new Entity();
+        plant.addComponent(new PlantComponent(
+                1, "name", "type", "desc", 1, 7, 1));
+        Function<CropTileComponent, Entity> plantFactoryMethod = cropTileComponent -> plant;
+        /*commenting out "destroying plant" section until Team 6's plants have that functionality
+
+        cropTile1.getEvents().trigger("plant", plantFactoryMethod);
+        verify(mockEntityService).register(plant);
+        cropTile1.getEvents().trigger("destroy");
+        verify(mockEntityService).unregister(plant);
+        verify(mockEntityService, never()).unregister(cropTile1);*/
+        cropTile1.getEvents().trigger("destroy");
+        verify(mockEntityService).unregister(cropTile1);
     }
 }
