@@ -27,8 +27,8 @@ public class TerrainFactory {
   private static final GridPoint2 MAP_SIZE = new GridPoint2(100, 100);
   private static final int TUFT_TILE_COUNT = 30;
   private static final int GRASS1_TILE_COUNT = 30;
-  private static final String path = "source/core/assets/configs/Map.txt"; // change this path if u can't open the file
-
+  private static final String path1 = "source/core/assets/configs/Map.txt"; // change this path if u can't open the file
+  private static final String path2 = "configs/Map.txt";
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;
   private static final Map<Character,String> charToTileImageMap;
@@ -207,7 +207,7 @@ public class TerrainFactory {
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
 
     try {
-      fillTilesWithFile(layer, MAP_SIZE, TRList, path);
+      fillTilesWithFile(layer, MAP_SIZE, TRList, path1, path2);
     } catch (FileNotFoundException e) {
       System.out.println("fillTilesWithFile -> File Not Found error!");
     } catch (IOException e) {
@@ -358,14 +358,21 @@ public class TerrainFactory {
    * @param layer the layer of the TiledMap
    * @param mapSize the size of the map
    * @param TRList the list of TextureRegion
-   * @param path the path of the file
+   * @param path1 the path of the file
    * @throws IOException when there is an error reading the file
    * @throws FileNotFoundException when file is not found
    */
-  private static void fillTilesWithFile(TiledMapTileLayer layer, GridPoint2 mapSize, ArrayList<TextureRegion> TRList, String path) throws IOException,
+  private static void fillTilesWithFile(TiledMapTileLayer layer, GridPoint2 mapSize, ArrayList<TextureRegion> TRList,
+                                        String path1, String path2) throws IOException,
           FileNotFoundException {
     // open file to read and read each character
-      BufferedReader bf = new BufferedReader(new FileReader(path));
+    BufferedReader bf;
+    //needs to be improved, just done because different file paths required when run from desktop launcher vs gradle
+    try {
+      bf = new BufferedReader(new FileReader(path1));
+    } catch (FileNotFoundException e) {
+      bf = new BufferedReader(new FileReader(path2));
+    }
       String line;
       int x_pos = 0, y_pos = 0;
         // checking for end of file
