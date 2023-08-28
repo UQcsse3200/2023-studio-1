@@ -7,11 +7,18 @@ import org.slf4j.LoggerFactory;
 import com.csse3200.game.services.GameTimeDisplay;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.GameTime;
+import com.csse3200.game.components.plants.PlantComponent;
+import com.csse3200.game.entities.Entity;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Repsonsible for controlling and updating classes dependent on the time
  */
 public class TimeController {
+
+    /** The current registered entities */
+    private List<Entity> entities = new ArrayList<>();
 
     /** The current GameTime service */
     private GameTime timeSource;
@@ -40,12 +47,24 @@ public class TimeController {
         this.paused = false;
     }
 
+    public void register(Entity entity) {
+        entities.add(entity);
+    }
+
+    public void remove(Entity entity) {
+        entities.remove(entity);
+    }
+
+    public void update() {
+
+    }
+
     /**
      * Logs the current time UI under this TimeController
      *
      * @param timeDisplay: The class that controls the clock and time display
      */
-    public void setTimeDisplay(GameTimeDisplay timeDisplay) {
+    public void registerTimeDisplay(GameTimeDisplay timeDisplay) {
         this.timeDisplay = timeDisplay;
     }
 
@@ -67,7 +86,10 @@ public class TimeController {
      * @return the current hour of the game
      */
     public int getHour() {
-        return (int) Math.floor(getTimeOfDay() / 30000);
+
+            this.hour = (int) Math.floor(getTimeOfDay() / 30000);
+
+        return this.hour;
     }
 
     /**
@@ -113,7 +135,13 @@ public class TimeController {
 
     // Sets the game time and display to a specific time
     public void setTime(int hour) {
+
+        // calculates the current day as an integer using Math.floor(timeSource.getActiveTime() / 720000)
+        // then calculates the time up until the current day by * 720000
+        // then calculates the time up until the desired hour by doing hour * 30000
+        long desiredTime = (long) Math.floor(timeSource.getActiveTime() / 720000) * 720000 + hour * 30000;
+
         this.hour = hour;
-        timeDisplay.update(this.hour);
+
     }
 }

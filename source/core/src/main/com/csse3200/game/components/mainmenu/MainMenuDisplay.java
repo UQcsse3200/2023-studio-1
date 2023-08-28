@@ -46,8 +46,6 @@ public class MainMenuDisplay extends UIComponent {
         title.setWidth(Gdx.graphics.getWidth());
         title.setHeight(Gdx.graphics.getHeight());
         title.setPosition(0, 0);
-
-
         TextButton startBtn = new TextButton("Start", skin);
         TextButton loadBtn = new TextButton("Controls", skin);
         TextButton settingsBtn = new TextButton("Settings", skin);
@@ -91,11 +89,8 @@ public class MainMenuDisplay extends UIComponent {
                     }
                 });
 
-
-
         table.add(title);
         table.row();
-
         table.add(startBtn).padTop(30f);
         table.row();
         table.add(loadBtn).padTop(15f);
@@ -117,8 +112,6 @@ public class MainMenuDisplay extends UIComponent {
             frame=1;
         }
         stage.addActor(table);
-
-
     }
 
     @Override
