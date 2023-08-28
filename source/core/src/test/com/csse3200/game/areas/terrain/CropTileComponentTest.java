@@ -1,5 +1,6 @@
 package com.csse3200.game.areas.terrain;
 
+import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.extensions.GameExtension;
@@ -35,8 +36,6 @@ public class CropTileComponentTest {
         cropTile5.create();
         cropTile6.create();
         cropTile7.create();
-        GameTime gameTime = mock(GameTime.class);
-        ServiceLocator.registerTimeSource(gameTime);
     }
 
     @Test
@@ -101,8 +100,17 @@ public class CropTileComponentTest {
     public void testUpdate() {
         GameTime gameTime = mock(GameTime.class);
         ServiceLocator.registerTimeSource(gameTime);
-        when(gameTime.getDeltaTime()).thenReturn(20f / 1000);
+        when(gameTime.getDeltaTime()).thenReturn(400f / 1000);
         cropTile1.update();
+        cropTile2.update();
+        cropTile3.update();
+        cropTile4.update();
+        cropTile5.update();
+        assertEquals(0.49958, cropTile1.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
+        assertEquals(0.26197, cropTile2.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
+        assertEquals(0.99916, cropTile3.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
+        assertEquals(-1.0, cropTile4.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
+        assertEquals(0, cropTile5.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
         cropTile6.update();
         cropTile7.update();
         assertEquals(-1, cropTile6.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
@@ -111,6 +119,9 @@ public class CropTileComponentTest {
 
     @Test
     public void testSetUnoccupied1() {
+        Entity plant = new Entity().addComponent(new PlantComponent(1, "name", "type", "desc", 1, 1, 1));
+        Function<CropTileComponent, Entity> factoryMethod1 = cropTile1 -> plant;
+        //cropTile1.getEvents().trigger("plant", factoryMethod1);
         cropTile1.getComponent(CropTileComponent.class).setUnoccupied();
         assertNull(cropTile1.getComponent(CropTileComponent.class).getPlant());
     }
@@ -123,7 +134,7 @@ public class CropTileComponentTest {
         Function<CropTileComponent, Entity> factoryMethod1 = cropTile1 -> plant;
         cropTile1.getEvents().trigger("plant", factoryMethod1);
         verify(mockEntityService).register(plant);
-        cropTile1.getEvents().trigger("destroyPlant");
+        //cropTile1.getEvents().trigger("destroy");
         cropTile1.getComponent(CropTileComponent.class).setUnoccupied();
         assertNull(cropTile1.getComponent(CropTileComponent.class).getPlant());
     }
