@@ -137,9 +137,21 @@ public class CropTileComponentTest {
     public void testSetUnoccupied2() {
         ServiceLocator.registerEntityService(new EntityService());
         Entity plant = mock(Entity.class);
+        Function<CropTileComponent, Entity> factoryMethod1 = cropTile1 -> plant;
+        cropTile1.getEvents().trigger("plant", factoryMethod1);
         ServiceLocator.getEntityService().register(plant);
         cropTile1.getEvents().trigger("destroyPlant");
         cropTile1.getComponent(CropTileComponent.class).setUnoccupied();
         assertNull(cropTile1.getComponent(CropTileComponent.class).getPlant());
+    }
+
+    @Test
+    public void testPlantCrop() {
+        ServiceLocator.registerEntityService(new EntityService());
+        Entity plant = mock(Entity.class);
+        Function<CropTileComponent, Entity> factoryMethod1 = cropTile1 -> plant;
+        cropTile2.getEvents().trigger("plant", factoryMethod1);
+        ServiceLocator.getEntityService().register(plant);
+        assertNotNull(cropTile2.getComponent(CropTileComponent.class).getPlant());
     }
 }
