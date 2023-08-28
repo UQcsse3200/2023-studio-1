@@ -94,17 +94,16 @@ public class TimeService {
 		}
 		timeBuffer -= MS_IN_HOUR;
 		hour += 1;
-		System.out.printf("ADVANCE AN HOUR %s%n", getHour());
 		timeBuffer -= MS_IN_HOUR;
-		triggerHourUpdate();
 
 		// If hour is between 0 and 23, day hasn't elapsed, do nothing
 		if (hour < 24) {
+			triggerHourUpdate();
 			return;
 		}
 		hour -= 24;
+		triggerHourUpdate();
 		day += 1;
-		System.out.printf("ADVANCE A DAY %s%n", getDay());
 		triggerDayUpdate();
 	}
 
