@@ -55,11 +55,9 @@ public class TractorFactory {
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/tractor.atlas", TextureAtlas.class)
                 );
-        animator.addAnimation("Tractor_Move_left_Tool", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("Tractor_Move_right_Tool", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("Tractor_Move_down_Tool", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("Tractor_Move_up_Tool", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("Tractor_Idle_Tool", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("move_left_tool", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("move_right_tool", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("move_stop_tool", 0.1f, Animation.PlayMode.LOOP);
 
         return animator;
     }
