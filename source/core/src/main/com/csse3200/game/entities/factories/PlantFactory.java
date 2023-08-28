@@ -32,14 +32,6 @@ public class PlantFactory {
     }
 
     /**
-     * Resets plant statistics to default values from "configs/plant.json" file.
-     */
-    public static void resetStats() {
-        stats = FileLoader.readClass(PlantConfigs.class, "configs/plant.json");
-    }
-
-
-    /**
      * Creates a generic plant to be used as a base for more specific plant creation methods.
      *
      * @return entity

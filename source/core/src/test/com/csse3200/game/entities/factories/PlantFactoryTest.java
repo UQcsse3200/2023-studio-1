@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 
 import com.csse3200.game.areas.terrain.CropTileComponent;
+import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.plants.BasePlantConfig;
 import com.csse3200.game.entities.configs.plants.PlantConfigs;
@@ -21,13 +22,11 @@ import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -36,6 +35,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.Callable;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -47,19 +47,19 @@ import static org.mockito.Mockito.*;
  * creating different plants in the game.
  */
 class PlantFactoryTest {
-    private PlantConfigs stats;
+    static PlantConfigs stats;
 
     // Mocked dependencies
     @Mock
-    private static CropTileComponent mockCropTile;
+    static CropTileComponent mockCropTile;
     @Mock
-    private ResourceService mockResourceService;
+    ResourceService mockResourceService;
     @Mock
-    private Texture mockTexture;
+    Texture mockTexture;
     @Mock
-    private Entity mockEntity;
+    Entity mockEntity;
     @Mock
-    private TextureRenderComponent mockRenderComponent;
+    TextureRenderComponent mockRenderComponent;
 
     /**
      * Set up required objects and mocked dependencies before each test.
@@ -67,28 +67,36 @@ class PlantFactoryTest {
     @BeforeEach
     void setUp() throws IOException {
         MockitoAnnotations.openMocks(this);
+        setupMocks();
+        setupGdxFiles();
+    }
+
+    /**
+     * Sets up mock objects required for the test.
+     */
+    void setupMocks() {
         ServiceLocator.registerPhysicsService(new PhysicsService());
         ServiceLocator.registerResourceService(mockResourceService);
-
-        // Mock methods and interactions
         when(mockEntity.getComponent(TextureRenderComponent.class)).thenReturn(mockRenderComponent);
         when(mockCropTile.getEntity()).thenReturn(mockEntity);
         when(mockEntity.getPosition()).thenReturn(new Vector2(5, 5));
+    }
 
-        // Mocking file handling for the GDX framework
+    /**
+     * Mocks the file operations for the GDX framework.
+     *
+     * @throws IOException if there is an error accessing or reading the file.
+     */
+    void setupGdxFiles() throws IOException {
         Gdx.files = mock(Files.class);
         FileHandle mockFileHandle = mock(FileHandle.class);
-
-        // Loading JSON from the external file
         String filePath = "configs/plant.json";
         InputStream inputStream = new FileInputStream(filePath);
         String jsonContent = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
 
-        // Return the loaded JSON content when the reader method of the mocked FileHandle is called
         when(mockFileHandle.reader("UTF-8")).thenReturn(new StringReader(jsonContent));
         when(Gdx.files.internal(anyString())).thenReturn(mockFileHandle);
 
-        // Load stats from the JSON using the FileLoader
         stats = FileLoader.readClass(PlantConfigs.class, "configs/plant.json");
         PlantFactory.setStats(stats);
     }
@@ -111,20 +119,15 @@ class PlantFactoryTest {
                                                 String description, float water, int life,
                                                 int maxHealth) {
         BasePlantConfig actualValues = getActualValue(plant);
+        String errMsg = "Mismatched value for plant " + plant + ": %s";
 
-        assertNotNull(actualValues, plant + " is null!");
-        assertEquals(health, actualValues.health, "Health value for plant " + plant +
-                " does not match expected!");
-        assertNotNull(actualValues.name, plant + " name is null!");
-        assertEquals(type, actualValues.type, "type for plant " + plant +
-                " does not match expected!");
-        assertNotNull(actualValues.description, plant + " description is null!");
-        assertEquals(water, actualValues.idealWaterLevel, "idealWaterLevel for plant "
-                + plant + " does not match expected!");
-        assertEquals(life, actualValues.adultLifeSpan, "adultLifeSpan for plant " + plant
-                + " does not match expected!");
-        assertEquals(maxHealth, actualValues.maxHealth, "maxHealth for plant " + plant
-                + " does not match expected!");
+        assertEquals(health, actualValues.health, String.format(errMsg, "health"));
+        assertEquals(name, actualValues.name, String.format(errMsg, "name"));
+        assertEquals(type, actualValues.type, String.format(errMsg, "type"));
+        assertEquals(description, actualValues.description, String.format(errMsg, "description"));
+        assertEquals(water, actualValues.idealWaterLevel, String.format(errMsg, "water level"));
+        assertEquals(life, actualValues.adultLifeSpan, String.format(errMsg, "life span"));
+        assertEquals(maxHealth, actualValues.maxHealth, String.format(errMsg, "max health"));
     }
 
     /**
@@ -174,12 +177,11 @@ class PlantFactoryTest {
     }
 
     /**
-     * Test for the creation of a base plant.
+     * Test for the creation of a base plant. Ensures that all necessary components
+     * are properly attached to the created plant entity.
      */
     @Test
     void shouldCreateBasePlant() {
-        ServiceLocator.registerPhysicsService(new PhysicsService());
-
         Entity plant = PlantFactory.createBasePlant();
         assertNotNull(plant);
 
@@ -204,41 +206,76 @@ class PlantFactoryTest {
     }
 
     /**
-     * Test to ensure texture paths for plants are retrieved correctly.
+     * Provides plant statistics for parameterized tests.
      *
-     * @param path The path to the texture.
+     * @return Stream of Arguments containing plant data.
      */
-    @ParameterizedTest
-    @ValueSource(strings = { "images/corn_temp.png", "images/aloe_temp.png",
-            "images/test_cactus.png", "images/belladonna.png", "images/tobacco.png",
-            "images/test_cactus2.png" })
-    void shouldRetrieveTexturePaths(String path) {
-        when(mockResourceService.getAsset(path, Texture.class)).thenReturn(mockTexture);
-
-        switch (path) {
-            case "images/corn_temp.png" -> assertNotNull(PlantFactory
-                    .createCosmicCob(mockCropTile), "Plant entity is null!");
-            case "images/aloe_temp.png" -> assertNotNull(PlantFactory
-                    .createAloeVera(mockCropTile), "Plant entity is null!");
-            case "images/test_cactus.png" -> assertNotNull(PlantFactory
-                    .createHammerPlant(mockCropTile), "Plant entity is null!");
-            case "images/belladonna.png" -> assertNotNull(PlantFactory
-                    .createAtropaBelladonna(mockCropTile), "Plant entity is null!");
-            case "images/tobacco.png" -> assertNotNull(PlantFactory
-                    .createNicotianaTabacum(mockCropTile), "Plant entity is null!");
-            case "images/test_cactus2.png" -> assertNotNull(PlantFactory
-                    .createVenusFlyTrap(mockCropTile), "Plant entity is null!");
-            default -> throw new IllegalArgumentException("Unknown plant texture path: " + path);
-        };
-
-        verify(mockResourceService).getAsset(path, Texture.class);
+    static Stream<Arguments> plantStatsProvider() {
+        return Stream.of(
+                Arguments.of("cosmicCob", "images/corn_temp.png",
+                        (Callable<Entity>) () -> PlantFactory.createCosmicCob(mockCropTile)),
+                Arguments.of("aloeVera", "images/aloe_temp.png",
+                        (Callable<Entity>) () -> PlantFactory.createAloeVera(mockCropTile)),
+                Arguments.of("hammerPlant", "images/test_cactus.png",
+                        (Callable<Entity>) () -> PlantFactory.createHammerPlant(mockCropTile)),
+                Arguments.of("atropaBelladonna", "images/belladonna.png",
+                        (Callable<Entity>) () -> PlantFactory.createAtropaBelladonna(mockCropTile)),
+                Arguments.of("nicotianaTabacum", "images/tobacco.png",
+                        (Callable<Entity>) () -> PlantFactory.createNicotianaTabacum(mockCropTile)),
+                Arguments.of("venusFlyTrap", "images/test_cactus2.png",
+                        (Callable<Entity>) () -> PlantFactory.createVenusFlyTrap(mockCropTile))
+        );
     }
 
     /**
-     * Clean up and reset after each test.
+     * Verifies if plants are associated with the correct texture paths.
+     *
+     * @param id             The unique identifier for the plant.
+     * @param texturePath    The path of the plant's texture in the asset directory.
+     * @param createPlantCallable   The method to create the specific plant.
+     * @throws Exception     If there's an error during plant creation or verification.
      */
-    @AfterEach
-    void tearDown() {
-        PlantFactory.resetStats();
+    @ParameterizedTest
+    @MethodSource("plantStatsProvider")
+    void verifyPlantTexturePath(String id, String texturePath, Callable<Entity> createPlantCallable)
+            throws Exception {
+        when(mockResourceService.getAsset(texturePath, Texture.class)).thenReturn(mockTexture);
+        assertNotNull(createPlantCallable.call(), id + " entity is null!");
+        verify(mockResourceService).getAsset(texturePath, Texture.class);
+    }
+
+    /**
+     * Tests if the properties of a created plant match expected values.
+     *
+     * @param id   The unique identifier for the plant.
+     * @param path The path of the plant's texture in the asset directory.
+     * @param createPlant The method to create the specific plant.
+     * @throws Exception If there's an error during plant creation or verification.
+     */
+    @ParameterizedTest
+    @MethodSource("plantStatsProvider")
+    void testCreatePlantSetsCorrectProperties(String id, String path, Callable<Entity> createPlant)
+            throws Exception {
+        BasePlantConfig expectedValues = getActualValue(id);
+        String errMsg = "Mismatched value for plant " + id + ": %s";
+
+        when(mockResourceService.getAsset(path, Texture.class)).thenReturn(mockTexture);
+        Entity plant = createPlant.call();
+        PlantComponent plantComponent = plant.getComponent(PlantComponent.class);
+
+        assertEquals(expectedValues.health, plantComponent.getPlantHealth(),
+                String.format(errMsg, "health"));
+        assertEquals(expectedValues.name, plantComponent.getPlantName(),
+                String.format(errMsg, "name"));
+        assertEquals(expectedValues.type, plantComponent.getPlantType(),
+                String.format(errMsg, "type"));
+        assertEquals(expectedValues.description, plantComponent.getPlantDescription(),
+                String.format(errMsg, "description"));
+        assertEquals(expectedValues.idealWaterLevel, plantComponent.getIdealWaterLevel(),
+                String.format(errMsg, "idealWaterLevel"));
+        assertEquals(expectedValues.adultLifeSpan, plantComponent.getAdultLifeSpan(),
+                String.format(errMsg, "adultLifeSpan"));
+        assertEquals(expectedValues.maxHealth, plantComponent.getMaxHealth(),
+                String.format(errMsg, "maxHealth"));
     }
 }
