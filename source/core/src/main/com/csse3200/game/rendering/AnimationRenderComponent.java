@@ -22,7 +22,7 @@ import java.util.Map;
  * <p>Example usage:
  *
  * <pre>
- *   AnimationRenderComponent animator = new AnimationRenderComponent("player.atlas");
+ *   AnimationRenderComponent animator = new AnimationRenderComponent("player.atlas", 16f);
  *   entity.addComponent(animator);
  *   animator.addAnimation("attack", 0.1f); // Only need to add animation once per entity
  *   animator.startAnimation("attack");
@@ -41,14 +41,25 @@ public class AnimationRenderComponent extends RenderComponent {
   private Animation<TextureRegion> currentAnimation;
   private String currentAnimationName;
   private float animationPlayTime;
+  private final float scaleFactor;
 
   /**
    * Create the component for a given texture atlas.
    * @param atlas libGDX-supported texture atlas containing desired animations
    */
   public AnimationRenderComponent(TextureAtlas atlas) {
+    this(atlas, 1f);
+  }
+
+  /**
+   * Create the component for a given texture atlas.
+   * @param atlas libGDX-supported texture atlas containing desired animations
+   * @param scaleFactor factor for scaling the atlas region when drawing animations
+   */
+  public AnimationRenderComponent(TextureAtlas atlas, float scaleFactor) {
     this.atlas = atlas;
     this.animations = new HashMap<>(4);
+    this.scaleFactor = scaleFactor;
     timeSource = ServiceLocator.getTimeSource();
   }
 
@@ -89,10 +100,13 @@ public class AnimationRenderComponent extends RenderComponent {
     return true;
   }
 
-  /** Scale the entity to a width of 1 and a height matching the texture's ratio */
+  /** Scale the entity using the texture's ration and configured scale factor */
   public void scaleEntity() {
     TextureRegion defaultTexture = this.atlas.findRegion("default");
-    entity.setScale(1f, (float) defaultTexture.getRegionHeight() / defaultTexture.getRegionWidth());
+    entity.setScale(
+            (float) defaultTexture.getRegionWidth() / this.scaleFactor,
+            (float) defaultTexture.getRegionHeight() / this.scaleFactor
+    );
   }
 
   /**
@@ -172,6 +186,10 @@ public class AnimationRenderComponent extends RenderComponent {
     }
     TextureRegion region = currentAnimation.getKeyFrame(animationPlayTime);
     Vector2 pos = entity.getPosition();
+    entity.setScale(
+            (float) region.getRegionWidth() / this.scaleFactor,
+            (float) region.getRegionHeight() / this.scaleFactor
+    );
     Vector2 scale = entity.getScale();
     batch.draw(region, pos.x, pos.y, scale.x, scale.y);
     animationPlayTime += timeSource.getDeltaTime();
