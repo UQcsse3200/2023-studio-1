@@ -103,7 +103,9 @@ public class NPCFactory {
     BaseAnimalConfig config = configs.chicken;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
-            ServiceLocator.getResourceService().getAsset("images/animals/chicken.atlas", TextureAtlas.class));
+            ServiceLocator.getResourceService().getAsset("images/animals/chicken.atlas", TextureAtlas.class),
+            16f
+    );
     animator.addAnimation("idle_left", Float.MAX_VALUE);
     animator.addAnimation("idle_right", Float.MAX_VALUE);
     animator.addAnimation("walk_left", 0.2f, Animation.PlayMode.LOOP_REVERSED);
@@ -135,7 +137,9 @@ public class NPCFactory {
     BaseAnimalConfig config = configs.cow;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
-            ServiceLocator.getResourceService().getAsset("images/animals/cow.atlas", TextureAtlas.class));
+            ServiceLocator.getResourceService().getAsset("images/animals/cow.atlas", TextureAtlas.class),
+            16f
+    );
     animator.addAnimation("idle_left", 0.25f, Animation.PlayMode.LOOP);
     animator.addAnimation("idle_right", 0.5f, Animation.PlayMode.LOOP);
     animator.addAnimation("walk_left", 0.25f, Animation.PlayMode.LOOP_REVERSED);

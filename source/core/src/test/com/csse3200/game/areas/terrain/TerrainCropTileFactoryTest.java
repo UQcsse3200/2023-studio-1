@@ -19,10 +19,11 @@ import static org.mockito.Mockito.mock;
 
 @ExtendWith(GameExtension.class)
 class TerrainCropTileFactoryTest {
+
   private static Entity tile;
 
   @BeforeEach
-  void BeforeEach() {
+  void beforeEach() {
     ServiceLocator.clear();
     ServiceLocator.registerResourceService(mock(ResourceService.class));
     ServiceLocator.registerEntityService(new EntityService());
@@ -33,14 +34,14 @@ class TerrainCropTileFactoryTest {
 
   @Test
   public void cropTileComponentDetected() {
-    tile = TerrainCropTileFactory.createTerrainEntity(0,0);
+    tile = TerrainCropTileFactory.createTerrainEntity(0, 0);
     CropTileComponent cropTileComponent = tile.getComponent(CropTileComponent.class);
     assertNotNull(cropTileComponent);
   }
 
   @Test
   public void cropTilePositionCorrect() {
-    Vector2 position = new Vector2(0,0);
+    Vector2 position = new Vector2(0, 0);
     tile = TerrainCropTileFactory.createTerrainEntity(position);
     assertEquals(position, tile.getPosition());
   }

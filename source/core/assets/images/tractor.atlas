@@ -1,0 +1,75 @@
+Tractor.png
+size: 1152, 64
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Tractor_Move_down_Tool
+  rotate: false
+  xy: 0,0
+  size: 128,64
+  orig: 128,64
+  offset: 0,0
+  index: 0
+Tractor_Move_up_Tool
+  rotate: false
+  xy: 128,0
+  size: 128,64
+  orig: 128,64
+  offset: 0,0
+  index: 0
+Tractor_Idle_Tool
+  rotate: false
+  xy: 256,0
+  size: 128,64
+  orig: 128,64
+  offset: 0,0
+  index: 0
+Tractor_Move_left_Tool
+  rotate: false
+  xy: 384,0
+  size: 128,64
+  orig: 128,64
+  offset: 0,0
+  index: 0
+Tractor_Move_left_Tool
+  rotate: false
+  xy: 512,0
+  size: 128,64
+  orig: 128,64
+  offset: 0,0
+  index: 1
+Tractor_Move_left_Tool
+  rotate: false
+  xy: 640,0
+  size: 128,64
+  orig: 128,64
+  offset: 0,0
+  index: 2
+Tractor_Move_right_Tool
+  rotate: false
+  xy: 768,0
+  size: 128,64
+  orig: 128,64
+  offset: 0,0
+  index: 0
+Tractor_Move_right_Tool
+  rotate: false
+  xy: 896,0
+  size: 128,64
+  orig: 128,64
+  offset: 0,0
+  index: 1
+Tractor_Move_right_Tool
+  rotate: false
+  xy: 1024,0
+  size: 128,64
+  orig: 128,64
+  offset: 0,0
+  index: 2
+default
+  rotate: false
+  xy: 256,0
+  size: 128,64
+  orig: 128,64
+  offset: 0,0
+  index: 0
