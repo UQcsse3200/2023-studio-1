@@ -39,6 +39,7 @@ public class CropTileComponent extends Component {
 	private final float soilQuality;
 	private boolean isFertilised;
 	private Entity plant;
+	private DynamicTextureRenderComponent currentTexture;
 
 
 	/**
@@ -68,6 +69,7 @@ public class CropTileComponent extends Component {
 		entity.getEvents().addListener("fertilise", this::fertiliseTile);
 		entity.getEvents().addListener("plant", this::plantCrop);
 		entity.getEvents().addListener("destroy", this::destroyTile);
+		currentTexture = entity.getComponent(DynamicTextureRenderComponent.class);
 	}
 
 	/**
@@ -83,7 +85,6 @@ public class CropTileComponent extends Component {
 		}
 
 		// Update the texture of the corresponding entity
-		DynamicTextureRenderComponent currentTexture = entity.getComponent(DynamicTextureRenderComponent.class);
 		if (currentTexture != null) {
 			String texturePath = this.getTexturePath();
 			currentTexture.setTexture(texturePath);
