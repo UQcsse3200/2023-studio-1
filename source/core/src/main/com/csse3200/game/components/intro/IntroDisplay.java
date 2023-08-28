@@ -1,5 +1,7 @@
 package com.csse3200.game.components.intro;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -36,6 +38,16 @@ public class IntroDisplay extends UIComponent {
     }
 
     private void addActors() {
+        Image background =
+                new Image(
+                        ServiceLocator.getResourceService()
+                                .getAsset("images/intro_background.png", Texture.class));
+
+        background.setPosition(0, 0);
+        background.setHeight(Gdx.graphics.getWidth() * (background.getHeight() / background.getWidth()));
+        background.setWidth(Gdx.graphics.getWidth());
+
+
         String story = """
                 {WAIT}
                 Earth as we know it has been ravaged by war and plague.
@@ -65,9 +77,9 @@ public class IntroDisplay extends UIComponent {
                 but first we must tame the wild planet that we now call home...{WAIT}
                 """;
         String defaultTokens = "{SLOWER}";
-        TypingLabel title = new TypingLabel(story, skin);
-        title.setDefaultToken(defaultTokens);
-        title.setAlignment(Align.center);
+        TypingLabel storyLabel = new TypingLabel(story, skin);
+        storyLabel.setDefaultToken(defaultTokens);
+        storyLabel.setAlignment(Align.center);
 
         TextButton continueButton = new TextButton("Continue", skin);
         continueButton.setVisible(false);
@@ -80,7 +92,7 @@ public class IntroDisplay extends UIComponent {
             }
         });
 
-        title.setTypingListener(new TypingAdapter() {
+        storyLabel.setTypingListener(new TypingAdapter() {
             public void end() {
                 continueButton.setVisible(true);
             }
@@ -88,11 +100,12 @@ public class IntroDisplay extends UIComponent {
 
         rootTable = new Table();
         rootTable.setFillParent(true); // Make the table fill the screen
-
-        rootTable.add(title).expandX().center();
+        rootTable.row();
+        rootTable.add(storyLabel).expandX().center();
         rootTable.row().padTop(30f);
         rootTable.add(continueButton).bottom().padBottom(30f);
 
+        stage.addActor(background);
         stage.addActor(rootTable);
     }
 

@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 public class IntroScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(ControlsScreen.class);
 
+    private static final String[] introScreenAssets = {"images/intro_background.png"};
     private final GdxGame game;
     private final Renderer renderer;
 
@@ -37,6 +38,7 @@ public class IntroScreen extends ScreenAdapter {
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(5f, 5f);
 
+        loadAssets();
         createUI();
     }
 
@@ -58,7 +60,21 @@ public class IntroScreen extends ScreenAdapter {
         ServiceLocator.getRenderService().dispose();
         ServiceLocator.getEntityService().dispose();
 
+        unloadAssets();
         ServiceLocator.clear();
+    }
+
+    private void loadAssets() {
+        logger.debug("Loading assets");
+        ResourceService resourceService = ServiceLocator.getResourceService();
+        resourceService.loadTextures(introScreenAssets);
+        ServiceLocator.getResourceService().loadAll();
+    }
+
+    private void unloadAssets() {
+        logger.debug("Unloading assets");
+        ResourceService resourceService = ServiceLocator.getResourceService();
+        resourceService.unloadAssets(introScreenAssets);
     }
 
     /**
