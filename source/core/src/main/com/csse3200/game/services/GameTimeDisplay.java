@@ -33,7 +33,7 @@ public class GameTimeDisplay extends UIComponent {
         super.create();
         addActors();
         this.timeController = ServiceLocator.getTimeSource().getTimeController();
-        this.timeController.setTimeDisplay(this);
+        this.timeController.registerTimeDisplay(this);
     }
 
     /**

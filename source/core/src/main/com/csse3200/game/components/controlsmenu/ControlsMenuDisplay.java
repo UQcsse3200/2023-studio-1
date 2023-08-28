@@ -1,5 +1,7 @@
 package com.csse3200.game.components.controlsmenu;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -7,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.GdxGame.ScreenType;
+import com.csse3200.game.screens.ControlsScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -21,8 +24,13 @@ import java.util.LinkedHashMap;
 public class ControlsMenuDisplay extends UIComponent {
   private static final Logger logger = LoggerFactory.getLogger(ControlsMenuDisplay.class);
   private final GdxGame game;
-
   private Table rootTable;
+  private Image background;
+  private Image transitionFrames;
+  private int frame;
+  private long lastFrameTime;
+  private int fps = 15;
+  private final long frameDuration = (long) (800 / fps);
 
   public ControlsMenuDisplay(GdxGame game) {
     super();
@@ -32,13 +40,12 @@ public class ControlsMenuDisplay extends UIComponent {
   @Override
   public void create() {
     super.create();
+    frame = 1;
     addActors();
   }
 
   private void addActors() {
-    Label title = new Label("Controls", skin, "title");
     TextButton returnBtn = new TextButton("Return", skin);
-
     returnBtn.addListener(new ChangeListener() {
       @Override
       public void changed(ChangeEvent changeEvent, Actor actor) {
@@ -46,13 +53,15 @@ public class ControlsMenuDisplay extends UIComponent {
         exitMenu();
       }
     });
-
     Table controlsTbl = makeControlsTable();
-
     rootTable = new Table();
     rootTable.setFillParent(true); // Make the table fill the screen
-
-    rootTable.add(title).expandX().top().padTop(30f); // The title is anchored to the top of the page
+    Image background = new Image(
+            ServiceLocator.getResourceService().getAsset("images/galaxy_home_still.png", Texture.class));
+    background.setWidth(Gdx.graphics.getWidth());
+    background.setHeight(Gdx.graphics.getHeight());
+    background.setPosition(0, 0);
+    stage.addActor(background);
 
     rootTable.row().padTop(30f); // Padding ensures that there is always space between table and title
 
@@ -62,8 +71,21 @@ public class ControlsMenuDisplay extends UIComponent {
 
     rootTable.add(returnBtn).padBottom(30f); // The return button is anchored to the bottom of the page
 
+    if (frame < ControlsScreen.frameCount) {
+      transitionFrames = new Image(ServiceLocator.getResourceService()
+              .getAsset(ControlsScreen.transitionTextures[frame], Texture.class));
+      transitionFrames.setWidth(Gdx.graphics.getWidth());
+      transitionFrames.setHeight(Gdx.graphics.getHeight() / 2);
+      transitionFrames.setPosition(0, Gdx.graphics.getHeight() / 2 + 15);
+      frame++;
+      stage.addActor(transitionFrames);
+      lastFrameTime = System.currentTimeMillis();
+    } else {
+      frame = 1;
+    }
     stage.addActor(rootTable);
   }
+
 
   private Table makeControlsTable() {
     Table controlsTbl = new Table();
@@ -118,6 +140,9 @@ public class ControlsMenuDisplay extends UIComponent {
 
   @Override
   public void update() {
+    if (System.currentTimeMillis() - lastFrameTime > frameDuration) {
+      addActors();
+    }
     stage.act(ServiceLocator.getTimeSource().getDeltaTime());
   }
 

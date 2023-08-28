@@ -5,5 +5,7 @@ package com.csse3200.game.entities.configs;
  */
 public class BaseAnimalConfig {
     public int health = 1;
-    public int tameResistance = 1;
+    public int tamingThreshold = 1;
+    public double tamingProbability = 1;
+    public String favouriteFood = "ANIMAL FOOD";
 }

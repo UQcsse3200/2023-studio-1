@@ -66,8 +66,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   /** @see InputProcessor#touchUp(int, int, int, int) */
   @Override
   public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-    Vector2 mousePos = new Vector2(screenX, screenY);
-    entity.getEvents().trigger("use", entity.getPosition(), mousePos, entity.getComponent(InventoryComponent.class).getInHand());
+    if (!actions.isMuted()) {
+      Vector2 mousePos = new Vector2(screenX, screenY);
+      entity.getEvents().trigger("use", entity.getPosition(), mousePos, entity.getComponent(InventoryComponent.class).getInHand());
+    }
     return false;
   }
 

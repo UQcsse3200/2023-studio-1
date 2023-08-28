@@ -43,7 +43,7 @@ public class CameraComponent extends Component {
       // This avoids glitchy camera behaviour when framerate != physics timestep
       PhysicsComponent physicsComponent = trackEntity.getComponent(PhysicsComponent.class);
       if (physicsComponent != null) {
-        entity.setPosition(physicsComponent.getBody().getWorldCenter());
+        entity.setPosition(physicsComponent.getBody().getPosition().mulAdd(trackEntity.getScale(), 0.5f));
       } else {
         entity.setPosition(trackEntity.getCenterPosition());
       }
