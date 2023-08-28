@@ -6,6 +6,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.events.EventHandler;
 
+import java.util.HashMap;
+
 public class GameMap {
 
     private final TerrainFactory terrainFactory;
