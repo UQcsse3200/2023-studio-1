@@ -22,23 +22,7 @@ public class PlayerAnimationController extends Component {
 
         animator.startAnimation("default");
     }
-
-    /**
-     * Get the direction the player is facing from the currently playing animation. If
-     * unable to ascertain, it will default to "down"
-     *
-     * @return A string containing either "up", "right", "down" or "left"
-     */
-    String getFacingDir() {
-        String validOutputs = "up right down left";
-        String[] currentAnim = animator.getCurrentAnimation().split("_");
-        if (currentAnim.length == 2) {
-            if (validOutputs.contains(currentAnim[1])) {
-                return currentAnim[1];
-            }
-        }
-        return "down";
-    }
+    
     /**
      * Check if the current (non-looping) animation has completed
      */
@@ -89,9 +73,9 @@ public class PlayerAnimationController extends Component {
     /**
      * Play the interaction animation
      */
-    void animationInteract() {
+    void animationInteract(String direction) {
         // Get the current animation name to get the facing direction
-        String animation = String.format("interact_%s", getFacingDir());
+        String animation = String.format("interact_%s", direction);
         if (!animator.getCurrentAnimation().equals(animation)) {
             animator.startAnimation(animation);
         }
