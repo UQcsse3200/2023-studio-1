@@ -172,9 +172,4 @@ public class CropTileComponent extends Component {
 		isFertilised = false;
 		plant = null;
 	}
-
-	public Entity getPlant() {
-		return plant;
-	}
-
 }
