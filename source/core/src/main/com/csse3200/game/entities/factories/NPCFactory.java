@@ -173,8 +173,8 @@ public class NPCFactory {
     animator.addAnimation("walk_right", 0.15f, Animation.PlayMode.LOOP);
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
-            .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-            .addTask(new FollowTask(player, 10, 4f, 4f));
+            .addTask(new WanderTask(new Vector2(2f, 2f), 3f))
+            .addTask(new FollowTask(player, 10, 5f, 5f, 2f));
 
     astrolotl
             .addComponent(aiTaskComponent)
