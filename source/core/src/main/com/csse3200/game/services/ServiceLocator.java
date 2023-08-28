@@ -21,6 +21,7 @@ public class ServiceLocator {
   private static EntityService entityService;
   private static RenderService renderService;
   private static PhysicsService physicsService;
+  private static TimeService timeService;
   private static GameTime timeSource;
   private static InputService inputService;
   private static ResourceService resourceService;
@@ -72,6 +73,11 @@ public class ServiceLocator {
   public static void registerPhysicsService(PhysicsService service) {
     logger.debug("Registering physics service {}", service);
     physicsService = service;
+  }
+
+  public static void registerTimeService(TimeService service) {
+    logger.debug("Registering time service {}", service);
+    timeService = service;
   }
 
   public static void registerTimeSource(GameTime source) {

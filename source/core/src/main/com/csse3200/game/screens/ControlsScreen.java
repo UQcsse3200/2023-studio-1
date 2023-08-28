@@ -16,6 +16,7 @@ import com.csse3200.game.rendering.Renderer;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.TimeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,6 +42,7 @@ public class ControlsScreen extends ScreenAdapter {
     ServiceLocator.registerResourceService(new ResourceService());
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
+    ServiceLocator.registerTimeService(new TimeService());
     ServiceLocator.registerTimeSource(new GameTime());
     renderer = RenderFactory.createRenderer();
     renderer.getCamera().getEntity().setPosition(5f, 5f);
