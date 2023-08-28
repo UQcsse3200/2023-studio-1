@@ -24,7 +24,7 @@ class GameAreaTest {
           public void create() {}
 
             /**
-             * @return
+             * @return Returns the player in the game area
              */
             @Override
             public Entity getPlayer() {
