@@ -162,7 +162,8 @@ public class CropTileComponent extends Component {
 		waterMultiplier = (waterMultiplier - WATER_DAMAGE_THRESHOLD) / (1 - WATER_DAMAGE_THRESHOLD);
 		waterMultiplier =
 				waterMultiplier > 0 ? Math.pow(waterMultiplier, IDEAL_WATER_FALL_OFF_TOLERANCE) : -1.0;
-		return waterMultiplier > 0 ? soilQuality * (isFertilised ? 2 : 1) * waterMultiplier : -1.0;
+		int fertiliserMultiplier = isFertilised ? 2: 1;
+		return waterMultiplier > 0 ? soilQuality * fertiliserMultiplier * waterMultiplier : -1.0;
 	}
 
 	/**
