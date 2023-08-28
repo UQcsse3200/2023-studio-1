@@ -39,6 +39,14 @@ public class ItemPickupComponentTest {
         public void create() {
             // Don't do anything because I love this game engine :)
         }
+
+        /**
+         * @return
+         */
+        @Override
+        public Entity getPlayer() {
+            return null;
+        }
     }
 
     @BeforeEach
