@@ -11,7 +11,7 @@ public class TimeService {
 	private static final int INITIAL_CAPACITY = 16;
 	private static final String HOUR_UPDATE = "hourUpdate";
 	private static final String DAY_UPDATE = "dayUpdate";
-	private static final int MS_IN_HOUR = 30000;
+	private static final int MS_IN_HOUR = 1000; //30000;
 	private final Array<Entity> hourUpdateEntities = new Array<>(false, INITIAL_CAPACITY);
 	private final Array<Entity> dayUpdateEntities = new Array<>(false, INITIAL_CAPACITY);
 	private int hour;
@@ -92,6 +92,7 @@ public class TimeService {
 		if (timeBuffer < MS_IN_HOUR) {
 			return;
 		}
+		System.out.println("ADVANCE AN HOUR");
 		timeBuffer -= MS_IN_HOUR;
 		hour += 1;
 		triggerHourUpdate();
@@ -100,6 +101,7 @@ public class TimeService {
 		if (hour < 24) {
 			return;
 		}
+		System.out.println("ADVANCE A DAY");
 		hour -= 24;
 		day += 1;
 		triggerDayUpdate();
