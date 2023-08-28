@@ -30,3 +30,7 @@ javadoc {
         tags = ['require', 'requires', 'ensure', 'ensures']
     }
 }
+
+dependencies {
+    implementation 'org.jetbrains:annotations:20.1.0'
+}

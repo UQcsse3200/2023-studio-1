@@ -190,7 +190,7 @@ public class PlantFactory {
         BasePlantConfig config = stats.venusFlyTrap;
 
         Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/test_cactus.png"))
+                .addComponent(new TextureRenderComponent("images/test_cactus2.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
                         config.maxHealth, cropTile));

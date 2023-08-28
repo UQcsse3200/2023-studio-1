@@ -3,28 +3,33 @@ package com.csse3200.game.entities.factories;
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Fixture;
+
+import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.plants.BasePlantConfig;
 import com.csse3200.game.entities.configs.plants.PlantConfigs;
 import com.csse3200.game.files.FileLoader;
-import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsService;
-import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.rendering.TextureRenderComponent;
+import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.io.StringReader;
 import java.util.stream.Stream;
@@ -33,11 +38,28 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class PlantFactoryTest {
+class PlantFactoryTest {
     private PlantConfigs stats;
+    @Mock
+    private static CropTileComponent mockCropTile;
+    @Mock
+    private ResourceService mockResourceService;
+    @Mock
+    private Texture mockTexture;
+    @Mock
+    private Entity mockEntity;
+    @Mock
+    private TextureRenderComponent mockRenderComponent;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+        ServiceLocator.registerResourceService(mockResourceService);
+        when(mockEntity.getComponent(TextureRenderComponent.class)).thenReturn(mockRenderComponent);
+        when(mockCropTile.getEntity()).thenReturn(mockEntity);
+        when(mockEntity.getPosition()).thenReturn(new Vector2(5, 5));
+
         Gdx.files = mock(Files.class);
         FileHandle mockFileHandle = mock(FileHandle.class);
 
@@ -124,13 +146,13 @@ public class PlantFactoryTest {
         // Load stats from the JSON using the FileLoader
         stats = FileLoader.readClass(PlantConfigs.class, "configs/plant.json");
         PlantFactory.setStats(stats);
-
     }
 
     @ParameterizedTest
     @MethodSource("plantConfigProvider")
-    public void testPlantConfigsLoadedCorrectly(String plant, int health, String name, String type,
-                                                String description, float water, int life, int maxHealth) {
+    void shouldLoadPlantConfigsCorrectly(String plant, int health, String name, String type,
+                                                String description, float water, int life,
+                                                int maxHealth) {
         BasePlantConfig actualValues = getActualValue(plant);
 
         assertNotNull(actualValues, plant + " is null!");
@@ -148,7 +170,7 @@ public class PlantFactoryTest {
                 + " does not match expected!");
     }
 
-    private static Stream<Arguments> plantConfigProvider() {
+    static Stream<Arguments> plantConfigProvider() {
         return Stream.of(
                 Arguments.of("cosmicCob", 100, "Cosmic Cob", "FOOD",
                         "Nutritious space corn!", (float) 0.7, 5, 300),
@@ -169,7 +191,7 @@ public class PlantFactoryTest {
         );
     }
 
-    private BasePlantConfig getActualValue(String plant) {
+    BasePlantConfig getActualValue(String plant) {
         return switch (plant) {
             case "cosmicCob" -> stats.cosmicCob;
             case "aloeVera" -> stats.aloeVera;
@@ -184,7 +206,7 @@ public class PlantFactoryTest {
     }
 
     @Test
-    public void testCreateBasePlant() {
+    void shouldCreateBasePlant() {
         ServiceLocator.registerPhysicsService(new PhysicsService());
 
         Entity plant = PlantFactory.createBasePlant();
@@ -198,20 +220,46 @@ public class PlantFactoryTest {
         ColliderComponent colliderComponent = plant.getComponent(ColliderComponent.class);
         colliderComponent.create();
         assertNotNull(colliderComponent, "Plant ColliderComponent should not be null");
-        System.out.println("collider: " + colliderComponent);
-        System.out.println("collider: " + colliderComponent.getFixture());
-        assertTrue(colliderComponent.getFixture().isSensor(), "Plant collider should be a sensor");
+        assertTrue(colliderComponent.getFixture().isSensor(),
+                "Plant collider should be a sensor");
 
         HitboxComponent hitboxComponent = plant.getComponent(HitboxComponent.class);
         hitboxComponent.create();
         assertNotNull(hitboxComponent, "Plant HitboxComponent should not be null");
-        assertTrue(hitboxComponent.getFixture().isSensor(), "Plant Hitbox should be a sensor");
+        assertTrue(hitboxComponent.getFixture().isSensor(),
+                "Plant Hitbox should be a sensor");
         assertEquals(PhysicsLayer.OBSTACLE, hitboxComponent.getLayer(),
                 "Plant Hitbox layer should be OBSTACLE");
     }
-    
+
+    @ParameterizedTest
+    @ValueSource(strings = { "images/corn_temp.png", "images/aloe_temp.png",
+            "images/test_cactus.png", "images/belladonna.png", "images/tobacco.png",
+            "images/test_cactus2.png" })
+    void shouldRetrieveTexturePaths(String path) {
+        when(mockResourceService.getAsset(path, Texture.class)).thenReturn(mockTexture);
+
+        switch (path) {
+            case "images/corn_temp.png" -> assertNotNull(PlantFactory
+                    .createCosmicCob(mockCropTile), "Plant entity is null!");
+            case "images/aloe_temp.png" -> assertNotNull(PlantFactory
+                    .createAloeVera(mockCropTile), "Plant entity is null!");
+            case "images/test_cactus.png" -> assertNotNull(PlantFactory
+                    .createHammerPlant(mockCropTile), "Plant entity is null!");
+            case "images/belladonna.png" -> assertNotNull(PlantFactory
+                    .createAtropaBelladonna(mockCropTile), "Plant entity is null!");
+            case "images/tobacco.png" -> assertNotNull(PlantFactory
+                    .createNicotianaTabacum(mockCropTile), "Plant entity is null!");
+            case "images/test_cactus2.png" -> assertNotNull(PlantFactory
+                    .createVenusFlyTrap(mockCropTile), "Plant entity is null!");
+            default -> throw new IllegalArgumentException("Unknown plant texture path: " + path);
+        };
+
+        verify(mockResourceService).getAsset(path, Texture.class);
+    }
+
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         PlantFactory.resetStats();
     }
 }
