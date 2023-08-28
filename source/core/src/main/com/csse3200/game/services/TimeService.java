@@ -92,7 +92,6 @@ public class TimeService {
 		if (timeBuffer < MS_IN_HOUR) {
 			return;
 		}
-		timeBuffer -= MS_IN_HOUR;
 		hour += 1;
 		timeBuffer -= MS_IN_HOUR;
 
