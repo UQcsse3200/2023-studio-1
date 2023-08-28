@@ -9,6 +9,7 @@ import com.csse3200.game.events.EventHandler;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/** the GameMap class is used to store and easily access and manage the components related to the game map */
 public class GameMap {
 
     private final TerrainFactory terrainFactory;
