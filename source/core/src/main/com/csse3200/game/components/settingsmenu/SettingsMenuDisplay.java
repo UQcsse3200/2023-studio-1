@@ -3,6 +3,7 @@ package com.csse3200.game.components.settingsmenu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.Graphics.Monitor;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
@@ -13,6 +14,7 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.GdxGame.ScreenType;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.files.UserSettings.DisplaySettings;
+import com.csse3200.game.screens.SettingsScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.csse3200.game.utils.StringDecorator;
@@ -26,13 +28,18 @@ import org.slf4j.LoggerFactory;
 public class SettingsMenuDisplay extends UIComponent {
   private static final Logger logger = LoggerFactory.getLogger(SettingsMenuDisplay.class);
   private final GdxGame game;
-
   private Table rootTable;
   private TextField fpsText;
   private CheckBox fullScreenCheck;
   private CheckBox vsyncCheck;
   private Slider uiScaleSlider;
   private SelectBox<StringDecorator<DisplayMode>> displayModeSelect;
+  private Image background;
+  private Image transitionFrames;
+  private int frame;
+  private long lastFrameTime;
+  private int fps = 15;
+  private final long frameDuration = (long) (800 / fps);
 
   public SettingsMenuDisplay(GdxGame game) {
     super();
@@ -42,27 +49,60 @@ public class SettingsMenuDisplay extends UIComponent {
   @Override
   public void create() {
     super.create();
+    frame = 1;
     addActors();
   }
 
   private void addActors() {
-    Label title = new Label("Settings", skin, "title");
+    Label titleback = new Label("Settings", skin, "title");
+    titleback.setPosition(0, 0);
+
+    Table titleContainer = new Table();
+    titleContainer.add(titleback).padTop(290f);
+    titleContainer.setPosition(0, Gdx.graphics.getHeight() * 0.75f);
+
     Table settingsTable = makeSettingsTable();
     Table menuBtns = makeMenuBtns();
 
+    Image title = new Image(
+            ServiceLocator.getResourceService()
+                    .getAsset("images/galaxy_home_still.png", Texture.class));
+    title.setWidth(Gdx.graphics.getWidth());
+    title.setHeight(Gdx.graphics.getHeight());
+    title.setPosition(0, 0);
+
     rootTable = new Table();
     rootTable.setFillParent(true);
+    rootTable.add(titleContainer).expandX().top();
+    rootTable.add(title);
+    stage.addActor(title);
 
-    rootTable.add(title).expandX().top().padTop(20f);
+    // Create a container for the settingsTable to prevent shifting
+    Table settingsContainer = new Table();
+    settingsContainer.add(settingsTable).expandX().expandY();
 
-    rootTable.row().padTop(30f);
-    rootTable.add(settingsTable).expandX().expandY();
-
+    rootTable.row().padTop(10f);
+    rootTable.add(settingsContainer).expandX().expandY(); // Add the settingsContainer instead of settingsTable
     rootTable.row();
     rootTable.add(menuBtns).fillX();
 
+    if (frame < SettingsScreen.frameCount) {
+      transitionFrames = new Image(ServiceLocator.getResourceService()
+              .getAsset(SettingsScreen.transitionTextures[frame], Texture.class));
+      transitionFrames.setWidth(Gdx.graphics.getWidth());
+      transitionFrames.setHeight(Gdx.graphics.getHeight() / 2);
+      transitionFrames.setPosition(0, Gdx.graphics.getHeight() / 2 + 15);
+      frame++;
+      stage.addActor(transitionFrames);
+      lastFrameTime = System.currentTimeMillis();
+    } else {
+      frame = 1;
+    }
     stage.addActor(rootTable);
   }
+
+
+
 
   private Table makeSettingsTable() {
     // Get current values
@@ -180,9 +220,10 @@ public class SettingsMenuDisplay extends UIComponent {
         });
 
     Table table = new Table();
-    table.add(exitBtn).expandX().left().pad(0f, 15f, 15f, 0f);
-    table.add(applyBtn).expandX().right().pad(0f, 0f, 15f, 15f);
+    table.add(exitBtn).expandX().left().pad(200f, 15f, 15f, 0f);
+    table.add(applyBtn).expandX().right().pad(200f, 0f, 15f, 15f);
     return table;
+
   }
 
   private void applyChanges() {
@@ -215,10 +256,14 @@ public class SettingsMenuDisplay extends UIComponent {
   @Override
   protected void draw(SpriteBatch batch) {
     // draw is handled by the stage
+
   }
 
   @Override
   public void update() {
+    if (System.currentTimeMillis() - lastFrameTime > frameDuration) {
+      addActors();
+    }
     stage.act(ServiceLocator.getTimeSource().getDeltaTime());
   }
 

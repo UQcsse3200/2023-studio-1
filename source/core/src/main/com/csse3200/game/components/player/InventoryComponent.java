@@ -34,7 +34,6 @@ public class InventoryComponent extends Component {
 
   /**
    * Returns if the player has a certain amount of gold.
-   *
    * @param item item to be checked
    * @return boolean representing if the item is on the character
    */
@@ -54,7 +53,6 @@ public class InventoryComponent extends Component {
 
   /**
    * Adds an item to the Player's inventory
-   *
    * @param item item to add
    * @return boolean representing if the item was added successfully
    */
@@ -64,7 +62,6 @@ public class InventoryComponent extends Component {
 
   /**
    * Removes an item from the Player's Inventory
-   *
    * @param item item to be removed
    * @return boolean representing if the item was removed successfully
    */
@@ -99,4 +96,3 @@ public class InventoryComponent extends Component {
     }
   }
 }
-
