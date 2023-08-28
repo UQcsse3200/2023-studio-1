@@ -99,7 +99,7 @@ public class RunAwayTask extends DefaultTask implements PriorityTask {
   private int getActivePriority() {
     float dst = getDistanceToTarget();
     if (dst > maxRunDistance || !isTargetVisible()) {
-      return -1; // Too far, stop chasing
+      return -1; // Too far, stop running away
     }
     return priority;
   }
@@ -123,5 +123,8 @@ public class RunAwayTask extends DefaultTask implements PriorityTask {
     }
     debugRenderer.drawLine(from, to);
     return true;
+  }
+  public MovementTask getMovementTask(){
+    return movementTask;
   }
 }

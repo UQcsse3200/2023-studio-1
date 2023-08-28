@@ -118,4 +118,8 @@ public class MovementTask extends DefaultTask {
     Vector2 currentPosition = owner.getEntity().getPosition();
     return currentPosition.sub(target).x < 0 ? DirectionUtils.RIGHT : DirectionUtils.LEFT;
   }
+
+  public Vector2 getSpeed() {
+    return speed;
+  }
 }
