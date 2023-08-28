@@ -12,6 +12,21 @@ public class TimeService {
 	private static final String DAY_UPDATE = "dayUpdate";
 	private final Array<Entity> hourUpdateEntities = new Array<>(false, INITIAL_CAPACITY);
 	private final Array<Entity> dayUpdateEntities = new Array<>(false, INITIAL_CAPACITY);
+	private static int hour;
+	private static int day;
+
+	public TimeService() {
+		hour = 0;
+		day = 0;
+	}
+
+	public int getHour() {
+		return hour;
+	}
+
+	public int getDay() {
+		return day;
+	}
 
 	public void registerHourUpdate(Entity entity) {
 		logger.debug("Registering {} for hourly updates", entity);
@@ -31,14 +46,18 @@ public class TimeService {
 	}
 	private void triggerHourUpdate() {
 		for (Entity entity: hourUpdateEntities) {
-			entity.getEvents().trigger(HOUR_UPDATE);
+			entity.getEvents().trigger(HOUR_UPDATE, getHour());
 		}
 	}
 
 	private void triggerDayUpdate() {
 		for (Entity entity: dayUpdateEntities) {
-			entity.getEvents().trigger(DAY_UPDATE);
+			entity.getEvents().trigger(DAY_UPDATE, getDay());
 		}
+	}
+	public void update() {
+		// Some logic to calculate day based on methods in timeSource
+		return;
 	}
 
 }
