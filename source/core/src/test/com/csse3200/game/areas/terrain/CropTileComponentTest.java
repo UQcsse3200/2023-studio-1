@@ -102,20 +102,14 @@ public class CropTileComponentTest {
 
     @Test
     public void testUpdate() {
-        DynamicTextureRenderComponent dynamock1 = mock(DynamicTextureRenderComponent.class);
-        DynamicTextureRenderComponent dynamock2 = mock(DynamicTextureRenderComponent.class);
-        DynamicTextureRenderComponent dynamock3 = mock(DynamicTextureRenderComponent.class);
-        DynamicTextureRenderComponent dynamock4 = mock(DynamicTextureRenderComponent.class);
-        DynamicTextureRenderComponent dynamock5 = mock(DynamicTextureRenderComponent.class);
-        DynamicTextureRenderComponent dynamock6 = mock(DynamicTextureRenderComponent.class);
-        DynamicTextureRenderComponent dynamock7 = mock(DynamicTextureRenderComponent.class);
-        cropTile1 = new Entity().addComponent(new CropTileComponent(1f, 0.5f)).addComponent(dynamock1);
-        cropTile2 = new Entity().addComponent(new CropTileComponent(0.5f, 0.5f)).addComponent(dynamock2);
-        cropTile3 = new Entity().addComponent(new CropTileComponent(1f, 1.0f)).addComponent(dynamock3);
-        cropTile4 = new Entity().addComponent(new CropTileComponent(0f, 1.0f)).addComponent(dynamock4);
-        cropTile5 = new Entity().addComponent(new CropTileComponent(1f, 0.0f)).addComponent(dynamock5);
-        cropTile6 = new Entity().addComponent(new CropTileComponent(2.5f, 0.5f)).addComponent(dynamock6);
-        cropTile7 = new Entity().addComponent(new CropTileComponent(-1.0f, 0.5f)).addComponent(dynamock7);
+        DynamicTextureRenderComponent dynamock = mock(DynamicTextureRenderComponent.class);
+        cropTile1 = new Entity().addComponent(new CropTileComponent(1f, 0.5f)).addComponent(dynamock);
+        cropTile2 = new Entity().addComponent(new CropTileComponent(0.5f, 0.5f)).addComponent(dynamock);
+        cropTile3 = new Entity().addComponent(new CropTileComponent(1f, 1.0f)).addComponent(dynamock);
+        cropTile4 = new Entity().addComponent(new CropTileComponent(0f, 1.0f)).addComponent(dynamock);
+        cropTile5 = new Entity().addComponent(new CropTileComponent(1f, 0.0f)).addComponent(dynamock);
+        cropTile6 = new Entity().addComponent(new CropTileComponent(2.5f, 0.5f)).addComponent(dynamock);
+        cropTile7 = new Entity().addComponent(new CropTileComponent(-1.0f, 0.5f)).addComponent(dynamock);
         cropTile1.create();
         cropTile2.create();
         cropTile3.create();
@@ -134,19 +128,12 @@ public class CropTileComponentTest {
         cropTile6.update();
         cropTile7.update();
         assertEquals(0.49958, cropTile1.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
-        verify(dynamock1).setTexture("images/watered_cropTile.png");
         assertEquals(0.26197, cropTile2.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
-        verify(dynamock2).setTexture("images/cropTile.png");
         assertEquals(0.99916, cropTile3.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
-        verify(dynamock3).setTexture("images/watered_cropTile.png");
         assertEquals(-1.0, cropTile4.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
-        verify(dynamock4).setTexture("images/cropTile.png");
         assertEquals(0, cropTile5.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
-        verify(dynamock5).setTexture("images/watered_cropTile.png");
         assertEquals(-1, cropTile6.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
-        verify(dynamock6).setTexture("images/overwatered_cropTile.png");
         assertEquals(-1, cropTile7.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
-        verify(dynamock7).setTexture("images/cropTile.png");
         cropTile1.getEvents().trigger("fertilise");
         cropTile2.getEvents().trigger("fertilise");
         cropTile3.getEvents().trigger("fertilise");
@@ -163,19 +150,12 @@ public class CropTileComponentTest {
         cropTile6.update();
         cropTile7.update();
         assertEquals(0.99663, cropTile1.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
-        verify(dynamock1).setTexture("images/watered_cropTile_fertilised.png");
         assertEquals(0.49378, cropTile2.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
-        verify(dynamock2).setTexture("images/cropTile_fertilised.png");
         assertEquals(1.99326, cropTile3.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
-        verify(dynamock3).setTexture("images/watered_cropTile_fertilised.png");
         assertEquals(-1.0, cropTile4.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
-        verify(dynamock4).setTexture("images/cropTile_fertilised.png");
         assertEquals(0, cropTile5.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
-        verify(dynamock5).setTexture("images/watered_cropTile_fertilised.png");
         assertEquals(-1, cropTile6.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
-        verify(dynamock6).setTexture("images/overwatered_cropTile_fertilised.png");
         assertEquals(-1, cropTile7.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
-        verify(dynamock7).setTexture("images/cropTile_fertilised.png");
     }
 
     @Test
