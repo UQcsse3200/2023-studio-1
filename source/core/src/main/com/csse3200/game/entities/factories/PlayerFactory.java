@@ -43,7 +43,8 @@ public class PlayerFactory {
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/player.atlas", TextureAtlas.class)
+                    ServiceLocator.getResourceService().getAsset("images/player.atlas", TextureAtlas.class),
+                    16f
             );
 
     setupPlayerAnimator(animator);

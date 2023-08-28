@@ -53,7 +53,8 @@ public class TractorFactory {
     private static AnimationRenderComponent setupTractorAnimations() {
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
-                        ServiceLocator.getResourceService().getAsset("images/tractor.atlas", TextureAtlas.class)
+                        ServiceLocator.getResourceService().getAsset("images/tractor.atlas", TextureAtlas.class),
+                        16f
                 );
         animator.addAnimation("Tractor_Move_left_Tool", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("Tractor_Move_right_Tool", 0.1f, Animation.PlayMode.LOOP);
