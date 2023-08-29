@@ -120,6 +120,7 @@ public class SettingsMenuDisplay extends UIComponent {
     rootTable.add(menuBtns).fillX();
 
     updateAnimation();
+    stage.addActor(transitionFrames);
     stage.addActor(rootTable);
   }
 
