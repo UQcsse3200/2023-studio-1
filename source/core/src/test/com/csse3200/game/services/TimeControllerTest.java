@@ -2,15 +2,18 @@ package com.csse3200.game.services;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
+import com.csse3200.game.extensions.GameExtension;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import static org.mockito.Mockito.*;
 
+@ExtendWith(GameExtension.class)
 class TimeControllerTest {
     
     static GameTime mockGameTime;
@@ -47,17 +50,20 @@ class TimeControllerTest {
     */
     @Test
     void getTimeInSeconds() {
-        assertEquals((int) 300, timeController.getTimeInSeconds());
+        assertEquals((int) 300, timeController.getTimeInSeconds(),
+                "300 seconds not given");
     }
     
     @Test
     void getTimeOfDay() {
-        assertEquals((int) 300000, timeController.getTimeOfDay());
+        assertEquals((int) 300000, timeController.getTimeOfDay(),
+        "Incorrect time of day returned; 300000 not given.");
     }
     
     @Test
     void getHour() {
-        assertEquals((int) 10, timeController.getHour());
+        assertEquals((int) 10, timeController.getHour(),
+                "Hour 10 not given.");
     }
     
     @Test
