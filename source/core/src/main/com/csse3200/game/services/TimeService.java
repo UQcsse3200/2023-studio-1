@@ -48,11 +48,13 @@ public class TimeService {
 	public void setHour(int hour) {
 		this.hour = hour;
 		this.timeBuffer = 0;
+		triggerHourUpdate();
 	}
 
 	public void setDay(int day) {
 		this.day = day;
 		this.timeBuffer= 0;
+		triggerDayUpdate();
 	}
 
 	public void registerHourUpdate(Entity entity) {
