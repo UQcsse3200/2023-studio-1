@@ -63,9 +63,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           return true;
         case Keys.NUM:
           if (keycode == Keys.NUM_0) {
-            handleHotKeySelection(0);
+            triggerHotKeySelection(0);
           } else {
-            handleHotKeySelection(keycode - hotKeyOffset);
+            triggerHotKeySelection(keycode - hotKeyOffset);
           }
           return true;
         default:
@@ -150,7 +150,11 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    *
    * @param index of the item the user wants to be holding
    */
-  private void handleHotKeySelection(int index) {
-    entity.getComponent(InventoryComponent.class).setHeldItem(index);
-  }
+   public void triggerHotKeySelection(int index) {
+     index -= 8;
+     if (index < 0) {
+       index = 9;
+     }
+     entity.getEvents().trigger("hotkeySelection", index);
+   }
 }

@@ -12,9 +12,6 @@ import java.awt.Point; // for positional data
 import java.util.HashMap;
 import java.util.Map;
 
-
-import static com.csse3200.game.entities.factories.ItemFactory.createHoe;
-
 /**
  * A component intended to be used by the player to track their inventory.
  *
