@@ -53,6 +53,11 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.F:
           triggerEnterEvent();
           return true;
+        case Keys.NUM_0: case Keys.NUM_1: case Keys.NUM_2:
+        case Keys.NUM_3: case Keys.NUM_4: case Keys.NUM_5:
+        case Keys.NUM_6: case Keys.NUM_7: case Keys.NUM_8:
+        case Keys.NUM_9:
+          triggerHotKeySelection(keycode);
         default:
           return false;
       }
@@ -64,7 +69,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   @Override
   public boolean touchUp(int screenX, int screenY, int pointer, int button) {
     Vector2 mousePos = new Vector2(screenX, screenY);
-    entity.getEvents().trigger("use", entity.getPosition(), mousePos, entity.getComponent(InventoryComponent.class).getInHand());
+    entity.getEvents().trigger("use", entity.getPosition(), mousePos, entity.getComponent(InventoryComponent.class).getHeldItem());
     return false;
   }
 
@@ -134,7 +139,11 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    *
    * @param index of the item the user wants to be holding
    */
-  private void handleHotKeySelection(int index) {
-    entity.getComponent(InventoryComponent.class).setHeldItem(index);
+  public void triggerHotKeySelection(int index) {
+    index -= 8;
+    if (index < 0) {
+      index = 9;
+    }
+    entity.getEvents().trigger("hotkeySelection", index);
   }
 }

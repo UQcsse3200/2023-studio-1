@@ -42,6 +42,7 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("attack", this::attack);
     entity.getEvents().addListener("enterTractor", this::enterTractor);
     entity.getEvents().addListener("use", this::use);
+    entity.getEvents().addListener("hotkeySelection", this::hotkeySelection);
   }
 
   @Override
@@ -169,6 +170,9 @@ public class PlayerActions extends Component {
 
   void use(Vector2 playerPos, Vector2 mousePos, Entity itemInHand) {
     itemInHand.getComponent(ItemActions.class).use(playerPos, mousePos, itemInHand, map);
+  }
+  void hotkeySelection(int index) {
+    entity.getComponent(InventoryComponent.class).setHeldItem(index);
   }
 
   /**

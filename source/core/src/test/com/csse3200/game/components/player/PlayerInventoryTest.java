@@ -1,5 +1,6 @@
 package com.csse3200.game.components.player;
 import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.extensions.GameExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,8 +24,8 @@ public class PlayerInventoryTest {
         player = new Entity()
                 .addComponent(inventoryComponent);
         player.create();
-        item1 = new Entity().addComponent(new ItemComponent("Hoe"));
-        item2 = new Entity().addComponent(new ItemComponent("Scythe"));
+        item1 = new Entity().addComponent(new ItemComponent("Hoe", ItemType.HOE));
+        item2 = new Entity().addComponent(new ItemComponent("Scythe",ItemType.SCYTHE));
     }
 
     @Test
