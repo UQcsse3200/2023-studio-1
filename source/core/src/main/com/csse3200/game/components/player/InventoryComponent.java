@@ -85,7 +85,7 @@ public class InventoryComponent extends Component {
    * @return boolean representing if the item was removed successfully
    */
   public boolean removeItem(Entity item) {
-    itemCount.put(item, itemCount.get(item) - 1);
+    itemCount.put(item, this.getItemCount(item) - 1);
     if (itemCount.get(item) == 0) {
       itemCount.remove(item);
       itemPosition.remove(item);

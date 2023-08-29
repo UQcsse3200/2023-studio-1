@@ -5,14 +5,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -76,13 +74,34 @@ class InventoryComponentTest {
   /**
    * Test case for the removeItem() method.
    */
-  //@Test
-//  public void testRemoveItem() {
-//    // Remove an item from the inventory
-//    assertTrue(inventoryComponent.removeItem(item1));
-//    // Check that the removed item is no longer in the inventory
-//    assertFalse(inventoryComponent.hasItem(item1));
-//    // Check that removing a non-existent item does not affect the inventory
-//    assertFalse(inventoryComponent.removeItem(new Entity()));
-//  }
+  @Test
+  public void testRemoveItem() {
+    // Remove an item from the inventory
+    assertTrue(inventoryComponent.removeItem(item1));
+    // Check that the removed item is no longer in the inventory
+    assertFalse(inventoryComponent.hasItem(item1));
+    // Check that removing a non-existent item does not affect the inventory
+    assertFalse(inventoryComponent.removeItem(new Entity()));
+  }
+  @Test
+  void testGetItemCount() {
+    assertEquals(inventoryComponent.getItemCount(item1), 1);
+    inventoryComponent.addItem(item1);
+    assertEquals(inventoryComponent.getItemCount(item1), 2);
+    inventoryComponent.removeItem(item1);
+    inventoryComponent.removeItem(item1);
+    assertEquals(inventoryComponent.getItemCount(item1), 0);
+
+  }
+  @Test
+  void testGetItemPosition() {
+    assertEquals(inventoryComponent.getItemPosition(item1), new Point(0, 0));
+  }
+
+  @Test
+  void testSetItemPosition() {
+    assertEquals(inventoryComponent.getItemPosition(item1), new Point(0, 0));
+    inventoryComponent.setItemPosition(item1,new Point(2,2));
+    assertEquals(inventoryComponent.getItemPosition(item1), new Point(2,2));
+  }
 }
