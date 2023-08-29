@@ -6,6 +6,7 @@ com.csse3200.game.areas.terrain
 com.csse3200.game.components
 com.csse3200.game.components.controlsmenu
 com.csse3200.game.components.gamearea
+com.csse3200.game.components.intro
 com.csse3200.game.components.items
 com.csse3200.game.components.maingame
 com.csse3200.game.components.mainmenu
