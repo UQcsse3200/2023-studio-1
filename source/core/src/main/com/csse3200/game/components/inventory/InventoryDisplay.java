@@ -91,6 +91,10 @@ public class InventoryDisplay extends UIComponent {
     stage.addActor(window);
   }
 
+  /**
+   * Draw stage of inventory
+   * @param batch Batch to render to.
+   */
   @Override
   public void draw(SpriteBatch batch)  {
 
@@ -100,10 +104,17 @@ public class InventoryDisplay extends UIComponent {
     //        //Add the items to the table
   }
 
+  /**
+   * Get inventory Component, function may be removed
+   * @return inventory
+   */
   public InventoryComponent getInventory() {
     return inventory;
   }
 
+  /**
+   * Toggle open state of inventory
+   */
   public void toggleOpen(){
     if (isOpen) {
       window.setVisible(false);

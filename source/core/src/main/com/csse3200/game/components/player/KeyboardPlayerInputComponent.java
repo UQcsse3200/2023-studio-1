@@ -5,6 +5,9 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.utils.math.Vector2Utils;
+import com.csse3200.game.components.player.InventoryComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Input handler for the player for keyboard and touch (mouse) input.
@@ -13,6 +16,7 @@ import com.csse3200.game.utils.math.Vector2Utils;
 public class KeyboardPlayerInputComponent extends InputComponent {
   private final Vector2 moveDirection = Vector2.Zero.cpy();
   private PlayerActions actions;
+  private final int hotKeyOffset = 6;
 
   public KeyboardPlayerInputComponent() {
     super(5);
@@ -56,6 +60,13 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           return true;
         case Keys.F:
           triggerEnterEvent();
+          return true;
+        case Keys.NUM:
+          if (keycode == Keys.NUM_0) {
+            handleHotKeySelection(0);
+          } else {
+            handleHotKeySelection(keycode - hotKeyOffset);
+          }
           return true;
         default:
           return false;
@@ -131,5 +142,14 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
   public void setWalkDirection(Vector2 direction) {
     this.moveDirection.set(direction);
+  }
+
+  /**
+   * Sets the players current held item to that in the provided index of the inventory
+   *
+   * @param index of the item the user wants to be holding
+   */
+  private void handleHotKeySelection(int index) {
+    entity.getComponent(InventoryComponent.class).setHeldItem(index);
   }
 }

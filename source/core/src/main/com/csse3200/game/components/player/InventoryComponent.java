@@ -26,6 +26,8 @@ public class InventoryComponent extends Component {
   private final HashMap<Entity, Integer> itemCount = new HashMap<>();
   private final HashMap<Entity, Point> itemPosition = new HashMap<>();
 
+  private Entity heldItem = null;
+
   public InventoryComponent(List<Entity> items) {
     setInventory(items);
   }
@@ -99,14 +101,29 @@ public class InventoryComponent extends Component {
     return createHoe();
   }
 
+  /**
+   * Returns the count of an item in the inventory
+   * @param item Entity that is an item to find the counted of
+   * @return integer representation of count
+   */
   public int getItemCount(Entity item) {
     return itemCount.getOrDefault(item, 0);
   }
 
+  /**
+   * Returns the position of an item
+   * @param item entity that is the item we want to find
+   * @return Point of the positional representation of the inventory
+   */
   public Point getItemPosition(Entity item) {
     return itemPosition.get(item);
   }
 
+  /**
+   * Returns a boolean value representing whether or not an item is at a point representation of the inventory
+   * @param point Point to check whether an item is at that position
+   * @return Boolean representing whether or not item is at point
+   */
   public Boolean getItemAtPoint( Point point) {
     for (Map.Entry<Entity, Point> entry : itemPosition.entrySet()) {
       if (entry.getValue().equals(point)) {
@@ -116,6 +133,11 @@ public class InventoryComponent extends Component {
     return false;
   }
 
+  /**
+   * Get item at a point
+   * @param point Point representation of inventory position
+   * @return Item at that position or null
+   */
   public Entity getItem(Point point) {
     for (Map.Entry<Entity, Point> entry : itemPosition.entrySet()) {
       if (entry.getValue().equals(point)) {
@@ -125,7 +147,40 @@ public class InventoryComponent extends Component {
     return null;
   }
 
+
+  /**
+   * Set point position for item
+   * @param item item to set position of
+   * @param point position to set
+   */
   public void setItemPosition(Entity item, Point point) {
     itemPosition.put(item, point);
+  }
+
+  /**
+   * Sets the held item for the Player.
+   *
+   * @param index The index of the item in the toolbar to be set as the held item.
+   */
+  public void setHeldItem(int index) {
+    if (index >= 0 && index < inventory.size() / 3) {
+      this.heldItem = inventory.get(index);
+    } else {
+      throw new IndexOutOfBoundsException("Invalid index");
+    }
+  }
+
+  /**
+   * Retrieves the held item of the Player.
+   *
+   * @return The Entity representing the held item.
+   * @throws IllegalStateException If the player is not holding an item.
+   */
+  public Entity getHeldItem() {
+    if (this.heldItem != null) {
+      return this.heldItem;
+    } else {
+      throw new IllegalStateException("Player is not holding an item");
+    }
   }
 }

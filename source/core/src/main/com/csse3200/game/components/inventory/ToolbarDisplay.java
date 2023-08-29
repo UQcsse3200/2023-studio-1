@@ -7,9 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.ui.UIComponent;
 
-import java.util.ArrayList;
-
-public class InventoryToolbar extends UIComponent {
+public class ToolbarDisplay extends UIComponent {
 
     private Table table;
     private Window window;
@@ -61,11 +59,18 @@ public class InventoryToolbar extends UIComponent {
         stage.addActor(window);
     }
 
+    /**
+     * Draw stage for render
+     * @param batch Batch to render to.
+     */
     @Override
     public void draw(SpriteBatch batch)  {
         // draw is handled by the stage
     }
 
+    /**
+     * Toggle Toolbar to open state
+     */
     public void toggleOpen(){
         if (isOpen) {
             window.setVisible(false);
@@ -84,6 +89,9 @@ public class InventoryToolbar extends UIComponent {
         // refresh the ui as per the new inventory.
     }
 
+    /**
+     * Dispose of Toolbar
+     */
     @Override
     public void dispose() {
         super.dispose();
