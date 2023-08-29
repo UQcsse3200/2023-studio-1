@@ -18,7 +18,6 @@ public class TimeService {
 	private int day;
 	private long timeBuffer;
 	private long lastGameTime;
-	private final GameTime gameTime;
 	private boolean paused;
 
 
@@ -26,8 +25,7 @@ public class TimeService {
 		hour = 0;
 		day = 0;
 		paused = false;
-		gameTime = new GameTime();
-		lastGameTime = gameTime.getTime();
+		lastGameTime = ServiceLocator.getTimeSource().getTime();
 	}
 
 	public boolean isPaused() {
@@ -86,8 +84,8 @@ public class TimeService {
 	}
 	public void update() {
 		// this time will be in ms
-		long timePassed = gameTime.getTimeSince(lastGameTime);
-		lastGameTime = gameTime.getTime();
+		long timePassed = ServiceLocator.getTimeSource().getTimeSince(lastGameTime);
+		lastGameTime = ServiceLocator.getTimeSource().getTime();
 		if (paused) {
 			return;
 		}

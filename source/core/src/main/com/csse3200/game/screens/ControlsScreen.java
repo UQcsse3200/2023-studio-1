@@ -54,12 +54,12 @@ public class ControlsScreen extends ScreenAdapter {
     this.game = game;
 
     logger.debug("Initialising controls screen services");
+    ServiceLocator.registerTimeSource(new GameTime());
     ServiceLocator.registerInputService(new InputService());
     ServiceLocator.registerResourceService(new ResourceService());
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
     ServiceLocator.registerTimeService(new TimeService());
-    ServiceLocator.registerTimeSource(new GameTime());
     renderer = RenderFactory.createRenderer();
     renderer.getCamera().getEntity().setPosition(5f, 5f);
 
