@@ -3,11 +3,12 @@ package com.csse3200.game.entities.factories;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.inventory.ToolbarDisplay;
 import com.csse3200.game.components.player.*;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.player.PlayerAnimationController;
-//import com.csse3200.game.components.player.PlayerStatsDisplay;
+import com.csse3200.game.components.inventory.InventoryDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.files.FileLoader;
@@ -58,10 +59,11 @@ public class PlayerFactory {
             .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack))
             .addComponent(new InventoryComponent(new ArrayList<Entity>()))
             .addComponent(inputComponent)
-            //.addComponent(new PlayerStatsDisplay())
             .addComponent(animator)
             .addComponent(new PlayerAnimationController())
-            .addComponent(new ItemPickupComponent());
+            .addComponent(new ItemPickupComponent())
+            .addComponent(new InventoryDisplay())
+            .addComponent(new ToolbarDisplay());
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
