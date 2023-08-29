@@ -73,7 +73,11 @@ public class InventoryComponent extends Component {
    * @return boolean representing if the item was added successfully
    */
   public boolean addItem(Entity item) {
-      return this.inventory.add(item);
+    itemCount.put(item, itemCount.getOrDefault(item, 0) + 1);
+    if (!itemPosition.containsKey(item)) {
+      itemPosition.put(item, new Point(0, 0)); // Default position. You can change this as needed.
+    }
+    return this.inventory.add(item);
   }
 
   /**

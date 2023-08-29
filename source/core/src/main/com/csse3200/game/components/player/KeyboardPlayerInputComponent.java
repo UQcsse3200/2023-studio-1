@@ -61,12 +61,11 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.F:
           triggerEnterEvent();
           return true;
-        case Keys.NUM:
-          if (keycode == Keys.NUM_0) {
-            triggerHotKeySelection(0);
-          } else {
-            triggerHotKeySelection(keycode - hotKeyOffset);
-          }
+        case Keys.NUM_0: case Keys.NUM_1: case Keys.NUM_2:
+        case Keys.NUM_3: case Keys.NUM_4: case Keys.NUM_5:
+        case Keys.NUM_6: case Keys.NUM_7: case Keys.NUM_8:
+        case Keys.NUM_9:
+          triggerHotKeySelection(keycode);
           return true;
         default:
           return false;
