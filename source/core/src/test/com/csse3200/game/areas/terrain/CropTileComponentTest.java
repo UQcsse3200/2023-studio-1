@@ -3,10 +3,8 @@ package com.csse3200.game.areas.terrain;
 import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.entities.configs.plants.PlantConfigs;
-import com.csse3200.game.entities.factories.PlantFactory;
+import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
-import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
@@ -178,7 +176,7 @@ public class CropTileComponentTest {
         ServiceLocator.registerEntityService(mockEntityService);
         Entity plant = mock(Entity.class);
         plant.addComponent(new PlantComponent(
-                1, "name", "type", "desc", 1, 7, 1));
+                1, "name", "type", "desc", 1, 7, 1, cropTile1.getComponent(CropTileComponent.class)));
         Function<CropTileComponent, Entity> plantFactoryMethod = cropTileComponent -> plant;
         cropTile1.getEvents().trigger("plant", plantFactoryMethod);
         verify(mockEntityService).register(plant);
@@ -200,7 +198,7 @@ public class CropTileComponentTest {
         ServiceLocator.registerEntityService(mockEntityService);
         Entity plant = mock(Entity.class);
         plant.addComponent(new PlantComponent(
-                1, "name", "type", "desc", 1, 7, 1));
+                1, "name", "type", "desc", 1, 7, 1, cropTile1.getComponent(CropTileComponent.class)));
         Function<CropTileComponent, Entity> plantFactoryMethod = cropTileComponent -> plant;
         cropTile1.getEvents().trigger("plant", plantFactoryMethod);
         verify(mockEntityService).register(plant);
@@ -213,18 +211,16 @@ public class CropTileComponentTest {
     public void testDestroyTile() {
         EntityService mockEntityService = mock(EntityService.class);
         ServiceLocator.registerEntityService(mockEntityService);
-        Entity plant = new Entity();
-        plant.addComponent(new PlantComponent(
-                1, "name", "type", "desc", 1, 7, 1));
+        Entity plant = new Entity().addComponent(new PlantComponent(
+                1, "name", "type", "desc", 1, 7, 1, cropTile1.getComponent(CropTileComponent.class)));
         Function<CropTileComponent, Entity> plantFactoryMethod = cropTileComponent -> plant;
-        /*commenting out "destroying plant" section until Team 6's plants have that functionality
-
         cropTile1.getEvents().trigger("plant", plantFactoryMethod);
         verify(mockEntityService).register(plant);
         cropTile1.getEvents().trigger("destroy");
-        verify(mockEntityService).unregister(plant);
-        verify(mockEntityService, never()).unregister(cropTile1);*/
+        verify(mockEntityService, never()).unregister(cropTile1);
         cropTile1.getEvents().trigger("destroy");
         verify(mockEntityService).unregister(cropTile1);
+        cropTile2.getEvents().trigger("destroy");
+        verify(mockEntityService).unregister(cropTile2);
     }
 }
