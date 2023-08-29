@@ -112,11 +112,11 @@ public class TimeController {
     }
 
     /**
-     * @return the current hour of the game
+     * @return the current hour of the day
      */
     public int getHour() {
 
-        this.hour = (int) Math.floor(timeSource.getActiveTime() / 30000);
+        this.hour = (int) Math.floor(getTimeOfDay() / 30000);
 
         return this.hour;
     }
