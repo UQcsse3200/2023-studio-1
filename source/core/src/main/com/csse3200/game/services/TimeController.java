@@ -29,14 +29,14 @@ public class TimeController {
     /** The current hour in the game*/
     private int hour;
 
-    /** if paused then 1 else 0 */
+    /** pause status */
     private boolean paused;
 
     /** Time that the game was last paused at */
     private long pausedAt;
 
     /**
-     * Constructor used to initalise important values and define initial states for the TimeController class
+     * Constructor used to define initial states for the TimeController class and link to parent GameTime service
      *
      * @param timeSource: The current GameTime service for this instance
      */
@@ -47,14 +47,27 @@ public class TimeController {
         this.paused = false;
     }
 
+    /**
+     * Add an entity observer to the list of entities
+     *
+     * @param entity: entity that you want to add as an observer
+     */
     public void register(Entity entity) {
         entities.add(entity);
     }
 
+    /**
+     * Remove an entity observer from the list of entities
+     *
+     * @param entity: entity that you want to remove from the list
+     */
     public void remove(Entity entity) {
         entities.remove(entity);
     }
 
+    /**
+     * Notify the entities to update
+     */
     public void update() {
 
     }
@@ -68,29 +81,6 @@ public class TimeController {
         this.timeDisplay = timeDisplay;
     }
 
-    /**
-     * @return the active time of the game in seconds
-     */
-    public int getTimeInSeconds() {
-        return (int) timeSource.getActiveTime() / 1000;
-    }
-
-    /**
-     * @return the time of the day in milliseconds
-     */
-    public int getTimeOfDay() {
-        return (int) timeSource.getActiveTime() % 720000;
-    }
-
-    /**
-     * @return the current hour of the game
-     */
-    public int getHour() {
-
-            this.hour = (int) Math.floor(getTimeOfDay() / 30000);
-
-        return this.hour;
-    }
 
     /**
      *  Updates the clock and time display by calling the update() method in GameTimeDisplay
@@ -105,6 +95,30 @@ public class TimeController {
 
             timeDisplay.update(this.hour);
         }
+    }
+
+    /**
+     * @return the active time of the game in seconds
+     */
+    public int getTimeInSeconds() {
+        return (int) timeSource.getActiveTime() / 1000;
+    }
+
+    /**
+     * @return the time of the day in milliseconds
+     */
+    public long getTimeOfDay() {
+        return timeSource.getActiveTime() % 720000;
+    }
+
+    /**
+     * @return the current hour of the day
+     */
+    public int getHour() {
+
+        this.hour = (int) Math.floor(getTimeOfDay() / 30000);
+
+        return this.hour;
     }
 
     /**
@@ -133,6 +147,7 @@ public class TimeController {
         }
     }
 
+    // not finished
     // Sets the game time and display to a specific time
     public void setTime(int hour) {
 
