@@ -14,7 +14,6 @@ import java.util.Map;
 
 /**
  * A component intended to be used by the player to track their inventory.
- *
  * Currently untested, but forms the basis for the UI which will be implemented soon:tm:
  */
 public class InventoryComponent extends Component {

@@ -5,9 +5,6 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.utils.math.Vector2Utils;
-import com.csse3200.game.components.player.InventoryComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Input handler for the player for keyboard and touch (mouse) input.
