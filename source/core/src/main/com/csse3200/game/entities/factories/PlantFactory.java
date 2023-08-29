@@ -32,14 +32,6 @@ public class PlantFactory {
     }
 
     /**
-     * Resets plant statistics to default values from "configs/plant.json" file.
-     */
-    public static void resetStats() {
-        stats = FileLoader.readClass(PlantConfigs.class, "configs/plant.json");
-    }
-
-
-    /**
      * Creates a generic plant to be used as a base for more specific plant creation methods.
      *
      * @return entity
@@ -190,7 +182,7 @@ public class PlantFactory {
         BasePlantConfig config = stats.venusFlyTrap;
 
         Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/test_cactus.png"))
+                .addComponent(new TextureRenderComponent("images/test_cactus2.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
                         config.maxHealth, cropTile));
