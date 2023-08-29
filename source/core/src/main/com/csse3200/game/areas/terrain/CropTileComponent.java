@@ -3,6 +3,7 @@ package com.csse3200.game.areas.terrain;
 import com.badlogic.gdx.math.MathUtils;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.function.Function;
@@ -17,27 +18,28 @@ public class CropTileComponent extends Component {
 	/**
 	 * Default rate that a tile's water level decreases
 	 */
-	private static final float waterDecreaseRate = 0.05f;
+	private static final float WATER_DECREASE_RATE = 0.05f;
 
 	/**
 	 * Ideal water fall off sharpness to calculate growth rate
 	 */
-	private static final float idealWaterFalloffSharpness = 2.0f;
+	private static final float IDEAL_WATER_FALL_OFF_SHARPNESS = 2.0f;
 
 	/**
 	 * How tolerant the growth rate is to the water being different from the ideal value
 	 */
-	private static final float idealWaterFalloffTolerance = 1.2f;
+	private static final float IDEAL_WATER_FALL_OFF_TOLERANCE = 1.2f;
 
 	/**
 	 * Water damage threshold used to calculate growth rate
 	 */
-	private static final float waterDamageThreshold = 0.1f;
+	private static final float WATER_DAMAGE_THRESHOLD = 0.1f;
 
 	private float waterContent;
 	private final float soilQuality;
 	private boolean isFertilised;
 	private Entity plant;
+	private DynamicTextureRenderComponent currentTexture;
 
 
 	/**
@@ -67,6 +69,7 @@ public class CropTileComponent extends Component {
 		entity.getEvents().addListener("fertilise", this::fertiliseTile);
 		entity.getEvents().addListener("plant", this::plantCrop);
 		entity.getEvents().addListener("destroy", this::destroyTile);
+		currentTexture = entity.getComponent(DynamicTextureRenderComponent.class);
 	}
 
 	/**
@@ -74,11 +77,17 @@ public class CropTileComponent extends Component {
 	 */
 	@Override
 	public void update() {
-		waterContent -= waterDecreaseRate * ServiceLocator.getTimeSource().getDeltaTime();
+		waterContent -= WATER_DECREASE_RATE * ServiceLocator.getTimeSource().getDeltaTime();
 		if (waterContent < 0) {
 			waterContent = 0;
 		} else if (waterContent > 2) {
 			waterContent = 2;
+		}
+
+		// Update the texture of the corresponding entity
+		if (currentTexture != null) {
+			String texturePath = this.getTexturePath();
+			currentTexture.setTexture(texturePath);
 		}
 	}
 
@@ -106,7 +115,7 @@ public class CropTileComponent extends Component {
 			plant.getEvents().trigger("destroyPlant");
 			this.setUnoccupied();
 		} else {
-			this.dispose();
+			entity.dispose();
 		}
 	}
 
@@ -147,13 +156,14 @@ public class CropTileComponent extends Component {
 	 */
 	public double getGrowthRate(float idealWaterAmount) {
 		double waterMultiplier = 1 / (Math.exp(
-				Math.pow(Math.abs(waterContent - idealWaterAmount), idealWaterFalloffSharpness)))
+				Math.pow(Math.abs(waterContent - idealWaterAmount), IDEAL_WATER_FALL_OFF_SHARPNESS)))
 				- 1 / MathUtils.E;
 		waterMultiplier *= 1 / (1 - 1 / MathUtils.E);
-		waterMultiplier = (waterMultiplier - waterDamageThreshold) / (1 - waterDamageThreshold);
+		waterMultiplier = (waterMultiplier - WATER_DAMAGE_THRESHOLD) / (1 - WATER_DAMAGE_THRESHOLD);
 		waterMultiplier =
-				waterMultiplier > 0 ? Math.pow(waterMultiplier, idealWaterFalloffTolerance) : -1.0;
-		return waterMultiplier > 0 ? soilQuality * (isFertilised ? 2 : 1) * waterMultiplier : -1.0;
+				waterMultiplier > 0 ? Math.pow(waterMultiplier, IDEAL_WATER_FALL_OFF_TOLERANCE) : -1.0;
+		int fertiliserMultiplier = isFertilised ? 2: 1;
+		return waterMultiplier > 0 ? soilQuality * fertiliserMultiplier * waterMultiplier : -1.0;
 	}
 
 	/**
@@ -173,4 +183,30 @@ public class CropTileComponent extends Component {
 		plant = null;
 	}
 
+	/**
+	 * Determine the appropriate String for the tile's texture based on fertiliser status and
+	 * water content.
+	 * @return the path to the texture for this CropTileComponent based on its status.
+	 */
+	private String getTexturePath() {
+		String path = "images/cropTile_fertilised.png";
+		if (isFertilised) {
+			if (waterContent < 0.5) {
+				path = "images/cropTile_fertilised.png";
+			} else if (waterContent < 1.5) {
+				path = "images/watered_cropTile_fertilised.png";
+			} else {
+				path = "images/overwatered_cropTile_fertilised.png";
+			}
+		} else {
+			if (waterContent < 0.5) {
+				path = "images/cropTile.png";
+			} else if (waterContent < 1.5) {
+				path = "images/watered_cropTile.png";
+			} else {
+				path = "images/overwatered_cropTile.png";
+			}
+		}
+		return path;
+	}
 }

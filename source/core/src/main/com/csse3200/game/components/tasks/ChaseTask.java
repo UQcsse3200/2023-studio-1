@@ -12,13 +12,21 @@ import com.csse3200.game.services.ServiceLocator;
 
 /** Chases a target entity until they get too far away or line of sight is lost */
 public class ChaseTask extends DefaultTask implements PriorityTask {
+  /** The entity to chase. */
   private final Entity target;
+  /** Task priority when chasing (-1 when not chasing). */
   private final int priority;
+  /** Maximum distance from the entity at which chasing can start. */
   private final float viewDistance;
+  /** Maximum distance from the entity while chasing before giving up. */
   private final float maxChaseDistance;
+  /** The physics engine for raycasting. */
   private final PhysicsEngine physics;
+  /** The debug renderer for visualization. */
   private final DebugRenderer debugRenderer;
+  /** Raycast hit information. */
   private final RaycastHit hit = new RaycastHit();
+  /** The movement task for chasing. */
   private MovementTask movementTask;
 
   /**
@@ -36,6 +44,9 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     debugRenderer = ServiceLocator.getRenderService().getDebug();
   }
 
+  /**
+   * Starts the chase task by initializing the movement task and triggering the "chaseStart" event.
+   */
   @Override
   public void start() {
     super.start();
@@ -46,6 +57,9 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     this.owner.getEntity().getEvents().trigger("chaseStart");
   }
 
+  /**
+   * Updates the chase task by updating the movement task and restarting it if necessary.
+   */
   @Override
   public void update() {
     movementTask.setTarget(target.getPosition());
@@ -55,12 +69,20 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     }
   }
 
+  /**
+   * Stops the chase task and the associated movement task.
+   */
   @Override
   public void stop() {
     super.stop();
     movementTask.stop();
   }
 
+  /**
+   * Gets the priority level of the chase task based on the current status and conditions.
+   *
+   * @return The priority level.
+   */
   @Override
   public int getPriority() {
     if (status == Status.ACTIVE) {
@@ -70,10 +92,21 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     return getInactivePriority();
   }
 
+  /**
+   * Calculates the distance between the owner's entity and the target entity.
+   *
+   * @return The distance between the owner's entity and the target entity.
+   */
   private float getDistanceToTarget() {
     return owner.getEntity().getPosition().dst(target.getPosition());
   }
 
+  /**
+   * Determines the priority when the chase task is active based on the distance to the target
+   * and the visibility of the target entity.
+   *
+   * @return The active priority level or -1 if chasing conditions are not met.
+   */
   private int getActivePriority() {
     float dst = getDistanceToTarget();
     if (dst > maxChaseDistance || !isTargetVisible()) {
@@ -82,6 +115,12 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     return priority;
   }
 
+  /**
+   * Determines the priority when the chase task is inactive based on the distance to the target
+   * and the visibility of the target entity.
+   *
+   * @return The inactive priority level or -1 if conditions are not met.
+   */
   private int getInactivePriority() {
     float dst = getDistanceToTarget();
     if (dst < viewDistance && isTargetVisible()) {
@@ -90,6 +129,11 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     return -1;
   }
 
+  /**
+   * Checks if the target entity is visible from the owner's entity position by performing a raycast.
+   *
+   * @return True if the target entity is visible, false otherwise.
+   */
   private boolean isTargetVisible() {
     Vector2 from = owner.getEntity().getCenterPosition();
     Vector2 to = target.getCenterPosition();
