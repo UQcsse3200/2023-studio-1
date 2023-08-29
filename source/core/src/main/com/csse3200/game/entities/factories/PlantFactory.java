@@ -55,7 +55,7 @@ public class PlantFactory {
         BasePlantConfig config = stats.cosmicCob;
 
         Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/corn_temp.png"))
+                .addComponent(new TextureRenderComponent("images/plants/Corn.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
                         config.maxHealth, cropTile));
@@ -80,7 +80,7 @@ public class PlantFactory {
         BasePlantConfig config = stats.aloeVera;
 
         Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/aloe_temp.png"))
+                .addComponent(new TextureRenderComponent("images/plants/Aloe.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
                         config.maxHealth, cropTile));
@@ -105,7 +105,7 @@ public class PlantFactory {
         BasePlantConfig config = stats.hammerPlant;
 
         Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/test_cactus.png"))
+                .addComponent(new TextureRenderComponent("images/plants/Hammer.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
                         config.maxHealth, cropTile));
@@ -131,7 +131,7 @@ public class PlantFactory {
         BasePlantConfig config = stats.atropaBelladonna;
 
         Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/belladonna.png"))
+                .addComponent(new TextureRenderComponent("images/plants/belladonna.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
                         config.maxHealth, cropTile));
@@ -156,7 +156,7 @@ public class PlantFactory {
         BasePlantConfig config = stats.nicotianaTabacum;
 
         Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/tobacco.png"))
+                .addComponent(new TextureRenderComponent("images/plants/waterweed.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
                         config.maxHealth, cropTile));
@@ -182,7 +182,7 @@ public class PlantFactory {
         BasePlantConfig config = stats.venusFlyTrap;
 
         Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/test_cactus2.png"))
+                .addComponent(new TextureRenderComponent("images/plants/VenusTrap.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
                         config.maxHealth, cropTile));
