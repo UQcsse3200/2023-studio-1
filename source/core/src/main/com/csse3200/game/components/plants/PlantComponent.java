@@ -11,10 +11,9 @@ public class PlantComponent extends Component {
     private String plantName;           // User facing plant name
     private String plantType;           // Type of plant (food, health, repair, defence, production, deadly)
     private String plantDescription;    // User facing description of the plant
-    private float plantAge = 0;           // Age of the plant in days as an integer
     private boolean decay = false;
     private float idealWaterLevel;              // Ideal water level. A factor when determining the growth rate.
-    private float currentAge;               // Current age of the plant
+    private float currentAge;               // Current age of the plant in in-game days
     private int growthStage;                    // Growth stage of a plant.
     private int adultLifeSpan;                  // How long a crop plant lives before starting to decay from old age.
 
@@ -40,7 +39,7 @@ public class PlantComponent extends Component {
         this.adultLifeSpan = adultLifeSpan;
         this.maxHealth = maxHealth;
         this.cropTile = cropTile;
-        this.plantAge = 0;
+        this.currentAge = 0;
         this.growthStage = 1;
     }
 
@@ -130,22 +129,6 @@ public class PlantComponent extends Component {
     }
 
     /**
-     * Get this plants current age in days
-     * @return the number of days the plant has existed for
-     */
-    public float getPlantAge() {
-        return this.plantAge;
-    }
-
-    /**
-     * Set this plant's age in days
-     * @param age - plant's age (in days)
-     */
-    public void setPlantAge(float age) {
-        this.plantAge = age;
-    }
-
-    /**
      * Get the ideal water level of a plant
      * @return ideal water level
      */
@@ -154,7 +137,7 @@ public class PlantComponent extends Component {
     }
 
     /**
-     * Get the current age of a plant
+     * Get the current age of a plant in days
      * @return current age
      */
     public float getCurrentAge() {
@@ -162,7 +145,7 @@ public class PlantComponent extends Component {
     }
 
     /**
-     * Sets the current age of a plant
+     * Sets the current age of a plant in days
      *
      * @param newAge - The new age the plant is being updated to
      */
