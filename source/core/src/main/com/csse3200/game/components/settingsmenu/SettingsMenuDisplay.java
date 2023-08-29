@@ -31,18 +31,47 @@ import org.slf4j.LoggerFactory;
 public class SettingsMenuDisplay extends UIComponent {
   private static final Logger logger = LoggerFactory.getLogger(SettingsMenuDisplay.class);
   private final GdxGame game;
-  private Table rootTable;
   private TextField fpsText;
   private CheckBox fullScreenCheck;
   private CheckBox vsyncCheck;
   private Slider uiScaleSlider;
   private SelectBox<StringDecorator<DisplayMode>> displayModeSelect;
+
+  /**
+   * The base Table on which the layout of the screen is built
+   */
+  private Table rootTable;
+
+  /**
+   * The Image that represents the background of the page
+   */
   private Image background;
+
+  /**
+   * An Image that stores the current frame of the menu screen animation
+   */
   private Image transitionFrames;
+
+  /**
+   * The current frame of the animation
+   */
   private int frame;
+
+  /**
+   * The time at which the last frame was updated
+   */
   private long lastFrameTime;
+
+  /**
+   * The target fps at which the frames should be updated
+   */
   private int fps = 15;
+
+  /**
+   * The duration for which each frame should be displayed
+   */
   private final long frameDuration = (long) (800 / fps);
+
 
   public SettingsMenuDisplay(GdxGame game) {
     super();

@@ -24,6 +24,7 @@ import java.util.LinkedHashMap;
 public class ControlsMenuDisplay extends UIComponent {
   private static final Logger logger = LoggerFactory.getLogger(ControlsMenuDisplay.class);
   private final GdxGame game;
+
   /**
    * The base Table on which the layout of the screen is built
    */
