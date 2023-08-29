@@ -73,13 +73,13 @@ public class TimeService {
 	}
 	private void triggerHourUpdate() {
 		for (Entity entity: hourUpdateEntities) {
-			entity.getEvents().trigger(HOUR_UPDATE, getHour());
+			entity.getEvents().trigger(HOUR_UPDATE);
 		}
 	}
 
 	private void triggerDayUpdate() {
 		for (Entity entity: dayUpdateEntities) {
-			entity.getEvents().trigger(DAY_UPDATE, getDay());
+			entity.getEvents().trigger(DAY_UPDATE);
 		}
 	}
 	public void update() {

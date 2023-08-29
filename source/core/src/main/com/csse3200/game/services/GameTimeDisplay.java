@@ -27,10 +27,11 @@ public class GameTimeDisplay extends UIComponent {
         super.create();
         entity.getEvents().addListener("hourUpdate", this::updateDisplay);
         ServiceLocator.getTimeService().registerHourUpdate(entity);
-        updateDisplay(ServiceLocator.getTimeService().getDay());
+        updateDisplay();
     }
 
-    public void updateDisplay(int time) {
+    public void updateDisplay() {
+        int time = ServiceLocator.getTimeService().getHour();
         table = new Table();
         group = new Group();
         table.top().left();
