@@ -101,8 +101,6 @@ public class InventoryComponent extends Component {
   public void setHeldItem(int index) {
     if (index >= 0 && index < inventory.size()) {
       this.heldItem = inventory.get(index);
-    } else {
-      throw new IndexOutOfBoundsException("Invalid index");
     }
   }
 

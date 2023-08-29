@@ -53,7 +53,6 @@ public class PlayerInventoryTest {
         player.getComponent(InventoryComponent.class).setHeldItem(0);
         assertSame(inventoryComponent.getHeldItem(), item1);
         player.getComponent(InventoryComponent.class).removeItem(item1);
-        assertThrows(IndexOutOfBoundsException.class,()->inventoryComponent.setHeldItem(1));
     }
     @Test
     void checkGetHeldItem() {
