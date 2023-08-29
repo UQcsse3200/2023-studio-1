@@ -11,11 +11,12 @@ public class PlantComponent extends Component {
     private String plantName;           // User facing plant name
     private String plantType;           // Type of plant (food, health, repair, defence, production, deadly)
     private String plantDescription;    // User facing description of the plant
-    private boolean decay = false;
-    private float idealWaterLevel;              // Ideal water level. A factor when determining the growth rate.
-    private float currentAge;               // Current age of the plant in in-game days
-    private int growthStage;                    // Growth stage of a plant.
-    private int adultLifeSpan;                  // How long a crop plant lives before starting to decay from old age.
+    private boolean decay;
+    private float idealWaterLevel;      // Ideal water level. A factor when determining the growth rate.
+    private float currentAge;           // Current age of the plant in in-game days
+    private int growthStage;            // Growth stage of a plant.
+    private int adultLifeSpan;          // How long a crop plant lives before starting to decay from old age.
+    private double currentGrowthLevel;  // Used to determine when a plant enters a new growth stage
 
     /** The crop tile on which this plant is planted on. */
     private CropTileComponent cropTile;
@@ -41,6 +42,8 @@ public class PlantComponent extends Component {
         this.cropTile = cropTile;
         this.currentAge = 0;
         this.growthStage = 1;
+        this.decay = false;
+        this.currentGrowthLevel = 0;
     }
 
     /**
@@ -204,6 +207,35 @@ public class PlantComponent extends Component {
      */
     public void increaseCurrentAge(float ageIncrement) {
         this.currentAge += ageIncrement;
+    }
+
+    /**
+     * Return the current growth level of the plant.
+     * @return The current growth level
+     */
+    public double getCurrentGrowthLevel() {
+        return this.currentGrowthLevel;
+    }
+
+    /**
+     * Increase the currentGrowthLevel based on the growth rate provided by the CropTileComponent where the
+     * plant is located.
+     * If the growthRate received is negative, this indicates that the conditions are inhospitable for the
+     * plant, and it will lose some health.
+     * currentGrowthLevel can not increase once a plant is an adult, but the tile can become inhospitable and
+     * decrease the adult plants' health.
+     * If the plant is already decaying, do nothing.
+     */
+    void increaseCurrentGrowthLevel() {
+        double growthRate = this.cropTile.getGrowthRate(this.idealWaterLevel);
+
+        // Check if the growth rate is negative
+        // That the plant is not decaying
+        if ((growthRate < 0) && !this.decay) {
+            increasePlantHealth(-10);
+        } else if (!this.decay && !(this.growthStage >= 7)) {
+            this.currentGrowthLevel += this.cropTile.getGrowthRate(this.idealWaterLevel);
+        }
     }
 
     /**
