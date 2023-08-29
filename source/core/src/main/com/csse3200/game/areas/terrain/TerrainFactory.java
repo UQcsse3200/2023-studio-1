@@ -397,17 +397,4 @@ public class TerrainFactory {
       // closing buffer reader object
       bf.close();
   }
-
-  /**
-   * This enum should contain the different terrains in your game, e.g. forest, cave, home, all with
-   * the same oerientation. But for demonstration purposes, the base code has the same level in 3
-   * different orientations.
-   */
-  public enum TerrainType { // should be able to be deleted at some point
-    FOREST_DEMO,
-    FOREST_DEMO_ISO,
-    FOREST_DEMO_HEX,
-
-    DESERT_DEMO
-  }
 }
