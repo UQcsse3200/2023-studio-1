@@ -26,11 +26,27 @@ public class ControlsScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(ControlsScreen.class);
   private final GdxGame game;
   private final Renderer renderer;
+
+  /**
+   * A count of the frame in the background animation
+   */
   public static final int frameCount = 71;
+
+  /**
+   * A list of textures that must be loaded for this screen
+   */
   private static final String[] mainMenuTextures = {"images/galaxy_home_still.png"};
+
+  /**
+   * A list of textures that must be loaded for the animation
+   */
   public static String[] transitionTextures = new String[frameCount];
+
+  /**
+   * A common name prefix for all the animation textures
+   */
   private static final String animationPrefix = "images/menu_animations/menu_animations";
-  private Texture backgroundTexture;
+
   private SpriteBatch batch;
 
   public ControlsScreen(GdxGame game) {
@@ -68,6 +84,9 @@ public class ControlsScreen extends ScreenAdapter {
     ServiceLocator.clear();
   }
 
+  /**
+   * Loads the texture assets required for the screen
+   */
   private void loadAssets() {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
@@ -76,10 +95,14 @@ public class ControlsScreen extends ScreenAdapter {
     ServiceLocator.getResourceService().loadAll();
   }
 
+  /**
+   * Loads the texture frames required for the animation on this screen.
+   */
   private void loadFrames() {
-    logger.debug("Loading assets");
+    logger.debug("Loading animation frames");
     ResourceService resourceService = ServiceLocator.getResourceService();
 
+    // Add the name of each animation texture to the transitionTextures array
     for (int i = 0; i < frameCount; i++) {
       transitionTextures[i] = animationPrefix + i + ".png";
     }
@@ -87,14 +110,18 @@ public class ControlsScreen extends ScreenAdapter {
     ServiceLocator.getResourceService().loadAll();
   }
 
+  /**
+   * Remove the loaded image textures from the ResourceService
+   */
   private void unloadAssets() {
     logger.debug("Unloading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.unloadAssets(mainMenuTextures);
+    resourceService.unloadAssets(transitionTextures);
   }
 
   /**
-   * Creates the setting screen's ui including components for rendering ui elements to the screen
+   * Creates the control screen's ui including components for rendering ui elements to the screen
    * and capturing and handling ui input.
    */
   private void createUI() {
