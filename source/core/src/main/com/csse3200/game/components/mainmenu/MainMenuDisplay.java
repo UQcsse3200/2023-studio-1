@@ -4,11 +4,14 @@ package com.csse3200.game.components.mainmenu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.csse3200.game.screens.ControlsScreen;
 import com.csse3200.game.screens.MainMenuScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
@@ -32,6 +35,7 @@ public class MainMenuDisplay extends UIComponent {
     public void create() {
         frame=1;
         super.create();
+        transitionFrames = new Image();
         addActors();
     }
 
@@ -46,8 +50,6 @@ public class MainMenuDisplay extends UIComponent {
         title.setWidth(Gdx.graphics.getWidth());
         title.setHeight(Gdx.graphics.getHeight());
         title.setPosition(0, 0);
-
-
         TextButton startBtn = new TextButton("Start", skin);
         TextButton loadBtn = new TextButton("Controls", skin);
         TextButton settingsBtn = new TextButton("Settings", skin);
@@ -91,11 +93,8 @@ public class MainMenuDisplay extends UIComponent {
                     }
                 });
 
-
-
         table.add(title);
         table.row();
-
         table.add(startBtn).padTop(30f);
         table.row();
         table.add(loadBtn).padTop(15f);
@@ -104,27 +103,30 @@ public class MainMenuDisplay extends UIComponent {
         table.row();
         table.add(exitBtn).padTop(15f);
         stage.addActor(title);
+        updateAnimation();
+
+        stage.addActor(transitionFrames);
+        stage.addActor(table);
+    }
+
+    private void updateAnimation() {
         if (frame < MainMenuScreen.frameCount) {
-            transitionFrames = new Image(ServiceLocator.getResourceService()
-                    .getAsset(MainMenuScreen.transitionTextures[frame], Texture.class));
+            transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
+                    .getAsset(MainMenuScreen.transitionTextures[frame], Texture.class))));
             transitionFrames.setWidth(Gdx.graphics.getWidth());
-            transitionFrames.setHeight(Gdx.graphics.getHeight()/2);
-            transitionFrames.setPosition(0, Gdx.graphics.getHeight()/2+15);
+            transitionFrames.setHeight(Gdx.graphics.getHeight() / 2);
+            transitionFrames.setPosition(0, Gdx.graphics.getHeight() / 2 + 15);
             frame++;
-            stage.addActor(transitionFrames);
             lastFrameTime = System.currentTimeMillis();
         } else {
-            frame=1;
+            frame = 1;
         }
-        stage.addActor(table);
-
-
     }
 
     @Override
     public void update() {
         if (System.currentTimeMillis() - lastFrameTime > frameDuration) {
-            addActors();
+            updateAnimation();
         }
     }
     @Override
