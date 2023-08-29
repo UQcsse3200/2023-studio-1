@@ -9,13 +9,12 @@ public class PlantComponent extends Component {
     private int plantHealth;            // Initial plant health
     private int maxHealth;              // Maximum health this plant can reach.
     private String plantName;           // User facing plant name
-    private String plantType;           // Type of plant (food, health, repair, defence, production)
+    private String plantType;           // Type of plant (food, health, repair, defence, production, deadly)
     private String plantDescription;    // User facing description of the plant
-    private int plantAge = 0;           // Age of the plant in days as an integer
     private boolean decay = false;
     private float idealWaterLevel;              // Ideal water level. A factor when determining the growth rate.
-    private float currentAge = 0;               // Current age of the plant
-    private int growthStage = 0;                // Growth stage starts at 0 for all plants.
+    private float currentAge;               // Current age of the plant in in-game days
+    private int growthStage;                    // Growth stage of a plant.
     private int adultLifeSpan;                  // How long a crop plant lives before starting to decay from old age.
 
     /** The crop tile on which this plant is planted on. */
@@ -24,13 +23,14 @@ public class PlantComponent extends Component {
     /**
      * Constructor used for plant types that have no extra properties.
      *
-     * @param health
-     * @param name
-     * @param plantType
-     * @param plantDescription
+     * @param health             health of the plant
+     * @param name               name of the plant
+     * @param plantType          type of the plant
+     * @param plantDescription   description of the plant
      */
     public PlantComponent(int health, String name, String plantType, String plantDescription,
-                          float idealWaterLevel, int adultLifeSpan, int maxHealth) {
+                          float idealWaterLevel, int adultLifeSpan, int maxHealth,
+                          CropTileComponent cropTile) {
         this.plantHealth = health;
         this.plantName = name;
         this.plantType = plantType;
@@ -38,6 +38,22 @@ public class PlantComponent extends Component {
         this.idealWaterLevel = idealWaterLevel;
         this.adultLifeSpan = adultLifeSpan;
         this.maxHealth = maxHealth;
+        this.cropTile = cropTile;
+        this.currentAge = 0;
+        this.growthStage = 1;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void create() {
+        super.create();
+
+        // Initialise event listeners.
+        entity.getEvents().addListener("harvest", this::harvest);
+        entity.getEvents().addListener("destroyPlant", this::destroyPlant);
+        entity.getEvents().addListener("attack", (Integer damage) -> increasePlantHealth(-damage));
     }
 
     /**
@@ -55,7 +71,7 @@ public class PlantComponent extends Component {
 
     /**
      * Set the current plant health
-     * @param health
+     * @param health - current plant health
      */
     public void setPlantHealth(int health) {
         this.plantHealth = health;
@@ -63,10 +79,10 @@ public class PlantComponent extends Component {
 
     /**
      * Increase (or decrease) the plant health by some value
-     * @param value
+     * @param plantHealthIncrement - plant health affected value
      */
-    public void increasePlantHealth(int value) {
-        this.plantHealth += value;
+    public void increasePlantHealth(int plantHealthIncrement) {
+        this.plantHealth += plantHealthIncrement;
     }
 
     /**
@@ -98,7 +114,7 @@ public class PlantComponent extends Component {
 
     /**
      * Set the decay boolean.
-     * @param decay
+     * @param decay - Whether the plant is decaying or not
      */
     public void setDecay(boolean decay) {
         this.decay = decay;
@@ -113,22 +129,6 @@ public class PlantComponent extends Component {
     }
 
     /**
-     * Get this plants current age in days
-     * @return the number of days the plant has existed for
-     */
-    public int getPlantAge() {
-        return this.plantAge;
-    }
-
-    /**
-     * Set this plants age in days
-     * @param age
-     */
-    public void setPlantAge(int age) {
-        this.plantAge = age;
-    }
-
-    /**
      * Get the ideal water level of a plant
      * @return ideal water level
      */
@@ -137,11 +137,20 @@ public class PlantComponent extends Component {
     }
 
     /**
-     * Get the current age of a plant
+     * Get the current age of a plant in days
      * @return current age
      */
     public float getCurrentAge() {
         return this.currentAge;
+    }
+
+    /**
+     * Sets the current age of a plant in days
+     *
+     * @param newAge - The new age the plant is being updated to
+     */
+    public void setCurrentAge(float newAge) {
+        this.currentAge = newAge;
     }
 
     /**
@@ -153,46 +162,75 @@ public class PlantComponent extends Component {
     }
 
     /**
+     * Set the growth stage of a plant.
+     *
+     * @param newGrowthStage - The updated growth stage of the plant, between 1 and 7.
+     */
+    public void setGrowthStage(int newGrowthStage) {
+        this.growthStage = newGrowthStage;
+    }
+
+    /**
      * get the adult life span of a plant
+     *
      * @return adult life span
      */
     public int getAdultLifeSpan() {
         return this.adultLifeSpan;
     }
 
+
+    /**
+     * Set the adult life span of a plant.
+     * @param adultLifeSpan - The number of days the plant will exist as an adult plant
+     */
+    public void setAdultLifeSpan(int adultLifeSpan) {
+        this.adultLifeSpan = adultLifeSpan;
+    }
+
     /**
      * Increment the current growth stage of a plant by 1
+     *
+     * @param growthIncrement - The number of growth stages the plant will increase by
      */
-    public void incrementGrowthStage() {
-        this.growthStage += 1;
+    public void increaseGrowthStage(int growthIncrement) {
+        this.growthStage += growthIncrement;
     }
 
     /**
-     * increase the current age of a plant by some value
-     * @param value
+     * Increase the current age of a plant by some integer value
+     *
+     * @param ageIncrement - The number of days the age will increase by
      */
-    public void increaseCurrentAge(int value) {
-        this.currentAge += value;
+    public void increaseCurrentAge(float ageIncrement) {
+        this.currentAge += ageIncrement;
     }
 
     /**
-     * check if a plant is still alive
-     * @return
+     * Check if a plant is dead
+     *
+     * @return if the plant is fully decayed
      */
     public boolean isDead() {
-        if (this.growthStage >= 7) {
-            return true;
-        } else {
-            return false;
-        }
+       return this.growthStage >= 7;
     }
 
     /**
-     * Sets the crop tile on which this plant is planted.
+     * Harvests this plant, causing it to drop its produce.
      *
-     * @param cropTile Crop tile this plant is planted on.
+     * <p>If this plant is not in a growth stage where is can be harvested, nothing will happen.
      */
-    public void setTile(CropTileComponent cropTile) {
-        this.cropTile = cropTile;
+    private void harvest() {
+        // Stub. When complete will cause the plant to drop items such as seeds and fruits.
+        // If the plant is a one-time use (e.g., carrots), then it will destroy itself.
+        destroyPlant();
+    }
+
+    /**
+     * Destroys this plant and clears the crop tile.
+     */
+    private void destroyPlant() {
+        cropTile.setUnoccupied();
+        entity.dispose();
     }
 }
