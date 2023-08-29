@@ -21,6 +21,9 @@ import org.slf4j.LoggerFactory;
 public class IntroScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(ControlsScreen.class);
 
+    /**
+     * An array of paths to image textures needed for this screen
+     */
     private static final String[] introScreenAssets = {"images/intro_background.png", "images/intro_planet.png"};
     private final GdxGame game;
     private final Renderer renderer;
@@ -64,6 +67,9 @@ public class IntroScreen extends ScreenAdapter {
         ServiceLocator.clear();
     }
 
+    /**
+     * Load all the image textures required for this screen into memory
+     */
     private void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
@@ -71,6 +77,9 @@ public class IntroScreen extends ScreenAdapter {
         ServiceLocator.getResourceService().loadAll();
     }
 
+    /**
+     * Remove all the loaded image textures from the ResouceService, and thus game memory.
+     */
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
@@ -78,7 +87,7 @@ public class IntroScreen extends ScreenAdapter {
     }
 
     /**
-     * Creates the setting screen's ui including components for rendering ui elements to the screen
+     * Creates the intro screen's ui including components for rendering ui elements to the screen
      * and capturing and handling ui input.
      */
     private void createUI() {
