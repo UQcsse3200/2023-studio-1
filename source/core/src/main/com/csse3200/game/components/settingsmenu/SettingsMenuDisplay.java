@@ -5,15 +5,18 @@ import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.Graphics.Monitor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.GdxGame.ScreenType;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.files.UserSettings.DisplaySettings;
+import com.csse3200.game.screens.MainMenuScreen;
 import com.csse3200.game.screens.SettingsScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
@@ -43,6 +46,7 @@ public class SettingsMenuDisplay extends UIComponent {
 
   public SettingsMenuDisplay(GdxGame game) {
     super();
+    transitionFrames = new Image();
     this.game = game;
   }
 
@@ -86,23 +90,23 @@ public class SettingsMenuDisplay extends UIComponent {
     rootTable.row();
     rootTable.add(menuBtns).fillX();
 
+    updateAnimation();
+    stage.addActor(rootTable);
+  }
+
+  private void updateAnimation() {
     if (frame < SettingsScreen.frameCount) {
-      transitionFrames = new Image(ServiceLocator.getResourceService()
-              .getAsset(SettingsScreen.transitionTextures[frame], Texture.class));
+      transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
+              .getAsset(SettingsScreen.transitionTextures[frame], Texture.class))));
       transitionFrames.setWidth(Gdx.graphics.getWidth());
       transitionFrames.setHeight(Gdx.graphics.getHeight() / 2);
       transitionFrames.setPosition(0, Gdx.graphics.getHeight() / 2 + 15);
       frame++;
-      stage.addActor(transitionFrames);
       lastFrameTime = System.currentTimeMillis();
     } else {
       frame = 1;
     }
-    stage.addActor(rootTable);
   }
-
-
-
 
   private Table makeSettingsTable() {
     // Get current values
@@ -262,7 +266,7 @@ public class SettingsMenuDisplay extends UIComponent {
   @Override
   public void update() {
     if (System.currentTimeMillis() - lastFrameTime > frameDuration) {
-      addActors();
+      updateAnimation();
     }
     stage.act(ServiceLocator.getTimeSource().getDeltaTime());
   }
