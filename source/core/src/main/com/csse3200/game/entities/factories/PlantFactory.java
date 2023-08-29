@@ -1,4 +1,5 @@
 package com.csse3200.game.entities.factories;
+import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.configs.plants.*;
@@ -31,42 +32,37 @@ public class PlantFactory {
     }
 
     /**
-     * Resets plant statistics to default values from "configs/plant.json" file.
-     */
-    public static void resetStats() {
-        stats = FileLoader.readClass(PlantConfigs.class, "configs/plant.json");
-    }
-
-
-    /**
      * Creates a generic plant to be used as a base for more specific plant creation methods.
      *
      * @return entity
      */
-    private static Entity createBasePlant() {
-
+    public static Entity createBasePlant() {
         Entity plant = new Entity()
-                .addComponent(new PhysicsComponent())
-                .addComponent(new ColliderComponent())
+                .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
+                .addComponent(new ColliderComponent().setSensor(true))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE));
 
-        plant.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-
-        return  plant;
+        return plant;
     }
 
     /**
      * Creates a cosmicCob entity that is a Food type plant.
      *
+     * @param cropTile Crop tile upon which the plant is planted
      * @return entity
      */
-    public static Entity createCosmicCob() {
+    public static Entity createCosmicCob(CropTileComponent cropTile) {
         BasePlantConfig config = stats.cosmicCob;
 
         Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/corn_temp.png"))
+                .addComponent(new TextureRenderComponent("images/plants/Corn.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
-                        config.description, config.idealWaterLevel, config.adultLifeSpan, config.maxHealth));
+                        config.description, config.idealWaterLevel, config.adultLifeSpan,
+                        config.maxHealth, cropTile));
+
+        // Set plant position over crop tile.
+        var cropTilePosition = cropTile.getEntity().getPosition();
+        plant.setPosition(cropTilePosition.x, cropTilePosition.y + 0.5f);
 
         plant.getComponent(TextureRenderComponent.class).scaleEntity();
         plant.scaleHeight(1f);
@@ -77,15 +73,21 @@ public class PlantFactory {
     /**
      * Creates an AloeVera entity that is a health type plant.
      *
+     * @param cropTile Crop tile upon which the plant is planted
      * @return entity
      */
-    public static Entity createAloeVera() {
+    public static Entity createAloeVera(CropTileComponent cropTile) {
         BasePlantConfig config = stats.aloeVera;
 
         Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/aloe_temp.png"))
+                .addComponent(new TextureRenderComponent("images/plants/Aloe.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
-                        config.description, config.idealWaterLevel, config.adultLifeSpan, config.maxHealth));
+                        config.description, config.idealWaterLevel, config.adultLifeSpan,
+                        config.maxHealth, cropTile));
+
+        // Set plant position over crop tile.
+        var cropTilePosition = cropTile.getEntity().getPosition();
+        plant.setPosition(cropTilePosition.x, cropTilePosition.y + 0.5f);
 
         plant.getComponent(TextureRenderComponent.class).scaleEntity();
         plant.scaleHeight(1f);
@@ -96,15 +98,21 @@ public class PlantFactory {
     /**
      * Creates a HammerPlant entity that is a repair type plant.
      *
+     * @param cropTile Crop tile upon which the plant is planted
      * @return entity
      */
-    public static Entity createHammerPlant() {
+    public static Entity createHammerPlant(CropTileComponent cropTile) {
         BasePlantConfig config = stats.hammerPlant;
 
         Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/test_cactus.png"))
+                .addComponent(new TextureRenderComponent("images/plants/Hammer.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
-                        config.description, config.idealWaterLevel, config.adultLifeSpan, config.maxHealth));
+                        config.description, config.idealWaterLevel, config.adultLifeSpan,
+                        config.maxHealth, cropTile));
+
+        // Set plant position over crop tile.
+        var cropTilePosition = cropTile.getEntity().getPosition();
+        plant.setPosition(cropTilePosition.x, cropTilePosition.y + 0.5f);
 
         plant.getComponent(TextureRenderComponent.class).scaleEntity();
         plant.scaleHeight(1f);
@@ -115,16 +123,22 @@ public class PlantFactory {
     /**
      * Creates a AtropaBelladonna entity that is a deadly type plant.
      *
+     * @param cropTile Crop tile upon which the plant is planted
      * @return entity
      */
 
-    public static Entity createAtropaBelladonna() {
+    public static Entity createAtropaBelladonna(CropTileComponent cropTile) {
         BasePlantConfig config = stats.atropaBelladonna;
 
         Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/belladonna.png"))
+                .addComponent(new TextureRenderComponent("images/plants/belladonna.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
-                        config.description, config.idealWaterLevel, config.adultLifeSpan, config.maxHealth));
+                        config.description, config.idealWaterLevel, config.adultLifeSpan,
+                        config.maxHealth, cropTile));
+
+        // Set plant position over crop tile.
+        var cropTilePosition = cropTile.getEntity().getPosition();
+        plant.setPosition(cropTilePosition.x, cropTilePosition.y + 0.5f);
 
         plant.getComponent(TextureRenderComponent.class).scaleEntity();
         plant.scaleHeight(1f);
@@ -135,15 +149,21 @@ public class PlantFactory {
     /**
      * Creates a Nicotiana Tabacum entity that is a deadly type plant.
      *
+     * @param cropTile Crop tile upon which the plant is planted
      * @return entity
      */
-    public static Entity createNicotianaTabacum() {
+    public static Entity createNicotianaTabacum(CropTileComponent cropTile) {
         BasePlantConfig config = stats.nicotianaTabacum;
 
         Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/tobacco.png"))
+                .addComponent(new TextureRenderComponent("images/plants/waterweed.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
-                        config.description, config.idealWaterLevel, config.adultLifeSpan, config.maxHealth));
+                        config.description, config.idealWaterLevel, config.adultLifeSpan,
+                        config.maxHealth, cropTile));
+
+        // Set plant position over crop tile.
+        var cropTilePosition = cropTile.getEntity().getPosition();
+        plant.setPosition(cropTilePosition.x, cropTilePosition.y + 0.5f);
 
         plant.getComponent(TextureRenderComponent.class).scaleEntity();
         plant.scaleHeight(1f);
@@ -155,15 +175,21 @@ public class PlantFactory {
     /**
      * Creates an venusFlyTrap entity that is a defence type plant.
      *
+     * @param cropTile Crop tile upon which the plant is planted
      * @return entity
      */
-    public static Entity createVenusFlyTrap() {
+    public static Entity createVenusFlyTrap(CropTileComponent cropTile) {
         BasePlantConfig config = stats.venusFlyTrap;
 
         Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/test_cactus.png"))
+                .addComponent(new TextureRenderComponent("images/plants/VenusTrap.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
-                        config.description, config.idealWaterLevel, config.adultLifeSpan, config.maxHealth));
+                        config.description, config.idealWaterLevel, config.adultLifeSpan,
+                        config.maxHealth, cropTile));
+
+        // Set plant position over crop tile.
+        var cropTilePosition = cropTile.getEntity().getPosition();
+        plant.setPosition(cropTilePosition.x, cropTilePosition.y + 0.5f);
 
         plant.getComponent(TextureRenderComponent.class).scaleEntity();
         plant.scaleHeight(1f);

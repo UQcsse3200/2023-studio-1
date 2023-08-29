@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/** Controls the game time */
+/** Service that controls the game time */
 public class GameTime {
   private static Logger logger = LoggerFactory.getLogger(GameTime.class);
   private final long startTime;

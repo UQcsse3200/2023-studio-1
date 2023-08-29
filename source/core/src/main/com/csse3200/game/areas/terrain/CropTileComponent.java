@@ -191,19 +191,19 @@ public class CropTileComponent extends Component {
 	private String getTexturePath() {
 		String path = "images/cropTile_fertilised.png";
 		if (isFertilised) {
-			if (0 <= waterContent && waterContent < 0.5) {
+			if (waterContent < 0.5) {
 				path = "images/cropTile_fertilised.png";
-			} else if (0.5 <= waterContent && waterContent < 1.5) {
+			} else if (waterContent < 1.5) {
 				path = "images/watered_cropTile_fertilised.png";
-			} else if (1.5 <= waterContent && waterContent <= 2) {
+			} else {
 				path = "images/overwatered_cropTile_fertilised.png";
 			}
 		} else {
-			if (0 <= waterContent && waterContent < 0.5) {
+			if (waterContent < 0.5) {
 				path = "images/cropTile.png";
-			} else if (0.5 <= waterContent && waterContent < 1.5) {
+			} else if (waterContent < 1.5) {
 				path = "images/watered_cropTile.png";
-			} else if (1.5 <= waterContent && waterContent <= 2) {
+			} else {
 				path = "images/overwatered_cropTile.png";
 			}
 		}
