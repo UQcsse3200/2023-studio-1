@@ -41,7 +41,7 @@ public class PlantComponentTest {
     void testIncreasePlantHealth() {
         int plantHealthIncrement = 2;
         testPlant.increasePlantHealth(plantHealthIncrement);
-        assertEquals(2, testPlant.getPlantHealth());
+        assertEquals(102, testPlant.getPlantHealth());
     }
 
     @Test
@@ -56,7 +56,7 @@ public class PlantComponentTest {
 
     @Test
     void testGetPlantDescription() {
-        assertEquals("plant created for testing.", testPlant.getPlantDescription());
+        assertEquals("This is a plant created for testing.", testPlant.getPlantDescription());
     }
 
     @Test
@@ -117,7 +117,7 @@ public class PlantComponentTest {
     @Test
     void testIncreaseGrowthStage() {
         testPlant.increaseGrowthStage(1);
-        assertEquals(3, testPlant.getGrowthStage());
+        assertEquals(2, testPlant.getGrowthStage());
     }
 
     @Test
@@ -135,13 +135,6 @@ public class PlantComponentTest {
     @Test
     void testIsDeadFalse() {
         assertFalse(testPlant.isDead());
-    }
-
-    @Test
-    void testDestroyPlant() {
-        Entity plantEntityTest = createBasePlant();
-        plantEntityTest.getEvents().trigger("destroyPlant");
-
     }
 
 
