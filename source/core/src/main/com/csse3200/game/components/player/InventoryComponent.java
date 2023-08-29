@@ -76,10 +76,6 @@ public class InventoryComponent extends Component {
    * @return boolean representing if the item was added successfully
    */
   public boolean addItem(Entity item) {
-    itemCount.put(item, itemCount.getOrDefault(item, 0) + 1);
-    if (!itemPosition.containsKey(item)) {
-      itemPosition.put(item, new Point(0, 0)); // Default position. You can change this as needed.
-    }
       return this.inventory.add(item);
   }
 
@@ -97,8 +93,31 @@ public class InventoryComponent extends Component {
     return this.inventory.remove(item);
   }
 
-  public Entity getInHand() {
-    return createHoe();
+  /**
+   * Sets the held item for the Player.
+   *
+   * @param index The index of the item in the inventory to be set as the held item.
+   */
+  public void setHeldItem(int index) {
+    if (index >= 0 && index < inventory.size()) {
+      this.heldItem = inventory.get(index);
+    } else {
+      throw new IndexOutOfBoundsException("Invalid index");
+    }
+  }
+
+  /**
+   * Retrieves the held item of the Player.
+   *
+   * @return The Entity representing the held item.
+   * @throws IllegalStateException If the player is not holding an item.
+   */
+  public Entity getHeldItem() {
+    if (this.heldItem != null) {
+      return this.heldItem;
+    } else {
+      throw new IllegalStateException("Player is not holding an item");
+    }
   }
 
   /**
@@ -155,32 +174,5 @@ public class InventoryComponent extends Component {
    */
   public void setItemPosition(Entity item, Point point) {
     itemPosition.put(item, point);
-  }
-
-  /**
-   * Sets the held item for the Player.
-   *
-   * @param index The index of the item in the toolbar to be set as the held item.
-   */
-  public void setHeldItem(int index) {
-    if (index >= 0 && index < inventory.size() / 3) {
-      this.heldItem = inventory.get(index);
-    } else {
-      throw new IndexOutOfBoundsException("Invalid index");
-    }
-  }
-
-  /**
-   * Retrieves the held item of the Player.
-   *
-   * @return The Entity representing the held item.
-   * @throws IllegalStateException If the player is not holding an item.
-   */
-  public Entity getHeldItem() {
-    if (this.heldItem != null) {
-      return this.heldItem;
-    } else {
-      throw new IllegalStateException("Player is not holding an item");
-    }
   }
 }

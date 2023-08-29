@@ -1,7 +1,6 @@
 package com.csse3200.game.components.player;
 
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.areas.terrain.GameMap;
@@ -39,9 +38,11 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("moveStop", this::stopMoving);
     entity.getEvents().addListener("run", this::run);
     entity.getEvents().addListener("runStop", this::stopRunning);
+    entity.getEvents().addListener("interact", this::interact);
     entity.getEvents().addListener("attack", this::attack);
     entity.getEvents().addListener("enterTractor", this::enterTractor);
     entity.getEvents().addListener("use", this::use);
+    entity.getEvents().addListener("hotkeySelection", this::hotkeySelection);
   }
 
   @Override
@@ -139,6 +140,19 @@ public class PlayerActions extends Component {
     this.running = false;
   }
 
+  void interact() {
+    float direction = getPrevMoveDirection();
+    if (direction < 45) {
+      entity.getEvents().trigger("animationInteract", "right");
+    } else if (direction < 135) {
+      entity.getEvents().trigger("animationInteract", "up");
+    } else if (direction < 225) {
+      entity.getEvents().trigger("animationInteract", "left");
+    } else if (direction < 315) {
+      entity.getEvents().trigger("animationInteract", "down");
+    }
+  }
+
   /**
    * Makes the player attack.
    */
@@ -173,6 +187,9 @@ public class PlayerActions extends Component {
 
   void use(Vector2 playerPos, Vector2 mousePos, Entity itemInHand) {
     itemInHand.getComponent(ItemActions.class).use(playerPos, mousePos, itemInHand, map);
+  }
+  void hotkeySelection(int index) {
+    entity.getComponent(InventoryComponent.class).setHeldItem(index);
   }
 
   /**

@@ -78,8 +78,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   /** @see InputProcessor#touchUp(int, int, int, int) */
   @Override
   public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-    Vector2 mousePos = new Vector2(screenX, screenY);
-    entity.getEvents().trigger("use", entity.getPosition(), mousePos, entity.getComponent(InventoryComponent.class).getInHand());
+    if (!actions.isMuted()) {
+      Vector2 mousePos = new Vector2(screenX, screenY);
+      entity.getEvents().trigger("use", entity.getPosition(), mousePos, entity.getComponent(InventoryComponent.class).getHeldItem());
+    }
     return false;
   }
 
@@ -104,7 +106,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           return true;
         case Keys.S:
           moveDirection.sub(Vector2Utils.DOWN);
-          triggerMoveEvent();;
+          triggerMoveEvent();
           return true;
         case Keys.D:
           moveDirection.sub(Vector2Utils.RIGHT);
@@ -143,8 +145,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public void setWalkDirection(Vector2 direction) {
     this.moveDirection.set(direction);
   }
-
-  /**
+   /**
    * Sets the players current held item to that in the provided index of the inventory
    *
    * @param index of the item the user wants to be holding
