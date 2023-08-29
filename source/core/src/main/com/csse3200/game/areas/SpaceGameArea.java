@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainCropTileFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.PlayerActions;
@@ -70,13 +69,14 @@ public class SpaceGameArea extends GameArea {
           "images/dirtPathTop.png",
           "images/dirtPathRight.png",
           "images/dirtPathBottom.png",
+          "images/dirtPathLeft.png",
           "images/gravel_1.png",
           "images/ice_1.png",
           "images/ice_2.png",
           "images/lava_1.png",
-          "images/lavaGround_1.png",
-          "images/lavaGround_2.png",
-          "images/lavaGround_3.png",
+          "images/lavaground_1.png",
+          "images/lavaground_2.png",
+          "images/lavaground_3.png",
           "images/water_1.png",
           "images/water_2.png",
           "images/water_3.png",
