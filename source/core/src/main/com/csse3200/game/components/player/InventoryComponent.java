@@ -115,9 +115,8 @@ public class InventoryComponent extends Component {
   public Entity getHeldItem() {
     if (this.heldItem != null) {
       return this.heldItem;
-    } else {
-      throw new IllegalStateException("Player is not holding an item");
     }
+    return null;
   }
 
   /**
