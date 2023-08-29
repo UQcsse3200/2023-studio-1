@@ -79,15 +79,15 @@ public class CameraComponentTest {
         cameraComponent.setTrackEntity(entityWithPhysics);
         cameraComponent.update();
         cameraPos = camera.position;
-        assertEquals(5f, cameraPos.x); // setTransform moves center, compare center
-        assertEquals(5f, cameraPos.y);
+        assertEquals(5.5f, cameraPos.x); // setTransform moves bottom left of entity, so add scale
+        assertEquals(5.5f, cameraPos.y);
 
         // test camera position update when entity is moved
         body.setTransform(new Vector2(7f, 3f), 0f);
         cameraComponent.update();
         cameraPos = camera.position;
-        assertEquals(7f, cameraPos.x);
-        assertEquals(3f, cameraPos.y);
+        assertEquals(7.5f, cameraPos.x);
+        assertEquals(3.5f, cameraPos.y);
     }
 
     @Test
@@ -108,7 +108,7 @@ public class CameraComponentTest {
         cameraComponent.setTrackEntity(entityWithPhysics);
         cameraComponent.update();
         cameraPos = camera.position;
-        assertEquals(-1f, cameraPos.x); // setTransform moves center, compare center
-        assertEquals(-1f, cameraPos.y);
+        assertEquals(-0.5f, cameraPos.x); // setTransform moves bottom left of entity, so add scale
+        assertEquals(-0.5f, cameraPos.y);
     }
 }

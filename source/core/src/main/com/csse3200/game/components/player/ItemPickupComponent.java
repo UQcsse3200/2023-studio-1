@@ -35,9 +35,9 @@ public class ItemPickupComponent extends Component {
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
 
         // Add item to inventory
-        this.entity.getComponent(InventoryComponent.class).addItem(target);
-
-        // remove it from game area (map):
-        ServiceLocator.getGameArea().removeEntity(target);
+        boolean added = this.entity.getComponent(InventoryComponent.class).addItem(target);
+        // if item was successfully added to player inventory, remove it from game area (map):
+        if (added) ServiceLocator.getGameArea().removeEntity(target);
+        // else, leave item alone.
     }
 }

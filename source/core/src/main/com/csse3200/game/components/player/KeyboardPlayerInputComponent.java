@@ -53,6 +53,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.F:
           triggerEnterEvent();
           return true;
+        case Keys.E: // Potentially also interact button later.
+          entity.getEvents().trigger("interact");
+          return true;
         default:
           return false;
       }
@@ -63,8 +66,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   /** @see InputProcessor#touchUp(int, int, int, int) */
   @Override
   public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-    Vector2 mousePos = new Vector2(screenX, screenY);
-    entity.getEvents().trigger("use", entity.getPosition(), mousePos, entity.getComponent(InventoryComponent.class).getInHand());
+    if (!actions.isMuted()) {
+      Vector2 mousePos = new Vector2(screenX, screenY);
+      entity.getEvents().trigger("use", entity.getPosition(), mousePos, entity.getComponent(InventoryComponent.class).getInHand());
+    }
     return false;
   }
 

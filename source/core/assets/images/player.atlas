@@ -731,6 +731,27 @@ interact_right
   orig: 18, 32
   offset: 0, 0
   index: 3
+interact_right
+  rotate: false
+  xy: 176, 64
+  size: 17, 32
+  orig: 17, 32
+  offset: 0, 0
+  index: 4
+interact_right
+  rotate: false
+  xy: 160, 64
+  size: 16, 32
+  orig: 16, 32
+  offset: 0, 0
+  index: 5
+interact_right
+  rotate: false
+  xy: 144, 64
+  size: 16, 32
+  orig: 16, 32
+  offset: 0, 0
+  index: 6
 interact_left
   rotate: false
   xy: 144, 96
@@ -759,6 +780,27 @@ interact_left
   orig: 18, 32
   offset: 0, 0
   index: 3
+interact_left
+  rotate: false
+  xy: 176, 96
+  size: 17, 32
+  orig: 17, 32
+  offset: 0, 0
+  index: 4
+interact_left
+  rotate: false
+  xy: 160, 96
+  size: 16, 32
+  orig: 16, 32
+  offset: 0, 0
+  index: 5
+interact_left
+  rotate: false
+  xy: 144, 96
+  size: 16, 32
+  orig: 16, 32
+  offset: 0, 0
+  index: 6
 interact_down
   rotate: false
   xy: 160, 128
@@ -780,6 +822,20 @@ interact_down
   orig: 16, 32
   offset: 0, 0
   index: 2
+interact_down
+  rotate: false
+  xy: 176, 128
+  size: 16, 32
+  orig: 16, 32
+  offset: 0, 0
+  index: 3
+interact_down
+  rotate: false
+  xy: 160, 128
+  size: 16, 32
+  orig: 16, 32
+  offset: 0, 0
+  index: 4
 interact_up
   rotate: false
   xy: 208, 128
@@ -801,6 +857,20 @@ interact_up
   orig: 16, 32
   offset: 0, 0
   index: 2
+interact_up
+  rotate: false
+  xy: 224, 128
+  size: 16, 32
+  orig: 16, 32
+  offset: 0, 0
+  index: 3
+interact_up
+  rotate: false
+  xy: 208, 128
+  size: 16, 32
+  orig: 16, 32
+  offset: 0, 0
+  index: 4
 snooze_down
   rotate: false
   xy: 0, 309
