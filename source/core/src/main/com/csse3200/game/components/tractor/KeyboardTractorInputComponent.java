@@ -110,7 +110,7 @@ public class KeyboardTractorInputComponent extends InputComponent {
      * Triggers the tractors walking animation event for the given direction.
      */
     private void triggerAnimationMoveStartEvent(String direction) {
-        entity.getEvents().trigger("startMoving", direction, "Tool");
+        entity.getEvents().trigger("startMoving");
     }
 
     /**

@@ -8,5 +8,6 @@ public class NPCConfigs {
   public GhostKingConfig ghostKing = new GhostKingConfig();
   public BaseAnimalConfig cow = new BaseAnimalConfig();
   public BaseAnimalConfig chicken = new BaseAnimalConfig();
+  public BaseAnimalConfig astrolotl = new BaseAnimalConfig();
 
 }

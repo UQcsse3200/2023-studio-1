@@ -37,20 +37,14 @@ public class MainMenuScreen extends ScreenAdapter {
 
   public MainMenuScreen(GdxGame game) {
     this.game = game;
-
-
     logger.debug("Initialising main menu screen services");
     ServiceLocator.registerInputService(new InputService());
     ServiceLocator.registerResourceService(new ResourceService());
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
-
-
     renderer = RenderFactory.createRenderer();
     loadAssets();
     createUI();
-
-
   }
 
   @Override
