@@ -3,6 +3,7 @@ package com.csse3200.game.areas.terrain;
 import com.badlogic.gdx.math.MathUtils;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.function.Function;
@@ -38,6 +39,7 @@ public class CropTileComponent extends Component {
 	private final float soilQuality;
 	private boolean isFertilised;
 	private Entity plant;
+	private DynamicTextureRenderComponent currentTexture;
 
 
 	/**
@@ -67,6 +69,7 @@ public class CropTileComponent extends Component {
 		entity.getEvents().addListener("fertilise", this::fertiliseTile);
 		entity.getEvents().addListener("plant", this::plantCrop);
 		entity.getEvents().addListener("destroy", this::destroyTile);
+		currentTexture = entity.getComponent(DynamicTextureRenderComponent.class);
 	}
 
 	/**
@@ -79,6 +82,12 @@ public class CropTileComponent extends Component {
 			waterContent = 0;
 		} else if (waterContent > 2) {
 			waterContent = 2;
+		}
+
+		// Update the texture of the corresponding entity
+		if (currentTexture != null) {
+			String texturePath = this.getTexturePath();
+			currentTexture.setTexture(texturePath);
 		}
 	}
 
@@ -153,7 +162,8 @@ public class CropTileComponent extends Component {
 		waterMultiplier = (waterMultiplier - WATER_DAMAGE_THRESHOLD) / (1 - WATER_DAMAGE_THRESHOLD);
 		waterMultiplier =
 				waterMultiplier > 0 ? Math.pow(waterMultiplier, IDEAL_WATER_FALL_OFF_TOLERANCE) : -1.0;
-		return waterMultiplier > 0 ? soilQuality * (isFertilised ? 2 : 1) * waterMultiplier : -1.0;
+		int fertiliserMultiplier = isFertilised ? 2: 1;
+		return waterMultiplier > 0 ? soilQuality * fertiliserMultiplier * waterMultiplier : -1.0;
 	}
 
 	/**
@@ -173,4 +183,30 @@ public class CropTileComponent extends Component {
 		plant = null;
 	}
 
+	/**
+	 * Determine the appropriate String for the tile's texture based on fertiliser status and
+	 * water content.
+	 * @return the path to the texture for this CropTileComponent based on its status.
+	 */
+	private String getTexturePath() {
+		String path = "images/cropTile_fertilised.png";
+		if (isFertilised) {
+			if (0 <= waterContent && waterContent < 0.5) {
+				path = "images/cropTile_fertilised.png";
+			} else if (0.5 <= waterContent && waterContent < 1.5) {
+				path = "images/watered_cropTile_fertilised.png";
+			} else if (1.5 <= waterContent && waterContent <= 2) {
+				path = "images/overwatered_cropTile_fertilised.png";
+			}
+		} else {
+			if (0 <= waterContent && waterContent < 0.5) {
+				path = "images/cropTile.png";
+			} else if (0.5 <= waterContent && waterContent < 1.5) {
+				path = "images/watered_cropTile.png";
+			} else if (1.5 <= waterContent && waterContent <= 2) {
+				path = "images/overwatered_cropTile.png";
+			}
+		}
+		return path;
+	}
 }
