@@ -1,5 +1,6 @@
 package com.csse3200.game.areas.terrain;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -53,28 +54,59 @@ public class GameMap {
     }
 
     /**
-     * Gets the tile at a coordinate position
+     * Gets the tile at a specified world coordinate position
      * @param x x coordinate
      * @param y y coordinate
      * @return a TerrainTile
      */
     public TerrainTile getTile(int x, int y) {
+        GridPoint2 max = this.getMapSize();
+
+        if (x > max.x || y > max.y) {
+            throw new IndexOutOfBoundsException("Bad Input: Coordinate position out of bounds");
+        }
+
         return (TerrainTile) getCell(x, y).getTile();
     }
 
     /**
-     * Gets the centre of a tile from a coordinate position
+     * Conversion function: gets the centre of a tile from a coordinate position
+     * Currently WIP
      * @param x x coordinate
      * @param y y coordinate
-     * @return a list of x and y pixel value
+     * @return a list of x and y pixel values
      */
-    public ArrayList<Integer> cellCoordinateToPosition(int x, int y) {
-        ArrayList<Integer> pixelPosition = new ArrayList<>();
+    public ArrayList<Integer> worldCoordinatesToScreenPosition(int x, int y) {
+        GridPoint2 max = this.getMapSize();
+
+        if (x > max.x || y > max.y) {
+            throw new IndexOutOfBoundsException("Bad Input: Coordinate position out of bounds");
+        }
+
+        ArrayList<Integer> pixelPositions = new ArrayList<>();
         int xPixel = (16 * x) + 8;
-        int yPixel = (16 * y) + 8;
-        pixelPosition.add(xPixel);
-        pixelPosition.add(yPixel);
-        return pixelPosition;
+        int y2 = (16 * y) - 8;
+        // post process y2 to convert (0,0) location
+        int yPixel = Gdx.graphics.getHeight() - 1 - y2;
+        pixelPositions.add(xPixel);
+        pixelPositions.add(yPixel);
+        return pixelPositions;
+    }
+
+    /**
+     * Conversion function: gets the centre of a tile from a coordinate position
+     * Currently WIP
+     * @param xPixel x pixel screen coordinate
+     * @param yPixel y pixel screen coordinate
+     * @return a list of x and y tile coordinates
+     */
+    public ArrayList<Integer> screenPositionToWorldCoordinates(int xPixel, int yPixel) {
+        ArrayList<Integer> coordinates = new ArrayList<>();
+        int x = Math.abs((xPixel / 16) - 1);
+        int y = Math.abs((yPixel / 16) - 1);
+        coordinates.add(x);
+        coordinates.add(y);
+        return coordinates;
     }
 
     /**
