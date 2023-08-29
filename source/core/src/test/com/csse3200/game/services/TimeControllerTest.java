@@ -1,9 +1,7 @@
 package com.csse3200.game.services;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics;
 import com.csse3200.game.extensions.GameExtension;
-import org.junit.jupiter.api.AfterEach;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,39 +28,26 @@ class TimeControllerTest {
     
     @BeforeEach
     void setUp() {
-        timeController = new TimeController();
+        timeController = new TimeController(mockGameTime);
         mockGameTimeDisplay = mock(GameTimeDisplay.class);
-        timeController.setTimeSource(mockGameTime);
-        timeController.setTimeDisplay(mockGameTimeDisplay);
-    }
-    /*
-    @AfterEach
-    void tearDown() {
+        timeController.registerTimeDisplay(mockGameTimeDisplay);
     }
     
-    @Test
-    void setTimeSource() {
-    }
-    
-    @Test
-    void setTimeDisplay() {
-    }
-    */
     @Test
     void getTimeInSeconds() {
-        assertEquals((int) 300, timeController.getTimeInSeconds(),
+        assertEquals(300, timeController.getTimeInSeconds(),
                 "300 seconds not given");
     }
     
     @Test
     void getTimeOfDay() {
-        assertEquals((int) 300000, timeController.getTimeOfDay(),
+        assertEquals(300000, timeController.getTimeOfDay(),
         "Incorrect time of day returned; 300000 not given.");
     }
     
     @Test
     void getHour() {
-        assertEquals((int) 10, timeController.getHour(),
+        assertEquals(10, timeController.getHour(),
                 "Hour 10 not given.");
     }
     
@@ -71,13 +56,7 @@ class TimeControllerTest {
         timeController.updateDisplay();
         verify(mockGameTimeDisplay, times(1)).update(10);
     }
-    /*
-    @Test
-    void pause() {
-        timeController.pause();
-        verify(mockGameTime, times(1)).getTime();
-    }
-    */
+
     @Test
     void pauseUnpause() {
         timeController.pause();
@@ -91,6 +70,6 @@ class TimeControllerTest {
     @Test
     void setTime() {
         timeController.setTime(7);
-        verify(mockGameTimeDisplay, times(1)).update(7);
+        verify(mockGameTime, atLeastOnce()).getActiveTime();
     }
 }

@@ -18,8 +18,19 @@ public class PlayerAnimationController extends Component {
         entity.getEvents().addListener("animationWalkStart", this::animationWalkStart);
         entity.getEvents().addListener("animationRunStart", this::animationRunStart);
         entity.getEvents().addListener("animationWalkStop", this::animationWalkStop);
+        entity.getEvents().addListener("animationInteract", this::animationInteract);
 
         animator.startAnimation("default");
+    }
+    
+    /**
+     * Check if the current (non-looping) animation has completed
+     */
+    boolean readyToPlay() {
+        if (animator.getCurrentAnimation().contains("interact")) {
+            return animator.isFinished();
+        }
+        return true;
     }
 
     /**
@@ -50,7 +61,21 @@ public class PlayerAnimationController extends Component {
      * Starts the default player animation when they stop walking.
      */
     void animationWalkStop(String direction) {
+        if (!readyToPlay()) {
+            return;
+        }
         String animation = String.format("idle_%s", direction);
+        if (!animator.getCurrentAnimation().equals(animation)) {
+            animator.startAnimation(animation);
+        }
+    }
+
+    /**
+     * Play the interaction animation
+     */
+    void animationInteract(String direction) {
+        // Get the current animation name to get the facing direction
+        String animation = String.format("interact_%s", direction);
         if (!animator.getCurrentAnimation().equals(animation)) {
             animator.startAnimation(animation);
         }
