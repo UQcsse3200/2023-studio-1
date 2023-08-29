@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import com.csse3200.game.services.GameTimeDisplay;
 import com.csse3200.game.services.TimeController;
 
-/** Controls the game time */
+/** Service that controls the game time */
 public class GameTime {
   private static Logger logger = LoggerFactory.getLogger(GameTime.class);
   private final long startTime;
