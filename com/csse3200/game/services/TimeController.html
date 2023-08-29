@@ -91,7 +91,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.csse3200.game.services.GameTime)" class="member-name-link">TimeController</a><wbr>(<a href="GameTime.html" title="class in com.csse3200.game.services">GameTime</a>&nbsp;timeSource)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Constructor used to initalise important values and define initial states for the TimeController class</div>
+<div class="block">Constructor used to define initial states for the TimeController class and link to parent GameTime service</div>
 </div>
 </div>
 </section>
@@ -113,7 +113,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTimeInSeconds()" class="member-name-link">getTimeInSeconds</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTimeOfDay()" class="member-name-link">getTimeOfDay</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
@@ -123,7 +123,9 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#register(com.csse3200.game.entities.Entity)" class="member-name-link">register</a><wbr>(<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;entity)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Add an entity observer to the list of entities</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#registerTimeDisplay(com.csse3200.game.services.GameTimeDisplay)" class="member-name-link">registerTimeDisplay</a><wbr>(<a href="GameTimeDisplay.html" title="class in com.csse3200.game.services">GameTimeDisplay</a>&nbsp;timeDisplay)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -131,7 +133,9 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#remove(com.csse3200.game.entities.Entity)" class="member-name-link">remove</a><wbr>(<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;entity)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Remove an entity observer from the list of entities</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTime(int)" class="member-name-link">setTime</a><wbr>(int&nbsp;hour)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -142,7 +146,9 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Notify the entities to update</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateDisplay()" class="member-name-link">updateDisplay</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -169,7 +175,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;(com.csse3200.game.services.GameTime)">
 <h3>TimeController</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">TimeController</span><wbr><span class="parameters">(<a href="GameTime.html" title="class in com.csse3200.game.services">GameTime</a>&nbsp;timeSource)</span></div>
-<div class="block">Constructor used to initalise important values and define initial states for the TimeController class</div>
+<div class="block">Constructor used to define initial states for the TimeController class and link to parent GameTime service</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>timeSource</code> - : The current GameTime service for this instance</dd>
@@ -188,18 +194,29 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="register(com.csse3200.game.entities.Entity)">
 <h3>register</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">register</span><wbr><span class="parameters">(<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;entity)</span></div>
+<div class="block">Add an entity observer to the list of entities</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>entity</code> - : entity that you want to add as an observer</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="remove(com.csse3200.game.entities.Entity)">
 <h3>remove</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">remove</span><wbr><span class="parameters">(<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;entity)</span></div>
+<div class="block">Remove an entity observer from the list of entities</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>entity</code> - : entity that you want to remove from the list</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="update()">
 <h3>update</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">update</span>()</div>
+<div class="block">Notify the entities to update</div>
 </section>
 </li>
 <li>
@@ -211,6 +228,13 @@ loadScripts(document, 'script');</script>
 <dt>Parameters:</dt>
 <dd><code>timeDisplay</code> - : The class that controls the clock and time display</dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="updateDisplay()">
+<h3>updateDisplay</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateDisplay</span>()</div>
+<div class="block">Updates the clock and time display by calling the update() method in GameTimeDisplay</div>
 </section>
 </li>
 <li>
@@ -226,7 +250,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getTimeOfDay()">
 <h3>getTimeOfDay</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getTimeOfDay</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">getTimeOfDay</span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the time of the day in milliseconds</dd>
@@ -241,13 +265,6 @@ loadScripts(document, 'script');</script>
 <dt>Returns:</dt>
 <dd>the current hour of the game</dd>
 </dl>
-</section>
-</li>
-<li>
-<section class="detail" id="updateDisplay()">
-<h3>updateDisplay</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateDisplay</span>()</div>
-<div class="block">Updates the clock and time display by calling the update() method in GameTimeDisplay</div>
 </section>
 </li>
 <li>
