@@ -4,6 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
@@ -13,6 +17,7 @@ import com.csse3200.game.screens.MainGameScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
+import java.awt.*;
 import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +47,6 @@ public class InventoryDisplay extends UIComponent {
     inventory = new InventoryComponent(new ArrayList<>());
     inventory.addItem(new ItemComponent("shovel", ItemType.SHOVEL, "Shovel for removing items").getEntity());
     inventory.addItem(new ItemComponent("shovel", ItemType.SHOVEL, "Shovel for removing items").getEntity());
-    logger.info(String.valueOf(inventory));
   }
 
   /**
@@ -56,19 +60,28 @@ public class InventoryDisplay extends UIComponent {
     table.pad(10);
 
     // Add some items to the table, to be changed once inventory item is improved
-    for (int i = 0; i < 30; i++) {
-      //Add the items to the table
-      table.add(new Image(new Texture("images/itemFrame.png"))).pad(10, 10, 10, 10).fill();
-      //table.add(new Image(new Texture("images/itemFrame.png")));
-      if ((i + 1) % 10 == 0) {
-        //Add a new row every 10 items
-        table.row();
+    for (int i = 0; i < 3; i++) {
+      //check if item exists at this point
+      for (int j = 0; j < 10; j++) {
+        if (i == 0) {
+          Label label = new Label(String.valueOf(j), skin.get("default", Label.LabelStyle.class));
+          Stack stack = new Stack();
+          stack.add(new Image(new Texture("images/itemFrame.png")));
+          table.add(stack).pad(10, 10, 10, 10).fill();
+        } else {
+          //add only the image to the table
+          table.add(new Image(new Texture("images/itemFrame.png"))).pad(10, 10, 10, 10).fill();
+        }
+        if (j == 9) {
+          //Add a new row every 10 items
+          table.row();
+        }
       }
     }
 
     // Create a window for the inventory using the skin
     window = new Window("Inventory", skin);
-    window.pad(40, 20, 20, 20); // Add padding to with so that the text doesn't go offscreen
+    window.pad(40, 10, 10, 10); // Add padding to with so that the text doesn't go offscreen
     window.add(table); //Add the table to the window
     window.pack(); // Pack the window to the size
     window.setMovable(false);
@@ -80,6 +93,11 @@ public class InventoryDisplay extends UIComponent {
 
   @Override
   public void draw(SpriteBatch batch)  {
+
+    //if (inventory != null && inventory.getItemAtPoint(new Point(j, i))) {
+    //          table.add(new Image(new Texture("/images/tool_shovel.png")));
+    //        }
+    //        //Add the items to the table
   }
 
   public InventoryComponent getInventory() {

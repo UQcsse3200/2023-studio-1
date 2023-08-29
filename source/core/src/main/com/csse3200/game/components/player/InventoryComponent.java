@@ -14,7 +14,6 @@ import java.util.Map;
 
 
 import static com.csse3200.game.entities.factories.ItemFactory.createHoe;
-import static com.csse3200.game.entities.factories.ItemFactory.createShovel;
 
 /**
  * A component intended to be used by the player to track their inventory.
@@ -24,8 +23,8 @@ import static com.csse3200.game.entities.factories.ItemFactory.createShovel;
 public class InventoryComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
   private final List<Entity> inventory = new ArrayList<Entity>();
-  private final Map<Entity, Integer> itemCount = new HashMap<>();
-  private final Map<Entity, Point> itemPosition = new HashMap<>();
+  private final HashMap<Entity, Integer> itemCount = new HashMap<>();
+  private final HashMap<Entity, Point> itemPosition = new HashMap<>();
 
   public InventoryComponent(List<Entity> items) {
     setInventory(items);
@@ -58,6 +57,10 @@ public class InventoryComponent extends Component {
     this.inventory.addAll(items);
     logger.debug("Setting inventory to {}", this.inventory.toString());
     for (Entity item : items) {
+      if (itemCount.containsKey(item)) {
+        itemCount.put(item, itemCount.get(item) + 1);
+      }
+
       itemCount.put(item, 1); // Setting initial count as 1
       itemPosition.put(item, new Point(0, 0)); // Setting a default position (0,0) for now.
     }
@@ -102,6 +105,24 @@ public class InventoryComponent extends Component {
 
   public Point getItemPosition(Entity item) {
     return itemPosition.get(item);
+  }
+
+  public Boolean getItemAtPoint( Point point) {
+    for (Map.Entry<Entity, Point> entry : itemPosition.entrySet()) {
+      if (entry.getValue().equals(point)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public Entity getItem(Point point) {
+    for (Map.Entry<Entity, Point> entry : itemPosition.entrySet()) {
+      if (entry.getValue().equals(point)) {
+        return entry.getKey();
+      }
+    }
+    return null;
   }
 
   public void setItemPosition(Entity item, Point point) {

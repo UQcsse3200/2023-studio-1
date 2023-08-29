@@ -1,10 +1,9 @@
 package com.csse3200.game.components.inventory;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.ui.UIComponent;
 
@@ -38,18 +37,21 @@ public class InventoryToolbar extends UIComponent {
     private void addActors() {
         Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
         table = new Table(skin);
-        table.defaults().size(64, 21);
+        table.defaults().size(64, 64);
         table.pad(10);
 
-        // Add some items to the table, to be changed once inventory item is improved
         for (int i = 0; i < 10; i++) {
-            //Add the items to the table
-            table.add("text").pad(10, 10, 10, 10).fill();
+            Label label = new Label(String.valueOf(i), skin.get("default", Label.LabelStyle.class));
+            //set the bounds of the label
+            label.setBounds(label.getX() + 15, label.getY(), label.getWidth(), label.getHeight());
+            Stack stack = new Stack();
+            stack.add(new Image(new Texture("images/itemFrame.png")));
+            table.add(stack).pad(10, 10, 10, 10).fill();
         }
 
         // Create a window for the inventory using the skin
-        window = new Window("Inventory", skin);
-        window.pad(40, 20, 20, 20); // Add padding to with so that the text doesn't go offscreen
+        window = new Window("", skin);
+        window.pad(40, 5, 5, 5); // Add padding to with so that the text doesn't go offscreen
         window.add(table); //Add the table to the window
         window.pack(); // Pack the window to the size
         window.setMovable(false);
