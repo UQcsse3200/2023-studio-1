@@ -1,6 +1,8 @@
 package com.csse3200.game.screens;
 
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.controlsmenu.ControlsMenuDisplay;
@@ -22,9 +24,14 @@ import org.slf4j.LoggerFactory;
 
 public class ControlsScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(ControlsScreen.class);
-
   private final GdxGame game;
   private final Renderer renderer;
+  public static final int frameCount = 71;
+  private static final String[] mainMenuTextures = {"images/galaxy_home_still.png"};
+  public static String[] transitionTextures = new String[frameCount];
+  private static final String animationPrefix = "images/menu_animations/menu_animations";
+  private Texture backgroundTexture;
+  private SpriteBatch batch;
 
   public ControlsScreen(GdxGame game) {
     this.game = game;
@@ -35,10 +42,10 @@ public class ControlsScreen extends ScreenAdapter {
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
     ServiceLocator.registerTimeSource(new GameTime());
-
     renderer = RenderFactory.createRenderer();
     renderer.getCamera().getEntity().setPosition(5f, 5f);
 
+    loadAssets();
     createUI();
   }
 
@@ -58,8 +65,32 @@ public class ControlsScreen extends ScreenAdapter {
     renderer.dispose();
     ServiceLocator.getRenderService().dispose();
     ServiceLocator.getEntityService().dispose();
-
     ServiceLocator.clear();
+  }
+
+  private void loadAssets() {
+    logger.debug("Loading assets");
+    ResourceService resourceService = ServiceLocator.getResourceService();
+    resourceService.loadTextures(mainMenuTextures);
+    loadFrames();
+    ServiceLocator.getResourceService().loadAll();
+  }
+
+  private void loadFrames() {
+    logger.debug("Loading assets");
+    ResourceService resourceService = ServiceLocator.getResourceService();
+
+    for (int i = 0; i < frameCount; i++) {
+      transitionTextures[i] = animationPrefix + i + ".png";
+    }
+    resourceService.loadTextures(transitionTextures);
+    ServiceLocator.getResourceService().loadAll();
+  }
+
+  private void unloadAssets() {
+    logger.debug("Unloading assets");
+    ResourceService resourceService = ServiceLocator.getResourceService();
+    resourceService.unloadAssets(mainMenuTextures);
   }
 
   /**
