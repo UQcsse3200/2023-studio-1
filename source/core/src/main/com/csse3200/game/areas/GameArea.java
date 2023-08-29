@@ -78,7 +78,6 @@ public abstract class GameArea implements Disposable {
     entity.setPosition(worldPos);
     spawnEntity(entity);
   }
-
   public void removeEntity(Entity entity) {
     entity.setEnabled(false);
     areaEntities.remove(entity);
