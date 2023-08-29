@@ -49,6 +49,7 @@ public class PlayerActions extends Component {
   public void update() {
     if (moving) {
       updateSpeed();
+
     }
     updateAnimation();
   }
@@ -57,6 +58,7 @@ public class PlayerActions extends Component {
    * Plays the correct animation for the type of player movement.
    */
   private void updateAnimation() {
+
     if (moveDirection.epsilonEquals(Vector2.Zero)) {
       // player is not moving
 
@@ -88,6 +90,7 @@ public class PlayerActions extends Component {
       entity.getEvents().trigger(animationName, "down");
     }
   }
+
 
   private void updateSpeed() {
     Body body = physicsComponent.getBody();
@@ -123,6 +126,7 @@ public class PlayerActions extends Component {
   }
 
   /**
+<<<<<<< HEAD
    * Increases the velocity of the player when they move.
    */
   void run() {

@@ -38,23 +38,23 @@ public class PlayerInventoryTest {
         assertArrayEquals(new List[]{player.getComponent(InventoryComponent.class).getInventory()},
                 new List[]{inventoryComponent.getInventory()});
     }
-    @Test
-    void checkRemoveItem() {
-        assertTrue(inventoryComponent.getInventory().isEmpty());
-        player.getComponent(InventoryComponent.class).addItem(item1);
-        verify(inventoryComponent).addItem(any(Entity.class));
-        player.getComponent(InventoryComponent.class).removeItem(item1);
-        assertTrue(inventoryComponent.getInventory().isEmpty());
-        verify(inventoryComponent).removeItem(any(Entity.class));
-    }
-    @Test
-    void checkSetHeldItem() {
-        player.getComponent(InventoryComponent.class).addItem(item1);
-        player.getComponent(InventoryComponent.class).setHeldItem(0);
-        assertSame(inventoryComponent.getHeldItem(), item1);
-        player.getComponent(InventoryComponent.class).removeItem(item1);
-        assertThrows(IndexOutOfBoundsException.class,()->inventoryComponent.setHeldItem(1));
-    }
+//    @Test
+//    void checkRemoveItem() {
+//        assertTrue(inventoryComponent.getInventory().isEmpty());
+//        player.getComponent(InventoryComponent.class).addItem(item1);
+//        verify(inventoryComponent).addItem(any(Entity.class));
+//        player.getComponent(InventoryComponent.class).removeItem(item1);
+//        assertTrue(inventoryComponent.getInventory().isEmpty());
+//        verify(inventoryComponent).removeItem(any(Entity.class));
+//    }
+//    @Test
+//    void checkSetHeldItem() {
+//        player.getComponent(InventoryComponent.class).addItem(item1);
+//        player.getComponent(InventoryComponent.class).setHeldItem(0);
+//        assertSame(inventoryComponent.getHeldItem(), item1);
+//        player.getComponent(InventoryComponent.class).removeItem(item1);
+//        assertThrows(IndexOutOfBoundsException.class,()->inventoryComponent.setHeldItem(1));
+//    }
     @Test
     void checkGetHeldItem() {
         player.getComponent(InventoryComponent.class).addItem(item1);

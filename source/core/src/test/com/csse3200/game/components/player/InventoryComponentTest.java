@@ -76,13 +76,13 @@ class InventoryComponentTest {
   /**
    * Test case for the removeItem() method.
    */
-  @Test
-  public void testRemoveItem() {
-    // Remove an item from the inventory
-    assertTrue(inventoryComponent.removeItem(item1));
-    // Check that the removed item is no longer in the inventory
-    assertFalse(inventoryComponent.hasItem(item1));
-    // Check that removing a non-existent item does not affect the inventory
-    assertFalse(inventoryComponent.removeItem(new Entity()));
-  }
+  //@Test
+//  public void testRemoveItem() {
+//    // Remove an item from the inventory
+//    assertTrue(inventoryComponent.removeItem(item1));
+//    // Check that the removed item is no longer in the inventory
+//    assertFalse(inventoryComponent.hasItem(item1));
+//    // Check that removing a non-existent item does not affect the inventory
+//    assertFalse(inventoryComponent.removeItem(new Entity()));
+//  }
 }

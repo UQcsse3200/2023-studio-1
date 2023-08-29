@@ -5,6 +5,9 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.utils.math.Vector2Utils;
+import com.csse3200.game.components.player.InventoryComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Input handler for the player for keyboard and touch (mouse) input.
@@ -13,6 +16,7 @@ import com.csse3200.game.utils.math.Vector2Utils;
 public class KeyboardPlayerInputComponent extends InputComponent {
   private final Vector2 moveDirection = Vector2.Zero.cpy();
   private PlayerActions actions;
+  private final int hotKeyOffset = 6;
 
   public KeyboardPlayerInputComponent() {
     super(5);
@@ -50,17 +54,20 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.SHIFT_LEFT:
           entity.getEvents().trigger("run");
           return true;
+        case Keys.I:
+          // inventory tings
+          entity.getEvents().trigger("toggleInventory");
+          return true;
         case Keys.F:
           triggerEnterEvent();
           return true;
-        case Keys.E: // Potentially also interact button later.
-          entity.getEvents().trigger("interact");
+        case Keys.NUM:
+          if (keycode == Keys.NUM_0) {
+            triggerHotKeySelection(0);
+          } else {
+            triggerHotKeySelection(keycode - hotKeyOffset);
+          }
           return true;
-        case Keys.NUM_0: case Keys.NUM_1: case Keys.NUM_2:
-        case Keys.NUM_3: case Keys.NUM_4: case Keys.NUM_5:
-        case Keys.NUM_6: case Keys.NUM_7: case Keys.NUM_8:
-        case Keys.NUM_9:
-          triggerHotKeySelection(keycode);
         default:
           return false;
       }
@@ -138,17 +145,16 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public void setWalkDirection(Vector2 direction) {
     this.moveDirection.set(direction);
   }
-
-  /**
+   /**
    * Sets the players current held item to that in the provided index of the inventory
    *
    * @param index of the item the user wants to be holding
    */
-  public void triggerHotKeySelection(int index) {
-    index -= 8;
-    if (index < 0) {
-      index = 9;
-    }
-    entity.getEvents().trigger("hotkeySelection", index);
-  }
+   public void triggerHotKeySelection(int index) {
+     index -= 8;
+     if (index < 0) {
+       index = 9;
+     }
+     entity.getEvents().trigger("hotkeySelection", index);
+   }
 }
