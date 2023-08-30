@@ -1,5 +1,6 @@
 package com.csse3200.game.components.player;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.GameArea;
@@ -58,7 +59,7 @@ public class ItemPickupComponentTest {
         pickupItem = new Entity()
                 .addComponent(new PhysicsComponent())
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ITEM))
-                .addComponent(new ItemComponent("Shovel", ItemType.SHOVEL));
+                .addComponent(new ItemComponent("Shovel", ItemType.SHOVEL, new Texture("images/tool_shovel.png")));
 
         picker.create();
         pickupItem.create();
