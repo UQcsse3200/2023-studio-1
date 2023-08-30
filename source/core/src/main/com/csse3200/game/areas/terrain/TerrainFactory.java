@@ -57,9 +57,9 @@ public class TerrainFactory {
     tempMapA.put('i',"images/ice_1.png");
     tempMapA.put('I',"images/ice_2.png");
     tempMapA.put('l',"images/lava_1.png");
-    tempMapA.put('L',"images/lavaground_1.png");
-    tempMapA.put('m',"images/lavaground_2.png");
-    tempMapA.put('M',"images/lavaground_3.png");
+    tempMapA.put('L',"images/lavaGround_1.png");
+    tempMapA.put('m',"images/lavaGround_2.png");
+    tempMapA.put('M',"images/lavaGround_3.png");
     tempMapA.put('w',"images/water_1.png");
     tempMapA.put('W',"images/water_2.png");
     tempMapA.put('!',"images/water_3.png");
