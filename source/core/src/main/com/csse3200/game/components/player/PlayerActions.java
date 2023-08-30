@@ -1,7 +1,6 @@
 package com.csse3200.game.components.player;
 
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.areas.terrain.GameMap;
@@ -43,12 +42,14 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("attack", this::attack);
     entity.getEvents().addListener("enterTractor", this::enterTractor);
     entity.getEvents().addListener("use", this::use);
+    entity.getEvents().addListener("hotkeySelection", this::hotkeySelection);
   }
 
   @Override
   public void update() {
     if (moving) {
       updateSpeed();
+
     }
     updateAnimation();
   }
@@ -57,6 +58,7 @@ public class PlayerActions extends Component {
    * Plays the correct animation for the type of player movement.
    */
   private void updateAnimation() {
+
     if (moveDirection.epsilonEquals(Vector2.Zero)) {
       // player is not moving
 
@@ -88,6 +90,7 @@ public class PlayerActions extends Component {
       entity.getEvents().trigger(animationName, "down");
     }
   }
+
 
   private void updateSpeed() {
     Body body = physicsComponent.getBody();
@@ -123,6 +126,7 @@ public class PlayerActions extends Component {
   }
 
   /**
+<<<<<<< HEAD
    * Increases the velocity of the player when they move.
    */
   void run() {
@@ -182,7 +186,12 @@ public class PlayerActions extends Component {
   }
 
   void use(Vector2 playerPos, Vector2 mousePos, Entity itemInHand) {
-    itemInHand.getComponent(ItemActions.class).use(playerPos, mousePos, itemInHand, map);
+    if (itemInHand != null) {
+      itemInHand.getComponent(ItemActions.class).use(playerPos, mousePos, itemInHand, map);
+    }
+  }
+  void hotkeySelection(int index) {
+    entity.getComponent(InventoryComponent.class).setHeldItem(index);
   }
 
   /**
