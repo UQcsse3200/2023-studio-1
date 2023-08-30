@@ -5,8 +5,8 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.components.items.ItemType;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.utils.math.GridPoint2Utils;
@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.tools.Tool;
+import java.util.ArrayList;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
@@ -44,17 +45,16 @@ public class ForestGameArea extends GameArea {
     "images/tool_hoe.png",
     "images/tool_scythe.png",
     "images/tool_watering_can.png",
-
-          "images/animals/chicken.png",
-          "images/animals/cow.png",
-
-          "images/cropTile.png"
-
+    "images/animals/chicken.png",
+    "images/animals/cow.png",
+    "images/cropTile.png",
+    "images/animal/astrolotl.png",
   };
 
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
-          "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas"
+          "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas",
+                  "images/animals/astrolotl.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -64,6 +64,8 @@ public class ForestGameArea extends GameArea {
 
   private Entity player;
   private Entity tractor;
+
+  private InventoryComponent inventory;
 
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
@@ -89,10 +91,9 @@ public class ForestGameArea extends GameArea {
     //spawnGhosts();    // so r ghosts
     //spawnGhostKing();
     player = spawnPlayer();
-
-
     spawnChickens();
     spawnCows();
+    spawnAstrolotl();
 
     // temp tool spawners
     spawnTool(ItemType.WATERING_CAN);
@@ -103,6 +104,9 @@ public class ForestGameArea extends GameArea {
     //playMusic();
 
     tractor = spawnTractor();
+
+    //initialise inventory
+    inventory = new InventoryComponent(new ArrayList<>());
   }
 
   public Entity getPlayer() {
@@ -208,22 +212,32 @@ public class ForestGameArea extends GameArea {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 2; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity chicken = NPCFactory.createChicken(player);
       spawnEntityAt(chicken, randomPos, true, true);
     }
   }
 
-
   private void spawnCows() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 minPos = new GridPoint2(2, 2);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
     for (int i = 0; i < 2; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity cow = NPCFactory.createCow();
+      Entity cow = NPCFactory.createCow(player);
       spawnEntityAt(cow, randomPos, true, true);
+    }
+  }
+
+  private void spawnAstrolotl() {
+    GridPoint2 minPos = new GridPoint2(2, 2);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < 1; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity astrolotl = NPCFactory.createAstrolotl(player);
+      spawnEntityAt(astrolotl, randomPos, true, true);
     }
   }
 
