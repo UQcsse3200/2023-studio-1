@@ -35,6 +35,10 @@ public class ItemActions extends Component {
         // Add your item here!!!
         boolean resultStatus;
         TerrainTile tile = getTileAtPosition(playerPos, mousePos);
+        if (tile == null) {
+            System.out.println("Map team pls fix");
+            return false;
+        }
         switch (type.getItemType()) {
             case HOE -> {
                 resultStatus = hoe(playerPos, mousePos);
@@ -176,7 +180,10 @@ public class ItemActions extends Component {
      * @return true if tile is harvestable else false
      */
     private boolean isCropTile(Entity tile) {
-      if (tile.getComponent(CropTileComponent.class) != null) {
+        if (tile == null) {
+            return false;
+        }
+        if (tile.getComponent(CropTileComponent.class) != null) {
         return true;
       }
       return false;

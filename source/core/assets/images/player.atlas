@@ -1627,112 +1627,112 @@ hoe_right
   orig: 31, 34
   offset: 0, 0
   index: 3
-water_up
+watering_can_up
   rotate: false
   xy: 0, 234
   size: 16, 32
   orig: 16, 32
   offset: 0, 0
   index: 0
-water_up
+watering_can_up
   rotate: false
   xy: 16, 234
   size: 16, 32
   orig: 16, 32
   offset: 0, 0
   index: 1
-water_up
+watering_can_up
   rotate: false
   xy: 32, 234
   size: 16, 32
   orig: 16, 32
   offset: 0, 0
   index: 2
-water_up
+watering_can_up
   rotate: false
   xy: 48, 234
   size: 16, 32
   orig: 16, 32
   offset: 0, 0
   index: 3
-water_down
+watering_can_down
   rotate: false
   xy: 64, 234
   size: 16, 32
   orig: 16, 32
   offset: 0, 0
   index: 0
-water_down
+watering_can_down
   rotate: false
   xy: 80, 234
   size: 16, 32
   orig: 16, 32
   offset: 0, 0
   index: 1
-water_down
+watering_can_down
   rotate: false
   xy: 96, 234
   size: 16, 32
   orig: 16, 32
   offset: 0, 0
   index: 2
-water_down
+watering_can_down
   rotate: false
   xy: 112, 234
   size: 16, 35
   orig: 16, 35
   offset: 0, 0
   index: 3
-water_left
+watering_can_left
   rotate: false
   xy: 128, 234
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 0
-water_left
+watering_can_left
   rotate: false
   xy: 160, 234
   size: 31, 32
   orig: 31, 32
   offset: 0, 0
   index: 1
-water_left
+watering_can_left
   rotate: false
   xy: 191, 234
   size: 31, 32
   orig: 31, 32
   offset: 0, 0
   index: 2
-water_left
+watering_can_left
   rotate: false
   xy: 222, 234
   size: 32, 33
   orig: 32, 33
   offset: 0, 0
   index: 3
-water_right
+watering_can_right
   rotate: false
   xy: 254, 234
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 0
-water_right
+watering_can_right
   rotate: false
   xy: 286, 234
   size: 31, 32
   orig: 31, 32
   offset: 0, 0
   index: 1
-water_right
+watering_can_right
   rotate: false
   xy: 317, 234
   size: 31, 32
   orig: 31, 32
   offset: 0, 0
   index: 2
-water_right
+watering_can_right
   rotate: false
   xy: 348, 234
   size: 32, 33
