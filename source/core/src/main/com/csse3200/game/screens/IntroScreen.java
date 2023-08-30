@@ -3,8 +3,9 @@ package com.csse3200.game.screens;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.components.controlsmenu.ControlsMenuDisplay;
+import com.csse3200.game.components.intro.IntroActions;
 import com.csse3200.game.components.intro.IntroDisplay;
+import com.csse3200.game.components.intro.IntroSkipDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
@@ -62,7 +63,6 @@ public class IntroScreen extends ScreenAdapter {
         renderer.dispose();
         ServiceLocator.getRenderService().dispose();
         ServiceLocator.getEntityService().dispose();
-
         unloadAssets();
         ServiceLocator.clear();
     }
@@ -95,7 +95,9 @@ public class IntroScreen extends ScreenAdapter {
         Stage stage = ServiceLocator.getRenderService().getStage();
         Entity ui = new Entity();
         ui.addComponent(new IntroDisplay(game))
-                .addComponent(new InputDecorator(stage, 10));
+                .addComponent(new InputDecorator(stage, 10))
+                .addComponent(new IntroActions(this.game))
+                .addComponent(new IntroSkipDisplay());
         ServiceLocator.getEntityService().register(ui);
     }
 }
