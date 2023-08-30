@@ -3,16 +3,21 @@ package com.csse3200.game.components.settingsmenu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.Graphics.Monitor;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.GdxGame.ScreenType;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.files.UserSettings.DisplaySettings;
+import com.csse3200.game.screens.MainMenuScreen;
+import com.csse3200.game.screens.SettingsScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.csse3200.game.utils.StringDecorator;
@@ -26,42 +31,111 @@ import org.slf4j.LoggerFactory;
 public class SettingsMenuDisplay extends UIComponent {
   private static final Logger logger = LoggerFactory.getLogger(SettingsMenuDisplay.class);
   private final GdxGame game;
-
-  private Table rootTable;
   private TextField fpsText;
   private CheckBox fullScreenCheck;
   private CheckBox vsyncCheck;
   private Slider uiScaleSlider;
   private SelectBox<StringDecorator<DisplayMode>> displayModeSelect;
 
+  /**
+   * The base Table on which the layout of the screen is built
+   */
+  private Table rootTable;
+
+  /**
+   * The Image that represents the background of the page
+   */
+  private Image background;
+
+  /**
+   * An Image that stores the current frame of the menu screen animation
+   */
+  private Image transitionFrames;
+
+  /**
+   * The current frame of the animation
+   */
+  private int frame;
+
+  /**
+   * The time at which the last frame was updated
+   */
+  private long lastFrameTime;
+
+  /**
+   * The target fps at which the frames should be updated
+   */
+  private int fps = 15;
+
+  /**
+   * The duration for which each frame should be displayed
+   */
+  private final long frameDuration = (long) (800 / fps);
+
+
   public SettingsMenuDisplay(GdxGame game) {
     super();
+    transitionFrames = new Image();
     this.game = game;
   }
 
   @Override
   public void create() {
     super.create();
+    frame = 1;
     addActors();
   }
 
   private void addActors() {
-    Label title = new Label("Settings", skin, "title");
+    Label titleback = new Label("Settings", skin, "title");
+    titleback.setPosition(0, 0);
+
+    Table titleContainer = new Table();
+    titleContainer.add(titleback).padTop(290f);
+    titleContainer.setPosition(0, Gdx.graphics.getHeight() * 0.75f);
+
     Table settingsTable = makeSettingsTable();
     Table menuBtns = makeMenuBtns();
 
+    Image title = new Image(
+            ServiceLocator.getResourceService()
+                    .getAsset("images/galaxy_home_still.png", Texture.class));
+    title.setWidth(Gdx.graphics.getWidth());
+    title.setHeight(Gdx.graphics.getHeight());
+    title.setPosition(0, 0);
+
     rootTable = new Table();
     rootTable.setFillParent(true);
+    rootTable.add(titleContainer).expandX().top();
+    rootTable.add(title);
+    stage.addActor(title);
 
-    rootTable.add(title).expandX().top().padTop(20f);
+    // Create a container for the settingsTable to prevent shifting
+    Table settingsContainer = new Table();
+    settingsContainer.add(settingsTable).expandX().expandY();
 
-    rootTable.row().padTop(30f);
-    rootTable.add(settingsTable).expandX().expandY();
-
+    rootTable.row().padTop(10f);
+    rootTable.add(settingsContainer).expandX().expandY(); // Add the settingsContainer instead of settingsTable
     rootTable.row();
     rootTable.add(menuBtns).fillX();
 
+    updateAnimation();
+    stage.addActor(transitionFrames);
     stage.addActor(rootTable);
+  }
+
+  private void updateAnimation() {
+    if (frame < SettingsScreen.frameCount) {
+      transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
+              .getAsset(SettingsScreen.transitionTextures[frame], Texture.class))));
+      transitionFrames.setWidth(Gdx.graphics.getWidth());
+      transitionFrames.setHeight(Gdx.graphics.getHeight() / 2);
+      transitionFrames.setPosition(0, Gdx.graphics.getHeight() / 2 + 15);
+      frame++;
+      lastFrameTime = System.currentTimeMillis();
+    } else {
+      frame = 1;
+    }
   }
 
   private Table makeSettingsTable() {
@@ -180,9 +254,10 @@ public class SettingsMenuDisplay extends UIComponent {
         });
 
     Table table = new Table();
-    table.add(exitBtn).expandX().left().pad(0f, 15f, 15f, 0f);
-    table.add(applyBtn).expandX().right().pad(0f, 0f, 15f, 15f);
+    table.add(exitBtn).expandX().left().pad(200f, 15f, 15f, 0f);
+    table.add(applyBtn).expandX().right().pad(200f, 0f, 15f, 15f);
     return table;
+
   }
 
   private void applyChanges() {
@@ -215,10 +290,14 @@ public class SettingsMenuDisplay extends UIComponent {
   @Override
   protected void draw(SpriteBatch batch) {
     // draw is handled by the stage
+
   }
 
   @Override
   public void update() {
+    if (System.currentTimeMillis() - lastFrameTime > frameDuration) {
+      updateAnimation();
+    }
     stage.act(ServiceLocator.getTimeSource().getDeltaTime());
   }
 
