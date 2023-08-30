@@ -64,7 +64,6 @@ public class InventoryDisplay extends UIComponent {
       //check if item exists at this point
       for (int j = 0; j < 10; j++) {
         if (i == 0) {
-          Label label = new Label(String.valueOf(j), skin.get("default", Label.LabelStyle.class));
           Stack stack = new Stack();
           stack.add(new Image(new Texture("images/itemFrame.png")));
           table.add(stack).pad(10, 10, 10, 10).fill();
@@ -72,10 +71,16 @@ public class InventoryDisplay extends UIComponent {
           //add only the image to the table
           table.add(new Image(new Texture("images/itemFrame.png"))).pad(10, 10, 10, 10).fill();
         }
+
+        Label label = new Label(String.valueOf(i * 10 + j + 1), skin.get("default", Label.LabelStyle.class));
+        table.add(label).pad(10, 10, 10, 10).fill();
+
         if (j == 9) {
           //Add a new row every 10 items
           table.row();
         }
+
+
       }
     }
 

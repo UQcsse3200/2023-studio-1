@@ -45,6 +45,8 @@ public class ToolbarDisplay extends UIComponent {
             Stack stack = new Stack();
             stack.add(new Image(new Texture("images/itemFrame.png")));
             table.add(stack).pad(10, 10, 10, 10).fill();
+            Label itemlabel = new Label(String.valueOf(i+1), skin.get("default", Label.LabelStyle.class));
+            table.add(itemlabel);
         }
 
         // Create a window for the inventory using the skin
