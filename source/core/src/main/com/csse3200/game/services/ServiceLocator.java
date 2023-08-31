@@ -1,6 +1,5 @@
 package com.csse3200.game.services;
 
-import com.badlogic.gdx.Game;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.input.InputService;
@@ -27,6 +26,7 @@ public class ServiceLocator {
   private static TimeService timeService;
   private static GameTime timeSource;
   private static GameArea gameArea;
+  private static SaveLoadService saveLoadService;
 
   public static GameArea getGameArea() {
     return gameArea;
@@ -56,6 +56,10 @@ public class ServiceLocator {
   }
   public static TimeService getTimeService() {
     return timeService;
+  }
+
+  public static SaveLoadService getSaveLoadService() {
+    return saveLoadService;
   }
 
   public static void registerGameArea(GameArea area) {
@@ -96,6 +100,11 @@ public class ServiceLocator {
   public static void registerTimeSource(GameTime source) {
     logger.debug("Registering time source {}", source);
     timeSource  = source;
+  }
+
+  public static void registerSaveLoadService(SaveLoadService source) {
+    logger.debug("Registering Save/Load service {}", source);
+    saveLoadService = source;
   }
 
   public static void clear() {

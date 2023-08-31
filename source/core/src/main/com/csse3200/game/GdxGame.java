@@ -78,7 +78,8 @@ public class GdxGame extends Game {
       case CONTROLS:
         return new ControlsScreen(this);
       case INTRO:
-        return new IntroScreen(this);
+        //return new IntroScreen(this);
+        return new MainGameScreen(this);
       default:
         return null;
     }
