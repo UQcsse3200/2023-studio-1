@@ -126,7 +126,6 @@ public class PlayerActions extends Component {
   }
 
   /**
-<<<<<<< HEAD
    * Increases the velocity of the player when they move.
    */
   void run() {
