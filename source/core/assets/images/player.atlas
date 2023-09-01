@@ -1389,112 +1389,112 @@ hoe_right
   orig: 48, 48
   offset: 0, 0
   rotate: false
-water_up
+watering_can_up
   xy: 0, 480
   index: 0
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   rotate: false
-water_up
+watering_can_up
   xy: 48, 480
   index: 1
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   rotate: false
-water_up
+watering_can_up
   xy: 96, 480
   index: 2
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   rotate: false
-water_up
+watering_can_up
   xy: 144, 480
   index: 3
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   rotate: false
-water_down
+watering_can_down
   xy: 192, 480
   index: 0
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   rotate: false
-water_down
+watering_can_down
   xy: 240, 480
   index: 1
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   rotate: false
-water_down
+watering_can_down
   xy: 288, 480
   index: 2
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   rotate: false
-water_down
+watering_can_down
   xy: 336, 480
   index: 3
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   rotate: false
-water_left
+watering_can_left
   xy: 384, 480
   index: 0
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   rotate: false
-water_left
+watering_can_left
   xy: 432, 480
   index: 1
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   rotate: false
-water_left
+watering_can_left
   xy: 480, 480
   index: 2
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   rotate: false
-water_left
+watering_can_left
   xy: 528, 480
   index: 3
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   rotate: false
-water_right
+watering_can_right
   xy: 576, 480
   index: 0
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   rotate: false
-water_right
+watering_can_right
   xy: 624, 480
   index: 1
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   rotate: false
-water_right
+watering_can_right
   xy: 672, 480
   index: 2
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   rotate: false
-water_right
+watering_can_right
   xy: 720, 480
   index: 3
   size: 48, 48

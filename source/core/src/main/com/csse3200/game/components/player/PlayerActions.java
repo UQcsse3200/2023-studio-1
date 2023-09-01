@@ -196,6 +196,7 @@ public class PlayerActions extends Component {
       itemInHand.getComponent(ItemActions.class).use(playerPos, mousePos, itemInHand, map);
     }
   }
+
   void hotkeySelection(int index) {
     entity.getComponent(InventoryComponent.class).setHeldItem(index);
   }
