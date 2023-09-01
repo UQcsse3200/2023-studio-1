@@ -1,5 +1,5 @@
 package com.csse3200.game.components.player;
-
+import java.util.Random;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -59,19 +59,25 @@ public class PlayerActions extends Component {
    */
   private void updateAnimation() {
 
+    int max=300; int min=1;
+
+    Random randomNum = new Random();
+
+    int AnimationRandomizer = min + randomNum.nextInt(max);
+
     if (moveDirection.epsilonEquals(Vector2.Zero)) {
       // player is not moving
 
       String animationName = "animationWalkStop";
       float direction = getPrevMoveDirection();
       if (direction < 45) {
-        entity.getEvents().trigger(animationName, "right");
+        entity.getEvents().trigger(animationName, "right", AnimationRandomizer);
       } else if (direction < 135) {
-        entity.getEvents().trigger(animationName, "up");
+        entity.getEvents().trigger(animationName, "up", AnimationRandomizer);
       } else if (direction < 225) {
-        entity.getEvents().trigger(animationName, "left");
+        entity.getEvents().trigger(animationName, "left", AnimationRandomizer);
       } else if (direction < 315) {
-        entity.getEvents().trigger(animationName, "down");
+        entity.getEvents().trigger(animationName, "down", AnimationRandomizer);
       }
       return;
     }
