@@ -47,11 +47,13 @@ public class PlayerActions extends Component {
 
   @Override
   public void update() {
-    if (moving) {
-      updateSpeed();
+    if (entity.getComponent(PlayerAnimationController.class).readyToPlay()) {
+      if (moving) {
+        updateSpeed();
 
+      }
+      updateAnimation();
     }
-    updateAnimation();
   }
 
   /**
@@ -146,6 +148,13 @@ public class PlayerActions extends Component {
     moving = false;
   }
 
+  void pauseMoving() {
+    Vector2 tmp = this.moveDirection;
+    this.moveDirection = Vector2.Zero.cpy();
+    updateSpeed();
+    moveDirection.add(tmp);
+  }
+
   /**
 <<<<<<< HEAD
    * Increases the velocity of the player when they move.
@@ -208,7 +217,10 @@ public class PlayerActions extends Component {
 
   void use(Vector2 playerPos, Vector2 mousePos, Entity itemInHand) {
     if (itemInHand != null) {
-      itemInHand.getComponent(ItemActions.class).use(playerPos, mousePos, itemInHand, map);
+      if (itemInHand.getComponent(ItemActions.class) != null) {
+        pauseMoving();
+        itemInHand.getComponent(ItemActions.class).use(playerPos, mousePos, itemInHand, map);
+      }
     }
   }
 
