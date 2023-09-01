@@ -2,13 +2,12 @@ package com.csse3200.game.areas.terrain;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.events.EventHandler;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /** the GameMap class is used to store and easily access and manage the components related to the game map */
 public class GameMap {
@@ -72,42 +71,44 @@ public class GameMap {
 
     /**
      * Conversion function: gets the centre of a tile from a coordinate position
-     * Currently WIP
+     * e.g. on a 4x4 tile grid, (0, 0) in the world translates to (8, 56) on the pixel grid
      * @param x x coordinate
      * @param y y coordinate
-     * @return a list of x and y pixel values
+     * @return a Vector2 value
      */
-    public ArrayList<Integer> worldCoordinatesToScreenPosition(int x, int y) {
+    public Vector2 worldCoordinatesToPixelPosition(int x, int y) {
         GridPoint2 max = this.getMapSize();
 
         if (x > max.x || y > max.y) {
             throw new IndexOutOfBoundsException("Bad Input: Coordinate position out of bounds");
         }
 
-        ArrayList<Integer> pixelPositions = new ArrayList<>();
+        Vector2 pixelPositions = new Vector2();
         int xPixel = (16 * x) + 8;
-        int y2 = (16 * y) - 8;
-        // post process y2 to convert (0,0) location
+        int y2 = (16 * y) + 8;
+        // post process y2 to convert (0,0) location to bottom left
         int yPixel = Gdx.graphics.getHeight() - 1 - y2;
-        pixelPositions.add(xPixel);
-        pixelPositions.add(yPixel);
+        pixelPositions.x = xPixel;
+        pixelPositions.y = yPixel;
         return pixelPositions;
     }
 
     /**
      * Conversion function: gets the centre of a tile from a coordinate position
-     * Currently WIP
+     * e.g. on a 4x4 tile grid, (6, 50) on the pixel grid translates to (0, 0) in the world
      * @param xPixel x pixel screen coordinate
      * @param yPixel y pixel screen coordinate
-     * @return a list of x and y tile coordinates
+     * @return a Vector2 value
      */
-    public ArrayList<Integer> screenPositionToWorldCoordinates(int xPixel, int yPixel) {
-        ArrayList<Integer> coordinates = new ArrayList<>();
-        int x = Math.abs((xPixel / 16) - 1);
-        int y = Math.abs((yPixel / 16) - 1);
-        coordinates.add(x);
-        coordinates.add(y);
-        return coordinates;
+    public Vector2 pixelPositionToWorldCoordinates(int xPixel, int yPixel) {
+        Vector2 worldCoordinates = new Vector2();
+        int x = Math.floorDiv(xPixel, 16);
+        // preprocess y2 to convert (0,0) to top left
+        int y2 = Gdx.graphics.getHeight() - 1 - yPixel;
+        int y = Math.floorDiv(y2, 16);
+        worldCoordinates.x = x;
+        worldCoordinates.y = y;
+        return worldCoordinates;
     }
 
     /**
