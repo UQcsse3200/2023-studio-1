@@ -103,6 +103,23 @@ public class PlayerFactory {
     animator.addAnimation("interact_up", 0.13f, Animation.PlayMode.NORMAL);
     animator.addAnimation("interact_right", 0.1f, Animation.PlayMode.NORMAL);
     animator.addAnimation("interact_left", 0.1f, Animation.PlayMode.NORMAL);
+
+    animator.addAnimation("hoe_up",0.1f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("hoe_left",0.1f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("hoe_right",0.1f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("hoe_down",0.1f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("shovel_up",0.1f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("shovel_left",0.1f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("shovel_right",0.1f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("shovel_down",0.1f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("watering_can_up",0.1f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("watering_can_left",0.1f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("watering_can_right",0.1f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("watering_can_down",0.1f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("scythe_up",0.1f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("scythe_left",0.1f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("scythe_right",0.1f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("scythe_down",0.1f,Animation.PlayMode.NORMAL);
   }
 
   private PlayerFactory() {
