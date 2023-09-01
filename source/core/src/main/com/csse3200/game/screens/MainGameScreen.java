@@ -64,6 +64,8 @@ public class MainGameScreen extends ScreenAdapter {
           "images/time_system_ui/indicator_21.png",
           "images/time_system_ui/indicator_22.png",
           "images/time_system_ui/indicator_23.png",
+          "images/oxygen_ui/oxygen_outline.png",
+          "images/oxygen_ui/oxygen_fill.png"
   };
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 
