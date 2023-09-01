@@ -6,7 +6,8 @@ package com.csse3200.game.services;
 public interface OxygenLevel {
     
     /**
-     * Sets the maximum amount of oxygen that can be present.
+     * Sets the maximum amount (in kg) of oxygen that can be present in the oxygen-storing
+     * object (I.e. Planet, oxygen tank, etc).
      */
     void setUpperLimit(int kilograms);
     
