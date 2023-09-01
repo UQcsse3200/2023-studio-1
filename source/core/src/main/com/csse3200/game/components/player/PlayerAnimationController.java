@@ -9,7 +9,7 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
  */
 public class PlayerAnimationController extends Component {
     AnimationRenderComponent animator;
-
+    String animationPrev;
     @Override
     public void create() {
         super.create();
@@ -60,14 +60,31 @@ public class PlayerAnimationController extends Component {
     /**
      * Starts the default player animation when they stop walking.
      */
-    void animationWalkStop(String direction) {
+    void animationWalkStop(String direction, int AnimationRandomizer) {
+
         if (!readyToPlay()) {
             return;
         }
-        String animation = String.format("idle_%s", direction);
-        if (!animator.getCurrentAnimation().equals(animation)) {
-            animator.startAnimation(animation);
+
+        String animationType;
+        if (AnimationRandomizer > 50){
+            animationType = "blink";
+        } else if (AnimationRandomizer > 25){
+            animationType = "yawn";
+        } else {
+            animationType = "snooze";
         }
+
+        String animation = String.format("%s_%s", animationType, direction);
+
+
+        if (!animator.getCurrentAnimation().equals(animation) && animator.isFinished()) {
+
+            animator.startAnimation(animation);
+            animationPrev = animation;
+        }
+
+
     }
 
     /**
