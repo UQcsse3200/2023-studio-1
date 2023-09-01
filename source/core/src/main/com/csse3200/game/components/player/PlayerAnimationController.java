@@ -83,7 +83,7 @@ public class PlayerAnimationController extends Component {
     /**
      * Check if the current (non-looping) animation has completed
      */
-    boolean readyToPlay() {
+    public boolean readyToPlay() {
         if (animator.getCurrentAnimation().contains("interact") || animator.getCurrentAnimation().contains("hoe")
                 || animator.getCurrentAnimation().contains("shovel") || animator.getCurrentAnimation().contains("scythe")
                 || animator.getCurrentAnimation().contains("watering_can")) {
@@ -99,7 +99,7 @@ public class PlayerAnimationController extends Component {
      */
     void animationWalkStart(String direction) {
         String animation = String.format("walk_%s", direction);
-        if (!animator.getCurrentAnimation().equals(animation)) {
+        if (!animator.getCurrentAnimation().equals(animation) || !readyToPlay()) {
             animator.startAnimation(animation);
         }
     }
@@ -111,7 +111,7 @@ public class PlayerAnimationController extends Component {
      */
     void animationRunStart(String direction) {
         String animation = String.format("run_%s", direction);
-        if (!animator.getCurrentAnimation().equals(animation)) {
+        if (!animator.getCurrentAnimation().equals(animation) || !readyToPlay()) {
             animator.startAnimation(animation);
         }
     }
