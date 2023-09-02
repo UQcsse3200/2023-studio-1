@@ -9,6 +9,7 @@ import com.csse3200.game.areas.terrain.TerrainCropTileFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.items.ItemType;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.*;
@@ -131,12 +132,16 @@ public class SpaceGameArea extends GameArea {
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
 
     Json json = new Json();
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHoe());
+        player.getComponent(InventoryComponent.class).addItem(ItemFactory.createShovel());
+
+
     String savedPlayer = json.toJson(player);
     System.out.println(savedPlayer);
     //player = json.fromJson(Entity.class, savedPlayer);
 
 
-    //tractor = spawnTractor();
+    tractor = spawnTractor();
     spawnChickens();
     spawnCows();
     spawnAstrolotl();

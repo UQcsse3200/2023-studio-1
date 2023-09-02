@@ -7,6 +7,8 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ComponentType;
+import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -291,17 +293,17 @@ public class Entity implements Json.Serializable {
     json.writeValue("x", position.x);
     json.writeValue("y", position.y);
 
-    json.writeArrayStart("components");
+    json.writeObjectStart("components");
     for (Component c : createdComponents) {
       c.write(json);
     }
-    json.writeArrayEnd();
+    json.writeObjectEnd();
     //json.writeValue("components", createdComponents);
     //System.out.println(json);
   }
 
   public void writeItem(Json json) {
-    json.writeValue("FUCK");
+    json.writeValue(this.getComponent(ItemComponent.class).getItemName());
   }
 
   public void read(Json json, JsonValue jsonMap) {
