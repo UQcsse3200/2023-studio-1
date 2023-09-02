@@ -51,6 +51,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.SHIFT_LEFT:
           entity.getEvents().trigger("run");
           return true;
+        case Keys.E: // Potentially also interact button later.
+          entity.getEvents().trigger("interact");
+          return true;
         case Keys.I:
           // inventory tings
           entity.getEvents().trigger("toggleInventory");

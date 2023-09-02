@@ -7,9 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.csse3200.game.ui.UIComponent;
-import com.csse3200.game.services.GameTime;
-import com.csse3200.game.services.TimeController;
-import com.csse3200.game.services.ServiceLocator;
+
+import java.security.Provider;
 
 /**
  * A ui component for displaying the current game time on the Main Game Screen.
@@ -21,9 +20,6 @@ public class GameTimeDisplay extends UIComponent {
     private Image clockImage;
     private Image planetImage;
     private Label timeLabel;
-    private int time;
-
-    private TimeController timeController;
 
     /**
      * Creates reusable ui styles and adds actors to the stage.
@@ -31,22 +27,12 @@ public class GameTimeDisplay extends UIComponent {
     @Override
     public void create() {
         super.create();
-        addActors();
-        this.timeController = ServiceLocator.getTimeSource().getTimeController();
-        this.timeController.registerTimeDisplay(this);
+        ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateDisplay);
+        updateDisplay();
     }
 
-    /**
-     * Creates actors, which are the clock frame, planet image, and time label. Adds them
-     * into a Group, and positions them with overlap. Adds this group into a table, then
-     * adds the table to the stage to be written into creation.
-     */
-    private void addActors() {
-        time = 0;
-        update(time);
-    }
-
-    public void update(int time) {
+    public void updateDisplay() {
+        int time = ServiceLocator.getTimeService().getHour();
         table = new Table();
         group = new Group();
         table.top().left();
@@ -87,7 +73,8 @@ public class GameTimeDisplay extends UIComponent {
 
     @Override
     public void draw(SpriteBatch batch) {
-        timeController.updateDisplay();
+        // Does nothing since draw
+        return;
     }
 
 
