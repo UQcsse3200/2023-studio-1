@@ -71,6 +71,8 @@ public class MainGameScreen extends ScreenAdapter {
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
 
+  private static Boolean lose;
+
   public MainGameScreen(GdxGame game) {
     this.game = game;
 
@@ -109,6 +111,13 @@ public class MainGameScreen extends ScreenAdapter {
     //renderer.getCamera().setTrackEntity(forestGameArea.getPlayer());
     spaceGameArea.getPlayer().getComponent(PlayerActions.class).setCameraVar(renderer.getCamera());
     spaceGameArea.getTractor().getComponent(TractorActions.class).setCameraVar(renderer.getCamera());
+
+    lose = false;
+    ServiceLocator.getTimeService().getEvents().addListener("loseScreen", this::loseScreenStart);
+  }
+
+  public void loseScreenStart() {
+    lose = true;
   }
 
   @Override
@@ -117,6 +126,9 @@ public class MainGameScreen extends ScreenAdapter {
     ServiceLocator.getEntityService().update();
     ServiceLocator.getTimeService().update();
     renderer.render();
+    if (lose == true) {
+      game.setScreen(GdxGame.ScreenType.LOSESCREEN);
+    }
   }
 
   @Override

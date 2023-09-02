@@ -84,6 +84,9 @@ public class TimeService {
 		events.trigger("hourUpdate");
 		day += 1;
 		events.trigger("dayUpdate");
+		if (day >= 30) {
+			events.trigger("loseScreen");
+		}
 	}
 
 }

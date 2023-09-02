@@ -16,11 +16,19 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.csse3200.game.GdxGame;
 
 public class LoseScreenDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(LoseScreenDisplay.class);
     private static final float Z_INDEX = 2f;
     private Image background;
+    private final GdxGame game;
+
+    public LoseScreenDisplay(GdxGame game) {
+        super();
+        // Initialise the animation with a blank image
+        this.game = game;
+    }
 
     @Override
     public void create() {
@@ -29,8 +37,12 @@ public class LoseScreenDisplay extends UIComponent {
     }
 
     private void addActors() {
-        background = new Image(ServiceLocator.getResourceService()
-                .getAsset("images/lose_temp.png", Texture.class));
+        background = new Image(
+                ServiceLocator.getResourceService().getAsset("images/lose_temp.png", Texture.class));
+        background.setWidth(Gdx.graphics.getWidth());
+        background.setHeight(Gdx.graphics.getHeight());
+        background.setPosition(0, 0);
+        stage.addActor(background);
     }
 
     @Override
@@ -45,7 +57,7 @@ public class LoseScreenDisplay extends UIComponent {
 
     @Override
     public void dispose() {
-        background.remove();
+        background.clear();
         super.dispose();
     }
 

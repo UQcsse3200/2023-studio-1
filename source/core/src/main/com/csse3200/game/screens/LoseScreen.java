@@ -28,10 +28,7 @@ public class LoseScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(LoseScreen.class);
     private final GdxGame game;
     private final Renderer renderer;
-    public static final int frameCount = 71;
-    private static final String[] loseScreenTextures = {"lose_temp.png"};
-    public static String[] transitionTextures = new String[frameCount];
-    private static final String animationPrefix = "images/menu_animations/menu_animations";
+    private static final String[] loseScreenTextures = {"images/lose_temp.png"};
     private Texture backgroundTexture;
     private SpriteBatch batch;
 
@@ -104,7 +101,7 @@ public class LoseScreen extends ScreenAdapter {
         logger.debug("Creating ui");
         Stage stage = ServiceLocator.getRenderService().getStage();
         Entity ui = new Entity();
-        ui.addComponent(new LoseScreenDisplay())
+        ui.addComponent(new LoseScreenDisplay(game))
                 .addComponent(new InputDecorator(stage, 10));
                 //.addComponent(new LoseScreenActions(game));
         ServiceLocator.getEntityService().register(ui);
