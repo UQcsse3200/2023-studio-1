@@ -35,6 +35,11 @@ public class TimeService {
 
 	public void setPaused(boolean state) {
 		paused = state;
+		if (state == true) {
+			ServiceLocator.getTimeSource().setTimeScale(0);
+		} else {
+			ServiceLocator.getTimeSource().setTimeScale(1);
+		}
 	}
 
 	public int getHour() {
