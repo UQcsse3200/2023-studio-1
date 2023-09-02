@@ -181,7 +181,6 @@ public class AnimationRenderComponent extends RenderComponent {
 
   @Override
   protected void draw(SpriteBatch batch) {
-    if (!ServiceLocator.getTimeService().isPaused()) {
       if (currentAnimation == null) {
         return;
       }
@@ -194,7 +193,6 @@ public class AnimationRenderComponent extends RenderComponent {
       Vector2 scale = entity.getScale();
       batch.draw(region, pos.x, pos.y, scale.x, scale.y);
       animationPlayTime += timeSource.getDeltaTime();
-    }
   }
 
   @Override
