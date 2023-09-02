@@ -69,16 +69,15 @@ public class CropTileComponent extends Component {
 		entity.getEvents().addListener("fertilise", this::fertiliseTile);
 		entity.getEvents().addListener("plant", this::plantCrop);
 		entity.getEvents().addListener("destroy", this::destroyTile);
-		entity.getEvents().addListener("hourUpdate", this::hourly_update);
-		ServiceLocator.getTimeService().registerHourUpdate(entity);
 		currentTexture = entity.getComponent(DynamicTextureRenderComponent.class);
 	}
 
 	/**
-	 * Decreases water content in the tile by a constant amount every hour.
+	 * Decreases water content in the tile by a constant amount.
 	 */
-	public void hourly_update() {
-		waterContent -= WATER_DECREASE_RATE;
+	@Override
+	public void update() {
+		waterContent -= WATER_DECREASE_RATE * ServiceLocator.getTimeSource().getDeltaTime();
 		if (waterContent < 0) {
 			waterContent = 0;
 		} else if (waterContent > 2) {

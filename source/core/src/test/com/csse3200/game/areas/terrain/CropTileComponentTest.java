@@ -8,7 +8,6 @@ import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.services.TimeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +24,6 @@ public class CropTileComponentTest {
     private Entity cropTile1, cropTile2, cropTile3, cropTile4, cropTile5, cropTile6, cropTile7;
     @BeforeEach
     public void init() {
-        ServiceLocator.registerTimeService(mock(TimeService.class));
         cropTile1 = new Entity().addComponent(new CropTileComponent(1f, 0.5f));
         cropTile2 = new Entity().addComponent(new CropTileComponent(0.5f, 0.5f));
         cropTile3 = new Entity().addComponent(new CropTileComponent(1f, 1.0f));
@@ -117,17 +115,19 @@ public class CropTileComponentTest {
         cropTile5.create();
         cropTile6.create();
         cropTile7.create();
-        cropTile1.getEvents().trigger("hourUpdate");
-        cropTile2.getEvents().trigger("hourUpdate");
-        cropTile3.getEvents().trigger("hourUpdate");
-        cropTile4.getEvents().trigger("hourUpdate");
-        cropTile5.getEvents().trigger("hourUpdate");
-        cropTile6.getEvents().trigger("hourUpdate");
-        cropTile7.getEvents().trigger("hourUpdate");
-
-        assertEquals(0.49737, cropTile1.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
-        assertEquals(0.239316, cropTile2.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
-        assertEquals(0.9947356, cropTile3.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
+        GameTime gameTime = mock(GameTime.class);
+        ServiceLocator.registerTimeSource(gameTime);
+        when(gameTime.getDeltaTime()).thenReturn(400f / 1000);
+        cropTile1.update();
+        cropTile2.update();
+        cropTile3.update();
+        cropTile4.update();
+        cropTile5.update();
+        cropTile6.update();
+        cropTile7.update();
+        assertEquals(0.49958, cropTile1.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
+        assertEquals(0.26197, cropTile2.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
+        assertEquals(0.99916, cropTile3.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
         assertEquals(-1.0, cropTile4.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
         assertEquals(0, cropTile5.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
         assertEquals(-1, cropTile6.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
@@ -140,16 +140,16 @@ public class CropTileComponentTest {
         cropTile6.getEvents().trigger("fertilise");
         cropTile7.getEvents().trigger("fertilise");
         //tests whether getTexturePath() goes down the correct way
-        cropTile1.getEvents().trigger("hourUpdate");
-        cropTile2.getEvents().trigger("hourUpdate");
-        cropTile3.getEvents().trigger("hourUpdate");
-        cropTile4.getEvents().trigger("hourUpdate");
-        cropTile5.getEvents().trigger("hourUpdate");
-        cropTile6.getEvents().trigger("hourUpdate");
-        cropTile7.getEvents().trigger("hourUpdate");
-        assertEquals(0.97904897, cropTile1.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
-        assertEquals(0.402672, cropTile2.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
-        assertEquals(1.958097, cropTile3.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
+        cropTile1.update();
+        cropTile2.update();
+        cropTile3.update();
+        cropTile4.update();
+        cropTile5.update();
+        cropTile6.update();
+        cropTile7.update();
+        assertEquals(0.99663, cropTile1.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
+        assertEquals(0.49378, cropTile2.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
+        assertEquals(1.99326, cropTile3.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
         assertEquals(-1.0, cropTile4.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
         assertEquals(0, cropTile5.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
         assertEquals(-1, cropTile6.getComponent(CropTileComponent.class).getGrowthRate(), 0.0f);
