@@ -1,5 +1,12 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.ItemFactory;
+import com.csse3200.game.entities.factories.PlayerFactory;
+import com.csse3200.game.files.SaveGame;
+import com.csse3200.game.files.SaveGame.GameState;
+
 /* A note of the registering of this service:
  *  this service is currently only registered at MainMenuScreen,
  *  (source/core/src/main/com/csse3200/game/screens/MainMenuScreen.java)
@@ -11,7 +18,17 @@ package com.csse3200.game.services;
  * - prints save/load to system out depending on method call.
  */
 public class SaveLoadService {
+
   public void save() {
+    Entity player = PlayerFactory.createPlayer();
+
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHoe());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createShovel());
+    SaveGame.GameState state = new GameState();
+    state.player = player;
+    player.create();
+    SaveGame.set(state);
+    
     System.out.println("save!");
   }
   public void load() {

@@ -131,14 +131,11 @@ public class SpaceGameArea extends GameArea {
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
 
-    Json json = new Json();
+    //TODO: REMOVE THESE WHEN WE FINISH TESTING
     player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHoe());
-        player.getComponent(InventoryComponent.class).addItem(ItemFactory.createShovel());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createShovel());
 
 
-    String savedPlayer = json.toJson(player);
-    System.out.println(savedPlayer);
-    //player = json.fromJson(Entity.class, savedPlayer);
 
 
     tractor = spawnTractor();
