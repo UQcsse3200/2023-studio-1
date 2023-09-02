@@ -3,6 +3,8 @@ package com.csse3200.game.entities;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntMap;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ComponentType;
 import com.csse3200.game.events.EventHandler;
@@ -24,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * ServiceLocator.getEntityService().register(player);
  * </pre>
  */
-public class Entity {
+public class Entity implements Json.Serializable {
   private static final Logger logger = LoggerFactory.getLogger(Entity.class);
   private static int nextId = 0;
   private static final String EVT_NAME_POS = "setPosition";
@@ -283,5 +285,35 @@ public class Entity {
   @Override
   public String toString() {
     return String.format("Entity{id=%d}", id);
+  }
+
+  public void write(Json json) {
+    json.writeValue("x", position.x);
+    json.writeValue("y", position.y);
+
+    json.writeArrayStart("components");
+    for (Component c : createdComponents) {
+      c.write(json);
+    }
+    json.writeArrayEnd();
+    //json.writeValue("components", createdComponents);
+    //System.out.println(json);
+  }
+
+  public void writeItem(Json json) {
+    json.writeValue("FUCK");
+  }
+
+  public void read(Json json, JsonValue jsonMap) {
+
+    // System.out.println(jsonMap);
+    
+    // position = new Vector2(jsonMap.getFloat("x"), jsonMap.getFloat("y"));
+    
+    // for (JsonValue c: jsonMap.get("components")) {
+    //   //System.out.println(c.get("class")).getClass());
+    // }
+
+
   }
 }

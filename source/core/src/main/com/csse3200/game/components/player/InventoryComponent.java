@@ -1,5 +1,6 @@
 package com.csse3200.game.components.player;
 
+import com.badlogic.gdx.utils.Json;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 
@@ -171,5 +172,16 @@ public class InventoryComponent extends Component {
    */
   public void setItemPosition(Entity item, Point point) {
     itemPosition.put(item, point);
+  }
+
+
+  @Override
+  public void write(Json json) {
+    json.writeArrayStart("inventoryItems");
+    // for (Entity e : inventory) {
+    //   e.writeItem(json); //TODO: this could cause an infinite loop :)
+    // }
+
+    json.writeArrayEnd();
   }
 }

@@ -3,6 +3,7 @@ package com.csse3200.game.areas;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Json;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainCropTileFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory;
@@ -129,7 +130,13 @@ public class SpaceGameArea extends GameArea {
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
 
-    tractor = spawnTractor();
+    Json json = new Json();
+    String savedPlayer = json.toJson(player);
+    System.out.println(savedPlayer);
+    //player = json.fromJson(Entity.class, savedPlayer);
+
+
+    //tractor = spawnTractor();
     spawnChickens();
     spawnCows();
     spawnAstrolotl();
