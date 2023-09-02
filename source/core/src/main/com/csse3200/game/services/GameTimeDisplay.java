@@ -8,6 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.csse3200.game.ui.UIComponent;
 
+import java.security.Provider;
+
 /**
  * A ui component for displaying the current game time on the Main Game Screen.
  */
@@ -25,8 +27,7 @@ public class GameTimeDisplay extends UIComponent {
     @Override
     public void create() {
         super.create();
-        entity.getEvents().addListener("hourUpdate", this::updateDisplay);
-        ServiceLocator.getTimeService().registerHourUpdate(entity);
+        ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateDisplay);
         updateDisplay();
     }
 
