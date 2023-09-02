@@ -24,7 +24,7 @@ public class TimeService {
 	public TimeService() {
 		hour = 0;
 		day = 0;
-		paused = true;
+		paused = false;
 		lastGameTime = ServiceLocator.getTimeSource().getTime();
 	}
 
