@@ -49,9 +49,10 @@ public class ItemSlot extends Stack {
      * @see Table for positioning options
      */
     private void createItemSlot() {
-        Label label = new Label(String.valueOf(this.count), this.skin);
-        label.setColor(Color.BLACK); // set text color to black
-        label.setAlignment(Align.bottomRight); // align label to bottom right
+        Label label = new Label(String.valueOf(this.count) + " ", this.skin); //please please please work
+        label.setColor(Color.BLACK);
+        label.setAlignment(Align.bottomRight);
+
         this.add(new Image(new Texture("images/itemFrame.png")));
         if (this.itemTexture != null) {
             this.add(new Image(this.itemTexture));
