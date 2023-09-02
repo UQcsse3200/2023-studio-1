@@ -45,8 +45,8 @@ public class InventoryDisplay extends UIComponent {
     isOpen = false;
     entity.getEvents().addListener("toggleInventory",this::toggleOpen);
     inventory = new InventoryComponent(new ArrayList<>());
-    inventory.addItem(new ItemComponent("shovel", ItemType.SHOVEL, "Shovel for removing items").getEntity());
-    inventory.addItem(new ItemComponent("shovel", ItemType.SHOVEL, "Shovel for removing items").getEntity());
+    inventory.addItem(new ItemComponent("shovel", ItemType.SHOVEL, "Shovel for removing items", new Texture("images/tool_shovel.png")).getEntity());
+    inventory.addItem(new ItemComponent("shovel", ItemType.SHOVEL, "Shovel for removing items", new Texture("images/tool_shovel.png")).getEntity());
   }
 
   /**
