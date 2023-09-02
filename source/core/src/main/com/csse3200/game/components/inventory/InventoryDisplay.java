@@ -63,15 +63,8 @@ public class InventoryDisplay extends UIComponent {
     for (int i = 0; i < 3; i++) {
       //check if item exists at this point
       for (int j = 0; j < 10; j++) {
-        if (i == 0) {
-          Label label = new Label(String.valueOf(j), skin.get("default", Label.LabelStyle.class));
-          Stack stack = new Stack();
-          stack.add(new Image(new Texture("images/itemFrame.png")));
-          table.add(stack).pad(10, 10, 10, 10).fill();
-        } else {
-          //add only the image to the table
-          table.add(new Image(new Texture("images/itemFrame.png"))).pad(10, 10, 10, 10).fill();
-        }
+        ItemSlot item = new ItemSlot(new Texture("images/tool_hoe.png"), 1);
+        table.add(item).pad(10, 10, 10, 10).fill();
         if (j == 9) {
           //Add a new row every 10 items
           table.row();

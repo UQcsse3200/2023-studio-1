@@ -1,36 +1,65 @@
 package com.csse3200.game.components.inventory;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.ui.UIComponent;
+import net.dermetfan.gdx.physics.box2d.PositionController;
 
 import java.util.ArrayList;
 
-public class ItemSlot extends UIComponent {
+public class ItemSlot extends Stack {
+    private Texture itemTexture;
+    private Integer count;
+    private Skin skin;
+    public ItemSlot(Texture itemTexture, Integer count) {
+        this.itemTexture = itemTexture;
+        this.count = count;
+        this.skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
+        createItemSlot();
+    }
 
-    public void create() {
-        super.create();
+    public ItemSlot(Texture itemTexture) {
+        this.itemTexture = itemTexture;
+        this.count = null;
+        this.skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
+        createItemSlot();
+    }
+
+    public ItemSlot() {
+        this.itemTexture = null;
+        this.count = null;
+        this.skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
+        this.createItemSlot();
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    public void setTexture(Texture itemTexture) {
+        this.itemTexture = itemTexture;
     }
 
     /**
      * Creates actors and positions them on the stage using a table.
      * @see Table for positioning options
      */
-    private void addActors() {
+    private void createItemSlot() {
+        Label label = new Label(String.valueOf(this.count), this.skin);
+        label.setColor(Color.BLACK); // set text color to black
+        label.setAlignment(Align.bottomRight); // align label to bottom right
+        this.add(new Image(new Texture("images/itemFrame.png")));
+        if (this.itemTexture != null) {
+            this.add(new Image(this.itemTexture));
+        }
+
+        if (this.count != null) {
+            this.add(label);
+        }
     }
 
-    /**
-     * Draw stage of inventory
-     * @param batch Batch to render to.
-     */
-    @Override
-    public void draw(SpriteBatch batch)  {
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
-    }
 }
