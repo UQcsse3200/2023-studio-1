@@ -18,7 +18,7 @@ public class TimeService {
 	private long timeBuffer;
 	private long lastGameTime;
 	private boolean paused;
-	private EventHandler events;
+	private final EventHandler events;
 
 
 	public TimeService() {
