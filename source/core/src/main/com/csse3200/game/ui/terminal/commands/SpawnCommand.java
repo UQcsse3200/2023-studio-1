@@ -29,6 +29,7 @@ public class SpawnCommand implements Command {
 		switch (args.get(0)) {
 			case "cow" -> entity = NPCFactory.createCow(player);
 			case "chicken" -> entity = NPCFactory.createChicken(player);
+			case "astrolotl" -> entity = NPCFactory.createAstrolotl(player);
 				default -> {
 				logger.debug("Entity argument is not valid");
 				return false;
