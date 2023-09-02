@@ -24,7 +24,7 @@ import com.csse3200.game.services.ServiceLocator;
 
 /** Factory for creating game terrains. */
 public class TerrainFactory {
-  private static final GridPoint2 MAP_SIZE = new GridPoint2(100, 100);
+  private static GridPoint2 MAP_SIZE = new GridPoint2(10000, 1000); // this will be updated
   private static final int TUFT_TILE_COUNT = 30;
   private static final int GRASS1_TILE_COUNT = 30;
   private static final String path1 = "source/core/assets/configs/Map.txt"; // change this path if u can't open the file
@@ -208,9 +208,6 @@ public class TerrainFactory {
   }
 
   private void createGameTiles(GridPoint2 tileSize, ArrayList<TextureRegion> TRList, TiledMap tiledMap) {
-    //TiledMap tiledMap = new TiledMap();
-    ArrayList<TerrainTile> TTlist = new ArrayList<TerrainTile>();
-
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
 
     try {
@@ -229,6 +226,7 @@ public class TerrainFactory {
   }
 
   /*
+  // uncomment this to assign tile to randomly
   private static void fillTilesAtRandom(TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile, int amount) {
     GridPoint2 min = new GridPoint2(0, 0);
     GridPoint2 max = new GridPoint2(mapSize.x - 1, mapSize.y - 1);
@@ -362,6 +360,24 @@ public class TerrainFactory {
   }
 
   /**
+   * This function will be used to check if a string is numeric
+   * 
+   * @param strNum the string to be checked
+   * @return -1 if the string is not numeric, else return the value of the string
+   */
+  public static int isNumeric(String strNum) {
+    if (strNum == null) {
+      return -1;
+    }
+    try {
+      int value = Integer.parseInt(strNum);
+      return value;
+    } catch (NumberFormatException nfe) {
+      return -1;
+    }
+  }
+
+  /**
    * This function will be used to fill the TiledMap with tiles
    * by reading a file
    * 
@@ -384,12 +400,33 @@ public class TerrainFactory {
       bf = new BufferedReader(new FileReader(path2));
     }
       String line;
+    line = bf.readLine();
+
+    // read 2 first lines
+    int x_MapSize = 0, y_MapSize = 0;
+    x_MapSize = isNumeric(line);
+    if (x_MapSize != -1) {
+      x_MapSize = Integer.parseInt(line);
+    } else {
+      System.out.println("Can't read x -> Incorrect input file!");
+    }
+    line = bf.readLine();
+    y_MapSize = isNumeric(line);
+    if (y_MapSize != -1) {
+      y_MapSize = Integer.parseInt(line);
+    } else {
+      System.out.println("Can't read y -> Incorrect input file!");
+    }
+
+    // update MAP_SIZE using existing function
+    MAP_SIZE.add(- MAP_SIZE.x, - MAP_SIZE.y);
+    MAP_SIZE.add(x_MapSize, y_MapSize);
     //y_pos = 100 and x_pos = 100 lets map generate correctly
       int x_pos = 0, y_pos = 100;
         // checking for end of file
     for (line = bf.readLine(); line != null; x_pos++, line = bf.readLine(), y_pos--) {
         for (x_pos = line.length() - 1; x_pos > 0; x_pos--) {
-          //Cell cell = layer.getCell(x_pos, y_pos); // uncomment this if u want to update instead of replace
+          //Cell cell = layer.getCell(x_pos, y_pos); // uncomment this if u want to update instead of create new Cell
           GridPoint2 point = new GridPoint2(x_pos, y_pos);
           layer.setCell(point.x, point.y, cellCreator(point, line, TRList));
         }
