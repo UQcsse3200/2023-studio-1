@@ -2,6 +2,10 @@ package com.csse3200.game.ui.terminal;
 
 import com.csse3200.game.components.Component;
 import com.csse3200.game.ui.terminal.commands.*;
+import com.csse3200.game.ui.terminal.commands.Command;
+import com.csse3200.game.ui.terminal.commands.DebugCommand;
+import com.csse3200.game.ui.terminal.commands.SetDayCommand;
+import com.csse3200.game.ui.terminal.commands.SetTimeCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +35,7 @@ public class Terminal extends Component {
     addCommand("setTime", new SetTimeCommand());
     addCommand("save", new SaveCommand());
     addCommand("load", new LoadCommand());
+    addCommand("setDay", new SetDayCommand());
   }
 
   /** @return message entered by user */
