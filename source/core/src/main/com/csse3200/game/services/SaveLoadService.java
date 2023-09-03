@@ -20,12 +20,17 @@ import com.csse3200.game.files.SaveGame.GameState;
 public class SaveLoadService {
 
   public void save() {
-    Entity player = PlayerFactory.createPlayer();
+    // Make a new GameState
+    SaveGame.GameState state = new GameState();
 
+    state.setDay(ServiceLocator.getTimeService().getDay());
+    state.setHour(ServiceLocator.getTimeService().getHour());
+
+    Entity player = PlayerFactory.createPlayer();
     player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHoe());
     player.getComponent(InventoryComponent.class).addItem(ItemFactory.createShovel());
-    SaveGame.GameState state = new GameState();
-    state.player = player;
+
+    state.setPlayer(player);
     player.create();
     SaveGame.set(state);
     
