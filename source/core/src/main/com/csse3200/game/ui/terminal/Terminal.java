@@ -35,7 +35,9 @@ public class Terminal extends Component {
     addCommand("setTime", new SetTimeCommand());
     addCommand("save", new SaveCommand());
     addCommand("load", new LoadCommand());
+    addCommand("spawn", new SpawnCommand());
     addCommand("setDay", new SetDayCommand());
+    addCommand("addItem", new AddItemCommand());
   }
 
   /** @return message entered by user */
