@@ -10,7 +10,7 @@ import com.csse3200.game.files.FileLoader.Location;
  * Reading, Writing, and applying user settings in the game.
  */
 public class SaveGame {
-  private static final String ROOT_DIR = "CSSE3200Game";
+  private static final String ROOT_DIR = "saves";
   private static final String SAVE_FILE = "saveFile.json";
 
   /**
@@ -19,7 +19,7 @@ public class SaveGame {
    */
   public static GameState get() {
     String path = ROOT_DIR + File.separator + SAVE_FILE;
-    GameState saveFile = FileLoader.readClass(GameState.class, path, Location.EXTERNAL);
+    GameState saveFile = FileLoader.readClass(GameState.class, path, Location.LOCAL);
 
     return saveFile != null ? saveFile : new GameState();
   }
@@ -30,7 +30,7 @@ public class SaveGame {
    */
   public static void set(GameState gameState) {
     String path = ROOT_DIR + File.separator + SAVE_FILE;
-    FileLoader.writeClass(gameState, path, Location.EXTERNAL);
+    FileLoader.writeClass(gameState, path, Location.LOCAL);
   }
 
   /**
