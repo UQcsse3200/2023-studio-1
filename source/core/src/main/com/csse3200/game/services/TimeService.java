@@ -13,7 +13,7 @@ public class TimeService {
 	private static final int INITIAL_CAPACITY = 16;
 	private static final String HOUR_UPDATE = "hourUpdate";
 	private static final String DAY_UPDATE = "dayUpdate";
-	private static final int MS_IN_HOUR = 1000; //30000;
+	private static final int MS_IN_HOUR = 500; //30000;
 	private int hour;
 	private int day;
 	private long timeBuffer;
@@ -91,7 +91,7 @@ public class TimeService {
 		day += 1;
 		events.trigger("dayUpdate");
 
-		if (day >= 30) {
+		if (day >= 1) {
 			events.trigger("loseScreen");
 		}
 	}

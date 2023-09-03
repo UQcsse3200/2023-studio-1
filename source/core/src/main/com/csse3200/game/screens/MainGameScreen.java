@@ -112,7 +112,7 @@ public class MainGameScreen extends ScreenAdapter {
     spaceGameArea.getTractor().getComponent(TractorActions.class).setCameraVar(renderer.getCamera());
 
     lose = false;
-    spaceGameArea.getPlayer().getEvents().addListener("loseScreen", this::loseScreenStart);
+    ServiceLocator.getTimeService().getEvents().addListener("loseScreen", this::loseScreenStart);
   }
 
   public void loseScreenStart() {

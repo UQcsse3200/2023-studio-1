@@ -103,7 +103,6 @@ public class LoseScreen extends ScreenAdapter {
         Entity ui = new Entity();
         ui.addComponent(new LoseScreenDisplay(game))
                 .addComponent(new InputDecorator(stage, 10));
-                //.addComponent(new LoseScreenActions(game));
         ServiceLocator.getEntityService().register(ui);
     }
 }
