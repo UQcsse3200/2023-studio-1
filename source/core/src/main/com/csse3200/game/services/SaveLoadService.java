@@ -20,13 +20,20 @@ import com.csse3200.game.files.SaveGame.GameState;
 public class SaveLoadService {
 
   public void save() {
-    Entity player = PlayerFactory.createPlayer();
-
-    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHoe());
-    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createShovel());
+    // Make a new GameState
     SaveGame.GameState state = new GameState();
-    state.player = player;
-    player.create();
+
+    state.setDay(ServiceLocator.getTimeService().getDay());
+    state.setHour(ServiceLocator.getTimeService().getHour());
+    // Idk why this is here (imma grab the real player)
+//    Entity player = PlayerFactory.createPlayer();
+//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHoe());
+//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createShovel());
+//
+//    state.setPlayer(player);
+//    player.create();
+    state.setPlayer(ServiceLocator.getGameArea().getPlayer());
+
     SaveGame.set(state);
     
     System.out.println("save!");

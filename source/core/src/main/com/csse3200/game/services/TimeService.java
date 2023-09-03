@@ -49,6 +49,7 @@ public class TimeService {
 	public int getDay() {
 		return day;
 	}
+
 	public void setHour(int hour) {
 		this.hour = hour;
 		this.timeBuffer = 0;

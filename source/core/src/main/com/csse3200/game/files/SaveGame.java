@@ -37,9 +37,35 @@ public class SaveGame {
    * Stores game state. Can be serialised/deserialised.
    */
   public static class GameState {
-    public Entity player;
+    private int day;
+    private int hour;
+
+    private Entity player;
 
     public GameState() {};
 
+    public int getDay() {
+      return day;
+    }
+
+    public void setDay(int day) {
+      this.day = day;
+    }
+
+    public int getHour() {
+      return hour;
+    }
+
+    public void setHour(int hour) {
+      this.hour = hour;
+    }
+
+    public Entity getPlayer() {
+      return player;
+    }
+
+    public void setPlayer(Entity player) {
+      this.player = player;
+    }
   }
 }
