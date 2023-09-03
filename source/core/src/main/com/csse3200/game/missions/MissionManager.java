@@ -8,17 +8,22 @@ import java.util.concurrent.atomic.AtomicReferenceArray;
 
 public class MissionManager {
 
+	private static final Achievement[] achievements = new Achievement[]{};
 	private static final ArrayList<Quest>  quests = new ArrayList<>();
-	private static final ArrayList<Achievement> achievements = new ArrayList<>();
 	private static final EventHandler events = new EventHandler();
 
 	public MissionManager() {
-		for (Mission mission: quests) {
-			mission.registerMission();
-		}
 		for (Mission mission: achievements) {
-			mission.registerMission();
+			mission.registerMission(events);
 		}
+	}
+
+	public void addQuest(Quest quest) {
+
+	}
+
+	private void updateHour() {
+
 	}
 
 }
