@@ -22,7 +22,11 @@ public class InventoryComponent extends Component {
   private final HashMap<Entity, Integer> itemCount = new HashMap<>();
   private final HashMap<Entity, Point> itemPosition = new HashMap<>();
 
+  private final HashMap<Integer,Entity> itemPlace = new HashMap<>();
+
   private Entity heldItem = null;
+
+
 
   public InventoryComponent(List<Entity> items) {
     setInventory(items);
@@ -52,18 +56,46 @@ public class InventoryComponent extends Component {
    * @param items items to be added to inventory
    */
   public void setInventory(List<Entity> items) {
+    this.inventory.clear();
     this.inventory.addAll(items);
+    int pos = itemPlace.size();
+    //int pos = 0;
     logger.debug("Setting inventory to {}", this.inventory.toString());
     for (Entity item : items) {
+      itemPlace.put(pos,item);
+      pos++;
       if (itemCount.containsKey(item)) {
         itemCount.put(item, itemCount.get(item) + 1);
+      } else {
+        itemCount.put(item, 1); // Setting initial count as 1
       }
-
-      itemCount.put(item, 1); // Setting initial count as 1
       itemPosition.put(item, new Point(0, 0)); // Setting a default position (0,0) for now.
     }
     logger.debug("Setting inventory to {}", this.inventory.toString());
 
+  }
+  public Entity getItemPos(int a){
+    return itemPlace.get(a);
+  }
+  public void swapPosition(int a, int b) {
+    Entity temp = itemPlace.get(a);
+    itemPlace.put(a,itemPlace.get(b));
+    itemPlace.put(b,temp);
+  }
+
+  public boolean setPosition(Entity entity, int pos) {
+    itemPlace.put(pos, entity);
+    entity.getEvents().trigger("updateInventory");
+    return true;
+  }
+  public void removePosition(int pos){
+    itemPlace.remove(pos);
+  }
+  public boolean setPosition(Entity entity){
+    int lastPlace = itemPlace.size() - 1 ;
+    itemPlace.put(lastPlace+1,entity);
+    entity.getEvents().trigger("updateInventory");
+    return true;
   }
 
   /**
@@ -73,9 +105,11 @@ public class InventoryComponent extends Component {
    */
   public boolean addItem(Entity item) {
     itemCount.put(item, itemCount.getOrDefault(item, 0) + 1);
+    setPosition(item);
     if (!itemPosition.containsKey(item)) {
       itemPosition.put(item, new Point(0, 0)); // Default position. You can change this as needed.
     }
+    updateInventory();
     return this.inventory.add(item);
   }
 
@@ -90,6 +124,7 @@ public class InventoryComponent extends Component {
       itemCount.remove(item);
       itemPosition.remove(item);
     }
+    updateInventory();
     return this.inventory.remove(item);
   }
 
@@ -171,5 +206,8 @@ public class InventoryComponent extends Component {
    */
   public void setItemPosition(Entity item, Point point) {
     itemPosition.put(item, point);
+  }
+  public void updateInventory(){
+    entity.getEvents().trigger("updateInventory");
   }
 }
