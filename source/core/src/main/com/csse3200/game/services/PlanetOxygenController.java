@@ -3,12 +3,17 @@ package com.csse3200.game.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PlanetOxygenLevel implements OxygenLevel{
-    private static final Logger logger = LoggerFactory.getLogger(TimeService.class);
+public class PlanetOxygenController implements OxygenLevel{
+    
+    private static final Logger logger = LoggerFactory.getLogger(PlanetOxygenController.class);
+    
+    private double oxygenUpperLimit;
+    private float oxygenPresent;
+    private float delta;
     
     @Override
     public void setUpperLimit(int kilograms) {
-    
+        oxygenUpperLimit = kilograms;
     }
     
     @Override
@@ -23,7 +28,7 @@ public class PlanetOxygenLevel implements OxygenLevel{
     
     @Override
     public float getOxygen() {
-        return 0;
+        return oxygenPresent;
     }
     
     @Override
