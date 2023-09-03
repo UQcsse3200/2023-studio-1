@@ -1,26 +1,18 @@
 package com.csse3200.game.components.inventory;
 
+import com.csse3200.game.entities.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.badlogic.gdx.utils.Align;
-import com.csse3200.game.components.items.ItemComponent;
-import com.csse3200.game.components.items.ItemType;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.rendering.TextureRenderComponent;
-import com.csse3200.game.screens.MainGameScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
-import java.awt.*;
 import java.util.ArrayList;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A ui component for displaying player stats, e.g. health.
@@ -28,13 +20,14 @@ import org.slf4j.LoggerFactory;
 public class InventoryDisplay extends UIComponent {
   private Table table;
   private InventoryComponent playerInventory;
-  private InventoryComponent inventory;
-
   private Window window;
-
   private boolean isOpen;
 
-  private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
+  public InventoryDisplay(InventoryComponent playerInventory) {
+    this.playerInventory = playerInventory;
+  }
+
+
   /**
    * Creates reusable ui styles and adds actors to the stage.
    */
@@ -43,11 +36,10 @@ public class InventoryDisplay extends UIComponent {
     super.create();
     addActors();
     isOpen = false;
+    entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
     entity.getEvents().addListener("toggleInventory",this::toggleOpen);
-    inventory = new InventoryComponent(new ArrayList<>());
-    inventory.addItem(new ItemComponent("shovel", ItemType.SHOVEL, "Shovel for removing items", new Texture("images/tool_shovel.png")).getEntity());
-    inventory.addItem(new ItemComponent("shovel", ItemType.SHOVEL, "Shovel for removing items", new Texture("images/tool_shovel.png")).getEntity());
   }
+
 
   /**
    * Creates actors and positions them on the stage using a table.
@@ -58,23 +50,20 @@ public class InventoryDisplay extends UIComponent {
     table = new Table(skin);
     table.defaults().size(64, 64);
     table.pad(10);
-
     // Add some items to the table, to be changed once inventory item is improved
-    for (int i = 0; i < 3; i++) {
-      //check if item exists at this point
-      for (int j = 0; j < 10; j++) {
-        ItemSlot item = new ItemSlot(new Texture("images/tool_hoe.png"), 1);
+    for (int i = 0; i < 30; i++) {
+      //Add the items to the table
+      ItemSlot item = new ItemSlot(new Texture("images/tool_hoe.png"), 1);
         table.add(item).pad(10, 10, 10, 10).fill();
-        if (j == 9) {
-          //Add a new row every 10 items
-          table.row();
-        }
+      if ((i + 1) % 10 == 0) {
+        //Add a new row every 10 items
+        table.row();
       }
     }
 
     // Create a window for the inventory using the skin
     window = new Window("Inventory", skin);
-    window.pad(40, 10, 10, 10); // Add padding to with so that the text doesn't go offscreen
+    window.pad(40, 20, 20, 20); // Add padding to with so that the text doesn't go offscreen
     window.add(table); //Add the table to the window
     window.pack(); // Pack the window to the size
     window.setMovable(false);
@@ -84,30 +73,11 @@ public class InventoryDisplay extends UIComponent {
     stage.addActor(window);
   }
 
-  /**
-   * Draw stage of inventory
-   * @param batch Batch to render to.
-   */
   @Override
   public void draw(SpriteBatch batch)  {
-
-    //if (inventory != null && inventory.getItemAtPoint(new Point(j, i))) {
-    //          table.add(new Image(new Texture("/images/tool_shovel.png")));
-    //        }
-    //        //Add the items to the table
+    // draw is handled by the stage
   }
 
-  /**
-   * Get inventory Component, function may be removed
-   * @return inventory
-   */
-  public InventoryComponent getInventory() {
-    return inventory;
-  }
-
-  /**
-   * Toggle open state of inventory
-   */
   public void toggleOpen(){
     if (isOpen) {
       window.setVisible(false);
@@ -118,8 +88,22 @@ public class InventoryDisplay extends UIComponent {
     }
   }
 
+  /**
+   * Updates the player's health on the ui.
+   * @param health player health
+   */
+  public void updatePlayerHealthUI(int health) {
+    CharSequence text = String.format("Health: %d", health);
+  }
+
+  public InventoryComponent getInventory(){
+    return this.playerInventory;
+  }
+
+
   @Override
   public void dispose() {
     super.dispose();
   }
 }
+

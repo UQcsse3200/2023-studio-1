@@ -49,6 +49,7 @@ public class PlayerFactory {
             );
 
     setupPlayerAnimator(animator);
+    InventoryComponent playerInventory = new InventoryComponent(new ArrayList<>());
 
     Entity player =
         new Entity()
@@ -57,12 +58,12 @@ public class PlayerFactory {
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
             .addComponent(new PlayerActions())
             .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack))
-            .addComponent(new InventoryComponent(new ArrayList<Entity>()))
+                .addComponent(playerInventory)
             .addComponent(inputComponent)
             .addComponent(animator)
             .addComponent(new PlayerAnimationController())
             .addComponent(new ItemPickupComponent())
-            .addComponent(new InventoryDisplay())
+                .addComponent(new InventoryDisplay(playerInventory))
             .addComponent(new ToolbarDisplay());
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
