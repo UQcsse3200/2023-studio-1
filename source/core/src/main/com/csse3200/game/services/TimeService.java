@@ -6,6 +6,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.csse3200.game.areas.SpaceGameArea;
 
 public class TimeService {
 	private static final Logger logger = LoggerFactory.getLogger(TimeService.class);
@@ -84,6 +85,7 @@ public class TimeService {
 		events.trigger("hourUpdate");
 		day += 1;
 		events.trigger("dayUpdate");
+
 		if (day >= 30) {
 			events.trigger("loseScreen");
 		}

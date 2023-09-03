@@ -94,7 +94,6 @@ public class MainGameScreen extends ScreenAdapter {
     renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
     renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
 
-
     loadAssets();
     createUI();
 
@@ -113,7 +112,7 @@ public class MainGameScreen extends ScreenAdapter {
     spaceGameArea.getTractor().getComponent(TractorActions.class).setCameraVar(renderer.getCamera());
 
     lose = false;
-    ServiceLocator.getTimeService().getEvents().addListener("loseScreen", this::loseScreenStart);
+    spaceGameArea.getPlayer().getEvents().addListener("loseScreen", this::loseScreenStart);
   }
 
   public void loseScreenStart() {
