@@ -53,7 +53,8 @@ public class InventoryDisplay extends UIComponent {
     // Add some items to the table, to be changed once inventory item is improved
     for (int i = 0; i < 30; i++) {
       //Add the items to the table
-      table.add("text").pad(10, 10, 10, 10).fill();
+      ItemSlot item = new ItemSlot(new Texture("images/tool_hoe.png"), 1);
+        table.add(item).pad(10, 10, 10, 10).fill();
       if ((i + 1) % 10 == 0) {
         //Add a new row every 10 items
         table.row();
