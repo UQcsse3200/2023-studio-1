@@ -121,10 +121,12 @@ public class MainGameScreen extends ScreenAdapter {
 
   @Override
   public void render(float delta) {
-    physicsEngine.update();
-    ServiceLocator.getEntityService().update();
-    ServiceLocator.getTimeService().update();
-    renderer.render();
+    if (!ServiceLocator.getTimeService().isPaused()) {
+      physicsEngine.update();
+      ServiceLocator.getEntityService().update();
+    }
+      ServiceLocator.getTimeService().update();
+      renderer.render();
     if (lose == true) {
       game.setScreen(GdxGame.ScreenType.LOSESCREEN);
     }
