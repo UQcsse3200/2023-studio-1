@@ -7,6 +7,7 @@ import com.csse3200.game.events.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.areas.SpaceGameArea;
+import com.csse3200.game.services.ServiceLocator;
 
 public class TimeService {
 	private static final Logger logger = LoggerFactory.getLogger(TimeService.class);
@@ -92,7 +93,7 @@ public class TimeService {
 		events.trigger("dayUpdate");
 
 		if (day >= 1) {
-			events.trigger("loseScreen");
+			ServiceLocator.getGameArea().getPlayer().getEvents().trigger("loseScreen");
 		}
 	}
 
