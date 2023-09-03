@@ -1,6 +1,7 @@
 package com.csse3200.game.missions;
 
 import com.csse3200.game.events.EventHandler;
+import com.csse3200.game.services.ServiceLocator;
 
 import java.sql.Array;
 import java.util.ArrayList;
@@ -13,16 +14,23 @@ public class MissionManager {
 	private static final EventHandler events = new EventHandler();
 
 	public MissionManager() {
-		for (Mission mission: achievements) {
+		for (Achievement mission: achievements) {
 			mission.registerMission(events);
 		}
+		ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateHour);
 	}
 
 	public void addQuest(Quest quest) {
+		quests.add(quest);
+		quest.registerMission(events);
+
 
 	}
 
 	private void updateHour() {
+		for (Quest quest: quests) {
+			quest.updateExpiry(1);
+		}
 
 	}
 
