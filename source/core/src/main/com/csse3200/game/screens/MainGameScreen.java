@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 public class MainGameScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
   private static final String[] mainGameTextures = {
-          "images/heart.png",
+          //"images/heart.png",
           "images/time_system_ui/clock_frame.png",
           "images/time_system_ui/indicator_0.png",
           "images/time_system_ui/indicator_1.png",
@@ -182,7 +182,8 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(new Terminal())
         .addComponent(inputComponent)
         .addComponent(new TerminalDisplay())
-        .addComponent(new GameTimeDisplay());
+        .addComponent(new GameTimeDisplay())
+        .addComponent(new OxygenDisplay());
 
     ServiceLocator.getEntityService().register(ui);
   }
