@@ -382,7 +382,10 @@ public class TerrainFactory {
       bf = new BufferedReader(new FileReader(path1));
     } catch (FileNotFoundException e) {
       bf = new BufferedReader(new FileReader(path2));
+    } finally { 
+      //https://rules.sonarsource.com/java/RSPEC-2093/
     }
+
       String line;
     //y_pos = 100 and x_pos = 100 lets map generate correctly
       int x_pos = 0, y_pos = 100;
