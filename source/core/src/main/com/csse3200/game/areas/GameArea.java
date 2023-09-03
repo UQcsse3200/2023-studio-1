@@ -52,7 +52,6 @@ public abstract class GameArea implements Disposable {
    */
   protected void deSpawnEntity(Entity entity) {
     areaEntities.remove(entity);
-    //ServiceLocator.getEntityService().register(entity);
   }
 
   /**
