@@ -176,9 +176,6 @@ public class ItemActions extends Component {
      * @return true if tile is harvestable else false
      */
     private boolean isCropTile(Entity tile) {
-      if (tile.getComponent(CropTileComponent.class) != null) {
-        return true;
-      }
-      return false;
+      return tile.getComponent(CropTileComponent.class) != null;
     }
 }
