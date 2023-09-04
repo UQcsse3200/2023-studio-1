@@ -30,7 +30,7 @@
     "health": 10,
     "name": "Space Snapper",
     "type": "DEFENCE",
-    "description" : "An angry plant that will gobble any nasty pests nearby. Keep small pets and children out of snapping distance!",
+    "description" : "An hangry plant that will gobble any nasty pests nearby. Keep small pets and children out of snapping distance!",
     "idealWaterLevel": 0.7,
     "adultLifeSpan": 5,
     "maxHealth": 400
