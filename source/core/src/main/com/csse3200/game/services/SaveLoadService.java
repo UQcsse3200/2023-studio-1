@@ -1,9 +1,5 @@
 package com.csse3200.game.services;
 
-import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.ItemFactory;
-import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.files.SaveGame;
 import com.csse3200.game.files.SaveGame.GameState;
 
@@ -27,13 +23,23 @@ public class SaveLoadService {
     state.setHour(ServiceLocator.getTimeService().getHour());
 
     state.setPlayer(ServiceLocator.getGameArea().getPlayer());
+    state.setEntities(ServiceLocator.getEntityService().getEntities());
 
     // Write the state to a file
     SaveGame.set(state);
     
     System.out.println("save!");
   }
+
   public void load() {
+    SaveGame.GameState state = SaveGame.get();
+
+    if (state == null) {
+      // TODO: Dialogue box or something?
+      System.out.println("NO FILE TO LOAD!");
+      return;
+    }
+
     System.out.println("load!");
   }
 }

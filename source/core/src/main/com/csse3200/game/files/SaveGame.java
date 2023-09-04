@@ -2,6 +2,7 @@ package com.csse3200.game.files;
 
 import java.io.File;
 
+import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.files.FileLoader.Location;
 
@@ -41,6 +42,7 @@ public class SaveGame {
     private int hour;
 
     private Entity player;
+    private Array<Entity> entities;
 
     public GameState() {};
 
@@ -66,6 +68,14 @@ public class SaveGame {
 
     public void setPlayer(Entity player) {
       this.player = player;
+    }
+
+    public Array<Entity> getEntities() {
+      return entities;
+    }
+  
+    public void setEntities(Array<Entity> entities) {
+      this.entities = entities; 
     }
   }
 }

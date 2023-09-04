@@ -1,10 +1,13 @@
 {
+hour: 4
 player: {
-	x: 0
-	y: 0
+	x: 13.9547415
+	y: 7.186847
 	components: {
 		inventory: [
 			hoe
+			shovel
+			watering can
 			shovel
 		]
 	}
