@@ -80,15 +80,17 @@ public class SaveGame {
     }
 
     private Array<Entity> filterEntities(Array<Entity> entities) {
-      for (int i = 0; i < entities.size; i++) {
-        if (entities.get(i).getType() == EntityType.Item || entities.get(i).getType() == EntityType.Player || entities.get(i).getType() == null) {
-          entities.removeIndex(i);
+      // If you edit this original array you edit what is in the ResourceService
+      Array<Entity> tmp = new Array<>(entities);
+      for (int i = 0; i < tmp.size; i++) {
+        if (tmp.get(i).getType() == EntityType.Item || tmp.get(i).getType() == EntityType.Player || tmp.get(i).getType() == null) {
+          tmp.removeIndex(i);
           // Moves the indexing down when removed so keep index same
           i--;
 
         }
       }
-      return entities;
+      return tmp;
     }
   }
 }

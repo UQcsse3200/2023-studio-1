@@ -126,28 +126,19 @@ public class SpaceGameArea extends GameArea {
     displayUI();
 
     spawnTerrain();
-    spawnCrop(); // temp
     spawnTrees();
 
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
-
-    //TODO: REMOVE THESE WHEN WE FINISH TESTING
     player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHoe());
     player.getComponent(InventoryComponent.class).addItem(ItemFactory.createShovel());
-
-
-
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createWateringcan());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createScythe());
 
     tractor = spawnTractor();
     spawnChickens();
     spawnCows();
     spawnAstrolotl();
-
-    spawnTool(ItemType.WATERING_CAN);
-    spawnTool(ItemType.SHOVEL);
-    spawnTool(ItemType.SCYTHE);
-    spawnTool(ItemType.HOE);
 
     //spawnGhosts();
     //spawnGhostKing();
