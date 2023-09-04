@@ -51,6 +51,8 @@ public class PlantComponent extends Component {
         this.growthStage = 1;
         this.decay = false;
         this.currentGrowthLevel = 0;
+
+        // Initialise default values for growth stage thresholds.
         this.growthStageThresholds[0] = 11;
         this.growthStageThresholds[1] = 21;
         this.growthStageThresholds[2] = 41;
@@ -84,6 +86,8 @@ public class PlantComponent extends Component {
         this.growthStage = 1;
         this.decay = false;
         this.currentGrowthLevel = 0;
+
+        // Initialise growth stage thresholds for specific plants.
         this.growthStageThresholds[0] = growthStageThresholds[0];
         this.growthStageThresholds[1] = growthStageThresholds[1];
         this.growthStageThresholds[2] = growthStageThresholds[2];
@@ -307,5 +311,23 @@ public class PlantComponent extends Component {
     private void destroyPlant() {
         cropTile.setUnoccupied();
         entity.dispose();
+    }
+
+    /**
+     * Update the growth stage of a plant based on its current growth level and its adult life span.
+     * If the currentGrowthLevel exceeds the corresponding growth threshold, then the plant will advance to
+     * the next growth stage.
+     * When a plant becomes an adult, it has an adult life span. When the number of days since a plant becomes
+     * and adult exceeds adult life span of a plant, then it starts to decay.
+     */
+    public void updateGrowthStage() {
+        this.increaseCurrentGrowthLevel();
+        // If a plant is not yet an adult
+        if (this.growthStage < 4) {
+            if (this.currentGrowthLevel >= this.growthStageThresholds[this.growthStage - 1]) {
+                growthStage += 1;
+            }
+        }
+        // STILL NEED TO HANDLE ADULT LIFE SPAN BASED ON IN GAME TIME. next on my list
     }
 }
