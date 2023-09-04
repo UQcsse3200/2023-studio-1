@@ -24,7 +24,7 @@ import com.csse3200.game.services.ServiceLocator;
 
 /** Factory for creating game terrains. */
 public class TerrainFactory {
-  private static GridPoint2 MAP_SIZE = new GridPoint2(10000, 1000); // this will be updated
+  private static GridPoint2 MAP_SIZE = new GridPoint2(100, 100); // this will be updated
   private static final int TUFT_TILE_COUNT = 30;
   private static final int GRASS1_TILE_COUNT = 30;
   private static final String filePath = "configs/Map.txt";
@@ -206,11 +206,60 @@ public class TerrainFactory {
     }
   }
 
-  private void createGameTiles(GridPoint2 tileSize, ArrayList<TextureRegion> TRList, TiledMap tiledMap) {
-    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
+  private static BufferedReader readFile(String filePath) throws IOException,
+          FileNotFoundException {
+    // open file to read and read each character
+    BufferedReader bf;
+    bf = new BufferedReader(new FileReader(filePath));
+    return bf;
+  }
 
+  private void createGameTiles(GridPoint2 tileSize, ArrayList<TextureRegion> TRList, TiledMap tiledMap) {
     try {
-      fillTilesWithFile(layer, MAP_SIZE, TRList, filePath);
+      BufferedReader bf = readFile(filePath);
+
+      String line;
+      int x_MapSize = 0, y_MapSize = 0;
+      // read 2 first lines
+      line = bf.readLine();
+
+      x_MapSize = isNumeric(line);
+      if (x_MapSize != -1) {
+        x_MapSize = Integer.parseInt(line);
+      } else {
+        System.out.println("Can't read x -> Incorrect input file!");
+      }
+      line = bf.readLine();
+      y_MapSize = isNumeric(line);
+      System.out.println(x_MapSize);
+      if (y_MapSize != -1) {
+        y_MapSize = Integer.parseInt(line);
+      } else {
+        System.out.println("Can't read y -> Incorrect input file!");
+      }
+      System.out.println(x_MapSize + " and " +  y_MapSize);
+      // update MAP_SIZE using existing function
+      //MAP_SIZE.add(- MAP_SIZE.x, - MAP_SIZE.y);
+      MAP_SIZE.add(x_MapSize, y_MapSize);
+
+      TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
+
+      //y_pos = 100 and x_pos = 100 lets map generate correctly
+      int x_pos = 0, y_pos = 100;
+      // checking for end of file
+      for (line = bf.readLine(); line != null; x_pos++, line = bf.readLine(), y_pos--) {
+        System.out.println(line);
+        for (x_pos = line.length() - 1; x_pos > 0; x_pos--) {
+          //Cell cell = layer.getCell(x_pos, y_pos); // uncomment this if u want to update instead of create new Cell
+          GridPoint2 point = new GridPoint2(x_pos, y_pos);
+          layer.setCell(point.x, point.y, cellCreator(point, line, TRList));
+        }
+      }
+      // closing buffer reader object
+      bf.close();
+      //fillTilesWithFile(layer, MAP_SIZE, TRList, bf);
+      tiledMap.getLayers().add(layer);
+
     } catch (FileNotFoundException e) {
       String workingDirectory = System.getProperty("user.dir");
       System.out.println("Working Directory: " + workingDirectory);
@@ -222,7 +271,6 @@ public class TerrainFactory {
     }
 
     //fillTilesAtRandom(layer, MAP_SIZE, grassTile3, GRASS3_TILE_COUNT);
-    tiledMap.getLayers().add(layer);
     //return tiledMap;
   }
 
@@ -385,49 +433,14 @@ public class TerrainFactory {
    * @param layer the layer of the TiledMap
    * @param mapSize the size of the map
    * @param TRList the list of TextureRegion
-   * @param path the path of the file
+   * @param bf the buffer reader to read the file
    * @throws IOException when there is an error reading the file
    * @throws FileNotFoundException when file is not found
    */
   private static void fillTilesWithFile(TiledMapTileLayer layer, GridPoint2 mapSize, ArrayList<TextureRegion> TRList,
-                                        String path) throws IOException,
-          FileNotFoundException {
+                                        BufferedReader bf) throws IOException {
     // open file to read and read each character
-    BufferedReader bf;
-    bf = new BufferedReader(new FileReader(path));
-      String line;
-    line = bf.readLine();
 
-    // read 2 first lines
-    int x_MapSize = 0, y_MapSize = 0;
-    x_MapSize = isNumeric(line);
-    if (x_MapSize != -1) {
-      x_MapSize = Integer.parseInt(line);
-    } else {
-      System.out.println("Can't read x -> Incorrect input file!");
-    }
-    line = bf.readLine();
-    y_MapSize = isNumeric(line);
-    if (y_MapSize != -1) {
-      y_MapSize = Integer.parseInt(line);
-    } else {
-      System.out.println("Can't read y -> Incorrect input file!");
-    }
 
-    // update MAP_SIZE using existing function
-    MAP_SIZE.add(- MAP_SIZE.x, - MAP_SIZE.y);
-    MAP_SIZE.add(x_MapSize, y_MapSize);
-    //y_pos = 100 and x_pos = 100 lets map generate correctly
-      int x_pos = 0, y_pos = 100;
-        // checking for end of file
-    for (line = bf.readLine(); line != null; x_pos++, line = bf.readLine(), y_pos--) {
-        for (x_pos = line.length() - 1; x_pos > 0; x_pos--) {
-          //Cell cell = layer.getCell(x_pos, y_pos); // uncomment this if u want to update instead of create new Cell
-          GridPoint2 point = new GridPoint2(x_pos, y_pos);
-          layer.setCell(point.x, point.y, cellCreator(point, line, TRList));
-        }
-    }
-      // closing buffer reader object
-      bf.close();
   }
 }
