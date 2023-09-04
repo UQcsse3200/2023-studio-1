@@ -13,7 +13,7 @@ public class ClimateController {
 	public ClimateController() {
 		humidity = DEFAULT_HUMIDITY;
 		temperature = DEFAULT_TEMPERATURE;
-		ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::UpdateWeatherEvent);
+		ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateWeatherEvent);
 	}
 
 	/**
