@@ -4,10 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.events.EventHandler;
-
-import java.util.ArrayList;
 
 /** the GameMap class is used to store and easily access and manage the components related to the game map */
 public class GameMap {
@@ -62,7 +59,7 @@ public class GameMap {
     public TerrainTile getTile(int x, int y) {
         GridPoint2 max = this.getMapSize();
 
-        if (x > max.x || y > max.y) {
+        if (x < 0 || y < 0 || x > max.x || y > max.y) {
             throw new IndexOutOfBoundsException("Bad Input: Coordinate position out of bounds");
         }
 
@@ -76,21 +73,18 @@ public class GameMap {
      * @param y y coordinate
      * @return a Vector2 value
      */
-    public Vector2 worldCoordinatesToPixelPosition(int x, int y) {
+    public GridPoint2 worldCoordinatesToPixelPosition(int x, int y) {
         GridPoint2 max = this.getMapSize();
 
         if (x > max.x || y > max.y) {
             throw new IndexOutOfBoundsException("Bad Input: Coordinate position out of bounds");
         }
 
-        Vector2 pixelPositions = new Vector2();
         int xPixel = (16 * x) + 8;
         int y2 = (16 * y) + 8;
         // post process y2 to convert (0,0) location to bottom left
-        int yPixel = Gdx.graphics.getHeight() - 1 - y2;
-        pixelPositions.x = xPixel;
-        pixelPositions.y = yPixel;
-        return pixelPositions;
+        int yPixel = Gdx.graphics.getHeight() - y2;
+        return new GridPoint2(xPixel, yPixel);
     }
 
     /**
@@ -100,15 +94,12 @@ public class GameMap {
      * @param yPixel y pixel screen coordinate
      * @return a Vector2 value
      */
-    public Vector2 pixelPositionToWorldCoordinates(int xPixel, int yPixel) {
-        Vector2 worldCoordinates = new Vector2();
+    public GridPoint2 pixelPositionToWorldCoordinates(int xPixel, int yPixel) {
         int x = Math.floorDiv(xPixel, 16);
         // preprocess y2 to convert (0,0) to top left
-        int y2 = Gdx.graphics.getHeight() - 1 - yPixel;
+        int y2 = Gdx.graphics.getHeight() - yPixel;
         int y = Math.floorDiv(y2, 16);
-        worldCoordinates.x = x;
-        worldCoordinates.y = y;
-        return worldCoordinates;
+        return new GridPoint2(x, y);
     }
 
     /**
