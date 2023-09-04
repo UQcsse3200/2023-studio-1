@@ -182,4 +182,13 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
   public Entity getTarget() {
     return target;
   }
+
+  /**
+   * Getter for distance that the entity can ee
+   *
+   * @return viewDistance of the chasing entity
+   */
+  public float getViewDistance() {
+    return viewDistance;
+  }
 }
