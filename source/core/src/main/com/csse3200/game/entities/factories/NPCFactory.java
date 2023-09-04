@@ -220,7 +220,7 @@ public class NPCFactory {
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
             .addTask(new ChaseTask(target, 10, 3f, 4f));
     Entity npc =
-        new Entity(EntityType.ToDelete)
+        new Entity()
             .addComponent(new PhysicsComponent())
             .addComponent(new PhysicsMovementComponent())
             .addComponent(new ColliderComponent())

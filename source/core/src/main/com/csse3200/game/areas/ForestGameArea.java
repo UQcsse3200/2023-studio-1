@@ -113,7 +113,7 @@ public class ForestGameArea extends GameArea {
   }
 
   private void displayUI() {
-    Entity ui = new Entity(EntityType.UI);
+    Entity ui = new Entity();
     // Added the name of the game
     ui.addComponent(new GameAreaDisplay("Gardens of the Galaxy"));
     spawnEntity(ui);
@@ -123,7 +123,7 @@ public class ForestGameArea extends GameArea {
     // Background terrain
     terrain = terrainFactory.createTerrain(new TiledMap()); // Added new TiledMap to prevent error, WILL NOT WORK IF YOU RUN ForestGameArea, run SpaceGameArea instead
     // terrain = terrainFactory.createTerrain(TerrainType.FOREST_DEMO);
-    spawnEntity(new Entity(EntityType.Terrain).addComponent(terrain));
+    spawnEntity(new Entity().addComponent(terrain));
 
     // Terrain walls
     float tileSize = terrain.getTileSize();

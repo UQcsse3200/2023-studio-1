@@ -9,7 +9,7 @@ import com.csse3200.game.services.ServiceLocator;
 public class RenderFactory {
 
   public static Entity createCamera() {
-    return new Entity(EntityType.Camera).addComponent(new CameraComponent());
+    return new Entity().addComponent(new CameraComponent());
   }
 
   public static Renderer createRenderer() {

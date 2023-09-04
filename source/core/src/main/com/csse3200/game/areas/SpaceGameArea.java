@@ -151,7 +151,7 @@ public class SpaceGameArea extends GameArea {
   }
 
   private void displayUI() {
-    Entity ui = new Entity(EntityType.UI);
+    Entity ui = new Entity();
     ui.addComponent(new GameAreaDisplay("Box Forest"));
     spawnEntity(ui);
   }
@@ -159,7 +159,7 @@ public class SpaceGameArea extends GameArea {
   private void spawnTerrain() {
     // Background terrain
     terrain = terrainFactory.createTerrain(this.gameMap.getTiledMap());
-    spawnEntity(new Entity(EntityType.Terrain).addComponent(terrain));                  // Will need to monitor this when changing the createTerrain function
+    spawnEntity(new Entity().addComponent(terrain));                  // Will need to monitor this when changing the createTerrain function
 
     // Terrain walls
     float tileSize = terrain.getTileSize();

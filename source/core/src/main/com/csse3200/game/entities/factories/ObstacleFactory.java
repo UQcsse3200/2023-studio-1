@@ -22,7 +22,7 @@ public class ObstacleFactory {
    */
   public static Entity createTree() {
     Entity tree =
-        new Entity(EntityType.ToDelete)
+        new Entity()
             .addComponent(new TextureRenderComponent("images/tree.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
@@ -41,7 +41,7 @@ public class ObstacleFactory {
    * @return Wall entity of given width and height
    */
   public static Entity createWall(float width, float height) {
-    Entity wall = new Entity(EntityType.Wall)
+    Entity wall = new Entity()
         .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
     wall.setScale(width, height);
