@@ -301,9 +301,16 @@ public class Entity implements Json.Serializable {
   }
 
   public void write(Json json) {
-    json.writeValue("x", position.x);
-    json.writeValue("y", position.y);
+    // Should be gone but incase double check
+    if (getType() == EntityType.Item || getType() == EntityType.Player || getType() == null) {
+      return;
+    }
 
+    json.writeValue("Entity", getType());
+    if (getType() != EntityType.Plant && getType() != EntityType.Tile) {
+      json.writeValue("x", position.x);
+      json.writeValue("y", position.y);
+    }
     json.writeObjectStart("components");
     for (Component c : createdComponents) {
       c.write(json);

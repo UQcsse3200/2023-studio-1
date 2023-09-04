@@ -201,7 +201,7 @@ public class NPCFactory {
    * @return entity
    */
   private static Entity createBaseAnimal(EntityType type) {
-    Entity animal = new Entity()
+    Entity animal = new Entity(type)
             .addComponent(new PhysicsComponent())
             .addComponent(new PhysicsMovementComponent())
             .addComponent(new ColliderComponent());

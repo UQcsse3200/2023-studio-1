@@ -4,6 +4,7 @@ import java.io.File;
 
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.files.FileLoader.Location;
 
 
@@ -75,7 +76,19 @@ public class SaveGame {
     }
   
     public void setEntities(Array<Entity> entities) {
-      this.entities = entities; 
+      this.entities = filterEntities(entities);
+    }
+
+    private Array<Entity> filterEntities(Array<Entity> entities) {
+      for (int i = 0; i < entities.size; i++) {
+        if (entities.get(i).getType() == EntityType.Item || entities.get(i).getType() == EntityType.Player || entities.get(i).getType() == null) {
+          entities.removeIndex(i);
+          // Moves the indexing down when removed so keep index same
+          i--;
+
+        }
+      }
+      return entities;
     }
   }
 }
