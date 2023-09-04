@@ -2,8 +2,8 @@
 hour: 4
 player: {
 	Entity: Player
-	x: 8.965386
-	y: 7.0697985
+	x: 9.534621
+	y: 9.562111
 	components: {
 		inventory: [
 			hoe
@@ -16,128 +16,128 @@ player: {
 entities: [
 	{
 		Entity: Axolotl
-		x: 7.6757545
-		y: 27.200481
+		x: 39.21288
+		y: 17.899033
 		components: {
 			tamed: false
 		}
 	}
 	{
 		Entity: Cow
-		x: 36.208652
-		y: 30.507614
+		x: 21.488323
+		y: 21.22797
 		components: {
 			tamed: false
 		}
 	}
 	{
 		Entity: Cow
-		x: 7.5649652
-		y: 9.275342
+		x: 35.572113
+		y: 20.637794
 		components: {
 			tamed: false
 		}
 	}
 	{
 		Entity: Cow
-		x: 19.05728
-		y: 5.6982274
+		x: 1.5446635
+		y: 24.279974
 		components: {
 			tamed: false
 		}
 	}
 	{
 		Entity: Cow
-		x: 9.068179
-		y: 32.24735
+		x: 32.486885
+		y: 9.896801
 		components: {
 			tamed: false
 		}
 	}
 	{
 		Entity: Cow
-		x: 43.979477
-		y: 5.4869275
+		x: 10.332525
+		y: 38.013283
 		components: {
 			tamed: false
 		}
 	}
 	{
 		Entity: Cow
-		x: 18.943563
-		y: 40.20639
+		x: 17.423815
+		y: 46.441406
 		components: {
 			tamed: false
 		}
 	}
 	{
 		Entity: Cow
-		x: 17.626251
-		y: 47.649887
+		x: 4.8938527
+		y: 19.079754
 		components: {
 			tamed: false
 		}
 	}
 	{
 		Entity: Cow
-		x: 31.112741
-		y: 13.070587
+		x: 27.23078
+		y: 35.90158
 		components: {
 			tamed: false
 		}
 	}
 	{
 		Entity: Cow
-		x: 3.209011
-		y: 7.9206963
+		x: 1.6128275
+		y: 30.163618
 		components: {
 			tamed: false
 		}
 	}
 	{
 		Entity: Cow
-		x: 21.457882
-		y: 18.136974
+		x: 10.267935
+		y: 10.809299
 		components: {
 			tamed: false
 		}
 	}
 	{
 		Entity: Chicken
-		x: 43.78149
-		y: 28.083946
+		x: 42.038082
+		y: 26.905382
 		components: {
 			tamed: false
 		}
 	}
 	{
 		Entity: Chicken
-		x: 37.061306
-		y: 10.585002
+		x: 21.753923
+		y: 32.518337
 		components: {
 			tamed: false
 		}
 	}
 	{
 		Entity: Chicken
-		x: 17.516563
-		y: 36.115944
+		x: 44.39193
+		y: 17.184113
 		components: {
 			tamed: false
 		}
 	}
 	{
 		Entity: Chicken
-		x: 33.361828
-		y: 30.718252
+		x: 35.5848
+		y: 3.3085325
 		components: {
 			tamed: false
 		}
 	}
 	{
 		Entity: Chicken
-		x: 25.954977
-		y: 38.201836
+		x: 26.253845
+		y: 1.1750512
 		components: {
 			tamed: false
 		}
@@ -150,40 +150,40 @@ entities: [
 	}
 	{
 		Entity: Chicken
-		x: 1.5058237
-		y: 41.278778
+		x: 0.017374372
+		y: 34.011833
 		components: {
 			tamed: false
 		}
 	}
 	{
 		Entity: Chicken
-		x: 1.7294576
-		y: 30.09506
+		x: 25.313978
+		y: 18.517279
 		components: {
 			tamed: false
 		}
 	}
 	{
 		Entity: Chicken
-		x: 22.1011
-		y: 3.6061113
+		x: 8.906219
+		y: 40.4488
 		components: {
 			tamed: false
 		}
 	}
 	{
 		Entity: Chicken
-		x: 42.877815
-		y: 43.176098
+		x: 40.235775
+		y: 23.844988
 		components: {
 			tamed: false
 		}
 	}
 	{
 		Entity: Chicken
-		x: 20.128103
-		y: 7.70952
+		x: 45.99157
+		y: 3.4374557
 		components: {
 			tamed: false
 		}
