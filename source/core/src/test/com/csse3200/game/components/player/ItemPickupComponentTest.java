@@ -42,6 +42,11 @@ public class ItemPickupComponentTest {
         public Entity getPlayer() {
             return null;
         }
+
+        @Override
+        public Entity getTractor() {
+            return null;
+        }
     }
 
     @BeforeEach

@@ -30,6 +30,11 @@ class GameAreaTest {
             public Entity getPlayer() {
                 return null;
             }
+
+            @Override
+            public Entity getTractor() {
+                return null;
+            }
         };
 
     ServiceLocator.registerEntityService(new EntityService());
