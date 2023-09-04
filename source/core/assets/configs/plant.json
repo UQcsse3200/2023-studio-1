@@ -44,7 +44,7 @@
     "adultLifeSpan": 5,
     "maxHealth": 100
   },
-  "atropaBelladonna": {
+  "nightshade": {
     "health": 10,
     "name": "Deadly Nightshade",
     "type": "DEADLY",
@@ -53,7 +53,7 @@
     "adultLifeSpan": 5,
     "maxHealth": 200
   },
-  "nicotianaTabacum": {
+  "tobacco": {
     "health": 10,
     "name": "Tobacco",
     "type": "DEADLY",

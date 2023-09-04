@@ -121,17 +121,17 @@ public class PlantFactory {
     }
 
     /**
-     * Creates a AtropaBelladonna entity that is a deadly type plant.
+     * Creates a Nightshade entity that is a deadly type plant.
      *
      * @param cropTile Crop tile upon which the plant is planted
      * @return entity
      */
 
-    public static Entity createAtropaBelladonna(CropTileComponent cropTile) {
-        BasePlantConfig config = stats.atropaBelladonna;
+    public static Entity createNightshade(CropTileComponent cropTile) {
+        BasePlantConfig config = stats.nightshade;
 
         Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/plants/belladonna.png"))
+                .addComponent(new TextureRenderComponent("images/plants/nightshade.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
                         config.maxHealth, cropTile));
@@ -147,13 +147,13 @@ public class PlantFactory {
     }
 
     /**
-     * Creates a Nicotiana Tabacum entity that is a deadly type plant.
+     * Creates a Tobacco entity that is a deadly type plant.
      *
      * @param cropTile Crop tile upon which the plant is planted
      * @return entity
      */
-    public static Entity createNicotianaTabacum(CropTileComponent cropTile) {
-        BasePlantConfig config = stats.nicotianaTabacum;
+    public static Entity createTobacco(CropTileComponent cropTile) {
+        BasePlantConfig config = stats.tobacco;
 
         Entity plant = createBasePlant()
                 .addComponent(new TextureRenderComponent("images/plants/waterweed.png"))
