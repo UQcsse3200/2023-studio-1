@@ -7,7 +7,7 @@ import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.files.SaveGame;
 import com.csse3200.game.files.SaveGame.GameState;
-
+import com.csse3200.game.entities.factories.NPCFactory;
 /* A note of the registering of this service:
  *  this service is currently only registered at MainMenuScreen,
  *  (source/core/src/main/com/csse3200/game/screens/MainMenuScreen.java)
@@ -63,14 +63,16 @@ public class SaveLoadService {
   }
 
   private void updateNPCs(GameState state) {
+    Entity player = ServiceLocator.getGameArea().getPlayer();
     EntityService entityService = ServiceLocator.getEntityService();
+
     entityService.disposeNPCs();
+
     for (Entity entity : state.getEntities()) {
       if (entity.getType() == EntityType.Cow) {
-        //TODO get either spawnentity at working or set pos
-        ServiceLocator.getGameArea().spawnEntity(entity);
-        System.out.println("cow spawned");
-
+        Entity cow = NPCFactory.createCow(player);
+        cow.setPosition(entity.getPosition());
+        ServiceLocator.getGameArea().spawnEntity(cow);
       }
     }
   }
