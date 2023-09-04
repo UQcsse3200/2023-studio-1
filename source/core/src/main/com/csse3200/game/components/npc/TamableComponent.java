@@ -107,16 +107,4 @@ public class TamableComponent extends Component {
     public boolean isTamed() {
         return isTamed;
     }
-
-    /**
-     * Function is used to set the tame value of the animals.
-     * This is used for testing purposes and will be deleted in later sprint.
-     * @param value Boolean value that will be used to set to the istamed variable.
-     */
-    public void setTame(boolean value) {
-        if (value) {
-            this.isTamed = true;
-        }
-        this.isTamed = false;
-    }
 }
