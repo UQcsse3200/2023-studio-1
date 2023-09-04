@@ -145,7 +145,7 @@ class PlantFactoryTest {
                 Arguments.of("hammerPlant", 10, "Hammer Plant", "REPAIR",
                         "A useful plant resembling a hand holding a hammer that repairs the other nearby plants, maybe they were friends!", (float) 0.7, 5, 400),
                 Arguments.of("venusFlyTrap", 10, "Space Snapper", "DEFENCE",
-                        "An angry plant that will gobble any nasty pests nearby. Keep small pets and children out of snapping distance!", (float) 0.7, 5, 400),
+                        "An hangry plant that will gobble any nasty pests nearby. Keep small pets and children out of snapping distance!", (float) 0.7, 5, 400),
                 Arguments.of("waterWeed", 10, "Atomic Algae", "PRODUCTION",
                         "Test description", (float) 0.7, 5, 400),
                 Arguments.of("nightshade", 10, "Deadly Nightshade",
