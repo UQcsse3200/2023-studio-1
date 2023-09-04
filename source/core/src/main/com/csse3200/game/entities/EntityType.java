@@ -8,10 +8,7 @@ public enum EntityType {
     Cow,
     Chicken,
     Axolotl,
-    Item,
-    Wall,
-    UI,
-    Terrain,
-    Camera,
-    ToDelete
+    Item
 }
+
+// import com.csse3200.game.entities.EntityType;
