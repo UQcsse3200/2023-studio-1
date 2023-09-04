@@ -1,5 +1,6 @@
 package com.csse3200.game.services;
 
+import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
@@ -66,11 +67,15 @@ public class SaveLoadService {
     entityService.disposeNPCs();
     for (Entity entity : state.getEntities()) {
       if (entity.getType() == EntityType.Cow) {
-        //TODO foundCow need to make cow via factory
-        //entityService.register(entity);
+        //TODO get either spawnentity at working or set pos
+        ServiceLocator.getGameArea().spawnEntity(entity);
+        System.out.println("cow spawned");
+
       }
     }
   }
+
+
 
   private void updateTime(GameState state) {
     ServiceLocator.getTimeService().setDay(state.getDay());
