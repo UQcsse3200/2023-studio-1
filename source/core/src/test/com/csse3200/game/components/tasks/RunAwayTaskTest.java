@@ -41,7 +41,7 @@ class RunAwayTaskTest {
 
   @Test
   void shouldMoveAwayFromTarget() {
-    Entity target = new Entity(type);
+    Entity target = new Entity();
     target.setPosition(2f, 2f);
 
     Vector2 speed = new Vector2(3f, 3f);
@@ -63,7 +63,7 @@ class RunAwayTaskTest {
 
   @Test
   void shouldMoveAwayOnlyWhenInDistance() {
-    Entity target = new Entity(type);
+    Entity target = new Entity();
     target.setPosition(0f, 6f);
 
     Entity entity = makePhysicsEntity();
@@ -93,7 +93,7 @@ class RunAwayTaskTest {
 
   @Test
   void shouldRunWhenTargetIsVisible() {
-    Entity target = new Entity(type);
+    Entity target = new Entity();
     target.setPosition(0f, 8f);
 
     Entity entity = makePhysicsEntity();
@@ -118,7 +118,7 @@ class RunAwayTaskTest {
 
   @Test
   void runAwayChangesEntitySpeed() {
-    Entity target = new Entity(type);
+    Entity target = new Entity();
     target.setPosition(0f, 8f);
 
     Entity entity = makePhysicsEntity();
@@ -137,7 +137,7 @@ class RunAwayTaskTest {
 
   @Test
   void entityStopsChase() {
-    Entity target = new Entity(type);
+    Entity target = new Entity();
     target.setPosition(0f, 0f);
 
     Vector2 speed = new Vector2(3f, 3f);
@@ -169,7 +169,7 @@ class RunAwayTaskTest {
   }
 
   private Entity makePhysicsEntity() {
-    return new Entity(type)
+    return new Entity()
         .addComponent(new PhysicsComponent())
         .addComponent(new PhysicsMovementComponent());
   }

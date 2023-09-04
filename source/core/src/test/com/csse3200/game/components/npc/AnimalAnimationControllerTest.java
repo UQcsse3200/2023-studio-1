@@ -23,7 +23,7 @@ class AnimalAnimationControllerTest {
         controller = new AnimalAnimationController();
         animator = mock(AnimationRenderComponent.class);
 
-        entity = new Entity(type)
+        entity = new Entity()
                 .addComponent(controller)
                 .addComponent(animator);
         entity.create();

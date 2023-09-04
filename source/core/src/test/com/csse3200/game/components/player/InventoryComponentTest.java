@@ -27,8 +27,8 @@ class InventoryComponentTest {
   public void setUp() {
     // Set up the inventory with two initial items
     List<Entity> items = new ArrayList<>();
-    item1 = new Entity(type);
-    item2 = new Entity(type);
+    item1 = new Entity();
+    item2 = new Entity();
     items.add(item1);
     items.add(item2);
     inventoryComponent = new InventoryComponent(items);
@@ -55,7 +55,7 @@ class InventoryComponentTest {
     // Check if an item is present in the inventory
     assertTrue(inventoryComponent.hasItem(item1));
     // Check if a non-existent item is not in the inventory
-    assertFalse(inventoryComponent.hasItem(new Entity(type)));
+    assertFalse(inventoryComponent.hasItem(new Entity()));
   }
 
   /**
@@ -64,7 +64,7 @@ class InventoryComponentTest {
   @Test
   public void testAddItem() {
     // Create a new item
-    Entity newItem = new Entity(type);
+    Entity newItem = new Entity();
     // Add the new item to the inventory
     assertTrue(inventoryComponent.addItem(newItem));
     // Check if the new item is now in the inventory
@@ -81,7 +81,7 @@ class InventoryComponentTest {
     // Check that the removed item is no longer in the inventory
     assertFalse(inventoryComponent.hasItem(item1));
     // Check that removing a non-existent item does not affect the inventory
-    assertFalse(inventoryComponent.removeItem(new Entity(type)));
+    assertFalse(inventoryComponent.removeItem(new Entity()));
   }
   @Test
   void testGetItemCount() {

@@ -307,7 +307,7 @@ class PlantFactoryTest {
      */
     @Test
     void testScaleEntity() {
-        Entity plant = new Entity(type);
+        Entity plant = new Entity();
         TextureRenderComponent mockComponent = mock(TextureRenderComponent.class);
         plant.addComponent(mockComponent);
         plant.getComponent(TextureRenderComponent.class).scaleEntity();
@@ -320,7 +320,7 @@ class PlantFactoryTest {
      */
     @Test
     void testScaleHeight() {
-        Entity plant = new Entity(type);
+        Entity plant = new Entity();
         plant.setScale(2f, 2f);
         plant.scaleHeight(1f);
 
@@ -332,7 +332,7 @@ class PlantFactoryTest {
      */
     @Test
     void testSetScaledCollider() {
-        Entity plant = new Entity(type);
+        Entity plant = new Entity();
         plant.setScale(2f, 2f);
         ColliderComponent mockCollider = mock(ColliderComponent.class);
         plant.addComponent(mockCollider);

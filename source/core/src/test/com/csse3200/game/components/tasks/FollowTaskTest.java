@@ -35,7 +35,7 @@ class FollowTaskTest {
 
     @Test
     void shouldMoveTowardsTarget() {
-        Entity target = new Entity(type);
+        Entity target = new Entity();
         target.setPosition(2f, 2f);
 
         AITaskComponent ai = new AITaskComponent().addTask(new FollowTask(target, 10, 5, 10,1.5f));
@@ -56,7 +56,7 @@ class FollowTaskTest {
 
     @Test
     void shouldStopAtStoppingDistance() {
-        Entity target = new Entity(type);
+        Entity target = new Entity();
         target.setPosition(0, 1f);
         float stoppingDistance = 0.5f;
         AITaskComponent ai = new AITaskComponent().addTask(new FollowTask(target, 10, 10, 10,stoppingDistance));
@@ -79,7 +79,7 @@ class FollowTaskTest {
 
     @Test
     void shouldFollowOnlyWhenInDistance() {
-        Entity target = new Entity(type);
+        Entity target = new Entity();
         target.setPosition(0f, 6f);
 
         Entity entity = makePhysicsEntity();
@@ -109,7 +109,7 @@ class FollowTaskTest {
 
     @Test
     void shouldNotFollowInStoppingDistance() {
-        Entity target = new Entity(type);
+        Entity target = new Entity();
         target.setPosition(0f, 6f);
 
         Entity entity = makePhysicsEntity();
@@ -124,7 +124,7 @@ class FollowTaskTest {
     }
 
     private Entity makePhysicsEntity() {
-        return new Entity(type)
+        return new Entity()
                 .addComponent(new PhysicsComponent())
                 .addComponent(new PhysicsMovementComponent());
     }

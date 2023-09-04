@@ -53,7 +53,7 @@ class TouchAttackComponentTest {
     Entity entity = createAttacker(targetLayer);
     // Target does not have a combat component
     Entity target =
-        new Entity(type)
+        new Entity()
             .addComponent(new PhysicsComponent())
             .addComponent(new HitboxComponent().setLayer(targetLayer));
     target.create();
@@ -67,7 +67,7 @@ class TouchAttackComponentTest {
 
   Entity createAttacker(short targetLayer) {
     Entity entity =
-        new Entity(type)
+        new Entity()
             .addComponent(new TouchAttackComponent(targetLayer))
             .addComponent(new CombatStatsComponent(0, 10))
             .addComponent(new PhysicsComponent())
@@ -78,7 +78,7 @@ class TouchAttackComponentTest {
 
   Entity createTarget(short layer) {
     Entity target =
-        new Entity(type)
+        new Entity()
             .addComponent(new CombatStatsComponent(10, 0))
             .addComponent(new PhysicsComponent())
             .addComponent(new HitboxComponent().setLayer(layer));

@@ -34,7 +34,7 @@ class PhysicsComponentTest {
 
   @Test
   void shouldBecomeActiveOnCreate() {
-    Entity entity = new Entity(type);
+    Entity entity = new Entity();
     PhysicsComponent component = new PhysicsComponent();
     entity.addComponent(component);
 
@@ -47,7 +47,7 @@ class PhysicsComponentTest {
 
   @Test
   void shouldMoveEntityToBody() {
-    Entity entity = new Entity(type);
+    Entity entity = new Entity();
     PhysicsComponent component = new PhysicsComponent();
     entity.addComponent(component);
     entity.create();

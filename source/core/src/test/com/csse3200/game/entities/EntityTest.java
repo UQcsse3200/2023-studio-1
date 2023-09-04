@@ -19,7 +19,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 class EntityTest {
   @Test
   void shouldSetAndGetPosition() {
-    Entity entity = new Entity(type);
+    Entity entity = new Entity();
     Vector2 pos = new Vector2(5f, -5f);
     entity.setPosition(pos);
     assertEquals(pos, entity.getPosition());
@@ -30,7 +30,7 @@ class EntityTest {
 
   @Test
   void shouldSetAndGetScale() {
-    Entity entity = new Entity(type);
+    Entity entity = new Entity();
     Vector2 scale = new Vector2(2f, 3f);
     entity.setScale(scale);
     assertEquals(scale, entity.getScale());
@@ -41,7 +41,7 @@ class EntityTest {
 
   @Test
   void shouldHaveCorrectCenter() {
-    Entity entity = new Entity(type);
+    Entity entity = new Entity();
     entity.setPosition(0f, 0f);
     entity.setScale(2f, 2f);
     assertEquals(new Vector2(1f, 1f), entity.getCenterPosition());
@@ -52,7 +52,7 @@ class EntityTest {
 
   @Test
   void shouldUpdateComponents() {
-    Entity entity = new Entity(type);
+    Entity entity = new Entity();
     Component component1 = spy(TestComponent1.class);
     Component component2 = spy(TestComponent2.class);
     entity.addComponent(component1);
@@ -70,7 +70,7 @@ class EntityTest {
 
   @Test
   void shouldCreateComponents() {
-    Entity entity = new Entity(type);
+    Entity entity = new Entity();
     Component component1 = spy(TestComponent1.class);
     Component component2 = spy(TestComponent2.class);
     entity.addComponent(component1);
@@ -85,7 +85,7 @@ class EntityTest {
 
   @Test
   void shouldRejectSameClassComponents() {
-    Entity entity = new Entity(type);
+    Entity entity = new Entity();
     Component component1 = new TestComponent1();
     Component component2 = new TestComponent1();
     entity.addComponent(component1);
@@ -95,7 +95,7 @@ class EntityTest {
 
   @Test
   void shouldRejectAfterCreate() {
-    Entity entity = new Entity(type);
+    Entity entity = new Entity();
     entity.create();
     entity.addComponent(new TestComponent1());
     assertNull(entity.getComponent(TestComponent1.class));
@@ -103,7 +103,7 @@ class EntityTest {
 
   @Test
   void shouldGetComponent() {
-    Entity entity = new Entity(type);
+    Entity entity = new Entity();
     Component component1 = new TestComponent1();
     Component component2 = new TestComponent2();
     entity.addComponent(component1);
@@ -118,14 +118,14 @@ class EntityTest {
 
   @Test
   void shouldNotGetMissingComponent() {
-    Entity entity = new Entity(type);
+    Entity entity = new Entity();
     TestComponent1 component = entity.getComponent(TestComponent1.class);
     assertNull(component);
   }
 
   @Test
   void shouldDisposeComponents() {
-    Entity entity = new Entity(type);
+    Entity entity = new Entity();
     TestComponent1 component = spy(TestComponent1.class);
     entity.addComponent(component);
     entity.create();
@@ -140,15 +140,15 @@ class EntityTest {
 
   @Test
   void shouldHaveUniqueId() {
-    Entity entity1 = new Entity(type);
-    Entity entity2 = new Entity(type);
+    Entity entity1 = new Entity();
+    Entity entity2 = new Entity();
 
     assertNotEquals(entity1.getId(), entity2.getId());
   }
 
   @Test
   void shouldEqualWithId() {
-    Entity entity1 = new Entity(type);
+    Entity entity1 = new Entity();
     Entity entity2 = mock(Entity.class);
     int id = entity1.getId();
     when(entity2.getId()).thenReturn(id);
@@ -158,7 +158,7 @@ class EntityTest {
 
   @Test
   void shouldNotUpdateIfDisabled() {
-    Entity entity = new Entity(type);
+    Entity entity = new Entity();
     TestComponent1 component = spy(TestComponent1.class);
     entity.addComponent(component);
     entity.create();

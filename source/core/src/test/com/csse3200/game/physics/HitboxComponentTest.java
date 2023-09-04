@@ -20,7 +20,7 @@ class HitboxComponentTest {
 
   @Test
   void shouldBeSensor() {
-    Entity entity = new Entity(type);
+    Entity entity = new Entity();
     entity.addComponent(new PhysicsComponent());
     HitboxComponent component = new HitboxComponent();
     entity.addComponent(component);

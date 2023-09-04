@@ -33,7 +33,7 @@ class WanderTaskTest {
     WanderTask wanderTask = new WanderTask(Vector2Utils.ONE, 1f);
 
     AITaskComponent aiTaskComponent = new AITaskComponent().addTask(wanderTask);
-    Entity entity = new Entity(type).addComponent(aiTaskComponent).addComponent(new PhysicsMovementComponent());
+    Entity entity = new Entity().addComponent(aiTaskComponent).addComponent(new PhysicsMovementComponent());
     entity.create();
 
     // Register callbacks

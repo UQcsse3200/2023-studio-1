@@ -32,7 +32,7 @@ class ColliderComponentTest {
 
   @Test
   void shouldSetFriction() {
-    Entity entity = new Entity(type);
+    Entity entity = new Entity();
     entity.addComponent(new PhysicsComponent());
     ColliderComponent component = new ColliderComponent();
     entity.addComponent(component);
@@ -46,7 +46,7 @@ class ColliderComponentTest {
 
   @Test
   void shouldSetSensor() {
-    Entity entity = new Entity(type);
+    Entity entity = new Entity();
     entity.addComponent(new PhysicsComponent());
     ColliderComponent component = new ColliderComponent();
     entity.addComponent(component);
@@ -60,7 +60,7 @@ class ColliderComponentTest {
 
   @Test
   void shouldSetDensity() {
-    Entity entity = new Entity(type);
+    Entity entity = new Entity();
     entity.addComponent(new PhysicsComponent());
     ColliderComponent component = new ColliderComponent();
     entity.addComponent(component);
@@ -74,7 +74,7 @@ class ColliderComponentTest {
 
   @Test
   void shouldSetRestitution() {
-    Entity entity = new Entity(type);
+    Entity entity = new Entity();
     entity.addComponent(new PhysicsComponent());
     ColliderComponent component = new ColliderComponent();
     entity.addComponent(component);
@@ -88,7 +88,7 @@ class ColliderComponentTest {
 
   @Test
   void shouldSetShape() {
-    Entity entity = new Entity(type);
+    Entity entity = new Entity();
     entity.addComponent(new PhysicsComponent());
     ColliderComponent component = new ColliderComponent();
     entity.addComponent(component);
@@ -101,7 +101,7 @@ class ColliderComponentTest {
 
   @Test
   void shouldSetBox() {
-    Entity entity = new Entity(type);
+    Entity entity = new Entity();
     entity.addComponent(new PhysicsComponent());
     ColliderComponent component = new ColliderComponent();
     entity.addComponent(component);
@@ -124,7 +124,7 @@ class ColliderComponentTest {
   }
 
   private static void testAlignedBox(AlignX alignX, AlignY alignY, Vector2 position) {
-    Entity entity = new Entity(type);
+    Entity entity = new Entity();
     entity.addComponent(new PhysicsComponent());
     ColliderComponent component = new ColliderComponent();
     entity.addComponent(component);

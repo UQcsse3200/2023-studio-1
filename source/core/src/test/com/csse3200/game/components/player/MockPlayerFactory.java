@@ -29,7 +29,7 @@ public class MockPlayerFactory {
         AnimationRenderComponent animator = setupPlayerAnimator();
 
         Entity player =
-                new Entity(type)
+                new Entity()
                         .addComponent(new PhysicsComponent())
                         .addComponent(new PlayerActions())
                         .addComponent(inputComponent)

@@ -84,7 +84,7 @@ class PhysicsContactListenerTest {
 
   Entity createPhysicsEntity() {
     Entity entity =
-        new Entity(type).addComponent(new PhysicsComponent()).addComponent(new ColliderComponent());
+        new Entity().addComponent(new PhysicsComponent()).addComponent(new ColliderComponent());
     entity.create();
     return entity;
   }

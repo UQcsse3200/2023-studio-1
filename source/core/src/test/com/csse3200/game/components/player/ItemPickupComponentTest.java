@@ -53,12 +53,12 @@ public class ItemPickupComponentTest {
         ServiceLocator.registerRenderService(new RenderService());
         ServiceLocator.registerGameArea(new TestGameArea());
         /* Create two test entities (one that picks up the other) */
-        picker = new Entity(type)
+        picker = new Entity()
                 .addComponent(new PhysicsComponent())
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
                 .addComponent(new InventoryComponent(new ArrayList<Entity>()))
                 .addComponent(new ItemPickupComponent());
-        pickupItem = new Entity(type)
+        pickupItem = new Entity()
                 .addComponent(new PhysicsComponent())
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ITEM))
                 .addComponent(new ItemComponent("Shovel", ItemType.SHOVEL, new Texture("images/tool_shovel.png")));

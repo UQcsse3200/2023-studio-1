@@ -88,7 +88,7 @@ class RendererTest {
   }
 
   private static CameraComponent makeCameraEntity(Camera camera) {
-    Entity camEntity = new Entity(type).addComponent(new CameraComponent(camera));
+    Entity camEntity = new Entity().addComponent(new CameraComponent(camera));
     return camEntity.getComponent(CameraComponent.class);
   }
 }

@@ -39,7 +39,7 @@ public class PanicTaskTest {
         panicTask = new PanicTask("panicTrigger", 1f, 10, new Vector2(1f, 1f), new Vector2(2f, 2f));
         AITaskComponent aiTaskComponent = new AITaskComponent().addTask(panicTask);
         movementComponent = spy(new PhysicsMovementComponent());
-        entity = new Entity(type)
+        entity = new Entity()
                 .addComponent(new PhysicsComponent())
                 .addComponent(aiTaskComponent)
                 .addComponent(movementComponent);
