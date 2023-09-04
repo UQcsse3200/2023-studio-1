@@ -20,6 +20,9 @@ public class PlantComponent extends Component {
 
     /** The crop tile on which this plant is planted on. */
     private CropTileComponent cropTile;
+    private int[] growthStageThresholds = {11, 21, 41}; // Default values.
+                                                        // Sprout, juvenile, adult. These thresholds determine when a
+                                                        // plant advances to the next growth stage
 
     /**
      * Constructor used for plant types that have no extra properties.
@@ -264,5 +267,20 @@ public class PlantComponent extends Component {
     private void destroyPlant() {
         cropTile.setUnoccupied();
         entity.dispose();
+    }
+
+    /**
+     * Override the default growth stage thresholds. This allows different plants to have unique growth
+     * times. Whem the currentGrowthLevel of a plant exceeds the corresponding growth threshold, then the
+     * current growth stage of the plant is increased.
+     * This method should be called when a new plant is created in the PlantFactory.
+     * @param sproutThresh - Threshold for a plant to become a sprout.
+     * @param juvenileThresh - Threshold for a plant to become a juvenile.
+     * @param adultThresh Threshold for a plant to become an adult
+     */
+    public void setGrowthStageThresholds(int sproutThresh, int juvenileThresh, int adultThresh) {
+        this.growthStageThresholds[0] = sproutThresh;
+        this.growthStageThresholds[1] = juvenileThresh;
+        this.growthStageThresholds[2] = adultThresh;
     }
 }
