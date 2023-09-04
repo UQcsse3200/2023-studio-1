@@ -1,19 +1,15 @@
 package com.csse3200.game.components.player;
 
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.BodyUserData;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.services.ServiceLocator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ItemPickupComponent extends Component {
     private HitboxComponent hitboxComponent;
-    private static final Logger logger = LoggerFactory.getLogger(GdxGame.class);
 
     @Override
     public void create() {
@@ -35,9 +31,9 @@ public class ItemPickupComponent extends Component {
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
 
         // Add item to inventory
-        this.entity.getComponent(InventoryComponent.class).addItem(target);
-
-        // remove it from game area (map):
-        ServiceLocator.getGameArea().removeEntity(target);
+        boolean added = this.entity.getComponent(InventoryComponent.class).addItem(target);
+        // if item was successfully added to player inventory, remove it from game area (map):
+        if (added) ServiceLocator.getGameArea().removeEntity(target);
+        // else, leave item alone.
     }
 }

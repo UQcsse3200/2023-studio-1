@@ -1,9 +1,11 @@
 package com.csse3200.game.components.player;
 
+
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.extensions.GameExtension;
+
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.ResourceService;
@@ -18,18 +20,20 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
+
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
+
 
 @ExtendWith(GameExtension.class)
 public class PlayerAnimationControllerTest {
     private Entity player;
+
     private AnimationRenderComponent animationRenderComponent;
 
     @BeforeEach
     void initialiseTest() {
         ServiceLocator.registerRenderService(new RenderService());
-
         ResourceService resourceService = new ResourceService();
         resourceService.loadTextureAtlases(new String[]{"images/player.atlas"});
         resourceService.loadTextures(new String[]{"images/heart.png"});
@@ -98,6 +102,7 @@ public class PlayerAnimationControllerTest {
                 arguments("animationRunStart", "left", "run_left"),
                 arguments("animationRunStart", "down", "run_down"),
                 arguments("animationRunStart", "right", "run_right")
+
         );
     }
 }

@@ -2,12 +2,12 @@ package com.csse3200.game.areas.terrain;
 
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.configs.CropTileConfig;
 import com.csse3200.game.files.FileLoader;
-import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.rendering.TextureRenderComponent;
+import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,10 +45,13 @@ public class TerrainCropTileFactory {
 	public static Entity createTerrainEntity(Vector2 position) {
 		logger.debug("Creating crop tile at position {}", position);
 
-		Entity tile = new Entity()
+		DynamicTextureRenderComponent renderComponent = new DynamicTextureRenderComponent("images/cropTile.png");
+		renderComponent.setLayer(0);
+
+		Entity tile = new Entity(EntityType.Tile)
 				.addComponent(new ColliderComponent().setSensor(true))
 				.addComponent(new PhysicsComponent())
-				.addComponent(new TextureRenderComponent("images/cropTile.png"))
+				.addComponent(renderComponent)
 				.addComponent(new CropTileComponent(stats.initialWaterContent, stats.initialSoilQuality));
 
 		tile.setPosition(position);

@@ -13,6 +13,7 @@ import com.csse3200.game.utils.math.Vector2Utils;
 public class KeyboardPlayerInputComponent extends InputComponent {
   private final Vector2 moveDirection = Vector2.Zero.cpy();
   private PlayerActions actions;
+  private final int hotKeyOffset = 6;
 
   public KeyboardPlayerInputComponent() {
     super(5);
@@ -50,8 +51,21 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.SHIFT_LEFT:
           entity.getEvents().trigger("run");
           return true;
+        case Keys.E: // Potentially also interact button later.
+          entity.getEvents().trigger("interact");
+          return true;
+        case Keys.I:
+          // inventory tings
+          entity.getEvents().trigger("toggleInventory");
+          return true;
         case Keys.F:
           triggerEnterEvent();
+          return true;
+        case Keys.NUM_0: case Keys.NUM_1: case Keys.NUM_2:
+        case Keys.NUM_3: case Keys.NUM_4: case Keys.NUM_5:
+        case Keys.NUM_6: case Keys.NUM_7: case Keys.NUM_8:
+        case Keys.NUM_9:
+          triggerHotKeySelection(keycode);
           return true;
         default:
           return false;
@@ -63,8 +77,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   /** @see InputProcessor#touchUp(int, int, int, int) */
   @Override
   public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-    Vector2 mousePos = new Vector2(screenX, screenY);
-    entity.getEvents().trigger("use", entity.getPosition(), mousePos, entity.getComponent(InventoryComponent.class).getInHand());
+    if (!actions.isMuted()) {
+      Vector2 mousePos = new Vector2(screenX, screenY);
+      entity.getEvents().trigger("use", entity.getPosition(), mousePos, entity.getComponent(InventoryComponent.class).getHeldItem());
+    }
     return false;
   }
 
@@ -89,7 +105,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           return true;
         case Keys.S:
           moveDirection.sub(Vector2Utils.DOWN);
-          triggerMoveEvent();;
+          triggerMoveEvent();
           return true;
         case Keys.D:
           moveDirection.sub(Vector2Utils.RIGHT);
@@ -128,4 +144,16 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public void setWalkDirection(Vector2 direction) {
     this.moveDirection.set(direction);
   }
+   /**
+   * Sets the players current held item to that in the provided index of the inventory
+   *
+   * @param index of the item the user wants to be holding
+   */
+   public void triggerHotKeySelection(int index) {
+     index -= 8;
+     if (index < 0) {
+       index = 9;
+     }
+     entity.getEvents().trigger("hotkeySelection", index);
+   }
 }

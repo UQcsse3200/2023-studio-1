@@ -4,12 +4,13 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.areas.terrain.TerrainCropTileFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
@@ -48,8 +49,12 @@ public class SpaceGameArea extends GameArea {
           "images/tool_watering_can.png",
           "images/animals/chicken.png",
           "images/animals/cow.png",
-          "images/animal/astrolotl.png",
           "images/cropTile.png",
+          "images/cropTile_fertilised.png",
+          "images/watered_cropTile.png",
+          "images/watered_cropTile_fertilised.png",
+          "images/overwatered_cropTile.png",
+          "images/overwatered_cropTile_fertilised.png",
 
           "images/beach_1.png",
           "images/beach_2.png",
@@ -65,6 +70,7 @@ public class SpaceGameArea extends GameArea {
           "images/dirtPathTop.png",
           "images/dirtPathRight.png",
           "images/dirtPathBottom.png",
+          "images/dirtPathLeft.png",
           "images/gravel_1.png",
           "images/ice_1.png",
           "images/ice_2.png",
@@ -118,6 +124,7 @@ public class SpaceGameArea extends GameArea {
     displayUI();
 
     spawnTerrain();
+    spawnCrop(); // temp
     spawnTrees();
 
     player = spawnPlayer();
@@ -188,6 +195,17 @@ public class SpaceGameArea extends GameArea {
       Entity tree = ObstacleFactory.createTree();
       spawnEntityAt(tree, randomPos, true, false);
     }
+  }
+
+  private Entity spawnCrop() {
+    GridPoint2 pos = new GridPoint2(10, 11);
+    Entity newPlayer = TerrainCropTileFactory.createTerrainEntity(0,0);
+    spawnEntityAt(newPlayer, pos, true, true);
+    Entity newPlayer2 = TerrainCropTileFactory.createTerrainEntity(1,0);
+    spawnEntityAt(newPlayer2, pos, true, true);
+    Entity newPlayer3 = TerrainCropTileFactory.createTerrainEntity(0,1);
+    spawnEntityAt(newPlayer3, pos, true, true);
+    return newPlayer;
   }
 
   private Entity spawnPlayer() {

@@ -3,14 +3,8 @@ package com.csse3200.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.files.UserSettings;
-import com.csse3200.game.screens.ControlsScreen;
-import com.csse3200.game.screens.MainGameScreen;
-import com.csse3200.game.screens.MainMenuScreen;
-import com.csse3200.game.screens.SettingsScreen;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.csse3200.game.screens.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -80,13 +74,15 @@ public class GdxGame extends Game {
         return new SettingsScreen(this);
       case CONTROLS:
         return new ControlsScreen(this);
+      case INTRO:
+        return new IntroScreen(this);
       default:
         return null;
     }
   }
 
   public enum ScreenType {
-    MAIN_MENU, MAIN_GAME, SETTINGS, CONTROLS
+    MAIN_MENU, MAIN_GAME, SETTINGS, CONTROLS, INTRO
   }
 
   /**

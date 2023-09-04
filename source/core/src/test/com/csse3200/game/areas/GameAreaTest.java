@@ -22,6 +22,14 @@ class GameAreaTest {
         new GameArea() {
           @Override
           public void create() {}
+
+            /**
+             * @return Returns the player in the game area
+             */
+            @Override
+            public Entity getPlayer() {
+                return null;
+            }
         };
 
     ServiceLocator.registerEntityService(new EntityService());
