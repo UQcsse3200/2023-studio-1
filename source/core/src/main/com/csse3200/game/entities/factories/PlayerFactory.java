@@ -10,6 +10,7 @@ import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.player.PlayerAnimationController;
 import com.csse3200.game.components.inventory.InventoryDisplay;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.input.InputComponent;
@@ -51,7 +52,7 @@ public class PlayerFactory {
     setupPlayerAnimator(animator);
 
     Entity player =
-        new Entity()
+        new Entity(EntityType.Player)
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))

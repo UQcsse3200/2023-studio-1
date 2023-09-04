@@ -14,6 +14,7 @@ import com.csse3200.game.components.tasks.FollowTask;
 import com.csse3200.game.components.tasks.RunAwayTask;
 import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.configs.BaseAnimalConfig;
 import com.csse3200.game.entities.configs.BaseEntityConfig;
 import com.csse3200.game.entities.configs.GhostKingConfig;
@@ -99,7 +100,7 @@ public class NPCFactory {
    * @return chicken entity
    */
   public static Entity createChicken(Entity player) {
-    Entity chicken = createBaseAnimal();
+    Entity chicken = createBaseAnimal(EntityType.Chicken);
     BaseAnimalConfig config = configs.chicken;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
@@ -133,7 +134,7 @@ public class NPCFactory {
    * @return cow entity
    */
   public static Entity createCow(Entity player) {
-    Entity cow = createBaseAnimal();
+    Entity cow = createBaseAnimal(EntityType.Cow);
     BaseAnimalConfig config = configs.cow;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
@@ -166,7 +167,7 @@ public class NPCFactory {
    * @return Astrolotl entity
    */
   public static Entity createAstrolotl(Entity player) {
-    Entity astrolotl = createBaseAnimal();
+    Entity astrolotl = createBaseAnimal(EntityType.Axolotl);
     BaseAnimalConfig config = configs.astrolotl;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
@@ -199,7 +200,7 @@ public class NPCFactory {
    *
    * @return entity
    */
-  private static Entity createBaseAnimal() {
+  private static Entity createBaseAnimal(EntityType type) {
     Entity animal = new Entity()
             .addComponent(new PhysicsComponent())
             .addComponent(new PhysicsMovementComponent())
