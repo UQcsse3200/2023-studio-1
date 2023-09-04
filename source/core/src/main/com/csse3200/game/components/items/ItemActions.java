@@ -7,6 +7,9 @@ import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.PlantFactory;
+
+import java.util.function.Function;
 
 import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
 
@@ -56,6 +59,10 @@ public class ItemActions extends Component {
       }
       case FERTILISER -> {
         resultStatus = fertilise(tile);
+        return resultStatus;
+      }
+      case SEED -> {
+        resultStatus = plant(tile, item);
         return resultStatus;
       }
       default -> {
@@ -184,6 +191,52 @@ public class ItemActions extends Component {
   private boolean fertilise(TerrainTile tile) {
     if (isCropTile(tile.getCropTile())) {
       tile.getCropTile().getEvents().trigger("fertilise");
+      return true;
+    }
+    return false;
+  }
+
+  private boolean plant(TerrainTile tile, Entity item) {
+    Function<CropTileComponent, Entity> plantFactoryMethod;
+    if (isCropTile(tile.getCropTile())) {
+        switch (item.getComponent(ItemComponent.class).getItemName()) {
+            case "aloe vera seed" -> {
+                plantFactoryMethod = PlantFactory::createAloeVera;
+                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
+            }
+            case "atomic algae seed" -> {
+                plantFactoryMethod = PlantFactory::createAtomicAlgae;
+                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
+            }
+            case "cosmic cob seed" -> {
+                plantFactoryMethod = PlantFactory::createCosmicCob;
+                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
+            }
+            case "deadly nightshade seed" -> {
+                plantFactoryMethod = PlantFactory::createDeadlyNightshade;
+                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
+            }
+            case "hammer plant seed" -> {
+                plantFactoryMethod = PlantFactory::createHammerPlant;
+                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
+            }
+            case "horticultural heater seed" -> {
+                plantFactoryMethod = PlantFactory::createHorticulturalHeater;
+                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
+            }
+            case "space snapper seed" -> {
+                plantFactoryMethod = PlantFactory::createVenusFlyTrap;
+                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
+            }
+            case "tobacco seed" -> {
+                plantFactoryMethod = PlantFactory::createNicotianaTabacum;
+                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
+            }
+            default -> {
+                System.out.println("Something went wrong");
+                throw new IllegalArgumentException("Explode");
+            }
+        }
       return true;
     }
     return false;
