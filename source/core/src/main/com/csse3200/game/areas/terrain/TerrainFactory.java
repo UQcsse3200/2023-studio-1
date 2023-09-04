@@ -275,7 +275,6 @@ public class TerrainFactory {
       } catch (Exception e) {
           System.out.println("fillTilesWithFile -> Testcase error!: " + e);
       }
-
   }
 
   /**

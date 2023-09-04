@@ -72,8 +72,8 @@ public class GameMapTest {
     }
 
     @Test
-    void testGetMapSize() {
-        assertEquals(new GridPoint2(10000,1000), gameMap.getMapSize());
+    void testGetInitialMapSize() {
+        assertEquals(new GridPoint2(1000,1000), gameMap.getMapSize());
     }
 
     @Test
