@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.EventHandler;
 
 /** the GameMap class is used to store and easily access and manage the components related to the game map */
@@ -169,6 +170,33 @@ public class GameMap {
     public boolean isTileTillable(int x, int y) {
         return this.getTile(x, y).isTillable();
     }
+
+    /**
+     * Returns a specified terrainTile's cropTile
+     * @param x x coordinate (0 -> MAP_SIZE.x -1)
+     * @param y y coordinate (0 -> MAP_SIZE.y -1)
+     * @return cropTile which occupies the terrainTile. Returns null if not occupied by cropTile
+     */
+    public Entity getTileCropTile(int x, int y) {
+        return this.getTile(x, y).getCropTile();
+    }
+
+    /**
+     * Places a cropTile on a specified TerrainTile replacing any cropTile that already occupied it
+     * @param cropTile cropTile that will occupy the terrainTile
+     * @param x x coordinate (0 -> MAP_SIZE.x -1)
+     * @param y y coordinate (0 -> MAP_SIZE.y -1)
+     */
+    public void setTileCropTile(Entity cropTile, int x, int y) {
+        this.getTile(x, y).setCropTile(cropTile);
+    }
+
+    /**
+     *  Removes the cropTile from the specified terrainTile
+     * @param x x coordinate (0 -> MAP_SIZE.x -1)
+     * @param y y coordinate (0 -> MAP_SIZE.y -1)
+     */
+    public void removeTileCropTile(int x, int y) {
+        this.getTile(x, y).setUnOccupied();
+    }
 }
-
-

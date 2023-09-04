@@ -256,7 +256,8 @@ public class TerrainTile implements TiledMapTile {
   }
 
   /**
-   * Sets the crop tile which occupies the terrain tile. Replaces any existing crop tile that was already occupying the terrain tile
+   * Sets the crop tile which occupies the terrain tile. Replaces any existing crop tile that was already occupying the
+   * terrain tile. Do not use to set cropTile as null, use removeCropTile instead.
    * @param cropTile new cropTile entity to occupy the terrainTile
    */
   public void setCropTile(Entity cropTile) {
