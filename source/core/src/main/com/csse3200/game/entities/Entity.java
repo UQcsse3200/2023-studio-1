@@ -302,7 +302,7 @@ public class Entity implements Json.Serializable {
 
   public void write(Json json) {
     // Should be gone but incase double check
-    if (getType() == EntityType.Item || getType() == EntityType.Player || getType() == null) {
+    if (getType() == EntityType.Item || getType() == null) {
       return;
     }
 

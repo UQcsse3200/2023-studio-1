@@ -182,7 +182,7 @@ public class InventoryComponent extends Component {
 
     for (Entity e : inventory) {
       e.writeItem(json); 
-      //e.write(json); //TODO: this could cause an infinite loop :)
+      //e.write(json); //TODO: this could cause an infinite loop :) <- should be fixed but needs counts
     }
 
     json.writeArrayEnd();

@@ -2,6 +2,7 @@ package com.csse3200.game.components.npc;
 
 import java.util.Random;
 
+import com.badlogic.gdx.utils.Json;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.entities.Entity;
@@ -118,5 +119,10 @@ public class TamableComponent extends Component {
             this.isTamed = true;
         }
         this.isTamed = false;
+    }
+
+    @Override
+    public void write (Json json) {
+        json.writeValue("tamed", isTamed());
     }
 }
