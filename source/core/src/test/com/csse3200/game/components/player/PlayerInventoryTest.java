@@ -22,11 +22,11 @@ public class PlayerInventoryTest {
     @BeforeEach
     void initialiseTest() {
         inventoryComponent = spy(new InventoryComponent(new ArrayList<>()));
-        player = new Entity()
+        player = new Entity(type)
                 .addComponent(inventoryComponent);
         player.create();
-        item1 = new Entity().addComponent(new ItemComponent("Hoe", ItemType.HOE, new Texture("images/tool_shovel.png")));
-        item2 = new Entity().addComponent(new ItemComponent("Scythe",ItemType.SCYTHE, new Texture("images/tool_shovel.png")));
+        item1 = new Entity(type).addComponent(new ItemComponent("Hoe", ItemType.HOE, new Texture("images/tool_shovel.png")));
+        item2 = new Entity(type).addComponent(new ItemComponent("Scythe",ItemType.SCYTHE, new Texture("images/tool_shovel.png")));
     }
 
     @Test

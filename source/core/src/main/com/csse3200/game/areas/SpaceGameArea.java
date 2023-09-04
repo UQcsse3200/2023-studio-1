@@ -10,6 +10,7 @@ import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
@@ -150,7 +151,7 @@ public class SpaceGameArea extends GameArea {
   }
 
   private void displayUI() {
-    Entity ui = new Entity();
+    Entity ui = new Entity(EntityType.UI);
     ui.addComponent(new GameAreaDisplay("Box Forest"));
     spawnEntity(ui);
   }
@@ -158,7 +159,7 @@ public class SpaceGameArea extends GameArea {
   private void spawnTerrain() {
     // Background terrain
     terrain = terrainFactory.createTerrain(this.gameMap.getTiledMap());
-    spawnEntity(new Entity().addComponent(terrain));                  // Will need to monitor this when changing the createTerrain function
+    spawnEntity(new Entity(EntityType.Terrain).addComponent(terrain));                  // Will need to monitor this when changing the createTerrain function
 
     // Terrain walls
     float tileSize = terrain.getTileSize();

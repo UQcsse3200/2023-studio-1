@@ -2,6 +2,7 @@ package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
@@ -21,7 +22,7 @@ public class ObstacleFactory {
    */
   public static Entity createTree() {
     Entity tree =
-        new Entity()
+        new Entity(EntityType.ToDelete)
             .addComponent(new TextureRenderComponent("images/tree.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
@@ -40,7 +41,7 @@ public class ObstacleFactory {
    * @return Wall entity of given width and height
    */
   public static Entity createWall(float width, float height) {
-    Entity wall = new Entity()
+    Entity wall = new Entity(EntityType.Wall)
         .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
     wall.setScale(width, height);

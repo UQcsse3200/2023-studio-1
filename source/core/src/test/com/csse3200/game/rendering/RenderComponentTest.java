@@ -50,8 +50,8 @@ class RenderComponentTest {
     RenderComponent component2 = spy(RenderComponent.class);
     assertEquals(component1.getLayer(), component2.getLayer());
 
-    Entity entity1 = new Entity();
-    Entity entity2 = new Entity();
+    Entity entity1 = new Entity(type);
+    Entity entity2 = new Entity(type);
     component1.setEntity(entity1);
     component2.setEntity(entity2);
 

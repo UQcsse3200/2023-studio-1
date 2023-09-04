@@ -30,7 +30,7 @@ public class TimedTaskTest {
         ServiceLocator.registerTimeSource(gameTime);
         ServiceLocator.registerPhysicsService(new PhysicsService());
 
-        entity = new Entity();
+        entity = new Entity(type);
     }
 
     @Test

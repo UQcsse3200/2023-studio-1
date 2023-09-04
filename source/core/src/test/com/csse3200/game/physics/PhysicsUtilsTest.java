@@ -24,7 +24,7 @@ class PhysicsUtilsTest {
     ServiceLocator.registerPhysicsService(new PhysicsService());
 
     entity =
-        new Entity().addComponent(new ColliderComponent()).addComponent(new PhysicsComponent());
+        new Entity(type).addComponent(new ColliderComponent()).addComponent(new PhysicsComponent());
   }
 
   @Test

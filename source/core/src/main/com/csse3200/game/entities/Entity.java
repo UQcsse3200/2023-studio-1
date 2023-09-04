@@ -30,6 +30,7 @@ public class Entity {
   private static final String EVT_NAME_POS = "setPosition";
 
   private final int id;
+  private final EntityType type;
   private final IntMap<Component> components;
   private final EventHandler eventHandler;
   private boolean enabled = true;
@@ -38,7 +39,8 @@ public class Entity {
   private Vector2 scale = new Vector2(1, 1);
   private Array<Component> createdComponents;
 
-  public Entity() {
+  public Entity(EntityType type) {
+    this.type = type;
     id = nextId;
     nextId++;
 

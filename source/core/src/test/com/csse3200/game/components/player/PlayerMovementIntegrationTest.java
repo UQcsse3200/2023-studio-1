@@ -46,7 +46,7 @@ public class PlayerMovementIntegrationTest {
 
         PlayerFactory.setupPlayerAnimator(animator);
 
-        player = new Entity()
+        player = new Entity(type)
                 .addComponent(new PhysicsComponent())
                 .addComponent(new PlayerActions())
                 .addComponent(animator)

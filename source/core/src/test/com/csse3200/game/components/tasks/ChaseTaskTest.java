@@ -35,7 +35,7 @@ class ChaseTaskTest {
 
   @Test
   void shouldMoveTowardsTarget() {
-    Entity target = new Entity();
+    Entity target = new Entity(type);
     target.setPosition(2f, 2f);
 
     AITaskComponent ai = new AITaskComponent().addTask(new ChaseTask(target, 10, 5, 10));
@@ -56,7 +56,7 @@ class ChaseTaskTest {
 
   @Test
   void shouldChaseOnlyWhenInDistance() {
-    Entity target = new Entity();
+    Entity target = new Entity(type);
     target.setPosition(0f, 6f);
 
     Entity entity = makePhysicsEntity();
@@ -84,7 +84,7 @@ class ChaseTaskTest {
   }
 
   private Entity makePhysicsEntity() {
-    return new Entity()
+    return new Entity(type)
         .addComponent(new PhysicsComponent())
         .addComponent(new PhysicsMovementComponent());
   }

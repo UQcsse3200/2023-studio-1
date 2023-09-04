@@ -2,7 +2,6 @@ package com.csse3200.game.components.tasks;
 
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
-import com.csse3200.game.components.tasks.PanicTask;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.listeners.EventListener0;
 import com.csse3200.game.extensions.GameExtension;
@@ -40,7 +39,7 @@ public class PanicTaskTest {
         panicTask = new PanicTask("panicTrigger", 1f, 10, new Vector2(1f, 1f), new Vector2(2f, 2f));
         AITaskComponent aiTaskComponent = new AITaskComponent().addTask(panicTask);
         movementComponent = spy(new PhysicsMovementComponent());
-        entity = new Entity()
+        entity = new Entity(type)
                 .addComponent(new PhysicsComponent())
                 .addComponent(aiTaskComponent)
                 .addComponent(movementComponent);

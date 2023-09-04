@@ -41,7 +41,7 @@ class MovementTaskTest {
   void shouldMoveOnStart() {
     Vector2 target = new Vector2(10f, 10f);
     MovementTask task = new MovementTask(target);
-    Entity entity = new Entity().addComponent(new PhysicsComponent());
+    Entity entity = new Entity(type).addComponent(new PhysicsComponent());
     PhysicsMovementComponent movementComponent = new PhysicsMovementComponent();
     entity.addComponent(movementComponent);
     entity.create();
@@ -56,7 +56,7 @@ class MovementTaskTest {
   @Test
   void shouldStopWhenClose() {
     MovementTask task = new MovementTask(new Vector2(10f, 10f), 2f);
-    Entity entity = new Entity().addComponent(new PhysicsComponent());
+    Entity entity = new Entity(type).addComponent(new PhysicsComponent());
     PhysicsMovementComponent movementComponent = new PhysicsMovementComponent();
     entity.addComponent(movementComponent);
     entity.setPosition(5f, 5f);
@@ -80,7 +80,7 @@ class MovementTaskTest {
     int framesElapsed2 = 0;
 
     MovementTask task = new MovementTask(new Vector2(1f, 1f));
-    Entity entity = new Entity().addComponent(new PhysicsComponent());
+    Entity entity = new Entity(type).addComponent(new PhysicsComponent());
     PhysicsMovementComponent movementComponent = new PhysicsMovementComponent();
     entity.addComponent(movementComponent);
     entity.create();
@@ -121,7 +121,7 @@ class MovementTaskTest {
   void shouldTriggerChangeDirection() {
     // create movement task to right of entity
     MovementTask task = new MovementTask(new Vector2(10f, 10f));
-    Entity entity = new Entity().addComponent(new PhysicsMovementComponent());
+    Entity entity = new Entity(type).addComponent(new PhysicsMovementComponent());
 
     entity.setPosition(5f, 5f);
     entity.create();
@@ -145,7 +145,7 @@ class MovementTaskTest {
   @Test
   void shouldStop() {
     MovementTask task = new MovementTask(new Vector2(10f, 10f), new Vector2(2f, 2f));
-    Entity entity = new Entity()
+    Entity entity = new Entity(type)
             .addComponent(new PhysicsComponent());
 
     PhysicsMovementComponent movementComponent = spy(new PhysicsMovementComponent());
@@ -168,7 +168,7 @@ class MovementTaskTest {
   void checkEntityStuck() {
     // set speed to 0 to ensure entity is stuck
     MovementTask task = new MovementTask(new Vector2(1f, 1f), new Vector2(0f,0f));
-    Entity entity = new Entity().addComponent(new PhysicsComponent());
+    Entity entity = new Entity(type).addComponent(new PhysicsComponent());
     PhysicsMovementComponent movementComponent = new PhysicsMovementComponent();
     entity.addComponent(movementComponent);
     entity.create();

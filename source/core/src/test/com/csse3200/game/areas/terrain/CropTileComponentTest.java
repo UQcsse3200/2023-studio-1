@@ -3,7 +3,6 @@ package com.csse3200.game.areas.terrain;
 import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.services.GameTime;
@@ -24,13 +23,13 @@ public class CropTileComponentTest {
     private Entity cropTile1, cropTile2, cropTile3, cropTile4, cropTile5, cropTile6, cropTile7;
     @BeforeEach
     public void init() {
-        cropTile1 = new Entity().addComponent(new CropTileComponent(1f, 0.5f));
-        cropTile2 = new Entity().addComponent(new CropTileComponent(0.5f, 0.5f));
-        cropTile3 = new Entity().addComponent(new CropTileComponent(1f, 1.0f));
-        cropTile4 = new Entity().addComponent(new CropTileComponent(0f, 1.0f));
-        cropTile5 = new Entity().addComponent(new CropTileComponent(1f, 0.0f));
-        cropTile6 = new Entity().addComponent(new CropTileComponent(2.5f, 0.5f));
-        cropTile7 = new Entity().addComponent(new CropTileComponent(-1.0f, 0.5f));
+        cropTile1 = new Entity(type).addComponent(new CropTileComponent(1f, 0.5f));
+        cropTile2 = new Entity(type).addComponent(new CropTileComponent(0.5f, 0.5f));
+        cropTile3 = new Entity(type).addComponent(new CropTileComponent(1f, 1.0f));
+        cropTile4 = new Entity(type).addComponent(new CropTileComponent(0f, 1.0f));
+        cropTile5 = new Entity(type).addComponent(new CropTileComponent(1f, 0.0f));
+        cropTile6 = new Entity(type).addComponent(new CropTileComponent(2.5f, 0.5f));
+        cropTile7 = new Entity(type).addComponent(new CropTileComponent(-1.0f, 0.5f));
         cropTile1.create();
         cropTile2.create();
         cropTile3.create();
@@ -65,7 +64,7 @@ public class CropTileComponentTest {
         assertEquals(1.0, cropTile4.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
         cropTile4.getEvents().trigger("water", 0.5f);
         assertEquals(0.55387, cropTile4.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
-        Entity dryTile = new Entity().addComponent(new CropTileComponent(0.0f, 1.0f));
+        Entity dryTile = new Entity(type).addComponent(new CropTileComponent(0.0f, 1.0f));
         dryTile.create();
         dryTile.getEvents().trigger("water", 1.0f);
         assertEquals(1.0, dryTile.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
@@ -101,13 +100,13 @@ public class CropTileComponentTest {
     @Test
     public void testUpdate() {
         DynamicTextureRenderComponent dynamock = mock(DynamicTextureRenderComponent.class);
-        cropTile1 = new Entity().addComponent(new CropTileComponent(1f, 0.5f)).addComponent(dynamock);
-        cropTile2 = new Entity().addComponent(new CropTileComponent(0.5f, 0.5f)).addComponent(dynamock);
-        cropTile3 = new Entity().addComponent(new CropTileComponent(1f, 1.0f)).addComponent(dynamock);
-        cropTile4 = new Entity().addComponent(new CropTileComponent(0f, 1.0f)).addComponent(dynamock);
-        cropTile5 = new Entity().addComponent(new CropTileComponent(1f, 0.0f)).addComponent(dynamock);
-        cropTile6 = new Entity().addComponent(new CropTileComponent(2.5f, 0.5f)).addComponent(dynamock);
-        cropTile7 = new Entity().addComponent(new CropTileComponent(-1.0f, 0.5f)).addComponent(dynamock);
+        cropTile1 = new Entity(type).addComponent(new CropTileComponent(1f, 0.5f)).addComponent(dynamock);
+        cropTile2 = new Entity(type).addComponent(new CropTileComponent(0.5f, 0.5f)).addComponent(dynamock);
+        cropTile3 = new Entity(type).addComponent(new CropTileComponent(1f, 1.0f)).addComponent(dynamock);
+        cropTile4 = new Entity(type).addComponent(new CropTileComponent(0f, 1.0f)).addComponent(dynamock);
+        cropTile5 = new Entity(type).addComponent(new CropTileComponent(1f, 0.0f)).addComponent(dynamock);
+        cropTile6 = new Entity(type).addComponent(new CropTileComponent(2.5f, 0.5f)).addComponent(dynamock);
+        cropTile7 = new Entity(type).addComponent(new CropTileComponent(-1.0f, 0.5f)).addComponent(dynamock);
         cropTile1.create();
         cropTile2.create();
         cropTile3.create();
@@ -211,7 +210,7 @@ public class CropTileComponentTest {
     public void testDestroyTile() {
         EntityService mockEntityService = mock(EntityService.class);
         ServiceLocator.registerEntityService(mockEntityService);
-        Entity plant = new Entity().addComponent(new PlantComponent(
+        Entity plant = new Entity(type).addComponent(new PlantComponent(
                 1, "name", "type", "desc", 1, 7, 1, cropTile1.getComponent(CropTileComponent.class)));
         Function<CropTileComponent, Entity> plantFactoryMethod = cropTileComponent -> plant;
         cropTile1.getEvents().trigger("plant", plantFactoryMethod);

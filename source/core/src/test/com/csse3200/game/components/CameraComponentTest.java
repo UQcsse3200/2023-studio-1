@@ -25,13 +25,13 @@ public class CameraComponentTest {
     void beforeEach() {
         ServiceLocator.registerPhysicsService(new PhysicsService());
 
-        camEntity = new Entity().addComponent(new CameraComponent());
+        camEntity = new Entity(type).addComponent(new CameraComponent());
         cameraComponent = camEntity.getComponent(CameraComponent.class);
         camera = cameraComponent.getCamera();
 
-        entity = new Entity();
+        entity = new Entity(type);
         entity.setScale(1f, 1f); // default scale, added for clarity
-        entityWithPhysics = new Entity().addComponent(new PhysicsComponent());
+        entityWithPhysics = new Entity(type).addComponent(new PhysicsComponent());
         entity.setScale(1f, 1f);
     }
 

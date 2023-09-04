@@ -48,7 +48,7 @@ public class PlayerAnimationControllerTest {
 
         PlayerFactory.setupPlayerAnimator(animationRenderComponent);
 
-        player = new Entity()
+        player = new Entity(type)
                 .addComponent(animationRenderComponent)
                 .addComponent(new PlayerAnimationController());
 

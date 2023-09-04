@@ -74,7 +74,7 @@ class AnimationRenderComponentTest {
 
     // Start animation
     AnimationRenderComponent animator = new AnimationRenderComponent(atlas);
-    Entity entity = new Entity();
+    Entity entity = new Entity(type);
     animator.setEntity(entity);
     animator.addAnimation(animName, frameTime);
     animator.startAnimation(animName);
@@ -102,7 +102,7 @@ class AnimationRenderComponentTest {
     when(gameTime.getDeltaTime()).thenReturn(1f);
 
     AnimationRenderComponent animator = new AnimationRenderComponent(atlas);
-    Entity entity = new Entity();
+    Entity entity = new Entity(type);
     animator.setEntity(entity);
     animator.addAnimation("test_name", 1f);
     assertFalse(animator.isFinished());

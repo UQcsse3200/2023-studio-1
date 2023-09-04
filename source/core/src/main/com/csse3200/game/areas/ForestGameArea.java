@@ -8,6 +8,7 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
@@ -112,7 +113,7 @@ public class ForestGameArea extends GameArea {
   }
 
   private void displayUI() {
-    Entity ui = new Entity();
+    Entity ui = new Entity(EntityType.UI);
     // Added the name of the game
     ui.addComponent(new GameAreaDisplay("Gardens of the Galaxy"));
     spawnEntity(ui);
@@ -122,7 +123,7 @@ public class ForestGameArea extends GameArea {
     // Background terrain
     terrain = terrainFactory.createTerrain(new TiledMap()); // Added new TiledMap to prevent error, WILL NOT WORK IF YOU RUN ForestGameArea, run SpaceGameArea instead
     // terrain = terrainFactory.createTerrain(TerrainType.FOREST_DEMO);
-    spawnEntity(new Entity().addComponent(terrain));
+    spawnEntity(new Entity(EntityType.Terrain).addComponent(terrain));
 
     // Terrain walls
     float tileSize = terrain.getTileSize();

@@ -4,22 +4,17 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.extensions.GameExtension;
-import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
-import com.csse3200.game.physics.raycast.RaycastHit;
 import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.rendering.RenderService;
-import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -46,7 +41,7 @@ class RunAwayTaskTest {
 
   @Test
   void shouldMoveAwayFromTarget() {
-    Entity target = new Entity();
+    Entity target = new Entity(type);
     target.setPosition(2f, 2f);
 
     Vector2 speed = new Vector2(3f, 3f);
@@ -68,7 +63,7 @@ class RunAwayTaskTest {
 
   @Test
   void shouldMoveAwayOnlyWhenInDistance() {
-    Entity target = new Entity();
+    Entity target = new Entity(type);
     target.setPosition(0f, 6f);
 
     Entity entity = makePhysicsEntity();
@@ -98,7 +93,7 @@ class RunAwayTaskTest {
 
   @Test
   void shouldRunWhenTargetIsVisible() {
-    Entity target = new Entity();
+    Entity target = new Entity(type);
     target.setPosition(0f, 8f);
 
     Entity entity = makePhysicsEntity();
@@ -123,7 +118,7 @@ class RunAwayTaskTest {
 
   @Test
   void runAwayChangesEntitySpeed() {
-    Entity target = new Entity();
+    Entity target = new Entity(type);
     target.setPosition(0f, 8f);
 
     Entity entity = makePhysicsEntity();
@@ -142,7 +137,7 @@ class RunAwayTaskTest {
 
   @Test
   void entityStopsChase() {
-    Entity target = new Entity();
+    Entity target = new Entity(type);
     target.setPosition(0f, 0f);
 
     Vector2 speed = new Vector2(3f, 3f);
@@ -174,7 +169,7 @@ class RunAwayTaskTest {
   }
 
   private Entity makePhysicsEntity() {
-    return new Entity()
+    return new Entity(type)
         .addComponent(new PhysicsComponent())
         .addComponent(new PhysicsMovementComponent());
   }
