@@ -20,17 +20,21 @@ public class PlantComponent extends Component {
 
     /** The crop tile on which this plant is planted on. */
     private CropTileComponent cropTile;
-    private int[] growthStageThresholds = {11, 21, 41}; // Default values.
-                                                        // Sprout, juvenile, adult. These thresholds determine when a
-                                                        // plant advances to the next growth stage
+    private int[] growthStageThresholds = {0, 0, 0}; // Sprout, juvenile, adult. Initialised to zero and given values
+                                        // in the constructor. These thresholds determine when a plant advances to the
+                                        // next growth stage
 
     /**
      * Constructor used for plant types that have no extra properties.
      *
-     * @param health             health of the plant
-     * @param name               name of the plant
-     * @param plantType          type of the plant
-     * @param plantDescription   description of the plant
+     * @param health - health of the plant
+     * @param name - name of the plant
+     * @param plantType - type of the plant
+     * @param plantDescription - description of the plant
+     * @param idealWaterLevel - The ideal water level for a plant
+     * @param adultLifeSpan - How long a plant will live for once it becomes an adult
+     * @param maxHealth - The maximum health a plant can achieve
+     * @param cropTile - The cropTileComponent where the plant will be located.
      */
     public PlantComponent(int health, String name, String plantType, String plantDescription,
                           float idealWaterLevel, int adultLifeSpan, int maxHealth,
@@ -47,6 +51,42 @@ public class PlantComponent extends Component {
         this.growthStage = 1;
         this.decay = false;
         this.currentGrowthLevel = 0;
+        this.growthStageThresholds[0] = 11;
+        this.growthStageThresholds[1] = 21;
+        this.growthStageThresholds[2] = 41;
+    }
+
+    /**
+     * Constructor used for plant types that have growthStageThresholds different from the default values.
+     *
+     * @param health - health of the plant
+     * @param name - name of the plant
+     * @param plantType - type of the plant
+     * @param plantDescription - description of the plant
+     * @param idealWaterLevel - The ideal water level for a plant
+     * @param adultLifeSpan - How long a plant will live for once it becomes an adult
+     * @param maxHealth - The maximum health a plant can achieve
+     * @param cropTile - The cropTileComponent where the plant will be located.
+     * @param growthStageThresholds - A list of three integers that represent the growth thresholds.
+     */
+    public PlantComponent(int health, String name, String plantType, String plantDescription,
+                          float idealWaterLevel, int adultLifeSpan, int maxHealth,
+                          CropTileComponent cropTile, int[] growthStageThresholds) {
+        this.plantHealth = health;
+        this.plantName = name;
+        this.plantType = plantType;
+        this.plantDescription = plantDescription;
+        this.idealWaterLevel = idealWaterLevel;
+        this.adultLifeSpan = adultLifeSpan;
+        this.maxHealth = maxHealth;
+        this.cropTile = cropTile;
+        this.currentAge = 0;
+        this.growthStage = 1;
+        this.decay = false;
+        this.currentGrowthLevel = 0;
+        this.growthStageThresholds[0] = growthStageThresholds[0];
+        this.growthStageThresholds[1] = growthStageThresholds[1];
+        this.growthStageThresholds[2] = growthStageThresholds[2];
     }
 
     /**
@@ -267,20 +307,5 @@ public class PlantComponent extends Component {
     private void destroyPlant() {
         cropTile.setUnoccupied();
         entity.dispose();
-    }
-
-    /**
-     * Override the default growth stage thresholds. This allows different plants to have unique growth
-     * times. Whem the currentGrowthLevel of a plant exceeds the corresponding growth threshold, then the
-     * current growth stage of the plant is increased.
-     * This method should be called when a new plant is created in the PlantFactory.
-     * @param sproutThresh - Threshold for a plant to become a sprout.
-     * @param juvenileThresh - Threshold for a plant to become a juvenile.
-     * @param adultThresh Threshold for a plant to become an adult
-     */
-    public void setGrowthStageThresholds(int sproutThresh, int juvenileThresh, int adultThresh) {
-        this.growthStageThresholds[0] = sproutThresh;
-        this.growthStageThresholds[1] = juvenileThresh;
-        this.growthStageThresholds[2] = adultThresh;
     }
 }
