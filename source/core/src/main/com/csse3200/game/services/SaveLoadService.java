@@ -27,7 +27,7 @@ public class SaveLoadService {
 
     // Write the state to a file
     SaveGame.set(state);
-    
+
     System.out.println("save!");
   }
 
@@ -40,6 +40,26 @@ public class SaveLoadService {
       return;
     }
 
+    updateGame(state);
     System.out.println("load!");
+  }
+
+  private void updateGame(GameState state) {
+    updatePlayer(state);
+    updateNPCs(state);
+    updateTime(state);
+  }
+
+  private void updatePlayer(GameState state) {
+
+  }
+
+  private void updateNPCs(GameState state) {
+
+  }
+
+  private void updateTime(GameState state) {
+    ServiceLocator.getTimeService().setDay(state.getDay());
+    ServiceLocator.getTimeService().setHour(state.getHour());
   }
 }
