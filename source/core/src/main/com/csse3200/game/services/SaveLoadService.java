@@ -2,6 +2,8 @@ package com.csse3200.game.services;
 
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.files.SaveGame;
 import com.csse3200.game.files.SaveGame.GameState;
 
@@ -47,8 +49,8 @@ public class SaveLoadService {
   }
 
   private void updateGame(GameState state) {
-    updatePlayer(state);
     updateNPCs(state);
+    updatePlayer(state);
     updateTime(state);
   }
 
@@ -60,7 +62,14 @@ public class SaveLoadService {
   }
 
   private void updateNPCs(GameState state) {
-
+    EntityService entityService = ServiceLocator.getEntityService();
+    entityService.disposeNPCs();
+    for (Entity entity : state.getEntities()) {
+      if (entity.getType() == EntityType.Cow) {
+        //TODO foundCow need to make cow via factory
+        //entityService.register(entity);
+      }
+    }
   }
 
   private void updateTime(GameState state) {

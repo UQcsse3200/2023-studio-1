@@ -55,6 +55,14 @@ public class EntityService {
     }
   }
 
+  public void disposeNPCs() {
+    for (Entity entity : entities) {
+      if (entity.getType() == EntityType.Cow){
+        entity.dispose();
+      }
+    }
+  }
+
   /**
    * Returns Array<Entity> of all entities in game
    * @return Array of entities in game

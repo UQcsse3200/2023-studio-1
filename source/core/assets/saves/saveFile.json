@@ -1,221 +1,192 @@
 {
 hour: 4
 player: {
-	name: "Entity{id=20}"
 	Entity: Player
+	x: 8.965386
+	y: 7.0697985
+	components: {
+		inventory: [
+			hoe
+			shovel
+			watering can
+			scythe
+		]
+	}
 }
 entities: [
 	{
-		name: "Entity{id=44}"
 		Entity: Axolotl
-		Entity: Axolotl
-		x: 43.351357
-		y: 40.077045
-		components: {}
+		x: 7.6757545
+		y: 27.200481
+		components: {
+			tamed: false
+		}
 	}
 	{
-		name: "Entity{id=43}"
 		Entity: Cow
-		Entity: Cow
-		x: 40.108444
-		y: 36.265007
-		components: {}
+		x: 36.208652
+		y: 30.507614
+		components: {
+			tamed: false
+		}
 	}
 	{
-		name: "Entity{id=42}"
 		Entity: Cow
-		Entity: Cow
-		x: 45.141197
-		y: 1.642989
-		components: {}
+		x: 7.5649652
+		y: 9.275342
+		components: {
+			tamed: false
+		}
 	}
 	{
-		name: "Entity{id=41}"
 		Entity: Cow
-		Entity: Cow
-		x: 14.333599
-		y: 29.537327
-		components: {}
+		x: 19.05728
+		y: 5.6982274
+		components: {
+			tamed: false
+		}
 	}
 	{
-		name: "Entity{id=40}"
 		Entity: Cow
-		Entity: Cow
-		x: 14.443475
-		y: 0.6226867
-		components: {}
+		x: 9.068179
+		y: 32.24735
+		components: {
+			tamed: false
+		}
 	}
 	{
-		name: "Entity{id=39}"
 		Entity: Cow
-		Entity: Cow
-		x: 4.424044
-		y: 33.548534
-		components: {}
+		x: 43.979477
+		y: 5.4869275
+		components: {
+			tamed: false
+		}
 	}
 	{
-		name: "Entity{id=38}"
 		Entity: Cow
+		x: 18.943563
+		y: 40.20639
+		components: {
+			tamed: false
+		}
+	}
+	{
 		Entity: Cow
-		x: 16.043568
-		y: 32.403416
-		components: {}
+		x: 17.626251
+		y: 47.649887
+		components: {
+			tamed: false
+		}
 	}
 	{
-		name: "Entity{id=37}"
 		Entity: Cow
+		x: 31.112741
+		y: 13.070587
+		components: {
+			tamed: false
+		}
+	}
+	{
 		Entity: Cow
-		x: 38.261986
-		y: 46.12861
-		components: {}
+		x: 3.209011
+		y: 7.9206963
+		components: {
+			tamed: false
+		}
 	}
 	{
-		name: "Entity{id=10}"
-		Entity: Tile
-		Entity: Tile
-		components: {}
-	}
-	{
-		name: "Entity{id=10}"
-		Entity: Tile
-		Entity: Tile
-		components: {}
-	}
-	{
-		name: "Entity{id=11}"
-		Entity: Tile
-		Entity: Tile
-		components: {}
-	}
-	{
-		name: "Entity{id=11}"
-		Entity: Tile
-		Entity: Tile
-		components: {}
-	}
-	{
-		name: "Entity{id=12}"
-		Entity: Tile
-		Entity: Tile
-		components: {}
-	}
-	{
-		name: "Entity{id=12}"
-		Entity: Tile
-		Entity: Tile
-		components: {}
-	}
-	{
-		name: "Entity{id=36}"
 		Entity: Cow
-		Entity: Cow
-		x: 46.395035
-		y: 3.4770339
-		components: {}
+		x: 21.457882
+		y: 18.136974
+		components: {
+			tamed: false
+		}
 	}
 	{
-		name: "Entity{id=35}"
-		Entity: Cow
-		Entity: Cow
-		x: 8.743021
-		y: 26.586903
-		components: {}
-	}
-	{
-		name: "Entity{id=34}"
-		Entity: Cow
-		Entity: Cow
-		x: 47.578014
-		y: 43.239307
-		components: {}
-	}
-	{
-		name: "Entity{id=33}"
 		Entity: Chicken
-		Entity: Chicken
-		x: 20.029541
-		y: 13.837771
-		components: {}
+		x: 43.78149
+		y: 28.083946
+		components: {
+			tamed: false
+		}
 	}
 	{
-		name: "Entity{id=32}"
 		Entity: Chicken
-		Entity: Chicken
-		x: 12.404554
-		y: 42.022007
-		components: {}
+		x: 37.061306
+		y: 10.585002
+		components: {
+			tamed: false
+		}
 	}
 	{
-		name: "Entity{id=31}"
 		Entity: Chicken
-		Entity: Chicken
-		x: 47.210968
-		y: 24.450287
-		components: {}
+		x: 17.516563
+		y: 36.115944
+		components: {
+			tamed: false
+		}
 	}
 	{
-		name: "Entity{id=30}"
 		Entity: Chicken
-		Entity: Chicken
-		x: 31.302048
-		y: 25.180202
-		components: {}
+		x: 33.361828
+		y: 30.718252
+		components: {
+			tamed: false
+		}
 	}
 	{
-		name: "Entity{id=29}"
 		Entity: Chicken
-		Entity: Chicken
-		x: 46.745605
-		y: 49.095627
-		components: {}
+		x: 25.954977
+		y: 38.201836
+		components: {
+			tamed: false
+		}
 	}
 	{
-		name: "Entity{id=23}"
-		Entity: Tractor
 		Entity: Tractor
 		x: 3.202381
 		y: 3.9232666
 		components: {}
 	}
 	{
-		name: "Entity{id=24}"
 		Entity: Chicken
-		Entity: Chicken
-		x: 23.050138
-		y: 14.931694
-		components: {}
+		x: 1.5058237
+		y: 41.278778
+		components: {
+			tamed: false
+		}
 	}
 	{
-		name: "Entity{id=25}"
 		Entity: Chicken
-		Entity: Chicken
-		x: 20.354818
-		y: 33.916912
-		components: {}
+		x: 1.7294576
+		y: 30.09506
+		components: {
+			tamed: false
+		}
 	}
 	{
-		name: "Entity{id=26}"
 		Entity: Chicken
-		Entity: Chicken
-		x: 15.019387
-		y: 9.11679
-		components: {}
+		x: 22.1011
+		y: 3.6061113
+		components: {
+			tamed: false
+		}
 	}
 	{
-		name: "Entity{id=27}"
 		Entity: Chicken
-		Entity: Chicken
-		x: 0.015000005
-		y: 5.3410864
-		components: {}
+		x: 42.877815
+		y: 43.176098
+		components: {
+			tamed: false
+		}
 	}
 	{
-		name: "Entity{id=28}"
 		Entity: Chicken
-		Entity: Chicken
-		x: 15.859929
-		y: 19.37952
-		components: {}
+		x: 20.128103
+		y: 7.70952
+		components: {
+			tamed: false
+		}
 	}
 ]
 }

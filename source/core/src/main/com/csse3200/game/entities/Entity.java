@@ -38,7 +38,7 @@ public class Entity implements Json.Serializable {
   private static final String EVT_NAME_POS = "setPosition";
 
   private final int id;
-  private final EntityType type;
+  private EntityType type;
   private final IntMap<Component> components;
   private final EventHandler eventHandler;
   private boolean enabled = true;
@@ -336,9 +336,12 @@ public class Entity implements Json.Serializable {
   public void read(Json json, JsonValue jsonMap) {
 
     position = new Vector2(jsonMap.getFloat("x"), jsonMap.getFloat("y"));
-    // for (JsonValue c: jsonMap.get("components")) {
-    //   //System.out.println(c.get("class")).getClass());
-    // }
+    String value = jsonMap.getString("Entity");
+    try {
+      type = EntityType.valueOf(value);
+    } catch (IllegalArgumentException e) {
+      type = null;
+    }
   }
 
 
