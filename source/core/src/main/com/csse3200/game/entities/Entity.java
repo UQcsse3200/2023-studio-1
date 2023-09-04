@@ -306,14 +306,10 @@ public class Entity implements Json.Serializable {
 
   public void read(Json json, JsonValue jsonMap) {
 
-    // System.out.println(jsonMap);
-    
-    // position = new Vector2(jsonMap.getFloat("x"), jsonMap.getFloat("y"));
+    position = new Vector2(jsonMap.getFloat("x"), jsonMap.getFloat("y"));
     
     // for (JsonValue c: jsonMap.get("components")) {
     //   //System.out.println(c.get("class")).getClass());
     // }
-
-
   }
 }

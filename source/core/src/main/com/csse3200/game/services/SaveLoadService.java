@@ -1,5 +1,6 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.files.SaveGame;
 import com.csse3200.game.files.SaveGame.GameState;
 
@@ -51,7 +52,9 @@ public class SaveLoadService {
   }
 
   private void updatePlayer(GameState state) {
-
+    Entity currentPlayer = ServiceLocator.getGameArea().getPlayer();
+    System.out.println(state.getPlayer().getPosition());
+    currentPlayer.setPosition(state.getPlayer().getPosition());
   }
 
   private void updateNPCs(GameState state) {
