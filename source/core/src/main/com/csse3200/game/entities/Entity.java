@@ -34,6 +34,7 @@ public class Entity implements Json.Serializable {
   private static final String EVT_NAME_POS = "setPosition";
 
   private final int id;
+  private final EntityType type;
   private final IntMap<Component> components;
   private final EventHandler eventHandler;
   private boolean enabled = true;
@@ -42,7 +43,17 @@ public class Entity implements Json.Serializable {
   private Vector2 scale = new Vector2(1, 1);
   private Array<Component> createdComponents;
 
-  public Entity() {
+    public Entity() {
+    this.type = null;
+    id = nextId;
+    nextId++;
+
+    components = new IntMap<>(4);
+    eventHandler = new EventHandler();
+  }
+
+  public Entity(EntityType type) {
+    this.type = type;
     id = nextId;
     nextId++;
 
@@ -310,5 +321,10 @@ public class Entity implements Json.Serializable {
     // for (JsonValue c: jsonMap.get("components")) {
     //   //System.out.println(c.get("class")).getClass());
     // }
+  }
+
+
+  public EntityType getType() {
+    return type;
   }
 }
