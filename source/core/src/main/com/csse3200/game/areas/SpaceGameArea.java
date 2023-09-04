@@ -87,7 +87,8 @@ public class SpaceGameArea extends GameArea {
           "images/snow_3.png",
           "images/stone_1.png",
           "images/stonePath_1.png",
-          "images/tractor.png"
+          "images/tractor.png",
+          "images/fertiliser.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
@@ -139,6 +140,7 @@ public class SpaceGameArea extends GameArea {
     spawnTool(ItemType.SHOVEL);
     spawnTool(ItemType.SCYTHE);
     spawnTool(ItemType.HOE);
+    spawnTool(ItemType.FERTILISER);
 
     //spawnGhosts();
     //spawnGhostKing();
@@ -236,6 +238,10 @@ public class SpaceGameArea extends GameArea {
         break;
       case WATERING_CAN:
         newTool = ItemFactory.createWateringcan();
+        spawnEntityAt(newTool, randomPos, true, true);
+        break;
+      case FERTILISER:
+        newTool = ItemFactory.createFertiliser();
         spawnEntityAt(newTool, randomPos, true, true);
         break;
     }

@@ -74,4 +74,15 @@ public class ItemFactory {
         .addComponent(new ItemComponent("watering can", ItemType.SCYTHE, new Texture("images/tool_scythe.png")));
     return scythe;
   }
+
+  public static Entity createFertiliser() {
+    Entity fertiliser = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/fertiliser.png"))
+            .addComponent(new ItemComponent("fertiliser", ItemType.FERTILISER, new Texture("images/fertiliser.png")));
+    return fertiliser;
+  }
+
+  public static Entity createSeed() {
+    return null;
+  }
 }
