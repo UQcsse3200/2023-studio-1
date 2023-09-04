@@ -27,7 +27,8 @@ public class TerrainFactory {
   private static GridPoint2 MAP_SIZE = new GridPoint2(10000, 1000); // this will be updated
   private static final int TUFT_TILE_COUNT = 30;
   private static final int GRASS1_TILE_COUNT = 30;
-  private static final String filePath = "configs/Map.txt";
+  private static final String path1 = "source/core/assets/configs/Map.txt"; // change this path if u can't open the file
+  private static final String path2 = "configs/Map.txt";
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;
   private static final Map<Character,String> charToTileImageMap;
@@ -210,16 +211,16 @@ public class TerrainFactory {
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
 
     try {
-      fillTilesWithFile(layer, MAP_SIZE, TRList, filePath);
+      fillTilesWithFile(layer, MAP_SIZE, TRList, path1, path2);
     } catch (FileNotFoundException e) {
-      String workingDirectory = System.getProperty("user.dir");
-      System.out.println("Working Directory: " + workingDirectory);
       System.out.println("fillTilesWithFile -> File Not Found error!");
     } catch (IOException e) {
       System.out.println("fillTilesWithFile -> Readfile error!");
     } catch (Exception e) {
       System.out.println("fillTilesWithFile -> Testcase error!: " + e);
     }
+
+
 
     //fillTilesAtRandom(layer, MAP_SIZE, grassTile3, GRASS3_TILE_COUNT);
     tiledMap.getLayers().add(layer);
@@ -385,18 +386,24 @@ public class TerrainFactory {
    * @param layer the layer of the TiledMap
    * @param mapSize the size of the map
    * @param TRList the list of TextureRegion
-   * @param path the path of the file
+   * @param path1 the path of the file
    * @throws IOException when there is an error reading the file
    * @throws FileNotFoundException when file is not found
    */
   private static void fillTilesWithFile(TiledMapTileLayer layer, GridPoint2 mapSize, ArrayList<TextureRegion> TRList,
-                                        String path) throws IOException,
+                                        String path1, String path2) throws IOException,
           FileNotFoundException {
     // open file to read and read each character
     BufferedReader bf;
-    bf = new BufferedReader(new FileReader(path));
-      String line;
-    line = bf.readLine();
+    //needs to be improved, just done because different file paths required when run from desktop launcher vs gradle
+    try {
+      bf = new BufferedReader(new FileReader(path1));
+    } catch (FileNotFoundException e) {
+      bf = new BufferedReader(new FileReader(path2));
+    } finally {
+      //https://rules.sonarsource.com/java/RSPEC-2093/
+    }
+    String line = bf.readLine();
 
     // read 2 first lines
     int x_MapSize = 0, y_MapSize = 0;
