@@ -221,7 +221,7 @@ class PlantFactoryTest {
                         (Callable<Entity>) () -> PlantFactory.createHammerPlant(mockCropTile)),
                 Arguments.of("nightshade", "images/plants/nightshade.png",
                         (Callable<Entity>) () -> PlantFactory.createNightshade(mockCropTile)),
-                Arguments.of("waterWeed", "images/plants/waterweed.png",
+                Arguments.of("tobacco", "images/plants/waterweed.png",
                         (Callable<Entity>) () -> PlantFactory.createTobacco(mockCropTile)),
                 Arguments.of("venusFlyTrap", "images/plants/VenusTrap.png",
                         (Callable<Entity>) () -> PlantFactory.createVenusFlyTrap(mockCropTile))
