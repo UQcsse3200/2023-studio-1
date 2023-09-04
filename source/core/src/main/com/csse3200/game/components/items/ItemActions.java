@@ -54,6 +54,10 @@ public class ItemActions extends Component {
         resultStatus = water(tile, item);
         return resultStatus;
       }
+      case FERTILISER -> {
+        resultStatus = fertilise(tile);
+        return resultStatus;
+      }
       default -> {
         return false;
       }
@@ -175,6 +179,14 @@ public class ItemActions extends Component {
     tile.setCropTile(cropTile);
     tile.setOccupied();
     return true;
+  }
+
+  private boolean fertilise(TerrainTile tile) {
+    if (isCropTile(tile.getCropTile())) {
+      tile.getCropTile().getEvents().trigger("fertilise");
+      return true;
+    }
+    return false;
   }
 
   /**
