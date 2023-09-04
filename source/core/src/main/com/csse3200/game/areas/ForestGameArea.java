@@ -5,6 +5,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
@@ -62,6 +63,7 @@ public class ForestGameArea extends GameArea {
 
   private final TerrainFactory terrainFactory;
 
+  private final ClimateController climateController;
   private Entity player;
   private Entity tractor;
 
@@ -75,6 +77,7 @@ public class ForestGameArea extends GameArea {
   public ForestGameArea(TerrainFactory terrainFactory) {
     super();
     this.terrainFactory = terrainFactory;
+    climateController = new ClimateController();
     ServiceLocator.registerGameArea(this);
   }
 
@@ -111,6 +114,14 @@ public class ForestGameArea extends GameArea {
 
   public Entity getPlayer() {
     return player;
+  }
+
+  /**
+   * @return
+   */
+  @Override
+  public ClimateController getClimateController() {
+    return climateController;
   }
 
   private void displayUI() {
