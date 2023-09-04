@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
@@ -46,6 +47,10 @@ public class ItemPickupComponentTest {
          */
         @Override
         public Entity getPlayer() {
+            return null;
+        }
+        @Override
+        public ClimateController getClimateController() {
             return null;
         }
     }
