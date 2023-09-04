@@ -5,6 +5,7 @@ import static org.mockito.Mockito.verify;
 
 import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.extensions.GameExtension;
@@ -28,6 +29,10 @@ class GameAreaTest {
              */
             @Override
             public Entity getPlayer() {
+                return null;
+            }
+            @Override
+            public ClimateController getClimateController() {
                 return null;
             }
         };
