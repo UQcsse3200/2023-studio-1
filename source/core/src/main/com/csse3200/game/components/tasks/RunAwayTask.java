@@ -1,16 +1,7 @@
 package com.csse3200.game.components.tasks;
 
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.ai.tasks.DefaultTask;
-import com.csse3200.game.ai.tasks.PriorityTask;
-import com.csse3200.game.ai.tasks.TaskRunner;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.physics.PhysicsEngine;
-import com.csse3200.game.physics.PhysicsLayer;
-import com.csse3200.game.physics.components.PhysicsMovementComponent;
-import com.csse3200.game.physics.raycast.RaycastHit;
-import com.csse3200.game.rendering.DebugRenderer;
-import com.csse3200.game.services.ServiceLocator;
 
 /** Runs from a target entity until they get too far away or line of sight is lost */
 public class RunAwayTask extends ChaseTask {
@@ -27,7 +18,6 @@ public class RunAwayTask extends ChaseTask {
    * @param maxRunDistance Maximum distance from the entity before stopping.
    */
   public RunAwayTask(Entity target, int priority, float viewDistance, float maxRunDistance, Vector2 runSpeed) {
-    //-1 is just a placeholder, the maxChaseDistance is unused
     super(target, priority, viewDistance, maxRunDistance);
     this.maxRunDistance = maxRunDistance;
     this.runSpeed = runSpeed;
@@ -53,7 +43,7 @@ public class RunAwayTask extends ChaseTask {
   }
 
   /**
-   * Updates the run away task by updating the movement task and restarting it if necessary.
+   * Updates the RunAwayTask by updating the movement task and restarting it if necessary.
    */
   @Override
   public void update() {
@@ -70,7 +60,7 @@ public class RunAwayTask extends ChaseTask {
   }
 
   /**
-   * Stops the run away task and the associated movement task, and triggers the "runAwayStop" event.
+   * Stops the RunAwayTask and the associated movement task, and triggers the "runAwayStop" event.
    */
   @Override
   public void stop() {
@@ -79,7 +69,7 @@ public class RunAwayTask extends ChaseTask {
   }
 
   /**
-   * Determines the priority when the run away task is active based on the distance to the target
+   * Determines the priority when the RunAwayTask is active based on the distance to the target
    * and the visibility of the target entity.
    *
    * @return The active priority level or -1 if conditions are not met.

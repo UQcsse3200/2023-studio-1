@@ -166,7 +166,7 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
   }
 
   /**
-   * Getter for the priority of this task if it's active
+   * Getter for the raw priority of this task
    *
    * @return priority of this task
    */
