@@ -53,7 +53,6 @@ public class SaveLoadService {
 
   private void updatePlayer(GameState state) {
     Entity currentPlayer = ServiceLocator.getGameArea().getPlayer();
-    System.out.println(state.getPlayer().getPosition());
     currentPlayer.setPosition(state.getPlayer().getPosition());
   }
 
