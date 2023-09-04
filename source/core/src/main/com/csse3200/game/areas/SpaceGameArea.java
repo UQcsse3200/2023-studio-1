@@ -149,6 +149,7 @@ public class SpaceGameArea extends GameArea {
     spawnTool(ItemType.SCYTHE);
     spawnTool(ItemType.HOE);
     spawnTool(ItemType.FERTILISER);
+    spawnTool(ItemType.SEED);
 
     //spawnGhosts();
     //spawnGhostKing();
@@ -250,6 +251,10 @@ public class SpaceGameArea extends GameArea {
         break;
       case FERTILISER:
         newTool = ItemFactory.createFertiliser();
+        spawnEntityAt(newTool, randomPos, true, true);
+        break;
+      case SEED:
+        newTool = ItemFactory.createAloeVeraSeed();
         spawnEntityAt(newTool, randomPos, true, true);
         break;
     }
