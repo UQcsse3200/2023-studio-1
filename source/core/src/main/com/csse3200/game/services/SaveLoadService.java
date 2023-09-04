@@ -25,15 +25,10 @@ public class SaveLoadService {
 
     state.setDay(ServiceLocator.getTimeService().getDay());
     state.setHour(ServiceLocator.getTimeService().getHour());
-    // Idk why this is here (imma grab the real player)
-//    Entity player = PlayerFactory.createPlayer();
-//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHoe());
-//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createShovel());
-//
-//    state.setPlayer(player);
-//    player.create();
+
     state.setPlayer(ServiceLocator.getGameArea().getPlayer());
 
+    // Write the state to a file
     SaveGame.set(state);
     
     System.out.println("save!");

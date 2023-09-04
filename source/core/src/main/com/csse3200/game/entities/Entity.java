@@ -298,8 +298,6 @@ public class Entity implements Json.Serializable {
       c.write(json);
     }
     json.writeObjectEnd();
-    //json.writeValue("components", createdComponents);
-    //System.out.println(json);
   }
 
   public void writeItem(Json json) {
