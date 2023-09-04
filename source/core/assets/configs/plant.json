@@ -3,7 +3,7 @@
     "health": 10,
     "name": "Cosmic Cob",
     "type": "FOOD",
-    "description": "Nutritious space corn!",
+    "description": "A nutritious snack with everything a human needs to survive, the local fauna won’t touch it though. Suspiciously high in protein and fat…",
     "idealWaterLevel": 0.7,
     "adultLifeSpan": 5,
     "maxHealth": 400
@@ -12,7 +12,7 @@
     "health": 10,
     "name": "Aloe Vera",
     "type": "HEALTH",
-    "description": "Produces gel that can be used for healing",
+    "description": "A unique plant that once ground down to a chunky red paste can be used to heal significant wounds, it’s a miracle!",
     "idealWaterLevel": 0.7,
     "adultLifeSpan": 5,
     "maxHealth": 300
@@ -21,7 +21,7 @@
     "health": 10,
     "name": "Hammer Plant",
     "type": "REPAIR",
-    "description": "Repairs plants within its healing radius",
+    "description": "A useful plant resembling a hand holding a hammer that repairs the other nearby plants, maybe they were friends!",
     "idealWaterLevel": 0.7,
     "adultLifeSpan": 5,
     "maxHealth": 200
@@ -30,7 +30,7 @@
     "health": 10,
     "name": "Space Snapper",
     "type": "DEFENCE",
-    "description" : "I eat the fauna!",
+    "description" : "An angry plant that will gobble any nasty pests nearby. Keep small pets and children out of snapping distance!",
     "idealWaterLevel": 0.7,
     "adultLifeSpan": 5,
     "maxHealth": 400

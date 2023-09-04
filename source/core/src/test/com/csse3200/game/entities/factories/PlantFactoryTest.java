@@ -98,7 +98,7 @@ class PlantFactoryTest {
         when(mockFileHandle.reader("UTF-8")).thenReturn(new StringReader(jsonContent));
         when(Gdx.files.internal(anyString())).thenReturn(mockFileHandle);
 
-        stats = FileLoader.readClass(PlantConfigs.class, "configs/plant.json");
+        stats = FileLoader.readClass(PlantConfigs.class, filePath);
         PlantFactory.setStats(stats);
     }
 
@@ -138,19 +138,19 @@ class PlantFactoryTest {
      */
     static Stream<Arguments> plantConfigProvider() {
         return Stream.of(
-                Arguments.of("cosmicCob", 100, "Cosmic Cob", "FOOD",
-                        "Nutritious space corn!", (float) 0.7, 5, 400),
-                Arguments.of("aloeVera", 50, "Aloe Vera", "HEALTH",
-                        "Produces gel that can be used for healing", (float) 0.7, 5, 400),
+                Arguments.of("cosmicCob", 10, "Cosmic Cob", "FOOD",
+                        "A nutritious snack with everything a human needs to survive, the local fauna won’t touch it though. Suspiciously high in protein and fat…", (float) 0.7, 5, 400),
+                Arguments.of("aloeVera", 10, "Aloe Vera", "HEALTH",
+                        "A unique plant that once ground down to a chunky red paste can be used to heal significant wounds, it’s a miracle!", (float) 0.7, 5, 400),
                 Arguments.of("hammerPlant", 10, "Hammer Plant", "REPAIR",
-                        "Repairs plants within its healing radius", (float) 0.7, 5, 400),
-                Arguments.of("venusFlyTrap", 100, "Space Snapper", "DEFENCE",
-                        "I eat the fauna!", (float) 0.7, 5, 400),
+                        "A useful plant resembling a hand holding a hammer that repairs the other nearby plants, maybe they were friends!", (float) 0.7, 5, 400),
+                Arguments.of("venusFlyTrap", 10, "Space Snapper", "DEFENCE",
+                        "An angry plant that will gobble any nasty pests nearby. Keep small pets and children out of snapping distance!", (float) 0.7, 5, 400),
                 Arguments.of("waterWeed", 10, "Atomic Algae", "PRODUCTION",
                         "Test description", (float) 0.7, 5, 400),
-                Arguments.of("nightshade", 200, "Deadly Nightshade",
+                Arguments.of("nightshade", 10, "Deadly Nightshade",
                         "DEADLY", "Grows deadly poisonous berries", (float) 0.7, 5, 400),
-                Arguments.of("tobacco", 20, "Tobacco", "DEADLY",
+                Arguments.of("tobacco", 10, "Tobacco", "DEADLY",
                         "Toxic addicted plant leaves", (float) 0.7, 5, 400),
                 Arguments.of("sunFlower", 10, "Horticultural Heater",
                         "PRODUCTION", "Warms up the nearby area", (float) 0.7, 5, 400)
