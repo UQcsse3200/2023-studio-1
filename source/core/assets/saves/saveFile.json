@@ -1,10 +1,10 @@
 {
 "day": 1,
-"hour": 3,
+"hour": 5,
 "player": {
 	"Entity": "Player",
-	"x": 6.042307,
-	"y": 2.9159606,
+	"x": 9.18673,
+	"y": 34.39195,
 	"components": {
 		"inventory": [
 			"hoe",
@@ -16,37 +16,32 @@
 },
 "entities": [
 	{
-		"Entity": "Axolotl",
-		"x": 30.689255,
-		"y": 17.001587,
-		"components": {
-			"tamed": false
-		}
+		"Entity": "Cow",
+		"x": -4.463867,
+		"y": -1.2233349,
+		"components": {}
 	},
 	{
-		"Entity": "Cow",
-		"x": 10.555645,
-		"y": 25.29787,
+		"Entity": "Axolotl",
+		"x": 42.728806,
+		"y": 20.155401,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 42.300182,
-		"y": 36.517876,
+		"x": 27.210346,
+		"y": 31.241436,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Tractor",
-		"x": 3.202381,
-		"y": 3.9232666,
+		"x": 3.613461,
+		"y": 5.9786696,
 		"components": {}
 	}
-],
-"map": {
-	"Tiles": {}
-}
+]
 }

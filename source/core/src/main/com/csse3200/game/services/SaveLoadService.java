@@ -22,6 +22,14 @@ import com.csse3200.game.utils.math.GridPoint2Utils;
 
 /* Current functionality:
  * - prints save/load to system out depending on method call.
+ * - Saves:
+ *    - player pos.
+ *    - player inventory (partially)
+ *    - time/day.
+ *    - entity (cows and stuff) location & tamed status.
+ * - Loads:
+ *    - player pos.
+ *    - time/day.
  */
 public class SaveLoadService {
   /**
@@ -36,7 +44,8 @@ public class SaveLoadService {
 
     state.setPlayer(ServiceLocator.getGameArea().getPlayer());
     state.setEntities(ServiceLocator.getEntityService().getEntities());
-    state.setMap(ServiceLocator.getGameArea().getMap());
+    // TODO: Broken map saving :(
+    //state.setMap(ServiceLocator.getGameArea().getMap());
 
     // Write the state to a file
     SaveGame.set(state);
@@ -52,10 +61,9 @@ public class SaveLoadService {
    */
   public void load() {
     SaveGame.GameState state = SaveGame.get();
-
     if (state == null) {
       // TODO: Dialogue box or something?
-      System.out.println("NO FILE TO LOAD!");
+      System.out.println("Couldn't read saveFile");
       return;
     }
 
