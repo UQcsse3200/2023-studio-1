@@ -21,6 +21,7 @@ public class TerrainTile implements TiledMapTile {
   private boolean isOccupied;
   private boolean isTillable;
   private Entity cropTile = null;
+  private double speed;
 
   public TerrainTile(TextureRegion textureRegion, TerrainCategory terrainCategory) {
     this.textureRegion = textureRegion;
@@ -32,34 +33,42 @@ public class TerrainTile implements TiledMapTile {
       case PATH:
         this.isTraversable = true;
         this.isTillable = true;
+        this.speed = 1.2;
         break;
       case BEACHSAND:
         this.isTraversable = true;
         this.isTillable = false;
+        this.speed = 0.9;
         break;
       case GRASS:
         this.isTraversable = true;
         this.isTillable = true;
+        this.speed = 1.1;
         break;
       case DIRT:
         this.isTraversable = true;
         this.isTillable = true;
+        this.speed = 0.7;
         break;
       case SHALLOWWATER:
         this.isTraversable = true;
         this.isTillable = false;
+        this.speed = 0.9;
         break;
       case DESERT:
         this.isTraversable = true;
         this.isTillable = false;
+        this.speed = 0.8;
         break;
       case SNOW:
         this.isTraversable = true;
         this.isTillable = false;
+        this.speed = 0.8;
         break;
       case ICE:
         this.isTraversable = true;
         this.isTillable = false;
+        this.speed = 1.5;
         break;
       case DEEPWATER:
         this.isTraversable = false;
@@ -76,14 +85,17 @@ public class TerrainTile implements TiledMapTile {
       case LAVAGROUND:
         this.isTraversable = true;
         this.isTillable = false;
+        this.speed = 0.7;
         break;
       case GRAVEL:
         this.isTraversable = true;
         this.isTillable = false;
+        this.speed = 1;
         break;
       case FLOWINGWATER:
         this.isTraversable = true;
         this.isTillable = false;
+        this.speed = 1.3;
         break;
     }
   }
