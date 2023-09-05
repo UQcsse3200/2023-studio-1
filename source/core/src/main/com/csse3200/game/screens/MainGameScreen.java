@@ -1,6 +1,10 @@
 package com.csse3200.game.screens;
 
+import box2dLight.PointLight;
+import box2dLight.RayHandler;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
@@ -68,6 +72,7 @@ public class MainGameScreen extends ScreenAdapter {
   private final GdxGame game;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
+  private RayHandler rayHandler;
 
   public MainGameScreen(GdxGame game) {
     this.game = game;
@@ -90,6 +95,8 @@ public class MainGameScreen extends ScreenAdapter {
     renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
     renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
 
+    rayHandler = new RayHandler(ServiceLocator.getPhysicsService().getPhysics().getWorld());
+    new PointLight(rayHandler, 5000, Color.CYAN, 100, 0, 0);
 
     loadAssets();
     createUI();
@@ -117,6 +124,8 @@ public class MainGameScreen extends ScreenAdapter {
     }
       ServiceLocator.getTimeService().update();
       renderer.render();
+    rayHandler.setCombinedMatrix((OrthographicCamera) renderer.getCamera().getCamera());
+    rayHandler.updateAndRender();
   }
 
   @Override
@@ -139,6 +148,7 @@ public class MainGameScreen extends ScreenAdapter {
   public void dispose() {
     logger.debug("Disposing main game screen");
 
+    rayHandler.dispose();
     renderer.dispose();
     unloadAssets();
 
