@@ -36,7 +36,13 @@ public class ToolbarDisplay extends UIComponent {
         Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
         table = new Table(skin);
         table.defaults().size(64, 64);
-        table.pad(10);
+
+        for (int i = 0; i < 10; i++) {
+            Label itemlabel = new Label(String.valueOf(i+1), skin.get("default", Label.LabelStyle.class));
+            table.add(itemlabel);
+        }
+
+        table.row();
 
         for (int i = 0; i < 10; i++) {
             Label label = new Label(String.valueOf(i), skin.get("default", Label.LabelStyle.class));
@@ -45,8 +51,7 @@ public class ToolbarDisplay extends UIComponent {
             Stack stack = new Stack();
             stack.add(new Image(new Texture("images/itemFrame.png")));
             table.add(stack).pad(10, 10, 10, 10).fill();
-            Label itemlabel = new Label(String.valueOf(i+1), skin.get("default", Label.LabelStyle.class));
-            table.add(itemlabel);
+
         }
 
         // Create a window for the inventory using the skin

@@ -72,8 +72,8 @@ public class InventoryDisplay extends UIComponent {
           table.add(new Image(new Texture("images/itemFrame.png"))).pad(10, 10, 10, 10).fill();
         }
 
-        Label label = new Label(String.valueOf(i * 10 + j + 1), skin.get("default", Label.LabelStyle.class));
-        table.add(label).pad(10, 10, 10, 10).fill();
+        //Label label = new Label(String.valueOf(i * 10 + j + 1), skin.get("default", Label.LabelStyle.class));
+        //table.add(label).pad(10, 10, 10, 10).fill();
 
         if (j == 9) {
           //Add a new row every 10 items
