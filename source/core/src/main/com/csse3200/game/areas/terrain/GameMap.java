@@ -199,4 +199,8 @@ public class GameMap {
     public void removeTileCropTile(int x, int y) {
         this.getTile(x, y).setUnOccupied();
     }
+
+    public float getTileSpeedModifier(int x, int y) {
+        return this.getTile(x, y).getSpeedModifier();
+    }
 }

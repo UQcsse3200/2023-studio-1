@@ -13,6 +13,8 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 
+import java.io.FileNotFoundException;
+
 /**
  * Action component for interacting with the player. Player events should be initialised in create()
  * and when triggered should call methods within this class.
@@ -110,7 +112,19 @@ public class PlayerActions extends Component {
   private void updateSpeed() {
     Body body = physicsComponent.getBody();
     Vector2 velocity = body.getLinearVelocity();
-    Vector2 velocityScale = this.running ? MAX_RUN_SPEED : MAX_WALK_SPEED;
+    Vector2 velocityScale = this.running ? MAX_RUN_SPEED.cpy() : MAX_WALK_SPEED.cpy();
+
+    //float terrainSpeedModifier = map.getTileSpeedModifier((int) this.entity.getPosition().x, (int) this.entity.getPosition().y);
+
+    if (this.running == true) {
+      System.out.println("Vector coordiantes: x:" + String.format("%.2f", entity.getPosition().x) + " y:" + String.format("%.2f", entity.getPosition().y));
+      //try {System.out.println();} catch (Exception e) { }
+      //System.out.println("TileCoords: " + map.pixelPositionToWorldCoordinates((int) this.entity.getPosition().x, (int) this.entity.getPosition().y));
+    }
+
+    //velocityScale.x = velocityScale.x * terrainSpeedModifier;
+    //velocityScale.y = velocityScale.y * terrainSpeedModifier;
+
     Vector2 desiredVelocity = moveDirection.cpy().scl(velocityScale);
     // impulse = (desiredVel - currentVel) * mass
     Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());

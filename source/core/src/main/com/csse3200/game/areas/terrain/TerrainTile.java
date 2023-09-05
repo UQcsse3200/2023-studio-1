@@ -41,7 +41,8 @@ public class TerrainTile implements TiledMapTile {
    * Stores a crop tile which occupies the terrain tile. Is null if no crop tile occupies the terrain tile.
    */
   private Entity cropTile = null;
-  private double speed;
+
+  private float speedModifier;
 
   public TerrainTile(TextureRegion textureRegion, TerrainCategory terrainCategory) {
     this.textureRegion = textureRegion;
@@ -53,69 +54,72 @@ public class TerrainTile implements TiledMapTile {
       case PATH:
         this.isTraversable = true;
         this.isTillable = true;
-        this.speed = 1.2;
+        this.speedModifier = 1.2f;
         break;
       case BEACHSAND:
         this.isTraversable = true;
         this.isTillable = false;
-        this.speed = 0.9;
+        this.speedModifier = 0.9f;
         break;
       case GRASS:
         this.isTraversable = true;
         this.isTillable = true;
-        this.speed = 1.1;
+        this.speedModifier = 1.1f;
         break;
       case DIRT:
         this.isTraversable = true;
         this.isTillable = true;
-        this.speed = 0.7;
+        this.speedModifier = 0.7f;
         break;
       case SHALLOWWATER:
         this.isTraversable = true;
         this.isTillable = false;
-        this.speed = 0.9;
+        this.speedModifier = 0.9f;
         break;
       case DESERT:
         this.isTraversable = true;
         this.isTillable = false;
-        this.speed = 0.8;
+        this.speedModifier = 0.8f;
         break;
       case SNOW:
         this.isTraversable = true;
         this.isTillable = false;
-        this.speed = 0.8;
+        this.speedModifier = 0.8f;
         break;
       case ICE:
         this.isTraversable = true;
         this.isTillable = false;
-        this.speed = 1.5;
+        this.speedModifier = 1.5f;
         break;
       case DEEPWATER:
         this.isTraversable = false;
         this.isTillable = false;
+        this.speedModifier = 0.2f; // Not traversable
         break;
       case ROCK:
         this.isTraversable = false;
         this.isTillable = false;
+        this.speedModifier = 0.2f; // Not traversable
         break;
       case LAVA:
         this.isTraversable = false;
         this.isTillable = false;
+        this.speedModifier = 0.2f; // Not traversable
         break;
       case LAVAGROUND:
         this.isTraversable = true;
         this.isTillable = false;
-        this.speed = 0.7;
+        this.speedModifier = 0.7f;
         break;
       case GRAVEL:
         this.isTraversable = true;
         this.isTillable = false;
-        this.speed = 1;
+        this.speedModifier = 1f;
         break;
       case FLOWINGWATER:
         this.isTraversable = true;
         this.isTillable = false;
-        this.speed = 1.3;
+        this.speedModifier = 1.3f;
         break;
     }
   }
@@ -283,5 +287,9 @@ public class TerrainTile implements TiledMapTile {
   public void removeCropTile() {
     this.cropTile = null;
     this.setUnOccupied();
+  }
+
+  public float getSpeedModifier() {
+    return this.speedModifier;
   }
 }
