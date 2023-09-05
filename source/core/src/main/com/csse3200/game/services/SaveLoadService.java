@@ -1,5 +1,7 @@
 package com.csse3200.game.services;
 
+import java.security.Provider.Service;
+
 import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
@@ -8,6 +10,9 @@ import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.files.SaveGame;
 import com.csse3200.game.files.SaveGame.GameState;
 import com.csse3200.game.entities.factories.NPCFactory;
+import com.csse3200.game.utils.math.GridPoint2Utils;
+
+
 /* A note of the registering of this service:
  *  this service is currently only registered at MainMenuScreen,
  *  (source/core/src/main/com/csse3200/game/screens/MainMenuScreen.java)
@@ -70,9 +75,12 @@ public class SaveLoadService {
 
     for (Entity entity : state.getEntities()) {
       if (entity.getType() == EntityType.Cow) {
+        
         Entity cow = NPCFactory.createCow(player);
         cow.setPosition(entity.getPosition());
-        ServiceLocator.getGameArea().spawnEntity(cow);
+        GridPoint2 position = new GridPoint2((int)cow.getPosition().x, (int)cow.getPosition().y);
+        ServiceLocator.getGameArea().spawnEntityAt(entity, position, true, true);
+        
       }
     }
   }
