@@ -1103,7 +1103,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Get a component of type T on the entity.</div>
 </dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainTile.html#getCropTile()" class="member-name-link">getCropTile()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns a crop tile entity which occupies the terrain tile</div>
+</dd>
 <dt><a href="com/csse3200/game/components/plants/PlantComponent.html#getCurrentAge()" class="member-name-link">getCurrentAge()</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
 <dd>
 <div class="block">Get the current age of a plant in days</div>
@@ -1390,6 +1392,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Gets the tile at a specified world coordinate position</div>
 </dd>
+<dt><a href="com/csse3200/game/areas/terrain/GameMap.html#getTileCropTile(int,int)" class="member-name-link">getTileCropTile(int, int)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
+<dd>
+<div class="block">Returns a specified terrainTile's cropTile</div>
+</dd>
 <dt><a href="com/csse3200/game/areas/terrain/GameMap.html#getTiledMap()" class="member-name-link">getTiledMap()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainComponent.html#getTileSize()" class="member-name-link">getTileSize()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a></dt>
@@ -1647,6 +1653,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/tractor/TractorActions.html#isMuted()" class="member-name-link">isMuted()</a> - Method in class com.csse3200.game.components.tractor.<a href="com/csse3200/game/components/tractor/TractorActions.html" title="class in com.csse3200.game.components.tractor">TractorActions</a></dt>
 <dd>
 <div class="block">When in the tractor inputs should be muted, this handles that.</div>
+</dd>
+<dt><a href="com/csse3200/game/areas/terrain/TerrainFactory.html#isNumeric(java.lang.String)" class="member-name-link">isNumeric(String)</a> - Static method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainFactory.html" title="class in com.csse3200.game.areas.terrain">TerrainFactory</a></dt>
+<dd>
+<div class="block">This function will be used to check if a string is numeric</div>
 </dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainTile.html#isOccupied()" class="member-name-link">isOccupied()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></dt>
 <dd>
@@ -2128,6 +2138,11 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Wrapper for pinch stop that can be overridden.</div>
 </dd>
+<dt><a href="com/csse3200/game/areas/terrain/GameMap.html#pixelPositionToWorldCoordinates(int,int)" class="member-name-link">pixelPositionToWorldCoordinates(int, int)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
+<dd>
+<div class="block">Conversion function: gets the centre of a tile from a coordinate position
+ e.g.</div>
+</dd>
 <dt><a href="com/csse3200/game/entities/EntityType.html#Plant" class="member-name-link">Plant</a> - Enum constant in enum class com.csse3200.game.entities.<a href="com/csse3200/game/entities/EntityType.html" title="enum class in com.csse3200.game.entities">EntityType</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/plants/PlantComponent.html" class="type-name-link" title="class in com.csse3200.game.components.plants">PlantComponent</a> - Class in <a href="com/csse3200/game/components/plants/package-summary.html">com.csse3200.game.components.plants</a></dt>
@@ -2280,11 +2295,19 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Remove an animation from this animator.</div>
 </dd>
+<dt><a href="com/csse3200/game/areas/terrain/TerrainTile.html#removeCropTile()" class="member-name-link">removeCropTile()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></dt>
+<dd>
+<div class="block">Removes any crop tile which occupies the terrain tile.</div>
+</dd>
 <dt><a href="com/csse3200/game/areas/GameArea.html#removeEntity(com.csse3200.game.entities.Entity)" class="member-name-link">removeEntity(Entity)</a> - Method in class com.csse3200.game.areas.<a href="com/csse3200/game/areas/GameArea.html" title="class in com.csse3200.game.areas">GameArea</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/player/InventoryComponent.html#removeItem(com.csse3200.game.entities.Entity)" class="member-name-link">removeItem(Entity)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a></dt>
 <dd>
 <div class="block">Removes an item from the Player's Inventory</div>
+</dd>
+<dt><a href="com/csse3200/game/areas/terrain/GameMap.html#removeTileCropTile(int,int)" class="member-name-link">removeTileCropTile(int, int)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
+<dd>
+<div class="block">Removes the cropTile from the specified terrainTile</div>
 </dd>
 <dt><a href="com/csse3200/game/rendering/Renderer.html#render()" class="member-name-link">render()</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/Renderer.html" title="class in com.csse3200.game.rendering">Renderer</a></dt>
 <dd>
@@ -2415,11 +2438,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Set the entity's width and scale the height to maintain aspect ratio.</div>
 </dd>
-<dt><a href="com/csse3200/game/areas/terrain/GameMap.html#screenPositionToWorldCoordinates(int,int)" class="member-name-link">screenPositionToWorldCoordinates(int, int)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
-<dd>
-<div class="block">Conversion function: gets the centre of a tile from a coordinate position
- Currently WIP</div>
-</dd>
 <dt><a href="com/csse3200/game/input/InputComponent.html#scrolled(float,float)" class="member-name-link">scrolled(float, float)</a> - Method in class com.csse3200.game.input.<a href="com/csse3200/game/input/InputComponent.html" title="class in com.csse3200.game.input">InputComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/input/InputDecorator.html#scrolled(float,float)" class="member-name-link">scrolled(float, float)</a> - Method in class com.csse3200.game.input.<a href="com/csse3200/game/input/InputDecorator.html" title="class in com.csse3200.game.input">InputDecorator</a></dt>
@@ -2494,7 +2512,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Closes the terminal and clears the stored message.</div>
 </dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainTile.html#setCropTile(com.csse3200.game.entities.Entity)" class="member-name-link">setCropTile(Entity)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Sets the crop tile which occupies the terrain tile.</div>
+</dd>
 <dt><a href="com/csse3200/game/components/plants/PlantComponent.html#setCurrentAge(float)" class="member-name-link">setCurrentAge(float)</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
 <dd>
 <div class="block">Sets the current age of a plant in days</div>
@@ -2694,6 +2714,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainTile.html#setTextureRegion(com.badlogic.gdx.graphics.g2d.TextureRegion)" class="member-name-link">setTextureRegion(TextureRegion)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/areas/terrain/GameMap.html#setTileCropTile(com.csse3200.game.entities.Entity,int,int)" class="member-name-link">setTileCropTile(Entity, int, int)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
+<dd>
+<div class="block">Places a cropTile on a specified TerrainTile replacing any cropTile that already occupied it</div>
+</dd>
 <dt><a href="com/csse3200/game/areas/terrain/GameMap.html#setTileOccupied(int,int)" class="member-name-link">setTileOccupied(int, int)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
 <dd>
 <div class="block">Sets the specified tile as being occupied</div>
@@ -3419,10 +3443,10 @@ the order they are declared.</div>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/files/UserSettings.DisplaySettings.html#width" class="member-name-link">width</a> - Variable in class com.csse3200.game.files.<a href="com/csse3200/game/files/UserSettings.DisplaySettings.html" title="class in com.csse3200.game.files">UserSettings.DisplaySettings</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/areas/terrain/GameMap.html#worldCoordinatesToScreenPosition(int,int)" class="member-name-link">worldCoordinatesToScreenPosition(int, int)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
+<dt><a href="com/csse3200/game/areas/terrain/GameMap.html#worldCoordinatesToPixelPosition(int,int)" class="member-name-link">worldCoordinatesToPixelPosition(int, int)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
 <dd>
 <div class="block">Conversion function: gets the centre of a tile from a coordinate position
- Currently WIP</div>
+ e.g.</div>
 </dd>
 <dt><a href="com/csse3200/game/files/FileLoader.html#writeClass(java.lang.Object,java.lang.String)" class="member-name-link">writeClass(Object, String)</a> - Static method in class com.csse3200.game.files.<a href="com/csse3200/game/files/FileLoader.html" title="class in com.csse3200.game.files">FileLoader</a></dt>
 <dd>
