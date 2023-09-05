@@ -4,28 +4,23 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.SpaceGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.MainGameActions;
-import com.csse3200.game.components.Component;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.input.InputDecorator;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
-import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
-import com.csse3200.game.services.GameTime;
-import com.csse3200.game.services.GameTimeDisplay;
-import com.csse3200.game.services.ResourceService;
-import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.*;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
@@ -89,6 +84,7 @@ public class MainGameScreen extends ScreenAdapter {
 
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
+    ServiceLocator.registerTimeService(new TimeService());
 
     renderer = RenderFactory.createRenderer();
     renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
@@ -115,9 +111,12 @@ public class MainGameScreen extends ScreenAdapter {
 
   @Override
   public void render(float delta) {
-    physicsEngine.update();
-    ServiceLocator.getEntityService().update();
-    renderer.render();
+    if (!ServiceLocator.getTimeService().isPaused()) {
+      physicsEngine.update();
+      ServiceLocator.getEntityService().update();
+    }
+      ServiceLocator.getTimeService().update();
+      renderer.render();
   }
 
   @Override

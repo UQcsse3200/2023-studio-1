@@ -1,13 +1,13 @@
 package com.csse3200.game.screens;
 
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.controlsmenu.ControlsMenuDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.input.InputDecorator;
 import com.csse3200.game.input.InputService;
@@ -16,6 +16,7 @@ import com.csse3200.game.rendering.Renderer;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.TimeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,11 +54,12 @@ public class ControlsScreen extends ScreenAdapter {
     this.game = game;
 
     logger.debug("Initialising controls screen services");
+    ServiceLocator.registerTimeSource(new GameTime());
     ServiceLocator.registerInputService(new InputService());
     ServiceLocator.registerResourceService(new ResourceService());
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
-    ServiceLocator.registerTimeSource(new GameTime());
+    ServiceLocator.registerTimeService(new TimeService());
     renderer = RenderFactory.createRenderer();
     renderer.getCamera().getEntity().setPosition(5f, 5f);
 
@@ -68,6 +70,7 @@ public class ControlsScreen extends ScreenAdapter {
   @Override
   public void render(float delta) {
     ServiceLocator.getEntityService().update();
+    ServiceLocator.getTimeService().update();
     renderer.render();
   }
 
