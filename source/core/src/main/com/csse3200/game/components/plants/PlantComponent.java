@@ -376,6 +376,7 @@ public class PlantComponent extends Component {
             System.out.println(this.numOfDaysAsAdult);
             if (numOfDaysAsAdult > this.adultLifeSpan) {
                 this.growthStage += 1;
+                this.decay = true;
                 updateTexture();
             }
         }
