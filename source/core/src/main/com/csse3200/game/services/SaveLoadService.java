@@ -34,6 +34,7 @@ public class SaveLoadService {
 
     state.setPlayer(ServiceLocator.getGameArea().getPlayer());
     state.setEntities(ServiceLocator.getEntityService().getEntities());
+    state.setMap(ServiceLocator.getGameArea().getMap());
 
     // Write the state to a file
     SaveGame.set(state);

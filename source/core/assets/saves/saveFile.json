@@ -1,9 +1,9 @@
 {
-hour: 4
+hour: 16
 player: {
 	Entity: Player
-	x: 3.4730742
-	y: 2.7774992
+	x: 11.863657
+	y: 28.268852
 	components: {
 		inventory: [
 			hoe
@@ -16,177 +16,85 @@ player: {
 entities: [
 	{
 		Entity: Axolotl
-		x: 19.447647
-		y: 25.151808
+		x: 39.266407
+		y: 26.842346
 		components: {
 			tamed: false
 		}
 	}
 	{
 		Entity: Cow
-		x: 33.74378
-		y: 19.706022
-		components: {
-			tamed: false
-		}
-	}
-	{
-		Entity: Cow
-		x: 37.653267
-		y: 18.65883
-		components: {
-			tamed: false
-		}
-	}
-	{
-		Entity: Cow
-		x: -0.15500002
-		y: 1.147803
-		components: {
-			tamed: false
-		}
-	}
-	{
-		Entity: Cow
-		x: 34.947052
-		y: 2.0120401
-		components: {
-			tamed: false
-		}
-	}
-	{
-		Entity: Cow
-		x: 23.80769
-		y: 35.530758
-		components: {
-			tamed: false
-		}
-	}
-	{
-		Entity: Cow
-		x: 12.1957
-		y: 25.568773
-		components: {
-			tamed: false
-		}
-	}
-	{
-		Entity: Cow
-		x: 41.330887
-		y: 32.732494
-		components: {
-			tamed: false
-		}
-	}
-	{
-		Entity: Cow
-		x: 32.347244
-		y: 34.636856
-		components: {
-			tamed: false
-		}
-	}
-	{
-		Entity: Cow
-		x: 21.238514
-		y: 33.32094
-		components: {
-			tamed: false
-		}
-	}
-	{
-		Entity: Cow
-		x: 13.787805
-		y: 30.856031
+		x: 15.229259
+		y: 6.4750957
 		components: {
 			tamed: false
 		}
 	}
 	{
 		Entity: Chicken
-		x: 20.670368
-		y: 4.2413135
-		components: {
-			tamed: false
-		}
-	}
-	{
-		Entity: Chicken
-		x: 48.232784
-		y: 21.458904
-		components: {
-			tamed: false
-		}
-	}
-	{
-		Entity: Chicken
-		x: 29.752827
-		y: 34.587887
-		components: {
-			tamed: false
-		}
-	}
-	{
-		Entity: Chicken
-		x: 31.37963
-		y: 32.306843
-		components: {
-			tamed: false
-		}
-	}
-	{
-		Entity: Chicken
-		x: 47.394638
-		y: 14.561841
+		x: 24.210552
+		y: 7.4412684
 		components: {
 			tamed: false
 		}
 	}
 	{
 		Entity: Tractor
-		x: 3.202381
-		y: 3.9232666
+		x: 3.613461
+		y: 5.9786696
 		components: {}
 	}
-	{
-		Entity: Chicken
-		x: 14.665914
-		y: 42.926952
-		components: {
-			tamed: false
-		}
-	}
-	{
-		Entity: Chicken
-		x: 40.25242
-		y: 12.540708
-		components: {
-			tamed: false
-		}
-	}
-	{
-		Entity: Chicken
-		x: 0.24472407
-		y: 16.280024
-		components: {
-			tamed: false
-		}
-	}
-	{
-		Entity: Chicken
-		x: 9.741353
-		y: 17.735434
-		components: {
-			tamed: false
-		}
-	}
-	{
-		Entity: Chicken
-		x: 25.636953
-		y: 20.160917
-		components: {
-			tamed: false
-		}
-	}
 ]
+map: {
+	Tiles: {
+		CropTile: {
+			X: 8
+			Y: 24
+			waterContent: 0.6900094
+			soilQuality: 1
+			isFertilised: false
+			plant: null
+		}
+		CropTile: {
+			X: 8
+			Y: 25
+			waterContent: 0.71000737
+			soilQuality: 1
+			isFertilised: false
+			plant: null
+		}
+		CropTile: {
+			X: 9
+			Y: 23
+			waterContent: 0.67922777
+			soilQuality: 1
+			isFertilised: false
+			plant: null
+		}
+		CropTile: {
+			X: 9
+			Y: 26
+			waterContent: 0.7200076
+			soilQuality: 1
+			isFertilised: false
+			plant: null
+		}
+		CropTile: {
+			X: 10
+			Y: 22
+			waterContent: 0.6683416
+			soilQuality: 1
+			isFertilised: false
+			plant: null
+		}
+		CropTile: {
+			X: 10
+			Y: 27
+			waterContent: 0.7308746
+			soilQuality: 1
+			isFertilised: false
+			plant: null
+		}
+	}
+}
 }

@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import com.badlogic.gdx.utils.Json;
+import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
 
 /**
@@ -228,6 +230,13 @@ public class TerrainTile implements TiledMapTile {
    */
   public boolean isTillable(){
     return this.isTillable;
+  }
+
+  public void write(Json json) {
+    getCropTile().getComponent(CropTileComponent.class).write(json);
+    if (getCropTile().getComponent(CropTileComponent.class).getPlant() != null) {
+      getCropTile().getComponent(CropTileComponent.class).getPlant().getComponent(PlantComponent.class).write(json);
+    }
   }
 
   public enum TerrainCategory { // wanted to name TerrainType but already enum with that name in TerrainFactory

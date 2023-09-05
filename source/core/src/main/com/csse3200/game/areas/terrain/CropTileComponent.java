@@ -211,7 +211,11 @@ public class CropTileComponent extends Component {
 		return path;
 	}
 
-  //need to store watercontent, soilquality, isFertilised, plant
+	public Entity getPlant() {
+		return plant;
+	}
+
+	//need to store watercontent, soilquality, isFertilised, plant
     @Override
     public void write (Json json) {
         json.writeValue("waterContent", waterContent);
