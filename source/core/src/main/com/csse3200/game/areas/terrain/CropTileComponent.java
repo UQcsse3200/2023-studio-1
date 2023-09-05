@@ -211,7 +211,12 @@ public class CropTileComponent extends Component {
 		return path;
 	}
 
-  //need to store watercontent, soilquality, isFertilised, plant
+  /**
+   * Writes in json summary of croptile state. Writes to json
+   * the waterContent, soilQuality, isFertilised and plant 
+   * to the json
+   * @param json which is a valid Json
+   */
     @Override
     public void write (Json json) {
         json.writeValue("waterContent", waterContent);

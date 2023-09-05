@@ -304,6 +304,14 @@ public class Entity implements Json.Serializable {
     return String.format("Entity{id=%d}", id);
   }
 
+  /**
+   * Writes to the json info about entities. 
+   * Writes the entities x,y coordinates 
+   * ALso loops through the entities associated components and writes information to the json about
+   * the component. 
+   * note each component should have a override write function
+   * @param json which is a valid Json that is written to
+   */
   public void write(Json json) {
     // Should be gone but incase double check
     if (getType() == EntityType.Item || getType() == null) {
