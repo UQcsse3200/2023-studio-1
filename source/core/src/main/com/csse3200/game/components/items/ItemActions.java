@@ -188,6 +188,12 @@ public class ItemActions extends Component {
     return true;
   }
 
+    /**
+     * Fertilises the tile at the given position
+     *
+     * @param tile the tile to be interacted with
+     * @return if fertilising was successful return true else return false
+     */
   private boolean fertilise(TerrainTile tile) {
     if (isCropTile(tile.getCropTile())) {
       tile.getCropTile().getEvents().trigger("fertilise");
@@ -196,6 +202,13 @@ public class ItemActions extends Component {
     return false;
   }
 
+    /**
+     * Plants the given seed seed in the tile at the given position
+     *
+     * @param tile the tile to be interacted with
+     * @param item the seed item to be planted
+     * @return if planting was successful return true else return false
+     */
   private boolean plant(TerrainTile tile, Entity item) {
     Function<CropTileComponent, Entity> plantFactoryMethod;
     if (isCropTile(tile.getCropTile())) {
