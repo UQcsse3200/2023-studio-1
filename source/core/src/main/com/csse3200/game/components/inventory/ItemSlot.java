@@ -53,12 +53,11 @@ public class ItemSlot extends Stack {
         label.setColor(Color.BLACK);
         label.setAlignment(Align.bottomRight);
 
-//        this.add(new Image(new Texture("images/itemFrame.png")));
         if (this.itemTexture != null) {
             this.add(new Image(this.itemTexture));
         }
 
-        if (this.count != null) {
+        if (this.count != null && this.count > 0) {
             this.add(label);
         }
     }

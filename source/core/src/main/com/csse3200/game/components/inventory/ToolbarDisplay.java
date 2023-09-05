@@ -1,9 +1,11 @@
 package com.csse3200.game.components.inventory;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.ui.UIComponent;
 
@@ -38,19 +40,14 @@ public class ToolbarDisplay extends UIComponent {
         table.defaults().size(64, 64);
 
         for (int i = 0; i < 10; i++) {
-            Label itemlabel = new Label(String.valueOf(i+1), skin.get("default", Label.LabelStyle.class));
-            table.add(itemlabel);
-        }
+            Label label = new Label(String.valueOf(i) + " ", skin); //please please please work
+            label.setColor(Color.WHITE);
+            label.setAlignment(Align.topLeft);
 
-        table.row();
-
-        for (int i = 0; i < 10; i++) {
-            Label label = new Label(String.valueOf(i), skin.get("default", Label.LabelStyle.class));
-            //set the bounds of the label
-            label.setBounds(label.getX() + 15, label.getY(), label.getWidth(), label.getHeight());
-            Stack stack = new Stack();
-            stack.add(new Image(new Texture("images/itemFrame.png")));
-            table.add(stack).pad(10, 10, 10, 10).fill();
+            ItemSlot item = new ItemSlot(new Texture("images/itemFrame.png"), 0);
+            item.add(label);
+            //stack.add(new Image(new Texture("images/itemFrame.png")));
+            table.add(item).pad(10, 10, 10, 10).fill();
 
         }
 
