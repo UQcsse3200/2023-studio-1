@@ -252,7 +252,7 @@ public class TerrainTile implements TiledMapTile {
    * @return cropTile entity or null if there is no cropTile entity
    */
   public Entity getCropTile() {
-    return cropTile;
+    return this.cropTile;
   }
 
   /**
