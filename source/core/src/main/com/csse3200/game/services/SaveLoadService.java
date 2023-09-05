@@ -80,6 +80,7 @@ public class SaveLoadService {
         cow.setPosition(entity.getPosition());
         GridPoint2 position = new GridPoint2((int)cow.getPosition().x, (int)cow.getPosition().y);
         ServiceLocator.getGameArea().spawnEntityAt(entity, position, true, true);
+        //TODo fix this
         
       }
     }
