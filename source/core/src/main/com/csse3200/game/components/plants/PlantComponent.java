@@ -1,6 +1,8 @@
 package com.csse3200.game.components.plants;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.rendering.DynamicTextureRenderComponent;
+import com.csse3200.game.services.ServiceLocator;
 
 /**
  * Class for all plants in the game.
@@ -16,16 +18,21 @@ public class PlantComponent extends Component {
     private float currentAge;           // Current age of the plant in in-game days
     private int growthStage;            // Growth stage of a plant.
     private int adultLifeSpan;          // How long a crop plant lives before starting to decay from old age.
-    private double currentGrowthLevel;  // Used to determine when a plant enters a new growth stage
+    private int currentGrowthLevel;  // Used to determine when a plant enters a new growth stage
 
     /** The crop tile on which this plant is planted on. */
     private CropTileComponent cropTile;
     private int[] growthStageThresholds = {0, 0, 0}; // Sprout, juvenile, adult. Initialised to zero and given values
-                                        // in the constructor. These thresholds determine when a plant advances to the
-                                        // next growth stage
+    // in the constructor. These thresholds determine when a plant advances to the
+    // next growth stage
+
+    private String[] growthStageImagePaths = {"", "", "", "", ""};
+
+    private int numOfDaysAsAdult; // Used to track how long a plant has been an adult.
+    private DynamicTextureRenderComponent currentTexture; // Current texture based on the growth stage
 
     /**
-     * Constructor used for plant types that have no extra properties.
+     * Constructor used for plant types that have no extra properties. This is just used for testing.
      *
      * @param health - health of the plant
      * @param name - name of the plant
@@ -56,6 +63,14 @@ public class PlantComponent extends Component {
         this.growthStageThresholds[0] = 11;
         this.growthStageThresholds[1] = 21;
         this.growthStageThresholds[2] = 41;
+
+        // Initialise the image paths for growth stages
+        // ALl pointing to Corn.png for now.
+        this.growthStageImagePaths[0] = "images/plants/Corn.png";
+        this.growthStageImagePaths[1] = "images/plants/Corn.png";
+        this.growthStageImagePaths[2] = "images/plants/Corn.png";
+        this.growthStageImagePaths[3] = "images/plants/Corn.png";
+        this.growthStageImagePaths[4] = "images/plants/Corn.png";
     }
 
     /**
@@ -70,10 +85,12 @@ public class PlantComponent extends Component {
      * @param maxHealth - The maximum health a plant can achieve
      * @param cropTile - The cropTileComponent where the plant will be located.
      * @param growthStageThresholds - A list of three integers that represent the growth thresholds.
+     * @param growthStageImagePaths - image paths for the different growth stages.
      */
     public PlantComponent(int health, String name, String plantType, String plantDescription,
                           float idealWaterLevel, int adultLifeSpan, int maxHealth,
-                          CropTileComponent cropTile, int[] growthStageThresholds) {
+                          CropTileComponent cropTile, int[] growthStageThresholds,
+                          String[] growthStageImagePaths) {
         this.plantHealth = health;
         this.plantName = name;
         this.plantType = plantType;
@@ -91,6 +108,13 @@ public class PlantComponent extends Component {
         this.growthStageThresholds[0] = growthStageThresholds[0];
         this.growthStageThresholds[1] = growthStageThresholds[1];
         this.growthStageThresholds[2] = growthStageThresholds[2];
+
+        // Initialise the image paths for the growth stages
+        this.growthStageImagePaths[0] = growthStageImagePaths[0];
+        this.growthStageImagePaths[1] = growthStageImagePaths[1];
+        this.growthStageImagePaths[2] = growthStageImagePaths[2];
+        this.growthStageImagePaths[3] = growthStageImagePaths[3];
+        this.growthStageImagePaths[4] = growthStageImagePaths[4];
     }
 
     /**
@@ -104,6 +128,9 @@ public class PlantComponent extends Component {
         entity.getEvents().addListener("harvest", this::harvest);
         entity.getEvents().addListener("destroyPlant", this::destroyPlant);
         entity.getEvents().addListener("attack", (Integer damage) -> increasePlantHealth(-damage));
+        ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateGrowthStage);
+        ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this:: adultLifeSpan);
+        this.currentTexture = entity.getComponent(DynamicTextureRenderComponent.class);
     }
 
     /**
@@ -260,7 +287,7 @@ public class PlantComponent extends Component {
      * Return the current growth level of the plant.
      * @return The current growth level
      */
-    public double getCurrentGrowthLevel() {
+    public int getCurrentGrowthLevel() {
         return this.currentGrowthLevel;
     }
 
@@ -278,10 +305,10 @@ public class PlantComponent extends Component {
 
         // Check if the growth rate is negative
         // That the plant is not decaying
-        if ((growthRate < 0) && !this.decay) {
+        if ((growthRate < 0) && !this.decay && (this.growthStage < 4)) {
             increasePlantHealth(-10);
         } else if (!this.decay && !(this.growthStage >= 7)) {
-            this.currentGrowthLevel += this.cropTile.getGrowthRate(this.idealWaterLevel);
+            this.currentGrowthLevel += (int)(this.cropTile.getGrowthRate(this.idealWaterLevel) * 10);
         }
     }
 
@@ -291,7 +318,7 @@ public class PlantComponent extends Component {
      * @return if the plant is fully decayed
      */
     public boolean isDead() {
-       return this.growthStage >= 7;
+        return this.growthStage >= 7;
     }
 
     /**
@@ -315,19 +342,55 @@ public class PlantComponent extends Component {
 
     /**
      * Update the growth stage of a plant based on its current growth level and its adult life span.
+     * This method is called every (in game) day at midday (12pm).
      * If the currentGrowthLevel exceeds the corresponding growth threshold, then the plant will advance to
      * the next growth stage.
      * When a plant becomes an adult, it has an adult life span. When the number of days since a plant becomes
      * and adult exceeds adult life span of a plant, then it starts to decay.
      */
     public void updateGrowthStage() {
-        this.increaseCurrentGrowthLevel();
-        // If a plant is not yet an adult
-        if (this.growthStage < 4) {
-            if (this.currentGrowthLevel >= this.growthStageThresholds[this.growthStage - 1]) {
-                growthStage += 1;
+        int time = ServiceLocator.getTimeService().getHour();
+        if (time == 12) {
+            this.increaseCurrentGrowthLevel();
+            // If a plant is not yet an adult
+            if (this.growthStage < 4) {
+                if (this.currentGrowthLevel >= this.growthStageThresholds[this.growthStage - 1]) {
+                    growthStage += 1;
+                    updateTexture();
+                    if (this.growthStage == 4) {
+                        this.numOfDaysAsAdult = 0;
+                    }
+                }
             }
         }
-        // STILL NEED TO HANDLE ADULT LIFE SPAN BASED ON IN GAME TIME. next on my list
+    }
+
+    /**
+     * An adult plant will live for a certain number of days (adultLifeSpan). Once a plant has exceeded its
+     * adultLifeSpan it will begin to decay.
+     */
+    public void adultLifeSpan() {
+        if (this.growthStage == 4) {
+            this.numOfDaysAsAdult += 1;
+            System.out.println("days as adult");
+            System.out.println(this.numOfDaysAsAdult);
+            if (numOfDaysAsAdult > this.adultLifeSpan) {
+                this.growthStage += 1;
+                updateTexture();
+            }
+        }
+    }
+
+    /**
+     * Update the texture of the plant based on its current growth stage.
+     */
+    public void updateTexture() {
+        if (growthStage <= 5) {
+            String path = this.growthStageImagePaths[this.growthStage - 1];
+
+            if (this.currentTexture != null) {
+                this.currentTexture.setTexture(path);
+            }
+        }
     }
 }
