@@ -1,6 +1,7 @@
 package com.csse3200.game.areas.terrain;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Json;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
@@ -209,4 +210,13 @@ public class CropTileComponent extends Component {
 		}
 		return path;
 	}
+
+  //need to store watercontent, soilquality, isFertilised, plant
+    @Override
+    public void write (Json json) {
+        json.writeValue("waterContent", waterContent);
+        json.writeValue("soilQuality", soilQuality);
+        json.writeValue("isFertilised", isFertilised);
+        json.writeValue("plant", plant);
+    }
 }
