@@ -97,6 +97,9 @@ project(":core") {
         // Typewriter Label for Intro
         api "com.rafaskoberg.gdx:typing-label:$typingLabelVersion"
 
+        // Box2DLigts
+        implementation "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
+
         // Unit Testing
         testImplementation "org.junit.jupiter:junit-jupiter-api:$junit5Version"
         testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:$junit5Version'
