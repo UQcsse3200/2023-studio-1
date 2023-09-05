@@ -9,6 +9,7 @@ import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
@@ -55,7 +56,7 @@ public class PlantFactory {
         BasePlantConfig config = stats.cosmicCob;
 
         Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/plants/Corn.png"))
+                .addComponent(new DynamicTextureRenderComponent("images/plants/Corn.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
                         config.maxHealth, cropTile));
@@ -64,7 +65,7 @@ public class PlantFactory {
         var cropTilePosition = cropTile.getEntity().getPosition();
         plant.setPosition(cropTilePosition.x, cropTilePosition.y + 0.5f);
 
-        plant.getComponent(TextureRenderComponent.class).scaleEntity();
+        plant.getComponent(DynamicTextureRenderComponent.class).scaleEntity();
         plant.scaleHeight(1f);
         PhysicsUtils.setScaledCollider(plant, 0.5f, 0.2f);
         return plant;
@@ -80,7 +81,7 @@ public class PlantFactory {
         BasePlantConfig config = stats.aloeVera;
 
         Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/plants/Aloe.png"))
+                .addComponent(new DynamicTextureRenderComponent("images/plants/Aloe.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
                         config.maxHealth, cropTile));
@@ -89,7 +90,7 @@ public class PlantFactory {
         var cropTilePosition = cropTile.getEntity().getPosition();
         plant.setPosition(cropTilePosition.x, cropTilePosition.y + 0.5f);
 
-        plant.getComponent(TextureRenderComponent.class).scaleEntity();
+        plant.getComponent(DynamicTextureRenderComponent.class).scaleEntity();
         plant.scaleHeight(1f);
         PhysicsUtils.setScaledCollider(plant, 0.5f, 0.2f);
         return plant;
@@ -105,7 +106,7 @@ public class PlantFactory {
         BasePlantConfig config = stats.hammerPlant;
 
         Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/plants/Hammer.png"))
+                .addComponent(new DynamicTextureRenderComponent("images/plants/Hammer.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
                         config.maxHealth, cropTile));
@@ -114,7 +115,7 @@ public class PlantFactory {
         var cropTilePosition = cropTile.getEntity().getPosition();
         plant.setPosition(cropTilePosition.x, cropTilePosition.y + 0.5f);
 
-        plant.getComponent(TextureRenderComponent.class).scaleEntity();
+        plant.getComponent(DynamicTextureRenderComponent.class).scaleEntity();
         plant.scaleHeight(1f);
         PhysicsUtils.setScaledCollider(plant, 0.5f, 0.2f);
         return plant;
@@ -131,7 +132,7 @@ public class PlantFactory {
         BasePlantConfig config = stats.nightshade;
 
         Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/plants/nightshade.png"))
+                .addComponent(new DynamicTextureRenderComponent("images/plants/nightshade.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
                         config.maxHealth, cropTile));
@@ -140,7 +141,7 @@ public class PlantFactory {
         var cropTilePosition = cropTile.getEntity().getPosition();
         plant.setPosition(cropTilePosition.x, cropTilePosition.y + 0.5f);
 
-        plant.getComponent(TextureRenderComponent.class).scaleEntity();
+        plant.getComponent(DynamicTextureRenderComponent.class).scaleEntity();
         plant.scaleHeight(1f);
         PhysicsUtils.setScaledCollider(plant, 0.5f, 0.2f);
         return plant;
@@ -156,7 +157,7 @@ public class PlantFactory {
         BasePlantConfig config = stats.tobacco;
 
         Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/plants/waterweed.png"))
+                .addComponent(new DynamicTextureRenderComponent("images/plants/waterweed.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
                         config.maxHealth, cropTile));
@@ -165,7 +166,7 @@ public class PlantFactory {
         var cropTilePosition = cropTile.getEntity().getPosition();
         plant.setPosition(cropTilePosition.x, cropTilePosition.y + 0.5f);
 
-        plant.getComponent(TextureRenderComponent.class).scaleEntity();
+        plant.getComponent(DynamicTextureRenderComponent.class).scaleEntity();
         plant.scaleHeight(1f);
         PhysicsUtils.setScaledCollider(plant, 0.5f, 0.2f);
         return plant;
@@ -182,7 +183,7 @@ public class PlantFactory {
         BasePlantConfig config = stats.venusFlyTrap;
 
         Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/plants/VenusTrap.png"))
+                .addComponent(new DynamicTextureRenderComponent("images/plants/VenusTrap.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
                         config.maxHealth, cropTile));
@@ -191,7 +192,7 @@ public class PlantFactory {
         var cropTilePosition = cropTile.getEntity().getPosition();
         plant.setPosition(cropTilePosition.x, cropTilePosition.y + 0.5f);
 
-        plant.getComponent(TextureRenderComponent.class).scaleEntity();
+        plant.getComponent(DynamicTextureRenderComponent.class).scaleEntity();
         plant.scaleHeight(1f);
         PhysicsUtils.setScaledCollider(plant, 0.5f, 0.2f);
         return plant;
