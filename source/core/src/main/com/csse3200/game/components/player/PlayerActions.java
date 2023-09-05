@@ -91,6 +91,21 @@ public class PlayerActions extends Component {
     }
   }
 
+  private void TileAffectedSpeed() {
+    // player position
+    if (this.prevMoveDirection < 45 && !map.getTile(1, 0).isTraversable()) {
+        // do st
+    } else if (this.prevMoveDirection < 135 && !map.getTile(0, 1).isTraversable()) {
+        // do st
+    } else if (this.prevMoveDirection < 225 && !map.getTile(-1, 0).isTraversable()) {
+        // do st
+    } else if (this.prevMoveDirection < 315 && !map.getTile(0, -1).isTraversable()) {
+        // do st
+    } else {
+        // do st
+    }
+    return;
+  }
 
   private void updateSpeed() {
     Body body = physicsComponent.getBody();

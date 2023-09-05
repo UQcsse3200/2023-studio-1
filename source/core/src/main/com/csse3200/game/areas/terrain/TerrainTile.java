@@ -16,10 +16,30 @@ public class TerrainTile implements TiledMapTile {
   private TextureRegion textureRegion;
   private float offsetX;
   private float offsetY;
+
+  /**
+   * Represents the type of terrain that the terrain tile is
+   */
   private TerrainCategory terrainCategory;
+
+  /**
+   * Stores whether a terrain tile is traversable or not. Is true if it traversable and false if not
+   */
   private boolean isTraversable;
+
+  /**
+   * Stores whether the tile is occupied or not by a STATIONARY entity - i.e. a cropTile. Is true if terrain tile is occupied and false if not
+   */
   private boolean isOccupied;
+
+  /**
+   * Stores whether the tile is tillable or not (can be farmed). Is true if the terrain tile is tillable and false if not
+   */
   private boolean isTillable;
+
+  /**
+   * Stores a crop tile which occupies the terrain tile. Is null if no crop tile occupies the terrain tile.
+   */
   private Entity cropTile = null;
   private double speed;
 
@@ -239,11 +259,29 @@ public class TerrainTile implements TiledMapTile {
     FLOWINGWATER
   }
 
+  /**
+   * Returns a crop tile entity which occupies the terrain tile
+   * @return cropTile entity or null if there is no cropTile entity
+   */
   public Entity getCropTile() {
     return cropTile;
   }
 
+  /**
+   * Sets the crop tile which occupies the terrain tile. Replaces any existing crop tile that was already occupying the
+   * terrain tile. Do not use to set cropTile as null, use removeCropTile instead.
+   * @param cropTile new cropTile entity to occupy the terrainTile
+   */
   public void setCropTile(Entity cropTile) {
     this.cropTile = cropTile;
+    this.setOccupied();
+  }
+
+  /**
+   * Removes any crop tile which occupies the terrain tile. Does not return the crop tile.
+   */
+  public void removeCropTile() {
+    this.cropTile = null;
+    this.setUnOccupied();
   }
 }
