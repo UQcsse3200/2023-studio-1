@@ -24,7 +24,9 @@ import com.csse3200.game.utils.math.GridPoint2Utils;
  * - prints save/load to system out depending on method call.
  */
 public class SaveLoadService {
-
+  /**
+   * Saves the current state of the game into a GameState
+   */
   public void save() {
     // Make a new GameState
     SaveGame.GameState state = new GameState();
@@ -42,6 +44,12 @@ public class SaveLoadService {
     System.out.println("save!");
   }
 
+
+
+  /**
+   * Load function which based on conents in saveFile.json
+   * Makes the game state match saveFile.json 
+   */
   public void load() {
     SaveGame.GameState state = SaveGame.get();
 
@@ -55,12 +63,20 @@ public class SaveLoadService {
     System.out.println("load!");
   }
 
+  /**
+   * Update NPCs, player and time of the game based off the gamestate that was saved
+   * @param state state of the game which was saved previously in saveFile.json
+   */
   private void updateGame(GameState state) {
     updateNPCs(state);
     updatePlayer(state);
     updateTime(state);
   }
 
+  /**
+   * Updates the player entity position based off the saved gamestate
+   * @param state gamestate of the entire game based off safeFile.json
+   */
   private void updatePlayer(GameState state) {
     Entity currentPlayer = ServiceLocator.getGameArea().getPlayer();
     currentPlayer.setPosition(state.getPlayer().getPosition());
@@ -68,6 +84,10 @@ public class SaveLoadService {
     System.out.println(state.getPlayer().getPosition());
   }
 
+  /**
+   * Destroys all NPCS in the map and then recreates them based off the gamestate
+   * @param state gamestate of the entire game based off safeFile.json
+   */
   private void updateNPCs(GameState state) {
     Entity player = ServiceLocator.getGameArea().getPlayer();
     EntityService entityService = ServiceLocator.getEntityService();
@@ -89,6 +109,10 @@ public class SaveLoadService {
 
 
 
+  /**
+   * Updates the time of the game based off the saved values in the gamestate
+   * @param state the state of the saved game
+   */
   private void updateTime(GameState state) {
     ServiceLocator.getTimeService().setDay(state.getDay());
     ServiceLocator.getTimeService().setHour(state.getHour());
