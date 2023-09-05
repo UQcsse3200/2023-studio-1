@@ -1,100 +1,52 @@
 {
-hour: 16
-player: {
-	Entity: Player
-	x: 11.863657
-	y: 28.268852
-	components: {
-		inventory: [
-			hoe
-			shovel
-			watering can
-			scythe
+"day": 1,
+"hour": 3,
+"player": {
+	"Entity": "Player",
+	"x": 6.042307,
+	"y": 2.9159606,
+	"components": {
+		"inventory": [
+			"hoe",
+			"shovel",
+			"watering can",
+			"scythe"
 		]
 	}
-}
-entities: [
+},
+"entities": [
 	{
-		Entity: Axolotl
-		x: 39.266407
-		y: 26.842346
-		components: {
-			tamed: false
+		"Entity": "Axolotl",
+		"x": 30.689255,
+		"y": 17.001587,
+		"components": {
+			"tamed": false
 		}
-	}
+	},
 	{
-		Entity: Cow
-		x: 15.229259
-		y: 6.4750957
-		components: {
-			tamed: false
+		"Entity": "Cow",
+		"x": 10.555645,
+		"y": 25.29787,
+		"components": {
+			"tamed": false
 		}
-	}
+	},
 	{
-		Entity: Chicken
-		x: 24.210552
-		y: 7.4412684
-		components: {
-			tamed: false
+		"Entity": "Chicken",
+		"x": 42.300182,
+		"y": 36.517876,
+		"components": {
+			"tamed": false
 		}
-	}
+	},
 	{
-		Entity: Tractor
-		x: 3.613461
-		y: 5.9786696
-		components: {}
+		"Entity": "Tractor",
+		"x": 3.202381,
+		"y": 3.9232666,
+		"components": {}
 	}
-]
-map: {
-	Tiles: {
-		CropTile: {
-			X: 8
-			Y: 24
-			waterContent: 0.6900094
-			soilQuality: 1
-			isFertilised: false
-			plant: null
-		}
-		CropTile: {
-			X: 8
-			Y: 25
-			waterContent: 0.71000737
-			soilQuality: 1
-			isFertilised: false
-			plant: null
-		}
-		CropTile: {
-			X: 9
-			Y: 23
-			waterContent: 0.67922777
-			soilQuality: 1
-			isFertilised: false
-			plant: null
-		}
-		CropTile: {
-			X: 9
-			Y: 26
-			waterContent: 0.7200076
-			soilQuality: 1
-			isFertilised: false
-			plant: null
-		}
-		CropTile: {
-			X: 10
-			Y: 22
-			waterContent: 0.6683416
-			soilQuality: 1
-			isFertilised: false
-			plant: null
-		}
-		CropTile: {
-			X: 10
-			Y: 27
-			waterContent: 0.7308746
-			soilQuality: 1
-			isFertilised: false
-			plant: null
-		}
-	}
+],
+"map": {
+	"Tiles": {}
 }
 }
