@@ -2,15 +2,20 @@ package com.csse3200.game.services;
 
 import java.security.Provider.Service;
 
+import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.EntityType;
+import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.files.SaveGame;
 import com.csse3200.game.files.SaveGame.GameState;
 import com.csse3200.game.entities.factories.NPCFactory;
+import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.utils.math.GridPoint2Utils;
+
+import static com.csse3200.game.services.ServiceLocator.getEntityService;
 
 
 /* A note of the registering of this service:
@@ -97,6 +102,18 @@ public class SaveLoadService {
    * @param state gamestate of the entire game based off safeFile.json
    */
   private void updateNPCs(GameState state) {
+    //Entity temp = new Entity();
+    Entity temp = PlayerFactory.createPlayer();
+    EntityService entityService = getEntityService();
+    //entityService.disposeNPCs(); TODO: dispose doesn't work
+    for (Entity entity : state.getEntities()) {
+      if (entity.getType() == EntityType.Chicken) {
+        Entity chicken = NPCFactory.createChicken(temp);
+        ServiceLocator.getGameArea().spawnEntity(chicken);
+        ServiceLocator.getEntityService().getEntities().peek().setPosition(entity.getPosition());
+      }
+    }
+    /*
     Entity player = ServiceLocator.getGameArea().getPlayer();
     EntityService entityService = ServiceLocator.getEntityService();
 
@@ -113,6 +130,7 @@ public class SaveLoadService {
         
       }
     }
+     */
   }
 
 
