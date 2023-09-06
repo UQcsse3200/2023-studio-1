@@ -121,6 +121,10 @@ public class TamableComponent extends Component {
         this.isTamed = false;
     }
 
+    /**
+     * Writes to the json boolean of tamed. 
+     * @param json which is a valid Json.
+     */
     @Override
     public void write (Json json) {
         json.writeValue("tamed", isTamed());

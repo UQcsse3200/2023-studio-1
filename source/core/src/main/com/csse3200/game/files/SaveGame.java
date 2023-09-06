@@ -3,6 +3,7 @@ package com.csse3200.game.files;
 import java.io.File;
 
 import com.badlogic.gdx.utils.Array;
+import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.files.FileLoader.Location;
@@ -23,7 +24,9 @@ public class SaveGame {
     String path = ROOT_DIR + File.separator + SAVE_FILE;
     GameState saveFile = FileLoader.readClass(GameState.class, path, Location.LOCAL);
 
-    return saveFile != null ? saveFile : new GameState();
+    return saveFile; // we do a null check in calling function anyway
+    // TODO: remove old code
+    //return saveFile != null ? saveFile : new GameState();
   }
 
   /**
@@ -44,6 +47,8 @@ public class SaveGame {
 
     private Entity player;
     private Array<Entity> entities;
+
+    private GameMap map;
 
     public GameState() {};
 
@@ -83,7 +88,7 @@ public class SaveGame {
       // If you edit this original array you edit what is in the ResourceService
       Array<Entity> tmp = new Array<>(entities);
       for (int i = 0; i < tmp.size; i++) {
-        if (tmp.get(i).getType() == EntityType.Item || tmp.get(i).getType() == EntityType.Player || tmp.get(i).getType() == null) {
+        if (tmp.get(i).getType() == EntityType.Item || tmp.get(i).getType() == EntityType.Player || tmp.get(i).getType() == null || tmp.get(i).getType() == EntityType.Tile) {
           tmp.removeIndex(i);
           // Moves the indexing down when removed so keep index same
           i--;
@@ -91,6 +96,14 @@ public class SaveGame {
         }
       }
       return tmp;
+    }
+
+    public GameMap getMap() {
+      return map;
+    }
+
+    public void setMap(GameMap map) {
+      this.map = map;
     }
   }
 }

@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ComponentType;
 import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.components.player.PlayerActions;
@@ -38,7 +39,7 @@ public class Entity implements Json.Serializable {
   private static final String EVT_NAME_POS = "setPosition";
 
   private final int id;
-  private final EntityType type;
+  private EntityType type;
   private final IntMap<Component> components;
   private final EventHandler eventHandler;
   private boolean enabled = true;
@@ -304,6 +305,14 @@ public class Entity implements Json.Serializable {
     return String.format("Entity{id=%d}", id);
   }
 
+  /**
+   * Writes to the json info about entities. 
+   * Writes the entities x,y coordinates 
+   * ALso loops through the entities associated components and writes information to the json about
+   * the component. 
+   * note each component should have a override write function
+   * @param json which is a valid Json that is written to
+   */
   public void write(Json json) {
     // Should be gone but incase double check
     if (getType() == EntityType.Item || getType() == null) {
@@ -336,9 +345,12 @@ public class Entity implements Json.Serializable {
   public void read(Json json, JsonValue jsonMap) {
 
     position = new Vector2(jsonMap.getFloat("x"), jsonMap.getFloat("y"));
-    // for (JsonValue c: jsonMap.get("components")) {
-    //   //System.out.println(c.get("class")).getClass());
-    // }
+    String value = jsonMap.getString("Entity");
+    try {
+      type = EntityType.valueOf(value);
+    } catch (IllegalArgumentException e) {
+      type = null;
+    }
   }
 
 

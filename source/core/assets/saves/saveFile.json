@@ -2,8 +2,8 @@
 "hour": 4,
 "player": {
 	"Entity": "Player",
-	"x": 4.75,
-	"y": 3.6082673,
+	"x": 10.073083,
+	"y": 4.054422,
 	"components": {
 		"inventory": [
 			"hoe",
@@ -16,128 +16,24 @@
 "entities": [
 	{
 		"Entity": "Axolotl",
-		"x": 30.62915,
-		"y": 14.050498,
+		"x": 13.861062,
+		"y": 38.615463,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Cow",
-		"x": 2.2474723,
-		"y": 9.616484,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Cow",
-		"x": 38.10631,
-		"y": 39.810337,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Cow",
-		"x": 26.974651,
-		"y": 15.519174,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Cow",
-		"x": 37.53836,
-		"y": 40.54684,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Cow",
-		"x": 38.985573,
-		"y": 20.536901,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Cow",
-		"x": 1.472113,
-		"y": 10.496558,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Cow",
-		"x": 24.17975,
-		"y": 27.646795,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Cow",
-		"x": 24.580893,
-		"y": 46.225784,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Cow",
-		"x": 8.436901,
-		"y": 45.38572,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Cow",
-		"x": 3.632964,
-		"y": 28.97958,
+		"x": 38.08797,
+		"y": 28.82689,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 45.958473,
-		"y": 43.16709,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 33.30856,
-		"y": 29.01024,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 2.3363702,
-		"y": 20.454771,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 32.950592,
-		"y": 26.264097,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 32.014107,
-		"y": 6.383583,
+		"x": 47.994938,
+		"y": 41.082104,
 		"components": {
 			"tamed": false
 		}
@@ -147,46 +43,6 @@
 		"x": 3.202381,
 		"y": 3.9232666,
 		"components": {}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 41.296764,
-		"y": 26.023806,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 38.069412,
-		"y": 47.206963,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 35.82195,
-		"y": 48.59325,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 19.71156,
-		"y": 37.99619,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 0.014996764,
-		"y": 6.9984145,
-		"components": {
-			"tamed": false
-		}
 	}
 ]
 }
