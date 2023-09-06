@@ -29,6 +29,7 @@ public class MissionManager {
 	 * Creates the mission manager, registered all game achievements and adds a listener for hourly updates
 	 */
 	public MissionManager() {
+		ServiceLocator.getTimeService().getEvents().addListener("updateHour", this::updateQuestTimes);
 		for (Achievement mission : achievements) {
 			mission.registerMission(events);
 		}
@@ -51,6 +52,12 @@ public class MissionManager {
 	 */
 	public EventHandler getEvents() {
 		return events;
+	}
+
+	private void updateQuestTimes() {
+		for (Quest quest : quests) {
+			quest.updateExpiry();
+		}
 	}
 
 }
