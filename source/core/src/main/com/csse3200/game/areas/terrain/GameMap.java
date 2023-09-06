@@ -50,10 +50,11 @@ public class GameMap {
      */
     private TiledMapTileLayer.Cell getCell(int x, int y) {
         // ADD A CHECK FOR INTS BEING OUT OF BOUNDS OF MAP                                   HUNTER DO THIS
+        //throw new IndexOutOfBoundsException("Bad Input: Coordinate position out of bounds");
         return ((TiledMapTileLayer) this.tiledMap.getLayers().get(0)).getCell(x, y);
     }
 
-    /**                                                             TO REMOVE THIS FUNCTION
+    /**                                                      TO REMOVE THIS FUNCTION                        HUNTER DO THIS
      * Gets the tile at a specified world coordinate position
      * @param x x coordinate
      * @param y y coordinate
@@ -96,39 +97,29 @@ public class GameMap {
     }
 
     /**
-     * Conversion function: gets the centre of a tile from a coordinate position
-     * e.g. on a 4x4 tile grid, (0, 0) in the world translates to (8, 56) on the pixel grid
-     * @param x x coordinate
-     * @param y y coordinate
-     * @return a Vector2 value
+     * Converts a Vector2 instance into a GridPoint2 instance representing the same TerrainTile position in the map
+     * layer. The float values in the Vector2 instance are transformed to integer x and y values for the GridPoint2
+     * instance.
+     * @param vector The Vector2 instance being used to create a corresponding GridPoint2 instance.
+     * @return the new GridPoint2 instance.
      */
-    public GridPoint2 worldCoordinatesToPixelPosition(int x, int y) {
-        GridPoint2 max = this.getMapSize();
-
-        if (x > max.x || y > max.y) {
-            throw new IndexOutOfBoundsException("Bad Input: Coordinate position out of bounds");
-        }
-
-        int xPixel = (16 * x) + 8;
-        int y2 = (16 * y) + 8;
-        // post process y2 to convert (0,0) location to bottom left
-        int yPixel = Gdx.graphics.getHeight() - y2;
-        return new GridPoint2(xPixel, yPixel);
+    public GridPoint2 vectorToTileCoordinates(Vector2 vector) {
+        int x = (int) Math.floor(vector.x / 0.5);
+        int y = (int) Math.floor(vector.y / 0.5);                 // SHOULD ADJUST these lines so they instead divide by the tile size from the terrainComponent
+        return new GridPoint2(x, y);
     }
 
     /**
-     * Conversion function: gets the centre of a tile from a coordinate position
-     * e.g. on a 4x4 tile grid, (6, 50) on the pixel grid translates to (0, 0) in the world
-     * @param xPixel x pixel screen coordinate
-     * @param yPixel y pixel screen coordinate
-     * @return a Vector2 value
+     * Converts a GridPoint2 instance into a Vector2 instance representing the same TerrainTile position in the map
+     * layer. The integer values in the GridPoint2 class which directly correspond to the TerrainTile coordinates
+     * are transformed for the new Vector2 instance.
+     * @param gridPoint2 The GridPoint2 instance being used to create a corresponding Vector2 instance.
+     * @return the new Vector2 instance.
      */
-    public GridPoint2 pixelPositionToWorldCoordinates(int xPixel, int yPixel) {
-        int x = Math.floorDiv(xPixel, 16);
-        // preprocess y2 to convert (0,0) to top left
-        int y2 = Gdx.graphics.getHeight() - yPixel;
-        int y = Math.floorDiv(y2, 16);
-        return new GridPoint2(x, y);
+    public Vector2 tileCoordinatesToVector (GridPoint2 gridPoint2) {
+        float x = (float) (gridPoint2.x * 0.5);
+        float y = (float) (gridPoint2.y * 0.5);            // SHOULD ADJUST these lines so they multiply by the tile size from the terrainComponent
+        return new Vector2(x, y);
     }
 
     /**
@@ -230,5 +221,46 @@ public class GameMap {
 
     public float getTileSpeedModifier(int x, int y) {
         return this.getTile(x, y).getSpeedModifier();
+    }
+
+
+
+
+    // TO BE REMOVED                                            DO NOT FORGET
+    /**
+     * Conversion function: gets the centre of a tile from a coordinate position
+     * e.g. on a 4x4 tile grid, (0, 0) in the world translates to (8, 56) on the pixel grid
+     * @param x x coordinate
+     * @param y y coordinate
+     * @return a Vector2 value
+     */
+    public GridPoint2 worldCoordinatesToPixelPosition(int x, int y) {
+        GridPoint2 max = this.getMapSize();
+
+        if (x > max.x || y > max.y) {
+            throw new IndexOutOfBoundsException("Bad Input: Coordinate position out of bounds");
+        }
+
+        int xPixel = (16 * x) + 8;
+        int y2 = (16 * y) + 8;
+        // post process y2 to convert (0,0) location to bottom left
+        int yPixel = Gdx.graphics.getHeight() - y2;
+        return new GridPoint2(xPixel, yPixel);
+    }
+
+    // TO BE REMOVED                                            DO NOT FORGET
+    /**
+     * Conversion function: gets the centre of a tile from a coordinate position
+     * e.g. on a 4x4 tile grid, (6, 50) on the pixel grid translates to (0, 0) in the world
+     * @param xPixel x pixel screen coordinate
+     * @param yPixel y pixel screen coordinate
+     * @return a Vector2 value
+     */
+    public GridPoint2 pixelPositionToWorldCoordinates(int xPixel, int yPixel) {
+        int x = Math.floorDiv(xPixel, 16);
+        // preprocess y2 to convert (0,0) to top left
+        int y2 = Gdx.graphics.getHeight() - yPixel;
+        int y = Math.floorDiv(y2, 16);
+        return new GridPoint2(x, y);
     }
 }
