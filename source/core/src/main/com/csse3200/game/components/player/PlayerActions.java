@@ -157,6 +157,7 @@ public class PlayerActions extends Component {
     } else if (direction < 315) {
       entity.getEvents().trigger("animationInteract", "down");
     }
+    entity.getEvents().trigger("toggleMissions");
   }
 
   /**
