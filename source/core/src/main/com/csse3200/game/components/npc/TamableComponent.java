@@ -1,10 +1,14 @@
 package com.csse3200.game.components.npc;
 
+import java.util.List;
 import java.util.Random;
 
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.items.ItemType;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
 
 /**
  * This the class for Tameable Component. These components should
@@ -18,6 +22,7 @@ public class TamableComponent extends Component {
     private boolean isTamed;
     private final Entity player;
     private Random random = new Random();  //https://rules.sonarsource.com/java/RSPEC-2119/
+    private InventoryComponent playerAssets;
 
     /**
      * Constructor for the Tameable Component class
@@ -34,6 +39,7 @@ public class TamableComponent extends Component {
         this.favouriteFood = favouriteFood;
         this.isTamed = false;
         this.player = player;
+        this.playerAssets = player.getComponent(InventoryComponent.class);
     }
 
     /**
@@ -65,10 +71,31 @@ public class TamableComponent extends Component {
         if (isTamed) {
             return;
         }
+        List<Entity> playerInv = this.playerAssets.getInventory();
+        boolean hasfood = false;
+        int inventoryIndex = 0;
+        for (int index = 0; index < playerInv.size(); index++) {
+            Entity invVariable = playerInv.get(index);
 
-        // Check player is holding the right item TODO: Implement checking the players item SEE
-        //  TEAM 8!.
-        if (player.getComponent(ItemComponent.class).getItemName().equals(favouriteFood)) {
+            //add an additional check (Type of entity)
+            if  (!invVariable.getType().equals(EntityType.Item)) {
+                //entity is not of an item type
+                continue;
+            }
+            if (invVariable.getComponent(ItemComponent.class).getItemName() == favouriteFood) {
+                hasfood = true;
+                inventoryIndex = index;
+                break;
+            }
+        }
+
+        if (!hasfood) { //player can't feed animal as it does not have his favourite food.
+            return;
+        }
+        this.playerAssets.setHeldItem(inventoryIndex);
+
+        // Check player is holding the right item
+        if (this.playerAssets.getHeldItem().getComponent(ItemComponent.class).getItemName().equals(favouriteFood)) {
 
             // Generate RNG number for taming
             double randomDecimal = generateRandomDecimal();
@@ -85,10 +112,8 @@ public class TamableComponent extends Component {
             } else {
                 numTimesFed++;
             }
-
-            // Remove the food from the players inventory TODO: WAIT FOR TEAM 8
-            // player.getComponent(ItemComponent.class).dispose();
-
+            this.playerAssets.removeItem(this.playerAssets.getHeldItem());
+            // Remove the food from the players inventory
         }
     }
 
@@ -106,17 +131,5 @@ public class TamableComponent extends Component {
      */
     public boolean isTamed() {
         return isTamed;
-    }
-
-    /**
-     * Function is used to set the tame value of the animals.
-     * This is used for testing purposes and will be deleted in later sprint.
-     * @param value Boolean value that will be used to set to the istamed variable.
-     */
-    public void setTame(boolean value) {
-        if (value) {
-            this.isTamed = true;
-        }
-        this.isTamed = false;
     }
 }
