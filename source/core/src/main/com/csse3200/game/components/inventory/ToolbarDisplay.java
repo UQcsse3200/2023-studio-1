@@ -8,7 +8,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.ui.UIComponent;
-
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.Screen;
 public class ToolbarDisplay extends UIComponent {
 
     private Table table;
@@ -16,6 +23,8 @@ public class ToolbarDisplay extends UIComponent {
     private boolean isOpen;
 
     private InventoryComponent inventory;
+
+    private final ShapeRenderer shapeRenderer = new ShapeRenderer();
 
     /**
      * Creates reusable ui styles and adds actors to the stage.
@@ -40,6 +49,7 @@ public class ToolbarDisplay extends UIComponent {
         table.defaults().size(64, 64);
 
         for (int i = 0; i < 10; i++) {
+
             Label label = new Label(String.valueOf(i) + " ", skin); //please please please work
             label.setColor(Color.WHITE);
             label.setAlignment(Align.topLeft);
@@ -48,6 +58,9 @@ public class ToolbarDisplay extends UIComponent {
             item.add(label);
             table.add(item).pad(10, 10, 10, 10).fill();
 
+            Label itemlabel = new Label(String.valueOf(i+1), skin.get("default", Label.LabelStyle.class));
+            itemlabel.setAlignment(Align.topLeft);
+            table.add(itemlabel);
         }
 
         // Create a window for the inventory using the skin
@@ -98,5 +111,9 @@ public class ToolbarDisplay extends UIComponent {
     @Override
     public void dispose() {
         super.dispose();
+    }
+
+    public void updateItemSlot(int slotNum) {
+
     }
 }
