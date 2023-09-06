@@ -7,8 +7,8 @@ public class PlanetOxygenController implements OxygenLevel{
     
     private static final Logger logger = LoggerFactory.getLogger(PlanetOxygenController.class);
     
-    private double oxygenUpperLimit;
-    private float oxygenPresent;
+    private float oxygenUpperLimit;
+    private float oxygenPresent = 0;
     private float delta;
     
     @Override
@@ -18,12 +18,12 @@ public class PlanetOxygenController implements OxygenLevel{
     
     @Override
     public void addOxygen(float kilogramsToAdd) {
-    
+        oxygenPresent += kilogramsToAdd;
     }
     
     @Override
     public void removeOxygen(float kilogramsToRemove) {
-    
+        oxygenPresent -= kilogramsToRemove;
     }
     
     @Override
@@ -33,11 +33,15 @@ public class PlanetOxygenController implements OxygenLevel{
     
     @Override
     public float getOxygenPercentage() {
+        if (oxygenUpperLimit > 0) {
+            return oxygenPresent/oxygenUpperLimit;
+        }
         return 0;
     }
     
     @Override
     public void registerContinuousAdd(float kilogramsPerHour) {
+    
     
     }
     
