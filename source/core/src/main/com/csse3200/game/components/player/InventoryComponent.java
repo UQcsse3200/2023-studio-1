@@ -83,7 +83,7 @@ public class InventoryComponent extends Component {
     itemPlace.put(b,temp);
   }
 
-  public boolean setPositionItem(Entity entity, int pos) {
+  public boolean setPosition(Entity entity, int pos) {
     itemPlace.put(pos, entity);
     entity.getEvents().trigger("updateInventory");
     return true;
@@ -91,7 +91,7 @@ public class InventoryComponent extends Component {
   public void removePosition(int pos){
     itemPlace.remove(pos);
   }
-  public boolean setPositionItem(Entity entity){
+  public boolean setPosition(Entity entity){
     int lastPlace = itemPlace.size() - 1 ;
     itemPlace.put(lastPlace+1,entity);
     entity.getEvents().trigger("updateInventory");
@@ -105,10 +105,11 @@ public class InventoryComponent extends Component {
    */
   public boolean addItem(Entity item) {
     itemCount.put(item, itemCount.getOrDefault(item, 0) + 1);
-    setPositionItem(item);
+    setPosition(item);
     if (!itemPosition.containsKey(item)) {
       itemPosition.put(item, new Point(0, 0)); // Default position. You can change this as needed.
     }
+    updateInventory();
     return this.inventory.add(item);
   }
 
@@ -123,6 +124,7 @@ public class InventoryComponent extends Component {
       itemCount.remove(item);
       itemPosition.remove(item);
     }
+    updateInventory();
     return this.inventory.remove(item);
   }
 
