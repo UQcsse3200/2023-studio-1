@@ -6,5 +6,6 @@ public enum ItemType {
     WATERING_CAN,
     SCYTHE,
     FERTILISER,
-    SEED
+    SEED,
+    ANIMAL_FOOD
 }
