@@ -9,10 +9,4 @@ public class NPCConfigs {
   public BaseAnimalConfig cow = new BaseAnimalConfig();
   public BaseAnimalConfig chicken = new BaseAnimalConfig();
   public BaseAnimalConfig astrolotl = new BaseAnimalConfig();
-
-
-  public BaseAnimalConfig testDummy1 = new BaseAnimalConfig();
-  public BaseAnimalConfig testDummy = new BaseAnimalConfig();
-
-
 }
