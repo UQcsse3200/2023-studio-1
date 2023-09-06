@@ -62,7 +62,8 @@ public class ClimateController {
 	 */
 	private void updateWeatherEvent() {
 		// Sets initial priority to current weather event or 0 if nothing is happening
-		int priority = currentWeatherEvent == null ? -1 : currentWeatherEvent.getPriority();
+		currentWeatherEvent = null;
+		int priority = -1;
 		// Updates every weather event
 		for (WeatherEvent event: weatherEvents) {
 			event.updateTime();
