@@ -5,8 +5,10 @@ import java.util.Random;
 
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
 
 /**
  * This the class for Tameable Component. These components should
@@ -74,6 +76,12 @@ public class TamableComponent extends Component {
         int inventoryIndex = 0;
         for (int index = 0; index < playerInv.size(); index++) {
             Entity invVariable = playerInv.get(index);
+
+            //add an additional check (Type of entity)
+            if  (!invVariable.getType().equals(EntityType.Item)) {
+                //entity is not of an item type
+                continue;
+            }
             if (invVariable.getComponent(ItemComponent.class).getItemName() == favouriteFood) {
                 hasfood = true;
                 inventoryIndex = index;
