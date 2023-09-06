@@ -10,11 +10,11 @@
     "sproutThreshold": 7,
     "juvenileThreshold": 22,
     "adultThreshold": 35,
-    "seedingAsset": "images/plants/Corn.png",
+    "seedlingAsset": "images/plants/corn_item.png",
     "sproutingAsset": "images/plants/Corn.png",
-    "juvenileAsset": "images/plants/Corn.png",
-    "adultAsset": "images/plants/Corn.png",
-    "decayingAsset": "images/plants/Corn.png"
+    "juvenileAsset": "images/plants/corn_juvenile.png",
+    "adultAsset": "images/plants/corn_adult.png",
+    "decayingAsset": "images/plants/corn_decaying.png"
   },
   "aloeVera": {
     "health": 10,
@@ -27,10 +27,10 @@
     "sproutThreshold": 13,
     "juvenileThreshold": 27,
     "adultThreshold": 46,
-    "seedingAsset": "images/plants/Aloe.png",
+    "seedlingAsset": "images/plants/Aloe.png",
     "sproutingAsset": "images/plants/Aloe.png",
     "juvenileAsset": "images/plants/Aloe.png",
-    "adultAsset": "images/plants/Aloe.png",
+    "adultAsset": "images/plants/aloe_adult.png",
     "decayingAsset": "images/plants/Aloe.png"
   },
   "hammerPlant": {
@@ -44,10 +44,10 @@
     "sproutThreshold": 12,
     "juvenileThreshold": 19,
     "adultThreshold": 37,
-    "seedingAsset": "images/plants/Hammer.png",
+    "seedlingAsset": "images/plants/Hammer.png",
     "sproutingAsset": "images/plants/Hammer.png",
     "juvenileAsset": "images/plants/Hammer.png",
-    "adultAsset": "images/plants/Hammer.png",
+    "adultAsset": "images/plants/hammer_adult.png",
     "decayingAsset": "images/plants/Hammer.png"
   },
   "venusFlyTrap": {
@@ -61,11 +61,11 @@
     "sproutThreshold": 13,
     "juvenileThreshold": 22,
     "adultThreshold": 40,
-    "seedingAsset": "images/plants/VenusTrap.png",
-    "sproutingAsset": "images/plants/VenusTrap.png",
-    "juvenileAsset": "images/plants/VenusTrap.png",
-    "adultAsset": "images/plants/VenusTrap.png",
-    "decayingAsset": "images/plants/VenusTrap.png"
+    "seedlingAsset": "images/plants/VenusTrap.png",
+    "sproutingAsset": "images/plants/venus_sprout.png",
+    "juvenileAsset": "images/plants/venus_juvenile.png",
+    "adultAsset": "images/plants/venus_adult.png",
+    "decayingAsset": "images/plants/venus_decaying.png"
   },
   "waterWeed": {
     "health": 10,
@@ -78,10 +78,10 @@
     "sproutThreshold": 8,
     "juvenileThreshold": 18,
     "adultThreshold": 32,
-    "seedingAsset": "images/plants/waterweed.png",
+    "seedlingAsset": "images/plants/waterweed_item.png",
     "sproutingAsset": "images/plants/waterweed.png",
     "juvenileAsset": "images/plants/waterweed.png",
-    "adultAsset": "images/plants/waterweed.png",
+    "adultAsset": "images/plants/waterweed_adult.png",
     "decayingAsset": "images/plants/waterweed.png"
   },
   "nightshade": {
@@ -95,11 +95,11 @@
     "sproutThreshold": 11,
     "juvenileThreshold": 20,
     "adultThreshold": 38,
-    "seedingAsset": "images/plants/nightshade.png",
-    "sproutingAsset": "images/plants/nightshade.png",
-    "juvenileAsset": "images/plants/nightshade.png",
-    "adultAsset": "images/plants/nightshade.png",
-    "decayingAsset": "images/plants/nightshade.png"
+    "seedlingAsset": "images/plants/belladonna_item.png",
+    "sproutingAsset": "images/plants/belladonna_sprout.png",
+    "juvenileAsset": "images/plants/belladonna_juvenile.png",
+    "adultAsset": "images/plants/belladonna_adult.png",
+    "decayingAsset": "images/plants/belladonna_decaying.png"
   },
   "tobacco": {
     "health": 10,
@@ -112,7 +112,7 @@
     "sproutThreshold": 14,
     "juvenileThreshold": 25,
     "adultThreshold": 42,
-    "seedingAsset": "images/plants/Corn.png",
+    "seedlingAsset": "images/plants/Corn.png",
     "sproutingAsset": "images/plants/Corn.png",
     "juvenileAsset": "images/plants/Corn.png",
     "adultAsset": "images/plants/Corn.png",
@@ -129,7 +129,7 @@
     "sproutThreshold": 9,
     "juvenileThreshold": 30,
     "adultThreshold": 45,
-    "seedingAsset": "images/plants/Corn.png",
+    "seedlingAsset": "images/plants/Corn.png",
     "sproutingAsset": "images/plants/Corn.png",
     "juvenileAsset": "images/plants/Corn.png",
     "adultAsset": "images/plants/Corn.png",

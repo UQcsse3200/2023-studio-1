@@ -9,7 +9,7 @@ import com.csse3200.game.services.ServiceLocator;
  */
 public class PlantComponent extends Component {
     private int plantHealth;            // Initial plant health
-    private int maxHealth;              // Maximum health this plant can reach.
+    private int maxHealth;              // Maximum health this plant can reach as an adult
     private String plantName;           // User facing plant name
     private String plantType;           // Type of plant (food, health, repair, defence, production, deadly)
     private String plantDescription;    // User facing description of the plant
@@ -26,6 +26,10 @@ public class PlantComponent extends Component {
     // in the constructor. These thresholds determine when a plant advances to the
     // next growth stage
 
+    private double currentMaxHealth = 0;
+    private double[] maxHealthAtStages = {0, 0, 0}; // Maximum health this plant can
+                                                                                    // reach at its current growth stage
+
     private String[] growthStageImagePaths = {"", "", "", "", ""};
 
     private int numOfDaysAsAdult; // Used to track how long a plant has been an adult.
@@ -40,7 +44,7 @@ public class PlantComponent extends Component {
      * @param plantDescription - description of the plant
      * @param idealWaterLevel - The ideal water level for a plant
      * @param adultLifeSpan - How long a plant will live for once it becomes an adult
-     * @param maxHealth - The maximum health a plant can achieve
+     * @param maxHealth - The maximum health a plant can reach as an adult
      * @param cropTile - The cropTileComponent where the plant will be located.
      */
     public PlantComponent(int health, String name, String plantType, String plantDescription,
@@ -64,6 +68,11 @@ public class PlantComponent extends Component {
         this.growthStageThresholds[1] = 21;
         this.growthStageThresholds[2] = 41;
 
+        // Initialise max health values to be changed at each growth stage
+        this.maxHealthAtStages[0] = 0.05 * this.maxHealth;
+        this.maxHealthAtStages[1] = 0.1 * this.maxHealth;
+        this.maxHealthAtStages[2] = 0.3 * this.maxHealth;
+
         // Initialise the image paths for growth stages
         // ALl pointing to Corn for now.
         this.growthStageImagePaths[0] = "images/plants/seedling.png";
@@ -82,7 +91,7 @@ public class PlantComponent extends Component {
      * @param plantDescription - description of the plant
      * @param idealWaterLevel - The ideal water level for a plant
      * @param adultLifeSpan - How long a plant will live for once it becomes an adult
-     * @param maxHealth - The maximum health a plant can achieve
+     * @param maxHealth - The maximum health a plant can reach as an adult
      * @param cropTile - The cropTileComponent where the plant will be located.
      * @param growthStageThresholds - A list of three integers that represent the growth thresholds.
      * @param growthStageImagePaths - image paths for the different growth stages.
@@ -108,6 +117,11 @@ public class PlantComponent extends Component {
         this.growthStageThresholds[0] = growthStageThresholds[0];
         this.growthStageThresholds[1] = growthStageThresholds[1];
         this.growthStageThresholds[2] = growthStageThresholds[2];
+
+        // Initialise max health values to be changed at each growth stage
+        this.maxHealthAtStages[0] = 0.05 * maxHealth;
+        this.maxHealthAtStages[1] = 0.1 * maxHealth;
+        this.maxHealthAtStages[2] = 0.3 * maxHealth;
 
         // Initialise the image paths for the growth stages
         this.growthStageImagePaths[0] = growthStageImagePaths[0];
@@ -142,10 +156,6 @@ public class PlantComponent extends Component {
         return this.plantHealth;
     }
 
-    public int getMaxHealth() {
-        return this.maxHealth;
-    }
-
     /**
      * Set the current plant health
      * @param health - current plant health
@@ -153,6 +163,19 @@ public class PlantComponent extends Component {
     public void setPlantHealth(int health) {
         this.plantHealth = health;
     }
+
+    /**
+     * Returns the max health of the plant
+     *
+     * @return current max health
+     */
+
+    public int getMaxHealth() {
+        return this.maxHealth;
+    }
+
+
+
 
     /**
      * Increase (or decrease) the plant health by some value
@@ -356,6 +379,7 @@ public class PlantComponent extends Component {
             if (this.growthStage < 4) {
                 if (this.currentGrowthLevel >= this.growthStageThresholds[this.growthStage - 1]) {
                     growthStage += 1;
+                    updateMaxHealth();
                     updateTexture();
                     if (this.growthStage == 4) {
                         this.numOfDaysAsAdult = 0;
@@ -363,6 +387,25 @@ public class PlantComponent extends Component {
                 }
             }
         }
+    }
+
+    /**
+     * Update the maximum health of the plant based on its current growth stage.
+     * Called whenever the growth stage is changed
+     */
+
+    private void updateMaxHealth() {
+        switch (this.growthStage) {
+            case 1:
+                this.currentMaxHealth = this.maxHealthAtStages[0];
+            case 2:
+                this.currentMaxHealth = this.maxHealthAtStages[1];
+            case 3:
+                this.currentMaxHealth = this.maxHealthAtStages[2];
+            case 4:
+                this.currentMaxHealth = this.maxHealth;
+        }
+
     }
 
     /**
@@ -381,6 +424,8 @@ public class PlantComponent extends Component {
             }
         }
     }
+
+
 
     /**
      * Update the texture of the plant based on its current growth stage.
