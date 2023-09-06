@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.EventHandler;
 
@@ -48,10 +49,11 @@ public class GameMap {
      * @return the Cell
      */
     private TiledMapTileLayer.Cell getCell(int x, int y) {
+        // ADD A CHECK FOR INTS BEING OUT OF BOUNDS OF MAP                                   HUNTER DO THIS
         return ((TiledMapTileLayer) this.tiledMap.getLayers().get(0)).getCell(x, y);
     }
 
-    /**
+    /**                                                             TO REMOVE THIS FUNCTION
      * Gets the tile at a specified world coordinate position
      * @param x x coordinate
      * @param y y coordinate
@@ -64,6 +66,32 @@ public class GameMap {
             throw new IndexOutOfBoundsException("Bad Input: Coordinate position out of bounds");
         }
 
+        return (TerrainTile) getCell(x, y).getTile();
+    }
+
+    /**
+     * Gets the TerrainTile at the specified GridPoint2 position. The x and y values in the GridPoint2 class directly
+     * correspond to the tile's position in the map layer.
+     *
+     * @param gridPoint The GridPoint2 instance representing the target TerrainTile's position.
+     * @return TerrainTile instance at the specified position.
+     */
+    public TerrainTile getTile(GridPoint2 gridPoint) {
+        return (TerrainTile) getCell(gridPoint.x, gridPoint.y).getTile();
+    }
+
+    /**
+     * Gets the TerrainTile at the specified Vector2 position. The x and y float values in the Vector2 class are
+     * transformed so that they correspond to the integer positions of the TerrainTile in the map layer.
+     *
+     * This transformation involves multiplying the float values by 2 to account for the 0.5f tile size, and then           WILL HAVE TO UPDATE if below comment is implemented
+     * flooring the result and casting it to an integer.
+     * @param vector The Vector2 instance representing the target TerrainTile's position.
+     * @return TerrainTile instance at the specified position.
+     */
+    public TerrainTile getTile(Vector2 vector) {
+        int x = (int) Math.floor(vector.x * 2);
+        int y = (int) Math.floor(vector.y * 2);                 // SHOULD ADJUST these lines so they instead divide by the tile size from the terrainComponent
         return (TerrainTile) getCell(x, y).getTile();
     }
 

@@ -24,8 +24,8 @@ public class SpaceGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(SpaceGameArea.class);
   private static final int NUM_TREES = 7;
   private static final int NUM_GHOSTS = 5;
-  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(99, 99); // CHANGE BACK TO 10, 10
-  private static final GridPoint2 TRACTOR_SPAWN = new GridPoint2(80, 80); // DELETE THIS AND SWITCH TRACTOR SPAWN TO PLAYER SPAWN
+  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
+  private static final GridPoint2 TRACTOR_SPAWN = new GridPoint2(15, 15);
 
   private static final GridPoint2 TOOL_SPAWN = new GridPoint2(15, 10);// temp!!!
   private static final GridPoint2 TOOL_SPAWN2 = new GridPoint2(15, 15);// temp!!!
