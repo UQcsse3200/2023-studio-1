@@ -15,8 +15,8 @@ public class MissionManager {
 	 * a listener for the {@link #name()} of the enum value.
 	 */
 	public enum MissionEvent {
-		PLANT_CROP,
-		FERTILISE_CROP
+		PLANT_CROP, // Triggers when a crop is planted
+		FERTILISE_CROP // Triggers when a crop is fertilised
 	}
 
 	private static final Achievement[] achievements = new Achievement[]{};
