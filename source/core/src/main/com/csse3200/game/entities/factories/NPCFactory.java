@@ -29,6 +29,10 @@ import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
+import javax.lang.model.UnknownEntityException;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+
 /**
  * Factory to create non-playable character (NPC) entities with predefined components.
  *
@@ -42,6 +46,35 @@ import com.csse3200.game.services.ServiceLocator;
 public class NPCFactory {
   private static final NPCConfigs configs =
       FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
+  //private static final HashMap<EntityType, Method> npcMap = new HashMap<EntityType, Method>();
+
+  public static Entity createNPC(EntityType type, Entity target) throws ClassNotFoundException {
+    Entity npc;
+    switch (type) {
+      case Chicken -> npc = createChicken(target);
+      case Cow -> npc = createCow(target);
+      case Axolotl -> npc = createAstrolotl(target);
+      default -> throw new ClassNotFoundException();
+    }
+    return npc;
+  }
+  // spawn the given npc
+    /*
+public class ItemFactory {
+  Map<String, Method> factoryMap = new HashMap<>();
+
+  public Map<String, Method> getFactoryMap() throws NoSuchMethodException {
+    Class<ItemFactory> c = ItemFactory.class;
+    factoryMap.put("base", c.getDeclaredMethod("createBaseItem"));
+    factoryMap.put("shovel", c.getDeclaredMethod("createShovel"));
+    factoryMap.put("hoe", c.getDeclaredMethod("createHoe"));
+    factoryMap.put("watering can", c.getDeclaredMethod("createWateringcan"));
+    factoryMap.put("scythe", c.getDeclaredMethod("createScythe"));
+    return factoryMap;
+  }
+}
+     */
+
 
   /**
    * Creates a ghost entity.

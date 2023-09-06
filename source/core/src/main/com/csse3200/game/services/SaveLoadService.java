@@ -81,7 +81,11 @@ public class SaveLoadService {
    * @param state state of the game which was saved previously in saveFile.json
    */
   private void updateGame(GameState state) {
-    updateNPCs(state);
+    try {
+      updateNPCs(state);
+    } catch (ClassNotFoundException e) {
+      throw new RuntimeException(e);
+    }
     updatePlayer(state);
     updateTime(state);
   }
@@ -101,17 +105,17 @@ public class SaveLoadService {
    * Destroys all NPCS in the map and then recreates them based off the gamestate
    * @param state gamestate of the entire game based off safeFile.json
    */
-  private void updateNPCs(GameState state) {
+  private void updateNPCs(GameState state) throws ClassNotFoundException {
     //Entity temp = new Entity();
-    Entity temp = PlayerFactory.createPlayer();
+    Entity target = PlayerFactory.createPlayer();
     EntityService entityService = getEntityService();
     //entityService.disposeNPCs(); TODO: dispose doesn't work
     for (Entity entity : state.getEntities()) {
-      if (entity.getType() == EntityType.Chicken) {
-        Entity chicken = NPCFactory.createChicken(temp);
-        ServiceLocator.getGameArea().spawnEntity(chicken);
-        ServiceLocator.getEntityService().getEntities().peek().setPosition(entity.getPosition());
-      }
+      //if (entity.getType() == EntityType.Chicken) {
+      Entity e = NPCFactory.createNPC(entity.getType(), target);
+      ServiceLocator.getGameArea().spawnEntity(e);
+      ServiceLocator.getEntityService().getEntities().peek().setPosition(entity.getPosition());
+      //}
     }
     /*
     Entity player = ServiceLocator.getGameArea().getPlayer();

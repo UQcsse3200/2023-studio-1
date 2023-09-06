@@ -1,10 +1,9 @@
 {
-"day": 2,
-"hour": 5,
+"hour": 9,
 "player": {
 	"Entity": "Player",
-	"x": 20.574883,
-	"y": 19.45904,
+	"x": 16.180803,
+	"y": 4.987121,
 	"components": {
 		"inventory": [
 			"hoe",
@@ -16,415 +15,895 @@
 },
 "entities": [
 	{
-		"Entity": "Chicken",
-		"x": 17.735386,
-		"y": 34.273724,
+		"Entity": "Axolotl",
+		"x": 48.84049,
+		"y": 4.8016834,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Cow",
+		"x": 47.112514,
+		"y": 16.541992,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Cow",
+		"x": 37.52475,
+		"y": 5.811082,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Cow",
+		"x": 8.8752575,
+		"y": 25.371632,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Cow",
+		"x": 29.224457,
+		"y": 39.062008,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Cow",
+		"x": 2.8315268,
+		"y": 43.129776,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Cow",
+		"x": 38.954838,
+		"y": 38.111126,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Cow",
+		"x": 30.020668,
+		"y": 35.707054,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Cow",
+		"x": 23.816782,
+		"y": 33.05469,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Cow",
+		"x": 30.096228,
+		"y": 13.182126,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Cow",
+		"x": 28.96967,
+		"y": 32.46002,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 5.4428263,
-		"y": 41.11251,
+		"x": 12.644449,
+		"y": 22.543482,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 28.799307,
-		"y": 18.812178,
+		"x": 23.055553,
+		"y": 35.62705,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 29.77289,
-		"y": 32.584435,
+		"x": 15.61509,
+		"y": 45.285122,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 32.91127,
-		"y": 38.15935,
+		"x": 20.085339,
+		"y": 12.036822,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 15.727669,
-		"y": 42.91862,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 34.017498,
-		"y": 41.128246,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 34.8583,
-		"y": 22.649317,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 34.336166,
-		"y": 36.84045,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 14.515497,
-		"y": 47.923134,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 16.728168,
-		"y": 33.44289,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 4.627826,
-		"y": 41.289165,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 24.334312,
-		"y": 20.514996,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 30.468801,
-		"y": 33.5302,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 33.552574,
-		"y": 40.29397,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 13.764105,
-		"y": 48.878006,
+		"x": 5.38807,
+		"y": 39.538586,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Tractor",
-		"x": 17.611492,
-		"y": 28.968426,
+		"x": 3.312303,
+		"y": 3.290975,
 		"components": {}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 13.107739,
-		"y": 47.796947,
+		"x": 34.66148,
+		"y": 35.976456,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 34.1896,
-		"y": 35.177803,
+		"x": 42.358673,
+		"y": 23.255867,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 37.394234,
-		"y": 21.97323,
+		"x": 24.63471,
+		"y": 22.872774,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 34.339108,
-		"y": 40.713043,
+		"x": 18.88496,
+		"y": 30.251148,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 16.50075,
-		"y": 42.381985,
+		"x": 23.5101,
+		"y": 34.892513,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 33.330284,
-		"y": 38.578476,
+		"x": 5.5400815,
+		"y": 6.470123,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 30.229721,
-		"y": 32.169445,
+		"x": 21.422138,
+		"y": 13.3892565,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 18.04969,
-		"y": 23.12312,
+		"x": 32.80987,
+		"y": 43.022327,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 4.4464483,
-		"y": 41.704063,
+		"x": 26.087118,
+		"y": 24.17803,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 17.484299,
-		"y": 33.858746,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Cow",
-		"x": 3.9735882,
-		"y": 38.838444,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Cow",
-		"x": 26.866854,
-		"y": 38.104324,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Cow",
-		"x": 33.182724,
-		"y": 39.55876,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Cow",
-		"x": 20.507166,
-		"y": 0.800813,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Cow",
-		"x": 27.55069,
-		"y": 39.456017,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Cow",
-		"x": 4.2261887,
-		"y": 25.000986,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Cow",
-		"x": 22.453007,
-		"y": 8.934982,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Cow",
-		"x": 30.6845,
-		"y": 21.144226,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Cow",
-		"x": 38.21012,
-		"y": 5.9094954,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Cow",
-		"x": 6.360843,
-		"y": 32.901474,
-		"components": {
-			"tamed": false
-		}
-	},
-	{
-		"Entity": "Axolotl",
-		"x": 25.682203,
-		"y": 24.784058,
+		"x": 17.271345,
+		"y": 14.84938,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 16.60722,
-		"y": 33.965458,
+		"x": 32.446667,
+		"y": 20.552704,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 4.235558,
-		"y": 42.34527,
+		"x": 20.273396,
+		"y": 5.4472737,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 25.086597,
-		"y": 19.934284,
+		"x": 36.22097,
+		"y": 1.7632298,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 30.027452,
-		"y": 33.11521,
+		"x": 19.602276,
+		"y": 6.614599,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 33.52203,
-		"y": 40.708958,
+		"x": 35.769165,
+		"y": 15.795516,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 12.908109,
-		"y": 47.381958,
+		"x": 13.315586,
+		"y": 34.31399,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 34.669086,
-		"y": 36.42546,
+		"x": 28.902203,
+		"y": 9.392126,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 33.689754,
-		"y": 23.906109,
+		"x": 40.954967,
+		"y": 30.464508,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 34.723248,
-		"y": 42.108807,
+		"x": 26.410448,
+		"y": 27.511768,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 17.221428,
-		"y": 43.266403,
+		"x": 35.48736,
+		"y": 44.53122,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 16.83629,
-		"y": 43.786697,
+		"x": 34.836544,
+		"y": 45.4057,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 34.779026,
-		"y": 42.641037,
+		"x": 26.092356,
+		"y": 24.762209,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 33.11257,
-		"y": 23.479725,
+		"x": 1.6065589,
+		"y": 7.819016,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 34.06357,
-		"y": 35.59513,
+		"x": 40.675728,
+		"y": 41.64603,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 17.35253,
+		"y": 23.976097,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 48.572037,
+		"y": 16.195057,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 3.8278568,
+		"y": 13.399708,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 21.862247,
+		"y": 40.283623,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 5.276695,
+		"y": 8.525232,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 25.031893,
+		"y": 19.365913,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 8.734284,
+		"y": 27.559912,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 8.122543,
+		"y": 24.041536,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 6.437212,
+		"y": 19.794933,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 2.45975,
+		"y": 47.629665,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 35.52254,
+		"y": 16.824852,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 28.077133,
+		"y": 19.449276,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 19.478321,
+		"y": 23.325556,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 35.68835,
+		"y": 15.04862,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 45.687225,
+		"y": 30.585754,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 22.158157,
+		"y": 31.979694,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 16.660046,
+		"y": 22.3712,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 21.448675,
+		"y": 11.8625555,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 13.386213,
+		"y": 6.954208,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 35.888046,
+		"y": 20.1008,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 39.452354,
+		"y": 40.13017,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 32.006767,
+		"y": 48.437603,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 19.296211,
+		"y": 44.128674,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 27.187908,
+		"y": 16.14709,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 39.685463,
+		"y": 36.367268,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 8.052304,
+		"y": 33.01514,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 22.890764,
+		"y": 14.16615,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 43.912773,
+		"y": 21.592695,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 7.8633327,
+		"y": 36.80406,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 28.224756,
+		"y": 11.435986,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 22.95388,
+		"y": 39.02837,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 16.779001,
+		"y": 21.209425,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 26.43956,
+		"y": 17.280788,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 47.089382,
+		"y": 5.35826,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 31.235767,
+		"y": 23.79882,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 14.208001,
+		"y": 0.84116966,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 20.076609,
+		"y": 16.52686,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 14.993223,
+		"y": 17.784744,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 15.891022,
+		"y": 26.485607,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 22.44266,
+		"y": 33.436394,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 3.0295591,
+		"y": 33.451725,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 4.3089137,
+		"y": 0.1370837,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 8.656714,
+		"y": 36.18149,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 33.048054,
+		"y": 8.143305,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 23.294937,
+		"y": 39.443245,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 15.205015,
+		"y": 31.08979,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 27.441133,
+		"y": 20.25083,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 3.6523414,
+		"y": 29.07548,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 15.577458,
+		"y": 10.461533,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 48.567646,
+		"y": 0.1168406,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 16.74216,
+		"y": 40.672695,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 37.6446,
+		"y": 36.69503,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 8.08568,
+		"y": 0.6577239,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 46.37838,
+		"y": 2.8690507,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 7.3304477,
+		"y": 35.069435,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 43.625595,
+		"y": 35.09686,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 23.494286,
+		"y": 29.957426,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 46.11583,
+		"y": 30.06068,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 3.0128574,
+		"y": 13.303024,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 30.258053,
+		"y": 18.441986,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 16.004314,
+		"y": 8.166806,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 26.716398,
+		"y": 6.155482,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 13.806931,
+		"y": 30.600817,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 47.904503,
+		"y": -0.8207128,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 38.60043,
+		"y": 13.017403,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 8.365069,
+		"y": 15.899969,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 2.447789,
+		"y": 6.484892,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 30.782244,
+		"y": -0.5494687,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 46.401947,
+		"y": 13.285742,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 35.17055,
+		"y": 0.90796924,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 8.719807,
+		"y": 44.781574,
 		"components": {
 			"tamed": false
 		}
