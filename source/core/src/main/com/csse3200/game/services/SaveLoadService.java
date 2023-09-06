@@ -14,7 +14,8 @@ import com.csse3200.game.files.SaveGame.GameState;
 import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.utils.math.GridPoint2Utils;
-
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.math.Vector2;
 import static com.csse3200.game.services.ServiceLocator.getEntityService;
 
 
@@ -105,14 +106,36 @@ public class SaveLoadService {
     //Entity temp = new Entity();
     Entity temp = PlayerFactory.createPlayer();
     EntityService entityService = getEntityService();
-    //entityService.disposeNPCs(); TODO: dispose doesn't work
+    entityService.disposeNPCs(); 
+    Array<Vector2> cowLocations = new Array();
     for (Entity entity : state.getEntities()) {
-      if (entity.getType() == EntityType.Chicken) {
-        Entity chicken = NPCFactory.createChicken(temp);
-        ServiceLocator.getGameArea().spawnEntity(chicken);
-        ServiceLocator.getEntityService().getEntities().peek().setPosition(entity.getPosition());
+      if (entity.getType() == EntityType.Cow) {
+        cowLocations.add(entity.getPosition());
+        Entity cow = NPCFactory.createCow(temp);
+        cow.setPosition(entity.getPosition());
+        ServiceLocator.getGameArea().spawnEntity(cow);
+        //ServiceLocator.getEntityService().getEntities().peek().setPosition(entity.getPosition());
       }
     }
+
+    Array<Entity> cows = ServiceLocator.getEntityService().getEntities();
+    // System.out.println(cowLocations);
+    // System.out.println(cowLocations.size);
+    // System.out.println(cows);
+    int i = 0;
+    for (Entity entity : cows){
+      System.out.println(entity.getType());
+      if (entity.getType() == EntityType.Cow){
+        //System.out.println(i);
+        i +=1;
+        entity.setPosition(cowLocations.get(0));
+      }
+    }
+
+
+
+
+
     /*
     Entity player = ServiceLocator.getGameArea().getPlayer();
     EntityService entityService = ServiceLocator.getEntityService();
