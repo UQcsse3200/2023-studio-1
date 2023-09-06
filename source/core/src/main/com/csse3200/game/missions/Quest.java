@@ -58,9 +58,4 @@ public abstract class Quest extends Mission {
 			reward.collect();
 		}
 	}
-
-	@Override
-	public void registerMission(EventHandler missionManagerEvents) {
-		missionManagerEvents.addListener("updateHour", this::updateExpiry);
-	}
 }
