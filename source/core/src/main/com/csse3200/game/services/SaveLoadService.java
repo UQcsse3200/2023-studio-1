@@ -103,30 +103,25 @@ public class SaveLoadService {
    * @param state gamestate of the entire game based off safeFile.json
    */
   private void updateNPCs(GameState state) {
-    Entity player = ServiceLocator.getGameArea().getPlayer();
-    
-    Array<Vector2> cowLocations = new Array<Vector2>(); //for saving cows.
+    Entity player = ServiceLocator.getGameArea().getPlayer(); // need player for spawning npc
+    //Remove all current npcs from the game
+    Array<Entity> currentGameEntities = ServiceLocator.getEntityService().getEntities();
 
-    Array<Entity> cows = ServiceLocator.getEntityService().getEntities();
-    
-    for (Entity entity : cows) {
-      if (entity.getType() == EntityType.Cow) {
-        ServiceLocator.getGameArea().removeEntity(entity);
-      }
-    }
+    ServiceLocator.getGameArea().removeNPCs(currentGameEntities);
 
     for (Entity entity : state.getEntities()) {
       if (entity.getType() == EntityType.Cow) {
-        cowLocations.add(entity.getPosition());
         Entity cow = NPCFactory.createCow(player);
         cow.setPosition(entity.getPosition());
         ServiceLocator.getGameArea().spawnEntity(cow);
-      }
-    }
-    Array<Entity> gameEntities = state.getEntities();
-    for (Entity entity : gameEntities){
-      if (entity.getType() == EntityType.Cow){
-        entity.setPosition(cowLocations.pop());
+      } else if (entity.getType() == EntityType.Chicken) {
+        Entity chicken = NPCFactory.createChicken(player);
+        chicken.setPosition(entity.getPosition());
+        ServiceLocator.getGameArea().spawnEntity(chicken);
+      } else if (entity.getType() == EntityType.Astrolotl) {
+        Entity astrolotl = NPCFactory.createAstrolotl(player);
+        astrolotl.setPosition(entity.getPosition());
+        ServiceLocator.getGameArea().spawnEntity(astrolotl);
       }
     }
   }

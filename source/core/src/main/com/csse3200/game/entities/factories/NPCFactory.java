@@ -167,7 +167,7 @@ public class NPCFactory {
    * @return Astrolotl entity
    */
   public static Entity createAstrolotl(Entity player) {
-    Entity astrolotl = createBaseAnimal(EntityType.Axolotl);
+    Entity astrolotl = createBaseAnimal(EntityType.Astrolotl);
     BaseAnimalConfig config = configs.astrolotl;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
