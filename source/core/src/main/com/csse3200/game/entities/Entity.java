@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ComponentType;
 import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.items.WateringCanLevelComponent;
 import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
@@ -339,11 +340,13 @@ public class Entity implements Json.Serializable {
   }
 
   public void writeItem(Json json) {
-    json.writeValue(this.getComponent(ItemComponent.class).getItemName());
+    json.writeValue("name", this.getComponent(ItemComponent.class).getItemName());
+    if (this.getComponent(WateringCanLevelComponent.class) != null) {
+      this.getComponent(WateringCanLevelComponent.class).write(json);
+    }
   }
 
   public void read(Json json, JsonValue jsonMap) {
-
     position = new Vector2(jsonMap.getFloat("x"), jsonMap.getFloat("y"));
     String value = jsonMap.getString("Entity");
     try {

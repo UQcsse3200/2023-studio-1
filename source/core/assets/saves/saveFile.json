@@ -1,46 +1,84 @@
 {
-"day": 1,
-"hour": 5,
 "player": {
 	"Entity": "Player",
-	"x": 9.18673,
-	"y": 34.39195,
+	"x": 4.3653903,
+	"y": 9.144,
 	"components": {
-		"inventory": [
-			"hoe",
-			"shovel",
-			"watering can",
-			"scythe"
-		]
+		"inventory": {
+			"item": {
+				"name": "hoe",
+				"count": 1
+			},
+			"item": {
+				"name": "shovel",
+				"count": 1
+			},
+			"item": {
+				"name": "watering_can",
+				"level": 150,
+				"count": 1
+			},
+			"item": {
+				"name": "scythe",
+				"count": 1
+			},
+			"item": {
+				"name": "fertiliser",
+				"count": 1
+			},
+			"item": {
+				"name": "hoe",
+				"count": 1
+			},
+			"item": {
+				"name": "scythe",
+				"count": 1
+			},
+			"item": {
+				"name": "watering_can",
+				"level": 150,
+				"count": 1
+			},
+			"item": {
+				"name": "shovel",
+				"count": 1
+			},
+			"item": {
+				"name": "aloe vera seed",
+				"count": 1
+			}
+		}
 	}
 },
 "entities": [
 	{
-		"Entity": "Cow",
-		"x": -4.463867,
-		"y": -1.2233349,
-		"components": {}
+		"Entity": "Axolotl",
+		"x": 43.646793,
+		"y": 32.233902,
+		"components": {
+			"tamed": false
+		}
 	},
 	{
-		"Entity": "Axolotl",
-		"x": 42.728806,
-		"y": 20.155401,
+		"Entity": "Cow",
+		"x": 39.838146,
+		"y": 41.651463,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 27.210346,
-		"y": 31.241436,
+		"x": 12.042059,
+		"y": 34.89346,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Tractor",
-		"x": 3.613461,
-		"y": 5.9786696,
+		"x": 3.202381,
+		"y": 4.659,
 		"components": {}
 	}
 ]
