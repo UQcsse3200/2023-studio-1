@@ -58,7 +58,7 @@ public class PlantFactory {
                 .addComponent(new TextureRenderComponent("images/plants/Corn.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
-                        config.maxHealth, cropTile));
+                        config.maxHealth, cropTile, config.soundsArray));
 
         // Set plant position over crop tile.
         var cropTilePosition = cropTile.getEntity().getPosition();
@@ -83,7 +83,7 @@ public class PlantFactory {
                 .addComponent(new TextureRenderComponent("images/plants/Aloe.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
-                        config.maxHealth, cropTile));
+                        config.maxHealth, cropTile, config.soundsArray));
 
         // Set plant position over crop tile.
         var cropTilePosition = cropTile.getEntity().getPosition();
@@ -108,7 +108,7 @@ public class PlantFactory {
                 .addComponent(new TextureRenderComponent("images/plants/Hammer.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
-                        config.maxHealth, cropTile));
+                        config.maxHealth, cropTile, config.soundsArray));
 
         // Set plant position over crop tile.
         var cropTilePosition = cropTile.getEntity().getPosition();
@@ -134,7 +134,7 @@ public class PlantFactory {
                 .addComponent(new TextureRenderComponent("images/plants/nightshade.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
-                        config.maxHealth, cropTile));
+                        config.maxHealth, cropTile, config.soundsArray));
 
         // Set plant position over crop tile.
         var cropTilePosition = cropTile.getEntity().getPosition();
@@ -159,7 +159,7 @@ public class PlantFactory {
                 .addComponent(new TextureRenderComponent("images/plants/waterweed.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
-                        config.maxHealth, cropTile));
+                        config.maxHealth, cropTile, config.soundsArray));
 
         // Set plant position over crop tile.
         var cropTilePosition = cropTile.getEntity().getPosition();
@@ -185,7 +185,7 @@ public class PlantFactory {
                 .addComponent(new TextureRenderComponent("images/plants/VenusTrap.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
-                        config.maxHealth, cropTile));
+                        config.maxHealth, cropTile, config.soundsArray));
 
         // Set plant position over crop tile.
         var cropTilePosition = cropTile.getEntity().getPosition();

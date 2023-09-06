@@ -12,6 +12,7 @@ public class BasePlantConfig {
     public float idealWaterLevel = 0;
     public int adultLifeSpan = 0;
     public int maxHealth = 0;
+    public String[] soundsArray = null;
 
 
 }
