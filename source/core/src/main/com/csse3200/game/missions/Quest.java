@@ -31,7 +31,7 @@ public abstract class Quest extends Mission {
 	 * @param amount number of hours to decrement the expiry time by
 	 */
 	public void updateExpiry() {
-		duration -= 1;
+		duration--;
 	}
 
 	/**
