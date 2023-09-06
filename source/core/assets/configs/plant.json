@@ -9,7 +9,12 @@
     "maxHealth": 400,
     "sproutThreshold": 7,
     "juvenileThreshold": 22,
-    "adultThreshold": 35
+    "adultThreshold": 35,
+    "seedingAsset": "images/plants/Corn.png",
+    "sproutingAsset": "images/plants/Corn.png",
+    "juvenileAsset": "images/plants/Corn.png",
+    "adultAsset": "images/plants/Corn.png",
+    "decayingAsset": "images/plants/Corn.png"
   },
   "aloeVera": {
     "health": 10,
@@ -21,7 +26,12 @@
     "maxHealth": 300,
     "sproutThreshold": 13,
     "juvenileThreshold": 27,
-    "adultThreshold": 46
+    "adultThreshold": 46,
+    "seedingAsset": "images/plants/Aloe.png",
+    "sproutingAsset": "images/plants/Aloe.png",
+    "juvenileAsset": "images/plants/Aloe.png",
+    "adultAsset": "images/plants/Aloe.png",
+    "decayingAsset": "images/plants/Aloe.png"
   },
   "hammerPlant": {
     "health": 10,
@@ -33,7 +43,12 @@
     "maxHealth": 200,
     "sproutThreshold": 12,
     "juvenileThreshold": 19,
-    "adultThreshold": 37
+    "adultThreshold": 37,
+    "seedingAsset": "images/plants/Hammer.png",
+    "sproutingAsset": "images/plants/Hammer.png",
+    "juvenileAsset": "images/plants/Hammer.png",
+    "adultAsset": "images/plants/Hammer.png",
+    "decayingAsset": "images/plants/Hammer.png"
   },
   "venusFlyTrap": {
     "health": 10,
@@ -45,7 +60,12 @@
     "maxHealth": 400,
     "sproutThreshold": 13,
     "juvenileThreshold": 22,
-    "adultThreshold": 40
+    "adultThreshold": 40,
+    "seedingAsset": "images/plants/VenusTrap.png",
+    "sproutingAsset": "images/plants/VenusTrap.png",
+    "juvenileAsset": "images/plants/VenusTrap.png",
+    "adultAsset": "images/plants/VenusTrap.png",
+    "decayingAsset": "images/plants/VenusTrap.png"
   },
   "waterWeed": {
     "health": 10,
@@ -57,7 +77,12 @@
     "maxHealth": 100,
     "sproutThreshold": 8,
     "juvenileThreshold": 18,
-    "adultThreshold": 32
+    "adultThreshold": 32,
+    "seedingAsset": "images/plants/waterweed.png",
+    "sproutingAsset": "images/plants/waterweed.png",
+    "juvenileAsset": "images/plants/waterweed.png",
+    "adultAsset": "images/plants/waterweed.png",
+    "decayingAsset": "images/plants/waterweed.png"
   },
   "nightshade": {
     "health": 10,
@@ -69,7 +94,12 @@
     "maxHealth": 200,
     "sproutThreshold": 11,
     "juvenileThreshold": 20,
-    "adultThreshold": 38
+    "adultThreshold": 38,
+    "seedingAsset": "images/plants/nightshade.png",
+    "sproutingAsset": "images/plants/nightshade.png",
+    "juvenileAsset": "images/plants/nightshade.png",
+    "adultAsset": "images/plants/nightshade.png",
+    "decayingAsset": "images/plants/nightshade.png"
   },
   "tobacco": {
     "health": 10,
@@ -81,7 +111,12 @@
     "maxHealth": 20,
     "sproutThreshold": 14,
     "juvenileThreshold": 25,
-    "adultThreshold": 42
+    "adultThreshold": 42,
+    "seedingAsset": "images/plants/Corn.png",
+    "sproutingAsset": "images/plants/Corn.png",
+    "juvenileAsset": "images/plants/Corn.png",
+    "adultAsset": "images/plants/Corn.png",
+    "decayingAsset": "images/plants/Corn.png"
   },
   "sunFlower": {
     "health" : 10,
@@ -93,6 +128,11 @@
     "maxHealth": 100,
     "sproutThreshold": 9,
     "juvenileThreshold": 30,
-    "adultThreshold": 45
+    "adultThreshold": 45,
+    "seedingAsset": "images/plants/Corn.png",
+    "sproutingAsset": "images/plants/Corn.png",
+    "juvenileAsset": "images/plants/Corn.png",
+    "adultAsset": "images/plants/Corn.png",
+    "decayingAsset": "images/plants/Corn.png"
   }
 }
