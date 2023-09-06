@@ -9,11 +9,15 @@ public abstract class WeatherEvent {
 	private int numHoursUntil;
 	private int duration;
 	private int priority;
+	private float humidity_modifier;
+	private static final float MIN_HUMIDITY_MODIFIER = 0.8f;
+	private static final float MAX_HUMIDITY_MODIFIER = 1.2f;
 
 	public WeatherEvent(int numHoursUntil, int duration, int priority) {
 		this.numHoursUntil = numHoursUntil;
 		this.duration = duration;
 		this.priority = priority;
+
 	}
 
 	public void updateTime() {
@@ -36,11 +40,7 @@ public abstract class WeatherEvent {
 		return numHoursUntil == 0 && duration > 0;
 	}
 
-	public void addEffect(ClimateController climate) {
-		return;
-	}
+	// TODO Figure out how to render screen effects and therefore fix method siganture
+	public abstract void getEffect();
 
-	public void triggerWeatherEvents() {
-		return;
-	}
 }
