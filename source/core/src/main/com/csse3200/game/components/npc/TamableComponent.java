@@ -82,7 +82,7 @@ public class TamableComponent extends Component {
                 //entity is not of an item type
                 continue;
             }
-            if (invVariable.getComponent(ItemComponent.class).getItemName() == favouriteFood) {
+            if (invVariable.getComponent(ItemComponent.class).getItemName().equals(favouriteFood)) {
                 hasfood = true;
                 inventoryIndex = index;
                 break;
