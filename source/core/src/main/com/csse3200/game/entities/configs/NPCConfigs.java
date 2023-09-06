@@ -10,4 +10,6 @@ public class NPCConfigs {
   public BaseAnimalConfig chicken = new BaseAnimalConfig();
   public BaseAnimalConfig astrolotl = new BaseAnimalConfig();
 
+
+
 }

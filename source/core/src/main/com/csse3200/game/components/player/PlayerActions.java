@@ -1,5 +1,5 @@
 package com.csse3200.game.components.player;
-
+import java.util.Random;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -47,11 +47,13 @@ public class PlayerActions extends Component {
 
   @Override
   public void update() {
-    if (moving) {
-      updateSpeed();
+    if (entity.getComponent(PlayerAnimationController.class).readyToPlay()) {
+      if (moving) {
+        updateSpeed();
 
+      }
+      updateAnimation();
     }
-    updateAnimation();
   }
 
   /**
@@ -59,19 +61,25 @@ public class PlayerActions extends Component {
    */
   private void updateAnimation() {
 
+    int max=300; int min=1;
+
+    Random randomNum = new Random();
+
+    int AnimationRandomizer = min + randomNum.nextInt(max);
+
     if (moveDirection.epsilonEquals(Vector2.Zero)) {
       // player is not moving
 
       String animationName = "animationWalkStop";
       float direction = getPrevMoveDirection();
       if (direction < 45) {
-        entity.getEvents().trigger(animationName, "right");
+        entity.getEvents().trigger(animationName, "right", AnimationRandomizer, false);
       } else if (direction < 135) {
-        entity.getEvents().trigger(animationName, "up");
+        entity.getEvents().trigger(animationName, "up", AnimationRandomizer, false);
       } else if (direction < 225) {
-        entity.getEvents().trigger(animationName, "left");
+        entity.getEvents().trigger(animationName, "left", AnimationRandomizer, false);
       } else if (direction < 315) {
-        entity.getEvents().trigger(animationName, "down");
+        entity.getEvents().trigger(animationName, "down", AnimationRandomizer, false);
       }
       return;
     }
@@ -140,6 +148,13 @@ public class PlayerActions extends Component {
     moving = false;
   }
 
+  void pauseMoving() {
+    Vector2 tmp = this.moveDirection;
+    this.moveDirection = Vector2.Zero.cpy();
+    updateSpeed();
+    moveDirection.add(tmp);
+  }
+
   /**
    * Increases the velocity of the player when they move.
    */
@@ -201,9 +216,13 @@ public class PlayerActions extends Component {
 
   void use(Vector2 playerPos, Vector2 mousePos, Entity itemInHand) {
     if (itemInHand != null) {
-      itemInHand.getComponent(ItemActions.class).use(playerPos, mousePos, itemInHand, map);
+      if (itemInHand.getComponent(ItemActions.class) != null) {
+        pauseMoving();
+        itemInHand.getComponent(ItemActions.class).use(playerPos, mousePos, itemInHand, map);
+      }
     }
   }
+
   void hotkeySelection(int index) {
     entity.getComponent(InventoryComponent.class).setHeldItem(index);
   }

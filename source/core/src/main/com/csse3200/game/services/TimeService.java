@@ -6,13 +6,15 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.csse3200.game.areas.SpaceGameArea;
+import com.csse3200.game.services.ServiceLocator;
 
 public class TimeService {
 	private static final Logger logger = LoggerFactory.getLogger(TimeService.class);
 	private static final int INITIAL_CAPACITY = 16;
 	private static final String HOUR_UPDATE = "hourUpdate";
 	private static final String DAY_UPDATE = "dayUpdate";
-	private static final int MS_IN_HOUR = 1000; //30000;
+	private static final int MS_IN_HOUR = 30000; //30000;
 	private int hour;
 	private int day;
 	private long timeBuffer;
@@ -90,6 +92,11 @@ public class TimeService {
 		events.trigger("hourUpdate");
 		day += 1;
 		events.trigger("dayUpdate");
+
+		// lose the game if the game reaches 30 days
+		if (day >= 30) {
+			ServiceLocator.getGameArea().getPlayer().getEvents().trigger("loseScreen");
+		}
 	}
 
 }
