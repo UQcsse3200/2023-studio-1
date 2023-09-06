@@ -22,18 +22,22 @@ public class ItemActions extends Component {
   /**
    * Uses the item at the given position
    * 
-   * @param playerPos the position of the player
+   * @param player the player entity using the item
    * @param mousePos  the position of the mouse
-   * @param item      item to use/ interact with tile
+   * @param map      item to use/ interact with tile
    * @return if interaction with tile was success return true else return false.
    */
-  public boolean use(Vector2 playerPos, Vector2 mousePos, Entity item, GameMap map) {
+  public boolean use(Entity player, Vector2 mousePos, GameMap map) {
     this.map = map;
-    ItemComponent type = item.getComponent(ItemComponent.class);
+
+    Vector2 playerPos = player.getPosition();
+
+    ItemComponent type = entity.getComponent(ItemComponent.class);
     // Wasn't an item or did not have ItemComponent class
     if (type == null) {
       return false;
     }
+
     // Add your item here!!!
     boolean resultStatus;
     TerrainTile tile = getTileAtPosition(playerPos, mousePos);
@@ -51,8 +55,11 @@ public class ItemActions extends Component {
         return resultStatus;
       }
       case WATERING_CAN -> {
-        resultStatus = water(tile, item);
+        resultStatus = water(tile);
         return resultStatus;
+      }
+      case ANIMAL_FOOD -> {
+
       }
       default -> {
         return false;
@@ -110,10 +117,9 @@ public class ItemActions extends Component {
    * Waters the tile at the given position.
    * 
    * @param tile the tile to be interacted with
-   * @param item a reference to a watering can
    * @return if watering was successful return true else return false
    */
-  private boolean water(TerrainTile tile, Entity item) {
+  private boolean water(TerrainTile tile) {
     boolean tileWaterable = isCropTile(tile.getCropTile());
     if (!tileWaterable) {
       return false;
@@ -121,7 +127,7 @@ public class ItemActions extends Component {
 
     // A water amount of 0.5 was recommended by team 7
     tile.getCropTile().getEvents().trigger("water", 0.5);
-    item.getComponent(WateringCanLevelComponent.class).incrementLevel(-5);
+    entity.getComponent(WateringCanLevelComponent.class).incrementLevel(-5);
     return true;
   }
 

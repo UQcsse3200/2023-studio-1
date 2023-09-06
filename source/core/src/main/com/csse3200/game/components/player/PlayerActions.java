@@ -200,11 +200,12 @@ public class PlayerActions extends Component {
     camera.setTrackEntity(tractor);
   }
 
-  void use(Vector2 playerPos, Vector2 mousePos, Entity itemInHand) {
+  void use(Entity player, Vector2 mousePos, Entity itemInHand) {
     if (itemInHand != null) {
-      itemInHand.getComponent(ItemActions.class).use(playerPos, mousePos, itemInHand, map);
+      itemInHand.getComponent(ItemActions.class).use(player, mousePos, map);
     }
   }
+
   void hotkeySelection(int index) {
     entity.getComponent(InventoryComponent.class).setHeldItem(index);
   }
