@@ -1,11 +1,9 @@
 package com.csse3200.game.missions;
 
 import com.csse3200.game.events.EventHandler;
-import com.csse3200.game.services.ServiceLocator;
 
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicReferenceArray;
+import java.util.List;
 
 public class MissionManager {
 
@@ -22,7 +20,8 @@ public class MissionManager {
 	}
 
 	private static final Achievement[] achievements = new Achievement[]{};
-	private static final ArrayList<Quest> quests = new ArrayList<>();
+	private static final List<Quest> activeQuests = new ArrayList<>();
+	private static final List<Quest> selectableQuests = new ArrayList<>();
 	private static final EventHandler events = new EventHandler();
 
 	/**
@@ -35,12 +34,43 @@ public class MissionManager {
 	}
 
 	/**
-	 * Adds a quest to the list of active quests in the game.  Also registers this quest in the game
-	 * @param quest quest to be added and registered
+	 * Accepts a quest by adding it to the list of active quests in the game.  Also registers this quest in the game.
+	 * If this {@link Quest} is in the {@link List} of selectable {@link Quest}s, then this method will also remove the
+	 * {@link Quest} from the {@link List} of selectable {@link Quest}s.
+	 * @param quest The {@link Quest} to be added and registered
+	 */
+	public void acceptQuest(Quest quest) {
+		// Remove the quest from selectable quests if present
+		selectableQuests.remove(quest);
+		activeQuests.add(quest);
+		quest.registerMission(events);
+	}
+
+	/**
+	 * Returns a {@link List} of currently active (tracked) {@link Quest}s. This includes all {@link Quest}s which have not
+	 * expired (that is, they have been accepted, and they have been completed or not yet expired).
+	 * @return The {@link List} of active {@link Quest}s.
+	 */
+	public List<Quest> getActiveQuests() {
+		return activeQuests;
+	}
+
+	/**
+	 * Adds a {@link Quest} to the {@link List} of selectable {@link Quest}s. Selectable {@link Quest}s can be accepted
+	 * by the player through the in-game quest NPC.
+	 * @param quest The {@link Quest} to add (this {@link Quest} should not have already been registered).
 	 */
 	public void addQuest(Quest quest) {
-		quests.add(quest);
-		quest.registerMission(events);
+		selectableQuests.add(quest);
+	}
+
+	/**
+	 * Returns a {@link List} of selectable {@link Quest}s. These {@link Quest}s can be accepted in-game through
+	 * interaction with the quest NPC.
+	 * @return The list of selectable {@link Quest}s.
+	 */
+	public List<Quest> getSelectableQuests() {
+		return selectableQuests;
 	}
 
 	/**

@@ -27,8 +27,7 @@ public abstract class Quest extends Mission {
 	}
 
 	/**
-	 * Decrements the expiry time of a quest by the given amount
-	 * @param amount number of hours to decrement the expiry time by
+	 * Decrements the duration to expiry of the quest by 1.
 	 */
 	public void updateExpiry() {
 		duration--;
