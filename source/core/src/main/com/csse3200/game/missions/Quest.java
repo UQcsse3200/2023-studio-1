@@ -1,5 +1,7 @@
 package com.csse3200.game.missions;
 
+import com.csse3200.game.events.EventHandler;
+
 public abstract class Quest extends Mission {
 
 	private final boolean isMandatory;
@@ -28,8 +30,8 @@ public abstract class Quest extends Mission {
 	 * Decrements the expiry time of a quest by the given amount
 	 * @param amount number of hours to decrement the expiry time by
 	 */
-	public void updateExpiry(int amount) {
-		duration -= amount;
+	public void updateExpiry() {
+		duration -= 1;
 	}
 
 	/**
@@ -58,4 +60,8 @@ public abstract class Quest extends Mission {
 		}
 	}
 
+	@Override
+	public void registerMission(EventHandler missionManagerEvents) {
+		missionManagerEvents.addListener("updateHour", this::updateExpiry);
+	}
 }

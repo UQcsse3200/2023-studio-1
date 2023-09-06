@@ -30,7 +30,6 @@ public class MissionManager {
 		for (Achievement mission : achievements) {
 			mission.registerMission(events);
 		}
-		ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateHour);
 	}
 
 	/**
@@ -41,17 +40,4 @@ public class MissionManager {
 		quests.add(quest);
 		quest.registerMission(events);
 	}
-
-	/**
-	 * Method that is called every in-game hour which loops through the active quests and updates their expiry time
-	 */
-	private void updateHour() {
-		for (Quest quest : quests) {
-			quest.updateExpiry(1);
-			if (quest.isExpired()) {
-				// Game over
-			}
-		}
-	}
-
 }
