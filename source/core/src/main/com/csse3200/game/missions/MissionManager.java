@@ -15,8 +15,10 @@ public class MissionManager {
 	 * a listener for the {@link #name()} of the enum value.
 	 */
 	public enum MissionEvent {
-		PLANT_CROP, // Triggers when a crop is planted
-		FERTILISE_CROP // Triggers when a crop is fertilised
+		// Triggers when a crop is planted, single String representing plant type is provided as argument
+		PLANT_CROP,
+		// Triggers when a crop is fertilised
+		FERTILISE_CROP
 	}
 
 	private static final Achievement[] achievements = new Achievement[]{};
@@ -40,4 +42,15 @@ public class MissionManager {
 		quests.add(quest);
 		quest.registerMission(events);
 	}
+
+	/**
+	 * Returns the {@link MissionManager}'s {@link EventHandler}, which is responsible for triggering events which
+	 * update the state of {@link Mission}s
+	 * @return The {@link EventHandler} of the {@link MissionManager}, from which events can be triggered to update the
+	 * 		   state of relevant {@link Mission}s.
+	 */
+	public EventHandler getEvents() {
+		return events;
+	}
+
 }
