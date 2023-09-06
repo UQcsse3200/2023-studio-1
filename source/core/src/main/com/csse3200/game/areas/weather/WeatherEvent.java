@@ -27,6 +27,14 @@ public abstract class WeatherEvent {
 		}
 	}
 
+	/**
+	 * Returns the priority of the weather event
+	 * @return weather event priority
+	 */
+	public int getPriority() {
+		return priority;
+	}
+
 	// TODO
 	public boolean isActive() {
 		return false;
