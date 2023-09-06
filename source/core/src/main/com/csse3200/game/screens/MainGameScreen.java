@@ -97,8 +97,7 @@ public class MainGameScreen extends ScreenAdapter {
     renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
 
     rayHandler = new RayHandler(ServiceLocator.getPhysicsService().getPhysics().getWorld());
-    new PointLight(, 5000, Color.CYAN, 100, 0, 0);
-    new DirectionalLight(rayHandler, 5000, Color.CYAN, 90);
+    new DirectionalLight(rayHandler, 5, Color.YELLOW, -90);
 
     loadAssets();
     createUI();
