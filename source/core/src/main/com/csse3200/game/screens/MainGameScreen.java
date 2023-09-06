@@ -1,6 +1,7 @@
 package com.csse3200.game.screens;
 
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
@@ -18,6 +19,7 @@ import com.csse3200.game.input.InputDecorator;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
+import com.csse3200.game.rendering.LightingController;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
 import com.csse3200.game.services.*;
@@ -68,6 +70,7 @@ public class MainGameScreen extends ScreenAdapter {
   private final GdxGame game;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
+  private LightingController lightingController;
 
   private static Boolean lose;
 
@@ -102,6 +105,8 @@ public class MainGameScreen extends ScreenAdapter {
     spaceGameArea.create();
     renderer.getCamera().setTrackEntity(spaceGameArea.getPlayer());
 
+    lightingController = new LightingController((OrthographicCamera) renderer.getCamera().getCamera());
+
     // Switched to spaceGameArea
     //ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
     //forestGameArea.create();
@@ -125,7 +130,8 @@ public class MainGameScreen extends ScreenAdapter {
     }
       ServiceLocator.getTimeService().update();
       renderer.render();
-    if (lose == true) {
+      lightingController.render();
+    if (lose) {
       game.setScreen(GdxGame.ScreenType.LOSESCREEN);
     }
   }
