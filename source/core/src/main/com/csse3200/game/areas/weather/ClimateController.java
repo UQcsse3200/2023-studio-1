@@ -21,7 +21,7 @@ public class ClimateController {
 		temperature = DEFAULT_TEMPERATURE;
 		events = new EventHandler();
 		ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateWeatherEvent);
-		ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::determineActiveWeatherEvent);
+		ServiceLocator.getTimeService().getEvents().addListener("activeEvent", this::determineActiveEvent);
 	}
 
 	/**
@@ -64,15 +64,14 @@ public class ClimateController {
 		return;
 	}
 
-	private void determineActiveWeatherEvent() {
-		int priority = 0;
-		for (WeatherEvent event : weatherEvents) {
-			if (event.isActive() && event.getPriority() > priority) {
-				currentWeatherEvent = event;
-				priority = event.getPriority();
-			}
+	private void determineActiveEvent(WeatherEvent event) {
+		int priority = -1;
+		if (currentWeatherEvent != null) {
+			priority = currentWeatherEvent.getPriority();
 		}
+		if (priority > event.getPriority()) {
+			currentWeatherEvent = event;
+		}
+
 	}
-
-
 }

@@ -23,7 +23,7 @@ public abstract class WeatherEvent {
 			numHoursUntil--;
 		} else if (duration > 0) {
 			duration--;
-			triggerWeatherEvents();
+			ServiceLocator.getGameArea().getClimateController().getEvents().trigger("activeEvent", this);
 		}
 	}
 
