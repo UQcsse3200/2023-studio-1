@@ -12,10 +12,26 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Factory to create an item
  */
 public class ItemFactory {
+  Map<String, Method> factoryMap = new HashMap<>();
+
+  public Map<String, Method> getFactoryMap() throws NoSuchMethodException {
+    Class<ItemFactory> c = ItemFactory.class;
+    factoryMap.put("base", c.getDeclaredMethod("createBaseItem"));
+    factoryMap.put("shovel", c.getDeclaredMethod("createShovel"));
+    factoryMap.put("hoe", c.getDeclaredMethod("createHoe"));
+    factoryMap.put("watering can", c.getDeclaredMethod("createWateringcan"));
+    factoryMap.put("scythe", c.getDeclaredMethod("createScythe"));
+    return factoryMap;
+  }
+
   public static Entity createBaseItem() {
     Entity item = new Entity(EntityType.Item)
         .addComponent(new PhysicsComponent())
