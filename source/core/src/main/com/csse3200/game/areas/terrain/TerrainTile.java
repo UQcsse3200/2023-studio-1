@@ -49,60 +49,16 @@ public class TerrainTile implements TiledMapTile {
 
     // define properties of the TerrainTile based on its terrain category
     switch (terrainCategory) {
-      case PATH:
+      case PATH, GRASS, DIRT:
         this.isTraversable = true;
         this.isTillable = true;
         break;
-      case BEACHSAND:
+      case BEACHSAND, SHALLOWWATER, DESERT, SNOW, ICE, LAVAGROUND, GRAVEL, FLOWINGWATER:
         this.isTraversable = true;
         this.isTillable = false;
         break;
-      case GRASS:
-        this.isTraversable = true;
-        this.isTillable = true;
-        break;
-      case DIRT:
-        this.isTraversable = true;
-        this.isTillable = true;
-        break;
-      case SHALLOWWATER:
-        this.isTraversable = true;
-        this.isTillable = false;
-        break;
-      case DESERT:
-        this.isTraversable = true;
-        this.isTillable = false;
-        break;
-      case SNOW:
-        this.isTraversable = true;
-        this.isTillable = false;
-        break;
-      case ICE:
-        this.isTraversable = true;
-        this.isTillable = false;
-        break;
-      case DEEPWATER:
+        case DEEPWATER, ROCK, LAVA:
         this.isTraversable = false;
-        this.isTillable = false;
-        break;
-      case ROCK:
-        this.isTraversable = false;
-        this.isTillable = false;
-        break;
-      case LAVA:
-        this.isTraversable = false;
-        this.isTillable = false;
-        break;
-      case LAVAGROUND:
-        this.isTraversable = true;
-        this.isTillable = false;
-        break;
-      case GRAVEL:
-        this.isTraversable = true;
-        this.isTillable = false;
-        break;
-      case FLOWINGWATER:
-        this.isTraversable = true;
         this.isTillable = false;
         break;
     }
