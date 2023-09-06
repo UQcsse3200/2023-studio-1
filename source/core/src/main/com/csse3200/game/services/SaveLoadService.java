@@ -1,6 +1,7 @@
 package com.csse3200.game.services;
 
 import java.security.Provider.Service;
+import java.util.HashMap;
 
 import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.math.GridPoint2;
@@ -17,7 +18,8 @@ import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.math.Vector2;
 import static com.csse3200.game.services.ServiceLocator.getEntityService;
-
+import java.util.Map;
+import java.util.function.Function;
 
 /* A note of the registering of this service:
  *  this service is currently only registered at MainMenuScreen,
@@ -103,30 +105,27 @@ public class SaveLoadService {
    * @param state gamestate of the entire game based off safeFile.json
    */
   private void updateNPCs(GameState state) {
-    Entity player = ServiceLocator.getGameArea().getPlayer(); // need player for spawning npc
-    
+    Entity player = ServiceLocator.getGameArea().getPlayer();
     Array<Entity> currentGameEntities = ServiceLocator.getEntityService().getEntities();
-    //Remove all current npcs from the game
+    
+    // Remove all current NPCs from the game
     ServiceLocator.getGameArea().removeNPCs(currentGameEntities);
 
+    // Create a map to associate entity types with NPC factory methods
+    Map<EntityType, Function<Entity, Entity>> npcFactories = new HashMap<>();
+    npcFactories.put(EntityType.Cow, NPCFactory::createCow);
+    npcFactories.put(EntityType.Chicken, NPCFactory::createChicken);
+    npcFactories.put(EntityType.Astrolotl, NPCFactory::createAstrolotl);
+
     for (Entity entity : state.getEntities()) {
-      if (entity.getType() == EntityType.Cow) { // for cows
-        Entity cow = NPCFactory.createCow(player); //create cow 
-        cow.setPosition(entity.getPosition()); //set position of cow to match savefile 
-        ServiceLocator.getGameArea().spawnEntity(cow); //spawn cow on the game area 
-
-      } else if (entity.getType() == EntityType.Chicken) { // chicken 
-        Entity chicken = NPCFactory.createChicken(player);
-        chicken.setPosition(entity.getPosition());
-        ServiceLocator.getGameArea().spawnEntity(chicken);
-
-      } else if (entity.getType() == EntityType.Astrolotl) { //astrolotl
-        Entity astrolotl = NPCFactory.createAstrolotl(player);
-        astrolotl.setPosition(entity.getPosition());
-        ServiceLocator.getGameArea().spawnEntity(astrolotl);
-      }
+        EntityType entityType = entity.getType();
+        if (npcFactories.containsKey(entityType)) {
+            Entity npc = npcFactories.get(entityType).apply(player);
+            npc.setPosition(entity.getPosition());
+            ServiceLocator.getGameArea().spawnEntity(npc);
+        }
     }
-  }
+}
 
 
 
