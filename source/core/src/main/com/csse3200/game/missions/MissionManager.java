@@ -9,6 +9,16 @@ import java.util.concurrent.atomic.AtomicReferenceArray;
 
 public class MissionManager {
 
+	/**
+	 * An enum storing all possible events that the {@link MissionManager}'s {@link EventHandler} should listen to and
+	 * trigger. To add a listener to the {@link MissionManager}, create a new {@link MissionEvent} enum value, and add
+	 * a listener for the {@link #name()} of the enum value.
+	 */
+	public enum MissionEvent {
+		PLANT_CROP,
+		FERTILISE_CROP
+	}
+
 	private static final Achievement[] achievements = new Achievement[]{};
 	private static final ArrayList<Quest> quests = new ArrayList<>();
 	private static final EventHandler events = new EventHandler();
