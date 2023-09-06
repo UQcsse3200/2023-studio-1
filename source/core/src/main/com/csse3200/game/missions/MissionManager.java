@@ -30,8 +30,6 @@ public class MissionManager {
 	public void addQuest(Quest quest) {
 		quests.add(quest);
 		quest.registerMission(events);
-
-
 	}
 
 	/**
@@ -40,8 +38,10 @@ public class MissionManager {
 	private void updateHour() {
 		for (Quest quest : quests) {
 			quest.updateExpiry(1);
+			if (quest.isExpired()) {
+				// Game over
+			}
 		}
-
 	}
 
 }
