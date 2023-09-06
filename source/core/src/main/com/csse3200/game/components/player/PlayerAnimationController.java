@@ -117,7 +117,7 @@ public class PlayerAnimationController extends Component {
     /**
      * Starts the default player animation when they stop walking.
      */
-    void animationWalkStop(String direction, int AnimationRandomizer) {
+    void animationWalkStop(String direction, int AnimationRandomizer, boolean testBypass) {
 
         if (!readyToPlay()) {
             return;
@@ -135,7 +135,7 @@ public class PlayerAnimationController extends Component {
         String animation = String.format("%s_%s", animationType, direction);
 
 
-        if (!animator.getCurrentAnimation().equals(animation) && animator.isFinished()) {
+        if (!animator.getCurrentAnimation().equals(animation) && animator.isFinished() || testBypass) {
 
             animator.startAnimation(animation);
             animationPrev = animation;
