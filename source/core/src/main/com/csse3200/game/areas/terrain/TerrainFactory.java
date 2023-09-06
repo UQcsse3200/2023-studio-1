@@ -29,8 +29,7 @@ import com.csse3200.game.services.ServiceLocator;
 /** Factory for creating game terrains. */
 public class TerrainFactory {
   private static GridPoint2 MAP_SIZE = new GridPoint2(1000, 1000); // this will be updated later in the code
-  private static final String path1 = "source/core/assets/configs/Map.txt"; // change this path if u can't open the file
-  private static final String path2 = "configs/Map.txt";
+  private static final String mapPath = "configs/Map.txt";
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;
   private static final Map<Character, String> charToTileImageMap;
@@ -247,12 +246,7 @@ public class TerrainFactory {
    */
   private void createGameTiles(GridPoint2 tileSize, ArrayList<TextureRegion> TRList, TiledMap tiledMap) {
       try {
-          BufferedReader bf;
-          try {
-              bf = new BufferedReader(new FileReader(path1));
-          } catch (FileNotFoundException e) {
-              bf = new BufferedReader(new FileReader(path2));
-          }
+          BufferedReader bf = new BufferedReader(new InputStreamReader(Gdx.files.internal(mapPath).read()));
           String line1, line2, line;
           line1 = bf.readLine();
           line2 = bf.readLine();
