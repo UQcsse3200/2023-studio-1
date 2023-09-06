@@ -1,5 +1,6 @@
 package com.csse3200.game.screens;
 
+import box2dLight.DirectionalLight;
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.ScreenAdapter;
@@ -96,7 +97,8 @@ public class MainGameScreen extends ScreenAdapter {
     renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
 
     rayHandler = new RayHandler(ServiceLocator.getPhysicsService().getPhysics().getWorld());
-    new PointLight(rayHandler, 5000, Color.CYAN, 100, 0, 0);
+    new PointLight(, 5000, Color.CYAN, 100, 0, 0);
+    new DirectionalLight(rayHandler, 5000, Color.CYAN, 90);
 
     loadAssets();
     createUI();
@@ -123,7 +125,7 @@ public class MainGameScreen extends ScreenAdapter {
       ServiceLocator.getEntityService().update();
     }
       ServiceLocator.getTimeService().update();
-      renderer.render();
+    renderer.render();
     rayHandler.setCombinedMatrix((OrthographicCamera) renderer.getCamera().getCamera());
     rayHandler.updateAndRender();
   }
