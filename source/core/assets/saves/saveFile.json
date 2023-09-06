@@ -1,8 +1,9 @@
 {
+"hour": 1,
 "player": {
 	"Entity": "Player",
-	"x": 4.3653903,
-	"y": 9.144,
+	"x": 10.042158,
+	"y": 11.2703285,
 	"components": {
 		"inventory": {
 			"item": {
@@ -23,6 +24,10 @@
 				"count": 1
 			},
 			"item": {
+				"name": "shovel",
+				"count": 1
+			},
+			"item": {
 				"name": "fertiliser",
 				"count": 1
 			},
@@ -31,7 +36,7 @@
 				"count": 1
 			},
 			"item": {
-				"name": "scythe",
+				"name": "aloe vera seed",
 				"count": 1
 			},
 			"item": {
@@ -40,11 +45,7 @@
 				"count": 1
 			},
 			"item": {
-				"name": "shovel",
-				"count": 1
-			},
-			"item": {
-				"name": "aloe vera seed",
+				"name": "scythe",
 				"count": 1
 			}
 		}
@@ -52,34 +53,276 @@
 },
 "entities": [
 	{
-		"Entity": "Axolotl",
-		"x": 43.646793,
-		"y": 32.233902,
+		"Entity": "Astrolotl",
+		"x": 44.172417,
+		"y": 34.883408,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Cow",
-		"x": 39.838146,
-		"y": 41.651463,
+		"x": 26.728685,
+		"y": 10.567002,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Cow",
+		"x": 3.4630172,
+		"y": 25.167116,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Cow",
+		"x": 19.659323,
+		"y": 6.0029387,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Cow",
+		"x": -0.15039122,
+		"y": 11.788476,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Cow",
+		"x": 4.5181046,
+		"y": 27.411383,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 12.042059,
-		"y": 34.89346,
+		"x": 19.674583,
+		"y": 19.50496,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 29.32926,
+		"y": 29.384514,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 45.975636,
+		"y": 18.561115,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 5.4574485,
+		"y": 10.135477,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 31.643932,
+		"y": 35.289303,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 20.15832,
+		"y": 31.082703,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 30.836493,
+		"y": 21.15768,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 19.882887,
+		"y": 40.477734,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 47.29668,
+		"y": 39.909115,
+		"components": {
+			"tamed": false
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 3.876659,
+		"y": 26.563042,
 		"components": {
 			"tamed": false
 		}
 	},
 	{
 		"Entity": "Tractor",
-		"x": 3.202381,
-		"y": 4.659,
+		"x": 1.4034349,
+		"y": 9.06612,
 		"components": {}
+	}
+],
+"tiles": [
+	{
+		"X": 10.401919,
+		"Y": 26.002934,
+		"waterContent": 0.21348949,
+		"soilQuality": 1,
+		"isFertilised": false,
+		"plant": null
+	},
+	{
+		"X": 9.294223,
+		"Y": 21.772144,
+		"waterContent": 0,
+		"soilQuality": 1,
+		"isFertilised": false,
+		"plant": null
+	},
+	{
+		"X": 9.294223,
+		"Y": 22.772144,
+		"waterContent": 0,
+		"soilQuality": 1,
+		"isFertilised": false,
+		"plant": null
+	},
+	{
+		"X": 9.386531,
+		"Y": 14.202885,
+		"waterContent": 0,
+		"soilQuality": 1,
+		"isFertilised": false,
+		"plant": null
+	},
+	{
+		"X": 9.386531,
+		"Y": 13.202885,
+		"waterContent": 0,
+		"soilQuality": 1,
+		"isFertilised": false,
+		"plant": null
+	},
+	{
+		"X": 9.571147,
+		"Y": 13.387501,
+		"waterContent": 0,
+		"soilQuality": 1,
+		"isFertilised": false,
+		"plant": null
+	},
+	{
+		"X": 10.217303,
+		"Y": 14.033657,
+		"waterContent": 0,
+		"soilQuality": 1,
+		"isFertilised": false,
+		"plant": null
+	},
+	{
+		"X": 10.124995,
+		"Y": 15.125965,
+		"waterContent": 0,
+		"soilQuality": 1,
+		"isFertilised": false,
+		"plant": null
+	},
+	{
+		"X": 8.294223,
+		"Y": 15.141354,
+		"waterContent": 0,
+		"soilQuality": 1,
+		"isFertilised": false,
+		"plant": null
+	},
+	{
+		"X": 9.294223,
+		"Y": 15.372124,
+		"waterContent": 0,
+		"soilQuality": 1,
+		"isFertilised": false,
+		"plant": null
+	},
+	{
+		"X": 9.294223,
+		"Y": 16.372124,
+		"waterContent": 0,
+		"soilQuality": 1,
+		"isFertilised": false,
+		"plant": null
+	},
+	{
+		"X": 8.294223,
+		"Y": 16.372124,
+		"waterContent": 0,
+		"soilQuality": 1,
+		"isFertilised": false,
+		"plant": null
+	},
+	{
+		"X": 7.617301,
+		"Y": 13.77211,
+		"waterContent": 0,
+		"soilQuality": 1,
+		"isFertilised": false,
+		"plant": null
+	},
+	{
+		"X": 7.617301,
+		"Y": 13.495186,
+		"waterContent": 0,
+		"soilQuality": 1,
+		"isFertilised": false,
+		"plant": null
+	},
+	{
+		"X": 8.617301,
+		"Y": 10.541328,
+		"waterContent": 0,
+		"soilQuality": 1,
+		"isFertilised": false,
+		"plant": null
+	},
+	{
+		"X": 8.617301,
+		"Y": 9.541328,
+		"waterContent": 0,
+		"soilQuality": 1,
+		"isFertilised": false,
+		"plant": null
+	},
+	{
+		"X": 9.617301,
+		"Y": 9.033634,
+		"waterContent": 0,
+		"soilQuality": 1,
+		"isFertilised": false,
+		"plant": null
 	}
 ]
 }

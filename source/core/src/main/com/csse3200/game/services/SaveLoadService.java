@@ -53,7 +53,7 @@ public class SaveLoadService {
     state.setPlayer(ServiceLocator.getGameArea().getPlayer());
     state.setEntities(ServiceLocator.getEntityService().getEntities());
     // TODO: Broken map saving :(
-    //state.setMap(ServiceLocator.getGameArea().getMap());
+    state.setTiles(ServiceLocator.getEntityService().getEntities());
 
     // Write the state to a file
     SaveGame.set(state);
