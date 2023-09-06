@@ -271,7 +271,9 @@ public class TerrainTile implements TiledMapTile {
    */
   public void setCropTile(Entity cropTile) {
     this.cropTile = cropTile;
-    cropTile.getComponent(CropTileComponent.class).setTerrainTile(this);
+    if (cropTile.getComponent(CropTileComponent.class).getTerrainTile() == null) {
+      cropTile.getComponent(CropTileComponent.class).setTerrainTile(this);
+    }
     this.setOccupied();
   }
 
