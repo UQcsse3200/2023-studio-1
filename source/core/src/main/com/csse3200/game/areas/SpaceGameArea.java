@@ -351,6 +351,4 @@ public class SpaceGameArea extends GameArea {
   public Entity getTractor() {
     return tractor;
   }
-
-
 }
