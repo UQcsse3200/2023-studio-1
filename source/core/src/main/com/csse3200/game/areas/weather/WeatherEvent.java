@@ -16,7 +16,6 @@ public abstract class WeatherEvent {
 		this.priority = priority;
 	}
 
-	//TODO
 	public void updateTime() {
 		if (numHoursUntil > 0) {
 			numHoursUntil--;
@@ -33,9 +32,8 @@ public abstract class WeatherEvent {
 		return priority;
 	}
 
-	// TODO
 	public boolean isActive() {
-		return false;
+		return numHoursUntil == 0 && duration > 0;
 	}
 
 	public void addEffect(ClimateController climate) {
