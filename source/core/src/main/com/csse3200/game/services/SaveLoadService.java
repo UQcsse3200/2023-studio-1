@@ -105,29 +105,25 @@ public class SaveLoadService {
   private void updateNPCs(GameState state) {
     //Entity temp = new Entity();
     Entity temp = PlayerFactory.createPlayer();
-    EntityService entityService = getEntityService();
-    entityService.disposeNPCs(); 
+    
     Array<Vector2> cowLocations = new Array();
+
+    Array<Entity> cows = ServiceLocator.getEntityService().getEntities();
+    for (Entity entity : cows) {
+      if (entity.getType() == EntityType.Cow) {
+        ServiceLocator.getGameArea().removeEntity(entity);
+      }
+    }
     for (Entity entity : state.getEntities()) {
       if (entity.getType() == EntityType.Cow) {
         cowLocations.add(entity.getPosition());
         Entity cow = NPCFactory.createCow(temp);
         cow.setPosition(entity.getPosition());
         ServiceLocator.getGameArea().spawnEntity(cow);
-        //ServiceLocator.getEntityService().getEntities().peek().setPosition(entity.getPosition());
       }
     }
-
-    Array<Entity> cows = ServiceLocator.getEntityService().getEntities();
-    // System.out.println(cowLocations);
-    // System.out.println(cowLocations.size);
-    // System.out.println(cows);
-    int i = 0;
     for (Entity entity : cows){
-      System.out.println(entity.getType());
       if (entity.getType() == EntityType.Cow){
-        //System.out.println(i);
-        i +=1;
         entity.setPosition(cowLocations.get(0));
       }
     }
