@@ -3,9 +3,11 @@ package com.csse3200.game.components.player;
 import java.util.Vector;
 
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.ItemActions;
@@ -118,19 +120,9 @@ public class PlayerActions extends Component {
     Vector2 velocity = body.getLinearVelocity();
     Vector2 velocityScale = this.running ? MAX_RUN_SPEED.cpy() : MAX_WALK_SPEED.cpy();
 
-    //float terrainSpeedModifier = map.getTileSpeedModifier((int) this.entity.getPosition().x, (int) this.entity.getPosition().y);
-
-    if (this.running == true) {
-      System.out.println("Vector coordiantes: x:" + String.format("%.2f", entity.getPosition().x) + " y:" + String.format("%.2f", entity.getPosition().y));
-      //try {System.out.println();} catch (Exception e) { }
-      //System.out.println("TileCoords: " + map.pixelPositionToWorldCoordinates((int) this.entity.getPosition().x, (int) this.entity.getPosition().y));
-    }
-
-    //velocityScale.x = velocityScale.x * terrainSpeedModifier;
-    //velocityScale.y = velocityScale.y * terrainSpeedModifier;
-
-    // Can simply apply a scalar multiplier effect (maybe .scl) instead of what I did above
-    // Could be done by creating a vector2 where it's x and y are the terrain speed modifiers
+    // Used to apply the terrainSpeedModifier
+    //float terrainSpeedModifier = map.getTile(this.entity.getPosition()).getSpeedModifier();
+    //velocityScale.scl(terrainSpeedModifier);
 
     Vector2 desiredVelocity = moveDirection.cpy().scl(velocityScale);
     // impulse = (desiredVel - currentVel) * mass
