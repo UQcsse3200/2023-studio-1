@@ -14,5 +14,13 @@ public class BasePlantConfig {
     public int maxHealth = 0;
     public String[] soundsArray = null;
 
+    public int sproutThreshold = 0;
+    public int juvenileThreshold = 0;
+    public int adultThreshold = 0;
 
+    public String seedlingAsset = "none";
+    public String sproutingAsset = "none";
+    public String juvenileAsset = "none";
+    public String adultAsset = "none";
+    public String decayingAsset = "none";
 }

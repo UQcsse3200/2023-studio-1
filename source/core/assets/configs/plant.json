@@ -7,7 +7,15 @@
     "idealWaterLevel": 0.7,
     "adultLifeSpan": 5,
     "maxHealth": 400,
-    "soundsArray" : ["sounds/impact4.ogg"]
+    "soundsArray" : ["sounds/impact4.ogg"],
+    "sproutThreshold": 7,
+    "juvenileThreshold": 22,
+    "adultThreshold": 35,
+    "seedlingAsset": "images/plants/corn_item.png",
+    "sproutingAsset": "images/plants/Corn.png",
+    "juvenileAsset": "images/plants/corn_juvenile.png",
+    "adultAsset": "images/plants/corn_adult.png",
+    "decayingAsset": "images/plants/corn_decaying.png"
   },
   "aloeVera": {
     "health": 10,
@@ -17,7 +25,15 @@
     "idealWaterLevel": 0.7,
     "adultLifeSpan": 5,
     "maxHealth": 300,
-    "soundsArray" : ["sounds/impact4.ogg"]
+    "soundsArray" : ["sounds/impact4.ogg"],
+    "sproutThreshold": 13,
+    "juvenileThreshold": 27,
+    "adultThreshold": 46,
+    "seedlingAsset": "images/plants/Aloe.png",
+    "sproutingAsset": "images/plants/Aloe.png",
+    "juvenileAsset": "images/plants/Aloe.png",
+    "adultAsset": "images/plants/aloe_adult.png",
+    "decayingAsset": "images/plants/Aloe.png"
   },
   "hammerPlant": {
     "health": 10,
@@ -27,7 +43,15 @@
     "idealWaterLevel": 0.7,
     "adultLifeSpan": 5,
     "maxHealth": 200,
-    "soundsArray" : ["sounds/impact4.ogg"]
+    "soundsArray" : ["sounds/impact4.ogg"],
+    "sproutThreshold": 12,
+    "juvenileThreshold": 19,
+    "adultThreshold": 37,
+    "seedlingAsset": "images/plants/Hammer.png",
+    "sproutingAsset": "images/plants/Hammer.png",
+    "juvenileAsset": "images/plants/Hammer.png",
+    "adultAsset": "images/plants/hammer_adult.png",
+    "decayingAsset": "images/plants/Hammer.png"
   },
   "venusFlyTrap": {
     "health": 10,
@@ -40,7 +64,15 @@
     "soundsArray" : ["sounds/impact4.ogg", "sounds/plants/venusFlyTrapDestroy.m4a",
       "sounds/impact4.ogg", "sounds/plants/venusFlyTrapNearby.m4a",
       "sounds/impact4.ogg", "sounds/plants/venusFlyTrapClick.m4a",
-      "sounds/impact4.ogg", "sounds/plants/venusFlyTrapDecays.m4a"]
+      "sounds/impact4.ogg", "sounds/plants/venusFlyTrapDecays.m4a"],
+    "sproutThreshold": 13,
+    "juvenileThreshold": 22,
+    "adultThreshold": 40,
+    "seedlingAsset": "images/plants/VenusTrap.png",
+    "sproutingAsset": "images/plants/venus_sprout.png",
+    "juvenileAsset": "images/plants/venus_juvenile.png",
+    "adultAsset": "images/plants/venus_adult.png",
+    "decayingAsset": "images/plants/venus_decaying.png"
   },
   "waterWeed": {
     "health": 10,
@@ -50,7 +82,15 @@
     "idealWaterLevel": 0.7,
     "adultLifeSpan": 5,
     "maxHealth": 100,
-    "soundsArray" : ["sounds/impact4.ogg"]
+    "soundsArray" : ["sounds/impact4.ogg"],
+    "sproutThreshold": 8,
+    "juvenileThreshold": 18,
+    "adultThreshold": 32,
+    "seedlingAsset": "images/plants/waterweed_item.png",
+    "sproutingAsset": "images/plants/waterweed.png",
+    "juvenileAsset": "images/plants/waterweed.png",
+    "adultAsset": "images/plants/waterweed_adult.png",
+    "decayingAsset": "images/plants/waterweed.png"
   },
   "nightshade": {
     "health": 10,
@@ -60,7 +100,15 @@
     "idealWaterLevel": 0.7,
     "adultLifeSpan": 5,
     "maxHealth": 200,
-    "soundsArray" : ["sounds/impact4.ogg"]
+    "soundsArray" : ["sounds/impact4.ogg"],
+    "sproutThreshold": 11,
+    "juvenileThreshold": 20,
+    "adultThreshold": 38,
+    "seedlingAsset": "images/plants/belladonna_item.png",
+    "sproutingAsset": "images/plants/belladonna_sprout.png",
+    "juvenileAsset": "images/plants/belladonna_juvenile.png",
+    "adultAsset": "images/plants/belladonna_adult.png",
+    "decayingAsset": "images/plants/belladonna_decaying.png"
   },
   "tobacco": {
     "health": 10,
@@ -70,7 +118,15 @@
     "idealWaterLevel": 0.7,
     "adultLifeSpan": 5,
     "maxHealth": 20,
-    "soundsArray" : ["sounds/impact4.ogg"]
+    "soundsArray" : ["sounds/impact4.ogg"],
+    "sproutThreshold": 14,
+    "juvenileThreshold": 25,
+    "adultThreshold": 42,
+    "seedlingAsset": "images/plants/Corn.png",
+    "sproutingAsset": "images/plants/Corn.png",
+    "juvenileAsset": "images/plants/Corn.png",
+    "adultAsset": "images/plants/Corn.png",
+    "decayingAsset": "images/plants/Corn.png"
   },
   "sunFlower": {
     "health" : 10,
@@ -80,6 +136,14 @@
     "idealWaterLevel": 0.7,
     "adultLifeSpan": 5,
     "maxHealth": 100,
-    "soundsArray" : ["sounds/impact4.ogg"]
+    "soundsArray" : ["sounds/impact4.ogg"],
+    "sproutThreshold": 9,
+    "juvenileThreshold": 30,
+    "adultThreshold": 45,
+    "seedlingAsset": "images/plants/Corn.png",
+    "sproutingAsset": "images/plants/Corn.png",
+    "juvenileAsset": "images/plants/Corn.png",
+    "adultAsset": "images/plants/Corn.png",
+    "decayingAsset": "images/plants/Corn.png"
   }
 }

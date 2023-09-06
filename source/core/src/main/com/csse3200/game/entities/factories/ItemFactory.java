@@ -10,11 +10,28 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
+import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  * Factory to create an item
  */
 public class ItemFactory {
+
+  /**
+   * Map of item names to their suppler function.
+   *
+   * <p>This map is unmodifiable (i.e., read-only).
+   */
+  public static final Map<String, Supplier<Entity>> itemSuppliers = Map.of(
+          // Add your item and supplier function here.
+          "shovel", ItemFactory::createShovel,
+          "hoe", ItemFactory::createHoe,
+          "watering can", ItemFactory::createWateringcan,
+          "scythe", ItemFactory::createScythe
+  );
+
+
   public static Entity createBaseItem() {
     Entity item = new Entity()
         .addComponent(new PhysicsComponent())
@@ -70,7 +87,7 @@ public class ItemFactory {
   public static Entity createScythe() {
     Entity scythe = createBaseItem()
         .addComponent(new TextureRenderComponent("images/tool_scythe.png"))
-        .addComponent(new ItemComponent("watering can", ItemType.SCYTHE, new Texture("images/tool_scythe.png")));
+        .addComponent(new ItemComponent("scythe", ItemType.SCYTHE, new Texture("images/tool_scythe.png")));
     return scythe;
   }
 }
