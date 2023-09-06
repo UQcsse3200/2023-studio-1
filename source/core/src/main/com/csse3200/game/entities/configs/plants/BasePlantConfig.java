@@ -13,5 +13,7 @@ public class BasePlantConfig {
     public int adultLifeSpan = 0;
     public int maxHealth = 0;
 
-
+    public int sproutThreshold = 0;
+    public int juvenileThreshold = 0;
+    public int adultThreshold = 0;
 }

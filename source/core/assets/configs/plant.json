@@ -6,7 +6,10 @@
     "description": "A nutritious snack with everything a human needs to survive, the local fauna won’t touch it though. Suspiciously high in protein and fat…",
     "idealWaterLevel": 0.7,
     "adultLifeSpan": 5,
-    "maxHealth": 400
+    "maxHealth": 400,
+    "sproutThreshold": 7,
+    "juvenileThreshold": 22,
+    "adultThreshold": 35
   },
   "aloeVera": {
     "health": 10,
@@ -15,7 +18,10 @@
     "description": "A unique plant that once ground down to a chunky red paste can be used to heal significant wounds, it’s a miracle!",
     "idealWaterLevel": 0.7,
     "adultLifeSpan": 5,
-    "maxHealth": 300
+    "maxHealth": 300,
+    "sproutThreshold": 13,
+    "juvenileThreshold": 27,
+    "adultThreshold": 46
   },
   "hammerPlant": {
     "health": 10,
@@ -24,7 +30,10 @@
     "description": "A useful plant resembling a hand holding a hammer that repairs the other nearby plants, maybe they were friends!",
     "idealWaterLevel": 0.7,
     "adultLifeSpan": 5,
-    "maxHealth": 200
+    "maxHealth": 200,
+    "sproutThreshold": 12,
+    "juvenileThreshold": 19,
+    "adultThreshold": 37
   },
   "venusFlyTrap": {
     "health": 10,
@@ -33,7 +42,10 @@
     "description" : "An hangry plant that will gobble any nasty pests nearby. Keep small pets and children out of snapping distance!",
     "idealWaterLevel": 0.7,
     "adultLifeSpan": 5,
-    "maxHealth": 400
+    "maxHealth": 400,
+    "sproutThreshold": 13,
+    "juvenileThreshold": 22,
+    "adultThreshold": 40
   },
   "waterWeed": {
     "health": 10,
@@ -42,7 +54,10 @@
     "description": "Test description",
     "idealWaterLevel": 0.7,
     "adultLifeSpan": 5,
-    "maxHealth": 100
+    "maxHealth": 100,
+    "sproutThreshold": 8,
+    "juvenileThreshold": 18,
+    "adultThreshold": 32
   },
   "nightshade": {
     "health": 10,
@@ -51,7 +66,10 @@
     "description": "Grows deadly poisonous berries",
     "idealWaterLevel": 0.7,
     "adultLifeSpan": 5,
-    "maxHealth": 200
+    "maxHealth": 200,
+    "sproutThreshold": 11,
+    "juvenileThreshold": 20,
+    "adultThreshold": 38
   },
   "tobacco": {
     "health": 10,
@@ -60,7 +78,10 @@
     "description": "Toxic addicted plant leaves",
     "idealWaterLevel": 0.7,
     "adultLifeSpan": 5,
-    "maxHealth": 20
+    "maxHealth": 20,
+    "sproutThreshold": 14,
+    "juvenileThreshold": 25,
+    "adultThreshold": 42
   },
   "sunFlower": {
     "health" : 10,
@@ -69,6 +90,9 @@
     "description": "Warms up the nearby area",
     "idealWaterLevel": 0.7,
     "adultLifeSpan": 5,
-    "maxHealth": 100
+    "maxHealth": 100,
+    "sproutThreshold": 9,
+    "juvenileThreshold": 30,
+    "adultThreshold": 45
   }
 }
