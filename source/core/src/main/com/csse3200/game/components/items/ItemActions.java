@@ -1,5 +1,4 @@
 package com.csse3200.game.components.items;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.CropTileComponent;
@@ -24,7 +23,7 @@ public class ItemActions extends Component {
 
   /**
    * Uses the item at the given position
-   * 
+   *
    * @param playerPos the position of the player
    * @param mousePos  the position of the mouse
    * @param item      item to use/ interact with tile
@@ -77,7 +76,7 @@ public class ItemActions extends Component {
 
   /**
    * Gets the tile at the given position. else returns null
-   * 
+   *
    * @param playerPos the position of the player
    * @param mousePos  the position of the mouse
    * @return Entity of tile at location else returns null
@@ -92,7 +91,7 @@ public class ItemActions extends Component {
    * mouse position. Will always return 1 tile to the left, right,
    * up, down, diagonal left up, diagonal right up, diagonal left down, diagonal
    * right down of the player.
-   * 
+   *
    * @param playerPos the position of the player
    * @param mousePos  the position of the mouse
    * @return a vector of the position where the player should hit
@@ -123,7 +122,7 @@ public class ItemActions extends Component {
 
   /**
    * Waters the tile at the given position.
-   * 
+   *
    * @param tile the tile to be interacted with
    * @param item a reference to a watering can
    * @return if watering was successful return true else return false
@@ -142,7 +141,7 @@ public class ItemActions extends Component {
 
   /**
    * Harvests the tile at the given position
-   * 
+   *
    * @param tile the tile to be interacted with
    * @return if harvesting was successful return true else return false
    */
@@ -157,7 +156,7 @@ public class ItemActions extends Component {
 
   /**
    * Shovels the tile at the given position
-   * 
+   *
    * @param tile the tile to be interacted with
    * @return if shoveling was successful return true else return false
    */
@@ -173,7 +172,7 @@ public class ItemActions extends Component {
 
   /**
    * Hoes the tile at the given position
-   * 
+   *
    * @param playerPos the position of the player
    * @param mousePos  the position of the mouse
    * @return if hoeing was successful return true else return false
@@ -261,7 +260,7 @@ public class ItemActions extends Component {
 
   /**
    * Checks if the tile is harvestable by checking if it is a CropTile
-   * 
+   *
    * @param tile tile being checked
    * @return true if tile is harvestable else false
    */
