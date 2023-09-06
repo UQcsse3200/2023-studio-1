@@ -38,7 +38,7 @@ public class ToolbarDisplay extends UIComponent {
      */
 
     private void resetToolbar(){
-        logger.info("Reset Toolbar..........................................");
+        //logger.info("Reset Toolbar..........................................");
         //window.remove();
         window.reset();
         Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
@@ -52,7 +52,7 @@ public class ToolbarDisplay extends UIComponent {
             //Stack stack = new Stack();
             //stack.add(new Image(new Texture("images/itemFrame.png")));
             if (inventory.getItemPos(i) == null){
-                logger.info("Null Item at "+i );
+                //logger.info("Null Item at "+i );
                 ItemSlot item = new ItemSlot();
                 table.add(item).pad(10, 10, 10, 10).fill();
                 //stack.add(new Image(new Texture("images/itemFrame.png")));

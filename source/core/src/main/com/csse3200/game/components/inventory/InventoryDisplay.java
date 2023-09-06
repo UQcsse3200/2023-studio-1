@@ -46,7 +46,7 @@ public class InventoryDisplay extends UIComponent {
   }
 
   private void resetInventory(){
-    logger.info("Reset Inventory..........................................");
+    //logger.info("Reset Inventory..........................................");
     window.reset();
     Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
     table = new Table(skin);
@@ -58,7 +58,7 @@ public class InventoryDisplay extends UIComponent {
       label.setBounds(label.getX() + 15, label.getY(), label.getWidth(), label.getHeight());
       //stack.add(new Image(new Texture("images/itemFrame.png")));
       if (playerInventory.getItemPos(i) == null){
-        logger.info("Null Item at "+i );
+        //logger.info("Null Item at "+i );
         ItemSlot item = new ItemSlot();
         table.add(item).pad(10, 10, 10, 10).fill();
       } else {
