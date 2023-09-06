@@ -258,10 +258,10 @@ public class TerrainFactory {
           TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
 
           // y_pos = 100 and x_pos = 100 lets map generate correctly
-          int x_pos = 0, y_pos = 100;
+          int x_pos = 0, y_pos = 99;
           // checking for end of file
           for (line = bf.readLine(); line != null; x_pos++, line = bf.readLine(), y_pos--) {
-              for (x_pos = line.length() - 1; x_pos > 0; x_pos--) {
+              for (x_pos = line.length() -1; x_pos >= 0; x_pos--) {
                   // Cell cell = layer.getCell(x_pos, y_pos); // uncomment this if u want to
                   // update instead of replace
                   GridPoint2 point = new GridPoint2(x_pos, y_pos);

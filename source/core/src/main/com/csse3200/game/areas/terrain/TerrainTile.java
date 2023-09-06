@@ -51,16 +51,6 @@ public class TerrainTile implements TiledMapTile {
 
     // define properties of the TerrainTile based on its terrain category
     switch (terrainCategory) {
-      case PATH:
-        this.isTraversable = true;
-        this.isTillable = true;
-        this.speedModifier = 1.2f;
-        break;
-      case BEACHSAND:
-        this.isTraversable = true;
-        this.isTillable = false;
-        this.speedModifier = 0.9f;
-        break;
       case GRASS:
         this.isTraversable = true;
         this.isTillable = true;
@@ -268,7 +258,7 @@ public class TerrainTile implements TiledMapTile {
    * @return cropTile entity or null if there is no cropTile entity
    */
   public Entity getCropTile() {
-    return cropTile;
+    return this.cropTile;
   }
 
   /**
