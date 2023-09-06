@@ -45,7 +45,7 @@ public class LoseScreenDisplay extends UIComponent {
         background.setHeight(Gdx.graphics.getHeight());
         background.setPosition(0, 0);
 
-        TextButton exitBtn = new TextButton("Exit", skin);
+        TextButton exitBtn = new TextButton("Return to Main Menu", skin);
 
         exitBtn.addListener(
                 new ChangeListener() {
