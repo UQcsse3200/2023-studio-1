@@ -197,4 +197,16 @@ public class PlantFactory {
         PhysicsUtils.setScaledCollider(plant, 0.5f, 0.2f);
         return plant;
     }
+
+    public static Entity createAtomicAlgae(CropTileComponent cropTile) {
+        return null;
+    }
+
+    public static Entity createHorticulturalHeater(CropTileComponent cropTile) {
+        return null;
+    }
+
+    public static Entity createDeadlyNightshade(CropTileComponent cropTile) {
+        return null;
+    }
 }
