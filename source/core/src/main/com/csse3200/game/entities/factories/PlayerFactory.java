@@ -7,6 +7,7 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.inventory.ToolbarDisplay;
 import com.csse3200.game.components.player.*;
 import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.components.missioninformation.MissionDisplay;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.player.PlayerAnimationController;
 import com.csse3200.game.components.inventory.InventoryDisplay;
@@ -65,6 +66,7 @@ public class PlayerFactory {
             .addComponent(new ItemPickupComponent())
             .addComponent(new InteractionColliderComponent(2f))
             .addComponent(new InventoryDisplay())
+                .addComponent(new MissionDisplay())
             .addComponent(new ToolbarDisplay());
 
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
