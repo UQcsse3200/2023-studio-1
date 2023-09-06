@@ -14,7 +14,6 @@ public abstract class WeatherEvent {
 		this.numHoursUntil = numHoursUntil;
 		this.duration = duration;
 		this.priority = priority;
-		ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateTime);
 	}
 
 	//TODO
@@ -23,7 +22,6 @@ public abstract class WeatherEvent {
 			numHoursUntil--;
 		} else if (duration > 0) {
 			duration--;
-			ServiceLocator.getGameArea().getClimateController().getEvents().trigger("activeEvent", this);
 		}
 	}
 
