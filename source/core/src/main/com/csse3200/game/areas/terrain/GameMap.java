@@ -2,13 +2,10 @@ package com.csse3200.game.areas.terrain;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.EventHandler;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /** the GameMap class is used to store and easily access and manage the components related to the game map */
 public class GameMap {
@@ -63,7 +60,7 @@ public class GameMap {
     public TerrainTile getTile(int x, int y) {
         GridPoint2 max = this.getMapSize();
 
-        if (x > max.x || y > max.y) {
+        if (x < 0 || y < 0 || x > max.x || y > max.y) {
             throw new IndexOutOfBoundsException("Bad Input: Coordinate position out of bounds");
         }
 
@@ -72,42 +69,38 @@ public class GameMap {
 
     /**
      * Conversion function: gets the centre of a tile from a coordinate position
-     * Currently WIP
+     * e.g. on a 4x4 tile grid, (0, 0) in the world translates to (8, 56) on the pixel grid
      * @param x x coordinate
      * @param y y coordinate
-     * @return a list of x and y pixel values
+     * @return a Vector2 value
      */
-    public ArrayList<Integer> worldCoordinatesToScreenPosition(int x, int y) {
+    public GridPoint2 worldCoordinatesToPixelPosition(int x, int y) {
         GridPoint2 max = this.getMapSize();
 
         if (x > max.x || y > max.y) {
             throw new IndexOutOfBoundsException("Bad Input: Coordinate position out of bounds");
         }
 
-        ArrayList<Integer> pixelPositions = new ArrayList<>();
         int xPixel = (16 * x) + 8;
-        int y2 = (16 * y) - 8;
-        // post process y2 to convert (0,0) location
-        int yPixel = Gdx.graphics.getHeight() - 1 - y2;
-        pixelPositions.add(xPixel);
-        pixelPositions.add(yPixel);
-        return pixelPositions;
+        int y2 = (16 * y) + 8;
+        // post process y2 to convert (0,0) location to bottom left
+        int yPixel = Gdx.graphics.getHeight() - y2;
+        return new GridPoint2(xPixel, yPixel);
     }
 
     /**
      * Conversion function: gets the centre of a tile from a coordinate position
-     * Currently WIP
+     * e.g. on a 4x4 tile grid, (6, 50) on the pixel grid translates to (0, 0) in the world
      * @param xPixel x pixel screen coordinate
      * @param yPixel y pixel screen coordinate
-     * @return a list of x and y tile coordinates
+     * @return a Vector2 value
      */
-    public ArrayList<Integer> screenPositionToWorldCoordinates(int xPixel, int yPixel) {
-        ArrayList<Integer> coordinates = new ArrayList<>();
-        int x = Math.abs((xPixel / 16) - 1);
-        int y = Math.abs((yPixel / 16) - 1);
-        coordinates.add(x);
-        coordinates.add(y);
-        return coordinates;
+    public GridPoint2 pixelPositionToWorldCoordinates(int xPixel, int yPixel) {
+        int x = Math.floorDiv(xPixel, 16);
+        // preprocess y2 to convert (0,0) to top left
+        int y2 = Gdx.graphics.getHeight() - yPixel;
+        int y = Math.floorDiv(y2, 16);
+        return new GridPoint2(x, y);
     }
 
     /**
@@ -177,6 +170,33 @@ public class GameMap {
     public boolean isTileTillable(int x, int y) {
         return this.getTile(x, y).isTillable();
     }
+
+    /**
+     * Returns a specified terrainTile's cropTile
+     * @param x x coordinate (0 -> MAP_SIZE.x -1)
+     * @param y y coordinate (0 -> MAP_SIZE.y -1)
+     * @return cropTile which occupies the terrainTile. Returns null if not occupied by cropTile
+     */
+    public Entity getTileCropTile(int x, int y) {
+        return this.getTile(x, y).getCropTile();
+    }
+
+    /**
+     * Places a cropTile on a specified TerrainTile replacing any cropTile that already occupied it
+     * @param cropTile cropTile that will occupy the terrainTile
+     * @param x x coordinate (0 -> MAP_SIZE.x -1)
+     * @param y y coordinate (0 -> MAP_SIZE.y -1)
+     */
+    public void setTileCropTile(Entity cropTile, int x, int y) {
+        this.getTile(x, y).setCropTile(cropTile);
+    }
+
+    /**
+     *  Removes the cropTile from the specified terrainTile
+     * @param x x coordinate (0 -> MAP_SIZE.x -1)
+     * @param y y coordinate (0 -> MAP_SIZE.y -1)
+     */
+    public void removeTileCropTile(int x, int y) {
+        this.getTile(x, y).setUnOccupied();
+    }
 }
-
-

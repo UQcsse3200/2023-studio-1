@@ -2,9 +2,7 @@ package com.csse3200.game.components.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.StringBuilder;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.rendering.AnimationRenderComponent;
@@ -15,7 +13,7 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
  */
 public class PlayerAnimationController extends Component {
     AnimationRenderComponent animator;
-
+    String animationPrev;
     @Override
     public void create() {
         super.create();
@@ -119,14 +117,31 @@ public class PlayerAnimationController extends Component {
     /**
      * Starts the default player animation when they stop walking.
      */
-    void animationWalkStop(String direction) {
+    void animationWalkStop(String direction, int AnimationRandomizer, boolean testBypass) {
+
         if (!readyToPlay()) {
             return;
         }
-        String animation = String.format("idle_%s", direction);
-        if (!animator.getCurrentAnimation().equals(animation)) {
-            animator.startAnimation(animation);
+
+        String animationType;
+        if (AnimationRandomizer > 50){
+            animationType = "blink";
+        } else if (AnimationRandomizer > 25){
+            animationType = "yawn";
+        } else {
+            animationType = "snooze";
         }
+
+        String animation = String.format("%s_%s", animationType, direction);
+
+
+        if (!animator.getCurrentAnimation().equals(animation) && animator.isFinished() || testBypass) {
+
+            animator.startAnimation(animation);
+            animationPrev = animation;
+        }
+
+
     }
 
     /**
