@@ -83,7 +83,7 @@ public class ItemActions extends Component {
    */
   private TerrainTile getTileAtPosition(Vector2 playerPos, Vector2 mousePos) {
     Vector2 pos = getAdjustedPos(playerPos, mousePos);
-    return map.getTile(Math.round(pos.x), Math.round(pos.y));
+    return map.getTile(pos);
   }
 
   /**
