@@ -125,6 +125,9 @@ public class PlayerActions extends Component {
     //velocityScale.x = velocityScale.x * terrainSpeedModifier;
     //velocityScale.y = velocityScale.y * terrainSpeedModifier;
 
+    // Can simply apply a scalar multiplier effect (maybe .scl) instead of what I did above
+    // Could be done by creating a vector2 where it's x and y are the terrain speed modifiers
+
     Vector2 desiredVelocity = moveDirection.cpy().scl(velocityScale);
     // impulse = (desiredVel - currentVel) * mass
     Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
