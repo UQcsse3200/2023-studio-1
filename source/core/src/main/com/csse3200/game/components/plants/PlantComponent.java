@@ -56,7 +56,7 @@ public class PlantComponent extends Component {
      */
     public PlantComponent(int health, String name, String plantType, String plantDescription,
                           float idealWaterLevel, int adultLifeSpan, int maxHealth,
-                          CropTileComponent cropTile, String[] soundsArray) {
+                          CropTileComponent cropTile) {
         this.plantHealth = health;
         this.plantName = name;
         this.plantType = plantType;
@@ -69,7 +69,6 @@ public class PlantComponent extends Component {
         this.growthStage = 1;
         this.decay = false;
         this.currentGrowthLevel = 0;
-        this.sounds = soundsArray;
 
         // Initialise default values for growth stage thresholds.
         this.growthStageThresholds[0] = 11;
@@ -102,6 +101,7 @@ public class PlantComponent extends Component {
      * @param maxHealth - The maximum health a plant can reach as an adult
      * @param cropTile - The cropTileComponent where the plant will be located.
      * @param growthStageThresholds - A list of three integers that represent the growth thresholds.
+     * @param soundsArray - A list of all sound files filepaths as strings
      * @param growthStageImagePaths - image paths for the different growth stages.
      */
     public PlantComponent(int health, String name, String plantType, String plantDescription,
