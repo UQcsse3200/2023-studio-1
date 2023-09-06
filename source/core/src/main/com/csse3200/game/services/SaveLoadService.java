@@ -1,17 +1,25 @@
 package com.csse3200.game.services;
 
 import java.security.Provider.Service;
+import java.util.HashMap;
 
+import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.EntityType;
+import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.files.SaveGame;
 import com.csse3200.game.files.SaveGame.GameState;
 import com.csse3200.game.entities.factories.NPCFactory;
+import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.utils.math.GridPoint2Utils;
-
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.math.Vector2;
+import static com.csse3200.game.services.ServiceLocator.getEntityService;
+import java.util.Map;
+import java.util.function.Function;
 
 /* A note of the registering of this service:
  *  this service is currently only registered at MainMenuScreen,
@@ -98,22 +106,26 @@ public class SaveLoadService {
    */
   private void updateNPCs(GameState state) {
     Entity player = ServiceLocator.getGameArea().getPlayer();
-    EntityService entityService = ServiceLocator.getEntityService();
+    Array<Entity> currentGameEntities = ServiceLocator.getEntityService().getEntities();
+    
+    // Remove all current NPCs from the game
+    ServiceLocator.getGameArea().removeNPCs(currentGameEntities);
 
-    entityService.disposeNPCs();
+    // Create a map to associate entity types with NPC factory methods
+    Map<EntityType, Function<Entity, Entity>> npcFactories = new HashMap<>();
+    npcFactories.put(EntityType.Cow, NPCFactory::createCow);
+    npcFactories.put(EntityType.Chicken, NPCFactory::createChicken);
+    npcFactories.put(EntityType.Astrolotl, NPCFactory::createAstrolotl);
 
     for (Entity entity : state.getEntities()) {
-      if (entity.getType() == EntityType.Cow) {
-        
-        Entity cow = NPCFactory.createCow(player);
-        cow.setPosition(entity.getPosition());
-        GridPoint2 position = new GridPoint2((int)cow.getPosition().x, (int)cow.getPosition().y);
-        ServiceLocator.getGameArea().spawnEntityAt(entity, position, true, true);
-        //TODo fix this
-        
-      }
+        EntityType entityType = entity.getType();
+        if (npcFactories.containsKey(entityType)) {
+            Entity npc = npcFactories.get(entityType).apply(player);
+            npc.setPosition(entity.getPosition());
+            ServiceLocator.getGameArea().spawnEntity(npc);
+        }
     }
-  }
+}
 
 
 
