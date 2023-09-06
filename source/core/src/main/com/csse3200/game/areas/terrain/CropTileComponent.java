@@ -41,6 +41,7 @@ public class CropTileComponent extends Component {
 	private boolean isFertilised;
 	private Entity plant;
 	private DynamicTextureRenderComponent currentTexture;
+	private TerrainTile terrainTile;
 
 
 	/**
@@ -215,6 +216,7 @@ public class CropTileComponent extends Component {
 		return plant;
 	}
 
+
   /**
    * Writes in json summary of croptile state. Writes to json
    * the waterContent, soilQuality, isFertilised and plant
@@ -228,4 +230,12 @@ public class CropTileComponent extends Component {
         json.writeValue("isFertilised", isFertilised);
         json.writeValue("plant", plant);
     }
+
+	public TerrainTile getTerrainTile() {
+		return terrainTile;
+	}
+
+	public void setTerrainTile(TerrainTile terrainTile) {
+		this.terrainTile = terrainTile;
+	}
 }
