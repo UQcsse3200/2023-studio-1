@@ -1,7 +1,10 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.entities.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PlanetOxygenController implements OxygenLevel{
     
@@ -9,7 +12,7 @@ public class PlanetOxygenController implements OxygenLevel{
     
     private float oxygenUpperLimit;
     private float oxygenPresent = 0;
-    private float delta;
+    //private Map<Entity., >entityOxygenValues = new HashMap();
     
     @Override
     public void setUpperLimit(int kilograms) {
@@ -38,7 +41,9 @@ public class PlanetOxygenController implements OxygenLevel{
         }
         return 0;
     }
+    public void registerEntityOxygen(Entity entity, float hourlyOxygen) {
     
+    }
     /**
      * Register a set amount of oxygen to be added to the object hourly.
      * @param kilogramsPerHour the number of kilograms to be added per hour.
