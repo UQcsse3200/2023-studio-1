@@ -58,7 +58,7 @@ public class ItemFactory {
     Entity watering_can = createBaseItem()
         .addComponent(new TextureRenderComponent("images/tool_watering_can.png"))
         .addComponent(
-            new ItemComponent("watering can", ItemType.WATERING_CAN, new Texture("images/tool_watering_can.png")))
+            new ItemComponent("watering_can", ItemType.WATERING_CAN, new Texture("images/tool_watering_can.png")))
         .addComponent(new WateringCanLevelComponent(150));
     return watering_can;
   }
@@ -71,7 +71,7 @@ public class ItemFactory {
   public static Entity createScythe() {
     Entity scythe = createBaseItem()
         .addComponent(new TextureRenderComponent("images/tool_scythe.png"))
-        .addComponent(new ItemComponent("watering can", ItemType.SCYTHE,
+        .addComponent(new ItemComponent("scythe", ItemType.SCYTHE,
                 new Texture("images/tool_scythe.png")));
     return scythe;
   }
