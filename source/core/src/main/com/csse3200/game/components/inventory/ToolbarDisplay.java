@@ -51,16 +51,13 @@ public class ToolbarDisplay extends UIComponent {
         for (int i = 0; i < 10; i++) {
 
             Label label = new Label(String.valueOf(i) + " ", skin); //please please please work
-            label.setColor(Color.WHITE);
+            label.setColor(Color.DARK_GRAY);
             label.setAlignment(Align.topLeft);
 
             ItemSlot item = new ItemSlot(new Texture("images/itemFrame.png"), 0);
             item.add(label);
             table.add(item).pad(10, 10, 10, 10).fill();
 
-            Label itemlabel = new Label(String.valueOf(i+1), skin.get("default", Label.LabelStyle.class));
-            itemlabel.setAlignment(Align.topLeft);
-            table.add(itemlabel);
         }
 
         // Create a window for the inventory using the skin
