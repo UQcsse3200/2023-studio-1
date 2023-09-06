@@ -71,13 +71,13 @@ public class PlayerActions extends Component {
       String animationName = "animationWalkStop";
       float direction = getPrevMoveDirection();
       if (direction < 45) {
-        entity.getEvents().trigger(animationName, "right", AnimationRandomizer);
+        entity.getEvents().trigger(animationName, "right", AnimationRandomizer, false);
       } else if (direction < 135) {
-        entity.getEvents().trigger(animationName, "up", AnimationRandomizer);
+        entity.getEvents().trigger(animationName, "up", AnimationRandomizer, false);
       } else if (direction < 225) {
-        entity.getEvents().trigger(animationName, "left", AnimationRandomizer);
+        entity.getEvents().trigger(animationName, "left", AnimationRandomizer, false);
       } else if (direction < 315) {
-        entity.getEvents().trigger(animationName, "down", AnimationRandomizer);
+        entity.getEvents().trigger(animationName, "down", AnimationRandomizer, false);
       }
       return;
     }
