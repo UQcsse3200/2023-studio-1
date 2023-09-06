@@ -103,53 +103,32 @@ public class SaveLoadService {
    * @param state gamestate of the entire game based off safeFile.json
    */
   private void updateNPCs(GameState state) {
-    //Entity temp = new Entity();
-    Entity temp = PlayerFactory.createPlayer();
+    Entity player = ServiceLocator.getGameArea().getPlayer();
     
-    Array<Vector2> cowLocations = new Array();
+    Array<Vector2> cowLocations = new Array<Vector2>(); //for saving cows.
 
     Array<Entity> cows = ServiceLocator.getEntityService().getEntities();
+    
     for (Entity entity : cows) {
       if (entity.getType() == EntityType.Cow) {
         ServiceLocator.getGameArea().removeEntity(entity);
       }
     }
+
     for (Entity entity : state.getEntities()) {
       if (entity.getType() == EntityType.Cow) {
         cowLocations.add(entity.getPosition());
-        Entity cow = NPCFactory.createCow(temp);
+        Entity cow = NPCFactory.createCow(player);
         cow.setPosition(entity.getPosition());
         ServiceLocator.getGameArea().spawnEntity(cow);
       }
     }
-    for (Entity entity : cows){
+    Array<Entity> gameEntities = state.getEntities();
+    for (Entity entity : gameEntities){
       if (entity.getType() == EntityType.Cow){
-        entity.setPosition(cowLocations.get(0));
+        entity.setPosition(cowLocations.pop());
       }
     }
-
-
-
-
-
-    /*
-    Entity player = ServiceLocator.getGameArea().getPlayer();
-    EntityService entityService = ServiceLocator.getEntityService();
-
-    entityService.disposeNPCs();
-
-    for (Entity entity : state.getEntities()) {
-      if (entity.getType() == EntityType.Cow) {
-        
-        Entity cow = NPCFactory.createCow(player);
-        cow.setPosition(entity.getPosition());
-        GridPoint2 position = new GridPoint2((int)cow.getPosition().x, (int)cow.getPosition().y);
-        ServiceLocator.getGameArea().spawnEntityAt(entity, position, true, true);
-        //TODo fix this
-        
-      }
-    }
-     */
   }
 
 

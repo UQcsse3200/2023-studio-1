@@ -78,12 +78,18 @@ public abstract class GameArea implements Disposable {
     entity.setPosition(worldPos);
     spawnEntity(entity);
   }
+
+
+  
   public void removeEntity(Entity entity) {
     entity.setEnabled(false);
     areaEntities.remove(entity);
-    Gdx.app.postRunnable(entity::dispose); //TODO: What does this do
+    Gdx.app.postRunnable(entity::dispose); 
   }
 
+
+
+  
   public abstract Entity getPlayer();
 
   public abstract Entity getTractor();
