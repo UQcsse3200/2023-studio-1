@@ -65,12 +65,12 @@ public class PlantComponent extends Component {
         this.growthStageThresholds[2] = 41;
 
         // Initialise the image paths for growth stages
-        // ALl pointing to Corn.png for now.
-        this.growthStageImagePaths[0] = "images/plants/Corn.png";
-        this.growthStageImagePaths[1] = "images/plants/Corn.png";
-        this.growthStageImagePaths[2] = "images/plants/Corn.png";
-        this.growthStageImagePaths[3] = "images/plants/Corn.png";
-        this.growthStageImagePaths[4] = "images/plants/Corn.png";
+        // ALl pointing to Corn for now.
+        this.growthStageImagePaths[0] = "images/plants/seedling.png";
+        this.growthStageImagePaths[1] = "images/plants/corn_sprout.png";
+        this.growthStageImagePaths[2] = "images/plants/corn_juvenile.png";
+        this.growthStageImagePaths[3] = "images/plants/corn_adult.png";
+        this.growthStageImagePaths[4] = "images/plants/corn_decaying.png";
     }
 
     /**
