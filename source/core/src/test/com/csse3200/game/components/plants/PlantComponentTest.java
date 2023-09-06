@@ -18,7 +18,7 @@ public class PlantComponentTest {
     void beforeEach() {
         CropTileComponent testCropTile = new CropTileComponent(1, 10);
         testPlant = new PlantComponent(100, "testPlant", "defence", "This is a " +
-                "plant created for testing.", 1, 2, 500, testCropTile);
+                "plant created for testing.", 1, 2, 500, testCropTile, new int[] {}, new String[] {}, new String[] {});
     }
 
     @Test
