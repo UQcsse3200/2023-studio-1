@@ -212,7 +212,7 @@ public class CropTileComponentTest {
         EntityService mockEntityService = mock(EntityService.class);
         ServiceLocator.registerEntityService(mockEntityService);
         Entity plant = new Entity().addComponent(new PlantComponent(
-                1, "name", "type", "desc", 1, 7, 1, cropTile1.getComponent(CropTileComponent.class), new int[] {}, new String[] {}, new String[] {}));
+                1, "name", "type", "desc", 1, 7, 1, cropTile1.getComponent(CropTileComponent.class)));
         Function<CropTileComponent, Entity> plantFactoryMethod = cropTileComponent -> plant;
         cropTile1.getEvents().trigger("plant", plantFactoryMethod);
         verify(mockEntityService).register(plant);
