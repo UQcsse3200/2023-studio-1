@@ -39,23 +39,35 @@ public class PlanetOxygenController implements OxygenLevel{
         return 0;
     }
     
-    @Override
+    /**
+     * Register a set amount of oxygen to be added to the object hourly.
+     * @param kilogramsPerHour the number of kilograms to be added per hour.
+     */
     public void registerContinuousAdd(float kilogramsPerHour) {
     
     
     }
     
-    @Override
+    /**
+     * Register a set amount of oxygen to be removed/consumed from the object, hourly.
+     * @param kilogramsPerHour the number of kilograms to be consumed per hour.
+     */
     public void registerContinuousConsumption(float kilogramsPerHour) {
     
     }
     
-    @Override
+    /**
+     * Remove/stop a set amount of oxygen being added to the object hourly.
+     * @param kilogramsPerHour the number of kilograms to stop adding per hour.
+     */
     public void removeContinuousAdd(float kilogramsPerHour) {
     
     }
     
-    @Override
+    /**
+     * Remove/stop a set amount of oxygen being consumed from the object hourly.
+     * @param kilogramsPerHour the number of kilograms to stop consuming per hour.
+     */
     public void removeContinuousConsumption(float kilogramsPerHour) {
     
     }

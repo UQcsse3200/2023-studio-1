@@ -34,28 +34,4 @@ public interface OxygenLevel {
      * @return The oxygen present as a percentage of the upper limit.
      */
     float getOxygenPercentage();
-    
-    /**
-     * Register a set amount of oxygen to be added to the object hourly.
-     * @param kilogramsPerHour the number of kilograms to be added per hour.
-     */
-    void registerContinuousAdd(float kilogramsPerHour);
-    
-    /**
-     * Register a set amount of oxygen to be removed/consumed from the object, hourly.
-     * @param kilogramsPerHour the number of kilograms to be consumed per hour.
-     */
-    void registerContinuousConsumption(float kilogramsPerHour);
-    
-    /**
-     * Remove/stop a set amount of oxygen being added to the object hourly.
-     * @param kilogramsPerHour the number of kilograms to stop adding per hour.
-     */
-    void removeContinuousAdd(float kilogramsPerHour);
-    
-    /**
-     * Remove/stop a set amount of oxygen being consumed from the object hourly.
-     * @param kilogramsPerHour the number of kilograms to stop consuming per hour.
-     */
-    void removeContinuousConsumption(float kilogramsPerHour);
 }
