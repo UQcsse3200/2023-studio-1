@@ -52,7 +52,6 @@ public abstract class GameArea implements Disposable {
    */
   protected void deSpawnEntity(Entity entity) {
     areaEntities.remove(entity);
-    //ServiceLocator.getEntityService().register(entity);
   }
 
   /**
@@ -83,4 +82,6 @@ public abstract class GameArea implements Disposable {
     areaEntities.remove(entity);
     Gdx.app.postRunnable(entity::dispose); //TODO: What does this do
   }
+
+  public abstract Entity getPlayer();
 }

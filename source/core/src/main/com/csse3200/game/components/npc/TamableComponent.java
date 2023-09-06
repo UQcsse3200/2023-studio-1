@@ -17,6 +17,7 @@ public class TamableComponent extends Component {
     private String favouriteFood;  //animals favourite food (found in NPC.json)
     private boolean isTamed;
     private final Entity player;
+    private Random random = new Random();  //https://rules.sonarsource.com/java/RSPEC-2119/
 
     /**
      * Constructor for the Tameable Component class
@@ -67,7 +68,7 @@ public class TamableComponent extends Component {
 
         // Check player is holding the right item TODO: Implement checking the players item SEE
         //  TEAM 8!.
-        if (player.getComponent(ItemComponent.class).getItemName() == favouriteFood) {
+        if (player.getComponent(ItemComponent.class).getItemName().equals(favouriteFood)) {
 
             // Generate RNG number for taming
             double randomDecimal = generateRandomDecimal();
@@ -95,9 +96,8 @@ public class TamableComponent extends Component {
      * Function is used to generate a random double decimal when the animal has been fed.
      * @return random double
      */
-    private double generateRandomDecimal() {
-        Random random = new Random();
-        return random.nextDouble();
+    private double generateRandomDecimal() { 
+        return this.random.nextDouble(); //https://rules.sonarsource.com/java/RSPEC-2119/
     }
 
     /**

@@ -1,4 +1,5 @@
 package com.csse3200.game.components.player;
+import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.extensions.GameExtension;
@@ -24,8 +25,8 @@ public class PlayerInventoryTest {
         player = new Entity()
                 .addComponent(inventoryComponent);
         player.create();
-        item1 = new Entity().addComponent(new ItemComponent("Hoe", ItemType.HOE));
-        item2 = new Entity().addComponent(new ItemComponent("Scythe",ItemType.SCYTHE));
+        item1 = new Entity().addComponent(new ItemComponent("Hoe", ItemType.HOE, new Texture("images/tool_shovel.png")));
+        item2 = new Entity().addComponent(new ItemComponent("Scythe",ItemType.SCYTHE, new Texture("images/tool_shovel.png")));
     }
 
     @Test

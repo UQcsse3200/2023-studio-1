@@ -1,5 +1,6 @@
 package com.csse3200.game.components.items;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.components.Component;
 import java.util.UUID;
 
@@ -21,6 +22,7 @@ public class ItemComponent extends Component {
     private int price; // Price of item
     private final boolean sellable; // is the item sellable
     private final ItemType itemType; // Type of item
+    private Texture itemTexture;
 
 
 
@@ -29,7 +31,8 @@ public class ItemComponent extends Component {
      * @param itemName user facing name for item
      * @param itemType the enum for type of item
      */
-    public ItemComponent(String itemName, ItemType itemType) {
+    public ItemComponent(String itemName, ItemType itemType, Texture invSprite) {
+        this.itemTexture = invSprite;
         this.itemType = itemType;
         this.itemName = itemName;
         this.itemId = generateUniqueID(); // Generate a unique ID for the item
@@ -44,7 +47,8 @@ public class ItemComponent extends Component {
      * @param itemType the enum for type of item
      * @param price sellable price of the item
      */
-    public ItemComponent(String itemName, ItemType itemType, int price) {
+    public ItemComponent(String itemName, ItemType itemType, int price, Texture invSprite) {
+        this.itemTexture = invSprite;
         this.itemType = itemType;
         this.itemName = itemName;
         this.itemId = generateUniqueID(); // Generate a unique ID for the item
@@ -59,7 +63,8 @@ public class ItemComponent extends Component {
      * @param itemType the enum for type of item
      * @param itemDescription user facing description for item
      */
-    public ItemComponent(String itemName, ItemType itemType, String itemDescription) {
+    public ItemComponent(String itemName, ItemType itemType, String itemDescription, Texture itemTexture) {
+        this.itemTexture = itemTexture;
         this.itemType = itemType;
         this.itemName = itemName;
         this.itemId = generateUniqueID(); // Generate a unique ID for the item
@@ -74,7 +79,8 @@ public class ItemComponent extends Component {
      * @param itemDescription user facing description for item
      * @param price price of item
      */
-    public ItemComponent(String itemName, ItemType itemType, String itemDescription, int price) {
+    public ItemComponent(String itemName, ItemType itemType, String itemDescription, int price, Texture invSprite) {
+        this.itemTexture = invSprite;
         this.itemType = itemType;
         this.itemName = itemName;
         this.itemId = generateUniqueID(); // Generate a unique ID for the item
@@ -100,6 +106,21 @@ public class ItemComponent extends Component {
         this.price = price;
     }
 
+    /**
+     * @return the texture of the item (Primarily used to the inventory display)
+     */
+    public Texture getItemTexture() {
+        return this.itemTexture;
+    }
+
+    /**
+     * Sets an Item's texture component to a given Texture
+     *
+     * @param itemTexture - The texture to set the item to.
+     */
+    public void setItemTexture(Texture itemTexture) {
+        this.itemTexture = itemTexture;
+    }
 
     /**
      * Returns selalble bool of item

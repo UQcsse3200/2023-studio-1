@@ -24,11 +24,11 @@ public class SetTimeCommand implements Command {
       logger.debug("Invalid arguments received for 'setTime' command: {}", args);
       return false;
     }
-    ServiceLocator.getTimeSource().getTimeController().setTime(Integer.parseInt(args.get(0)));
+    ServiceLocator.getTimeService().setHour(Integer.parseInt(args.get(0)));
     return true;
   }
 
-  Boolean isValid(ArrayList<String> args) {
+  boolean isValid(ArrayList<String> args) {
     if (args.size() != 1) {
       logger.debug("Only 1 argument is needed and {} were given", args.size());
       return false;

@@ -10,6 +10,7 @@ import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
@@ -24,6 +25,7 @@ public class SpaceGameArea extends GameArea {
   private static final int NUM_TREES = 7;
   private static final int NUM_GHOSTS = 5;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
+  private static final GridPoint2 TRACTOR_SPAWN = new GridPoint2(15, 15);
 
   private static final GridPoint2 TOOL_SPAWN = new GridPoint2(15, 10);// temp!!!
   private static final GridPoint2 TOOL_SPAWN2 = new GridPoint2(15, 15);// temp!!!
@@ -247,7 +249,7 @@ public class SpaceGameArea extends GameArea {
    */
   private Entity spawnTractor() {
     Entity newTractor = TractorFactory.createTractor(player);
-    spawnEntityAt(newTractor, PLAYER_SPAWN, true, true);
+    spawnEntityAt(newTractor, TRACTOR_SPAWN, true, true);
     return newTractor;
   }
 
