@@ -3,6 +3,7 @@ package com.csse3200.game.components.inventory;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
@@ -53,7 +54,10 @@ public class ItemSlot extends Stack {
         label.setColor(Color.BLACK);
         label.setAlignment(Align.bottomRight);
 
+        NinePatch npimage = new NinePatch(new Texture(Gdx.files.internal("image.png")), 10, 10, 10, 10);
+
         if (this.itemTexture != null) {
+            this.setFillParent(true);
             this.add(new Image(this.itemTexture));
         }
 

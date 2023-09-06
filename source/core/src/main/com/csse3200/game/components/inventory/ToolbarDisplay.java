@@ -46,7 +46,6 @@ public class ToolbarDisplay extends UIComponent {
 
             ItemSlot item = new ItemSlot(new Texture("images/itemFrame.png"), 0);
             item.add(label);
-            //stack.add(new Image(new Texture("images/itemFrame.png")));
             table.add(item).pad(10, 10, 10, 10).fill();
 
         }
