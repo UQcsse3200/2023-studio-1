@@ -11,8 +11,5 @@ public class NPCConfigs {
   public BaseAnimalConfig astrolotl = new BaseAnimalConfig();
 
 
-  public BaseAnimalConfig testDummy1 = new BaseAnimalConfig();
-  public BaseAnimalConfig testDummy = new BaseAnimalConfig();
-
 
 }
