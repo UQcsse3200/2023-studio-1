@@ -16,4 +16,10 @@ public class BasePlantConfig {
     public int sproutThreshold = 0;
     public int juvenileThreshold = 0;
     public int adultThreshold = 0;
+
+    public String seedingAsset = "none";
+    public String sproutingAsset = "none";
+    public String juvenileAsset = "none";
+    public String adultAsset = "none";
+    public String decayingAsset = "none";
 }
