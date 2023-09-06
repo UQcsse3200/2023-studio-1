@@ -55,11 +55,15 @@ public class PlantFactory {
     public static Entity createCosmicCob(CropTileComponent cropTile) {
         BasePlantConfig config = stats.cosmicCob;
 
+        int[] growthThresholds = {config.sproutThreshold, config.juvenileThreshold, config.adultThreshold};
+        String[] imagePaths = {config.seedlingAsset, config.sproutingAsset, config.juvenileAsset, config.adultAsset,
+                config.decayingAsset};
+
         Entity plant = createBasePlant()
                 .addComponent(new DynamicTextureRenderComponent("images/plants/Corn.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
-                        config.maxHealth, cropTile));
+                        config.maxHealth, cropTile, growthThresholds, imagePaths));
 
         // Set plant position over crop tile.
         var cropTilePosition = cropTile.getEntity().getPosition();
@@ -80,11 +84,15 @@ public class PlantFactory {
     public static Entity createAloeVera(CropTileComponent cropTile) {
         BasePlantConfig config = stats.aloeVera;
 
+        int[] growthThresholds = {config.sproutThreshold, config.juvenileThreshold, config.adultThreshold};
+        String[] imagePaths = {config.seedlingAsset, config.sproutingAsset, config.juvenileAsset, config.adultAsset,
+                config.decayingAsset};
+
         Entity plant = createBasePlant()
                 .addComponent(new DynamicTextureRenderComponent("images/plants/Aloe.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
-                        config.maxHealth, cropTile));
+                        config.maxHealth, cropTile, growthThresholds, imagePaths));
 
         // Set plant position over crop tile.
         var cropTilePosition = cropTile.getEntity().getPosition();
@@ -105,11 +113,15 @@ public class PlantFactory {
     public static Entity createHammerPlant(CropTileComponent cropTile) {
         BasePlantConfig config = stats.hammerPlant;
 
+        int[] growthThresholds = {config.sproutThreshold, config.juvenileThreshold, config.adultThreshold};
+        String[] imagePaths = {config.seedlingAsset, config.sproutingAsset, config.juvenileAsset, config.adultAsset,
+                config.decayingAsset};
+
         Entity plant = createBasePlant()
                 .addComponent(new DynamicTextureRenderComponent("images/plants/Hammer.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
-                        config.maxHealth, cropTile));
+                        config.maxHealth, cropTile, growthThresholds, imagePaths));
 
         // Set plant position over crop tile.
         var cropTilePosition = cropTile.getEntity().getPosition();
@@ -131,11 +143,15 @@ public class PlantFactory {
     public static Entity createNightshade(CropTileComponent cropTile) {
         BasePlantConfig config = stats.nightshade;
 
+        int[] growthThresholds = {config.sproutThreshold, config.juvenileThreshold, config.adultThreshold};
+        String[] imagePaths = {config.seedlingAsset, config.sproutingAsset, config.juvenileAsset, config.adultAsset,
+                config.decayingAsset};
+
         Entity plant = createBasePlant()
                 .addComponent(new DynamicTextureRenderComponent("images/plants/nightshade.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
-                        config.maxHealth, cropTile));
+                        config.maxHealth, cropTile, growthThresholds, imagePaths));
 
         // Set plant position over crop tile.
         var cropTilePosition = cropTile.getEntity().getPosition();
@@ -156,11 +172,15 @@ public class PlantFactory {
     public static Entity createTobacco(CropTileComponent cropTile) {
         BasePlantConfig config = stats.tobacco;
 
+        int[] growthThresholds = {config.sproutThreshold, config.juvenileThreshold, config.adultThreshold};
+        String[] imagePaths = {config.seedlingAsset, config.sproutingAsset, config.juvenileAsset, config.adultAsset,
+                config.decayingAsset};
+
         Entity plant = createBasePlant()
                 .addComponent(new DynamicTextureRenderComponent("images/plants/waterweed.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
-                        config.maxHealth, cropTile));
+                        config.maxHealth, cropTile, growthThresholds, imagePaths));
 
         // Set plant position over crop tile.
         var cropTilePosition = cropTile.getEntity().getPosition();
@@ -182,11 +202,15 @@ public class PlantFactory {
     public static Entity createVenusFlyTrap(CropTileComponent cropTile) {
         BasePlantConfig config = stats.venusFlyTrap;
 
+        int[] growthThresholds = {config.sproutThreshold, config.juvenileThreshold, config.adultThreshold};
+        String[] imagePaths = {config.seedlingAsset, config.sproutingAsset, config.juvenileAsset, config.adultAsset,
+                config.decayingAsset};
+
         Entity plant = createBasePlant()
                 .addComponent(new DynamicTextureRenderComponent("images/plants/VenusTrap.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
-                        config.maxHealth, cropTile));
+                        config.maxHealth, cropTile, growthThresholds, imagePaths));
 
         // Set plant position over crop tile.
         var cropTilePosition = cropTile.getEntity().getPosition();

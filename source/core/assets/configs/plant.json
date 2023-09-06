@@ -10,7 +10,7 @@
     "sproutThreshold": 7,
     "juvenileThreshold": 22,
     "adultThreshold": 35,
-    "seedingAsset": "images/plants/corn_item.png",
+    "seedlingAsset": "images/plants/corn_item.png",
     "sproutingAsset": "images/plants/Corn.png",
     "juvenileAsset": "images/plants/corn_juvenile.png",
     "adultAsset": "images/plants/corn_adult.png",
