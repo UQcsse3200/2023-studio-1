@@ -1,6 +1,7 @@
 package com.csse3200.game.missions;
 
 import com.csse3200.game.events.EventHandler;
+import com.csse3200.game.services.ServiceLocator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class MissionManager {
 	 * Creates the mission manager, registered all game achievements and adds a listener for hourly updates
 	 */
 	public MissionManager() {
-		ServiceLocator.getTimeService().getEvents().addListener("updateHour", this::updateQuestTimes);
+		ServiceLocator.getTimeService().getEvents().addListener("updateHour", this::updateActiveQuestTimes);
 		for (Achievement mission : achievements) {
 			mission.registerMission(events);
 		}
@@ -84,8 +85,11 @@ public class MissionManager {
 		return events;
 	}
 
-	private void updateQuestTimes() {
-		for (Quest quest : quests) {
+	/**
+	 * Updates all active {@link Quest}s' durations through their {@link Quest#updateExpiry()} method.
+	 */
+	private void updateActiveQuestTimes() {
+		for (Quest quest : activeQuests) {
 			quest.updateExpiry();
 		}
 	}
