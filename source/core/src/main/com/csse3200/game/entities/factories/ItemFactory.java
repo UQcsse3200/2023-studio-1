@@ -11,7 +11,12 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
+import java.util.AbstractMap;
+import java.util.AbstractMap.SimpleEntry;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 /**
@@ -20,17 +25,42 @@ import java.util.function.Supplier;
 public class ItemFactory {
 
   /**
-   * Map of item names to their suppler function.
+   * Map of item names to their supplier function.
    *
-   * <p>This map is unmodifiable (i.e., read-only).
+   * <p>This unmodifiable (i.e., read-only) map provides a means of acquiring the factory method
+   * for an item based on its unique item name.
    */
-  public static final Map<String, Supplier<Entity>> itemSuppliers = Map.of(
+  private static final Map<String, Supplier<Entity>> itemSuppliers = Map.ofEntries(
+          new SimpleEntry<>("shovel", ItemFactory::createShovel),
+          new SimpleEntry<>("hoe", ItemFactory::createHoe),
+          new SimpleEntry<>("watering can", ItemFactory::createWateringcan),
+          new SimpleEntry<>("scythe", ItemFactory::createScythe),
+          new SimpleEntry<>("fertiliser", ItemFactory::createFertiliser),
+          new SimpleEntry<>("aloe vera seed", ItemFactory::createAloeVeraSeed),
+          new SimpleEntry<>("atomic algae seed", ItemFactory::createAtomicAlgaeSeed),
+          new SimpleEntry<>("cosmic cob seed", ItemFactory::createCosmicCobSeed),
+          new SimpleEntry<>("deadly nightshade seed", ItemFactory::createDeadlyNightshadeSeed),
+          new SimpleEntry<>("hammer plant seed", ItemFactory::createHammerPlantSeed),
+          new SimpleEntry<>("horticultural heater seed", ItemFactory::createHorticulturalHeaterSeed),
+          new SimpleEntry<>("space snapper seed", ItemFactory::createSpaceSnapperSeed),
+          new SimpleEntry<>("tobacco seed", ItemFactory::createTobaccoSeed)
           // Add your item and supplier function here.
-          "shovel", ItemFactory::createShovel,
-          "hoe", ItemFactory::createHoe,
-          "watering can", ItemFactory::createWateringcan,
-          "scythe", ItemFactory::createScythe
   );
+
+  /**
+   * Returns the supplier function for the item with the given unique name.
+   *
+   * @param itemName Name of the item to get the supplier of
+   * @return Supplier for the item
+   * @throws NoSuchElementException If an item with the given name does not exist
+   */
+  public static Supplier<Entity> getItemSupplier(String itemName) {
+    Supplier<Entity> itemSupplier = itemSuppliers.get(itemName);
+    if (itemSupplier == null) {
+      throw new NoSuchElementException(String.format("Item with the name '%s' does not exist", itemName));
+    }
+    return itemSupplier;
+  }
 
 
   public static Entity createBaseItem() {
