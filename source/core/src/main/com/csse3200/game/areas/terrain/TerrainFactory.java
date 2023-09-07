@@ -1,11 +1,14 @@
 package com.csse3200.game.areas.terrain;
 
 import java.io.*;
+import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -25,9 +28,8 @@ import com.csse3200.game.services.ServiceLocator;
 
 /** Factory for creating game terrains. */
 public class TerrainFactory {
-  private static GridPoint2 MAP_SIZE = new GridPoint2(1000, 1000); // this will be updated
-  private static final String path1 = "source/core/assets/configs/Map.txt"; // change this path if u can't open the file
-  private static final String path2 = "configs/Map.txt";
+  private static GridPoint2 MAP_SIZE = new GridPoint2(1000, 1000); // this will be updated later in the code
+  private static final String mapPath = "configs/Map.txt";
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;
   private static final Map<Character, String> charToTileImageMap;
@@ -244,24 +246,17 @@ public class TerrainFactory {
    */
   private void createGameTiles(GridPoint2 tileSize, ArrayList<TextureRegion> TRList, TiledMap tiledMap) {
       try {
-          BufferedReader bf;
-          try {
-              bf = new BufferedReader(new FileReader(path1));
-          } catch (FileNotFoundException e) {
-              bf = new BufferedReader(new FileReader(path2));
-          }
+          BufferedReader bf = new BufferedReader(new InputStreamReader(Gdx.files.internal(mapPath).read()));
           String line1, line2, line;
           line1 = bf.readLine();
           line2 = bf.readLine();
           updateMapSize(line1,line2);
-
           TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
-
           // y_pos = 100 and x_pos = 100 lets map generate correctly
-          int x_pos = 0, y_pos = 100;
+          int x_pos = 0, y_pos = 99;
           // checking for end of file
           for (line = bf.readLine(); line != null; x_pos++, line = bf.readLine(), y_pos--) {
-              for (x_pos = line.length() - 1; x_pos > 0; x_pos--) {
+              for (x_pos = line.length() -1; x_pos >= 0; x_pos--) {
                   // Cell cell = layer.getCell(x_pos, y_pos); // uncomment this if u want to
                   // update instead of replace
                   GridPoint2 point = new GridPoint2(x_pos, y_pos);
