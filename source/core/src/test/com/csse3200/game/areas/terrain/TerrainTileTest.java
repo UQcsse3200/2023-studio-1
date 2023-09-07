@@ -131,11 +131,9 @@ class TerrainTileTest {
     public void cropTile() {
         Entity cropTile = new Entity();
         assertNull(basicTestTile.getCropTile());
-
         basicTestTile.setCropTile(cropTile);
         assertTrue(basicTestTile.isOccupied());
         assertEquals(cropTile, basicTestTile.getCropTile());
-
         basicTestTile.removeCropTile();
         assertFalse(basicTestTile.isOccupied());
         assertNull(basicTestTile.getCropTile());

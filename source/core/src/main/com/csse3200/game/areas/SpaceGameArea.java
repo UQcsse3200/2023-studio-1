@@ -376,7 +376,13 @@ public class SpaceGameArea extends GameArea {
     return tractor;
   }
 
+
+  /**
+   * Returns the game map
+   */
   public GameMap getMap() {
     return gameMap;
   }
+
+
 }
