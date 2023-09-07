@@ -100,25 +100,33 @@ public class ItemActions extends Component {
     int width = Gdx.graphics.getWidth();
     int height = Gdx.graphics.getHeight();
 
-    int playerXPos = width / 2;
-    int playerYPos = height / 2;
+    int screenCentreX = width / 2;
+    int screenCentreY = height / 2;
 
     int xDelta = 0;
     int yDelta = 0;
 
-    if (playerXPos - 24 > mousePos.x) {
+    if (screenCentreX - 24 > mousePos.x) {
       xDelta -= 1;
-    } else if (playerXPos + 24 < mousePos.x) {
+    } else if (screenCentreX + 24 < mousePos.x) {
       xDelta += 1;
     }
 
-    if (playerYPos + 48 < mousePos.y) {
+    if (screenCentreY + 48 < mousePos.y) {
       yDelta -= 1;
-    } else if (playerYPos - 48 > mousePos.y) {
+    } else if (screenCentreY - 48 > mousePos.y) {
       yDelta += 1;
     }
-    return new Vector2(playerPos.x + xDelta, playerPos.y + yDelta);
+
+    int playerPositionAsIntX = (int)Math.ceil(playerPos.x); 
+    int playerPositionAsIntY = (int)Math.ceil(playerPos.y);
+    
+    int x = (int)Math.ceil(playerPositionAsIntX + xDelta);
+    int y = (int)Math.ceil(playerPositionAsIntY + yDelta);
+    
+    return new Vector2(x, y);
   }
+
 
   /**
    * Waters the tile at the given position.
@@ -184,7 +192,7 @@ public class ItemActions extends Component {
     }
     // Make a new tile
     Vector2 newPos = getAdjustedPos(playerPos, mousePos);
-
+    System.out.println(playerPos + " " + newPos);
     Entity cropTile = createTerrainEntity(newPos);
     tile.setCropTile(cropTile);
     tile.setOccupied();
