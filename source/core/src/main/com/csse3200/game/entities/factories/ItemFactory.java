@@ -8,6 +8,7 @@ import com.csse3200.game.components.items.WateringCanLevelComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.PhysicsLayer;
+import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
@@ -73,5 +74,31 @@ public class ItemFactory {
         .addComponent(new TextureRenderComponent("images/tool_scythe.png"))
         .addComponent(new ItemComponent("watering can", ItemType.SCYTHE, new Texture("images/tool_scythe.png")));
     return scythe;
+  }
+
+  /**
+   * Creates a milk item
+   *
+   * @return milk item
+   */
+  public static Entity createMilk() {
+    Entity milk = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/milk.png"))
+            .addComponent(new ItemComponent("milk", ItemType.MILK, new Texture("images/milk.png")));
+    milk.scaleHeight(0.55f);
+    return milk;
+  }
+
+  /**
+   * Creates an egg item
+   *
+   * @return egg item
+   */
+  public static Entity createEgg() {
+    Entity egg = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/egg.png"))
+            .addComponent(new ItemComponent("egg", ItemType.EGG, new Texture("images/egg.png")));
+    egg.scaleHeight(0.55f);
+    return egg;
   }
 }

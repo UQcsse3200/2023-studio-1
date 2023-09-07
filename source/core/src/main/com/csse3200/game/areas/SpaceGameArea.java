@@ -43,6 +43,8 @@ public class SpaceGameArea extends GameArea {
           "images/iso_grass_2.png",
           "images/iso_grass_3.png",
           "images/tool_shovel.png",
+          "images/egg.png",
+          "images/milk.png",
 
           "images/tool_hoe.png",
           "images/tool_scythe.png",
@@ -211,6 +213,7 @@ public class SpaceGameArea extends GameArea {
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
+    System.out.println(newPlayer.getPosition());
     return newPlayer;
   }
 
