@@ -7,6 +7,7 @@ public abstract class WeatherEvent {
 	private int numHoursUntil;
 	private int duration;
 	private int priority;
+	private float severity;
 	private float humidityModifier;
 	private float temperatureModifier;
 	private static final float MIN_HUMIDITY_MODIFIER = 0.4f;
@@ -20,6 +21,7 @@ public abstract class WeatherEvent {
 		this.priority = priority;
 		this.humidityModifier = generateRandomHumidityModifier();
 		this.temperatureModifier = generateRandomTemperatureModifier();
+		this.severity = generateRandomSeverity();
 	}
 
 	public void updateTime() {
@@ -45,12 +47,16 @@ public abstract class WeatherEvent {
 	// TODO Figure out how to render screen effects and therefore fix method siganture
 	public abstract void getEffect();
 
-	private static float generateRandomHumidityModifier() {
+	protected float generateRandomHumidityModifier() {
 		return (new Random().nextFloat() * (MAX_HUMIDITY_MODIFIER - MIN_HUMIDITY_MODIFIER)) + MIN_HUMIDITY_MODIFIER;
 	}
 
-	private static float generateRandomTemperatureModifier() {
+	protected float generateRandomTemperatureModifier() {
 		return (new Random().nextFloat() * (MAX_TEMPERATURE_MODIFIER - MIN_TEMPERATURE_MODIFIER)) + MIN_TEMPERATURE_MODIFIER;
+	}
+
+	protected float generateRandomSeverity() {
+		return (new Random().nextFloat());
 	}
 
 	public float getHumidityModifier() {
@@ -61,4 +67,11 @@ public abstract class WeatherEvent {
 		return temperatureModifier;
 	}
 
+	public float getSeverity() {
+		return severity;
+	}
+
+	protected void setHumidityModifier(float humidityModifier) {
+		this.humidityModifier = humidityModifier;
+	}
 }
