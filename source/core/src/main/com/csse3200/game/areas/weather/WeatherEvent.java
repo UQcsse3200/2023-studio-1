@@ -6,14 +6,14 @@ public abstract class WeatherEvent {
 
 	private int numHoursUntil;
 	private int duration;
-	private int priority;
-	private float severity;
-	private float humidityModifier;
-	private float temperatureModifier;
-	private static final float MIN_HUMIDITY_MODIFIER = 0.4f;
-	private static final float MAX_HUMIDITY_MODIFIER = 1.6f;
-	private static final float MIN_TEMPERATURE_MODIFIER = 0.8f;
-	private static final float MAX_TEMPERATURE_MODIFIER = 1.2f;
+	private final int priority;
+	private final float severity;
+	private final float humidityModifier;
+	private final float temperatureModifier;
+	private static final float MIN_HUMIDITY_MODIFIER = 1.0f;
+	private static final float MAX_HUMIDITY_MODIFIER = 1.0f;
+	private static final float MIN_TEMPERATURE_MODIFIER = 1.0f;
+	private static final float MAX_TEMPERATURE_MODIFIER = 1.0f;
 
 	public WeatherEvent(int numHoursUntil, int duration, int priority) {
 		this.numHoursUntil = numHoursUntil;
@@ -34,6 +34,7 @@ public abstract class WeatherEvent {
 
 	/**
 	 * Returns the priority of the weather event
+	 *
 	 * @return weather event priority
 	 */
 	public int getPriority() {
@@ -69,9 +70,5 @@ public abstract class WeatherEvent {
 
 	public float getSeverity() {
 		return severity;
-	}
-
-	protected void setHumidityModifier(float humidityModifier) {
-		this.humidityModifier = humidityModifier;
 	}
 }
