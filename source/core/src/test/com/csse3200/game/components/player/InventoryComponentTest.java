@@ -19,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 @ExtendWith(GameExtension.class)
 class InventoryComponentTest {
 
+
   private InventoryComponent inventoryComponent;
   private Entity item1;
   private Entity item2;

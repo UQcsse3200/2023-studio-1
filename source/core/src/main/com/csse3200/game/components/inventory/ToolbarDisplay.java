@@ -1,12 +1,21 @@
 package com.csse3200.game.components.inventory;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.ui.UIComponent;
-
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.Screen;
 public class ToolbarDisplay extends UIComponent {
 
     private Table table;
@@ -14,6 +23,8 @@ public class ToolbarDisplay extends UIComponent {
     private boolean isOpen;
 
     private InventoryComponent inventory;
+
+    private final ShapeRenderer shapeRenderer = new ShapeRenderer();
 
     /**
      * Creates reusable ui styles and adds actors to the stage.
@@ -36,15 +47,17 @@ public class ToolbarDisplay extends UIComponent {
         Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
         table = new Table(skin);
         table.defaults().size(64, 64);
-        table.pad(10);
 
         for (int i = 0; i < 10; i++) {
-            Label label = new Label(String.valueOf(i), skin.get("default", Label.LabelStyle.class));
-            //set the bounds of the label
-            label.setBounds(label.getX() + 15, label.getY(), label.getWidth(), label.getHeight());
-            Stack stack = new Stack();
-            stack.add(new Image(new Texture("images/itemFrame.png")));
-            table.add(stack).pad(10, 10, 10, 10).fill();
+
+            Label label = new Label(String.valueOf(i) + " ", skin); //please please please work
+            label.setColor(Color.DARK_GRAY);
+            label.setAlignment(Align.topLeft);
+
+            ItemSlot item = new ItemSlot();
+            item.add(label);
+            table.add(item).pad(10, 10, 10, 10).fill();
+
         }
 
         // Create a window for the inventory using the skin
@@ -95,5 +108,9 @@ public class ToolbarDisplay extends UIComponent {
     @Override
     public void dispose() {
         super.dispose();
+    }
+
+    public void updateItemSlot(int slotNum) {
+
     }
 }
