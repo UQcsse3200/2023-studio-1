@@ -53,4 +53,12 @@ public abstract class WeatherEvent {
 		return (new Random().nextFloat() * (MAX_TEMPERATURE_MODIFIER - MIN_TEMPERATURE_MODIFIER)) + MIN_TEMPERATURE_MODIFIER;
 	}
 
+	public float getHumidityModifier() {
+		return humidityModifier;
+	}
+
+	public float getTemperatureModifier() {
+		return temperatureModifier;
+	}
+
 }

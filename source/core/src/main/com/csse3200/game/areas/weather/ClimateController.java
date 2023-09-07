@@ -54,7 +54,13 @@ public class ClimateController {
 	 * Updates the values of the game's climate based on current weather events
 	 */
 	private void updateClimate() {
-		return;
+		if (currentWeatherEvent.isActive()) {
+			humidity *= currentWeatherEvent.getHumidityModifier();
+			temperature *= currentWeatherEvent.getTemperatureModifier();
+
+			humidity = Math.min(Math.max(humidity, 0.2f), 1.0f);
+			temperature = Math.min(Math.max(temperature, 10.0f), 35.0f);
+		}
 	}
 
 	/**
@@ -73,6 +79,7 @@ public class ClimateController {
 				priority = currentWeatherEvent.getPriority();
 			}
 		}
+		updateClimate();
 	}
 
 	private void determineActiveEvent(WeatherEvent event) {
