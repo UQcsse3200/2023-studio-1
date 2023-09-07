@@ -58,7 +58,7 @@ public class LightingController {
 
 		Vector2 sunPosition = ServiceLocator.getGameArea().getPlayer().getCenterPosition();
 		sunPosition.sub(20, 20);
-		sunLight.setColor(3, 12, 33, 1);
+		sunLight.setColor(3, 12, 33, 0.5f);
 		sunLight.setPosition(sunPosition);
 		rayHandler.updateAndRender();
 	}
