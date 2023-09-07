@@ -54,9 +54,14 @@ public class GameMap {
 
     /**
      * Gets the TerrainTile at the specified Vector2 position. The x and y float values in the Vector2 class are
-     * transformed so that they correspond to the integer positions of the TerrainTile in the map layer. If using the
-     * Vector2 position variable from the Entity class, it is important to remember that the vector points to the bottom
-     * left of the entity sprite, not the centre of the sprite.
+     * transformed so that they correspond to the integer positions of the TerrainTile in the map layer.
+     *
+     * If using the Vector2 position variable from the Entity class, it is important to remember that the vector points
+     * to the bottom left of the entity sprite, not the centre of the sprite (This is important to know if the entity
+     * uses animations since the entity size may be larger than the actual sprite). The Entity class provides the
+     * getPosition() or getCentredPosition() methods to help retrieve an appropriate Vector2 instance to use.
+     *
+     *
      * @param vector The Vector2 instance representing the target TerrainTile's position.
      * @return TerrainTile instance at the specified position.
      */
