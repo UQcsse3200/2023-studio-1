@@ -32,6 +32,7 @@ public class TerrainFactory {
   private static final String mapPath = "configs/Map.txt";
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;
+  private Map<Character, TextureRegion> charToTextureMap = new HashMap<>();
   private static final Map<Character, String> charToTileImageMap;
   static {
     Map<Character, String> tempMapA = new HashMap<>();
@@ -71,7 +72,6 @@ public class TerrainFactory {
     tempMapA.put('+', "images/stonePath_1.png");
     charToTileImageMap = Collections.unmodifiableMap(tempMapA);
   }
-  private Map<Character, TextureRegion> charToTextureMap = new HashMap<>();
   private static final Map<Character, TerrainTile.TerrainCategory> charToTileTypeMap;
   static {
     Map<Character, TerrainTile.TerrainCategory> tempMapB = new HashMap<>();
@@ -132,6 +132,9 @@ public class TerrainFactory {
     this.orientation = orientation;
   }
 
+  /**
+   * Loads textures into the charToTextureMap based upon the images within the charToTileImageMap and resourceService
+   */
   public void loadTextures(){
     ResourceService resourceService = ServiceLocator.getResourceService();
     for (Map.Entry<Character, String> entry: charToTileImageMap.entrySet()) {
@@ -183,14 +186,12 @@ public class TerrainFactory {
   private void updateMapSize(String line1, String line2) {
     int x_MapSize = 0, y_MapSize = 0;
     // read 2 first lines
-    x_MapSize = isNumeric(line1);
-    if (x_MapSize != -1) {
+    if (isNumeric(line1)) {
       x_MapSize = Integer.parseInt(line1);
     } else {
       System.out.println("Can't read x -> Incorrect input file!");
     }
-    y_MapSize = isNumeric(line2);
-    if (y_MapSize != -1) {
+    if (isNumeric(line2)) {
       y_MapSize = Integer.parseInt(line2);
     } else {
       System.out.println("Can't read y -> Incorrect input file!");
@@ -245,17 +246,17 @@ public class TerrainFactory {
    * This function will be used to check if a string is numeric
    *
    * @param strNum the string to be checked
-   * @return -1 if the string is not numeric, else return the value of the string
+   * @return false if the string is not numeric, else return true
    */
-  public static int isNumeric(String strNum) {
+  public static boolean isNumeric(String strNum) {
     if (strNum == null) {
-      return -1;
+      return false;
     }
     try {
       int value = Integer.parseInt(strNum);
-      return value;
+      return true;
     } catch (NumberFormatException nfe) {
-      return -1;
+      return false;
     }
   }
 }
