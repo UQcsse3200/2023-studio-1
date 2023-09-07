@@ -64,8 +64,8 @@ public class GameMap {
      * @return TerrainTile instance at the specified position.
      */
     public TerrainTile getTile(Vector2 vector) {
-        int x = (int) Math.floor((vector.x+1)*2 + 1);
-        int y = (int) Math.floor((vector.y+1)*2 -1); // SHOULD ADJUST these lines so they instead divide by the tile size from the terrainComponent
+        int x = (int) Math.floor((vector.x + 1) * 2);
+        int y = (int) Math.floor((vector.y + 1) * 2 - 1); // SHOULD ADJUST these lines so they instead divide by the tile size from the terrainComponent
         return (TerrainTile) getCell(x, y).getTile();
 
         //return getTile(vectorToTileCoordinates(vector)); // need to test if this works
