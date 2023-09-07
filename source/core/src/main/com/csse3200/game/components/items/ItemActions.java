@@ -134,7 +134,7 @@ public class ItemActions extends Component {
     }
 
     // A water amount of 0.5 was recommended by team 7
-    tile.getCropTile().getEvents().trigger("water", 0.5);
+    tile.getCropTile().getEvents().trigger("water", 0.5f);
     item.getComponent(WateringCanLevelComponent.class).incrementLevel(-5);
     return true;
   }
@@ -164,7 +164,7 @@ public class ItemActions extends Component {
     if (tile.getCropTile() != null) {
       tile.getCropTile().getEvents().trigger("destroy");
       tile.setUnOccupied();
-      tile.setCropTile(null);
+      tile.removeCropTile();
       return true;
     }
     return false;
