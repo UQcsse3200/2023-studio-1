@@ -15,7 +15,8 @@
     "health": 5,
     "tamingThreshold": 1,
     "tamingProbability": 0.5,
-    "favouriteFood": "ASTROLOTL FOOD"  },
+    "favouriteFood": "ASTROLOTL FOOD"
+  },
   "oxygenEater": {
     "health": 100
   }

@@ -128,26 +128,20 @@ public class IntroDisplay extends UIComponent {
         storyLabel.setAlignment(Align.center); // Center align the text
 
         TextButton continueButton = new TextButton("Continue", skin);
-        continueButton.setVisible(false); // Make the continue button invisible
 
         // The continue button lets the user proceed to the main game
         continueButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
-                logger.debug("Exit button clicked");
+                logger.debug("Continue button clicked");
                 startGame();
-            }
-        });
-
-        // But the continue button should only be revealed when the story is finished playing
-        storyLabel.setTypingListener(new TypingAdapter() {
-            public void end() {
-                continueButton.setVisible(true);
             }
         });
 
         rootTable = new Table();
         rootTable.setFillParent(true); // Make the table fill the screen
+
+        rootTable.row();
 
         rootTable.add(storyLabel).expandX().center().padTop(150f); // The story label is at the top of the screen
         rootTable.row().padTop(30f);

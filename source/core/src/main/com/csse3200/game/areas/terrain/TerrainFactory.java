@@ -1,11 +1,14 @@
 package com.csse3200.game.areas.terrain;
 
 import java.io.*;
+import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -25,11 +28,8 @@ import com.csse3200.game.services.ServiceLocator;
 
 /** Factory for creating game terrains. */
 public class TerrainFactory {
-  private static final GridPoint2 MAP_SIZE = new GridPoint2(100, 100);
-  private static final int TUFT_TILE_COUNT = 30;
-  private static final int GRASS1_TILE_COUNT = 30;
-  private static final String path1 = "source/core/assets/configs/Map.txt"; // change this path if u can't open the file
-  private static final String path2 = "configs/Map.txt";
+  private static GridPoint2 MAP_SIZE = new GridPoint2(1000, 1000); // this will be updated later in the code
+  private static final String mapPath = "configs/Map.txt";
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;
   private static final Map<Character, String> charToTileImageMap;
@@ -211,40 +211,71 @@ public class TerrainFactory {
     }
   }
 
-  private void createGameTiles(GridPoint2 tileSize, ArrayList<TextureRegion> TRList, TiledMap tiledMap) {
-    // TiledMap tiledMap = new TiledMap();
-    ArrayList<TerrainTile> TTlist = new ArrayList<TerrainTile>();
-
-    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
-
-    try {
-      fillTilesWithFile(layer, MAP_SIZE, TRList, path1, path2);
-    } catch (FileNotFoundException e) {
-      System.out.println("fillTilesWithFile -> File Not Found error!");
-    } catch (IOException e) {
-      System.out.println("fillTilesWithFile -> Readfile error!");
-    } catch (Exception e) {
-      System.out.println("fillTilesWithFile -> Testcase error!: " + e);
+  /**
+   * This function will be used to update the MAP_SIZE
+   * 
+   * @param line1 the first line in the file (x parameter)
+   * @param line2 the second line in the file (y parameter)
+   */
+  private void updateMapSize(String line1, String line2) {
+    int x_MapSize = 0, y_MapSize = 0;
+    // read 2 first lines
+    x_MapSize = isNumeric(line1);
+    if (x_MapSize != -1) {
+      x_MapSize = Integer.parseInt(line1);
+    } else {
+      System.out.println("Can't read x -> Incorrect input file!");
     }
-
-    // fillTilesAtRandom(layer, MAP_SIZE, grassTile3, GRASS3_TILE_COUNT);
-    tiledMap.getLayers().add(layer);
-    // return tiledMap;
+    y_MapSize = isNumeric(line2);
+    if (y_MapSize != -1) {
+      y_MapSize = Integer.parseInt(line2);
+    } else {
+      System.out.println("Can't read y -> Incorrect input file!");
+    }
+    // update MAP_SIZE using existing function
+    MAP_SIZE.add(- MAP_SIZE.x, - MAP_SIZE.y);
+    MAP_SIZE.add(x_MapSize, y_MapSize);
   }
 
-  /*
-   * private static void fillTilesAtRandom(TiledMapTileLayer layer, GridPoint2
-   * mapSize, TerrainTile tile, int amount) {
-   * GridPoint2 min = new GridPoint2(0, 0);
-   * GridPoint2 max = new GridPoint2(mapSize.x - 1, mapSize.y - 1);
+  /**
+   * This function will be used to create a TiledMap using the file
    * 
-   * for (int i = 0; i < amount; i++) {
-   * GridPoint2 tilePos = RandomUtils.random(min, max);
-   * Cell cell = layer.getCell(tilePos.x, tilePos.y);
-   * cell.setTile(tile);
-   * }
-   * }
+   * @param tileSize the size of the tile
+   * @param TRList the list of Texture Region
+   * @param tiledMap the TiledMap
    */
+  private void createGameTiles(GridPoint2 tileSize, ArrayList<TextureRegion> TRList, TiledMap tiledMap) {
+      try {
+          BufferedReader bf = new BufferedReader(new InputStreamReader(Gdx.files.internal(mapPath).read()));
+          String line1, line2, line;
+          line1 = bf.readLine();
+          line2 = bf.readLine();
+          updateMapSize(line1,line2);
+          TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
+          // y_pos = 100 and x_pos = 100 lets map generate correctly
+          int x_pos = 0, y_pos = 99;
+          // checking for end of file
+          for (line = bf.readLine(); line != null; x_pos++, line = bf.readLine(), y_pos--) {
+              for (x_pos = line.length() -1; x_pos >= 0; x_pos--) {
+                  // Cell cell = layer.getCell(x_pos, y_pos); // uncomment this if u want to
+                  // update instead of replace
+                  GridPoint2 point = new GridPoint2(x_pos, y_pos);
+                  layer.setCell(point.x, point.y, cellCreator(point, line, TRList));
+              }
+          }
+          // closing buffer reader object
+          bf.close();
+
+          tiledMap.getLayers().add(layer);
+      } catch (FileNotFoundException e) {
+          System.out.println("fillTilesWithFile -> File Not Found error!");
+      } catch (IOException e) {
+          System.out.println("fillTilesWithFile -> Readfile error!");
+      } catch (Exception e) {
+          System.out.println("fillTilesWithFile -> Testcase error!: " + e);
+      }
+  }
+
 
   /**
    * This function will be used to create a cell for the TiledMap
@@ -368,9 +399,24 @@ public class TerrainFactory {
   }
 
   /**
-   * This function will be used to fill the TiledMap with tiles
-   * by reading a file
-   * 
+   * This function will be used to check if a string is numeric
+   *
+   * @param strNum the string to be checked
+   * @return -1 if the string is not numeric, else return the value of the string
+   */
+  public static int isNumeric(String strNum) {
+    if (strNum == null) {
+      return -1;
+    }
+    try {
+      int value = Integer.parseInt(strNum);
+      return value;
+    } catch (NumberFormatException nfe) {
+      return -1;
+    }
+  }
+
+  /**
    * @param layer   the layer of the TiledMap
    * @param mapSize the size of the map
    * @param TRList  the list of TextureRegion
@@ -407,6 +453,5 @@ public class TerrainFactory {
       // closing buffer reader object
       bf.close();
     }
-
   }
 }
