@@ -1,6 +1,10 @@
 package com.csse3200.game.components.plants;
+import com.badlogic.gdx.audio.Sound;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.services.ServiceLocator;
+
+import static com.badlogic.gdx.math.MathUtils.random;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -23,6 +27,9 @@ public class PlantComponent extends Component {
     /** The crop tile on which this plant is planted on. */
     private CropTileComponent cropTile;
     private int[] growthStageThresholds = {0, 0, 0}; // Sprout, juvenile, adult. Initialised to zero and given values
+                                        // in the constructor. These thresholds determine when a plant advances to the
+                                        // next growth stage
+    private String[] sounds;
     // in the constructor. These thresholds determine when a plant advances to the
     // next growth stage
 
@@ -94,11 +101,12 @@ public class PlantComponent extends Component {
      * @param maxHealth - The maximum health a plant can reach as an adult
      * @param cropTile - The cropTileComponent where the plant will be located.
      * @param growthStageThresholds - A list of three integers that represent the growth thresholds.
+     * @param soundsArray - A list of all sound files filepaths as strings
      * @param growthStageImagePaths - image paths for the different growth stages.
      */
     public PlantComponent(int health, String name, String plantType, String plantDescription,
                           float idealWaterLevel, int adultLifeSpan, int maxHealth,
-                          CropTileComponent cropTile, int[] growthStageThresholds,
+                          CropTileComponent cropTile, int[] growthStageThresholds, String[] soundsArray,
                           String[] growthStageImagePaths) {
         this.plantHealth = health;
         this.plantName = name;
@@ -112,6 +120,7 @@ public class PlantComponent extends Component {
         this.growthStage = 1;
         this.decay = false;
         this.currentGrowthLevel = 0;
+        this.sounds = soundsArray;
 
         // Initialise growth stage thresholds for specific plants.
         this.growthStageThresholds[0] = growthStageThresholds[0];
@@ -353,6 +362,7 @@ public class PlantComponent extends Component {
         // Stub. When complete will cause the plant to drop items such as seeds and fruits.
         // If the plant is a one-time use (e.g., carrots), then it will destroy itself.
         destroyPlant();
+        playSound("harvest");
     }
 
     /**
@@ -439,4 +449,31 @@ public class PlantComponent extends Component {
             }
         }
     }
+
+    public void playSound(String functionCalled) {
+        String[] sounds = this.sounds;
+        switch (functionCalled) {
+            //seperate sounds into tuple pairs for each event
+            case "destroy" -> soundMethod(sounds[0], sounds[1]);
+            case "nearby" -> soundMethod(sounds[2], sounds[3]);
+            case "click" -> soundMethod(sounds[4], sounds[5]);
+            case "decays" -> soundMethod(sounds[6], sounds[7]);
+        }
+    }
+
+    void soundMethod(String lore, String notLore) {
+        Boolean playLoreSound = random.nextInt(100) <= 0; //Gives 1% chance of being true
+        Sound soundEffect;
+
+        if (playLoreSound) {
+            soundEffect = ServiceLocator.getResourceService().getAsset(lore, Sound.class);
+        } else {
+            soundEffect = ServiceLocator.getResourceService().getAsset(notLore, Sound.class);
+        }
+
+        soundEffect.play();
+
+    }
+
+
 }
