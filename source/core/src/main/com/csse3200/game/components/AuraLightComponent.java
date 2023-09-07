@@ -4,14 +4,19 @@ import box2dLight.PointLight;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.physics.box2d.World;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.services.ServiceLocator;
 
 public class AuraLightComponent extends Component{
 
+	private static final Color DEFAULT_COLOR = new Color(3,12,33,0.7f);
 	private final PointLight light;
 
 	public AuraLightComponent() {
-		light = new PointLight();
-		light.setDistance(100);
+		light = new PointLight(ServiceLocator.getPhysicsService().getRayHandler(), 50);
+		light.setDistance(10);
+		light.setColor(DEFAULT_COLOR);
 	}
 
 	public AuraLightComponent(float distance) {
@@ -32,5 +37,27 @@ public class AuraLightComponent extends Component{
 
 	public void setDistance(float distance) {
 		light.setDistance(distance);
+	}
+
+	public void setColor(Color color) {
+		light.setColor(color);
+	}
+
+	public void setActive(boolean active) {
+		light.setActive(active);
+	}
+
+	public boolean getActive() {
+		return light.isActive();
+	}
+
+	@Override
+	public void update() {
+		light.setPosition(entity.getCenterPosition());
+	}
+
+	@Override
+	public void dispose() {
+		light.dispose();
 	}
 }
