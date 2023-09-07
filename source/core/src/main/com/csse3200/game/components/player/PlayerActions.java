@@ -91,7 +91,6 @@ public class PlayerActions extends Component {
     // player is moving
     String animationName = String.format("animation%sStart", running ? "Run" : "Walk");
     float direction = moveDirection.angleDeg();
-
     if (direction < 45) {
       entity.getEvents().trigger(animationName, "right");
     } else if (direction < 135) {

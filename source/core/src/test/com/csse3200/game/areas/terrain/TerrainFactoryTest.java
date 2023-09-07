@@ -42,6 +42,7 @@ public class TerrainFactoryTest {
 
     /**
      * Test to see all images are pngs
+     * Used code from: https://www.w3schools.blog/validate-image-file-extension-regular-expression-regex-java
      */
     @Test
     public void testTileImagesArePNGs(){
@@ -64,6 +65,7 @@ public class TerrainFactoryTest {
 
     /**
      * Test to see map is a txt file
+     * Used code from: https://www.w3schools.blog/validate-image-file-extension-regular-expression-regex-java
      */
     @Test
     public void testMapisTxt(){
