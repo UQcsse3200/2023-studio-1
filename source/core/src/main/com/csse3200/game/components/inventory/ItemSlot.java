@@ -16,24 +16,33 @@ public class ItemSlot extends Stack {
     private Texture itemTexture;
     private Integer count;
     private Skin skin;
+
+    private Image background;
+    private Image frame;
     public ItemSlot(Texture itemTexture, Integer count) {
         this.itemTexture = itemTexture;
         this.count = count;
         this.skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
-        createItemSlot();
+        this.background = new Image(new Texture(Gdx.files.internal("images/selected.png")));
+        this.frame = new Image(new Texture(Gdx.files.internal("images/itemFrame.png")));
+        this.createItemSlot();
     }
 
     public ItemSlot(Texture itemTexture) {
         this.itemTexture = itemTexture;
         this.count = null;
         this.skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
-        createItemSlot();
+        this.background = new Image(new Texture(Gdx.files.internal("images/selected.png")));
+        this.frame = new Image(new Texture(Gdx.files.internal("images/itemFrame.png")));
+        this.createItemSlot();
     }
 
     public ItemSlot() {
         this.itemTexture = null;
         this.count = null;
         this.skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
+        this.background = new Image(new Texture(Gdx.files.internal("images/selected.png")));
+        this.frame = new Image(new Texture(Gdx.files.internal("images/itemFrame.png")));
         this.createItemSlot();
     }
 
@@ -54,13 +63,7 @@ public class ItemSlot extends Stack {
         label.setColor(Color.BLACK);
         label.setAlignment(Align.bottomRight);
 
-        Image background = new Image(new Texture(Gdx.files.internal("images/selected.png")));
-        Image frame = new Image(new Texture(Gdx.files.internal("images/itemFrame.png")));
-        Image test = new Image(new Texture("images/tool_hoe.png"));
-
-        this.add(background);
-        this.add(frame);
-        this.add(test);
+        this.add(this.frame);
 
         if (this.itemTexture != null) {
             this.add(new Image(this.itemTexture));
