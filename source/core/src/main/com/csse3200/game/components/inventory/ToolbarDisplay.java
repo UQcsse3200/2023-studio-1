@@ -49,15 +49,69 @@ public class ToolbarDisplay extends UIComponent {
         table.defaults().size(64, 64);
 
         for (int i = 0; i < 10; i++) {
+            //Set the indexes for the toolbar
+            int idx = i + 1;
+            if (idx == 10) {
+                idx = 0;
+            }
 
-            Label label = new Label(String.valueOf(i) + " ", skin); //please please please work
+            //Create the label for the item slot
+            Label label = new Label(String.valueOf(idx) + " ", skin); //please please please work
             label.setColor(Color.DARK_GRAY);
             label.setAlignment(Align.topLeft);
 
-            ItemSlot item = new ItemSlot();
+            //Create the itemslot
+            ItemSlot item = new ItemSlot(false);
             item.add(label);
             table.add(item).pad(10, 10, 10, 10).fill();
+        }
 
+        // Create a window for the inventory using the skin
+        window = new Window("", skin);
+        window.pad(40, 5, 5, 5); // Add padding to with so that the text doesn't go offscreen
+        window.add(table); //Add the table to the window
+        window.pack(); // Pack the window to the size
+        window.setMovable(false);
+        window.setPosition(stage.getWidth() / 2 - window.getWidth() / 2, 0); // Clip to the bottom of the window on the stage
+        window.setVisible(true);
+        // Add the window to the stage
+        stage.addActor(window);
+    }
+
+
+    public void selectItem(int index) {
+        //Remove the toolbar
+        this.dispose();
+
+        //Recreate the toolbar with the new thing highlighted
+        Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
+        table = new Table(skin);
+        table.defaults().size(64, 64);
+
+        for (int i = 0; i < 10; i++) {
+            //Set the indexes for the toolbar
+            int idx = i + 1;
+            if (idx == 10) {
+                idx = 0;
+            }
+
+            //Create the hotkey label for the index of this item
+            Label label = new Label(String.valueOf(idx) + " ", skin); //please please please work
+            label.setColor(Color.DARK_GRAY);
+            label.setAlignment(Align.topLeft);
+
+            //Make sure the item at the specific index is selected
+            boolean isSelected;
+            if (i == index) {
+                isSelected = true;
+            } else {
+                isSelected = false;
+            }
+
+            //Create the item and add it to the table
+            ItemSlot item = new ItemSlot(isSelected);
+            item.add(label);
+            table.add(item).pad(10, 10, 10, 10).fill();
         }
 
         // Create a window for the inventory using the skin

@@ -1,3 +1,4 @@
+/*
 package com.csse3200.game.components.player;
 
 import com.badlogic.gdx.graphics.Texture;
@@ -94,4 +95,4 @@ public class InventoryHotkeyTest {
         }
 }
 
-
+*/

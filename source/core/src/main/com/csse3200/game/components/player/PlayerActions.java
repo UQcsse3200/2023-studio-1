@@ -8,6 +8,7 @@ import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.inventory.ToolbarDisplay;
 import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
 import com.csse3200.game.components.tractor.TractorActions;
@@ -237,6 +238,7 @@ public class PlayerActions extends Component {
 
   void hotkeySelection(int index) {
     entity.getComponent(InventoryComponent.class).setHeldItem(index);
+    entity.getComponent(ToolbarDisplay.class).selectItem(index);
   }
 
   /**

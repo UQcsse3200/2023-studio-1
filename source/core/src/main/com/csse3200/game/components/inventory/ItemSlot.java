@@ -19,30 +19,36 @@ public class ItemSlot extends Stack {
 
     private Image background;
     private Image frame;
-    public ItemSlot(Texture itemTexture, Integer count) {
+
+    private boolean selected;
+
+    public ItemSlot(Texture itemTexture, Integer count, boolean selected) {
         this.itemTexture = itemTexture;
         this.count = count;
         this.skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
         this.background = new Image(new Texture(Gdx.files.internal("images/selected.png")));
         this.frame = new Image(new Texture(Gdx.files.internal("images/itemFrame.png")));
+        this.selected = selected;
         this.createItemSlot();
     }
 
-    public ItemSlot(Texture itemTexture) {
+    public ItemSlot(Texture itemTexture, boolean selected) {
         this.itemTexture = itemTexture;
         this.count = null;
         this.skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
         this.background = new Image(new Texture(Gdx.files.internal("images/selected.png")));
         this.frame = new Image(new Texture(Gdx.files.internal("images/itemFrame.png")));
+        this.selected = selected;
         this.createItemSlot();
     }
 
-    public ItemSlot() {
+    public ItemSlot(boolean selected) {
         this.itemTexture = null;
         this.count = null;
         this.skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
         this.background = new Image(new Texture(Gdx.files.internal("images/selected.png")));
         this.frame = new Image(new Texture(Gdx.files.internal("images/itemFrame.png")));
+        this.selected = selected;
         this.createItemSlot();
     }
 
@@ -63,12 +69,20 @@ public class ItemSlot extends Stack {
         label.setColor(Color.BLACK);
         label.setAlignment(Align.bottomRight);
 
+        //Add the selection background if necessary
+        if (this.selected) {
+            this.add(this.background);
+        }
+
+        //Add the item frame image to the item slot
         this.add(this.frame);
 
+        //Add the item image to the itemSlot
         if (this.itemTexture != null) {
             this.add(new Image(this.itemTexture));
         }
 
+        //Add the count label if the number is not 0
         if (this.count != null && this.count > 0) {
             this.add(label);
         }
