@@ -166,6 +166,43 @@ public class NPCFactory {
     return astrolotl;
   }
 
+
+  public static Entity createOxygenEater(Entity player) {
+    Entity oxygenEater = createBaseAnimal(EntityType.OxygenEater);
+    BaseAnimalConfig config = configs.oxygenEater;
+
+    AnimationRenderComponent animator = new AnimationRenderComponent(
+            ServiceLocator.getResourceService().getAsset("images/animals/oxygen_eater.atlas",
+                    TextureAtlas.class),
+            16f
+    );
+
+    animator.addAnimation("idle_left", 1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle_right", 1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("walk_left", 1f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation("walk_right", 1f, Animation.PlayMode.LOOP);
+
+
+
+//    animator.addAnimation("idle", 1f, Animation.PlayMode.LOOP);
+  // animator.addAnimation("consume", 1f, Animation.PlayMode.LOOP);
+
+    AITaskComponent aiTaskComponent = new AITaskComponent()
+            .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+
+    oxygenEater
+            .addComponent(aiTaskComponent)
+            .addComponent(animator)
+            .addComponent(new AnimalAnimationController());
+
+
+    oxygenEater.scaleHeight(3f);
+    PhysicsUtils.setScaledCollider(oxygenEater, 0.7f, 0.4f);
+
+
+    return oxygenEater;
+  }
+
   /**
    * Creates a generic animal to be used as a base entity by more specific animal creation methods.
    *
@@ -179,6 +216,7 @@ public class NPCFactory {
 
     return animal;
   }
+
 
   /**
    * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.

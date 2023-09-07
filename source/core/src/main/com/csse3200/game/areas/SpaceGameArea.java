@@ -92,7 +92,7 @@ public class SpaceGameArea extends GameArea {
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
           "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas",
-          "images/animals/astrolotl.atlas",
+          "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg", "sounds/car-horn-6408.mp3"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -137,6 +137,7 @@ public class SpaceGameArea extends GameArea {
     spawnChickens();
     spawnCows();
     spawnAstrolotl();
+    spawnOxygenEater();
 
     spawnTool(ItemType.WATERING_CAN);
     spawnTool(ItemType.SHOVEL);
@@ -284,6 +285,17 @@ public class SpaceGameArea extends GameArea {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity astrolotl = NPCFactory.createAstrolotl(player);
       spawnEntityAt(astrolotl, randomPos, true, true);
+    }
+  }
+
+  private void spawnOxygenEater() {
+    GridPoint2 minPos = new GridPoint2(2, 2);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < 5; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity oxygenEater = NPCFactory.createOxygenEater(player);
+      spawnEntityAt(oxygenEater, randomPos, true, true);
     }
   }
 

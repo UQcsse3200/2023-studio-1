@@ -8,7 +8,7 @@ public enum EntityType {
     Cow,
     Chicken,
     Axolotl,
+    OxygenEater,
     Item
 }
 
-// import com.csse3200.game.entities.EntityType;

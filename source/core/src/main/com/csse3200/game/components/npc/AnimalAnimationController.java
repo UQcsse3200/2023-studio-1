@@ -92,4 +92,10 @@ public class AnimalAnimationController extends Component {
         entity.getEvents().trigger(currentAnimation + "Start");
     }
 
+    void animateConsumeOxygen() {
+        animator.startAnimation("consume");
+    }
+
+
+
 }
