@@ -4,7 +4,9 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -127,6 +129,7 @@ public class CropTileComponent extends Component {
 	 */
 	private void fertiliseTile() {
 		isFertilised = true;
+		ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.FERTILISE_CROP.name());
 	}
 
 	/**
@@ -142,9 +145,8 @@ public class CropTileComponent extends Component {
 	}
 
 	/**
-	 * Plants a plant entity on the tile and stores the plant as a member variable
-	 * in the tile
-	 * component
+	 * Plants a plant entity on the tile and stores the plant as a member variable in the tile
+	 * component. It is assumed that the {@link Entity} created from the factory contains a {@link PlantComponent}.
 	 *
 	 * @param plantFactoryMethod Factory method that is used to create a new plant
 	 */
@@ -154,6 +156,14 @@ public class CropTileComponent extends Component {
 		}
 		plant = plantFactoryMethod.apply(this);
 		ServiceLocator.getEntityService().register(plant);
+
+		PlantComponent plantComponent = plant.getComponent(PlantComponent.class);
+		if (plantComponent != null) {
+			ServiceLocator.getMissionManager().getEvents().trigger(
+					MissionManager.MissionEvent.PLANT_CROP.name(),
+					plantComponent.getPlantType()
+			);
+		}
 	}
 
 	/**
