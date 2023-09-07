@@ -5,9 +5,11 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
+import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ComponentType;
 import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.items.WateringCanLevelComponent;
 import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
@@ -318,19 +320,20 @@ public class Entity implements Json.Serializable {
     if (getType() == EntityType.Item || getType() == null) {
       return;
     }
-
-    json.writeValue("Entity", getType());
-    if (getType() != EntityType.Plant && getType() != EntityType.Tile) {
-      float posX = position.x;
-      float posY = position.y;
-      if (getType() == EntityType.Player && !ServiceLocator.getGameArea().getTractor().getComponent(TractorActions.class).isMuted()) {
-        // Therefore the player is in the tractor and you are modifying the player's data
-        posX = ServiceLocator.getGameArea().getTractor().getPosition().x;
-        posY = ServiceLocator.getGameArea().getTractor().getPosition().y;
-      }
-      json.writeValue("x", posX);
-      json.writeValue("y", posY);
+    if (getType() == EntityType.Tile) {
+      getComponent(CropTileComponent.class).write(json);
+      return;
     }
+    json.writeValue("Entity", getType());
+    float posX = position.x;
+    float posY = position.y;
+    if (getType() == EntityType.Player && !ServiceLocator.getGameArea().getTractor().getComponent(TractorActions.class).isMuted()) {
+      // Therefore the player is in the tractor and you are modifying the player's data
+      posX = ServiceLocator.getGameArea().getTractor().getPosition().x;
+      posY = ServiceLocator.getGameArea().getTractor().getPosition().y;
+    }
+    json.writeValue("x", posX);
+    json.writeValue("y", posY);
     json.writeObjectStart("components");
     for (Component c : createdComponents) {
       c.write(json);
@@ -339,11 +342,13 @@ public class Entity implements Json.Serializable {
   }
 
   public void writeItem(Json json) {
-    json.writeValue(this.getComponent(ItemComponent.class).getItemName());
+    json.writeValue("name", this.getComponent(ItemComponent.class).getItemName());
+    if (this.getComponent(WateringCanLevelComponent.class) != null) {
+      this.getComponent(WateringCanLevelComponent.class).write(json);
+    }
   }
 
   public void read(Json json, JsonValue jsonMap) {
-
     position = new Vector2(jsonMap.getFloat("x"), jsonMap.getFloat("y"));
     String value = jsonMap.getString("Entity");
     try {

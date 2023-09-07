@@ -7,8 +7,9 @@ import com.badlogic.gdx.utils.Disposable;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.ServiceLocator;
-
+import com.badlogic.gdx.utils.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,12 +79,32 @@ public abstract class GameArea implements Disposable {
     entity.setPosition(worldPos);
     spawnEntity(entity);
   }
+
+
+  
   public void removeEntity(Entity entity) {
     entity.setEnabled(false);
     areaEntities.remove(entity);
-    Gdx.app.postRunnable(entity::dispose); //TODO: What does this do
+    Gdx.app.postRunnable(entity::dispose); 
   }
 
+  /**
+   * Loops through the games npcs and removes them. REmoves all
+   * cows, chickens and Astrolotl from the game
+   * @param npcs Array<entity> containing all chickens, cows and Astrolotl to be removed
+   */
+  public void removeNPCs(Array<Entity> npcs) {
+    for (Entity npc : npcs) {
+      if (npc.getType() == EntityType.Cow || npc.getType() == EntityType.Chicken ||
+          npc.getType() == EntityType.Astrolotl) {
+        removeEntity(npc);
+      }
+    }
+  }
+
+
+
+  
   public abstract Entity getPlayer();
 
   public abstract Entity getTractor();

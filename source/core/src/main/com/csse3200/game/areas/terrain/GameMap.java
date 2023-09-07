@@ -10,7 +10,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.EventHandler;
 
 /** the GameMap class is used to store and easily access and manage the components related to the game map */
-public class GameMap implements Json.Serializable {
+public class GameMap {
 
     private final TerrainFactory terrainFactory;
     private final TiledMap tiledMap;
@@ -200,29 +200,5 @@ public class GameMap implements Json.Serializable {
      */
     public void removeTileCropTile(int x, int y) {
         this.getTile(x, y).setUnOccupied();
-    }
-
-    @Override
-    public void write(Json json) {
-        json.writeObjectStart("Tiles");
-        for (int i = 1; i < getMapSize().x; i++) {
-            for (int j = 1; j < getMapSize().y; j++) {
-                if (getTile(i,j) != null) {
-                    if (getTile(i,j).getCropTile() != null) {
-                        json.writeObjectStart("CropTile");
-                        json.writeValue("X", i);
-                        json.writeValue("Y", j);
-                        getTile(i, j).write(json);
-                        json.writeObjectEnd();
-                    }
-                }
-            }
-        }
-        json.writeObjectEnd();
-    }
-
-    @Override
-    public void read(Json json, JsonValue jsonData) {
-        // :p
     }
 }

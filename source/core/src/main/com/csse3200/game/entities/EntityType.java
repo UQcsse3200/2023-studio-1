@@ -7,7 +7,7 @@ public enum EntityType {
     Tile,  // This is team 7 stuff
     Cow,
     Chicken,
-    Axolotl,
+    Astrolotl,
     Item
 }
 

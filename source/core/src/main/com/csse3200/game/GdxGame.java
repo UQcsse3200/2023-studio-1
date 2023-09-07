@@ -75,15 +75,16 @@ public class GdxGame extends Game {
       case CONTROLS:
         return new ControlsScreen(this);
       case INTRO:
-        //return new IntroScreen(this);
-        return new MainGameScreen(this);
+        return new IntroScreen(this);
+      case LOSESCREEN:
+        return new LoseScreen(this);
       default:
         return null;
     }
   }
 
   public enum ScreenType {
-    MAIN_MENU, MAIN_GAME, SETTINGS, CONTROLS, INTRO
+    MAIN_MENU, MAIN_GAME, SETTINGS, CONTROLS, INTRO, LOSESCREEN
   }
 
   /**

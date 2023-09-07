@@ -48,7 +48,7 @@ public class SaveGame {
     private Entity player;
     private Array<Entity> entities;
 
-    private GameMap map;
+    private Array<Entity> tiles;
 
     public GameState() {};
 
@@ -98,12 +98,26 @@ public class SaveGame {
       return tmp;
     }
 
-    public GameMap getMap() {
-      return map;
+    public Array<Entity> getTiles() {
+      return tiles;
     }
 
-    public void setMap(GameMap map) {
-      this.map = map;
+    public void setTiles(Array<Entity> tiles) {
+      this.tiles = filterTiles(tiles);
+    }
+
+    private Array<Entity> filterTiles(Array<Entity> entities) {
+      // If you edit this original array you edit what is in the ResourceService
+      Array<Entity> tiles = new Array<>(entities);
+      for (int i = 0; i < tiles.size; i++) {
+        if (tiles.get(i).getType() != EntityType.Tile) {
+          tiles.removeIndex(i);
+          // Moves the indexing down when removed so keep index same
+          i--;
+
+        }
+      }
+      return tiles;
     }
   }
 }

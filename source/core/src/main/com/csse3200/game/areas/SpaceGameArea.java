@@ -89,7 +89,16 @@ public class SpaceGameArea extends GameArea {
           "images/snow_3.png",
           "images/stone_1.png",
           "images/stonePath_1.png",
-          "images/tractor.png"
+          "images/tractor.png",
+          "images/fertiliser.png",
+          "images/plants/aloe_vera_seed.png",
+          "images/plants/atomic_algae_seed.png",
+          "images/plants/cosmic_cob_seed.png",
+          "images/plants/deadly_nightshade_seed.png",
+          "images/plants/hammer_plant_seed.png",
+          "images/plants/horticultural_heater_seed.png",
+          "images/plants/space_snapper_seed.png",
+          "images/plants/tobacco_seed.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
@@ -139,6 +148,13 @@ public class SpaceGameArea extends GameArea {
     spawnChickens();
     spawnCows();
     spawnAstrolotl();
+
+    spawnTool(ItemType.WATERING_CAN);
+    spawnTool(ItemType.SHOVEL);
+    spawnTool(ItemType.SCYTHE);
+    spawnTool(ItemType.HOE);
+    spawnTool(ItemType.FERTILISER);
+    spawnTool(ItemType.SEED);
 
     //spawnGhosts();
     //spawnGhostKing();
@@ -238,6 +254,14 @@ public class SpaceGameArea extends GameArea {
         newTool = ItemFactory.createWateringcan();
         spawnEntityAt(newTool, randomPos, true, true);
         break;
+      case FERTILISER:
+        newTool = ItemFactory.createFertiliser();
+        spawnEntityAt(newTool, randomPos, true, true);
+        break;
+      case SEED:
+        newTool = ItemFactory.createAloeVeraSeed();
+        spawnEntityAt(newTool, randomPos, true, true);
+        break;
     }
   }
 
@@ -268,7 +292,7 @@ public class SpaceGameArea extends GameArea {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 5; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity cow = NPCFactory.createCow(player);
       spawnEntityAt(cow, randomPos, true, true);

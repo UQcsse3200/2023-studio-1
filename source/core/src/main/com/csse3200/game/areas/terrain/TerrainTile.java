@@ -1,5 +1,6 @@
 package com.csse3200.game.areas.terrain;
 
+import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
@@ -7,6 +8,10 @@ import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.utils.Json;
 import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.ItemFactory;
+
+import java.util.HashMap;
+import java.util.function.Supplier;
 
 /**
  * Custom terrain tile implementation for tiled map terrain that stores additional properties we
@@ -271,6 +276,9 @@ public class TerrainTile implements TiledMapTile {
    */
   public void setCropTile(Entity cropTile) {
     this.cropTile = cropTile;
+    if (cropTile.getComponent(CropTileComponent.class).getTerrainTile() == null) {
+      cropTile.getComponent(CropTileComponent.class).setTerrainTile(this);
+    }
     this.setOccupied();
   }
 

@@ -178,13 +178,16 @@ public class InventoryComponent extends Component {
   @Override
   public void write(Json json) {
 
-    json.writeArrayStart("inventory");
+    json.writeObjectStart("inventory");
 
     for (Entity e : inventory) {
-      e.writeItem(json); 
+      json.writeObjectStart("item");
+      e.writeItem(json);
+      json.writeValue("count", getItemCount(e));
+      json.writeObjectEnd();
       //e.write(json); //TODO: this could cause an infinite loop :) <- should be fixed but needs counts
     }
 
-    json.writeArrayEnd();
+    json.writeObjectEnd();
   }
 }
