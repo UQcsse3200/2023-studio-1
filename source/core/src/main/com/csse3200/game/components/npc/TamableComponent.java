@@ -22,7 +22,7 @@ public class TamableComponent extends Component {
     private boolean isTamed;
     private final Entity player;
     private Random random = new Random();  //https://rules.sonarsource.com/java/RSPEC-2119/
-    private InventoryComponent playerAssets;
+    private InventoryComponent playerInventory;
 
     /**
      * Constructor for the Tameable Component class
@@ -39,7 +39,7 @@ public class TamableComponent extends Component {
         this.favouriteFood = favouriteFood;
         this.isTamed = false;
         this.player = player;
-        this.playerAssets = player.getComponent(InventoryComponent.class);
+        this.playerInventory = player.getComponent(InventoryComponent.class);
     }
 
     /**
@@ -71,31 +71,9 @@ public class TamableComponent extends Component {
         if (isTamed) {
             return;
         }
-        List<Entity> playerInv = this.playerAssets.getInventory();
-        boolean hasfood = false;
-        int inventoryIndex = 0;
-        for (int index = 0; index < playerInv.size(); index++) {
-            Entity invVariable = playerInv.get(index);
-
-            //add an additional check (Type of entity)
-            if  (!invVariable.getType().equals(EntityType.Item)) {
-                //entity is not of an item type
-                continue;
-            }
-            if (invVariable.getComponent(ItemComponent.class).getItemName().equals(favouriteFood)) {
-                hasfood = true;
-                inventoryIndex = index;
-                break;
-            }
-        }
-
-        if (!hasfood) { //player can't feed animal as it does not have his favourite food.
-            return;
-        }
-        this.playerAssets.setHeldItem(inventoryIndex);
 
         // Check player is holding the right item
-        if (this.playerAssets.getHeldItem().getComponent(ItemComponent.class).getItemName().equals(favouriteFood)) {
+        if (this.playerInventory.getHeldItem().getComponent(ItemComponent.class).getItemName().equals(favouriteFood)) {
 
             // Generate RNG number for taming
             double randomDecimal = generateRandomDecimal();
@@ -112,7 +90,7 @@ public class TamableComponent extends Component {
             } else {
                 numTimesFed++;
             }
-            this.playerAssets.removeItem(this.playerAssets.getHeldItem());
+            this.playerInventory.removeItem(this.playerInventory.getHeldItem());
             // Remove the food from the players inventory
         }
     }
