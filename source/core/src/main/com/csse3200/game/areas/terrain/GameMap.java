@@ -62,9 +62,12 @@ public class GameMap {
      * @return TerrainTile instance at the specified position.
      */
     public TerrainTile getTile(Vector2 vector) {
-        int x = (int) Math.floor(vector.x / 0.5);
-        int y = (int) Math.floor(vector.y / 0.5);                 // SHOULD ADJUST these lines so they instead divide by the tile size from the terrainComponent
+        int x = (int) Math.floor((vector.x+1)*2 + 1);
+        int y = (int) Math.floor((vector.y+1)*2 -1); // SHOULD ADJUST these lines so they instead divide by the tile size from the terrainComponent
         return (TerrainTile) getCell(x, y).getTile();
+
+        //return getTile(vectorToTileCoordinates(vector)); // need to test if this works
+        // if above does work, the code above it can be removed
     }
 
     /**
@@ -87,7 +90,7 @@ public class GameMap {
      * @param gridPoint2 The GridPoint2 instance being used to create a corresponding Vector2 instance.
      * @return the new Vector2 instance.
      */
-    public Vector2 tileCoordinatesToVector (GridPoint2 gridPoint2) {
+    public Vector2 tileCoordinatesToVector(GridPoint2 gridPoint2) {
         float x = (float) (gridPoint2.x * 0.5);
         float y = (float) (gridPoint2.y * 0.5);            // SHOULD ADJUST these lines so they multiply by the tile size from the terrainComponent
         return new Vector2(x, y);
