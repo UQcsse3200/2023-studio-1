@@ -27,6 +27,10 @@ com.csse3200.game.events
 com.csse3200.game.events.listeners
 com.csse3200.game.files
 com.csse3200.game.input
+com.csse3200.game.missions
+com.csse3200.game.missions.achievements
+com.csse3200.game.missions.quests
+com.csse3200.game.missions.rewards
 com.csse3200.game.physics
 com.csse3200.game.physics.components
 com.csse3200.game.physics.raycast
