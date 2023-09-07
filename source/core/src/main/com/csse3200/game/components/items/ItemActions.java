@@ -83,7 +83,7 @@ public class ItemActions extends Component {
    */
   private TerrainTile getTileAtPosition(Vector2 playerPos, Vector2 mousePos) {
     Vector2 pos = getAdjustedPos(playerPos, mousePos);
-    return map.getTile(Math.round(pos.x), Math.round(pos.y));
+    return map.getTile(pos);
   }
 
   /**
@@ -134,7 +134,7 @@ public class ItemActions extends Component {
     }
 
     // A water amount of 0.5 was recommended by team 7
-    tile.getCropTile().getEvents().trigger("water", 0.5);
+    tile.getCropTile().getEvents().trigger("water", 0.5f);
     item.getComponent(WateringCanLevelComponent.class).incrementLevel(-5);
     return true;
   }
@@ -163,8 +163,8 @@ public class ItemActions extends Component {
   private boolean shovel(TerrainTile tile) {
     if (tile.getCropTile() != null) {
       tile.getCropTile().getEvents().trigger("destroy");
+      tile.removeCropTile();
       tile.setUnOccupied();
-      tile.setCropTile(null);
       return true;
     }
     return false;
