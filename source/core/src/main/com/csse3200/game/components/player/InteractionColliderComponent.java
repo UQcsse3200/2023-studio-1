@@ -174,7 +174,6 @@ public class InteractionColliderComponent extends HitboxComponent {
         switch (itemType){
             case FOOD -> {
                 List<Entity> feedableEntities = filterByComponent(entities, TamableComponent.class);
-                // TODO: ADD CONDITION IF ANIMAL IS FULL?? / ALREADY TAMED.
                 feedableEntities.removeIf(entity -> entity.getComponent(TamableComponent.class).isTamed());
                 return getNearest(feedableEntities);
             }
