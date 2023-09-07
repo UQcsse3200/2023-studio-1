@@ -135,7 +135,6 @@ public class SpaceGameArea extends GameArea {
 
     spawnTerrain();
     spawnCrop(); // temp
-    spawnTrees();
 
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
