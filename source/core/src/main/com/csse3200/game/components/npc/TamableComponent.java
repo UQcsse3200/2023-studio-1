@@ -71,8 +71,14 @@ public class TamableComponent extends Component {
         if (isTamed) {
             return;
         }
-
+        //if player is not holding an item type in entity.
+        //May also need to check if an entity has a item component.
+        if (this.playerInventory.getHeldItem().getType() != EntityType.Item) {
+            return;
+        }
         // Check player is holding the right item
+
+        //potential of working with null values here. 
         if (this.playerInventory.getHeldItem().getComponent(ItemComponent.class).getItemName().equals(favouriteFood)) {
 
             // Generate RNG number for taming
@@ -93,6 +99,8 @@ public class TamableComponent extends Component {
             this.playerInventory.removeItem(this.playerInventory.getHeldItem());
             // Remove the food from the players inventory
         }
+        //player not holding the item
+        return;
     }
 
     /**
