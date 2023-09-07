@@ -84,6 +84,8 @@ public class NPCFactory {
 
     PhysicsUtils.setScaledCollider(chicken, 0.8f, 0.4f);
 
+    chicken.getComponent(TamableComponent.class).setTame(true);
+
     return chicken;
   }
 
@@ -104,6 +106,13 @@ public class NPCFactory {
     animator.addAnimation("walk_left", 0.25f, Animation.PlayMode.LOOP_REVERSED);
     animator.addAnimation("walk_right", 0.25f, Animation.PlayMode.LOOP);
 
+    // Tamed Animations
+    animator.addAnimation("idle_left_tamed", Float.MAX_VALUE);
+    animator.addAnimation("idle_right_tamed", Float.MAX_VALUE);
+    animator.addAnimation("walk_left_tamed", 0.2f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation("walk_right_tamed", 0.2f, Animation.PlayMode.LOOP);
+
+
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
 
@@ -117,6 +126,9 @@ public class NPCFactory {
 
     cow.scaleHeight(1.8f);
     PhysicsUtils.setScaledCollider(cow, 0.7f, 0.4f);
+
+    cow.getComponent(TamableComponent.class).setTame(true);
+
     return cow;
   }
 
@@ -147,6 +159,7 @@ public class NPCFactory {
             .addComponent(new TamableComponent(
                     player, config.tamingThreshold,
                     config.tamingProbability, config.favouriteFood));
+
 
     astrolotl.scaleHeight(1.2f);
     PhysicsUtils.setScaledCollider(astrolotl, 0.9f, 0.4f);

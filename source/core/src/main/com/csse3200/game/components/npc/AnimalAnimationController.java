@@ -31,8 +31,9 @@ public class AnimalAnimationController extends Component {
      */
     private String isTamed() {
 
-        if (this.entity.getComponent(TamableComponent.class).isTamed()) {
-            System.out.println(TAMED_SUFFIX);
+        TamableComponent tamableComponent = this.entity.getComponent(TamableComponent.class);
+
+        if (tamableComponent != null && tamableComponent.isTamed()) {
             return TAMED_SUFFIX;
         }
         return "";

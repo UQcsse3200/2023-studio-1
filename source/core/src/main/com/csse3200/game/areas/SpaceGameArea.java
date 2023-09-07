@@ -130,6 +130,8 @@ public class SpaceGameArea extends GameArea {
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
 
+    // TODO:
+
 
     tractor = spawnTractor();
     spawnChickens();

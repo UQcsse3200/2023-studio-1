@@ -10,263 +10,263 @@ idle_left
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 0
 idle_right
    rotate: false
    xy: 80, 0
    size: 16, 16
    orig: 16, 16
    offset: 0, 0
-   index: -1
+   index: 0
 walk_left
   rotate: false
   xy: 16, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 0
 walk_left
   rotate: false
   xy: 32, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 1
 walk_left
   rotate: false
   xy: 48, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 2
 walk_left
   rotate: false
   xy: 64, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 3
 walk_right
   rotate: false
   xy: 96, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 0
 walk_right
   rotate: false
   xy: 112, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 1
 walk_right
   rotate: false
   xy: 128, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 2
 walk_right
   rotate: false
   xy: 144, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 3
 run_left
   rotate: false
   xy: 16, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 0
 run_left
   rotate: false
   xy: 32, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 1
 run_left
   rotate: false
   xy: 48, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 2
 run_left
   rotate: false
   xy: 64, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 3
 run_right
   rotate: false
   xy: 96, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 0
 run_right
   rotate: false
   xy: 112, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 1
 run_right
   rotate: false
   xy: 128, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 2
 run_right
   rotate: false
   xy: 144, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 3
 default
    rotate: false
    xy: 80, 0
    size: 16, 16
    orig: 16, 16
    offset: 0, 0
-   index: -1
+   index: 0
 idle_left_tamed
   rotate: false
   xy: 160, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 0
 idle_right_tamed
    rotate: false
    xy: 240, 0
    size: 16, 16
    orig: 16, 16
    offset: 0, 0
-   index: -1
+   index: 0
 walk_left_tamed
   rotate: false
   xy: 176, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 0
 walk_left_tamed
   rotate: false
   xy: 192, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 1
 walk_left_tamed
   rotate: false
   xy: 208, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 2
 walk_left_tamed
   rotate: false
   xy: 224, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 3
 walk_right_tamed
   rotate: false
   xy: 256, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 0
 walk_right_tamed
   rotate: false
   xy: 272, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 1
 walk_right_tamed
   rotate: false
   xy: 288, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 2
 walk_right_tamed
   rotate: false
   xy: 304, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 3
 run_left_tamed
   rotate: false
   xy: 176, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 0
 run_left_tamed
   rotate: false
   xy: 192, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 1
 run_left_tamed
   rotate: false
   xy: 208, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 2
 run_left_tamed
   rotate: false
   xy: 224, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 3
 run_right_tamed
   rotate: false
   xy: 256, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 0
 run_right_tamed
   rotate: false
   xy: 272, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 1
 run_right_tamed
   rotate: false
   xy: 288, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 2
 run_right_tamed
   rotate: false
   xy: 304, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: -1
+  index: 3
 default_tamed
    rotate: false
    xy: 240, 0
    size: 16, 16
    orig: 16, 16
    offset: 0, 0
-   index: -1
+   index: 0
