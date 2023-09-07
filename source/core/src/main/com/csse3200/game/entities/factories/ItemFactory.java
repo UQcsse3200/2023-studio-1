@@ -87,7 +87,7 @@ public class ItemFactory {
             .addComponent(new TextureRenderComponent("images/milk.png"))
             .addComponent(new ItemComponent("milk",
                     ItemType.MILK, new Texture("images/milk.png")));
-    milk.scaleHeight(0.55f);
+    milk.scaleHeight(0.75f);
     return milk;
   }
 
@@ -101,7 +101,7 @@ public class ItemFactory {
             .addComponent(new TextureRenderComponent("images/egg.png"))
             .addComponent(new ItemComponent("egg", ItemType.EGG,
                     new Texture("images/egg.png")));
-    egg.scaleHeight(0.55f);
+    egg.scaleHeight(0.75f);
     return egg;
   }
 
