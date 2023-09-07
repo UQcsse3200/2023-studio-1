@@ -29,11 +29,13 @@ import com.csse3200.game.services.ServiceLocator;
 /** Factory for creating game terrains. */
 public class TerrainFactory {
   private static GridPoint2 MAP_SIZE = new GridPoint2(1000, 1000); // this will be updated later in the code
-  private static final String mapPath = "configs/Map.txt";
+  //protected for testing
+  protected static final String mapPath = "configs/Map.txt";
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;
   private Map<Character, TextureRegion> charToTextureMap = new HashMap<>();
-  private static final Map<Character, String> charToTileImageMap;
+  //protected for testing
+  protected static final Map<Character, String> charToTileImageMap;
   static {
     Map<Character, String> tempMapA = new HashMap<>();
     tempMapA.put('g', "images/grass_1.png");
