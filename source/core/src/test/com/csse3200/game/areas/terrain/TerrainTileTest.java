@@ -1,14 +1,13 @@
 package com.csse3200.game.areas.terrain;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.extensions.GameExtension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(GameExtension.class)
 class TerrainTileTest {
@@ -127,6 +126,19 @@ class TerrainTileTest {
         assertFalse(gravelTerrainTile.isTillable());
         assertFalse(flowingWaterTerrainTile.isTillable());
     }
+
+    @Test
+    public void cropTile() {
+        Entity cropTile = new Entity();
+        assertNull(basicTestTile.getCropTile());
+        basicTestTile.setCropTile(cropTile);
+        assertTrue(basicTestTile.isOccupied());
+        assertEquals(cropTile, basicTestTile.getCropTile());
+        basicTestTile.removeCropTile();
+        assertFalse(basicTestTile.isOccupied());
+        assertNull(basicTestTile.getCropTile());
+    }
+
 }
 
 
