@@ -19,9 +19,9 @@ public abstract class WeatherEvent {
 		this.numHoursUntil = numHoursUntil;
 		this.duration = duration;
 		this.priority = priority;
+		this.severity = generateRandomSeverity();
 		this.humidityModifier = generateRandomHumidityModifier();
 		this.temperatureModifier = generateRandomTemperatureModifier();
-		this.severity = generateRandomSeverity();
 	}
 
 	public void updateTime() {
@@ -56,8 +56,12 @@ public abstract class WeatherEvent {
 		return (new Random().nextFloat() * (MAX_TEMPERATURE_MODIFIER - MIN_TEMPERATURE_MODIFIER)) + MIN_TEMPERATURE_MODIFIER;
 	}
 
+	/**
+	 * Generates a severity between 1 and 1.5
+	 * @return weather event severity
+	 */
 	protected float generateRandomSeverity() {
-		return (new Random().nextFloat());
+		return (float) ((new Random().nextFloat() * 0.5) + 1);
 	}
 
 	public float getHumidityModifier() {

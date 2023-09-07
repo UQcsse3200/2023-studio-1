@@ -14,9 +14,6 @@ public class RainEvent extends WeatherEvent {
 
     @Override
     protected float generateRandomHumidityModifier() {
-        float baseRainModifier = super.generateRandomHumidityModifier();
-        float modifiedHumidity = baseRainModifier + getSeverity() * 0.3f;
-        setHumidityModifier(modifiedHumidity);
-        return modifiedHumidity;
+        return super.generateRandomHumidityModifier() * getSeverity();
     }
 }
