@@ -25,6 +25,7 @@ public class SpaceGameArea extends GameArea {
   private static final int NUM_TREES = 7;
   private static final int NUM_GHOSTS = 5;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
+  private static final GridPoint2 TRACTOR_SPAWN = new GridPoint2(15, 15);
 
   private static final GridPoint2 TOOL_SPAWN = new GridPoint2(15, 10);// temp!!!
   private static final GridPoint2 TOOL_SPAWN2 = new GridPoint2(15, 15);// temp!!!
@@ -89,12 +90,21 @@ public class SpaceGameArea extends GameArea {
           "images/snow_3.png",
           "images/stone_1.png",
           "images/stonePath_1.png",
-          "images/tractor.png"
+          "images/tractor.png",
+          "images/fertiliser.png",
+          "images/plants/aloe_vera_seed.png",
+          "images/plants/atomic_algae_seed.png",
+          "images/plants/cosmic_cob_seed.png",
+          "images/plants/deadly_nightshade_seed.png",
+          "images/plants/hammer_plant_seed.png",
+          "images/plants/horticultural_heater_seed.png",
+          "images/plants/space_snapper_seed.png",
+          "images/plants/tobacco_seed.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
           "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas",
-          "images/animals/astrolotl.atlas",
+          "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg", "sounds/car-horn-6408.mp3"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -132,18 +142,22 @@ public class SpaceGameArea extends GameArea {
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
 
+    // TODO:
+
+
     tractor = spawnTractor();
     spawnChickens();
     spawnCows();
     spawnAstrolotl();
+    spawnOxygenEater();
 
     spawnTool(ItemType.WATERING_CAN);
     spawnTool(ItemType.SHOVEL);
     spawnTool(ItemType.SCYTHE);
     spawnTool(ItemType.HOE);
+    spawnTool(ItemType.FERTILISER);
+    spawnTool(ItemType.SEED);
 
-    //spawnGhosts();
-    //spawnGhostKing();
 
     //playMusic();
   }
@@ -241,6 +255,14 @@ public class SpaceGameArea extends GameArea {
         newTool = ItemFactory.createWateringcan();
         spawnEntityAt(newTool, randomPos, true, true);
         break;
+      case FERTILISER:
+        newTool = ItemFactory.createFertiliser();
+        spawnEntityAt(newTool, randomPos, true, true);
+        break;
+      case SEED:
+        newTool = ItemFactory.createAloeVeraSeed();
+        spawnEntityAt(newTool, randomPos, true, true);
+        break;
     }
   }
 
@@ -251,7 +273,7 @@ public class SpaceGameArea extends GameArea {
    */
   private Entity spawnTractor() {
     Entity newTractor = TractorFactory.createTractor(player);
-    spawnEntityAt(newTractor, PLAYER_SPAWN, true, true);
+    spawnEntityAt(newTractor, TRACTOR_SPAWN, true, true);
     return newTractor;
   }
 
@@ -289,25 +311,17 @@ public class SpaceGameArea extends GameArea {
     }
   }
 
-  private void spawnGhosts() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
+  private void spawnOxygenEater() {
+    GridPoint2 minPos = new GridPoint2(2, 2);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
-    for (int i = 0; i < NUM_GHOSTS; i++) {
+    for (int i = 0; i < 5; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity ghost = NPCFactory.createGhost(player);
-      spawnEntityAt(ghost, randomPos, true, true);
+      Entity oxygenEater = NPCFactory.createOxygenEater(player);
+      spawnEntityAt(oxygenEater, randomPos, true, true);
     }
   }
 
-  private void spawnGhostKing() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-    GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-    Entity ghostKing = NPCFactory.createGhostKing(player);
-    spawnEntityAt(ghostKing, randomPos, true, true);
-  }
 
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
@@ -353,6 +367,4 @@ public class SpaceGameArea extends GameArea {
   public Entity getTractor() {
     return tractor;
   }
-
-
 }

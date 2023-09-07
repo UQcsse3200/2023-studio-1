@@ -44,57 +44,6 @@ public class NPCFactory {
   private static final NPCConfigs configs =
       FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 
-  /**
-   * Creates a ghost entity.
-   *
-   * @param target entity to chase
-   * @return entity
-   */
-  public static Entity createGhost(Entity target) {
-    Entity ghost = createBaseNPC(target);
-    BaseEntityConfig config = configs.ghost;
-
-    AnimationRenderComponent animator =
-        new AnimationRenderComponent(
-            ServiceLocator.getResourceService().getAsset("images/ghost.atlas", TextureAtlas.class));
-    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
-
-    ghost
-        .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
-        .addComponent(animator)
-        .addComponent(new GhostAnimationController());
-
-    ghost.getComponent(AnimationRenderComponent.class).scaleEntity();
-
-    return ghost;
-  }
-
-  /**
-   * Creates a ghost king entity.
-   *
-   * @param target entity to chase
-   * @return entity
-   */
-  public static Entity createGhostKing(Entity target) {
-    Entity ghostKing = createBaseNPC(target);
-    GhostKingConfig config = configs.ghostKing;
-
-    AnimationRenderComponent animator =
-        new AnimationRenderComponent(
-            ServiceLocator.getResourceService()
-                .getAsset("images/ghostKing.atlas", TextureAtlas.class));
-    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
-
-    ghostKing
-        .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
-        .addComponent(animator)
-        .addComponent(new GhostAnimationController());
-
-    ghostKing.getComponent(AnimationRenderComponent.class).scaleEntity();
-    return ghostKing;
-  }
 
   /**
    * Creates a chicken entity
@@ -115,6 +64,14 @@ public class NPCFactory {
     animator.addAnimation("run_left", 0.1f, Animation.PlayMode.LOOP_REVERSED);
     animator.addAnimation("run_right", 0.1f, Animation.PlayMode.LOOP);
 
+    // Tamed Animations
+    animator.addAnimation("idle_left_tamed", Float.MAX_VALUE);
+    animator.addAnimation("idle_right_tamed", Float.MAX_VALUE);
+    animator.addAnimation("walk_left_tamed", 0.2f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation("walk_right_tamed", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("run_left_tamed", 0.1f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation("run_right_tamed", 0.1f, Animation.PlayMode.LOOP);
+
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
             .addTask(new RunAwayTask(player, 10, 2f, 4f, new Vector2(3f, 3f)));
@@ -128,6 +85,9 @@ public class NPCFactory {
                     config.tamingProbability, config.favouriteFood));
 
     PhysicsUtils.setScaledCollider(chicken, 0.8f, 0.4f);
+
+    chicken.getComponent(TamableComponent.class).setTame(true);
+
     return chicken;
   }
 
@@ -148,6 +108,13 @@ public class NPCFactory {
     animator.addAnimation("walk_left", 0.25f, Animation.PlayMode.LOOP_REVERSED);
     animator.addAnimation("walk_right", 0.25f, Animation.PlayMode.LOOP);
 
+    // Tamed Animations
+    animator.addAnimation("idle_left_tamed", Float.MAX_VALUE);
+    animator.addAnimation("idle_right_tamed", Float.MAX_VALUE);
+    animator.addAnimation("walk_left_tamed", 0.2f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation("walk_right_tamed", 0.2f, Animation.PlayMode.LOOP);
+
+
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
 
@@ -162,6 +129,9 @@ public class NPCFactory {
 
     cow.scaleHeight(1.8f);
     PhysicsUtils.setScaledCollider(cow, 0.7f, 0.4f);
+
+    cow.getComponent(TamableComponent.class).setTame(true);
+
     return cow;
   }
 
@@ -193,9 +163,47 @@ public class NPCFactory {
                     player, config.tamingThreshold,
                     config.tamingProbability, config.favouriteFood));
 
+
     astrolotl.scaleHeight(1.2f);
     PhysicsUtils.setScaledCollider(astrolotl, 0.9f, 0.4f);
     return astrolotl;
+  }
+
+
+  public static Entity createOxygenEater(Entity player) {
+    Entity oxygenEater = createBaseAnimal(EntityType.OxygenEater);
+    BaseAnimalConfig config = configs.oxygenEater;
+
+    AnimationRenderComponent animator = new AnimationRenderComponent(
+            ServiceLocator.getResourceService().getAsset("images/animals/oxygen_eater.atlas",
+                    TextureAtlas.class),
+            16f
+    );
+
+    animator.addAnimation("idle_left", 1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle_right", 1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("walk_left", 1f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation("walk_right", 1f, Animation.PlayMode.LOOP);
+
+
+
+//    animator.addAnimation("idle", 1f, Animation.PlayMode.LOOP);
+  // animator.addAnimation("consume", 1f, Animation.PlayMode.LOOP);
+
+    AITaskComponent aiTaskComponent = new AITaskComponent()
+            .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+
+    oxygenEater
+            .addComponent(aiTaskComponent)
+            .addComponent(animator)
+            .addComponent(new AnimalAnimationController());
+
+
+    oxygenEater.scaleHeight(3f);
+    PhysicsUtils.setScaledCollider(oxygenEater, 0.7f, 0.4f);
+
+
+    return oxygenEater;
   }
 
   /**
@@ -211,6 +219,7 @@ public class NPCFactory {
 
     return animal;
   }
+
 
   /**
    * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.

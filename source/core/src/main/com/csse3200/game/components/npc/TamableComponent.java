@@ -1,10 +1,14 @@
 package com.csse3200.game.components.npc;
 
+import java.util.List;
 import java.util.Random;
 
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.items.ItemType;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
 
 /**
  * This the class for Tameable Component. These components should
@@ -18,6 +22,7 @@ public class TamableComponent extends Component {
     private boolean isTamed;
     private final Entity player;
     private Random random = new Random();  //https://rules.sonarsource.com/java/RSPEC-2119/
+    private InventoryComponent playerInventory;
 
     /**
      * Constructor for the Tameable Component class
@@ -34,6 +39,7 @@ public class TamableComponent extends Component {
         this.favouriteFood = favouriteFood;
         this.isTamed = false;
         this.player = player;
+        this.playerInventory = player.getComponent(InventoryComponent.class);
     }
 
     /**
@@ -66,9 +72,8 @@ public class TamableComponent extends Component {
             return;
         }
 
-        // Check player is holding the right item TODO: Implement checking the players item SEE
-        //  TEAM 8!.
-        if (player.getComponent(ItemComponent.class).getItemName().equals(favouriteFood)) {
+        // Check player is holding the right item
+        if (this.playerInventory.getHeldItem().getComponent(ItemComponent.class).getItemName().equals(favouriteFood)) {
 
             // Generate RNG number for taming
             double randomDecimal = generateRandomDecimal();
@@ -85,10 +90,8 @@ public class TamableComponent extends Component {
             } else {
                 numTimesFed++;
             }
-
-            // Remove the food from the players inventory TODO: WAIT FOR TEAM 8
-            // player.getComponent(ItemComponent.class).dispose();
-
+            this.playerInventory.removeItem(this.playerInventory.getHeldItem());
+            // Remove the food from the players inventory
         }
     }
 
@@ -114,9 +117,6 @@ public class TamableComponent extends Component {
      * @param value Boolean value that will be used to set to the istamed variable.
      */
     public void setTame(boolean value) {
-        if (value) {
-            this.isTamed = true;
-        }
-        this.isTamed = false;
+        this.isTamed = value;
     }
 }

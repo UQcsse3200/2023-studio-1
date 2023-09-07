@@ -2,8 +2,10 @@ package com.csse3200.game.services;
 
 import com.badlogic.gdx.Game;
 import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.input.InputService;
+import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
 import org.slf4j.Logger;
@@ -27,10 +29,14 @@ public class ServiceLocator {
   private static TimeService timeService;
   private static GameTime timeSource;
   private static GameArea gameArea;
+  private static CameraComponent cameraComponent;
+  private static MissionManager missions;
 
   public static GameArea getGameArea() {
     return gameArea;
   }
+
+  public static CameraComponent getCameraComponent() { return cameraComponent; }
 
   public static EntityService getEntityService() {
     return entityService;
@@ -58,9 +64,18 @@ public class ServiceLocator {
     return timeService;
   }
 
+  public static MissionManager getMissionManager() {
+    return missions;
+  }
+
   public static void registerGameArea(GameArea area) {
     logger.debug("Registering game area {}", area);
     gameArea = area;
+  }
+
+  public static void registerCameraComponent(CameraComponent camera) {
+    logger.debug("Registering game area {}", camera);
+    cameraComponent = camera;
   }
 
   public static void registerEntityService(EntityService service) {
@@ -96,6 +111,11 @@ public class ServiceLocator {
   public static void registerTimeSource(GameTime source) {
     logger.debug("Registering time source {}", source);
     timeSource  = source;
+  }
+
+  public static void registerMissionManager(MissionManager source) {
+    logger.debug("Registering mission manager {}", source);
+    missions = source;
   }
 
   public static void clear() {
