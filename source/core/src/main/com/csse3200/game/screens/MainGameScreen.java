@@ -93,6 +93,8 @@ public class MainGameScreen extends ScreenAdapter {
     renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
     renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
 
+    ServiceLocator.registerLightService(new LightService((OrthographicCamera) renderer.getCamera().getCamera()));
+
     loadAssets();
     createUI();
 
@@ -126,7 +128,7 @@ public class MainGameScreen extends ScreenAdapter {
     }
       ServiceLocator.getTimeService().update();
       renderer.render();
-      ServiceLocator.getPhysicsService().renderLight((OrthographicCamera) renderer.getCamera().getCamera());
+      ServiceLocator.getLightService().renderLight();
     if (lose) {
       game.setScreen(GdxGame.ScreenType.LOSESCREEN);
     }

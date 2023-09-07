@@ -1,11 +1,7 @@
 package com.csse3200.game.components;
 
 import box2dLight.PointLight;
-import box2dLight.RayHandler;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.physics.box2d.World;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 public class AuraLightComponent extends Component{
@@ -14,7 +10,7 @@ public class AuraLightComponent extends Component{
 	private final PointLight light;
 
 	public AuraLightComponent() {
-		light = new PointLight(ServiceLocator.getPhysicsService().getRayHandler(), 50);
+		light = new PointLight(ServiceLocator.getLightService().getRayHandler(), 50);
 		light.setDistance(10);
 		light.setColor(DEFAULT_COLOR);
 	}
