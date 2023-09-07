@@ -163,8 +163,8 @@ public class ItemActions extends Component {
   private boolean shovel(TerrainTile tile) {
     if (tile.getCropTile() != null) {
       tile.getCropTile().getEvents().trigger("destroy");
-      tile.setUnOccupied();
       tile.removeCropTile();
+      tile.setUnOccupied();
       return true;
     }
     return false;
