@@ -2,8 +2,10 @@ package com.csse3200.game.areas.terrain;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -226,13 +228,30 @@ public class CropTileComponent extends Component {
     @Override
     public void write (Json json) {
 		//TODO needs to be a gridpoint2 to get actual tile, but team 3 slow
-		json.writeValue("X", entity.getPosition().x);
-		json.writeValue("Y",entity.getPosition().y);
-        json.writeValue("waterContent", waterContent);
-        json.writeValue("soilQuality", soilQuality);
-        json.writeValue("isFertilised", isFertilised);
-        json.writeValue("plant", plant);
+		json.writeValue("Entity", EntityType.Tile);
+		json.writeValue("x", entity.getPosition().x);
+		json.writeValue("y",entity.getPosition().y);
+		json.writeObjectStart("components");
+		json.writeValue("waterContent", waterContent);
+		json.writeValue("soilQuality", soilQuality);
+		json.writeValue("isFertilised", isFertilised);
+		json.writeValue("plant", plant);
+		json.writeObjectEnd();
     }
+
+	/**
+	 * reads croptile state from json to
+	 * the waterContent, soilQuality, isFertilised and plant
+	 * to the json
+	 * @param json which is a valid Json
+	 */
+	@Override
+	public void read (Json json, JsonValue jsonMap) {
+		// TODO implement
+		//waterContent = json.readValue(;"waterContent");
+		waterContent = jsonMap.getFloat("waterContent");
+
+	}
 
 	public TerrainTile getTerrainTile() {
 		return terrainTile;

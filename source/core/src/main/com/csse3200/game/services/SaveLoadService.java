@@ -17,9 +17,11 @@ import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.math.Vector2;
-import static com.csse3200.game.services.ServiceLocator.getEntityService;
+
 import java.util.Map;
 import java.util.function.Function;
+
+import static com.csse3200.game.services.ServiceLocator.*;
 
 /* A note of the registering of this service:
  *  this service is currently only registered at MainMenuScreen,
@@ -87,6 +89,7 @@ public class SaveLoadService {
     updateNPCs(state);
     updatePlayer(state);
     updateTime(state);
+    updateTiles(state);
   }
 
   /**
@@ -125,7 +128,7 @@ public class SaveLoadService {
             ServiceLocator.getGameArea().spawnEntity(npc);
         }
     }
-}
+  }
 
 
 
@@ -136,5 +139,28 @@ public class SaveLoadService {
   private void updateTime(GameState state) {
     ServiceLocator.getTimeService().setDay(state.getDay());
     ServiceLocator.getTimeService().setHour(state.getHour());
+  }
+
+  /**
+   * Destroys all tiles in the map and then recreates them based off the gamestate
+   * @param state gamestate of the entire game based off safeFile.json
+   */
+  private void updateTiles(GameState state) {
+    // remove tiles
+    /* Have some shovel code here to inspire me:
+      private boolean shovel(TerrainTile tile) {
+        if (tile.getCropTile() != null) {
+          tile.getCropTile().getEvents().trigger("destroy");
+          tile.setUnOccupied();
+          tile.setCropTile(null);
+          return true;
+        }
+        return false;
+      }*/
+    for (Entity tile : state.getTiles()) {
+      System.out.println(tile);
+    }
+    System.out.println("can't delete old tile");
+    System.out.println("can't recreate tile");
   }
 }

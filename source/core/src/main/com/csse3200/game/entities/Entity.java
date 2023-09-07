@@ -350,12 +350,13 @@ public class Entity implements Json.Serializable {
 
   public void read(Json json, JsonValue jsonMap) {
     position = new Vector2(jsonMap.getFloat("x"), jsonMap.getFloat("y"));
-    String value = jsonMap.getString("Entity");
+    String value = jsonMap.getString("Entity"); // this means we are looking for key = Entity.
     try {
       type = EntityType.valueOf(value);
     } catch (IllegalArgumentException e) {
       type = null;
     }
+    System.out.println(type + " @ (" + position.x + ", " + position.y + ")" );
   }
 
 
