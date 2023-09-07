@@ -78,6 +78,20 @@ public class SaveLoadService {
   }
 
   /**
+   * Check to see if there is a valid save file stored 
+   * if not return false
+   * 
+   * @return
+   */
+  public boolean validSaveFile(){
+    SaveGame.GameState state = SaveGame.get();
+    if (state == null){
+      return false;
+    }
+    return true;
+  }
+
+  /**
    * Update NPCs, player and time of the game based off the gamestate that was
    * saved
    * 

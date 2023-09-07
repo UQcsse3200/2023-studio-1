@@ -49,8 +49,10 @@ public class MainMenuDisplay extends UIComponent {
         title.setWidth(Gdx.graphics.getWidth());
         title.setHeight(Gdx.graphics.getHeight());
         title.setPosition(0, 0);
-        TextButton startBtn = new TextButton("Start", skin);
-        TextButton loadBtn = new TextButton("Controls", skin);
+        TextButton startBtn = new TextButton("New Game", skin);
+        TextButton loadBtn = new TextButton("Continue", skin);
+        if (!ServiceLocator.getSaveLoadService().validSaveFile()){   loadBtn.setDisabled(true);  }  //check to see if there is anything to even load
+        TextButton controlsBtn = new TextButton("Controls", skin);
         TextButton settingsBtn = new TextButton("Settings", skin);
         TextButton exitBtn = new TextButton("Exit", skin);
 
@@ -68,8 +70,17 @@ public class MainMenuDisplay extends UIComponent {
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("Load button clicked");
+                        logger.debug("load button clicked");
                         entity.getEvents().trigger("load");
+                    }
+                });
+
+        controlsBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("control button clicked");
+                        entity.getEvents().trigger("control");
                     }
                 });
 
@@ -94,9 +105,11 @@ public class MainMenuDisplay extends UIComponent {
 
         table.add(title);
         table.row();
-        table.add(startBtn).padTop(30f);
+        table.add(startBtn).padTop(80f);
         table.row();
         table.add(loadBtn).padTop(15f);
+        table.row();
+        table.add(controlsBtn).padTop(15f);
         table.row();
         table.add(settingsBtn).padTop(15f);
         table.row();
