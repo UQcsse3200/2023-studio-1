@@ -54,7 +54,7 @@ public class ToolbarDisplay extends UIComponent {
             label.setColor(Color.DARK_GRAY);
             label.setAlignment(Align.topLeft);
 
-            ItemSlot item = new ItemSlot(new Texture("images/itemFrame.png"), 0);
+            ItemSlot item = new ItemSlot();
             item.add(label);
             table.add(item).pad(10, 10, 10, 10).fill();
 
