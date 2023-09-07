@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.input.InputService;
+import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
 import org.slf4j.Logger;
@@ -27,6 +28,7 @@ public class ServiceLocator {
   private static TimeService timeService;
   private static GameTime timeSource;
   private static GameArea gameArea;
+  private static MissionManager missions;
 
   public static GameArea getGameArea() {
     return gameArea;
@@ -56,6 +58,10 @@ public class ServiceLocator {
   }
   public static TimeService getTimeService() {
     return timeService;
+  }
+
+  public static MissionManager getMissionManager() {
+    return missions;
   }
 
   public static void registerGameArea(GameArea area) {
@@ -96,6 +102,11 @@ public class ServiceLocator {
   public static void registerTimeSource(GameTime source) {
     logger.debug("Registering time source {}", source);
     timeSource  = source;
+  }
+
+  public static void registerMissionManager(MissionManager source) {
+    logger.debug("Registering mission manager {}", source);
+    missions = source;
   }
 
   public static void clear() {
