@@ -128,56 +128,6 @@ public class ItemActions extends Component {
   }
 
 
-
-
-
-
-
-
-  // */
-  // private Vector2 getAdjustedPos(Vector2 playerPos, Vector2 mousePos) {
-  //   int width = Gdx.graphics.getWidth();
-  //   int height = Gdx.graphics.getHeight();
-
-  //   int playerXPos = width / 2;
-  //   int playerYPos = height / 2;
-
-  //   int xDelta = 0;
-  //   int yDelta = 0;
-
-  //   if (playerXPos - 24 > mousePos.x) {
-  //     xDelta -= 1;
-  //   } else if (playerXPos + 24 < mousePos.x) {
-  //     xDelta += 1;
-  //   }
-
-  //   if (playerYPos + 48 < mousePos.y) {
-  //     yDelta -= 1;
-  //   } else if (playerYPos - 48 > mousePos.y) {
-  //     yDelta += 1;
-  //   }
-  //   return new Vector2(playerPos.x + xDelta, playerPos.y + yDelta);
-  // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   /**
    * Waters the tile at the given position.
    *
