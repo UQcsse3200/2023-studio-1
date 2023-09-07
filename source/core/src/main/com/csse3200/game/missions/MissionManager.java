@@ -1,6 +1,11 @@
 package com.csse3200.game.missions;
 
 import com.csse3200.game.events.EventHandler;
+import com.csse3200.game.missions.achievements.Achievement;
+import com.csse3200.game.missions.achievements.PlantCropsAchievement;
+import com.csse3200.game.missions.quests.FertiliseCropTilesQuest;
+import com.csse3200.game.missions.quests.Quest;
+import com.csse3200.game.missions.rewards.ItemReward;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.ArrayList;
@@ -20,10 +25,18 @@ public class MissionManager {
 		FERTILISE_CROP
 	}
 
-	private static final Achievement[] achievements = new Achievement[]{};
-	private static final List<Quest> activeQuests = new ArrayList<>();
-	private static final List<Quest> selectableQuests = new ArrayList<>();
 	private static final EventHandler events = new EventHandler();
+	private static final List<Quest> activeQuests = new ArrayList<>();
+	private static final List<Quest> selectableQuests = List.of(
+			// Item rewards to be decided upon at a later date
+			new FertiliseCropTilesQuest("Haber Hobbyist", new ItemReward(new ArrayList<>()), 24, 10),
+			new FertiliseCropTilesQuest("Fertiliser Fanatic", new ItemReward(new ArrayList<>()), 48, 40)
+	);
+	private static final Achievement[] achievements = new Achievement[]{
+			new PlantCropsAchievement("Plant President", 50),
+			new PlantCropsAchievement("Crop Enjoyer", 200),
+			new PlantCropsAchievement("Gardener of the Galaxy", 800)
+	};
 
 	/**
 	 * Creates the mission manager, registered all game achievements and adds a listener for hourly updates

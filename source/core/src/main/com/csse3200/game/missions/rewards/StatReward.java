@@ -1,8 +1,8 @@
-package com.csse3200.game.missions;
+package com.csse3200.game.missions.rewards;
 
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.missions.rewards.Reward;
 import com.csse3200.game.services.ServiceLocator;
 
 /**

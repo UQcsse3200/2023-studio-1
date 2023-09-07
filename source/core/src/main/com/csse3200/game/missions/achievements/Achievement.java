@@ -1,4 +1,6 @@
-package com.csse3200.game.missions;
+package com.csse3200.game.missions.achievements;
+
+import com.csse3200.game.missions.Mission;
 
 public abstract class Achievement extends Mission {
 

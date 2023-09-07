@@ -1,6 +1,7 @@
-package com.csse3200.game.missions;
+package com.csse3200.game.missions.quests;
 
-import com.csse3200.game.events.EventHandler;
+import com.csse3200.game.missions.Mission;
+import com.csse3200.game.missions.rewards.Reward;
 
 public abstract class Quest extends Mission {
 
