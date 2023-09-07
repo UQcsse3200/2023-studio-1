@@ -15,8 +15,6 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 
-import java.io.FileNotFoundException;
-
 /**
  * Action component for interacting with the player. Player events should be initialised in create()
  * and when triggered should call methods within this class.
@@ -89,6 +87,12 @@ public class PlayerActions extends Component {
     }
 
     // player is moving
+
+    Vector2 playerVector = entity.getPosition();
+    System.out.println("player vector: " + playerVector + "   vector to grid: " + map.vectorToTileCoordinates(playerVector));
+    System.out.println("grid to vector: " + map.tileCoordinatesToVector(map.vectorToTileCoordinates(playerVector)) + "   vector to grid: " +  map.vectorToTileCoordinates(map.tileCoordinatesToVector(map.vectorToTileCoordinates(playerVector))));
+    System.out.println(map.getTile(playerVector).getTerrainCategory());
+
     String animationName = String.format("animation%sStart", running ? "Run" : "Walk");
     float direction = moveDirection.angleDeg();
     if (direction < 45) {

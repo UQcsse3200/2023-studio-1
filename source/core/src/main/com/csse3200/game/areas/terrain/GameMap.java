@@ -54,33 +54,21 @@ public class GameMap {
 
     /**
      * Gets the TerrainTile at the specified Vector2 position. The x and y float values in the Vector2 class are
-     * transformed so that they correspond to the integer positions of the TerrainTile in the map layer.
-     *
-     * This transformation involves multiplying the float values by 2 to account for the 0.5f tile size, and then           WILL HAVE TO UPDATE if below comment is implemented
-     * flooring the result and casting it to an integer.
+     * transformed so that they correspond to the integer positions of the TerrainTile in the map layer. If using the
+     * Vector2 position variable from the Entity class, it is important to remember that the vector points to the bottom
+     * left of the entity sprite, not the centre of the sprite.
      * @param vector The Vector2 instance representing the target TerrainTile's position.
      * @return TerrainTile instance at the specified position.
      */
     public TerrainTile getTile(Vector2 vector) {
-        int x = (int) Math.floor((vector.x + 1) * 2);
-        int y = (int) Math.floor((vector.y + 1) * 2 - 1); // SHOULD ADJUST these lines so they instead divide by the tile size from the terrainComponent
+        //int x = (int) Math.floor((vector.x + 1) / 0.5);
+        int x = (int) Math.floor(vector.x / 0.5);
+        //int y = (int) Math.floor(((vector.y + 1) / 0.5) - 1); // SHOULD ADJUST these lines so they instead divide by the tile size from the terrainComponent
+        int y = (int) Math.floor(vector.y / 0.5);
         return (TerrainTile) getCell(x, y).getTile();
 
         //return getTile(vectorToTileCoordinates(vector)); // need to test if this works
         // if above does work, the code above it can be removed
-    }
-
-    /**
-     * Converts a Vector2 instance into a GridPoint2 instance representing the same TerrainTile position on the map
-     * layer. The float values in the Vector2 instance are transformed to integer x and y values for the GridPoint2
-     * instance.
-     * @param vector The Vector2 instance being used to create a corresponding GridPoint2 instance.
-     * @return the new GridPoint2 instance.
-     */
-    public GridPoint2 vectorToTileCoordinates(Vector2 vector) {
-        int x = (int) Math.floor(vector.x / 0.5);
-        int y = (int) Math.floor(vector.y / 0.5);                 // SHOULD ADJUST these lines so they instead divide by the tile size from the terrainComponent
-        return new GridPoint2(x, y);
     }
 
     /**
@@ -97,6 +85,21 @@ public class GameMap {
     }
 
     /**
+     * Converts a Vector2 instance into a GridPoint2 instance representing the same TerrainTile position on the map
+     * layer. The float values in the Vector2 instance are transformed to integer x and y values for the GridPoint2
+     * instance.
+     * @param vector The Vector2 instance being used to create a corresponding GridPoint2 instance.
+     * @return the new GridPoint2 instance.
+     */
+    public GridPoint2 vectorToTileCoordinates(Vector2 vector) {
+        int x = (int) Math.floor(vector.x / 0.5);
+        //int x = (int) Math.floor((vector.x + 1) / 0.5);
+        int y = (int) Math.floor(vector.y / 0.5);
+        //int y = (int) Math.floor(((vector.y + 1) / 0.5) - 1);       // SHOULD ADJUST these lines so they instead divide by the tile size from the terrainComponent
+        return new GridPoint2(x, y);
+    }
+
+    /**
      * Returns the Cell object in the TiledMap corresponding to the provided coordinates. Used as a helper function to
      * reduce the complexity of other methods involved with coordinates and vectors.
      * @param x x coordinate (0 -> MAP_SIZE.x -1)
@@ -104,7 +107,7 @@ public class GameMap {
      * @return the Cell at the specified position
      */
     private TiledMapTileLayer.Cell getCell(int x, int y) {
-        // ADD A CHECK FOR INTS BEING OUT OF BOUNDS OF MAP                                                      HUNTER DO THIS
+        // ADD A CHECK FOR INTS BEING OUT OF BOUNDS OF MAP                                         HUNTER DO THIS
         //throw new IndexOutOfBoundsException("Bad Input: Coordinate position out of bounds");
         return ((TiledMapTileLayer) this.tiledMap.getLayers().get(0)).getCell(x, y);
     }
