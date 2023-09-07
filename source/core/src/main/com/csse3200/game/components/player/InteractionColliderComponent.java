@@ -11,9 +11,7 @@ import com.csse3200.game.physics.BodyUserData;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.utils.DirectionUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Represents a component that handles interaction detection with entities within a specified range.
@@ -95,7 +93,7 @@ public class InteractionColliderComponent extends HitboxComponent {
      * @return A list of entities within the interaction range.
      */
     public List<Entity> getEntitiesInRange() {
-        return entitiesInRange;
+        return new ArrayList<>(entitiesInRange);
     }
 
     /**
@@ -105,41 +103,22 @@ public class InteractionColliderComponent extends HitboxComponent {
      * @return A list of entities within the interaction range in the specified direction.
      */
     public List<Entity> getEntitiesTowardsDirection(String direction) {
-        List<Entity> filteredEntities = new ArrayList<>();
-        for (Entity entity : entitiesInRange) {
+        List<Entity> entities = getEntitiesInRange();
+        entities.removeIf(entity -> {
             Vector2 targetDirectionVector = entity.getCenterPosition().sub(this.entity.getCenterPosition());
             String targetDirection = DirectionUtils.vectorToDirection(targetDirectionVector);
 
-            if (Objects.equals(targetDirection, direction)) {
-                filteredEntities.add(entity);
-            }
-        }
-        return filteredEntities;
-    }
+            return !Objects.equals(targetDirection, direction);
+        });
 
+        return entities;
+    }
 
     public List<Entity> getEntitiesTowardsPosition(Vector2 position) {
         Vector2 directionVector = position.sub(entity.getCenterPosition());
         String direction = DirectionUtils.vectorToDirection(directionVector);
 
         return getEntitiesTowardsDirection(direction);
-    }
-
-    /**
-     * Filters a list of entities by a specified component type.
-     *
-     * @param entities The list of entities to filter.
-     * @param type     The component type by which to filter entities.
-     * @return A list of entities containing the specified component type.
-     */
-    public List<Entity> filterByComponent(List<Entity> entities, Class<? extends Component> type) {
-        List<Entity> filteredEntities = new ArrayList<>();
-        for (Entity entity : entities) {
-            if (entity.getComponent(type) != null) {
-                filteredEntities.add(entity);
-            }
-        }
-        return filteredEntities;
     }
 
     /**
@@ -153,29 +132,22 @@ public class InteractionColliderComponent extends HitboxComponent {
             return null;
         }
 
-        Entity nearestEntity = null;
-        float nearestEntityDistance = Float.MAX_VALUE;
         Vector2 position = this.entity.getCenterPosition();
+        Comparator<Entity> distanceComparator = (entity1, entity2) -> {
+            float distance1 = position.dst(entity1.getCenterPosition());
+            float distance2 = position.dst(entity2.getCenterPosition());
+            return Float.compare(distance1, distance2);
+        };
 
-        for (Entity entity : entities) {
-            Vector2 entityPosition = entity.getCenterPosition();
-            float currentEntityDistance = position.dst(entityPosition);
-
-            if (currentEntityDistance < nearestEntityDistance) {
-                nearestEntity = entity;
-                nearestEntityDistance = currentEntityDistance;
-            }
-        }
-
-        return nearestEntity;
+        return Collections.max(entities, distanceComparator);
     }
 
     public Entity getSuitableEntity(List<Entity> entities, ItemType itemType) {
         switch (itemType){
             case FOOD -> {
-                List<Entity> feedableEntities = filterByComponent(entities, TamableComponent.class);
-                feedableEntities.removeIf(entity -> entity.getComponent(TamableComponent.class).isTamed());
-                return getNearest(feedableEntities);
+                entities.removeIf(entity -> entity.getComponent(TamableComponent.class) == null);
+                entities.removeIf(entity -> entity.getComponent(TamableComponent.class).isTamed());
+                return getNearest(entities);
             }
         }
         return null;
