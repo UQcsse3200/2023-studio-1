@@ -46,7 +46,7 @@ public class TerrainCropTileFactory {
 		logger.debug("Creating crop tile at position {}", position);
 
 		DynamicTextureRenderComponent renderComponent = new DynamicTextureRenderComponent("images/cropTile.png");
-		renderComponent.setLayer(0);
+		renderComponent.setLayer(1);
 
 		Entity tile = new Entity(EntityType.Tile)
 				.addComponent(new ColliderComponent().setSensor(true))
