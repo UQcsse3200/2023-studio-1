@@ -192,7 +192,6 @@ public class ItemActions extends Component {
     }
     // Make a new tile
     Vector2 newPos = getAdjustedPos(playerPos, mousePos);
-    System.out.println(playerPos + " " + newPos);
     Entity cropTile = createTerrainEntity(newPos);
     tile.setCropTile(cropTile);
     tile.setOccupied();
