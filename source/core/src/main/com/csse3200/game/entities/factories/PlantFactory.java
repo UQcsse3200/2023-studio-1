@@ -47,7 +47,7 @@ public class PlantFactory {
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setSensor(true))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
-                .addComponent(new DynamicTextureRenderComponent(imagePaths[0]))
+                .addComponent(new DynamicTextureRenderComponent("images/plants/Corn.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
                         config.maxHealth, cropTile, growthThresholds, config.soundsArray, imagePaths));
@@ -58,6 +58,7 @@ public class PlantFactory {
 
         plant.getComponent(DynamicTextureRenderComponent.class).scaleEntity();
         plant.scaleHeight(1f);
+        PhysicsUtils.setScaledCollider(plant, 0.5f, 0.2f);
 
         return plant;
     }
