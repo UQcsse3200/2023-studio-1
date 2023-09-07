@@ -1,6 +1,7 @@
 package com.csse3200.game.physics;
 
 import box2dLight.RayHandler;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 
 /**
  * Provides a global access point to the physics engine. This is necessary for physics-based
@@ -26,4 +27,10 @@ public class PhysicsService {
   public RayHandler getRayHandler() {
     return rayHandler;
   }
+
+  public void renderLight(OrthographicCamera camera) {
+    rayHandler.setCombinedMatrix(camera);
+    rayHandler.updateAndRender();
+  }
+
 }
