@@ -2,6 +2,7 @@ package com.csse3200.game.entities.factories;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.components.plants.PlantComponent;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.configs.plants.*;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -42,11 +43,11 @@ public class PlantFactory {
         String[] imagePaths = {config.seedlingAsset, config.sproutingAsset, config.juvenileAsset,
                 config.adultAsset, config.decayingAsset};
 
-        Entity plant = new Entity()
+        Entity plant = new Entity(EntityType.Plant)
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setSensor(true))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
-                .addComponent(new DynamicTextureRenderComponent("images/plants/Corn.png"))
+                .addComponent(new DynamicTextureRenderComponent(imagePaths[0]))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
                         config.maxHealth, cropTile, growthThresholds, config.soundsArray, imagePaths));
@@ -57,7 +58,6 @@ public class PlantFactory {
 
         plant.getComponent(DynamicTextureRenderComponent.class).scaleEntity();
         plant.scaleHeight(1f);
-        PhysicsUtils.setScaledCollider(plant, 0.5f, 0.2f);
 
         return plant;
     }
@@ -124,5 +124,17 @@ public class PlantFactory {
      */
     public static Entity createVenusFlyTrap(CropTileComponent cropTile) {
         return createBasePlant(stats.venusFlyTrap, cropTile);
+    }
+
+    public static Entity createAtomicAlgae(CropTileComponent cropTile) {
+        return null;
+    }
+
+    public static Entity createHorticulturalHeater(CropTileComponent cropTile) {
+        return null;
+    }
+
+    public static Entity createDeadlyNightshade(CropTileComponent cropTile) {
+        return null;
     }
 }

@@ -6,6 +6,7 @@ import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.components.tractor.TractorAnimationController;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
@@ -28,7 +29,7 @@ public class TractorFactory {
     AnimationRenderComponent animator = setupTractorAnimations();
     InputComponent inputComponent = ServiceLocator.getInputService().getInputFactory().createForTractor();
 
-    Entity tractor = new Entity()
+    Entity tractor = new Entity(EntityType.Tractor)
         .addComponent(new PhysicsComponent())
         .addComponent(new TractorAnimationController())
         .addComponent(new ColliderComponent())
