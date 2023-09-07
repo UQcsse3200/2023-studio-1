@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.math.GridPoint2;
+import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
@@ -52,7 +53,6 @@ public class SaveLoadService {
 
     state.setPlayer(ServiceLocator.getGameArea().getPlayer());
     state.setEntities(ServiceLocator.getEntityService().getEntities());
-    // TODO: Broken map saving :(
     state.setTiles(ServiceLocator.getEntityService().getEntities());
 
     // Write the state to a file
@@ -61,11 +61,9 @@ public class SaveLoadService {
     System.out.println("save!");
   }
 
-
-
   /**
    * Load function which based on conents in saveFile.json
-   * Makes the game state match saveFile.json 
+   * Makes the game state match saveFile.json
    */
   public void load() {
     SaveGame.GameState state = SaveGame.get();
@@ -80,17 +78,21 @@ public class SaveLoadService {
   }
 
   /**
-   * Update NPCs, player and time of the game based off the gamestate that was saved
+   * Update NPCs, player and time of the game based off the gamestate that was
+   * saved
+   * 
    * @param state state of the game which was saved previously in saveFile.json
    */
   private void updateGame(GameState state) {
     updateNPCs(state);
     updatePlayer(state);
     updateTime(state);
+    updateTiles(state);
   }
 
   /**
    * Updates the player entity position based off the saved gamestate
+   * 
    * @param state gamestate of the entire game based off safeFile.json
    */
   private void updatePlayer(GameState state) {
@@ -102,12 +104,13 @@ public class SaveLoadService {
 
   /**
    * Destroys all NPCS in the map and then recreates them based off the gamestate
+   * 
    * @param state gamestate of the entire game based off safeFile.json
    */
   private void updateNPCs(GameState state) {
     Entity player = ServiceLocator.getGameArea().getPlayer();
     Array<Entity> currentGameEntities = ServiceLocator.getEntityService().getEntities();
-    
+
     // Remove all current NPCs from the game
     ServiceLocator.getGameArea().removeNPCs(currentGameEntities);
 
@@ -118,19 +121,37 @@ public class SaveLoadService {
     npcFactories.put(EntityType.Astrolotl, NPCFactory::createAstrolotl);
 
     for (Entity entity : state.getEntities()) {
-        EntityType entityType = entity.getType();
-        if (npcFactories.containsKey(entityType)) {
-            Entity npc = npcFactories.get(entityType).apply(player);
-            npc.setPosition(entity.getPosition());
-            ServiceLocator.getGameArea().spawnEntity(npc);
-        }
+      EntityType entityType = entity.getType();
+      if (npcFactories.containsKey(entityType)) {
+        Entity npc = npcFactories.get(entityType).apply(player);
+        npc.setPosition(entity.getPosition());
+        ServiceLocator.getGameArea().spawnEntity(npc);
+      }
     }
-}
+  }
 
+  private void updateTiles(GameState state) {
+    // TODO: remove all the unused crop
+    System.out.println(state.getTiles());
+    // for (Entity e: state.getTiles()) {
 
+    // }
+    // if (tile.getCropTile() != null || !tile.isTillable()) {
+    //   return false;
+    // }
+    // // Make a new tile
+    // Vector2 newPos = getAdjustedPos(playerPos, mousePos);
+
+    // Entity cropTile = createTerrainEntity(newPos);
+    // tile.setCropTile(cropTile);
+    // tile.setOccupied();
+    // return true;
+
+  }
 
   /**
    * Updates the time of the game based off the saved values in the gamestate
+   * 
    * @param state the state of the saved game
    */
   private void updateTime(GameState state) {

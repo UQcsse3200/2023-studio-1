@@ -320,10 +320,11 @@ public class Entity implements Json.Serializable {
     if (getType() == EntityType.Item || getType() == null) {
       return;
     }
-    if (getType() == EntityType.Tile) {
-      getComponent(CropTileComponent.class).write(json);
-      return;
-    }
+    // if (getType() == EntityType.Tile) {
+    //   getComponent(CropTileComponent.class).write(json);
+    //   return;
+    // }
+
     json.writeValue("Entity", getType());
     float posX = position.x;
     float posY = position.y;
@@ -336,7 +337,9 @@ public class Entity implements Json.Serializable {
     json.writeValue("y", posY);
     json.writeObjectStart("components");
     for (Component c : createdComponents) {
+      json.writeObjectStart(c.getClass().getSimpleName());
       c.write(json);
+      json.writeObjectEnd();
     }
     json.writeObjectEnd();
   }
@@ -349,12 +352,22 @@ public class Entity implements Json.Serializable {
   }
 
   public void read(Json json, JsonValue jsonMap) {
-    position = new Vector2(jsonMap.getFloat("x"), jsonMap.getFloat("y"));
     String value = jsonMap.getString("Entity");
     try {
       type = EntityType.valueOf(value);
     } catch (IllegalArgumentException e) {
       type = null;
+    }
+
+    position = new Vector2(jsonMap.getFloat("x"), jsonMap.getFloat("y"));
+
+    if (type == EntityType.Tile) {
+
+      jsonMap = jsonMap.get("components").get("CropTileComponent");
+     
+      CropTileComponent c = new CropTileComponent(jsonMap.getFloat("waterContent"), jsonMap.getFloat("soilQuality"));
+
+      this.addComponent(c);
     }
   }
 
