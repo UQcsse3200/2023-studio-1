@@ -453,7 +453,7 @@ public class PlantComponent extends Component {
     public void playSound(String functionCalled) {
         String[] sounds = this.sounds;
         switch (functionCalled) {
-            //seperate sounds into tuple pairs for each event
+            // seperate sounds into tuple pairs for each event
             case "destroy" -> soundMethod(sounds[0], sounds[1]);
             case "nearby" -> soundMethod(sounds[2], sounds[3]);
             case "click" -> soundMethod(sounds[4], sounds[5]);
@@ -462,7 +462,7 @@ public class PlantComponent extends Component {
     }
 
     void soundMethod(String lore, String notLore) {
-        Boolean playLoreSound = random.nextInt(100) <= 0; //Gives 1% chance of being true
+        boolean playLoreSound = random.nextInt(100) <= 0; //Gives 1% chance of being true
         Sound soundEffect;
 
         if (playLoreSound) {
