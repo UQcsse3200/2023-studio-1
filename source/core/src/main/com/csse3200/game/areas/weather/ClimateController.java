@@ -1,7 +1,9 @@
 package com.csse3200.game.areas.weather;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.TimeService;
 
 import java.util.ArrayList;
 
@@ -35,6 +37,7 @@ public class ClimateController {
 
 	/**
 	 * Returns the event handler for the Climate controller class
+	 *
 	 * @return Event handler
 	 */
 	public EventHandler getEvents() {
@@ -54,13 +57,12 @@ public class ClimateController {
 	 * Updates the values of the game's climate based on current weather events
 	 */
 	private void updateClimate() {
-		if (currentWeatherEvent.isActive()) {
-			humidity *= currentWeatherEvent.getHumidityModifier();
-			temperature *= currentWeatherEvent.getTemperatureModifier();
-
-			humidity = Math.min(Math.max(humidity, 0.2f), 1.0f);
-			temperature = Math.min(Math.max(temperature, 10.0f), 35.0f);
-		}
+		float humidityModifier = currentWeatherEvent == null ? 1 : currentWeatherEvent.getHumidityModifier();
+		float temperatureModifier = currentWeatherEvent == null ? 1 : currentWeatherEvent.getTemperatureModifier();
+		temperature = (float)(((10 + MathUtils.random(-2, 2)) * MathUtils.sin((float)
+				(ServiceLocator.getTimeService().getHour() * Math.PI / 46)) + 17.2) * temperatureModifier);
+		humidity = (float) ((float) 0.5 + (0.1 * MathUtils.random(1,3)) * MathUtils.sin((float)
+				(Math.PI / 12 * (ServiceLocator.getTimeService().getHour() - 12))) * humidityModifier);
 	}
 
 	/**
@@ -71,12 +73,15 @@ public class ClimateController {
 		currentWeatherEvent = null;
 		int priority = -1;
 		// Updates every weather event
-		for (WeatherEvent event: weatherEvents) {
+		for (WeatherEvent event : weatherEvents) {
 			event.updateTime();
 			// Checks whether an event is active and is of higher priority
-			if (event.isActive() && event.getPriority() > priority){
+			if (event.isActive() && event.getPriority() > priority) {
 				currentWeatherEvent = event;
 				priority = currentWeatherEvent.getPriority();
+				// If the event is expired, remove it from the list
+			} else if (event.isExpired()) {
+				weatherEvents.remove(event);
 			}
 		}
 		updateClimate();
