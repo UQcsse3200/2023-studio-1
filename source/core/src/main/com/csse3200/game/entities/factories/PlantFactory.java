@@ -2,6 +2,7 @@ package com.csse3200.game.entities.factories;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.components.plants.PlantComponent;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.configs.plants.*;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -38,7 +39,7 @@ public class PlantFactory {
      * @return entity
      */
     public static Entity createBasePlant() {
-        Entity plant = new Entity()
+        Entity plant = new Entity(EntityType.Plant)
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setSensor(true))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE));
@@ -220,5 +221,17 @@ public class PlantFactory {
         plant.scaleHeight(1f);
         PhysicsUtils.setScaledCollider(plant, 0.5f, 0.2f);
         return plant;
+    }
+
+    public static Entity createAtomicAlgae(CropTileComponent cropTile) {
+        return null;
+    }
+
+    public static Entity createHorticulturalHeater(CropTileComponent cropTile) {
+        return null;
+    }
+
+    public static Entity createDeadlyNightshade(CropTileComponent cropTile) {
+        return null;
     }
 }
