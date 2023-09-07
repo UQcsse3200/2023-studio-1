@@ -3,11 +3,12 @@ package com.csse3200.game.areas.terrain;
 import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.TimeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,6 +39,10 @@ public class CropTileComponentTest {
         cropTile5.create();
         cropTile6.create();
         cropTile7.create();
+        ServiceLocator.registerTimeSource(new GameTime());
+        ServiceLocator.registerTimeService(new TimeService());
+        MissionManager Mission = new MissionManager();
+        ServiceLocator.registerMissionManager(Mission);
     }
 
     @Test
