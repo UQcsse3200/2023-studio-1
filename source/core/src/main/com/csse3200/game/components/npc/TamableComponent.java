@@ -114,9 +114,6 @@ public class TamableComponent extends Component {
      * @param value Boolean value that will be used to set to the istamed variable.
      */
     public void setTame(boolean value) {
-        if (value) {
-            this.isTamed = true;
-        }
-        this.isTamed = false;
+        this.isTamed = value;
     }
 }
