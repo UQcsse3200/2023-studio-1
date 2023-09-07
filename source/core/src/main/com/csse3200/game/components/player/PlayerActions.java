@@ -200,9 +200,9 @@ public class PlayerActions extends Component {
     camera.setTrackEntity(tractor);
   }
 
-  void use(Entity player, Vector2 mousePos, Entity itemInHand) {
+  void use(Vector2 mousePos, Entity itemInHand) {
     if (itemInHand != null) {
-      itemInHand.getComponent(ItemActions.class).use(player, mousePos, map);
+      itemInHand.getComponent(ItemActions.class).use(entity, mousePos, map);
     }
   }
 

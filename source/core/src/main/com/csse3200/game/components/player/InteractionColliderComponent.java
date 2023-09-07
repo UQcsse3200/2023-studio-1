@@ -4,6 +4,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.items.ItemType;
+import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.BodyUserData;
 import com.csse3200.game.physics.components.HitboxComponent;
@@ -54,7 +56,7 @@ public class InteractionColliderComponent extends HitboxComponent {
      * @param range The new interaction range to set.
      */
     public void updateRange(float range) {
-        this.range = range; //TODO: THIS DOES NOTHING. FIX.
+        this.range = range; //TODO: THIS DOES NOTHING. NEED TO CREATE NEW FIXTURE OR SOMETHING
     }
 
     /**
@@ -102,18 +104,25 @@ public class InteractionColliderComponent extends HitboxComponent {
      * @param direction The direction in which to filter entities (e.g., "UP", "DOWN", "LEFT", "RIGHT").
      * @return A list of entities within the interaction range in the specified direction.
      */
-    public List<Entity> getEntitiesInRange(String direction) {
+    public List<Entity> getEntitiesTowardsDirection(String direction) {
         List<Entity> filteredEntities = new ArrayList<>();
-
         for (Entity entity : entitiesInRange) {
-            Vector2 directionVector = entity.getCenterPosition().sub(this.entity.getCenterPosition());
-            float angle = directionVector.angleDeg();
+            Vector2 targetDirectionVector = entity.getCenterPosition().sub(this.entity.getCenterPosition());
+            String targetDirection = DirectionUtils.vectorToDirection(targetDirectionVector);
 
-            if (Objects.equals(DirectionUtils.angleToDirection(angle), direction)) {
+            if (Objects.equals(targetDirection, direction)) {
                 filteredEntities.add(entity);
             }
         }
         return filteredEntities;
+    }
+
+
+    public List<Entity> getEntitiesTowardsPosition(Vector2 position) {
+        Vector2 directionVector = position.sub(entity.getCenterPosition());
+        String direction = DirectionUtils.vectorToDirection(directionVector);
+
+        return getEntitiesTowardsDirection(direction);
     }
 
     /**
@@ -123,7 +132,7 @@ public class InteractionColliderComponent extends HitboxComponent {
      * @param type     The component type by which to filter entities.
      * @return A list of entities containing the specified component type.
      */
-    public List<Entity> filterByComponent(List<Entity> entities, Class<Component> type) {
+    public List<Entity> filterByComponent(List<Entity> entities, Class<? extends Component> type) {
         List<Entity> filteredEntities = new ArrayList<>();
         for (Entity entity : entities) {
             if (entity.getComponent(type) != null) {
@@ -159,5 +168,17 @@ public class InteractionColliderComponent extends HitboxComponent {
         }
 
         return nearestEntity;
+    }
+
+    public Entity getSuitableEntity(List<Entity> entities, ItemType itemType) {
+        switch (itemType){
+            case FOOD -> {
+                List<Entity> feedableEntities = filterByComponent(entities, TamableComponent.class);
+                // TODO: ADD CONDITION IF ANIMAL IS FULL?? / ALREADY TAMED.
+                feedableEntities.removeIf(entity -> entity.getComponent(TamableComponent.class).isTamed());
+                return getNearest(feedableEntities);
+            }
+        }
+        return null;
     }
 }

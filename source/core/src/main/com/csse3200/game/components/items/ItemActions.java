@@ -2,11 +2,16 @@ package com.csse3200.game.components.items;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.player.InteractionColliderComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.services.ServiceLocator;
+
+import java.util.List;
 
 import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
 
@@ -31,6 +36,7 @@ public class ItemActions extends Component {
     this.map = map;
 
     Vector2 playerPos = player.getPosition();
+    Vector2 mouseWorldPos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
 
     ItemComponent type = entity.getComponent(ItemComponent.class);
     // Wasn't an item or did not have ItemComponent class
@@ -58,8 +64,17 @@ public class ItemActions extends Component {
         resultStatus = water(tile);
         return resultStatus;
       }
-      case ANIMAL_FOOD -> {
-
+      case FOOD -> { // TODO: THIS IS ITEM TYPE IS JUST FOR TESTING PURPOSES, REPLACE WITH PLANT DROP TYPE
+        InteractionColliderComponent interactionCollider = player.getComponent(InteractionColliderComponent.class);
+        List<Entity> entitiesTowardsMouse = interactionCollider.getEntitiesTowardsPosition(mouseWorldPos);
+        Entity feedableEntity = interactionCollider.getSuitableEntity(entitiesTowardsMouse, ItemType.FOOD);
+        resultStatus = feed(feedableEntity);
+        if (!resultStatus) {
+          // consume it yourself instead??
+          // consume(player)
+          resultStatus = true;
+        }
+        return resultStatus;
       }
       default -> {
         return false;
@@ -191,5 +206,14 @@ public class ItemActions extends Component {
    */
   private boolean isCropTile(Entity tile) {
     return tile.getComponent(CropTileComponent.class) != null;
+  }
+
+  private boolean feed(Entity feedableEntity) {
+    if (feedableEntity == null) {
+      return false;
+    }
+
+    feedableEntity.getEvents().trigger("feed");
+    return true;
   }
 }
