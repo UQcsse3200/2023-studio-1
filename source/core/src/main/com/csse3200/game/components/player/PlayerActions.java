@@ -15,8 +15,6 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 
-import java.io.FileNotFoundException;
-
 /**
  * Action component for interacting with the player. Player events should be initialised in create()
  * and when triggered should call methods within this class.
@@ -91,7 +89,6 @@ public class PlayerActions extends Component {
     // player is moving
     String animationName = String.format("animation%sStart", running ? "Run" : "Walk");
     float direction = moveDirection.angleDeg();
-
     if (direction < 45) {
       entity.getEvents().trigger(animationName, "right");
     } else if (direction < 135) {
