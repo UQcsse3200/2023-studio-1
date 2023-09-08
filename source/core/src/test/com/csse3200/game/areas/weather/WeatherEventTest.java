@@ -21,7 +21,7 @@ public class WeatherEventTest {
     }
 
     @Test
-    public void testUpdateTimeDecreasesCountdown() {
+    public void testUpdateTime() {
         WeatherEvent weatherEventSpy2 = spy(weatherEvent2);
         WeatherEvent weatherEventSpy3 = spy(weatherEvent3);
         WeatherEvent weatherEventSpy4 = spy(weatherEvent4);
@@ -47,5 +47,21 @@ public class WeatherEventTest {
         assertEquals(weatherEvent3.getPriority(), 5);
         assertEquals(weatherEvent4.getPriority(), 3);
         assertEquals(weatherEvent5.getPriority(), 1);
+    }
+
+    @Test
+    public void testIsExpired() {
+        for (int i = 0; i < 10; i++) {
+            weatherEvent1.updateTime();
+            weatherEvent2.updateTime();
+            weatherEvent3.updateTime();
+            weatherEvent4.updateTime();
+            weatherEvent5.updateTime();
+        }
+        assertTrue(weatherEvent1.isExpired());
+        assertTrue(weatherEvent2.isExpired());
+        assertTrue(weatherEvent3.isExpired());
+        assertTrue(weatherEvent4.isExpired());
+        assertTrue(weatherEvent5.isExpired());
     }
 }
