@@ -46,13 +46,14 @@ public abstract class WeatherEvent {
 	 * @param duration number of in-game hours that the event can occur for
 	 * @param priority priority of the weather event
 	 */
-	public WeatherEvent(int numHoursUntil, int duration, int priority) {
+	public WeatherEvent(int numHoursUntil, int duration, int priority, float severity) {
 		this.numHoursUntil = numHoursUntil;
 		this.duration = duration;
 		this.priority = priority;
-		this.severity = generateRandomSeverity();
-		this.humidityModifier = generateRandomHumidityModifier();
-		this.temperatureModifier = generateRandomTemperatureModifier();
+		this.severity = severity;
+		this.humidityModifier = MIN_HUMIDITY_MODIFIER + (MAX_HUMIDITY_MODIFIER - MIN_HUMIDITY_MODIFIER) * severity;
+		this.temperatureModifier = MIN_TEMPERATURE_MODIFIER +
+				(MAX_TEMPERATURE_MODIFIER - MIN_TEMPERATURE_MODIFIER) * severity;
 	}
 
 	/**
@@ -79,7 +80,7 @@ public abstract class WeatherEvent {
 
 	/**
 	 * Determines whether the weather event is active based on the countdown timer and the duration
-	 * @return
+	 * @return boolean value representing
 	 */
 	public boolean isActive() {
 		return numHoursUntil == 0 && duration > 0;

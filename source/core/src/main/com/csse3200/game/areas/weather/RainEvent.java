@@ -2,8 +2,8 @@ package com.csse3200.game.areas.weather;
 
 public class RainEvent extends WeatherEvent {
 
-    public RainEvent(int numHoursUntil, int duration, int priority) {
-        super(numHoursUntil, duration, priority);
+    public RainEvent(int numHoursUntil, int duration, int priority, float severity) {
+        super(numHoursUntil, duration, priority, severity);
     }
 
     //TODO
