@@ -24,7 +24,7 @@ public class WeatherEventDisplay extends UIComponent {
 		group = new Group();
 		table.top().left();
 		table.setFillParent(true);
-		table.padTop(200f).padLeft(-100f);
+		table.padTop(520f).padLeft(-265f);
 
 		WeatherEvent currentEvent = ServiceLocator.getGameArea().getClimateController().getCurrentWeatherEvent();
 		if (currentEvent instanceof RainEvent) {
@@ -34,7 +34,7 @@ public class WeatherEventDisplay extends UIComponent {
 			weatherImage = new Image(ServiceLocator.getResourceService().getAsset(
 					"images/time_system_ui/indicator_1.png", Texture.class));
 		}
-		weatherImage.setPosition(weatherImage.getImageX() + 158f, weatherImage.getImageY() + 147f);
+		weatherImage.setPosition(weatherImage.getImageX() + 158f, weatherImage.getImageY() + 189f);
 		stage.addActor(weatherImage);
 
 		group.addActor(weatherImage);
