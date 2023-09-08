@@ -328,15 +328,6 @@ public class Entity implements Json.Serializable {
     json.writeValue("Entity", getType());
     float posX = position.x;
     float posY = position.y;
-    if (getType() == EntityType.Player && getComponent(PlayerActions.class).isMuted()) {
-
-      // TODO
-      // Therefore the player is in the tractor and you are modifying the player's data
-      // Shouldn't do below and instead store a value saying the player is in tractor in the json
-      // if someone can do that for me I can handle the rest of the logic
-      posX = ServiceLocator.getGameArea().getTractor().getPosition().x;
-      posY = ServiceLocator.getGameArea().getTractor().getPosition().y;
-    }
     json.writeValue("x", posX);
     json.writeValue("y", posY);
     json.writeObjectStart("components");
@@ -364,6 +355,15 @@ public class Entity implements Json.Serializable {
     }
 
     position = new Vector2(jsonMap.getFloat("x"), jsonMap.getFloat("y"));
+
+    //if the current entity that is being read is type tractor update whether the player was in the tractor when saving last
+    if (type == EntityType.Tractor){
+      jsonMap = jsonMap.get("components").get("TractorActions");
+      TractorActions tractorActions = new TractorActions(); 
+      tractorActions.setMuted(jsonMap.getBoolean("isMuted"));   //update the tractor 'muted' variable based on the info in the json file
+
+      this.addComponent(tractorActions);
+    }
 
     if (type == EntityType.Tile) {
 
