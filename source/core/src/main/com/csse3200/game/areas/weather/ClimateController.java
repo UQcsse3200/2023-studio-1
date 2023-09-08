@@ -97,4 +97,8 @@ public class ClimateController {
 		}
 
 	}
+
+	public WeatherEvent getCurrentWeatherEvent() {
+		return currentWeatherEvent;
+	}
 }
