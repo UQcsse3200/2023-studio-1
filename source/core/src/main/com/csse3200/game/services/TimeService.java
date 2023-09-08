@@ -11,10 +11,8 @@ import com.csse3200.game.services.ServiceLocator;
 
 public class TimeService {
 	private static final Logger logger = LoggerFactory.getLogger(TimeService.class);
-	private static final int INITIAL_CAPACITY = 16;
-	private static final String HOUR_UPDATE = "hourUpdate";
-	private static final String DAY_UPDATE = "dayUpdate";
-	private static final int MS_IN_HOUR = 30000; //30000;
+	private static final int MS_IN_MINUTE = 500;
+	private int minute;
 	private int hour;
 	private int day;
 	private long timeBuffer;
@@ -26,6 +24,7 @@ public class TimeService {
 	public TimeService() {
 		hour = 0;
 		day = 0;
+		minute = 0;
 		paused = false;
 		lastGameTime = ServiceLocator.getTimeSource().getTime();
 		events = new EventHandler();
@@ -37,11 +36,7 @@ public class TimeService {
 
 	public void setPaused(boolean state) {
 		paused = state;
-		if (state == true) {
-			ServiceLocator.getTimeSource().setTimeScale(0);
-		} else {
-			ServiceLocator.getTimeSource().setTimeScale(1);
-		}
+		ServiceLocator.getTimeSource().setTimeScale(state ? 0 : 1);
 	}
 
 	public int getHour() {
@@ -50,6 +45,10 @@ public class TimeService {
 
 	public int getDay() {
 		return day;
+	}
+
+	public int getMinute() {
+		return minute;
 	}
 	public void setHour(int hour) {
 		this.hour = hour;
@@ -61,6 +60,12 @@ public class TimeService {
 		this.day = day;
 		this.timeBuffer= 0;
 		events.trigger("dayUpdate");
+	}
+
+	public void setMinute(int minute) {
+		this.minute = minute;
+		this.timeBuffer = 0;
+		events.trigger("minuteUpdate");
 	}
 
 	public EventHandler getEvents() {
@@ -75,20 +80,27 @@ public class TimeService {
 			return;
 		}
 		timeBuffer += timePassed;
-		// If time elapsed isn't one hour in the game, do nothing
-		if (timeBuffer < MS_IN_HOUR) {
+
+		if (timeBuffer < MS_IN_MINUTE) {
+			return;
+		}
+		minute += 1;
+		timeBuffer -= MS_IN_MINUTE;
+		events.trigger("minuteUpdate");
+
+		// If minute is between 0 and 59, hour hasn't elapsed - don't do anything
+		if (minute < 60) {
 			return;
 		}
 		hour += 1;
-		timeBuffer -= MS_IN_HOUR;
+		minute -= 60;
+		events.trigger("hourUpdate");
 
 		// If hour is between 0 and 23, day hasn't elapsed, do nothing
 		if (hour < 24) {
-			events.trigger("hourUpdate");
 			return;
 		}
 		hour -= 24;
-		events.trigger("hourUpdate");
 		day += 1;
 		events.trigger("dayUpdate");
 
