@@ -104,6 +104,7 @@ public class SaveLoadService {
     updateNPCs(state);
     updatePlayer(state);
     updateTime(state);
+    updateTractor(state);
     updateTiles(state);
   }
 
@@ -152,6 +153,18 @@ public class SaveLoadService {
         ServiceLocator.getGameArea().spawnEntity(npc);
       }
     }
+  }
+
+  /**
+   * Update the tractors in-game position on load
+   * @param state
+   */
+  private void updateTractor(GameState state){
+    Entity tractor = ServiceLocator.getGameArea().getTractor();
+    
+    if (state.getTractor() == null || tractor == null) { return; }
+
+    tractor.setPosition(state.getTractor().getPosition());
   }
 
   private void updateTiles(GameState state) {
