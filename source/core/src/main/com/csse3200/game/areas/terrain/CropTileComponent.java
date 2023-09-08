@@ -6,11 +6,8 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
-<<<<<<< HEAD
 import com.csse3200.game.entities.EntityType;
-=======
 import com.csse3200.game.missions.MissionManager;
->>>>>>> 1-save-load
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -278,27 +275,6 @@ public class CropTileComponent extends Component {
 		json.writeValue("plant", plant);
 	}
 
-<<<<<<< HEAD
-  /**
-   * Writes in json summary of croptile state. Writes to json
-   * the waterContent, soilQuality, isFertilised and plant
-   * to the json
-   * @param json which is a valid Json
-   */
-    @Override
-    public void write (Json json) {
-		//TODO needs to be a gridpoint2 to get actual tile, but team 3 slow
-		json.writeValue("Entity", EntityType.Tile);
-		json.writeValue("x", entity.getPosition().x);
-		json.writeValue("y",entity.getPosition().y);
-		json.writeObjectStart("components");
-		json.writeValue("waterContent", waterContent);
-		json.writeValue("soilQuality", soilQuality);
-		json.writeValue("isFertilised", isFertilised);
-		json.writeValue("plant", plant);
-		json.writeObjectEnd();
-    }
-=======
 	@Override
 	public void read(Json json, JsonValue jsonMap) {
 		// jsonMap = jsonMap.get("CropTileComponent");
@@ -306,21 +282,6 @@ public class CropTileComponent extends Component {
 		// soilQuality = jsonMap.getFloat("soilQuality");
 		// isFertilised = jsonMap.getBoolean("isFertilised");
 		//plant = json.fromJson(Entity.class, jsonMap.getString("plant"));
-	}
->>>>>>> 1-save-load
-
-	/**
-	 * reads croptile state from json to
-	 * the waterContent, soilQuality, isFertilised and plant
-	 * to the json
-	 * @param json which is a valid Json
-	 */
-	@Override
-	public void read (Json json, JsonValue jsonMap) {
-		// TODO implement
-		//waterContent = json.readValue(;"waterContent");
-		waterContent = jsonMap.getFloat("waterContent");
-
 	}
 
 	public TerrainTile getTerrainTile() {

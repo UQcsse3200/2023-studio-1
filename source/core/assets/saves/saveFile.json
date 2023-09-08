@@ -1,47 +1,65 @@
 {
 "player": {
 	"Entity": "Player",
-	"x": 9.5895,
-	"y": 9.622519,
+	"x": 3.4866815,
+	"y": 3.3785872,
 	"components": {
-		"inventory": {
-			"item": {
-				"name": "hoe",
-				"count": 1
-			},
-			"item": {
-				"name": "shovel",
-				"count": 1
-			},
-			"item": {
-				"name": "watering_can",
-				"level": 150,
-				"count": 1
-			},
-			"item": {
-				"name": "scythe",
-				"count": 1
-			},
-			"item": {
-				"name": "watering_can",
-				"level": 150,
-				"count": 1
-			},
-			"item": {
-				"name": "shovel",
-				"count": 1
-			},
-			"item": {
-				"name": "aloe vera seed",
-				"count": 1
-			},
-			"item": {
-				"name": "hoe",
-				"count": 1
-			},
-			"item": {
-				"name": "fertiliser",
-				"count": 1
+		"InteractionColliderComponent": {},
+		"HitboxComponent": {},
+		"AnimationRenderComponent": {},
+		"PhysicsComponent": {},
+		"ToolbarDisplay": {},
+		"CombatStatsComponent": {},
+		"ItemPickupComponent": {},
+		"KeyboardPlayerInputComponent": {},
+		"InventoryDisplay": {},
+		"PlayerActions": {},
+		"PlayerAnimationController": {},
+		"ColliderComponent": {},
+		"InventoryComponent": {
+			"inventory": {
+				"item": {
+					"name": "hoe",
+					"count": 1
+				},
+				"item": {
+					"name": "shovel",
+					"count": 1
+				},
+				"item": {
+					"name": "watering_can",
+					"level": 150,
+					"count": 1
+				},
+				"item": {
+					"name": "scythe",
+					"count": 1
+				},
+				"item": {
+					"name": "scythe",
+					"count": 1
+				},
+				"item": {
+					"name": "fertiliser",
+					"count": 1
+				},
+				"item": {
+					"name": "aloe vera seed",
+					"count": 1
+				},
+				"item": {
+					"name": "watering_can",
+					"level": 150,
+					"count": 1
+				},
+				"item": {
+					"name": "hoe",
+					"count": 1
+				},
+				"item": {
+					"name": "shovel",
+					"count": 1
+				}
 			}
 		}
 	}
@@ -49,182 +67,305 @@
 "entities": [
 	{
 		"Entity": "Astrolotl",
-		"x": 37.070988,
-		"y": 1.5327573,
+		"x": 45.503742,
+		"y": 0.11499999,
 		"components": {
-			"tamed": false
+			"AITaskComponent": {},
+			"PhysicsComponent": {},
+			"AnimationRenderComponent": {},
+			"TamableComponent": {
+				"tamed": false
+			},
+			"PhysicsMovementComponent": {},
+			"AnimalAnimationController": {},
+			"ColliderComponent": {}
 		}
 	},
 	{
 		"Entity": "Cow",
-		"x": 45.993458,
-		"y": 40.934414,
+		"x": 47.418446,
+		"y": 22.392931,
 		"components": {
-			"tamed": false
+			"AITaskComponent": {},
+			"PhysicsComponent": {},
+			"AnimationRenderComponent": {},
+			"TamableComponent": {
+				"tamed": false
+			},
+			"PhysicsMovementComponent": {},
+			"AnimalAnimationController": {},
+			"ColliderComponent": {}
 		}
 	},
 	{
 		"Entity": "Cow",
-		"x": 29.906715,
-		"y": 13.398254,
+		"x": 30.297478,
+		"y": 1.0811971,
 		"components": {
-			"tamed": false
+			"AITaskComponent": {},
+			"PhysicsComponent": {},
+			"AnimationRenderComponent": {},
+			"TamableComponent": {
+				"tamed": false
+			},
+			"PhysicsMovementComponent": {},
+			"AnimalAnimationController": {},
+			"ColliderComponent": {}
 		}
 	},
 	{
 		"Entity": "Cow",
-		"x": 47.735214,
-		"y": 47.25011,
+		"x": 44.04629,
+		"y": 10.635639,
 		"components": {
-			"tamed": false
+			"AITaskComponent": {},
+			"PhysicsComponent": {},
+			"AnimationRenderComponent": {},
+			"TamableComponent": {
+				"tamed": false
+			},
+			"PhysicsMovementComponent": {},
+			"AnimalAnimationController": {},
+			"ColliderComponent": {}
 		}
 	},
 	{
 		"Entity": "Cow",
-		"x": 30.056358,
-		"y": 21.693579,
+		"x": 12.678575,
+		"y": 0.11693193,
 		"components": {
-			"tamed": false
+			"AITaskComponent": {},
+			"PhysicsComponent": {},
+			"AnimationRenderComponent": {},
+			"TamableComponent": {
+				"tamed": false
+			},
+			"PhysicsMovementComponent": {},
+			"AnimalAnimationController": {},
+			"ColliderComponent": {}
 		}
 	},
 	{
 		"Entity": "Cow",
-		"x": 25.016651,
-		"y": 23.464548,
+		"x": 3.5562878,
+		"y": 37.847797,
 		"components": {
-			"tamed": false
+			"AITaskComponent": {},
+			"PhysicsComponent": {},
+			"AnimationRenderComponent": {},
+			"TamableComponent": {
+				"tamed": false
+			},
+			"PhysicsMovementComponent": {},
+			"AnimalAnimationController": {},
+			"ColliderComponent": {}
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 2.8343027,
-		"y": 23.46747,
+		"x": 24.310816,
+		"y": 35.016823,
 		"components": {
-			"tamed": false
+			"AITaskComponent": {},
+			"PhysicsComponent": {},
+			"AnimationRenderComponent": {},
+			"TamableComponent": {
+				"tamed": false
+			},
+			"PhysicsMovementComponent": {},
+			"AnimalAnimationController": {},
+			"ColliderComponent": {}
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 37.483932,
-		"y": 44.16483,
+		"x": 22.89368,
+		"y": 2.947915,
 		"components": {
-			"tamed": false
+			"AITaskComponent": {},
+			"PhysicsComponent": {},
+			"AnimationRenderComponent": {},
+			"TamableComponent": {
+				"tamed": false
+			},
+			"PhysicsMovementComponent": {},
+			"AnimalAnimationController": {},
+			"ColliderComponent": {}
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 5.912328,
-		"y": 14.6227455,
+		"x": 23.565207,
+		"y": 25.097864,
 		"components": {
-			"tamed": false
+			"AITaskComponent": {},
+			"PhysicsComponent": {},
+			"AnimationRenderComponent": {},
+			"TamableComponent": {
+				"tamed": false
+			},
+			"PhysicsMovementComponent": {},
+			"AnimalAnimationController": {},
+			"ColliderComponent": {}
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 47.493034,
-		"y": 3.57918,
+		"x": 10.284331,
+		"y": 21.488707,
 		"components": {
-			"tamed": false
+			"AITaskComponent": {},
+			"PhysicsComponent": {},
+			"AnimationRenderComponent": {},
+			"TamableComponent": {
+				"tamed": false
+			},
+			"PhysicsMovementComponent": {},
+			"AnimalAnimationController": {},
+			"ColliderComponent": {}
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 0.979183,
-		"y": 47.003883,
+		"x": 46.548355,
+		"y": 17.926374,
 		"components": {
-			"tamed": false
+			"AITaskComponent": {},
+			"PhysicsComponent": {},
+			"AnimationRenderComponent": {},
+			"TamableComponent": {
+				"tamed": false
+			},
+			"PhysicsMovementComponent": {},
+			"AnimalAnimationController": {},
+			"ColliderComponent": {}
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 32.741787,
-		"y": 1.6217155,
+		"x": 38.43773,
+		"y": 14.832797,
 		"components": {
-			"tamed": false
+			"AITaskComponent": {},
+			"PhysicsComponent": {},
+			"AnimationRenderComponent": {},
+			"TamableComponent": {
+				"tamed": false
+			},
+			"PhysicsMovementComponent": {},
+			"AnimalAnimationController": {},
+			"ColliderComponent": {}
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 4.2975755,
-		"y": 8.635049,
+		"x": 9.862662,
+		"y": 49.136566,
 		"components": {
-			"tamed": false
+			"AITaskComponent": {},
+			"PhysicsComponent": {},
+			"AnimationRenderComponent": {},
+			"TamableComponent": {
+				"tamed": false
+			},
+			"PhysicsMovementComponent": {},
+			"AnimalAnimationController": {},
+			"ColliderComponent": {}
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 16.02614,
-		"y": 4.753725,
+		"x": 8.357715,
+		"y": 20.10461,
 		"components": {
-			"tamed": false
+			"AITaskComponent": {},
+			"PhysicsComponent": {},
+			"AnimationRenderComponent": {},
+			"TamableComponent": {
+				"tamed": false
+			},
+			"PhysicsMovementComponent": {},
+			"AnimalAnimationController": {},
+			"ColliderComponent": {}
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 7.4816084,
-		"y": 48.139587,
+		"x": 19.70907,
+		"y": 4.79753,
 		"components": {
-			"tamed": false
+			"AITaskComponent": {},
+			"PhysicsComponent": {},
+			"AnimationRenderComponent": {},
+			"TamableComponent": {
+				"tamed": false
+			},
+			"PhysicsMovementComponent": {},
+			"AnimalAnimationController": {},
+			"ColliderComponent": {}
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 0.5283258,
-		"y": 3.010245,
+		"x": 34.54872,
+		"y": 40.219627,
 		"components": {
-			"tamed": false
+			"AITaskComponent": {},
+			"PhysicsComponent": {},
+			"AnimationRenderComponent": {},
+			"TamableComponent": {
+				"tamed": false
+			},
+			"PhysicsMovementComponent": {},
+			"AnimalAnimationController": {},
+			"ColliderComponent": {}
 		}
 	},
 	{
 		"Entity": "Tractor",
-		"x": 2.9213116,
-		"y": 4.656611,
-		"components": {}
+		"x": 5.057478,
+		"y": 5.7893705,
+		"components": {
+			"TractorActions": {},
+			"AnimationRenderComponent": {},
+			"PhysicsComponent": {},
+			"KeyboardTractorInputComponent": {},
+			"TractorAnimationController": {},
+			"ColliderComponent": {}
+		}
 	}
 ],
 "tiles": [
 	{
 		"Entity": "Tile",
-		"x": 9.758728,
-		"y": 9.853289,
+		"x": 6,
+		"y": 4,
 		"components": {
-			"waterContent": 0.9083339,
-			"soilQuality": 1,
-			"isFertilised": false,
-			"plant": null
+			"DynamicTextureRenderComponent": {},
+			"PhysicsComponent": {},
+			"CropTileComponent": {
+				"waterContent": 0.8733342,
+				"soilQuality": 1,
+				"isFertilised": false,
+				"plant": null
+			},
+			"ColliderComponent": {}
 		}
 	},
 	{
 		"Entity": "Tile",
-		"x": 10.912579,
-		"y": 8.776361,
+		"x": 5,
+		"y": 7,
 		"components": {
-			"waterContent": 0.8741681,
-			"soilQuality": 1,
-			"isFertilised": false,
-			"plant": null
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 12.620277,
-		"y": 8.776361,
-		"components": {
-			"waterContent": 0.8250016,
-			"soilQuality": 1,
-			"isFertilised": false,
-			"plant": null
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 11.697197,
-		"y": 7.9148197,
-		"components": {
-			"waterContent": 0.65333533,
-			"soilQuality": 1,
-			"isFertilised": false,
-			"plant": null
+			"DynamicTextureRenderComponent": {},
+			"PhysicsComponent": {},
+			"CropTileComponent": {
+				"waterContent": 0.6184152,
+				"soilQuality": 1,
+				"isFertilised": false,
+				"plant": null
+			},
+			"ColliderComponent": {}
 		}
 	}
 ]

@@ -113,9 +113,6 @@ public class SaveLoadService {
     currentPlayer.getComponent(PlayerActions.class).getCameraVar().setTrackEntity(currentPlayer);
     currentPlayer.getComponent(PlayerActions.class).setMuted(false);
     //currentPlayer.getComponent(PlayerActions.class).stopMoving();
-
-    System.out.println(currentPlayer.getPosition());
-    System.out.println(state.getPlayer().getPosition());
   }
 
   /**
@@ -177,9 +174,6 @@ public class SaveLoadService {
         }
         return false;
       }*/
-    for (Entity tile : state.getTiles()) {
-      System.out.println(tile);
-    }
     System.out.println("can't delete old tile");
     System.out.println("can't recreate tile");
     // TODO: remove all the unused crop

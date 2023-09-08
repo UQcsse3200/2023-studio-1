@@ -363,8 +363,6 @@ public class Entity implements Json.Serializable {
     } catch (IllegalArgumentException e) {
       type = null;
     }
-    System.out.println(type + " @ (" + position.x + ", " + position.y + ")" );
-
     position = new Vector2(jsonMap.getFloat("x"), jsonMap.getFloat("y"));
 
     if (type == EntityType.Tile) {
