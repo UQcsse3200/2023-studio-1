@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.SpaceGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.components.Component;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.tractor.TractorActions;
@@ -32,7 +33,7 @@ import org.slf4j.LoggerFactory;
 /**
  * The game screen containing the main game.
  *
- * <p>Details on libGDX screens: https://happycoding.io/tutorials/libgdx/game-screens
+ * <p>Details on libGDX screens: <a href="https://happycoding.io/tutorials/libgdx/game-screens">...</a>
  */
 public class MainGameScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
@@ -71,6 +72,7 @@ public class MainGameScreen extends ScreenAdapter {
   private final PhysicsEngine physicsEngine;
 
   private static Boolean lose;
+  private final Entity ui;
 
   public MainGameScreen(GdxGame game) {
     this.game = game;
@@ -96,7 +98,7 @@ public class MainGameScreen extends ScreenAdapter {
     ServiceLocator.registerLightService(new LightService((OrthographicCamera) renderer.getCamera().getCamera()));
 
     loadAssets();
-    createUI();
+    ui = createUI();
 
     logger.debug("Initialising main game screen entities");
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
@@ -129,6 +131,7 @@ public class MainGameScreen extends ScreenAdapter {
       ServiceLocator.getTimeService().update();
       renderer.render();
       ServiceLocator.getLightService().renderLight();
+      ui.update();
     if (lose) {
       game.setScreen(GdxGame.ScreenType.LOSESCREEN);
     }
@@ -181,7 +184,7 @@ public class MainGameScreen extends ScreenAdapter {
    * Creates the main game's ui including components for rendering ui elements to the screen and
    * capturing and handling ui input.
    */
-  private void createUI() {
+  private Entity createUI() {
     logger.debug("Creating ui");
     Stage stage = ServiceLocator.getRenderService().getStage();
     InputComponent inputComponent =
@@ -198,5 +201,7 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(new GameTimeDisplay());
 
     ServiceLocator.getEntityService().register(ui);
+
+    return ui;
   }
 }

@@ -2,6 +2,7 @@ package com.csse3200.game.rendering;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -22,7 +23,7 @@ public class Renderer implements Disposable {
 
   private CameraComponent camera;
   private float gameWidth;
-  private SpriteBatch batch;
+  public SpriteBatch batch;
   private Stage stage;
   private RenderService renderService;
   private DebugRenderer debugRenderer;
@@ -138,5 +139,9 @@ public class Renderer implements Disposable {
 
   public Stage getStage() {
     return stage;
+  }
+
+  public Batch getBatch() {
+    return batch;
   }
 }
