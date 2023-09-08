@@ -27,7 +27,7 @@ public class AnimalAnimationController extends Component {
     private static final String TAMED_SUFFIX = "_tamed";
 
     /**
-     *
+     * Returns a suffix if the entity is tamed.
      */
     private String isTamed() {
 
@@ -90,10 +90,6 @@ public class AnimalAnimationController extends Component {
     void changeDirection(String direction){
         this.direction = direction;
         entity.getEvents().trigger(currentAnimation + "Start");
-    }
-
-    void animateConsumeOxygen() {
-        animator.startAnimation("consume");
     }
 
 
