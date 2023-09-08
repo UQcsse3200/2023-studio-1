@@ -87,12 +87,6 @@ public class PlayerActions extends Component {
     }
 
     // player is moving
-
-    Vector2 playerVector = entity.getPosition();
-    System.out.println("player vector: " + playerVector + "   vector to grid: " + map.vectorToTileCoordinates(playerVector));
-    System.out.println("grid to vector: " + map.tileCoordinatesToVector(map.vectorToTileCoordinates(playerVector)) + "   vector to grid: " +  map.vectorToTileCoordinates(map.tileCoordinatesToVector(map.vectorToTileCoordinates(playerVector))));
-    System.out.println(map.getTile(playerVector).getTerrainCategory());
-
     String animationName = String.format("animation%sStart", running ? "Run" : "Walk");
     float direction = moveDirection.angleDeg();
     if (direction < 45) {
