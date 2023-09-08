@@ -24,18 +24,6 @@
     "health": 5,
     "tamingThreshold": 1,
     "tamingProbability": 0.5,
-    "favouriteFood": "ASTROLOTL FOOD"  },
-
-  "testDummy1": {
-    "health": 100,
-    "tamingThreshold": 3,
-    "tamingProbability": 0,
-    "favouriteFood": "Animal Food"  },
-
-  "testDummy2": {
-    "health": 100,
-    "tamingThreshold": 3,
-    "tamingProbability": 0,
-    "favouriteFood": "Animal Food" }
+    "favouriteFood": "ASTROLOTL FOOD"  }
 }
 
