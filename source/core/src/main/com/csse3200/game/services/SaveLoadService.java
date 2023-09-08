@@ -1,30 +1,21 @@
 package com.csse3200.game.services;
 
-import java.security.Provider.Service;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
 
-import com.badlogic.gdx.graphics.TextureData;
-import com.badlogic.gdx.math.GridPoint2;
+import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.EntityType;
-import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.files.SaveGame;
 import com.csse3200.game.files.SaveGame.GameState;
 import com.csse3200.game.entities.factories.NPCFactory;
-import com.csse3200.game.entities.factories.TractorFactory;
-import com.csse3200.game.rendering.TextureRenderComponent;
-import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.utils.math.Vector2Utils;
+import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 
-import static com.csse3200.game.services.ServiceLocator.getEntityService;
-import java.util.Map;
-import java.util.function.Function;
 
 /* A note of the registering of this service:
  *  this service is currently only registered at MainMenuScreen,
@@ -102,10 +93,16 @@ public class SaveLoadService {
    * @param state state of the game which was saved previously in saveFile.json
    */
   private void updateGame(GameState state) {
+    // Get all entities currently in game:
+    Array<Entity> currentGameEntities = ServiceLocator.getEntityService().getEntities();
+    // Remove entities from game that we will replace on load:
+    ServiceLocator.getGameArea().removeLoadableEntities(currentGameEntities);
+    // Replace current entities with loaded ones:
     updateNPCs(state);
+    updateTiles(state);
     updatePlayer(state);
     updateTime(state);
-    updateTiles(state);
+    updateTractor(state);
   }
 
   /**
@@ -116,16 +113,9 @@ public class SaveLoadService {
   private void updatePlayer(GameState state) {
     Entity currentPlayer = ServiceLocator.getGameArea().getPlayer();
     currentPlayer.setPosition(state.getPlayer().getPosition());
-
-    // TODO BELOW NEEDS TO BE REMOVED FOR MAIN
-    // These on load will take the player out of tractor so temp if we can figure out how to keep inside
-    // (we would need to store a bool saying if player is in tractor
-    // I know how to figure that out but don't know how to use it in the json or to store it
     currentPlayer.getComponent(PlayerActions.class).getCameraVar().setTrackEntity(currentPlayer);
     currentPlayer.getComponent(PlayerActions.class).setMuted(false);
     //currentPlayer.getComponent(PlayerActions.class).stopMoving();
-    System.out.println(currentPlayer.getPosition());
-    System.out.println(state.getPlayer().getPosition());
   }
 
   /**
@@ -135,17 +125,10 @@ public class SaveLoadService {
    */
   private void updateNPCs(GameState state) {
     Entity player = ServiceLocator.getGameArea().getPlayer();
-    Array<Entity> currentGameEntities = ServiceLocator.getEntityService().getEntities();
-
-    // Remove all current NPCs from the game
-    ServiceLocator.getGameArea().removeNPCs(currentGameEntities);
-
     // Create a map to associate entity types with NPC factory methods
     Map<EntityType, Function<Entity, Entity>> npcFactories = new HashMap<>();
     npcFactories.put(EntityType.Cow, NPCFactory::createCow);
     npcFactories.put(EntityType.Chicken, NPCFactory::createChicken);
-    npcFactories.put(EntityType.Astrolotl, NPCFactory::createAstrolotl);
-    npcFactories.put(EntityType.Tractor, TractorFactory::createTractor);
 
     for (Entity entity : state.getEntities()) {
       EntityType entityType = entity.getType();
@@ -153,34 +136,39 @@ public class SaveLoadService {
         Entity npc = npcFactories.get(entityType).apply(player);
         npc.setPosition(entity.getPosition());
         ServiceLocator.getGameArea().spawnEntity(npc);
-        // TODO takes the player out of the tractor on load REMOVE FOR MAIN / WHEN IT WORKS
-        if (entityType == EntityType.Tractor) {
-          npc.getComponent(TractorActions.class).setMuted(true);    //disable the tractor
-        }
       }
     }
   }
 
-  private void updateTiles(GameState state) {
-    // TODO: remove all the unused crop
-    System.out.println(state.getTiles());
-    // for (Entity e: state.getTiles()) {
+  /**
+<<<<<<< HEAD
+=======
+   * Update the tractors in-game position and check if the player was in the tractor or not
+   *  on saving last
+   * @param state
+   */
+  private void updateTractor(GameState state){
+    Entity tractor = ServiceLocator.getGameArea().getTractor(); //Get the tractor in the game
+    Entity tractorState = state.getTractor();   //Get tractor entity stored within the json file
+    
+    if (tractorState == null || tractor == null) { return; }  
+    
+    Boolean inTractor = !tractorState.getComponent(TractorActions.class).isMuted();  //store the inverse of the muted value from tractor state entity
 
-    // }
-    // if (tile.getCropTile() != null || !tile.isTillable()) {
-    //   return false;
-    // }
-    // // Make a new tile
-    // Vector2 newPos = getAdjustedPos(playerPos, mousePos);
-
-    // Entity cropTile = createTerrainEntity(newPos);
-    // tile.setCropTile(cropTile);
-    // tile.setOccupied();
-    // return true;
-
+    Entity player = ServiceLocator.getGameArea().getPlayer();
+    
+    tractor.setPosition(tractorState.getPosition());   //Update the tractors position to the values stored in the json file
+    
+    //Check whether the player was in the tractor when they last saved 
+    if (inTractor){
+      //set the player inside the tractor
+      player.setPosition(tractor.getPosition());              //Teleport the player to the tractor
+      player.getEvents().trigger("enterTractor");   //trigger the enterTractor event
+    }
   }
 
-  /**
+
+  /**''
    * Updates the time of the game based off the saved values in the gamestate
    * 
    * @param state the state of the saved game
@@ -188,5 +176,24 @@ public class SaveLoadService {
   private void updateTime(GameState state) {
     ServiceLocator.getTimeService().setDay(state.getDay());
     ServiceLocator.getTimeService().setHour(state.getHour());
+  }
+
+  /**
+   * Recreates / loads tile back into map after a save.
+   * @param state gamestate of the entire game based off safeFile.json
+   */
+  private void updateTiles(GameState state) {
+    GameMap map = ServiceLocator.getGameArea().getMap();
+    for (Entity cropTile : state.getTiles()) {
+      // add render-component back & re-register:
+      DynamicTextureRenderComponent renderComponent = new DynamicTextureRenderComponent("images/cropTile.png");
+      renderComponent.setLayer(1);
+      cropTile.addComponent(renderComponent);
+      ServiceLocator.getEntityService().register(cropTile);
+      // Stick cropTile onto terrainTile
+      TerrainTile tile = map.getTile(cropTile.getPosition());
+      tile.setCropTile(cropTile);
+      tile.setOccupied();
+    }
   }
 }

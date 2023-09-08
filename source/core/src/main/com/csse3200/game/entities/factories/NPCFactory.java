@@ -29,6 +29,10 @@ import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
+import javax.lang.model.UnknownEntityException;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+
 /**
  * Factory to create non-playable character (NPC) entities with predefined components.
  *
@@ -42,7 +46,6 @@ import com.csse3200.game.services.ServiceLocator;
 public class NPCFactory {
   private static final NPCConfigs configs =
       FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
-
   /**
    * Creates a ghost entity.
    *
