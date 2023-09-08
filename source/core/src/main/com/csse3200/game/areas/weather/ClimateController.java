@@ -23,7 +23,6 @@ public class ClimateController {
 		temperature = DEFAULT_TEMPERATURE;
 		events = new EventHandler();
 		ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateWeatherEvent);
-		events.addListener("startEvent", this::determineActiveEvent);
 	}
 
 	/**
