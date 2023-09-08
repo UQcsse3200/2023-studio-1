@@ -44,6 +44,10 @@ public class ClimateController {
 		return events;
 	}
 
+	/**
+	 * Adds a weather event to the list of weather events stored in the climate controller class
+	 * @param event Weather event
+	 */
 	public void addWeatherEvent(WeatherEvent event) {
 		weatherEvents.add(event);
 	}
@@ -69,7 +73,6 @@ public class ClimateController {
 				(time * Math.PI / 46)) + 17.2) * temperatureModifier);
 		humidity = (float) ((float) 0.5 + (0.1 * MathUtils.random(1, 3)) * MathUtils.sin((float)
 				(Math.PI / 12 * (time - 12))) * humidityModifier);
-		System.out.printf("(%s, %s), ", time, temperature);
 	}
 
 	/**
