@@ -25,9 +25,27 @@ public class MissionManager {
 		FERTILISE_CROP
 	}
 
+	/**
+	 * The {@link MissionManager}'s {@link EventHandler}. {@link Mission}s should add listeners to
+	 * this {@link EventHandler} to update their state, when said events are triggered by in-game
+	 * interactions
+	 */
 	private static final EventHandler events = new EventHandler();
+
+	/**
+	 * A {@link List} of {@link Quest}s which are currently active
+	 */
 	private static final List<Quest> activeQuests = new ArrayList<>();
+
+	/**
+	 * A {@link List} of {@link Quest}s which the player may choose to accept by interacting with
+	 * the missions NPC in-game
+	 */
 	private static final List<Quest> selectableQuests = new ArrayList<>();
+
+	/**
+	 * An array of all in-game {@link Achievement}s
+	 */
 	private static final Achievement[] achievements = new Achievement[]{
 			new PlantCropsAchievement("Plant President", 50),
 			new PlantCropsAchievement("Crop Enjoyer", 200),
