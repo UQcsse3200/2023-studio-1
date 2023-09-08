@@ -18,6 +18,9 @@ import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
+
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +30,7 @@ public class SpaceGameArea extends GameArea {
   private static final int NUM_TREES = 7;
   private static final int NUM_GHOSTS = 5;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
+  private static final GridPoint2 TRACTOR_SPAWN = new GridPoint2(15, 15);
 
   private static final GridPoint2 TOOL_SPAWN = new GridPoint2(15, 10);// temp!!!
   private static final GridPoint2 TOOL_SPAWN2 = new GridPoint2(15, 15);// temp!!!
@@ -175,7 +179,8 @@ public class SpaceGameArea extends GameArea {
   private void spawnTerrain() {
     // Background terrain
     terrain = terrainFactory.createTerrain(this.gameMap.getTiledMap());
-    spawnEntity(new Entity().addComponent(terrain));                  // Will need to monitor this when changing the createTerrain function
+    this.gameMap.setTerrainComponent(terrain);
+    spawnEntity(new Entity().addComponent(terrain));
 
     // Terrain walls
     float tileSize = terrain.getTileSize();
@@ -272,7 +277,7 @@ public class SpaceGameArea extends GameArea {
    */
   private Entity spawnTractor() {
     Entity newTractor = TractorFactory.createTractor(player);
-    spawnEntityAt(newTractor, PLAYER_SPAWN, true, true);
+    spawnEntityAt(newTractor, TRACTOR_SPAWN, true, true);
     return newTractor;
   }
 
@@ -375,7 +380,13 @@ public class SpaceGameArea extends GameArea {
     return tractor;
   }
 
+
+  /**
+   * Returns the game map
+   */
   public GameMap getMap() {
     return gameMap;
   }
+
+
 }

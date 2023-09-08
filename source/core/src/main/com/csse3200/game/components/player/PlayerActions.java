@@ -1,9 +1,11 @@
 package com.csse3200.game.components.player;
 import java.util.Random;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.ItemActions;
@@ -87,7 +89,6 @@ public class PlayerActions extends Component {
     // player is moving
     String animationName = String.format("animation%sStart", running ? "Run" : "Walk");
     float direction = moveDirection.angleDeg();
-
     if (direction < 45) {
       entity.getEvents().trigger(animationName, "right");
     } else if (direction < 135) {
@@ -99,26 +100,33 @@ public class PlayerActions extends Component {
     }
   }
 
-  private void TileAffectedSpeed() {
+  private Vector2 TileAffectedSpeed(Vector2 runSpeed) {
     // player position
-    if (this.prevMoveDirection < 45 && !map.getTile(1, 0).isTraversable()) {
-        // do st
-    } else if (this.prevMoveDirection < 135 && !map.getTile(0, 1).isTraversable()) {
-        // do st
-    } else if (this.prevMoveDirection < 225 && !map.getTile(-1, 0).isTraversable()) {
-        // do st
-    } else if (this.prevMoveDirection < 315 && !map.getTile(0, -1).isTraversable()) {
-        // do st
-    } else {
-        // do st
-    }
-    return;
+    /*Vector2 playerPos = entity.getPosition();
+    playerPos.x = Math.round(playerPos.x);
+    playerPos.y = Math.round(playerPos.y);
+    if (this.moveDirection.angleDeg() < 45 && map.getTile((int)playerPos.x +1, (int)playerPos.y) != null && !map.getTile((int)playerPos.x +1, (int)playerPos.y).isTraversable()) {
+      return new Vector2(0, runSpeed.y);
+    } else if (this.moveDirection.angleDeg() < 135 && map.getTile((int)playerPos.x +1, (int)playerPos.y) != null && !map.getTile((int)playerPos.x, (int)playerPos.y +1).isTraversable()) {
+      return new Vector2(runSpeed.x, 0);
+    } else if (this.moveDirection.angleDeg() < 225 && map.getTile((int)playerPos.x +1, (int)playerPos.y) != null && !map.getTile((int)playerPos.x -1, (int)playerPos.y).isTraversable()) {
+      return new Vector2(0, runSpeed.y);
+    } else if (this.moveDirection.angleDeg() < 315 && map.getTile((int)playerPos.x +1, (int)playerPos.y) != null && !map.getTile((int)playerPos.x, (int)playerPos.y -1).isTraversable()) {
+      return new Vector2(runSpeed.x, 0);
+    }*/
+    // the getTile is not working as expected
+    return runSpeed;
   }
 
   private void updateSpeed() {
     Body body = physicsComponent.getBody();
     Vector2 velocity = body.getLinearVelocity();
-    Vector2 velocityScale = this.running ? MAX_RUN_SPEED : MAX_WALK_SPEED;
+    Vector2 velocityScale = this.running ? MAX_RUN_SPEED.cpy() : MAX_WALK_SPEED.cpy();
+
+    // Used to apply the terrainSpeedModifier
+    //float terrainSpeedModifier = map.getTile(this.entity.getPosition()).getSpeedModifier();
+    //velocityScale.scl(terrainSpeedModifier);
+
     Vector2 desiredVelocity = moveDirection.cpy().scl(velocityScale);
     // impulse = (desiredVel - currentVel) * mass
     Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
@@ -212,6 +220,7 @@ public class PlayerActions extends Component {
     tractor.getComponent(KeyboardTractorInputComponent.class).setWalkDirection(entity.getComponent(KeyboardPlayerInputComponent.class).getWalkDirection());
     this.entity.setPosition(new Vector2(-10,-10));
     camera.setTrackEntity(tractor);
+    tractor.getComponent(TractorActions.class).setCameraVar(camera);
   }
 
   void use(Vector2 playerPos, Vector2 mousePos, Entity itemInHand) {
@@ -241,6 +250,10 @@ public class PlayerActions extends Component {
 
   public void setCameraVar (CameraComponent cam) {
     this.camera = cam;
+  }
+
+  public CameraComponent getCameraVar () {
+    return camera;
   }
 
   public void setGameMap(GameMap map) {

@@ -320,15 +320,20 @@ public class Entity implements Json.Serializable {
     if (getType() == EntityType.Item || getType() == null) {
       return;
     }
-    if (getType() == EntityType.Tile) {
-      getComponent(CropTileComponent.class).write(json);
-      return;
-    }
+    // if (getType() == EntityType.Tile) {
+    //   getComponent(CropTileComponent.class).write(json);
+    //   return;
+    // }
+
     json.writeValue("Entity", getType());
     float posX = position.x;
     float posY = position.y;
-    if (getType() == EntityType.Player && !ServiceLocator.getGameArea().getTractor().getComponent(TractorActions.class).isMuted()) {
+    if (getType() == EntityType.Player && getComponent(PlayerActions.class).isMuted()) {
+
+      // TODO
       // Therefore the player is in the tractor and you are modifying the player's data
+      // Shouldn't do below and instead store a value saying the player is in tractor in the json
+      // if someone can do that for me I can handle the rest of the logic
       posX = ServiceLocator.getGameArea().getTractor().getPosition().x;
       posY = ServiceLocator.getGameArea().getTractor().getPosition().y;
     }
@@ -336,7 +341,9 @@ public class Entity implements Json.Serializable {
     json.writeValue("y", posY);
     json.writeObjectStart("components");
     for (Component c : createdComponents) {
+      json.writeObjectStart(c.getClass().getSimpleName());
       c.write(json);
+      json.writeObjectEnd();
     }
     json.writeObjectEnd();
   }
@@ -350,13 +357,24 @@ public class Entity implements Json.Serializable {
 
   public void read(Json json, JsonValue jsonMap) {
     position = new Vector2(jsonMap.getFloat("x"), jsonMap.getFloat("y"));
-    String value = jsonMap.getString("Entity"); // this means we are looking for key = Entity.
+    String value = jsonMap.getString("Entity");
     try {
       type = EntityType.valueOf(value);
     } catch (IllegalArgumentException e) {
       type = null;
     }
     System.out.println(type + " @ (" + position.x + ", " + position.y + ")" );
+
+    position = new Vector2(jsonMap.getFloat("x"), jsonMap.getFloat("y"));
+
+    if (type == EntityType.Tile) {
+
+      jsonMap = jsonMap.get("components").get("CropTileComponent");
+     
+      CropTileComponent c = new CropTileComponent(jsonMap.getFloat("waterContent"), jsonMap.getFloat("soilQuality"));
+
+      this.addComponent(c);
+    }
   }
 
 

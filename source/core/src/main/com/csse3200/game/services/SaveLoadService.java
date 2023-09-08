@@ -1,27 +1,20 @@
 package com.csse3200.game.services;
 
-import java.security.Provider.Service;
 import java.util.HashMap;
-
-import com.badlogic.gdx.graphics.TextureData;
-import com.badlogic.gdx.math.GridPoint2;
-import com.csse3200.game.components.player.PlayerActions;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.entities.EntityType;
-import com.csse3200.game.entities.factories.PlayerFactory;
-import com.csse3200.game.files.SaveGame;
-import com.csse3200.game.files.SaveGame.GameState;
-import com.csse3200.game.entities.factories.NPCFactory;
-import com.csse3200.game.rendering.TextureRenderComponent;
-import com.csse3200.game.utils.math.GridPoint2Utils;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.math.Vector2;
-
 import java.util.Map;
 import java.util.function.Function;
 
-import static com.csse3200.game.services.ServiceLocator.*;
+import com.csse3200.game.components.player.PlayerActions;
+import com.csse3200.game.components.tractor.TractorActions;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
+import com.csse3200.game.files.SaveGame;
+import com.csse3200.game.files.SaveGame.GameState;
+import com.csse3200.game.entities.factories.NPCFactory;
+import com.csse3200.game.entities.factories.TractorFactory;
+import com.badlogic.gdx.utils.Array;
+
+
 
 /* A note of the registering of this service:
  *  this service is currently only registered at MainMenuScreen,
@@ -54,7 +47,6 @@ public class SaveLoadService {
 
     state.setPlayer(ServiceLocator.getGameArea().getPlayer());
     state.setEntities(ServiceLocator.getEntityService().getEntities());
-    // TODO: Broken map saving :(
     state.setTiles(ServiceLocator.getEntityService().getEntities());
 
     // Write the state to a file
@@ -63,11 +55,9 @@ public class SaveLoadService {
     System.out.println("save!");
   }
 
-
-
   /**
    * Load function which based on conents in saveFile.json
-   * Makes the game state match saveFile.json 
+   * Makes the game state match saveFile.json
    */
   public void load() {
     SaveGame.GameState state = SaveGame.get();
@@ -82,7 +72,23 @@ public class SaveLoadService {
   }
 
   /**
-   * Update NPCs, player and time of the game based off the gamestate that was saved
+   * Check to see if there is a valid save file stored 
+   * if not return false
+   * 
+   * @return
+   */
+  public boolean validSaveFile(){
+    SaveGame.GameState state = SaveGame.get();
+    if (state == null){
+      return false;
+    }
+    return true;
+  }
+
+  /**
+   * Update NPCs, player and time of the game based off the gamestate that was
+   * saved
+   * 
    * @param state state of the game which was saved previously in saveFile.json
    */
   private void updateGame(GameState state) {
@@ -94,23 +100,33 @@ public class SaveLoadService {
 
   /**
    * Updates the player entity position based off the saved gamestate
+   * 
    * @param state gamestate of the entire game based off safeFile.json
    */
   private void updatePlayer(GameState state) {
     Entity currentPlayer = ServiceLocator.getGameArea().getPlayer();
     currentPlayer.setPosition(state.getPlayer().getPosition());
+    // TODO
+    // These on load will take the player out of tractor so temp if we can figure out how to keep inside
+    // (we would need to store a bool saying if player is in tractor
+    // I know how to figure that out but don't know how to use it in the json or to store it
+    currentPlayer.getComponent(PlayerActions.class).getCameraVar().setTrackEntity(currentPlayer);
+    currentPlayer.getComponent(PlayerActions.class).setMuted(false);
+    //currentPlayer.getComponent(PlayerActions.class).stopMoving();
+
     System.out.println(currentPlayer.getPosition());
     System.out.println(state.getPlayer().getPosition());
   }
 
   /**
    * Destroys all NPCS in the map and then recreates them based off the gamestate
+   * 
    * @param state gamestate of the entire game based off safeFile.json
    */
   private void updateNPCs(GameState state) {
     Entity player = ServiceLocator.getGameArea().getPlayer();
     Array<Entity> currentGameEntities = ServiceLocator.getEntityService().getEntities();
-    
+
     // Remove all current NPCs from the game
     ServiceLocator.getGameArea().removeNPCs(currentGameEntities);
 
@@ -119,21 +135,25 @@ public class SaveLoadService {
     npcFactories.put(EntityType.Cow, NPCFactory::createCow);
     npcFactories.put(EntityType.Chicken, NPCFactory::createChicken);
     npcFactories.put(EntityType.Astrolotl, NPCFactory::createAstrolotl);
+    npcFactories.put(EntityType.Tractor, TractorFactory::createTractor);
 
     for (Entity entity : state.getEntities()) {
-        EntityType entityType = entity.getType();
-        if (npcFactories.containsKey(entityType)) {
-            Entity npc = npcFactories.get(entityType).apply(player);
-            npc.setPosition(entity.getPosition());
-            ServiceLocator.getGameArea().spawnEntity(npc);
+      EntityType entityType = entity.getType();
+      if (npcFactories.containsKey(entityType)) {
+        Entity npc = npcFactories.get(entityType).apply(player);
+        npc.setPosition(entity.getPosition());
+        ServiceLocator.getGameArea().spawnEntity(npc);
+        // TODO takes the player out of the tractor on load
+        if (entityType == EntityType.Tractor) {
+          npc.getComponent(TractorActions.class).setMuted(true);    //disable the tractor
         }
+      }
     }
   }
 
-
-
   /**
    * Updates the time of the game based off the saved values in the gamestate
+   * 
    * @param state the state of the saved game
    */
   private void updateTime(GameState state) {
@@ -162,5 +182,21 @@ public class SaveLoadService {
     }
     System.out.println("can't delete old tile");
     System.out.println("can't recreate tile");
+    // TODO: remove all the unused crop
+    System.out.println(state.getTiles());
+    // for (Entity e: state.getTiles()) {
+
+    // }
+    // if (tile.getCropTile() != null || !tile.isTillable()) {
+    //   return false;
+    // }
+    // // Make a new tile
+    // Vector2 newPos = getAdjustedPos(playerPos, mousePos);
+
+    // Entity cropTile = createTerrainEntity(newPos);
+    // tile.setCropTile(cropTile);
+    // tile.setOccupied();
+    // return true;
+
   }
 }

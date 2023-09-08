@@ -111,6 +111,11 @@ public class MainGameScreen extends ScreenAdapter {
 
     lose = false;
     spaceGameArea.getPlayer().getEvents().addListener("loseScreen", this::loseScreenStart);
+
+    // if the LoadSaveOnStart value is set true then load entities saved from file
+    if (game.isLoadOnStart()){
+      ServiceLocator.getSaveLoadService().load();
+    }
   }
 
   public void loseScreenStart() {
