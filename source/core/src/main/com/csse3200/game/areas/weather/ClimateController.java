@@ -53,6 +53,14 @@ public class ClimateController {
 	}
 
 	/**
+	 * Gets the current weather event that is occurring
+	 * @return current weather event, null if not event is occurring
+	 */
+	public WeatherEvent getCurrentWeatherEvent() {
+		return currentWeatherEvent;
+	}
+
+	/**
 	 * Gets the current temperature of the game world
 	 *
 	 * @return current game temperature
