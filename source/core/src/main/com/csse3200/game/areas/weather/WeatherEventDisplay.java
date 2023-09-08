@@ -27,7 +27,7 @@ public class WeatherEventDisplay extends UIComponent {
 		table.padTop(520f).padLeft(-265f);
 
 		WeatherEvent currentEvent = ServiceLocator.getGameArea().getClimateController().getCurrentWeatherEvent();
-		if (currentEvent instanceof RainEvent) {
+		if (currentEvent instanceof AcidShowerEvent) {
 			weatherImage = new Image(ServiceLocator.getResourceService().getAsset(
 					"images/weather_event/raindrop.png", Texture.class));
 		} else {
