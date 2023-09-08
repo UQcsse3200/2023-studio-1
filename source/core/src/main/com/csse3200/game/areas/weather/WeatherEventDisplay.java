@@ -17,7 +17,6 @@ public class WeatherEventDisplay extends UIComponent {
 	public void create() {
 		super.create();
 		ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateDisplay);
-		updateDisplay();
 	}
 
 	public void updateDisplay() {
@@ -25,16 +24,16 @@ public class WeatherEventDisplay extends UIComponent {
 		group = new Group();
 		table.top().left();
 		table.setFillParent(true);
-		table.padTop(150f).padLeft(-100f);
+		table.padTop(200f).padLeft(-100f);
 
 		WeatherEvent currentEvent = ServiceLocator.getGameArea().getClimateController().getCurrentWeatherEvent();
 		if (currentEvent instanceof RainEvent) {
 			weatherImage = new Image(ServiceLocator.getResourceService().getAsset(
 					"images/weather_event/raindrop.png", Texture.class));
+		} else {
+			weatherImage = new Image(ServiceLocator.getResourceService().getAsset(
+					"images/time_system_ui/indicator_1.png", Texture.class));
 		}
-		// TODO Remove this when other events are added
-		weatherImage = new Image(ServiceLocator.getResourceService().getAsset(
-				"images/weather_event/raindrop.png", Texture.class));
 		weatherImage.setPosition(weatherImage.getImageX() + 158f, weatherImage.getImageY() + 147f);
 		stage.addActor(weatherImage);
 
@@ -52,6 +51,7 @@ public class WeatherEventDisplay extends UIComponent {
 
 	@Override
 	protected void draw(SpriteBatch batch) {
+		updateDisplay();
 		return;
 	}
 }
