@@ -86,15 +86,4 @@ public class ClimateController {
 		}
 		updateClimate();
 	}
-
-	private void determineActiveEvent(WeatherEvent event) {
-		int priority = -1;
-		if (currentWeatherEvent != null) {
-			priority = currentWeatherEvent.getPriority();
-		}
-		if (priority > event.getPriority()) {
-			currentWeatherEvent = event;
-		}
-
-	}
 }
