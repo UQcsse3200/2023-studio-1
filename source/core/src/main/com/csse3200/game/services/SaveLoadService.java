@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.player.PlayerActions;
+import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.EntityType;
@@ -18,6 +19,8 @@ import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.utils.math.Vector2Utils;
+
 import static com.csse3200.game.services.ServiceLocator.getEntityService;
 import java.util.Map;
 import java.util.function.Function;
@@ -98,6 +101,14 @@ public class SaveLoadService {
   private void updatePlayer(GameState state) {
     Entity currentPlayer = ServiceLocator.getGameArea().getPlayer();
     currentPlayer.setPosition(state.getPlayer().getPosition());
+    // TODO
+    // These on load will take the player out of tractor so temp if we can figure out how to keep inside
+    // (we would need to store a bool saying if player is in tractor
+    // I know how to figure that out but don't know how to use it in the json or to store it
+    currentPlayer.getComponent(PlayerActions.class).getCameraVar().setTrackEntity(currentPlayer);
+    currentPlayer.getComponent(PlayerActions.class).setMuted(false);
+    //currentPlayer.getComponent(PlayerActions.class).stopMoving();
+
     System.out.println(currentPlayer.getPosition());
     System.out.println(state.getPlayer().getPosition());
   }
@@ -126,6 +137,10 @@ public class SaveLoadService {
         Entity npc = npcFactories.get(entityType).apply(player);
         npc.setPosition(entity.getPosition());
         ServiceLocator.getGameArea().spawnEntity(npc);
+        // TODO takes the player out of the tractor on load
+        if (npc.getType() == EntityType.Tractor) {
+          npc.getComponent(TractorActions.class).setMuted(true);
+        }
       }
     }
   }

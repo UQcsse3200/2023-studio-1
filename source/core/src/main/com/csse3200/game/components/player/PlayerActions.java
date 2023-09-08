@@ -253,6 +253,10 @@ public class PlayerActions extends Component {
     this.camera = cam;
   }
 
+  public CameraComponent getCameraVar () {
+    return camera;
+  }
+
   public void setGameMap(GameMap map) {
     this.map = map;
   }

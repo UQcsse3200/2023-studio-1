@@ -137,6 +137,7 @@ public class TractorActions extends Component {
    */
   void exitTractor() {
     this.stopMoving();
+    this.mode = TractorMode.normal;
     player.getComponent(PlayerActions.class).setMuted(false);
     muted = true;
     player.getComponent(KeyboardPlayerInputComponent.class)
