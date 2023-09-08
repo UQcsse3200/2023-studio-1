@@ -111,9 +111,9 @@ public class MissionDisplay extends UIComponent {
         Table contentTable = new Table();
         contentTable.defaults().size(500f, 50f);
         contentTable.row().padBottom(30f).padTop(30f);
-        contentTable.add(missionDescription).center().expandX().expandY();
+        contentTable.add(missionDescription).center().expand();
         contentTable.row();
-        contentTable.add(buttonTable).center().expandX().expandY();
+        contentTable.add(buttonTable).center().expand();
 
         window.add(contentTable);
         window.pad(50, 50, 50, 50);
@@ -124,6 +124,157 @@ public class MissionDisplay extends UIComponent {
                 stage.getHeight() / 2 - window.getHeight() / 2
         ); // center on stage
 
+    }
+
+    /**
+     * Generates a Label containing the quest's name.
+     *
+     * @param quest to generate the label for
+     * @return Label
+     */
+    private Label getQuestNameLabel(Quest quest) {
+        return new Label(
+                quest.getName(),
+                skin,
+                "pixel-mid",
+                "black"
+        );
+    }
+
+    /**
+     * Generates a Label containing the quest's short description.
+     *
+     * @param quest to generate the label for
+     * @return Label
+     */
+    private Label getQuestShortDescriptionLabel(Quest quest) {
+        return new Label(
+                quest.getShortDescription(),
+                skin,
+                "pixel-body",
+                "black"
+        );
+    }
+
+    /**
+     * Generates a Label containing the quest's description.
+     *
+     * @param quest to generate the label for
+     * @return Label
+     */
+    private Label getQuestDescriptionLabel(Quest quest) {
+        Label descriptionLabel = new Label(
+                quest.getDescription(),
+                skin,
+                "pixel-body",
+                "black"
+        );
+        descriptionLabel.setWrap(true);
+        return descriptionLabel;
+    }
+
+    /**
+     * Generates a TextButton for a quest's action
+     *
+     * @param quest to generate the button for
+     * @return TextButton
+     */
+    private TextButton getQuestActionButton(Quest quest) {
+        return getQuestActionButton(quest, false);
+    }
+
+    /**
+     * Generates a TextButton for a quest's action
+     *
+     * @param quest to generate the button for
+     * @param isNew true if the quest hasn't been accepted yet
+     * @return TextButton
+     */
+    private TextButton getQuestActionButton(Quest quest, boolean isNew) {
+        TextButton actionButton = null;
+
+        if (isNew) {
+            actionButton = new TextButton(
+                    "Accept",
+                    skin,
+                    "small"
+            );
+            actionButton.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent changeEvent, Actor actor) {
+                    missionManager.acceptQuest(quest);
+                    generateQuestsMenu();
+                }
+            });
+        } else if (quest.isExpired()) {
+            actionButton = new TextButton(
+                    "Reactivate",
+                    skin,
+                    "small"
+            );
+            actionButton.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent changeEvent, Actor actor) {
+                    quest.resetExpiry();
+                    generateQuestsMenu();
+                }
+            });
+        } else if (quest.isCompleted()) {
+            actionButton = new TextButton(
+                    "Collect Reward",
+                    skin,
+                    "small"
+            );
+            actionButton.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent changeEvent, Actor actor) {
+                    quest.collectReward();
+                }
+            });
+        }
+
+        return actionButton;
+    }
+
+    /**
+     * Generates a TextButton to view a quest's info.
+     *
+     * @param quest to generate the button for
+     * @return TextButton
+     */
+    private TextButton getQuestViewButton(Quest quest) {
+        return getQuestViewButton(quest, false);
+    }
+
+    /**
+     * Generates a TextButton to view a quest's info.
+     *
+     * @param quest to generate the button for
+     * @param isNew true if the quest hasn't been accepted yet
+     * @return TextButton
+     */
+    private TextButton getQuestViewButton(Quest quest, boolean isNew) {
+        TextButton viewButton = new TextButton(
+                "View",
+                skin,
+                "small"
+        );
+        viewButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                generateQuestInfo(quest, isNew);
+            }
+        });
+
+        return viewButton;
+    }
+
+    private TextButton getBackButton() {
+        return new TextButton(
+                "< Back",
+                skin,
+                "small"
+        );
     }
 
     /**
@@ -166,169 +317,116 @@ public class MissionDisplay extends UIComponent {
 
         Table questTable = new Table();
 
-        questTable.row();
-        questTable.add(newQuestsLabel).colspan(4);
-
-        for (Quest quest : selectableQuests) {
+        if (!selectableQuests.isEmpty()) {
             questTable.row();
+            questTable.add(newQuestsLabel).colspan(4);
 
-            Label questName = new Label(
-                    quest.getName(),
-                    skin,
-                    "pixel-mid",
-                    "black"
-            );
-            Label questDescription = new Label(
-                    quest.getShortDescription(),
-                    skin,
-                    "pixel-body",
-                    "black"
-            );
-
-            TextButton button = new TextButton(
-                    "Accept",
-                    skin,
-                    "small"
-            );
-            button.addListener(new ChangeListener() {
-                @Override
-                public void changed(ChangeEvent changeEvent, Actor actor) {
-                    missionManager.acceptQuest(quest);
-                    generateQuestsMenu();
-                }
-            });
-            TextButton viewButton = new TextButton(
-                    "View",
-                    skin,
-                    "small"
-            );
-
-            questTable.add(questName).right().pad(10f);
-            questTable.add(questDescription).pad(10f);
-            questTable.add(button).pad(10f);
-            questTable.add(viewButton).pad(10f);
+            for (Quest quest : selectableQuests) {
+                questTable.row();
+                questTable.add(getQuestNameLabel(quest)).right().pad(10f);
+                questTable.add(getQuestShortDescriptionLabel(quest)).pad(10f);
+                questTable.add(getQuestActionButton(quest, true)).pad(10f).fill();
+                questTable.add(getQuestViewButton(quest, true)).pad(10f).fill();
+            }
         }
 
-        questTable.row();
-        questTable.add(activeQuestsLabel).colspan(4);
-
-        for (Quest quest : inProgressQuests) {
-            Label questName = new Label(
-                    quest.getName(),
-                    skin,
-                    "pixel-mid",
-                    "black"
-            );
-            Label questDescription = new Label(
-                    quest.getShortDescription(),
-                    skin,
-                    "pixel-body",
-                    "black"
-            );
-
-            TextButton viewButton = new TextButton(
-                    "View",
-                    skin,
-                    "small"
-            );
-
+        if (!inProgressQuests.isEmpty()) {
             questTable.row();
-            questTable.add(questName).right().pad(10f);
-            questTable.add(questDescription).pad(10f);
-            questTable.add();
-            questTable.add(viewButton).pad(10f);
+            questTable.add(activeQuestsLabel).colspan(4);
+
+            for (Quest quest : inProgressQuests) {
+                questTable.row();
+                questTable.add(getQuestNameLabel(quest)).right().pad(10f);
+                questTable.add(getQuestShortDescriptionLabel(quest)).pad(10f);
+                questTable.add().pad(10f);
+                questTable.add(getQuestViewButton(quest)).pad(10f).fill();
+            }
         }
 
-        questTable.row();
-        questTable.add(expiredQuestsLabel).colspan(4);
-
-        for (Quest quest : expiredQuests) {
-            Label questName = new Label(
-                    quest.getName(),
-                    skin,
-                    "pixel-mid",
-                    "black"
-            );
-            Label questDescription = new Label(
-                    quest.getShortDescription(),
-                    skin,
-                    "pixel-body",
-                    "black"
-            );
-
+        if (!expiredQuests.isEmpty()) {
             questTable.row();
-            questTable.add(questName).right().pad(10f);
-            questTable.add(questDescription).pad(10f);
+            questTable.add(expiredQuestsLabel).colspan(4);
 
-            TextButton button = new TextButton(
-                    "Reactivate",
-                    skin,
-                    "small"
-            );
-            button.addListener(new ChangeListener() {
-                @Override
-                public void changed(ChangeEvent changeEvent, Actor actor) {
-                    quest.resetExpiry();
-                    generateQuestsMenu();
-                }
-            });
-
-            questTable.add(button).pad(10f);
-
-            TextButton viewButton = new TextButton(
-                    "View",
-                    skin,
-                    "small"
-            );
-
-            questTable.add(viewButton).pad(10f);
+            for (Quest quest : expiredQuests) {
+                questTable.row();
+                questTable.add(getQuestNameLabel(quest)).right().pad(10f);
+                questTable.add(getQuestShortDescriptionLabel(quest)).pad(10f);
+                questTable.add(getQuestActionButton(quest)).pad(10f).fill();
+                questTable.add(getQuestViewButton(quest)).pad(10f).fill();
+            }
         }
 
-        questTable.row();
-        questTable.add(completedQuestsLabel).colspan(4);
-
-        for (Quest quest : completedQuests) {
-            Label questName = new Label(
-                    quest.getName(),
-                    skin,
-                    "pixel-mid",
-                    "black"
-            );
-            Label questDescription = new Label(
-                    quest.getShortDescription(),
-                    skin,
-                    "pixel-body",
-                    "black"
-            );
-
+        if (!completedQuests.isEmpty()) {
             questTable.row();
-            questTable.add(questName).right().pad(10f);
-            questTable.add(questDescription).pad(10f);
+            questTable.add(completedQuestsLabel).colspan(4);
 
-            TextButton button = new TextButton(
-                    "Collect Reward",
-                    skin,
-                    "small"
-            );
-            button.addListener(new ChangeListener() {
-                @Override
-                public void changed(ChangeEvent changeEvent, Actor actor) {
-                    quest.collectReward();
-                }
-            });
-
-            questTable.add(button).pad(10f);
-
-            TextButton viewButton = new TextButton(
-                    "View",
-                    skin,
-                    "small"
-            );
-
-            questTable.add(viewButton).pad(10f);
+            for (Quest quest : completedQuests) {
+                questTable.row();
+                questTable.add(getQuestNameLabel(quest)).right().pad(10f);
+                questTable.add(getQuestShortDescriptionLabel(quest)).pad(10f);
+                questTable.add(getQuestActionButton(quest)).pad(10f).fill();
+                questTable.add(getQuestViewButton(quest)).pad(10f).fill();
+            }
         }
+
+
+        TextButton backButton = getBackButton();
+        backButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                openMenu();
+            }
+        });
+
+        questTable.row().pad(30f);
+        questTable.add(backButton).colspan(4).center().fill();
 
         questWindow.add(questTable);
+        questWindow.pad(50, 50, 50, 50);
+        questWindow.pack();
+        questWindow.setMovable(false);
+        questWindow.setPosition(
+                stage.getWidth() / 2 - questWindow.getWidth() / 2,
+                stage.getHeight() / 2 - questWindow.getHeight() / 2
+        ); // center on stage
+    }
+
+    /**
+     * Generates an information page for a quest.
+     *
+     * @param quest to generate the page for
+     * @param isNew true if the quest hasn't been accepted yet
+     */
+    private void generateQuestInfo(Quest quest, boolean isNew) {
+        questWindow.clear();
+
+        TextButton backButton = getBackButton();
+        backButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                generateQuestsMenu();
+            }
+        });
+
+        TextButton actionButton = getQuestActionButton(quest, isNew);
+
+        Table questInfoTable = new Table();
+
+        questInfoTable.defaults().size(500f, 50f);
+        questInfoTable.row().pad(30f);
+        questInfoTable.add(getQuestNameLabel(quest)).fill();
+        questInfoTable.row().pad(30f);
+        questInfoTable.add(getQuestDescriptionLabel(quest)).center().colspan(2).fill();
+
+        if (actionButton != null) {
+            questInfoTable.row().padTop(30f);
+            questInfoTable.add(actionButton).center();
+        }
+
+        questInfoTable.row().pad(30f);
+        questInfoTable.add(backButton).fill();
+
+        questWindow.add(questInfoTable);
         questWindow.pad(50, 50, 50, 50);
         questWindow.pack();
         questWindow.setMovable(false);
@@ -358,11 +456,21 @@ public class MissionDisplay extends UIComponent {
 
             isOpen = false;
         } else {
-            generateMissionMenu();
-
-            window.setVisible(true);
-            isOpen = true;
+            openMenu();
         }
+    }
+
+    /**
+     * Sets the main mission menu to visible.
+     */
+    public void openMenu() {
+        generateMissionMenu();
+
+        window.setVisible(true);
+        achWindow.setVisible(false);
+        questWindow.setVisible(false);
+
+        isOpen = true;
     }
 
     /**
