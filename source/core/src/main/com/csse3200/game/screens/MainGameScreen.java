@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.SpaceGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.areas.weather.WeatherEventDisplay;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.tractor.TractorActions;
@@ -62,6 +63,7 @@ public class MainGameScreen extends ScreenAdapter {
           "images/time_system_ui/indicator_21.png",
           "images/time_system_ui/indicator_22.png",
           "images/time_system_ui/indicator_23.png",
+          "images/weather_event/raindrop.png"
   };
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 
@@ -191,7 +193,9 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(new Terminal())
         .addComponent(inputComponent)
         .addComponent(new TerminalDisplay())
-        .addComponent(new GameTimeDisplay());
+        .addComponent(new GameTimeDisplay())
+        .addComponent(new WeatherEventDisplay());
+
 
     ServiceLocator.getEntityService().register(ui);
   }
