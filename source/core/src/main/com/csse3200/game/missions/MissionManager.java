@@ -30,23 +30,23 @@ public class MissionManager {
 	 * this {@link EventHandler} to update their state, when said events are triggered by in-game
 	 * interactions
 	 */
-	private final EventHandler events = new EventHandler();
+	private static final EventHandler events = new EventHandler();
 
 	/**
 	 * A {@link List} of {@link Quest}s which are currently active
 	 */
-	private final List<Quest> activeQuests = new ArrayList<>();
+	private static final List<Quest> activeQuests = new ArrayList<>();
 
 	/**
 	 * A {@link List} of {@link Quest}s which the player may choose to accept by interacting with
 	 * the missions NPC in-game
 	 */
-	private final List<Quest> selectableQuests = new ArrayList<>();
+	private static final List<Quest> selectableQuests = new ArrayList<>();
 
 	/**
 	 * An array of all in-game {@link Achievement}s
 	 */
-	private final Achievement[] achievements = new Achievement[]{
+	private static final Achievement[] achievements = new Achievement[]{
 			new PlantCropsAchievement("Plant President", 50),
 			new PlantCropsAchievement("Crop Enjoyer", 200),
 			new PlantCropsAchievement("Gardener of the Galaxy", 800)
