@@ -1,21 +1,19 @@
 {
+"hour": 5,
 "player": {
 	"Entity": "Player",
-	"x": 12.269529,
-	"y": 24.580704,
+	"x": 7.510004,
+	"y": 21.436464,
 	"components": {
-		"InteractionColliderComponent": {},
-		"HitboxComponent": {},
-		"AnimationRenderComponent": {},
-		"PhysicsComponent": {},
 		"ToolbarDisplay": {},
 		"CombatStatsComponent": {},
 		"ItemPickupComponent": {},
+		"ColliderComponent": {},
 		"KeyboardPlayerInputComponent": {},
 		"InventoryDisplay": {},
 		"PlayerActions": {},
 		"PlayerAnimationController": {},
-		"ColliderComponent": {},
+		"PhysicsComponent": {},
 		"InventoryComponent": {
 			"inventory": {
 				"item": {
@@ -34,908 +32,382 @@
 				"item": {
 					"name": "scythe",
 					"count": 1
-				},
-				"item": {
-					"name": "watering_can",
-					"level": 150,
-					"count": 1
-				},
-				"item": {
-					"name": "shovel",
-					"count": 1
-				},
-				"item": {
-					"name": "fertiliser",
-					"count": 1
-				},
-				"item": {
-					"name": "hoe",
-					"count": 1
 				}
 			}
-		}
+		},
+		"InteractionColliderComponent": {},
+		"HitboxComponent": {},
+		"AnimationRenderComponent": {}
 	}
 },
 "entities": [
 	{
-		"Entity": "Cow",
-		"x": 46.733814,
-		"y": 10.137909,
-		"components": {
-			"AITaskComponent": {},
-			"PhysicsComponent": {},
-			"AnimationRenderComponent": {},
-			"TamableComponent": {
-				"tamed": false
-			},
-			"PhysicsMovementComponent": {},
-			"AnimalAnimationController": {},
-			"ColliderComponent": {}
-		}
-	},
-	{
 		"Entity": "Astrolotl",
-		"x": 4.369115,
-		"y": 11.760558,
+		"x": 3.1549509,
+		"y": 6.3271103,
 		"components": {
-			"AITaskComponent": {},
+			"PhysicsMovementComponent": {},
+			"AnimalAnimationController": {},
+			"ColliderComponent": {},
 			"PhysicsComponent": {},
-			"AnimationRenderComponent": {},
+			"AITaskComponent": {},
 			"TamableComponent": {
 				"tamed": false
 			},
-			"PhysicsMovementComponent": {},
-			"AnimalAnimationController": {},
-			"ColliderComponent": {}
+			"AnimationRenderComponent": {}
 		}
 	},
 	{
 		"Entity": "Cow",
-		"x": 40.292118,
-		"y": 4.0376005,
+		"x": 23.40779,
+		"y": 47.165794,
 		"components": {
-			"AITaskComponent": {},
+			"PhysicsMovementComponent": {},
+			"AnimalAnimationController": {},
+			"ColliderComponent": {},
 			"PhysicsComponent": {},
-			"AnimationRenderComponent": {},
+			"AITaskComponent": {},
 			"TamableComponent": {
 				"tamed": false
 			},
-			"PhysicsMovementComponent": {},
-			"AnimalAnimationController": {},
-			"ColliderComponent": {}
+			"AnimationRenderComponent": {}
 		}
 	},
 	{
 		"Entity": "Cow",
-		"x": 28.655766,
-		"y": 11.308675,
+		"x": 21.905735,
+		"y": 18.210587,
 		"components": {
-			"AITaskComponent": {},
+			"PhysicsMovementComponent": {},
+			"AnimalAnimationController": {},
+			"ColliderComponent": {},
 			"PhysicsComponent": {},
-			"AnimationRenderComponent": {},
+			"AITaskComponent": {},
 			"TamableComponent": {
 				"tamed": false
 			},
-			"PhysicsMovementComponent": {},
-			"AnimalAnimationController": {},
-			"ColliderComponent": {}
+			"AnimationRenderComponent": {}
 		}
 	},
 	{
 		"Entity": "Cow",
-		"x": 2.1032069,
-		"y": 47.945366,
+		"x": 5.9322276,
+		"y": 31.060505,
 		"components": {
-			"AITaskComponent": {},
+			"PhysicsMovementComponent": {},
+			"AnimalAnimationController": {},
+			"ColliderComponent": {},
 			"PhysicsComponent": {},
-			"AnimationRenderComponent": {},
+			"AITaskComponent": {},
 			"TamableComponent": {
 				"tamed": false
 			},
-			"PhysicsMovementComponent": {},
-			"AnimalAnimationController": {},
-			"ColliderComponent": {}
+			"AnimationRenderComponent": {}
 		}
 	},
 	{
 		"Entity": "Cow",
-		"x": 41.55179,
-		"y": 31.067024,
+		"x": 41.979713,
+		"y": 12.479099,
 		"components": {
-			"AITaskComponent": {},
+			"PhysicsMovementComponent": {},
+			"AnimalAnimationController": {},
+			"ColliderComponent": {},
 			"PhysicsComponent": {},
-			"AnimationRenderComponent": {},
+			"AITaskComponent": {},
 			"TamableComponent": {
 				"tamed": false
 			},
+			"AnimationRenderComponent": {}
+		}
+	},
+	{
+		"Entity": "Cow",
+		"x": 25.11586,
+		"y": 20.890661,
+		"components": {
 			"PhysicsMovementComponent": {},
 			"AnimalAnimationController": {},
-			"ColliderComponent": {}
+			"ColliderComponent": {},
+			"PhysicsComponent": {},
+			"AITaskComponent": {},
+			"TamableComponent": {
+				"tamed": false
+			},
+			"AnimationRenderComponent": {}
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 26.003239,
-		"y": 44.06494,
+		"x": 22.537655,
+		"y": 15.296704,
 		"components": {
-			"AITaskComponent": {},
+			"PhysicsMovementComponent": {},
+			"AnimalAnimationController": {},
+			"ColliderComponent": {},
 			"PhysicsComponent": {},
-			"AnimationRenderComponent": {},
+			"AITaskComponent": {},
 			"TamableComponent": {
 				"tamed": false
 			},
-			"PhysicsMovementComponent": {},
-			"AnimalAnimationController": {},
-			"ColliderComponent": {}
+			"AnimationRenderComponent": {}
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 9.69346,
-		"y": 33.019302,
+		"x": 25.953102,
+		"y": 42.69662,
 		"components": {
-			"AITaskComponent": {},
+			"PhysicsMovementComponent": {},
+			"AnimalAnimationController": {},
+			"ColliderComponent": {},
 			"PhysicsComponent": {},
-			"AnimationRenderComponent": {},
+			"AITaskComponent": {},
 			"TamableComponent": {
 				"tamed": false
 			},
-			"PhysicsMovementComponent": {},
-			"AnimalAnimationController": {},
-			"ColliderComponent": {}
+			"AnimationRenderComponent": {}
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 45.366497,
-		"y": 1.6531925,
+		"x": 34.10392,
+		"y": 11.49936,
 		"components": {
-			"AITaskComponent": {},
+			"PhysicsMovementComponent": {},
+			"AnimalAnimationController": {},
+			"ColliderComponent": {},
 			"PhysicsComponent": {},
-			"AnimationRenderComponent": {},
+			"AITaskComponent": {},
 			"TamableComponent": {
 				"tamed": false
 			},
-			"PhysicsMovementComponent": {},
-			"AnimalAnimationController": {},
-			"ColliderComponent": {}
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 9.339496,
-		"y": 1.1589806,
-		"components": {
-			"AITaskComponent": {},
-			"PhysicsComponent": {},
-			"AnimationRenderComponent": {},
-			"TamableComponent": {
-				"tamed": false
-			},
-			"PhysicsMovementComponent": {},
-			"AnimalAnimationController": {},
-			"ColliderComponent": {}
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 40.98771,
-		"y": 40.05299,
-		"components": {
-			"AITaskComponent": {},
-			"PhysicsComponent": {},
-			"AnimationRenderComponent": {},
-			"TamableComponent": {
-				"tamed": false
-			},
-			"PhysicsMovementComponent": {},
-			"AnimalAnimationController": {},
-			"ColliderComponent": {}
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 19.742298,
-		"y": 19.451563,
-		"components": {
-			"AITaskComponent": {},
-			"PhysicsComponent": {},
-			"AnimationRenderComponent": {},
-			"TamableComponent": {
-				"tamed": false
-			},
-			"PhysicsMovementComponent": {},
-			"AnimalAnimationController": {},
-			"ColliderComponent": {}
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 3.496068,
-		"y": 17.413433,
-		"components": {
-			"AITaskComponent": {},
-			"PhysicsComponent": {},
-			"AnimationRenderComponent": {},
-			"TamableComponent": {
-				"tamed": false
-			},
-			"PhysicsMovementComponent": {},
-			"AnimalAnimationController": {},
-			"ColliderComponent": {}
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 7.241786,
-		"y": 41.60754,
-		"components": {
-			"AITaskComponent": {},
-			"PhysicsComponent": {},
-			"AnimationRenderComponent": {},
-			"TamableComponent": {
-				"tamed": false
-			},
-			"PhysicsMovementComponent": {},
-			"AnimalAnimationController": {},
-			"ColliderComponent": {}
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 30.129221,
-		"y": 3.9426568,
-		"components": {
-			"AITaskComponent": {},
-			"PhysicsComponent": {},
-			"AnimationRenderComponent": {},
-			"TamableComponent": {
-				"tamed": false
-			},
-			"PhysicsMovementComponent": {},
-			"AnimalAnimationController": {},
-			"ColliderComponent": {}
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 44.816463,
-		"y": 33.770634,
-		"components": {
-			"AITaskComponent": {},
-			"PhysicsComponent": {},
-			"AnimationRenderComponent": {},
-			"TamableComponent": {
-				"tamed": false
-			},
-			"PhysicsMovementComponent": {},
-			"AnimalAnimationController": {},
-			"ColliderComponent": {}
+			"AnimationRenderComponent": {}
 		}
 	},
 	{
 		"Entity": "Tractor",
-		"x": 5.0627823,
-		"y": 4.6077614,
+		"x": 5.0625,
+		"y": 5.78125,
 		"components": {
-			"TractorActions": {},
-			"AnimationRenderComponent": {},
+			"TractorAnimationController": {},
+			"ColliderComponent": {},
+			"TractorActions": {
+				"isMuted": true
+			},
 			"PhysicsComponent": {},
 			"KeyboardTractorInputComponent": {},
-			"TractorAnimationController": {},
-			"ColliderComponent": {}
+			"AnimationRenderComponent": {}
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 43.448208,
+		"y": 21.407457,
+		"components": {
+			"PhysicsMovementComponent": {},
+			"AnimalAnimationController": {},
+			"ColliderComponent": {},
+			"PhysicsComponent": {},
+			"AITaskComponent": {},
+			"TamableComponent": {
+				"tamed": false
+			},
+			"AnimationRenderComponent": {}
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 32.357647,
+		"y": 42.53559,
+		"components": {
+			"PhysicsMovementComponent": {},
+			"AnimalAnimationController": {},
+			"ColliderComponent": {},
+			"PhysicsComponent": {},
+			"AITaskComponent": {},
+			"TamableComponent": {
+				"tamed": false
+			},
+			"AnimationRenderComponent": {}
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 5.132105,
+		"y": 47.834927,
+		"components": {
+			"PhysicsMovementComponent": {},
+			"AnimalAnimationController": {},
+			"ColliderComponent": {},
+			"PhysicsComponent": {},
+			"AITaskComponent": {},
+			"TamableComponent": {
+				"tamed": false
+			},
+			"AnimationRenderComponent": {}
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 35.79232,
+		"y": 34.891064,
+		"components": {
+			"PhysicsMovementComponent": {},
+			"AnimalAnimationController": {},
+			"ColliderComponent": {},
+			"PhysicsComponent": {},
+			"AITaskComponent": {},
+			"TamableComponent": {
+				"tamed": false
+			},
+			"AnimationRenderComponent": {}
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 4.70355,
+		"y": 34.710575,
+		"components": {
+			"PhysicsMovementComponent": {},
+			"AnimalAnimationController": {},
+			"ColliderComponent": {},
+			"PhysicsComponent": {},
+			"AITaskComponent": {},
+			"TamableComponent": {
+				"tamed": false
+			},
+			"AnimationRenderComponent": {}
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 38.729656,
+		"y": 31.12494,
+		"components": {
+			"PhysicsMovementComponent": {},
+			"AnimalAnimationController": {},
+			"ColliderComponent": {},
+			"PhysicsComponent": {},
+			"AITaskComponent": {},
+			"TamableComponent": {
+				"tamed": false
+			},
+			"AnimationRenderComponent": {}
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 5.9459195,
+		"y": 47.542343,
+		"components": {
+			"PhysicsMovementComponent": {},
+			"AnimalAnimationController": {},
+			"ColliderComponent": {},
+			"PhysicsComponent": {},
+			"AITaskComponent": {},
+			"TamableComponent": {
+				"tamed": false
+			},
+			"AnimationRenderComponent": {}
 		}
 	}
 ],
 "tiles": [
 	{
 		"Entity": "Tile",
-		"x": 22,
-		"y": 18,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"PhysicsComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0.7150421,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			},
-			"ColliderComponent": {}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 21,
-		"y": 19,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"PhysicsComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0.702557,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			},
-			"ColliderComponent": {}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 20,
-		"y": 20,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"PhysicsComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0.6958748,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			},
-			"ColliderComponent": {}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 20,
-		"y": 21,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"PhysicsComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0.6884129,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			},
-			"ColliderComponent": {}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 19,
-		"y": 21,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"PhysicsComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0.6808271,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			},
-			"ColliderComponent": {}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 19,
-		"y": 22,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"PhysicsComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0.6742392,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			},
-			"ColliderComponent": {}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 18,
-		"y": 22,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"PhysicsComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0.66753024,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			},
-			"ColliderComponent": {}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 17,
-		"y": 23,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"PhysicsComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0.6525123,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			},
-			"ColliderComponent": {}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 16,
-		"y": 24,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"PhysicsComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0.6467078,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			},
-			"ColliderComponent": {}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 16,
-		"y": 25,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"PhysicsComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0.6391563,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			},
-			"ColliderComponent": {}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 15,
-		"y": 25,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"PhysicsComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0.6333954,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			},
-			"ColliderComponent": {}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 15,
-		"y": 26,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"PhysicsComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0.62586635,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			},
-			"ColliderComponent": {}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 14,
-		"y": 26,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"PhysicsComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0.6200367,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			},
-			"ColliderComponent": {}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 14,
-		"y": 27,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"PhysicsComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0.61338866,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			},
-			"ColliderComponent": {}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 13,
-		"y": 27,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"PhysicsComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0.6075637,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			},
-			"ColliderComponent": {}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 13,
-		"y": 28,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"PhysicsComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0.60006684,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			},
-			"ColliderComponent": {}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 10,
-		"y": 22,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 11,
-		"y": 20,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 10,
-		"y": 21,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 9,
-		"y": 21,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 9,
-		"y": 22,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 8,
-		"y": 23,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			}
-		}
-	},
-	{
-		"Entity": "Tile",
 		"x": 7,
-		"y": 19,
+		"y": 20,
 		"components": {
-			"DynamicTextureRenderComponent": {},
 			"CropTileComponent": {
-				"waterContent": 0,
+				"waterContent": 0.64758945,
 				"soilQuality": 1,
 				"isFertilised": false,
 				"plant": null
-			}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 11,
-		"y": 22,
-		"components": {
+			},
+			"ColliderComponent": {},
 			"DynamicTextureRenderComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 8,
-		"y": 27,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 9,
-		"y": 27,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 9,
-		"y": 26,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			}
+			"PhysicsComponent": {}
 		}
 	},
 	{
 		"Entity": "Tile",
 		"x": 10,
-		"y": 26,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 10,
-		"y": 25,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 11,
-		"y": 25,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 11,
-		"y": 24,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 12,
-		"y": 24,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 12,
-		"y": 23,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 12,
-		"y": 28,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"PhysicsComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0.5935082,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			},
-			"ColliderComponent": {}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 12,
-		"y": 29,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"PhysicsComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0.56846666,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			},
-			"ColliderComponent": {}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 13,
-		"y": 23,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 14,
-		"y": 22,
-		"components": {
-			"DynamicTextureRenderComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 15,
 		"y": 21,
 		"components": {
-			"DynamicTextureRenderComponent": {},
 			"CropTileComponent": {
-				"waterContent": 0,
+				"waterContent": 0.5742725,
 				"soilQuality": 1,
 				"isFertilised": false,
 				"plant": null
-			}
+			},
+			"ColliderComponent": {},
+			"DynamicTextureRenderComponent": {},
+			"PhysicsComponent": {}
 		}
 	},
 	{
 		"Entity": "Tile",
-		"x": 15,
+		"x": 9,
+		"y": 22,
+		"components": {
+			"CropTileComponent": {
+				"waterContent": 0.53596365,
+				"soilQuality": 1,
+				"isFertilised": false,
+				"plant": null
+			},
+			"ColliderComponent": {},
+			"DynamicTextureRenderComponent": {},
+			"PhysicsComponent": {}
+		}
+	},
+	{
+		"Entity": "Tile",
+		"x": 11,
+		"y": 21,
+		"components": {
+			"CropTileComponent": {
+				"waterContent": 0.50675714,
+				"soilQuality": 1,
+				"isFertilised": false,
+				"plant": null
+			},
+			"ColliderComponent": {},
+			"DynamicTextureRenderComponent": {},
+			"PhysicsComponent": {}
+		}
+	},
+	{
+		"Entity": "Tile",
+		"x": 11,
 		"y": 20,
 		"components": {
-			"DynamicTextureRenderComponent": {},
 			"CropTileComponent": {
-				"waterContent": 0,
+				"waterContent": 0.47175747,
 				"soilQuality": 1,
 				"isFertilised": false,
 				"plant": null
-			}
+			},
+			"ColliderComponent": {},
+			"DynamicTextureRenderComponent": {},
+			"PhysicsComponent": {}
 		}
 	},
 	{
 		"Entity": "Tile",
-		"x": 16,
+		"x": 9,
 		"y": 20,
 		"components": {
-			"DynamicTextureRenderComponent": {},
 			"CropTileComponent": {
-				"waterContent": 0,
+				"waterContent": 0.43425694,
 				"soilQuality": 1,
 				"isFertilised": false,
 				"plant": null
-			}
-		}
-	},
-	{
-		"Entity": "Tile",
-		"x": 16,
-		"y": 19,
-		"components": {
+			},
+			"ColliderComponent": {},
 			"DynamicTextureRenderComponent": {},
-			"CropTileComponent": {
-				"waterContent": 0,
-				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": null
-			}
+			"PhysicsComponent": {}
 		}
 	}
 ]

@@ -4,9 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.player.PlayerActions;
@@ -16,13 +13,8 @@ import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.files.SaveGame;
 import com.csse3200.game.files.SaveGame.GameState;
 import com.csse3200.game.entities.factories.NPCFactory;
-import com.csse3200.game.entities.factories.TractorFactory;
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
-import com.csse3200.game.rendering.RenderComponent;
-
-import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
-
 
 
 /* A note of the registering of this service:
@@ -110,20 +102,17 @@ public class SaveLoadService {
     updateTiles(state);
     updatePlayer(state);
     updateTime(state);
+    updateTractor(state);
   }
 
   /**
-   * Updates the player entity position based off the saved gamestate
+   * Updates the player entity position based off the saved GameState
    * 
    * @param state gamestate of the entire game based off safeFile.json
    */
   private void updatePlayer(GameState state) {
     Entity currentPlayer = ServiceLocator.getGameArea().getPlayer();
     currentPlayer.setPosition(state.getPlayer().getPosition());
-    // TODO
-    // These on load will take the player out of tractor so temp if we can figure out how to keep inside
-    // (we would need to store a bool saying if player is in tractor
-    // I know how to figure that out but don't know how to use it in the json or to store it
     currentPlayer.getComponent(PlayerActions.class).getCameraVar().setTrackEntity(currentPlayer);
     currentPlayer.getComponent(PlayerActions.class).setMuted(false);
     //currentPlayer.getComponent(PlayerActions.class).stopMoving();
@@ -140,8 +129,6 @@ public class SaveLoadService {
     Map<EntityType, Function<Entity, Entity>> npcFactories = new HashMap<>();
     npcFactories.put(EntityType.Cow, NPCFactory::createCow);
     npcFactories.put(EntityType.Chicken, NPCFactory::createChicken);
-    npcFactories.put(EntityType.Astrolotl, NPCFactory::createAstrolotl);
-    npcFactories.put(EntityType.Tractor, TractorFactory::createTractor);
 
     for (Entity entity : state.getEntities()) {
       EntityType entityType = entity.getType();
@@ -149,15 +136,39 @@ public class SaveLoadService {
         Entity npc = npcFactories.get(entityType).apply(player);
         npc.setPosition(entity.getPosition());
         ServiceLocator.getGameArea().spawnEntity(npc);
-        // TODO takes the player out of the tractor on load
-        if (entityType == EntityType.Tractor) {
-          npc.getComponent(TractorActions.class).setMuted(true);    //disable the tractor
-        }
       }
     }
   }
 
   /**
+<<<<<<< HEAD
+=======
+   * Update the tractors in-game position and check if the player was in the tractor or not
+   *  on saving last
+   * @param state
+   */
+  private void updateTractor(GameState state){
+    Entity tractor = ServiceLocator.getGameArea().getTractor(); //Get the tractor in the game
+    Entity tractorState = state.getTractor();   //Get tractor entity stored within the json file
+    
+    if (tractorState == null || tractor == null) { return; }  
+    
+    Boolean inTractor = !tractorState.getComponent(TractorActions.class).isMuted();  //store the inverse of the muted value from tractor state entity
+
+    Entity player = ServiceLocator.getGameArea().getPlayer();
+    
+    tractor.setPosition(tractorState.getPosition());   //Update the tractors position to the values stored in the json file
+    
+    //Check whether the player was in the tractor when they last saved 
+    if (inTractor){
+      //set the player inside the tractor
+      player.setPosition(tractor.getPosition());              //Teleport the player to the tractor
+      player.getEvents().trigger("enterTractor");   //trigger the enterTractor event
+    }
+  }
+
+
+  /**''
    * Updates the time of the game based off the saved values in the gamestate
    * 
    * @param state the state of the saved game

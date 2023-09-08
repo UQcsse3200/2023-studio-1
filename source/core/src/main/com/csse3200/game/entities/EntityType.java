@@ -10,7 +10,3 @@ public enum EntityType {
     Astrolotl,
     Item
 }
-
-
-
-// import com.csse3200.game.entities.EntityType;

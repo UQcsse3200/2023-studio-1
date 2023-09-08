@@ -102,6 +102,20 @@ public class SaveGame {
       return tiles;
     }
 
+    /**
+     * Loop through all entities in the save file and if the tractor is there return the tractor
+     *    if not return null
+     * @return
+     */
+    public Entity getTractor(){
+      for (Entity entity : this.getEntities()){
+        if (entity.getType() == EntityType.Tractor){
+          return entity;
+        }
+      }
+      return null;
+    }
+
     public void setTiles(Array<Entity> tiles) {
       this.tiles = filterTiles(tiles);
     }
