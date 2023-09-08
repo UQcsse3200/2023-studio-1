@@ -6,9 +6,6 @@ import com.csse3200.game.entities.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Set;
-import java.util.HashSet;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.Point; // for positional data
@@ -26,11 +23,9 @@ import static com.csse3200.game.entities.factories.ItemFactory.createShovel;
  */
 public class InventoryComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
-  private final List<Entity> inventory = new ArrayList<>();
-  private final Set<Integer> inventoryIds = new HashSet<>();  // To quickly check by ID
-  private final Map<Integer, Integer> itemCount = new HashMap<>();
-  private final Map<Integer, Point> itemPosition = new HashMap<>();
-
+  private final List<Entity> inventory = new ArrayList<Entity>();
+  private final Map<Entity, Integer> itemCount = new HashMap<>();
+  private final Map<Entity, Point> itemPosition = new HashMap<>();
 
   public InventoryComponent(List<Entity> items) {
     setInventory(items);
@@ -50,61 +45,66 @@ public class InventoryComponent extends Component {
    * @param item item to be checked
    * @return boolean representing if the item is on the character
    */
-
-
   public Boolean hasItem(Entity item) {
-    return inventoryIds.contains(item.getId());
+    return this.inventory.contains(item);
   }
 
+  /**
+   * Sets the player's inventory.
+   *
+   * @param items items to be added to inventory
+   */
   public void setInventory(List<Entity> items) {
     this.inventory.addAll(items);
+    logger.debug("Setting inventory to {}", this.inventory.toString());
     for (Entity item : items) {
-      inventoryIds.add(item.getId());
-      itemCount.put(item.getId(), 1);
-      itemPosition.put(item.getId(), new Point(0, 0));
+      itemCount.put(item, 1); // Setting initial count as 1
+      itemPosition.put(item, new Point(0, 0)); // Setting a default position (0,0) for now.
     }
     logger.debug("Setting inventory to {}", this.inventory.toString());
+
   }
 
+  /**
+   * Adds an item to the Player's inventory
+   * @param item item to add
+   * @return boolean representing if the item was added successfully
+   */
   public boolean addItem(Entity item) {
-    int id = item.getId();
-    inventoryIds.add(id);
-    itemCount.put(id, itemCount.getOrDefault(id, 0) + 1);
-    if (!itemPosition.containsKey(id)) {
-      itemPosition.put(id, new Point(0, 0));
+    itemCount.put(item, itemCount.getOrDefault(item, 0) + 1);
+    if (!itemPosition.containsKey(item)) {
+      itemPosition.put(item, new Point(0, 0)); // Default position. You can change this as needed.
     }
-    return inventory.add(item);
+      return this.inventory.add(item);
   }
 
+  /**
+   * Removes an item from the Player's Inventory
+   * @param item item to be removed
+   * @return boolean representing if the item was removed successfully
+   */
   public boolean removeItem(Entity item) {
-    int id = item.getId();
-    int newCount = itemCount.getOrDefault(id, 0) - 1;
-
-    if (newCount <= 0) {
-      itemCount.remove(id);
-      itemPosition.remove(id);
-      inventory.remove(item);
-      inventoryIds.remove(id);
-    } else {
-      itemCount.put(id, newCount);
+    itemCount.put(item, itemCount.get(item) - 1);
+    if (itemCount.get(item) == 0) {
+      itemCount.remove(item);
+      itemPosition.remove(item);
     }
-    return true;
+    return this.inventory.remove(item);
   }
 
   public Entity getInHand() {
     return createHoe();
   }
 
-
   public int getItemCount(Entity item) {
-    return itemCount.getOrDefault(item.getId(), 0);
+    return itemCount.getOrDefault(item, 0);
   }
 
   public Point getItemPosition(Entity item) {
-    return itemPosition.get(item.getId());
+    return itemPosition.get(item);
   }
 
   public void setItemPosition(Entity item, Point point) {
-    itemPosition.put(item.getId(), point);
+    itemPosition.put(item, point);
   }
 }
