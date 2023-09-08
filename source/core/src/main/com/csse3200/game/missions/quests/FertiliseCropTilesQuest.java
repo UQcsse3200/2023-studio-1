@@ -48,6 +48,11 @@ public class FertiliseCropTilesQuest extends Quest {
                 + numberOfTilesFertilised + " out of " + target + " crop tiles fertilised.";
     }
 
+    @Override
+    public String getShortDescription() {
+        return numberOfTilesFertilised + " out of " + target + " crop tiles fertilised";
+    }
+
     /**
      * Increments the number of crop tiles the player has fertilised.
      */

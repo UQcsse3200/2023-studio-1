@@ -27,11 +27,7 @@ public class MissionManager {
 
 	private static final EventHandler events = new EventHandler();
 	private static final List<Quest> activeQuests = new ArrayList<>();
-	private static final List<Quest> selectableQuests = List.of(
-			// Item rewards to be decided upon at a later date
-			new FertiliseCropTilesQuest("Haber Hobbyist", new ItemReward(new ArrayList<>()), 24, 10),
-			new FertiliseCropTilesQuest("Fertiliser Fanatic", new ItemReward(new ArrayList<>()), 48, 40)
-	);
+	private static final List<Quest> selectableQuests = new ArrayList<>();
 	private static final Achievement[] achievements = new Achievement[]{
 			new PlantCropsAchievement("Plant President", 50),
 			new PlantCropsAchievement("Crop Enjoyer", 200),
@@ -46,6 +42,16 @@ public class MissionManager {
 		for (Achievement mission : achievements) {
 			mission.registerMission(events);
 		}
+
+		// Add initial quests - regardless of GameArea
+		selectableQuests.add(
+				// Item reward to be determined at later date
+				new FertiliseCropTilesQuest("Haber Hobbyist", new ItemReward(new ArrayList<>()), 24, 10)
+		);
+		selectableQuests.add(
+				// Item reward to be determined at later date
+				new FertiliseCropTilesQuest("Fertiliser Fanatic", new ItemReward(new ArrayList<>()), 48, 40)
+		);
 	}
 
 	/**
