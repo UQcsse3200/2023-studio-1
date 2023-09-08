@@ -1,29 +1,35 @@
 package com.csse3200.game.missions;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class MissionManagerTest {
 
-    @Test
-    void testAcceptQuest() {
+    @BeforeAll
+    public void begin() {
+
     }
 
     @Test
-    void testGetActiveQuests() {
+    public void testAcceptQuest() {
     }
 
     @Test
-    void testAddQuest() {
+    public void testGetActiveQuests() {
     }
 
     @Test
-    void testGetSelectableQuests() {
+    public void testAddQuest() {
     }
 
     @Test
-    void testGetEvents() {
+    public void testGetSelectableQuests() {
+    }
+
+    @Test
+    public void testGetEvents() {
     }
 
 }
