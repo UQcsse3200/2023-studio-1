@@ -3,6 +3,7 @@ package com.csse3200.game.areas.weather;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
@@ -37,5 +38,14 @@ public class WeatherEventTest {
         verify(weatherEventSpy3, times(1)).isActive();
         verify(weatherEventSpy4, times(0)).isActive();
         verify(weatherEventSpy5, times(0)).isActive();
+    }
+
+    @Test
+    public void testGetPriority() {
+        assertEquals(weatherEvent1.getPriority(), 1);
+        assertEquals(weatherEvent2.getPriority(), 2);
+        assertEquals(weatherEvent3.getPriority(), 5);
+        assertEquals(weatherEvent4.getPriority(), 3);
+        assertEquals(weatherEvent5.getPriority(), 1);
     }
 }
