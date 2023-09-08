@@ -18,6 +18,9 @@ import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
+
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -176,7 +179,8 @@ public class SpaceGameArea extends GameArea {
   private void spawnTerrain() {
     // Background terrain
     terrain = terrainFactory.createTerrain(this.gameMap.getTiledMap());
-    spawnEntity(new Entity().addComponent(terrain));                  // Will need to monitor this when changing the createTerrain function
+    this.gameMap.setTerrainComponent(terrain);
+    spawnEntity(new Entity().addComponent(terrain));
 
     // Terrain walls
     float tileSize = terrain.getTileSize();
