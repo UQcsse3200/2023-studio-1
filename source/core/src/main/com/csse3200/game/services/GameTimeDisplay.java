@@ -27,17 +27,12 @@ public class GameTimeDisplay extends UIComponent {
     @Override
     public void create() {
         super.create();
-        ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateDisplay);
-        updateDisplay();
+        ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateTimeLabel);
+        updateTimeLabel();
     }
 
-    public void updateDisplay() {
+    public void updateTimeLabel() {
         int time = ServiceLocator.getTimeService().getHour();
-        table = new Table();
-        group = new Group();
-        table.top().left();
-        table.setFillParent(true);
-        table.padTop(150f).padLeft(-100f);
 
         clockImage = new Image(ServiceLocator.getResourceService().getAsset(
             "images/time_system_ui/clock_frame.png", Texture.class));
@@ -62,6 +57,15 @@ public class GameTimeDisplay extends UIComponent {
         } else if ((1 <= time && time <= 9) || (13 <= time && time <= 21)) {
             timeLabel.setPosition(clockImage.getImageX() + 164f, clockImage.getImageY() + 139f);
         }
+    }
+
+    @Override
+    public void draw(SpriteBatch batch) {
+        table = new Table();
+        group = new Group();
+        table.top().left();
+        table.setFillParent(true);
+        table.padTop(150f).padLeft(-100f);
 
         group.addActor(clockImage);
         group.addActor(planetImage);
@@ -69,10 +73,7 @@ public class GameTimeDisplay extends UIComponent {
 
         table.add(group).size(200);
         stage.addActor(table);
-    }
 
-    @Override
-    public void draw(SpriteBatch batch) {
         // Does nothing since draw
         return;
     }
