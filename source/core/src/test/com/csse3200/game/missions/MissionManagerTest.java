@@ -7,13 +7,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MissionManagerTest {
 
+    MissionManager missionManager;
+
     @BeforeAll
     public void begin() {
-
-    }
-
-    @Test
-    public void testAcceptQuest() {
+        missionManager = new MissionManager();
     }
 
     @Test
@@ -21,11 +19,15 @@ class MissionManagerTest {
     }
 
     @Test
-    public void testAddQuest() {
+    public void testGetSelectableQuests() {
     }
 
     @Test
-    public void testGetSelectableQuests() {
+    public void testAcceptQuest() {
+    }
+
+    @Test
+    public void testAddQuest() {
     }
 
     @Test

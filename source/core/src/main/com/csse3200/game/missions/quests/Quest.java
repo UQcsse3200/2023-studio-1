@@ -6,7 +6,8 @@ import com.csse3200.game.missions.rewards.Reward;
 public abstract class Quest extends Mission {
 
 	private final boolean isMandatory;
-	private int duration;
+	private final int duration;
+	private int timeToExpiry;
 	private final Reward reward;
 
 	/**
@@ -25,13 +26,17 @@ public abstract class Quest extends Mission {
 		this.reward = reward;
 		this.duration = expiryDuration;
 		this.isMandatory = isMandatory;
+
+		this.timeToExpiry = this.duration;
 	}
 
 	/**
 	 * Decrements the duration to expiry of the quest by 1.
 	 */
 	public void updateExpiry() {
-		duration--;
+		if (--timeToExpiry < 0) {
+			timeToExpiry = 0;
+		}
 	}
 
 	/**
@@ -39,7 +44,7 @@ public abstract class Quest extends Mission {
 	 * @return True if the quest has expired, false otherwise.
 	 */
 	public boolean isExpired() {
-		return duration <= 0;
+		return timeToExpiry <= 0;
 	}
 
 	/**
@@ -59,4 +64,12 @@ public abstract class Quest extends Mission {
 			reward.collect();
 		}
 	}
+
+	/**
+	 * Resets the {@link Quest}'s time to expiry back to the original expiry duration.
+	 */
+	public void resetExpiry() {
+		timeToExpiry = duration;
+	}
+
 }
