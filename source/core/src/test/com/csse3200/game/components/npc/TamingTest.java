@@ -4,17 +4,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.components.tasks.TamedTask;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
-import com.csse3200.game.entities.factories.PlayerFactory;
-import com.csse3200.game.events.listeners.EventListener0;
 import com.csse3200.game.extensions.GameExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
