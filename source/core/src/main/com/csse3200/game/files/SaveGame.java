@@ -46,6 +46,7 @@ public class SaveGame {
     private int hour;
 
     private Entity player;
+    private Entity tractor;
     private Array<Entity> entities;
 
     private Array<Entity> tiles;
@@ -88,11 +89,11 @@ public class SaveGame {
       // If you edit this original array you edit what is in the ResourceService
       Array<Entity> tmp = new Array<>(entities);
       for (int i = 0; i < tmp.size; i++) {
-        if (tmp.get(i).getType() == EntityType.Item || tmp.get(i).getType() == EntityType.Player || tmp.get(i).getType() == null || tmp.get(i).getType() == EntityType.Tile) {
+        if (tmp.get(i).getType() == EntityType.Item || tmp.get(i).getType() == EntityType.Player || tmp.get(i).getType() == null
+                || tmp.get(i).getType() == EntityType.Tile || tmp.get(i).getType() == EntityType.Tractor) {
           tmp.removeIndex(i);
           // Moves the indexing down when removed so keep index same
           i--;
-
         }
       }
       return tmp;
@@ -108,12 +109,7 @@ public class SaveGame {
      * @return
      */
     public Entity getTractor(){
-      for (Entity entity : this.getEntities()){
-        if (entity.getType() == EntityType.Tractor){
-          return entity;
-        }
-      }
-      return null;
+      return tractor;
     }
 
     public void setTiles(Array<Entity> tiles) {
@@ -132,6 +128,10 @@ public class SaveGame {
         }
       }
       return tiles;
+    }
+
+    public void setTractor(Entity tractor) {
+      this.tractor = tractor;
     }
   }
 }

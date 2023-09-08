@@ -4,6 +4,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Json;
+import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainCropTileFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory;
@@ -23,6 +24,8 @@ import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.function.Function;
 
 /** SpaceGameArea is the area used for the initial game version */
 public class SpaceGameArea extends GameArea {
@@ -102,7 +105,8 @@ public class SpaceGameArea extends GameArea {
           "images/plants/hammer_plant_seed.png",
           "images/plants/horticultural_heater_seed.png",
           "images/plants/space_snapper_seed.png",
-          "images/plants/tobacco_seed.png"
+          "images/plants/tobacco_seed.png",
+          "images/plants/Corn.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
@@ -140,6 +144,7 @@ public class SpaceGameArea extends GameArea {
 
     spawnTerrain();
     //spawnTrees();
+    spawnCrop();
 
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
@@ -222,10 +227,8 @@ public class SpaceGameArea extends GameArea {
     GridPoint2 pos = new GridPoint2(10, 11);
     Entity newPlayer = TerrainCropTileFactory.createTerrainEntity(0,0);
     spawnEntityAt(newPlayer, pos, true, true);
-    Entity newPlayer2 = TerrainCropTileFactory.createTerrainEntity(1,0);
-    spawnEntityAt(newPlayer2, pos, true, true);
-    Entity newPlayer3 = TerrainCropTileFactory.createTerrainEntity(0,1);
-    spawnEntityAt(newPlayer3, pos, true, true);
+    Function<CropTileComponent, Entity> method = PlantFactory::createCosmicCob;
+    newPlayer.getEvents().trigger("plant", method);
     return newPlayer;
   }
 

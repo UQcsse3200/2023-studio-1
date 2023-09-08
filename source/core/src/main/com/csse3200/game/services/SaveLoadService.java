@@ -31,6 +31,7 @@ import com.csse3200.game.rendering.DynamicTextureRenderComponent;
  *    - player inventory (partially)
  *    - time/day.
  *    - entity (cows and stuff) location & tamed status.
+ *    - tiles (cropTileComponent and plants)
  * - Loads:
  *    - player pos.
  *    - time/day.
@@ -47,6 +48,7 @@ public class SaveLoadService {
     state.setHour(ServiceLocator.getTimeService().getHour());
 
     state.setPlayer(ServiceLocator.getGameArea().getPlayer());
+    state.setTractor(ServiceLocator.getGameArea().getTractor());
     state.setEntities(ServiceLocator.getEntityService().getEntities());
     state.setTiles(ServiceLocator.getEntityService().getEntities());
 
@@ -141,29 +143,31 @@ public class SaveLoadService {
   }
 
   /**
-<<<<<<< HEAD
-=======
    * Update the tractors in-game position and check if the player was in the tractor or not
    *  on saving last
    * @param state
    */
   private void updateTractor(GameState state){
-    Entity tractor = ServiceLocator.getGameArea().getTractor(); //Get the tractor in the game
-    Entity tractorState = state.getTractor();   //Get tractor entity stored within the json file
+    Entity tractor = ServiceLocator.getGameArea().getTractor(); // Get the tractor in the game
+    Entity tractorState = state.getTractor();   // Get tractor entity stored within the json file
+    System.out.println(tractorState);
+    System.out.println(tractorState.getPosition());
     
-    if (tractorState == null || tractor == null) { return; }  
+    if (tractorState == null || tractor == null) {
+      System.out.println("Error");
+      return;
+    }
     
-    Boolean inTractor = !tractorState.getComponent(TractorActions.class).isMuted();  //store the inverse of the muted value from tractor state entity
-
-    Entity player = ServiceLocator.getGameArea().getPlayer();
+    Boolean inTractor = !tractorState.getComponent(TractorActions.class).isMuted();  // Store the inverse of the muted value from tractor state entity
+    tractor.setPosition(tractorState.getPosition());   // Update the tractors position to the values stored in the json file
     
-    tractor.setPosition(tractorState.getPosition());   //Update the tractors position to the values stored in the json file
-    
-    //Check whether the player was in the tractor when they last saved 
-    if (inTractor){
-      //set the player inside the tractor
-      player.setPosition(tractor.getPosition());              //Teleport the player to the tractor
-      player.getEvents().trigger("enterTractor");   //trigger the enterTractor event
+    // Check whether the player was in the tractor when they last saved
+    if (inTractor) {
+      // Set the player inside the tractor
+      System.out.println("In tractor");
+      Entity player = ServiceLocator.getGameArea().getPlayer();
+      player.setPosition(tractor.getPosition());              // Teleport the player to the tractor (Needed so that they are in 5 units of each other)
+      player.getEvents().trigger("enterTractor");   // Trigger the enterTractor event
     }
   }
 
