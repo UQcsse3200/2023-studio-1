@@ -6,6 +6,8 @@ import com.csse3200.game.entities.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Set;
+import java.util.HashSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.Point; // for positional data
@@ -23,9 +25,11 @@ import static com.csse3200.game.entities.factories.ItemFactory.createShovel;
  */
 public class InventoryComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
+  private final Set<Integer> inventoryIds = new HashSet<>();  // To quickly check by ID
+
   private final List<Entity> inventory = new ArrayList<Entity>();
-  private final Map<Entity, Integer> itemCount = new HashMap<>();
-  private final Map<Entity, Point> itemPosition = new HashMap<>();
+  private final Map<Integer, Integer> itemCount = new HashMap<>();
+  private final Map<Integer, Point> itemPosition = new HashMap<>();
 
   public InventoryComponent(List<Entity> items) {
     setInventory(items);
@@ -46,7 +50,7 @@ public class InventoryComponent extends Component {
    * @return boolean representing if the item is on the character
    */
   public Boolean hasItem(Entity item) {
-    return this.inventory.contains(item);
+    return inventoryIds.contains(item.getId());
   }
 
   /**
@@ -58,8 +62,10 @@ public class InventoryComponent extends Component {
     this.inventory.addAll(items);
     logger.debug("Setting inventory to {}", this.inventory.toString());
     for (Entity item : items) {
-      itemCount.put(item, 1); // Setting initial count as 1
-      itemPosition.put(item, new Point(0, 0)); // Setting a default position (0,0) for now.
+      inventoryIds.add(item.getId());
+
+      itemCount.put(item.getId(), 1); // Setting initial count as 1
+      itemPosition.put(item.getId(), new Point(0, 0)); // Setting a default position (0,0) for now.
     }
     logger.debug("Setting inventory to {}", this.inventory.toString());
 
@@ -71,9 +77,9 @@ public class InventoryComponent extends Component {
    * @return boolean representing if the item was added successfully
    */
   public boolean addItem(Entity item) {
-    itemCount.put(item, itemCount.getOrDefault(item, 0) + 1);
+    itemCount.put(item.getId(), itemCount.getOrDefault(item, 0) + 1);
     if (!itemPosition.containsKey(item)) {
-      itemPosition.put(item, new Point(0, 0)); // Default position. You can change this as needed.
+      itemPosition.put(item.getId(), new Point(0, 0)); // Default position. You can change this as needed.
     }
       return this.inventory.add(item);
   }
@@ -84,7 +90,7 @@ public class InventoryComponent extends Component {
    * @return boolean representing if the item was removed successfully
    */
   public boolean removeItem(Entity item) {
-    itemCount.put(item, itemCount.get(item) - 1);
+    itemCount.put(item.getId(), itemCount.get(item) - 1);
     if (itemCount.get(item) == 0) {
       itemCount.remove(item);
       itemPosition.remove(item);
@@ -105,6 +111,6 @@ public class InventoryComponent extends Component {
   }
 
   public void setItemPosition(Entity item, Point point) {
-    itemPosition.put(item, point);
+    itemPosition.put(item.getId(), point);
   }
 }
