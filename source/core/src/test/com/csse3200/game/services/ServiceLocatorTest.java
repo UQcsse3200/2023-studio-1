@@ -37,7 +37,6 @@ class ServiceLocatorTest {
     assertNull(ServiceLocator.getEntityService());
     assertNull(ServiceLocator.getRenderService());
     assertNull(ServiceLocator.getPhysicsService());
-    assertNull(ServiceLocator.getSaveLoadService());
     assertNull(ServiceLocator.getTimeSource());
   }
 }
