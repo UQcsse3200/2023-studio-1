@@ -23,6 +23,7 @@ public class ClimateController {
 		temperature = DEFAULT_TEMPERATURE;
 		events = new EventHandler();
 		ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateWeatherEvent);
+		ServiceLocator.getTimeService().getEvents().addListener("minuteUpdate", this::updateClimate);
 	}
 
 	/**
@@ -56,12 +57,15 @@ public class ClimateController {
 	 * Updates the values of the game's climate based on current weather events
 	 */
 	private void updateClimate() {
+		float time = ServiceLocator.getTimeService().getHour() +
+				(float) ServiceLocator.getTimeService().getMinute() / 60;
 		float humidityModifier = currentWeatherEvent == null ? 1 : currentWeatherEvent.getHumidityModifier();
 		float temperatureModifier = currentWeatherEvent == null ? 1 : currentWeatherEvent.getTemperatureModifier();
-		temperature = (float)(((10 + MathUtils.random(-2, 2)) * MathUtils.sin((float)
-				(ServiceLocator.getTimeService().getHour() * Math.PI / 46)) + 17.2) * temperatureModifier);
-		humidity = (float) ((float) 0.5 + (0.1 * MathUtils.random(1,3)) * MathUtils.sin((float)
-				(Math.PI / 12 * (ServiceLocator.getTimeService().getHour() - 12))) * humidityModifier);
+		temperature = (float) (((10 + MathUtils.random(-2, 2)) * MathUtils.sin((float)
+				(time * Math.PI / 46)) + 17.2) * temperatureModifier);
+		humidity = (float) ((float) 0.5 + (0.1 * MathUtils.random(1, 3)) * MathUtils.sin((float)
+				(Math.PI / 12 * (time - 12))) * humidityModifier);
+		System.out.printf("(%s, %s), ", time, temperature);
 	}
 
 	/**
@@ -83,6 +87,5 @@ public class ClimateController {
 				weatherEvents.remove(event);
 			}
 		}
-		updateClimate();
 	}
 }
