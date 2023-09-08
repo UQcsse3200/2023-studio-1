@@ -15,7 +15,6 @@ import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.files.SaveGame;
 import com.csse3200.game.files.SaveGame.GameState;
 import com.csse3200.game.entities.factories.NPCFactory;
-import com.csse3200.game.entities.factories.TractorFactory;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.badlogic.gdx.utils.Array;
@@ -105,6 +104,7 @@ public class SaveLoadService {
     updateNPCs(state);
     updatePlayer(state);
     updateTime(state);
+    updateTractor(state);
     updateTiles(state);
   }
 
@@ -144,8 +144,6 @@ public class SaveLoadService {
     Map<EntityType, Function<Entity, Entity>> npcFactories = new HashMap<>();
     npcFactories.put(EntityType.Cow, NPCFactory::createCow);
     npcFactories.put(EntityType.Chicken, NPCFactory::createChicken);
-    npcFactories.put(EntityType.Astrolotl, NPCFactory::createAstrolotl);
-    npcFactories.put(EntityType.Tractor, TractorFactory::createTractor);
 
     for (Entity entity : state.getEntities()) {
       EntityType entityType = entity.getType();
@@ -153,10 +151,14 @@ public class SaveLoadService {
         Entity npc = npcFactories.get(entityType).apply(player);
         npc.setPosition(entity.getPosition());
         ServiceLocator.getGameArea().spawnEntity(npc);
-        // TODO takes the player out of the tractor on load
-        if (entityType == EntityType.Tractor) {
-          npc.getComponent(TractorActions.class).setMuted(true);    //disable the tractor
-        }
+      }
+    }
+  }
+
+  private void updateTractor(GameState state){
+    for (Entity entity : state.getEntities()) {
+      if (entity.getType() == EntityType.Tractor){
+
       }
     }
   }

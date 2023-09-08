@@ -96,7 +96,7 @@ public abstract class GameArea implements Disposable {
   public void removeNPCs(Array<Entity> npcs) {
     for (Entity npc : npcs) {
       if (npc.getType() == EntityType.Cow || npc.getType() == EntityType.Chicken ||
-          npc.getType() == EntityType.Astrolotl || npc.getType() == EntityType.Tractor) {
+          npc.getType() == EntityType.Astrolotl) {
         removeEntity(npc);
       }
     }
