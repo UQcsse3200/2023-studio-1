@@ -4,6 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.areas.terrain.CropTileComponent;
+import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
@@ -13,6 +18,10 @@ import com.csse3200.game.files.SaveGame.GameState;
 import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.TractorFactory;
 import com.badlogic.gdx.utils.Array;
+import com.csse3200.game.rendering.DynamicTextureRenderComponent;
+import com.csse3200.game.rendering.RenderComponent;
+
+import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
 
 
 
@@ -92,10 +101,15 @@ public class SaveLoadService {
    * @param state state of the game which was saved previously in saveFile.json
    */
   private void updateGame(GameState state) {
+    // Get all entities currently in game:
+    Array<Entity> currentGameEntities = ServiceLocator.getEntityService().getEntities();
+    // Remove entities from game that we will replace on load:
+    ServiceLocator.getGameArea().removeLoadableEntities(currentGameEntities);
+    // Replace current entities with loaded ones:
     updateNPCs(state);
+    updateTiles(state);
     updatePlayer(state);
     updateTime(state);
-    updateTiles(state);
   }
 
   /**
@@ -122,11 +136,6 @@ public class SaveLoadService {
    */
   private void updateNPCs(GameState state) {
     Entity player = ServiceLocator.getGameArea().getPlayer();
-    Array<Entity> currentGameEntities = ServiceLocator.getEntityService().getEntities();
-
-    // Remove all current NPCs from the game
-    ServiceLocator.getGameArea().removeNPCs(currentGameEntities);
-
     // Create a map to associate entity types with NPC factory methods
     Map<EntityType, Function<Entity, Entity>> npcFactories = new HashMap<>();
     npcFactories.put(EntityType.Cow, NPCFactory::createCow);
@@ -159,38 +168,21 @@ public class SaveLoadService {
   }
 
   /**
-   * Destroys all tiles in the map and then recreates them based off the gamestate
+   * Recreates / loads tile back into map after a save.
    * @param state gamestate of the entire game based off safeFile.json
    */
   private void updateTiles(GameState state) {
-    // remove tiles
-    /* Have some shovel code here to inspire me:
-      private boolean shovel(TerrainTile tile) {
-        if (tile.getCropTile() != null) {
-          tile.getCropTile().getEvents().trigger("destroy");
-          tile.setUnOccupied();
-          tile.setCropTile(null);
-          return true;
-        }
-        return false;
-      }*/
-    System.out.println("can't delete old tile");
-    System.out.println("can't recreate tile");
-    // TODO: remove all the unused crop
-    System.out.println(state.getTiles());
-    // for (Entity e: state.getTiles()) {
-
-    // }
-    // if (tile.getCropTile() != null || !tile.isTillable()) {
-    //   return false;
-    // }
-    // // Make a new tile
-    // Vector2 newPos = getAdjustedPos(playerPos, mousePos);
-
-    // Entity cropTile = createTerrainEntity(newPos);
-    // tile.setCropTile(cropTile);
-    // tile.setOccupied();
-    // return true;
-
+    GameMap map = ServiceLocator.getGameArea().getMap();
+    for (Entity cropTile : state.getTiles()) {
+      // add render-component back & re-register:
+      DynamicTextureRenderComponent renderComponent = new DynamicTextureRenderComponent("images/cropTile.png");
+      renderComponent.setLayer(1);
+      cropTile.addComponent(renderComponent);
+      ServiceLocator.getEntityService().register(cropTile);
+      // Stick cropTile onto terrainTile
+      TerrainTile tile = map.getTile(cropTile.getPosition());
+      tile.setCropTile(cropTile);
+      tile.setOccupied();
+    }
   }
 }

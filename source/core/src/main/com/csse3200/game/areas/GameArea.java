@@ -11,6 +11,7 @@ import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.ServiceLocator;
 import com.badlogic.gdx.utils.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -91,13 +92,14 @@ public abstract class GameArea implements Disposable {
   /**
    * Loops through the games npcs and removes them. REmoves all
    * cows, chickens and Astrolotl from the game
-   * @param npcs Array<entity> containing all chickens, cows and Astrolotl to be removed
+   * @param entities Array<entity> containing all chickens, cows and Astrolotl to be removed
    */
-  public void removeNPCs(Array<Entity> npcs) {
-    for (Entity npc : npcs) {
-      if (npc.getType() == EntityType.Cow || npc.getType() == EntityType.Chicken ||
-          npc.getType() == EntityType.Astrolotl || npc.getType() == EntityType.Tractor) {
-        removeEntity(npc);
+  public void removeLoadableEntities(Array<Entity> entities) {
+    ArrayList<EntityType> loadableTypes = new ArrayList<>(Arrays.asList(EntityType.Tile, EntityType.Cow,
+            EntityType.Cow, EntityType.Chicken, EntityType.Astrolotl, EntityType.Tractor));
+    for (Entity e : entities) {
+      if (loadableTypes.contains(e.getType())) {
+        removeEntity(e);
       }
     }
   }
