@@ -66,10 +66,17 @@ public abstract class Quest extends Mission {
 	}
 
 	/**
-	 * Resets the {@link Quest}'s time to expiry back to the original expiry duration.
+	 * Resets the {@link Quest}'s time to expiry back to the original expiry duration, and calls the
+	 * {@link Quest}'s {@link #resetState()} method.
 	 */
 	public void resetExpiry() {
 		timeToExpiry = duration;
+		resetState();
 	}
+
+	/**
+	 * Resets the internal state of the {@link Quest}, to what it was before being accepted/modified.
+	 */
+	protected abstract void resetState();
 
 }

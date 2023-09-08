@@ -72,6 +72,11 @@ class MissionManagerTest {
             public String getShortDescription() {
                 return "Short Description 1";
             }
+
+            @Override
+            protected void resetState() {
+                count = 0;
+            }
         };
         q2 = new Quest("My Quest 2", r2, 1, false) {
             private int count = 5;
@@ -94,6 +99,11 @@ class MissionManagerTest {
             @Override
             public String getShortDescription() {
                 return "Short Description 2";
+            }
+
+            @Override
+            protected void resetState() {
+                count = 5;
             }
         };
         q3 = new Quest("My Quest 3", r3, 5, true) {
@@ -119,6 +129,12 @@ class MissionManagerTest {
             @Override
             public String getShortDescription() {
                 return "Short Description 3";
+            }
+
+            @Override
+            protected void resetState() {
+                count1 = 0;
+                count2 = 1;
             }
         };
 
