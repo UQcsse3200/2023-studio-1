@@ -185,7 +185,6 @@ public class InventoryComponent extends Component {
       e.writeItem(json);
       json.writeValue("count", getItemCount(e));
       json.writeObjectEnd();
-      //e.write(json); //TODO: this could cause an infinite loop :) <- should be fixed but needs counts
     }
 
     json.writeObjectEnd();
