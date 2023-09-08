@@ -11,7 +11,7 @@ import com.csse3200.game.services.ServiceLocator;
 
 public class TimeService {
 	private static final Logger logger = LoggerFactory.getLogger(TimeService.class);
-	private static final int MS_IN_MINUTE = 500;
+	private static final int MS_IN_MINUTE = 50;
 	private int minute;
 	private int hour;
 	private int day;
@@ -130,22 +130,25 @@ public class TimeService {
 		}
 		minute += 1;
 		timeBuffer -= MS_IN_MINUTE;
-		events.trigger("minuteUpdate");
 
 		// If minute is between 0 and 59, hour hasn't elapsed - don't do anything
 		if (minute < 60) {
+			events.trigger("minuteUpdate");
 			return;
 		}
 		hour += 1;
 		minute -= 60;
-		events.trigger("hourUpdate");
+		events.trigger("minuteUpdate");
 
 		// If hour is between 0 and 23, day hasn't elapsed, do nothing
 		if (hour < 24) {
+			events.trigger("hourUpdate");
 			return;
 		}
 		hour -= 24;
 		day += 1;
+		// This event has to be triggered after the hour is checked the hour isn't 24 when the event is sent
+		events.trigger("hourUpdate");
 		events.trigger("dayUpdate");
 
 		// lose the game if the game reaches 30 days
