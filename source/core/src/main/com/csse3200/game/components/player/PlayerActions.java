@@ -220,6 +220,7 @@ public class PlayerActions extends Component {
     tractor.getComponent(KeyboardTractorInputComponent.class).setWalkDirection(entity.getComponent(KeyboardPlayerInputComponent.class).getWalkDirection());
     this.entity.setPosition(new Vector2(-10,-10));
     camera.setTrackEntity(tractor);
+    tractor.getComponent(TractorActions.class).setCameraVar(camera);
   }
 
   void use(Vector2 playerPos, Vector2 mousePos, Entity itemInHand) {
