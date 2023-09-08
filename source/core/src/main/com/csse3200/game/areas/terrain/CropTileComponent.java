@@ -266,13 +266,12 @@ public class CropTileComponent extends Component {
 	 */
 	@Override
 	public void write(Json json) {
-		// TODO needs to be a gridpoint2 to get actual tile, but team 3 slow
-		// json.writeValue("x", entity.getPosition().x);
-		// json.writeValue("y",entity.getPosition().y);
+		json.writeObjectStart(this.getClass().getSimpleName());
 		json.writeValue("waterContent", waterContent);
 		json.writeValue("soilQuality", soilQuality);
 		json.writeValue("isFertilised", isFertilised);
 		json.writeValue("plant", plant);
+		json.writeObjectEnd();
 	}
 
 	@Override

@@ -269,9 +269,11 @@ public class PlantComponent extends Component {
 
     @Override
     public void write(Json json) {
+        json.writeObjectStart(this.getClass().getSimpleName());
         json.writeValue("name", getPlantName());
         json.writeValue("health", getPlantHealth());
         json.writeValue("name", getCurrentAge());
         json.writeValue("name", getCurrentGrowthLevel());
+        json.writeObjectEnd();
     }
 }

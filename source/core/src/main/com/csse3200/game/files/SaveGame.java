@@ -23,10 +23,7 @@ public class SaveGame {
   public static GameState get() {
     String path = ROOT_DIR + File.separator + SAVE_FILE;
     GameState saveFile = FileLoader.readClass(GameState.class, path, Location.LOCAL);
-
-    return saveFile; // we do a null check in calling function anyway
-    // TODO: remove old code
-    //return saveFile != null ? saveFile : new GameState();
+    return saveFile;
   }
 
   /**

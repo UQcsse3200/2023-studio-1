@@ -177,16 +177,15 @@ public class InventoryComponent extends Component {
 
   @Override
   public void write(Json json) {
-
+    json.writeObjectStart(this.getClass().getSimpleName());
     json.writeObjectStart("inventory");
-
     for (Entity e : inventory) {
       json.writeObjectStart("item");
       e.writeItem(json);
       json.writeValue("count", getItemCount(e));
       json.writeObjectEnd();
     }
-
+    json.writeObjectEnd();
     json.writeObjectEnd();
   }
 }

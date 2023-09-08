@@ -152,6 +152,8 @@ public class TamableComponent extends Component {
      */
     @Override
     public void write (Json json) {
+        json.writeObjectStart(this.getClass().getSimpleName());
         json.writeValue("tamed", isTamed());
+        json.writeObjectEnd();
     }
 }

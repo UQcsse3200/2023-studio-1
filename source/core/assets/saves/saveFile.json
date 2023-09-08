@@ -2,19 +2,9 @@
 "hour": 3,
 "player": {
 	"Entity": "Player",
-	"x": 2.086778,
-	"y": 5.2387643,
+	"x": 7.1500053,
+	"y": 2.273075,
 	"components": {
-		"AnimationRenderComponent": {},
-		"ToolbarDisplay": {},
-		"CombatStatsComponent": {},
-		"ItemPickupComponent": {},
-		"KeyboardPlayerInputComponent": {},
-		"ColliderComponent": {},
-		"InventoryDisplay": {},
-		"PlayerActions": {},
-		"PlayerAnimationController": {},
-		"HitboxComponent": {},
 		"InventoryComponent": {
 			"inventory": {
 				"item": {
@@ -35,185 +25,118 @@
 					"count": 1
 				}
 			}
-		},
-		"PhysicsComponent": {},
-		"InteractionColliderComponent": {}
+		}
 	}
 },
 "tractor": {
 	"Entity": "Tractor",
-	"x": 5.0630436,
-	"y": 5.7863693,
+	"x": 5.0625,
+	"y": 5.78125,
 	"components": {
-		"AnimationRenderComponent": {},
-		"KeyboardTractorInputComponent": {},
 		"TractorActions": {
 			"isMuted": true
-		},
-		"ColliderComponent": {},
-		"TractorAnimationController": {},
-		"PhysicsComponent": {}
+		}
 	}
 },
 "entities": [
 	{
 		"Entity": "Astrolotl",
-		"x": 3.6517851,
-		"y": 41.732716,
+		"x": 42.869446,
+		"y": 11.435597,
 		"components": {
-			"AnimationRenderComponent": {},
-			"AnimalAnimationController": {},
-			"AITaskComponent": {},
-			"ColliderComponent": {},
 			"TamableComponent": {
 				"tamed": false
-			},
-			"PhysicsMovementComponent": {},
-			"PhysicsComponent": {}
+			}
 		}
 	},
 	{
 		"Entity": "Cow",
-		"x": 9.367303,
-		"y": 37.858063,
+		"x": 3.3540654,
+		"y": 3.1579616,
 		"components": {
-			"AnimationRenderComponent": {},
-			"AnimalAnimationController": {},
-			"AITaskComponent": {},
-			"ColliderComponent": {},
 			"TamableComponent": {
 				"tamed": false
-			},
-			"PhysicsMovementComponent": {},
-			"PhysicsComponent": {}
+			}
 		}
 	},
 	{
 		"Entity": "Cow",
-		"x": 13.620977,
-		"y": 32.997658,
+		"x": 37.060135,
+		"y": 34.20811,
 		"components": {
-			"AnimationRenderComponent": {},
-			"AnimalAnimationController": {},
-			"AITaskComponent": {},
-			"ColliderComponent": {},
 			"TamableComponent": {
 				"tamed": false
-			},
-			"PhysicsMovementComponent": {},
-			"PhysicsComponent": {}
+			}
 		}
 	},
 	{
 		"Entity": "Cow",
-		"x": 4.2034683,
-		"y": 45.78125,
+		"x": 42.002506,
+		"y": 3.2302477,
 		"components": {
-			"AnimationRenderComponent": {},
-			"AnimalAnimationController": {},
-			"AITaskComponent": {},
-			"ColliderComponent": {},
 			"TamableComponent": {
 				"tamed": false
-			},
-			"PhysicsMovementComponent": {},
-			"PhysicsComponent": {}
+			}
 		}
 	},
 	{
 		"Entity": "Cow",
-		"x": 13.480533,
-		"y": 45.444145,
+		"x": 42.874683,
+		"y": 33.671394,
 		"components": {
-			"AnimationRenderComponent": {},
-			"AnimalAnimationController": {},
-			"AITaskComponent": {},
-			"ColliderComponent": {},
 			"TamableComponent": {
 				"tamed": false
-			},
-			"PhysicsMovementComponent": {},
-			"PhysicsComponent": {}
+			}
 		}
 	},
 	{
 		"Entity": "Cow",
-		"x": 20.440058,
-		"y": 6.473493,
+		"x": 34.555683,
+		"y": 2.3454332,
 		"components": {
-			"AnimationRenderComponent": {},
-			"AnimalAnimationController": {},
-			"AITaskComponent": {},
-			"ColliderComponent": {},
 			"TamableComponent": {
 				"tamed": false
-			},
-			"PhysicsMovementComponent": {},
-			"PhysicsComponent": {}
+			}
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 5.6618094,
-		"y": 10.020307,
+		"x": 34.49962,
+		"y": 9.0564995,
 		"components": {
-			"AnimationRenderComponent": {},
-			"AnimalAnimationController": {},
-			"AITaskComponent": {},
-			"ColliderComponent": {},
 			"TamableComponent": {
 				"tamed": false
-			},
-			"PhysicsMovementComponent": {},
-			"PhysicsComponent": {}
+			}
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 48.192192,
-		"y": 34.34502,
+		"x": 28.8589,
+		"y": 3.970253,
 		"components": {
-			"AnimationRenderComponent": {},
-			"AnimalAnimationController": {},
-			"AITaskComponent": {},
-			"ColliderComponent": {},
 			"TamableComponent": {
 				"tamed": false
-			},
-			"PhysicsMovementComponent": {},
-			"PhysicsComponent": {}
+			}
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 4.81145,
-		"y": 17.402777,
+		"x": 37.782722,
+		"y": 0.40575188,
 		"components": {
-			"AnimationRenderComponent": {},
-			"AnimalAnimationController": {},
-			"AITaskComponent": {},
-			"ColliderComponent": {},
 			"TamableComponent": {
 				"tamed": false
-			},
-			"PhysicsMovementComponent": {},
-			"PhysicsComponent": {}
+			}
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 7.9892535,
-		"y": 42.026524,
+		"x": 28.52791,
+		"y": 1.5845997,
 		"components": {
-			"AnimationRenderComponent": {},
-			"AnimalAnimationController": {},
-			"AITaskComponent": {},
-			"ColliderComponent": {},
 			"TamableComponent": {
 				"tamed": false
-			},
-			"PhysicsMovementComponent": {},
-			"PhysicsComponent": {}
+			}
 		}
 	},
 	{
@@ -226,141 +149,108 @@
 				"health": 10,
 				"name": 0,
 				"name": 0
-			},
-			"TextureRenderComponent": {},
-			"ColliderComponent": {},
-			"HitboxComponent": {},
-			"PhysicsComponent": {}
+			}
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 25.413124,
-		"y": 16.436352,
+		"x": 37.550606,
+		"y": 25.937857,
 		"components": {
-			"AnimationRenderComponent": {},
-			"AnimalAnimationController": {},
-			"AITaskComponent": {},
-			"ColliderComponent": {},
 			"TamableComponent": {
 				"tamed": false
-			},
-			"PhysicsMovementComponent": {},
-			"PhysicsComponent": {}
+			}
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 29.207642,
-		"y": 42.061733,
+		"x": 22.264069,
+		"y": 5.179051,
 		"components": {
-			"AnimationRenderComponent": {},
-			"AnimalAnimationController": {},
-			"AITaskComponent": {},
-			"ColliderComponent": {},
 			"TamableComponent": {
 				"tamed": false
-			},
-			"PhysicsMovementComponent": {},
-			"PhysicsComponent": {}
+			}
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 21.894648,
-		"y": 6.4118657,
+		"x": 7.5037246,
+		"y": 38.28794,
 		"components": {
-			"AnimationRenderComponent": {},
-			"AnimalAnimationController": {},
-			"AITaskComponent": {},
-			"ColliderComponent": {},
 			"TamableComponent": {
 				"tamed": false
-			},
-			"PhysicsMovementComponent": {},
-			"PhysicsComponent": {}
+			}
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 33.08768,
-		"y": 3.8483198,
+		"x": 42.797565,
+		"y": 18.647932,
 		"components": {
-			"AnimationRenderComponent": {},
-			"AnimalAnimationController": {},
-			"AITaskComponent": {},
-			"ColliderComponent": {},
 			"TamableComponent": {
 				"tamed": false
-			},
-			"PhysicsMovementComponent": {},
-			"PhysicsComponent": {}
+			}
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 48.20262,
-		"y": 19.290289,
+		"x": 9.954366,
+		"y": 22.27522,
 		"components": {
-			"AnimationRenderComponent": {},
-			"AnimalAnimationController": {},
-			"AITaskComponent": {},
-			"ColliderComponent": {},
 			"TamableComponent": {
 				"tamed": false
-			},
-			"PhysicsMovementComponent": {},
-			"PhysicsComponent": {}
+			}
 		}
 	},
 	{
 		"Entity": "Chicken",
-		"x": 42.69372,
-		"y": 35.490517,
+		"x": 41.522892,
+		"y": 32.092014,
 		"components": {
-			"AnimationRenderComponent": {},
-			"AnimalAnimationController": {},
-			"AITaskComponent": {},
-			"ColliderComponent": {},
 			"TamableComponent": {
 				"tamed": false
-			},
-			"PhysicsMovementComponent": {},
-			"PhysicsComponent": {}
+			}
 		}
 	}
 ],
 "tiles": [
 	{
 		"Entity": "Tile",
-		"x": 4.75,
-		"y": 5.25,
+		"x": 9,
+		"y": 3,
 		"components": {
-			"DynamicTextureRenderComponent": {},
 			"CropTileComponent": {
-				"waterContent": 0,
+				"waterContent": 0.69081485,
 				"soilQuality": 1,
 				"isFertilised": false,
-				"plant": {
-					"Entity": "Plant",
-					"x": 4.75,
-					"y": 5.75,
-					"components": {
-						"PlantComponent": {
-							"name": "Cosmic Cob",
-							"health": 10,
-							"name": 0,
-							"name": 0
-						},
-						"TextureRenderComponent": {},
-						"ColliderComponent": {},
-						"HitboxComponent": {},
-						"PhysicsComponent": {}
-					}
-				}
-			},
-			"ColliderComponent": {},
-			"PhysicsComponent": {}
+				"plant": null
+			}
+		}
+	},
+	{
+		"Entity": "Tile",
+		"x": 8,
+		"y": 3,
+		"components": {
+			"CropTileComponent": {
+				"waterContent": 0.6541491,
+				"soilQuality": 1,
+				"isFertilised": false,
+				"plant": null
+			}
+		}
+	},
+	{
+		"Entity": "Tile",
+		"x": 7,
+		"y": 3,
+		"components": {
+			"CropTileComponent": {
+				"waterContent": 0.6083455,
+				"soilQuality": 1,
+				"isFertilised": false,
+				"plant": null
+			}
 		}
 	},
 	{
@@ -368,7 +258,6 @@
 		"x": 4.75,
 		"y": 5.25,
 		"components": {
-			"DynamicTextureRenderComponent": {},
 			"CropTileComponent": {
 				"waterContent": 0,
 				"soilQuality": 1,
@@ -383,16 +272,35 @@
 							"health": 10,
 							"name": 0,
 							"name": 0
-						},
-						"TextureRenderComponent": {},
-						"ColliderComponent": {},
-						"HitboxComponent": {},
-						"PhysicsComponent": {}
+						}
 					}
 				}
-			},
-			"ColliderComponent": {},
-			"PhysicsComponent": {}
+			}
+		}
+	},
+	{
+		"Entity": "Tile",
+		"x": 4.75,
+		"y": 5.25,
+		"components": {
+			"CropTileComponent": {
+				"waterContent": 0,
+				"soilQuality": 1,
+				"isFertilised": false,
+				"plant": {
+					"Entity": "Plant",
+					"x": 4.75,
+					"y": 5.75,
+					"components": {
+						"PlantComponent": {
+							"name": "Cosmic Cob",
+							"health": 10,
+							"name": 0,
+							"name": 0
+						}
+					}
+				}
+			}
 		}
 	}
 ]

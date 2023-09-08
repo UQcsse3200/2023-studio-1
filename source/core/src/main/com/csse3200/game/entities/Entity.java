@@ -332,43 +332,45 @@ public class Entity implements Json.Serializable {
     json.writeValue("y", posY);
     json.writeObjectStart("components");
     for (Component c : createdComponents) {
-      // TODO move to inside relevant component write functions as it is increasing file size by too much
-      json.writeObjectStart(c.getClass().getSimpleName());
       c.write(json);
-      json.writeObjectEnd();
     }
     json.writeObjectEnd();
   }
 
   public void writeItem(Json json) {
     json.writeValue("name", this.getComponent(ItemComponent.class).getItemName());
+    //update the tractor 'muted' variable based on the info in the json file on ItemType or something?
     if (this.getComponent(WateringCanLevelComponent.class) != null) {
       this.getComponent(WateringCanLevelComponent.class).write(json);
     }
   }
 
   public void read(Json json, JsonValue jsonMap) {
+    // Saves the position
     position = new Vector2(jsonMap.getFloat("x"), jsonMap.getFloat("y"));
+    // Gets the type of Entity
     String value = jsonMap.getString("Entity");
     try {
       type = EntityType.valueOf(value);
     } catch (IllegalArgumentException e) {
       type = null;
     }
+    // Saves the position TODO duplicate? the first line of this method is the same
     position = new Vector2(jsonMap.getFloat("x"), jsonMap.getFloat("y"));
-    // TODO refactor to a switch
-    //if the current entity that is being read is type tractor update whether the player was in the tractor when saving last
-    if (type == EntityType.Tractor){
-      jsonMap = jsonMap.get("components").get("TractorActions");
-      TractorActions tractorActions = new TractorActions(); 
-      tractorActions.setMuted(jsonMap.getBoolean("isMuted"));   //update the tractor 'muted' variable based on the info in the json file
-      this.addComponent(tractorActions);
-    }
 
-    if (type == EntityType.Tile) {
-      jsonMap = jsonMap.get("components").get("CropTileComponent");
-      CropTileComponent c = new CropTileComponent(jsonMap.getFloat("waterContent"), jsonMap.getFloat("soilQuality"));
-      this.addComponent(c);
+    switch (type) {
+      case Tractor -> {
+        jsonMap = jsonMap.get("components").get("TractorActions");
+        TractorActions tractorActions = new TractorActions();
+        // Update the tractor 'muted' variable based on the info in the json file
+        tractorActions.setMuted(jsonMap.getBoolean("isMuted"));
+        this.addComponent(tractorActions);
+      }
+      case Tile -> {
+        jsonMap = jsonMap.get("components").get("CropTileComponent");
+        CropTileComponent c = new CropTileComponent(jsonMap.getFloat("waterContent"), jsonMap.getFloat("soilQuality"));
+        this.addComponent(c);
+      }
     }
   }
 

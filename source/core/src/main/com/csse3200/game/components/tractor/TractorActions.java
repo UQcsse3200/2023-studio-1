@@ -192,7 +192,9 @@ public class TractorActions extends Component {
   }
 
   public void write(Json json){
+    json.writeObjectStart(this.getClass().getSimpleName());
     //Save the muted value to the json file
     json.writeValue("isMuted", this.isMuted());
+    json.writeObjectEnd();
   }
 }
