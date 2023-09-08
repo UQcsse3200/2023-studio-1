@@ -8,6 +8,7 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.npc.AnimalAnimationController;
 import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.TouchAttackComponent;
+import com.csse3200.game.components.npc.PassiveDropComponent;
 import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.FollowTask;
@@ -77,6 +78,7 @@ public class NPCFactory {
 
     chicken
             .addComponent(aiTaskComponent)
+            .addComponent(new PassiveDropComponent(ItemFactory::createEgg, 24))
             .addComponent(animator)
             .addComponent(new AnimalAnimationController())
             .addComponent(new TamableComponent(player, config.tamingThreshold,
@@ -118,6 +120,7 @@ public class NPCFactory {
 
     cow
             .addComponent(aiTaskComponent)
+            .addComponent(new PassiveDropComponent(ItemFactory::createMilk, 24))
             .addComponent(animator)
             .addComponent(new AnimalAnimationController())
             .addComponent(new TamableComponent(
@@ -150,7 +153,7 @@ public class NPCFactory {
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 3f))
-            .addTask(new FollowTask(player, 10, 5f, 5f, 2f));
+            .addTask(new FollowTask(player, 10, 5f, 15f, 2f));
 
     astrolotl
             .addComponent(aiTaskComponent)
