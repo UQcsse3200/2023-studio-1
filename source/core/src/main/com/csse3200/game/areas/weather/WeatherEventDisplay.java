@@ -2,36 +2,56 @@ package com.csse3200.game.areas.weather;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
 public class WeatherEventDisplay extends UIComponent {
-    private Image raindropImage;
+	private Image weatherImage;
+	private Group group;
+	private Table table;
 
-    @Override
-    public void create() {
-        super.create();
-        ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateDisplay);
-        updateDisplay();
-    }
+	@Override
+	public void create() {
+		super.create();
+		ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateDisplay);
+		updateDisplay();
+	}
 
-    public void updateDisplay() {
-        raindropImage = new Image(ServiceLocator.getResourceService().getAsset("images/weather_event/raindrop.png", Texture.class));
-        raindropImage.setPosition(raindropImage.getImageX() + 158f, raindropImage.getImageY() + 147f);
-        ClimateController climateController = ServiceLocator.getGameArea().getClimateController();
-        raindropImage.setVisible(climateController.getCurrentWeatherEvent() instanceof RainEvent);
-        stage.addActor(raindropImage);
-    }
+	public void updateDisplay() {
+		table = new Table();
+		group = new Group();
+		table.top().left();
+		table.setFillParent(true);
+		table.padTop(150f).padLeft(-100f);
 
-    @Override
-    public void dispose() {
-        super.dispose();
-        raindropImage.remove();
-    }
+		WeatherEvent currentEvent = ServiceLocator.getGameArea().getClimateController().getCurrentWeatherEvent();
+		if (currentEvent instanceof RainEvent) {
+			weatherImage = new Image(ServiceLocator.getResourceService().getAsset(
+					"images/weather_event/raindrop.png", Texture.class));
+		}
+		// TODO Remove this when other events are added
+		weatherImage = new Image(ServiceLocator.getResourceService().getAsset(
+				"images/weather_event/raindrop.png", Texture.class));
+		weatherImage.setPosition(weatherImage.getImageX() + 158f, weatherImage.getImageY() + 147f);
+		stage.addActor(weatherImage);
 
-    @Override
-    protected void draw(SpriteBatch batch) {
-        return;
-    }
+		group.addActor(weatherImage);
+
+		table.add(group).size(200);
+		stage.addActor(table);
+	}
+
+	@Override
+	public void dispose() {
+		super.dispose();
+		weatherImage.remove();
+	}
+
+	@Override
+	protected void draw(SpriteBatch batch) {
+		return;
+	}
 }
