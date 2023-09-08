@@ -38,10 +38,13 @@ public class PlantFactory {
      * @return entity
      */
     public static Entity createBasePlant(BasePlantConfig config, CropTileComponent cropTile) {
-        int[] growthThresholds = {config.sproutThreshold, config.juvenileThreshold,
-                config.adultThreshold};
-        String[] imagePaths = {config.seedlingAsset, config.sproutingAsset, config.juvenileAsset,
-                config.adultAsset, config.decayingAsset};
+        int[] growthThresholds = {config.sproutThreshold, config.juvenileThreshold, config.adultThreshold};
+        String[] imagePaths =   {   config.imageFolderPath + "1_seedling.png",
+                                    config.imageFolderPath + "2_sprout.png",
+                                    config.imageFolderPath + "3_juvenile.png",
+                                    config.imageFolderPath + "4_adult.png",
+                                    config.imageFolderPath + "5_decaying.png"
+                                };
 
         Entity plant = new Entity(EntityType.Plant)
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
