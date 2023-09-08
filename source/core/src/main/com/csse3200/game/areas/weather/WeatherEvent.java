@@ -42,9 +42,10 @@ public abstract class WeatherEvent {
 
 	/**
 	 * Constructs an {@link WeatherEvent} with a given duration, priority and countdown
+	 *
 	 * @param numHoursUntil number of in-game hours until the weather event can occur
-	 * @param duration number of in-game hours that the event can occur for
-	 * @param priority priority of the weather event
+	 * @param duration      number of in-game hours that the event can occur for
+	 * @param priority      priority of the weather event
 	 */
 	public WeatherEvent(int numHoursUntil, int duration, int priority, float severity) {
 		this.numHoursUntil = numHoursUntil;
@@ -77,9 +78,9 @@ public abstract class WeatherEvent {
 		return priority;
 	}
 
-
 	/**
 	 * Determines whether the weather event is active based on the countdown timer and the duration
+	 *
 	 * @return boolean value representing
 	 */
 	public boolean isActive() {
@@ -88,41 +89,17 @@ public abstract class WeatherEvent {
 
 	/**
 	 * Determines whether the weather event has finished
+	 *
 	 * @return boolean value representing whether the weather event is finished or not
 	 */
 	public boolean isExpired() {
 		return numHoursUntil == 0 && duration <= 0;
 	}
 
-	// TODO Figure out how to render screen effects and therefore fix method siganture
-	public abstract void getEffect();
-
-	/**
-	 * Generates a random humidity modifier based on the min and max values defined
-	 * @return humidity modifier
-	 */
-	protected float generateRandomHumidityModifier() {
-		return (new Random().nextFloat() * (MAX_HUMIDITY_MODIFIER - MIN_HUMIDITY_MODIFIER)) + MIN_HUMIDITY_MODIFIER;
-	}
-
-	/**
-	 * Generates a random temperature humidity modifier based on the min and max values defined
-	 * @return temperature modifier
-	 */
-	protected float generateRandomTemperatureModifier() {
-		return (new Random().nextFloat() * (MAX_TEMPERATURE_MODIFIER - MIN_TEMPERATURE_MODIFIER)) + MIN_TEMPERATURE_MODIFIER;
-	}
-
-	/**
-	 * Generates a severity between 1 and 1.5
-	 * @return weather event severity
-	 */
-	protected float generateRandomSeverity() {
-		return (float) ((new Random().nextFloat() * 0.5) + 1);
-	}
 
 	/**
 	 * Gets the humidity modifier of this weather event
+	 *
 	 * @return humidity modifier
 	 */
 	public float getHumidityModifier() {
@@ -131,6 +108,7 @@ public abstract class WeatherEvent {
 
 	/**
 	 * Gets the temperature modifier of this weather event
+	 *
 	 * @return temperature modifier
 	 */
 	public float getTemperatureModifier() {
@@ -139,6 +117,7 @@ public abstract class WeatherEvent {
 
 	/**
 	 * Gets the severity of this weather event
+	 *
 	 * @return weather event severity
 	 */
 	public float getSeverity() {

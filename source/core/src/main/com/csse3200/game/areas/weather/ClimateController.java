@@ -44,6 +44,10 @@ public class ClimateController {
 		return events;
 	}
 
+	public void addWeatherEvent(WeatherEvent event) {
+		weatherEvents.add(event);
+	}
+
 	/**
 	 * Gets the current temperature of the game world
 	 *
