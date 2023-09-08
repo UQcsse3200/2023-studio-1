@@ -262,6 +262,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/physics/components/PhysicsComponent.AlignY.html#CENTER" class="member-name-link">CENTER</a> - Enum constant in enum class com.csse3200.game.physics.components.<a href="com/csse3200/game/physics/components/PhysicsComponent.AlignY.html" title="enum class in com.csse3200.game.physics.components">PhysicsComponent.AlignY</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/areas/terrain/TerrainFactory.html#charToTileImageMap" class="member-name-link">charToTileImageMap</a> - Static variable in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainFactory.html" title="class in com.csse3200.game.areas.terrain">TerrainFactory</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/tasks/ChaseTask.html" class="type-name-link" title="class in com.csse3200.game.components.tasks">ChaseTask</a> - Class in <a href="com/csse3200/game/components/tasks/package-summary.html">com.csse3200.game.components.tasks</a></dt>
 <dd>
 <div class="block">Chases a target entity until they get too far away or line of sight is lost</div>
@@ -1381,7 +1383,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/terrain/GameMap.html#getMapSize()" class="member-name-link">getMapSize()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
 <dd>
-<div class="block">Returns the size of the map</div>
+<div class="block">Returns a GridPoint2 instance that contains the size of the map.</div>
 </dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainFactory.html#getMapSize()" class="member-name-link">getMapSize()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainFactory.html" title="class in com.csse3200.game.areas.terrain">TerrainFactory</a></dt>
 <dd>&nbsp;</dd>
@@ -1521,6 +1523,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns the terrain tile's terrain category i.e.</div>
 </dd>
+<dt><a href="com/csse3200/game/areas/terrain/GameMap.html#getTerrainComponent()" class="member-name-link">getTerrainComponent()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/terrain/GameMap.html#getTerrainFactory()" class="member-name-link">getTerrainFactory()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainTile.html#getTextureRegion()" class="member-name-link">getTextureRegion()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></dt>
@@ -2060,6 +2064,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Loads a list of texture atlas assets into the asset manager.</div>
 </dd>
+<dt><a href="com/csse3200/game/areas/terrain/TerrainFactory.html#loadTextures()" class="member-name-link">loadTextures()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainFactory.html" title="class in com.csse3200.game.areas.terrain">TerrainFactory</a></dt>
+<dd>
+<div class="block">Loads textures into the charToTextureMap based upon the images within the charToTileImageMap and resourceService</div>
+</dd>
 <dt><a href="com/csse3200/game/services/ResourceService.html#loadTextures(java.lang.String%5B%5D)" class="member-name-link">loadTextures(String[])</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ResourceService.html" title="class in com.csse3200.game.services">ResourceService</a></dt>
 <dd>
 <div class="block">Loads a list of texture assets into the asset manager.</div>
@@ -2131,6 +2139,8 @@ loadScripts(document, 'script');</script>
 <div class="block">The game screen containing the main menu.</div>
 </dd>
 <dt><a href="com/csse3200/game/screens/MainMenuScreen.html#%3Cinit%3E(com.csse3200.game.GdxGame)" class="member-name-link">MainMenuScreen(GdxGame)</a> - Constructor for class com.csse3200.game.screens.<a href="com/csse3200/game/screens/MainMenuScreen.html" title="class in com.csse3200.game.screens">MainMenuScreen</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/areas/terrain/TerrainFactory.html#mapPath" class="member-name-link">mapPath</a> - Static variable in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainFactory.html" title="class in com.csse3200.game.areas.terrain">TerrainFactory</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/utils/math/Vector2Utils.html#MAX" class="member-name-link">MAX</a> - Static variable in class com.csse3200.game.utils.math.<a href="com/csse3200/game/utils/math/Vector2Utils.html" title="class in com.csse3200.game.utils.math">Vector2Utils</a></dt>
 <dd>&nbsp;</dd>
@@ -2942,6 +2952,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Sets the terrain category of the terrain tile to the specified terrain category</div>
 </dd>
+<dt><a href="com/csse3200/game/areas/terrain/GameMap.html#setTerrainComponent(com.csse3200.game.areas.terrain.TerrainComponent)" class="member-name-link">setTerrainComponent(TerrainComponent)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/rendering/DynamicTextureRenderComponent.html#setTexture(java.lang.String)" class="member-name-link">setTexture(String)</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/DynamicTextureRenderComponent.html" title="class in com.csse3200.game.rendering">DynamicTextureRenderComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainTile.html#setTextureRegion(com.badlogic.gdx.graphics.g2d.TextureRegion)" class="member-name-link">setTextureRegion(TextureRegion)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></dt>
