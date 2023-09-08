@@ -64,4 +64,13 @@ public class WeatherEventTest {
         assertTrue(weatherEvent4.isExpired());
         assertTrue(weatherEvent5.isExpired());
     }
+
+    @Test
+    public void testGetSeverity() {
+        assertEquals(weatherEvent1.getSeverity(), 1.2f);
+        assertEquals(weatherEvent2.getSeverity(), 1.4f);
+        assertEquals(weatherEvent3.getSeverity(), 1.0f);
+        assertEquals(weatherEvent4.getSeverity(), 1.3f);
+        assertEquals(weatherEvent5.getSeverity(), 1.1f);
+    }
 }
