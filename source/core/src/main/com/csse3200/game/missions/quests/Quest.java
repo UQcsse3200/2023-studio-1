@@ -5,9 +5,24 @@ import com.csse3200.game.missions.rewards.Reward;
 
 public abstract class Quest extends Mission {
 
+	/**
+	 * True if expiry of {@link Quest} should result in a game-over, false otherwise
+	 */
 	private final boolean isMandatory;
+
+	/**
+	 * The duration of the {@link Quest} once it has been accepted before it expires
+	 */
 	private final int duration;
+
+	/**
+	 * The amount of time remaining before the {@link Quest} expires
+	 */
 	private int timeToExpiry;
+
+	/**
+	 * The {@link Reward} to be collected once the {@link Quest} has been completed
+	 */
 	private final Reward reward;
 
 	/**
