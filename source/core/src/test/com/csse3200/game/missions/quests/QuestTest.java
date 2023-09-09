@@ -29,31 +29,31 @@ class QuestTest {
         r1 = new Reward() {
             @Override
             public void collect() {
-                isCollected = true;
+                setCollected();
             }
         };
         r2 = new Reward() {
             @Override
             public void collect() {
-                isCollected = true;
+                setCollected();
             }
         };
         r3 = new Reward() {
             @Override
             public void collect() {
-                isCollected = true;
+                setCollected();
             }
         };
         r4 = new Reward() {
             @Override
             public void collect() {
-                isCollected = true;
+                setCollected();
             }
         };
         r5 = new Reward() {
             @Override
             public void collect() {
-                isCollected = true;
+                setCollected();
             }
         };
 
