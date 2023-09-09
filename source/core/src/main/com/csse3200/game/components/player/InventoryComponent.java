@@ -26,6 +26,9 @@ public class InventoryComponent extends Component {
   private Entity heldItem = null;
 
   public InventoryComponent(List<Entity> items) {
+    if (items == null) {
+      return;
+    }
     setInventory(items);
   }
 
@@ -36,6 +39,10 @@ public class InventoryComponent extends Component {
    */
   public List<Entity> getInventory() {
     return this.inventory;
+  }
+
+  public HashMap<Entity, Integer> getItemCount() {
+    return itemCount;
   }
 
   /**

@@ -10,6 +10,7 @@ import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ComponentType;
 import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.items.WateringCanLevelComponent;
 import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.components.plants.PlantComponent;
@@ -18,10 +19,13 @@ import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.events.EventHandler;
+import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
 
 /**
  * Core entity class. Entities exist in the game and are updated each frame. All entities have a
@@ -389,6 +393,23 @@ public class Entity implements Json.Serializable {
         tamableComponent.setTame(jsonMap.getBoolean("Tamed"));
         this.addComponent(tamableComponent);
         break;
+      case Player:
+        InventoryComponent inventoryComponent = new InventoryComponent(null);
+        HashMap<Entity, Integer> items = new HashMap<>();
+        JsonValue inv = jsonMap.get("components").get("InventoryComponent").get("inventory");
+        System.out.println(inv);
+        inv.forEach(jsonValue -> {
+          System.out.println(jsonValue);
+          Entity item = FactoryService.getItemFactories().get(jsonValue.getString("name")).get();
+          ItemType itemType = item.getComponent(ItemComponent.class).getItemType();
+          switch (itemType) {
+            case WATERING_CAN -> item.getComponent(WateringCanLevelComponent.class).setCurrentLevel(jsonValue.getFloat("level"));
+          }
+          items.put(item, jsonValue.getInt("count"));
+        });
+        inventoryComponent.setInventory(items);
+        this.addComponent(inventoryComponent);
+
       default:
         // Nothing
       }

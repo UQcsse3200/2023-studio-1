@@ -5,8 +5,10 @@ import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainCropTileFactory;
 import com.csse3200.game.areas.terrain.TerrainTile;
+import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.components.plants.PlantComponent;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
@@ -124,6 +126,7 @@ public class SaveLoadService {
     currentPlayer.setPosition(state.getPlayer().getPosition());
     currentPlayer.getComponent(PlayerActions.class).getCameraVar().setTrackEntity(currentPlayer);
     currentPlayer.getComponent(PlayerActions.class).setMuted(false);
+    currentPlayer.getComponent(InventoryComponent.class).setInventory(state.getPlayer().getComponent(InventoryComponent.class).getItemCount());
   }
 
   /**
