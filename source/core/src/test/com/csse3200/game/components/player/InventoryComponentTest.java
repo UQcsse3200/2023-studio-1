@@ -111,5 +111,6 @@ class InventoryComponentTest {
   }
 
    */
+
 }
 
