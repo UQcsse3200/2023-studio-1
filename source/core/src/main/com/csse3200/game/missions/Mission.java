@@ -57,4 +57,13 @@ public abstract class Mission {
      */
     public abstract String getDescription();
 
+    /**
+     * Returns a short {@link String} description of the {@link Mission}. This description should be
+     * at most around 50 characters. This might simply contain progress information on the
+     * {@link Mission}, or a shortened form of {@link #getDescription()}.
+     *
+     * @return A short {@link String} description of the {@link Mission}
+     */
+    public abstract String getShortDescription();
+
 }

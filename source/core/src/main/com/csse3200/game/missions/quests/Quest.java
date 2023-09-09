@@ -5,8 +5,24 @@ import com.csse3200.game.missions.rewards.Reward;
 
 public abstract class Quest extends Mission {
 
+	/**
+	 * True if expiry of {@link Quest} should result in a game-over, false otherwise
+	 */
 	private final boolean isMandatory;
-	private int duration;
+
+	/**
+	 * The duration of the {@link Quest} once it has been accepted before it expires
+	 */
+	private final int duration;
+
+	/**
+	 * The amount of time remaining before the {@link Quest} expires
+	 */
+	private int timeToExpiry;
+
+	/**
+	 * The {@link Reward} to be collected once the {@link Quest} has been completed
+	 */
 	private final Reward reward;
 
 	/**
@@ -25,13 +41,17 @@ public abstract class Quest extends Mission {
 		this.reward = reward;
 		this.duration = expiryDuration;
 		this.isMandatory = isMandatory;
+
+		this.timeToExpiry = this.duration;
 	}
 
 	/**
 	 * Decrements the duration to expiry of the quest by 1.
 	 */
 	public void updateExpiry() {
-		duration--;
+		if (--timeToExpiry < 0) {
+			timeToExpiry = 0;
+		}
 	}
 
 	/**
@@ -39,7 +59,7 @@ public abstract class Quest extends Mission {
 	 * @return True if the quest has expired, false otherwise.
 	 */
 	public boolean isExpired() {
-		return duration <= 0;
+		return timeToExpiry <= 0;
 	}
 
 	/**
@@ -55,8 +75,23 @@ public abstract class Quest extends Mission {
 	 * {@link Mission} has not been completed, this method will do nothing.
 	 */
 	public void collectReward() {
-		if (!isCompleted() || !reward.isCollected()) {
+		if (isCompleted() && !reward.isCollected()) {
 			reward.collect();
 		}
 	}
+
+	/**
+	 * Resets the {@link Quest}'s time to expiry back to the original expiry duration, and calls the
+	 * {@link Quest}'s {@link #resetState()} method.
+	 */
+	public void resetExpiry() {
+		timeToExpiry = duration;
+		resetState();
+	}
+
+	/**
+	 * Resets the internal state of the {@link Quest}, to what it was before being accepted/modified.
+	 */
+	protected abstract void resetState();
+
 }

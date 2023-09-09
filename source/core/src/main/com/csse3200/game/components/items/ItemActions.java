@@ -225,7 +225,7 @@ public class ItemActions extends Component {
   }
 
     /**
-     * Plants seed in the tile at the given position
+     * Plants the given seed seed in the tile at the given position
      *
      * @param tile the tile to be interacted with
      * @return if planting was successful return true else return false

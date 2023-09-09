@@ -30,7 +30,7 @@ public class ItemReward extends Reward {
      */
     @Override
     public void collect() {
-        super.isCollected = true;
+        this.setCollected();
 
         Entity player = ServiceLocator.getGameArea().getPlayer();
         InventoryComponent inventory = player.getComponent(InventoryComponent.class);

@@ -11,7 +11,7 @@ import java.util.List;
  */
 public abstract class Reward {
 
-    protected boolean isCollected;
+    private boolean isCollected;
 
     public Reward() {
         isCollected = false;
@@ -19,6 +19,10 @@ public abstract class Reward {
 
     public boolean isCollected() {
         return isCollected;
+    }
+
+    public void setCollected() {
+        isCollected = true;
     }
 
     public abstract void collect();
