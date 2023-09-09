@@ -125,9 +125,13 @@ public class PlayerActions extends Component {
     Vector2 velocity = body.getLinearVelocity();
     Vector2 velocityScale = this.running ? MAX_RUN_SPEED.cpy() : MAX_WALK_SPEED.cpy();
 
+    /*
     // Used to apply the terrainSpeedModifier
-    //float terrainSpeedModifier = map.getTile(this.entity.getPosition()).getSpeedModifier();
-    //velocityScale.scl(terrainSpeedModifier);
+    Vector2 playerVector = this.entity.getCenterPosition();
+    playerVector.add(0, -1.0f); // Player entity sprite's feet are located -1.0f below the centre of the entity
+    float terrainSpeedModifier = map.getTile(playerVector).getSpeedModifier();
+    velocityScale.scl(terrainSpeedModifier);
+     */
 
     Vector2 desiredVelocity = moveDirection.cpy().scl(velocityScale);
     // impulse = (desiredVel - currentVel) * mass
