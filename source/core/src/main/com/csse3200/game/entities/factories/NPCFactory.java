@@ -47,6 +47,7 @@ public class NPCFactory {
 
   /**
    * Creates a chicken entity
+   * @param player player entity
    * @return chicken entity
    */
   public static Entity createChicken(Entity player) {
@@ -86,13 +87,12 @@ public class NPCFactory {
 
     PhysicsUtils.setScaledCollider(chicken, 0.8f, 0.4f);
 
-    chicken.getComponent(TamableComponent.class).setTame(true);
-
     return chicken;
   }
 
   /**
    * Creates a cow entity
+   * @param player player entity
    * @return cow entity
    */
   public static Entity createCow(Entity player) {
@@ -130,13 +130,12 @@ public class NPCFactory {
     cow.scaleHeight(1.8f);
     PhysicsUtils.setScaledCollider(cow, 0.7f, 0.4f);
 
-    cow.getComponent(TamableComponent.class).setTame(true);
-
     return cow;
   }
 
   /**
    * Creates an Astrolotl entity
+   * @param player player entity
    * @return Astrolotl entity
    */
   public static Entity createAstrolotl(Entity player) {
@@ -169,7 +168,11 @@ public class NPCFactory {
     return astrolotl;
   }
 
-
+  /**
+   * Creates an Oxygen Eater entity.
+   * @param player player entity
+   * @return Oxygen Eater entity
+   */
   public static Entity createOxygenEater(Entity player) {
     Entity oxygenEater = createBaseAnimal(EntityType.OxygenEater);
     BaseAnimalConfig config = configs.oxygenEater;
