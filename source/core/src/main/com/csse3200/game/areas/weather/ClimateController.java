@@ -76,7 +76,8 @@ public class ClimateController {
 	}
 
 	/**
-	 * Updates the values of the game's climate based on current weather events
+	 * Updates the values of the game's climate based on current weather events. Factoring in the in-game time and
+	 * the weather event modifiers.
 	 */
 	private void updateClimate() {
 		float time = ServiceLocator.getTimeService().getDay() * 24
@@ -91,18 +92,16 @@ public class ClimateController {
 				+ MIN_TEMPERATURE + temperatureModifier;
 
 		humidity = generateClimate(time, -4, 8, 0.14f, 3.5f) + humidityModifier;
-
-		System.out.printf("(%s, %s), ", time, humidity);
 	}
 
 	/**
-	 * Temperature generation algorithm that takes inspiration from the perlin noise algorithm.
-	 * @param time
-	 * @param offset
-	 * @param octaves
-	 * @param persistence
-	 * @param lacunarity
-	 * @return
+	 * Climate generation algorithm that is inspired by the Perlin noise algorithm.
+	 * @param time in-game time value
+	 * @param offset function offset
+	 * @param octaves number of noise functions used in the calculation
+	 * @param persistence how much each octave/function contributes to the noise generated
+	 * @param lacunarity how much each octave increases in frequency
+	 * @return generated noise value used in calculating climate values
 	 */
 	private float generateClimate(
 			float time, float offset, int octaves, float persistence, float lacunarity) {
@@ -123,6 +122,11 @@ public class ClimateController {
 		return temperatureNormalised / maxAmplitude;
 	}
 
+	/**
+	 * Sin function used for calculating climate in the generateClimate() method
+	 * @param x function variable
+	 * @return function result
+	 */
 	private float getTempSin(float x) {
 		return 0.5f * MathUtils.sin((float) ((x - 6) * Math.PI / 12)) + 0.5f;
 	}
