@@ -27,7 +27,6 @@ public class InventoryComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
   private final Set<Integer> inventoryIds = new HashSet<>();  // To quickly check by ID
 
-  private Entity heldItem=null;
   private final List<Entity> inventory = new ArrayList<Entity>();
   private final Map<Integer, Integer> itemCount = new HashMap<>();
   private final Map<Integer, Point> itemPosition = new HashMap<>();
@@ -83,25 +82,6 @@ public class InventoryComponent extends Component {
       itemPosition.put(item.getId(), new Point(0, 0)); // Default position. You can change this as needed.
     }
       return this.inventory.add(item);
-  }
-
-  public void setHeldItem(int index) {
-    if (index >= 0 && index < inventory.size()) {
-      this.heldItem = inventory.get(index);
-    }
-  }
-
-  /**
-   * Retrieves the held item of the Player.
-   *
-   * @return The Entity representing the held item.
-   * @throws IllegalStateException If the player is not holding an item.
-   */
-  public Entity getHeldItem() {
-    if (this.heldItem != null) {
-      return this.heldItem;
-    }
-    return null;
   }
 
   /**
