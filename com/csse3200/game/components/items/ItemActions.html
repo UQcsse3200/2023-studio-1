@@ -121,9 +121,8 @@ loadScripts(document, 'script');</script>
 <div class="block">Called when the entity is created and registered.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#use(com.badlogic.gdx.math.Vector2,com.badlogic.gdx.math.Vector2,com.csse3200.game.entities.Entity,com.csse3200.game.areas.terrain.GameMap)" class="member-name-link">use</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;playerPos,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#use(com.csse3200.game.entities.Entity,com.badlogic.gdx.math.Vector2,com.csse3200.game.areas.terrain.GameMap)" class="member-name-link">use</a><wbr>(<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;player,
  com.badlogic.gdx.math.Vector2&nbsp;mousePos,
- <a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;item,
  <a href="../../areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a>&nbsp;map)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Uses the item at the given position</div>
@@ -176,18 +175,17 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="use(com.badlogic.gdx.math.Vector2,com.badlogic.gdx.math.Vector2,com.csse3200.game.entities.Entity,com.csse3200.game.areas.terrain.GameMap)">
+<section class="detail" id="use(com.csse3200.game.entities.Entity,com.badlogic.gdx.math.Vector2,com.csse3200.game.areas.terrain.GameMap)">
 <h3>use</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">use</span><wbr><span class="parameters">(com.badlogic.gdx.math.Vector2&nbsp;playerPos,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">use</span><wbr><span class="parameters">(<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;player,
  com.badlogic.gdx.math.Vector2&nbsp;mousePos,
- <a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;item,
  <a href="../../areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a>&nbsp;map)</span></div>
 <div class="block">Uses the item at the given position</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>playerPos</code> - the position of the player</dd>
+<dd><code>player</code> - the player entity using the item</dd>
 <dd><code>mousePos</code> - the position of the mouse</dd>
-<dd><code>item</code> - item to use/ interact with tile</dd>
+<dd><code>map</code> - item to use/ interact with tile</dd>
 <dt>Returns:</dt>
 <dd>if interaction with tile was success return true else return false.</dd>
 </dl>

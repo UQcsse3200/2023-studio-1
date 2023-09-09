@@ -138,14 +138,19 @@ loadScripts(document, 'script');</script>
  int&nbsp;screenHeight,
  float&nbsp;gameWidth)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTrackEntity(com.csse3200.game.entities.Entity)" class="member-name-link">setTrackEntity</a><wbr>(<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;trackEntity)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.math.Vector2</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#screenPositionToWorldPosition(com.badlogic.gdx.math.Vector2)" class="member-name-link">screenPositionToWorldPosition</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;screenPosition)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the entity to track by the camera.</div>
+<div class="block">Converts screen position vector to world position vector</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTrackEntity(com.csse3200.game.entities.Entity)" class="member-name-link">setTrackEntity</a><wbr>(<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;trackEntity)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the entity to track by the camera.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Updates the camera's position based on the tracked entity's position.</div>
 </div>
 </div>
@@ -245,6 +250,19 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">resize</span><wbr><span class="parameters">(int&nbsp;screenWidth,
  int&nbsp;screenHeight,
  float&nbsp;gameWidth)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="screenPositionToWorldPosition(com.badlogic.gdx.math.Vector2)">
+<h3>screenPositionToWorldPosition</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.math.Vector2</span>&nbsp;<span class="element-name">screenPositionToWorldPosition</span><wbr><span class="parameters">(com.badlogic.gdx.math.Vector2&nbsp;screenPosition)</span></div>
+<div class="block">Converts screen position vector to world position vector</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>screenPosition</code> - Vector2 object with x, y screen position.</dd>
+<dt>Returns:</dt>
+<dd>vector of real world position</dd>
+</dl>
 </section>
 </li>
 </ul>
