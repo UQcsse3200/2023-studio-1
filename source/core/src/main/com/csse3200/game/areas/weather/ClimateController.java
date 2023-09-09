@@ -3,10 +3,8 @@ package com.csse3200.game.areas.weather;
 import com.badlogic.gdx.math.MathUtils;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.services.TimeService;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class ClimateController {
 
@@ -91,10 +89,10 @@ public class ClimateController {
 		if (eventPossibility <= 0.25) {
 			return;
 		}
-		int eventGenerated = MathUtils.random(0,1);
-		int numHoursUntil = MathUtils.random(1,6);
-		int duration = MathUtils.random(2,5);
-		int priority = MathUtils.random(0,3);
+		int eventGenerated = MathUtils.random(0, 1);
+		int numHoursUntil = MathUtils.random(1, 6);
+		int duration = MathUtils.random(2, 5);
+		int priority = MathUtils.random(0, 3);
 		float severity = MathUtils.random();
 		WeatherEvent event;
 		switch (eventGenerated) {
@@ -130,11 +128,12 @@ public class ClimateController {
 	 * Climate generation algorithm that is inspired by the Perlin noise algorithm. Credit to @Tom-Strooper for the Java
 	 * implementation.
 	 * Inspiration from this <a href="https://github.com/SebLague/Procedural-Landmass-Generation">GitHub Repo</a>
-	 * @param time in-game time value
-	 * @param offset function offset
-	 * @param octaves number of noise functions used in the calculation
+	 *
+	 * @param time        in-game time value
+	 * @param offset      function offset
+	 * @param octaves     number of noise functions used in the calculation
 	 * @param persistence how much each octave/function contributes to the noise generated
-	 * @param lacunarity how much each octave increases in frequency
+	 * @param lacunarity  how much each octave increases in frequency
 	 * @return generated noise value used in calculating climate values
 	 */
 	private float generateClimate(
@@ -158,6 +157,7 @@ public class ClimateController {
 
 	/**
 	 * Sin function used for calculating climate in the generateClimate() method
+	 *
 	 * @param x function variable
 	 * @return function result
 	 */

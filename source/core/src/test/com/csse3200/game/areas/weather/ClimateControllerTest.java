@@ -17,13 +17,12 @@ import static org.mockito.Mockito.*;
 import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.io.Serial;
-
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(GameExtension.class)
 class ClimateControllerTest {
 
 	ClimateController controller;
+
 	@BeforeEach
 	public void setUp() {
 		GameTime gameTime = mock(GameTime.class);
@@ -72,7 +71,7 @@ class ClimateControllerTest {
 	@Test
 	public void testNoEventAdded() {
 		assertNull(controller.getCurrentWeatherEvent());
-		try (MockedStatic<MathUtils> mathUtils= mockStatic(MathUtils.class)) {
+		try (MockedStatic<MathUtils> mathUtils = mockStatic(MathUtils.class)) {
 			mathUtils.when(MathUtils::random).thenReturn(0f);
 			ServiceLocator.getTimeService().getEvents().trigger("dayUpdate");
 			for (int i = 0; i < 50; i++) {
@@ -85,7 +84,7 @@ class ClimateControllerTest {
 	@Test
 	public void testAddedEvent() {
 		assertNull(controller.getCurrentWeatherEvent());
-		try (MockedStatic<MathUtils> mathUtils= mockStatic(MathUtils.class)) {
+		try (MockedStatic<MathUtils> mathUtils = mockStatic(MathUtils.class)) {
 			mathUtils.when(MathUtils::random).thenReturn(1f);
 			mathUtils.when(() -> MathUtils.random(anyInt(), anyInt())).thenReturn(1);
 			ServiceLocator.getTimeService().getEvents().trigger("dayUpdate");
@@ -107,7 +106,9 @@ class ClimateControllerTest {
 
 	@Test
 	public void testAddEventWithNull() {
-		assertThrows(IllegalArgumentException.class, () -> {controller.addWeatherEvent(null);});
+		assertThrows(IllegalArgumentException.class, () -> {
+			controller.addWeatherEvent(null);
+		});
 	}
 
 }
