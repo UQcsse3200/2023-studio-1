@@ -25,4 +25,14 @@ public class AcidShowerEvent extends WeatherEvent {
         temperatureModifier = MIN_TEMPERATURE_MODIFIER +
                 (MAX_TEMPERATURE_MODIFIER - MIN_TEMPERATURE_MODIFIER) * severity;
     }
+
+    @Override
+    public float getHumidityModifier() {
+        return humidityModifier;
+    }
+
+    @Override
+    public float getTemperatureModifier() {
+        return temperatureModifier;
+    }
 }

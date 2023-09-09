@@ -35,11 +35,6 @@ public abstract class WeatherEvent {
 	 */
 	protected float temperatureModifier;
 
-	protected static final float MIN_HUMIDITY_MODIFIER = 1.0f;
-	protected static final float MAX_HUMIDITY_MODIFIER = 1.0f;
-	protected static final float MIN_TEMPERATURE_MODIFIER = 1.0f;
-	protected static final float MAX_TEMPERATURE_MODIFIER = 1.0f;
-
 	/**
 	 * Constructs an {@link WeatherEvent} with a given duration, priority and countdown
 	 *
@@ -52,9 +47,8 @@ public abstract class WeatherEvent {
 		this.duration = duration;
 		this.priority = priority;
 		this.severity = severity;
-		this.humidityModifier = MIN_HUMIDITY_MODIFIER + (MAX_HUMIDITY_MODIFIER - MIN_HUMIDITY_MODIFIER) * severity;
-		this.temperatureModifier = MIN_TEMPERATURE_MODIFIER +
-				(MAX_TEMPERATURE_MODIFIER - MIN_TEMPERATURE_MODIFIER) * severity;
+		this.humidityModifier = 1.0f;
+		this.temperatureModifier = 1.0f;
 	}
 
 	/**
