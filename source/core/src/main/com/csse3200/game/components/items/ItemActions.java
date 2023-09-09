@@ -7,6 +7,7 @@ import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.PlantFactory;
+import com.csse3200.game.services.ServiceLocator;
 
 import java.util.function.Function;
 
@@ -193,6 +194,7 @@ public class ItemActions extends Component {
     // Make a new tile
     Vector2 newPos = getAdjustedPos(playerPos, mousePos);
     Entity cropTile = createTerrainEntity(newPos);
+    ServiceLocator.getEntityService().register(cropTile);
     tile.setCropTile(cropTile);
     tile.setOccupied();
     return true;
