@@ -112,4 +112,25 @@ class ClimateControllerTest {
 		});
 	}
 
+	@Test
+	public void testAddInstantEvent() {
+		AcidShowerEvent event = new AcidShowerEvent(0, 1, 2, 0.5f);
+		controller.addWeatherEvent(event);
+		assertEquals(controller.getCurrentWeatherEvent(), event);
+		ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+		assertNull(controller.getCurrentWeatherEvent());
+	}
+
+	@Test
+	public void testOverridenEvent() {
+		AcidShowerEvent event = new AcidShowerEvent(0, 1, 2, 0.5f);
+		controller.addWeatherEvent(event);
+		assertEquals(controller.getCurrentWeatherEvent(), event);
+		AcidShowerEvent event2 = new AcidShowerEvent(0, 1, 10, 0.5f);
+		controller.addWeatherEvent(event2);
+		assertEquals(controller.getCurrentWeatherEvent(), event2);
+		ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+		assertNull(controller.getCurrentWeatherEvent());
+	}
+
 }
