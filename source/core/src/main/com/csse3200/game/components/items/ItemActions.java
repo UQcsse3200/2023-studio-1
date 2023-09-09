@@ -1,5 +1,4 @@
 package com.csse3200.game.components.items;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.CropTileComponent;
@@ -7,6 +6,9 @@ import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.PlantFactory;
+
+import java.util.function.Function;
 
 import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
 
@@ -21,7 +23,7 @@ public class ItemActions extends Component {
 
   /**
    * Uses the item at the given position
-   * 
+   *
    * @param playerPos the position of the player
    * @param mousePos  the position of the mouse
    * @param item      item to use/ interact with tile
@@ -37,6 +39,10 @@ public class ItemActions extends Component {
     // Add your item here!!!
     boolean resultStatus;
     TerrainTile tile = getTileAtPosition(playerPos, mousePos);
+    if (tile == null) {
+      System.out.println("Map team pls fix");
+      return false;
+    }
     switch (type.getItemType()) {
       case HOE -> {
         resultStatus = hoe(playerPos, mousePos);
@@ -54,6 +60,14 @@ public class ItemActions extends Component {
         resultStatus = water(tile, item);
         return resultStatus;
       }
+      case FERTILISER -> {
+        resultStatus = fertilise(tile);
+        return resultStatus;
+      }
+      case SEED -> {
+        resultStatus = plant(tile, item);
+        return resultStatus;
+      }
       default -> {
         return false;
       }
@@ -62,14 +76,14 @@ public class ItemActions extends Component {
 
   /**
    * Gets the tile at the given position. else returns null
-   * 
+   *
    * @param playerPos the position of the player
    * @param mousePos  the position of the mouse
    * @return Entity of tile at location else returns null
    */
   private TerrainTile getTileAtPosition(Vector2 playerPos, Vector2 mousePos) {
     Vector2 pos = getAdjustedPos(playerPos, mousePos);
-    return map.getTile(Math.round(pos.x), Math.round(pos.y));
+    return map.getTile(pos);
   }
 
   /**
@@ -77,7 +91,7 @@ public class ItemActions extends Component {
    * mouse position. Will always return 1 tile to the left, right,
    * up, down, diagonal left up, diagonal right up, diagonal left down, diagonal
    * right down of the player.
-   * 
+   *
    * @param playerPos the position of the player
    * @param mousePos  the position of the mouse
    * @return a vector of the position where the player should hit
@@ -108,7 +122,7 @@ public class ItemActions extends Component {
 
   /**
    * Waters the tile at the given position.
-   * 
+   *
    * @param tile the tile to be interacted with
    * @param item a reference to a watering can
    * @return if watering was successful return true else return false
@@ -127,7 +141,7 @@ public class ItemActions extends Component {
 
   /**
    * Harvests the tile at the given position
-   * 
+   *
    * @param tile the tile to be interacted with
    * @return if harvesting was successful return true else return false
    */
@@ -142,7 +156,7 @@ public class ItemActions extends Component {
 
   /**
    * Shovels the tile at the given position
-   * 
+   *
    * @param tile the tile to be interacted with
    * @return if shoveling was successful return true else return false
    */
@@ -158,7 +172,7 @@ public class ItemActions extends Component {
 
   /**
    * Hoes the tile at the given position
-   * 
+   *
    * @param playerPos the position of the player
    * @param mousePos  the position of the mouse
    * @return if hoeing was successful return true else return false
@@ -177,13 +191,80 @@ public class ItemActions extends Component {
     return true;
   }
 
+    /**
+     * Fertilises the tile at the given position
+     *
+     * @param tile the tile to be interacted with
+     * @return if fertilising was successful return true else return false
+     */
+  private boolean fertilise(TerrainTile tile) {
+    if (isCropTile(tile.getCropTile())) {
+      tile.getCropTile().getEvents().trigger("fertilise");
+      return true;
+    }
+    return false;
+  }
+
+    /**
+     * Plants the given seed seed in the tile at the given position
+     *
+     * @param tile the tile to be interacted with
+     * @param item the seed item to be planted
+     * @return if planting was successful return true else return false
+     */
+  private boolean plant(TerrainTile tile, Entity item) {
+    Function<CropTileComponent, Entity> plantFactoryMethod;
+    if (isCropTile(tile.getCropTile())) {
+        switch (item.getComponent(ItemComponent.class).getItemName()) {
+            case "aloe vera seed" -> {
+                plantFactoryMethod = PlantFactory::createAloeVera;
+                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
+            }
+            case "atomic algae seed" -> {
+                plantFactoryMethod = PlantFactory::createAtomicAlgae;
+                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
+            }
+            case "cosmic cob seed" -> {
+                plantFactoryMethod = PlantFactory::createCosmicCob;
+                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
+            }
+            case "deadly nightshade seed" -> {
+                plantFactoryMethod = PlantFactory::createDeadlyNightshade;
+                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
+            }
+            case "hammer plant seed" -> {
+                plantFactoryMethod = PlantFactory::createHammerPlant;
+                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
+            }
+            case "horticultural heater seed" -> {
+                plantFactoryMethod = PlantFactory::createHorticulturalHeater;
+                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
+            }
+            case "space snapper seed" -> {
+                plantFactoryMethod = PlantFactory::createVenusFlyTrap;
+                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
+            }
+            case "tobacco seed" -> {
+                plantFactoryMethod = PlantFactory::createNicotianaTabacum;
+                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
+            }
+            default -> {
+                System.out.println("Something went wrong");
+                throw new IllegalArgumentException("Explode");
+            }
+        }
+      return true;
+    }
+    return false;
+  }
+
   /**
    * Checks if the tile is harvestable by checking if it is a CropTile
-   * 
+   *
    * @param tile tile being checked
    * @return true if tile is harvestable else false
    */
   private boolean isCropTile(Entity tile) {
-    return tile.getComponent(CropTileComponent.class) != null;
+    return (tile != null) && (tile.getComponent(CropTileComponent.class) != null);
   }
 }

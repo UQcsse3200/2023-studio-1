@@ -55,9 +55,6 @@ public class TerrainCropTileFactory {
 				.addComponent(new CropTileComponent(stats.initialWaterContent, stats.initialSoilQuality));
 
 		tile.setPosition(position);
-		logger.debug("Registering crop tile {} with entity service", tile);
-		ServiceLocator.getEntityService().register(tile);
-
 		return tile;
 	}
 }
