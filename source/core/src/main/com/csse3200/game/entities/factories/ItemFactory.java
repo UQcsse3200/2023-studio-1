@@ -222,4 +222,17 @@ public class ItemFactory {
                     "Seed of Tobacco", new Texture("images/plants/tobacco_seed.png")));
     return seed;
   }
+
+  /**
+   * Creates a 'Cow food' item
+   *
+   * @return tobacco seed
+   */
+  public static Entity createCowFood() {
+    Entity animalFood = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/plants/tobacco_seed.png"))
+            .addComponent(new ItemComponent("COW FOOD", ItemType.FOOD,
+                    "Cow food", new Texture("images/plants/tobacco_seed.png")));
+    return animalFood;
+  }
 }

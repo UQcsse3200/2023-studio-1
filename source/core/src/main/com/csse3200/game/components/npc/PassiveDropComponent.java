@@ -50,6 +50,11 @@ public class PassiveDropComponent extends Component {
      * Spawns the dropItem at the entity's location. Considers the drop rate of the item.
      */
     public void dropItems() {
+        TamableComponent tamableComponent = this.entity.getComponent(TamableComponent.class);
+        if (tamableComponent == null || !tamableComponent.isTamed()) {
+            return;
+        }
+
         hoursPassed += 1;
         if (hoursPassed == timeToNextDrop) {
             Entity item = dropItem.get();

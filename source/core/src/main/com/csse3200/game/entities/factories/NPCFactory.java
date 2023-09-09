@@ -120,7 +120,7 @@ public class NPCFactory {
 
     cow
             .addComponent(aiTaskComponent)
-            .addComponent(new PassiveDropComponent(ItemFactory::createMilk, 2))
+            .addComponent(new PassiveDropComponent(ItemFactory::createFertiliser, 2))
             .addComponent(animator)
             .addComponent(new AnimalAnimationController())
             .addComponent(new TamableComponent(

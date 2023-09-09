@@ -157,6 +157,7 @@ public class SpaceGameArea extends GameArea {
     spawnTool(ItemType.HOE);
     spawnTool(ItemType.FERTILISER);
     spawnTool(ItemType.SEED);
+    spawnTool(ItemType.FOOD);
 
 
     //playMusic();
@@ -262,6 +263,10 @@ public class SpaceGameArea extends GameArea {
         break;
       case SEED:
         newTool = ItemFactory.createAloeVeraSeed();
+        spawnEntityAt(newTool, randomPos, true, true);
+        break;
+      case FOOD:
+        newTool = ItemFactory.createCowFood();
         spawnEntityAt(newTool, randomPos, true, true);
         break;
     }
