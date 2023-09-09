@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.missions.MissionManager;
+import com.csse3200.game.missions.achievements.Achievement;
 import com.csse3200.game.missions.quests.Quest;
 import com.csse3200.game.screens.MainGameScreen;
 import com.csse3200.game.services.ServiceLocator;
@@ -33,6 +34,7 @@ public class MissionDisplay extends UIComponent {
     private boolean achOpen = false;
     private boolean tamedAnimal;
     private int questNum;
+    private boolean showCompletedMissions = false;
     private  int plantsGrown;
     private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
 
@@ -61,33 +63,24 @@ public class MissionDisplay extends UIComponent {
         questWindow = new Window("Quests", skin);
         questWindow.setVisible(false);
         stage.addActor(questWindow);
-        String tamedString;
 
-        if (tamedAnimal){
-            tamedString = " You have tamed an animal ";
-        } else {
-            tamedString = " You need to (tame method) to tame an animal ";
-        }
-        String questAchevimentString = " " + String.valueOf(questNum) + " out of 5 completed ";
-        String plantsGrowString =" "  + String.valueOf(plantsGrown) + " out of 5 grown ";
+        // Assuming you have a list of achievements
+        Achievement[] achievements = missionManager.getAchievements();
+        createAchievements(achievements);
+
+    }
+    private void createAchievements(Achievement[] achievements) {
         achWindow = new Window("Achievements", skin);
-
         achWindow.pad(40, 10, 10, 10);
+        Table uncompletedTable = new Table();
+        Table completedTable = new Table();
+
         Table contentTable = new Table();
-        contentTable.defaults().padBottom(10); // Set default padding for the content
+        contentTable.defaults().padBottom(10);
 
         Label.LabelStyle labelStyle = new Label.LabelStyle();
-        labelStyle.font = skin.getFont("pixel-body"); // Assuming you have a font named "pixel-body" in your skin file
+        labelStyle.font = skin.getFont("pixel-body");
         labelStyle.fontColor = Color.BLACK;
-
-        Label header1Label = new Label(" Tame a wild animal ", skin, "pixel-mid", "black"); // Assuming you have a title font named "pixel-title"
-        Label tamedLabel = new Label(tamedString, labelStyle);
-
-        Label header2Label = new Label(" Complete 5 quests ", skin, "pixel-mid", "black"); // Assuming you have a title font named "pixel-title"
-        Label questAchievementLabel = new Label(questAchevimentString, labelStyle);
-
-        Label header3Label = new Label(" Grow 5 plants ", skin, "pixel-mid", "black"); // Assuming you have a title font named "pixel-title"
-        Label thirdLabel = new Label(plantsGrowString, labelStyle);
 
         TextButton backButton = getBackButton();
         backButton.addListener(new ChangeListener() {
@@ -97,24 +90,61 @@ public class MissionDisplay extends UIComponent {
             }
         });
 
-        contentTable.add(header1Label).left().row();
-        contentTable.add(tamedLabel).left().row();
-        contentTable.add(header2Label).left().row();
-        contentTable.add(questAchievementLabel).left().row();
-        contentTable.add(header3Label).left().row();
-        contentTable.add(thirdLabel).left().row();
-        contentTable.add(backButton).colspan(4).bottom().center().fill();
+        TextButton toggleButton = new TextButton("Show Completed", skin);
+        toggleButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                showCompletedMissions = !showCompletedMissions;
+                toggleButton.setText(showCompletedMissions ? "Show Uncompleted" : "Show Completed");
+                // Clear the current achievement tables and rebuild them based on the toggle
+                uncompletedTable.clearChildren();
+                completedTable.clearChildren();
+                for (Achievement achievement : achievements) {
+                    Label titleLabel = new Label(" " + achievement.getName(), skin, "pixel-mid", "black");
+                    Label descriptionLabel = new Label(" " + achievement.getDescription(), skin, "pixel-body", "black");
+
+                    if (achievement.isCompleted() && showCompletedMissions) {
+                        completedTable.add(titleLabel).left().row();
+                        completedTable.add(descriptionLabel).left().row();
+                    } else if (!achievement.isCompleted() && !showCompletedMissions) {
+                        uncompletedTable.add(titleLabel).left().row();
+                        uncompletedTable.add(descriptionLabel).left().row();
+                    }
+                }
+            }
+        });
+
+
+
+        // Populate the tables based on the initial state
+        for (Achievement achievement : achievements) {
+            Label titleLabel = new Label(" " + achievement.getName(), skin, "pixel-mid", "black");
+            Label descriptionLabel = new Label(" " + achievement.getDescription(), skin, "pixel-body", "black");
+
+            if (achievement.isCompleted() && showCompletedMissions) {
+                completedTable.add(titleLabel).left().row();
+                completedTable.add(descriptionLabel).left().row();
+            } else if (!achievement.isCompleted() && !showCompletedMissions) {
+                uncompletedTable.add(titleLabel).left().row();
+                uncompletedTable.add(descriptionLabel).left().row();
+            }
+        }
+
+        contentTable.add(uncompletedTable).expand().fill().padRight(20);
+        contentTable.add(completedTable).expand().fill().padLeft(20);
+
+        contentTable.row();
+        contentTable.add(backButton).colspan(2).bottom().center().fill();
 
         achWindow.add(contentTable).expand().fill();
-
+        achWindow.row().padTop(10);
+        achWindow.add(toggleButton).colspan(2).bottom().center().fill();
         achWindow.pack();
         achWindow.setMovable(false);
         achWindow.setPosition(stage.getWidth() / 2 - achWindow.getWidth() / 2, stage.getHeight() / 2 - achWindow.getHeight() / 2);
         achWindow.setVisible(false);
         stage.addActor(achWindow);
-
     }
-
     /**
      * Generates the main menu for missions. Contains a small blurb from the Mission NPC
      * and allows the user to view either quests or achievements.
