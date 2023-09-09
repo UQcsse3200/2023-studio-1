@@ -10,6 +10,7 @@ import com.csse3200.game.ui.UIComponent;
 
 public class WeatherEventDisplay extends UIComponent {
 	private Image weatherImage;
+	private Image clockImage;
 	private Group group;
 	private Table table;
 
@@ -24,9 +25,11 @@ public class WeatherEventDisplay extends UIComponent {
 		group = new Group();
 		table.top().left();
 		table.setFillParent(true);
-		table.padTop(520f).padLeft(-265f);
+		table.padTop(520f).padLeft(-100f);
 
 		WeatherEvent currentEvent = ServiceLocator.getGameArea().getClimateController().getCurrentWeatherEvent();
+		clockImage = new Image(ServiceLocator.getResourceService().getAsset(
+				"images/time_system_ui/clock_frame.png", Texture.class));
 		if (currentEvent instanceof AcidShowerEvent) {
 			weatherImage = new Image(ServiceLocator.getResourceService().getAsset(
 					"images/weather_event/raindrop.png", Texture.class));
@@ -37,9 +40,11 @@ public class WeatherEventDisplay extends UIComponent {
 			weatherImage = new Image(ServiceLocator.getResourceService().getAsset(
 					"images/time_system_ui/indicator_1.png", Texture.class));
 		}
+		clockImage.setPosition(clockImage.getImageX() + 158f, clockImage.getImageY() + 189f);
 		weatherImage.setPosition(weatherImage.getImageX() + 158f, weatherImage.getImageY() + 189f);
 		stage.addActor(weatherImage);
 
+		group.addActor(clockImage);
 		group.addActor(weatherImage);
 
 		table.add(group).size(200);
@@ -49,6 +54,7 @@ public class WeatherEventDisplay extends UIComponent {
 	@Override
 	public void dispose() {
 		super.dispose();
+		clockImage.remove();
 		weatherImage.remove();
 	}
 
