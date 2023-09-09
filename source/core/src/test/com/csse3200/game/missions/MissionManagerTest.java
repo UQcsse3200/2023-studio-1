@@ -1,7 +1,6 @@
 package com.csse3200.game.missions;
 
 import com.csse3200.game.events.EventHandler;
-import com.csse3200.game.missions.achievements.Achievement;
 import com.csse3200.game.missions.quests.Quest;
 import com.csse3200.game.missions.rewards.Reward;
 import com.csse3200.game.services.GameTime;
@@ -10,13 +9,9 @@ import com.csse3200.game.services.TimeService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
 class MissionManagerTest {
 
     private Reward r1, r2, r3;
@@ -32,24 +27,18 @@ class MissionManagerTest {
     @BeforeEach
     public void preTest() {
         r1 = new Reward() {
-            public int magicNumber = 0;
             @Override
             public void collect() {
-                magicNumber = 1;
             }
         };
         r2 = new Reward() {
-            public int magicNumber = 0;
             @Override
             public void collect() {
-                magicNumber = 1;
             }
         };
         r3 = new Reward() {
-            public int magicNumber = 0;
             @Override
             public void collect() {
-                magicNumber = 1;
             }
         };
 
@@ -68,17 +57,16 @@ class MissionManagerTest {
 
             @Override
             public String getDescription() {
-                return "Long Description 1";
+                return null;
             }
 
             @Override
             public String getShortDescription() {
-                return "Short Description 1";
+                return null;
             }
 
             @Override
             protected void resetState() {
-                count = 0;
             }
         };
         q2 = new Quest("My Quest 2", r2, 1, false) {
@@ -96,17 +84,16 @@ class MissionManagerTest {
 
             @Override
             public String getDescription() {
-                return "Long Description 2";
+                return null;
             }
 
             @Override
             public String getShortDescription() {
-                return "Short Description 2";
+                return null;
             }
 
             @Override
             protected void resetState() {
-                count = 5;
             }
         };
         q3 = new Quest("My Quest 3", r3, 5, true) {
@@ -126,18 +113,16 @@ class MissionManagerTest {
 
             @Override
             public String getDescription() {
-                return count1 + " & " + count2;
+                return null;
             }
 
             @Override
             public String getShortDescription() {
-                return "Short Description 3";
+                return null;
             }
 
             @Override
             protected void resetState() {
-                count1 = 0;
-                count2 = 1;
             }
         };
     }
