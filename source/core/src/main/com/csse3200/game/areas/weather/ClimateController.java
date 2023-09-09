@@ -13,17 +13,21 @@ public class ClimateController {
 	private float temperature;
 
 	private static final float DEFAULT_HUMIDITY = 0.5f;
-	private static final float DEFAULT_TEMPERATURE = 26.0f;
+	private static final float MIN_TEMPERATURE = 0f;
+	private static final float MAX_TEMPERATURE = 30f;
+
+	private static final float MIN_HUMIDITY = 0f;
+	private static final float MAX_HUMIDITY = 1.0f;
+
 	private static WeatherEvent currentWeatherEvent;
 	private static final ArrayList<WeatherEvent> weatherEvents = new ArrayList<>();
 	private final EventHandler events;
 
 	public ClimateController() {
-		humidity = DEFAULT_HUMIDITY;
-		temperature = DEFAULT_TEMPERATURE;
 		events = new EventHandler();
 		ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateWeatherEvent);
 		ServiceLocator.getTimeService().getEvents().addListener("minuteUpdate", this::updateClimate);
+		updateClimate();
 	}
 
 	/**
@@ -83,26 +87,25 @@ public class ClimateController {
 		float humidityModifier = currentWeatherEvent == null ? 0 : currentWeatherEvent.getHumidityModifier();
 		float temperatureModifier = currentWeatherEvent == null ? 0 : currentWeatherEvent.getTemperatureModifier();
 
-		temperature = generateTemperature(time, 30, 0, 4, 8, 0.24f, 2.8f) + temperatureModifier;
+		temperature = (MAX_TEMPERATURE - MIN_TEMPERATURE) * generateClimate(time, 4, 8, 0.24f, 2.8f)
+				+ MIN_TEMPERATURE + temperatureModifier;
 
-		humidity = (float) ((float) 0.5 + (0.1 * MathUtils.random(1, 3)) * MathUtils.sin((float)
-				(Math.PI / 12 * (time - 12))) * humidityModifier);
-		System.out.printf("(%s, %s), ", time, temperature);
+		humidity = generateClimate(time, -4, 8, 0.14f, 3.5f) + humidityModifier;
+
+		System.out.printf("(%s, %s), ", time, humidity);
 	}
 
 	/**
 	 * Temperature generation algorithm that takes inspiration from the perlin noise algorithm.
 	 * @param time
-	 * @param maxTemp
-	 * @param minTemp
 	 * @param offset
 	 * @param octaves
 	 * @param persistence
 	 * @param lacunarity
 	 * @return
 	 */
-	private float generateTemperature(
-			float time, float maxTemp, float minTemp, float offset, int octaves, float persistence, float lacunarity) {
+	private float generateClimate(
+			float time, float offset, int octaves, float persistence, float lacunarity) {
 		float maxAmplitude = 0f;
 		float amplitude = 1.0f;
 		float frequency = 1.0f;
@@ -117,7 +120,7 @@ public class ClimateController {
 			frequency *= lacunarity;
 		}
 
-		return (maxTemp - minTemp) * temperatureNormalised / maxAmplitude + minTemp;
+		return temperatureNormalised / maxAmplitude;
 	}
 
 	private float getTempSin(float x) {
