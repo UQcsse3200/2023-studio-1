@@ -118,25 +118,35 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link"><code>String</code></a> description of the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isCompleted()" class="member-name-link">isCompleted</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getShortDescription()" class="member-name-link">getShortDescription</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns a short <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link"><code>String</code></a> description of the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isCompleted()" class="member-name-link">isCompleted</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns true if the number of crop tiles the player has fertilised is greater than or equal
  to the target number of tiles.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#registerMission(com.csse3200.game.events.EventHandler)" class="member-name-link">registerMission</a><wbr>(<a href="../../events/EventHandler.html" title="class in com.csse3200.game.events">EventHandler</a>&nbsp;missionManagerEvents)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#registerMission(com.csse3200.game.events.EventHandler)" class="member-name-link">registerMission</a><wbr>(<a href="../../events/EventHandler.html" title="class in com.csse3200.game.events">EventHandler</a>&nbsp;missionManagerEvents)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Registers the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> to the <a href="../MissionManager.html" title="class in com.csse3200.game.missions"><code>MissionManager</code></a>, by adding all event
  listeners to the service which the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> needs to listen to in order to update its
  state.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#resetState()" class="member-name-link">resetState</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Resets the number of tiles fertilised back to 0</div>
 </div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.csse3200.game.missions.quests.Quest">Methods inherited from class&nbsp;com.csse3200.game.missions.quests.<a href="Quest.html" title="class in com.csse3200.game.missions.quests">Quest</a></h3>
-<code><a href="Quest.html#collectReward()">collectReward</a>, <a href="Quest.html#isExpired()">isExpired</a>, <a href="Quest.html#isMandatory()">isMandatory</a>, <a href="Quest.html#updateExpiry()">updateExpiry</a></code></div>
+<code><a href="Quest.html#collectReward()">collectReward</a>, <a href="Quest.html#isExpired()">isExpired</a>, <a href="Quest.html#isMandatory()">isMandatory</a>, <a href="Quest.html#resetExpiry()">resetExpiry</a>, <a href="Quest.html#updateExpiry()">updateExpiry</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.csse3200.game.missions.Mission">Methods inherited from class&nbsp;com.csse3200.game.missions.<a href="../Mission.html" title="class in com.csse3200.game.missions">Mission</a></h3>
 <code><a href="../Mission.html#getName()">getName</a></code></div>
@@ -227,6 +237,33 @@ loadScripts(document, 'script');</script>
 <dt>Returns:</dt>
 <dd>A <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link"><code>String</code></a> description of the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>, including any relevant details
          you would like the player to know about.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getShortDescription()">
+<h3>getShortDescription</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getShortDescription</span>()</div>
+<div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="../Mission.html#getShortDescription()">Mission</a></code></span></div>
+<div class="block">Returns a short <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link"><code>String</code></a> description of the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>. This description should be
+ at most around 50 characters. This might simply contain progress information on the
+ <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>, or a shortened form of <a href="../Mission.html#getDescription()"><code>Mission.getDescription()</code></a>.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../Mission.html#getShortDescription()">getShortDescription</a></code>&nbsp;in class&nbsp;<code><a href="../Mission.html" title="class in com.csse3200.game.missions">Mission</a></code></dd>
+<dt>Returns:</dt>
+<dd>A short <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link"><code>String</code></a> description of the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="resetState()">
+<h3>resetState</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">resetState</span>()</div>
+<div class="block">Resets the number of tiles fertilised back to 0</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="Quest.html#resetState()">resetState</a></code>&nbsp;in class&nbsp;<code><a href="Quest.html" title="class in com.csse3200.game.missions.quests">Quest</a></code></dd>
 </dl>
 </section>
 </li>
