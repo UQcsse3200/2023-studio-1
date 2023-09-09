@@ -16,6 +16,7 @@ import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.input.InputDecorator;
 import com.csse3200.game.input.InputService;
+import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
@@ -69,6 +70,8 @@ public class MainGameScreen extends ScreenAdapter {
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
 
+  private static Boolean lose;
+
   public MainGameScreen(GdxGame game) {
     this.game = game;
 
@@ -86,10 +89,12 @@ public class MainGameScreen extends ScreenAdapter {
     ServiceLocator.registerRenderService(new RenderService());
     ServiceLocator.registerTimeService(new TimeService());
 
+    ServiceLocator.registerMissionManager(new MissionManager());
+
     renderer = RenderFactory.createRenderer();
     renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
     renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
-
+    ServiceLocator.registerCameraComponent(renderer.getCamera());
 
     loadAssets();
     createUI();
@@ -107,6 +112,13 @@ public class MainGameScreen extends ScreenAdapter {
     //renderer.getCamera().setTrackEntity(forestGameArea.getPlayer());
     spaceGameArea.getPlayer().getComponent(PlayerActions.class).setCameraVar(renderer.getCamera());
     spaceGameArea.getTractor().getComponent(TractorActions.class).setCameraVar(renderer.getCamera());
+
+    lose = false;
+    spaceGameArea.getPlayer().getEvents().addListener("loseScreen", this::loseScreenStart);
+  }
+
+  public void loseScreenStart() {
+    lose = true;
   }
 
   @Override
@@ -117,6 +129,9 @@ public class MainGameScreen extends ScreenAdapter {
     }
       ServiceLocator.getTimeService().update();
       renderer.render();
+    if (lose == true) {
+      game.setScreen(GdxGame.ScreenType.LOSESCREEN);
+    }
   }
 
   @Override
