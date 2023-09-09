@@ -25,6 +25,7 @@ public class SpaceGameArea extends GameArea {
   private static final int NUM_TREES = 7;
   private static final int NUM_GHOSTS = 5;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
+  private static final GridPoint2 TRACTOR_SPAWN = new GridPoint2(15, 15);
 
   private static final GridPoint2 TOOL_SPAWN = new GridPoint2(15, 10);// temp!!!
   private static final GridPoint2 TOOL_SPAWN2 = new GridPoint2(15, 15);// temp!!!
@@ -43,6 +44,8 @@ public class SpaceGameArea extends GameArea {
           "images/iso_grass_2.png",
           "images/iso_grass_3.png",
           "images/tool_shovel.png",
+          "images/egg.png",
+          "images/milk.png",
 
           "images/tool_hoe.png",
           "images/tool_scythe.png",
@@ -87,7 +90,16 @@ public class SpaceGameArea extends GameArea {
           "images/snow_3.png",
           "images/stone_1.png",
           "images/stonePath_1.png",
-          "images/tractor.png"
+          "images/tractor.png",
+          "images/fertiliser.png",
+          "images/plants/aloe_vera_seed.png",
+          "images/plants/atomic_algae_seed.png",
+          "images/plants/cosmic_cob_seed.png",
+          "images/plants/deadly_nightshade_seed.png",
+          "images/plants/hammer_plant_seed.png",
+          "images/plants/horticultural_heater_seed.png",
+          "images/plants/space_snapper_seed.png",
+          "images/plants/tobacco_seed.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
@@ -143,6 +155,8 @@ public class SpaceGameArea extends GameArea {
     spawnTool(ItemType.SHOVEL);
     spawnTool(ItemType.SCYTHE);
     spawnTool(ItemType.HOE);
+    spawnTool(ItemType.FERTILISER);
+    spawnTool(ItemType.SEED);
 
 
     //playMusic();
@@ -213,6 +227,7 @@ public class SpaceGameArea extends GameArea {
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
+    System.out.println(newPlayer.getPosition());
     return newPlayer;
   }
 
@@ -240,6 +255,14 @@ public class SpaceGameArea extends GameArea {
         newTool = ItemFactory.createWateringcan();
         spawnEntityAt(newTool, randomPos, true, true);
         break;
+      case FERTILISER:
+        newTool = ItemFactory.createFertiliser();
+        spawnEntityAt(newTool, randomPos, true, true);
+        break;
+      case SEED:
+        newTool = ItemFactory.createAloeVeraSeed();
+        spawnEntityAt(newTool, randomPos, true, true);
+        break;
     }
   }
 
@@ -250,7 +273,7 @@ public class SpaceGameArea extends GameArea {
    */
   private Entity spawnTractor() {
     Entity newTractor = TractorFactory.createTractor(player);
-    spawnEntityAt(newTractor, PLAYER_SPAWN, true, true);
+    spawnEntityAt(newTractor, TRACTOR_SPAWN, true, true);
     return newTractor;
   }
 
@@ -344,6 +367,4 @@ public class SpaceGameArea extends GameArea {
   public Entity getTractor() {
     return tractor;
   }
-
-
 }

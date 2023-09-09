@@ -1,5 +1,6 @@
 package com.csse3200.game.components.player;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
@@ -45,9 +46,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           moveDirection.add(Vector2Utils.RIGHT);
           triggerMoveEvent();
           return true;
-        case Keys.SPACE:
-          entity.getEvents().trigger("attack");
-          return true;
         case Keys.SHIFT_LEFT:
           entity.getEvents().trigger("run");
           return true;
@@ -60,6 +58,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           return true;
         case Keys.F:
           triggerEnterEvent();
+          return true;
+        case Keys.SPACE:
+          touchUp(Gdx.input.getX(),Gdx.input.getY(), 0,0);
           return true;
         case Keys.NUM_0: case Keys.NUM_1: case Keys.NUM_2:
         case Keys.NUM_3: case Keys.NUM_4: case Keys.NUM_5:
@@ -79,7 +80,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public boolean touchUp(int screenX, int screenY, int pointer, int button) {
     if (!actions.isMuted()) {
       Vector2 mousePos = new Vector2(screenX, screenY);
-      entity.getEvents().trigger("use", entity.getPosition(), mousePos, entity.getComponent(InventoryComponent.class).getHeldItem());
+      entity.getEvents().trigger("use", mousePos, entity.getComponent(InventoryComponent.class).getHeldItem());
     }
     return false;
   }
