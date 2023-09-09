@@ -80,6 +80,9 @@ public class TractorActions extends Component {
   }
 
   private void hoe(TerrainTile tile, Vector2 pos) {
+    if (tile == null) {
+      return;
+    }
     if (tile.getCropTile() != null || !tile.isTillable()) {
       return;
     }
