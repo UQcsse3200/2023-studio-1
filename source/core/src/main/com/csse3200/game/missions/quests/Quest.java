@@ -60,7 +60,7 @@ public abstract class Quest extends Mission {
 	 * {@link Mission} has not been completed, this method will do nothing.
 	 */
 	public void collectReward() {
-		if (isCompleted() || !reward.isCollected()) {
+		if (isCompleted() && !reward.isCollected()) {
 			reward.collect();
 		}
 	}

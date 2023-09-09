@@ -29,26 +29,31 @@ class QuestTest {
         r1 = new Reward() {
             @Override
             public void collect() {
+                isCollected = true;
             }
         };
         r2 = new Reward() {
             @Override
             public void collect() {
+                isCollected = true;
             }
         };
         r3 = new Reward() {
             @Override
             public void collect() {
+                isCollected = true;
             }
         };
         r4 = new Reward() {
             @Override
             public void collect() {
+                isCollected = true;
             }
         };
         r5 = new Reward() {
             @Override
             public void collect() {
+                isCollected = true;
             }
         };
 
@@ -314,6 +319,74 @@ class QuestTest {
         q3.registerMission(ServiceLocator.getMissionManager().getEvents());
         q4.registerMission(ServiceLocator.getMissionManager().getEvents());
         q5.registerMission(ServiceLocator.getMissionManager().getEvents());
+
+        ServiceLocator.getMissionManager().getEvents().trigger("e1");
+        assertFalse(q1.isCompleted());
+        assertTrue(q2.isCompleted());
+        assertFalse(q3.isCompleted());
+        ServiceLocator.getMissionManager().getEvents().trigger("e1");
+        ServiceLocator.getMissionManager().getEvents().trigger("e1");
+        ServiceLocator.getMissionManager().getEvents().trigger("e1");
+        assertFalse(q1.isCompleted());
+        assertFalse(q2.isCompleted());
+        assertTrue(q3.isCompleted());
+
+        ServiceLocator.getMissionManager().getEvents().trigger("e2");
+        ServiceLocator.getMissionManager().getEvents().trigger("e2");
+        assertFalse(q3.isCompleted());
+        assertTrue(q4.isCompleted());
+        ServiceLocator.getMissionManager().getEvents().trigger("e2");
+        ServiceLocator.getMissionManager().getEvents().trigger("e2");
+        ServiceLocator.getMissionManager().getEvents().trigger("e2");
+        assertTrue(q5.isCompleted());
+    }
+
+    @Test
+    public void testCollectRewards() {
+        assertFalse(r1.isCollected());
+        q1.collectReward();
+        assertTrue(r1.isCollected());
+
+        assertFalse(r2.isCollected());
+        q2.collectReward();
+        assertFalse(r2.isCollected());
+        q2.registerMission(ServiceLocator.getMissionManager().getEvents());
+        ServiceLocator.getMissionManager().getEvents().trigger("e1");
+        q2.collectReward();
+        assertTrue(r2.isCollected());
+
+        assertFalse(r3.isCollected());
+        q3.collectReward();
+        assertFalse(r3.isCollected());
+        q3.registerMission(ServiceLocator.getMissionManager().getEvents());
+        ServiceLocator.getMissionManager().getEvents().trigger("e1");
+        ServiceLocator.getMissionManager().getEvents().trigger("e1");
+        ServiceLocator.getMissionManager().getEvents().trigger("e1");
+        ServiceLocator.getMissionManager().getEvents().trigger("e1");
+        q3.collectReward();
+        assertTrue(r3.isCollected());
+
+        assertFalse(r4.isCollected());
+        q4.collectReward();
+        assertFalse(r4.isCollected());
+        q4.registerMission(ServiceLocator.getMissionManager().getEvents());
+        ServiceLocator.getMissionManager().getEvents().trigger("e2");
+        ServiceLocator.getMissionManager().getEvents().trigger("e2");
+        ServiceLocator.getMissionManager().getEvents().trigger("e1");
+        q4.collectReward();
+        assertTrue(r4.isCollected());
+
+        assertFalse(r5.isCollected());
+        q5.collectReward();
+        assertFalse(r5.isCollected());
+        q5.registerMission(ServiceLocator.getMissionManager().getEvents());
+        ServiceLocator.getMissionManager().getEvents().trigger("e2");
+        ServiceLocator.getMissionManager().getEvents().trigger("e2");
+        ServiceLocator.getMissionManager().getEvents().trigger("e2");
+        ServiceLocator.getMissionManager().getEvents().trigger("e2");
+        ServiceLocator.getMissionManager().getEvents().trigger("e2");
+        q5.collectReward();
+        assertTrue(r5.isCollected());
     }
 
 }
