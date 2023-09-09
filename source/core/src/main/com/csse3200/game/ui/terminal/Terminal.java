@@ -1,8 +1,7 @@
 package com.csse3200.game.ui.terminal;
 
 import com.csse3200.game.components.Component;
-import com.csse3200.game.ui.terminal.commands.Command;
-import com.csse3200.game.ui.terminal.commands.DebugCommand;
+import com.csse3200.game.ui.terminal.commands.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +28,10 @@ public class Terminal extends Component {
     this.commands = commands;
 
     addCommand("debug", new DebugCommand());
+    addCommand("setTime", new SetTimeCommand());
+    addCommand("spawn", new SpawnCommand());
+    addCommand("setDay", new SetDayCommand());
+    addCommand("addItem", new AddItemCommand());
   }
 
   /** @return message entered by user */

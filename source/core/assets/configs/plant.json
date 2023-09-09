@@ -1,0 +1,74 @@
+{
+  "cosmicCob": {
+    "health": 10,
+    "name": "Cosmic Cob",
+    "type": "FOOD",
+    "description": "Nutritious space corn!",
+    "idealWaterLevel": 0.7,
+    "adultLifeSpan": 5,
+    "maxHealth": 400
+  },
+  "aloeVera": {
+    "health": 10,
+    "name": "Aloe Vera",
+    "type": "HEALTH",
+    "description": "Produces gel that can be used for healing",
+    "idealWaterLevel": 0.7,
+    "adultLifeSpan": 5,
+    "maxHealth": 300
+  },
+  "hammerPlant": {
+    "health": 10,
+    "name": "Hammer Plant",
+    "type": "REPAIR",
+    "description": "Repairs plants within its healing radius",
+    "idealWaterLevel": 0.7,
+    "adultLifeSpan": 5,
+    "maxHealth": 200
+  },
+  "venusFlyTrap": {
+    "health": 10,
+    "name": "Space Snapper",
+    "type": "DEFENCE",
+    "description" : "I eat the fauna!",
+    "idealWaterLevel": 0.7,
+    "adultLifeSpan": 5,
+    "maxHealth": 400
+  },
+  "waterWeed": {
+    "health": 10,
+    "name": "Atomic Algae",
+    "type": "PRODUCTION",
+    "description": "Test description",
+    "idealWaterLevel": 0.7,
+    "adultLifeSpan": 5,
+    "maxHealth": 100
+  },
+  "atropaBelladonna": {
+    "health": 10,
+    "name": "Deadly Nightshade",
+    "type": "DEADLY",
+    "description": "Grows deadly poisonous berries",
+    "idealWaterLevel": 0.7,
+    "adultLifeSpan": 5,
+    "maxHealth": 200
+  },
+  "nicotianaTabacum": {
+    "health": 10,
+    "name": "Tobacco",
+    "type": "DEADLY",
+    "description": "Toxic addicted plant leaves",
+    "idealWaterLevel": 0.7,
+    "adultLifeSpan": 5,
+    "maxHealth": 20
+  },
+  "sunFlower": {
+    "health" : 10,
+    "name": "Horticultural Heater",
+    "type": "PRODUCTION",
+    "description": "Warms up the nearby area",
+    "idealWaterLevel": 0.7,
+    "adultLifeSpan": 5,
+    "maxHealth": 100
+  }
+}

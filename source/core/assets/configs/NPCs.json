@@ -1,12 +1,24 @@
 {
-  "ghost": {
-    "health": 40,
-    "baseAttack": 10
+  "cow": {
+    "health": 50,
+    "tamingThreshold": 3,
+    "tamingProbability": 0.75,
+    "favouriteFood": "COW FOOD"
   },
-  "ghostKing": {
-    "health": 100,
-    "baseAttack": 25,
-    "spookyFactor": 7
+  "chicken": {
+    "health": 10,
+    "tamingThreshold": 3,
+    "tamingProbability": 0.5,
+    "favouriteFood": "CHICKEN FOOD"
+  },
+  "astrolotl": {
+    "health": 5,
+    "tamingThreshold": 1,
+    "tamingProbability": 0.5,
+    "favouriteFood": "ASTROLOTL FOOD"
+  },
+  "oxygenEater": {
+    "health": 100
   }
 }
 

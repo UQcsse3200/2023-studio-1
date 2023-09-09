@@ -1,19 +1,25 @@
+
 package com.csse3200.game.screens;
 
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.mainmenu.MainMenuActions;
 import com.csse3200.game.components.mainmenu.MainMenuDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.input.InputDecorator;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
+import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.TimeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,19 +30,24 @@ public class MainMenuScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuScreen.class);
   private final GdxGame game;
   private final Renderer renderer;
-  private static final String[] mainMenuTextures = {"images/box_boy_title.png"};
+  public static final int frameCount = 71;
+  private static final String[] mainMenuTextures = {"images/galaxy_home_still.png"};
+  public static String[] transitionTextures = new String[frameCount];
+  private static final String animationPrefix = "images/menu_animations/menu_animations";
+  private Texture backgroundTexture;
+  private SpriteBatch batch;
+
 
   public MainMenuScreen(GdxGame game) {
     this.game = game;
-
     logger.debug("Initialising main menu screen services");
+    ServiceLocator.registerTimeSource(new GameTime());
     ServiceLocator.registerInputService(new InputService());
     ServiceLocator.registerResourceService(new ResourceService());
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
-
+    ServiceLocator.registerTimeService(new TimeService());
     renderer = RenderFactory.createRenderer();
-
     loadAssets();
     createUI();
   }
@@ -44,8 +55,10 @@ public class MainMenuScreen extends ScreenAdapter {
   @Override
   public void render(float delta) {
     ServiceLocator.getEntityService().update();
+    ServiceLocator.getTimeService().update();
     renderer.render();
   }
+
 
   @Override
   public void resize(int width, int height) {
@@ -79,6 +92,18 @@ public class MainMenuScreen extends ScreenAdapter {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(mainMenuTextures);
+    loadFrames();
+    ServiceLocator.getResourceService().loadAll();
+  }
+
+  private void loadFrames() {
+    logger.debug("Loading assets");
+    ResourceService resourceService = ServiceLocator.getResourceService();
+
+    for (int i = 0; i < frameCount; i++) {
+      transitionTextures[i] = animationPrefix + i + ".png";
+    }
+    resourceService.loadTextures(transitionTextures);
     ServiceLocator.getResourceService().loadAll();
   }
 
@@ -97,8 +122,9 @@ public class MainMenuScreen extends ScreenAdapter {
     Stage stage = ServiceLocator.getRenderService().getStage();
     Entity ui = new Entity();
     ui.addComponent(new MainMenuDisplay())
-        .addComponent(new InputDecorator(stage, 10))
-        .addComponent(new MainMenuActions(game));
+            .addComponent(new InputDecorator(stage, 10))
+            .addComponent(new MainMenuActions(game));
     ServiceLocator.getEntityService().register(ui);
   }
 }
+

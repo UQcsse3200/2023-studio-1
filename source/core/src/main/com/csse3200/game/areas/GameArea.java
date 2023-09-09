@@ -1,5 +1,6 @@
 package com.csse3200.game.areas;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
@@ -39,9 +40,18 @@ public abstract class GameArea implements Disposable {
    *
    * @param entity Entity (not yet registered)
    */
-  protected void spawnEntity(Entity entity) {
+  public void spawnEntity(Entity entity) {
     areaEntities.add(entity);
     ServiceLocator.getEntityService().register(entity);
+  }
+
+  /**
+   * de-spawn entity at its current position
+   *
+   * @param entity Entity (not yet registered)
+   */
+  protected void deSpawnEntity(Entity entity) {
+    areaEntities.remove(entity);
   }
 
   /**
@@ -52,7 +62,7 @@ public abstract class GameArea implements Disposable {
    * @param centerX true to center entity X on the tile, false to align the bottom left corner
    * @param centerY true to center entity Y on the tile, false to align the bottom left corner
    */
-  protected void spawnEntityAt(
+  public void spawnEntityAt(
       Entity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
     Vector2 worldPos = terrain.tileToWorldPosition(tilePos);
     float tileSize = terrain.getTileSize();
@@ -67,4 +77,11 @@ public abstract class GameArea implements Disposable {
     entity.setPosition(worldPos);
     spawnEntity(entity);
   }
+  public void removeEntity(Entity entity) {
+    entity.setEnabled(false);
+    areaEntities.remove(entity);
+    Gdx.app.postRunnable(entity::dispose); //TODO: What does this do
+  }
+
+  public abstract Entity getPlayer();
 }

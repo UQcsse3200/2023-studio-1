@@ -1,7 +1,9 @@
 package com.csse3200.game.components.items;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.components.Component;
 import java.util.UUID;
+
 
 public class ItemComponent extends Component {
     /**
@@ -11,34 +13,44 @@ public class ItemComponent extends Component {
      * @param price price of item
      * @param sellable is the item sellable. true if sellable false otherwise
      * @param itemId unique id of the item
-     * 
+     * @param itemType type of item
+     *
      */
-    private String itemName; // User facing name for item. can be customised by user. 
+    private String itemName; // User facing name for item. can be customised by user.
     private String itemDescription; // User facing description for item.
     private final String itemId;
     private int price; // Price of item
     private final boolean sellable; // is the item sellable
+    private final ItemType itemType; // Type of item
+    private Texture itemTexture;
+
 
 
     /**
      * Constructor for Item
-     * @param itemName user facing name for item  
+     * @param itemName user facing name for item
+     * @param itemType the enum for type of item
      */
-    public ItemComponent(String itemName) {
-        this.itemName = itemName; 
+    public ItemComponent(String itemName, ItemType itemType, Texture invSprite) {
+        this.itemTexture = invSprite;
+        this.itemType = itemType;
+        this.itemName = itemName;
         this.itemId = generateUniqueID(); // Generate a unique ID for the item
         this.itemDescription = "" ; //default description
         this.price = 0;
-        this.sellable = false; //default sellable 
+        this.sellable = false; //default sellable
     }
 
     /**
      * Constructor for Item
-     * @param itemName user facing name 
+     * @param itemName user facing name
+     * @param itemType the enum for type of item
      * @param price sellable price of the item
      */
-    public ItemComponent(String itemName,  int price) {
-        this.itemName = itemName; 
+    public ItemComponent(String itemName, ItemType itemType, int price, Texture invSprite) {
+        this.itemTexture = invSprite;
+        this.itemType = itemType;
+        this.itemName = itemName;
         this.itemId = generateUniqueID(); // Generate a unique ID for the item
         this.itemDescription = "" ; //default description
         this.price = price;
@@ -47,11 +59,14 @@ public class ItemComponent extends Component {
 
     /**
      * Constructor for Item
-     * @param itemName user facing name for item  
+     * @param itemName user facing name for item
+     * @param itemType the enum for type of item
      * @param itemDescription user facing description for item
      */
-    public ItemComponent(String itemName, String itemDescription) {
-        this.itemName = itemName; 
+    public ItemComponent(String itemName, ItemType itemType, String itemDescription, Texture itemTexture) {
+        this.itemTexture = itemTexture;
+        this.itemType = itemType;
+        this.itemName = itemName;
         this.itemId = generateUniqueID(); // Generate a unique ID for the item
         this.itemDescription = itemDescription ; //default description
         this.sellable = false; //default sellable
@@ -59,12 +74,15 @@ public class ItemComponent extends Component {
 
     /**
      * Constructor for Item
-     * @param itemName user facing name for item 
+     * @param itemName user facing name for item
+     * @param itemType the enum for type of item
      * @param itemDescription user facing description for item
      * @param price price of item
      */
-    public ItemComponent(String itemName, String itemDescription, int price) {
-        this.itemName = itemName; 
+    public ItemComponent(String itemName, ItemType itemType, String itemDescription, int price, Texture invSprite) {
+        this.itemTexture = invSprite;
+        this.itemType = itemType;
+        this.itemName = itemName;
         this.itemId = generateUniqueID(); // Generate a unique ID for the item
         this.itemDescription = itemDescription ; //default description
         this.price = price;
@@ -72,8 +90,7 @@ public class ItemComponent extends Component {
     }
 
 
-
-    /** 
+    /**
      * Returns the price of the item
      * @return int price of item
      */
@@ -81,6 +98,29 @@ public class ItemComponent extends Component {
         return price;
     }
 
+    /**
+     * Sets the price of the item
+     * @param price int price of item
+     */
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    /**
+     * @return the texture of the item (Primarily used to the inventory display)
+     */
+    public Texture getItemTexture() {
+        return this.itemTexture;
+    }
+
+    /**
+     * Sets an Item's texture component to a given Texture
+     *
+     * @param itemTexture - The texture to set the item to.
+     */
+    public void setItemTexture(Texture itemTexture) {
+        this.itemTexture = itemTexture;
+    }
 
     /**
      * Returns selalble bool of item
@@ -90,7 +130,7 @@ public class ItemComponent extends Component {
         return sellable;
     }
 
-    
+
     /**
      * Returns the name of the item
      * @return int price of item
@@ -116,11 +156,27 @@ public class ItemComponent extends Component {
     }
 
     /**
+     * Sets the price of the item
+     * @param description string description of the item
+     */
+    public void setItemDescription(String description) {
+        itemDescription = description;
+    }
+
+    /**
      * Sets the item name of the item
      * @param name string name of the item
      */
     public void setItemName(String name) {
         itemName = name;
+    }
+
+    /**
+     * Returns the type of the item
+     * @return ItemType enum type of item
+     */
+    public ItemType getItemType() {
+        return itemType;
     }
 
     /**

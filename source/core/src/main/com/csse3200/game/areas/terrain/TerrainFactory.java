@@ -1,5 +1,14 @@
 package com.csse3200.game.areas.terrain;
 
+import java.io.*;
+import java.nio.Buffer;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -11,20 +20,100 @@ import com.badlogic.gdx.maps.tiled.renderers.HexagonalTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.areas.terrain.TerrainComponent.TerrainOrientation;
 import com.csse3200.game.components.CameraComponent;
-import com.csse3200.game.utils.math.RandomUtils;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
 /** Factory for creating game terrains. */
 public class TerrainFactory {
-  private static final GridPoint2 MAP_SIZE = new GridPoint2(30, 30);
-  private static final int TUFT_TILE_COUNT = 30;
-  private static final int ROCK_TILE_COUNT = 10;
 
+  private static GridPoint2 MAP_SIZE = new GridPoint2(1000, 1000); // this will be updated later in the code
+  //protected for testing
+  protected static final String mapPath = "configs/Map.txt";
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;
+  private Map<Character, TextureRegion> charToTextureMap = new HashMap<>();
+  //protected for testing
+  protected static final Map<Character, String> charToTileImageMap;
+  static {
+    Map<Character, String> tempMapA = new HashMap<>();
+    tempMapA.put('g', "images/grass_1.png");
+    tempMapA.put('G', "images/grass_2.png");
+    tempMapA.put('f', "images/grass_3.png");
+    tempMapA.put('b', "images/beach_1.png");
+    tempMapA.put('B', "images/beach_2.png");
+    tempMapA.put('c', "images/beach_3.png");
+    tempMapA.put('d', "images/deepWater_1.png");
+    tempMapA.put('D', "images/deepWater_2.png");
+    tempMapA.put('s', "images/desert_1.png");
+    tempMapA.put('C', "images/desert_2.png");
+    tempMapA.put('S', "images/desert_3.png");
+    tempMapA.put('/', "images/dirt_1.png");
+    tempMapA.put('r', "images/dirt_2.png");
+    tempMapA.put('R', "images/dirt_3.png");
+    tempMapA.put('^', "images/dirtPathTop.png");
+    tempMapA.put('<', "images/dirtPathLeft.png");
+    tempMapA.put('>', "images/dirtPathRight.png");
+    tempMapA.put('v', "images/dirtPathBottom.png");
+    tempMapA.put('%', "images/gravel_1.png");
+    tempMapA.put('i', "images/ice_1.png");
+    tempMapA.put('I', "images/ice_2.png");
+    tempMapA.put('l', "images/lava_1.png");
+    tempMapA.put('L', "images/lavaGround_1.png");
+    tempMapA.put('m', "images/lavaGround_2.png");
+    tempMapA.put('M', "images/lavaGround_3.png");
+    tempMapA.put('w', "images/water_1.png");
+    tempMapA.put('W', "images/water_2.png");
+    tempMapA.put('!', "images/water_3.png");
+    tempMapA.put('#', "images/flowingWater_1.png");
+    tempMapA.put('p', "images/snow_1.png");
+    tempMapA.put('P', "images/snow_2.png");
+    tempMapA.put('@', "images/snow_3.png");
+    tempMapA.put('&', "images/stone_1.png");
+    tempMapA.put('+', "images/stonePath_1.png");
+    charToTileImageMap = Collections.unmodifiableMap(tempMapA);
+  }
+  private static final Map<Character, TerrainTile.TerrainCategory> charToTileTypeMap;
+  static {
+    Map<Character, TerrainTile.TerrainCategory> tempMapB = new HashMap<>();
+    tempMapB.put('g', TerrainTile.TerrainCategory.GRASS);
+    tempMapB.put('G', TerrainTile.TerrainCategory.GRASS);
+    tempMapB.put('f', TerrainTile.TerrainCategory.GRASS);
+    tempMapB.put('b', TerrainTile.TerrainCategory.BEACHSAND);
+    tempMapB.put('B', TerrainTile.TerrainCategory.BEACHSAND);
+    tempMapB.put('c', TerrainTile.TerrainCategory.BEACHSAND);
+    tempMapB.put('d', TerrainTile.TerrainCategory.DEEPWATER);
+    tempMapB.put('D', TerrainTile.TerrainCategory.DEEPWATER);
+    tempMapB.put('s', TerrainTile.TerrainCategory.DESERT);
+    tempMapB.put('C', TerrainTile.TerrainCategory.DESERT);
+    tempMapB.put('S', TerrainTile.TerrainCategory.DESERT);
+    tempMapB.put('/', TerrainTile.TerrainCategory.DIRT);
+    tempMapB.put('r', TerrainTile.TerrainCategory.DIRT);
+    tempMapB.put('R', TerrainTile.TerrainCategory.DIRT);
+    tempMapB.put('^', TerrainTile.TerrainCategory.PATH);
+    tempMapB.put('>', TerrainTile.TerrainCategory.PATH);
+    tempMapB.put('<', TerrainTile.TerrainCategory.PATH);
+    tempMapB.put('v', TerrainTile.TerrainCategory.PATH);
+    tempMapB.put('%', TerrainTile.TerrainCategory.GRAVEL);
+    tempMapB.put('i', TerrainTile.TerrainCategory.ICE);
+    tempMapB.put('I', TerrainTile.TerrainCategory.ICE);
+    tempMapB.put('l', TerrainTile.TerrainCategory.LAVA);
+    tempMapB.put('L', TerrainTile.TerrainCategory.LAVAGROUND);
+    tempMapB.put('m', TerrainTile.TerrainCategory.LAVAGROUND);
+    tempMapB.put('M', TerrainTile.TerrainCategory.LAVAGROUND);
+    tempMapB.put('w', TerrainTile.TerrainCategory.SHALLOWWATER);
+    tempMapB.put('W', TerrainTile.TerrainCategory.SHALLOWWATER);
+    tempMapB.put('!', TerrainTile.TerrainCategory.SHALLOWWATER);
+    tempMapB.put('#', TerrainTile.TerrainCategory.FLOWINGWATER);
+    tempMapB.put('p', TerrainTile.TerrainCategory.SNOW);
+    tempMapB.put('P', TerrainTile.TerrainCategory.SNOW);
+    tempMapB.put('@', TerrainTile.TerrainCategory.SNOW);
+    tempMapB.put('&', TerrainTile.TerrainCategory.ROCK);
+    tempMapB.put('+', TerrainTile.TerrainCategory.PATH);
+    charToTileTypeMap = Collections.unmodifiableMap(tempMapB);
+  }
 
   /**
    * Create a terrain factory with Orthogonal orientation
@@ -39,7 +128,7 @@ public class TerrainFactory {
    * Create a terrain factory
    *
    * @param cameraComponent Camera to render terrains to. Must be orthographic.
-   * @param orientation orientation to render terrain at
+   * @param orientation     orientation to render terrain at
    */
   public TerrainFactory(CameraComponent cameraComponent, TerrainOrientation orientation) {
     this.camera = (OrthographicCamera) cameraComponent.getCamera();
@@ -47,48 +136,33 @@ public class TerrainFactory {
   }
 
   /**
-   * Create a terrain of the given type, using the orientation of the factory. This can be extended
-   * to add additional game terrains.
-   *
-   * @param terrainType Terrain to create
-   * @return Terrain component which renders the terrain
+   * Loads textures into the charToTextureMap based upon the images within the charToTileImageMap and resourceService
    */
-  public TerrainComponent createTerrain(TerrainType terrainType) {
+  public void loadTextures(){
     ResourceService resourceService = ServiceLocator.getResourceService();
-    switch (terrainType) {
-      case FOREST_DEMO:
-        TextureRegion orthoGrass =
-            new TextureRegion(resourceService.getAsset("images/grass_1.png", Texture.class));
-        TextureRegion orthoTuft =
-            new TextureRegion(resourceService.getAsset("images/grass_2.png", Texture.class));
-        TextureRegion orthoRocks =
-            new TextureRegion(resourceService.getAsset("images/grass_3.png", Texture.class));
-        return createForestDemoTerrain(0.5f, orthoGrass, orthoTuft, orthoRocks);
-      case FOREST_DEMO_ISO:
-        TextureRegion isoGrass =
-            new TextureRegion(resourceService.getAsset("images/iso_grass_1.png", Texture.class));
-        TextureRegion isoTuft =
-            new TextureRegion(resourceService.getAsset("images/iso_grass_2.png", Texture.class));
-        TextureRegion isoRocks =
-            new TextureRegion(resourceService.getAsset("images/iso_grass_3.png", Texture.class));
-        return createForestDemoTerrain(1f, isoGrass, isoTuft, isoRocks);
-      case FOREST_DEMO_HEX:
-        TextureRegion hexGrass =
-            new TextureRegion(resourceService.getAsset("images/hex_grass_1.png", Texture.class));
-        TextureRegion hexTuft =
-            new TextureRegion(resourceService.getAsset("images/hex_grass_2.png", Texture.class));
-        TextureRegion hexRocks =
-            new TextureRegion(resourceService.getAsset("images/hex_grass_3.png", Texture.class));
-        return createForestDemoTerrain(1f, hexGrass, hexTuft, hexRocks);
-      default:
-        return null;
-    }
+    for (Map.Entry<Character, String> entry: charToTileImageMap.entrySet()) {
+      charToTextureMap.put(entry.getKey(), new TextureRegion(resourceService.getAsset(entry.getValue(),Texture.class)));
+      }
+  }
+  public GridPoint2 getMapSize() {
+    return MAP_SIZE.cpy();
   }
 
-  private TerrainComponent createForestDemoTerrain(
-      float tileWorldSize, TextureRegion grass, TextureRegion grassTuft, TextureRegion rocks) {
-    GridPoint2 tilePixelSize = new GridPoint2(grass.getRegionWidth(), grass.getRegionHeight());
-    TiledMap tiledMap = createForestDemoTiles(tilePixelSize, grass, grassTuft, rocks);
+  /**
+   * Create a terrain of the given type, using the orientation of the factory.
+   * This can be extended
+   * to add additional game terrains.
+   *
+   * @return Terrain component which renders the terrain
+   */
+  public TerrainComponent createTerrain(TiledMap tiledMap) {
+    loadTextures();
+    return createGameTerrain(0.5f, tiledMap);
+  }
+
+  private TerrainComponent createGameTerrain(float tileWorldSize, TiledMap tiledMap) {
+    GridPoint2 tilePixelSize = new GridPoint2(charToTextureMap.get('g').getRegionWidth(), charToTextureMap.get('g').getRegionHeight());
+    createGameTiles(tilePixelSize, tiledMap);
     TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
@@ -106,55 +180,86 @@ public class TerrainFactory {
     }
   }
 
-  private TiledMap createForestDemoTiles(
-      GridPoint2 tileSize, TextureRegion grass, TextureRegion grassTuft, TextureRegion rocks) {
-    TiledMap tiledMap = new TiledMap();
-    TerrainTile grassTile = new TerrainTile(grass);
-    TerrainTile grassTuftTile = new TerrainTile(grassTuft);
-    TerrainTile rockTile = new TerrainTile(rocks);
-    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
-
-    // Create base grass
-    fillTiles(layer, MAP_SIZE, grassTile);
-
-    // Add some grass and rocks
-    fillTilesAtRandom(layer, MAP_SIZE, grassTuftTile, TUFT_TILE_COUNT);
-    fillTilesAtRandom(layer, MAP_SIZE, rockTile, ROCK_TILE_COUNT);
-
-    tiledMap.getLayers().add(layer);
-    return tiledMap;
-  }
-
-  private static void fillTilesAtRandom(
-      TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile, int amount) {
-    GridPoint2 min = new GridPoint2(0, 0);
-    GridPoint2 max = new GridPoint2(mapSize.x - 1, mapSize.y - 1);
-
-    for (int i = 0; i < amount; i++) {
-      GridPoint2 tilePos = RandomUtils.random(min, max);
-      Cell cell = layer.getCell(tilePos.x, tilePos.y);
-      cell.setTile(tile);
+  /**
+   * This function will be used to update the MAP_SIZE
+   * 
+   * @param line1 the first line in the file (x parameter)
+   * @param line2 the second line in the file (y parameter)
+   */
+  private void updateMapSize(String line1, String line2) {
+    int x_MapSize = 0, y_MapSize = 0;
+    // read 2 first lines
+    if (isNumeric(line1)) {
+      x_MapSize = Integer.parseInt(line1);
+    } else {
+      System.out.println("Can't read x -> Incorrect input file!");
     }
-  }
-
-  private static void fillTiles(TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile) {
-    for (int x = 0; x < mapSize.x; x++) {
-      for (int y = 0; y < mapSize.y; y++) {
-        Cell cell = new Cell();
-        cell.setTile(tile);
-        layer.setCell(x, y, cell);
-      }
+    if (isNumeric(line2)) {
+      y_MapSize = Integer.parseInt(line2);
+    } else {
+      System.out.println("Can't read y -> Incorrect input file!");
     }
+    // update MAP_SIZE using existing function
+    MAP_SIZE.add(- MAP_SIZE.x, - MAP_SIZE.y);
+    MAP_SIZE.add(x_MapSize, y_MapSize);
   }
 
   /**
-   * This enum should contain the different terrains in your game, e.g. forest, cave, home, all with
-   * the same oerientation. But for demonstration purposes, the base code has the same level in 3
-   * different orientations.
+   * This function will be used to create a TiledMap using the file
+   * 
+   * @param tileSize the size of the tile
+   * @param tiledMap the TiledMap
    */
-  public enum TerrainType {
-    FOREST_DEMO,
-    FOREST_DEMO_ISO,
-    FOREST_DEMO_HEX
+  private void createGameTiles(GridPoint2 tileSize, TiledMap tiledMap) {
+      try {
+          BufferedReader bf = new BufferedReader(new InputStreamReader(Gdx.files.internal(mapPath).read()));
+          String line1, line2, line;
+          line1 = bf.readLine();
+          line2 = bf.readLine();
+          updateMapSize(line1,line2);
+          TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
+          // y_pos = 100 and x_pos = 100 lets map generate correctly
+          int x_pos = 0, y_pos = 99;
+          // checking for end of file
+          for (line = bf.readLine(); line != null; x_pos++, line = bf.readLine(), y_pos--) {
+              for (x_pos = line.length() -1; x_pos >= 0; x_pos--) {
+                  // Cell cell = layer.getCell(x_pos, y_pos); // uncomment this if u want to
+                  // update instead of replace
+                  GridPoint2 point = new GridPoint2(x_pos, y_pos);
+                  //this line replaces the entire old cell creator function
+                  layer.setCell(point.x, point.y, new Cell().setTile(
+                          new TerrainTile(charToTextureMap.get(line.charAt(point.x)),
+                                  charToTileTypeMap.get(line.charAt(point.x)))));
+              }
+          }
+          // closing buffer reader object
+          bf.close();
+
+          tiledMap.getLayers().add(layer);
+      } catch (FileNotFoundException e) {
+          System.out.println("fillTilesWithFile -> File Not Found error!");
+      } catch (IOException e) {
+          System.out.println("fillTilesWithFile -> Readfile error!");
+      } catch (Exception e) {
+          System.out.println("fillTilesWithFile -> Testcase error!: " + e);
+      }
+  }
+
+  /**
+   * This function will be used to check if a string is numeric
+   *
+   * @param strNum the string to be checked
+   * @return false if the string is not numeric, else return true
+   */
+  public static boolean isNumeric(String strNum) {
+    if (strNum == null) {
+      return false;
+    }
+    try {
+      int value = Integer.parseInt(strNum);
+      return true;
+    } catch (NumberFormatException nfe) {
+      return false;
+    }
   }
 }
