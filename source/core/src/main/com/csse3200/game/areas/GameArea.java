@@ -90,9 +90,9 @@ public abstract class GameArea implements Disposable {
   }
 
   /**
-   * Loops through the games npcs and removes them. REmoves all
-   * cows, chickens and Astrolotl from the game
-   * @param entities Array<entity> containing all chickens, cows and Astrolotl to be removed
+   * Loops through the games npcs and removes them. Removes all
+   *  animals, crop tiles, and plants from the game.
+   * @param entities Array of entities currently in game.
    */
   public void removeLoadableEntities(Array<Entity> entities) {
     ArrayList<EntityType> loadableTypes = new ArrayList<>(Arrays.asList(EntityType.Tile, EntityType.Cow,
