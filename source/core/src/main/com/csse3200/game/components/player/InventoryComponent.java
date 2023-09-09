@@ -45,6 +45,10 @@ public class InventoryComponent extends Component {
     return itemCount;
   }
 
+  public HashMap<Entity, Point> getItemPosition() {
+    return itemPosition;
+  }
+
   /**
    * Returns if the player has a certain amount of gold.
    * @param item item to be checked
@@ -78,13 +82,13 @@ public class InventoryComponent extends Component {
    *
    * @param items items to be added to inventory
    */
-  public void setInventory(HashMap<Entity, Integer> items) {
+  public void setInventory(HashMap<Entity, Integer> items, HashMap<Entity, Point> itemPosition, List inventory) {
     this.inventory.clear();
+    this.inventory.addAll(inventory);
     this.itemPosition.clear();
+    this.itemPosition.putAll(itemPosition);
     this.itemCount.clear();
-    for (Entity item : items.keySet()) {
-      addItem(item);
-    }
+    this.itemCount.putAll(items);
   }
 
   /**
@@ -203,6 +207,8 @@ public class InventoryComponent extends Component {
       json.writeObjectStart("item");
       e.writeItem(json);
       json.writeValue("count", getItemCount(e));
+      json.writeValue("X",getItemPosition(e).x);
+      json.writeValue("Y",getItemPosition(e).y);
       json.writeObjectEnd();
     }
     json.writeObjectEnd();

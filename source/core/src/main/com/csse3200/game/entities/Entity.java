@@ -25,6 +25,8 @@ import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -396,18 +398,20 @@ public class Entity implements Json.Serializable {
       case Player:
         InventoryComponent inventoryComponent = new InventoryComponent(null);
         HashMap<Entity, Integer> items = new HashMap<>();
+        HashMap<Entity, Point> itemPositions = new HashMap<>();
+        ArrayList inventory = new ArrayList();
         JsonValue inv = jsonMap.get("components").get("InventoryComponent").get("inventory");
-        System.out.println(inv);
         inv.forEach(jsonValue -> {
-          System.out.println(jsonValue);
           Entity item = FactoryService.getItemFactories().get(jsonValue.getString("name")).get();
           ItemType itemType = item.getComponent(ItemComponent.class).getItemType();
           switch (itemType) {
             case WATERING_CAN -> item.getComponent(WateringCanLevelComponent.class).setCurrentLevel(jsonValue.getFloat("level"));
           }
           items.put(item, jsonValue.getInt("count"));
+          itemPositions.put(item,new Point(jsonValue.getInt("X"), jsonValue.getInt("Y")));
+          inventory.add(item);
         });
-        inventoryComponent.setInventory(items);
+        inventoryComponent.setInventory(items, itemPositions, inventory);
         this.addComponent(inventoryComponent);
 
       default:
