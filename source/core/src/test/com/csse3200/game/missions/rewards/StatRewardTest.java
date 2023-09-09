@@ -46,7 +46,7 @@ class StatRewardTest {
         r1.collect();
         initialStats.addHealth(0);
         assertEquals(initialStats, ServiceLocator.getGameArea().getPlayer().getComponent(CombatStatsComponent.class));
-        assertTrue(r1.isCollected);
+        assertTrue(r1.isCollected());
     }
 
     @Test
