@@ -56,8 +56,6 @@ public class TerrainCropTileFactory {
 
 		tile.setPosition(position);
 		logger.debug("Registering crop tile {} with entity service", tile);
-		ServiceLocator.getEntityService().register(tile);
-
 		return tile;
 	}
 }
