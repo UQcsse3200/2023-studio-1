@@ -122,7 +122,9 @@ public class ClimateController {
 	}
 
 	/**
-	 * Climate generation algorithm that is inspired by the Perlin noise algorithm.
+	 * Climate generation algorithm that is inspired by the Perlin noise algorithm. Credit to @Tom-Strooper for the Java
+	 * implementation.
+	 * Inspiration from this <a href="https://github.com/SebLague/Procedural-Landmass-Generation">GitHub Repo</a>
 	 * @param time in-game time value
 	 * @param offset function offset
 	 * @param octaves number of noise functions used in the calculation
