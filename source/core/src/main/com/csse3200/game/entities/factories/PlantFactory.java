@@ -38,10 +38,13 @@ public class PlantFactory {
      * @return entity
      */
     public static Entity createBasePlant(BasePlantConfig config, CropTileComponent cropTile) {
-        int[] growthThresholds = {config.sproutThreshold, config.juvenileThreshold,
-                config.adultThreshold};
-        String[] imagePaths = {config.seedlingAsset, config.sproutingAsset, config.juvenileAsset,
-                config.adultAsset, config.decayingAsset};
+        int[] growthThresholds = {config.sproutThreshold, config.juvenileThreshold, config.adultThreshold};
+        String[] imagePaths =   {   config.imageFolderPath + "1_seedling.png",
+                                    config.imageFolderPath + "2_sprout.png",
+                                    config.imageFolderPath + "3_juvenile.png",
+                                    config.imageFolderPath + "4_adult.png",
+                                    config.imageFolderPath + "5_decaying.png"
+                                };
 
         Entity plant = new Entity(EntityType.Plant)
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
@@ -50,7 +53,8 @@ public class PlantFactory {
                 .addComponent(new DynamicTextureRenderComponent("images/plants/Corn.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
-                        config.maxHealth, cropTile, growthThresholds, config.soundsArray, imagePaths));
+                        config.maxHealth, cropTile, growthThresholds, config.soundsArray,
+                        imagePaths));
 
         // Set plant position over crop tile.
         var cropTilePosition = cropTile.getEntity().getPosition();
@@ -95,12 +99,31 @@ public class PlantFactory {
     }
 
     /**
+     * Creates an venusFlyTrap entity that is a defence type plant.
+     *
+     * @param cropTile Crop tile upon which the plant is planted
+     * @return entity
+     */
+    public static Entity createVenusFlyTrap(CropTileComponent cropTile) {
+        return createBasePlant(stats.venusFlyTrap, cropTile);
+    }
+
+    /**
+     * Creates a waterWeed entity that is a production type plant.
+     *
+     * @param cropTile Crop tile upon which the plant is planted
+     * @return entity
+     */
+    public static Entity createWaterWeed(CropTileComponent cropTile) {
+        return createBasePlant(stats.waterWeed, cropTile);
+    }
+
+    /**
      * Creates a Nightshade entity that is a deadly type plant.
      *
      * @param cropTile Crop tile upon which the plant is planted
      * @return entity
      */
-
     public static Entity createNightshade(CropTileComponent cropTile) {
         return createBasePlant(stats.nightshade, cropTile);
 
@@ -116,26 +139,14 @@ public class PlantFactory {
         return createBasePlant(stats.tobacco, cropTile);
     }
 
-
     /**
-     * Creates an venusFlyTrap entity that is a defence type plant.
+     * Creates a sunFlower entity that is a production type plant.
      *
      * @param cropTile Crop tile upon which the plant is planted
      * @return entity
      */
-    public static Entity createVenusFlyTrap(CropTileComponent cropTile) {
-        return createBasePlant(stats.venusFlyTrap, cropTile);
+    public static Entity createSunFlower(CropTileComponent cropTile) {
+        return createBasePlant(stats.sunFlower, cropTile);
     }
 
-    public static Entity createAtomicAlgae(CropTileComponent cropTile) {
-        return null;
-    }
-
-    public static Entity createHorticulturalHeater(CropTileComponent cropTile) {
-        return null;
-    }
-
-    public static Entity createDeadlyNightshade(CropTileComponent cropTile) {
-        return null;
-    }
 }
