@@ -4,5 +4,8 @@ public enum ItemType {
     SHOVEL,
     HOE,
     WATERING_CAN,
-    SCYTHE
+    SCYTHE,
+    FERTILISER,
+    SEED,
+    ANIMAL_FOOD
 }

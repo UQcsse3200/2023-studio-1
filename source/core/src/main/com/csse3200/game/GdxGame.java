@@ -3,11 +3,8 @@ package com.csse3200.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.screens.*;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -79,13 +76,15 @@ public class GdxGame extends Game {
         return new ControlsScreen(this);
       case INTRO:
         return new IntroScreen(this);
+      case LOSESCREEN:
+        return new LoseScreen(this);
       default:
         return null;
     }
   }
 
   public enum ScreenType {
-    MAIN_MENU, MAIN_GAME, SETTINGS, CONTROLS, INTRO
+    MAIN_MENU, MAIN_GAME, SETTINGS, CONTROLS, INTRO, LOSESCREEN
   }
 
   /**

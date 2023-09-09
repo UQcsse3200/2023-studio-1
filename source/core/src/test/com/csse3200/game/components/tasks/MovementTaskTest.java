@@ -96,7 +96,6 @@ class MovementTaskTest {
       ServiceLocator.getPhysicsService().getPhysics().update();
 
       framesElapsed1 += 1;
-      System.out.println(entity.getPosition());
     }
     entity.setPosition(0f, 0f);
 
