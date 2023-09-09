@@ -12,7 +12,7 @@ public class PlanetOxygenController implements OxygenLevel{
     
     private float oxygenUpperLimit;
     private float oxygenPresent = 0;
-    //private Map<Entity., >entityOxygenValues = new HashMap();
+    private Map<Entity, >entityOxygenValues = new HashMap();
     
     @Override
     public void setUpperLimit(int kilograms) {
@@ -37,9 +37,9 @@ public class PlanetOxygenController implements OxygenLevel{
     @Override
     public float getOxygenPercentage() {
         if (oxygenUpperLimit > 0) {
-            return oxygenPresent/oxygenUpperLimit;
+            return oxygenPresent / oxygenUpperLimit;
         }
-        return 0;
+        return -1;
     }
     public void registerEntityOxygen(Entity entity, float hourlyOxygen) {
     
