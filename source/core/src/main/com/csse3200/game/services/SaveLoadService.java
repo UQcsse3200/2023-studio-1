@@ -1,8 +1,5 @@
 package com.csse3200.game.services;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
 
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
@@ -16,10 +13,10 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.files.SaveGame;
 import com.csse3200.game.files.SaveGame.GameState;
-import com.csse3200.game.entities.factories.NPCFactory;
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.missions.MissionManager;
-import com.csse3200.game.rendering.DynamicTextureRenderComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /* A note of the registering of this service:
@@ -46,6 +43,7 @@ import com.csse3200.game.rendering.DynamicTextureRenderComponent;
  * After that we need wiki and sprint achievement form.
  */
 public class SaveLoadService {
+  private static final Logger logger = LoggerFactory.getLogger(SaveLoadService.class);
   /**
    * Saves the current state of the game into a GameState
    */
@@ -64,7 +62,7 @@ public class SaveLoadService {
     // Write the state to a file
     SaveGame.set(state);
 
-    System.out.println("The current game state has been saved to the file assets/saves/saveFile.json");
+    logger.debug("The current game state has been saved to the file assets/saves/saveFile.json");
   }
 
   /**
@@ -75,26 +73,23 @@ public class SaveLoadService {
     SaveGame.GameState state = SaveGame.get();
     if (state == null) {
       // TODO: Dialogue box or something?
-      System.out.println("Couldn't read the file assets/saves/saveFile.json");
+      logger.error("Couldn't read the file assets/saves/saveFile.json");
       return;
     }
 
     updateGame(state);
-    System.out.println("The game state has been loaded from the file assets/saves/saveFile.json");
+    logger.debug("The game state has been loaded from the file assets/saves/saveFile.json");
   }
 
   /**
    * Check to see if there is a valid save file stored 
    * if not return false
    * 
-   * @return
+   * @return true if there exists a valid save file, false otherwise
    */
   public boolean validSaveFile(){
     SaveGame.GameState state = SaveGame.get();
-    if (state == null){
-      return false;
-    }
-    return true;
+    return state != null;
   }
 
   /**
@@ -154,7 +149,7 @@ public class SaveLoadService {
   /**
    * Update the tractors in-game position and check if the player was in the tractor or not
    *  on saving last
-   * @param state
+   * @param state GameState holding data to be loaded
    */
   private void updateTractor(GameState state){
     Entity tractor = ServiceLocator.getGameArea().getTractor(); // Get the tractor in the game
@@ -162,11 +157,11 @@ public class SaveLoadService {
 
     //if there isn't a tractor currently in the game, return
     if (tractorState == null || tractor == null) {
-      System.out.println("Error, No tractor found!");
+      logger.error("Error, No tractor found!");
       return;
     }
     
-    Boolean inTractor = !tractorState.getComponent(TractorActions.class).isMuted();  // Store the inverse of the muted value from tractor state entity
+    boolean inTractor = !tractorState.getComponent(TractorActions.class).isMuted();  // Store the inverse of the muted value from tractor state entity
     tractor.setPosition(tractorState.getPosition());   // Update the tractors position to the values stored in the json file
     
     // Check whether the player was in the tractor when they last saved
