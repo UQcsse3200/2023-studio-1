@@ -22,7 +22,11 @@ public class InventoryComponent extends Component {
   private final HashMap<Entity, Integer> itemCount = new HashMap<>();
   private final HashMap<Entity, Point> itemPosition = new HashMap<>();
 
+  private final HashMap<Integer,Entity> itemPlace = new HashMap<>();
+
   private Entity heldItem = null;
+
+
 
   public InventoryComponent(List<Entity> items) {
     setInventory(items);
@@ -52,14 +56,19 @@ public class InventoryComponent extends Component {
    * @param items items to be added to inventory
    */
   public void setInventory(List<Entity> items) {
+    this.inventory.clear();
     this.inventory.addAll(items);
+    int pos = itemPlace.size();
+    //int pos = 0;
     logger.debug("Setting inventory to {}", this.inventory.toString());
     for (Entity item : items) {
+      itemPlace.put(pos,item);
+      pos++;
       if (itemCount.containsKey(item)) {
         itemCount.put(item, itemCount.get(item) + 1);
+      } else {
+        itemCount.put(item, 1); // Setting initial count as 1
       }
-
-      itemCount.put(item, 1); // Setting initial count as 1
       itemPosition.put(item, new Point(0, 0)); // Setting a default position (0,0) for now.
     }
     logger.debug("Setting inventory to {}", this.inventory.toString());
@@ -67,15 +76,71 @@ public class InventoryComponent extends Component {
   }
 
   /**
+   * Function to get the item of a specific position in Inventory.
+   * Starts an 0
+   * @param position position of the item in inventory
+   * @return entity for that position in inventory
+   */
+  public Entity getItemPos(int position){
+    return itemPlace.get(position);
+  }
+
+  /**
+   * swaps potion of two entity in HashList used to display
+   * @param position1
+   * @param position2
+   */
+  public void swapPosition(int position1, int position2) {
+    Entity temp = itemPlace.get(position1);
+    itemPlace.put(position1,itemPlace.get(position2));
+    itemPlace.put(position2,temp);
+  }
+
+  /**
+   * add position of an entity into the HashList
+   * Both position and Entity are provided into the function
+   * @param entity
+   * @param pos
+   * @return
+   */
+
+  public boolean setPosition(Entity entity, int pos) {
+    itemPlace.put(pos, entity);
+    entity.getEvents().trigger("updateInventory");
+    return true;
+  }
+
+  /**
+   * add position of an entity into the HashList
+   * Only enity is passed into function. Position is next available one.
+   * @param entity
+   * @return
+   */
+  public boolean setPosition(Entity entity){
+    int lastPlace = itemPlace.size() - 1 ;
+    itemPlace.put(lastPlace+1,entity);
+    entity.getEvents().trigger("updateInventory");
+    return true;
+  }
+  /**
+   * Remove item from the inventory display not from the Inventory
+   * @param pos
+   */
+  public void removePosition(int pos){
+    itemPlace.remove(pos);
+  }
+  /**
    * Adds an item to the Player's inventory
    * @param item item to add
    * @return boolean representing if the item was added successfully
    */
   public boolean addItem(Entity item) {
     itemCount.put(item, itemCount.getOrDefault(item, 0) + 1);
+    setPosition(item);
     if (!itemPosition.containsKey(item)) {
       itemPosition.put(item, new Point(0, 0)); // Default position. You can change this as needed.
     }
+    updateInventory();
     return this.inventory.add(item);
   }
 
@@ -90,6 +155,7 @@ public class InventoryComponent extends Component {
       itemCount.remove(item);
       itemPosition.remove(item);
     }
+    updateInventory();
     return this.inventory.remove(item);
   }
 
@@ -171,5 +237,8 @@ public class InventoryComponent extends Component {
    */
   public void setItemPosition(Entity item, Point point) {
     itemPosition.put(item, point);
+  }
+  public void updateInventory(){
+    entity.getEvents().trigger("updateInventory");
   }
 }
