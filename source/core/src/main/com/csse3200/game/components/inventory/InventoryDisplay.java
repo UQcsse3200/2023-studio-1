@@ -95,6 +95,7 @@ public class InventoryDisplay extends UIComponent {
     table.defaults().size(64, 64);
     table.pad(10);
     // Add some items to the table, to be changed once inventory item is improved
+
     for (int i = 0; i < 30; i++) {
       //Add the items to the table
       ItemSlot item = new ItemSlot();

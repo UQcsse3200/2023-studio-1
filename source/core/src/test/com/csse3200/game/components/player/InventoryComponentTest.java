@@ -19,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 @ExtendWith(GameExtension.class)
 class InventoryComponentTest {
 
+
   private InventoryComponent inventoryComponent;
   private Entity item1;
   private Entity item2;
@@ -108,5 +109,7 @@ class InventoryComponentTest {
     inventoryComponent.setItemPosition(item1,new Point(2,2));
     assertEquals(inventoryComponent.getItemPosition(item1), new Point(2,2));
   }
+
    */
 }
+

@@ -3,6 +3,7 @@ package com.csse3200.game.components.inventory;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
@@ -53,12 +54,19 @@ public class ItemSlot extends Stack {
         label.setColor(Color.BLACK);
         label.setAlignment(Align.bottomRight);
 
-        this.add(new Image(new Texture("images/itemFrame.png")));
+        Image background = new Image(new Texture(Gdx.files.internal("images/selected.png")));
+        Image frame = new Image(new Texture(Gdx.files.internal("images/itemFrame.png")));
+        Image test = new Image(new Texture("images/tool_hoe.png"));
+
+        this.add(background);
+        this.add(frame);
+        this.add(test);
+
         if (this.itemTexture != null) {
             this.add(new Image(this.itemTexture));
         }
 
-        if (this.count != null) {
+        if (this.count != null && this.count > 0) {
             this.add(label);
         }
     }
