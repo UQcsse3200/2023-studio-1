@@ -52,6 +52,11 @@ public class PlantCropsAchievement extends Achievement {
                 + numberOfCropsPlanted + " out of " + target + " crops planted!";
     }
 
+    @Override
+    public String getShortDescription() {
+        return numberOfCropsPlanted + " out of " + target + " crops planted";
+    }
+
     /**
      * Increments the number of plants the player has planted.
      * @param ignored The {@link String} representation of the plant type. Irrelevant for this
