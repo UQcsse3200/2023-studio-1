@@ -128,7 +128,7 @@ public class IntroDisplay extends UIComponent {
         storyLabel.setAlignment(Align.center); // Center align the text
 
         TextButton continueButton = new TextButton("Continue", skin);
-        continueButton.setVisible(false); // Make the continue button invisible
+        continueButton.setVisible(true); // Make the continue button invisible
 
         // The continue button lets the user proceed to the main game
         continueButton.addListener(new ChangeListener() {
