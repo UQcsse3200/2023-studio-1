@@ -51,7 +51,6 @@ public class MainMenuDisplay extends UIComponent {
         title.setPosition(0, 0);
         TextButton startBtn = new TextButton("New Game", skin);
         TextButton loadBtn = new TextButton("Continue", skin);
-        if (!ServiceLocator.getSaveLoadService().validSaveFile()){   loadBtn.setDisabled(true);  }  //check to see if there is anything to even load
         TextButton controlsBtn = new TextButton("Controls", skin);
         TextButton settingsBtn = new TextButton("Settings", skin);
         TextButton exitBtn = new TextButton("Exit", skin);
