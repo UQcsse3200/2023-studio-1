@@ -145,7 +145,6 @@ public class SpaceGameArea extends GameArea {
 
     spawnTerrain();
     //spawnTrees();
-    spawnCrop();
 
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
@@ -159,10 +158,6 @@ public class SpaceGameArea extends GameArea {
     spawnCows();
     spawnAstrolotl();
 
-//    spawnTool(ItemType.WATERING_CAN);
-//    spawnTool(ItemType.SHOVEL);
-//    spawnTool(ItemType.SCYTHE);
-//    spawnTool(ItemType.HOE);
 //    spawnTool(ItemType.FERTILISER);
 //    spawnTool(ItemType.SEED);
 
