@@ -54,10 +54,15 @@ public class ItemSlot extends Stack {
         label.setColor(Color.BLACK);
         label.setAlignment(Align.bottomRight);
 
-        NinePatch npimage = new NinePatch(new Texture(Gdx.files.internal("image.png")), 10, 10, 10, 10);
+        Image background = new Image(new Texture(Gdx.files.internal("images/selected.png")));
+        Image frame = new Image(new Texture(Gdx.files.internal("images/itemFrame.png")));
+        Image test = new Image(new Texture("images/tool_hoe.png"));
+
+        this.add(background);
+        this.add(frame);
+        this.add(test);
 
         if (this.itemTexture != null) {
-            this.setFillParent(true);
             this.add(new Image(this.itemTexture));
         }
 

@@ -109,5 +109,8 @@ class InventoryComponentTest {
     inventoryComponent.setItemPosition(item1,new Point(2,2));
     assertEquals(inventoryComponent.getItemPosition(item1), new Point(2,2));
   }
+
+   */
+
 }
 

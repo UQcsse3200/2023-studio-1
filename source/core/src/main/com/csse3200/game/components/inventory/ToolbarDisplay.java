@@ -6,12 +6,34 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
+
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+
+
+import com.csse3200.game.components.items.ItemComponent;
+
+import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.ui.UIComponent;
+
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.Screen;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class ToolbarDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(ToolbarDisplay.class);
@@ -90,7 +112,7 @@ public class ToolbarDisplay extends UIComponent {
             label.setColor(Color.DARK_GRAY);
             label.setAlignment(Align.topLeft);
 
-            ItemSlot item = new ItemSlot(new Texture("images/itemFrame.png"), 0);
+            ItemSlot item = new ItemSlot();
             item.add(label);
             table.add(item).pad(10, 10, 10, 10).fill();
         }
