@@ -160,8 +160,9 @@ public class SaveLoadService {
     Entity tractor = ServiceLocator.getGameArea().getTractor(); // Get the tractor in the game
     Entity tractorState = state.getTractor();   // Get tractor entity stored within the json file
 
+    //if there isn't a tractor currently in the game, return
     if (tractorState == null || tractor == null) {
-      System.out.println("Error");
+      System.out.println("Error, No tractor found!");
       return;
     }
     
@@ -171,7 +172,6 @@ public class SaveLoadService {
     // Check whether the player was in the tractor when they last saved
     if (inTractor) {
       // Set the player inside the tractor
-      System.out.println("In tractor");
       Entity player = ServiceLocator.getGameArea().getPlayer();
       player.setPosition(tractor.getPosition());              // Teleport the player to the tractor (Needed so that they are in 5 units of each other)
       player.getEvents().trigger("enterTractor");   // Trigger the enterTractor event
