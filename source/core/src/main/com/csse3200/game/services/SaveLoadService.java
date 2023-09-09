@@ -8,6 +8,7 @@ import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainCropTileFactory;
 import com.csse3200.game.areas.terrain.TerrainTile;
+import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.tractor.TractorActions;
@@ -41,7 +42,7 @@ import com.csse3200.game.rendering.DynamicTextureRenderComponent;
  *    - time/day.
  *    - entity (cows and stuff) location
  *    - tiles (cropTileComponent and plants)
- * //TODO player inv load and make sure tamed is being loaded in
+ * //TODO player inv load
  * After that we need wiki and sprint achievement form.
  */
 public class SaveLoadService {
@@ -137,16 +138,14 @@ public class SaveLoadService {
    */
   private void updateNPCs(GameState state) {
     Entity player = ServiceLocator.getGameArea().getPlayer();
-    // Create a map to associate entity types with NPC factory methods
-    // TODO should be a private final field not a variable here.
 
     for (Entity entity : state.getEntities()) {
       EntityType entityType = entity.getType();
       if (FactoryService.getNpcFactories().containsKey(entityType)) {
         Entity npc = FactoryService.getNpcFactories().get(entityType).apply(player);
         npc.setPosition(entity.getPosition());
-        // TODO tamed value add in here, also may need to make the below comment better?
-        // TODO Team 4 please add in saving health here
+        npc.getComponent(TamableComponent.class).setTame(entity.getComponent(TamableComponent.class).isTamed());
+        // TODO Team 4 please add in saving health here (feel free to talk to us but please read doc or code first)
         ServiceLocator.getGameArea().spawnEntity(npc);
       }
     }
