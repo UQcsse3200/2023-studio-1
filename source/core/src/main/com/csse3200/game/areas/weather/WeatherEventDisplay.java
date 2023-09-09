@@ -30,6 +30,9 @@ public class WeatherEventDisplay extends UIComponent {
 		if (currentEvent instanceof AcidShowerEvent) {
 			weatherImage = new Image(ServiceLocator.getResourceService().getAsset(
 					"images/weather_event/raindrop.png", Texture.class));
+		} else if (currentEvent instanceof SolarSurgeEvent) {
+			weatherImage = new Image(ServiceLocator.getResourceService().getAsset(
+					"images/time_system_ui/indicator_1.png", Texture.class));
 		} else {
 			weatherImage = new Image(ServiceLocator.getResourceService().getAsset(
 					"images/time_system_ui/indicator_1.png", Texture.class));
