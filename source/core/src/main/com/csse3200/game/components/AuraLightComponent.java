@@ -8,6 +8,7 @@ public class AuraLightComponent extends Component{
 
 	private static final Color DEFAULT_COLOR = new Color(3,12,33,0.8f);
 	private final PointLight light;
+	private boolean active;
 
 	public AuraLightComponent() {
 		light = new PointLight(ServiceLocator.getLightService().getRayHandler(), 100);
@@ -16,6 +17,13 @@ public class AuraLightComponent extends Component{
 		light.setStaticLight(true);
 		light.setXray(true); // Stops most of shadows and reduces CPU burden
 		light.setSoft(true);
+	}
+
+	@Override
+	public void create() {
+		super.create();
+		active = false;
+		entity.getEvents().addListener("toggleLight", this::toggleLight);
 	}
 
 	public AuraLightComponent(float distance) {
@@ -42,7 +50,8 @@ public class AuraLightComponent extends Component{
 		light.setColor(color);
 	}
 
-	public void setActive(boolean active) {
+	public void toggleLight() {
+		active = !active;
 		light.setActive(active);
 	}
 
