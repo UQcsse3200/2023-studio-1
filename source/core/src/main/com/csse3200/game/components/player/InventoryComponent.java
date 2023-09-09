@@ -90,10 +90,11 @@ public class InventoryComponent extends Component {
    * @return boolean representing if the item was removed successfully
    */
   public boolean removeItem(Entity item) {
-    itemCount.put(item.getId(), itemCount.get(item) - 1);
-    if (itemCount.get(item) == 0) {
-      itemCount.remove(item);
-      itemPosition.remove(item);
+    int itemId = item.getId();
+    itemCount.put(itemId, itemCount.get(itemId) - 1);
+    if (itemCount.get(itemId) == 0) {
+      itemCount.remove(itemId);
+      itemPosition.remove(itemId);
     }
     return this.inventory.remove(item);
   }
@@ -113,14 +114,13 @@ public class InventoryComponent extends Component {
    * @return The Entity representing the held item.
    * @throws IllegalStateException If the player is not holding an item.
    */
-  /*
   public Entity getHeldItem() {
     if (this.heldItem != null) {
       return this.heldItem;
     }
     return null;
   }
-*/
+
   public Entity getInHand() {
     return createHoe();
   }

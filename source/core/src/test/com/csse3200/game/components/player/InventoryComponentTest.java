@@ -29,10 +29,10 @@ class InventoryComponentTest {
     List<Entity> items = new ArrayList<>();
     item1 = new Entity();
     item2 = new Entity();
-    items.add(item1);
+    items.add(item1); // Fix: Add the entity, not its ID
     items.add(item2);
     inventoryComponent = new InventoryComponent(items);
-  }
+    }
 
   /**
    * Test case for the getInventory() method.
@@ -76,32 +76,42 @@ class InventoryComponentTest {
    */
   @Test
   public void testRemoveItem() {
-    // Remove an item from the inventory
+    // Add a second instance of item1
+    inventoryComponent.addItem(item1);
+
+    // Remove one instance
     assertTrue(inventoryComponent.removeItem(item1));
-    // Check that the removed item is no longer in the inventory
+
+    // It should still be present (because of the second instance)
+    assertTrue(inventoryComponent.hasItem(item1));
+
+    // Now remove the second instance
+    assertTrue(inventoryComponent.removeItem(item1));
+
+    // It should not be present now
     assertFalse(inventoryComponent.hasItem(item1));
+
     // Check that removing a non-existent item does not affect the inventory
     assertFalse(inventoryComponent.removeItem(new Entity()));
   }
   @Test
   void testGetItemCount() {
-    assertEquals(inventoryComponent.getItemCount(item1), 1);
+    assertEquals(1, inventoryComponent.getItemCount(item1));
     inventoryComponent.addItem(item1);
-    assertEquals(inventoryComponent.getItemCount(item1), 2);
+    assertEquals(2, inventoryComponent.getItemCount(item1));
     inventoryComponent.removeItem(item1);
     inventoryComponent.removeItem(item1);
-    assertEquals(inventoryComponent.getItemCount(item1), 0);
-
+    assertEquals(0, inventoryComponent.getItemCount(item1));
   }
+
   @Test
   void testGetItemPosition() {
-    assertEquals(inventoryComponent.getItemPosition(item1), new Point(0, 0));
+    assertEquals(new Point(0, 0), inventoryComponent.getItemPosition(item1));
   }
-
   @Test
   void testSetItemPosition() {
-    assertEquals(inventoryComponent.getItemPosition(item1), new Point(0, 0));
-    inventoryComponent.setItemPosition(item1,new Point(2,2));
-    assertEquals(inventoryComponent.getItemPosition(item1), new Point(2,2));
+    assertEquals(new Point(0, 0), inventoryComponent.getItemPosition(item1));
+    inventoryComponent.setItemPosition(item1, new Point(2,2));
+    assertEquals(new Point(2,2), inventoryComponent.getItemPosition(item1));
   }
 }
