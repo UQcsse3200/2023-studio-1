@@ -45,7 +45,7 @@ public abstract class WeatherEvent {
 	public WeatherEvent(int numHoursUntil, int duration, int priority, float severity) throws IllegalArgumentException {
 		if (priority < 0) {
 			throw new IllegalArgumentException("Priority cannot be less than 0");
-		} else if (duration < 0) {
+		} else if (duration <= 0) {
 			throw new IllegalArgumentException("Duration cannot be less than 0");
 		} else if (numHoursUntil < 0) {
 			throw new IllegalArgumentException("Number of hours until the event occurs cannot be less than 0");

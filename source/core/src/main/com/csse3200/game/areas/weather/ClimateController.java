@@ -54,9 +54,11 @@ public class ClimateController {
 			throw new IllegalArgumentException("Null cannot be added as a weather event");
 		}
 		weatherEvents.add(event);
+		if (!event.isActive()) {
+			return;
+		}
 		if (currentWeatherEvent == null) {
 			currentWeatherEvent = event;
-			return;
 		} else if (event.getPriority() > currentWeatherEvent.getPriority()) {
 			currentWeatherEvent = event;
 		}
