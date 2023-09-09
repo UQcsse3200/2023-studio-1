@@ -25,9 +25,11 @@ import com.csse3200.game.services.ServiceLocator;
 
 /** Factory for creating game terrains. */
 public class TerrainFactory {
+
   private static GridPoint2 MAP_SIZE = new GridPoint2(1000, 1000); // this will be updated later in the code
   private static final String path1 = "source/core/assets/configs/Map.txt"; // change this path if u can't open the file
   private static final String path2 = "configs/Map.txt";
+
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;
   private static final Map<Character, String> charToTileImageMap;
