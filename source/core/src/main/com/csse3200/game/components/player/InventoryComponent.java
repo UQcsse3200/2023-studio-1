@@ -48,7 +48,7 @@ public class InventoryComponent extends Component {
   }
 
   /**
-   * Sets the player's inventory.
+   * Sets the player's inventory to a given List<></>.
    *
    * @param items items to be added to inventory
    */
@@ -64,7 +64,20 @@ public class InventoryComponent extends Component {
       itemPosition.put(item, new Point(0, 0)); // Setting a default position (0,0) for now.
     }
     logger.debug("Setting inventory to {}", this.inventory.toString());
+  }
 
+  /**
+   * Sets the player's inventory to a given HashMap.
+   *
+   * @param items items to be added to inventory
+   */
+  public void setInventory(HashMap<Entity, Integer> items) {
+    this.inventory.clear();
+    this.itemPosition.clear();
+    this.itemCount.clear();
+    for (Entity item : items.keySet()) {
+      addItem(item);
+    }
   }
 
   /**

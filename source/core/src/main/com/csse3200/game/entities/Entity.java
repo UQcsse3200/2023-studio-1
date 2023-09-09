@@ -356,8 +356,6 @@ public class Entity implements Json.Serializable {
     } catch (IllegalArgumentException e) {
       type = null;
     }
-    // Saves the position TODO duplicate? the first line of this method is the same
-    position = new Vector2(jsonMap.getFloat("x"), jsonMap.getFloat("y"));
 
     switch (type) {
       case Tractor:

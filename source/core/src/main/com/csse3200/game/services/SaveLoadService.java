@@ -33,7 +33,7 @@ import com.csse3200.game.rendering.DynamicTextureRenderComponent;
  * - prints save/load to system out depending on method call.
  * - Saves:
  *    - player pos.
- *    - player inventory (partially)
+ *    - player inventory
  *    - time/day.
  *    - entity (cows and stuff) location & tamed status.
  *    - tiles (cropTileComponent and plants)
