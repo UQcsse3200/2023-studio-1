@@ -15,11 +15,15 @@ public class PlanetOxygenController implements OxygenLevel{
     private float oxygenUpperLimit;
     private float oxygenPresent;
     private Map<EntityType, Float> entityOxygenUse;
+    private float delta;
     
     public PlanetOxygenController() {
         oxygenUpperLimit = DEFAULT_MAX_OXYGEN;
         oxygenPresent = 0;
         entityOxygenUse = new HashMap();
+        delta = 0;
+        ServiceLocator.getTimeService().getEvents()
+                .addListener("hourUpdate", this::update);
     }
     
     @Override
@@ -50,7 +54,7 @@ public class PlanetOxygenController implements OxygenLevel{
         return -1;
     }
     
-    /**
+    /** (OUTDATED)
      * Register an entity type for it to affect the planet's oxygen on
      * an hourly basis. For both entities which create or consume oxygen
      * at a constant rate, e.g. plants or animals or combustion-related
@@ -73,7 +77,7 @@ public class PlanetOxygenController implements OxygenLevel{
         }
     }
     
-    /**
+    /** (OUTDATED)
      * Update the oxygen value for an already registered entity type.
      * If entity is not already registered the call will do nothing.
      * To register a new entity type and value use the
@@ -88,5 +92,50 @@ public class PlanetOxygenController implements OxygenLevel{
             // type, then update its value.
             entityOxygenUse.put(entityType, newHourlyOxygen);
         }
+    }
+    
+    /**
+     * Perform the update on the oxygen present by applying the recalculated
+     * hour delta. If level reaches 0, trigger lose screen. Triggers an event to
+     * update the oxygen display.
+     */
+    public void update() {
+        delta = calculateDelta();
+        
+        if (oxygenPresent + delta <= 0) {
+            // No oxygen left - trigger lose screen.
+            // TODO update oxygen display and maybe wait 1 second before triggering losescreen
+            oxygenPresent = 0;
+            ServiceLocator.getGameArea().getPlayer().getEvents().trigger("loseScreen");
+        } else {
+            oxygenPresent += delta;
+        }
+        // TODO update oxygen display
+    }
+    
+    /**
+     * Iterated through the existing entity array and matches up each entity with
+     * its corresponding oxygen value acquired from the EntityType enum. Then sums
+     * the hourly oxygen rate of all existing entities to provide the hourly delta.
+     * @return The calculated oxygen change for the hour.
+     */
+    private float calculateDelta() {
+        // Calculated change in oxygen for the hour
+        float calculatedDelta = 0;
+        EntityType type;
+        // Loop through existing entities in the game to sum their oxygen values.
+        for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
+            type = entity.getType();
+            // Loop through registered entity types for a matching type.
+            for (EntityType enumType : EntityType.values()) {
+                if (type == enumType) {
+                    calculatedDelta += entity.getType().getOxygenRate();
+                    // Break from inner loop after first match as an entity
+                    // should only have one type.
+                    break;
+                }
+            }
+        }
+        return calculatedDelta;
     }
 }

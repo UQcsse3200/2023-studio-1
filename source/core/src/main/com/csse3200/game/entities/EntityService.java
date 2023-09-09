@@ -35,7 +35,15 @@ public class EntityService {
     logger.debug("Unregistering {} in entity service", entity);
     entities.removeValue(entity, true);
   }
-
+  
+  /**
+   * Getter method for entity array.
+   * @return the array of entities
+   */
+  public Array<Entity> getEntities() {
+    return entities;
+  }
+  
   /**
    * Update all registered entities. Should only be called from the main game loop.
    */
