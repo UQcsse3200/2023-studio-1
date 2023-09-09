@@ -40,7 +40,7 @@ import com.csse3200.game.rendering.DynamicTextureRenderComponent;
  * - Loads:
  *    - player pos.
  *    - time/day.
- *    - entity (cows and stuff) location
+ *    - entity (cows and stuff) location & tamed status
  *    - tiles (cropTileComponent and plants)
  * //TODO player inv load
  * After that we need wiki and sprint achievement form.
