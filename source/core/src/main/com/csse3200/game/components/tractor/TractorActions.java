@@ -90,6 +90,7 @@ public class TractorActions extends Component {
     Entity cropTile = createTerrainEntity(new Vector2((int)Math.ceil(pos.x), (int)Math.ceil(pos.y)));
     tile.setCropTile(cropTile);
     tile.setOccupied();
+    ServiceLocator.getEntityService().register(cropTile);
   }
 
   /**
