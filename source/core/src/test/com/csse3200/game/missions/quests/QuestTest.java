@@ -222,6 +222,41 @@ class QuestTest {
     }
 
     @Test
+    public void testGetDescription() {
+        assertEquals("Long Description 1", q1.getDescription());
+        assertEquals("Long Description 2", q2.getDescription());
+        assertEquals("Long Description 3", q3.getDescription());
+        assertEquals("false & 0", q4.getDescription());
+        assertEquals("Collatz Conjecture", q5.getDescription());
+
+        q4.registerMission(ServiceLocator.getMissionManager().getEvents());
+
+        ServiceLocator.getMissionManager().getEvents().trigger("e1");
+        assertEquals("true & 0", q4.getDescription());
+        ServiceLocator.getMissionManager().getEvents().trigger("e2");
+        assertEquals("false & 1", q4.getDescription());
+    }
+
+    @Test
+    public void testGetShortDescription() {
+        assertEquals("Short Description 1", q1.getShortDescription());
+        assertEquals("Short Description 2", q2.getShortDescription());
+        assertEquals("Short Description 3", q3.getShortDescription());
+        assertEquals("0", q4.getShortDescription());
+        assertEquals("At: 10", q5.getShortDescription());
+
+        q4.registerMission(ServiceLocator.getMissionManager().getEvents());
+        q5.registerMission(ServiceLocator.getMissionManager().getEvents());
+
+        ServiceLocator.getMissionManager().getEvents().trigger("e2");
+        assertEquals("1", q4.getShortDescription());
+        assertEquals("At: 5", q5.getShortDescription());
+        ServiceLocator.getMissionManager().getEvents().trigger("e2");
+        assertEquals("2", q4.getShortDescription());
+        assertEquals("At: 8", q5.getShortDescription());
+    }
+
+    @Test
     public void testQuestsExpiry() {
         assertTrue(q1.isExpired());
         assertFalse(q2.isExpired());
@@ -246,11 +281,13 @@ class QuestTest {
         q3.updateExpiry();
         q4.updateExpiry();
         q5.updateExpiry();
+
         q1.updateExpiry();
         q2.updateExpiry();
         q3.updateExpiry();
         q4.updateExpiry();
         q5.updateExpiry();
+
         q1.updateExpiry();
         q2.updateExpiry();
         q3.updateExpiry();
