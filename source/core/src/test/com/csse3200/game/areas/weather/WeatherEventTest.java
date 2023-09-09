@@ -109,4 +109,13 @@ public class WeatherEventTest {
         assertEquals(0.245f, acidShowerEvent4.getHumidityModifier(), 0.00001);
         assertEquals(0.215f, acidShowerEvent5.getHumidityModifier(), 0.00001);
     }
+
+    @Test
+    public void testAcidShowerEventGetTemperatureModifier() {
+        assertEquals(-11.0f, acidShowerEvent1.getTemperatureModifier(), 0.00001);
+        assertEquals(-12.0f, acidShowerEvent2.getTemperatureModifier(), 0.00001);
+        assertEquals(-10.0f, acidShowerEvent3.getTemperatureModifier(), 0.00001);
+        assertEquals(-11.5f, acidShowerEvent4.getTemperatureModifier(), 0.00001);
+        assertEquals(-10.5f, acidShowerEvent5.getTemperatureModifier(), 0.00001);
+    }
 }
