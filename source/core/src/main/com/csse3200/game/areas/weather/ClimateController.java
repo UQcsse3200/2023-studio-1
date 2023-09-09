@@ -6,6 +6,7 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class ClimateController {
 
@@ -25,6 +26,7 @@ public class ClimateController {
 
 	public ClimateController() {
 		events = new EventHandler();
+		ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::addDailyEvent);
 		ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateWeatherEvent);
 		ServiceLocator.getTimeService().getEvents().addListener("minuteUpdate", this::updateClimate);
 		updateClimate();
@@ -54,6 +56,9 @@ public class ClimateController {
 	 * @param event Weather event
 	 */
 	public void addWeatherEvent(WeatherEvent event) {
+		if (event == null) {
+			return;
+		}
 		weatherEvents.add(event);
 	}
 
@@ -73,6 +78,28 @@ public class ClimateController {
 	 */
 	public float getTemperature() {
 		return temperature;
+	}
+
+	/**
+	 * Methods that is run every day to possibly generate a random weather event
+	 */
+	private void addDailyEvent() {
+		float eventPossibility = MathUtils.random();
+		// 25% that no weather event is generated
+		if (eventPossibility <= 0.25) {
+			return;
+		}
+		int eventGenerated = MathUtils.random(0,1);
+		int numHoursUntil = MathUtils.random(1,6);
+		int duration = MathUtils.random(2,5);
+		int priority = MathUtils.random(0,3);
+		float severity = MathUtils.random();
+		WeatherEvent event = null;
+		switch (eventGenerated) {
+			case 0 -> event = new AcidShowerEvent(numHoursUntil, duration, priority, severity);
+			case 1 -> event = new SolarSurgeEvent(numHoursUntil, duration, priority, severity);
+		}
+		addWeatherEvent(event);
 	}
 
 	/**
