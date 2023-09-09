@@ -301,4 +301,19 @@ class QuestTest {
         assertTrue(q5.isExpired());
     }
 
+    @Test
+    public void testIsCompleted() {
+        assertTrue(q1.isCompleted());
+        assertFalse(q2.isCompleted());
+        assertFalse(q3.isCompleted());
+        assertFalse(q4.isCompleted());
+        assertFalse(q5.isCompleted());
+
+        q1.registerMission(ServiceLocator.getMissionManager().getEvents());
+        q2.registerMission(ServiceLocator.getMissionManager().getEvents());
+        q3.registerMission(ServiceLocator.getMissionManager().getEvents());
+        q4.registerMission(ServiceLocator.getMissionManager().getEvents());
+        q5.registerMission(ServiceLocator.getMissionManager().getEvents());
+    }
+
 }
