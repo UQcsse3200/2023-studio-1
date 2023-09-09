@@ -1,6 +1,7 @@
 package com.csse3200.game.missions.rewards;
 
 import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
@@ -29,6 +30,11 @@ class ItemRewardTest {
         @Override
         public Entity getPlayer() {
             return player;
+        }
+
+        @Override
+        public ClimateController getClimateController() {
+            return null;
         }
     }
 
