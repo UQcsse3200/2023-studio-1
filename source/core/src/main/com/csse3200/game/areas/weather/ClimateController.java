@@ -51,11 +51,17 @@ public class ClimateController {
 	 *
 	 * @param event Weather event
 	 */
-	public void addWeatherEvent(WeatherEvent event) {
+	public void addWeatherEvent(WeatherEvent event) throws IllegalArgumentException {
 		if (event == null) {
-			return;
+			throw new IllegalArgumentException("Null cannot be added as a weather event");
 		}
 		weatherEvents.add(event);
+		if (currentWeatherEvent == null) {
+			currentWeatherEvent = event;
+			return;
+		} else if (event.getPriority() > currentWeatherEvent.getPriority()) {
+			currentWeatherEvent = event;
+		}
 	}
 
 	/**
@@ -174,9 +180,8 @@ public class ClimateController {
 				currentWeatherEvent = event;
 				priority = currentWeatherEvent.getPriority();
 				// If the event is expired, remove it from the list
-			} else if (event.isExpired()) {
-				weatherEvents.remove(event);
 			}
 		}
+		weatherEvents.removeIf(WeatherEvent::isExpired);
 	}
 }
