@@ -25,7 +25,7 @@ public class WeatherEventDisplay extends UIComponent {
 		group = new Group();
 		table.top().left();
 		table.setFillParent(true);
-		table.padTop(520f).padLeft(-100f);
+		table.padTop(520f).padLeft(-260f);
 
 		WeatherEvent currentEvent = ServiceLocator.getGameArea().getClimateController().getCurrentWeatherEvent();
 		clockImage = new Image(ServiceLocator.getResourceService().getAsset(
