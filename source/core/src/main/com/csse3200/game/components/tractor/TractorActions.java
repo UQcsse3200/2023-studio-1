@@ -118,7 +118,7 @@ public class TractorActions extends Component {
   /**
    * Stops the player from walking.
    */
-  void stopMoving() {
+  public void stopMoving() {
     this.walkDirection = Vector2.Zero.cpy();
     updateSpeed();
     this.moving = false;

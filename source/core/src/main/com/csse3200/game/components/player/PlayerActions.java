@@ -150,7 +150,7 @@ public class PlayerActions extends Component {
   /**
    * Stops the player from moving.
    */
-  void stopMoving() {
+  public void stopMoving() {
     this.moveDirection = Vector2.Zero.cpy();
     updateSpeed();
     moving = false;

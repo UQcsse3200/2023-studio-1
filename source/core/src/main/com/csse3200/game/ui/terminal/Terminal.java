@@ -1,6 +1,12 @@
 package com.csse3200.game.ui.terminal;
 
+import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
+import com.csse3200.game.components.player.PlayerActions;
+import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
+import com.csse3200.game.components.tractor.TractorActions;
+import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.terminal.commands.*;
 import com.csse3200.game.ui.terminal.commands.Command;
 import com.csse3200.game.ui.terminal.commands.DebugCommand;
@@ -66,6 +72,8 @@ public class Terminal extends Component {
    */
   public void setOpen() {
     logger.debug("Opening terminal");
+    ServiceLocator.getGameArea().getPlayer().getComponent(PlayerActions.class).stopMoving();
+    ServiceLocator.getGameArea().getTractor().getComponent(TractorActions.class).stopMoving();
     isOpen = true;
   }
 
@@ -75,6 +83,8 @@ public class Terminal extends Component {
   public void setClosed() {
     logger.debug("Closing terminal");
     isOpen = false;
+    ServiceLocator.getGameArea().getPlayer().getComponent(KeyboardPlayerInputComponent.class).setWalkDirection(Vector2.Zero);
+    ServiceLocator.getGameArea().getTractor().getComponent(KeyboardTractorInputComponent.class).setWalkDirection(Vector2.Zero);
     setEnteredMessage("");
   }
 
