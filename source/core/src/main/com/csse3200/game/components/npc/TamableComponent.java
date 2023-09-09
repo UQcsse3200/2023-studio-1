@@ -1,10 +1,15 @@
 package com.csse3200.game.components.npc;
 
+import java.util.List;
 import java.util.Random;
 
+import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.items.ItemType;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
 
 /**
  * This the class for Tameable Component. These components should
@@ -17,6 +22,8 @@ public class TamableComponent extends Component {
     private String favouriteFood;  //animals favourite food (found in NPC.json)
     private boolean isTamed;
     private final Entity player;
+    private Random random = new Random();  //https://rules.sonarsource.com/java/RSPEC-2119/
+    private InventoryComponent playerInventory;
 
     /**
      * Constructor for the Tameable Component class
@@ -33,6 +40,7 @@ public class TamableComponent extends Component {
         this.favouriteFood = favouriteFood;
         this.isTamed = false;
         this.player = player;
+        this.playerInventory = player.getComponent(InventoryComponent.class);
     }
 
     /**
@@ -48,7 +56,8 @@ public class TamableComponent extends Component {
      * Function to be called from the event handler.
      * This is the player's attempt to feed and tame the animal.
      * How the taming process works:
-     * - The player can only feed the animal, its favourite food.
+     * - The player can only feed the animal, if the player is holding the animal's
+     *   favourite food.
      * - When fed, a random double decimal will be generated. If this
      *   decimal exceeds the animal's tame probability, the animal will then be tamed.
      *  - If not the player can continue feeding the animal.
@@ -60,14 +69,21 @@ public class TamableComponent extends Component {
      * and item must be used to feed the animal.
      */
     private void feedAnimal() {
-
         if (isTamed) {
             return;
         }
 
-        // Check player is holding the right item TODO: Implement checking the players item SEE
-        //  TEAM 8!.
-        if (player.getComponent(ItemComponent.class).getItemName() == favouriteFood) {
+        if (this.playerInventory.getHeldItem() == null) {
+            return;
+        }
+        //Ensures that the player's held item has the ItemComponent class.
+        if (this.playerInventory.getHeldItem().getComponent(ItemComponent.class) == null) {
+            return;
+        }
+        // If so, we can check if player is holding the right item
+
+        //potential of working with null values here. 
+        if (this.playerInventory.getHeldItem().getComponent(ItemComponent.class).getItemName().equals(favouriteFood)) {
 
             // Generate RNG number for taming
             double randomDecimal = generateRandomDecimal();
@@ -75,29 +91,27 @@ public class TamableComponent extends Component {
             // Try and tame the animal
             // Check how many times the player has tried to tame the animal
             // If player has already tried enough times, tame the animal (prevents frustration).
-            if (numTimesFed > tamingThreshold) {
+            if (numTimesFed == tamingThreshold) {
                 isTamed = true;
             }
             // Use RNG to try and tame the animal
-            else if (randomDecimal < tamingProbability) {
+            else if (randomDecimal > tamingProbability) {
                 isTamed = true;
             } else {
                 numTimesFed++;
             }
-
-            // Remove the food from the players inventory TODO: WAIT FOR TEAM 8
-            // player.getComponent(ItemComponent.class).dispose();
-
+//            this.playerInventory.removeItem(this.playerInventory.getHeldItem()); TODO: once inventory works comment it in
+            // Remove the food from the players inventory
         }
+        return;
     }
 
     /**
      * Function is used to generate a random double decimal when the animal has been fed.
      * @return random double
      */
-    private double generateRandomDecimal() {
-        Random random = new Random();
-        return random.nextDouble();
+    private double generateRandomDecimal() { 
+        return this.random.nextDouble(); //https://rules.sonarsource.com/java/RSPEC-2119/
     }
 
     /**
@@ -114,9 +128,6 @@ public class TamableComponent extends Component {
      * @param value Boolean value that will be used to set to the istamed variable.
      */
     public void setTame(boolean value) {
-        if (value) {
-            this.isTamed = true;
-        }
-        this.isTamed = false;
+        this.isTamed = value;
     }
 }
