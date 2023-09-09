@@ -206,7 +206,7 @@ public class ItemActions extends Component {
   }
 
     /**
-     * Plants the given seed seed in the tile at the given position
+     * Plants the given seed in the tile at the given position
      *
      * @param tile the tile to be interacted with
      * @param item the seed item to be planted
@@ -216,32 +216,28 @@ public class ItemActions extends Component {
     Function<CropTileComponent, Entity> plantFactoryMethod;
     if (isCropTile(tile.getCropTile())) {
         switch (item.getComponent(ItemComponent.class).getItemName()) {
-            case "aloe vera seed" -> {
-                plantFactoryMethod = PlantFactory::createAloeVera;
-                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
-            }
-            case "atomic algae seed" -> {
-                plantFactoryMethod = PlantFactory::createAtomicAlgae;
-                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
-            }
             case "cosmic cob seed" -> {
                 plantFactoryMethod = PlantFactory::createCosmicCob;
                 tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
             }
-            case "deadly nightshade seed" -> {
-                plantFactoryMethod = PlantFactory::createDeadlyNightshade;
+            case "aloe vera seed" -> {
+                plantFactoryMethod = PlantFactory::createAloeVera;
                 tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
             }
             case "hammer plant seed" -> {
                 plantFactoryMethod = PlantFactory::createHammerPlant;
                 tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
             }
-            case "horticultural heater seed" -> {
-                plantFactoryMethod = PlantFactory::createHorticulturalHeater;
-                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
-            }
             case "space snapper seed" -> {
                 plantFactoryMethod = PlantFactory::createVenusFlyTrap;
+                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
+            }
+            case "water weed seed" -> {
+                plantFactoryMethod = PlantFactory::createWaterWeed;
+                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
+            }
+            case "deadly nightshade seed" -> {
+                plantFactoryMethod = PlantFactory::createNightshade;
                 tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
             }
             case "tobacco seed" -> {

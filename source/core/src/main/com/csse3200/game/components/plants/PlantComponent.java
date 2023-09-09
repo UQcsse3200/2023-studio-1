@@ -11,49 +11,100 @@ import static com.badlogic.gdx.math.MathUtils.random;
  * Class for all plants in the game.
  */
 public class PlantComponent extends Component {
-    /** Initial plant health */
-    private int plantHealth;
-    /** Maximum health this plant can reach as an adult */
-    private int maxHealth;
-    /** User facing plant name */
-    private String plantName;
-    /** Type of plant (food, health, repair, defence, production, deadly) */
-    private String plantType;
-    /** User facing description of the plant */
-    private String plantDescription;
-    /** Tracks if the plant is currently decaying */
-    private boolean decay;
-    /** Ideal water level. A factor when determining the growth rate. */
-    private float idealWaterLevel;
-    /** Current age of the plant in in-game days */
-    private float currentAge;
-    /** Growth stage of a plant. */
-    private int growthStage;
-    /** How long a crop plant lives before starting to decay from old age. */
-    private int adultLifeSpan;
-    /** Used to determine when a plant enters a new growth stage */
-    private int currentGrowthLevel;
-    /** The crop tile on which this plant is planted on. */
-    private CropTileComponent cropTile;
+
     /**
-     * Sprout, juvenile, adult. Initialised to zero and given values in the constructor.
-     * These thresholds determine when a plant advances to the next growth stage
+     * Initial plant health
      */
-    private int[] growthStageThresholds = {0, 0, 0}; //
-    /** The sounds that each plant makes */
-    private String[] sounds;
-    /** Used to track the plants current maximum health */
-    private double currentMaxHealth = 0;
+    private int plantHealth;
+
     /**
-     * Maximum health this plant can reach at its current growth stage. Determines whe a plant
-     * advances to the next growth stage.
+     * Maximum health that this plant can reach as an adult
+     */
+    private final int maxHealth;
+
+    /**
+     * User facing plant name
+     */
+    private final String plantName;
+
+    /**
+     * The type of plant (food, health, repair, defence, production, deadly)
+     */
+    private final String plantType;
+
+    /**
+     * User facing description of the plant
+     */
+    private final String plantDescription;
+
+    /**
+     * Indicates if the plant is currently in a state of decay.
+     */
+    private boolean decay;
+
+    /**
+     * Ideal water level of the plant. A factor when determining the growth rate.
+     */
+    private final float idealWaterLevel;
+
+    /**
+     * Current age of the plant in in-game days.
+     */
+    private float currentAge;
+
+    /**
+     * The growth stage of the plant. 1=Seedling, 2=Sprout, 3=Juvenile, 4=Adult, 5=Decaying, 6=Dead.
+     */
+    private int growthStage;
+
+    /**
+     * How long a plant lives as an adult before starting to decay from old age.
+     */
+    private int adultLifeSpan;
+
+    /**
+     * Used to determine when a plant enters a new growth stage (for growth stages 2, 3, 4)
+     */
+    private int currentGrowthLevel;
+
+    /**
+     * The crop tile on which this plant is planted on.
+     */
+    private final CropTileComponent cropTile;
+
+    /**
+     * The growth thresholds for different growth stages (Sprout Juvenile, Adult).
+     */
+    private final int[] growthStageThresholds = {0, 0, 0};
+
+    /**
+     * The paths to the sounds associated with the plant.
+     */
+    private String[] sounds;
+
+    /**
+     * The current max health. This limits the amount of health a plant can have at different growth stages.
+     */
+    private double currentMaxHealth = 0;
+
+    /**
+     * The maximum health a plant can have at different growth stages (stages 1, 2, 3).
      */
     private double[] maxHealthAtStages = {0, 0, 0};
-    /** Initializes the plants image paths */
+
+    /**
+     * The paths to the images associated with different growth stages (Seedling, Sprout, Juvenile, Adult, Decaying).
+     */
     private String[] growthStageImagePaths = {"", "", "", "", ""};
-    /** Used to track how long a plant has been an adult. */
+
+    /**
+     * Used to track how long a plant has been an adult.
+     */
     private int numOfDaysAsAdult;
-    /** Current texture based on the growth stage */
+
+    /**
+     * The current texture based on the growth stage.
+     */
     private DynamicTextureRenderComponent currentTexture;
 
     /**
@@ -300,7 +351,6 @@ public class PlantComponent extends Component {
         return this.adultLifeSpan;
     }
 
-
     /**
      * Set the adult life span of a plant.
      * @param adultLifeSpan - The number of days the plant will exist as an adult plant
@@ -461,10 +511,10 @@ public class PlantComponent extends Component {
     }
 
     /**
-     * Plays a sound when a function is called.
+     * Determine what sound needs to be called based on the type of interaction.
      * The sounds are separated into tuple pairs for each event.
      *
-     * @param functionCalled The function that triggers the sound
+     * @param functionCalled The type of interaction with the plant.
      */
     public void playSound(String functionCalled) {
         String[] sounds = this.sounds;
@@ -477,10 +527,10 @@ public class PlantComponent extends Component {
     }
 
     /**
-     * Randomizes the sound that plays to either play a regular sound or a plant lore sound.
-     *
-     * @param lore The lore sound.
-     * @param notLore The regular sound.
+     * Decide what sound to play. There is a small random chance that a lore sound will be selected, otherwise
+     * the normal sound will be played.
+     * @param lore Sound associated with the secret lore
+     * @param notLore - Normal sound that the player will be expecting.
      */
     void soundMethod(String lore, String notLore) {
         boolean playLoreSound = random.nextInt(100) <= 0; //Gives 1% chance of being true
@@ -491,7 +541,6 @@ public class PlantComponent extends Component {
         } else {
             soundEffect = ServiceLocator.getResourceService().getAsset(notLore, Sound.class);
         }
-
         soundEffect.play();
     }
 }
