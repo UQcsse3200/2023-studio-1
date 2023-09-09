@@ -29,6 +29,10 @@ public class OxygenDisplay extends UIComponent{
     public void create() {
         super.create();
         oxygenSkin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
+
+        // Adds a listener to check for oxygen updates
+
+
         updateDisplay();
     }
 
@@ -36,8 +40,13 @@ public class OxygenDisplay extends UIComponent{
      * Updates the display, showing the oxygen bar in the top of the main game screen.
      */
     public void updateDisplay() {
-        int oxygenPercent = 50;
+        int oxygenPercent = 75;
         float scaling = (float) oxygenPercent / 100;
+
+        if (oxygenPercent == 0) {
+            ServiceLocator.getGameArea().getPlayer().getEvents().trigger("loseScreen");
+        }
+
         table = new Table();
         group = new Group();
         table.top();
