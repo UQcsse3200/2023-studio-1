@@ -46,6 +46,7 @@ public class ClimateController {
 
 	/**
 	 * Adds a weather event to the list of weather events stored in the climate controller class
+	 *
 	 * @param event Weather event
 	 */
 	public void addWeatherEvent(WeatherEvent event) {
@@ -54,6 +55,7 @@ public class ClimateController {
 
 	/**
 	 * Gets the current weather event that is occurring
+	 *
 	 * @return current weather event, null if not event is occurring
 	 */
 	public WeatherEvent getCurrentWeatherEvent() {
@@ -73,14 +75,53 @@ public class ClimateController {
 	 * Updates the values of the game's climate based on current weather events
 	 */
 	private void updateClimate() {
-		float time = ServiceLocator.getTimeService().getHour() +
-				(float) ServiceLocator.getTimeService().getMinute() / 60;
-		float humidityModifier = currentWeatherEvent == null ? 1 : currentWeatherEvent.getHumidityModifier();
-		float temperatureModifier = currentWeatherEvent == null ? 1 : currentWeatherEvent.getTemperatureModifier();
-		temperature = (float) (((10 + MathUtils.random(-2, 2)) * MathUtils.sin((float)
-				(time * Math.PI / 46)) + 17.2) * temperatureModifier);
+		float time = ServiceLocator.getTimeService().getDay() * 24
+				+ ServiceLocator.getTimeService().getHour()
+				+ (float) ServiceLocator.getTimeService().getMinute() / 60;
+
+
+		float humidityModifier = currentWeatherEvent == null ? 0 : currentWeatherEvent.getHumidityModifier();
+		float temperatureModifier = currentWeatherEvent == null ? 0 : currentWeatherEvent.getTemperatureModifier();
+
+		temperature = generateTemperature(time, 0, 30, 4, 8, 0.24f, 2.8f) + temperatureModifier;
+
 		humidity = (float) ((float) 0.5 + (0.1 * MathUtils.random(1, 3)) * MathUtils.sin((float)
 				(Math.PI / 12 * (time - 12))) * humidityModifier);
+		System.out.printf("(%s, %s), ", time, temperature);
+	}
+
+	/**
+	 * Temperature generation algorithm that takes inspiration from the perlin noise algorithm.
+	 * @param time
+	 * @param maxTemp
+	 * @param minTemp
+	 * @param offset
+	 * @param octaves
+	 * @param persistence
+	 * @param lacunarity
+	 * @return
+	 */
+	private float generateTemperature(
+			float time, float maxTemp, float minTemp, float offset, int octaves, float persistence, float lacunarity) {
+		float maxAmplitude = 0f;
+		float amplitude = 1.0f;
+		float frequency = 1.0f;
+
+		float temperatureNormalised = 0.0f;
+
+		for (int i = 0; i < octaves; i++) {
+			temperatureNormalised += amplitude * getTempSin(time - offset) * frequency;
+			maxAmplitude += amplitude;
+
+			amplitude *= persistence;
+			frequency *= lacunarity;
+		}
+
+		return (maxTemp - minTemp) * temperatureNormalised / maxAmplitude + minTemp;
+	}
+
+	private float getTempSin(float x) {
+		return 0.5f * MathUtils.sin((float) ((x - 6) * Math.PI / 12)) + 0.5f;
 	}
 
 	/**
