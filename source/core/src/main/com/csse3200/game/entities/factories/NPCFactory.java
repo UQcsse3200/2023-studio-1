@@ -78,7 +78,7 @@ public class NPCFactory {
 
     chicken
             .addComponent(aiTaskComponent)
-            .addComponent(new PassiveDropComponent(ItemFactory::createEgg, 24))
+            .addComponent(new PassiveDropComponent(ItemFactory::createEgg, 2))
             .addComponent(animator)
             .addComponent(new AnimalAnimationController())
             .addComponent(new TamableComponent(player, config.tamingThreshold,
@@ -120,7 +120,7 @@ public class NPCFactory {
 
     cow
             .addComponent(aiTaskComponent)
-            .addComponent(new PassiveDropComponent(ItemFactory::createMilk, 24))
+            .addComponent(new PassiveDropComponent(ItemFactory::createMilk, 2))
             .addComponent(animator)
             .addComponent(new AnimalAnimationController())
             .addComponent(new TamableComponent(
