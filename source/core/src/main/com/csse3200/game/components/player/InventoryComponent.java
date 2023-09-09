@@ -24,12 +24,14 @@ import static com.csse3200.game.entities.factories.ItemFactory.createShovel;
  * Currently untested, but forms the basis for the UI which will be implemented soon:tm:
  */
 public class InventoryComponent extends Component {
-  private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
-  private final Set<Integer> inventoryIds = new HashSet<>();  // To quickly check by ID
-  private Entity heldItem=null;
-  private final List<Entity> inventory = new ArrayList<Entity>();
-  private final Map<Integer, Integer> itemCount = new HashMap<>();
-  private final Map<Integer, Point> itemPosition = new HashMap<>();
+
+    private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
+
+    private final Set<Integer> inventoryIds = new HashSet<>();
+    private final List<Entity> inventory = new ArrayList<>();
+    private final Map<Integer, Integer> itemCount = new HashMap<>();
+    private final Map<Integer, Point> itemPosition = new HashMap<>();
+    private Entity heldItem = null;
 
   public InventoryComponent(List<Entity> items) {
     setInventory(items);
@@ -58,17 +60,22 @@ public class InventoryComponent extends Component {
    *
    * @param items items to be added to inventory
    */
-  public void setInventory(List<Entity> items) {
-    this.inventory.addAll(items);
-    logger.debug("Setting inventory to {}", this.inventory.toString());
-    for (Entity item : items) {
-      inventoryIds.add(item.getId());
 
-      itemCount.put(item.getId(), 1); // Setting initial count as 1
-      itemPosition.put(item.getId(), new Point(0, 0)); // Setting a default position (0,0) for now.
+  public void setInventory(List<Entity> items) {
+    for (Entity item : items) {
+      // Check if the inventory already contains an item with the same ID
+      if (inventoryIds.contains(item.getId())) {
+        // If yes, just increase the count
+        itemCount.put(item.getId(), itemCount.get(item.getId()) + 1);
+      } else {
+        // If no, add the item to the inventory and set its count to 1
+        this.inventory.add(item);
+        inventoryIds.add(item.getId());
+        itemCount.put(item.getId(), 1);
+        itemPosition.put(item.getId(), new Point(0, 0)); // Default position
+      }
     }
     logger.debug("Setting inventory to {}", this.inventory.toString());
-
   }
 
   /**
@@ -97,39 +104,16 @@ public class InventoryComponent extends Component {
    */
   public boolean removeItem(Entity item) {
     if (itemCount.getOrDefault(item.getId(), 0) > 1) {
-
-      itemCount.put(item.getId(), itemCount.get(item) - 1);
-      return false;
-    }
-      else{
-
+      // If there are more than one items with the same ID, decrease the count
+      itemCount.put(item.getId(), itemCount.get(item.getId()) - 1);
+      return false; // Item not fully removed, just decreased the count
+    } else {
+      // If there's only one item left with the ID, remove it from the inventory
       itemCount.remove(item.getId());
       itemPosition.remove(item.getId());
       inventoryIds.remove(item.getId());
-
-    return this.inventory.remove(item);
-  }}
-
-
-
-
-  public void setHeldItem(int index) {
-    if (index >= 0 && index < inventory.size()) {
-      this.heldItem = inventory.get(index);
+      return this.inventory.remove(item);
     }
-  }
-
-  /**
-   * Retrieves the held item of the Player.
-   *
-   * @return The Entity representing the held item.
-   * @throws IllegalStateException If the player is not holding an item.
-   */
-  public Entity getHeldItem() {
-    if (this.heldItem != null) {
-      return this.heldItem;
-    }
-    return null;
   }
 
   public Entity getInHand() {
