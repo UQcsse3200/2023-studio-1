@@ -139,7 +139,7 @@ public class ClimateController {
 		float temperatureNormalised = 0.0f;
 
 		for (int i = 0; i < octaves; i++) {
-			temperatureNormalised += amplitude * getTempSin((time - offset) * frequency);
+			temperatureNormalised += amplitude * getClimateSin((time - offset) * frequency);
 			maxAmplitude += amplitude;
 
 			amplitude *= persistence;
@@ -154,7 +154,7 @@ public class ClimateController {
 	 * @param x function variable
 	 * @return function result
 	 */
-	private float getTempSin(float x) {
+	private float getClimateSin(float x) {
 		return 0.5f * MathUtils.sin((float) ((x - 6) * Math.PI / 12)) + 0.5f;
 	}
 
