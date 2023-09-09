@@ -1,15 +1,14 @@
 {
-"day": 1,
-"hour": 1,
+"hour": 3,
 "player": {
 	"Entity": "Player",
-	"x": -10,
-	"y": -10,
+	"x": 3.75,
+	"y": 3.75,
 	"components": {
 		"InventoryComponent": {
 			"inventory": {
 				"item": {
-					"name": "hoe",
+					"name": "fertiliser",
 					"count": 1
 				},
 				"item": {
@@ -17,12 +16,16 @@
 					"count": 1
 				},
 				"item": {
-					"name": "watering_can",
-					"level": 150,
+					"name": "hoe",
 					"count": 1
 				},
 				"item": {
 					"name": "scythe",
+					"count": 1
+				},
+				"item": {
+					"name": "watering_can",
+					"level": 150,
 					"count": 1
 				}
 			}
@@ -31,19 +34,19 @@
 },
 "tractor": {
 	"Entity": "Tractor",
-	"x": 31.306389,
-	"y": 15.619936,
+	"x": 5.0625,
+	"y": 5.78125,
 	"components": {
 		"TractorActions": {
-			"isMuted": false
+			"isMuted": true
 		}
 	}
 },
 "entities": [
 	{
 		"Entity": "Astrolotl",
-		"x": 19.338263,
-		"y": 39.83017,
+		"x": 4.139783,
+		"y": 35.871586,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -52,8 +55,8 @@
 	},
 	{
 		"Entity": "Cow",
-		"x": -0.0985813,
-		"y": 46.73445,
+		"x": 21.757404,
+		"y": 46.726376,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -62,8 +65,8 @@
 	},
 	{
 		"Entity": "Cow",
-		"x": 37.83663,
-		"y": 27.042908,
+		"x": 5.033593,
+		"y": 43.58495,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -72,8 +75,8 @@
 	},
 	{
 		"Entity": "Cow",
-		"x": 0.41600415,
-		"y": 5.224887,
+		"x": 16.972645,
+		"y": 3.3434463,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -82,8 +85,8 @@
 	},
 	{
 		"Entity": "Cow",
-		"x": 1.9103632,
-		"y": 34.175434,
+		"x": 19.197392,
+		"y": 3.4083328,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -92,8 +95,8 @@
 	},
 	{
 		"Entity": "Cow",
-		"x": 17.588152,
-		"y": 11.97547,
+		"x": 14.178945,
+		"y": 27.91396,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -102,8 +105,8 @@
 	},
 	{
 		"Entity": "Chicken",
-		"x": 13.18009,
-		"y": 44.05601,
+		"x": 29.617447,
+		"y": 42.993393,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -112,11 +115,24 @@
 	},
 	{
 		"Entity": "Chicken",
-		"x": 6.22127,
-		"y": 15.462929,
+		"x": 22.654346,
+		"y": 34.009323,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Plant",
+		"x": 4.75,
+		"y": 5.75,
+		"components": {
+			"PlantComponent": {
+				"name": "Cosmic Cob",
+				"health": 10,
+				"age": 0,
+				"growth": 0
 			}
 		}
 	},
@@ -126,7 +142,7 @@
 		"y": 5.25,
 		"components": {
 			"CropTileComponent": {
-				"waterContent": 0,
+				"waterContent": 0.5956635,
 				"soilQuality": 1,
 				"isFertilised": false,
 				"plant": {
@@ -146,22 +162,9 @@
 		}
 	},
 	{
-		"Entity": "Plant",
-		"x": 4.75,
-		"y": 5.75,
-		"components": {
-			"PlantComponent": {
-				"name": "Cosmic Cob",
-				"health": 10,
-				"age": 0,
-				"growth": 0
-			}
-		}
-	},
-	{
 		"Entity": "Chicken",
-		"x": 8.101084,
-		"y": 30.60383,
+		"x": 27.85741,
+		"y": 23.80358,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -170,8 +173,8 @@
 	},
 	{
 		"Entity": "Chicken",
-		"x": 5.2557373,
-		"y": 22.523457,
+		"x": 14.009741,
+		"y": 20.57372,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -180,8 +183,8 @@
 	},
 	{
 		"Entity": "Chicken",
-		"x": 3.7612524,
-		"y": 6.1787977,
+		"x": 11.514454,
+		"y": 32.49257,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -190,8 +193,8 @@
 	},
 	{
 		"Entity": "Chicken",
-		"x": 24.91608,
-		"y": 31.145277,
+		"x": 43.073193,
+		"y": 14.441293,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -200,8 +203,8 @@
 	},
 	{
 		"Entity": "Chicken",
-		"x": 9.430293,
-		"y": 20.629417,
+		"x": 2.922384,
+		"y": 0.11499999,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -210,8 +213,8 @@
 	},
 	{
 		"Entity": "Chicken",
-		"x": 5.7069187,
-		"y": 6.904312,
+		"x": 12.359952,
+		"y": 43.296158,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -220,8 +223,8 @@
 	},
 	{
 		"Entity": "Chicken",
-		"x": 7.5603094,
-		"y": 19.477955,
+		"x": 31.445759,
+		"y": 25.145063,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -230,8 +233,8 @@
 	},
 	{
 		"Entity": "Chicken",
-		"x": 27.304129,
-		"y": 28.123274,
+		"x": 0.17663488,
+		"y": 15.196465,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -246,7 +249,7 @@
 		"y": 5.25,
 		"components": {
 			"CropTileComponent": {
-				"waterContent": 0,
+				"waterContent": 0.5956635,
 				"soilQuality": 1,
 				"isFertilised": false,
 				"plant": {
