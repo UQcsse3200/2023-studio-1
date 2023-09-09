@@ -10,6 +10,8 @@ import static org.mockito.Mockito.*;
 public class WeatherEventTest {
 
     private WeatherEvent weatherEvent1, weatherEvent2, weatherEvent3, weatherEvent4, weatherEvent5;
+    private AcidShowerEvent acidShowerEvent1, acidShowerEvent2, acidShowerEvent3, acidShowerEvent4, acidShowerEvent5;
+    private SolarSurgeEvent solarSurgeEvent1, solarSurgeEvent2;
 
     @BeforeEach
     public void setUp() {
@@ -18,6 +20,13 @@ public class WeatherEventTest {
         weatherEvent3 = new WeatherEvent(2, 4, 5, 1.0f) { };
         weatherEvent4 = new WeatherEvent(3, 3, 3, 1.3f) { };
         weatherEvent5 = new WeatherEvent(5, 5, 1, 1.1f) { };
+        acidShowerEvent1 = new AcidShowerEvent(0, 9, 1, 1.2f);
+        acidShowerEvent2 = new AcidShowerEvent(1, 2, 2, 1.4f);
+        acidShowerEvent3 = new AcidShowerEvent(2, 4, 5, 1.0f);
+        acidShowerEvent4 = new AcidShowerEvent(3, 3, 3, 1.3f);
+        acidShowerEvent5 = new AcidShowerEvent(5, 5, 1, 1.1f);
+        solarSurgeEvent1 = new SolarSurgeEvent(0, 6, 1, 1.1f);
+        solarSurgeEvent2= new SolarSurgeEvent(3, 3, 3, 1.3f);
     }
 
     @Test
@@ -72,5 +81,32 @@ public class WeatherEventTest {
         assertEquals(weatherEvent3.getSeverity(), 1.0f);
         assertEquals(weatherEvent4.getSeverity(), 1.3f);
         assertEquals(weatherEvent5.getSeverity(), 1.1f);
+    }
+
+    @Test
+    public void testWeatherEventGetHumidityModifier() {
+        assertEquals(weatherEvent1.getHumidityModifier(), 1.0f);
+        assertEquals(weatherEvent2.getHumidityModifier(), 1.0f);
+        assertEquals(weatherEvent3.getHumidityModifier(), 1.0f);
+        assertEquals(weatherEvent4.getHumidityModifier(), 1.0f);
+        assertEquals(weatherEvent5.getHumidityModifier(), 1.0f);
+    }
+
+    @Test
+    public void testWeatherEventGetTemperatureModifier() {
+        assertEquals(weatherEvent1.getTemperatureModifier(), 1.0f);
+        assertEquals(weatherEvent2.getTemperatureModifier(), 1.0f);
+        assertEquals(weatherEvent3.getTemperatureModifier(), 1.0f);
+        assertEquals(weatherEvent4.getTemperatureModifier(), 1.0f);
+        assertEquals(weatherEvent5.getTemperatureModifier(), 1.0f);
+    }
+
+    @Test
+    public void testAcidShowerEventGetHumidityModifier() {
+        assertEquals(0.23f, acidShowerEvent1.getHumidityModifier(), 0.00001);
+        assertEquals(0.26f, acidShowerEvent2.getHumidityModifier(), 0.00001);
+        assertEquals(0.2f, acidShowerEvent3.getHumidityModifier(), 0.00001);
+        assertEquals(0.245f, acidShowerEvent4.getHumidityModifier(), 0.00001);
+        assertEquals(0.215f, acidShowerEvent5.getHumidityModifier(), 0.00001);
     }
 }
