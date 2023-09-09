@@ -113,6 +113,14 @@ public class MissionManager {
 	}
 
 	/**
+	 * Returns all in-game {@link Achievement}s.
+	 * @return All in-game {@link Achievement}s.
+	 */
+	public Achievement[] getAchievements() {
+		return achievements;
+	}
+
+	/**
 	 * Returns the {@link MissionManager}'s {@link EventHandler}, which is responsible for triggering events which
 	 * update the state of {@link Mission}s
 	 * @return The {@link EventHandler} of the {@link MissionManager}, from which events can be triggered to update the

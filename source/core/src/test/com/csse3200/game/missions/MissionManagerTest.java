@@ -10,14 +10,17 @@ import com.csse3200.game.services.TimeService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class MissionManagerTest {
 
     private Reward r1, r2, r3;
     private Quest q1, q2, q3;
-    private Achievement a1, a2, a3;
 
     @BeforeAll
     public static void begin() {
@@ -137,78 +140,6 @@ class MissionManagerTest {
                 count2 = 1;
             }
         };
-
-        a1 = new Achievement("My Achievement 1") {
-            private int count = 0;
-
-            @Override
-            public void registerMission(EventHandler missionManagerEvents) {
-                missionManagerEvents.addListener("otherEvent", () -> { count++; });
-            }
-
-            @Override
-            public boolean isCompleted() {
-                return count == 10;
-            }
-
-            @Override
-            public String getDescription() {
-                return "Long Achievement Description 1";
-            }
-
-            @Override
-            public String getShortDescription() {
-                return "Short Achievement Description 1";
-            }
-        };
-        a2 = new Achievement("My Achievement 2") {
-            private int count = 10;
-
-            @Override
-            public void registerMission(EventHandler missionManagerEvents) {
-                missionManagerEvents.addListener("otherEvent", () -> { count--; });
-            }
-
-            @Override
-            public boolean isCompleted() {
-                return count == 0;
-            }
-
-            @Override
-            public String getDescription() {
-                return "Long Achievement Description 2";
-            }
-
-            @Override
-            public String getShortDescription() {
-                return "Short Achievement Description 2";
-            }
-        };
-        a3 = new Achievement("My Achievement 3") {
-            private int count1 = 0;
-            private int count2 = 1;
-
-            @Override
-            public void registerMission(EventHandler missionManagerEvents) {
-                missionManagerEvents.addListener("event", () -> { count1++; });
-                missionManagerEvents.addListener("otherEvent", () -> { count2 *= 2; });
-            }
-
-            @Override
-            public boolean isCompleted() {
-                return count1 == 5 && count2 < 16;
-            }
-
-            @Override
-            public String getDescription() {
-                return count1 + " & " + count2;
-            }
-
-            @Override
-            public String getShortDescription() {
-                return "Short Achievement Description 1";
-            }
-        };
     }
 
     @Test
@@ -275,6 +206,108 @@ class MissionManagerTest {
         ServiceLocator.getMissionManager().acceptQuest(q3);
         assertEquals(initialNumberSelectableQuests, ServiceLocator.getMissionManager().getSelectableQuests().size());
         assertEquals(initialNumberActiveQuests + 3, ServiceLocator.getMissionManager().getActiveQuests().size());
+    }
+
+    @Test
+    public void testSelectableQuestsDoNotUpdate() {
+        ServiceLocator.getMissionManager().addQuest(q1);
+        ServiceLocator.getMissionManager().addQuest(q2);
+        ServiceLocator.getMissionManager().addQuest(q3);
+
+        assertFalse(q1.isCompleted());
+        assertFalse(q2.isCompleted());
+        assertFalse(q3.isCompleted());
+
+        ServiceLocator.getMissionManager().getEvents().trigger("event");
+        ServiceLocator.getMissionManager().getEvents().trigger("event");
+        ServiceLocator.getMissionManager().getEvents().trigger("event");
+        ServiceLocator.getMissionManager().getEvents().trigger("event");
+        ServiceLocator.getMissionManager().getEvents().trigger("event");
+        ServiceLocator.getMissionManager().getEvents().trigger("otherEvent");
+        ServiceLocator.getMissionManager().getEvents().trigger("otherEvent");
+        ServiceLocator.getMissionManager().getEvents().trigger("otherEvent");
+        ServiceLocator.getMissionManager().getEvents().trigger("otherEvent");
+
+        assertFalse(q1.isCompleted());
+        assertFalse(q2.isCompleted());
+        assertFalse(q3.isCompleted());
+    }
+
+    @Test
+    public void testActiveQuestsUpdate() {
+        ServiceLocator.getMissionManager().acceptQuest(q1);
+        ServiceLocator.getMissionManager().acceptQuest(q2);
+        ServiceLocator.getMissionManager().acceptQuest(q3);
+
+        assertFalse(q1.isCompleted());
+        assertFalse(q2.isCompleted());
+        assertFalse(q3.isCompleted());
+
+        ServiceLocator.getMissionManager().getEvents().trigger("event");
+        ServiceLocator.getMissionManager().getEvents().trigger("event");
+        ServiceLocator.getMissionManager().getEvents().trigger("event");
+        ServiceLocator.getMissionManager().getEvents().trigger("event");
+        ServiceLocator.getMissionManager().getEvents().trigger("event");
+        ServiceLocator.getMissionManager().getEvents().trigger("otherEvent");
+        ServiceLocator.getMissionManager().getEvents().trigger("otherEvent");
+        ServiceLocator.getMissionManager().getEvents().trigger("otherEvent");
+        ServiceLocator.getMissionManager().getEvents().trigger("otherEvent");
+
+        assertTrue(q1.isCompleted());
+        assertTrue(q2.isCompleted());
+        assertTrue(q3.isCompleted());
+    }
+
+    @Test
+    public void testQuestsOnlyUpdateOnceAccepted() {
+        ServiceLocator.getMissionManager().addQuest(q1);
+        ServiceLocator.getMissionManager().addQuest(q2);
+        ServiceLocator.getMissionManager().addQuest(q3);
+
+        assertFalse(q1.isCompleted());
+        assertFalse(q2.isCompleted());
+        assertFalse(q3.isCompleted());
+
+        ServiceLocator.getMissionManager().getEvents().trigger("event");
+        ServiceLocator.getMissionManager().getEvents().trigger("event");
+        ServiceLocator.getMissionManager().getEvents().trigger("event");
+        ServiceLocator.getMissionManager().getEvents().trigger("event");
+        ServiceLocator.getMissionManager().getEvents().trigger("event");
+        ServiceLocator.getMissionManager().getEvents().trigger("otherEvent");
+        ServiceLocator.getMissionManager().getEvents().trigger("otherEvent");
+        ServiceLocator.getMissionManager().getEvents().trigger("otherEvent");
+        ServiceLocator.getMissionManager().getEvents().trigger("otherEvent");
+
+        assertFalse(q1.isCompleted());
+        assertFalse(q2.isCompleted());
+        assertFalse(q3.isCompleted());
+
+        ServiceLocator.getMissionManager().acceptQuest(q1);
+        ServiceLocator.getMissionManager().acceptQuest(q2);
+        ServiceLocator.getMissionManager().acceptQuest(q3);
+
+        assertFalse(q1.isCompleted());
+        assertFalse(q2.isCompleted());
+        assertFalse(q3.isCompleted());
+
+        ServiceLocator.getMissionManager().getEvents().trigger("event");
+        ServiceLocator.getMissionManager().getEvents().trigger("event");
+        ServiceLocator.getMissionManager().getEvents().trigger("event");
+        ServiceLocator.getMissionManager().getEvents().trigger("event");
+        ServiceLocator.getMissionManager().getEvents().trigger("event");
+        ServiceLocator.getMissionManager().getEvents().trigger("otherEvent");
+        ServiceLocator.getMissionManager().getEvents().trigger("otherEvent");
+        ServiceLocator.getMissionManager().getEvents().trigger("otherEvent");
+        ServiceLocator.getMissionManager().getEvents().trigger("otherEvent");
+
+        assertTrue(q1.isCompleted());
+        assertTrue(q2.isCompleted());
+        assertTrue(q3.isCompleted());
+    }
+
+    @Test
+    public void testSelectableQuestsDoNotExpire() {
+        
     }
 
 }
