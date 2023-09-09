@@ -5,6 +5,10 @@ package com.csse3200.game.areas.weather;
  * SolarSurgeEvent is caused by the production of a massive amount of solar energy.
  */
 public class SolarSurgeEvent extends WeatherEvent {
+    protected static final float MIN_HUMIDITY_MODIFIER = -0.2f;
+    protected static final float MAX_HUMIDITY_MODIFIER = -0.4f;
+    protected static final float MIN_TEMPERATURE_MODIFIER = 15f;
+    protected static final float MAX_TEMPERATURE_MODIFIER = 30f;
 
     /**
      * Constructs a SolarSurgeEvent with a given countdown, duration, priority and severity.
@@ -16,5 +20,8 @@ public class SolarSurgeEvent extends WeatherEvent {
      */
     public SolarSurgeEvent(int numHoursUntil, int duration, int priority, float severity) {
         super(numHoursUntil, duration, priority, severity);
+        humidityModifier = MIN_HUMIDITY_MODIFIER + (MAX_HUMIDITY_MODIFIER - MIN_HUMIDITY_MODIFIER) * severity;
+        temperatureModifier = MIN_TEMPERATURE_MODIFIER +
+                (MAX_TEMPERATURE_MODIFIER - MIN_TEMPERATURE_MODIFIER) * severity;
     }
 }

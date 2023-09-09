@@ -7,38 +7,38 @@ public abstract class WeatherEvent {
 	/**
 	 * Number of in-game hours until the {@link WeatherEvent} is able to be triggered and affects the in-game climate
 	 */
-	private int numHoursUntil;
+	protected int numHoursUntil;
 
 	/**
 	 * Number of in-game hours that the {@link WeatherEvent} can be active for
 	 */
-	private int duration;
+	protected int duration;
 
 	/**
 	 * The priority of the {@link WeatherEvent} so that some weather can override others if they are important
 	 */
-	private final int priority;
+	protected final int priority;
 
 	/**
 	 * The severity of the {@link WeatherEvent} which can affect the climate modifiers depending on the implementation
 	 * of the {@link WeatherEvent}. This ranges from 1.0 to 1.5
 	 */
-	private final float severity;
+	protected final float severity;
 
 	/**
 	 * Modifier that is used to calculate the humidity in game
 	 */
-	private final float humidityModifier;
+	protected float humidityModifier;
 
 	/**
 	 * Modifier used to calculate the temperature in game
 	 */
-	private final float temperatureModifier;
+	protected float temperatureModifier;
 
-	private static final float MIN_HUMIDITY_MODIFIER = 1.0f;
-	private static final float MAX_HUMIDITY_MODIFIER = 1.0f;
-	private static final float MIN_TEMPERATURE_MODIFIER = 1.0f;
-	private static final float MAX_TEMPERATURE_MODIFIER = 1.0f;
+	protected static final float MIN_HUMIDITY_MODIFIER = 1.0f;
+	protected static final float MAX_HUMIDITY_MODIFIER = 1.0f;
+	protected static final float MIN_TEMPERATURE_MODIFIER = 1.0f;
+	protected static final float MAX_TEMPERATURE_MODIFIER = 1.0f;
 
 	/**
 	 * Constructs an {@link WeatherEvent} with a given duration, priority and countdown
