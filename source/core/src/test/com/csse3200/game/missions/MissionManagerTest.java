@@ -143,6 +143,13 @@ class MissionManagerTest {
     }
 
     @Test
+    public void testAchievementsLoadCorrectly() {
+        assertEquals("Plant President", ServiceLocator.getMissionManager().getAchievements()[0].getName());
+        assertEquals("Crop Enjoyer", ServiceLocator.getMissionManager().getAchievements()[1].getName());
+        assertEquals("Gardener of the Galaxy", ServiceLocator.getMissionManager().getAchievements()[2].getName());
+    }
+
+    @Test
     public void testAcceptNonSelectableQuest() {
         int initialNumberSelectableQuests = ServiceLocator.getMissionManager().getSelectableQuests().size();
         int initialNumberActiveQuests = ServiceLocator.getMissionManager().getActiveQuests().size();
@@ -307,7 +314,103 @@ class MissionManagerTest {
 
     @Test
     public void testSelectableQuestsDoNotExpire() {
-        
+        ServiceLocator.getMissionManager().addQuest(q1);
+        ServiceLocator.getMissionManager().addQuest(q2);
+        ServiceLocator.getMissionManager().addQuest(q3);
+
+        assertTrue(q1.isExpired());
+        assertFalse(q2.isExpired());
+        assertFalse(q3.isExpired());
+
+        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+
+        assertTrue(q1.isExpired());
+        assertFalse(q2.isExpired());
+        assertFalse(q3.isExpired());
+
+        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+
+        assertTrue(q1.isExpired());
+        assertFalse(q2.isExpired());
+        assertFalse(q3.isExpired());
+    }
+
+    @Test
+    public void testActiveQuestsExpire() {
+        ServiceLocator.getMissionManager().acceptQuest(q1);
+        ServiceLocator.getMissionManager().acceptQuest(q2);
+        ServiceLocator.getMissionManager().acceptQuest(q3);
+
+        assertTrue(q1.isExpired());
+        assertFalse(q2.isExpired());
+        assertFalse(q3.isExpired());
+
+        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+
+        assertTrue(q1.isExpired());
+        assertTrue(q2.isExpired());
+        assertFalse(q3.isExpired());
+
+        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+
+        assertTrue(q1.isExpired());
+        assertTrue(q2.isExpired());
+        assertTrue(q3.isExpired());
+    }
+
+    @Test
+    public void testQuestsOnlyExpireOnceAccepted() {
+        ServiceLocator.getMissionManager().addQuest(q1);
+        ServiceLocator.getMissionManager().addQuest(q2);
+        ServiceLocator.getMissionManager().addQuest(q3);
+
+        assertTrue(q1.isExpired());
+        assertFalse(q2.isExpired());
+        assertFalse(q3.isExpired());
+
+        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+
+        assertTrue(q1.isExpired());
+        assertFalse(q2.isExpired());
+        assertFalse(q3.isExpired());
+
+        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+
+        assertTrue(q1.isExpired());
+        assertFalse(q2.isExpired());
+        assertFalse(q3.isExpired());
+
+        ServiceLocator.getMissionManager().acceptQuest(q1);
+        ServiceLocator.getMissionManager().acceptQuest(q2);
+        ServiceLocator.getMissionManager().acceptQuest(q3);
+
+        assertTrue(q1.isExpired());
+        assertFalse(q2.isExpired());
+        assertFalse(q3.isExpired());
+
+        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+
+        assertTrue(q1.isExpired());
+        assertTrue(q2.isExpired());
+        assertFalse(q3.isExpired());
+
+        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+
+        assertTrue(q1.isExpired());
+        assertTrue(q2.isExpired());
+        assertTrue(q3.isExpired());
     }
 
 }
