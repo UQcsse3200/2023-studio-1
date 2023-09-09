@@ -43,6 +43,13 @@ public abstract class WeatherEvent {
 	 * @param priority      priority of the weather event
 	 */
 	public WeatherEvent(int numHoursUntil, int duration, int priority, float severity) {
+		if (priority < 0) {
+			throw new IllegalArgumentException("Priority cannot be less than 0");
+		} else if (duration < 0) {
+			throw new IllegalArgumentException("Duration cannot be less than 0");
+		} else if (numHoursUntil < 0) {
+			throw new IllegalArgumentException("Number of hours until the event occurs cannot be less than 0");
+		}
 		this.numHoursUntil = numHoursUntil;
 		this.duration = duration;
 		this.priority = priority;
