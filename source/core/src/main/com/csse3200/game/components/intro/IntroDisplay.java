@@ -9,10 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.GdxGame.ScreenType;
-import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
-import com.rafaskoberg.gdx.typinglabel.TypingAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.rafaskoberg.gdx.typinglabel.TypingLabel;
@@ -29,17 +27,17 @@ public class IntroDisplay extends UIComponent {
      * The time in seconds that it takes for the narration animation to reach the trigger point,
      * at which the planet should enter the frame.
      */
-    private static float textAnimationDuration = 18;
+    private static float textAnimationDuration = 12;
 
     /**
      * The speed in pixels/frame that the background and the planet should move at.
      */
-    private float spaceSpeed = 1;
+    private float spaceSpeed = 0.5f;
 
     /**
      * The distance away from the top the text that the planet should stop in pixels.
      */
-    private float planetToTextPadding = 150;
+    private float planetToTextPadding = 100;
 
     /**
      * The Image that forms the background of the page.
@@ -81,7 +79,7 @@ public class IntroDisplay extends UIComponent {
         background =
                 new Image(
                         ServiceLocator.getResourceService()
-                                .getAsset("images/intro_background.png", Texture.class));
+                                .getAsset("images/intro_background_v2.png", Texture.class));
         background.setPosition(0, 0);
         // Scale the height of the background to maintain the original aspect ratio of the image
         // This prevents distortion of the image.
@@ -93,13 +91,17 @@ public class IntroDisplay extends UIComponent {
                 new Image(
                         ServiceLocator.getResourceService()
                                 .getAsset("images/intro_planet.png", Texture.class));
-        planet.setSize(200, 200); // Set to a reasonable fixed size
+        // Scale it to a 10% of screen width
+        float planetWidth = (float) (Gdx.graphics.getWidth() * 0.1);
+        float planetHeight = planetWidth * (planet.getHeight() / planet.getWidth());
+        planet.setSize(planetWidth, planetHeight); // Set to a reasonable fixed size
 
         // The planet moves at a constant speed, so to make it appear at the right time,
         // it is to be placed at the right y coordinate above the screen.
         // The height is informed by the length of the text animation and the game's target FPS.
-        float planetOffset = textAnimationDuration * UserSettings.get().fps;
+        float planetOffset = 2500;
         planet.setPosition((float)Gdx.graphics.getWidth()/2, planetOffset, Align.center);
+
 
         // The {TOKENS} in the String below are used by TypingLabel to create the requisite animation effects
         String story = """
@@ -147,6 +149,9 @@ public class IntroDisplay extends UIComponent {
         rootTable.row().padTop(30f);
         rootTable.add(continueButton).bottom().padBottom(30f);
 
+        //spaceSpeed = (planet.getY(Align.center) - storyLabel.getY(Align.top) + planetToTextPadding) /
+            //    (textAnimationDuration * (float)Gdx.graphics.getFramesPerSecond());
+
         // The background and planet are added directly to the stage so that they can be moved and animated freely.
         stage.addActor(background);
         stage.addActor(planet);
@@ -173,6 +178,18 @@ public class IntroDisplay extends UIComponent {
             planet.setY(planet.getY() - spaceSpeed); // Move the planet
             background.setY(background.getY() - spaceSpeed); // Move the background
         }
+
+        // Resize and position the planet
+        float planetWidth = (float) (Gdx.graphics.getWidth() * 0.1);
+        float planetHeight = planetWidth * (planet.getHeight() / planet.getWidth());
+        planet.setSize(planetWidth, planetHeight);
+        planet.setPosition((float)Gdx.graphics.getWidth()/2, planet.getY(Align.center), Align.center);
+        spaceSpeed = (planet.getY(Align.center) - storyLabel.getY(Align.top) + planetToTextPadding) /
+                (textAnimationDuration * (float)Gdx.graphics.getFramesPerSecond());
+
+        logger.info(String.format("Space Speed: %s", spaceSpeed));
+
+
         stage.act(ServiceLocator.getTimeSource().getDeltaTime());
     }
 
