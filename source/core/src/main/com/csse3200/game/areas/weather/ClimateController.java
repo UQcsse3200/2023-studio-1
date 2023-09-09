@@ -83,7 +83,7 @@ public class ClimateController {
 		float humidityModifier = currentWeatherEvent == null ? 0 : currentWeatherEvent.getHumidityModifier();
 		float temperatureModifier = currentWeatherEvent == null ? 0 : currentWeatherEvent.getTemperatureModifier();
 
-		temperature = generateTemperature(time, 0, 30, 4, 8, 0.24f, 2.8f) + temperatureModifier;
+		temperature = generateTemperature(time, 30, 0, 4, 8, 0.24f, 2.8f) + temperatureModifier;
 
 		humidity = (float) ((float) 0.5 + (0.1 * MathUtils.random(1, 3)) * MathUtils.sin((float)
 				(Math.PI / 12 * (time - 12))) * humidityModifier);
@@ -110,7 +110,7 @@ public class ClimateController {
 		float temperatureNormalised = 0.0f;
 
 		for (int i = 0; i < octaves; i++) {
-			temperatureNormalised += amplitude * getTempSin(time - offset) * frequency;
+			temperatureNormalised += amplitude * getTempSin((time - offset) * frequency);
 			maxAmplitude += amplitude;
 
 			amplitude *= persistence;
