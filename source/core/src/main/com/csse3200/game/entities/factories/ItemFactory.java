@@ -25,11 +25,6 @@ public class ItemFactory {
   }
 
   /**
-   * Creates desired item
-   */
-  //public static Entity createAnyItem(ItemType itemType) {
-
-  /**
    * Creates a shovel item
    * 
    * @return shovel

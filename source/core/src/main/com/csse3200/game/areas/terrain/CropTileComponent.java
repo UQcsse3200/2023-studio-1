@@ -257,6 +257,38 @@ public class CropTileComponent extends Component {
 		return plant;
 	}
 
+	public boolean isFertilised() {
+		return isFertilised;
+	}
+
+	public void setFertilised(boolean fertilised) {
+		isFertilised = fertilised;
+	}
+
+	public void setSoilQuality(float soilQuality) {
+		this.soilQuality = soilQuality;
+	}
+
+	public void setWaterContent(float waterContent) {
+		this.waterContent = waterContent;
+	}
+
+	public float getSoilQuality() {
+		return soilQuality;
+	}
+
+	public float getWaterContent() {
+		return waterContent;
+	}
+
+	/**
+	 * Only to be used for loading as it can go around the achievement stuff
+	 * @param plant - the plant to set here
+	 */
+	public void setPlant(Entity plant) {
+		this.plant = plant;
+	}
+
 	/**
 	 * Writes in json summary of croptile state. Writes to json
 	 * the waterContent, soilQuality, isFertilised and plant
@@ -276,6 +308,7 @@ public class CropTileComponent extends Component {
 
 	@Override
 	public void read(Json json, JsonValue jsonMap) {
+		// TODO remove below?
 		// jsonMap = jsonMap.get("CropTileComponent");
 		// waterContent = jsonMap.getFloat("waterContent");
 		// soilQuality = jsonMap.getFloat("soilQuality");

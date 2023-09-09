@@ -15,6 +15,7 @@ import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.*;
+import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
@@ -227,8 +228,9 @@ public class SpaceGameArea extends GameArea {
     GridPoint2 pos = new GridPoint2(10, 11);
     Entity newPlayer = TerrainCropTileFactory.createTerrainEntity(0,0);
     spawnEntityAt(newPlayer, pos, true, true);
-    Function<CropTileComponent, Entity> method = PlantFactory::createCosmicCob;
-    newPlayer.getEvents().trigger("plant", method);
+    Entity plant = FactoryService.getPlantFactories().get("Cosmic Cob").apply(newPlayer.getComponent(CropTileComponent.class));
+    ServiceLocator.getEntityService().register(plant);
+    newPlayer.getComponent(CropTileComponent.class).setPlant(plant);
     return newPlayer;
   }
 

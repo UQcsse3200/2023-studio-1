@@ -272,8 +272,8 @@ public class PlantComponent extends Component {
         json.writeObjectStart(this.getClass().getSimpleName());
         json.writeValue("name", getPlantName());
         json.writeValue("health", getPlantHealth());
-        json.writeValue("name", getCurrentAge());
-        json.writeValue("name", getCurrentGrowthLevel());
+        json.writeValue("age", getCurrentAge());
+        json.writeValue("growth", getCurrentGrowthLevel());
         json.writeObjectEnd();
     }
 }

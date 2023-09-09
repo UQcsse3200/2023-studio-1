@@ -4,8 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.areas.terrain.TerrainCropTileFactory;
 import com.csse3200.game.areas.terrain.TerrainTile;
+import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
@@ -14,6 +17,7 @@ import com.csse3200.game.files.SaveGame;
 import com.csse3200.game.files.SaveGame.GameState;
 import com.csse3200.game.entities.factories.NPCFactory;
 import com.badlogic.gdx.utils.Array;
+import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 
 
@@ -35,6 +39,10 @@ import com.csse3200.game.rendering.DynamicTextureRenderComponent;
  * - Loads:
  *    - player pos.
  *    - time/day.
+ *    - entity (cows and stuff) location
+ *    - tiles (cropTileComponent and plants)
+ * //TODO player inv load and make sure tamed is being loaded in
+ * After that we need wiki and sprint achievement form.
  */
 public class SaveLoadService {
   /**
@@ -55,23 +63,23 @@ public class SaveLoadService {
     // Write the state to a file
     SaveGame.set(state);
 
-    System.out.println("save!");
+    System.out.println("The current game state has been saved to the file assets/saves/saveFile.json");
   }
 
   /**
-   * Load function which based on conents in saveFile.json
+   * Load function which based on contents in saveFile.json
    * Makes the game state match saveFile.json
    */
   public void load() {
     SaveGame.GameState state = SaveGame.get();
     if (state == null) {
       // TODO: Dialogue box or something?
-      System.out.println("Couldn't read saveFile");
+      System.out.println("Couldn't read the file assets/saves/saveFile.json");
       return;
     }
 
     updateGame(state);
-    System.out.println("load!");
+    System.out.println("The game state has been loaded from the file assets/saves/saveFile.json");
   }
 
   /**
@@ -99,12 +107,15 @@ public class SaveLoadService {
     Array<Entity> currentGameEntities = ServiceLocator.getEntityService().getEntities();
     // Remove entities from game that we will replace on load:
     ServiceLocator.getGameArea().removeLoadableEntities(currentGameEntities);
-    // Replace current entities with loaded ones:
+    // Update playable characters (Tractor and player)
+    updatePlayer(state);
+    updateTractor(state);
+    // Remake and reload anything that could've been destroyed since last save.
     updateNPCs(state);
     updateTiles(state);
-    updatePlayer(state);
+    // Update Misc
     updateTime(state);
-    updateTractor(state);
+    updateMissions(state);
   }
 
   /**
@@ -117,7 +128,6 @@ public class SaveLoadService {
     currentPlayer.setPosition(state.getPlayer().getPosition());
     currentPlayer.getComponent(PlayerActions.class).getCameraVar().setTrackEntity(currentPlayer);
     currentPlayer.getComponent(PlayerActions.class).setMuted(false);
-    //currentPlayer.getComponent(PlayerActions.class).stopMoving();
   }
 
   /**
@@ -128,15 +138,15 @@ public class SaveLoadService {
   private void updateNPCs(GameState state) {
     Entity player = ServiceLocator.getGameArea().getPlayer();
     // Create a map to associate entity types with NPC factory methods
-    Map<EntityType, Function<Entity, Entity>> npcFactories = new HashMap<>();
-    npcFactories.put(EntityType.Cow, NPCFactory::createCow);
-    npcFactories.put(EntityType.Chicken, NPCFactory::createChicken);
+    // TODO should be a private final field not a variable here.
 
     for (Entity entity : state.getEntities()) {
       EntityType entityType = entity.getType();
-      if (npcFactories.containsKey(entityType)) {
-        Entity npc = npcFactories.get(entityType).apply(player);
+      if (FactoryService.getNpcFactories().containsKey(entityType)) {
+        Entity npc = FactoryService.getNpcFactories().get(entityType).apply(player);
         npc.setPosition(entity.getPosition());
+        // TODO tamed value add in here, also may need to make the below comment better?
+        // TODO Team 4 please add in saving health here
         ServiceLocator.getGameArea().spawnEntity(npc);
       }
     }
@@ -150,9 +160,7 @@ public class SaveLoadService {
   private void updateTractor(GameState state){
     Entity tractor = ServiceLocator.getGameArea().getTractor(); // Get the tractor in the game
     Entity tractorState = state.getTractor();   // Get tractor entity stored within the json file
-    System.out.println(tractorState);
-    System.out.println(tractorState.getPosition());
-    
+
     if (tractorState == null || tractor == null) {
       System.out.println("Error");
       return;
@@ -188,16 +196,38 @@ public class SaveLoadService {
    */
   private void updateTiles(GameState state) {
     GameMap map = ServiceLocator.getGameArea().getMap();
-    for (Entity cropTile : state.getTiles()) {
-      // add render-component back & re-register:
-      DynamicTextureRenderComponent renderComponent = new DynamicTextureRenderComponent("images/cropTile.png");
-      renderComponent.setLayer(1);
-      cropTile.addComponent(renderComponent);
-      ServiceLocator.getEntityService().register(cropTile);
-      // Stick cropTile onto terrainTile
-      TerrainTile tile = map.getTile(cropTile.getPosition());
-      tile.setCropTile(cropTile);
-      tile.setOccupied();
+    for (Entity savedCropTile : state.getTiles()) {
+      CropTileComponent savedComponent = savedCropTile.getComponent(CropTileComponent.class);
+      // Makes a new crop tile
+      Entity newCropTile = TerrainCropTileFactory.createTerrainEntity(savedCropTile.getPosition());
+      ServiceLocator.getGameArea().spawnEntity(newCropTile);
+      CropTileComponent newComponent = newCropTile.getComponent(CropTileComponent.class);
+      // Sets CropTileComponents values to GameState ones
+      newComponent.setFertilised(savedComponent.isFertilised());
+      newComponent.setWaterContent(savedComponent.getWaterContent());
+      newComponent.setSoilQuality(savedComponent.getSoilQuality());
+      if (savedComponent.getPlant() != null) {
+        PlantComponent savedPlantComponent = savedComponent.getPlant().getComponent(PlantComponent.class);
+        // Makes a new plant
+        Entity plant = FactoryService.getPlantFactories().get(savedPlantComponent.getPlantName()).apply(newComponent);
+        ServiceLocator.getGameArea().spawnEntity(plant);
+        PlantComponent newPlantComponent = plant.getComponent(PlantComponent.class);
+        // Sets PlantComponent values to GameState ones
+        newPlantComponent.setGrowthStage(savedPlantComponent.getGrowthStage());
+        newPlantComponent.setPlantHealth(savedPlantComponent.getPlantHealth());
+        newPlantComponent.setCurrentAge(savedPlantComponent.getCurrentAge());
+        // Sets plant to the CropTileComponent
+        newComponent.setPlant(plant);
+      }
+      // Gets the Terrain tile from the map and set the crop tile to it
+      TerrainTile tile = map.getTile(newCropTile.getPosition());
+      tile.setCropTile(newCropTile);
     }
+  }
+
+  private void updateMissions(GameState state) {
+    MissionManager missions = ServiceLocator.getMissionManager();
+    // TODO Mission saving
+    // Add in setting missions based off the ones that are done
   }
 }
