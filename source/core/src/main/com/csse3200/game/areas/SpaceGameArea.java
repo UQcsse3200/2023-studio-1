@@ -159,12 +159,12 @@ public class SpaceGameArea extends GameArea {
     spawnCows();
     spawnAstrolotl();
 
-    spawnTool(ItemType.WATERING_CAN);
-    spawnTool(ItemType.SHOVEL);
-    spawnTool(ItemType.SCYTHE);
-    spawnTool(ItemType.HOE);
-    spawnTool(ItemType.FERTILISER);
-    spawnTool(ItemType.SEED);
+//    spawnTool(ItemType.WATERING_CAN);
+//    spawnTool(ItemType.SHOVEL);
+//    spawnTool(ItemType.SCYTHE);
+//    spawnTool(ItemType.HOE);
+//    spawnTool(ItemType.FERTILISER);
+//    spawnTool(ItemType.SEED);
 
     //spawnGhosts();
     //spawnGhostKing();
