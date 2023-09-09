@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.EventHandler;
+import java.util.ArrayList;
 
 /** the GameMap class is used to store and easily access and manage the components related to the game map */
 public class GameMap {
@@ -126,11 +127,34 @@ public class GameMap {
         int yMin = 0;
         int yMax = mapBounds.y;
 
-        if (x < xMin || x > xMax || y < yMin || y > yMax) {
+        if (x < xMin || x >= xMax || y < yMin || y >= yMax) {
             throw new ArrayIndexOutOfBoundsException("The provided coordinates (" + x + "," + y + ") do not fall" +
                     "within the map bounds of x:" + xMin + "-" + xMax + " and y:" + yMin + "-" + yMax);
         }
 
         return ((TiledMapTileLayer) this.tiledMap.getLayers().get(0)).getCell(x, y);
+    }
+
+    public ArrayList<GridPoint2> getTraversableTileCoordinates() {
+        GridPoint2 mapBounds = this.getMapSize();
+        int xMax = mapBounds.x;
+        int yMax = mapBounds.y;
+
+        ArrayList<GridPoint2> traversableTileCoordinates = new ArrayList<>();
+
+        for (int x = 0; x < xMax; x++) {
+            for (int y = 0; y < yMax; y++) {
+                GridPoint2 tileGridPoint = new GridPoint2(x, y);
+                if (getTile(tileGridPoint).isTraversable() == true) {
+                    traversableTileCoordinates.add(tileGridPoint);
+                }
+            }
+        }
+
+        return traversableTileCoordinates;
+    }
+
+    public ArrayList<GridPoint2> getUntraversableTiles() {
+        return null;
     }
 }
