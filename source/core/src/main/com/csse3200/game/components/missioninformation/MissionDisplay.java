@@ -1,5 +1,6 @@
 package com.csse3200.game.components.missioninformation;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -30,6 +31,9 @@ public class MissionDisplay extends UIComponent {
     private boolean isOpen;
     private boolean questsOpen = false;
     private boolean achOpen = false;
+    private boolean tamedAnimal;
+    private int questNum;
+    private  int plantsGrown;
     private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
 
     @Override
@@ -57,15 +61,58 @@ public class MissionDisplay extends UIComponent {
         questWindow = new Window("Quests", skin);
         questWindow.setVisible(false);
         stage.addActor(questWindow);
+        String tamedString;
 
+        if (tamedAnimal){
+            tamedString = " You have tamed an animal ";
+        } else {
+            tamedString = " You need to (tame method) to tame an animal ";
+        }
+        String questAchevimentString = " " + String.valueOf(questNum) + " out of 5 completed ";
+        String plantsGrowString =" "  + String.valueOf(plantsGrown) + " out of 5 grown ";
         achWindow = new Window("Achievements", skin);
-        achWindow.pad(40, 10, 10, 10); // Add padding to with so that the text doesn't go offscreen
-        achWindow.add("ACH:1\n");
-        achWindow.pack(); // Pack the window to the size
+
+        achWindow.pad(40, 10, 10, 10);
+        Table contentTable = new Table();
+        contentTable.defaults().padBottom(10); // Set default padding for the content
+
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle.font = skin.getFont("pixel-body"); // Assuming you have a font named "pixel-body" in your skin file
+        labelStyle.fontColor = Color.BLACK;
+
+        Label header1Label = new Label(" Tame a wild animal ", skin, "pixel-mid", "black"); // Assuming you have a title font named "pixel-title"
+        Label tamedLabel = new Label(tamedString, labelStyle);
+
+        Label header2Label = new Label(" Complete 5 quests ", skin, "pixel-mid", "black"); // Assuming you have a title font named "pixel-title"
+        Label questAchievementLabel = new Label(questAchevimentString, labelStyle);
+
+        Label header3Label = new Label(" Grow 5 plants ", skin, "pixel-mid", "black"); // Assuming you have a title font named "pixel-title"
+        Label thirdLabel = new Label(plantsGrowString, labelStyle);
+
+        TextButton backButton = getBackButton();
+        backButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                openMenu();
+            }
+        });
+
+        contentTable.add(header1Label).left().row();
+        contentTable.add(tamedLabel).left().row();
+        contentTable.add(header2Label).left().row();
+        contentTable.add(questAchievementLabel).left().row();
+        contentTable.add(header3Label).left().row();
+        contentTable.add(thirdLabel).left().row();
+        contentTable.add(backButton).colspan(4).bottom().center().fill();
+
+        achWindow.add(contentTable).expand().fill();
+
+        achWindow.pack();
         achWindow.setMovable(false);
-        achWindow.setPosition(stage.getWidth() / 2 - achWindow.getWidth() / 2, stage.getHeight() / 2 - achWindow.getHeight() / 2); // Center the window on the stage
+        achWindow.setPosition(stage.getWidth() / 2 - achWindow.getWidth() / 2, stage.getHeight() / 2 - achWindow.getHeight() / 2);
         achWindow.setVisible(false);
         stage.addActor(achWindow);
+
     }
 
     /**
@@ -109,6 +156,9 @@ public class MissionDisplay extends UIComponent {
         missionDescription.setAlignment(Align.center);
 
         Table contentTable = new Table();
+
+
+
         contentTable.defaults().size(500f, 50f);
         contentTable.row().padBottom(30f).padTop(30f);
         contentTable.add(missionDescription).center().expand();
