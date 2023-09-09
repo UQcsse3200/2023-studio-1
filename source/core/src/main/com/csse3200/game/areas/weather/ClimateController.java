@@ -13,7 +13,6 @@ public class ClimateController {
 	private float humidity;
 	private float temperature;
 
-	private static final float DEFAULT_HUMIDITY = 0.5f;
 	private static final float MIN_TEMPERATURE = 0f;
 	private static final float MAX_TEMPERATURE = 40f;
 
@@ -91,10 +90,13 @@ public class ClimateController {
 		int duration = MathUtils.random(2,5);
 		int priority = MathUtils.random(0,3);
 		float severity = MathUtils.random();
-		WeatherEvent event = null;
+		WeatherEvent event;
 		switch (eventGenerated) {
 			case 0 -> event = new AcidShowerEvent(numHoursUntil, duration, priority, severity);
 			case 1 -> event = new SolarSurgeEvent(numHoursUntil, duration, priority, severity);
+			default -> {
+				return;
+			}
 		}
 		addWeatherEvent(event);
 	}
