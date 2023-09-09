@@ -84,6 +84,7 @@ public class GdxGame extends Game {
         return new MainMenuScreen(this);
       case LOAD_GAME:
         setLoadOnStart(true);
+        return new MainGameScreen(this);
       case MAIN_GAME:
         return new MainGameScreen(this);
       case SETTINGS:

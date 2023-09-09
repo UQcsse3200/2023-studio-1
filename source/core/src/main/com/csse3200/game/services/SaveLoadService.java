@@ -41,7 +41,6 @@ import org.slf4j.LoggerFactory;
  *    - time/day.
  *    - entity (cows and stuff) location & tamed status
  *    - tiles (cropTileComponent and plants)
- * //TODO player inv load
  * After that we need wiki and sprint achievement form.
  */
 public class SaveLoadService {

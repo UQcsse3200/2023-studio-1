@@ -328,10 +328,6 @@ public class Entity implements Json.Serializable {
     if (getType() == EntityType.Item || getType() == null) {
       return;
     }
-    // if (getType() == EntityType.Tile) {
-    //   getComponent(CropTileComponent.class).write(json);
-    //   return;
-    // }
 
     json.writeValue("Entity", getType());
     float posX = position.x;
