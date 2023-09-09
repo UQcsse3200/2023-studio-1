@@ -50,7 +50,8 @@ public class PlantFactory {
                 .addComponent(new DynamicTextureRenderComponent("images/plants/Corn.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
-                        config.maxHealth, cropTile, growthThresholds, config.soundsArray, imagePaths));
+                        config.maxHealth, cropTile, growthThresholds, config.soundsArray,
+                        imagePaths));
 
         // Set plant position over crop tile.
         var cropTilePosition = cropTile.getEntity().getPosition();
