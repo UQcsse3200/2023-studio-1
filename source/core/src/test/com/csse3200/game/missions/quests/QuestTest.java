@@ -389,4 +389,108 @@ class QuestTest {
         assertTrue(r5.isCollected());
     }
 
+    @Test
+    public void testResetExpiryResetsTimeToExpiry() {
+        assertTrue(q1.isExpired());
+        assertFalse(q2.isExpired());
+        assertFalse(q3.isExpired());
+        assertFalse(q4.isExpired());
+        assertFalse(q5.isExpired());
+
+        q2.updateExpiry();
+        q3.updateExpiry();
+        q4.updateExpiry();
+        q5.updateExpiry();
+
+        q4.updateExpiry();
+        q5.updateExpiry();
+
+        q4.updateExpiry();
+        q5.updateExpiry();
+
+        q4.updateExpiry();
+        q5.updateExpiry();
+
+        assertTrue(q1.isExpired());
+        assertTrue(q2.isExpired());
+        assertTrue(q3.isExpired());
+        assertTrue(q4.isExpired());
+        assertTrue(q5.isExpired());
+
+        q1.resetExpiry();
+        q2.resetExpiry();
+        q3.resetExpiry();
+        q4.resetExpiry();
+        q5.resetExpiry();
+
+        assertTrue(q1.isExpired());
+        assertFalse(q2.isExpired());
+        assertFalse(q3.isExpired());
+        assertFalse(q4.isExpired());
+        assertFalse(q5.isExpired());
+
+        q2.updateExpiry();
+        q3.updateExpiry();
+        q4.updateExpiry();
+        q5.updateExpiry();
+
+        q4.updateExpiry();
+        q5.updateExpiry();
+
+        q4.updateExpiry();
+        q5.updateExpiry();
+
+        q4.updateExpiry();
+        q5.updateExpiry();
+
+        assertTrue(q1.isExpired());
+        assertTrue(q2.isExpired());
+        assertTrue(q3.isExpired());
+        assertTrue(q4.isExpired());
+        assertTrue(q5.isExpired());
+    }
+
+    @Test
+    public void testResetExpiryResetsState() {
+        assertTrue(q1.isCompleted());
+        assertFalse(q2.isCompleted());
+        assertFalse(q3.isCompleted());
+        assertFalse(q4.isCompleted());
+        assertFalse(q5.isCompleted());
+
+        q5.registerMission(ServiceLocator.getMissionManager().getEvents());
+        ServiceLocator.getMissionManager().getEvents().trigger("e2");
+        ServiceLocator.getMissionManager().getEvents().trigger("e2");
+        ServiceLocator.getMissionManager().getEvents().trigger("e2");
+        q3.registerMission(ServiceLocator.getMissionManager().getEvents());
+        ServiceLocator.getMissionManager().getEvents().trigger("e1");
+        ServiceLocator.getMissionManager().getEvents().trigger("e1");
+        ServiceLocator.getMissionManager().getEvents().trigger("e1");
+        ServiceLocator.getMissionManager().getEvents().trigger("e1");
+        ServiceLocator.getMissionManager().getEvents().trigger("e1");
+        q4.registerMission(ServiceLocator.getMissionManager().getEvents());
+        ServiceLocator.getMissionManager().getEvents().trigger("e2");
+        ServiceLocator.getMissionManager().getEvents().trigger("e2");
+        q2.registerMission(ServiceLocator.getMissionManager().getEvents());
+        ServiceLocator.getMissionManager().getEvents().trigger("e1");
+
+        assertTrue(q1.isCompleted());
+        assertTrue(q2.isCompleted());
+        assertTrue(q3.isCompleted());
+        assertTrue(q4.isCompleted());
+        assertTrue(q5.isCompleted());
+
+        q1.resetExpiry();
+        q2.resetExpiry();
+        q3.resetExpiry();
+        q4.resetExpiry();
+        q5.resetExpiry();
+
+        assertTrue(q1.isCompleted());
+        assertFalse(q2.isCompleted());
+        assertFalse(q3.isCompleted());
+        assertFalse(q4.isCompleted());
+        assertFalse(q5.isCompleted());
+    }
+
 }
