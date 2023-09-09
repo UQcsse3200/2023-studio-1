@@ -113,13 +113,14 @@ public class InventoryComponent extends Component {
    * @return The Entity representing the held item.
    * @throws IllegalStateException If the player is not holding an item.
    */
+  /*
   public Entity getHeldItem() {
     if (this.heldItem != null) {
       return this.heldItem;
     }
     return null;
   }
-
+*/
   public Entity getInHand() {
     return createHoe();
   }
