@@ -55,7 +55,6 @@ public class TerrainCropTileFactory {
 				.addComponent(new CropTileComponent(stats.initialWaterContent, stats.initialSoilQuality));
 
 		tile.setPosition(position);
-
 		return tile;
 	}
 }
