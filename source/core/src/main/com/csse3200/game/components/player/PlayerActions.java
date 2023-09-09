@@ -237,8 +237,17 @@ public class PlayerActions extends Component {
   }
 
   void hotkeySelection(int index) {
-    entity.getComponent(InventoryComponent.class).setHeldItem(index);
-    entity.getComponent(ToolbarDisplay.class).selectItem(index);
+    InventoryComponent inventoryComponent = entity.getComponent(InventoryComponent.class);
+    //Make sure its initialised
+    if (inventoryComponent != null) {
+      inventoryComponent.setHeldItem(index);
+    }
+
+    ToolbarDisplay toolbarDisplay = entity.getComponent(ToolbarDisplay.class);
+    //Make sure its initialised
+    if (toolbarDisplay != null) {
+      toolbarDisplay.selectItem(index);
+    }
   }
 
   /**
