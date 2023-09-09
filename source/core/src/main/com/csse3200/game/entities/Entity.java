@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ComponentType;
@@ -383,7 +384,8 @@ public class Entity implements Json.Serializable {
       case Cow: case Astrolotl: case Chicken:
         jsonMap = jsonMap.get("components").get("TamableComponent");
         // Does not need actual values here as it is just used to store the tamed value;
-        TamableComponent tamableComponent = new TamableComponent(ServiceLocator.getGameArea().getPlayer(), 1, 1, null);
+        Entity emptyPlayer = new Entity();    //empty player, as the real player is not needed for reading in the component
+        TamableComponent tamableComponent = new TamableComponent(emptyPlayer, 1, 1, null);
         tamableComponent.setTame(jsonMap.getBoolean("Tamed"));
         this.addComponent(tamableComponent);
         break;
