@@ -286,11 +286,15 @@ public class ItemActions extends Component {
     return (tile != null) && (tile.getComponent(CropTileComponent.class) != null);
   }
 
+  /**
+   * Feeds given entity.
+   * @param feedableEntity entity to feed
+   * @return true if feed is successful
+   */
   private boolean feed(Entity feedableEntity) {
     if (feedableEntity == null) {
       return false;
     }
-
     feedableEntity.getEvents().trigger("feed");
     return true;
   }

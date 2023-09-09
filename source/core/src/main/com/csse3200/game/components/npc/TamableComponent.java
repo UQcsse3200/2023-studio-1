@@ -100,7 +100,7 @@ public class TamableComponent extends Component {
             } else {
                 numTimesFed++;
             }
-            this.playerInventory.removeItem(this.playerInventory.getHeldItem());
+//            this.playerInventory.removeItem(this.playerInventory.getHeldItem()); TODO: once inventory works comment it in
             // Remove the food from the players inventory
         }
         return;
