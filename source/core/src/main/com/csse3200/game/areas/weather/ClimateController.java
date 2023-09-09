@@ -15,7 +15,7 @@ public class ClimateController {
 
 	private static final float DEFAULT_HUMIDITY = 0.5f;
 	private static final float MIN_TEMPERATURE = 0f;
-	private static final float MAX_TEMPERATURE = 30f;
+	private static final float MAX_TEMPERATURE = 40f;
 
 	private static WeatherEvent currentWeatherEvent;
 	private static final ArrayList<WeatherEvent> weatherEvents = new ArrayList<>();
