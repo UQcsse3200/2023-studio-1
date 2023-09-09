@@ -62,10 +62,8 @@ public class FertiliseCropTilesQuest extends Quest {
         }
     }
 
-    /**
     @Override
     protected void resetState() {
         numberOfTilesFertilised = 0;
     }
-
 }
