@@ -62,12 +62,8 @@ public class FertiliseCropTilesQuest extends Quest {
         }
     }
 
-    /**
-     * Resets the number of tiles fertilised back to 0
-     */
     @Override
     protected void resetState() {
         numberOfTilesFertilised = 0;
     }
-
 }

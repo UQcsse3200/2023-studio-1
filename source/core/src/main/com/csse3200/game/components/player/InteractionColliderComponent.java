@@ -4,14 +4,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.items.ItemType;
+import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.BodyUserData;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.utils.DirectionUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Represents a component that handles interaction detection with entities within a specified range.
@@ -54,7 +54,7 @@ public class InteractionColliderComponent extends HitboxComponent {
      * @param range The new interaction range to set.
      */
     public void updateRange(float range) {
-        this.range = range; //TODO: THIS DOES NOTHING. FIX.
+        this.range = range; //TODO: THIS DOES NOTHING. NEED TO CREATE NEW FIXTURE OR SOMETHING
     }
 
     /**
@@ -93,7 +93,7 @@ public class InteractionColliderComponent extends HitboxComponent {
      * @return A list of entities within the interaction range.
      */
     public List<Entity> getEntitiesInRange() {
-        return entitiesInRange;
+        return new ArrayList<>(entitiesInRange);
     }
 
     /**
@@ -102,35 +102,23 @@ public class InteractionColliderComponent extends HitboxComponent {
      * @param direction The direction in which to filter entities (e.g., "UP", "DOWN", "LEFT", "RIGHT").
      * @return A list of entities within the interaction range in the specified direction.
      */
-    public List<Entity> getEntitiesInRange(String direction) {
-        List<Entity> filteredEntities = new ArrayList<>();
+    public List<Entity> getEntitiesTowardsDirection(String direction) {
+        List<Entity> entities = getEntitiesInRange();
+        entities.removeIf(entity -> {
+            Vector2 targetDirectionVector = entity.getCenterPosition().sub(this.entity.getCenterPosition());
+            String targetDirection = DirectionUtils.vectorToDirection(targetDirectionVector);
 
-        for (Entity entity : entitiesInRange) {
-            Vector2 directionVector = entity.getCenterPosition().sub(this.entity.getCenterPosition());
-            float angle = directionVector.angleDeg();
+            return !Objects.equals(targetDirection, direction);
+        });
 
-            if (Objects.equals(DirectionUtils.angleToDirection(angle), direction)) {
-                filteredEntities.add(entity);
-            }
-        }
-        return filteredEntities;
+        return entities;
     }
 
-    /**
-     * Filters a list of entities by a specified component type.
-     *
-     * @param entities The list of entities to filter.
-     * @param type     The component type by which to filter entities.
-     * @return A list of entities containing the specified component type.
-     */
-    public List<Entity> filterByComponent(List<Entity> entities, Class<Component> type) {
-        List<Entity> filteredEntities = new ArrayList<>();
-        for (Entity entity : entities) {
-            if (entity.getComponent(type) != null) {
-                filteredEntities.add(entity);
-            }
-        }
-        return filteredEntities;
+    public List<Entity> getEntitiesTowardsPosition(Vector2 position) {
+        Vector2 directionVector = position.sub(entity.getCenterPosition());
+        String direction = DirectionUtils.vectorToDirection(directionVector);
+
+        return getEntitiesTowardsDirection(direction);
     }
 
     /**
@@ -144,20 +132,24 @@ public class InteractionColliderComponent extends HitboxComponent {
             return null;
         }
 
-        Entity nearestEntity = null;
-        float nearestEntityDistance = Float.MAX_VALUE;
         Vector2 position = this.entity.getCenterPosition();
+        Comparator<Entity> distanceComparator = (entity1, entity2) -> {
+            float distance1 = position.dst(entity1.getCenterPosition());
+            float distance2 = position.dst(entity2.getCenterPosition());
+            return Float.compare(distance1, distance2);
+        };
 
-        for (Entity entity : entities) {
-            Vector2 entityPosition = entity.getCenterPosition();
-            float currentEntityDistance = position.dst(entityPosition);
+        return Collections.max(entities, distanceComparator);
+    }
 
-            if (currentEntityDistance < nearestEntityDistance) {
-                nearestEntity = entity;
-                nearestEntityDistance = currentEntityDistance;
+    public Entity getSuitableEntity(List<Entity> entities, ItemType itemType) {
+        switch (itemType){
+            case FOOD -> {
+                entities.removeIf(entity -> entity.getComponent(TamableComponent.class) == null);
+                entities.removeIf(entity -> entity.getComponent(TamableComponent.class).isTamed());
+                return getNearest(entities);
             }
         }
-
-        return nearestEntity;
+        return null;
     }
 }

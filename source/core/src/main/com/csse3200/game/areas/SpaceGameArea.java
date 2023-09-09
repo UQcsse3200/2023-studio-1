@@ -44,6 +44,8 @@ public class SpaceGameArea extends GameArea {
           "images/iso_grass_2.png",
           "images/iso_grass_3.png",
           "images/tool_shovel.png",
+          "images/egg.png",
+          "images/milk.png",
 
           "images/tool_hoe.png",
           "images/tool_scythe.png",
@@ -102,7 +104,7 @@ public class SpaceGameArea extends GameArea {
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
           "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas",
-          "images/animals/astrolotl.atlas",
+          "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg", "sounds/car-horn-6408.mp3"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -140,10 +142,14 @@ public class SpaceGameArea extends GameArea {
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
 
+    // TODO:
+
+
     tractor = spawnTractor();
     spawnChickens();
     spawnCows();
     spawnAstrolotl();
+    spawnOxygenEater();
 
     spawnTool(ItemType.WATERING_CAN);
     spawnTool(ItemType.SHOVEL);
@@ -152,8 +158,6 @@ public class SpaceGameArea extends GameArea {
     spawnTool(ItemType.FERTILISER);
     spawnTool(ItemType.SEED);
 
-    //spawnGhosts();
-    //spawnGhostKing();
 
     //playMusic();
   }
@@ -224,6 +228,7 @@ public class SpaceGameArea extends GameArea {
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
+    System.out.println(newPlayer.getPosition());
     return newPlayer;
   }
 
@@ -307,25 +312,17 @@ public class SpaceGameArea extends GameArea {
     }
   }
 
-  private void spawnGhosts() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
+  private void spawnOxygenEater() {
+    GridPoint2 minPos = new GridPoint2(2, 2);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
-    for (int i = 0; i < NUM_GHOSTS; i++) {
+    for (int i = 0; i < 5; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity ghost = NPCFactory.createGhost(player);
-      spawnEntityAt(ghost, randomPos, true, true);
+      Entity oxygenEater = NPCFactory.createOxygenEater(player);
+      spawnEntityAt(oxygenEater, randomPos, true, true);
     }
   }
 
-  private void spawnGhostKing() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-    GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-    Entity ghostKing = NPCFactory.createGhostKing(player);
-    spawnEntityAt(ghostKing, randomPos, true, true);
-  }
 
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
