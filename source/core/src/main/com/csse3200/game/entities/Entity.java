@@ -357,7 +357,7 @@ public class Entity implements Json.Serializable {
     } catch (IllegalArgumentException e) {
       type = null;
     }
-    
+
     switch (type) {
       case Tractor:
         jsonMap = jsonMap.get("components").get("TractorActions");

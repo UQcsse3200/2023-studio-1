@@ -306,16 +306,6 @@ public class CropTileComponent extends Component {
 		json.writeObjectEnd();
 	}
 
-	@Override
-	public void read(Json json, JsonValue jsonMap) {
-		// TODO remove below?
-		// jsonMap = jsonMap.get("CropTileComponent");
-		// waterContent = jsonMap.getFloat("waterContent");
-		// soilQuality = jsonMap.getFloat("soilQuality");
-		// isFertilised = jsonMap.getBoolean("isFertilised");
-		//plant = json.fromJson(Entity.class, jsonMap.getString("plant"));
-	}
-
 	public TerrainTile getTerrainTile() {
 		return terrainTile;
 	}
