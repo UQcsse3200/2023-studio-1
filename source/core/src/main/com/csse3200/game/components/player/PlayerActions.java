@@ -152,7 +152,7 @@ public class PlayerActions extends Component {
   /**
    * Stops the player from moving.
    */
-  void stopMoving() {
+  public void stopMoving() {
     this.moveDirection = Vector2.Zero.cpy();
     updateSpeed();
     moving = false;
@@ -175,7 +175,7 @@ public class PlayerActions extends Component {
   /**
    * Removes the velocity increase of the player.
    */
-  void stopRunning() {
+  public void stopRunning() {
     this.running = false;
   }
 
@@ -251,6 +251,10 @@ public class PlayerActions extends Component {
 
   public void setCameraVar (CameraComponent cam) {
     this.camera = cam;
+  }
+
+  public CameraComponent getCameraVar () {
+    return camera;
   }
 
   public void setGameMap(GameMap map) {
