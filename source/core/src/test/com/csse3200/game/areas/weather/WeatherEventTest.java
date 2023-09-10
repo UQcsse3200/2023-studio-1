@@ -147,41 +147,34 @@ public class WeatherEventTest {
 
     @Test
     public void testConstructorWithNegativePriority() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            new WeatherEvent(4, 5, -1, 1.1f) {
-            };
+        assertThrows(IllegalArgumentException.class, () -> new WeatherEvent(4, 5, -1, 1.1f) {
         }, "Priority cannot be less than 0");
     }
 
     @Test
     public void testConstructorWithZeroDuration() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            new WeatherEvent(0, 0, 1, 1.2f) {
-            };
+        assertThrows(IllegalArgumentException.class, () -> new WeatherEvent(0, 0, 1, 1.2f) {
         }, "Duration cannot be 0");
     }
 
     @Test
     public void testConstructorWithNegativeDuration() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            new WeatherEvent(5, -1, 3, 1.3f) { };
-        }, "Duration cannot be less than 0");
+        assertThrows(IllegalArgumentException.class, () -> new WeatherEvent(5, -1, 3, 1.3f) { }, "Duration cannot be less than 0");
     }
 
     @Test
     public void testConstructorWithNegativeNumHoursUntil() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            new WeatherEvent(-1, 5, 1, 1.2f) { };
-        }, "Number of hours until the event occurs cannot be less than 0");
+        assertThrows(IllegalArgumentException.class, () -> new WeatherEvent(-1, 5, 1, 1.2f) { }, "Number of hours until the event occurs cannot be less than 0");
     }
 
     @Test
     public void testConstructorWithInvalidSeverity() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            new WeatherEvent(2, 3, 1, 0.7f) { };
-        }, "Severity can't be less than 1.0f");
-        assertThrows(IllegalArgumentException.class, () -> {
-            new WeatherEvent(3, 5, 4, 1.7f) { };
-        }, "Severity can't be more than 1.5f");
+        assertThrows(IllegalArgumentException.class, () -> new WeatherEvent(2, 3, 1, 0.7f) { }, "Severity can't be less than 1.0f");
+        assertThrows(IllegalArgumentException.class, () -> new WeatherEvent(3, 5, 4, 1.7f) { }, "Severity can't be more than 1.5f");
+        assertThrows(IllegalArgumentException.class, () -> new AcidShowerEvent(3, 5, 4, 0.4f) { }, "Severity can't be less than 1.0f");
+
+        assertThrows(IllegalArgumentException.class, () -> new AcidShowerEvent(3, 5, 4, 1.7f) { }, "Severity can't be more than 1.5f");
+        assertThrows(IllegalArgumentException.class, () -> new SolarSurgeEvent(1, 2, 4, 0.4f) { }, "Severity can't be less than 1.0f");
+        assertThrows(IllegalArgumentException.class, () -> new SolarSurgeEvent(1, 2, 4, 1.6f) { }, "Severity can't be more than 1.6f");
     }
 }

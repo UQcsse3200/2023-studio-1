@@ -36,7 +36,7 @@ class ClimateControllerTest {
 
 	@Test
 	public void testAddingEvent() {
-		WeatherEvent event = new AcidShowerEvent(1, 1, 1, 0.5f);
+		WeatherEvent event = new AcidShowerEvent(1, 1, 1, 1.3f);
 		controller.addWeatherEvent(event);
 
 		ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
@@ -96,7 +96,7 @@ class ClimateControllerTest {
 
 	@Test
 	public void testExpiringEvent() {
-		WeatherEvent event = new SolarSurgeEvent(1, 1, 1, 0.5f);
+		WeatherEvent event = new SolarSurgeEvent(1, 1, 1, 1.4f);
 		controller.addWeatherEvent(event);
 
 		ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
@@ -107,14 +107,12 @@ class ClimateControllerTest {
 
 	@Test
 	public void testAddEventWithNull() {
-		assertThrows(IllegalArgumentException.class, () -> {
-			controller.addWeatherEvent(null);
-		});
+		assertThrows(IllegalArgumentException.class, () -> controller.addWeatherEvent(null));
 	}
 
 	@Test
 	public void testAddInstantEvent() {
-		AcidShowerEvent event = new AcidShowerEvent(0, 1, 2, 0.5f);
+		AcidShowerEvent event = new AcidShowerEvent(0, 1, 2, 1.5f);
 		controller.addWeatherEvent(event);
 		assertEquals(controller.getCurrentWeatherEvent(), event);
 		ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
@@ -123,10 +121,10 @@ class ClimateControllerTest {
 
 	@Test
 	public void testOverridenEvent() {
-		AcidShowerEvent event = new AcidShowerEvent(0, 1, 2, 0.5f);
+		AcidShowerEvent event = new AcidShowerEvent(0, 1, 2, 1.5f);
 		controller.addWeatherEvent(event);
 		assertEquals(controller.getCurrentWeatherEvent(), event);
-		AcidShowerEvent event2 = new AcidShowerEvent(0, 1, 10, 0.5f);
+		AcidShowerEvent event2 = new AcidShowerEvent(0, 1, 10, 1.2f);
 		controller.addWeatherEvent(event2);
 		assertEquals(controller.getCurrentWeatherEvent(), event2);
 		ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
