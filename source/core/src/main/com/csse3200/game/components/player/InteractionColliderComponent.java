@@ -49,15 +49,6 @@ public class InteractionColliderComponent extends HitboxComponent {
     }
 
     /**
-     * Updates the interaction range of this component.
-     *
-     * @param range The new interaction range to set.
-     */
-    public void updateRange(float range) {
-        this.range = range; //TODO: THIS DOES NOTHING. NEED TO CREATE NEW FIXTURE OR SOMETHING
-    }
-
-    /**
      * Adds entity to entitiesInRange on collision start.
      *
      * @param me     The fixture of this component.
