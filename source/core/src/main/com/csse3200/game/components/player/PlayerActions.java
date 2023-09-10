@@ -15,6 +15,8 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 
+import java.io.FileNotFoundException;
+
 /**
  * Action component for interacting with the player. Player events should be initialised in create()
  * and when triggered should call methods within this class.
@@ -164,7 +166,6 @@ public class PlayerActions extends Component {
   }
 
   /**
-<<<<<<< HEAD
    * Increases the velocity of the player when they move.
    */
   void run() {
@@ -223,11 +224,11 @@ public class PlayerActions extends Component {
     camera.setTrackEntity(tractor);
   }
 
-  void use(Vector2 playerPos, Vector2 mousePos, Entity itemInHand) {
+  void use(Vector2 mousePos, Entity itemInHand) {
     if (itemInHand != null) {
       if (itemInHand.getComponent(ItemActions.class) != null) {
         pauseMoving();
-        itemInHand.getComponent(ItemActions.class).use(playerPos, mousePos, itemInHand, map);
+        itemInHand.getComponent(ItemActions.class).use(entity, mousePos, map);
       }
     }
   }

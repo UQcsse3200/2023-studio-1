@@ -8,6 +8,7 @@ public enum EntityType {
     Cow(-2),
     Chicken(-1),
     Axolotl(10),
+    OxygenEater(-4),
     Item(0);
     
     // Negative rate for consumption, positive for production of oxygen
@@ -27,4 +28,3 @@ public enum EntityType {
     }
 }
 
-// import com.csse3200.game.entities.EntityType;

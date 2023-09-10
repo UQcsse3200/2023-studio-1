@@ -31,7 +31,7 @@ public class StatReward extends Reward {
      */
     @Override
     public void collect() {
-        super.isCollected = true;
+        this.setCollected();
 
         Entity player = ServiceLocator.getGameArea().getPlayer();
         CombatStatsComponent playerStats = player.getComponent(CombatStatsComponent.class);
