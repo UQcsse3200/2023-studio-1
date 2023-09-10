@@ -12,6 +12,7 @@ import com.csse3200.game.services.ServiceLocator;
 public class TimeService {
 	private static final Logger logger = LoggerFactory.getLogger(TimeService.class);
 	private static final int MS_IN_MINUTE = 50;
+	private static final int LOSE_DAY = 30;
 	private int minute;
 	private int hour;
 	private int day;
@@ -152,7 +153,7 @@ public class TimeService {
 		events.trigger("dayUpdate");
 
 		// lose the game if the game reaches 30 days
-		if (day >= 30) {
+		if (day >= LOSE_DAY) {
 			ServiceLocator.getGameArea().getPlayer().getEvents().trigger("loseScreen");
 		}
 	}

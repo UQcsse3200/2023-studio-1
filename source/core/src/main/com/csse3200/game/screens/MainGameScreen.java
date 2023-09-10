@@ -109,10 +109,15 @@ public class MainGameScreen extends ScreenAdapter {
     spaceGameArea.getPlayer().getComponent(PlayerActions.class).setCameraVar(renderer.getCamera());
     spaceGameArea.getTractor().getComponent(TractorActions.class).setCameraVar(renderer.getCamera());
 
+    // initially the player hasnt lost yet, so lose is false
     lose = false;
+    // listener is added to the player entity
     spaceGameArea.getPlayer().getEvents().addListener("loseScreen", this::loseScreenStart);
   }
 
+  /**
+   * When called the lose is set to true
+   */
   public void loseScreenStart() {
     lose = true;
   }
@@ -125,6 +130,8 @@ public class MainGameScreen extends ScreenAdapter {
     }
       ServiceLocator.getTimeService().update();
       renderer.render();
+
+    // if lose is true, then the game screen is set to the losing screen
     if (lose == true) {
       game.setScreen(GdxGame.ScreenType.LOSESCREEN);
     }
