@@ -226,6 +226,10 @@ public class SaveLoadService {
     }
   }
 
+  /**
+   * Updates the missions based off the gamestate
+   * @param state gamestate of the entire game based off safeFile.json
+   */
   private void updateMissions(GameState state) {
     MissionManager missions = ServiceLocator.getMissionManager();
     // TODO Mission saving
