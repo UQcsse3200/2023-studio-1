@@ -71,6 +71,14 @@ public class PlanetOxygenService implements OxygenLevel{
     }
     
     /**
+     * Getter for the default initial oxygen value.
+     * @return the default initial/'starting' oxygen value.
+     */
+    public float getDefaultInitialOxygen() {
+        return DEFAULT_INITIAL_OXYGEN;
+    }
+    
+    /**
      * Perform the update on the oxygen present by applying the recalculated
      * hour delta. If level reaches 0, trigger lose screen. Triggers an event to
      * update the oxygen display.
