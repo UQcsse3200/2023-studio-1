@@ -37,14 +37,6 @@ public class EntityService {
   }
   
   /**
-   * Getter method for entity array.
-   * @return the array of entities
-   */
-  public Array<Entity> getEntities() {
-    return entities;
-  }
-  
-  /**
    * Update all registered entities. Should only be called from the main game loop.
    */
   public void update() {
@@ -61,5 +53,13 @@ public class EntityService {
     for (Entity entity : entities) {
       entity.dispose();
     }
+  }
+
+  /**
+   * Returns Array<Entity> of all entities in game
+   * @return Array of entities in game
+   */
+  public Array<Entity> getEntities() {
+    return entities;
   }
 }

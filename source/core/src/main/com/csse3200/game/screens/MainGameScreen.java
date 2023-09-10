@@ -102,12 +102,11 @@ public class MainGameScreen extends ScreenAdapter {
 
     logger.debug("Initialising main game screen entities");
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-
     SpaceGameArea spaceGameArea = new SpaceGameArea(terrainFactory);
     spaceGameArea.create();
     renderer.getCamera().setTrackEntity(spaceGameArea.getPlayer());
 
-    // Switched to spaceGameArea
+    // Switched to spaceGameArea TODO DELETE
     //ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
     //forestGameArea.create();
     //renderer.getCamera().setTrackEntity(forestGameArea.getPlayer());
@@ -116,6 +115,11 @@ public class MainGameScreen extends ScreenAdapter {
 
     lose = false;
     spaceGameArea.getPlayer().getEvents().addListener("loseScreen", this::loseScreenStart);
+
+    // if the LoadSaveOnStart value is set true then load entities saved from file
+    if (game.isLoadOnStart()){
+      ServiceLocator.getSaveLoadService().load();
+    }
   }
 
   public void loseScreenStart() {

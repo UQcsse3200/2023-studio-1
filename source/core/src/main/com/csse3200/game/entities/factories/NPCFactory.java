@@ -30,6 +30,10 @@ import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
+import javax.lang.model.UnknownEntityException;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+
 /**
  * Factory to create non-playable character (NPC) entities with predefined components.
  *
@@ -139,7 +143,7 @@ public class NPCFactory {
    * @return Astrolotl entity
    */
   public static Entity createAstrolotl(Entity player) {
-    Entity astrolotl = createBaseAnimal(EntityType.Axolotl);
+    Entity astrolotl = createBaseAnimal(EntityType.Astrolotl);
     BaseAnimalConfig config = configs.astrolotl;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
@@ -215,7 +219,7 @@ public class NPCFactory {
    * @return entity
    */
   private static Entity createBaseAnimal(EntityType type) {
-    Entity animal = new Entity()
+    Entity animal = new Entity(type)
             .addComponent(new PhysicsComponent())
             .addComponent(new PhysicsMovementComponent())
             .addComponent(new ColliderComponent());

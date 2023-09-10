@@ -60,7 +60,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           triggerEnterEvent();
           return true;
         case Keys.SPACE:
-          touchUp(Gdx.input.getX(),Gdx.input.getY(), 0,0);
+          touchUp(Gdx.input.getX(), Gdx.input.getY(), 0, 0);
           return true;
         case Keys.NUM_0: case Keys.NUM_1: case Keys.NUM_2:
         case Keys.NUM_3: case Keys.NUM_4: case Keys.NUM_5:

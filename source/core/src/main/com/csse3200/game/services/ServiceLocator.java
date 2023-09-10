@@ -1,6 +1,5 @@
 package com.csse3200.game.services;
 
-import com.badlogic.gdx.Game;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.entities.EntityService;
@@ -30,6 +29,7 @@ public class ServiceLocator {
   private static GameTime timeSource;
   private static GameArea gameArea;
   private static CameraComponent cameraComponent;
+  private static SaveLoadService saveLoadService;
   private static MissionManager missions;
   private static PlanetOxygenService planetOxygenService;
 
@@ -70,6 +70,10 @@ public class ServiceLocator {
   }
   public static PlanetOxygenService getPlanetOxygenService() {
     return planetOxygenService;
+  }
+
+  public static SaveLoadService getSaveLoadService() {
+    return saveLoadService;
   }
 
   public static void registerGameArea(GameArea area) {
@@ -127,6 +131,19 @@ public class ServiceLocator {
     planetOxygenService = source;
   }
 
+  /**
+   * Registers the save/load service.
+   * @param source the service to register
+   */
+  public static void registerSaveLoadService(SaveLoadService source) {
+    logger.debug("Registering Save/Load service {}", source);
+    saveLoadService = source;
+  }
+
+  /**
+   * Clears all registered services.
+   * Do not clear saveLoadService
+   */
   public static void clear() {
     entityService = null;
     renderService = null;
@@ -135,6 +152,7 @@ public class ServiceLocator {
     inputService = null;
     resourceService = null;
     planetOxygenService = null;
+    gameArea = null;
   }
 
   private ServiceLocator() {
