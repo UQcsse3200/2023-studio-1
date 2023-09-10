@@ -37,6 +37,7 @@ public class ItemActions extends Component {
 
     Vector2 playerPos = player.getPosition();
     Vector2 mouseWorldPos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
+    InteractionColliderComponent interactionCollider = player.getComponent(InteractionColliderComponent.class);
 
     ItemComponent type = entity.getComponent(ItemComponent.class);
     // Wasn't an item or did not have ItemComponent class
@@ -69,15 +70,14 @@ public class ItemActions extends Component {
         return resultStatus;
       }
       case FOOD -> { // TODO: THIS IS ITEM TYPE IS JUST FOR TESTING PURPOSES, REPLACE WITH PLANT DROP TYPE
-        InteractionColliderComponent interactionCollider = player.getComponent(InteractionColliderComponent.class);
-        List<Entity> entitiesTowardsMouse = interactionCollider.getEntitiesTowardsPosition(mouseWorldPos);
-        Entity feedableEntity = interactionCollider.getSuitableEntity(entitiesTowardsMouse, ItemType.FOOD);
-        resultStatus = feed(feedableEntity);
-        if (!resultStatus) {
-          // consume it yourself instead??
-          // consume(player)
-          resultStatus = true;
+        if (interactionCollider == null) {
+          return false;
         }
+        resultStatus = feed(interactionCollider.getSuitableEntities(ItemType.FOOD, mouseWorldPos));
+//        if (!resultStatus) {
+//          // consume it yourself instead??
+//          // resultStatus = consume(player)
+//        }
         return resultStatus;
       }
       case FERTILISER -> {
@@ -288,14 +288,15 @@ public class ItemActions extends Component {
 
   /**
    * Feeds given entity.
-   * @param feedableEntity entity to feed
+   * @param feedableEntities list that should contain the one entity to feed
    * @return true if feed is successful
    */
-  private boolean feed(Entity feedableEntity) {
-    if (feedableEntity == null) {
+  private boolean feed(List<Entity> feedableEntities) {
+    if (feedableEntities.size() != 1) {
       return false;
     }
-    feedableEntity.getEvents().trigger("feed");
+
+    feedableEntities.get(0).getEvents().trigger("feed");
     return true;
   }
 }

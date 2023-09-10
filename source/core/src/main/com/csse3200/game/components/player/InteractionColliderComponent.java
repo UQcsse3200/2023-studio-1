@@ -20,7 +20,7 @@ public class InteractionColliderComponent extends HitboxComponent {
     /** List of entities currently in the interaction range. */
     private final List<Entity> entitiesInRange = new ArrayList<>();
     /** The interaction range within which entities are detected. */
-    private float range;
+    private final float range;
 
     /**
      * Constructs an InteractionColliderComponent with the specified interaction range.
@@ -105,6 +105,12 @@ public class InteractionColliderComponent extends HitboxComponent {
         return entities;
     }
 
+    /**
+     * Gets the list of entities currently in the interaction range towards a position.
+     *
+     * @param position The vector position in which to filter entities.
+     * @return A list of entities within the interaction range towards the position.
+     */
     public List<Entity> getEntitiesTowardsPosition(Vector2 position) {
         Vector2 directionVector = position.sub(entity.getCenterPosition());
         String direction = DirectionUtils.vectorToDirection(directionVector);
@@ -113,34 +119,40 @@ public class InteractionColliderComponent extends HitboxComponent {
     }
 
     /**
-     * Gets the nearest entity from a list of entities based on their distances.
+     * Gets a list containing the nearest entity from a list of entities.
      *
      * @param entities The list of entities to search for the nearest entity.
-     * @return The nearest entity in the list, or null if the list is empty.
+     * @return A list containing the nearest entity in the list, or an empty list if the input list is empty.
      */
-    public Entity getNearest(List<Entity> entities) {
+    public List<Entity> getNearest(List<Entity> entities) {
         if (entities.isEmpty()) {
-            return null;
+            return Collections.emptyList(); // Return an empty list if there are no entities.
         }
 
         Vector2 position = this.entity.getCenterPosition();
-        Comparator<Entity> distanceComparator = (entity1, entity2) -> {
-            float distance1 = position.dst(entity1.getCenterPosition());
-            float distance2 = position.dst(entity2.getCenterPosition());
-            return Float.compare(distance1, distance2);
-        };
+        Comparator<Entity> distanceComparator = (entity1, entity2) ->
+                Float.compare(position.dst(entity1.getCenterPosition()), position.dst(entity2.getCenterPosition()));
 
-        return Collections.max(entities, distanceComparator);
+        Entity nearestEntity = Collections.min(entities, distanceComparator);
+        return Collections.singletonList(nearestEntity);
     }
 
-    public Entity getSuitableEntity(List<Entity> entities, ItemType itemType) {
+    /**
+     * Retrieves a list of suitable entities of the specified item type based on their proximity to a given position.
+     *
+     * @param itemType The type of item to determine suitability criteria (e.g., FOOD).
+     * @param position The position to evaluate proximity to.
+     * @return A list of suitable entities based on the provided criteria, or an empty list if no suitable entities are found.
+     */
+    public List<Entity> getSuitableEntities(ItemType itemType, Vector2 position) {
+        List<Entity> entities = getEntitiesTowardsPosition(position);
         switch (itemType){
             case FOOD -> {
                 entities.removeIf(entity -> entity.getComponent(TamableComponent.class) == null);
-                entities.removeIf(entity -> entity.getComponent(TamableComponent.class).isTamed());
+                entities.removeIf(entity -> entity.getComponent(TamableComponent.class).isTamed()); //TODO: axolotl? handle that
                 return getNearest(entities);
             }
         }
-        return null;
+        return Collections.emptyList();
     }
 }
