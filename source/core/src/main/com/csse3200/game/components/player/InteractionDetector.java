@@ -3,7 +3,6 @@ package com.csse3200.game.components.player;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.entities.Entity;
@@ -16,18 +15,18 @@ import java.util.*;
 /**
  * Represents a component that handles interaction detection with entities within a specified range.
  */
-public class InteractionColliderComponent extends HitboxComponent {
+public class InteractionDetector extends HitboxComponent {
     /** List of entities currently in the interaction range. */
     private final List<Entity> entitiesInRange = new ArrayList<>();
     /** The interaction range within which entities are detected. */
     private final float range;
 
     /**
-     * Constructs an InteractionColliderComponent with the specified interaction range.
+     * Constructs an InteractionDetector with the specified interaction range.
      *
      * @param range The interaction range within which entities are detected.
      */
-    public InteractionColliderComponent(float range) {
+    public InteractionDetector(float range) {
         this.range = range;
     }
 
@@ -101,7 +100,6 @@ public class InteractionColliderComponent extends HitboxComponent {
 
             return !Objects.equals(targetDirection, direction);
         });
-
         return entities;
     }
 

@@ -1,12 +1,11 @@
 package com.csse3200.game.components.items;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.player.InteractionColliderComponent;
+import com.csse3200.game.components.player.InteractionDetector;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 import java.util.List;
@@ -37,7 +36,7 @@ public class ItemActions extends Component {
 
     Vector2 playerPos = player.getPosition();
     Vector2 mouseWorldPos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
-    InteractionColliderComponent interactionCollider = player.getComponent(InteractionColliderComponent.class);
+    InteractionDetector interactionCollider = player.getComponent(InteractionDetector.class);
 
     ItemComponent type = entity.getComponent(ItemComponent.class);
     // Wasn't an item or did not have ItemComponent class
