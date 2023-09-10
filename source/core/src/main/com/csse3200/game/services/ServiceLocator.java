@@ -122,11 +122,19 @@ public class ServiceLocator {
     missions = source;
   }
 
+  /**
+   * Registers the save/load service.
+   * @param source the service to register
+   */
   public static void registerSaveLoadService(SaveLoadService source) {
     logger.debug("Registering Save/Load service {}", source);
     saveLoadService = source;
   }
 
+  /**
+   * Clears all registered services.
+   * Do not clear saveLoadService
+   */
   public static void clear() {
     entityService = null;
     renderService = null;
