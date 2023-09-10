@@ -9,7 +9,8 @@ import org.slf4j.LoggerFactory;
 public class PlanetOxygenService implements OxygenLevel{
     
     private static final Logger logger = LoggerFactory.getLogger(PlanetOxygenService.class);
-    private static final float DEFAULT_OXYGEN_GOAL = 10000;
+    private static final float DEFAULT_OXYGEN_GOAL = 1000;
+    private static final float DEFAULT_INITIAL_OXYGEN = 100;
     
     private float oxygenGoal;
     private float oxygenPresent;
@@ -18,7 +19,7 @@ public class PlanetOxygenService implements OxygenLevel{
     
     public PlanetOxygenService() {
         oxygenGoal = DEFAULT_OXYGEN_GOAL;
-        oxygenPresent = 0;
+        oxygenPresent = DEFAULT_INITIAL_OXYGEN;
         delta = 0;
         ServiceLocator.getTimeService().getEvents()
                 .addListener("hourUpdate", this::update);
@@ -104,13 +105,15 @@ public class PlanetOxygenService implements OxygenLevel{
         // Loop through existing entities in the game to sum their oxygen values.
         for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
             type = entity.getType();
-            // Loop through registered entity types for a matching type.
-            for (EntityType enumType : EntityType.values()) {
-                if (type.equals(enumType)) {
-                    calculatedDelta += entity.getType().getOxygenRate();
-                    // Break from inner loop after first match as an entity
-                    // should only have one type.
-                    break;
+            if (type != null) {
+                // Loop through registered entity types for a matching type.
+                for (EntityType enumType : EntityType.values()) {
+                    if (type.equals(enumType)) {
+                        calculatedDelta += entity.getType().getOxygenRate();
+                        // Break from inner loop after first match as an entity
+                        // should only have one type.
+                        break;
+                    }
                 }
             }
         }

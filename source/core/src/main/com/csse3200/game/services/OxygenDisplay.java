@@ -46,7 +46,10 @@ public class OxygenDisplay extends UIComponent{
         float scaling = (float) oxygenPercent / 100;
 
         if (oxygenPercent == 0) {
-            ServiceLocator.getGameArea().getPlayer().getEvents().trigger("loseScreen");
+            //ServiceLocator.getGameArea().getPlayer().getEvents().trigger("loseScreen");
+        }
+        if (oxygenOutline != null && oxygenFill != null && oxygenLabel != null) {
+            dispose();
         }
 
         table = new Table();

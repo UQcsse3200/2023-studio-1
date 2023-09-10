@@ -39,7 +39,6 @@ public class SettingsScreen extends ScreenAdapter {
     ServiceLocator.registerRenderService(new RenderService());
     ServiceLocator.registerTimeSource(new GameTime());
     ServiceLocator.registerTimeService(new TimeService());
-    ServiceLocator.registerPlanetOxygenService(new PlanetOxygenService());
     renderer = RenderFactory.createRenderer();
     renderer.getCamera().getEntity().setPosition(5f, 5f);
     loadAssets();

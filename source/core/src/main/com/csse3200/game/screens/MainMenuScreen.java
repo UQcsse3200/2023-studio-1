@@ -44,7 +44,6 @@ public class MainMenuScreen extends ScreenAdapter {
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
     ServiceLocator.registerTimeService(new TimeService());
-    ServiceLocator.registerPlanetOxygenService(new PlanetOxygenService());
     ServiceLocator.registerSaveLoadService(new SaveLoadService());
     renderer = RenderFactory.createRenderer();
     loadAssets();

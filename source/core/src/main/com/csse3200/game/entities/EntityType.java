@@ -7,12 +7,12 @@ package com.csse3200.game.entities;
 public enum EntityType {
     Player(0),
     Tractor(0),
-    Plant(1),
+    Plant(10),
     Tile(0),  // This is team 7 stuff
-    Cow(-2),
-    Chicken(-1),
-    Astrolotl(10),
-    OxygenEater(-4),
+    Cow(0),
+    Chicken(0),
+    Astrolotl(0),
+    OxygenEater(0),
     Item(0);
     
     // Negative rate for consumption, positive for production of oxygen
