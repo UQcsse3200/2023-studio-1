@@ -134,6 +134,8 @@ public class ServiceLocator {
     timeSource = null;
     inputService = null;
     resourceService = null;
+    gameArea = null;
+    saveLoadService = null;
   }
 
   private ServiceLocator() {

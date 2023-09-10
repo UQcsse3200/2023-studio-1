@@ -375,10 +375,8 @@ public class SpaceGameArea extends GameArea {
   }
 
   /**
-   * Does not set the camera to the Entity instead sets a camera variable inside of scripts
-   * to do that later
+   * Returns the tractor entity
    */
-  @Override
   public Entity getTractor() {
     return tractor;
   }
@@ -387,7 +385,6 @@ public class SpaceGameArea extends GameArea {
   /**
    * Returns the game map
    */
-  @Override
   public GameMap getMap() {
     return gameMap;
   }

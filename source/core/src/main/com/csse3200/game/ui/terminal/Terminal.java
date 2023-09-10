@@ -72,11 +72,13 @@ public class Terminal extends Component {
    */
   public void setOpen() {
     logger.debug("Opening terminal");
-    if (ServiceLocator.getGameArea().getPlayer() != null) {
-      ServiceLocator.getGameArea().getPlayer().getComponent(PlayerActions.class).stopMoving();
-    }
-    if (ServiceLocator.getGameArea().getTractor() != null) {
-      ServiceLocator.getGameArea().getTractor().getComponent(TractorActions.class).stopMoving();
+    if (ServiceLocator.getGameArea() != null) {
+      if (ServiceLocator.getGameArea().getPlayer() != null) {
+        ServiceLocator.getGameArea().getPlayer().getComponent(PlayerActions.class).stopMoving();
+      }
+      if (ServiceLocator.getGameArea().getTractor() != null) {
+        ServiceLocator.getGameArea().getTractor().getComponent(TractorActions.class).stopMoving();
+      }
     }
     isOpen = true;
   }
@@ -87,11 +89,13 @@ public class Terminal extends Component {
   public void setClosed() {
     logger.debug("Closing terminal");
     isOpen = false;
-    if (ServiceLocator.getGameArea().getPlayer() != null) {
-      ServiceLocator.getGameArea().getPlayer().getComponent(KeyboardPlayerInputComponent.class).setWalkDirection(Vector2.Zero);
-    }
-    if (ServiceLocator.getGameArea().getTractor() != null) {
-      ServiceLocator.getGameArea().getTractor().getComponent(KeyboardTractorInputComponent.class).setWalkDirection(Vector2.Zero);
+    if (ServiceLocator.getGameArea() != null) {
+      if (ServiceLocator.getGameArea().getPlayer() != null) {
+        ServiceLocator.getGameArea().getPlayer().getComponent(KeyboardPlayerInputComponent.class).setWalkDirection(Vector2.Zero);
+      }
+      if (ServiceLocator.getGameArea().getTractor() != null) {
+        ServiceLocator.getGameArea().getTractor().getComponent(KeyboardTractorInputComponent.class).setWalkDirection(Vector2.Zero);
+      }
     }
     setEnteredMessage("");
   }
