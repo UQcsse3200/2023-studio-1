@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.ui.UIComponent;
 
 import java.security.Provider;
@@ -15,10 +16,12 @@ import java.security.Provider;
  */
 public class GameTimeDisplay extends UIComponent {
 
-    Table table;
-    Group group;
+    Table table = new Table();
+    Group group = new Group();
     private Image clockImage;
+    private Array<Image> planetImages;
     private Image planetImage;
+    private Array<Label> timeLabels;
     private Label timeLabel;
 
     /**
@@ -31,24 +34,36 @@ public class GameTimeDisplay extends UIComponent {
         updateDisplay();
     }
 
-    public void updateDisplay() {
-        int time = ServiceLocator.getTimeService().getHour();
+    public void createTexture() {
         clockImage = new Image(ServiceLocator.getResourceService().getAsset(
-            "images/time_system_ui/clock_frame.png", Texture.class));
-        planetImage = new Image(ServiceLocator.getResourceService().getAsset(
-            String.format("images/time_system_ui/indicator_%d.png", time), Texture.class));
-
-        // Set the correct text for the time label, dependent on time.
-        if (time == 0) {
-            timeLabel = new Label("12 am", skin, "large");
-        } else if (time >= 1 && time < 12) {
-            timeLabel = new Label(String.format("%d am", time), skin, "large");
-        } else if (time == 12) {
-            timeLabel = new Label("12 pm", skin, "large");
-        } else {
-            timeLabel = new Label(String.format("%d pm", time - 12), skin, "large");
+                "images/time_system_ui/clock_frame.png", Texture.class));
+        planetImages = new Array<>();
+        for (int i = 0; i < 24; i++) {
+            planetImages.add(new Image(ServiceLocator.getResourceService().getAsset(
+                    String.format("images/time_system_ui/indicator_%d.png", i), Texture.class)));
         }
+        timeLabels = new Array<>();
+        for (int i = 0; i < 24; i++) {
+            if (i == 0) {
+                timeLabels.add(new Label("12 am", skin, "large"));
+            } else if (i >= 1 && i < 12) {
+                timeLabels.add(new Label(String.format("%d am", i), skin, "large"));
+            } else if (i == 12) {
+                timeLabels.add(new Label("12 pm", skin, "large"));
+            } else {
+                timeLabels.add(new Label(String.format("%d pm", i - 12), skin, "large"));
+            }
+        }
+    }
 
+    public void updateDisplay() {
+        if (planetImages == null) {
+            createTexture();
+        }
+        int time = ServiceLocator.getTimeService().getHour();
+        // Set the correct text for the time label & planet image, dependent on time.
+        timeLabel = timeLabels.get(time);
+        planetImage = planetImages.get(time);
         // Accounts for offset in the position of the text label to fit single digit and double-digit
         // times nicely.
         if (time == 0 || (10 <= time && time <= 12) || (22 <= time && time <= 23)) {
@@ -60,8 +75,8 @@ public class GameTimeDisplay extends UIComponent {
 
     @Override
     public void draw(SpriteBatch batch) {
-        table = new Table();
-        group = new Group();
+        table.clear();
+        group.clear();
         table.top().left();
         table.setFillParent(true);
         table.padTop(150f).padLeft(-100f);
