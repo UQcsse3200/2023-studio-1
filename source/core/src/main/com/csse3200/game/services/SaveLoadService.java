@@ -5,7 +5,6 @@ import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainCropTileFactory;
 import com.csse3200.game.areas.terrain.TerrainTile;
-import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.components.player.InventoryComponent;
@@ -73,7 +72,6 @@ public class SaveLoadService {
   public void load() {
     SaveGame.GameState state = SaveGame.get();
     if (state == null) {
-      // TODO: Dialogue box or something?
       logger.error("Couldn't read the file assets/saves/saveFile.json");
       return;
     }
@@ -226,6 +224,10 @@ public class SaveLoadService {
     }
   }
 
+  /**
+   * Updates the missions based off the gamestate
+   * @param state gamestate of the entire game based off safeFile.json
+   */
   private void updateMissions(GameState state) {
     MissionManager missions = ServiceLocator.getMissionManager();
     // TODO Mission saving

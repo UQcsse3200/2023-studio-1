@@ -30,16 +30,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Core entity class. Entities exist in the game and are updated each frame. All entities have a
- * position and scale, but have no default behaviour. Components should be added to an entity to
- * give it specific behaviour. This class should not be inherited or modified directly.
+ * Core entity class. Entities exist in the game and are updated each frame. All
+ * entities have a
+ * position and scale, but have no default behaviour. Components should be added
+ * to an entity to
+ * give it specific behaviour. This class should not be inherited or modified
+ * directly.
  *
- * <p>Example use:
+ * <p>
+ * Example use:
  *
  * <pre>
  * Entity player = new Entity()
- *   .addComponent(new RenderComponent())
- *   .addComponent(new PlayerControllerComponent());
+ *     .addComponent(new RenderComponent())
+ *     .addComponent(new PlayerControllerComponent());
  * ServiceLocator.getEntityService().register(player);
  * </pre>
  */
@@ -58,7 +62,7 @@ public class Entity implements Json.Serializable {
   private Vector2 scale = new Vector2(1, 1);
   private Array<Component> createdComponents;
 
-    public Entity() {
+  public Entity() {
     this.type = null;
     id = nextId;
     nextId++;
@@ -77,7 +81,8 @@ public class Entity implements Json.Serializable {
   }
 
   /**
-   * Enable or disable an entity. Disabled entities do not run update() or earlyUpdate() on their
+   * Enable or disable an entity. Disabled entities do not run update() or
+   * earlyUpdate() on their
    * components, but can still be disposed.
    *
    * @param enabled true for enable, false for disable.
@@ -122,7 +127,7 @@ public class Entity implements Json.Serializable {
    * Set the entity's game position and optionally notifies listeners.
    *
    * @param position new position.
-   * @param notify true to notify (default), false otherwise
+   * @param notify   true to notify (default), false otherwise
    */
   public void setPosition(Vector2 position, boolean notify) {
     this.position = position;
@@ -132,7 +137,8 @@ public class Entity implements Json.Serializable {
   }
 
   /**
-   * Get the entity's scale. Used for rendering and physics bounding box calculations.
+   * Get the entity's scale. Used for rendering and physics bounding box
+   * calculations.
    *
    * @return Scale in x and y directions. 1 = 1 metre.
    */
@@ -193,7 +199,7 @@ public class Entity implements Json.Serializable {
    * Get a component of type T on the entity.
    *
    * @param type The component class, e.g. RenderComponent.class
-   * @param <T> The component type, e.g. RenderComponent
+   * @param <T>  The component type, e.g. RenderComponent
    * @return The entity component, or null if nonexistent.
    */
   @SuppressWarnings("unchecked")
@@ -203,9 +209,11 @@ public class Entity implements Json.Serializable {
   }
 
   /**
-   * Add a component to the entity. Can only be called before the entity is registered in the world.
+   * Add a component to the entity. Can only be called before the entity is
+   * registered in the world.
    *
-   * @param component The component to add. Only one component of a type can be added to an entity.
+   * @param component The component to add. Only one component of a type can be
+   *                  added to an entity.
    * @return Itself
    */
   public Entity addComponent(Component component) {
@@ -229,7 +237,9 @@ public class Entity implements Json.Serializable {
     return this;
   }
 
-  /** Dispose of the entity. This will dispose of all components on this entity. */
+  /**
+   * Dispose of the entity. This will dispose of all components on this entity.
+   */
   public void dispose() {
     for (Component component : createdComponents) {
       component.dispose();
@@ -238,7 +248,8 @@ public class Entity implements Json.Serializable {
   }
 
   /**
-   * Create the entity and start running. This is called when the entity is registered in the world,
+   * Create the entity and start running. This is called when the entity is
+   * registered in the world,
    * and should not be called manually.
    */
   public void create() {
@@ -256,7 +267,8 @@ public class Entity implements Json.Serializable {
   }
 
   /**
-   * Perform an early update on all components. This is called by the entity service and should not
+   * Perform an early update on all components. This is called by the entity
+   * service and should not
    * be called manually.
    */
   public void earlyUpdate() {
@@ -269,7 +281,8 @@ public class Entity implements Json.Serializable {
   }
 
   /**
-   * Perform an update on all components. This is called by the entity service and should not be
+   * Perform an update on all components. This is called by the entity service and
+   * should not be
    * called manually.
    */
   public void update() {
@@ -291,7 +304,8 @@ public class Entity implements Json.Serializable {
   }
 
   /**
-   * Get the event handler attached to this entity. Can be used to trigger events from an attached
+   * Get the event handler attached to this entity. Can be used to trigger events
+   * from an attached
    * component, or listen to events from a component.
    *
    * @return entity's event handler
@@ -316,11 +330,13 @@ public class Entity implements Json.Serializable {
   }
 
   /**
-   * Writes to the json info about entities. 
-   * Writes the entities x,y coordinates 
-   * ALso loops through the entities associated components and writes information to the json about
-   * the component. 
+   * Writes to the json info about entities.
+   * Writes the entities x,y coordinates
+   * ALso loops through the entities associated components and writes information
+   * to the json about
+   * the component.
    * note each component should have a override write function
+   * 
    * @param json which is a valid Json that is written to
    */
   public void write(Json json) {
@@ -341,14 +357,26 @@ public class Entity implements Json.Serializable {
     json.writeObjectEnd();
   }
 
+  /**
+   * Writes the item to the json file
+   * @param json which is a valid Json that is written to
+   */
   public void writeItem(Json json) {
     json.writeValue("name", this.getComponent(ItemComponent.class).getItemName());
-    //update the tractor 'muted' variable based on the info in the json file on ItemType or something?
+    // update the tractor 'muted' variable based on the info in the json file on
+    // ItemType or something?
     if (this.getComponent(WateringCanLevelComponent.class) != null) {
       this.getComponent(WateringCanLevelComponent.class).write(json);
     }
   }
 
+  /**
+   * Reads the json file and creates the entities based on the information in the
+   * json file
+   * 
+   * @param json    which is a valid Json that is read from
+   * @param jsonMap which is a valid JsonValue that is read from
+   */
   public void read(Json json, JsonValue jsonMap) {
     // Saves the position
     position = new Vector2(jsonMap.getFloat("x"), jsonMap.getFloat("y"));
@@ -359,7 +387,6 @@ public class Entity implements Json.Serializable {
     } catch (IllegalArgumentException e) {
       type = null;
     }
-    System.out.println(type);
     switch (type) {
       case Tractor:
         jsonMap = jsonMap.get("components").get("TractorActions");
@@ -376,17 +403,21 @@ public class Entity implements Json.Serializable {
         if (plantData.get("Entity") != null) {
           // Has a plant
           plantData = plantData.get("components").get("PlantComponent");
-          c.setPlant(new Entity().addComponent(new PlantComponent(plantData.getInt("health"), plantData.getString("name"),
+          c.setPlant(
+              new Entity().addComponent(new PlantComponent(plantData.getInt("health"), plantData.getString("name"),
                   "bleh", "bleh", 1f, 999, 999, this.getComponent(CropTileComponent.class))));
           c.getPlant().getComponent(PlantComponent.class).setCurrentAge(plantData.getFloat("age"));
           c.getPlant().getComponent(PlantComponent.class).setGrowthStage(plantData.getInt("growth"));
         }
         this.addComponent(c);
         break;
-      case Cow: case Astrolotl: case Chicken:
+      case Cow:
+      case Astrolotl:
+      case Chicken:
         jsonMap = jsonMap.get("components").get("TamableComponent");
         // Does not need actual values here as it is just used to store the tamed value;
-        Entity emptyPlayer = new Entity();    //empty player, as the real player is not needed for reading in the component
+        Entity emptyPlayer = new Entity(); // empty player, as the real player is not needed for reading in the
+                                           // component
         TamableComponent tamableComponent = new TamableComponent(emptyPlayer, 1, 1, null);
         tamableComponent.setTame(jsonMap.getBoolean("Tamed"));
         this.addComponent(tamableComponent);
@@ -401,10 +432,11 @@ public class Entity implements Json.Serializable {
           Entity item = FactoryService.getItemFactories().get(jsonValue.getString("name")).get();
           ItemType itemType = item.getComponent(ItemComponent.class).getItemType();
           switch (itemType) {
-            case WATERING_CAN -> item.getComponent(WateringCanLevelComponent.class).setCurrentLevel(jsonValue.getFloat("level"));
+            case WATERING_CAN ->
+              item.getComponent(WateringCanLevelComponent.class).setCurrentLevel(jsonValue.getFloat("level"));
           }
           items.put(item, jsonValue.getInt("count"));
-          itemPositions.put(item,new Point(jsonValue.getInt("X"), jsonValue.getInt("Y")));
+          itemPositions.put(item, new Point(jsonValue.getInt("X"), jsonValue.getInt("Y")));
           inventory.add(item);
         });
         inventoryComponent.setInventory(items, itemPositions, inventory);
@@ -412,10 +444,14 @@ public class Entity implements Json.Serializable {
 
       default:
         // Nothing
-      }
     }
+  }
 
-
+  /**
+   * Gets the type of entity
+   * 
+   * @return the type of entity from EntityType enum
+   */
   public EntityType getType() {
     return type;
   }
