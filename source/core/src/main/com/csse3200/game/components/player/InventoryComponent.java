@@ -59,7 +59,7 @@ public class InventoryComponent extends Component {
   }
 
   /**
-   * Sets the player's inventory to a given List<></>.
+   * Sets the player's inventory to a given List.
    *
    * @param items items to be added to inventory
    */
