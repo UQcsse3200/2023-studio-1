@@ -5,16 +5,16 @@ import com.csse3200.game.entities.EntityType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PlanetOxygenController implements OxygenLevel{
+public class PlanetOxygenService implements OxygenLevel{
     
-    private static final Logger logger = LoggerFactory.getLogger(PlanetOxygenController.class);
+    private static final Logger logger = LoggerFactory.getLogger(PlanetOxygenService.class);
     private static final float DEFAULT_OXYGEN_GOAL = 10000;
     
     private float oxygenGoal;
     private float oxygenPresent;
     private float delta;
     
-    public PlanetOxygenController() {
+    public PlanetOxygenService() {
         oxygenGoal = DEFAULT_OXYGEN_GOAL;
         oxygenPresent = 0;
         delta = 0;
