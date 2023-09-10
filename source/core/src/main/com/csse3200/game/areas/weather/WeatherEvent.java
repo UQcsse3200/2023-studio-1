@@ -50,6 +50,8 @@ public abstract class WeatherEvent {
 			throw new IllegalArgumentException("Duration cannot be less than 0");
 		} else if (numHoursUntil < 0) {
 			throw new IllegalArgumentException("Number of hours until the event occurs cannot be less than 0");
+		} else if (severity < 1.0f || severity > 1.5f) {
+			throw new IllegalArgumentException("Severity must be between 1.0f and 1.5f");
 		}
 		this.numHoursUntil = numHoursUntil;
 		this.duration = duration;

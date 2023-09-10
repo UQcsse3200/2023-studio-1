@@ -174,4 +174,14 @@ public class WeatherEventTest {
             new WeatherEvent(-1, 5, 1, 1.2f) { };
         }, "Number of hours until the event occurs cannot be less than 0");
     }
+
+    @Test
+    public void testConstructorWithInvalidSeverity() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new WeatherEvent(2, 3, 1, 0.7f) { };
+        }, "Severity can't be less than 1.0f");
+        assertThrows(IllegalArgumentException.class, () -> {
+            new WeatherEvent(3, 5, 4, 1.7f) { };
+        }, "Severity can't be more than 1.5f");
+    }
 }
