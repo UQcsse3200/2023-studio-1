@@ -88,6 +88,7 @@ public class MainGameScreen extends ScreenAdapter {
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
     ServiceLocator.registerTimeService(new TimeService());
+    ServiceLocator.registerPlanetOxygenService(new PlanetOxygenService());
 
     ServiceLocator.registerMissionManager(new MissionManager());
 
