@@ -28,6 +28,7 @@ public class WanderTask extends DefaultTask implements PriorityTask {
   /** The currently active task (movement or waiting). */
   private Task currentTask;
 
+
   /**
    * @param wanderRange Distance in X and Y the entity can move from its position when start() is
    *     called.

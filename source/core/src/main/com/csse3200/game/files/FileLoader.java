@@ -3,6 +3,7 @@ package com.csse3200.game.files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,6 +85,7 @@ public class FileLoader {
     logger.debug("Reading class {} from {}", object.getClass().getSimpleName(), filename);
     FileHandle file = getFileHandle(filename, location);
     assert file != null;
+    json.setOutputType(JsonWriter.OutputType.json);
     file.writeString(json.prettyPrint(object), false);
   }
 

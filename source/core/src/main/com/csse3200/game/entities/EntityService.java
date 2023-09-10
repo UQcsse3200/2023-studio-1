@@ -54,4 +54,12 @@ public class EntityService {
       entity.dispose();
     }
   }
+
+  /**
+   * Returns Array of entities of all entities in game
+   * @return Array of entities in game
+   */
+  public Array<Entity> getEntities() {
+    return entities;
+  }
 }

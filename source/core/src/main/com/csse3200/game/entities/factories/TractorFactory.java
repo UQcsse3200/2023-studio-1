@@ -2,6 +2,7 @@ package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.components.tractor.TractorAnimationController;
@@ -40,8 +41,8 @@ public class TractorFactory {
     tractor.getComponent(AnimationRenderComponent.class).scaleEntity();
     tractor.getComponent(TractorActions.class).setPlayer(player);
     tractor.getComponent(KeyboardTractorInputComponent.class).setActions(tractor.getComponent(TractorActions.class));
-    tractor.scaleWidth(3f);
-    tractor.scaleHeight(3f);
+    tractor.getComponent(ColliderComponent.class).setAsBox(new Vector2(3.5f, 1.5f), new Vector2(3f, 0.75f));
+    tractor.getComponent(ColliderComponent.class).setDensity(999);    //prevents entities from pushing the tractor so easily
     return tractor;
   }
 
