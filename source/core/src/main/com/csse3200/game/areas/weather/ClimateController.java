@@ -8,16 +8,41 @@ import java.util.ArrayList;
 
 public class ClimateController {
 
+
+	/**
+	 * In-game humidity
+	 */
 	private float humidity;
+	/**
+	 * In-game temperature
+	 */
 	private float temperature;
 
+	/**
+	 * Minimum temperature possible in the game without the effects of weather events
+	 */
 	private static final float MIN_TEMPERATURE = 0f;
+	/**
+	 * Maximum temperature possible in the game without the effects of weather events
+	 */
 	private static final float MAX_TEMPERATURE = 40f;
 
+	/**
+	 * The weather event that is currently occurring in the game
+	 */
 	private static WeatherEvent currentWeatherEvent;
+	/**
+	 * List of all weather events that are either occurring or about to occur
+	 */
 	private static final ArrayList<WeatherEvent> weatherEvents = new ArrayList<>();
+	/**
+	 * Event handler that other entities can use to trigger weather-based events
+	 */
 	private final EventHandler events;
 
+	/**
+	 * Creates a new climate controller that listens to time events and maintains the in-game climate
+	 */
 	public ClimateController() {
 		events = new EventHandler();
 		ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::addDailyEvent);
