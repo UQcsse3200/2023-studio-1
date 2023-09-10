@@ -3,6 +3,7 @@ package com.csse3200.game.areas;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.entities.Entity;
@@ -28,6 +29,16 @@ class GameAreaTest {
              */
             @Override
             public Entity getPlayer() {
+                return null;
+            }
+
+            @Override
+            public Entity getTractor() {
+                return null;
+            }
+
+            @Override
+            public GameMap getMap() {
                 return null;
             }
         };
