@@ -6,6 +6,7 @@ import com.csse3200.game.missions.rewards.Reward;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -125,6 +126,11 @@ class MissionManagerTest {
             protected void resetState() {
             }
         };
+    }
+
+    @AfterAll
+    public static void end() {
+        ServiceLocator.clear();
     }
 
     @Test
