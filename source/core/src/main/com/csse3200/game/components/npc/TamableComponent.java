@@ -73,16 +73,16 @@ public class TamableComponent extends Component {
             return;
         }
 
+        //Ensures player is holding an item
         if (this.playerInventory.getHeldItem() == null) {
             return;
         }
-        //Ensures that the player's held item has the ItemComponent class.
+        //If true, ensures that the player's held item has the ItemComponent class.
         if (this.playerInventory.getHeldItem().getComponent(ItemComponent.class) == null) {
             return;
         }
         // If so, we can check if player is holding the right item
 
-        //potential of working with null values here. 
         if (this.playerInventory.getHeldItem().getComponent(ItemComponent.class).getItemName().equals(favouriteFood)) {
 
             // Generate RNG number for taming
