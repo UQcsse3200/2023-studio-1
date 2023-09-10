@@ -4,9 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
-import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.npc.AnimalAnimationController;
-import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.PassiveDropComponent;
 import com.csse3200.game.components.npc.TamableComponent;
@@ -17,8 +15,6 @@ import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.configs.BaseAnimalConfig;
-import com.csse3200.game.entities.configs.BaseEntityConfig;
-import com.csse3200.game.entities.configs.GhostKingConfig;
 import com.csse3200.game.entities.configs.NPCConfigs;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -75,7 +71,7 @@ public class NPCFactory {
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-            .addTask(new RunAwayTask(player, 10, 4f, 4f, new Vector2(3f, 3f)));
+            .addTask(new RunAwayTask(player, 10, 2.25f, 4.25f, new Vector2(3f, 3f)));
 
     chicken
             .addComponent(aiTaskComponent)
@@ -151,8 +147,8 @@ public class NPCFactory {
     animator.addAnimation("walk_right", 0.15f, Animation.PlayMode.LOOP);
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
-            .addTask(new WanderTask(new Vector2(2f, 2f), 3f))
-            .addTask(new FollowTask(player, 10, 10f, 10f, 3.5f));
+            .addTask(new WanderTask(new Vector2(1.5f, 1.5f), 5f))
+            .addTask(new FollowTask(player, 10, 8, 10, 3f));
 
     astrolotl
             .addComponent(aiTaskComponent)
