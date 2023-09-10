@@ -67,19 +67,44 @@ public class WeatherEventTest {
 
     @Test
     public void testIsExpired() {
+        // case: numHoursUntil == 0 and duration > 0
+        assertFalse(weatherEvent1.isExpired());
+        assertFalse(acidShowerEvent1.isExpired());
+        assertFalse(solarSurgeEvent1.isExpired());
+        // case: numHoursUntil > 0 and duration > 0
+        assertFalse(weatherEvent2.isExpired());
+        assertFalse(weatherEvent3.isExpired());
+        assertFalse(weatherEvent4.isExpired());
+        assertFalse(weatherEvent5.isExpired());
+        assertFalse(acidShowerEvent2.isExpired());
+        assertFalse(acidShowerEvent3.isExpired());
+        assertFalse(solarSurgeEvent2.isExpired());
+        assertFalse(solarSurgeEvent3.isExpired());
         for (int i = 0; i < 10; i++) {
             weatherEvent1.updateTime();
             weatherEvent2.updateTime();
             weatherEvent3.updateTime();
             weatherEvent4.updateTime();
             weatherEvent5.updateTime();
+            acidShowerEvent1.updateTime();
+            acidShowerEvent2.updateTime();
+            acidShowerEvent3.updateTime();
+            solarSurgeEvent1.updateTime();
+            solarSurgeEvent2.updateTime();
+            solarSurgeEvent3.updateTime();
         }
-        //Events should expire after their duration ends
+        // case: numHoursUntil == 0 and duration == 0
         assertTrue(weatherEvent1.isExpired());
         assertTrue(weatherEvent2.isExpired());
         assertTrue(weatherEvent3.isExpired());
         assertTrue(weatherEvent4.isExpired());
         assertTrue(weatherEvent5.isExpired());
+        assertTrue(acidShowerEvent1.isExpired());
+        assertTrue(acidShowerEvent2.isExpired());
+        assertTrue(acidShowerEvent3.isExpired());
+        assertTrue(solarSurgeEvent1.isExpired());
+        assertTrue(solarSurgeEvent2.isExpired());
+        assertTrue(solarSurgeEvent3.isExpired());
     }
 
     @Test
