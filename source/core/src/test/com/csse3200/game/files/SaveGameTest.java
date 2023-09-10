@@ -3,12 +3,12 @@ package com.csse3200.game.files;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+import com.badlogic.gdx.math.Vector2;
 
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.files.SaveGame.GameState;
-
 public class SaveGameTest {
 
   @Test
@@ -102,5 +102,25 @@ public class SaveGameTest {
     assertEquals(2,state.getEntities().size);
     assertEquals(plant,state.getEntities().get(0));
     assertEquals(chicken,state.getEntities().get(1));
+  }
+
+  @Test
+  public void getTractor() {
+    GameState gameState = new SaveGame.GameState();
+    Entity tractor = new Entity(EntityType.Tractor);
+    gameState.setTractor(tractor);
+    assertEquals(tractor, gameState.getTractor());
+    assertEquals(EntityType.Tractor, gameState.getTractor().getType());
+  }
+
+  @Test
+  public void setTractor() {
+    GameState gameState = new SaveGame.GameState();
+    Entity tractor = new Entity(EntityType.Tractor);
+    Vector2 position = new Vector2(1, 1);
+    tractor.setPosition(position);
+    gameState.setTractor(tractor);
+    assertEquals(tractor, gameState.getTractor());
+    assertEquals(position, gameState.getTractor().getPosition());
   }
 }
