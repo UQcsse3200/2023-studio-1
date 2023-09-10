@@ -26,5 +26,5 @@ public interface OxygenLevel {
      * Gets the oxygen present as a percentage of the upper limit (Float 0.0 - 100.0).
      * @return The oxygen present as a percentage of the upper limit.
      */
-    float getOxygenPercentage();
+    int getOxygenPercentage();
 }

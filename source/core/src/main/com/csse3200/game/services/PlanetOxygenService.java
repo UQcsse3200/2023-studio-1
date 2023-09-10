@@ -2,6 +2,7 @@ package com.csse3200.game.services;
 
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
+import com.csse3200.game.events.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +14,7 @@ public class PlanetOxygenService implements OxygenLevel{
     private float oxygenGoal;
     private float oxygenPresent;
     private float delta;
+    private final EventHandler eventHandler;
     
     public PlanetOxygenService() {
         oxygenGoal = DEFAULT_OXYGEN_GOAL;
@@ -20,6 +22,7 @@ public class PlanetOxygenService implements OxygenLevel{
         delta = 0;
         ServiceLocator.getTimeService().getEvents()
                 .addListener("hourUpdate", this::update);
+        eventHandler = new EventHandler();
     }
     
     @Override
@@ -38,9 +41,9 @@ public class PlanetOxygenService implements OxygenLevel{
     }
     
     @Override
-    public float getOxygenPercentage() {
+    public int getOxygenPercentage() throws IllegalArgumentException {
         if (oxygenGoal > 0) {
-            return oxygenPresent / oxygenGoal;
+            return (int) ((oxygenPresent / oxygenGoal) * 100);
         }
         // Error, should not occur
         return -1;
@@ -50,10 +53,20 @@ public class PlanetOxygenService implements OxygenLevel{
      * Set the maximum/goal amount of oxygen to be present on the planet
      * @param kilograms
      */
-    public void setOxygenGoal(int kilograms) {
-        if (kilograms > 0) {
+    public void setOxygenGoal(int kilograms) throws IllegalArgumentException {
+        if (kilograms <= 0) {
+            throw new IllegalArgumentException("Goal cannot be 0 or negative");
+        } else {
             oxygenGoal = kilograms;
         }
+    }
+    
+    /**
+     * Gets the PlanetOxygenService's event handler
+     * @return the event handler
+     */
+    public EventHandler getEvents() {
+        return eventHandler;
     }
     
     /**
@@ -66,8 +79,8 @@ public class PlanetOxygenService implements OxygenLevel{
         
         if (oxygenPresent + delta <= 0) {
             // No oxygen left - trigger lose screen.
-            // TODO update oxygen display and maybe wait 1 second before triggering loseScreen
             oxygenPresent = 0;
+            eventHandler.trigger("oxygenUpdate");
             ServiceLocator.getGameArea().getPlayer().getEvents().trigger("loseScreen");
         } else if (oxygenPresent + delta > oxygenGoal) {
             // Limit the present oxygen to not surpass the oxygen goal.
@@ -75,7 +88,7 @@ public class PlanetOxygenService implements OxygenLevel{
         } else {
             oxygenPresent += delta;
         }
-        // TODO update oxygen display
+        eventHandler.trigger("oxygenUpdate");
     }
     
     /**
