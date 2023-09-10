@@ -1,0 +1,12 @@
+questgiver.png
+size: 16, 40
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+default
+  rotate: false
+  xy: 0, 64
+  size: 16, 40
+  orig: 16, 40
+  offset: 0, 0
+  index: 0

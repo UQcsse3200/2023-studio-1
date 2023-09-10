@@ -26,8 +26,6 @@ public class QuestgiverFactory {
         .addComponent(animator);
 
     questgiver.getComponent(AnimationRenderComponent.class).scaleEntity();
-    questgiver.scaleWidth(1.8f);
-    questgiver.scaleHeight(1.8f);
     return questgiver;
   }
 
@@ -40,7 +38,6 @@ public class QuestgiverFactory {
     AnimationRenderComponent animator = new AnimationRenderComponent(
         ServiceLocator.getResourceService().getAsset("images/questgiver.atlas", TextureAtlas.class),
         16f);
-    animator.addAnimation("idle", 0.1f, Animation.PlayMode.LOOP);
 
     return animator;
   }

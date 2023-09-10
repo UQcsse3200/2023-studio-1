@@ -6,7 +6,6 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.intro.IntroDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.input.InputDecorator;
 import com.csse3200.game.input.InputService;
@@ -24,7 +23,7 @@ public class IntroScreen extends ScreenAdapter {
     /**
      * An array of paths to image textures needed for this screen
      */
-    private static final String[] introScreenAssets = {"images/intro_background.png", "images/intro_planet.png"};
+    private static final String[] introScreenAssets = { "images/intro_background.png", "images/intro_planet.png" };
     private final GdxGame game;
     private final Renderer renderer;
 
@@ -44,7 +43,6 @@ public class IntroScreen extends ScreenAdapter {
         loadAssets();
         createUI();
     }
-
 
     @Override
     public void render(float delta) {
@@ -78,7 +76,8 @@ public class IntroScreen extends ScreenAdapter {
     }
 
     /**
-     * Remove all the loaded image textures from the ResouceService, and thus game memory.
+     * Remove all the loaded image textures from the ResouceService, and thus game
+     * memory.
      */
     private void unloadAssets() {
         logger.debug("Unloading assets");
@@ -87,7 +86,8 @@ public class IntroScreen extends ScreenAdapter {
     }
 
     /**
-     * Creates the intro screen's ui including components for rendering ui elements to the screen
+     * Creates the intro screen's ui including components for rendering ui elements
+     * to the screen
      * and capturing and handling ui input.
      */
     private void createUI() {

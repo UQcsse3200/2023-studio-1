@@ -12,7 +12,6 @@ import com.csse3200.game.GdxGame.ScreenType;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
-import com.rafaskoberg.gdx.typinglabel.TypingAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.rafaskoberg.gdx.typinglabel.TypingLabel;

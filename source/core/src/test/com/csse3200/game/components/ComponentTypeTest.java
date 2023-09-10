@@ -1,12 +1,12 @@
 package com.csse3200.game.components;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-import com.csse3200.game.components.Component;
-import com.csse3200.game.components.ComponentType;
-import com.csse3200.game.extensions.GameExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
+import com.csse3200.game.extensions.GameExtension;
 
 @ExtendWith(GameExtension.class)
 class ComponentTypeTest {
@@ -14,13 +14,11 @@ class ComponentTypeTest {
   void shouldGiveSameIdForSameClass() {
     assertEquals(
         ComponentType.getFrom(Component.class).getId(),
-        ComponentType.getFrom(Component.class).getId()
-    );
+        ComponentType.getFrom(Component.class).getId());
 
     assertEquals(
         ComponentType.getFrom(TestComponent1.class).getId(),
-        ComponentType.getFrom(TestComponent1.class).getId()
-    );
+        ComponentType.getFrom(TestComponent1.class).getId());
   }
 
   @Test
@@ -33,6 +31,9 @@ class ComponentTypeTest {
     assertNotEquals(type2.getId(), type3.getId());
   }
 
-  static class TestComponent1 extends Component {}
-  static class TestComponent2 extends TestComponent1 {}
+  static class TestComponent1 extends Component {
+  }
+
+  static class TestComponent2 extends TestComponent1 {
+  }
 }

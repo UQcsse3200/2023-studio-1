@@ -1,14 +1,14 @@
 package com.csse3200.game.areas.terrain;
 
-import java.io.*;
-import java.nio.Buffer;
-import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -20,7 +20,6 @@ import com.badlogic.gdx.maps.tiled.renderers.HexagonalTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.areas.terrain.TerrainComponent.TerrainOrientation;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.services.ResourceService;
@@ -29,12 +28,12 @@ import com.csse3200.game.services.ServiceLocator;
 /** Factory for creating game terrains. */
 public class TerrainFactory {
   private static GridPoint2 MAP_SIZE = new GridPoint2(1000, 1000); // this will be updated later in the code
-  //protected for testing
+  // protected for testing
   protected static final String mapPath = "configs/Map.txt";
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;
   private Map<Character, TextureRegion> charToTextureMap = new HashMap<>();
-  //protected for testing
+  // protected for testing
   protected static final Map<Character, String> charToTileImageMap;
   static {
     Map<Character, String> tempMapA = new HashMap<>();
@@ -135,14 +134,17 @@ public class TerrainFactory {
   }
 
   /**
-   * Loads textures into the charToTextureMap based upon the images within the charToTileImageMap and resourceService
+   * Loads textures into the charToTextureMap based upon the images within the
+   * charToTileImageMap and resourceService
    */
-  public void loadTextures(){
+  public void loadTextures() {
     ResourceService resourceService = ServiceLocator.getResourceService();
-    for (Map.Entry<Character, String> entry: charToTileImageMap.entrySet()) {
-      charToTextureMap.put(entry.getKey(), new TextureRegion(resourceService.getAsset(entry.getValue(),Texture.class)));
-      }
+    for (Map.Entry<Character, String> entry : charToTileImageMap.entrySet()) {
+      charToTextureMap.put(entry.getKey(),
+          new TextureRegion(resourceService.getAsset(entry.getValue(), Texture.class)));
+    }
   }
+
   public GridPoint2 getMapSize() {
     return MAP_SIZE.cpy();
   }
@@ -160,7 +162,8 @@ public class TerrainFactory {
   }
 
   private TerrainComponent createGameTerrain(float tileWorldSize, TiledMap tiledMap) {
-    GridPoint2 tilePixelSize = new GridPoint2(charToTextureMap.get('g').getRegionWidth(), charToTextureMap.get('g').getRegionHeight());
+    GridPoint2 tilePixelSize = new GridPoint2(charToTextureMap.get('g').getRegionWidth(),
+        charToTextureMap.get('g').getRegionHeight());
     createGameTiles(tilePixelSize, tiledMap);
     TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
@@ -199,7 +202,7 @@ public class TerrainFactory {
       System.out.println("Can't read y -> Incorrect input file!");
     }
     // update MAP_SIZE using existing function
-    MAP_SIZE.add(- MAP_SIZE.x, - MAP_SIZE.y);
+    MAP_SIZE.add(-MAP_SIZE.x, -MAP_SIZE.y);
     MAP_SIZE.add(x_MapSize, y_MapSize);
   }
 
@@ -210,38 +213,38 @@ public class TerrainFactory {
    * @param tiledMap the TiledMap
    */
   private void createGameTiles(GridPoint2 tileSize, TiledMap tiledMap) {
-      try {
-          BufferedReader bf = new BufferedReader(new InputStreamReader(Gdx.files.internal(mapPath).read()));
-          String line1, line2, line;
-          line1 = bf.readLine();
-          line2 = bf.readLine();
-          updateMapSize(line1,line2);
-          TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
-          // y_pos = 100 and x_pos = 100 lets map generate correctly
-          int x_pos = 0, y_pos = 99;
-          // checking for end of file
-          for (line = bf.readLine(); line != null; x_pos++, line = bf.readLine(), y_pos--) {
-              for (x_pos = line.length() -1; x_pos >= 0; x_pos--) {
-                  // Cell cell = layer.getCell(x_pos, y_pos); // uncomment this if u want to
-                  // update instead of replace
-                  GridPoint2 point = new GridPoint2(x_pos, y_pos);
-                  //this line replaces the entire old cell creator function
-                  layer.setCell(point.x, point.y, new Cell().setTile(
-                          new TerrainTile(charToTextureMap.get(line.charAt(point.x)),
-                                  charToTileTypeMap.get(line.charAt(point.x)))));
-              }
-          }
-          // closing buffer reader object
-          bf.close();
-
-          tiledMap.getLayers().add(layer);
-      } catch (FileNotFoundException e) {
-          System.out.println("fillTilesWithFile -> File Not Found error!");
-      } catch (IOException e) {
-          System.out.println("fillTilesWithFile -> Readfile error!");
-      } catch (Exception e) {
-          System.out.println("fillTilesWithFile -> Testcase error!: " + e);
+    try {
+      BufferedReader bf = new BufferedReader(new InputStreamReader(Gdx.files.internal(mapPath).read()));
+      String line1, line2, line;
+      line1 = bf.readLine();
+      line2 = bf.readLine();
+      updateMapSize(line1, line2);
+      TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
+      // y_pos = 100 and x_pos = 100 lets map generate correctly
+      int x_pos = 0, y_pos = 99;
+      // checking for end of file
+      for (line = bf.readLine(); line != null; x_pos++, line = bf.readLine(), y_pos--) {
+        for (x_pos = line.length() - 1; x_pos >= 0; x_pos--) {
+          // Cell cell = layer.getCell(x_pos, y_pos); // uncomment this if u want to
+          // update instead of replace
+          GridPoint2 point = new GridPoint2(x_pos, y_pos);
+          // this line replaces the entire old cell creator function
+          layer.setCell(point.x, point.y, new Cell().setTile(
+              new TerrainTile(charToTextureMap.get(line.charAt(point.x)),
+                  charToTileTypeMap.get(line.charAt(point.x)))));
+        }
       }
+      // closing buffer reader object
+      bf.close();
+
+      tiledMap.getLayers().add(layer);
+    } catch (FileNotFoundException e) {
+      System.out.println("fillTilesWithFile -> File Not Found error!");
+    } catch (IOException e) {
+      System.out.println("fillTilesWithFile -> Readfile error!");
+    } catch (Exception e) {
+      System.out.println("fillTilesWithFile -> Testcase error!: " + e);
+    }
   }
 
   /**

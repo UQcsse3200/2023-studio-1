@@ -1,5 +1,8 @@
 package com.csse3200.game.screens;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -8,7 +11,6 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.settingsmenu.SettingsMenuDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.input.InputDecorator;
 import com.csse3200.game.input.InputService;
@@ -18,14 +20,12 @@ import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /** The game screen containing the settings. */
 public class SettingsScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(SettingsScreen.class);
   public static final int frameCount = 71;
-  private static final String[] mainMenuTextures = {"images/galaxy_home_still.png"};
+  private static final String[] mainMenuTextures = { "images/galaxy_home_still.png" };
   public static String[] transitionTextures = new String[frameCount];
   private static final String animationPrefix = "images/menu_animations/menu_animations";
   private Texture backgroundTexture;
@@ -67,6 +67,7 @@ public class SettingsScreen extends ScreenAdapter {
     ServiceLocator.getEntityService().dispose();
     ServiceLocator.clear();
   }
+
   private void loadAssets() {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
@@ -92,9 +93,9 @@ public class SettingsScreen extends ScreenAdapter {
     resourceService.unloadAssets(mainMenuTextures);
   }
 
-
   /**
-   * Creates the setting screen's ui including components for rendering ui elements to the screen
+   * Creates the setting screen's ui including components for rendering ui
+   * elements to the screen
    * and capturing and handling ui input.
    */
   private void createUI() {

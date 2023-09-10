@@ -1,6 +1,8 @@
 package com.csse3200.game.screens;
 
-import com.badlogic.gdx.Game;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,12 +16,8 @@ import com.csse3200.game.input.InputDecorator;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
-import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.services.TimeService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The game screen for the lose scenario
@@ -28,20 +26,19 @@ public class LoseScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(LoseScreen.class);
     private final GdxGame game;
     private final Renderer renderer;
-    private static final String[] loseScreenTextures = {"images/lose_temp.png"};
+    private static final String[] loseScreenTextures = { "images/lose_temp.png" };
     private Texture backgroundTexture;
     private SpriteBatch batch;
-
 
     public LoseScreen(GdxGame game) {
         this.game = game;
         logger.debug("Initialising lose screen services");
-        //ServiceLocator.registerTimeSource(new GameTime());
+        // ServiceLocator.registerTimeSource(new GameTime());
         ServiceLocator.registerInputService(new InputService());
         ServiceLocator.registerResourceService(new ResourceService());
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerRenderService(new RenderService());
-        //ServiceLocator.registerTimeService(new TimeService());
+        // ServiceLocator.registerTimeService(new TimeService());
 
         renderer = RenderFactory.createRenderer();
 
@@ -52,7 +49,7 @@ public class LoseScreen extends ScreenAdapter {
     @Override
     public void render(float delta) {
         ServiceLocator.getEntityService().update();
-        //ServiceLocator.getTimeService().update();
+        // ServiceLocator.getTimeService().update();
         renderer.render();
     }
 

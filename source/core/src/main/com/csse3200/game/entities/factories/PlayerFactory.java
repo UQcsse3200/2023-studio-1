@@ -1,16 +1,20 @@
 package com.csse3200.game.entities.factories;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.inventory.InventoryDisplay;
 import com.csse3200.game.components.inventory.ToolbarDisplay;
-import com.csse3200.game.components.player.*;
-import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.missioninformation.MissionDisplay;
+import com.csse3200.game.components.player.InteractionColliderComponent;
+import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.components.player.ItemPickupComponent;
+import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.player.PlayerAnimationController;
-import com.csse3200.game.components.inventory.InventoryDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.configs.PlayerConfig;
@@ -23,51 +27,46 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
-
-import java.util.ArrayList;
-
 /**
  * Factory to create a player entity.
  *
- * <p>Predefined player properties are loaded from a config stored as a json file and should have
+ * <p>
+ * Predefined player properties are loaded from a config stored as a json file
+ * and should have
  * the properties stores in 'PlayerConfig'.
  */
 public class PlayerFactory {
-  private static final PlayerConfig stats =
-      FileLoader.readClass(PlayerConfig.class, "configs/player.json");
+  private static final PlayerConfig stats = FileLoader.readClass(PlayerConfig.class, "configs/player.json");
 
   /**
    * Create a player entity.
+   * 
    * @return entity
    */
   public static Entity createPlayer() {
-    InputComponent inputComponent =
-        ServiceLocator.getInputService().getInputFactory().createForPlayer();
+    InputComponent inputComponent = ServiceLocator.getInputService().getInputFactory().createForPlayer();
 
-    AnimationRenderComponent animator =
-            new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/player.atlas", TextureAtlas.class),
-                    16f
-            );
+    AnimationRenderComponent animator = new AnimationRenderComponent(
+        ServiceLocator.getResourceService().getAsset("images/player.atlas", TextureAtlas.class),
+        16f);
 
     setupPlayerAnimator(animator);
 
-    Entity player =
-        new Entity(EntityType.Player)
-            .addComponent(new PhysicsComponent())
-            .addComponent(new ColliderComponent())
-            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
-            .addComponent(new PlayerActions())
-            .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack))
-            .addComponent(new InventoryComponent(new ArrayList<Entity>()))
-            .addComponent(inputComponent)
-            .addComponent(animator)
-            .addComponent(new PlayerAnimationController())
-            .addComponent(new ItemPickupComponent())
-            .addComponent(new InteractionColliderComponent(2f))
-            .addComponent(new InventoryDisplay())
-                .addComponent(new MissionDisplay())
-            .addComponent(new ToolbarDisplay());
+    Entity player = new Entity(EntityType.Player)
+        .addComponent(new PhysicsComponent())
+        .addComponent(new ColliderComponent())
+        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
+        .addComponent(new PlayerActions())
+        .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack))
+        .addComponent(new InventoryComponent(new ArrayList<Entity>()))
+        .addComponent(inputComponent)
+        .addComponent(animator)
+        .addComponent(new PlayerAnimationController())
+        .addComponent(new ItemPickupComponent())
+        .addComponent(new InteractionColliderComponent(2f))
+        .addComponent(new InventoryDisplay())
+        .addComponent(new MissionDisplay())
+        .addComponent(new ToolbarDisplay());
 
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
     player.getComponent(ColliderComponent.class).setAsBox(new Vector2(1f, 1f), new Vector2(1.5f, 1f));
@@ -106,22 +105,22 @@ public class PlayerFactory {
     animator.addAnimation("interact_right", 0.1f, Animation.PlayMode.NORMAL);
     animator.addAnimation("interact_left", 0.1f, Animation.PlayMode.NORMAL);
 
-    animator.addAnimation("hoe_up",0.1f,Animation.PlayMode.NORMAL);
-    animator.addAnimation("hoe_left",0.1f,Animation.PlayMode.NORMAL);
-    animator.addAnimation("hoe_right",0.1f,Animation.PlayMode.NORMAL);
-    animator.addAnimation("hoe_down",0.1f,Animation.PlayMode.NORMAL);
-    animator.addAnimation("shovel_up",0.1f,Animation.PlayMode.NORMAL);
-    animator.addAnimation("shovel_left",0.1f,Animation.PlayMode.NORMAL);
-    animator.addAnimation("shovel_right",0.1f,Animation.PlayMode.NORMAL);
-    animator.addAnimation("shovel_down",0.1f,Animation.PlayMode.NORMAL);
-    animator.addAnimation("watering_can_up",0.1f,Animation.PlayMode.NORMAL);
-    animator.addAnimation("watering_can_left",0.1f,Animation.PlayMode.NORMAL);
-    animator.addAnimation("watering_can_right",0.1f,Animation.PlayMode.NORMAL);
-    animator.addAnimation("watering_can_down",0.1f,Animation.PlayMode.NORMAL);
-    animator.addAnimation("scythe_up",0.1f,Animation.PlayMode.NORMAL);
-    animator.addAnimation("scythe_left",0.1f,Animation.PlayMode.NORMAL);
-    animator.addAnimation("scythe_right",0.1f,Animation.PlayMode.NORMAL);
-    animator.addAnimation("scythe_down",0.1f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("hoe_up", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("hoe_left", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("hoe_right", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("hoe_down", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("shovel_up", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("shovel_left", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("shovel_right", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("shovel_down", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("watering_can_up", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("watering_can_left", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("watering_can_right", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("watering_can_down", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("scythe_up", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("scythe_left", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("scythe_right", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("scythe_down", 0.1f, Animation.PlayMode.NORMAL);
   }
 
   private PlayerFactory() {

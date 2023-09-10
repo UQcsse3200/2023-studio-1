@@ -1,19 +1,21 @@
 package com.csse3200.game.entities;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.services.ServiceLocator;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(GameExtension.class)
 class EntityTest {
@@ -171,15 +173,17 @@ class EntityTest {
     verify(component, times(0)).update();
   }
 
-//  @Test
-//  void testThatShouldFail() {
-//    Entity entity = new Entity();
-//    Vector2 pos = new Vector2(5f, -5f);
-//    entity.setPosition(pos);
-//    assertEquals(Vector2.Zero, entity.getPosition());
-//  }
+  // @Test
+  // void testThatShouldFail() {
+  // Entity entity = new Entity();
+  // Vector2 pos = new Vector2(5f, -5f);
+  // entity.setPosition(pos);
+  // assertEquals(Vector2.Zero, entity.getPosition());
+  // }
 
-  static class TestComponent1 extends Component {}
+  static class TestComponent1 extends Component {
+  }
 
-  static class TestComponent2 extends Component {}
+  static class TestComponent2 extends Component {
+  }
 }

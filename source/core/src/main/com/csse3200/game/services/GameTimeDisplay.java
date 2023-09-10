@@ -8,8 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.csse3200.game.ui.UIComponent;
 
-import java.security.Provider;
-
 /**
  * A ui component for displaying the current game time on the Main Game Screen.
  */
@@ -40,9 +38,9 @@ public class GameTimeDisplay extends UIComponent {
         table.padTop(150f).padLeft(-100f);
 
         clockImage = new Image(ServiceLocator.getResourceService().getAsset(
-            "images/time_system_ui/clock_frame.png", Texture.class));
+                "images/time_system_ui/clock_frame.png", Texture.class));
         planetImage = new Image(ServiceLocator.getResourceService().getAsset(
-            String.format("images/time_system_ui/indicator_%d.png", time), Texture.class));
+                String.format("images/time_system_ui/indicator_%d.png", time), Texture.class));
 
         // Set the correct text for the time label, dependent on time.
         if (time == 0) {
@@ -55,7 +53,8 @@ public class GameTimeDisplay extends UIComponent {
             timeLabel = new Label(String.format("%d pm", time - 12), skin, "large");
         }
 
-        // Accounts for offset in the position of the text label to fit single digit and double-digit
+        // Accounts for offset in the position of the text label to fit single digit and
+        // double-digit
         // times nicely.
         if (time == 0 || (10 <= time && time <= 12) || (22 <= time && time <= 23)) {
             timeLabel.setPosition(clockImage.getImageX() + 158f, clockImage.getImageY() + 139f);
@@ -76,7 +75,6 @@ public class GameTimeDisplay extends UIComponent {
         // Does nothing since draw
         return;
     }
-
 
     @Override
     public void dispose() {
