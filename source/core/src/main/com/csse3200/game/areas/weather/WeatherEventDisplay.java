@@ -31,8 +31,7 @@ public class WeatherEventDisplay extends UIComponent {
 	 * Updates the displayed image based on the current weather event.
 	 */
 	public void updateDisplay() {
-		//WeatherEvent currentEvent = ServiceLocator.getGameArea().getClimateController().getCurrentWeatherEvent();
-		WeatherEvent currentEvent = new AcidShowerEvent(0,3,1,1.2f);
+		WeatherEvent currentEvent = ServiceLocator.getGameArea().getClimateController().getCurrentWeatherEvent();
 
 		clockImage = new Image(ServiceLocator.getResourceService().getAsset(
 				"images/weather_event/weather-border.png", Texture.class));
