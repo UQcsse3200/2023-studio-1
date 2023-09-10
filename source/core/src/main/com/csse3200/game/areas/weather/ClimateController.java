@@ -30,7 +30,7 @@ public class ClimateController {
 	/**
 	 * The weather event that is currently occurring in the game
 	 */
-	private static WeatherEvent currentWeatherEvent;
+	private WeatherEvent currentWeatherEvent;
 	/**
 	 * List of all weather events that are either occurring or about to occur
 	 */
@@ -158,13 +158,16 @@ public class ClimateController {
 	 *
 	 * @param time        in-game time value
 	 * @param offset      function offset
-	 * @param octaves     number of noise functions used in the calculation
+	 * @param octaves     number of noise functions used in the calculation (must be greater than 0)
 	 * @param persistence how much each octave/function contributes to the noise generated
 	 * @param lacunarity  how much each octave increases in frequency
 	 * @return generated noise value used in calculating climate values
 	 */
 	private float generateClimate(
 			float time, float offset, int octaves, float persistence, float lacunarity) {
+		if (octaves <= 0) {
+			throw new IllegalArgumentException("Number of noise functions must be greater than 0");
+		}
 		float maxAmplitude = 0f;
 		float amplitude = 1.0f;
 		float frequency = 1.0f;
@@ -178,6 +181,12 @@ public class ClimateController {
 			amplitude *= persistence;
 			frequency *= lacunarity;
 		}
+
+		// To avoid divide by zero
+		if (maxAmplitude == 0) {
+			return 0.5f;
+		}
+
 
 		return temperatureNormalised / maxAmplitude;
 	}

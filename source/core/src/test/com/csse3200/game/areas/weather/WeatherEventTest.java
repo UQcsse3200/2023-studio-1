@@ -14,7 +14,7 @@ public class WeatherEventTest {
 
     @BeforeEach
     public void setUp() {
-        weatherEvent1 = new WeatherEvent(0, 9, 1, 1.2f) { };
+        weatherEvent1 = new WeatherEvent(0, 10, 1, 1.2f) { };
         weatherEvent2 = new WeatherEvent(1, 2, 2, 1.4f) { };
         weatherEvent3 = new WeatherEvent(2, 4, 5, 1.0f) { };
         weatherEvent4 = new WeatherEvent(3, 3, 3, 1.3f) { };
@@ -80,6 +80,16 @@ public class WeatherEventTest {
         assertTrue(weatherEvent3.isExpired());
         assertTrue(weatherEvent4.isExpired());
         assertTrue(weatherEvent5.isExpired());
+    }
+
+    @Test
+    public void testIsActiveButNotIsExpired() {
+        assertFalse(weatherEvent1.isExpired());
+        assertTrue(weatherEvent1.isActive());
+        assertFalse(acidShowerEvent1.isExpired());
+        assertTrue(acidShowerEvent1.isActive());
+        assertFalse(solarSurgeEvent1.isExpired());
+        assertTrue(solarSurgeEvent1.isActive());
     }
 
     @Test
