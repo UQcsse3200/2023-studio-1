@@ -82,9 +82,7 @@ public class ClimateController {
 		if (!event.isActive()) {
 			return;
 		}
-		if (currentWeatherEvent == null) {
-			currentWeatherEvent = event;
-		} else if (event.getPriority() > currentWeatherEvent.getPriority()) {
+		if (currentWeatherEvent == null || event.getPriority() > currentWeatherEvent.getPriority()) {
 			currentWeatherEvent = event;
 		}
 	}
