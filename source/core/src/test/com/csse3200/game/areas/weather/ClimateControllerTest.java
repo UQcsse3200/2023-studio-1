@@ -7,6 +7,7 @@ import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,6 +33,11 @@ class ClimateControllerTest {
 		EventHandler handler = new EventHandler();
 		when(timeService.getEvents()).thenReturn(handler);
 		controller = new ClimateController();
+	}
+
+	@AfterEach
+	public void clear() {
+		ServiceLocator.clear();
 	}
 
 	@Test

@@ -169,12 +169,6 @@ public class WeatherEventTest {
 
     @Test
     public void testConstructorWithInvalidSeverity() {
-        assertThrows(IllegalArgumentException.class, () -> new WeatherEvent(2, 3, 1, 0.7f) { }, "Severity can't be less than 1.0f");
-        assertThrows(IllegalArgumentException.class, () -> new WeatherEvent(3, 5, 4, 1.7f) { }, "Severity can't be more than 1.5f");
-        assertThrows(IllegalArgumentException.class, () -> new AcidShowerEvent(3, 5, 4, 0.4f) { }, "Severity can't be less than 1.0f");
-
-        assertThrows(IllegalArgumentException.class, () -> new AcidShowerEvent(3, 5, 4, 1.7f) { }, "Severity can't be more than 1.5f");
-        assertThrows(IllegalArgumentException.class, () -> new SolarSurgeEvent(1, 2, 4, 0.4f) { }, "Severity can't be less than 1.0f");
-        assertThrows(IllegalArgumentException.class, () -> new SolarSurgeEvent(1, 2, 4, 1.6f) { }, "Severity can't be more than 1.6f");
+        assertThrows(IllegalArgumentException.class, () -> new WeatherEvent(2, 3, 1, -1f) { }, "Severity must be greater than 0.");
     }
 }

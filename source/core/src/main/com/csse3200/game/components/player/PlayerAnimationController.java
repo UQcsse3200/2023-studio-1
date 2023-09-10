@@ -28,14 +28,20 @@ public class PlayerAnimationController extends Component {
         animator.startAnimation("default");
     }
 
-    void use(Vector2 playerPos, Vector2 mousePos, Entity itemInHand) {
+    void use(Vector2 mousePos, Entity itemInHand) {
+        Vector2 playerPos = entity.getPosition();
         if (itemInHand != null) {
             if (itemInHand.getComponent(ItemComponent.class) != null) {
+                String direction = getDirection(playerPos, mousePos);
 
                 String animation = String.format("%s_%s", itemInHand.getComponent(ItemComponent.class).getItemName().toLowerCase(),
-                        getDirection(playerPos, mousePos));
+                        direction);
                 if (!animator.getCurrentAnimation().equals(animation)) {
-                    animator.startAnimation(animation);
+                    if (animator.hasAnimation(animation)) {
+                        animator.startAnimation(animation);
+                    } else {
+                        entity.getEvents().trigger("animationInteract", direction);
+                    }
                 }
             }
         }

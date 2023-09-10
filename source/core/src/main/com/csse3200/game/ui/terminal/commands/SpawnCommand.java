@@ -20,7 +20,7 @@ public class SpawnCommand implements Command {
 	 */
 	@Override
 	public boolean action(ArrayList<String> args) {
-		if (!correctNumArgs(args)) {
+		if (!isValid(args)) {
 			logger.debug("Incorrect number of arguments provided");
 			return false;
 		}
@@ -53,7 +53,7 @@ public class SpawnCommand implements Command {
 		return true;
 	}
 
-	boolean correctNumArgs(ArrayList<String> args) {
+	boolean isValid(ArrayList<String> args) {
 		return args.size() == 1 || args.size() == 3;
 	}
 }

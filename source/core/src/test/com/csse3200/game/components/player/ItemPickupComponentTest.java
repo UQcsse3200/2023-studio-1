@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.entities.Entity;
@@ -46,6 +47,16 @@ public class ItemPickupComponentTest {
         }
         @Override
         public ClimateController getClimateController() {
+            return null;
+        }
+
+        @Override
+        public Entity getTractor() {
+            return null;
+        }
+
+        @Override
+        public GameMap getMap() {
             return null;
         }
     }

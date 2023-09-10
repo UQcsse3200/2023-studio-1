@@ -5,9 +5,21 @@ package com.csse3200.game.areas.weather;
  * entities.
  */
 public class AcidShowerEvent extends WeatherEvent {
+    /**
+     * Minimum modifier that is used when calculating the effect of the weather event on humidity
+     */
     protected static final float MIN_HUMIDITY_MODIFIER = 0.05f;
+    /**
+     * Maximum modifier that is used when calculating the effect of the weather event on humidity
+     */
     protected static final float MAX_HUMIDITY_MODIFIER = 0.2f;
+    /**
+     * Minimum modifier that is used when calculating the effect of the weather event on temperature
+     */
     protected static final float MIN_TEMPERATURE_MODIFIER = -5f;
+    /**
+     * Maximum modifier that is used when calculating the effect of the weather event on temperature
+     */
     protected static final float MAX_TEMPERATURE_MODIFIER = -10f;
 
     /**
