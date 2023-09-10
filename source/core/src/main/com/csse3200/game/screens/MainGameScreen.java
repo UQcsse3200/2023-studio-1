@@ -65,7 +65,6 @@ public class MainGameScreen extends ScreenAdapter {
           "images/time_system_ui/indicator_22.png",
           "images/time_system_ui/indicator_23.png",
           "images/weather_event/weather-border.png",
-          "images/weather_event/raindrop.png",
           "images/weather_event/acid-rain.png",
           "images/weather_event/solar-flare.png"
   };
