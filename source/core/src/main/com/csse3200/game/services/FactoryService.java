@@ -39,7 +39,8 @@ public class FactoryService {
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("hammer plant seed", ItemFactory::createHammerPlantSeed),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("horticultural heater seed", ItemFactory::createHorticulturalHeaterSeed),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("space snapper seed", ItemFactory::createSpaceSnapperSeed),
-            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("tobacco seed", ItemFactory::createTobaccoSeed));
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("tobacco seed", ItemFactory::createTobaccoSeed),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("COW FOOD", ItemFactory::createCowFood));
 
     public static Map<String, Function<CropTileComponent, Entity>> getPlantFactories() {
         return plantFactories;

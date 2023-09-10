@@ -359,7 +359,7 @@ public class Entity implements Json.Serializable {
     } catch (IllegalArgumentException e) {
       type = null;
     }
-
+    System.out.println(type);
     switch (type) {
       case Tractor:
         jsonMap = jsonMap.get("components").get("TractorActions");
