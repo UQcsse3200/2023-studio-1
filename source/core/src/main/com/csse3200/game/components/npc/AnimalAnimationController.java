@@ -4,10 +4,9 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.utils.DirectionUtils;
 
-import javax.swing.event.TableModelEvent;
-
 /**
- * This class listens to events relevant to a chicken entity's state and plays the animation when one
+ * This class listens to events relevant to a chicken entity's state and plays
+ * the animation when one
  * of the events is triggered.
  */
 public class AnimalAnimationController extends Component {
@@ -40,7 +39,8 @@ public class AnimalAnimationController extends Component {
     }
 
     /**
-     * Create component by retrieving animator, setting start direction and animation, and adding
+     * Create component by retrieving animator, setting start direction and
+     * animation, and adding
      * event listeners.
      */
     @Override
@@ -84,14 +84,14 @@ public class AnimalAnimationController extends Component {
     }
 
     /**
-     * Set new direction of animal and retrigger current animation with new direction
+     * Set new direction of animal and retrigger current animation with new
+     * direction
+     * 
      * @param direction new direction
      */
-    void changeDirection(String direction){
+    void changeDirection(String direction) {
         this.direction = direction;
         entity.getEvents().trigger(currentAnimation + "Start");
     }
-
-
 
 }

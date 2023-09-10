@@ -1,13 +1,9 @@
 package com.csse3200.game.services;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.utils.Array;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.events.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.csse3200.game.areas.SpaceGameArea;
-import com.csse3200.game.services.ServiceLocator;
+
+import com.csse3200.game.events.EventHandler;
 
 public class TimeService {
 	private static final Logger logger = LoggerFactory.getLogger(TimeService.class);
@@ -19,7 +15,6 @@ public class TimeService {
 	private long lastGameTime;
 	private boolean paused;
 	private final EventHandler events;
-
 
 	/**
 	 * Constructs a basic TimeService instance to track the in-game time
@@ -35,6 +30,7 @@ public class TimeService {
 
 	/**
 	 * Returns whether the game is paused or not
+	 * 
 	 * @return boolean value representing whether the game is paused or not
 	 */
 	public boolean isPaused() {
@@ -43,6 +39,7 @@ public class TimeService {
 
 	/**
 	 * Changes the pause state of the game
+	 * 
 	 * @param state boolean value for whether the game is paused or not
 	 */
 	public void setPaused(boolean state) {
@@ -52,6 +49,7 @@ public class TimeService {
 
 	/**
 	 * Gets the current in-game hour
+	 * 
 	 * @return in-game hour
 	 */
 	public int getHour() {
@@ -60,6 +58,7 @@ public class TimeService {
 
 	/**
 	 * Gets the current in-game day
+	 * 
 	 * @return in-game day
 	 */
 	public int getDay() {
@@ -68,6 +67,7 @@ public class TimeService {
 
 	/**
 	 * Gets the current in-game minute
+	 * 
 	 * @return in-game minute
 	 */
 	public int getMinute() {
@@ -75,7 +75,9 @@ public class TimeService {
 	}
 
 	/**
-	 * Sets the in-game hour to a certain value. Also updates the time buffer and triggers any necessary events
+	 * Sets the in-game hour to a certain value. Also updates the time buffer and
+	 * triggers any necessary events
+	 * 
 	 * @param hour in-game hour
 	 */
 	public void setHour(int hour) {
@@ -85,17 +87,21 @@ public class TimeService {
 	}
 
 	/**
-	 * Sets the in-game day to a certain value. Also updates the time buffer and triggers any necessary events
+	 * Sets the in-game day to a certain value. Also updates the time buffer and
+	 * triggers any necessary events
+	 * 
 	 * @param day in-game day
 	 */
 	public void setDay(int day) {
 		this.day = day;
-		this.timeBuffer= 0;
+		this.timeBuffer = 0;
 		events.trigger("dayUpdate");
 	}
 
 	/**
-	 * Sets the in-game minute to a certain value. Also updates the time buffer and triggers any necessary events
+	 * Sets the in-game minute to a certain value. Also updates the time buffer and
+	 * triggers any necessary events
+	 * 
 	 * @param minute in-game minute
 	 */
 	public void setMinute(int minute) {
@@ -106,6 +112,7 @@ public class TimeService {
 
 	/**
 	 * Gets the event handler for the TimeService
+	 * 
 	 * @return event handler
 	 */
 	public EventHandler getEvents() {
@@ -113,8 +120,10 @@ public class TimeService {
 	}
 
 	/**
-	 * Tracks the in-game time stored in the time service. This method is called in the main game loop. It calculates
-	 * the time that has passed since it last checked the time and calculates whether in-game time has elapsed.
+	 * Tracks the in-game time stored in the time service. This method is called in
+	 * the main game loop. It calculates
+	 * the time that has passed since it last checked the time and calculates
+	 * whether in-game time has elapsed.
 	 */
 	public void update() {
 		// this time will be in ms
@@ -147,7 +156,8 @@ public class TimeService {
 		}
 		hour -= 24;
 		day += 1;
-		// This event has to be triggered after the hour is checked the hour isn't 24 when the event is sent
+		// This event has to be triggered after the hour is checked the hour isn't 24
+		// when the event is sent
 		events.trigger("hourUpdate");
 		events.trigger("dayUpdate");
 

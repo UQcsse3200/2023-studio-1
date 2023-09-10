@@ -1,9 +1,14 @@
 package com.csse3200.game.components.player;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.entities.Entity;
@@ -11,10 +16,9 @@ import com.csse3200.game.physics.BodyUserData;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.utils.DirectionUtils;
 
-import java.util.*;
-
 /**
- * Represents a component that handles interaction detection with entities within a specified range.
+ * Represents a component that handles interaction detection with entities
+ * within a specified range.
  */
 public class InteractionColliderComponent extends HitboxComponent {
     /** List of entities currently in the interaction range. */
@@ -23,7 +27,8 @@ public class InteractionColliderComponent extends HitboxComponent {
     private float range;
 
     /**
-     * Constructs an InteractionColliderComponent with the specified interaction range.
+     * Constructs an InteractionColliderComponent with the specified interaction
+     * range.
      *
      * @param range The interaction range within which entities are detected.
      */
@@ -31,9 +36,9 @@ public class InteractionColliderComponent extends HitboxComponent {
         this.range = range;
     }
 
-
     /**
-     * When entity is created, sets up circular collider with radius as range used for detecting entities.
+     * When entity is created, sets up circular collider with radius as range used
+     * for detecting entities.
      * Also attaches collision event listeners.
      */
     @Override
@@ -54,14 +59,14 @@ public class InteractionColliderComponent extends HitboxComponent {
      * @param range The new interaction range to set.
      */
     public void updateRange(float range) {
-        this.range = range; //TODO: THIS DOES NOTHING. NEED TO CREATE NEW FIXTURE OR SOMETHING
+        this.range = range; // TODO: THIS DOES NOTHING. NEED TO CREATE NEW FIXTURE OR SOMETHING
     }
 
     /**
      * Adds entity to entitiesInRange on collision start.
      *
-     * @param me     The fixture of this component.
-     * @param other  The fixture of the colliding entity.
+     * @param me    The fixture of this component.
+     * @param other The fixture of the colliding entity.
      */
     private void onCollisionStart(Fixture me, Fixture other) {
         if (getFixture() != me) {
@@ -75,8 +80,8 @@ public class InteractionColliderComponent extends HitboxComponent {
     /**
      * Removes entity from entitiesInRange on collision end.
      *
-     * @param me     The fixture of this component.
-     * @param other  The fixture of the colliding entity.
+     * @param me    The fixture of this component.
+     * @param other The fixture of the colliding entity.
      */
     private void onCollisionEnd(Fixture me, Fixture other) {
         if (getFixture() != me) {
@@ -97,10 +102,13 @@ public class InteractionColliderComponent extends HitboxComponent {
     }
 
     /**
-     * Gets the list of entities currently in the interaction range in the specified direction.
+     * Gets the list of entities currently in the interaction range in the specified
+     * direction.
      *
-     * @param direction The direction in which to filter entities (e.g., "UP", "DOWN", "LEFT", "RIGHT").
-     * @return A list of entities within the interaction range in the specified direction.
+     * @param direction The direction in which to filter entities (e.g., "UP",
+     *                  "DOWN", "LEFT", "RIGHT").
+     * @return A list of entities within the interaction range in the specified
+     *         direction.
      */
     public List<Entity> getEntitiesTowardsDirection(String direction) {
         List<Entity> entities = getEntitiesInRange();
@@ -143,7 +151,7 @@ public class InteractionColliderComponent extends HitboxComponent {
     }
 
     public Entity getSuitableEntity(List<Entity> entities, ItemType itemType) {
-        switch (itemType){
+        switch (itemType) {
             case FOOD -> {
                 entities.removeIf(entity -> entity.getComponent(TamableComponent.class) == null);
                 entities.removeIf(entity -> entity.getComponent(TamableComponent.class).isTamed());

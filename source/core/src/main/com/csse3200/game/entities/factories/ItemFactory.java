@@ -8,7 +8,6 @@ import com.csse3200.game.components.items.WateringCanLevelComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.PhysicsLayer;
-import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
@@ -83,9 +82,9 @@ public class ItemFactory {
    */
   public static Entity createMilk() {
     Entity milk = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/milk.png"))
-            .addComponent(new ItemComponent("milk",
-                    ItemType.MILK, new Texture("images/milk.png")));
+        .addComponent(new TextureRenderComponent("images/milk.png"))
+        .addComponent(new ItemComponent("milk",
+            ItemType.MILK, new Texture("images/milk.png")));
     milk.scaleHeight(0.75f);
     return milk;
   }
@@ -97,23 +96,23 @@ public class ItemFactory {
    */
   public static Entity createEgg() {
     Entity egg = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/egg.png"))
-            .addComponent(new ItemComponent("egg", ItemType.EGG,
-                    new Texture("images/egg.png")));
+        .addComponent(new TextureRenderComponent("images/egg.png"))
+        .addComponent(new ItemComponent("egg", ItemType.EGG,
+            new Texture("images/egg.png")));
     egg.scaleHeight(0.75f);
     return egg;
   }
 
-   /**
+  /**
    * Creates a fertiliser item
    *
    * @return fertiliser
    */
   public static Entity createFertiliser() {
     Entity fertiliser = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/fertiliser.png"))
-            .addComponent(new ItemComponent("fertiliser", ItemType.FERTILISER,
-                    new Texture("images/fertiliser.png")));
+        .addComponent(new TextureRenderComponent("images/fertiliser.png"))
+        .addComponent(new ItemComponent("fertiliser", ItemType.FERTILISER,
+            new Texture("images/fertiliser.png")));
     return fertiliser;
   }
 
@@ -124,9 +123,9 @@ public class ItemFactory {
    */
   public static Entity createAloeVeraSeed() {
     Entity seed = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/aloe_vera_seed.png"))
-            .addComponent(new ItemComponent("aloe vera seed", ItemType.SEED,
-                    "Seed of Aloe Vera", new Texture("images/plants/aloe_vera_seed.png")));
+        .addComponent(new TextureRenderComponent("images/plants/aloe_vera_seed.png"))
+        .addComponent(new ItemComponent("aloe vera seed", ItemType.SEED,
+            "Seed of Aloe Vera", new Texture("images/plants/aloe_vera_seed.png")));
     return seed;
   }
 
@@ -137,9 +136,9 @@ public class ItemFactory {
    */
   public static Entity createAtomicAlgaeSeed() {
     Entity seed = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/atomic_algae_seed.png"))
-            .addComponent(new ItemComponent("atomic algae seed", ItemType.SEED,
-                    "Seed of Atomic Algae", new Texture("images/plants/atomic_algae_seed.png")));
+        .addComponent(new TextureRenderComponent("images/plants/atomic_algae_seed.png"))
+        .addComponent(new ItemComponent("atomic algae seed", ItemType.SEED,
+            "Seed of Atomic Algae", new Texture("images/plants/atomic_algae_seed.png")));
     return seed;
   }
 
@@ -150,9 +149,9 @@ public class ItemFactory {
    */
   public static Entity createCosmicCobSeed() {
     Entity seed = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/cosmic_cob_seed.png"))
-            .addComponent(new ItemComponent("cosmic cob seed", ItemType.SEED,
-                    "Seed of Cosmic Cob", new Texture("images/plants/cosmic_cob_seed.png")));
+        .addComponent(new TextureRenderComponent("images/plants/cosmic_cob_seed.png"))
+        .addComponent(new ItemComponent("cosmic cob seed", ItemType.SEED,
+            "Seed of Cosmic Cob", new Texture("images/plants/cosmic_cob_seed.png")));
     return seed;
   }
 
@@ -163,9 +162,9 @@ public class ItemFactory {
    */
   public static Entity createDeadlyNightshadeSeed() {
     Entity seed = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/deadly_nightshade_seed.png"))
-            .addComponent(new ItemComponent("deadly nightshade seed", ItemType.SEED,
-                    "Seed of Deadly Nightshade", new Texture("images/plants/deadly_nightshade_seed.png")));
+        .addComponent(new TextureRenderComponent("images/plants/deadly_nightshade_seed.png"))
+        .addComponent(new ItemComponent("deadly nightshade seed", ItemType.SEED,
+            "Seed of Deadly Nightshade", new Texture("images/plants/deadly_nightshade_seed.png")));
     return seed;
   }
 
@@ -176,9 +175,9 @@ public class ItemFactory {
    */
   public static Entity createHammerPlantSeed() {
     Entity seed = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/hammer_plant_seed.png"))
-            .addComponent(new ItemComponent("hammer plant seed", ItemType.SEED,
-                    "Seed of Hammer Plant", new Texture("images/plants/hammer_plant_seed.png")));
+        .addComponent(new TextureRenderComponent("images/plants/hammer_plant_seed.png"))
+        .addComponent(new ItemComponent("hammer plant seed", ItemType.SEED,
+            "Seed of Hammer Plant", new Texture("images/plants/hammer_plant_seed.png")));
     return seed;
   }
 
@@ -189,10 +188,10 @@ public class ItemFactory {
    */
   public static Entity createHorticulturalHeaterSeed() {
     Entity seed = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/horticultural_heater_seed.png"))
-            .addComponent(new ItemComponent("horticultural heater seed", ItemType.SEED,
-                    "Seed of Horticultural Heater",
-                    new Texture("images/plants/horticultural_heater_seed.png")));
+        .addComponent(new TextureRenderComponent("images/plants/horticultural_heater_seed.png"))
+        .addComponent(new ItemComponent("horticultural heater seed", ItemType.SEED,
+            "Seed of Horticultural Heater",
+            new Texture("images/plants/horticultural_heater_seed.png")));
     return seed;
   }
 
@@ -203,9 +202,9 @@ public class ItemFactory {
    */
   public static Entity createSpaceSnapperSeed() {
     Entity seed = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/space_snapper_seed.png"))
-            .addComponent(new ItemComponent("space snapper seed", ItemType.SEED,
-                    "Seed of Space Snapper", new Texture("images/plants/space_snapper_seed.png")));
+        .addComponent(new TextureRenderComponent("images/plants/space_snapper_seed.png"))
+        .addComponent(new ItemComponent("space snapper seed", ItemType.SEED,
+            "Seed of Space Snapper", new Texture("images/plants/space_snapper_seed.png")));
     return seed;
   }
 
@@ -216,9 +215,9 @@ public class ItemFactory {
    */
   public static Entity createTobaccoSeed() {
     Entity seed = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/tobacco_seed.png"))
-            .addComponent(new ItemComponent("tobacco seed", ItemType.SEED,
-                    "Seed of Tobacco", new Texture("images/plants/tobacco_seed.png")));
+        .addComponent(new TextureRenderComponent("images/plants/tobacco_seed.png"))
+        .addComponent(new ItemComponent("tobacco seed", ItemType.SEED,
+            "Seed of Tobacco", new Texture("images/plants/tobacco_seed.png")));
     return seed;
   }
 
@@ -229,9 +228,9 @@ public class ItemFactory {
    */
   public static Entity createCowFood() {
     Entity animalFood = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/tobacco_seed.png"))
-            .addComponent(new ItemComponent("COW FOOD", ItemType.FOOD,
-                    "Cow food", new Texture("images/plants/tobacco_seed.png")));
+        .addComponent(new TextureRenderComponent("images/plants/tobacco_seed.png"))
+        .addComponent(new ItemComponent("COW FOOD", ItemType.FOOD,
+            "Cow food", new Texture("images/plants/tobacco_seed.png")));
     return animalFood;
   }
 }

@@ -1,20 +1,20 @@
 package com.csse3200.game.services;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.extensions.GameExtension;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
 
 @ExtendWith(GameExtension.class)
 class ResourceServiceTest {
@@ -23,7 +23,7 @@ class ResourceServiceTest {
     String texture1 = "test/files/tree.png";
     String texture2 = "test/files/missing.png";
     String texture3 = "test/files/heart.png";
-    String[] textures = {texture1, texture2, texture3};
+    String[] textures = { texture1, texture2, texture3 };
 
     AssetManager assetManager = spy(AssetManager.class);
     ResourceService resourceService = new ResourceService(assetManager);
@@ -51,7 +51,7 @@ class ResourceServiceTest {
     String texture1 = "test/files/tree.png";
     String texture2 = "test/files/missing.png";
     String texture3 = "test/files/heart.png";
-    String[] textures = {texture1, texture2, texture3};
+    String[] textures = { texture1, texture2, texture3 };
 
     AssetManager assetManager = spy(AssetManager.class);
     ResourceService resourceService = new ResourceService(assetManager);
@@ -74,7 +74,7 @@ class ResourceServiceTest {
   void shouldContainAndGetAssets() {
     String texture1 = "test/files/tree.png";
     String texture2 = "test/files/missing.png";
-    String[] textures = {texture1, texture2};
+    String[] textures = { texture1, texture2 };
 
     AssetManager assetManager = spy(AssetManager.class);
     ResourceService resourceService = new ResourceService(assetManager);
@@ -95,7 +95,7 @@ class ResourceServiceTest {
   void shouldLoadTextures() {
     String asset1 = "test/files/tree.png";
     String asset2 = "test/files/heart.png";
-    String[] textures = {asset1, asset2};
+    String[] textures = { asset1, asset2 };
 
     AssetManager assetManager = spy(AssetManager.class);
     ResourceService resourceService = new ResourceService(assetManager);
@@ -109,7 +109,7 @@ class ResourceServiceTest {
   void shouldLoadTextureAtlases() {
     String asset1 = "test/files/test.atlas";
     String asset2 = "test/files/test2.atlas";
-    String[] textures = {asset1, asset2};
+    String[] textures = { asset1, asset2 };
 
     AssetManager assetManager = spy(AssetManager.class);
     ResourceService resourceService = new ResourceService(assetManager);
@@ -123,7 +123,7 @@ class ResourceServiceTest {
   void shouldLoadSounds() {
     String asset1 = "test/files/sound1.ogg";
     String asset2 = "test/files/sound2.ogg";
-    String[] textures = {asset1, asset2};
+    String[] textures = { asset1, asset2 };
 
     AssetManager assetManager = spy(AssetManager.class);
     ResourceService resourceService = new ResourceService(assetManager);
@@ -137,7 +137,7 @@ class ResourceServiceTest {
   void shouldLoadMusic() {
     String asset1 = "test/files/sound1.ogg";
     String asset2 = "test/files/sound2.ogg";
-    String[] textures = {asset1, asset2};
+    String[] textures = { asset1, asset2 };
 
     AssetManager assetManager = spy(AssetManager.class);
     ResourceService resourceService = new ResourceService(assetManager);

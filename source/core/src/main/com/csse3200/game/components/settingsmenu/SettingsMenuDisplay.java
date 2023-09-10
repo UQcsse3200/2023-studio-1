@@ -1,5 +1,8 @@
 package com.csse3200.game.components.settingsmenu;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.Graphics.Monitor;
@@ -8,7 +11,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
@@ -16,17 +26,16 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.GdxGame.ScreenType;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.files.UserSettings.DisplaySettings;
-import com.csse3200.game.screens.MainMenuScreen;
 import com.csse3200.game.screens.SettingsScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.csse3200.game.utils.StringDecorator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * Settings menu display and logic. If you bork the settings, they can be changed manually in
- * CSSE3200Game/settings.json under your home directory (This is C:/users/[username] on Windows).
+ * Settings menu display and logic. If you bork the settings, they can be
+ * changed manually in
+ * CSSE3200Game/settings.json under your home directory (This is
+ * C:/users/[username] on Windows).
  */
 public class SettingsMenuDisplay extends UIComponent {
   private static final Logger logger = LoggerFactory.getLogger(SettingsMenuDisplay.class);
@@ -72,7 +81,6 @@ public class SettingsMenuDisplay extends UIComponent {
    */
   private final long frameDuration = (long) (800 / fps);
 
-
   public SettingsMenuDisplay(GdxGame game) {
     super();
     transitionFrames = new Image();
@@ -98,8 +106,8 @@ public class SettingsMenuDisplay extends UIComponent {
     Table menuBtns = makeMenuBtns();
 
     Image title = new Image(
-            ServiceLocator.getResourceService()
-                    .getAsset("images/galaxy_home_still.png", Texture.class));
+        ServiceLocator.getResourceService()
+            .getAsset("images/galaxy_home_still.png", Texture.class));
     title.setWidth(Gdx.graphics.getWidth());
     title.setHeight(Gdx.graphics.getHeight());
     title.setPosition(0, 0);
@@ -127,10 +135,10 @@ public class SettingsMenuDisplay extends UIComponent {
   private void updateAnimation() {
     if (frame < SettingsScreen.frameCount) {
       transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
-              .getAsset(SettingsScreen.transitionTextures[frame], Texture.class))));
+          .getAsset(SettingsScreen.transitionTextures[frame], Texture.class))));
       transitionFrames.setWidth(Gdx.graphics.getWidth());
-      transitionFrames.setHeight(Gdx.graphics.getHeight() / (float)2); //https://rules.sonarsource.com/java/RSPEC-2184/
-      transitionFrames.setPosition(0, Gdx.graphics.getHeight() / (float)2 + 15); //https://rules.sonarsource.com/java/RSPEC-2184/
+      transitionFrames.setHeight(Gdx.graphics.getHeight() / (float) 2); // https://rules.sonarsource.com/java/RSPEC-2184/
+      transitionFrames.setPosition(0, Gdx.graphics.getHeight() / (float) 2 + 15); // https://rules.sonarsource.com/java/RSPEC-2184/
       frame++;
       lastFrameTime = System.currentTimeMillis();
     } else {

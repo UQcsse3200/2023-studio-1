@@ -2,15 +2,15 @@ package com.csse3200.game.components.tasks;
 
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.PriorityTask;
-import com.csse3200.game.ai.tasks.TaskRunner;
 import com.csse3200.game.ai.tasks.TimedTask;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.utils.math.RandomUtils;
-import com.csse3200.game.utils.math.Vector2Utils;
 
 /**
- * A panic task that causes the owner's entity to move randomly within a specified range for a certain duration.
- * The task is triggered by an event and has a priority that determines its execution order.
+ * A panic task that causes the owner's entity to move randomly within a
+ * specified range for a certain duration.
+ * The task is triggered by an event and has a priority that determines its
+ * execution order.
  */
 public class PanicTask extends TimedTask implements PriorityTask {
     /** Range that entity will randomly move during panic state. */
@@ -38,7 +38,8 @@ public class PanicTask extends TimedTask implements PriorityTask {
     }
 
     /**
-     * Starts the panic task by initializing the movement task and triggering the "runStart" event.
+     * Starts the panic task by initializing the movement task and triggering the
+     * "runStart" event.
      */
     @Override
     public void start() {
@@ -53,7 +54,8 @@ public class PanicTask extends TimedTask implements PriorityTask {
     }
 
     /**
-     * Updates the panic task by checking if movement has finished, and if so, restarting the movement task.
+     * Updates the panic task by checking if movement has finished, and if so,
+     * restarting the movement task.
      */
     @Override
     public void update() {
@@ -78,7 +80,8 @@ public class PanicTask extends TimedTask implements PriorityTask {
     }
 
     /**
-     * Generates a random position within the specified panic range, centered around the starting position.
+     * Generates a random position within the specified panic range, centered around
+     * the starting position.
      *
      * @return A random position within the panic range.
      */

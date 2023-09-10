@@ -5,7 +5,7 @@ filter: Nearest, Nearest
 repeat: none
 default
   rotate: false
-  xy: 0, 0
+  xy: 0, 64
   size: 16, 40
   orig: 16, 40
   offset: 0, 0

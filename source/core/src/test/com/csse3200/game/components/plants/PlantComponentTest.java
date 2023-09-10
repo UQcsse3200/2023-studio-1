@@ -1,19 +1,21 @@
 package com.csse3200.game.components.plants;
 
-import com.csse3200.game.areas.terrain.CropTileComponent;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.extensions.GameExtension;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import static com.csse3200.game.entities.factories.PlantFactory.createBasePlant;
-import static org.junit.jupiter.api.Assertions.*;
+import com.csse3200.game.areas.terrain.CropTileComponent;
+import com.csse3200.game.extensions.GameExtension;
 
 @ExtendWith(GameExtension.class)
 public class PlantComponentTest {
 
     private PlantComponent testPlant;
+
     @BeforeEach
     void beforeEach() {
         CropTileComponent testCropTile = new CropTileComponent(1, 10);
@@ -136,6 +138,5 @@ public class PlantComponentTest {
     void testIsDeadFalse() {
         assertFalse(testPlant.isDead());
     }
-
 
 }

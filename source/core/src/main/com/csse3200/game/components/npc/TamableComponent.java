@@ -1,16 +1,12 @@
 package com.csse3200.game.components.npc;
 
-import java.util.List;
 import java.util.Random;
 
-import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.Json;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.ItemComponent;
-import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.EntityType;
 
 /**
  * This the class for Tameable Component. These components should

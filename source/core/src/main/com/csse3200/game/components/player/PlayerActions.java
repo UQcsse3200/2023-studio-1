@@ -1,11 +1,11 @@
 package com.csse3200.game.components.player;
+
 import java.util.Random;
+
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.areas.terrain.GameMap;
-import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.ItemActions;
@@ -15,10 +15,9 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 
-import java.io.FileNotFoundException;
-
 /**
- * Action component for interacting with the player. Player events should be initialised in create()
+ * Action component for interacting with the player. Player events should be
+ * initialised in create()
  * and when triggered should call methods within this class.
  */
 public class PlayerActions extends Component {
@@ -65,7 +64,8 @@ public class PlayerActions extends Component {
    */
   private void updateAnimation() {
 
-    int max=300; int min=1;
+    int max = 300;
+    int min = 1;
 
     Random randomNum = new Random();
 
@@ -104,18 +104,28 @@ public class PlayerActions extends Component {
 
   private Vector2 TileAffectedSpeed(Vector2 runSpeed) {
     // player position
-    /*Vector2 playerPos = entity.getPosition();
-    playerPos.x = Math.round(playerPos.x);
-    playerPos.y = Math.round(playerPos.y);
-    if (this.moveDirection.angleDeg() < 45 && map.getTile((int)playerPos.x +1, (int)playerPos.y) != null && !map.getTile((int)playerPos.x +1, (int)playerPos.y).isTraversable()) {
-      return new Vector2(0, runSpeed.y);
-    } else if (this.moveDirection.angleDeg() < 135 && map.getTile((int)playerPos.x +1, (int)playerPos.y) != null && !map.getTile((int)playerPos.x, (int)playerPos.y +1).isTraversable()) {
-      return new Vector2(runSpeed.x, 0);
-    } else if (this.moveDirection.angleDeg() < 225 && map.getTile((int)playerPos.x +1, (int)playerPos.y) != null && !map.getTile((int)playerPos.x -1, (int)playerPos.y).isTraversable()) {
-      return new Vector2(0, runSpeed.y);
-    } else if (this.moveDirection.angleDeg() < 315 && map.getTile((int)playerPos.x +1, (int)playerPos.y) != null && !map.getTile((int)playerPos.x, (int)playerPos.y -1).isTraversable()) {
-      return new Vector2(runSpeed.x, 0);
-    }*/
+    /*
+     * Vector2 playerPos = entity.getPosition();
+     * playerPos.x = Math.round(playerPos.x);
+     * playerPos.y = Math.round(playerPos.y);
+     * if (this.moveDirection.angleDeg() < 45 && map.getTile((int)playerPos.x +1,
+     * (int)playerPos.y) != null && !map.getTile((int)playerPos.x +1,
+     * (int)playerPos.y).isTraversable()) {
+     * return new Vector2(0, runSpeed.y);
+     * } else if (this.moveDirection.angleDeg() < 135 &&
+     * map.getTile((int)playerPos.x +1, (int)playerPos.y) != null &&
+     * !map.getTile((int)playerPos.x, (int)playerPos.y +1).isTraversable()) {
+     * return new Vector2(runSpeed.x, 0);
+     * } else if (this.moveDirection.angleDeg() < 225 &&
+     * map.getTile((int)playerPos.x +1, (int)playerPos.y) != null &&
+     * !map.getTile((int)playerPos.x -1, (int)playerPos.y).isTraversable()) {
+     * return new Vector2(0, runSpeed.y);
+     * } else if (this.moveDirection.angleDeg() < 315 &&
+     * map.getTile((int)playerPos.x +1, (int)playerPos.y) != null &&
+     * !map.getTile((int)playerPos.x, (int)playerPos.y -1).isTraversable()) {
+     * return new Vector2(runSpeed.x, 0);
+     * }
+     */
     // the getTile is not working as expected
     return runSpeed;
   }
@@ -126,8 +136,9 @@ public class PlayerActions extends Component {
     Vector2 velocityScale = this.running ? MAX_RUN_SPEED.cpy() : MAX_WALK_SPEED.cpy();
 
     // Used to apply the terrainSpeedModifier
-    //float terrainSpeedModifier = map.getTile(this.entity.getPosition()).getSpeedModifier();
-    //velocityScale.scl(terrainSpeedModifier);
+    // float terrainSpeedModifier =
+    // map.getTile(this.entity.getPosition()).getSpeedModifier();
+    // velocityScale.scl(terrainSpeedModifier);
 
     Vector2 desiredVelocity = moveDirection.cpy().scl(velocityScale);
     // impulse = (desiredVel - currentVel) * mass
@@ -138,6 +149,7 @@ public class PlayerActions extends Component {
   public float getPrevMoveDirection() {
     return prevMoveDirection;
   }
+
   /**
    * Moves the player towards a given direction.
    *
@@ -149,6 +161,7 @@ public class PlayerActions extends Component {
     this.prevMoveDirection = moveDirection.angleDeg();
     moving = true;
   }
+
   /**
    * Stops the player from moving.
    */
@@ -202,7 +215,9 @@ public class PlayerActions extends Component {
   }
 
   /**
-   * Sets tractor to the tractor entity, can be used to calculate distances and mute inputs
+   * Sets tractor to the tractor entity, can be used to calculate distances and
+   * mute inputs
+   * 
    * @param tractor
    */
   public void setTractor(Entity tractor) {
@@ -213,15 +228,16 @@ public class PlayerActions extends Component {
    * Makes the player get into tractor.
    */
   void enterTractor() {
-    //check within 4 units of tractor
+    // check within 4 units of tractor
     if (this.entity.getPosition().dst(tractor.getPosition()) > 4) {
       return;
     }
     this.stopMoving();
     muted = true;
     tractor.getComponent(TractorActions.class).setMuted(false);
-    tractor.getComponent(KeyboardTractorInputComponent.class).setWalkDirection(entity.getComponent(KeyboardPlayerInputComponent.class).getWalkDirection());
-    this.entity.setPosition(new Vector2(-10,-10));
+    tractor.getComponent(KeyboardTractorInputComponent.class)
+        .setWalkDirection(entity.getComponent(KeyboardPlayerInputComponent.class).getWalkDirection());
+    this.entity.setPosition(new Vector2(-10, -10));
     camera.setTrackEntity(tractor);
   }
 
@@ -240,6 +256,7 @@ public class PlayerActions extends Component {
 
   /**
    * When in the tractor inputs should be muted, this handles that.
+   * 
    * @return if the players inputs should be muted
    */
   public boolean isMuted() {
@@ -250,11 +267,11 @@ public class PlayerActions extends Component {
     this.muted = muted;
   }
 
-  public void setCameraVar (CameraComponent cam) {
+  public void setCameraVar(CameraComponent cam) {
     this.camera = cam;
   }
 
-  public CameraComponent getCameraVar () {
+  public CameraComponent getCameraVar() {
     return camera;
   }
 
