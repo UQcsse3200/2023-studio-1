@@ -8,5 +8,7 @@ public enum EntityType {
     Cow,
     Chicken,
     Astrolotl,
+    OxygenEater,
     Item
 }
+

@@ -1,6 +1,7 @@
 package com.csse3200.game.services;
 
 import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.missions.MissionManager;
@@ -27,12 +28,15 @@ public class ServiceLocator {
   private static TimeService timeService;
   private static GameTime timeSource;
   private static GameArea gameArea;
+  private static CameraComponent cameraComponent;
   private static SaveLoadService saveLoadService;
   private static MissionManager missions;
 
   public static GameArea getGameArea() {
     return gameArea;
   }
+
+  public static CameraComponent getCameraComponent() { return cameraComponent; }
 
   public static EntityService getEntityService() {
     return entityService;
@@ -71,6 +75,11 @@ public class ServiceLocator {
   public static void registerGameArea(GameArea area) {
     logger.debug("Registering game area {}", area);
     gameArea = area;
+  }
+
+  public static void registerCameraComponent(CameraComponent camera) {
+    logger.debug("Registering game area {}", camera);
+    cameraComponent = camera;
   }
 
   public static void registerEntityService(EntityService service) {

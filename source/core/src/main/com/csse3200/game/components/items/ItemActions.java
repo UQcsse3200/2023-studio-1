@@ -1,11 +1,15 @@
 package com.csse3200.game.components.items;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.player.InteractionColliderComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.services.ServiceLocator;
+import java.util.List;
 import com.csse3200.game.entities.factories.PlantFactory;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -24,19 +28,24 @@ public class ItemActions extends Component {
 
   /**
    * Uses the item at the given position
-   *
-   * @param playerPos the position of the player
+   * 
+   * @param player the player entity using the item
    * @param mousePos  the position of the mouse
-   * @param item      item to use/ interact with tile
+   * @param map      item to use/ interact with tile
    * @return if interaction with tile was success return true else return false.
    */
-  public boolean use(Vector2 playerPos, Vector2 mousePos, Entity item, GameMap map) {
+  public boolean use(Entity player, Vector2 mousePos, GameMap map) {
     this.map = map;
-    ItemComponent type = item.getComponent(ItemComponent.class);
+
+    Vector2 playerPos = player.getPosition();
+    Vector2 mouseWorldPos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
+
+    ItemComponent type = entity.getComponent(ItemComponent.class);
     // Wasn't an item or did not have ItemComponent class
     if (type == null) {
       return false;
     }
+
     // Add your item here!!!
     boolean resultStatus;
     TerrainTile tile = getTileAtPosition(playerPos, mousePos);
@@ -58,7 +67,19 @@ public class ItemActions extends Component {
         return resultStatus;
       }
       case WATERING_CAN -> {
-        resultStatus = water(tile, item);
+        resultStatus = water(tile);
+        return resultStatus;
+      }
+      case FOOD -> { // TODO: THIS IS ITEM TYPE IS JUST FOR TESTING PURPOSES, REPLACE WITH PLANT DROP TYPE
+        InteractionColliderComponent interactionCollider = player.getComponent(InteractionColliderComponent.class);
+        List<Entity> entitiesTowardsMouse = interactionCollider.getEntitiesTowardsPosition(mouseWorldPos);
+        Entity feedableEntity = interactionCollider.getSuitableEntity(entitiesTowardsMouse, ItemType.FOOD);
+        resultStatus = feed(feedableEntity);
+        if (!resultStatus) {
+          // consume it yourself instead??
+          // consume(player)
+          resultStatus = true;
+        }
         return resultStatus;
       }
       case FERTILISER -> {
@@ -66,7 +87,7 @@ public class ItemActions extends Component {
         return resultStatus;
       }
       case SEED -> {
-        resultStatus = plant(tile, item);
+        resultStatus = plant(tile);
         return resultStatus;
       }
       default -> {
@@ -133,10 +154,9 @@ public class ItemActions extends Component {
    * Waters the tile at the given position.
    *
    * @param tile the tile to be interacted with
-   * @param item a reference to a watering can
    * @return if watering was successful return true else return false
    */
-  private boolean water(TerrainTile tile, Entity item) {
+  private boolean water(TerrainTile tile) {
     boolean tileWaterable = isCropTile(tile.getCropTile());
     if (!tileWaterable) {
       return false;
@@ -144,7 +164,7 @@ public class ItemActions extends Component {
 
     // A water amount of 0.5 was recommended by team 7
     tile.getCropTile().getEvents().trigger("water", 0.5f);
-    item.getComponent(WateringCanLevelComponent.class).incrementLevel(-5);
+    //item.getComponent(WateringCanLevelComponent.class).incrementLevel(-5); //TODO
     return true;
   }
 
@@ -218,13 +238,12 @@ public class ItemActions extends Component {
      * Plants the given seed seed in the tile at the given position
      *
      * @param tile the tile to be interacted with
-     * @param item the seed item to be planted
      * @return if planting was successful return true else return false
      */
-  private boolean plant(TerrainTile tile, Entity item) {
+  private boolean plant(TerrainTile tile) {
     Function<CropTileComponent, Entity> plantFactoryMethod;
     if (isCropTile(tile.getCropTile())) {
-        switch (item.getComponent(ItemComponent.class).getItemName()) {
+        switch (entity.getComponent(ItemComponent.class).getItemName()) {
             case "aloe vera seed" -> {
                 plantFactoryMethod = PlantFactory::createAloeVera;
                 tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
@@ -275,5 +294,18 @@ public class ItemActions extends Component {
    */
   private boolean isCropTile(Entity tile) {
     return (tile != null) && (tile.getComponent(CropTileComponent.class) != null);
+  }
+
+  /**
+   * Feeds given entity.
+   * @param feedableEntity entity to feed
+   * @return true if feed is successful
+   */
+  private boolean feed(Entity feedableEntity) {
+    if (feedableEntity == null) {
+      return false;
+    }
+    feedableEntity.getEvents().trigger("feed");
+    return true;
   }
 }
