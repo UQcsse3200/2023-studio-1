@@ -3,8 +3,7 @@ package com.csse3200.game.areas.weather;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class WeatherEventTest {
@@ -34,17 +33,22 @@ public class WeatherEventTest {
 
     @Test
     public void testUpdateTime() {
+        WeatherEvent weatherEventSpy1 = spy(weatherEvent1);
         WeatherEvent weatherEventSpy2 = spy(weatherEvent2);
         WeatherEvent weatherEventSpy3 = spy(weatherEvent3);
         WeatherEvent weatherEventSpy4 = spy(weatherEvent4);
         WeatherEvent weatherEventSpy5 = spy(weatherEvent5);
+        //weatherEvent1 should be active as numHoursUntil = 0
+        assertTrue(weatherEventSpy1.isActive());
         weatherEventSpy2.updateTime();
         weatherEventSpy3.updateTime();
         weatherEventSpy4.updateTime();
         weatherEventSpy5.updateTime();
+        //weatherEvent2 should be active as numHoursUntil = 1
         assertTrue(weatherEventSpy2.isActive());
         verify(weatherEventSpy2, times(1)).isActive();
         verify(weatherEventSpy3, times(0)).isActive();
+        //Updating time again so that weatherEvent3 becomes active
         weatherEventSpy3.updateTime();
         assertTrue(weatherEventSpy3.isActive());
         verify(weatherEventSpy3, times(1)).isActive();
@@ -70,6 +74,7 @@ public class WeatherEventTest {
             weatherEvent4.updateTime();
             weatherEvent5.updateTime();
         }
+        //Events should expire after their duration ends
         assertTrue(weatherEvent1.isExpired());
         assertTrue(weatherEvent2.isExpired());
         assertTrue(weatherEvent3.isExpired());
@@ -138,5 +143,45 @@ public class WeatherEventTest {
         assertEquals(30.0f, solarSurgeEvent3.getTemperatureModifier(), 0.00001);
         assertEquals(34.5f, solarSurgeEvent4.getTemperatureModifier(), 0.00001);
         assertEquals(31.5f, solarSurgeEvent5.getTemperatureModifier(), 0.00001);
+    }
+
+    @Test
+    public void testConstructorWithNegativePriority() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new WeatherEvent(4, 5, -1, 1.1f) {
+            };
+        }, "Priority cannot be less than 0");
+    }
+
+    @Test
+    public void testConstructorWithZeroDuration() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new WeatherEvent(0, 0, 1, 1.2f) {
+            };
+        }, "Duration cannot be 0");
+    }
+
+    @Test
+    public void testConstructorWithNegativeDuration() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new WeatherEvent(5, -1, 3, 1.3f) { };
+        }, "Duration cannot be less than 0");
+    }
+
+    @Test
+    public void testConstructorWithNegativeNumHoursUntil() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new WeatherEvent(-1, 5, 1, 1.2f) { };
+        }, "Number of hours until the event occurs cannot be less than 0");
+    }
+
+    @Test
+    public void testConstructorWithInvalidSeverity() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new WeatherEvent(2, 3, 1, 0.7f) { };
+        }, "Severity can't be less than 1.0f");
+        assertThrows(IllegalArgumentException.class, () -> {
+            new WeatherEvent(3, 5, 4, 1.7f) { };
+        }, "Severity can't be more than 1.5f");
     }
 }
