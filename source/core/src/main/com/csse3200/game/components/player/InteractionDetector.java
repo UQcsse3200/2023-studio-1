@@ -144,6 +144,12 @@ public class InteractionDetector extends HitboxComponent {
      */
     public List<Entity> getSuitableEntities(ItemType itemType, Vector2 position) {
         List<Entity> entities = getEntitiesTowardsPosition(position);
+
+        if (itemType == null) {
+            // Add behaviour when not holding an item / interact button?
+            return Collections.emptyList();
+        }
+
         switch (itemType){
             case FOOD -> {
                 entities.removeIf(entity -> entity.getComponent(TamableComponent.class) == null);
