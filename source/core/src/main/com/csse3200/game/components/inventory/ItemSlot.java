@@ -56,11 +56,9 @@ public class ItemSlot extends Stack {
 
         Image background = new Image(new Texture(Gdx.files.internal("images/selected.png")));
         Image frame = new Image(new Texture(Gdx.files.internal("images/itemFrame.png")));
-        Image test = new Image(new Texture("images/tool_hoe.png"));
 
         this.add(background);
         this.add(frame);
-        this.add(test);
 
         if (this.itemTexture != null) {
             this.add(new Image(this.itemTexture));

@@ -7,8 +7,11 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.SpaceGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.components.inventory.InventoryDisplay;
+import com.csse3200.game.components.inventory.ToolbarDisplay;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
@@ -71,6 +74,8 @@ public class MainGameScreen extends ScreenAdapter {
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
 
+  private InventoryComponent inventory;
+
   public MainGameScreen(GdxGame game) {
     this.game = game;
 
@@ -109,6 +114,7 @@ public class MainGameScreen extends ScreenAdapter {
     //renderer.getCamera().setTrackEntity(forestGameArea.getPlayer());
     spaceGameArea.getPlayer().getComponent(PlayerActions.class).setCameraVar(renderer.getCamera());
     spaceGameArea.getTractor().getComponent(TractorActions.class).setCameraVar(renderer.getCamera());
+    inventory = spaceGameArea.getPlayer().getComponent(InventoryComponent.class);
   }
 
   @Override
@@ -180,7 +186,9 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(new Terminal())
         .addComponent(inputComponent)
         .addComponent(new TerminalDisplay())
-        .addComponent(new GameTimeDisplay());
+        .addComponent(new GameTimeDisplay())
+        .addComponent(new InventoryDisplay((inventory)))
+        .addComponent(new ToolbarDisplay());
 
     ServiceLocator.getEntityService().register(ui);
   }

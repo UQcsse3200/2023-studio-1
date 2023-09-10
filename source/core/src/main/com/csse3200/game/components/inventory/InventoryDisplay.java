@@ -40,7 +40,6 @@ public class InventoryDisplay extends UIComponent {
     super.create();
     addActors();
     isOpen = false;
-    entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
     entity.getEvents().addListener("toggleInventory",this::toggleOpen);
     entity.getEvents().addListener("updateInventory",this::updateInventory);
   }
@@ -56,7 +55,6 @@ public class InventoryDisplay extends UIComponent {
       Label label = new Label(String.valueOf(i), skin.get("default", Label.LabelStyle.class));
       //set the bounds of the label
       label.setBounds(label.getX() + 15, label.getY(), label.getWidth(), label.getHeight());
-      //stack.add(new Image(new Texture("images/itemFrame.png")));
       if (playerInventory.getItemPos(i) == null){
         //logger.info("Null Item at "+i );
         ItemSlot item = new ItemSlot();
@@ -66,13 +64,11 @@ public class InventoryDisplay extends UIComponent {
                 playerInventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture(),
                 playerInventory.getItemCount(playerInventory.getItemPos(i)));
         table.add(item).pad(10, 10, 10, 10).fill();
-        //stack.add(new Image(playerInventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture()));
       }
       if ((i + 1) % 10 == 0) {
         //Add a new row every 10 items
         table.row();
       }
-      //table.add(stack).pad(10, 10, 10, 10).fill();
     }
     //window = new Window("", skin);
     window.pad(40, 5, 5, 5); // Add padding to with so that the text doesn't go offscreen
@@ -99,7 +95,7 @@ public class InventoryDisplay extends UIComponent {
     for (int i = 0; i < 30; i++) {
       //Add the items to the table
       ItemSlot item = new ItemSlot();
-        table.add(item).pad(10, 10, 10, 10).fill();
+      table.add(item).pad(10, 10, 10, 10).fill();
       if ((i + 1) % 10 == 0) {
         //Add a new row every 10 items
         table.row();
@@ -148,9 +144,7 @@ public class InventoryDisplay extends UIComponent {
   public void updateInventory(){
     playerInventory = entity.getComponent(InventoryComponent.class);
     resetInventory();
-
   }
-
 
   @Override
   public void dispose() {

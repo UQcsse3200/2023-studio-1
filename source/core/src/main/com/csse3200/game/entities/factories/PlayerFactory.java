@@ -58,13 +58,11 @@ public class PlayerFactory {
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
             .addComponent(new PlayerActions())
             .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack))
-                .addComponent(playerInventory)
+            .addComponent(playerInventory)
             .addComponent(inputComponent)
             .addComponent(animator)
             .addComponent(new PlayerAnimationController())
-            .addComponent(new ItemPickupComponent())
-                .addComponent(new InventoryDisplay(playerInventory))
-            .addComponent(new ToolbarDisplay());
+            .addComponent(new ItemPickupComponent());
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);

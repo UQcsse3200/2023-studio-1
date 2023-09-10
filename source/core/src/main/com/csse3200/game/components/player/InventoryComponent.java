@@ -21,12 +21,8 @@ public class InventoryComponent extends Component {
   private final List<Entity> inventory = new ArrayList<Entity>();
   private final HashMap<Entity, Integer> itemCount = new HashMap<>();
   private final HashMap<Entity, Point> itemPosition = new HashMap<>();
-
   private final HashMap<Integer,Entity> itemPlace = new HashMap<>();
-
   private Entity heldItem = null;
-
-
 
   public InventoryComponent(List<Entity> items) {
     setInventory(items);
