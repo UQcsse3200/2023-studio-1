@@ -143,7 +143,10 @@ public class SaveLoadService {
       if (FactoryService.getNpcFactories().containsKey(entityType)) {
         Entity npc = FactoryService.getNpcFactories().get(entityType).apply(player);
         npc.setPosition(entity.getPosition());
-        npc.getComponent(TamableComponent.class).setTame(entity.getComponent(TamableComponent.class).isTamed());
+        // Non tameable npcs here
+        if (entityType != EntityType.OxygenEater) {
+          npc.getComponent(TamableComponent.class).setTame(entity.getComponent(TamableComponent.class).isTamed());
+        }
         // TODO Team 4 please add in saving health here (feel free to talk to us but please read doc or code first)
         ServiceLocator.getGameArea().spawnEntity(npc);
       }
