@@ -1,7 +1,8 @@
 package com.csse3200.game.areas.weather;
 
-import java.util.Random;
-
+/**
+ * Represents a Weather Event like Acid Shower or Solar Surge. These are updated based on in-game hours.
+ */
 public abstract class WeatherEvent {
 
 	/**
