@@ -28,8 +28,8 @@ public class ObstacleFactory {
 
     Obstacle.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     Obstacle.getComponent(TextureRenderComponent.class).scaleEntity();
-    Obstacle.scaleHeight(2.5f);
-    PhysicsUtils.setScaledCollider(Obstacle, 0.25f, 0.25f);
+    Obstacle.scaleHeight(1f);
+    PhysicsUtils.setScaledCollider(Obstacle, 0.5f, 0.5f);
     return Obstacle;
   }
 
