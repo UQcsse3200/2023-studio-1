@@ -4,6 +4,8 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.utils.DirectionUtils;
 
+import javax.swing.event.TableModelEvent;
+
 /**
  * This class listens to events relevant to a chicken entity's state and plays the animation when one
  * of the events is triggered.
@@ -21,6 +23,21 @@ public class AnimalAnimationController extends Component {
     private static final String RUN_PREFIX = "run";
     /** Idle prefix to play idle animation */
     private static final String IDLE_PREFIX = "idle";
+    /** Tamed suffix to add tamed indicator */
+    private static final String TAMED_SUFFIX = "_tamed";
+
+    /**
+     * Returns a suffix if the entity is tamed.
+     */
+    private String isTamed() {
+
+        TamableComponent tamableComponent = this.entity.getComponent(TamableComponent.class);
+
+        if (tamableComponent != null && tamableComponent.isTamed()) {
+            return TAMED_SUFFIX;
+        }
+        return "";
+    }
 
     /**
      * Create component by retrieving animator, setting start direction and animation, and adding
@@ -46,7 +63,7 @@ public class AnimalAnimationController extends Component {
      * Play walk animation with current direction
      */
     void animateWalk() {
-        animator.startAnimation(WALK_PREFIX + "_" + direction);
+        animator.startAnimation(WALK_PREFIX + "_" + direction + isTamed());
         currentAnimation = WALK_PREFIX;
     }
 
@@ -54,7 +71,7 @@ public class AnimalAnimationController extends Component {
      * Play run animation with current direction
      */
     void animateRun() {
-        animator.startAnimation(RUN_PREFIX + "_" + direction);
+        animator.startAnimation(RUN_PREFIX + "_" + direction + isTamed());
         currentAnimation = RUN_PREFIX;
     }
 
@@ -62,7 +79,7 @@ public class AnimalAnimationController extends Component {
      * Play idle animation with current direction
      */
     void animateIdle() {
-        animator.startAnimation(IDLE_PREFIX + "_" + direction);
+        animator.startAnimation(IDLE_PREFIX + "_" + direction + isTamed());
         currentAnimation = IDLE_PREFIX;
     }
 
@@ -74,5 +91,7 @@ public class AnimalAnimationController extends Component {
         this.direction = direction;
         entity.getEvents().trigger(currentAnimation + "Start");
     }
+
+
 
 }

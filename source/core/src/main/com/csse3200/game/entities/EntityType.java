@@ -1,5 +1,9 @@
 package com.csse3200.game.entities;
 
+/**
+ * An enum of all the entity types in the game.
+ * Feel free to add yours here. Read Documentation for SaveLoad and follow procedure there 
+ */
 public enum EntityType {
     Player,
     Tractor,
@@ -7,8 +11,8 @@ public enum EntityType {
     Tile,  // This is team 7 stuff
     Cow,
     Chicken,
-    Axolotl,
+    Astrolotl,
+    OxygenEater,
     Item
 }
 
-// import com.csse3200.game.entities.EntityType;

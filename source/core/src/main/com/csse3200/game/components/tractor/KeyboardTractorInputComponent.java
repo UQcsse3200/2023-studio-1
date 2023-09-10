@@ -54,6 +54,15 @@ public class KeyboardTractorInputComponent extends InputComponent {
           Sound honkSound = ServiceLocator.getResourceService().getAsset("sounds/car-horn-6408.mp3", Sound.class);
           honkSound.play();
           return true;
+        case Input.Keys.NUM_1:
+          actions.setMode(TractorMode.normal);
+          return true;
+        case Input.Keys.NUM_2:
+          actions.setMode(TractorMode.tilling);
+          return true;
+        case Input.Keys.NUM_3:
+          actions.setMode(TractorMode.harvesting);
+          return true;
         default:
           return false;
       }

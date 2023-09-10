@@ -46,7 +46,7 @@ public class TerrainCropTileFactory {
 		logger.debug("Creating crop tile at position {}", position);
 
 		DynamicTextureRenderComponent renderComponent = new DynamicTextureRenderComponent("images/cropTile.png");
-		renderComponent.setLayer(0);
+		renderComponent.setLayer(1);
 
 		Entity tile = new Entity(EntityType.Tile)
 				.addComponent(new ColliderComponent().setSensor(true))
@@ -55,9 +55,6 @@ public class TerrainCropTileFactory {
 				.addComponent(new CropTileComponent(stats.initialWaterContent, stats.initialSoilQuality));
 
 		tile.setPosition(position);
-		logger.debug("Registering crop tile {} with entity service", tile);
-		ServiceLocator.getEntityService().register(tile);
-
 		return tile;
 	}
 }
