@@ -79,13 +79,13 @@ public class ToolbarDisplay extends UIComponent {
             //stack.add(new Image(new Texture("images/itemFrame.png")));
             if (inventory.getItemPos(i) == null){
                 //logger.info("Null Item at "+i );
-                ItemSlot item = new ItemSlot();
+                ItemSlot item = new ItemSlot(false);
                 table.add(item).pad(10, 10, 10, 10).fill();
                 //stack.add(new Image(new Texture("images/itemFrame.png")));
             } else {
                 ItemSlot item = new ItemSlot(
                         inventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture(),
-                        inventory.getItemCount(inventory.getItemPos(i)));
+                        inventory.getItemCount(inventory.getItemPos(i)), false);
                 table.add(item).pad(10, 10, 10, 10).fill();
                 //stack.add(new Image(inventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture()));
             }

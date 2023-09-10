@@ -60,12 +60,12 @@ public class InventoryDisplay extends UIComponent {
       //stack.add(new Image(new Texture("images/itemFrame.png")));
       if (playerInventory.getItemPos(i) == null){
         //logger.info("Null Item at "+i );
-        ItemSlot item = new ItemSlot();
+        ItemSlot item = new ItemSlot(false);
         table.add(item).pad(10, 10, 10, 10).fill();
       } else {
         ItemSlot item = new ItemSlot(
                 playerInventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture(),
-                playerInventory.getItemCount(playerInventory.getItemPos(i)));
+                playerInventory.getItemCount(playerInventory.getItemPos(i)), false);
         table.add(item).pad(10, 10, 10, 10).fill();
         //stack.add(new Image(playerInventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture()));
       }
