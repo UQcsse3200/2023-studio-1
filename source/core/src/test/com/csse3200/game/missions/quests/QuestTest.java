@@ -390,6 +390,50 @@ class QuestTest {
     }
 
     @Test
+    public void testCollectRewardOnlyCollectsOnce() {
+        int[] counts = new int[]{0};
+        Reward r = new Reward() {
+            @Override
+            public void collect() {
+                counts[0]++;
+                setCollected();
+            }
+        };
+        Quest q = new Quest("", r, 0, false) {
+            @Override
+            protected void resetState() {
+            }
+
+            @Override
+            public void registerMission(EventHandler missionManagerEvents) {
+            }
+
+            @Override
+            public boolean isCompleted() {
+                return true;
+            }
+
+            @Override
+            public String getDescription() {
+                return null;
+            }
+
+            @Override
+            public String getShortDescription() {
+                return null;
+            }
+        };
+
+        assertEquals(0, counts[0]);
+        q.collectReward();
+        assertEquals(1, counts[0]);
+        q.collectReward();
+        assertEquals(1, counts[0]);
+        q.collectReward();
+        assertEquals(1, counts[0]);
+    }
+
+    @Test
     public void testResetExpiryResetsTimeToExpiry() {
         assertTrue(q1.isExpired());
         assertFalse(q2.isExpired());
