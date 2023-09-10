@@ -4,13 +4,6 @@ package com.csse3200.game.services;
  * Used to adjust and check oxygen levels.
  */
 public interface OxygenLevel {
-    
-    /**
-     * Sets the maximum amount (in kg) of oxygen that can be present in the oxygen-storing
-     * object (I.e. Planet, oxygen tank, etc).
-     */
-    void setUpperLimit(int kilograms);
-    
     /**
      * Add x kilograms of oxygen to the object in question.
      * @param kilogramsToAdd the float number of kilograms to add.

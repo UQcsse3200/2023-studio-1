@@ -8,23 +8,18 @@ import org.slf4j.LoggerFactory;
 public class PlanetOxygenController implements OxygenLevel{
     
     private static final Logger logger = LoggerFactory.getLogger(PlanetOxygenController.class);
-    private static final float DEFAULT_MAX_OXYGEN = 10000;
+    private static final float DEFAULT_OXYGEN_GOAL = 10000;
     
-    private float oxygenUpperLimit;
+    private float oxygenGoal;
     private float oxygenPresent;
     private float delta;
     
     public PlanetOxygenController() {
-        oxygenUpperLimit = DEFAULT_MAX_OXYGEN;
+        oxygenGoal = DEFAULT_OXYGEN_GOAL;
         oxygenPresent = 0;
         delta = 0;
         ServiceLocator.getTimeService().getEvents()
                 .addListener("hourUpdate", this::update);
-    }
-    
-    @Override
-    public void setUpperLimit(int kilograms) {
-        oxygenUpperLimit = kilograms;
     }
     
     @Override
@@ -44,10 +39,21 @@ public class PlanetOxygenController implements OxygenLevel{
     
     @Override
     public float getOxygenPercentage() {
-        if (oxygenUpperLimit > 0) {
-            return oxygenPresent / oxygenUpperLimit;
+        if (oxygenGoal > 0) {
+            return oxygenPresent / oxygenGoal;
         }
+        // Error, should not occur
         return -1;
+    }
+    
+    /**
+     * Set the maximum/goal amount of oxygen to be present on the planet
+     * @param kilograms
+     */
+    public void setOxygenGoal(int kilograms) {
+        if (kilograms > 0) {
+            oxygenGoal = kilograms;
+        }
     }
     
     /**
@@ -60,9 +66,12 @@ public class PlanetOxygenController implements OxygenLevel{
         
         if (oxygenPresent + delta <= 0) {
             // No oxygen left - trigger lose screen.
-            // TODO update oxygen display and maybe wait 1 second before triggering losescreen
+            // TODO update oxygen display and maybe wait 1 second before triggering loseScreen
             oxygenPresent = 0;
             ServiceLocator.getGameArea().getPlayer().getEvents().trigger("loseScreen");
+        } else if (oxygenPresent + delta > oxygenGoal) {
+            // Limit the present oxygen to not surpass the oxygen goal.
+            oxygenPresent = oxygenGoal;
         } else {
             oxygenPresent += delta;
         }
