@@ -76,11 +76,17 @@ loadScripts(document, 'script');</script>
 </div>
 </div>
 <section class="class-description" id="class-description">
+<dl class="notes">
+<dt>All Implemented Interfaces:</dt>
+<dd><code>com.badlogic.gdx.utils.Json.Serializable</code></dd>
+</dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">CropTileComponent</span>
 <span class="extends-implements">extends <a href="../../components/Component.html" title="class in com.csse3200.game.components">Component</a></span></div>
-<div class="block">Component which stores information about plots of land on which crops and plants can grow.
- Listens to a variety of trigger-able events to update state of the tile, including its water
+<div class="block">Component which stores information about plots of land on which crops and
+ plants can grow.
+ Listens to a variety of trigger-able events to update state of the tile,
+ including its water
  content and whether it is fertilised.</div>
 </section>
 <section class="summary">
@@ -102,11 +108,17 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(float,float)" class="member-name-link">CropTileComponent</a><wbr>(float&nbsp;initialWaterContent,
- float&nbsp;soilQuality)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">CropTileComponent</a>()</code></div>
 <div class="col-last even-row-color">
-<div class="block">Creates a new crop tile component, with a specified initial water content, and an initial soil
- quality (higher values indicate higher soil quality, meaning better growth rate).</div>
+<div class="block">Creates a new crop tile with default values</div>
+</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(float,float)" class="member-name-link">CropTileComponent</a><wbr>(float&nbsp;initialWaterContent,
+ float&nbsp;soilQuality)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a new crop tile component, with a specified initial water content,
+ and an initial soil
+ quality (higher values indicate higher soil quality, meaning better growth
+ rate).</div>
 </div>
 </div>
 </section>
@@ -130,31 +142,70 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getGrowthRate()" class="member-name-link">getGrowthRate</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Gets the growth rate of the tile, assuming a water content value of 1 yields the maximum growth
+<div class="block">Gets the growth rate of the tile, assuming a water content value of 1 yields
+ the maximum growth
  rate.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getGrowthRate(float)" class="member-name-link">getGrowthRate</a><wbr>(float&nbsp;idealWaterAmount)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Gets the growth rate of the tile, specifying the water content of the tile which yields the
+<div class="block">Gets the growth rate of the tile, specifying the water content of the tile
+ which yields the
  maximum growth rate.</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPlant()" class="member-name-link">getPlant</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSoilQuality()" class="member-name-link">getSoilQuality</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTerrainTile()" class="member-name-link">getTerrainTile</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWaterContent()" class="member-name-link">getWaterContent</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isFertilised()" class="member-name-link">isFertilised</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setFertilised(boolean)" class="member-name-link">setFertilised</a><wbr>(boolean&nbsp;fertilised)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setUnoccupied()" class="member-name-link">setUnoccupied</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPlant(com.csse3200.game.entities.Entity)" class="member-name-link">setPlant</a><wbr>(<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;plant)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Only to be used for loading as it can go around the achievement stuff</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setSoilQuality(float)" class="member-name-link">setSoilQuality</a><wbr>(float&nbsp;soilQuality)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTerrainTile(com.csse3200.game.areas.terrain.TerrainTile)" class="member-name-link">setTerrainTile</a><wbr>(<a href="TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a>&nbsp;terrainTile)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setUnoccupied()" class="member-name-link">setUnoccupied</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the tile to be unoccupied.</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setWaterContent(float)" class="member-name-link">setWaterContent</a><wbr>(float&nbsp;waterContent)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Decreases water content in the tile by a constant amount.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#write(com.badlogic.gdx.utils.Json)" class="member-name-link">write</a><wbr>(com.badlogic.gdx.utils.Json&nbsp;json)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Writes in json summary of croptile state.</div>
 </div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.csse3200.game.components.Component">Methods inherited from class&nbsp;com.csse3200.game.components.<a href="../../components/Component.html" title="class in com.csse3200.game.components">Component</a></h3>
-<code><a href="../../components/Component.html#dispose()">dispose</a>, <a href="../../components/Component.html#earlyUpdate()">earlyUpdate</a>, <a href="../../components/Component.html#getEntity()">getEntity</a>, <a href="../../components/Component.html#setEnabled(boolean)">setEnabled</a>, <a href="../../components/Component.html#setEntity(com.csse3200.game.entities.Entity)">setEntity</a>, <a href="../../components/Component.html#toString()">toString</a>, <a href="../../components/Component.html#triggerEarlyUpdate()">triggerEarlyUpdate</a>, <a href="../../components/Component.html#triggerUpdate()">triggerUpdate</a></code></div>
+<code><a href="../../components/Component.html#dispose()">dispose</a>, <a href="../../components/Component.html#earlyUpdate()">earlyUpdate</a>, <a href="../../components/Component.html#getEntity()">getEntity</a>, <a href="../../components/Component.html#read(com.badlogic.gdx.utils.Json,com.badlogic.gdx.utils.JsonValue)">read</a>, <a href="../../components/Component.html#setEnabled(boolean)">setEnabled</a>, <a href="../../components/Component.html#setEntity(com.csse3200.game.entities.Entity)">setEntity</a>, <a href="../../components/Component.html#toString()">toString</a>, <a href="../../components/Component.html#triggerEarlyUpdate()">triggerEarlyUpdate</a>, <a href="../../components/Component.html#triggerUpdate()">triggerUpdate</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -170,20 +221,34 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="&lt;init&gt;()">
+<h3>CropTileComponent</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CropTileComponent</span>()</div>
+<div class="block">Creates a new crop tile with default values</div>
+</section>
+</li>
+<li>
 <section class="detail" id="&lt;init&gt;(float,float)">
 <h3>CropTileComponent</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CropTileComponent</span><wbr><span class="parameters">(float&nbsp;initialWaterContent,
  float&nbsp;soilQuality)</span></div>
-<div class="block">Creates a new crop tile component, with a specified initial water content, and an initial soil
- quality (higher values indicate higher soil quality, meaning better growth rate).</div>
+<div class="block">Creates a new crop tile component, with a specified initial water content,
+ and an initial soil
+ quality (higher values indicate higher soil quality, meaning better growth
+ rate).</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>initialWaterContent</code> - The initial amount of water in the crop tile. Value should be
-                            between 0 and 2 inclusive - 0 indicates tile is completely dry, and
-                            2 indicates tile is flooded, water content of 1 leads to ideal
+<dd><code>initialWaterContent</code> - The initial amount of water in the crop tile.
+                            Value should be
+                            between 0 and 2 inclusive - 0 indicates tile is
+                            completely dry, and
+                            2 indicates tile is flooded, water content of 1
+                            leads to ideal
                             growth rate for most plants</dd>
-<dd><code>soilQuality</code> - The initial soil quality of the crop tile. Higher soil quality
-                            increases the calculated growth rate. Should be greater than 0.</dd>
+<dd><code>soilQuality</code> - The initial soil quality of the crop tile. Higher
+                            soil quality
+                            increases the calculated growth rate. Should be
+                            greater than 0.</dd>
 </dl>
 </section>
 </li>
@@ -221,13 +286,17 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getGrowthRate()">
 <h3>getGrowthRate</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">getGrowthRate</span>()</div>
-<div class="block">Gets the growth rate of the tile, assuming a water content value of 1 yields the maximum growth
- rate. The calculated growth rate is dependent on the water content and soil quality of this
+<div class="block">Gets the growth rate of the tile, assuming a water content value of 1 yields
+ the maximum growth
+ rate. The calculated growth rate is dependent on the water content and soil
+ quality of this
  tile, and whether it is fertilised.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>The calculated growth rate of the tile with an ideal water content value of 1, which is
- dependent on water content, soil quality, and whether the tile has been fertilised.</dd>
+<dd>The calculated growth rate of the tile with an ideal water content
+         value of 1, which is
+         dependent on water content, soil quality, and whether the tile has
+         been fertilised.</dd>
 </dl>
 </section>
 </li>
@@ -235,15 +304,18 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getGrowthRate(float)">
 <h3>getGrowthRate</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">getGrowthRate</span><wbr><span class="parameters">(float&nbsp;idealWaterAmount)</span></div>
-<div class="block">Gets the growth rate of the tile, specifying the water content of the tile which yields the
- maximum growth rate. The calculated growth rate is dependent on the water content and soil
+<div class="block">Gets the growth rate of the tile, specifying the water content of the tile
+ which yields the
+ maximum growth rate. The calculated growth rate is dependent on the water
+ content and soil
  quality of this tile, and whether it is fertilised.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>idealWaterAmount</code> - The amount which yields the maximum growth rate.</dd>
 <dt>Returns:</dt>
-<dd>The calculated growth rate of the tile, dependent on water content, soil quality, and
- whether the tile has been fertilised.</dd>
+<dd>The calculated growth rate of the tile, dependent on water content,
+         soil quality, and
+         whether the tile has been fertilised.</dd>
 </dl>
 </section>
 </li>
@@ -252,6 +324,88 @@ loadScripts(document, 'script');</script>
 <h3>setUnoccupied</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setUnoccupied</span>()</div>
 <div class="block">Sets the tile to be unoccupied.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getPlant()">
+<h3>getPlant</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">getPlant</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isFertilised()">
+<h3>isFertilised</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isFertilised</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setFertilised(boolean)">
+<h3>setFertilised</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setFertilised</span><wbr><span class="parameters">(boolean&nbsp;fertilised)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="setSoilQuality(float)">
+<h3>setSoilQuality</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setSoilQuality</span><wbr><span class="parameters">(float&nbsp;soilQuality)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="setWaterContent(float)">
+<h3>setWaterContent</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setWaterContent</span><wbr><span class="parameters">(float&nbsp;waterContent)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getSoilQuality()">
+<h3>getSoilQuality</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">getSoilQuality</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getWaterContent()">
+<h3>getWaterContent</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">getWaterContent</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setPlant(com.csse3200.game.entities.Entity)">
+<h3>setPlant</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setPlant</span><wbr><span class="parameters">(<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;plant)</span></div>
+<div class="block">Only to be used for loading as it can go around the achievement stuff</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>plant</code> - - the plant to set here</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="write(com.badlogic.gdx.utils.Json)">
+<h3>write</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">write</span><wbr><span class="parameters">(com.badlogic.gdx.utils.Json&nbsp;json)</span></div>
+<div class="block">Writes in json summary of croptile state. Writes to json
+ the waterContent, soilQuality, isFertilised and plant
+ to the json</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code>write</code>&nbsp;in interface&nbsp;<code>com.badlogic.gdx.utils.Json.Serializable</code></dd>
+<dt>Overrides:</dt>
+<dd><code><a href="../../components/Component.html#write(com.badlogic.gdx.utils.Json)">write</a></code>&nbsp;in class&nbsp;<code><a href="../../components/Component.html" title="class in com.csse3200.game.components">Component</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>json</code> - which is a valid Json</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getTerrainTile()">
+<h3>getTerrainTile</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></span>&nbsp;<span class="element-name">getTerrainTile</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setTerrainTile(com.csse3200.game.areas.terrain.TerrainTile)">
+<h3>setTerrainTile</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTerrainTile</span><wbr><span class="parameters">(<a href="TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a>&nbsp;terrainTile)</span></div>
 </section>
 </li>
 </ul>
