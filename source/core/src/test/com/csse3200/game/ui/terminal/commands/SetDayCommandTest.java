@@ -25,6 +25,7 @@ class SetDayCommandTest {
 	ArrayList<String> args;
 	@BeforeEach
 	void beforeEach() {
+		ServiceLocator.clear();
 		command = new SetDayCommand();
 		args = new ArrayList<>();
 	}
