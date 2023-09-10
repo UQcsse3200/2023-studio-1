@@ -19,10 +19,12 @@ import com.csse3200.game.utils.math.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+
 /** SpaceGameArea is the area used for the initial game version */
 public class SpaceGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(SpaceGameArea.class);
-  private static final int NUM_TREES = 7;
+
   private static final int NUM_GHOSTS = 5;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final GridPoint2 TRACTOR_SPAWN = new GridPoint2(15, 15);
@@ -137,7 +139,8 @@ public class SpaceGameArea extends GameArea {
 
     spawnTerrain();
     spawnCrop(); // temp
-    spawnTrees();
+
+    spawnInvisibleObstacle();// spawn invisible obstacle on the non-traversable area of the map
 
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
@@ -204,16 +207,17 @@ public class SpaceGameArea extends GameArea {
         ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
   }
 
-  private void spawnTrees() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-    for (int i = 0; i < NUM_TREES; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity tree = ObstacleFactory.createTree();
-      spawnEntityAt(tree, randomPos, true, false);
-    }
-  }
+    /**
+     * Spawn invisible obstacle on the non-traversable area of the map
+     */
+   private void spawnInvisibleObstacle() {
+     ArrayList<GridPoint2> Non_Traversable_Obs = this.gameMap.getNonTraversableTileCoordinates();
+     for (int i = 0; i < Non_Traversable_Obs.size(); i++) {
+       GridPoint2 Pos = Non_Traversable_Obs.get(i);
+       Entity invisible_obs = ObstacleFactory.createInvisibleObstacle();
+       spawnEntityAt(invisible_obs, Pos, true, false);
+     }
+   }
 
   private Entity spawnCrop() {
     GridPoint2 pos = new GridPoint2(10, 11);
