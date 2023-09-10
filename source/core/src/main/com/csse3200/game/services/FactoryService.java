@@ -17,8 +17,8 @@ import java.util.function.Supplier;
 
 public class FactoryService {
     private static final Map<EntityType, Function<Entity, Entity>> npcFactories = Map.of(EntityType.Chicken, NPCFactory::createChicken,
-            EntityType.Cow, NPCFactory::createCow,
-            EntityType.Astrolotl, NPCFactory::createAstrolotl);
+            EntityType.Cow, NPCFactory::createCow, EntityType.Astrolotl, NPCFactory::createAstrolotl,
+            EntityType.OxygenEater, NPCFactory::createOxygenEater);
 
     private static final Map<String, Function<CropTileComponent, Entity>> plantFactories = Map.of("Cosmic Cob", PlantFactory::createCosmicCob,
             "Aloe Vera", PlantFactory::createAloeVera, "Hammer Plant", PlantFactory::createHammerPlant, "Deadly Nightshade",

@@ -175,7 +175,7 @@ public class PlayerActions extends Component {
   /**
    * Removes the velocity increase of the player.
    */
-  void stopRunning() {
+  public void stopRunning() {
     this.running = false;
   }
 

@@ -74,6 +74,7 @@ public class Terminal extends Component {
     logger.debug("Opening terminal");
     if (ServiceLocator.getGameArea() != null) {
       if (ServiceLocator.getGameArea().getPlayer() != null) {
+        ServiceLocator.getGameArea().getPlayer().getComponent(PlayerActions.class).stopRunning();
         ServiceLocator.getGameArea().getPlayer().getComponent(PlayerActions.class).stopMoving();
       }
       if (ServiceLocator.getGameArea().getTractor() != null) {
