@@ -54,4 +54,13 @@ public class EntityService {
       entity.dispose();
     }
   }
+
+  /**
+   * Get number of entities registered
+   *
+   * @return number of entities
+   */
+  public int getSize() {
+    return entities.size;
+  }
 }
