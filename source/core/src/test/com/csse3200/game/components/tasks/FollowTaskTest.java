@@ -116,7 +116,7 @@ class FollowTaskTest {
         entity.create();
         entity.setPosition(0f, 5f);
 
-        FollowTask followTask = new FollowTask(target, 10, 5, 10, 1.1f);
+        FollowTask followTask = new FollowTask(target, 10, 5, 10, 2f);
         followTask.create(() -> entity);
 
         // Not currently active, target is within stopping distance, should have negative priority

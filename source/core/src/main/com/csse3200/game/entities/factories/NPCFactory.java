@@ -75,7 +75,7 @@ public class NPCFactory {
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-            .addTask(new RunAwayTask(player, 10, 2f, 4f, new Vector2(3f, 3f)));
+            .addTask(new RunAwayTask(player, 10, 4f, 4f, new Vector2(3f, 3f)));
 
     chicken
             .addComponent(aiTaskComponent)
@@ -152,7 +152,7 @@ public class NPCFactory {
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 3f))
-            .addTask(new FollowTask(player, 10, 5f, 15f, 2f));
+            .addTask(new FollowTask(player, 10, 10f, 10f, 3.5f));
 
     astrolotl
             .addComponent(aiTaskComponent)
