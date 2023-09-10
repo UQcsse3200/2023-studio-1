@@ -8,12 +8,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
+/**
+ * Displays different images corresponding to the current weather event on the UI.
+ */
 public class WeatherEventDisplay extends UIComponent {
 	private Image weatherImage;
 	private Image clockImage;
 	private Group group;
 	private Table table;
 
+	/**
+	 * Initializes the display and listens to the updates in the game hours.
+	 */
 	@Override
 	public void create() {
 		super.create();
@@ -21,6 +27,9 @@ public class WeatherEventDisplay extends UIComponent {
 		updateDisplay();
 	}
 
+	/**
+	 * Updates the displayed image based on the current weather event.
+	 */
 	public void updateDisplay() {
 		WeatherEvent currentEvent = ServiceLocator.getGameArea().getClimateController().getCurrentWeatherEvent();
 		clockImage = new Image(ServiceLocator.getResourceService().getAsset(
@@ -37,6 +46,10 @@ public class WeatherEventDisplay extends UIComponent {
 		}
 	}
 
+	/**
+	 * Draw the weather event display.
+	 * @param batch Batch to render to.
+	 */
 	@Override
 	public void draw(SpriteBatch batch) {
 		table = new Table();
@@ -52,6 +65,9 @@ public class WeatherEventDisplay extends UIComponent {
 		stage.addActor(table);
 	}
 
+	/**
+	 * Cleans up assets.
+	 */
 	@Override
 	public void dispose() {
 		super.dispose();
