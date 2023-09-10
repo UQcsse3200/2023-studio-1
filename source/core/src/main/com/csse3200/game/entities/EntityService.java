@@ -56,7 +56,7 @@ public class EntityService {
   }
 
   /**
-   * Returns Array<Entity> of all entities in game
+   * Returns Array of entities of all entities in game
    * @return Array of entities in game
    */
   public Array<Entity> getEntities() {
