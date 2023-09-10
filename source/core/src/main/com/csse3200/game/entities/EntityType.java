@@ -14,6 +14,7 @@ public enum EntityType {
     Astrolotl,
     OxygenEater,
     Item,
-    Questgiver
+    Questgiver,
+    QuestgiverIndicator
 }
 
