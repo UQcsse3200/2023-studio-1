@@ -101,7 +101,6 @@ public class MainGameScreen extends ScreenAdapter {
     ServiceLocator.registerCameraComponent(renderer.getCamera());
 
     loadAssets();
-    createUI();
 
     logger.debug("Initialising main game screen entities");
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
@@ -109,6 +108,7 @@ public class MainGameScreen extends ScreenAdapter {
     spaceGameArea.create();
     renderer.getCamera().setTrackEntity(spaceGameArea.getPlayer());
 
+    createUI();
     // Switched to spaceGameArea TODO DELETE
     //ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
     //forestGameArea.create();
