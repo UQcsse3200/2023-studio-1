@@ -241,7 +241,6 @@ public class PlayerActions extends Component {
     //Make sure its initialised
     if (inventoryComponent != null) {
       inventoryComponent.setHeldItem(index);
-      inventoryComponent.setHeldIndex(index);
     }
   }
 

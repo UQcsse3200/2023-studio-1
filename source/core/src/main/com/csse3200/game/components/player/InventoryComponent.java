@@ -162,6 +162,7 @@ public class InventoryComponent extends Component {
   public void setHeldItem(int index) {
     if (index >= 0 && index < inventory.size()) {
       this.heldItem = inventory.get(index);
+      this.heldIndex = index;
     }
   }
 
@@ -181,15 +182,6 @@ public class InventoryComponent extends Component {
    */
   public int getHeldIndex() {
     return this.heldIndex;
-  }
-
-  /**
-   * Sets the held item index of the Player.
-   *
-   * @param index integer of the index in the inventory
-   */
-  public void setHeldIndex(int index) {
-    this.heldIndex = index;
   }
 
   /**
