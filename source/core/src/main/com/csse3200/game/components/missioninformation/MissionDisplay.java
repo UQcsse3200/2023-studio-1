@@ -1,6 +1,5 @@
 package com.csse3200.game.components.missioninformation;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -12,12 +11,10 @@ import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.achievements.Achievement;
 import com.csse3200.game.missions.quests.Quest;
-import com.csse3200.game.screens.MainGameScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -27,16 +24,8 @@ public class MissionDisplay extends UIComponent {
     private MissionManager missionManager;
 
     private Window window;
-    private Window achWindow;
-    private Window questWindow;
     private boolean isOpen;
-    private boolean questsOpen = false;
-    private boolean achOpen = false;
-    private boolean tamedAnimal;
-    private int questNum;
     private boolean showCompletedMissions = false;
-    private  int plantsGrown;
-    private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
 
     @Override
     public void create() {
@@ -47,40 +36,47 @@ public class MissionDisplay extends UIComponent {
         addActors();
 
         entity.getEvents().addListener("toggleMissions", this::toggleOpen);
-        entity.getEvents().addListener("toggleAchievements", this::toggleAchievements);
     }
 
     /**
-     * Creates actors and positions them on the stage using a table.
-     *
-     * @see Table for positioning options
+     * Creates a window for the missions and adds it to the stage.
      */
     private void addActors() {
         window = new Window("Mission Giver", skin);
         window.setVisible(false);
         stage.addActor(window);
-
-        questWindow = new Window("Quests", skin);
-        questWindow.setVisible(false);
-        stage.addActor(questWindow);
-
-        // Assuming you have a list of achievements
-        Achievement[] achievements = missionManager.getAchievements();
-        createAchievements(achievements);
-
     }
-    private void createAchievements(Achievement[] achievements) {
-        achWindow = new Window("Achievements", skin);
-        achWindow.pad(40, 10, 10, 10);
-        Table uncompletedTable = new Table();
-        Table completedTable = new Table();
+
+    /**
+     * Generates a table of achievements containing their names & descriptions.
+     *
+     * @param achievementsTable parent table to add content to
+     * @param achievements      list of achievements to include
+     */
+    private void createAchievementsTable(Table achievementsTable, List<Achievement> achievements) {
+        achievementsTable.clearChildren();
+        for (Achievement achievement : achievements) {
+            Label titleLabel = new Label(" " + achievement.getName(), skin, "pixel-mid", "black");
+            Label descriptionLabel = new Label(" " + achievement.getDescription(), skin, "pixel-body", "black");
+
+            achievementsTable.add(titleLabel).left().row();
+            achievementsTable.add(descriptionLabel).left().row();
+        }
+    }
+
+    /**
+     * Generates the achievements menu with a toggle between in progress & completed achievements.
+     */
+    private void generateAchievements() {
+        window.clear();
+        window.getTitleLabel().setText("Achievements");
+
+        Achievement[] achievements = missionManager.getAchievements();
+
+        Table achievementsTable = new Table();
 
         Table contentTable = new Table();
         contentTable.defaults().padBottom(10);
-
-        Label.LabelStyle labelStyle = new Label.LabelStyle();
-        labelStyle.font = skin.getFont("pixel-body");
-        labelStyle.fontColor = Color.BLACK;
 
         TextButton backButton = getBackButton();
         backButton.addListener(new ChangeListener() {
@@ -90,74 +86,56 @@ public class MissionDisplay extends UIComponent {
             }
         });
 
-        TextButton toggleButton = new TextButton("Show Completed", skin);
+        TextButton toggleButton = new TextButton("Show Completed", skin, "small");
         toggleButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 showCompletedMissions = !showCompletedMissions;
                 toggleButton.setText(showCompletedMissions ? "Show Uncompleted" : "Show Completed");
-                // Clear the current achievement tables and rebuild them based on the toggle
-                uncompletedTable.clearChildren();
-                completedTable.clearChildren();
-                for (Achievement achievement : achievements) {
-                    Label titleLabel = new Label(" " + achievement.getName(), skin, "pixel-mid", "black");
-                    Label descriptionLabel = new Label(" " + achievement.getDescription(), skin, "pixel-body", "black");
-
-                    if (achievement.isCompleted() && showCompletedMissions) {
-                        completedTable.add(titleLabel).left().row();
-                        completedTable.add(descriptionLabel).left().row();
-                    } else if (!achievement.isCompleted() && !showCompletedMissions) {
-                        uncompletedTable.add(titleLabel).left().row();
-                        uncompletedTable.add(descriptionLabel).left().row();
-                    }
-                }
+                // Clear the current achievement table and rebuild it based on the toggle
+                createAchievementsTable(
+                        achievementsTable,
+                        Arrays.stream(achievements).filter(achievement -> showCompletedMissions == achievement.isCompleted()).toList()
+                );
             }
         });
 
-
-
         // Populate the tables based on the initial state
-        for (Achievement achievement : achievements) {
-            Label titleLabel = new Label(" " + achievement.getName(), skin, "pixel-mid", "black");
-            Label descriptionLabel = new Label(" " + achievement.getDescription(), skin, "pixel-body", "black");
+        createAchievementsTable(
+                achievementsTable,
+                Arrays.stream(achievements).filter(achievement -> showCompletedMissions == achievement.isCompleted()).toList()
+        );
 
-            if (achievement.isCompleted() && showCompletedMissions) {
-                completedTable.add(titleLabel).left().row();
-                completedTable.add(descriptionLabel).left().row();
-            } else if (!achievement.isCompleted() && !showCompletedMissions) {
-                uncompletedTable.add(titleLabel).left().row();
-                uncompletedTable.add(descriptionLabel).left().row();
-            }
-        }
+        contentTable.add(achievementsTable).expand().fill().padRight(20);
 
-        contentTable.add(uncompletedTable).expand().fill().padRight(20);
-        contentTable.add(completedTable).expand().fill().padLeft(20);
-
+        contentTable.row();
+        contentTable.add(toggleButton).colspan(2).bottom().center().fill();
         contentTable.row();
         contentTable.add(backButton).colspan(2).bottom().center().fill();
 
-        achWindow.add(contentTable).expand().fill();
-        achWindow.row().padTop(10);
-        achWindow.add(toggleButton).colspan(2).bottom().center().fill();
-        achWindow.pack();
-        achWindow.setMovable(false);
-        achWindow.setPosition(stage.getWidth() / 2 - achWindow.getWidth() / 2, stage.getHeight() / 2 - achWindow.getHeight() / 2);
-        achWindow.setVisible(false);
-        stage.addActor(achWindow);
+        window.add(contentTable);
+        window.pad(50, 50, 50, 50);
+        window.pack();
+        window.setMovable(false);
+        window.setPosition(
+                stage.getWidth() / 2 - window.getWidth() / 2,
+                stage.getHeight() / 2 - window.getHeight() / 2
+        ); // center on stage
     }
+
     /**
      * Generates the main menu for missions. Contains a small blurb from the Mission NPC
      * and allows the user to view either quests or achievements.
      */
     private void generateMissionMenu() {
         window.clear();
+        window.getTitleLabel().setText("Mission Giver");
 
         TextButton achievementsButton = new TextButton("Achievements", skin);
         achievementsButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
-                logger.debug("Achievements button clicked");
-                toggleAchievements();
+                openAchievements();
             }
         });
 
@@ -166,7 +144,6 @@ public class MissionDisplay extends UIComponent {
         questsButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
-                logger.debug("Quests button clicked");
                 openQuests();
             }
         });
@@ -186,8 +163,6 @@ public class MissionDisplay extends UIComponent {
         missionDescription.setAlignment(Align.center);
 
         Table contentTable = new Table();
-
-
 
         contentTable.defaults().size(500f, 50f);
         contentTable.row().padBottom(30f).padTop(30f);
@@ -361,7 +336,8 @@ public class MissionDisplay extends UIComponent {
      * Generates the quest menu. Contains a table split into new, in progress, expired and completed quests.
      */
     private void generateQuestsMenu() {
-        questWindow.clear();
+        window.clear();
+        window.getTitleLabel().setText("Quests");
 
         List<Quest> selectableQuests = missionManager.getSelectableQuests();
         List<Quest> activeQuests = missionManager.getActiveQuests();
@@ -449,7 +425,6 @@ public class MissionDisplay extends UIComponent {
             }
         }
 
-
         TextButton backButton = getBackButton();
         backButton.addListener(new ChangeListener() {
             @Override
@@ -461,13 +436,13 @@ public class MissionDisplay extends UIComponent {
         questTable.row().pad(30f);
         questTable.add(backButton).colspan(4).center().fill();
 
-        questWindow.add(questTable);
-        questWindow.pad(50, 50, 50, 50);
-        questWindow.pack();
-        questWindow.setMovable(false);
-        questWindow.setPosition(
-                stage.getWidth() / 2 - questWindow.getWidth() / 2,
-                stage.getHeight() / 2 - questWindow.getHeight() / 2
+        window.add(questTable);
+        window.pad(50, 50, 50, 50);
+        window.pack();
+        window.setMovable(false);
+        window.setPosition(
+                stage.getWidth() / 2 - window.getWidth() / 2,
+                stage.getHeight() / 2 - window.getHeight() / 2
         ); // center on stage
     }
 
@@ -478,7 +453,7 @@ public class MissionDisplay extends UIComponent {
      * @param isNew true if the quest hasn't been accepted yet
      */
     private void generateQuestInfo(Quest quest, boolean isNew) {
-        questWindow.clear();
+        window.clear();
 
         TextButton backButton = getBackButton();
         backButton.addListener(new ChangeListener() {
@@ -506,13 +481,13 @@ public class MissionDisplay extends UIComponent {
         questInfoTable.row().pad(30f);
         questInfoTable.add(backButton).fill();
 
-        questWindow.add(questInfoTable);
-        questWindow.pad(50, 50, 50, 50);
-        questWindow.pack();
-        questWindow.setMovable(false);
-        questWindow.setPosition(
-                stage.getWidth() / 2 - questWindow.getWidth() / 2,
-                stage.getHeight() / 2 - questWindow.getHeight() / 2
+        window.add(questInfoTable);
+        window.pad(50, 50, 50, 50);
+        window.pack();
+        window.setMovable(false);
+        window.setPosition(
+                stage.getWidth() / 2 - window.getWidth() / 2,
+                stage.getHeight() / 2 - window.getHeight() / 2
         ); // center on stage
     }
 
@@ -531,9 +506,6 @@ public class MissionDisplay extends UIComponent {
     public void toggleOpen() {
         if (isOpen) {
             window.setVisible(false);
-            achWindow.setVisible(false);
-            questWindow.setVisible(false);
-
             isOpen = false;
         } else {
             openMenu();
@@ -547,8 +519,6 @@ public class MissionDisplay extends UIComponent {
         generateMissionMenu();
 
         window.setVisible(true);
-        achWindow.setVisible(false);
-        questWindow.setVisible(false);
 
         isOpen = true;
     }
@@ -559,31 +529,15 @@ public class MissionDisplay extends UIComponent {
     public void openQuests() {
         if (isOpen) {
             generateQuestsMenu();
-
-            questWindow.setVisible(true);
-            window.setVisible(false);
-            achWindow.setVisible(false);
-
-            questsOpen = true;
-            achOpen = false;
         }
     }
 
     /**
      * Opens the achievement menu.
      */
-    public void toggleAchievements() {
-        if (isOpen && questsOpen) {
-            window.setVisible(false);
-            questWindow.setVisible(false);
-            achWindow.setVisible(true);
-            questsOpen = false;
-            achOpen = true;
-        } else if (isOpen) {
-            window.setVisible(false);
-            achWindow.setVisible(true);
-            questsOpen = false;
-            achOpen = true;
+    public void openAchievements() {
+        if (isOpen) {
+            generateAchievements();
         }
     }
 
@@ -593,8 +547,6 @@ public class MissionDisplay extends UIComponent {
     @Override
     public void dispose() {
         window.clear();
-        questWindow.clear();
-        achWindow.clear();
 
         super.dispose();
     }

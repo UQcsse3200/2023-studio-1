@@ -56,9 +56,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           // inventory tings
           entity.getEvents().trigger("toggleInventory");
           return true;
-        case Keys.P:
-          entity.getEvents().trigger("toggleAchievements");
-          return true;
         case Keys.F:
           triggerEnterEvent();
           return true;
