@@ -3,6 +3,7 @@ package com.csse3200.game.missions.quests;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.rewards.Reward;
+import com.csse3200.game.services.ServiceLocator;
 
 public class FertiliseCropTilesQuest extends Quest {
 
@@ -59,6 +60,7 @@ public class FertiliseCropTilesQuest extends Quest {
     private void updateState() {
         if (++numberOfTilesFertilised >= target) {
             numberOfTilesFertilised = target;
+            ServiceLocator.getMissionManager().getEvents().trigger("questComplete");
         }
     }
 

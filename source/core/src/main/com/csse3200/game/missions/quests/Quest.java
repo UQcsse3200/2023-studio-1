@@ -2,6 +2,7 @@ package com.csse3200.game.missions.quests;
 
 import com.csse3200.game.missions.Mission;
 import com.csse3200.game.missions.rewards.Reward;
+import com.csse3200.game.services.ServiceLocator;
 
 public abstract class Quest extends Mission {
 
@@ -49,8 +50,9 @@ public abstract class Quest extends Mission {
 	 * Decrements the duration to expiry of the quest by 1.
 	 */
 	public void updateExpiry() {
-		if (--timeToExpiry < 0) {
+		if (--timeToExpiry <= 0) {
 			timeToExpiry = 0;
+			ServiceLocator.getMissionManager().getEvents().trigger("questExpired");
 		}
 	}
 
