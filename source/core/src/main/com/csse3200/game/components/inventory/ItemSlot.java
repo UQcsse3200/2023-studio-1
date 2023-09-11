@@ -85,9 +85,6 @@ public class ItemSlot extends Stack {
         //Add the item image to the itemSlot
         if (this.itemTexture != null) {
             itemImage = new Image(this.itemTexture);
-            itemImage.setTouchable(Touchable.enabled);
-            itemImage.setZIndex(99999);
-
             this.add(itemImage);
         }
 

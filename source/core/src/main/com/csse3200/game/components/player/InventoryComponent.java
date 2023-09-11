@@ -83,7 +83,7 @@ public class InventoryComponent extends Component {
    * @param position position of the item in inventory
    * @return entity for that position in inventory
    */
-  public Entity getItemPos(int position){
+  public Entity getItemPos(int position) {
     return itemPlace.get(position);
   }
 
@@ -161,7 +161,7 @@ public class InventoryComponent extends Component {
    */
   public void setHeldItem(int index) {
     if (index >= 0 && index < inventory.size()) {
-      this.heldItem = inventory.get(index);
+      this.heldItem = itemPlace.get(index);
       this.heldIndex = index;
     }
   }

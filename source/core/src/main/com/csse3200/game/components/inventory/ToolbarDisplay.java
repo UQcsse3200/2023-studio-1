@@ -2,9 +2,11 @@ package com.csse3200.game.components.inventory;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Align;
@@ -73,25 +75,31 @@ public class ToolbarDisplay extends UIComponent {
         final Map<Image,ItemSlot> map = new HashMap<>();
 
         for (int i = 0; i < 10; i++){
-            Label label = new Label(String.valueOf(i), skin.get("default", Label.LabelStyle.class));
-            //set the bounds of the label
-            label.setBounds(label.getX() + 15, label.getY(), label.getWidth(), label.getHeight());
+            int idx = i + 1;
+            if (idx == 10) {
+                idx = 0;
+            }
+            Label label = new Label(String.valueOf(idx) + " ", skin); //please please please work
+            label.setColor(Color.DARK_GRAY);
+            label.setAlignment(Align.topLeft);
             //stack.add(new Image(new Texture("images/itemFrame.png")));
             ItemSlot item;
             if (inventory.getItemPos(i) == null){
                 //logger.info("Null Item at "+i );
-                item = new ItemSlot(false);
+                item = new ItemSlot(i == selectedSlot);
                 //stack.add(new Image(new Texture("images/itemFrame.png")));
             } else {
                 item = new ItemSlot(
                         inventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture(),
-                        false);
-                actors.add(item.getItemImage());
-                map.put(item.getItemImage(), item);
+                        i == selectedSlot);
+
                 //stack.add(new Image(inventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture()));
             }
-            //item.setDebug(true);
-
+            item.add(label);
+            if (inventory.getItemPos(i) != null) {
+            item.setItemImage(new Image(inventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture()));}
+            actors.add(item.getItemImage());
+            map.put(item.getItemImage(), item);
 
             indexes.put(item, i);
             table.add(item).pad(10, 10, 10, 10).fill();
@@ -133,7 +141,6 @@ public class ToolbarDisplay extends UIComponent {
             map.put(item.getItemImage(), item);
             indexes.put(item, i);
             actors.add(item.getItemImage());
-
             //Create the itemslot, check if it is the active slot
             item.add(label);
             table.add(item).pad(10, 10, 10, 10).fill();
