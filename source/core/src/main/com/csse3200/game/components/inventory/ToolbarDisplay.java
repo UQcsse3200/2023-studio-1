@@ -13,20 +13,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+/**
+ * Display the UI for the toolbar
+ */
 public class ToolbarDisplay extends UIComponent {
-    private static final Logger logger = LoggerFactory.getLogger(ToolbarDisplay.class);
     private Table table;
     private Window window;
     private boolean isOpen;
-
     private InventoryComponent inventory;
-
-    private final ShapeRenderer shapeRenderer = new ShapeRenderer();
-
     private int selectedSlot = 0;
 
     /**
-     * Creates reusable ui styles and adds actors to the stage.
+     * Creates the event listeners, ui, and gets the UI.
      */
     @Override
     public void create() {
@@ -40,7 +38,7 @@ public class ToolbarDisplay extends UIComponent {
     }
 
     /**
-     * Creates actors and positions them on the stage using a table.
+     * Updates actors and re-positions them on the stage using a table.
      * @see Table for positioning options
      */
 
@@ -77,6 +75,11 @@ public class ToolbarDisplay extends UIComponent {
         // Add the window to the stage
         stage.addActor(window);
     }
+
+    /**
+     *  Creates actors and positions them on the stage using a table.
+     *  @see Table for positioning options
+     */
     private void addActors() {
         Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
         table = new Table(skin);
@@ -118,7 +121,6 @@ public class ToolbarDisplay extends UIComponent {
      */
     @Override
     public void draw(SpriteBatch batch)  {
-        // draw is handled by the stage
     }
 
     /**
