@@ -3,175 +3,175 @@ size: 3600, 1036
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-reward_available:
+reward_available
     rotate: false
     xy: 0, 0
     size: 11, 21
     orig: 11, 21
     offset: 0, 0
     index: 0
-reward_available:
+reward_available
     rotate: false
     xy: 11, 0
     size: 11, 21
     orig: 11, 21
     offset: 0, 0
     index: 1
-reward_available:
+reward_available
     rotate: false
     xy: 22, 0
     size: 11, 21
     orig: 11, 21
     offset: 0, 0
     index: 2
-reward_available:
+reward_available
     rotate: false
     xy: 33, 0
     size: 11, 21
     orig: 11, 21
     offset: 0, 0
     index: 3
-reward_available:
+reward_available
     rotate: false
     xy: 44, 0
     size: 11, 21
     orig: 11, 21
     offset: 0, 0
     index: 4
-reward_available:
+reward_available
     rotate: false
     xy: 55, 0
     size: 11, 21
     orig: 11, 21
     offset: 0, 0
     index: 5
-reward_available:
+reward_available
     rotate: false
     xy: 66, 0
     size: 11, 21
     orig: 11, 21
     offset: 0, 0
     index: 6
-reward_available:
+reward_available
     rotate: false
     xy: 77, 0
     size: 11, 21
     orig: 11, 21
     offset: 0, 0
     index: 7
-reward_available:
+reward_available
     rotate: false
     xy: 88, 0
     size: 11, 21
     orig: 11, 21
     offset: 0, 0
     index: 8
-reward_available:
+reward_available
     rotate: false
     xy: 99, 0
     size: 11, 21
     orig: 11, 21
     offset: 0, 0
     index: 9
-reward_available:
+reward_available
     rotate: false
     xy: 110, 0
     size: 11, 21
     orig: 11, 21
     offset: 0, 0
     index: 10
-reward_available:
+reward_available
     rotate: false
     xy: 121, 0
     size: 11, 21
     orig: 11, 21
     offset: 0, 0
     index: 11
-reward_available:
+reward_available
     rotate: false
     xy: 132, 0
     size: 11, 21
     orig: 11, 21
     offset: 0, 0
     index: 12
-reward_available:
+reward_available
     rotate: false
     xy: 143, 0
     size: 11, 21
     orig: 11, 21
     offset: 0, 0
     index: 13
-reward_available:
+reward_available
     rotate: false
     xy: 154, 0
     size: 11, 21
     orig: 11, 21
     offset: 0, 0
     index: 14
-reward_available:
+reward_available
     rotate: false
     xy: 165, 0
     size: 11, 21
     orig: 11, 21
     offset: 0, 0
     index: 15
-mission_available:
+mission_available
     rotate: false
     xy: 0, 21
     size: 11, 21
     orig: 11, 21
     offset: 0,0
     index: 0
-mission_available:
+mission_available
     rotate: false
     xy: 11, 21
     size: 11, 21
     orig: 11, 21
     offset: 0,0
     index: 1
-mission_available:
+mission_available
     rotate: false
     xy: 22, 21
     size: 11, 21
     orig: 11, 21
     offset: 0,0
     index: 2
-mission_available:
+mission_available
     rotate: false
     xy: 33, 21
     size: 11, 21
     orig: 11, 21
     offset: 0,0
     index: 3
-out_of_time:
+out_of_time
     rotate: false
     xy: 44, 21
     size: 11, 21
     orig: 11, 21
     offset: 0,0
     index: 0
-out_of_time:
+out_of_time
     rotate: false
     xy: 55, 21
     size: 11, 21
     orig: 11, 21
     offset: 0,0
     index: 1
-out_of_time:
+out_of_time
     rotate: false
     xy: 66, 21
     size: 11, 21
     orig: 11, 21
     offset: 0,0
     index: 2
-out_of_time:
+out_of_time
     rotate: false
     xy: 77, 21
     size: 11, 21
     orig: 11, 21
     offset: 0,0
     index: 3
-empty:
+empty
     rotate: false
     xy: 0,0
     size: 1,1
