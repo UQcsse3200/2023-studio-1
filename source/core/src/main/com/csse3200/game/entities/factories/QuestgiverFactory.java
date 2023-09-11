@@ -79,6 +79,8 @@ public class QuestgiverFactory {
     animator.addAnimation("empty", 100);
     animator.addAnimation("mission_available", 100);
     animator.addAnimation("out_of_time", 100);
+
+    animator.startAnimation("empty");
     return animator;
   }
 
