@@ -24,6 +24,8 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.IntStream;
 
 
 public class ToolbarDisplay extends UIComponent {
@@ -36,7 +38,6 @@ public class ToolbarDisplay extends UIComponent {
 
     private final ShapeRenderer shapeRenderer = new ShapeRenderer();
     private Map<ItemSlot,Integer> indexes;
-    private DragAndDrop dnd;
 
     public ToolbarDisplay() {
     }
@@ -71,8 +72,6 @@ public class ToolbarDisplay extends UIComponent {
         table = new Table(skin);
         table.defaults().size(64, 64);
         table.pad(10);
-        ArrayList<Actor> actors = new ArrayList<>();
-        final Map<Image,ItemSlot> map = new HashMap<>();
 
         for (int i = 0; i < 10; i++){
             int idx = i + 1;
@@ -96,12 +95,6 @@ public class ToolbarDisplay extends UIComponent {
                 //stack.add(new Image(inventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture()));
             }
             item.add(label);
-            if (inventory.getItemPos(i) != null) {
-            item.setItemImage(new Image(inventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture()));}
-            actors.add(item.getItemImage());
-            map.put(item.getItemImage(), item);
-
-            indexes.put(item, i);
             table.add(item).pad(10, 10, 10, 10).fill();
             //table.add(stack).pad(10, 10, 10, 10).fill();
         }
@@ -114,15 +107,11 @@ public class ToolbarDisplay extends UIComponent {
         window.setVisible(isOpen);
         // Add the window to the stage
         stage.addActor(window);
-        setDragItems(actors, map);
     }
     private void addActors() {
         Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
         table = new Table(skin);
         table.defaults().size(64, 64);
-        ArrayList<Actor> actors = new ArrayList<>(); // list of source items in DragAndDrop
-        final Map<Image,ItemSlot> map = new HashMap<>(); // map of items to their Slots
-        indexes = new HashMap<>(); // map of items to their index
         for (int i = 0; i < 10; i++) {
             //Set the indexes for the toolbar
             int idx = i + 1;
@@ -137,10 +126,6 @@ public class ToolbarDisplay extends UIComponent {
 
             ItemSlot item = new ItemSlot(i == selectedSlot);
             //item.setDebug(true);
-
-            map.put(item.getItemImage(), item);
-            indexes.put(item, i);
-            actors.add(item.getItemImage());
             //Create the itemslot, check if it is the active slot
             item.add(label);
             table.add(item).pad(10, 10, 10, 10).fill();
@@ -156,9 +141,8 @@ public class ToolbarDisplay extends UIComponent {
         window.setVisible(true);
         // Add the window to the stage
         stage.addActor(window);
-        dnd = new DragAndDrop();
-        setDragItems(actors, map);
     }
+    /*
     public void setDragItems(ArrayList<Actor> actors, Map<Image,ItemSlot> map) {
         for (Actor item : actors) {
             if (item != null) {
@@ -201,12 +185,13 @@ public class ToolbarDisplay extends UIComponent {
 
 
                         ItemSlot sourceSlot = map.get((source.getActor()));
+                        inventory.setHeldItem(indexes.get(sourceSlot));
                         inventory.swapPosition(indexes.get(sourceSlot), indexes.get(slot));
                         map.put(slot.getItemImage(), sourceSlot);
                         sourceSlot.setItemImage(slot.getItemImage());
                         map.put((Image) payload.getDragActor(),slot);
                         slot.setItemImage((Image)payload.getDragActor());
-                        //entity.getEvents().trigger("updateInventory");
+                        updateItemSlot(1);
 
 
                     }
@@ -214,7 +199,7 @@ public class ToolbarDisplay extends UIComponent {
 
             }
         }
-    }
+    } */
 
     /**
      * Draw stage for render

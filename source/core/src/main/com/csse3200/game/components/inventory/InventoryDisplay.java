@@ -17,6 +17,8 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.IntStream;
 
 /**
  * A ui component for displaying player stats, e.g. health.
@@ -150,7 +152,6 @@ public class InventoryDisplay extends UIComponent {
           payload.setObject(getActor());
           payload.setDragActor(getActor());
           stage.addActor(getActor());
-          System.out.println(item);
 
           return payload;
         }
@@ -182,7 +183,6 @@ public class InventoryDisplay extends UIComponent {
           sourceSlot.setItemImage(slot.getItemImage());
           map.put((Image) payload.getDragActor(),slot);
           slot.setItemImage((Image)payload.getDragActor());
-          entity.getEvents().trigger("updateInventory");
 
         }
       });
@@ -197,9 +197,11 @@ public class InventoryDisplay extends UIComponent {
 
   public void toggleOpen(){
     if (isOpen) {
+      entity.getEvents().trigger("updateInventory");
       window.setVisible(false);
       isOpen = false;
     } else {
+      entity.getEvents().trigger("updateInventory");
       window.setVisible(true);
       isOpen = true;
     }
