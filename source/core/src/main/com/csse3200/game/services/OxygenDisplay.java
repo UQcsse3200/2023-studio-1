@@ -68,10 +68,6 @@ public class OxygenDisplay extends UIComponent{
         int oxygenPercent = ServiceLocator.getPlanetOxygenService().getOxygenPercentage();
         float scaling = (float) oxygenPercent / 100;
 
-        if (oxygenPercent == 0) {
-            ServiceLocator.getGameArea().getPlayer().getEvents().trigger("loseScreen");
-        }
-
         // Accounts for scaling of the oxygen bar due to the oxygen percent
         oxygenFill.setX(oxygenFill.getImageX() + 14 * (1 - scaling));
         oxygenFill.setScaleX(scaling);
@@ -82,8 +78,8 @@ public class OxygenDisplay extends UIComponent{
             oxygenLabel.setPosition(oxygenOutline.getImageX() + 125f, oxygenOutline.getImageY() + 8.5f);
         }
 
-        // Uncomment line below to test that oxygen percent increases by 1% per hour.
-        //ServiceLocator.getPlanetOxygenService().addOxygen(10);
+        // Uncomment line below to test that oxygen percent decreases by 1% per hour (till endgame condition reached).
+        //ServiceLocator.getPlanetOxygenService().removeOxygen(10);
     }
 
     /**

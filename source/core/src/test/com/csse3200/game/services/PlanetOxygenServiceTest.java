@@ -30,18 +30,34 @@ class PlanetOxygenServiceTest {
     
     @Test
     void getOxygenPercentage() {
-    
+        // Test when oxygenGoal is positive
+        planetOxygenService.setOxygenGoal(1000);
+        planetOxygenService.addOxygen(400);
+
+        // Account for the initial 100 kilograms of oxygen already present.
+        assertEquals(50,planetOxygenService.getOxygenPercentage(),
+                "Oxygen percentage calculation is incorrect");
+
+        // Test when oxygenGoal is zero (should return -1) - buggy at the moment
+        //planetOxygenService.setOxygenGoal(0);
+        //assertEquals(-1, planetOxygenService.getOxygenPercentage());
     }
     
     @Test
     void setOxygenGoal() {
+        planetOxygenService.setOxygenGoal(500);
+        assertEquals(500, planetOxygenService.getOxygenGoal(),
+            "Oxygen goal was not set correctly");
     }
     
     @Test
     void getEvents() {
+        assertNotNull(planetOxygenService.getEvents(),
+            "Event handler should not be null");
     }
     
     @Test
     void update() {
+        // Do this when entity oxygen levels can be tracked.
     }
 }

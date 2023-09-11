@@ -61,6 +61,12 @@ public class PlanetOxygenService implements OxygenLevel{
             oxygenGoal = kilograms;
         }
     }
+
+    /**
+     * Gets the maximum/goal amount of oxygen to be present on the planet.
+     * @return kilograms of oxygen
+     */
+    public float getOxygenGoal() { return oxygenGoal; }
     
     /**
      * Gets the PlanetOxygenService's event handler
@@ -101,7 +107,7 @@ public class PlanetOxygenService implements OxygenLevel{
     }
     
     /**
-     * Iterated through the existing entity array and matches up each entity with
+     * Iterate through the existing entity array and matches up each entity with
      * its corresponding oxygen value acquired from the EntityType enum. Then sums
      * the hourly oxygen rate of all existing entities to provide the hourly delta.
      * @return The calculated oxygen change for the hour.
