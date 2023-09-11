@@ -241,12 +241,7 @@ public class PlayerActions extends Component {
     //Make sure its initialised
     if (inventoryComponent != null) {
       inventoryComponent.setHeldItem(index);
-    }
-
-    ToolbarDisplay toolbarDisplay = entity.getComponent(ToolbarDisplay.class);
-    //Make sure its initialised
-    if (toolbarDisplay != null) {
-      toolbarDisplay.selectItem(index);
+      inventoryComponent.setHeldIndex(index);
     }
   }
 

@@ -2,38 +2,16 @@ package com.csse3200.game.components.inventory;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-
-
-import com.csse3200.game.components.items.ItemComponent;
-
-import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.ui.UIComponent;
-
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.Screen;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 public class ToolbarDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(ToolbarDisplay.class);
@@ -45,6 +23,8 @@ public class ToolbarDisplay extends UIComponent {
 
     private final ShapeRenderer shapeRenderer = new ShapeRenderer();
 
+    private int selectedSlot = 0;
+
     /**
      * Creates reusable ui styles and adds actors to the stage.
      */
@@ -55,6 +35,7 @@ public class ToolbarDisplay extends UIComponent {
         isOpen = true;
         entity.getEvents().addListener("updateInventory", this::updateInventory);
         entity.getEvents().addListener("toggleInventory",this::toggleOpen);
+        entity.getEvents().addListener("hotkeySelection",this::updateItemSlot);
         inventory = entity.getComponent(InventoryDisplay.class).getInventory();
     }
 
@@ -71,26 +52,21 @@ public class ToolbarDisplay extends UIComponent {
         table = new Table(skin);
         table.defaults().size(64, 64);
         table.pad(10);
+
         for (int i = 0; i < 10; i++){
             Label label = new Label(String.valueOf(i), skin.get("default", Label.LabelStyle.class));
-            //set the bounds of the label
             label.setBounds(label.getX() + 15, label.getY(), label.getWidth(), label.getHeight());
-            //Stack stack = new Stack();
-            //stack.add(new Image(new Texture("images/itemFrame.png")));
             if (inventory.getItemPos(i) == null){
-                //logger.info("Null Item at "+i );
-                ItemSlot item = new ItemSlot(false);
+                ItemSlot item = new ItemSlot(i == selectedSlot);
                 table.add(item).pad(10, 10, 10, 10).fill();
-                //stack.add(new Image(new Texture("images/itemFrame.png")));
             } else {
                 ItemSlot item = new ItemSlot(
                         inventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture(),
-                        inventory.getItemCount(inventory.getItemPos(i)), false);
+                        inventory.getItemCount(inventory.getItemPos(i)), i == selectedSlot);
                 table.add(item).pad(10, 10, 10, 10).fill();
-                //stack.add(new Image(inventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture()));
             }
-            //table.add(stack).pad(10, 10, 10, 10).fill();
         }
+
         //window = new Window("", skin);
         window.pad(40, 5 , 5, 5); // Add padding to with so that the text doesn't go offscreen
         window.add(table); //Add the table to the window
@@ -118,8 +94,8 @@ public class ToolbarDisplay extends UIComponent {
             label.setColor(Color.DARK_GRAY);
             label.setAlignment(Align.topLeft);
 
-            //Create the itemslot
-            ItemSlot item = new ItemSlot(false);
+            //Create the itemslot, check if it is the active slot
+            ItemSlot item = new ItemSlot(i == selectedSlot);
             item.add(label);
             table.add(item).pad(10, 10, 10, 10).fill();
         }
@@ -132,54 +108,6 @@ public class ToolbarDisplay extends UIComponent {
         window.setMovable(false);
         window.setPosition(stage.getWidth() / 2 - window.getWidth() / 2, 0); // Clip to the bottom of the window on the stage
         window.setVisible(true);
-        // Add the window to the stage
-        stage.addActor(window);
-    }
-
-
-    public void selectItem(int index) {
-        //Remove the toolbar
-        this.dispose();
-
-        //Recreate the toolbar with the new thing highlighted
-        Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
-        table = new Table(skin);
-        table.defaults().size(64, 64);
-
-        for (int i = 0; i < 10; i++) {
-            //Set the indexes for the toolbar
-            int idx = i + 1;
-            if (idx == 10) {
-                idx = 0;
-            }
-
-            //Create the hotkey label for the index of this item
-            Label label = new Label(String.valueOf(idx) + " ", skin); //please please please work
-            label.setColor(Color.DARK_GRAY);
-            label.setAlignment(Align.topLeft);
-
-            //Make sure the item at the specific index is selected
-            boolean isSelected;
-            if (i == index) {
-                isSelected = true;
-            } else {
-                isSelected = false;
-            }
-
-            //Create the item and add it to the table
-            ItemSlot item = new ItemSlot(isSelected);
-            item.add(label);
-            table.add(item).pad(10, 10, 10, 10).fill();
-
-        }
-        // Create a window for the inventory using the skin
-        window = new Window("", skin);
-        window.pad(40, 5, 5, 5); // Add padding to with so that the text doesn't go offscreen
-        window.add(table); //Add the table to the window
-        window.pack(); // Pack the window to the size
-        window.setMovable(false);
-        window.setPosition(stage.getWidth() / 2 - window.getWidth() / 2, 0); // Clip to the bottom of the window on the stage
-        window.setVisible(!isOpen);
         // Add the window to the stage
         stage.addActor(window);
     }
@@ -216,14 +144,20 @@ public class ToolbarDisplay extends UIComponent {
     }
 
     /**
+     * Updates the player's inventory toolbar selected itemSlot.
+     * @param slotNum updated slot number
+     */
+    public void updateItemSlot(int slotNum) {
+        this.selectedSlot = inventory.getHeldIndex();
+        // refresh ui to reflect new selected slot
+        resetToolbar();
+    }
+
+    /**
      * Dispose of Toolbar
      */
     @Override
     public void dispose() {
         super.dispose();
-    }
-
-    public void updateItemSlot(int slotNum) {
-
     }
 }
