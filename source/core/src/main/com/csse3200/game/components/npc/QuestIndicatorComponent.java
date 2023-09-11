@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -27,13 +28,18 @@ public class QuestIndicatorComponent extends Component {
     public void create() {
         super.create();
         this.parentAnimator = this.entity.getComponent(AnimationRenderComponent.class);
-        updateState(State.IDLE);
+        updateState(State.QUEST_AVAILABLE);
 
-        ServiceLocator.getMissionManager().getEvents().addListener("questComplete", this::displayFinishedQuest);
-        ServiceLocator.getMissionManager().getEvents().addListener("questComplete", this::displayFinishedQuest);
-        ServiceLocator.getMissionManager().getEvents().addListener("questExpired", this::displayExpiredQuest);
+        MissionManager manager = ServiceLocator.getMissionManager();
+        manager.getEvents().addListener("questComplete", this::displayFinishedQuest);
+        manager.getEvents().addListener("questComplete", this::displayFinishedQuest);
+        manager.getEvents().addListener("questExpired", this::displayExpiredQuest);
+        manager.getEvents().addListener("questNew", this::displayNewQuest);
+    }
 
-        // Todo - get reference to questgiver: questgiver.getEvents().addListener("toggleMissions", this::markRead);
+    public void registerQuestgiver(Entity questgiver) {
+        this.questgiver = questgiver;
+        questgiver.getEvents().addListener("toggleMissions", this::markRead);
     }
 
     private void displayFinishedQuest() {
@@ -42,6 +48,10 @@ public class QuestIndicatorComponent extends Component {
 
     private void displayExpiredQuest() {
         updateState(State.OUT_OF_TIME);
+    }
+
+    private void displayNewQuest() {
+        updateState(State.QUEST_AVAILABLE);
     }
 
     private void markRead() {

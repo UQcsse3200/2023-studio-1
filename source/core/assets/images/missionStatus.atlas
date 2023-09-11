@@ -1,7 +1,7 @@
 missionStatus.png
 size: 3600, 1036
 format: RGBA8888
-filter: Linear,Linear
+filter: Nearest, Nearest
 repeat:
 default
     rotate: false
