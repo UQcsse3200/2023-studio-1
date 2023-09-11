@@ -36,7 +36,7 @@ public abstract class Quest extends Mission {
 	 * @param isMandatory A boolean value representing whether the {@link Quest} is mandatory. Mandatory {@link Quest}s
 	 *                    will result in a game over if it is not completed before it expires.
 	 */
-	public Quest(String name, Reward reward, int expiryDuration, boolean isMandatory) {
+	protected Quest(String name, Reward reward, int expiryDuration, boolean isMandatory) {
 		super(name);
 		this.reward = reward;
 		this.duration = expiryDuration;
