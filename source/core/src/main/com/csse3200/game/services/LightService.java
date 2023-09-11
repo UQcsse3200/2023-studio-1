@@ -8,9 +8,9 @@ public class LightService {
 
 	private final RayHandler rayHandler;
 	private final OrthographicCamera camera;
-	public LightService(OrthographicCamera camera) {
+	public LightService() {
 		rayHandler = new RayHandler(ServiceLocator.getPhysicsService().getPhysics().getWorld());
-		this.camera = camera;
+		this.camera = (OrthographicCamera) ServiceLocator.getCameraComponent().getCamera();
 		rayHandler.setCulling(true);
 		rayHandler.setAmbientLight(0.8f);
 		ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateAmbientLighting);

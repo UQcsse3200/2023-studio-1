@@ -2,6 +2,8 @@ package com.csse3200.game.screens;
 
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
@@ -22,6 +24,7 @@ import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
+import com.csse3200.game.rendering.Renderable;
 import com.csse3200.game.rendering.Renderer;
 import com.csse3200.game.services.*;
 import com.csse3200.game.ui.terminal.Terminal;
@@ -103,7 +106,7 @@ public class MainGameScreen extends ScreenAdapter {
     renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
     ServiceLocator.registerCameraComponent(renderer.getCamera());
 
-    ServiceLocator.registerLightService(new LightService((OrthographicCamera) renderer.getCamera().getCamera()));
+    ServiceLocator.registerLightService(new LightService());
 
     loadAssets();
 
@@ -143,7 +146,6 @@ public class MainGameScreen extends ScreenAdapter {
       ServiceLocator.getTimeService().update();
       renderer.render();
       ServiceLocator.getLightService().renderLight();
-      ui.update();
     if (lose) {
       game.setScreen(GdxGame.ScreenType.LOSESCREEN);
     }
