@@ -6,112 +6,168 @@ repeat: none
 reward_available:
     rotate: false
     xy: 0, 0
-    size: 7, 20
-    orig: 7, 20
+    size: 11, 21
+    orig: 11, 21
     offset: 0, 0
     index: 0
 reward_available:
     rotate: false
-    xy: 7, 0
-    size: 7, 20
-    orig: 7, 20
+    xy: 11, 0
+    size: 11, 21
+    orig: 11, 21
     offset: 0, 0
     index: 1
 reward_available:
     rotate: false
-    xy: 14, 0
-    size: 7, 20
-    orig: 7, 20
+    xy: 22, 0
+    size: 11, 21
+    orig: 11, 21
     offset: 0, 0
     index: 2
 reward_available:
     rotate: false
-    xy: 21, 0
-    size: 7, 20
-    orig: 7, 20
+    xy: 33, 0
+    size: 11, 21
+    orig: 11, 21
     offset: 0, 0
     index: 3
 reward_available:
     rotate: false
-    xy: 28, 0
-    size: 7, 20
-    orig: 7, 20
+    xy: 44, 0
+    size: 11, 21
+    orig: 11, 21
     offset: 0, 0
     index: 4
 reward_available:
     rotate: false
-    xy: 35, 0
-    size: 7, 20
-    orig: 7, 20
+    xy: 55, 0
+    size: 11, 21
+    orig: 11, 21
     offset: 0, 0
     index: 5
 reward_available:
     rotate: false
-    xy: 42, 0
-    size: 7, 20
-    orig: 7, 20
+    xy: 66, 0
+    size: 11, 21
+    orig: 11, 21
     offset: 0, 0
     index: 6
 reward_available:
     rotate: false
-    xy: 49, 0
-    size: 7, 20
-    orig: 7, 20
+    xy: 77, 0
+    size: 11, 21
+    orig: 11, 21
     offset: 0, 0
     index: 7
 reward_available:
     rotate: false
-    xy: 56, 0
-    size: 7, 20
-    orig: 7, 20
+    xy: 88, 0
+    size: 11, 21
+    orig: 11, 21
     offset: 0, 0
     index: 8
 reward_available:
     rotate: false
-    xy: 63, 0
-    size: 7, 20
-    orig: 7, 20
+    xy: 99, 0
+    size: 11, 21
+    orig: 11, 21
     offset: 0, 0
     index: 9
 reward_available:
     rotate: false
-    xy: 70, 0
-    size: 7, 20
-    orig: 7, 20
+    xy: 110, 0
+    size: 11, 21
+    orig: 11, 21
     offset: 0, 0
     index: 10
 reward_available:
     rotate: false
-    xy: 77, 0
-    size: 7, 20
-    orig: 7, 20
+    xy: 121, 0
+    size: 11, 21
+    orig: 11, 21
     offset: 0, 0
     index: 11
 reward_available:
     rotate: false
-    xy: 84, 0
-    size: 7, 20
-    orig: 7, 20
+    xy: 132, 0
+    size: 11, 21
+    orig: 11, 21
     offset: 0, 0
     index: 12
 reward_available:
     rotate: false
-    xy: 91, 0
-    size: 7, 20
-    orig: 7, 20
+    xy: 143, 0
+    size: 11, 21
+    orig: 11, 21
     offset: 0, 0
     index: 13
 reward_available:
     rotate: false
-    xy: 98, 0
-    size: 7, 20
-    orig: 7, 20
+    xy: 154, 0
+    size: 11, 21
+    orig: 11, 21
     offset: 0, 0
     index: 14
 reward_available:
     rotate: false
-    xy: 105, 0
-    size: 7, 20
-    orig: 7, 20
+    xy: 165, 0
+    size: 11, 21
+    orig: 11, 21
     offset: 0, 0
     index: 15
+mission_available:
+    rotate: false
+    xy: 0, 21
+    size: 11, 21
+    orig: 11, 21
+    offset: 0,0
+    index: 0
+mission_available:
+    rotate: false
+    xy: 11, 21
+    size: 11, 21
+    orig: 11, 21
+    offset: 0,0
+    index: 1
+mission_available:
+    rotate: false
+    xy: 22, 21
+    size: 11, 21
+    orig: 11, 21
+    offset: 0,0
+    index: 2
+mission_available:
+    rotate: false
+    xy: 33, 21
+    size: 11, 21
+    orig: 11, 21
+    offset: 0,0
+    index: 3
+out_of_time:
+    rotate: false
+    xy: 44, 21
+    size: 11, 21
+    orig: 11, 21
+    offset: 0,0
+    index: 0
+out_of_time:
+    rotate: false
+    xy: 55, 21
+    size: 11, 21
+    orig: 11, 21
+    offset: 0,0
+    index: 1
+out_of_time:
+    rotate: false
+    xy: 66, 21
+    size: 11, 21
+    orig: 11, 21
+    offset: 0,0
+    index: 2
+out_of_time:
+    rotate: false
+    xy: 77, 21
+    size: 11, 21
+    orig: 11, 21
+    offset: 0,0
+    index: 3
