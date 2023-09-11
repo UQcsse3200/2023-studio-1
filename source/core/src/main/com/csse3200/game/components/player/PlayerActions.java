@@ -192,7 +192,7 @@ public class PlayerActions extends Component {
     }
 
     // if there is a questgiver entity in range, trigger event toggleMissions
-    List<Entity> entitiesInRange = this.entity.getComponent(InteractionColliderComponent.class).getEntitiesInRange();
+    List<Entity> entitiesInRange = this.entity.getComponent(InteractionDetector.class).getEntitiesInRange();
 
     for (Entity entity : entitiesInRange) {
       EntityType entityType = entity.getType();

@@ -30,10 +30,10 @@ public class RunAwayTask extends ChaseTask {
   public void start() {
     status = Status.ACTIVE;
     Vector2 targetVec = new Vector2();
-    targetVec.x = owner.getEntity().getPosition().x +
-            (owner.getEntity().getPosition().x - getTarget().getPosition().x);
-    targetVec.y = owner.getEntity().getPosition().y +
-            (owner.getEntity().getPosition().y - getTarget().getPosition().y);
+    targetVec.x = owner.getEntity().getCenterPosition().x +
+            (owner.getEntity().getCenterPosition().x - getTarget().getCenterPosition().x);
+    targetVec.y = owner.getEntity().getCenterPosition().y +
+            (owner.getEntity().getCenterPosition().y - getTarget().getCenterPosition().y);
     setMovementTask(new MovementTask(targetVec, runSpeed));
     getMovementTask().create(owner);
     getMovementTask().start();
@@ -48,10 +48,10 @@ public class RunAwayTask extends ChaseTask {
   @Override
   public void update() {
     Vector2 targetVec = new Vector2();
-    targetVec.x = owner.getEntity().getPosition().x +
-            (owner.getEntity().getPosition().x - getTarget().getPosition().x);
-    targetVec.y = owner.getEntity().getPosition().y +
-            (owner.getEntity().getPosition().y - getTarget().getPosition().y);
+    targetVec.x = owner.getEntity().getCenterPosition().x +
+            (owner.getEntity().getCenterPosition().x - getTarget().getCenterPosition().x);
+    targetVec.y = owner.getEntity().getCenterPosition().y +
+            (owner.getEntity().getCenterPosition().y - getTarget().getCenterPosition().y);
     getMovementTask().setTarget(targetVec);
     getMovementTask().update();
     if (getMovementTask().getStatus() != Status.ACTIVE) {
