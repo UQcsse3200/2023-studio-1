@@ -9,7 +9,7 @@ import com.csse3200.game.services.ServiceLocator;
 public class DynamicTextureRenderComponent extends RenderComponent {
   private Texture texture;
 
-  private static int layer;
+  private int layer;
 
   /**
    * @param texturePath Internal path of static texture to render.

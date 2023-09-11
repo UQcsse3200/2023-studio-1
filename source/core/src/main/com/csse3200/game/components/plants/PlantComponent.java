@@ -1,4 +1,5 @@
 package com.csse3200.game.components.plants;
+import com.badlogic.gdx.utils.Json;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.components.Component;
 
@@ -264,5 +265,15 @@ public class PlantComponent extends Component {
     private void destroyPlant() {
         cropTile.setUnoccupied();
         entity.dispose();
+    }
+
+    @Override
+    public void write(Json json) {
+        json.writeObjectStart(this.getClass().getSimpleName());
+        json.writeValue("name", getPlantName());
+        json.writeValue("health", getPlantHealth());
+        json.writeValue("age", getCurrentAge());
+        json.writeValue("growth", getCurrentGrowthLevel());
+        json.writeObjectEnd();
     }
 }

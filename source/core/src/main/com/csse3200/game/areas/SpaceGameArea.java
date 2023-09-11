@@ -3,21 +3,31 @@ package com.csse3200.game.areas;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Json;
+import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainCropTileFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.items.ItemType;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.*;
+import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
+
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.function.Function;
 
 /** SpaceGameArea is the area used for the initial game version */
 public class SpaceGameArea extends GameArea {
@@ -99,7 +109,8 @@ public class SpaceGameArea extends GameArea {
           "images/plants/hammer_plant_seed.png",
           "images/plants/horticultural_heater_seed.png",
           "images/plants/space_snapper_seed.png",
-          "images/plants/tobacco_seed.png"
+          "images/plants/tobacco_seed.png",
+          "images/plants/Corn.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
@@ -114,6 +125,7 @@ public class SpaceGameArea extends GameArea {
   private final GameMap gameMap;
 
   private Entity player;
+  private final ClimateController climateController;
   private Entity tractor;
 
   /**
@@ -124,7 +136,8 @@ public class SpaceGameArea extends GameArea {
   public SpaceGameArea(TerrainFactory terrainFactory) {
     super();
     this.terrainFactory = terrainFactory;
-    this.gameMap = new GameMap(terrainFactory);
+    gameMap = new GameMap(terrainFactory);
+    climateController = new ClimateController();
     ServiceLocator.registerGameArea(this);
   }
 
@@ -136,8 +149,7 @@ public class SpaceGameArea extends GameArea {
     displayUI();
 
     spawnTerrain();
-    spawnCrop(); // temp
-    spawnTrees();
+    //spawnTrees();
 
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
@@ -165,6 +177,9 @@ public class SpaceGameArea extends GameArea {
 
   public Entity getPlayer() {
     return player;
+  }
+  public ClimateController getClimateController() {
+    return climateController;
   }
 
   private void displayUI() {
@@ -219,10 +234,9 @@ public class SpaceGameArea extends GameArea {
     GridPoint2 pos = new GridPoint2(10, 11);
     Entity newPlayer = TerrainCropTileFactory.createTerrainEntity(0,0);
     spawnEntityAt(newPlayer, pos, true, true);
-    Entity newPlayer2 = TerrainCropTileFactory.createTerrainEntity(1,0);
-    spawnEntityAt(newPlayer2, pos, true, true);
-    Entity newPlayer3 = TerrainCropTileFactory.createTerrainEntity(0,1);
-    spawnEntityAt(newPlayer3, pos, true, true);
+    Entity plant = FactoryService.getPlantFactories().get("Cosmic Cob").apply(newPlayer.getComponent(CropTileComponent.class));
+    ServiceLocator.getEntityService().register(plant);
+    newPlayer.getComponent(CropTileComponent.class).setPlant(plant);
     return newPlayer;
   }
 
@@ -299,7 +313,7 @@ public class SpaceGameArea extends GameArea {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 5; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity cow = NPCFactory.createCow(player);
       spawnEntityAt(cow, randomPos, true, true);
@@ -367,10 +381,17 @@ public class SpaceGameArea extends GameArea {
   }
 
   /**
-   * Does not set the camera to the Entity instead sets a camera variable inside of scripts
-   * to do that later
+   * Returns the tractor entity
    */
   public Entity getTractor() {
     return tractor;
+  }
+
+
+  /**
+   * Returns the game map
+   */
+  public GameMap getMap() {
+    return gameMap;
   }
 }
