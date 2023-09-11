@@ -98,9 +98,9 @@ public class Renderer implements Disposable {
 
     batch.begin();
     renderService.render(batch);
-    if (ServiceLocator.getLightService() != null) {
-      ServiceLocator.getLightService().renderLight();
-    }
+//    if (ServiceLocator.getLightService() != null) {
+//      ServiceLocator.getLightService().renderLight();
+//    }
     batch.end();
     debugRenderer.render(projMatrix);
 
