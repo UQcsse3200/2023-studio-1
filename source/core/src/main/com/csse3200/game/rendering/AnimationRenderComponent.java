@@ -42,6 +42,8 @@ public class AnimationRenderComponent extends RenderComponent {
   private String currentAnimationName;
   private float animationPlayTime;
   private final float scaleFactor;
+  private boolean animationPaused = false;
+  private float animationPauseStart;
 
   /**
    * Create the component for a given texture atlas.
@@ -169,6 +171,15 @@ public class AnimationRenderComponent extends RenderComponent {
    */
   public String getCurrentAnimation() {
     return currentAnimationName;
+  }
+
+  public void togglePauseAnimation() {
+    animationPaused = !animationPaused;
+    if (animationPaused) {
+      animationPauseStart = animationPlayTime;
+    } else {
+      animationPlayTime = animationPauseStart;
+    }
   }
 
   /**

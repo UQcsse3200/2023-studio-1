@@ -4,11 +4,11 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.SpaceGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.maingame.MainGameActions;
+import com.csse3200.game.components.maingame.PauseMenuActions;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
@@ -19,7 +19,6 @@ import com.csse3200.game.input.InputDecorator;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
-import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
 import com.csse3200.game.services.*;
@@ -65,9 +64,14 @@ public class MainGameScreen extends ScreenAdapter {
           "images/time_system_ui/indicator_22.png",
           "images/time_system_ui/indicator_23.png",
   };
+
+  private static final String[] pauseMenuTextures =
+          {"images/PauseMenu/Pausenew.jpg"};
+
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 
   private final GdxGame game;
+  private static Component mainGameActions;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
 
@@ -117,6 +121,10 @@ public class MainGameScreen extends ScreenAdapter {
     ServiceLocator.getEntityService().update();
     ServiceLocator.getTimeService().update();
     renderer.render();
+    if (PauseMenuActions.getQuitGameStatus()) {
+      mainGameActions.getEntity().getEvents().trigger("exit");
+      PauseMenuActions.setQuitGameStatus();
+    }
   }
 
   @Override
@@ -168,6 +176,7 @@ public class MainGameScreen extends ScreenAdapter {
    */
   private void createUI() {
     logger.debug("Creating ui");
+    mainGameActions = new MainGameActions(this.game);
     Stage stage = ServiceLocator.getRenderService().getStage();
     InputComponent inputComponent =
         ServiceLocator.getInputService().getInputFactory().createForTerminal();
@@ -175,12 +184,14 @@ public class MainGameScreen extends ScreenAdapter {
     Entity ui = new Entity();
     ui.addComponent(new InputDecorator(stage, 10))
         .addComponent(new PerformanceDisplay())
-        .addComponent(new MainGameActions(this.game))
+        .addComponent(mainGameActions)
+       // .addComponent(new MainGameActions(this.game))
         .addComponent(new MainGameExitDisplay())
         .addComponent(new Terminal())
         .addComponent(inputComponent)
         .addComponent(new TerminalDisplay())
-        .addComponent(new GameTimeDisplay());
+        .addComponent(new GameTimeDisplay())
+        .addComponent(new PauseMenuActions());
 
     ServiceLocator.getEntityService().register(ui);
   }

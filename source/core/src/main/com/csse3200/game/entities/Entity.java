@@ -5,7 +5,14 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntMap;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ComponentType;
+import com.csse3200.game.components.npc.AnimalAnimationController;
+import com.csse3200.game.components.npc.GhostAnimationController;
+import com.csse3200.game.components.npc.TamableComponent;
+import com.csse3200.game.components.player.ItemPickupComponent;
+import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
+import com.csse3200.game.components.player.PlayerAnimationController;
 import com.csse3200.game.events.EventHandler;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -248,6 +255,32 @@ public class Entity {
     }
     for (Component component : createdComponents) {
       component.triggerUpdate();
+    }
+  }
+
+  public void togglePauseAnimations(boolean pausePlayer) {
+    if (!pausePlayer) {
+      for (Component component : createdComponents) {
+        if (component instanceof KeyboardPlayerInputComponent ||
+                component instanceof PlayerAnimationController ||
+                component instanceof AnimalAnimationController ||
+                component instanceof GhostAnimationController ||
+                component instanceof TamableComponent ||
+                component instanceof ItemPickupComponent
+        ) {
+          return;
+        }
+      }
+    }
+    for (Component component : createdComponents) {
+      if (component instanceof PlayerAnimationController) {
+        return;
+      }
+    }
+    for (Component component : createdComponents) {
+      if (component instanceof AnimationRenderComponent) {
+        ((AnimationRenderComponent) component).togglePauseAnimation();
+      }
     }
   }
 

@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.inventory.ToolbarDisplay;
+import com.csse3200.game.components.maingame.PauseMenuActions;
 import com.csse3200.game.components.player.*;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
@@ -60,10 +61,12 @@ public class PlayerFactory {
             .addComponent(new InventoryComponent(new ArrayList<Entity>()))
             .addComponent(inputComponent)
             .addComponent(animator)
+            .addComponent(new OpenPauseComponent())
             .addComponent(new PlayerAnimationController())
             .addComponent(new ItemPickupComponent())
             .addComponent(new InventoryDisplay())
-            .addComponent(new ToolbarDisplay());
+            .addComponent(new ToolbarDisplay())
+            .addComponent(new PauseMenuActions());
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
