@@ -6,6 +6,7 @@ import com.csse3200.game.missions.rewards.Reward;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -208,6 +209,11 @@ class QuestTest {
         };
     }
 
+    @AfterAll
+    public static void end() {
+        ServiceLocator.clear();
+    }
+
     @Test
     public void testGetName() {
         assertEquals("My Quest 1", q1.getName());
@@ -387,6 +393,50 @@ class QuestTest {
         ServiceLocator.getMissionManager().getEvents().trigger("e2");
         q5.collectReward();
         assertTrue(r5.isCollected());
+    }
+
+    @Test
+    public void testCollectRewardOnlyCollectsOnce() {
+        int[] counts = new int[]{0};
+        Reward r = new Reward() {
+            @Override
+            public void collect() {
+                counts[0]++;
+                setCollected();
+            }
+        };
+        Quest q = new Quest("", r, 0, false) {
+            @Override
+            protected void resetState() {
+            }
+
+            @Override
+            public void registerMission(EventHandler missionManagerEvents) {
+            }
+
+            @Override
+            public boolean isCompleted() {
+                return true;
+            }
+
+            @Override
+            public String getDescription() {
+                return null;
+            }
+
+            @Override
+            public String getShortDescription() {
+                return null;
+            }
+        };
+
+        assertEquals(0, counts[0]);
+        q.collectReward();
+        assertEquals(1, counts[0]);
+        q.collectReward();
+        assertEquals(1, counts[0]);
+        q.collectReward();
+        assertEquals(1, counts[0]);
     }
 
     @Test

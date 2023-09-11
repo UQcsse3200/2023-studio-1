@@ -1,9 +1,13 @@
 package com.csse3200.game.missions.rewards;
 
 import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
@@ -29,6 +33,21 @@ class ItemRewardTest {
         @Override
         public Entity getPlayer() {
             return player;
+        }
+
+        @Override
+        public ClimateController getClimateController() {
+            return null;
+        }
+
+        @Override
+        public Entity getTractor() {
+            return null;
+        }
+
+        @Override
+        public GameMap getMap() {
+            return null;
         }
     }
 
@@ -56,6 +75,11 @@ class ItemRewardTest {
         items3.add(e3);
         items3.add(e4);
         r3 = new ItemReward(items3);
+    }
+
+    @AfterEach
+    void afterTest() {
+        ServiceLocator.clear();
     }
 
     @Test
@@ -87,5 +111,4 @@ class ItemRewardTest {
         assertEquals(initialPlayerInventory, ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class));
         assertTrue(r3.isCollected());
     }
-
 }

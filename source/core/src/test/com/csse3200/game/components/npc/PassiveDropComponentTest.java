@@ -2,6 +2,8 @@ package com.csse3200.game.components.npc;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
@@ -70,6 +72,21 @@ class PassiveDropComponentTest {
             public Entity getPlayer() {
                 return null;
             }
+
+            @Override
+            public ClimateController getClimateController() {
+                return null;
+            }
+
+            @Override
+            public Entity getTractor() {
+                return null;
+            }
+
+            @Override
+            public GameMap getMap() {
+                return null;
+            }
         });
         GameTime gameTime = mock(GameTime.class);
         ServiceLocator.registerTimeSource(gameTime);
@@ -104,5 +121,4 @@ class PassiveDropComponentTest {
         //Assert nothing has happened
         assertTrue(ServiceLocator.getEntityService().getSize() == initialEntityCount);
     }
-
 }
