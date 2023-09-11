@@ -33,7 +33,7 @@ public class InventoryComponent extends Component {
     return itemPlace.size();
   }
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
-  private final List<Entity> inventory = new ArrayList<Entity>();
+  private final List<Entity> inventory = new ArrayList<>();
   private final HashMap<Entity, Integer> itemCount = new HashMap<>();
   private final HashMap<Entity, Point> itemPosition = new HashMap<>();
 
@@ -42,8 +42,6 @@ public class InventoryComponent extends Component {
   private Entity heldItem = null;
 
   private int heldIndex = 0;
-  private int firstEmptyIndex = 0;
-
 
   public InventoryComponent(List<Entity> items) {
     setInventory(items);
