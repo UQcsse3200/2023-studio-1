@@ -82,13 +82,13 @@ public class ToolbarDisplay extends UIComponent {
             ItemSlot item;
             if (inventory.getItemPos(i) == null){
                 //logger.info("Null Item at "+i );
-                item = new ItemSlot();
+                item = new ItemSlot(false);
 
                 //stack.add(new Image(new Texture("images/itemFrame.png")));
             } else {
                 item = new ItemSlot(
                         inventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture(),
-                        inventory.getItemCount(inventory.getItemPos(i)));
+                        false);
                 //stack.add(new Image(inventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture()));
             }
             Container<ItemSlot> container = new Container<>(item);
@@ -130,11 +130,13 @@ public class ToolbarDisplay extends UIComponent {
             Label label = new Label(String.valueOf(idx) + " ", skin); //please please please work
             label.setColor(Color.DARK_GRAY);
             label.setAlignment(Align.topLeft);
-            Container<ItemSlot> container = new Container<>(item);
-            container.setTouchable(Touchable.enabled);
+
+
             //container.setDebug(true);
             //item.setDebug(true);
             ItemSlot item = new ItemSlot(i == selectedSlot);
+            Container<ItemSlot> container = new Container<>(item);
+            container.setTouchable(Touchable.enabled);
             map.put(item, container);
             indexes.put(item, i);
             actors.add(item);

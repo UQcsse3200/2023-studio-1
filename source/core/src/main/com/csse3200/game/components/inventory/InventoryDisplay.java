@@ -66,12 +66,12 @@ public class InventoryDisplay extends UIComponent {
       ItemSlot item;
       if (playerInventory.getItemPos(i) == null) {
         //logger.info("Null Item at "+i );
-        item = new ItemSlot();
+        item = new ItemSlot(false);
 
       } else {
         item = new ItemSlot(
                 playerInventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture(),
-                playerInventory.getItemCount(playerInventory.getItemPos(i)));
+                false);
         //stack.add(new Image(playerInventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture()));
       }
       Container<ItemSlot> container = new Container<>(item);
@@ -114,7 +114,7 @@ public class InventoryDisplay extends UIComponent {
     indexes = new HashMap<>(); // map of items to their index
     for (int i = 0; i < 30; i++) {
       //Add the items to the table
-      ItemSlot item = new ItemSlot();
+      ItemSlot item = new ItemSlot(false);
       Container<ItemSlot> container = new Container<>(item);
       container.setTouchable(Touchable.enabled);
       //container.setDebug(true);
@@ -148,6 +148,7 @@ public class InventoryDisplay extends UIComponent {
 
 
     for (Actor item : actors) {
+      if (indexes.get(item) != null)
       dnd.addSource(new DragAndDrop.Source(item) {
         DragAndDrop.Payload payload = new DragAndDrop.Payload();
         @Override

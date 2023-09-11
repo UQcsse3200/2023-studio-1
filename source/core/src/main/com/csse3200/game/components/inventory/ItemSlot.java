@@ -21,6 +21,7 @@ public class ItemSlot extends Stack {
     private Image frame;
 
     private boolean selected;
+    private Image itemImage;
 
     public ItemSlot(Texture itemTexture, Integer count, boolean selected) {
         this.itemTexture = itemTexture;
@@ -79,7 +80,8 @@ public class ItemSlot extends Stack {
 
         //Add the item image to the itemSlot
         if (this.itemTexture != null) {
-            this.add(new Image(this.itemTexture));
+            itemImage = new Image(this.itemTexture);
+            this.add(itemImage);
         }
 
         //Add the count label if the number is not 0
@@ -88,4 +90,11 @@ public class ItemSlot extends Stack {
         }
     }
 
+    public Image getItemImage() {
+        return itemImage;
+    }
+    public void setItemImage(Image image) {
+        this.removeActor(itemImage);
+        this.add(image);
+    }
 }
