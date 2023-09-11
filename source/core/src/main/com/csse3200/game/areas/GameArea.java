@@ -4,11 +4,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
+import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainComponent;
+import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.ServiceLocator;
-
+import com.badlogic.gdx.utils.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -77,11 +81,34 @@ public abstract class GameArea implements Disposable {
     entity.setPosition(worldPos);
     spawnEntity(entity);
   }
+
+
+
   public void removeEntity(Entity entity) {
     entity.setEnabled(false);
     areaEntities.remove(entity);
-    Gdx.app.postRunnable(entity::dispose); //TODO: What does this do
+    Gdx.app.postRunnable(entity::dispose);
+  }
+
+  /**
+   * Loops through the games npcs and removes them. Removes all
+   *  animals, crop tiles, and plants from the game.
+   * @param entities Array of entities currently in game.
+   */
+  public void removeLoadableEntities(Array<Entity> entities) {
+    ArrayList<EntityType> loadableTypes = new ArrayList<>(Arrays.asList(EntityType.Tile, EntityType.Cow,
+            EntityType.Cow, EntityType.Chicken, EntityType.Astrolotl, EntityType.Plant, EntityType.Tile, EntityType.OxygenEater));
+    for (Entity e : entities) {
+      if (loadableTypes.contains(e.getType())) {
+        removeEntity(e);
+      }
+    }
   }
 
   public abstract Entity getPlayer();
+  public abstract ClimateController getClimateController();
+
+  public abstract Entity getTractor();
+
+  public abstract GameMap getMap();
 }

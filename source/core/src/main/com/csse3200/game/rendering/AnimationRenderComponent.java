@@ -34,6 +34,8 @@ import java.util.Map;
  * - other third-party tools, e.g. https://www.codeandweb.com/texturepacker <br>
  */
 public class AnimationRenderComponent extends RenderComponent {
+
+  private static final int DEFAULT_LAYER = 4;
   private static final Logger logger = LoggerFactory.getLogger(AnimationRenderComponent.class);
   private final GameTime timeSource;
   private final TextureAtlas atlas;
@@ -196,8 +198,13 @@ public class AnimationRenderComponent extends RenderComponent {
   }
 
   @Override
+  public int getLayer() {
+    return DEFAULT_LAYER;
+  }
+
+  @Override
   public void dispose() {
-    atlas.dispose();
+    //atlas.dispose();
     super.dispose();
   }
 }

@@ -1,5 +1,6 @@
 package com.csse3200.game.components.items;
 
+import com.badlogic.gdx.utils.Json;
 import com.csse3200.game.components.Component;
 
 public class WateringCanLevelComponent extends Component {
@@ -14,7 +15,7 @@ public class WateringCanLevelComponent extends Component {
      */
     public WateringCanLevelComponent() {
         capacity = 50; 
-        currentLevel = 0;
+        currentLevel = capacity;
     }
 
     /**
@@ -25,7 +26,7 @@ public class WateringCanLevelComponent extends Component {
      */
     public WateringCanLevelComponent(float newCapacity) {
         capacity = newCapacity; 
-        currentLevel = 0;
+        currentLevel = capacity;
     }
 
     /**
@@ -95,5 +96,10 @@ public class WateringCanLevelComponent extends Component {
         }
 
         currentLevel += increment;
+    }
+
+    @Override
+    public void write(Json json) {
+        json.writeValue("level", getCurrentLevel());
     }
 }

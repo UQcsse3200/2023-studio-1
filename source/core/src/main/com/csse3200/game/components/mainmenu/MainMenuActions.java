@@ -20,6 +20,7 @@ public class MainMenuActions extends Component {
   public void create() {
     entity.getEvents().addListener("start", this::onStart);
     entity.getEvents().addListener("load", this::onLoad);
+    entity.getEvents().addListener("control", this::onControls);
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("settings", this::onSettings);
   }
@@ -29,6 +30,7 @@ public class MainMenuActions extends Component {
    */
   private void onStart() {
     logger.info("Start game");
+    //Check ask if the player is sure they want to start a new game
     game.setScreen(GdxGame.ScreenType.INTRO);
   }
 
@@ -38,6 +40,14 @@ public class MainMenuActions extends Component {
    */
   private void onLoad() {
     logger.info("Load game");
+    game.setScreen(GdxGame.ScreenType.LOAD_GAME);
+  }
+
+  /**
+   * opens controls screen
+   */
+  private void onControls() {
+    logger.info("Launching control screen");
     game.setScreen(GdxGame.ScreenType.CONTROLS);
   }
 
