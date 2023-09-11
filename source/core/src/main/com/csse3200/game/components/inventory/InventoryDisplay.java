@@ -26,14 +26,17 @@ public class InventoryDisplay extends UIComponent {
   private Table table;
   private InventoryComponent playerInventory;
   private Window window;
-  private boolean isOpen;
+  private boolean isOpen = false;
   private DragAndDrop dnd;
   private Map<ItemSlot,Integer> indexes;
 
+  /**
+   * Constructor for class
+   * @param playerInventory inventory of player
+   */
   public InventoryDisplay(InventoryComponent playerInventory) {
     this.playerInventory = playerInventory;
   }
-
 
   /**
    * Creates reusable ui styles and adds actors to the stage.
@@ -42,14 +45,14 @@ public class InventoryDisplay extends UIComponent {
   public void create() {
     super.create();
     addActors();
-    isOpen = false;
-    entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
     entity.getEvents().addListener("toggleInventory",this::toggleOpen);
     entity.getEvents().addListener("updateInventory",this::updateInventory);
   }
 
+  /**
+   * Re-renders the Inventory UI, when a change is made to the inventory
+   */
   private void resetInventory(){
-    //logger.info("Reset Inventory..........................................");
     window.reset();
     dnd.clear();
     Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
@@ -86,14 +89,12 @@ public class InventoryDisplay extends UIComponent {
         //Add a new row every 10 items
         table.row();
       }
-      //table.add(stack).pad(10, 10, 10, 10).fill();
     }
-    //window = new Window("", skin);
-    window.pad(40, 5, 5, 5); // Add padding to with so that the text doesn't go offscreen
-    window.add(table); //Add the table to the window
-    window.pack(); // Pack the window to the size
+    window.pad(40, 5, 5, 5);
+    window.add(table);
+    window.pack();
     window.setMovable(false);
-    window.setPosition(stage.getWidth() / 2 - window.getWidth() / 2, 0); // Clip to the bottom of the window on the stage
+    window.setPosition(stage.getWidth() / 2 - window.getWidth() / 2, 0);
     window.setVisible(isOpen);
     // Add the window to the stage
     stage.addActor(window);
@@ -105,7 +106,6 @@ public class InventoryDisplay extends UIComponent {
    * @see Table for positioning options
    */
   private void addActors() {
-    Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
     table = new Table(skin);
     table.defaults().size(64, 64);
     table.pad(10);
@@ -196,42 +196,45 @@ public class InventoryDisplay extends UIComponent {
     }
   }
 
-  @Override
-  public void draw(SpriteBatch batch)  {
-    // draw is handled by the stage
-  }
 
-  public void toggleOpen(){
-    if (isOpen) {
-      entity.getEvents().trigger("updateInventory");
-      window.setVisible(false);
-      isOpen = false;
-    } else {
-      entity.getEvents().trigger("updateInventory");
-      window.setVisible(true);
-      isOpen = true;
-    }
+  /**
+   * The draw stage of the UIComponent, it is handled by the stage
+   * @param batch Batch to render to.
+   */
+  @Override
+  public void draw(SpriteBatch batch) {
+
   }
 
   /**
-   * Updates the player's health on the ui.
-   * @param health player health
+   * Toggle the inventory open, and changes the window visibility
    */
-  public void updatePlayerHealthUI(int health) {
-    CharSequence text = String.format("Health: %d", health);
+  public void toggleOpen(){
+      entity.getEvents().trigger("updateInventory");
+      isOpen = !isOpen;
+    window.setVisible(isOpen);
   }
 
+  /**
+   * Fetches the player inventory and returns it
+   * @return playerInventory inventory attached to player
+   */
   public InventoryComponent getInventory(){
     return this.playerInventory;
   }
 
+  /**
+   * Force update of the display after update inventory event is called
+   */
   public void updateInventory(){
     playerInventory = entity.getComponent(InventoryComponent.class);
     resetInventory();
 
   }
 
-
+  /**
+   * Dispose of the component
+   */
   @Override
   public void dispose() {
     super.dispose();
