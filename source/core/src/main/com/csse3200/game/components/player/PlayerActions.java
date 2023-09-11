@@ -102,24 +102,6 @@ public class PlayerActions extends Component {
     }
   }
 
-  private Vector2 TileAffectedSpeed(Vector2 runSpeed) {
-    // player position
-    /*Vector2 playerPos = entity.getPosition();
-    playerPos.x = Math.round(playerPos.x);
-    playerPos.y = Math.round(playerPos.y);
-    if (this.moveDirection.angleDeg() < 45 && map.getTile((int)playerPos.x +1, (int)playerPos.y) != null && !map.getTile((int)playerPos.x +1, (int)playerPos.y).isTraversable()) {
-      return new Vector2(0, runSpeed.y);
-    } else if (this.moveDirection.angleDeg() < 135 && map.getTile((int)playerPos.x +1, (int)playerPos.y) != null && !map.getTile((int)playerPos.x, (int)playerPos.y +1).isTraversable()) {
-      return new Vector2(runSpeed.x, 0);
-    } else if (this.moveDirection.angleDeg() < 225 && map.getTile((int)playerPos.x +1, (int)playerPos.y) != null && !map.getTile((int)playerPos.x -1, (int)playerPos.y).isTraversable()) {
-      return new Vector2(0, runSpeed.y);
-    } else if (this.moveDirection.angleDeg() < 315 && map.getTile((int)playerPos.x +1, (int)playerPos.y) != null && !map.getTile((int)playerPos.x, (int)playerPos.y -1).isTraversable()) {
-      return new Vector2(runSpeed.x, 0);
-    }*/
-    // the getTile is not working as expected
-    return runSpeed;
-  }
-
   private void updateSpeed() {
     Body body = physicsComponent.getBody();
     Vector2 velocity = body.getLinearVelocity();
