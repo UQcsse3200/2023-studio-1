@@ -116,6 +116,26 @@ public class InventoryComponent extends Component {
     }
   }
 
+  public void setHeldItem(int index) {
+    if (index >= 0 && index < inventory.size()) {
+      this.heldItem = inventory.get(index);
+    }
+  }
+
+  /**
+   * Retrieves the held item of the Player.
+   *
+   * @return The Entity representing the held item.
+   * @throws IllegalStateException If the player is not holding an item.
+   */
+  public Entity getHeldItem() {
+    if (this.heldItem != null) {
+      return this.heldItem;
+    }
+    return null;
+  }
+
+
   public Entity getInHand() {
     return createHoe();
   }
