@@ -37,17 +37,30 @@ class PlanetOxygenServiceTest {
         // Account for the initial 100 kilograms of oxygen already present.
         assertEquals(50,planetOxygenService.getOxygenPercentage(),
                 "Oxygen percentage calculation is incorrect");
-
-        // Test when oxygenGoal is zero (should return -1) - buggy at the moment
-        //planetOxygenService.setOxygenGoal(0);
-        //assertEquals(-1, planetOxygenService.getOxygenPercentage());
     }
     
     @Test
     void setOxygenGoal() {
+        // Test when oxygen goal is set correctly
         planetOxygenService.setOxygenGoal(500);
         assertEquals(500, planetOxygenService.getOxygenGoal(),
             "Oxygen goal was not set correctly");
+
+        // Test when oxygen goal is set to 0
+        try {
+            planetOxygenService.setOxygenGoal(0);
+            fail("Should have caught the IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            assertTrue(true);
+        }
+
+        // Test when oxygen goal is set to a negative number
+        try {
+            planetOxygenService.setOxygenGoal(-20);
+            fail("Should have caught the IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            assertTrue(true);
+        }
     }
     
     @Test
