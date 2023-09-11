@@ -14,7 +14,7 @@ public abstract class Mission {
      *
      * @param name The {@link String} name of the {@link Mission}, visible to the player in-game.
      */
-    public Mission(String name) {
+    protected Mission(String name) {
         this.name = name;
     }
 
