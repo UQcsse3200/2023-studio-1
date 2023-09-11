@@ -76,6 +76,9 @@ public class QuestgiverFactory {
         16f);
 
     animator.addAnimation("reward_available", 100);
+    animator.addAnimation("empty", 100);
+    animator.addAnimation("mission_available", 100);
+    animator.addAnimation("out_of_time", 100);
     return animator;
   }
 
