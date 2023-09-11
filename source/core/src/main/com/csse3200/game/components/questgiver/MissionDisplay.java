@@ -148,10 +148,22 @@ public class MissionDisplay extends UIComponent {
             }
         });
 
+
+        /* CLOSE MENU BUTTON QUICK FIX */
+        TextButton closeButton = new TextButton("Close", skin);
+        closeButton.addListener(new ChangeListener() {
+                                    @Override
+                                    public void changed(ChangeEvent event, Actor actor) {
+                                        toggleOpen();
+                                    }
+                                });
+
+
         Table buttonTable = new Table();
         buttonTable.row();
         buttonTable.add(achievementsButton).pad(30f);
         buttonTable.add(questsButton).pad(30f);
+        buttonTable.add(closeButton).pad(30f); // QUICK FIX
 
         Label missionDescription = new Label(
                 "Looks like your skills could be useful for us here on Alpha Centauri. Why don't you take a look at how you can help?",
@@ -164,7 +176,7 @@ public class MissionDisplay extends UIComponent {
 
         Table contentTable = new Table();
 
-        contentTable.defaults().size(500f, 50f);
+        contentTable.defaults().size(600f, 50f);
         contentTable.row().padBottom(30f).padTop(30f);
         contentTable.add(missionDescription).center().expand();
         contentTable.row();
