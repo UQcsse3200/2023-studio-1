@@ -1,3 +1,5 @@
+package com.csse3200.game.files;
+
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainCropTileFactory;

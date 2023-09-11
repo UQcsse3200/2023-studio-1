@@ -1,4 +1,4 @@
-package com.csse3200.game.components.missioninformation;
+package com.csse3200.game.components.questgiver;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -529,6 +529,7 @@ public class MissionDisplay extends UIComponent {
      * Toggles the visibility of the main mission ui.
      */
     public void toggleOpen() {
+        
         if (isOpen) {
             window.setVisible(false);
             achWindow.setVisible(false);
