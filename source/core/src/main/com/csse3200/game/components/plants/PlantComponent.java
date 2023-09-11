@@ -38,11 +38,6 @@ public class PlantComponent extends Component {
     private final String plantDescription;
 
     /**
-     * Indicates if the plant is currently in a state of decay.
-     */
-    private boolean decay;
-
-    /**
      * Ideal water level of the plant. A factor when determining the growth rate.
      */
     private final float idealWaterLevel;
@@ -94,7 +89,7 @@ public class PlantComponent extends Component {
     /**
      * The paths to the sounds associated with the plant.
      */
-    private String[] sounds;
+    private String[] soundsPlants = {"","","","","","","",""};
 
     /**
      * The current max health. This limits the amount of health a plant can have at different growth stages.
@@ -144,7 +139,6 @@ public class PlantComponent extends Component {
         this.adultLifeSpan = adultLifeSpan;
         this.maxHealth = maxHealth;
         this.cropTile = cropTile;
-        this.decay = false;
         this.currentGrowthLevel = 0;
         this.growthStages = GrowthStage.SEEDLING;
 
@@ -168,58 +162,6 @@ public class PlantComponent extends Component {
     }
 
     /**
-     * Constructor used for plant types that have growthStageThresholds different from the default
-     * values.
-     *
-     * @param health - health of the plant
-     * @param name - name of the plant
-     * @param plantType - type of the plant
-     * @param plantDescription - description of the plant
-     * @param idealWaterLevel - The ideal water level for a plant
-     * @param adultLifeSpan - How long a plant will live for once it becomes an adult
-     * @param maxHealth - The maximum health a plant can reach as an adult
-     * @param cropTile - The cropTileComponent where the plant will be located.
-     * @param growthStageThresholds - A list of three integers that represent the growth thresholds.
-     * @param soundsArray - A list of all sound files filepaths as strings
-     * @param growthStageImagePaths - image paths for the different growth stages.
-     */
-    public PlantComponent(int health, String name, String plantType, String plantDescription,
-                          float idealWaterLevel, int adultLifeSpan, int maxHealth,
-                          CropTileComponent cropTile, int[] growthStageThresholds,
-                          String[] soundsArray, String[] growthStageImagePaths) {
-        this.plantHealth = health;
-        this.plantName = name;
-        this.plantType = plantType;
-        this.plantDescription = plantDescription;
-        this.idealWaterLevel = idealWaterLevel;
-        this.adultLifeSpan = adultLifeSpan;
-        this.maxHealth = maxHealth;
-        this.cropTile = cropTile;
-        this.decay = false;
-        this.currentGrowthLevel = 0;
-        this.sounds = soundsArray;
-        this.growthStages = GrowthStage.SEEDLING;
-
-
-        // Initialise growth stage thresholds for specific plants.
-        this.growthStageThresholds[0] = growthStageThresholds[0];
-        this.growthStageThresholds[1] = growthStageThresholds[1];
-        this.growthStageThresholds[2] = growthStageThresholds[2];
-
-        // Initialise max health values to be changed at each growth stage
-        this.maxHealthAtStages[0] = 0.05 * maxHealth;
-        this.maxHealthAtStages[1] = 0.1 * maxHealth;
-        this.maxHealthAtStages[2] = 0.3 * maxHealth;
-
-        // Initialise the image paths for the growth stages
-        this.growthStageImagePaths[0] = growthStageImagePaths[0];
-        this.growthStageImagePaths[1] = growthStageImagePaths[1];
-        this.growthStageImagePaths[2] = growthStageImagePaths[2];
-        this.growthStageImagePaths[3] = growthStageImagePaths[3];
-        this.growthStageImagePaths[4] = growthStageImagePaths[4];
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -231,7 +173,7 @@ public class PlantComponent extends Component {
         entity.getEvents().addListener("destroyPlant", this::destroyPlant);
         entity.getEvents().addListener("attack", this::attack);
         ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateGrowthStage);
-        ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::adultLifeSpan);
+        ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::beginDecay);
         this.currentTexture = entity.getComponent(DynamicTextureRenderComponent.class);
     }
 
@@ -302,7 +244,60 @@ public class PlantComponent extends Component {
      * @param decay - Whether the plant is decaying or not
      */
     public void setDecay(boolean decay) {
-        this.decay = decay;
+        if (decay) {
+            this.growthStages = GrowthStage.DECAYING;
+        }
+    }
+
+    /**
+     * Constructor used for plant types that have growthStageThresholds different from the default
+     * values.
+     *
+     * @param health - health of the plant
+     * @param name - name of the plant
+     * @param plantType - type of the plant
+     * @param plantDescription - description of the plant
+     * @param idealWaterLevel - The ideal water level for a plant
+     * @param adultLifeSpan - How long a plant will live for once it becomes an adult
+     * @param maxHealth - The maximum health a plant can reach as an adult
+     * @param cropTile - The cropTileComponent where the plant will be located.
+     * @param growthStageThresholds - A list of three integers that represent the growth thresholds.
+     * @param soundsArray - A list of all sound files filepaths as strings
+     * @param growthStageImagePaths - image paths for the different growth stages.
+     */
+    public PlantComponent(int health, String name, String plantType, String plantDescription,
+                          float idealWaterLevel, int adultLifeSpan, int maxHealth,
+                          CropTileComponent cropTile, int[] growthStageThresholds,
+                          String[] soundsArray, String[] growthStageImagePaths) {
+        this.plantHealth = health;
+        this.plantName = name;
+        this.plantType = plantType;
+        this.plantDescription = plantDescription;
+        this.idealWaterLevel = idealWaterLevel;
+        this.adultLifeSpan = adultLifeSpan;
+        this.maxHealth = maxHealth;
+        this.cropTile = cropTile;
+        this.currentGrowthLevel = 0;
+        this.soundsPlants = soundsArray;
+        this.growthStages = GrowthStage.SEEDLING;
+
+
+        // Initialise growth stage thresholds for specific plants.
+        this.growthStageThresholds[0] = growthStageThresholds[0];
+        this.growthStageThresholds[1] = growthStageThresholds[1];
+        this.growthStageThresholds[2] = growthStageThresholds[2];
+
+        // Initialise max health values to be changed at each growth stage
+        this.maxHealthAtStages[0] = 0.05 * maxHealth;
+        this.maxHealthAtStages[1] = 0.1 * maxHealth;
+        this.maxHealthAtStages[2] = 0.3 * maxHealth;
+
+        // Initialise the image paths for the growth stages
+        this.growthStageImagePaths[0] = growthStageImagePaths[0];
+        this.growthStageImagePaths[1] = growthStageImagePaths[1];
+        this.growthStageImagePaths[2] = growthStageImagePaths[2];
+        this.growthStageImagePaths[3] = growthStageImagePaths[3];
+        this.growthStageImagePaths[4] = growthStageImagePaths[4];
     }
 
     /**
@@ -456,14 +451,14 @@ public class PlantComponent extends Component {
         if (time == 12) {
             this.increaseCurrentGrowthLevel();
             if (getGrowthStage().getValue() <= GrowthStage.ADULT.value) {
-                if (this.currentGrowthLevel >= this.growthStageThresholds[getGrowthStage().value - 1]) {
+                if (this.currentGrowthLevel >= this.growthStageThresholds[getGrowthStage().getValue() - 1]) {
                     setGrowthStage(getGrowthStage().getValue() + 1);
                     updateMaxHealth();
                     updateTexture();
                 }
             }
             if (getGrowthStage() == GrowthStage.ADULT) {
-                adultLifeSpan();
+                beginDecay();
             }
         }
     }
@@ -486,14 +481,14 @@ public class PlantComponent extends Component {
      * An adult plant will live for a certain number of days (adultLifeSpan). Once a plant has
      * exceeded its adultLifeSpan it will begin to decay.
      */
-    public void adultLifeSpan() {
+    public void beginDecay() {
         if (getGrowthStage() == GrowthStage.ADULT) {
             this.numOfDaysAsAdult += 1;
-            if (numOfDaysAsAdult > this.adultLifeSpan) {
+            if (getNumOfDaysAsAdult() > getAdultLifeSpan()) {
                 setGrowthStage(getGrowthStage().getValue() + 1);
                 setDecay(true);
                 updateTexture();
-                playSound("decay");
+                playSound("decays");
             }
         }
     }
@@ -511,6 +506,10 @@ public class PlantComponent extends Component {
         }
     }
 
+    public DynamicTextureRenderComponent getTexture() {
+        return this.currentTexture;
+    }
+
     /**
      * Determine what sound needs to be called based on the type of interaction.
      * The sounds are separated into tuple pairs for each event.
@@ -518,13 +517,12 @@ public class PlantComponent extends Component {
      * @param functionCalled The type of interaction with the plant.
      */
     public void playSound(String functionCalled) {
-        String[] sounds = this.sounds;
-
         switch (functionCalled) {
-            case "click" -> chooseSound(sounds[0], sounds[1]);
-            case "decays" -> chooseSound(sounds[2], sounds[3]);
-            case "destroy" -> chooseSound(sounds[4], sounds[5]);
-            case "nearby" -> chooseSound(sounds[6], sounds[7]);
+            case "click" -> chooseSound(this.soundsPlants[0], this.soundsPlants[1]);
+            case "decays" -> chooseSound(this.soundsPlants[0], this.soundsPlants[1]);
+            case "destroy" -> chooseSound(this.soundsPlants[0], this.soundsPlants[1]);
+            case "nearby" -> chooseSound(this.soundsPlants[0], this.soundsPlants[1]);
+            default -> throw new IllegalStateException("Unexpected function: " + functionCalled);
         }
     }
 
