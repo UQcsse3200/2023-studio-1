@@ -13,20 +13,16 @@ public class LightService {
 		this.camera = (OrthographicCamera) ServiceLocator.getCameraComponent().getCamera();
 		rayHandler.setCulling(true);
 		rayHandler.setAmbientLight(0.8f);
-		ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateAmbientLighting);
 	}
 
 	public void renderLight() {
+		float time = ServiceLocator.getTimeService().getHour() + (float) ServiceLocator.getTimeService().getMinute() / 60;
+		rayHandler.setAmbientLight((float) (MathUtils.sin((float) (Math.PI / 23 * time)) + 0.1));
 		rayHandler.setCombinedMatrix(camera);
 		rayHandler.updateAndRender();
 	}
 
 	public RayHandler getRayHandler() {
 		return rayHandler;
-	}
-
-	private void updateAmbientLighting() {
-		int hour = ServiceLocator.getTimeService().getHour();
-		rayHandler.setAmbientLight((float) (MathUtils.sin((float) (Math.PI / 23 * hour)) + 0.1));
 	}
 }
