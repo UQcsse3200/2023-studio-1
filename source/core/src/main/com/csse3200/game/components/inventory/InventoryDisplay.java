@@ -1,7 +1,10 @@
 package com.csse3200.game.components.inventory;
 
+import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.csse3200.game.components.items.ItemComponent;
@@ -10,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.ui.UIComponent;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,7 +60,7 @@ public class InventoryDisplay extends UIComponent {
     table.defaults().size(64, 64);
     table.pad(10);
     ArrayList<Actor> actors = new ArrayList<Actor>();
-    final Map<ItemSlot,Container<ItemSlot>> map = new HashMap<>();
+    final Map<Image,ItemSlot> map = new HashMap<>();
 
     for (int i = 0; i < 30; i++){
       Label label = new Label(String.valueOf(i), skin.get("default", Label.LabelStyle.class));
@@ -72,15 +76,15 @@ public class InventoryDisplay extends UIComponent {
         item = new ItemSlot(
                 playerInventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture(),
                 false);
+        actors.add(item.getItemImage());
         //stack.add(new Image(playerInventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture()));
       }
-      Container<ItemSlot> container = new Container<>(item);
-      //container.setDebug(true);
-      container.setTouchable(Touchable.enabled);
-      map.put(item, container);
-      actors.add(item);
+      map.put(item.getItemImage(), item);
+      if (item.getItemImage() != null) {
+        item.getItemImage().setDebug(false);
+      }
       indexes.put(item, i);
-      table.add(container).pad(10, 10, 10, 10).fill();
+      table.add(item).pad(10, 10, 10, 10).fill();
       if ((i + 1) % 10 == 0) {
         //Add a new row every 10 items
         table.row();
@@ -109,21 +113,17 @@ public class InventoryDisplay extends UIComponent {
     table.defaults().size(64, 64);
     table.pad(10);
     ArrayList<Actor> actors = new ArrayList<Actor>();
-    final Map<ItemSlot,Container<ItemSlot>> map = new HashMap<>();
+    final Map<Image,ItemSlot> map = new HashMap<>();
       // Add some items to the table, to be changed once inventory item is improved
     indexes = new HashMap<>(); // map of items to their index
     for (int i = 0; i < 30; i++) {
       //Add the items to the table
       ItemSlot item = new ItemSlot(false);
-      Container<ItemSlot> container = new Container<>(item);
-      container.setTouchable(Touchable.enabled);
-      //container.setDebug(true);
       //item.setDebug(true);
-      map.put(item, container);
+      map.put(item.getItemImage(), item);
 
-      table.add(container).width(70).height(70).pad(10, 10, 10, 10);
+      table.add(item).width(70).height(70).pad(10, 10, 10, 10);
       indexes.put(item, i);
-      actors.add(item);
       if ((i + 1) % 10 == 0) {
         //Add a new row every 10 items
         table.row();
@@ -144,11 +144,8 @@ public class InventoryDisplay extends UIComponent {
     setDragItems(actors, map);
 
   }
-  public void setDragItems(ArrayList<Actor> actors, Map<ItemSlot,Container<ItemSlot>> map) {
-
-
+  public void setDragItems(@NotNull ArrayList<Actor> actors, Map<Image,ItemSlot> map) {
     for (Actor item : actors) {
-      if (indexes.get(item) != null)
       dnd.addSource(new DragAndDrop.Source(item) {
         DragAndDrop.Payload payload = new DragAndDrop.Payload();
         @Override
@@ -156,6 +153,7 @@ public class InventoryDisplay extends UIComponent {
           payload.setObject(getActor());
           payload.setDragActor(getActor());
           stage.addActor(getActor());
+          System.out.println(item);
 
           return payload;
         }
@@ -163,17 +161,17 @@ public class InventoryDisplay extends UIComponent {
         @Override
         public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
           if (target == null) {
-            Container<ItemSlot> con = map.get(getActor());
-            con.setActor(null);
-            con.setActor((ItemSlot) this.getActor());
+            ItemSlot itemSlot = map.get(getActor());
+            itemSlot.removeActor(getActor());
+            itemSlot.add(getActor());
           }
         }
       });
     }
 
-    for (Cell<Container<ItemSlot>> targetItem : table.getCells()) {
+    for (Cell<ItemSlot> targetItem : table.getCells()) {
       dnd.addTarget(new DragAndDrop.Target(targetItem.getActor()) {
-        Container<ItemSlot> container = targetItem.getActor();
+        ItemSlot slot = targetItem.getActor();
         @Override
         public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
           return true;
@@ -181,15 +179,12 @@ public class InventoryDisplay extends UIComponent {
 
         @Override
         public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-          playerInventory.swapPosition(indexes.get(source.getActor()), indexes.get(targetItem.getActor().getActor()));
-          Integer temp =indexes.get(source.getActor());
-          indexes.put((ItemSlot) source.getActor(),indexes.get(targetItem.getActor().getActor()));
-          indexes.put(targetItem.getActor().getActor(),temp);
-          Container<ItemSlot> sourceContainer = map.get((source.getActor()));
-          map.put((ItemSlot) container.getActor(),sourceContainer);
-          sourceContainer.setActor(container.getActor());
-          map.put((ItemSlot) payload.getDragActor(),container);
-          container.setActor((ItemSlot) payload.getDragActor());
+          ItemSlot sourceSlot = map.get((source.getActor()));
+          playerInventory.swapPosition(indexes.get(sourceSlot), indexes.get(slot));
+          map.put(slot.getItemImage(), sourceSlot);
+          sourceSlot.setItemImage(slot.getItemImage());
+          map.put((Image) payload.getDragActor(),slot);
+          slot.setItemImage((Image)payload.getDragActor());
           entity.getEvents().trigger("updateInventory");
 
         }

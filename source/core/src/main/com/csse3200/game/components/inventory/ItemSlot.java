@@ -5,12 +5,14 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.ui.UIComponent;
 import net.dermetfan.gdx.physics.box2d.PositionController;
 
 import java.util.ArrayList;
+
 
 public class ItemSlot extends Stack {
     private Texture itemTexture;
@@ -51,6 +53,7 @@ public class ItemSlot extends Stack {
         this.frame = new Image(new Texture(Gdx.files.internal("images/itemFrame.png")));
         this.selected = selected;
         this.createItemSlot();
+
     }
 
     public void setCount(Integer count) {
@@ -61,6 +64,11 @@ public class ItemSlot extends Stack {
         this.itemTexture = itemTexture;
     }
 
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
     /**
      * Creates actors and positions them on the stage using a table.
      * @see Table for positioning options
@@ -69,6 +77,7 @@ public class ItemSlot extends Stack {
         Label label = new Label(String.valueOf(this.count) + " ", this.skin); //please please please work
         label.setColor(Color.BLACK);
         label.setAlignment(Align.bottomRight);
+        this.setTouchable(Touchable.childrenOnly);
 
         //Add the selection background if necessary
         if (this.selected) {
@@ -81,6 +90,9 @@ public class ItemSlot extends Stack {
         //Add the item image to the itemSlot
         if (this.itemTexture != null) {
             itemImage = new Image(this.itemTexture);
+            itemImage.setTouchable(Touchable.enabled);
+            itemImage.setZIndex(99999);
+
             this.add(itemImage);
         }
 
@@ -95,6 +107,10 @@ public class ItemSlot extends Stack {
     }
     public void setItemImage(Image image) {
         this.removeActor(itemImage);
-        this.add(image);
+        itemImage = null;
+        if (image != null) {
+            this.add(image);
+            this.itemImage = image;
+        }
     }
 }
