@@ -139,7 +139,6 @@ public class MainGameScreen extends ScreenAdapter {
     }
       ServiceLocator.getTimeService().update();
       renderer.render();
-    ServiceLocator.getLightService().renderLight();
     if (lose) {
       game.setScreen(GdxGame.ScreenType.LOSESCREEN);
     }
