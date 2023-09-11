@@ -92,19 +92,27 @@ public class PlayerMovementIntegrationTest {
 
     @ParameterizedTest(name = "default animation played correctly when stopped after {0}")
     @MethodSource({"shouldReturnToDefaultAnimationOnStopParams"})
-    void shouldReturnToDefaultAnimationOnStop(String prevDirection, String expectedAnimation) {
+    void shouldReturnToDefaultAnimationOnStop(String prevDirection, String expectedAnimation, int randomiser) {
         AnimationRenderComponent animationRenderComponent = player.getComponent(AnimationRenderComponent.class);
-        player.getEvents().trigger("animationWalkStop",prevDirection );
+        player.getEvents().trigger("animationWalkStop",prevDirection, randomiser, true );
         assertEquals(expectedAnimation, animationRenderComponent.getCurrentAnimation());
     }
 
     private static Stream<Arguments> shouldReturnToDefaultAnimationOnStopParams() {
         return Stream.of(
                 // ((testDescription, prev moveDirection), isRunning, expectedAnimationName)
-                arguments("right", "idle_right"),
-                arguments("down", "idle_down"),
-                arguments("up", "idle_up"),
-                arguments("right", "idle_right")
+                arguments("right", "snooze_right", 5 ),
+                arguments("right", "blink_right", 55 ),
+                arguments("right", "yawn_right", 30 ),
+                arguments("left", "snooze_left", 5 ),
+                arguments("left", "blink_left", 55 ),
+                arguments("left", "yawn_left", 30 ),
+                arguments("down", "snooze_down", 5 ),
+                arguments("down", "blink_down", 55 ),
+                arguments("down", "yawn_down", 30 ),
+                arguments("up", "snooze_up", 5 ),
+                arguments("up", "blink_up", 55 ),
+                arguments("up", "yawn_up", 30 )
         );
     }
 }

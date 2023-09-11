@@ -26,6 +26,8 @@ public class InventoryComponent extends Component {
 
   private Entity heldItem = null;
 
+  private int heldIndex = 0;
+
 
 
   public InventoryComponent(List<Entity> items) {
@@ -119,15 +121,8 @@ public class InventoryComponent extends Component {
   public boolean setPosition(Entity entity){
     int lastPlace = itemPlace.size() - 1 ;
     itemPlace.put(lastPlace+1,entity);
-    entity.getEvents().trigger("updateInventory");
+      entity.getEvents().trigger("updateInventory");
     return true;
-  }
-  /**
-   * Remove item from the inventory display not from the Inventory
-   * @param pos
-   */
-  public void removePosition(int pos){
-    itemPlace.remove(pos);
   }
   /**
    * Adds an item to the Player's inventory
@@ -167,6 +162,7 @@ public class InventoryComponent extends Component {
   public void setHeldItem(int index) {
     if (index >= 0 && index < inventory.size()) {
       this.heldItem = inventory.get(index);
+      this.heldIndex = index;
     }
   }
 
@@ -174,13 +170,18 @@ public class InventoryComponent extends Component {
    * Retrieves the held item of the Player.
    *
    * @return The Entity representing the held item.
-   * @throws IllegalStateException If the player is not holding an item.
    */
   public Entity getHeldItem() {
-    if (this.heldItem != null) {
-      return this.heldItem;
-    }
-    return null;
+    return this.heldItem;
+  }
+
+  /**
+   * Retrieves the held item index of the Player.
+   *
+   * @return The Entity representing the held item.
+   */
+  public int getHeldIndex() {
+    return this.heldIndex;
   }
 
   /**

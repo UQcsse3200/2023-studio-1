@@ -41,6 +41,8 @@ public class ToolbarDisplay extends UIComponent {
     }
 
 
+    private int selectedSlot = 0;
+
     /**
      * Creates reusable ui styles and adds actors to the stage.
      */
@@ -51,6 +53,7 @@ public class ToolbarDisplay extends UIComponent {
         isOpen = true;
         entity.getEvents().addListener("updateInventory", this::updateInventory);
         entity.getEvents().addListener("toggleInventory",this::toggleOpen);
+        entity.getEvents().addListener("hotkeySelection",this::updateItemSlot);
         inventory = entity.getComponent(InventoryDisplay.class).getInventory();
     }
 
@@ -117,21 +120,30 @@ public class ToolbarDisplay extends UIComponent {
         final Map<ItemSlot,Container<ItemSlot>> map = new HashMap<>(); // map of items to their containers
         indexes = new HashMap<>(); // map of items to their index
         for (int i = 0; i < 10; i++) {
+            //Set the indexes for the toolbar
+            int idx = i + 1;
+            if (idx == 10) {
+                idx = 0;
+            }
 
-            Label label = new Label(String.valueOf(i) + " ", skin); //please please please work
+            //Create the label for the item slot
+            Label label = new Label(String.valueOf(idx) + " ", skin); //please please please work
             label.setColor(Color.DARK_GRAY);
             label.setAlignment(Align.topLeft);
-            ItemSlot item = new ItemSlot();
             Container<ItemSlot> container = new Container<>(item);
             container.setTouchable(Touchable.enabled);
             //container.setDebug(true);
             //item.setDebug(true);
+            ItemSlot item = new ItemSlot(i == selectedSlot);
             map.put(item, container);
             indexes.put(item, i);
             actors.add(item);
+
+            //Create the itemslot, check if it is the active slot
             item.add(label);
             table.add(container).pad(10, 10, 10, 10).fill();
         }
+
         // Create a window for the inventory using the skin
         window = new Window("", skin);
         window.pad(40, 5, 5, 5); // Add padding to with so that the text doesn't go offscreen
@@ -139,7 +151,7 @@ public class ToolbarDisplay extends UIComponent {
         window.pack(); // Pack the window to the size
         window.setMovable(false);
         window.setPosition(stage.getWidth() / 2 - window.getWidth() / 2, 0); // Clip to the bottom of the window on the stage
-        window.setVisible(!isOpen);
+        window.setVisible(true);
         // Add the window to the stage
         stage.addActor(window);
         dnd = new DragAndDrop();
@@ -234,14 +246,20 @@ public class ToolbarDisplay extends UIComponent {
     }
 
     /**
+     * Updates the player's inventory toolbar selected itemSlot.
+     * @param slotNum updated slot number
+     */
+    public void updateItemSlot(int slotNum) {
+        this.selectedSlot = inventory.getHeldIndex();
+        // refresh ui to reflect new selected slot
+        resetToolbar();
+    }
+
+    /**
      * Dispose of Toolbar
      */
     @Override
     public void dispose() {
         super.dispose();
-    }
-
-    public void updateItemSlot(int slotNum) {
-
     }
 }

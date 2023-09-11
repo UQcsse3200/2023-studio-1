@@ -110,8 +110,7 @@ public class InventoryDisplay extends UIComponent {
     table.pad(10);
     ArrayList<Actor> actors = new ArrayList<Actor>();
     final Map<ItemSlot,Container<ItemSlot>> map = new HashMap<>();
-
-    // Add some items to the table, to be changed once inventory item is improved
+      // Add some items to the table, to be changed once inventory item is improved
     indexes = new HashMap<>(); // map of items to their index
     for (int i = 0; i < 30; i++) {
       //Add the items to the table
@@ -204,13 +203,13 @@ public class InventoryDisplay extends UIComponent {
   }
 
   public void toggleOpen(){
-      if (isOpen) {
-        window.setVisible(false);
-        isOpen = false;
-      } else {
-        window.setVisible(true);
-        isOpen = true;
-      }
+    if (isOpen) {
+      window.setVisible(false);
+      isOpen = false;
+    } else {
+      window.setVisible(true);
+      isOpen = true;
+    }
   }
 
   /**
