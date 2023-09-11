@@ -10,7 +10,7 @@ public abstract class Achievement extends Mission {
 	 * @param name The {@link String} name of the {@link Achievement}, visible to the player
 	 *             in-game.
 	 */
-	public Achievement(String name) {
+	protected Achievement(String name) {
 		super(name);
 	}
 
