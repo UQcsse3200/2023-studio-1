@@ -89,7 +89,7 @@ public class PlantComponent extends Component {
     /**
      * The paths to the sounds associated with the plant.
      */
-    private String[] soundsPlants = {"","","","","","","",""};
+    private String[] sounds;
 
     /**
      * The current max health. This limits the amount of health a plant can have at different growth stages.
@@ -141,6 +141,8 @@ public class PlantComponent extends Component {
         this.cropTile = cropTile;
         this.currentGrowthLevel = 0;
         this.growthStages = GrowthStage.SEEDLING;
+        this.numOfDaysAsAdult = 0;
+        this.currentMaxHealth = maxHealth;
 
         // Initialise default values for growth stage thresholds.
         this.growthStageThresholds[0] = 11;
@@ -159,6 +161,59 @@ public class PlantComponent extends Component {
         this.growthStageImagePaths[2] = "images/plants/corn_juvenile.png";
         this.growthStageImagePaths[3] = "images/plants/corn_adult.png";
         this.growthStageImagePaths[4] = "images/plants/corn_decaying.png";
+    }
+
+    /**
+     * Constructor used for plant types that have growthStageThresholds different from the default
+     * values.
+     *
+     * @param health - health of the plant
+     * @param name - name of the plant
+     * @param plantType - type of the plant
+     * @param plantDescription - description of the plant
+     * @param idealWaterLevel - The ideal water level for a plant
+     * @param adultLifeSpan - How long a plant will live for once it becomes an adult
+     * @param maxHealth - The maximum health a plant can reach as an adult
+     * @param cropTile - The cropTileComponent where the plant will be located.
+     * @param growthStageThresholds - A list of three integers that represent the growth thresholds.
+     * @param soundsArray - A list of all sound files filepaths as strings
+     * @param growthStageImagePaths - image paths for the different growth stages.
+     */
+    public PlantComponent(int health, String name, String plantType, String plantDescription,
+                          float idealWaterLevel, int adultLifeSpan, int maxHealth,
+                          CropTileComponent cropTile, int[] growthStageThresholds,
+                          String[] soundsArray, String[] growthStageImagePaths) {
+        this.plantHealth = health;
+        this.plantName = name;
+        this.plantType = plantType;
+        this.plantDescription = plantDescription;
+        this.idealWaterLevel = idealWaterLevel;
+        this.adultLifeSpan = adultLifeSpan;
+        this.maxHealth = maxHealth;
+        this.cropTile = cropTile;
+        this.currentGrowthLevel = 0;
+        this.sounds = soundsArray;
+        this.growthStages = GrowthStage.SEEDLING;
+        this.numOfDaysAsAdult = 0;
+        this.currentMaxHealth = maxHealth;
+
+
+        // Initialise growth stage thresholds for specific plants.
+        this.growthStageThresholds[0] = growthStageThresholds[0];
+        this.growthStageThresholds[1] = growthStageThresholds[1];
+        this.growthStageThresholds[2] = growthStageThresholds[2];
+
+        // Initialise max health values to be changed at each growth stage
+        this.maxHealthAtStages[0] = 0.05 * maxHealth;
+        this.maxHealthAtStages[1] = 0.1 * maxHealth;
+        this.maxHealthAtStages[2] = 0.3 * maxHealth;
+
+        // Initialise the image paths for the growth stages
+        this.growthStageImagePaths[0] = growthStageImagePaths[0];
+        this.growthStageImagePaths[1] = growthStageImagePaths[1];
+        this.growthStageImagePaths[2] = growthStageImagePaths[2];
+        this.growthStageImagePaths[3] = growthStageImagePaths[3];
+        this.growthStageImagePaths[4] = growthStageImagePaths[4];
     }
 
     /**
@@ -240,64 +295,10 @@ public class PlantComponent extends Component {
     }
 
     /**
-     * Set the decay boolean.
-     * @param decay - Whether the plant is decaying or not
+     * Set the plant to decaying stage.
      */
-    public void setDecay(boolean decay) {
-        if (decay) {
-            this.growthStages = GrowthStage.DECAYING;
-        }
-    }
-
-    /**
-     * Constructor used for plant types that have growthStageThresholds different from the default
-     * values.
-     *
-     * @param health - health of the plant
-     * @param name - name of the plant
-     * @param plantType - type of the plant
-     * @param plantDescription - description of the plant
-     * @param idealWaterLevel - The ideal water level for a plant
-     * @param adultLifeSpan - How long a plant will live for once it becomes an adult
-     * @param maxHealth - The maximum health a plant can reach as an adult
-     * @param cropTile - The cropTileComponent where the plant will be located.
-     * @param growthStageThresholds - A list of three integers that represent the growth thresholds.
-     * @param soundsArray - A list of all sound files filepaths as strings
-     * @param growthStageImagePaths - image paths for the different growth stages.
-     */
-    public PlantComponent(int health, String name, String plantType, String plantDescription,
-                          float idealWaterLevel, int adultLifeSpan, int maxHealth,
-                          CropTileComponent cropTile, int[] growthStageThresholds,
-                          String[] soundsArray, String[] growthStageImagePaths) {
-        this.plantHealth = health;
-        this.plantName = name;
-        this.plantType = plantType;
-        this.plantDescription = plantDescription;
-        this.idealWaterLevel = idealWaterLevel;
-        this.adultLifeSpan = adultLifeSpan;
-        this.maxHealth = maxHealth;
-        this.cropTile = cropTile;
-        this.currentGrowthLevel = 0;
-        this.soundsPlants = soundsArray;
-        this.growthStages = GrowthStage.SEEDLING;
-
-
-        // Initialise growth stage thresholds for specific plants.
-        this.growthStageThresholds[0] = growthStageThresholds[0];
-        this.growthStageThresholds[1] = growthStageThresholds[1];
-        this.growthStageThresholds[2] = growthStageThresholds[2];
-
-        // Initialise max health values to be changed at each growth stage
-        this.maxHealthAtStages[0] = 0.05 * maxHealth;
-        this.maxHealthAtStages[1] = 0.1 * maxHealth;
-        this.maxHealthAtStages[2] = 0.3 * maxHealth;
-
-        // Initialise the image paths for the growth stages
-        this.growthStageImagePaths[0] = growthStageImagePaths[0];
-        this.growthStageImagePaths[1] = growthStageImagePaths[1];
-        this.growthStageImagePaths[2] = growthStageImagePaths[2];
-        this.growthStageImagePaths[3] = growthStageImagePaths[3];
-        this.growthStageImagePaths[4] = growthStageImagePaths[4];
+    public void setDecay() {
+        this.growthStages = GrowthStage.DECAYING;
     }
 
     /**
@@ -348,7 +349,7 @@ public class PlantComponent extends Component {
 
     /**
      * Set the adult life span of a plant.
-     * @param adultLifeSpan - The number of days the plant will exist as an adult plant
+     * @param adultLifeSpan The number of days the plant will exist as an adult plant
      */
     public void setAdultLifeSpan(int adultLifeSpan) {
         this.adultLifeSpan = adultLifeSpan;
@@ -357,7 +358,7 @@ public class PlantComponent extends Component {
     /**
      * Increment the current growth stage of a plant by 1
      *
-     * @param growthIncrement - The number of growth stages the plant will increase by
+     * @param growthIncrement The number of growth stages the plant will increase by
      */
     public void increaseGrowthStage(int growthIncrement) {
         this.growthStages.value += growthIncrement;
@@ -371,16 +372,36 @@ public class PlantComponent extends Component {
         return this.currentGrowthLevel;
     }
 
+    /**
+     * Retrieves the current maximum health value of the plant.
+     * @return The current maximum health of the plant.
+     */
     public double getCurrentMaxHealth() {
         return this.currentMaxHealth;
     }
 
+    /**
+     * Retrieves the number of days the plant has been an adult.
+     * @return The number of days the plant has been in its adult stage.
+     */
     public int getNumOfDaysAsAdult() {
         return numOfDaysAsAdult;
     }
 
+    /**
+     * Sets the number of days the plant has been an adult.
+     * @param numOfDaysAsAdult The number of days to set the plant's adult stage duration to.
+     */
     public void setNumOfDaysAsAdult(int numOfDaysAsAdult) {
         this.numOfDaysAsAdult = numOfDaysAsAdult;
+    }
+
+    /**
+     * Retrieves the current texture of the plant.
+     * @return The current texture of the plant.
+     */
+    public DynamicTextureRenderComponent getTexture() {
+        return this.currentTexture;
     }
 
     /**
@@ -433,8 +454,11 @@ public class PlantComponent extends Component {
         entity.dispose();
     }
 
+    /**
+     * To attack plants and damage their health.
+     */
     private void attack() {
-        int attackDamage = 0;
+        int attackDamage = 10;
         increasePlantHealth(-attackDamage);
     }
 
@@ -486,7 +510,7 @@ public class PlantComponent extends Component {
             this.numOfDaysAsAdult += 1;
             if (getNumOfDaysAsAdult() > getAdultLifeSpan()) {
                 setGrowthStage(getGrowthStage().getValue() + 1);
-                setDecay(true);
+                setDecay();
                 updateTexture();
                 playSound("decays");
             }
@@ -506,10 +530,6 @@ public class PlantComponent extends Component {
         }
     }
 
-    public DynamicTextureRenderComponent getTexture() {
-        return this.currentTexture;
-    }
-
     /**
      * Determine what sound needs to be called based on the type of interaction.
      * The sounds are separated into tuple pairs for each event.
@@ -518,10 +538,10 @@ public class PlantComponent extends Component {
      */
     public void playSound(String functionCalled) {
         switch (functionCalled) {
-            case "click" -> chooseSound(this.soundsPlants[0], this.soundsPlants[1]);
-            case "decays" -> chooseSound(this.soundsPlants[0], this.soundsPlants[1]);
-            case "destroy" -> chooseSound(this.soundsPlants[0], this.soundsPlants[1]);
-            case "nearby" -> chooseSound(this.soundsPlants[0], this.soundsPlants[1]);
+            case "click" -> chooseSound(sounds[0], sounds[1]);
+            case "decays" -> chooseSound(sounds[2], sounds[3]);
+            case "destroy" -> chooseSound(sounds[4], sounds[5]);
+            case "nearby" -> chooseSound(sounds[6], sounds[7]);
             default -> throw new IllegalStateException("Unexpected function: " + functionCalled);
         }
     }
@@ -530,7 +550,7 @@ public class PlantComponent extends Component {
      * Decide what sound to play. There is a small random chance that a lore sound will be selected, otherwise
      * the normal sound will be played.
      * @param lore Sound associated with the secret lore
-     * @param notLore - Normal sound that the player will be expecting.
+     * @param notLore Normal sound that the player will be expecting.
      */
     void chooseSound(String lore, String notLore) {
         boolean playLoreSound = random.nextInt(100) <= 0; //Gives 1% chance of being true
