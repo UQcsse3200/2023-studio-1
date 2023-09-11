@@ -125,13 +125,20 @@ public class PlayerActions extends Component {
     Vector2 velocity = body.getLinearVelocity();
     Vector2 velocityScale = this.running ? MAX_RUN_SPEED.cpy() : MAX_WALK_SPEED.cpy();
 
-    /*
     // Used to apply the terrainSpeedModifier
-    Vector2 playerVector = this.entity.getCenterPosition();
+    Vector2 playerVector = this.entity.getCenterPosition(); // Centre position is better indicator of player location
     playerVector.add(0, -1.0f); // Player entity sprite's feet are located -1.0f below the centre of the entity
-    float terrainSpeedModifier = map.getTile(playerVector).getSpeedModifier();
-    velocityScale.scl(terrainSpeedModifier);
-     */
+
+    try {
+      float terrainSpeedModifier = map.getTile(playerVector).getSpeedModifier();
+      velocityScale.scl(terrainSpeedModifier);
+    } catch (Exception e) {
+      // This should only occur when either:
+      //    The map is not instantiated (some tests do not instantiate a gameMap instance)
+      //    the getTile method returns null
+      // In this event, the speed will not be modified. This will need to be updated to throw an exception once the
+      // GameMap class is slightly modified to allow for easier instantiation of test maps for testing.
+    }
 
     Vector2 desiredVelocity = moveDirection.cpy().scl(velocityScale);
     // impulse = (desiredVel - currentVel) * mass
@@ -156,7 +163,7 @@ public class PlayerActions extends Component {
   /**
    * Stops the player from moving.
    */
-  void stopMoving() {
+  public void stopMoving() {
     this.moveDirection = Vector2.Zero.cpy();
     updateSpeed();
     moving = false;
@@ -179,7 +186,7 @@ public class PlayerActions extends Component {
   /**
    * Removes the velocity increase of the player.
    */
-  void stopRunning() {
+  public void stopRunning() {
     this.running = false;
   }
 
@@ -255,6 +262,10 @@ public class PlayerActions extends Component {
 
   public void setCameraVar (CameraComponent cam) {
     this.camera = cam;
+  }
+
+  public CameraComponent getCameraVar () {
+    return camera;
   }
 
   public void setGameMap(GameMap map) {

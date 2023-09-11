@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.SpaceGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.areas.weather.WeatherEventDisplay;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.tractor.TractorActions;
@@ -63,6 +64,9 @@ public class MainGameScreen extends ScreenAdapter {
           "images/time_system_ui/indicator_21.png",
           "images/time_system_ui/indicator_22.png",
           "images/time_system_ui/indicator_23.png",
+          "images/weather_event/weather-border.png",
+          "images/weather_event/acid-rain.png",
+          "images/weather_event/solar-flare.png"
   };
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 
@@ -97,16 +101,15 @@ public class MainGameScreen extends ScreenAdapter {
     ServiceLocator.registerCameraComponent(renderer.getCamera());
 
     loadAssets();
-    createUI();
 
     logger.debug("Initialising main game screen entities");
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-
     SpaceGameArea spaceGameArea = new SpaceGameArea(terrainFactory);
     spaceGameArea.create();
     renderer.getCamera().setTrackEntity(spaceGameArea.getPlayer());
 
-    // Switched to spaceGameArea
+    createUI();
+    // Switched to spaceGameArea TODO DELETE
     //ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
     //forestGameArea.create();
     //renderer.getCamera().setTrackEntity(forestGameArea.getPlayer());
@@ -115,6 +118,11 @@ public class MainGameScreen extends ScreenAdapter {
 
     lose = false;
     spaceGameArea.getPlayer().getEvents().addListener("loseScreen", this::loseScreenStart);
+
+    // if the LoadSaveOnStart value is set true then load entities saved from file
+    if (game.isLoadOnStart()){
+      ServiceLocator.getSaveLoadService().load();
+    }
   }
 
   public void loseScreenStart() {
@@ -195,7 +203,9 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(new Terminal())
         .addComponent(inputComponent)
         .addComponent(new TerminalDisplay())
-        .addComponent(new GameTimeDisplay());
+        .addComponent(new GameTimeDisplay())
+        .addComponent(new WeatherEventDisplay());
+
 
     ServiceLocator.getEntityService().register(ui);
   }
