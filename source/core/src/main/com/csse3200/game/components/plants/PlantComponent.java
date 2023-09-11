@@ -48,14 +48,28 @@ public class PlantComponent extends Component {
     private final float idealWaterLevel;
 
     /**
-     * Current age of the plant in in-game days.
+     * The growth stage of the plant
      */
-    private float currentAge;
+    public enum GrowthStage {
+        SEEDLING(1),
+        SPROUT(2),
+        JUVENILE(3),
+        ADULT(4),
+        DECAYING(5),
+        DEAD(6);
 
-    /**
-     * The growth stage of the plant. 1=Seedling, 2=Sprout, 3=Juvenile, 4=Adult, 5=Decaying, 6=Dead.
-     */
-    private int growthStage;
+        private int value;
+
+        GrowthStage(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
+
+    private GrowthStage growthStages;
 
     /**
      * How long a plant lives as an adult before starting to decay from old age.
@@ -130,10 +144,9 @@ public class PlantComponent extends Component {
         this.adultLifeSpan = adultLifeSpan;
         this.maxHealth = maxHealth;
         this.cropTile = cropTile;
-        this.currentAge = 0;
-        this.growthStage = 1;
         this.decay = false;
         this.currentGrowthLevel = 0;
+        this.growthStages = GrowthStage.SEEDLING;
 
         // Initialise default values for growth stage thresholds.
         this.growthStageThresholds[0] = 11;
@@ -182,11 +195,11 @@ public class PlantComponent extends Component {
         this.adultLifeSpan = adultLifeSpan;
         this.maxHealth = maxHealth;
         this.cropTile = cropTile;
-        this.currentAge = 0;
-        this.growthStage = 1;
         this.decay = false;
         this.currentGrowthLevel = 0;
         this.sounds = soundsArray;
+        this.growthStages = GrowthStage.SEEDLING;
+
 
         // Initialise growth stage thresholds for specific plants.
         this.growthStageThresholds[0] = growthStageThresholds[0];
@@ -216,9 +229,9 @@ public class PlantComponent extends Component {
         // Initialise event listeners.
         entity.getEvents().addListener("harvest", this::harvest);
         entity.getEvents().addListener("destroyPlant", this::destroyPlant);
-        entity.getEvents().addListener("attack", (Integer damage) -> increasePlantHealth(-damage));
+        entity.getEvents().addListener("attack", this::attack);
         ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateGrowthStage);
-        ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this:: adultLifeSpan);
+        ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::adultLifeSpan);
         this.currentTexture = entity.getComponent(DynamicTextureRenderComponent.class);
     }
 
@@ -297,7 +310,7 @@ public class PlantComponent extends Component {
      * @return If the plant is in a state of decay or not
      */
     public boolean isDecay() {
-        return this.decay;
+        return this.growthStages == GrowthStage.DECAYING;
     }
 
     /**
@@ -309,37 +322,24 @@ public class PlantComponent extends Component {
     }
 
     /**
-     * Get the current age of a plant in days
-     * @return current age
-     */
-    public float getCurrentAge() {
-        return this.currentAge;
-    }
-
-    /**
-     * Sets the current age of a plant in days
-     *
-     * @param newAge - The new age the plant is being updated to
-     */
-    public void setCurrentAge(float newAge) {
-        this.currentAge = newAge;
-    }
-
-    /**
      * Get the current growth stage of a plant
      * @return current growth stage
      */
-    public int getGrowthStage() {
-        return this.growthStage;
+    public GrowthStage getGrowthStage() {
+        return this.growthStages;
     }
 
     /**
      * Set the growth stage of a plant.
      *
-     * @param newGrowthStage - The updated growth stage of the plant, between 1 and 7.
+     * @param newGrowthStage - The updated growth stage of the plant, between 1 and 6.
      */
     public void setGrowthStage(int newGrowthStage) {
-        this.growthStage = newGrowthStage;
+        if (newGrowthStage >= 1 && newGrowthStage <= GrowthStage.values().length) {
+            this.growthStages = GrowthStage.values()[newGrowthStage - 1];
+        } else {
+            throw new IllegalArgumentException("Invalid growth stage value.");
+        }
     }
 
     /**
@@ -365,16 +365,7 @@ public class PlantComponent extends Component {
      * @param growthIncrement - The number of growth stages the plant will increase by
      */
     public void increaseGrowthStage(int growthIncrement) {
-        this.growthStage += growthIncrement;
-    }
-
-    /**
-     * Increase the current age of a plant by some integer value
-     *
-     * @param ageIncrement - The number of days the age will increase by
-     */
-    public void increaseCurrentAge(float ageIncrement) {
-        this.currentAge += ageIncrement;
+        this.growthStages.value += growthIncrement;
     }
 
     /**
@@ -383,6 +374,18 @@ public class PlantComponent extends Component {
      */
     public int getCurrentGrowthLevel() {
         return this.currentGrowthLevel;
+    }
+
+    public double getCurrentMaxHealth() {
+        return this.currentMaxHealth;
+    }
+
+    public int getNumOfDaysAsAdult() {
+        return numOfDaysAsAdult;
+    }
+
+    public void setNumOfDaysAsAdult(int numOfDaysAsAdult) {
+        this.numOfDaysAsAdult = numOfDaysAsAdult;
     }
 
     /**
@@ -399,9 +402,9 @@ public class PlantComponent extends Component {
 
         // Check if the growth rate is negative
         // That the plant is not decaying
-        if ((growthRate < 0) && !this.decay && (this.growthStage < 4)) {
+        if ((growthRate < 0) && !isDecay() && (getGrowthStage().getValue() < GrowthStage.ADULT.value)) {
             increasePlantHealth(-10);
-        } else if (!this.decay && !(this.growthStage >= 7)) {
+        } else if (!isDecay() && !(getGrowthStage().getValue() >= GrowthStage.ADULT.value)) {
             this.currentGrowthLevel += (int)(this.cropTile.getGrowthRate(this.idealWaterLevel) * 10);
         }
     }
@@ -412,7 +415,7 @@ public class PlantComponent extends Component {
      * @return if the plant is fully decayed
      */
     public boolean isDead() {
-        return this.growthStage >= 7;
+        return this.growthStages == GrowthStage.DEAD;
     }
 
     /**
@@ -435,6 +438,11 @@ public class PlantComponent extends Component {
         entity.dispose();
     }
 
+    private void attack() {
+        int attackDamage = 0;
+        increasePlantHealth(-attackDamage);
+    }
+
     /**
      * Update the growth stage of a plant based on its current growth level and its adult life span.
      * This method is called every (in game) day at midday (12pm).
@@ -447,16 +455,15 @@ public class PlantComponent extends Component {
         int time = ServiceLocator.getTimeService().getHour();
         if (time == 12) {
             this.increaseCurrentGrowthLevel();
-            // If a plant is not yet an adult
-            if (this.growthStage < 4) {
-                if (this.currentGrowthLevel >= this.growthStageThresholds[this.growthStage - 1]) {
-                    growthStage += 1;
+            if (getGrowthStage().getValue() <= GrowthStage.ADULT.value) {
+                if (this.currentGrowthLevel >= this.growthStageThresholds[getGrowthStage().value - 1]) {
+                    setGrowthStage(getGrowthStage().getValue() + 1);
                     updateMaxHealth();
                     updateTexture();
-                    if (this.growthStage == 4) {
-                        this.numOfDaysAsAdult = 0;
-                    }
                 }
+            }
+            if (getGrowthStage() == GrowthStage.ADULT) {
+                adultLifeSpan();
             }
         }
     }
@@ -465,18 +472,14 @@ public class PlantComponent extends Component {
      * Update the maximum health of the plant based on its current growth stage.
      * Called whenever the growth stage is changed
      */
-    private void updateMaxHealth() {
-        switch (this.growthStage) {
-            case 1:
-                this.currentMaxHealth = this.maxHealthAtStages[0];
-            case 2:
-                this.currentMaxHealth = this.maxHealthAtStages[1];
-            case 3:
-                this.currentMaxHealth = this.maxHealthAtStages[2];
-            case 4:
-                this.currentMaxHealth = this.maxHealth;
-        }
-
+    public void updateMaxHealth() {
+        switch (getGrowthStage()) {
+            case SEEDLING -> this.currentMaxHealth = this.maxHealthAtStages[0];
+            case SPROUT -> this.currentMaxHealth = this.maxHealthAtStages[1];
+            case JUVENILE -> this.currentMaxHealth = this.maxHealthAtStages[2];
+            case ADULT -> this.currentMaxHealth = this.maxHealth;
+            default -> throw new IllegalStateException("Unexpected value: " + getGrowthStage());
+        };
     }
 
     /**
@@ -484,13 +487,11 @@ public class PlantComponent extends Component {
      * exceeded its adultLifeSpan it will begin to decay.
      */
     public void adultLifeSpan() {
-        if (this.growthStage == 4) {
+        if (getGrowthStage() == GrowthStage.ADULT) {
             this.numOfDaysAsAdult += 1;
-            System.out.println("days as adult");
-            System.out.println(this.numOfDaysAsAdult);
             if (numOfDaysAsAdult > this.adultLifeSpan) {
-                this.growthStage += 1;
-                this.decay = true;
+                setGrowthStage(getGrowthStage().getValue() + 1);
+                setDecay(true);
                 updateTexture();
                 playSound("decay");
             }
@@ -501,8 +502,8 @@ public class PlantComponent extends Component {
      * Update the texture of the plant based on its current growth stage.
      */
     public void updateTexture() {
-        if (growthStage <= 5) {
-            String path = this.growthStageImagePaths[this.growthStage - 1];
+        if (getGrowthStage().getValue() <= GrowthStage.DECAYING.value) {
+            String path = this.growthStageImagePaths[getGrowthStage().getValue() - 1];
 
             if (this.currentTexture != null) {
                 this.currentTexture.setTexture(path);
@@ -520,10 +521,10 @@ public class PlantComponent extends Component {
         String[] sounds = this.sounds;
 
         switch (functionCalled) {
-            case "click" -> soundMethod(sounds[0], sounds[1]);
-            case "decays" -> soundMethod(sounds[2], sounds[3]);
-            case "destroy" -> soundMethod(sounds[4], sounds[5]);
-            case "nearby" -> soundMethod(sounds[6], sounds[7]);
+            case "click" -> chooseSound(sounds[0], sounds[1]);
+            case "decays" -> chooseSound(sounds[2], sounds[3]);
+            case "destroy" -> chooseSound(sounds[4], sounds[5]);
+            case "nearby" -> chooseSound(sounds[6], sounds[7]);
         }
     }
 
@@ -533,7 +534,7 @@ public class PlantComponent extends Component {
      * @param lore Sound associated with the secret lore
      * @param notLore - Normal sound that the player will be expecting.
      */
-    void soundMethod(String lore, String notLore) {
+    void chooseSound(String lore, String notLore) {
         boolean playLoreSound = random.nextInt(100) <= 0; //Gives 1% chance of being true
         Sound soundEffect;
 
