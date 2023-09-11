@@ -59,7 +59,7 @@
     "health": 10,
     "name": "Atomic Algae",
     "type": "PRODUCTION",
-    "description": "Test description",
+    "description": "A highly efficient oxygen-producing plant.",
     "idealWaterLevel": 0.7,
     "adultLifeSpan": 5,
     "maxHealth": 100,
@@ -73,7 +73,7 @@
     "health": 10,
     "name": "Deadly Nightshade",
     "type": "DEADLY",
-    "description": "Grows deadly poisonous berries",
+    "description": "Grows deadly poisonous berries.",
     "idealWaterLevel": 0.7,
     "adultLifeSpan": 5,
     "maxHealth": 200,
@@ -81,34 +81,6 @@
     "sproutThreshold": 11,
     "juvenileThreshold": 20,
     "adultThreshold": 38,
-    "imageFolderPath": "images/plants/waterweed/"
-  },
-  "tobacco": {
-    "health": 10,
-    "name": "Tobacco",
-    "type": "DEADLY",
-    "description": "Toxic addicted plant leaves",
-    "idealWaterLevel": 0.7,
-    "adultLifeSpan": 5,
-    "maxHealth": 20,
-    "soundFolderPath" : "sounds/plants/aloeVera/",
-    "sproutThreshold": 14,
-    "juvenileThreshold": 25,
-    "adultThreshold": 42,
-    "imageFolderPath": "images/plants/waterweed/"
-  },
-  "sunFlower": {
-    "health" : 10,
-    "name": "Horticultural Heater",
-    "type": "PRODUCTION",
-    "description": "Warms up the nearby area",
-    "idealWaterLevel": 0.7,
-    "adultLifeSpan": 5,
-    "maxHealth": 100,
-    "soundFolderPath" : "sounds/plants/aloeVera/",
-    "sproutThreshold": 9,
-    "juvenileThreshold": 30,
-    "adultThreshold": 45,
-    "imageFolderPath": "images/plants/waterweed/"
+    "imageFolderPath": "images/plants/nightshade/"
   }
 }
