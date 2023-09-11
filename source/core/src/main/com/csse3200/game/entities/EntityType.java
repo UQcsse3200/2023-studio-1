@@ -13,6 +13,8 @@ public enum EntityType {
     Chicken,
     Astrolotl,
     OxygenEater,
-    Item
+    Item,
+    Questgiver,
+    QuestgiverIndicator
 }
 
