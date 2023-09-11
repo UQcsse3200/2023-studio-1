@@ -2,13 +2,8 @@ package com.csse3200.game.components.inventory;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Align;
 
 import com.csse3200.game.components.items.ItemComponent;
@@ -21,13 +16,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.IntStream;
-
-
 public class ToolbarDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(ToolbarDisplay.class);
     private Table table;
@@ -37,13 +25,12 @@ public class ToolbarDisplay extends UIComponent {
     private InventoryComponent inventory;
 
     private final ShapeRenderer shapeRenderer = new ShapeRenderer();
-    private Map<ItemSlot,Integer> indexes;
 
     public ToolbarDisplay() {
     }
 
 
-    private int selectedSlot = 0;
+    private int selectedSlot = -1;
 
     /**
      * Creates reusable ui styles and adds actors to the stage.
@@ -118,7 +105,6 @@ public class ToolbarDisplay extends UIComponent {
             if (idx == 10) {
                 idx = 0;
             }
-
             //Create the label for the item slot
             Label label = new Label(String.valueOf(idx) + " ", skin); //please please please work
             label.setColor(Color.DARK_GRAY);

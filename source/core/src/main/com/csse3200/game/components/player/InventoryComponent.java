@@ -178,7 +178,7 @@ public class InventoryComponent extends Component {
    * @param index The index of the item in the inventory to be set as the held item.
    */
   public void setHeldItem(int index) {
-    if (index >= 0 && index < inventory.size()) {
+    if (index >= 0 && index < 10) {
       this.heldItem = itemPlace.get(index);
       this.heldIndex = index;
     }
