@@ -56,6 +56,15 @@ public class EntityService {
   }
 
   /**
+   * Get number of entities registered
+   *
+   * @return number of entities
+   */
+  public int getSize() {
+    return entities.size;
+  }
+
+   /**
    * Returns Array of entities of all entities in game
    * @return Array of entities in game
    */

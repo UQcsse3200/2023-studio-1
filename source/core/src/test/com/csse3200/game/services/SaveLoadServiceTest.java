@@ -1,3 +1,5 @@
+package com.csse3200.game.services;
+
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainCropTileFactory;
@@ -70,7 +72,6 @@ class SaveLoadServiceTest {
         when(mockEntityService.getEntities()).thenReturn(entityArray);
         ServiceLocator.registerEntityService(mockEntityService);
     }
-
 
 
     @Test
