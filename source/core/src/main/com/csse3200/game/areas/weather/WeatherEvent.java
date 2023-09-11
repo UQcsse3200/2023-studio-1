@@ -45,7 +45,7 @@ public abstract class WeatherEvent {
 	 * @param duration      number of in-game hours that the event can occur for
 	 * @param priority      priority of the weather event
 	 */
-	public WeatherEvent(int numHoursUntil, int duration, int priority, float severity) throws IllegalArgumentException {
+	protected WeatherEvent(int numHoursUntil, int duration, int priority, float severity) throws IllegalArgumentException {
 		if (priority < 0) {
 			throw new IllegalArgumentException("Priority cannot be less than 0");
 		} else if (duration <= 0) {
