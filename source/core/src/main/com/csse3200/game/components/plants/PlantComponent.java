@@ -217,9 +217,9 @@ public class PlantComponent extends Component {
         entity.getEvents().addListener("harvest", this::harvest);
         entity.getEvents().addListener("destroyPlant", this::destroyPlant);
         entity.getEvents().addListener("attack", (Integer damage) -> increasePlantHealth(-damage));
-        //ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateGrowthStage);
-        //ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this:: adultLifeSpan);
-        //this.currentTexture = entity.getComponent(DynamicTextureRenderComponent.class);
+        ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateGrowthStage);
+        ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this:: adultLifeSpan);
+        this.currentTexture = entity.getComponent(DynamicTextureRenderComponent.class);
     }
 
     /**

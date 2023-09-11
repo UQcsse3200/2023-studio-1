@@ -154,13 +154,9 @@ class PlantFactoryTest {
                         "A hangry plant that will gobble any nasty pests nearby. Keep small pets " +
                                 "and children out of snapping distance!", (float) 0.7, 5, 400),
                 Arguments.of("waterWeed", 10, "Atomic Algae", "PRODUCTION",
-                        "Test description", (float) 0.7, 5, 400),
+                        "A highly efficient oxygen-producing plant.", (float) 0.7, 5, 400),
                 Arguments.of("nightshade", 10, "Deadly Nightshade",
-                        "DEADLY", "Grows deadly poisonous berries", (float) 0.7, 5, 400),
-                Arguments.of("tobacco", 10, "Tobacco", "DEADLY",
-                        "Toxic addicted plant leaves", (float) 0.7, 5, 400),
-                Arguments.of("sunFlower", 10, "Horticultural Heater",
-                        "PRODUCTION", "Warms up the nearby area", (float) 0.7, 5, 400)
+                        "DEADLY", "Grows deadly poisonous berries.", (float) 0.7, 5, 400)
         );
     }
 
@@ -178,8 +174,6 @@ class PlantFactoryTest {
             case "venusFlyTrap" -> stats.venusFlyTrap;
             case "waterWeed" -> stats.waterWeed;
             case "nightshade" -> stats.nightshade;
-            case "tobacco" -> stats.tobacco;
-            case "sunFlower" -> stats.sunFlower;
             default -> throw new IllegalArgumentException("Unknown plant name: " + id);
         };
     }
@@ -229,8 +223,8 @@ class PlantFactoryTest {
                         (Callable<Entity>) () -> PlantFactory.createHammerPlant(mockCropTile)),
                 Arguments.of("nightshade", "images/plants/Corn.png",
                         (Callable<Entity>) () -> PlantFactory.createNightshade(mockCropTile)),
-                Arguments.of("tobacco", "images/plants/Corn.png",
-                        (Callable<Entity>) () -> PlantFactory.createTobacco(mockCropTile)),
+                Arguments.of("waterWeed", "images/plants/Corn.png",
+                        (Callable<Entity>) () -> PlantFactory.createWaterWeed(mockCropTile)),
                 Arguments.of("venusFlyTrap", "images/plants/Corn.png",
                         (Callable<Entity>) () -> PlantFactory.createVenusFlyTrap(mockCropTile))
         );
