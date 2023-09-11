@@ -10,7 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
-import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.screens.MainGameScreen;
+
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,12 +60,12 @@ public class InventoryDisplay extends UIComponent {
       //stack.add(new Image(new Texture("images/itemFrame.png")));
       if (playerInventory.getItemPos(i) == null){
         //logger.info("Null Item at "+i );
-        ItemSlot item = new ItemSlot();
+        ItemSlot item = new ItemSlot(false);
         table.add(item).pad(10, 10, 10, 10).fill();
       } else {
         ItemSlot item = new ItemSlot(
                 playerInventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture(),
-                playerInventory.getItemCount(playerInventory.getItemPos(i)));
+                playerInventory.getItemCount(playerInventory.getItemPos(i)), false);
         table.add(item).pad(10, 10, 10, 10).fill();
         //stack.add(new Image(playerInventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture()));
       }
@@ -98,7 +99,7 @@ public class InventoryDisplay extends UIComponent {
 
     for (int i = 0; i < 30; i++) {
       //Add the items to the table
-      ItemSlot item = new ItemSlot();
+      ItemSlot item = new ItemSlot(false);
         table.add(item).pad(10, 10, 10, 10).fill();
       if ((i + 1) % 10 == 0) {
         //Add a new row every 10 items
