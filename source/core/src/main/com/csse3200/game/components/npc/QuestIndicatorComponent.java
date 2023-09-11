@@ -10,7 +10,7 @@ import com.csse3200.game.services.ServiceLocator;
 public class QuestIndicatorComponent extends Component {
     enum State {
         IDLE("empty"),
-        QUEST_AVAILABLE("quest_available"),
+        QUEST_AVAILABLE("mission_available"),
         REWARD_AVAILABLE("reward_available"),
         OUT_OF_TIME("out_of_time");
 
@@ -21,21 +21,36 @@ public class QuestIndicatorComponent extends Component {
     }
 
     State state;
+    Entity questgiver;
     AnimationRenderComponent parentAnimator;
 
-    public QuestIndicatorComponent(Entity questGiver) {
+    public QuestIndicatorComponent(Entity questgiver) {
         super.create();
         this.parentAnimator = this.entity.getComponent(AnimationRenderComponent.class);
-        this.entity.getEvents().addListener("newState", this::updateState);
+        this.questgiver = questgiver;
+        updateState(State.IDLE);
+
+        ServiceLocator.getMissionManager().getEvents().addListener("questComplete", this::displayFinishedQuest);
+        ServiceLocator.getMissionManager().getEvents().addListener("questComplete", this::displayFinishedQuest);
+        ServiceLocator.getMissionManager().getEvents().addListener("questExpired", this::displayExpiredQuest);
+
+        questgiver.getEvents().addListener("toggleMissions", this::markRead);
+    }
+
+    private void displayFinishedQuest() {
+        updateState(State.REWARD_AVAILABLE);
+    }
+
+    private void displayExpiredQuest() {
+        updateState(State.OUT_OF_TIME);
+    }
+
+    private void markRead() {
         updateState(State.IDLE);
     }
 
     public void updateState(State newState) {
         this.state = newState;
         parentAnimator.startAnimation(newState.animationName);
-    }
-
-    public void updateLocation(Vector2 parentPos) {
-        this.entity.setPosition(parentPos.x, parentPos.y - 32);
     }
 }

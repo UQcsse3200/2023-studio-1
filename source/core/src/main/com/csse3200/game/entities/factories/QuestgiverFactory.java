@@ -2,6 +2,7 @@ package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.csse3200.game.components.npc.QuestIndicatorComponent;
 import com.csse3200.game.components.questgiver.MissionDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
@@ -32,12 +33,18 @@ public class QuestgiverFactory {
     return questgiver;
   }
 
+  /**
+   * Create a questgiver indicator entity (i.e. the animation that indicates status changes)
+   *
+   * @return questgiver indicator entity
+   */
   public static Entity createQuestgiverIndicator(Entity questgiver) {
 
     AnimationRenderComponent animator = setupMissionAnimations();
 
     Entity questgiverIndicator = new Entity(EntityType.QuestgiverIndicator)
-        .addComponent(animator);
+            .addComponent(new QuestIndicatorComponent(questgiver))
+            .addComponent(animator);
 
     questgiverIndicator.getComponent(AnimationRenderComponent.class).scaleEntity();
     return questgiverIndicator;
