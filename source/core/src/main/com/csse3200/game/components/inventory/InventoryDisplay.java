@@ -33,6 +33,7 @@ public class InventoryDisplay extends UIComponent {
   private InventoryComponent playerInventory;
   private Window window;
   private boolean isOpen;
+  private DragAndDrop dnd;
 
   public InventoryDisplay(InventoryComponent playerInventory) {
     this.playerInventory = playerInventory;
@@ -55,26 +56,36 @@ public class InventoryDisplay extends UIComponent {
   private void resetInventory(){
     //logger.info("Reset Inventory..........................................");
     window.reset();
+    dnd.clear();
     Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
     table = new Table(skin);
     table.defaults().size(64, 64);
     table.pad(10);
+    ArrayList<Actor> actors = new ArrayList<Actor>();
+    final Map<ItemSlot,Container<ItemSlot>> map = new HashMap<>();
+
     for (int i = 0; i < 30; i++){
       Label label = new Label(String.valueOf(i), skin.get("default", Label.LabelStyle.class));
       //set the bounds of the label
       label.setBounds(label.getX() + 15, label.getY(), label.getWidth(), label.getHeight());
       //stack.add(new Image(new Texture("images/itemFrame.png")));
-      if (playerInventory.getItemPos(i) == null){
+      ItemSlot item;
+      if (playerInventory.getItemPos(i) == null) {
         //logger.info("Null Item at "+i );
-        ItemSlot item = new ItemSlot();
-        table.add(item).pad(10, 10, 10, 10).fill();
+        item = new ItemSlot();
+
       } else {
-        ItemSlot item = new ItemSlot(
+        item = new ItemSlot(
                 playerInventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture(),
                 playerInventory.getItemCount(playerInventory.getItemPos(i)));
-        table.add(item).pad(10, 10, 10, 10).fill();
         //stack.add(new Image(playerInventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture()));
       }
+      Container<ItemSlot> container = new Container<>(item);
+      container.setDebug(true);
+      container.setTouchable(Touchable.enabled);
+      map.put(item, container);
+      actors.add(item);
+      table.add(container).pad(10, 10, 10, 10).fill();
       if ((i + 1) % 10 == 0) {
         //Add a new row every 10 items
         table.row();
@@ -90,6 +101,7 @@ public class InventoryDisplay extends UIComponent {
     window.setVisible(isOpen);
     // Add the window to the stage
     stage.addActor(window);
+    setDragItems(actors, map);
   }
 
   /**
@@ -109,16 +121,13 @@ public class InventoryDisplay extends UIComponent {
     for (int i = 0; i < 30; i++) {
       //Add the items to the table
       ItemSlot item = new ItemSlot();
-        table.add(item).pad(10, 10, 10, 10).fill();
-      ItemSlot item = new ItemSlot(new Texture("images/tool_hoe.png"), i);
-      item.setSize(64,64);
       Container<ItemSlot> container = new Container<>(item);
       container.setTouchable(Touchable.enabled);
       container.setDebug(true);
       item.setDebug(true);
       map.put(item, container);
 
-      table.add(container).width(100).height(100).pad(10, 10, 10, 10);
+      table.add(container).width(70).height(70).pad(10, 10, 10, 10);
 
       actors.add(item);
       if ((i + 1) % 10 == 0) {
@@ -137,19 +146,20 @@ public class InventoryDisplay extends UIComponent {
     window.setVisible(false);
     // Add the window to the stage
     stage.addActor(window);
-    DragAndDrop dnd = new DragAndDrop();
+    dnd = new DragAndDrop();
+    setDragItems(actors, map);
+
+  }
+  public void setDragItems(ArrayList<Actor> actors, Map<ItemSlot,Container<ItemSlot>> map) {
 
 
     for (Actor item : actors) {
       dnd.addSource(new DragAndDrop.Source(item) {
         DragAndDrop.Payload payload = new DragAndDrop.Payload();
-
-
         @Override
         public DragAndDrop.Payload dragStart(InputEvent event, float x, float y, int pointer) {
           payload.setObject(getActor());
           payload.setDragActor(getActor());
-          Actor parent = (Actor)item.getParent();
           stage.addActor(getActor());
 
           return payload;
@@ -161,31 +171,29 @@ public class InventoryDisplay extends UIComponent {
             Container<ItemSlot> con = map.get(getActor());
             con.setActor(null);
             con.setActor((ItemSlot) this.getActor());
-            stage.clear();
-            stage.addActor(window);
           }
         }
       });
     }
 
     for (Cell<Container<ItemSlot>> targetItem : table.getCells()) {
-        dnd.addTarget(new DragAndDrop.Target(targetItem.getActor()) {
-          Container<ItemSlot> container = targetItem.getActor();
-          @Override
-          public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-            return true;
-          }
+      dnd.addTarget(new DragAndDrop.Target(targetItem.getActor()) {
+        Container<ItemSlot> container = targetItem.getActor();
+        @Override
+        public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+          return true;
+        }
 
-          @Override
-          public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-            Container<ItemSlot> sourceContainer = map.get((source.getActor()));
-            map.put((ItemSlot) container.getActor(),sourceContainer);
-            sourceContainer.setActor(container.getActor());
-            map.put((ItemSlot) payload.getDragActor(),container);
-            container.setActor((ItemSlot) payload.getDragActor());
+        @Override
+        public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+          Container<ItemSlot> sourceContainer = map.get((source.getActor()));
+          map.put((ItemSlot) container.getActor(),sourceContainer);
+          sourceContainer.setActor(container.getActor());
+          map.put((ItemSlot) payload.getDragActor(),container);
+          container.setActor((ItemSlot) payload.getDragActor());
 
-          }
-        });
+        }
+      });
 
     }
   }
