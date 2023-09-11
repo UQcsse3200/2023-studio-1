@@ -2,7 +2,6 @@ package com.csse3200.game.components.inventory;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -13,28 +12,11 @@ import com.badlogic.gdx.utils.Align;
 
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-
-import com.csse3200.game.components.items.ItemComponent;
-
-import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.ui.UIComponent;
-
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.Screen;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -85,7 +67,7 @@ public class ToolbarDisplay extends UIComponent {
         table = new Table(skin);
         table.defaults().size(64, 64);
         table.pad(10);
-        ArrayList<Actor> actors = new ArrayList<Actor>();
+        ArrayList<Actor> actors = new ArrayList<>();
         final Map<ItemSlot,Container<ItemSlot>> map = new HashMap<>();
 
         for (int i = 0; i < 10; i++){
@@ -108,8 +90,8 @@ public class ToolbarDisplay extends UIComponent {
             }
             Container<ItemSlot> container = new Container<>(item);
             container.setTouchable(Touchable.enabled);
-            container.setDebug(true);
-            item.setDebug(true);
+            //container.setDebug(true);
+            //item.setDebug(true);
             map.put(item, container);
             actors.add(item);
             indexes.put(item, i);
@@ -131,7 +113,7 @@ public class ToolbarDisplay extends UIComponent {
         Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
         table = new Table(skin);
         table.defaults().size(64, 64);
-        ArrayList<Actor> actors = new ArrayList<Actor>(); // list of source items in DragAndDrop
+        ArrayList<Actor> actors = new ArrayList<>(); // list of source items in DragAndDrop
         final Map<ItemSlot,Container<ItemSlot>> map = new HashMap<>(); // map of items to their containers
         indexes = new HashMap<>(); // map of items to their index
         for (int i = 0; i < 10; i++) {
@@ -142,8 +124,8 @@ public class ToolbarDisplay extends UIComponent {
             ItemSlot item = new ItemSlot();
             Container<ItemSlot> container = new Container<>(item);
             container.setTouchable(Touchable.enabled);
-            container.setDebug(true);
-            item.setDebug(true);
+            //container.setDebug(true);
+            //item.setDebug(true);
             map.put(item, container);
             indexes.put(item, i);
             actors.add(item);
@@ -200,16 +182,18 @@ public class ToolbarDisplay extends UIComponent {
                 @Override
                 public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
                     // called when left click is touched up
+
                     inventory.swapPosition(indexes.get(source.getActor()), indexes.get(targetItem.getActor().getActor()));
                     Integer temp =indexes.get(source.getActor());
                     indexes.put((ItemSlot) source.getActor(),indexes.get(targetItem.getActor().getActor()));
-                    indexes.put((ItemSlot)targetItem.getActor().getActor(),temp);
+                    indexes.put(targetItem.getActor().getActor(),temp);
 
                     Container<ItemSlot> sourceContainer = map.get((source.getActor()));
-                    map.put((ItemSlot) container.getActor(),sourceContainer);
+                    map.put(container.getActor(),sourceContainer);
                     sourceContainer.setActor(container.getActor());
                     map.put((ItemSlot) payload.getDragActor(),container);
                     container.setActor((ItemSlot) payload.getDragActor());
+                    entity.getEvents().trigger("updateInventory");
 
 
                 }

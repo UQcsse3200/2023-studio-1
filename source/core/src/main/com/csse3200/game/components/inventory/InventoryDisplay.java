@@ -3,19 +3,12 @@ package com.csse3200.game.components.inventory;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.csse3200.game.components.items.ItemComponent;
-import com.csse3200.game.entities.Entity;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.rendering.TextureRenderComponent;
-import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +27,7 @@ public class InventoryDisplay extends UIComponent {
   private Window window;
   private boolean isOpen;
   private DragAndDrop dnd;
+  private Map<ItemSlot,Integer> indexes;
 
   public InventoryDisplay(InventoryComponent playerInventory) {
     this.playerInventory = playerInventory;
@@ -81,10 +75,11 @@ public class InventoryDisplay extends UIComponent {
         //stack.add(new Image(playerInventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture()));
       }
       Container<ItemSlot> container = new Container<>(item);
-      container.setDebug(true);
+      //container.setDebug(true);
       container.setTouchable(Touchable.enabled);
       map.put(item, container);
       actors.add(item);
+      indexes.put(item, i);
       table.add(container).pad(10, 10, 10, 10).fill();
       if ((i + 1) % 10 == 0) {
         //Add a new row every 10 items
@@ -117,18 +112,18 @@ public class InventoryDisplay extends UIComponent {
     final Map<ItemSlot,Container<ItemSlot>> map = new HashMap<>();
 
     // Add some items to the table, to be changed once inventory item is improved
-
+    indexes = new HashMap<>(); // map of items to their index
     for (int i = 0; i < 30; i++) {
       //Add the items to the table
       ItemSlot item = new ItemSlot();
       Container<ItemSlot> container = new Container<>(item);
       container.setTouchable(Touchable.enabled);
-      container.setDebug(true);
-      item.setDebug(true);
+      //container.setDebug(true);
+      //item.setDebug(true);
       map.put(item, container);
 
       table.add(container).width(70).height(70).pad(10, 10, 10, 10);
-
+      indexes.put(item, i);
       actors.add(item);
       if ((i + 1) % 10 == 0) {
         //Add a new row every 10 items
@@ -186,11 +181,16 @@ public class InventoryDisplay extends UIComponent {
 
         @Override
         public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+          playerInventory.swapPosition(indexes.get(source.getActor()), indexes.get(targetItem.getActor().getActor()));
+          Integer temp =indexes.get(source.getActor());
+          indexes.put((ItemSlot) source.getActor(),indexes.get(targetItem.getActor().getActor()));
+          indexes.put(targetItem.getActor().getActor(),temp);
           Container<ItemSlot> sourceContainer = map.get((source.getActor()));
           map.put((ItemSlot) container.getActor(),sourceContainer);
           sourceContainer.setActor(container.getActor());
           map.put((ItemSlot) payload.getDragActor(),container);
           container.setActor((ItemSlot) payload.getDragActor());
+          entity.getEvents().trigger("updateInventory");
 
         }
       });
