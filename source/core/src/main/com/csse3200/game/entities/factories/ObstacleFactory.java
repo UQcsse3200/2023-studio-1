@@ -22,7 +22,7 @@ public class ObstacleFactory {
   public static Entity createInvisibleObstacle() {
     Entity Obstacle =
             new Entity()
-                    .addComponent(new TextureRenderComponent("images/tree.png"))
+                    .addComponent(new TextureRenderComponent("images/invisible_sprite.png"))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
