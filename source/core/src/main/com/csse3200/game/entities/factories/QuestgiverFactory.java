@@ -43,7 +43,7 @@ public class QuestgiverFactory {
     AnimationRenderComponent animator = setupMissionAnimations();
 
     Entity questgiverIndicator = new Entity(EntityType.QuestgiverIndicator)
-            .addComponent(new QuestIndicatorComponent(questgiver))
+            .addComponent(new QuestIndicatorComponent())
             .addComponent(animator);
 
     questgiverIndicator.getComponent(AnimationRenderComponent.class).scaleEntity();

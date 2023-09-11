@@ -24,17 +24,16 @@ public class QuestIndicatorComponent extends Component {
     Entity questgiver;
     AnimationRenderComponent parentAnimator;
 
-    public QuestIndicatorComponent(Entity questgiver) {
+    public void create() {
         super.create();
         this.parentAnimator = this.entity.getComponent(AnimationRenderComponent.class);
-        this.questgiver = questgiver;
         updateState(State.IDLE);
 
         ServiceLocator.getMissionManager().getEvents().addListener("questComplete", this::displayFinishedQuest);
         ServiceLocator.getMissionManager().getEvents().addListener("questComplete", this::displayFinishedQuest);
         ServiceLocator.getMissionManager().getEvents().addListener("questExpired", this::displayExpiredQuest);
 
-        questgiver.getEvents().addListener("toggleMissions", this::markRead);
+        // Todo - get reference to questgiver: questgiver.getEvents().addListener("toggleMissions", this::markRead);
     }
 
     private void displayFinishedQuest() {
