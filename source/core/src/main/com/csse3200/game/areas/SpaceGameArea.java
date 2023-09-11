@@ -8,6 +8,7 @@ import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainCropTileFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
@@ -124,6 +125,7 @@ public class SpaceGameArea extends GameArea {
   private final GameMap gameMap;
 
   private Entity player;
+  private final ClimateController climateController;
   private Entity tractor;
 
   /**
@@ -134,7 +136,8 @@ public class SpaceGameArea extends GameArea {
   public SpaceGameArea(TerrainFactory terrainFactory) {
     super();
     this.terrainFactory = terrainFactory;
-    this.gameMap = new GameMap(terrainFactory);
+    gameMap = new GameMap(terrainFactory);
+    climateController = new ClimateController();
     ServiceLocator.registerGameArea(this);
   }
 
@@ -174,6 +177,9 @@ public class SpaceGameArea extends GameArea {
 
   public Entity getPlayer() {
     return player;
+  }
+  public ClimateController getClimateController() {
+    return climateController;
   }
 
   private void displayUI() {

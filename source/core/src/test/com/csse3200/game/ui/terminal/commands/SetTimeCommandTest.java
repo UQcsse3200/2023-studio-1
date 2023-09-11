@@ -27,9 +27,9 @@ class SetTimeCommandTest {
 
   @BeforeEach
   void beforeEach() {
+    ServiceLocator.clear();
     command = new SetTimeCommand();
     args = new ArrayList<>();
-    ServiceLocator.clear();
   }
 
   @Test

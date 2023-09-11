@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.SpaceGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.areas.weather.WeatherEventDisplay;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.tractor.TractorActions;
@@ -64,7 +65,11 @@ public class MainGameScreen extends ScreenAdapter {
           "images/time_system_ui/indicator_22.png",
           "images/time_system_ui/indicator_23.png",
           "images/oxygen_ui/oxygen_outline.png",
-          "images/oxygen_ui/oxygen_fill.png"
+          "images/oxygen_ui/oxygen_fill.png",
+          "images/weather_event/weather-border.png",
+          "images/weather_event/acid-rain.png",
+          "images/weather_event/solar-flare.png"
+
   };
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 
@@ -100,7 +105,6 @@ public class MainGameScreen extends ScreenAdapter {
     ServiceLocator.registerCameraComponent(renderer.getCamera());
 
     loadAssets();
-    createUI();
 
     logger.debug("Initialising main game screen entities");
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
@@ -108,6 +112,7 @@ public class MainGameScreen extends ScreenAdapter {
     spaceGameArea.create();
     renderer.getCamera().setTrackEntity(spaceGameArea.getPlayer());
 
+    createUI();
     // Switched to spaceGameArea TODO DELETE
     //ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
     //forestGameArea.create();
@@ -203,7 +208,8 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(inputComponent)
         .addComponent(new TerminalDisplay())
         .addComponent(new GameTimeDisplay())
-        .addComponent(new OxygenDisplay());
+        .addComponent(new OxygenDisplay())
+        .addComponent(new WeatherEventDisplay());
 
     ServiceLocator.getEntityService().register(ui);
   }

@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainComponent;
+import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.ServiceLocator;
@@ -82,11 +83,11 @@ public abstract class GameArea implements Disposable {
   }
 
 
-  
+
   public void removeEntity(Entity entity) {
     entity.setEnabled(false);
     areaEntities.remove(entity);
-    Gdx.app.postRunnable(entity::dispose); 
+    Gdx.app.postRunnable(entity::dispose);
   }
 
   /**
@@ -105,6 +106,7 @@ public abstract class GameArea implements Disposable {
   }
 
   public abstract Entity getPlayer();
+  public abstract ClimateController getClimateController();
 
   public abstract Entity getTractor();
 
