@@ -12,7 +12,6 @@ import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.input.InputDecorator;
@@ -30,10 +29,11 @@ import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 /**
  * The game screen containing the main game.
  *
- * <p>Details on libGDX screens: https://happycoding.io/tutorials/libgdx/game-screens
+ * <p>Details on libGDX screens: <a href="https://happycoding.io/tutorials/libgdx/game-screens">...</a>
  */
 public class MainGameScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
@@ -100,6 +100,8 @@ public class MainGameScreen extends ScreenAdapter {
     renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
     ServiceLocator.registerCameraComponent(renderer.getCamera());
 
+    ServiceLocator.registerLightService(new LightService());
+
     loadAssets();
 
     logger.debug("Initialising main game screen entities");
@@ -137,7 +139,7 @@ public class MainGameScreen extends ScreenAdapter {
     }
       ServiceLocator.getTimeService().update();
       renderer.render();
-    if (lose == true) {
+    if (lose) {
       game.setScreen(GdxGame.ScreenType.LOSESCREEN);
     }
   }

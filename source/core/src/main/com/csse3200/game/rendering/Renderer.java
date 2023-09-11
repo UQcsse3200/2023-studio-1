@@ -22,7 +22,7 @@ public class Renderer implements Disposable {
 
   private CameraComponent camera;
   private float gameWidth;
-  private SpriteBatch batch;
+  public SpriteBatch batch;
   private Stage stage;
   private RenderService renderService;
   private DebugRenderer debugRenderer;
@@ -99,6 +99,9 @@ public class Renderer implements Disposable {
     batch.begin();
     renderService.render(batch);
     batch.end();
+    if (ServiceLocator.getLightService() != null) {
+      ServiceLocator.getLightService().renderLight();
+    }
     debugRenderer.render(projMatrix);
 
     stage.act();

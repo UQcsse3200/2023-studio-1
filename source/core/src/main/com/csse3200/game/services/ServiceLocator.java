@@ -28,6 +28,7 @@ public class ServiceLocator {
   private static TimeService timeService;
   private static GameTime timeSource;
   private static GameArea gameArea;
+  private static LightService lightService;
   private static CameraComponent cameraComponent;
   private static SaveLoadService saveLoadService;
   private static MissionManager missions;
@@ -62,6 +63,9 @@ public class ServiceLocator {
   }
   public static TimeService getTimeService() {
     return timeService;
+  }
+  public static LightService getLightService() {
+    return lightService;
   }
 
   public static MissionManager getMissionManager() {
@@ -120,6 +124,11 @@ public class ServiceLocator {
   public static void registerMissionManager(MissionManager source) {
     logger.debug("Registering mission manager {}", source);
     missions = source;
+  }
+
+  public static void registerLightService(LightService source) {
+    logger.debug("Registering light service {}", source);
+    lightService = source;
   }
 
   /**

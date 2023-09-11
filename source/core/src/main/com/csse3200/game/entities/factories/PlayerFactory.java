@@ -3,6 +3,7 @@ package com.csse3200.game.entities.factories;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.inventory.InventoryDisplay;
 import com.csse3200.game.components.inventory.ToolbarDisplay;
@@ -61,7 +62,8 @@ public class PlayerFactory {
             .addComponent(new ItemPickupComponent())
             .addComponent(new InteractionDetector(2f))
             .addComponent(new InventoryDisplay())
-            .addComponent(new ToolbarDisplay());
+            .addComponent(new ToolbarDisplay())
+	        .addComponent(new AuraLightComponent());
 
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
     player.getComponent(ColliderComponent.class).setAsBox(new Vector2(1f, 1f), new Vector2(1.5f, 1f));
