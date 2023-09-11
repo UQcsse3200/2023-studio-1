@@ -150,6 +150,7 @@ public class InventoryDisplay extends UIComponent {
           payload.setObject(getActor());
           payload.setDragActor(getActor());
           stage.addActor(getActor());
+          dnd.setDragActorPosition(50,-getActor().getHeight()/2);
 
           return payload;
         }
