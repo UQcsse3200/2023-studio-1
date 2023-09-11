@@ -2,7 +2,14 @@ missionStatus.png
 size: 3600, 1036
 format: RGBA8888
 filter: Linear,Linear
-repeat: none
+repeat:
+default
+    rotate: false
+    xy: 0, 0
+    size: 11, 21
+    orig: 11, 21
+    offset: 0, 0
+    index: 0
 reward_available
     rotate: false
     xy: 0, 0
