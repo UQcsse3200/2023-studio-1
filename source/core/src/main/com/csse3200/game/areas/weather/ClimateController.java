@@ -1,12 +1,14 @@
 package com.csse3200.game.areas.weather;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.ArrayList;
 
-public class ClimateController {
+public class ClimateController implements Json.Serializable {
 
 
 	/**
@@ -30,7 +32,7 @@ public class ClimateController {
 	/**
 	 * The weather event that is currently occurring in the game
 	 */
-	private static WeatherEvent currentWeatherEvent;
+	private WeatherEvent currentWeatherEvent;
 	/**
 	 * List of all weather events that are either occurring or about to occur
 	 */
@@ -61,6 +63,13 @@ public class ClimateController {
 	}
 
 	/**
+	 * Sets the current humidity of the game world
+	 */
+	public void setHumidity(float humidity) {
+		this.humidity = humidity;
+	}
+
+	/**
 	 * Returns the event handler for the Climate controller class
 	 *
 	 * @return Event handler
@@ -82,9 +91,7 @@ public class ClimateController {
 		if (!event.isActive()) {
 			return;
 		}
-		if (currentWeatherEvent == null) {
-			currentWeatherEvent = event;
-		} else if (event.getPriority() > currentWeatherEvent.getPriority()) {
+		if (currentWeatherEvent == null || event.getPriority() > currentWeatherEvent.getPriority()) {
 			currentWeatherEvent = event;
 		}
 	}
@@ -99,12 +106,28 @@ public class ClimateController {
 	}
 
 	/**
+	 * Gets the current weather event that is occurring
+	 */
+	public void setCurrentWeatherEvent(WeatherEvent event) {
+		currentWeatherEvent = event;
+	}
+
+	/**
 	 * Gets the current temperature of the game world
 	 *
 	 * @return current game temperature
 	 */
 	public float getTemperature() {
 		return temperature;
+	}
+
+	/**
+	 * Sets the temperature to a given temperature
+	 *
+	 * @param temperature the temperature to set it to
+	 */
+	public void setTemperature(float temperature) {
+		this.temperature = temperature;
 	}
 
 	/**
@@ -158,13 +181,16 @@ public class ClimateController {
 	 *
 	 * @param time        in-game time value
 	 * @param offset      function offset
-	 * @param octaves     number of noise functions used in the calculation
+	 * @param octaves     number of noise functions used in the calculation (must be greater than 0)
 	 * @param persistence how much each octave/function contributes to the noise generated
 	 * @param lacunarity  how much each octave increases in frequency
 	 * @return generated noise value used in calculating climate values
 	 */
 	private float generateClimate(
 			float time, float offset, int octaves, float persistence, float lacunarity) {
+		if (octaves <= 0) {
+			throw new IllegalArgumentException("Number of noise functions must be greater than 0");
+		}
 		float maxAmplitude = 0f;
 		float amplitude = 1.0f;
 		float frequency = 1.0f;
@@ -178,6 +204,12 @@ public class ClimateController {
 			amplitude *= persistence;
 			frequency *= lacunarity;
 		}
+
+		// To avoid divide by zero
+		if (maxAmplitude == 0) {
+			return 0.5f;
+		}
+
 
 		return temperatureNormalised / maxAmplitude;
 	}
@@ -210,5 +242,37 @@ public class ClimateController {
 			}
 		}
 		weatherEvents.removeIf(WeatherEvent::isExpired);
+	}
+
+
+	@Override
+	public void write(Json json) {
+		json.writeValue("Temp", getTemperature());
+		json.writeValue("Humidity", getHumidity());
+		if (currentWeatherEvent != null) {
+			currentWeatherEvent.write(json);
+		}
+	}
+
+	@Override
+	public void read(Json json, JsonValue jsonData) {
+		temperature = jsonData.getFloat("Temp");
+		humidity = jsonData.getFloat("Humidity");
+		// It has a special weather event
+		currentWeatherEvent = null;
+		if (jsonData.has("name")) {
+			switch (jsonData.getString("name")) {
+				case ("AcidShowerEvent") -> {
+					currentWeatherEvent = new AcidShowerEvent(jsonData.getInt("hoursUntil"),
+							jsonData.getInt("duration"), jsonData.getInt("priority"),
+							jsonData.getFloat("severity"));
+				} case ("SolarSurgeEvent") -> {
+					currentWeatherEvent = new SolarSurgeEvent(jsonData.getInt("hoursUntil"),
+							jsonData.getInt("duration"), jsonData.getInt("priority"),
+							jsonData.getFloat("severity"));
+
+				}
+			}
+		}
 	}
 }

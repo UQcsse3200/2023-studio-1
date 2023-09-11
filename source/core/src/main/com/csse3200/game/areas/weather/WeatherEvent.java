@@ -1,5 +1,7 @@
 package com.csse3200.game.areas.weather;
 
+import com.badlogic.gdx.utils.Json;
+
 /**
  * Represents a Weather Event like Acid Shower or Solar Surge. These are updated based on in-game hours.
  */
@@ -43,7 +45,7 @@ public abstract class WeatherEvent {
 	 * @param duration      number of in-game hours that the event can occur for
 	 * @param priority      priority of the weather event
 	 */
-	public WeatherEvent(int numHoursUntil, int duration, int priority, float severity) throws IllegalArgumentException {
+	protected WeatherEvent(int numHoursUntil, int duration, int priority, float severity) throws IllegalArgumentException {
 		if (priority < 0) {
 			throw new IllegalArgumentException("Priority cannot be less than 0");
 		} else if (duration <= 0) {
@@ -71,6 +73,19 @@ public abstract class WeatherEvent {
 		} else if (duration > 0) {
 			duration--;
 		}
+	}
+
+	/**
+	 * Gets the duration of the weather event
+	 *
+	 * @return the amount of time the weather event has left
+	 */
+	public int getDuration() {
+		return duration;
+	}
+
+	public int getNumHoursUntil() {
+		return numHoursUntil;
 	}
 
 	/**
@@ -126,5 +141,13 @@ public abstract class WeatherEvent {
 	 */
 	public float getSeverity() {
 		return severity;
+	}
+
+	public void write(Json json) {
+		json.writeValue("name", getClass().getName());
+		json.writeValue("severity", getSeverity());
+		json.writeValue("duration", getDuration());
+		json.writeValue("hoursUntil", getNumHoursUntil());
+		json.writeValue("priority", getPriority());
 	}
 }
