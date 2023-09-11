@@ -141,7 +141,7 @@ public class Renderer implements Disposable {
     return stage;
   }
 
-  public Batch getBatch() {
+  public SpriteBatch getBatch() {
     return batch;
   }
 }
