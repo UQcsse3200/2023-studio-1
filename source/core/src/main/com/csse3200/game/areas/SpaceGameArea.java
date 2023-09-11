@@ -116,7 +116,8 @@ public class SpaceGameArea extends GameArea {
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
           "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas",
-          "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas", "images/questgiver.atlas"
+          "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas", "images/questgiver.atlas",
+          "images/mission_status.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg", "sounds/car-horn-6408.mp3"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -251,6 +252,9 @@ public class SpaceGameArea extends GameArea {
   private void spawnQuestgiver() {
     Entity newQuestgiver = QuestgiverFactory.createQuestgiver();
     spawnEntityAt(newQuestgiver, QUESTGIVER_SPAWN, true, true);
+
+    Entity newQuestgiverIndicator = QuestgiverFactory.createQuestgiverIndicator(newQuestgiver);
+    spawnEntityAt(newQuestgiverIndicator, QUESTGIVER_SPAWN, true, true);
   }
 
   private void spawnTool(ItemType tool) {
