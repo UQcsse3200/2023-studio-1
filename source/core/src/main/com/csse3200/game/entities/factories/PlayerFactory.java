@@ -4,13 +4,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.inventory.InventoryDisplay;
 import com.csse3200.game.components.inventory.ToolbarDisplay;
 import com.csse3200.game.components.player.*;
-import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.components.missioninformation.MissionDisplay;
-import com.csse3200.game.components.player.PlayerActions;
-import com.csse3200.game.components.player.PlayerAnimationController;
-import com.csse3200.game.components.inventory.InventoryDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.configs.PlayerConfig;
@@ -22,7 +18,6 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
-
 
 import java.util.ArrayList;
 
@@ -66,7 +61,6 @@ public class PlayerFactory {
             .addComponent(new ItemPickupComponent())
             .addComponent(new InteractionColliderComponent(2f))
             .addComponent(new InventoryDisplay())
-                .addComponent(new MissionDisplay())
             .addComponent(new ToolbarDisplay());
 
     player.getComponent(ColliderComponent.class).setDensity(1.5f);

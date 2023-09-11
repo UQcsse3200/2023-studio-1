@@ -1,21 +1,21 @@
 package com.csse3200.game.components.player;
-import java.util.Random;
+
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.areas.terrain.GameMap;
-import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 
-import java.io.FileNotFoundException;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Action component for interacting with the player. Player events should be initialised in create()
@@ -190,7 +190,16 @@ public class PlayerActions extends Component {
     } else if (direction < 315) {
       entity.getEvents().trigger("animationInteract", "down");
     }
-    entity.getEvents().trigger("toggleMissions");
+
+    // if there is a questgiver entity in range, trigger event toggleMissions
+    List<Entity> entitiesInRange = this.entity.getComponent(InteractionColliderComponent.class).getEntitiesInRange();
+
+    for (Entity entity : entitiesInRange) {
+      EntityType entityType = entity.getType();
+      if (entityType.equals(EntityType.Questgiver)) {
+        entity.getEvents().trigger("toggleMissions");
+      }
+    }
   }
 
   /**

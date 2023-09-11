@@ -2,6 +2,7 @@ package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.csse3200.game.components.questgiver.MissionDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.components.ColliderComponent;
@@ -11,11 +12,11 @@ import com.csse3200.game.services.ServiceLocator;
 
 public class QuestgiverFactory {
 
-   /**
-     * Creates a questgiver entity
-     * 
-     * @return questgiver entity
-     */
+  /**
+   * Creates a questgiver entity
+   * 
+   * @return questgiver entity
+   */
   public static Entity createQuestgiver() {
 
     AnimationRenderComponent animator = setupQuestgiverAnimations();
@@ -23,9 +24,11 @@ public class QuestgiverFactory {
     Entity questgiver = new Entity(EntityType.Questgiver)
         .addComponent(new PhysicsComponent())
         .addComponent(new ColliderComponent())
+        .addComponent(new MissionDisplay())
         .addComponent(animator);
 
     questgiver.getComponent(AnimationRenderComponent.class).scaleEntity();
+    questgiver.getComponent(ColliderComponent.class).setDensity(10000); //set density so the questgiver doesn't get pushed around
     return questgiver;
   }
 
@@ -34,7 +37,7 @@ public class QuestgiverFactory {
     AnimationRenderComponent animator = setupMissionAnimations();
 
     Entity questgiverIndicator = new Entity(EntityType.QuestgiverIndicator)
-            .addComponent(animator);
+        .addComponent(animator);
 
     questgiverIndicator.getComponent(AnimationRenderComponent.class).scaleEntity();
     return questgiverIndicator;
@@ -56,16 +59,17 @@ public class QuestgiverFactory {
   }
 
   /**
-   *  Load animations for the questgiver indicator animation
+   * Load animations for the questgiver indicator animation
    *
    * @return an AnimationRenderComponent for the questgiver indicator animations
    */
   private static AnimationRenderComponent setupMissionAnimations() {
     AnimationRenderComponent animator = new AnimationRenderComponent(
-            ServiceLocator.getResourceService().getAsset("images/missionStatus.atlas", TextureAtlas.class),
-            16f);
+        ServiceLocator.getResourceService().getAsset("images/missionStatus.atlas", TextureAtlas.class),
+        16f);
 
     animator.addAnimation("reward_available", 100);
     return animator;
   }
+
 }

@@ -1,4 +1,4 @@
-package com.csse3200.game.components.missioninformation;
+package com.csse3200.game.components.questgiver;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -504,6 +504,7 @@ public class MissionDisplay extends UIComponent {
      * Toggles the visibility of the main mission ui.
      */
     public void toggleOpen() {
+        
         if (isOpen) {
             window.setVisible(false);
             isOpen = false;
