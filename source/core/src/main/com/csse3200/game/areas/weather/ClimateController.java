@@ -64,8 +64,6 @@ public class ClimateController implements Json.Serializable {
 
 	/**
 	 * Sets the current humidity of the game world
-	 *
-	 * @return current humidity value between 0 and 1
 	 */
 	public void setHumidity(float humidity) {
 		this.humidity = humidity;
@@ -111,8 +109,6 @@ public class ClimateController implements Json.Serializable {
 
 	/**
 	 * Gets the current weather event that is occurring
-	 *
-	 * @return current weather event, null if not event is occurring
 	 */
 	public void setCurrentWeatherEvent(WeatherEvent event) {
 		currentWeatherEvent = event;

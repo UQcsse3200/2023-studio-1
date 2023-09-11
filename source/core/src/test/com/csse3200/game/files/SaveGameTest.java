@@ -1,7 +1,13 @@
 package com.csse3200.game.files;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import com.csse3200.game.areas.weather.AcidShowerEvent;
+import com.csse3200.game.areas.weather.ClimateController;
+import com.csse3200.game.areas.weather.SolarSurgeEvent;
 import org.junit.Test;
 import com.badlogic.gdx.math.Vector2;
 
@@ -122,5 +128,21 @@ public class SaveGameTest {
     gameState.setTractor(tractor);
     assertEquals(tractor, gameState.getTractor());
     assertEquals(position, gameState.getTractor().getPosition());
+  }
+
+  @Test
+  public void getClimate() {
+    GameState state = new GameState();
+    ClimateController mockClimate = mock(ClimateController.class);
+    when(mockClimate.getHumidity()).thenReturn(5f);
+    when(mockClimate.getTemperature()).thenReturn(5f);
+    when(mockClimate.getCurrentWeatherEvent()).thenReturn(null);
+    mockClimate.setHumidity(5f);
+    mockClimate.setTemperature(5f);
+    mockClimate.setCurrentWeatherEvent(null);
+    state.setClimate(mockClimate);
+    assertEquals(mockClimate.getHumidity(),state.getClimate().getHumidity(), 0.1f);
+    assertEquals(mockClimate.getTemperature(),state.getClimate().getTemperature(), 0.1f);
+    assertEquals(mockClimate.getCurrentWeatherEvent(),state.getClimate().getCurrentWeatherEvent());
   }
 }
