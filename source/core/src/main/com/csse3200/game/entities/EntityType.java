@@ -13,22 +13,27 @@ public enum EntityType {
     Chicken(0),
     Astrolotl(0),
     OxygenEater(0),
-    Item(0);
-    
+    Item(0),
+    Questgiver(0),
+    QuestgiverIndicator(0);
+
+
     // Negative rate for consumption, positive for production of oxygen
     private final float hourlyOxygenRate;
-    
+
     EntityType(float hourlyOxygenRate) {
         this.hourlyOxygenRate = hourlyOxygenRate;
     }
-    
+
     /**
      * Getter method for the oxygen consumption/production rate
      * of a given entity type.
+     *
      * @return the hourly oxygen rate of the entity type.
      */
     public float getOxygenRate() {
         return hourlyOxygenRate;
     }
 }
+
 

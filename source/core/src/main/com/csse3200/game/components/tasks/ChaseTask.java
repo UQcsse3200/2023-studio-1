@@ -50,7 +50,7 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
   @Override
   public void start() {
     super.start();
-    movementTask = new MovementTask(target.getPosition());
+    movementTask = new MovementTask(target.getCenterPosition());
     movementTask.create(owner);
     movementTask.start();
     
@@ -62,7 +62,7 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
    */
   @Override
   public void update() {
-    movementTask.setTarget(target.getPosition());
+    movementTask.setTarget(target.getCenterPosition());
     movementTask.update();
     if (movementTask.getStatus() != Status.ACTIVE) {
       movementTask.start();
@@ -98,7 +98,7 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
    * @return The distance between the owner's entity and the target entity.
    */
   protected float getDistanceToTarget() {
-    return owner.getEntity().getPosition().dst(target.getPosition());
+    return owner.getEntity().getCenterPosition().dst(target.getCenterPosition());
   }
 
   /**
