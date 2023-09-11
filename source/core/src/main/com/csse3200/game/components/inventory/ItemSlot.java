@@ -3,15 +3,10 @@ package com.csse3200.game.components.inventory;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
-import com.csse3200.game.ui.UIComponent;
-import net.dermetfan.gdx.physics.box2d.PositionController;
-
-import java.util.ArrayList;
 
 
 public class ItemSlot extends Stack {
