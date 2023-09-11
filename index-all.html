@@ -555,7 +555,7 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Called when the entity is created and registered.</div>
 </dd>
-<dt><a href="com/csse3200/game/components/player/InteractionColliderComponent.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/InteractionColliderComponent.html" title="class in com.csse3200.game.components.player">InteractionColliderComponent</a></dt>
+<dt><a href="com/csse3200/game/components/player/InteractionDetector.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/InteractionDetector.html" title="class in com.csse3200.game.components.player">InteractionDetector</a></dt>
 <dd>
 <div class="block">When entity is created, sets up circular collider with radius as range used for detecting entities.</div>
 </dd>
@@ -1397,16 +1397,18 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/files/SaveGame.GameState.html#getEntities()" class="member-name-link">getEntities()</a> - Method in class com.csse3200.game.files.<a href="com/csse3200/game/files/SaveGame.GameState.html" title="class in com.csse3200.game.files">SaveGame.GameState</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/player/InteractionColliderComponent.html#getEntitiesInRange()" class="member-name-link">getEntitiesInRange()</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/InteractionColliderComponent.html" title="class in com.csse3200.game.components.player">InteractionColliderComponent</a></dt>
+<dt><a href="com/csse3200/game/components/player/InteractionDetector.html#getEntitiesInRange()" class="member-name-link">getEntitiesInRange()</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/InteractionDetector.html" title="class in com.csse3200.game.components.player">InteractionDetector</a></dt>
 <dd>
 <div class="block">Gets the list of entities currently in the interaction range.</div>
 </dd>
-<dt><a href="com/csse3200/game/components/player/InteractionColliderComponent.html#getEntitiesTowardsDirection(java.lang.String)" class="member-name-link">getEntitiesTowardsDirection(String)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/InteractionColliderComponent.html" title="class in com.csse3200.game.components.player">InteractionColliderComponent</a></dt>
+<dt><a href="com/csse3200/game/components/player/InteractionDetector.html#getEntitiesTowardsDirection(java.lang.String)" class="member-name-link">getEntitiesTowardsDirection(String)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/InteractionDetector.html" title="class in com.csse3200.game.components.player">InteractionDetector</a></dt>
 <dd>
 <div class="block">Gets the list of entities currently in the interaction range in the specified direction.</div>
 </dd>
-<dt><a href="com/csse3200/game/components/player/InteractionColliderComponent.html#getEntitiesTowardsPosition(com.badlogic.gdx.math.Vector2)" class="member-name-link">getEntitiesTowardsPosition(Vector2)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/InteractionColliderComponent.html" title="class in com.csse3200.game.components.player">InteractionColliderComponent</a></dt>
-<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/player/InteractionDetector.html#getEntitiesTowardsPosition(com.badlogic.gdx.math.Vector2)" class="member-name-link">getEntitiesTowardsPosition(Vector2)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/InteractionDetector.html" title="class in com.csse3200.game.components.player">InteractionDetector</a></dt>
+<dd>
+<div class="block">Gets the list of entities currently in the interaction range towards a position.</div>
+</dd>
 <dt><a href="com/csse3200/game/ai/tasks/TaskRunner.html#getEntity()" class="member-name-link">getEntity()</a> - Method in interface com.csse3200.game.ai.tasks.<a href="com/csse3200/game/ai/tasks/TaskRunner.html" title="interface in com.csse3200.game.ai.tasks">TaskRunner</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/Component.html#getEntity()" class="member-name-link">getEntity()</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/Component.html" title="class in com.csse3200.game.components">Component</a></dt>
@@ -1610,9 +1612,9 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns the <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link"><code>String</code></a> name of this <a href="com/csse3200/game/missions/Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>.</div>
 </dd>
-<dt><a href="com/csse3200/game/components/player/InteractionColliderComponent.html#getNearest(java.util.List)" class="member-name-link">getNearest(List&lt;Entity&gt;)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/InteractionColliderComponent.html" title="class in com.csse3200.game.components.player">InteractionColliderComponent</a></dt>
+<dt><a href="com/csse3200/game/components/player/InteractionDetector.html#getNearest(java.util.List)" class="member-name-link">getNearest(List&lt;Entity&gt;)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/InteractionDetector.html" title="class in com.csse3200.game.components.player">InteractionDetector</a></dt>
 <dd>
-<div class="block">Gets the nearest entity from a list of entities based on their distances.</div>
+<div class="block">Gets a list containing the nearest entity from a list of entities.</div>
 </dd>
 <dt><a href="com/csse3200/game/areas/terrain/GameMap.html#getNonTraversableTileCoordinates()" class="member-name-link">getNonTraversableTileCoordinates()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
 <dd>
@@ -1732,6 +1734,10 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/missions/quests/FertiliseCropTilesQuest.html#getShortDescription()" class="member-name-link">getShortDescription()</a> - Method in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/FertiliseCropTilesQuest.html" title="class in com.csse3200.game.missions.quests">FertiliseCropTilesQuest</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/entities/EntityService.html#getSize()" class="member-name-link">getSize()</a> - Method in class com.csse3200.game.entities.<a href="com/csse3200/game/entities/EntityService.html" title="class in com.csse3200.game.entities">EntityService</a></dt>
+<dd>
+<div class="block">Get number of entities registered</div>
+</dd>
 <dt><a href="com/csse3200/game/areas/terrain/CropTileComponent.html#getSoilQuality()" class="member-name-link">getSoilQuality()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/CropTileComponent.html" title="class in com.csse3200.game.areas.terrain">CropTileComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/tasks/MovementTask.html#getSpeed()" class="member-name-link">getSpeed()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/MovementTask.html" title="class in com.csse3200.game.components.tasks">MovementTask</a></dt>
@@ -1750,8 +1756,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Get the current status of the task.</div>
 </dd>
-<dt><a href="com/csse3200/game/components/player/InteractionColliderComponent.html#getSuitableEntity(java.util.List,com.csse3200.game.components.items.ItemType)" class="member-name-link">getSuitableEntity(List&lt;Entity&gt;, ItemType)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/InteractionColliderComponent.html" title="class in com.csse3200.game.components.player">InteractionColliderComponent</a></dt>
-<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/player/InteractionDetector.html#getSuitableEntities(com.csse3200.game.components.items.ItemType,com.badlogic.gdx.math.Vector2)" class="member-name-link">getSuitableEntities(ItemType, Vector2)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/InteractionDetector.html" title="class in com.csse3200.game.components.player">InteractionDetector</a></dt>
+<dd>
+<div class="block">Retrieves a list of suitable entities of the specified item type based on their proximity to a given position.</div>
+</dd>
 <dt><a href="com/csse3200/game/ai/movement/MovementController.html#getTarget()" class="member-name-link">getTarget()</a> - Method in interface com.csse3200.game.ai.movement.<a href="com/csse3200/game/ai/movement/MovementController.html" title="interface in com.csse3200.game.ai.movement">MovementController</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/tasks/ChaseTask.html#getTarget()" class="member-name-link">getTarget()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/ChaseTask.html" title="class in com.csse3200.game.components.tasks">ChaseTask</a></dt>
@@ -2009,13 +2017,13 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/input/InputService.html#%3Cinit%3E(com.csse3200.game.input.InputFactory)" class="member-name-link">InputService(InputFactory)</a> - Constructor for class com.csse3200.game.input.<a href="com/csse3200/game/input/InputService.html" title="class in com.csse3200.game.input">InputService</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/player/InteractionColliderComponent.html" class="type-name-link" title="class in com.csse3200.game.components.player">InteractionColliderComponent</a> - Class in <a href="com/csse3200/game/components/player/package-summary.html">com.csse3200.game.components.player</a></dt>
+<dt><a href="com/csse3200/game/components/player/InteractionDetector.html" class="type-name-link" title="class in com.csse3200.game.components.player">InteractionDetector</a> - Class in <a href="com/csse3200/game/components/player/package-summary.html">com.csse3200.game.components.player</a></dt>
 <dd>
 <div class="block">Represents a component that handles interaction detection with entities within a specified range.</div>
 </dd>
-<dt><a href="com/csse3200/game/components/player/InteractionColliderComponent.html#%3Cinit%3E(float)" class="member-name-link">InteractionColliderComponent(float)</a> - Constructor for class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/InteractionColliderComponent.html" title="class in com.csse3200.game.components.player">InteractionColliderComponent</a></dt>
+<dt><a href="com/csse3200/game/components/player/InteractionDetector.html#%3Cinit%3E(float)" class="member-name-link">InteractionDetector(float)</a> - Constructor for class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/InteractionDetector.html" title="class in com.csse3200.game.components.player">InteractionDetector</a></dt>
 <dd>
-<div class="block">Constructs an InteractionColliderComponent with the specified interaction range.</div>
+<div class="block">Constructs an InteractionDetector with the specified interaction range.</div>
 </dd>
 <dt><a href="com/csse3200/game/files/FileLoader.Location.html#INTERNAL" class="member-name-link">INTERNAL</a> - Enum constant in enum class com.csse3200.game.files.<a href="com/csse3200/game/files/FileLoader.Location.html" title="enum class in com.csse3200.game.files">FileLoader.Location</a></dt>
 <dd>&nbsp;</dd>
@@ -4115,10 +4123,6 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/components/npc/QuestIndicatorComponent.html#updateLocation(com.badlogic.gdx.math.Vector2)" class="member-name-link">updateLocation(Vector2)</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/QuestIndicatorComponent.html" title="class in com.csse3200.game.components.npc">QuestIndicatorComponent</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/player/InteractionColliderComponent.html#updateRange(float)" class="member-name-link">updateRange(float)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/InteractionColliderComponent.html" title="class in com.csse3200.game.components.player">InteractionColliderComponent</a></dt>
-<dd>
-<div class="block">Updates the interaction range of this component.</div>
-</dd>
 <dt><a href="com/csse3200/game/components/npc/QuestIndicatorComponent.html#updateState(com.csse3200.game.components.npc.QuestIndicatorComponent.State)" class="member-name-link">updateState(QuestIndicatorComponent.State)</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/QuestIndicatorComponent.html" title="class in com.csse3200.game.components.npc">QuestIndicatorComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/weather/WeatherEvent.html#updateTime()" class="member-name-link">updateTime()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/WeatherEvent.html" title="class in com.csse3200.game.areas.weather">WeatherEvent</a></dt>
