@@ -1,15 +1,11 @@
 package com.csse3200.game.screens;
 
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.SpaceGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.components.Component;
 import com.csse3200.game.areas.weather.WeatherEventDisplay;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.player.PlayerActions;
@@ -24,7 +20,6 @@ import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
-import com.csse3200.game.rendering.Renderable;
 import com.csse3200.game.rendering.Renderer;
 import com.csse3200.game.services.*;
 import com.csse3200.game.ui.terminal.Terminal;
@@ -80,7 +75,6 @@ public class MainGameScreen extends ScreenAdapter {
   private final PhysicsEngine physicsEngine;
 
   private static Boolean lose;
-  private final Entity ui;
 
   public MainGameScreen(GdxGame game) {
     this.game = game;
@@ -116,7 +110,7 @@ public class MainGameScreen extends ScreenAdapter {
     spaceGameArea.create();
     renderer.getCamera().setTrackEntity(spaceGameArea.getPlayer());
 
-    ui = createUI();
+    createUI();
     // Switched to spaceGameArea TODO DELETE
     //ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
     //forestGameArea.create();
@@ -197,7 +191,7 @@ public class MainGameScreen extends ScreenAdapter {
    * Creates the main game's ui including components for rendering ui elements to the screen and
    * capturing and handling ui input.
    */
-  private Entity createUI() {
+  private void createUI() {
     logger.debug("Creating ui");
     Stage stage = ServiceLocator.getRenderService().getStage();
     InputComponent inputComponent =
@@ -216,7 +210,5 @@ public class MainGameScreen extends ScreenAdapter {
 
 
     ServiceLocator.getEntityService().register(ui);
-
-    return ui;
   }
 }
