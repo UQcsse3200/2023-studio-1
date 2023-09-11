@@ -74,9 +74,14 @@ loadScripts(document, 'script');</script>
 <div class="inheritance">com.csse3200.game.areas.weather.ClimateController</div>
 </div>
 <section class="class-description" id="class-description">
+<dl class="notes">
+<dt>All Implemented Interfaces:</dt>
+<dd><code>com.badlogic.gdx.utils.Json.Serializable</code></dd>
+</dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">ClimateController</span>
-<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
+implements com.badlogic.gdx.utils.Json.Serializable</span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -131,6 +136,28 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the current temperature of the game world</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#read(com.badlogic.gdx.utils.Json,com.badlogic.gdx.utils.JsonValue)" class="member-name-link">read</a><wbr>(com.badlogic.gdx.utils.Json&nbsp;json,
+ com.badlogic.gdx.utils.JsonValue&nbsp;jsonData)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCurrentWeatherEvent(com.csse3200.game.areas.weather.WeatherEvent)" class="member-name-link">setCurrentWeatherEvent</a><wbr>(<a href="WeatherEvent.html" title="class in com.csse3200.game.areas.weather">WeatherEvent</a>&nbsp;event)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the current weather event that is occurring</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setHumidity(float)" class="member-name-link">setHumidity</a><wbr>(float&nbsp;humidity)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the current humidity of the game world</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTemperature(float)" class="member-name-link">setTemperature</a><wbr>(float&nbsp;temperature)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the temperature to a given temperature</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#write(com.badlogic.gdx.utils.Json)" class="member-name-link">write</a><wbr>(com.badlogic.gdx.utils.Json&nbsp;json)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -175,6 +202,13 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="setHumidity(float)">
+<h3>setHumidity</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setHumidity</span><wbr><span class="parameters">(float&nbsp;humidity)</span></div>
+<div class="block">Sets the current humidity of the game world</div>
+</section>
+</li>
+<li>
 <section class="detail" id="getEvents()">
 <h3>getEvents</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../events/EventHandler.html" title="class in com.csse3200.game.events">EventHandler</a></span>&nbsp;<span class="element-name">getEvents</span>()</div>
@@ -211,6 +245,13 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="setCurrentWeatherEvent(com.csse3200.game.areas.weather.WeatherEvent)">
+<h3>setCurrentWeatherEvent</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setCurrentWeatherEvent</span><wbr><span class="parameters">(<a href="WeatherEvent.html" title="class in com.csse3200.game.areas.weather">WeatherEvent</a>&nbsp;event)</span></div>
+<div class="block">Gets the current weather event that is occurring</div>
+</section>
+</li>
+<li>
 <section class="detail" id="getTemperature()">
 <h3>getTemperature</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">getTemperature</span>()</div>
@@ -218,6 +259,38 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>current game temperature</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setTemperature(float)">
+<h3>setTemperature</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTemperature</span><wbr><span class="parameters">(float&nbsp;temperature)</span></div>
+<div class="block">Sets the temperature to a given temperature</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>temperature</code> - the temperature to set it to</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="write(com.badlogic.gdx.utils.Json)">
+<h3>write</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">write</span><wbr><span class="parameters">(com.badlogic.gdx.utils.Json&nbsp;json)</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code>write</code>&nbsp;in interface&nbsp;<code>com.badlogic.gdx.utils.Json.Serializable</code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="read(com.badlogic.gdx.utils.Json,com.badlogic.gdx.utils.JsonValue)">
+<h3>read</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">read</span><wbr><span class="parameters">(com.badlogic.gdx.utils.Json&nbsp;json,
+ com.badlogic.gdx.utils.JsonValue&nbsp;jsonData)</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code>read</code>&nbsp;in interface&nbsp;<code>com.badlogic.gdx.utils.Json.Serializable</code></dd>
 </dl>
 </section>
 </li>
