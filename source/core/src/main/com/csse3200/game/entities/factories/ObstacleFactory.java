@@ -16,7 +16,7 @@ import com.csse3200.game.rendering.TextureRenderComponent;
 public class ObstacleFactory {
   
   /**
-   * Creates a invisible obstacle entity which located onto the non-traversable area of the map.
+   * Creates an invisible obstacle entity which located onto the non-traversable area of the map.
    * @return Invisible obstacle entity
    */
   public static Entity createInvisibleObstacle() {
