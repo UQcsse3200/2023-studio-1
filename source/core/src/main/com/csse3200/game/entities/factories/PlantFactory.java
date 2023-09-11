@@ -46,6 +46,13 @@ public class PlantFactory {
                                     config.imageFolderPath + "5_decaying.png"
                                 };
 
+        String[] soundsArray =   {
+                config.soundFolderPath + "click.wav", config.soundFolderPath + "clickLore.wav",
+                config.soundFolderPath + "decay.wav", config.soundFolderPath + "decayLore.wav",
+                config.soundFolderPath + "destroy.wav", config.soundFolderPath + "destroyLore.wav",
+                config.soundFolderPath + "nearby.wav", config.soundFolderPath + "nearbyLore.wav",
+        };
+
         Entity plant = new Entity(EntityType.Plant)
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setSensor(true))
@@ -53,7 +60,7 @@ public class PlantFactory {
                 .addComponent(new DynamicTextureRenderComponent("images/plants/Corn.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
-                        config.maxHealth, cropTile, growthThresholds, config.soundsArray,
+                        config.maxHealth, cropTile, growthThresholds, soundsArray,
                         imagePaths));
 
         // Set plant position over crop tile.

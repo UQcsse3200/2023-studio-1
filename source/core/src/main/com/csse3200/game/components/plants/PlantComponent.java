@@ -217,9 +217,9 @@ public class PlantComponent extends Component {
         entity.getEvents().addListener("harvest", this::harvest);
         entity.getEvents().addListener("destroyPlant", this::destroyPlant);
         entity.getEvents().addListener("attack", (Integer damage) -> increasePlantHealth(-damage));
-        ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateGrowthStage);
-        ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this:: adultLifeSpan);
-        this.currentTexture = entity.getComponent(DynamicTextureRenderComponent.class);
+        //ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateGrowthStage);
+        //ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this:: adultLifeSpan);
+        //this.currentTexture = entity.getComponent(DynamicTextureRenderComponent.class);
     }
 
     /**
@@ -518,11 +518,12 @@ public class PlantComponent extends Component {
      */
     public void playSound(String functionCalled) {
         String[] sounds = this.sounds;
+
         switch (functionCalled) {
-            case "destroy" -> soundMethod(sounds[0], sounds[1]);
-            case "nearby" -> soundMethod(sounds[2], sounds[3]);
-            case "click" -> soundMethod(sounds[4], sounds[5]);
-            case "decays" -> soundMethod(sounds[6], sounds[7]);
+            case "click" -> soundMethod(sounds[0], sounds[1]);
+            case "decays" -> soundMethod(sounds[2], sounds[3]);
+            case "destroy" -> soundMethod(sounds[4], sounds[5]);
+            case "nearby" -> soundMethod(sounds[6], sounds[7]);
         }
     }
 

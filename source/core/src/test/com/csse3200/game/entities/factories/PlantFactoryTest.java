@@ -141,13 +141,18 @@ class PlantFactoryTest {
     static Stream<Arguments> plantConfigProvider() {
         return Stream.of(
                 Arguments.of("cosmicCob", 10, "Cosmic Cob", "FOOD",
-                        "A nutritious snack with everything a human needs to survive, the local fauna won’t touch it though. Suspiciously high in protein and fat…", (float) 0.7, 5, 400),
+                        "A nutritious snack with everything a human needs to survive, the local " +
+                                "fauna won’t touch it though. Suspiciously high in protein and fat…",
+                        (float) 0.7, 5, 400),
                 Arguments.of("aloeVera", 10, "Aloe Vera", "HEALTH",
-                        "A unique plant that once ground down to a chunky red paste can be used to heal significant wounds, it’s a miracle!", (float) 0.7, 5, 400),
+                        "A unique plant that once ground down to a chunky red paste can be used " +
+                                "to heal significant wounds, it’s a miracle!", (float) 0.7, 5, 400),
                 Arguments.of("hammerPlant", 10, "Hammer Plant", "REPAIR",
-                        "A useful plant resembling a hand holding a hammer that repairs the other nearby plants, maybe they were friends!", (float) 0.7, 5, 400),
+                        "A useful plant resembling a hand holding a hammer that repairs the " +
+                                "other nearby plants, maybe they were friends!", (float) 0.7, 5, 400),
                 Arguments.of("venusFlyTrap", 10, "Space Snapper", "DEFENCE",
-                        "An hangry plant that will gobble any nasty pests nearby. Keep small pets and children out of snapping distance!", (float) 0.7, 5, 400),
+                        "A hangry plant that will gobble any nasty pests nearby. Keep small pets " +
+                                "and children out of snapping distance!", (float) 0.7, 5, 400),
                 Arguments.of("waterWeed", 10, "Atomic Algae", "PRODUCTION",
                         "Test description", (float) 0.7, 5, 400),
                 Arguments.of("nightshade", 10, "Deadly Nightshade",
@@ -234,10 +239,10 @@ class PlantFactoryTest {
     /**
      * Verifies if plants are associated with the correct texture paths.
      *
-     * @param id             The unique identifier for the plant.
+     * @param id      The unique identifier for the plant.
      * @param path    The path of the plant's texture in the asset directory.
      * @param createPlant   The method to create the specific plant.
-     * @throws Exception     If there's an error during plant creation or verification.
+     * @throws Exception    If there's an error during plant creation or verification.
      */
     @ParameterizedTest
     @MethodSource("plantStatsProvider")
