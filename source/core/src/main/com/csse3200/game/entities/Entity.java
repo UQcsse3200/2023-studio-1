@@ -329,6 +329,10 @@ public class Entity implements Json.Serializable {
     return String.format("Entity{id=%d}", id);
   }
 
+  public Array<Component> getCreatedComponents() {
+    return createdComponents;
+  }
+
   /**
    * Writes to the json info about entities.
    * Writes the entities x,y coordinates
