@@ -1,7 +1,6 @@
 package com.csse3200.game.components.player;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.csse3200.game.components.inventory.ToolbarDisplay;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.entities.Entity;
@@ -13,8 +12,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import javax.tools.Tool;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
