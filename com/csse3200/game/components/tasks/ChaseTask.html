@@ -80,10 +80,6 @@ loadScripts(document, 'script');</script>
 <dt>All Implemented Interfaces:</dt>
 <dd><code><a href="../../ai/tasks/PriorityTask.html" title="interface in com.csse3200.game.ai.tasks">PriorityTask</a></code>, <code><a href="../../ai/tasks/Task.html" title="interface in com.csse3200.game.ai.tasks">Task</a></code></dd>
 </dl>
-<dl class="notes">
-<dt>Direct Known Subclasses:</dt>
-<dd><code><a href="FollowTask.html" title="class in com.csse3200.game.components.tasks">FollowTask</a></code>, <code><a href="RunAwayTask.html" title="class in com.csse3200.game.components.tasks">RunAwayTask</a></code></dd>
-</dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">ChaseTask</span>
 <span class="extends-implements">extends <a href="../../ai/tasks/DefaultTask.html" title="class in com.csse3200.game.ai.tasks">DefaultTask</a>
@@ -137,71 +133,24 @@ implements <a href="../../ai/tasks/PriorityTask.html" title="interface in com.cs
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getActivePriority()" class="member-name-link">getActivePriority</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Determines the priority when the chase task is active based on the distance to the target
- and the visibility of the target entity.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected float</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDistanceToTarget()" class="member-name-link">getDistanceToTarget</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Calculates the distance between the owner's entity and the target entity.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getInactivePriority()" class="member-name-link">getInactivePriority</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Determines the priority when the chase task is inactive based on the distance to the target
- and the visibility of the target entity.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="MovementTask.html" title="class in com.csse3200.game.components.tasks">MovementTask</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMovementTask()" class="member-name-link">getMovementTask</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Gets the movement task associated with this run away task.</div>
-</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPriority()" class="member-name-link">getPriority</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the priority level of the chase task based on the current status and conditions.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRawPriority()" class="member-name-link">getRawPriority</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Getter for the raw priority of this task</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTarget()" class="member-name-link">getTarget</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Getter for the target entity that this task is related to</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getViewDistance()" class="member-name-link">getViewDistance</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Getter for distance that the entity can ee</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isTargetVisible()" class="member-name-link">isTargetVisible</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Checks if the target entity is visible from the owner's entity position by performing a raycast.</div>
-</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setMovementTask(com.csse3200.game.components.tasks.MovementTask)" class="member-name-link">setMovementTask</a><wbr>(<a href="MovementTask.html" title="class in com.csse3200.game.components.tasks">MovementTask</a>&nbsp;movementTask)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#start()" class="member-name-link">start</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Setter for movementTask</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#start()" class="member-name-link">start</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Starts the chase task by initializing the movement task and triggering the "chaseStart" event.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stop()" class="member-name-link">stop</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stop()" class="member-name-link">stop</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Stops the chase task and the associated movement task.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Updates the chase task by updating the movement task and restarting it if necessary.</div>
 </div>
 </div>
@@ -300,107 +249,6 @@ implements <a href="../../ai/tasks/PriorityTask.html" title="interface in com.cs
 <dd><code><a href="../../ai/tasks/PriorityTask.html#getPriority()">getPriority</a></code>&nbsp;in interface&nbsp;<code><a href="../../ai/tasks/PriorityTask.html" title="interface in com.csse3200.game.ai.tasks">PriorityTask</a></code></dd>
 <dt>Returns:</dt>
 <dd>The priority level.</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getDistanceToTarget()">
-<h3>getDistanceToTarget</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">getDistanceToTarget</span>()</div>
-<div class="block">Calculates the distance between the owner's entity and the target entity.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>The distance between the owner's entity and the target entity.</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getActivePriority()">
-<h3>getActivePriority</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getActivePriority</span>()</div>
-<div class="block">Determines the priority when the chase task is active based on the distance to the target
- and the visibility of the target entity.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>The active priority level or -1 if chasing conditions are not met.</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getInactivePriority()">
-<h3>getInactivePriority</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getInactivePriority</span>()</div>
-<div class="block">Determines the priority when the chase task is inactive based on the distance to the target
- and the visibility of the target entity.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>The inactive priority level or -1 if conditions are not met.</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="isTargetVisible()">
-<h3>isTargetVisible</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isTargetVisible</span>()</div>
-<div class="block">Checks if the target entity is visible from the owner's entity position by performing a raycast.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>True if the target entity is visible, false otherwise.</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getMovementTask()">
-<h3>getMovementTask</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="MovementTask.html" title="class in com.csse3200.game.components.tasks">MovementTask</a></span>&nbsp;<span class="element-name">getMovementTask</span>()</div>
-<div class="block">Gets the movement task associated with this run away task.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>The movement task instance.</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="setMovementTask(com.csse3200.game.components.tasks.MovementTask)">
-<h3>setMovementTask</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setMovementTask</span><wbr><span class="parameters">(<a href="MovementTask.html" title="class in com.csse3200.game.components.tasks">MovementTask</a>&nbsp;movementTask)</span></div>
-<div class="block">Setter for movementTask</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>movementTask</code> - the movement task that is assigned</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getRawPriority()">
-<h3>getRawPriority</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getRawPriority</span>()</div>
-<div class="block">Getter for the raw priority of this task</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>priority of this task</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getTarget()">
-<h3>getTarget</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">getTarget</span>()</div>
-<div class="block">Getter for the target entity that this task is related to</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>target entity</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getViewDistance()">
-<h3>getViewDistance</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">getViewDistance</span>()</div>
-<div class="block">Getter for distance that the entity can ee</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>viewDistance of the chasing entity</dd>
 </dl>
 </section>
 </li>

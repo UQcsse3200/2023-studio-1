@@ -111,56 +111,76 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.math.GridPoint2</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMapSize()" class="member-name-link">getMapSize</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns a GridPoint2 instance that contains the size of the map.</div>
+<div class="block">Returns the size of the map</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;com.badlogic.gdx.math.GridPoint2&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNonTraversableTileCoordinates()" class="member-name-link">getNonTraversableTileCoordinates</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Retrieves a list of grid coordinates representing non-traversable tiles on the map.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTerrainComponent()" class="member-name-link">getTerrainComponent</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="TerrainFactory.html" title="class in com.csse3200.game.areas.terrain">TerrainFactory</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTerrainFactory()" class="member-name-link">getTerrainFactory</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTile(com.badlogic.gdx.math.GridPoint2)" class="member-name-link">getTile</a><wbr>(com.badlogic.gdx.math.GridPoint2&nbsp;gridPoint)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTile(int,int)" class="member-name-link">getTile</a><wbr>(int&nbsp;x,
+ int&nbsp;y)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Gets the TerrainTile at the specified GridPoint2 position.</div>
+<div class="block">Gets the tile at a specified world coordinate position</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTile(com.badlogic.gdx.math.Vector2)" class="member-name-link">getTile</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;vector)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Gets the TerrainTile at the specified Vector2 position.</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.maps.tiled.TiledMap</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTiledMap()" class="member-name-link">getTiledMap</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="TerrainTile.TerrainCategory.html" title="enum class in com.csse3200.game.areas.terrain">TerrainTile.TerrainCategory</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTileTerrainCategory(int,int)" class="member-name-link">getTileTerrainCategory</a><wbr>(int&nbsp;x,
+ int&nbsp;y)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the terrain category at a specified tile</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.maps.tiled.TiledMap</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTiledMap()" class="member-name-link">getTiledMap</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;com.badlogic.gdx.math.GridPoint2&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTraversableTileCoordinates()" class="member-name-link">getTraversableTileCoordinates</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isTileOccupied(int,int)" class="member-name-link">isTileOccupied</a><wbr>(int&nbsp;x,
+ int&nbsp;y)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Retrieves a list of grid coordinates representing traversable tiles on the map.</div>
+<div class="block">Returns whether the specified terrain is occupied</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isTileTillable(int,int)" class="member-name-link">isTileTillable</a><wbr>(int&nbsp;x,
+ int&nbsp;y)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns whether the specified terrain is tillable</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isTileTraversable(int,int)" class="member-name-link">isTileTraversable</a><wbr>(int&nbsp;x,
+ int&nbsp;y)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns whether the specified terrain is traversable</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#screenPositionToWorldCoordinates(int,int)" class="member-name-link">screenPositionToWorldCoordinates</a><wbr>(int&nbsp;xPixel,
+ int&nbsp;yPixel)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Conversion function: gets the centre of a tile from a coordinate position
+ Currently WIP</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTileOccupied(int,int)" class="member-name-link">setTileOccupied</a><wbr>(int&nbsp;x,
+ int&nbsp;y)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the specified tile as being occupied</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTerrainComponent(com.csse3200.game.areas.terrain.TerrainComponent)" class="member-name-link">setTerrainComponent</a><wbr>(<a href="TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a>&nbsp;terrainComponent)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.math.Vector2</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#tileCoordinatesToVector(com.badlogic.gdx.math.GridPoint2)" class="member-name-link">tileCoordinatesToVector</a><wbr>(com.badlogic.gdx.math.GridPoint2&nbsp;gridPoint2)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Converts a GridPoint2 instance into a Vector2 instance representing the same TerrainTile position on the map
- layer.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;com.badlogic.gdx.math.GridPoint2&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#traversableTileCoordinatesHelper(java.lang.Boolean)" class="member-name-link">traversableTileCoordinatesHelper</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;isTraversable)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTileTerrainCategory(com.csse3200.game.areas.terrain.TerrainTile.TerrainCategory,int,int)" class="member-name-link">setTileTerrainCategory</a><wbr>(<a href="TerrainTile.TerrainCategory.html" title="enum class in com.csse3200.game.areas.terrain">TerrainTile.TerrainCategory</a>&nbsp;terrainCategory,
+ int&nbsp;x,
+ int&nbsp;y)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Helper function to retrieve a list of grid coordinates based on traversability.</div>
+<div class="block">Sets the terrainCategory at the specified tile to the provided terrainCategory</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.math.GridPoint2</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#vectorToTileCoordinates(com.badlogic.gdx.math.Vector2)" class="member-name-link">vectorToTileCoordinates</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;vector)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTileUnoccupied(int,int)" class="member-name-link">setTileUnoccupied</a><wbr>(int&nbsp;x,
+ int&nbsp;y)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Converts a Vector2 instance into a GridPoint2 instance representing the same TerrainTile position on the map
- layer.</div>
+<div class="block">Sets the specified tile as being unoccupied</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#worldCoordinatesToScreenPosition(int,int)" class="member-name-link">worldCoordinatesToScreenPosition</a><wbr>(int&nbsp;x,
+ int&nbsp;y)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Conversion function: gets the centre of a tile from a coordinate position
+ Currently WIP</div>
 </div>
 </div>
 </div>
@@ -206,23 +226,6 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="getTerrainComponent()">
-<h3>getTerrainComponent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a></span>&nbsp;<span class="element-name">getTerrainComponent</span>()
-                                     throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></span></div>
-<dl class="notes">
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></code></dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="setTerrainComponent(com.csse3200.game.areas.terrain.TerrainComponent)">
-<h3>setTerrainComponent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTerrainComponent</span><wbr><span class="parameters">(<a href="TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a>&nbsp;terrainComponent)</span></div>
-</section>
-</li>
-<li>
 <section class="detail" id="getEventHandler()">
 <h3>getEventHandler</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../events/EventHandler.html" title="class in com.csse3200.game.events">EventHandler</a></span>&nbsp;<span class="element-name">getEventHandler</span>()</div>
@@ -232,112 +235,158 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getMapSize()">
 <h3>getMapSize</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.math.GridPoint2</span>&nbsp;<span class="element-name">getMapSize</span>()</div>
-<div class="block">Returns a GridPoint2 instance that contains the size of the map.</div>
+<div class="block">Returns the size of the map</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>a copy of the GridPoint2 instance which contains the dimensions of the map.</dd>
+<dd>a copy of the GridPoint2 instance which contains the dimensions of the map</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="getTile(com.badlogic.gdx.math.GridPoint2)">
+<section class="detail" id="getTile(int,int)">
 <h3>getTile</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></span>&nbsp;<span class="element-name">getTile</span><wbr><span class="parameters">(com.badlogic.gdx.math.GridPoint2&nbsp;gridPoint)</span></div>
-<div class="block">Gets the TerrainTile at the specified GridPoint2 position. The x and y values in the GridPoint2 class directly
- correspond to the tile's position in the map layer.</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></span>&nbsp;<span class="element-name">getTile</span><wbr><span class="parameters">(int&nbsp;x,
+ int&nbsp;y)</span></div>
+<div class="block">Gets the tile at a specified world coordinate position</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>gridPoint</code> - The GridPoint2 instance representing the target TerrainTile's position.</dd>
+<dd><code>x</code> - x coordinate</dd>
+<dd><code>y</code> - y coordinate</dd>
 <dt>Returns:</dt>
-<dd>TerrainTile instance at the specified position IF the gridpoint is within the bounds of the map, null
-         otherwise</dd>
+<dd>a TerrainTile</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="getTile(com.badlogic.gdx.math.Vector2)">
-<h3>getTile</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></span>&nbsp;<span class="element-name">getTile</span><wbr><span class="parameters">(com.badlogic.gdx.math.Vector2&nbsp;vector)</span></div>
-<div class="block">Gets the TerrainTile at the specified Vector2 position. The x and y float values in the Vector2 class are
- transformed so that they correspond to the integer positions of the TerrainTile in the map layer.
-
- If using the Vector2 position variable from the Entity class, it is important to remember that the vector points
- to the bottom left of the entity sprite, not the centre of the sprite (This is important to know if the entity
- uses animations since the entity size may be larger than the actual sprite). The Entity class provides the
- getPosition() and getCentredPosition() methods to help retrieve an appropriate Vector2 instance to use.</div>
+<section class="detail" id="worldCoordinatesToScreenPosition(int,int)">
+<h3>worldCoordinatesToScreenPosition</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</span>&nbsp;<span class="element-name">worldCoordinatesToScreenPosition</span><wbr><span class="parameters">(int&nbsp;x,
+ int&nbsp;y)</span></div>
+<div class="block">Conversion function: gets the centre of a tile from a coordinate position
+ Currently WIP</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>vector</code> - The Vector2 instance representing the target TerrainTile's position.</dd>
+<dd><code>x</code> - x coordinate</dd>
+<dd><code>y</code> - y coordinate</dd>
 <dt>Returns:</dt>
-<dd>TerrainTile instance at the specified position IF the vector is within the bounds of the map, null
-         otherwise</dd>
+<dd>a list of x and y pixel values</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="tileCoordinatesToVector(com.badlogic.gdx.math.GridPoint2)">
-<h3>tileCoordinatesToVector</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.math.Vector2</span>&nbsp;<span class="element-name">tileCoordinatesToVector</span><wbr><span class="parameters">(com.badlogic.gdx.math.GridPoint2&nbsp;gridPoint2)</span></div>
-<div class="block">Converts a GridPoint2 instance into a Vector2 instance representing the same TerrainTile position on the map
- layer. The integer values in the GridPoint2 class which directly correspond to the TerrainTile coordinates
- are transformed for the new Vector2 instance.</div>
+<section class="detail" id="screenPositionToWorldCoordinates(int,int)">
+<h3>screenPositionToWorldCoordinates</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</span>&nbsp;<span class="element-name">screenPositionToWorldCoordinates</span><wbr><span class="parameters">(int&nbsp;xPixel,
+ int&nbsp;yPixel)</span></div>
+<div class="block">Conversion function: gets the centre of a tile from a coordinate position
+ Currently WIP</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>gridPoint2</code> - The GridPoint2 instance being used to create a corresponding Vector2 instance.</dd>
+<dd><code>xPixel</code> - x pixel screen coordinate</dd>
+<dd><code>yPixel</code> - y pixel screen coordinate</dd>
 <dt>Returns:</dt>
-<dd>the new Vector2 instance.</dd>
+<dd>a list of x and y tile coordinates</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="vectorToTileCoordinates(com.badlogic.gdx.math.Vector2)">
-<h3>vectorToTileCoordinates</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.math.GridPoint2</span>&nbsp;<span class="element-name">vectorToTileCoordinates</span><wbr><span class="parameters">(com.badlogic.gdx.math.Vector2&nbsp;vector)</span></div>
-<div class="block">Converts a Vector2 instance into a GridPoint2 instance representing the same TerrainTile position on the map
- layer. The float values in the Vector2 instance are transformed to integer x and y values for the GridPoint2
- instance.</div>
+<section class="detail" id="getTileTerrainCategory(int,int)">
+<h3>getTileTerrainCategory</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="TerrainTile.TerrainCategory.html" title="enum class in com.csse3200.game.areas.terrain">TerrainTile.TerrainCategory</a></span>&nbsp;<span class="element-name">getTileTerrainCategory</span><wbr><span class="parameters">(int&nbsp;x,
+ int&nbsp;y)</span></div>
+<div class="block">Returns the terrain category at a specified tile</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>vector</code> - The Vector2 instance being used to create a corresponding GridPoint2 instance.</dd>
+<dd><code>x</code> - x coordinate (0 -> MAP_SIZE.x -1)</dd>
+<dd><code>y</code> - y coordinate (0 -> MAP_SIZE.y -1)</dd>
 <dt>Returns:</dt>
-<dd>the new GridPoint2 instance.</dd>
+<dd>the TerrainCategory of the specified tile</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="getTraversableTileCoordinates()">
-<h3>getTraversableTileCoordinates</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;com.badlogic.gdx.math.GridPoint2&gt;</span>&nbsp;<span class="element-name">getTraversableTileCoordinates</span>()</div>
-<div class="block">Retrieves a list of grid coordinates representing traversable tiles on the map.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>An ArrayList of GridPoint2 objects containing the coordinates of traversable tiles.</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getNonTraversableTileCoordinates()">
-<h3>getNonTraversableTileCoordinates</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;com.badlogic.gdx.math.GridPoint2&gt;</span>&nbsp;<span class="element-name">getNonTraversableTileCoordinates</span>()</div>
-<div class="block">Retrieves a list of grid coordinates representing non-traversable tiles on the map.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>An ArrayList of GridPoint2 objects containing the coordinates of non-traversable tiles.</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="traversableTileCoordinatesHelper(java.lang.Boolean)">
-<h3>traversableTileCoordinatesHelper</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;com.badlogic.gdx.math.GridPoint2&gt;</span>&nbsp;<span class="element-name">traversableTileCoordinatesHelper</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;isTraversable)</span></div>
-<div class="block">Helper function to retrieve a list of grid coordinates based on traversability.</div>
+<section class="detail" id="setTileTerrainCategory(com.csse3200.game.areas.terrain.TerrainTile.TerrainCategory,int,int)">
+<h3>setTileTerrainCategory</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTileTerrainCategory</span><wbr><span class="parameters">(<a href="TerrainTile.TerrainCategory.html" title="enum class in com.csse3200.game.areas.terrain">TerrainTile.TerrainCategory</a>&nbsp;terrainCategory,
+ int&nbsp;x,
+ int&nbsp;y)</span></div>
+<div class="block">Sets the terrainCategory at the specified tile to the provided terrainCategory</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>isTraversable</code> - A Boolean flag indicating whether to retrieve traversable (true) or non-traversable (false)
-                      tiles.</dd>
+<dd><code>terrainCategory</code> - terrinCategory to set the TerrainTile to</dd>
+<dd><code>x</code> - x coordinate (0 -> MAP_SIZE.x -1)</dd>
+<dd><code>y</code> - y coordinate (0 -> MAP_SIZE.y -1)</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isTileTraversable(int,int)">
+<h3>isTileTraversable</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isTileTraversable</span><wbr><span class="parameters">(int&nbsp;x,
+ int&nbsp;y)</span></div>
+<div class="block">Returns whether the specified terrain is traversable</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>x</code> - x coordinate (0 -> MAP_SIZE.x -1)</dd>
+<dd><code>y</code> - y coordinate (0 -> MAP_SIZE.y -1)</dd>
 <dt>Returns:</dt>
-<dd>An ArrayList of GridPoint2 objects containing the coordinates of tiles based on the specified
-         traversability.</dd>
+<dd>true if the tile is traversable and false if not</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isTileOccupied(int,int)">
+<h3>isTileOccupied</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isTileOccupied</span><wbr><span class="parameters">(int&nbsp;x,
+ int&nbsp;y)</span></div>
+<div class="block">Returns whether the specified terrain is occupied</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>x</code> - x coordinate (0 -> MAP_SIZE.x -1)</dd>
+<dd><code>y</code> - y coordinate (0 -> MAP_SIZE.y -1)</dd>
+<dt>Returns:</dt>
+<dd>true if the tile is occupied and false if not</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setTileOccupied(int,int)">
+<h3>setTileOccupied</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTileOccupied</span><wbr><span class="parameters">(int&nbsp;x,
+ int&nbsp;y)</span></div>
+<div class="block">Sets the specified tile as being occupied</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>x</code> - x coordinate (0 -> MAP_SIZE.x -1)</dd>
+<dd><code>y</code> - y coordinate (0 -> MAP_SIZE.y -1)</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setTileUnoccupied(int,int)">
+<h3>setTileUnoccupied</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTileUnoccupied</span><wbr><span class="parameters">(int&nbsp;x,
+ int&nbsp;y)</span></div>
+<div class="block">Sets the specified tile as being unoccupied</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>x</code> - x coordinate (0 -> MAP_SIZE.x -1)</dd>
+<dd><code>y</code> - y coordinate (0 -> MAP_SIZE.y -1)</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isTileTillable(int,int)">
+<h3>isTileTillable</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isTileTillable</span><wbr><span class="parameters">(int&nbsp;x,
+ int&nbsp;y)</span></div>
+<div class="block">Returns whether the specified terrain is tillable</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>x</code> - x coordinate (0 -> MAP_SIZE.x -1)</dd>
+<dd><code>y</code> - y coordinate (0 -> MAP_SIZE.y -1)</dd>
+<dt>Returns:</dt>
+<dd>true if the tile is tillable and false if not</dd>
 </dl>
 </section>
 </li>

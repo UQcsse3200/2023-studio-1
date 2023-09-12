@@ -71,10 +71,6 @@ loadScripts(document, 'script');</script>
 <h1 title="Interface OxygenLevel" class="title">Interface OxygenLevel</h1>
 </div>
 <section class="class-description" id="class-description">
-<dl class="notes">
-<dt>All Known Implementing Classes:</dt>
-<dd><code><a href="PlanetOxygenService.html" title="class in com.csse3200.game.services">PlanetOxygenService</a></code></dd>
-</dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">OxygenLevel</span></div>
 <div class="block">Used to adjust and check oxygen levels.</div>
@@ -102,15 +98,40 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Gets the amount of oxygen present in the object in kilos.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>int</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>float</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getOxygenPercentage()" class="member-name-link">getOxygenPercentage</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Gets the oxygen present as a percentage of the upper limit (Float 0.0 - 100.0).</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#registerContinuousAdd(float)" class="member-name-link">registerContinuousAdd</a><wbr>(float&nbsp;kilogramsPerHour)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Register a set amount of oxygen to be added to the object hourly.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#registerContinuousConsumption(float)" class="member-name-link">registerContinuousConsumption</a><wbr>(float&nbsp;kilogramsPerHour)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Register a set amount of oxygen to be removed/consumed from the object, hourly.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#removeContinuousAdd(float)" class="member-name-link">removeContinuousAdd</a><wbr>(float&nbsp;kilogramsPerHour)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Remove/stop a set amount of oxygen being added to the object hourly.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#removeContinuousConsumption(float)" class="member-name-link">removeContinuousConsumption</a><wbr>(float&nbsp;kilogramsPerHour)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Remove/stop a set amount of oxygen being consumed from the object hourly.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#removeOxygen(float)" class="member-name-link">removeOxygen</a><wbr>(float&nbsp;kilogramsToRemove)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Remove x kilograms of oxygen from the object in question.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setUpperLimit(int)" class="member-name-link">setUpperLimit</a><wbr>(int&nbsp;kilograms)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Sets the maximum amount of oxygen that can be present.</div>
 </div>
 </div>
 </div>
@@ -126,6 +147,13 @@ loadScripts(document, 'script');</script>
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="setUpperLimit(int)">
+<h3>setUpperLimit</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setUpperLimit</span><wbr><span class="parameters">(int&nbsp;kilograms)</span></div>
+<div class="block">Sets the maximum amount of oxygen that can be present.</div>
+</section>
+</li>
 <li>
 <section class="detail" id="addOxygen(float)">
 <h3>addOxygen</h3>
@@ -162,11 +190,55 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getOxygenPercentage()">
 <h3>getOxygenPercentage</h3>
-<div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">getOxygenPercentage</span>()</div>
+<div class="member-signature"><span class="return-type">float</span>&nbsp;<span class="element-name">getOxygenPercentage</span>()</div>
 <div class="block">Gets the oxygen present as a percentage of the upper limit (Float 0.0 - 100.0).</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>The oxygen present as a percentage of the upper limit.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="registerContinuousAdd(float)">
+<h3>registerContinuousAdd</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">registerContinuousAdd</span><wbr><span class="parameters">(float&nbsp;kilogramsPerHour)</span></div>
+<div class="block">Register a set amount of oxygen to be added to the object hourly.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>kilogramsPerHour</code> - the number of kilograms to be added per hour.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="registerContinuousConsumption(float)">
+<h3>registerContinuousConsumption</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">registerContinuousConsumption</span><wbr><span class="parameters">(float&nbsp;kilogramsPerHour)</span></div>
+<div class="block">Register a set amount of oxygen to be removed/consumed from the object, hourly.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>kilogramsPerHour</code> - the number of kilograms to be consumed per hour.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="removeContinuousAdd(float)">
+<h3>removeContinuousAdd</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">removeContinuousAdd</span><wbr><span class="parameters">(float&nbsp;kilogramsPerHour)</span></div>
+<div class="block">Remove/stop a set amount of oxygen being added to the object hourly.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>kilogramsPerHour</code> - the number of kilograms to stop adding per hour.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="removeContinuousConsumption(float)">
+<h3>removeContinuousConsumption</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">removeContinuousConsumption</span><wbr><span class="parameters">(float&nbsp;kilogramsPerHour)</span></div>
+<div class="block">Remove/stop a set amount of oxygen being consumed from the object hourly.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>kilogramsPerHour</code> - the number of kilograms to stop consuming per hour.</dd>
 </dl>
 </section>
 </li>
