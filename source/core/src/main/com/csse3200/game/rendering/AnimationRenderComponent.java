@@ -181,18 +181,18 @@ public class AnimationRenderComponent extends RenderComponent {
 
   @Override
   protected void draw(SpriteBatch batch) {
-    if (currentAnimation == null) {
-      return;
-    }
-    TextureRegion region = currentAnimation.getKeyFrame(animationPlayTime);
-    Vector2 pos = entity.getPosition();
-    entity.setScale(
-            (float) region.getRegionWidth() / this.scaleFactor,
-            (float) region.getRegionHeight() / this.scaleFactor
-    );
-    Vector2 scale = entity.getScale();
-    batch.draw(region, pos.x, pos.y, scale.x, scale.y);
-    animationPlayTime += timeSource.getDeltaTime();
+      if (currentAnimation == null) {
+        return;
+      }
+      TextureRegion region = currentAnimation.getKeyFrame(animationPlayTime);
+      Vector2 pos = entity.getPosition();
+      entity.setScale(
+              (float) region.getRegionWidth() / this.scaleFactor,
+              (float) region.getRegionHeight() / this.scaleFactor
+      );
+      Vector2 scale = entity.getScale();
+      batch.draw(region, pos.x, pos.y, scale.x, scale.y);
+      animationPlayTime += timeSource.getDeltaTime();
   }
 
   @Override
