@@ -170,7 +170,7 @@ public class IntroDisplay extends UIComponent {
     public void update() {
         // This movement logic is triggered on every frame, until the middle of the planet hits its target position
         // on screen
-        if (planet.getY(Align.bottom) >= storyLabel.getY(Align.top) + planetToTextPadding) {
+        if (planet.getY(Align.center) >= storyLabel.getY(Align.top) + planetToTextPadding) {
             planet.setY(planet.getY() - spaceSpeed); // Move the planet
             background.setY(background.getY() - spaceSpeed); // Move the background
         }
@@ -185,8 +185,16 @@ public class IntroDisplay extends UIComponent {
 
         // adjust the speed of movement based on screen size and current fps to ensure planet
         // hits position at the right time
-        spaceSpeed = (planet.getY(Align.center) - storyLabel.getY(Align.top) + planetToTextPadding) /
+        float calculatedSpeed = (planet.getY(Align.center) - storyLabel.getY(Align.top) + planetToTextPadding) /
                 (textAnimationDuration * (float)Gdx.graphics.getFramesPerSecond());
+
+        // The universal speed limit must be enforced
+        if (calculatedSpeed > 1.5f) {
+            spaceSpeed = 1.5f;
+        } else {
+            spaceSpeed = calculatedSpeed;
+        }
+
 
         logger.debug(String.format("Space Speed: %s", spaceSpeed));
 
