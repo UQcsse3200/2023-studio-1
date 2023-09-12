@@ -1,4 +1,5 @@
 package com.csse3200.game.components.items;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.CropTileComponent;
@@ -7,11 +8,10 @@ import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.player.InteractionDetector;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.services.ServiceLocator;
-import java.util.List;
 import com.csse3200.game.entities.factories.PlantFactory;
 import com.csse3200.game.services.ServiceLocator;
 
+import java.util.List;
 import java.util.function.Function;
 
 import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
