@@ -119,4 +119,5 @@ public abstract class GameArea implements Disposable {
   public abstract Entity getTractor();
 
   public abstract GameMap getMap();
+  public void setPlayer(Entity customPlayer) { player = customPlayer; }
 }
