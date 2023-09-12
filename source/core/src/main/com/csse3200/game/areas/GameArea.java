@@ -113,7 +113,7 @@ public abstract class GameArea implements Disposable {
   public Entity getPlayer() {
     return player;
   }
-  public abstract Entity getPlayer();
+ // public abstract Entity getPlayer();
   public abstract ClimateController getClimateController();
 
   public abstract Entity getTractor();
