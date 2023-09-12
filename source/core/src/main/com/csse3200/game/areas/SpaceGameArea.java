@@ -92,6 +92,7 @@ public class SpaceGameArea extends GameArea {
           "images/stonePath_1.png",
           "images/tractor.png",
           "images/fertiliser.png",
+
           "images/plants/misc/aloe_vera_seed.png",
           "images/plants/misc/atomic_algae_seed.png",
           "images/plants/misc/cosmic_cob_seed.png",
@@ -99,7 +100,52 @@ public class SpaceGameArea extends GameArea {
           "images/plants/misc/hammer_plant_seed.png",
           "images/plants/misc/horticultural_heater_seed.png",
           "images/plants/misc/space_snapper_seed.png",
-          "images/plants/misc/tobacco_seed.png"
+          "images/plants/misc/tobacco_seed.png",
+
+          "images/plants/cosmic_cob/1_seedling.png",
+          "images/plants/cosmic_cob/2_sprout.png",
+          "images/plants/cosmic_cob/3_juvenile.png",
+          "images/plants/cosmic_cob/4_adult.png",
+          "images/plants/cosmic_cob/5_decaying.png",
+          "images/plants/cosmic_cob/item_drop.png",
+
+          "images/plants/aloe_vera/1_seedling.png",
+          "images/plants/aloe_vera/2_sprout.png",
+          "images/plants/aloe_vera/3_juvenile.png",
+          "images/plants/aloe_vera/4_adult.png",
+          "images/plants/aloe_vera/5_decaying.png",
+          "images/plants/aloe_vera/item_drop.png",
+          "images/plants/aloe_vera/seedbag.png",
+
+          "images/plants/hammer_plant/1_seedling.png",
+          "images/plants/hammer_plant/2_sprout.png",
+          "images/plants/hammer_plant/3_juvenile.png",
+          "images/plants/hammer_plant/4_adult.png",
+          "images/plants/hammer_plant/5_decaying.png",
+          "images/plants/hammer_plant/item_drop.png",
+          "images/plants/hammer_plant/seedbag.png",
+
+          "images/plants/venus_trap/1_seedling.png",
+          "images/plants/venus_trap/2_sprout.png",
+          "images/plants/venus_trap/3_juvenile.png",
+          "images/plants/venus_trap/4_adult.png",
+          "images/plants/venus_trap/5_decaying.png",
+
+          "images/plants/waterweed/1_seedling.png",
+          "images/plants/waterweed/2_sprout.png",
+          "images/plants/waterweed/3_juvenile.png",
+          "images/plants/waterweed/4_adult.png",
+          "images/plants/waterweed/5_decaying.png",
+          "images/plants/waterweed/item_drop.png",
+
+          "images/plants/nightshade/1_seedling.png",
+          "images/plants/nightshade/2_sprout.png",
+          "images/plants/nightshade/3_juvenile.png",
+          "images/plants/nightshade/4_adult.png",
+          "images/plants/nightshade/5_decaying.png",
+          "images/plants/nightshade/item_drop.png"
+
+
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
