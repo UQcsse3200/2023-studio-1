@@ -24,14 +24,14 @@ import static com.csse3200.game.entities.factories.ItemFactory.createShovel;
  * Currently untested, but forms the basis for the UI which will be implemented soon:tm:
  */
 public class InventoryComponent extends Component {
-private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
+  private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
 
-private final Set<Integer> inventoryIds = new HashSet<>();
-private final List<Entity> inventory = new ArrayList<>();
-private final Map<Integer, Integer> itemCount = new HashMap<>();
-private final Map<Integer, Point> itemPosition = new HashMap<>();
-private final HashMap<Integer,Entity> itemPlace = new HashMap<>();
-private Entity heldItem = null;
+  private final Set<Integer> inventoryIds = new HashSet<>();
+  private final List<Entity> inventory = new ArrayList<>();
+  private final Map<Integer, Integer> itemCount = new HashMap<>();
+  private final Map<Integer, Point> itemPosition = new HashMap<>();
+  private final HashMap<Integer,Entity> itemPlace = new HashMap<>();
+  private Entity heldItem = null;
 
 
   private int heldIndex = 0;
@@ -130,7 +130,7 @@ private Entity heldItem = null;
   public boolean setPosition(Entity entity){
     int lastPlace = itemPlace.size() - 1 ;
     itemPlace.put(lastPlace+1,entity);
-      entity.getEvents().trigger("updateInventory");
+    entity.getEvents().trigger("updateInventory");
     return true;
   }
   /**
