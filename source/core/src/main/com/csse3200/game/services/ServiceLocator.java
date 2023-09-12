@@ -31,6 +31,7 @@ public class ServiceLocator {
   private static CameraComponent cameraComponent;
   private static SaveLoadService saveLoadService;
   private static MissionManager missions;
+  private static PlanetOxygenService planetOxygenService;
 
   public static GameArea getGameArea() {
     return gameArea;
@@ -66,6 +67,9 @@ public class ServiceLocator {
 
   public static MissionManager getMissionManager() {
     return missions;
+  }
+  public static PlanetOxygenService getPlanetOxygenService() {
+    return planetOxygenService;
   }
 
   public static SaveLoadService getSaveLoadService() {
@@ -121,6 +125,11 @@ public class ServiceLocator {
     logger.debug("Registering mission manager {}", source);
     missions = source;
   }
+  
+  public static void registerPlanetOxygenService(PlanetOxygenService source) {
+    logger.debug("Registering planet oxygen service {}", source);
+    planetOxygenService = source;
+  }
 
   /**
    * Registers the save/load service.
@@ -142,6 +151,7 @@ public class ServiceLocator {
     timeSource = null;
     inputService = null;
     resourceService = null;
+    planetOxygenService = null;
     gameArea = null;
   }
 

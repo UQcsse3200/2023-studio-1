@@ -35,6 +35,8 @@ public class SpaceGameArea extends GameArea {
   private static final int NUM_TREES = 7;
   private static final int NUM_GHOSTS = 5;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
+  private static final GridPoint2 QUESTGIVER_SPAWN = new GridPoint2(20, 20);
+  private static final GridPoint2 QUESTGIVERIND_SPAWN = new GridPoint2(20, 24);
   private static final GridPoint2 TRACTOR_SPAWN = new GridPoint2(15, 15);
 
   private static final GridPoint2 TOOL_SPAWN = new GridPoint2(15, 10);// temp!!!
@@ -115,7 +117,8 @@ public class SpaceGameArea extends GameArea {
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
           "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas",
-          "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas"
+          "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas", "images/questgiver.atlas",
+          "images/missionStatus.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg", "sounds/car-horn-6408.mp3"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -158,6 +161,7 @@ public class SpaceGameArea extends GameArea {
 
 
     tractor = spawnTractor();
+    spawnQuestgiver();
     spawnChickens();
     spawnCows();
     spawnAstrolotl();
@@ -243,8 +247,15 @@ public class SpaceGameArea extends GameArea {
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
-    System.out.println(newPlayer.getPosition());
     return newPlayer;
+  }
+
+  private void spawnQuestgiver() {
+    Entity newQuestgiver = QuestgiverFactory.createQuestgiver();
+    spawnEntityAt(newQuestgiver, QUESTGIVER_SPAWN, true, true);
+
+    Entity newQuestgiverIndicator = QuestgiverFactory.createQuestgiverIndicator(newQuestgiver);
+    spawnEntityAt(newQuestgiverIndicator, QUESTGIVERIND_SPAWN, true, true);
   }
 
   private void spawnTool(ItemType tool) {

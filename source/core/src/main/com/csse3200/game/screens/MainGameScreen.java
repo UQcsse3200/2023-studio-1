@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 public class MainGameScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
   private static final String[] mainGameTextures = {
-          "images/heart.png",
+          //"images/heart.png",
           "images/time_system_ui/clock_frame.png",
           "images/time_system_ui/indicator_0.png",
           "images/time_system_ui/indicator_1.png",
@@ -64,9 +64,12 @@ public class MainGameScreen extends ScreenAdapter {
           "images/time_system_ui/indicator_21.png",
           "images/time_system_ui/indicator_22.png",
           "images/time_system_ui/indicator_23.png",
+          "images/oxygen_ui/oxygen_outline.png",
+          "images/oxygen_ui/oxygen_fill.png",
           "images/weather_event/weather-border.png",
           "images/weather_event/acid-rain.png",
           "images/weather_event/solar-flare.png"
+
   };
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 
@@ -92,6 +95,7 @@ public class MainGameScreen extends ScreenAdapter {
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
     ServiceLocator.registerTimeService(new TimeService());
+    ServiceLocator.registerPlanetOxygenService(new PlanetOxygenService());
 
     ServiceLocator.registerMissionManager(new MissionManager());
 
@@ -204,8 +208,8 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(inputComponent)
         .addComponent(new TerminalDisplay())
         .addComponent(new GameTimeDisplay())
+        .addComponent(new OxygenDisplay())
         .addComponent(new WeatherEventDisplay());
-
 
     ServiceLocator.getEntityService().register(ui);
   }
