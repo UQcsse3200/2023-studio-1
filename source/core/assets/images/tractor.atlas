@@ -1,7 +1,7 @@
 tractor.png
 size: 516, 63
 format: RGBA8888
-filter: Linear,Linear
+filter: Nearest,Nearest
 repeat: none
 move_left_tool
   rotate: false
