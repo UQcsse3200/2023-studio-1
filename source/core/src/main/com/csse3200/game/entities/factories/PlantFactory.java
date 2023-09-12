@@ -56,7 +56,7 @@ public class PlantFactory {
         BasePlantConfig config = stats.cosmicCob;
 
         Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/plants/corn.png"))
+                .addComponent(new TextureRenderComponent("images/plants/Corn.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
                         config.maxHealth, cropTile));
@@ -81,7 +81,7 @@ public class PlantFactory {
         BasePlantConfig config = stats.aloeVera;
 
         Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/plants/aloevera.png"))
+                .addComponent(new TextureRenderComponent("images/plants/Aloe.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
                         config.maxHealth, cropTile));
@@ -106,7 +106,7 @@ public class PlantFactory {
         BasePlantConfig config = stats.hammerPlant;
 
         Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/plants/hammer.png"))
+                .addComponent(new TextureRenderComponent("images/plants/Hammer.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
                         config.maxHealth, cropTile));
@@ -183,7 +183,7 @@ public class PlantFactory {
         BasePlantConfig config = stats.venusFlyTrap;
 
         Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/plants/venus.png"))
+                .addComponent(new TextureRenderComponent("images/plants/VenusTrap.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
                         config.maxHealth, cropTile));
