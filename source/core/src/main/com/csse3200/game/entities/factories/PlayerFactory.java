@@ -62,16 +62,10 @@ public class PlayerFactory {
             .addComponent(new OpenPauseComponent())
             .addComponent(new PlayerAnimationController())
             .addComponent(new ItemPickupComponent())
-            //.addComponent(new InteractionColliderComponent(2f))
             .addComponent(new InteractionDetector(2f))
             .addComponent(new InventoryDisplay(playerInventory))
             .addComponent(new ToolbarDisplay())
             .addComponent(new PauseMenuActions());
-
-
-            
-
-               
 
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
     player.getComponent(ColliderComponent.class).setAsBox(new Vector2(1f, 1f), new Vector2(1.5f, 1f));

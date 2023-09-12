@@ -3,7 +3,6 @@ package com.csse3200.game.components.tractor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.CameraComponent;
