@@ -11,8 +11,8 @@ public class AuraLightComponent extends Component{
 	private boolean active;
 
 	public AuraLightComponent() {
-		light = new PointLight(ServiceLocator.getLightService().getRayHandler(), 100);
-		light.setDistance(5);
+		light = new PointLight(ServiceLocator.getLightService().getRayHandler(), 10);
+		light.setDistance(4);
 		light.setColor(DEFAULT_COLOR);
 		light.setStaticLight(true);
 		light.setXray(true); // Stops most of shadows and reduces CPU burden
@@ -28,18 +28,18 @@ public class AuraLightComponent extends Component{
 
 	public AuraLightComponent(float distance) {
 		this();
-		light.setDistance(distance);
+		setDistance(distance);
 	}
 
 	public AuraLightComponent(Color color) {
 		this();
-		light.setColor(color);
+		setColor(color);
 	}
 
 	public AuraLightComponent(float distance, Color color) {
 		this();
-		light.setDistance(distance);
-		light.setColor(color);
+		setDistance(distance);
+		setColor(color);
 	}
 
 	public void setDistance(float distance) {
