@@ -31,7 +31,12 @@ public class InventoryComponent extends Component {
   private final List<Entity> inventory = new ArrayList<>();
   private final Map<Integer, Integer> itemCount = new HashMap<>();
   private final Map<Integer, Point> itemPosition = new HashMap<>();
+
+  private final HashMap<Integer,Entity> itemPlace = new HashMap<>();
   private Entity heldItem = null;
+
+
+  private int heldIndex = 0;
 
   public InventoryComponent(List<Entity> items) {
     setInventory(items);
@@ -46,6 +51,54 @@ public class InventoryComponent extends Component {
     return this.inventory;
   }
 
+  /**
+   * Function to get the item of a specific position in Inventory.
+   * Starts an 0
+   * @param position position of the item in inventory
+   * @return entity for that position in inventory
+   */
+  public Entity getItemPos(int position){
+    return itemPlace.get(position);
+  }
+
+  /**
+   * swaps potion of two entity in HashList used to display
+   * @param position1
+   * @param position2
+   */
+  public void swapPosition(int position1, int position2) {
+    Entity temp = itemPlace.get(position1);
+    itemPlace.put(position1,itemPlace.get(position2));
+    itemPlace.put(position2,temp);
+  }
+
+  /**
+   * add position of an entity into the HashList
+   * Both position and Entity are provided into the function
+   * @param entity
+   * @param pos
+   * @return
+   */
+
+  public boolean setPosition(Entity entity, int pos) {
+    itemPlace.put(pos, entity);
+    entity.getEvents().trigger("updateInventory");
+    return true;
+  }
+
+  /**
+   * add position of an entity into the HashList
+   * Only enity is passed into function. Position is next available one.
+   * @param entity
+   * @return
+   */
+  public boolean setPosition(Entity entity){
+    int lastPlace = itemPlace.size() - 1 ;
+    itemPlace.put(lastPlace+1,entity);
+    entity.getEvents().trigger("updateInventory");
+    return true;
+  }
+  /**
 
   public void setHeldItem(int index) {
     if (index >= 0 && index < inventory.size()) {
@@ -59,6 +112,23 @@ public class InventoryComponent extends Component {
    * @return The Entity representing the held item.
    * @throws IllegalStateException If the player is not holding an item.
    */
+
+
+  /**
+   * Retrieves the held item of the Player.
+   *
+   * @return The Entity representing the held item.
+   */
+
+
+  /**
+   * Retrieves the held item index of the Player.
+   *
+   * @return The Entity representing the held item.
+   */
+  public int getHeldIndex() {
+    return this.heldIndex;
+  }
   public Entity getHeldItem() {
     if (this.heldItem != null) {
       return this.heldItem;
@@ -154,3 +224,4 @@ public class InventoryComponent extends Component {
     itemPosition.put(item.getId(), point);
   }
 }
+
