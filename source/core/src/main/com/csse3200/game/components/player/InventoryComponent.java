@@ -24,19 +24,41 @@ import static com.csse3200.game.entities.factories.ItemFactory.createShovel;
  * Currently untested, but forms the basis for the UI which will be implemented soon:tm:
  */
 public class InventoryComponent extends Component {
-private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
-
-private final Set<Integer> inventoryIds = new HashSet<>();
-private final List<Entity> inventory = new ArrayList<>();
-private final Map<Integer, Integer> itemCount = new HashMap<>();
-private final Map<Integer, Point> itemPosition = new HashMap<>();
-private final HashMap<Integer,Entity> itemPlace = new HashMap<>();
-private Entity heldItem = null;
 
 
-  private int heldIndex = 0;
+
+    private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
+
+    private final Set<Integer> inventoryIds = new HashSet<>();
+    private final List<Entity> inventory = new ArrayList<>();
+    private final Map<Integer, Integer> itemCount = new HashMap<>();
+    private final Map<Integer, Point> itemPosition = new HashMap<>();
+    private final HashMap<Integer, Entity> itemPlace = new HashMap<>();
+    private Entity heldItem = null;
+    private int heldIndex = 0;
+
+    public InventoryComponent(List<Entity> items) {
+        setInventory(items);
+    }
 
 
+    private int heldIndex = 0;
+  
+  public int findFirstIndex() {
+    for (int i = 0; i < itemPlace.size();i++) {
+      if (itemPlace.getOrDefault(i,null) == null) {
+        return i;
+      }
+      else {
+        if (i == 30) {
+          return -1;
+        }
+      }
+
+    }
+    return itemPlace.size();
+  }
+  
 
   public InventoryComponent(List<Entity> items) {
     setInventory(items);
@@ -92,7 +114,7 @@ private Entity heldItem = null;
    * @param position position of the item in inventory
    * @return entity for that position in inventory
    */
-  public Entity getItemPos(int position){
+  public Entity getItemPos(int position) {
     return itemPlace.get(position);
   }
 
@@ -128,8 +150,11 @@ private Entity heldItem = null;
    * @return
    */
   public boolean setPosition(Entity entity){
-    int lastPlace = itemPlace.size() - 1 ;
-    itemPlace.put(lastPlace+1,entity);
+    int lastPlace = findFirstIndex();
+    if (lastPlace == -1) {
+      return false;
+    }
+    itemPlace.put(lastPlace,entity);
       entity.getEvents().trigger("updateInventory");
     return true;
   }
@@ -174,8 +199,8 @@ private Entity heldItem = null;
   }
 
   public void setHeldItem(int index) {
-    if (index >= 0 && index < inventory.size()) {
-      this.heldItem = inventory.get(index);
+    if (index >= 0 && index < 10) {
+      this.heldItem = itemPlace.get(index);
       this.heldIndex = index;
     }
   }
