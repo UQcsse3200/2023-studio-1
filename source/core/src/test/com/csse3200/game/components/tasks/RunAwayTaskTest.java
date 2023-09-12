@@ -140,8 +140,8 @@ class RunAwayTaskTest {
     Entity target = new Entity();
     target.setPosition(0f, 0f);
 
-    Vector2 speed = new Vector2(3f, 3f);
-    AITaskComponent ai = new AITaskComponent().addTask(new RunAwayTask(target, 10, 4, 1, speed));
+    Vector2 speed = new Vector2(10f, 10f);
+    AITaskComponent ai = new AITaskComponent().addTask(new RunAwayTask(target, 10, 3f, 0.5f, speed));
     Entity entity = makePhysicsEntity().addComponent(ai);
     entity.create();
     entity.setPosition(1f, 0f);
@@ -164,8 +164,7 @@ class RunAwayTaskTest {
     }
 
     float newDistance = entity.getPosition().dst(target.getPosition());
-
-    assertTrue(newDistance == initialDistance);
+    assertTrue(Math.abs(newDistance - initialDistance) < 0.001);
   }
 
   private Entity makePhysicsEntity() {

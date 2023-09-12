@@ -33,7 +33,7 @@ public class FollowTask extends ChaseTask {
   @Override
   public void start() {
     status = Status.ACTIVE;
-    setMovementTask(new MovementTask(getTarget().getPosition(), (float) 1.5));
+    setMovementTask(new MovementTask(getTarget().getCenterPosition(), (float) 1.5));
     getMovementTask().create(owner);
     getMovementTask().start();
 
@@ -49,7 +49,7 @@ public class FollowTask extends ChaseTask {
     if(getDistanceToTarget() <= stoppingDistance){
       stop();
     } else {
-      getMovementTask().setTarget(getTarget().getPosition());
+      getMovementTask().setTarget(getTarget().getCenterPosition());
       getMovementTask().update();
       if (getMovementTask().getStatus() != Status.ACTIVE) {
         this.owner.getEntity().getEvents().trigger("followStart");
