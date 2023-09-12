@@ -9,6 +9,8 @@ import com.csse3200.game.services.ServiceLocator;
 public class DynamicTextureRenderComponent extends RenderComponent {
   private Texture texture;
 
+  private int layer;
+
   /**
    * @param texturePath Internal path of static texture to render.
    *                    Will be scaled to the entity's scale.
@@ -20,6 +22,7 @@ public class DynamicTextureRenderComponent extends RenderComponent {
   /** @param texture Static texture to render. Will be scaled to the entity's scale. */
   public DynamicTextureRenderComponent(Texture texture) {
     this.texture = texture;
+    this.layer = 1;
   }
 
   public void setTexture(String texturePath) {
@@ -36,6 +39,16 @@ public class DynamicTextureRenderComponent extends RenderComponent {
   protected void draw(SpriteBatch batch) {
     Vector2 position = entity.getPosition();
     Vector2 scale = entity.getScale();
+    float textureWidth = texture.getWidth();
+    float textureHeight = texture.getHeight();
     batch.draw(texture, position.x, position.y, scale.x, scale.y);
+  }
+
+  public void setLayer(int layer) {
+    this.layer = layer;
+  }
+  @Override
+  public int getLayer() {
+    return layer;
   }
 }

@@ -4,22 +4,17 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.extensions.GameExtension;
-import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
-import com.csse3200.game.physics.raycast.RaycastHit;
 import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.rendering.RenderService;
-import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -145,8 +140,8 @@ class RunAwayTaskTest {
     Entity target = new Entity();
     target.setPosition(0f, 0f);
 
-    Vector2 speed = new Vector2(3f, 3f);
-    AITaskComponent ai = new AITaskComponent().addTask(new RunAwayTask(target, 10, 4, 1, speed));
+    Vector2 speed = new Vector2(10f, 10f);
+    AITaskComponent ai = new AITaskComponent().addTask(new RunAwayTask(target, 10, 3f, 0.5f, speed));
     Entity entity = makePhysicsEntity().addComponent(ai);
     entity.create();
     entity.setPosition(1f, 0f);
@@ -169,8 +164,7 @@ class RunAwayTaskTest {
     }
 
     float newDistance = entity.getPosition().dst(target.getPosition());
-
-    assertTrue(newDistance == initialDistance);
+    assertTrue(Math.abs(newDistance - initialDistance) < 0.001);
   }
 
   private Entity makePhysicsEntity() {

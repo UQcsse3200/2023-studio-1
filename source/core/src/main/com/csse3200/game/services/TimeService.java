@@ -3,85 +3,119 @@ package com.csse3200.game.services;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.events.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.csse3200.game.areas.SpaceGameArea;
+import com.csse3200.game.services.ServiceLocator;
 
 public class TimeService {
 	private static final Logger logger = LoggerFactory.getLogger(TimeService.class);
-	private static final int INITIAL_CAPACITY = 16;
-	private static final String HOUR_UPDATE = "hourUpdate";
-	private static final String DAY_UPDATE = "dayUpdate";
-	private static final int MS_IN_HOUR = 1000; //30000;
-	private final Array<Entity> hourUpdateEntities = new Array<>(false, INITIAL_CAPACITY);
-	private final Array<Entity> dayUpdateEntities = new Array<>(false, INITIAL_CAPACITY);
+	private static final int MS_IN_MINUTE = 500;
+	private int minute;
 	private int hour;
 	private int day;
 	private long timeBuffer;
 	private long lastGameTime;
 	private boolean paused;
+	private final EventHandler events;
 
 
+	/**
+	 * Constructs a basic TimeService instance to track the in-game time
+	 */
 	public TimeService() {
 		hour = 0;
 		day = 0;
+		minute = 0;
 		paused = false;
 		lastGameTime = ServiceLocator.getTimeSource().getTime();
+		events = new EventHandler();
 	}
 
+	/**
+	 * Returns whether the game is paused or not
+	 * @return boolean value representing whether the game is paused or not
+	 */
 	public boolean isPaused() {
 		return paused;
 	}
 
+	/**
+	 * Changes the pause state of the game
+	 * @param state boolean value for whether the game is paused or not
+	 */
 	public void setPaused(boolean state) {
 		paused = state;
+		ServiceLocator.getTimeSource().setTimeScale(state ? 0 : 1);
 	}
 
+	/**
+	 * Gets the current in-game hour
+	 * @return in-game hour
+	 */
 	public int getHour() {
 		return hour;
 	}
 
+	/**
+	 * Gets the current in-game day
+	 * @return in-game day
+	 */
 	public int getDay() {
 		return day;
 	}
+
+	/**
+	 * Gets the current in-game minute
+	 * @return in-game minute
+	 */
+	public int getMinute() {
+		return minute;
+	}
+
+	/**
+	 * Sets the in-game hour to a certain value. Also updates the time buffer and triggers any necessary events
+	 * @param hour in-game hour
+	 */
 	public void setHour(int hour) {
 		this.hour = hour;
 		this.timeBuffer = 0;
-		triggerHourUpdate();
+		events.trigger("hourUpdate");
 	}
 
+	/**
+	 * Sets the in-game day to a certain value. Also updates the time buffer and triggers any necessary events
+	 * @param day in-game day
+	 */
 	public void setDay(int day) {
 		this.day = day;
 		this.timeBuffer= 0;
-		triggerDayUpdate();
+		events.trigger("dayUpdate");
 	}
 
-	public void registerHourUpdate(Entity entity) {
-		logger.debug("Registering {} for hourly updates", entity);
-		hourUpdateEntities.add(entity);
-	}
-	public void registerDayUpdate(Entity entity) {
-		logger.debug("Registering {} for daily updates", entity);
-		dayUpdateEntities.add(entity);
-	}
-	public void unregisterHourUpdate(Entity entity) {
-		logger.debug("Unregistering {} for hourly updates", entity);
-		hourUpdateEntities.removeValue(entity, true);
-	}
-	public void unregisterDayUpdate(Entity entity) {
-		logger.debug("Unregistering {} for daily updates", entity);
-		dayUpdateEntities.removeValue(entity, true);
-	}
-	private void triggerHourUpdate() {
-		for (Entity entity: hourUpdateEntities) {
-			entity.getEvents().trigger(HOUR_UPDATE);
-		}
+	/**
+	 * Sets the in-game minute to a certain value. Also updates the time buffer and triggers any necessary events
+	 * @param minute in-game minute
+	 */
+	public void setMinute(int minute) {
+		this.minute = minute;
+		this.timeBuffer = 0;
+		events.trigger("minuteUpdate");
 	}
 
-	private void triggerDayUpdate() {
-		for (Entity entity: dayUpdateEntities) {
-			entity.getEvents().trigger(DAY_UPDATE);
-		}
+	/**
+	 * Gets the event handler for the TimeService
+	 * @return event handler
+	 */
+	public EventHandler getEvents() {
+		return events;
 	}
+
+	/**
+	 * Tracks the in-game time stored in the time service. This method is called in the main game loop. It calculates
+	 * the time that has passed since it last checked the time and calculates whether in-game time has elapsed.
+	 */
 	public void update() {
 		// this time will be in ms
 		long timePassed = ServiceLocator.getTimeSource().getTimeSince(lastGameTime);
@@ -90,22 +124,37 @@ public class TimeService {
 			return;
 		}
 		timeBuffer += timePassed;
-		// If time elapsed isn't one hour in the game, do nothing
-		if (timeBuffer < MS_IN_HOUR) {
+
+		if (timeBuffer < MS_IN_MINUTE) {
+			return;
+		}
+		minute += 1;
+		timeBuffer -= MS_IN_MINUTE;
+
+		// If minute is between 0 and 59, hour hasn't elapsed - don't do anything
+		if (minute < 60) {
+			events.trigger("minuteUpdate");
 			return;
 		}
 		hour += 1;
-		timeBuffer -= MS_IN_HOUR;
+		minute -= 60;
+		events.trigger("minuteUpdate");
 
 		// If hour is between 0 and 23, day hasn't elapsed, do nothing
 		if (hour < 24) {
-			triggerHourUpdate();
+			events.trigger("hourUpdate");
 			return;
 		}
 		hour -= 24;
-		triggerHourUpdate();
 		day += 1;
-		triggerDayUpdate();
+		// This event has to be triggered after the hour is checked the hour isn't 24 when the event is sent
+		events.trigger("hourUpdate");
+		events.trigger("dayUpdate");
+
+		// lose the game if the game reaches 30 days
+		if (day >= 30) {
+			ServiceLocator.getGameArea().getPlayer().getEvents().trigger("loseScreen");
+		}
 	}
 
 }

@@ -9,14 +9,18 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.maingame.PauseMenuActions;
+import com.csse3200.game.areas.weather.WeatherEventDisplay;
+import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.input.InputDecorator;
 import com.csse3200.game.input.InputService;
+import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
@@ -37,7 +41,7 @@ import org.slf4j.LoggerFactory;
 public class MainGameScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
   private static final String[] mainGameTextures = {
-          "images/heart.png",
+          //"images/heart.png",
           "images/time_system_ui/clock_frame.png",
           "images/time_system_ui/indicator_0.png",
           "images/time_system_ui/indicator_1.png",
@@ -63,6 +67,12 @@ public class MainGameScreen extends ScreenAdapter {
           "images/time_system_ui/indicator_21.png",
           "images/time_system_ui/indicator_22.png",
           "images/time_system_ui/indicator_23.png",
+          "images/oxygen_ui/oxygen_outline.png",
+          "images/oxygen_ui/oxygen_fill.png",
+          "images/weather_event/weather-border.png",
+          "images/weather_event/acid-rain.png",
+          "images/weather_event/solar-flare.png"
+
   };
 
   private static final String[] pauseMenuTextures =
@@ -74,6 +84,8 @@ public class MainGameScreen extends ScreenAdapter {
   private static Component mainGameActions;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
+
+  private static Boolean lose;
 
   public MainGameScreen(GdxGame game) {
     this.game = game;
@@ -91,28 +103,42 @@ public class MainGameScreen extends ScreenAdapter {
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
     ServiceLocator.registerTimeService(new TimeService());
+    ServiceLocator.registerPlanetOxygenService(new PlanetOxygenService());
+
+    ServiceLocator.registerMissionManager(new MissionManager());
 
     renderer = RenderFactory.createRenderer();
     renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
     renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
-
+    ServiceLocator.registerCameraComponent(renderer.getCamera());
 
     loadAssets();
-    createUI();
 
     logger.debug("Initialising main game screen entities");
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-
     SpaceGameArea spaceGameArea = new SpaceGameArea(terrainFactory);
     spaceGameArea.create();
     renderer.getCamera().setTrackEntity(spaceGameArea.getPlayer());
 
-    // Switched to spaceGameArea
+    createUI();
+    // Switched to spaceGameArea TODO DELETE
     //ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
     //forestGameArea.create();
     //renderer.getCamera().setTrackEntity(forestGameArea.getPlayer());
     spaceGameArea.getPlayer().getComponent(PlayerActions.class).setCameraVar(renderer.getCamera());
     spaceGameArea.getTractor().getComponent(TractorActions.class).setCameraVar(renderer.getCamera());
+
+    lose = false;
+    spaceGameArea.getPlayer().getEvents().addListener("loseScreen", this::loseScreenStart);
+
+    // if the LoadSaveOnStart value is set true then load entities saved from file
+    if (game.isLoadOnStart()){
+      ServiceLocator.getSaveLoadService().load();
+    }
+  }
+
+  public void loseScreenStart() {
+    lose = true;
   }
 
   @Override
@@ -124,6 +150,14 @@ public class MainGameScreen extends ScreenAdapter {
     if (PauseMenuActions.getQuitGameStatus()) {
       mainGameActions.getEntity().getEvents().trigger("exit");
       PauseMenuActions.setQuitGameStatus();
+    if (!ServiceLocator.getTimeService().isPaused()) {
+      physicsEngine.update();
+      ServiceLocator.getEntityService().update();
+    }
+      ServiceLocator.getTimeService().update();
+      renderer.render();
+    if (lose == true) {
+      game.setScreen(GdxGame.ScreenType.LOSESCREEN);
     }
   }
 
@@ -192,6 +226,8 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(new TerminalDisplay())
         .addComponent(new GameTimeDisplay())
         .addComponent(new PauseMenuActions());
+        .addComponent(new OxygenDisplay())
+        .addComponent(new WeatherEventDisplay());
 
     ServiceLocator.getEntityService().register(ui);
   }

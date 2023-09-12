@@ -1,21 +1,18 @@
 package com.csse3200.game.components.player;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.entities.factories.ItemFactory;
-import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsService;
-import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.RenderService;
@@ -39,6 +36,28 @@ public class ItemPickupComponentTest {
         @Override
         public void create() {
             // Don't do anything because I love this game engine :)
+        }
+
+        /**
+         * @return
+         */
+        @Override
+        public Entity getPlayer() {
+            return null;
+        }
+        @Override
+        public ClimateController getClimateController() {
+            return null;
+        }
+
+        @Override
+        public Entity getTractor() {
+            return null;
+        }
+
+        @Override
+        public GameMap getMap() {
+            return null;
         }
     }
 

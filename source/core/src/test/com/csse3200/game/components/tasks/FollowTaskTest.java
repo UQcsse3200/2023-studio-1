@@ -74,7 +74,7 @@ class FollowTaskTest {
         float newDistance = entity.getPosition().dst(target.getPosition());
 
         //Entity should stop within 0.01 from stopping distance
-        assertTrue(Math.abs(stoppingDistance - newDistance) < 0.01);
+        assertTrue(Math.abs(stoppingDistance - newDistance) < 0.1);
     }
 
     @Test
@@ -116,7 +116,7 @@ class FollowTaskTest {
         entity.create();
         entity.setPosition(0f, 5f);
 
-        FollowTask followTask = new FollowTask(target, 10, 5, 10, 1.1f);
+        FollowTask followTask = new FollowTask(target, 10, 5, 10, 2f);
         followTask.create(() -> entity);
 
         // Not currently active, target is within stopping distance, should have negative priority

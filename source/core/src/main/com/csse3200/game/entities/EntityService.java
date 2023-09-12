@@ -41,7 +41,7 @@ public class EntityService {
     logger.debug("Unregistering {} in entity service", entity);
     entities.removeValue(entity, true);
   }
-
+  
   /**
    * Update all registered entities. Should only be called from the main game loop.
    */
@@ -93,5 +93,22 @@ public class EntityService {
     for (Entity entity : entities) {
       entity.dispose();
     }
+  }
+
+  /**
+   * Get number of entities registered
+   *
+   * @return number of entities
+   */
+  public int getSize() {
+    return entities.size;
+  }
+
+   /**
+   * Returns Array of entities of all entities in game
+   * @return Array of entities in game
+   */
+  public Array<Entity> getEntities() {
+    return entities;
   }
 }

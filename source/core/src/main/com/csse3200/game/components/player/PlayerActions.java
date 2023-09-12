@@ -10,8 +10,12 @@ import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
+
+import java.util.List;
+import java.util.Random;
 
 /**
  * Action component for interacting with the player. Player events should be initialised in create()
@@ -47,11 +51,13 @@ public class PlayerActions extends Component {
 
   @Override
   public void update() {
-    if (moving) {
-      updateSpeed();
+    if (entity.getComponent(PlayerAnimationController.class).readyToPlay()) {
+      if (moving) {
+        updateSpeed();
 
+      }
+      updateAnimation();
     }
-    updateAnimation();
   }
 
   /**
@@ -59,19 +65,25 @@ public class PlayerActions extends Component {
    */
   private void updateAnimation() {
 
+    int max=300; int min=1;
+
+    Random randomNum = new Random();
+
+    int AnimationRandomizer = min + randomNum.nextInt(max);
+
     if (moveDirection.epsilonEquals(Vector2.Zero)) {
       // player is not moving
 
       String animationName = "animationWalkStop";
       float direction = getPrevMoveDirection();
       if (direction < 45) {
-        entity.getEvents().trigger(animationName, "right");
+        entity.getEvents().trigger(animationName, "right", AnimationRandomizer, false);
       } else if (direction < 135) {
-        entity.getEvents().trigger(animationName, "up");
+        entity.getEvents().trigger(animationName, "up", AnimationRandomizer, false);
       } else if (direction < 225) {
-        entity.getEvents().trigger(animationName, "left");
+        entity.getEvents().trigger(animationName, "left", AnimationRandomizer, false);
       } else if (direction < 315) {
-        entity.getEvents().trigger(animationName, "down");
+        entity.getEvents().trigger(animationName, "down", AnimationRandomizer, false);
       }
       return;
     }
@@ -79,7 +91,6 @@ public class PlayerActions extends Component {
     // player is moving
     String animationName = String.format("animation%sStart", running ? "Run" : "Walk");
     float direction = moveDirection.angleDeg();
-
     if (direction < 45) {
       entity.getEvents().trigger(animationName, "right");
     } else if (direction < 135) {
@@ -91,11 +102,33 @@ public class PlayerActions extends Component {
     }
   }
 
+  private Vector2 TileAffectedSpeed(Vector2 runSpeed) {
+    // player position
+    /*Vector2 playerPos = entity.getPosition();
+    playerPos.x = Math.round(playerPos.x);
+    playerPos.y = Math.round(playerPos.y);
+    if (this.moveDirection.angleDeg() < 45 && map.getTile((int)playerPos.x +1, (int)playerPos.y) != null && !map.getTile((int)playerPos.x +1, (int)playerPos.y).isTraversable()) {
+      return new Vector2(0, runSpeed.y);
+    } else if (this.moveDirection.angleDeg() < 135 && map.getTile((int)playerPos.x +1, (int)playerPos.y) != null && !map.getTile((int)playerPos.x, (int)playerPos.y +1).isTraversable()) {
+      return new Vector2(runSpeed.x, 0);
+    } else if (this.moveDirection.angleDeg() < 225 && map.getTile((int)playerPos.x +1, (int)playerPos.y) != null && !map.getTile((int)playerPos.x -1, (int)playerPos.y).isTraversable()) {
+      return new Vector2(0, runSpeed.y);
+    } else if (this.moveDirection.angleDeg() < 315 && map.getTile((int)playerPos.x +1, (int)playerPos.y) != null && !map.getTile((int)playerPos.x, (int)playerPos.y -1).isTraversable()) {
+      return new Vector2(runSpeed.x, 0);
+    }*/
+    // the getTile is not working as expected
+    return runSpeed;
+  }
 
   private void updateSpeed() {
     Body body = physicsComponent.getBody();
     Vector2 velocity = body.getLinearVelocity();
-    Vector2 velocityScale = this.running ? MAX_RUN_SPEED : MAX_WALK_SPEED;
+    Vector2 velocityScale = this.running ? MAX_RUN_SPEED.cpy() : MAX_WALK_SPEED.cpy();
+
+    // Used to apply the terrainSpeedModifier
+    //float terrainSpeedModifier = map.getTile(this.entity.getPosition()).getSpeedModifier();
+    //velocityScale.scl(terrainSpeedModifier);
+
     Vector2 desiredVelocity = moveDirection.cpy().scl(velocityScale);
     // impulse = (desiredVel - currentVel) * mass
     Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
@@ -119,14 +152,20 @@ public class PlayerActions extends Component {
   /**
    * Stops the player from moving.
    */
-  void stopMoving() {
+  public void stopMoving() {
     this.moveDirection = Vector2.Zero.cpy();
     updateSpeed();
     moving = false;
   }
 
+  void pauseMoving() {
+    Vector2 tmp = this.moveDirection;
+    this.moveDirection = Vector2.Zero.cpy();
+    updateSpeed();
+    moveDirection.add(tmp);
+  }
+
   /**
-<<<<<<< HEAD
    * Increases the velocity of the player when they move.
    */
   void run() {
@@ -136,7 +175,7 @@ public class PlayerActions extends Component {
   /**
    * Removes the velocity increase of the player.
    */
-  void stopRunning() {
+  public void stopRunning() {
     this.running = false;
   }
 
@@ -150,6 +189,16 @@ public class PlayerActions extends Component {
       entity.getEvents().trigger("animationInteract", "left");
     } else if (direction < 315) {
       entity.getEvents().trigger("animationInteract", "down");
+    }
+
+    // if there is a questgiver entity in range, trigger event toggleMissions
+    List<Entity> entitiesInRange = this.entity.getComponent(InteractionDetector.class).getEntitiesInRange();
+
+    for (Entity entity : entitiesInRange) {
+      EntityType entityType = entity.getType();
+      if (entityType.equals(EntityType.Questgiver)) {
+        entity.getEvents().trigger("toggleMissions");
+      }
     }
   }
 
@@ -185,11 +234,15 @@ public class PlayerActions extends Component {
     camera.setTrackEntity(tractor);
   }
 
-  void use(Vector2 playerPos, Vector2 mousePos, Entity itemInHand) {
+  void use(Vector2 mousePos, Entity itemInHand) {
     if (itemInHand != null) {
-      itemInHand.getComponent(ItemActions.class).use(playerPos, mousePos, itemInHand, map);
+      if (itemInHand.getComponent(ItemActions.class) != null) {
+        pauseMoving();
+        itemInHand.getComponent(ItemActions.class).use(entity, mousePos, map);
+      }
     }
   }
+
   void hotkeySelection(int index) {
     entity.getComponent(InventoryComponent.class).setHeldItem(index);
   }
@@ -208,6 +261,10 @@ public class PlayerActions extends Component {
 
   public void setCameraVar (CameraComponent cam) {
     this.camera = cam;
+  }
+
+  public CameraComponent getCameraVar () {
+    return camera;
   }
 
   public void setGameMap(GameMap map) {

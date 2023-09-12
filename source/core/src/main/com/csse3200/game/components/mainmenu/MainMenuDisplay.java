@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.csse3200.game.screens.ControlsScreen;
 import com.csse3200.game.screens.MainMenuScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
@@ -50,8 +49,9 @@ public class MainMenuDisplay extends UIComponent {
         title.setWidth(Gdx.graphics.getWidth());
         title.setHeight(Gdx.graphics.getHeight());
         title.setPosition(0, 0);
-        TextButton startBtn = new TextButton("Start", skin);
-        TextButton loadBtn = new TextButton("Controls", skin);
+        TextButton startBtn = new TextButton("New Game", skin);
+        TextButton loadBtn = new TextButton("Continue", skin);
+        TextButton controlsBtn = new TextButton("Controls", skin);
         TextButton settingsBtn = new TextButton("Settings", skin);
         TextButton exitBtn = new TextButton("Exit", skin);
 
@@ -69,8 +69,17 @@ public class MainMenuDisplay extends UIComponent {
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("Load button clicked");
+                        logger.debug("load button clicked");
                         entity.getEvents().trigger("load");
+                    }
+                });
+
+        controlsBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("control button clicked");
+                        entity.getEvents().trigger("control");
                     }
                 });
 
@@ -95,9 +104,11 @@ public class MainMenuDisplay extends UIComponent {
 
         table.add(title);
         table.row();
-        table.add(startBtn).padTop(30f);
+        table.add(startBtn).padTop(80f);
         table.row();
         table.add(loadBtn).padTop(15f);
+        table.row();
+        table.add(controlsBtn).padTop(15f);
         table.row();
         table.add(settingsBtn).padTop(15f);
         table.row();
@@ -114,8 +125,8 @@ public class MainMenuDisplay extends UIComponent {
             transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
                     .getAsset(MainMenuScreen.transitionTextures[frame], Texture.class))));
             transitionFrames.setWidth(Gdx.graphics.getWidth());
-            transitionFrames.setHeight(Gdx.graphics.getHeight() / 2);
-            transitionFrames.setPosition(0, Gdx.graphics.getHeight() / 2 + 15);
+            transitionFrames.setHeight(Gdx.graphics.getHeight() / (float)2); //https://rules.sonarsource.com/java/tag/overflow/RSPEC-2184/
+            transitionFrames.setPosition(0, Gdx.graphics.getHeight() / (float)2 + 15); //https://rules.sonarsource.com/java/tag/overflow/RSPEC-2184/
             frame++;
             lastFrameTime = System.currentTimeMillis();
         } else {

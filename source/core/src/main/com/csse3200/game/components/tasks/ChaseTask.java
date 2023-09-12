@@ -50,7 +50,7 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
   @Override
   public void start() {
     super.start();
-    movementTask = new MovementTask(target.getPosition());
+    movementTask = new MovementTask(target.getCenterPosition());
     movementTask.create(owner);
     movementTask.start();
     
@@ -62,7 +62,7 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
    */
   @Override
   public void update() {
-    movementTask.setTarget(target.getPosition());
+    movementTask.setTarget(target.getCenterPosition());
     movementTask.update();
     if (movementTask.getStatus() != Status.ACTIVE) {
       movementTask.start();
@@ -97,8 +97,8 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
    *
    * @return The distance between the owner's entity and the target entity.
    */
-  private float getDistanceToTarget() {
-    return owner.getEntity().getPosition().dst(target.getPosition());
+  protected float getDistanceToTarget() {
+    return owner.getEntity().getCenterPosition().dst(target.getCenterPosition());
   }
 
   /**
@@ -107,7 +107,7 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
    *
    * @return The active priority level or -1 if chasing conditions are not met.
    */
-  private int getActivePriority() {
+  protected int getActivePriority() {
     float dst = getDistanceToTarget();
     if (dst > maxChaseDistance || !isTargetVisible()) {
       return -1; // Too far, stop chasing
@@ -121,7 +121,7 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
    *
    * @return The inactive priority level or -1 if conditions are not met.
    */
-  private int getInactivePriority() {
+  protected int getInactivePriority() {
     float dst = getDistanceToTarget();
     if (dst < viewDistance && isTargetVisible()) {
       return priority;
@@ -134,7 +134,7 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
    *
    * @return True if the target entity is visible, false otherwise.
    */
-  private boolean isTargetVisible() {
+  protected boolean isTargetVisible() {
     Vector2 from = owner.getEntity().getCenterPosition();
     Vector2 to = target.getCenterPosition();
 
@@ -145,5 +145,50 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     }
     debugRenderer.drawLine(from, to);
     return true;
+  }
+
+  /**
+   * Gets the movement task associated with this run away task.
+   *
+   * @return The movement task instance.
+   */
+  public MovementTask getMovementTask(){
+    return movementTask;
+  }
+
+  /**
+   * Setter for movementTask
+   *
+   * @param movementTask the movement task that is assigned
+   */
+  public void setMovementTask(MovementTask movementTask) {
+    this.movementTask = movementTask;
+  }
+
+  /**
+   * Getter for the raw priority of this task
+   *
+   * @return priority of this task
+   */
+  public int getRawPriority() {
+    return priority;
+  }
+
+  /**
+   * Getter for the target entity that this task is related to
+   *
+   * @return target entity
+   */
+  public Entity getTarget() {
+    return target;
+  }
+
+  /**
+   * Getter for distance that the entity can ee
+   *
+   * @return viewDistance of the chasing entity
+   */
+  public float getViewDistance() {
+    return viewDistance;
   }
 }
