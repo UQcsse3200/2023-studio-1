@@ -57,8 +57,8 @@ public class ToolbarDisplay extends UIComponent {
             if (idx == 10) {
                 idx = 0;
             }
-            Label label = new Label(String.valueOf(idx) + " ", skin); //please please please work
-            label.setColor(Color.DARK_GRAY);
+            Label label = new Label(" " + String.valueOf(idx), skin); //please please please work
+            label.setColor(Color.BLUE);
             label.setAlignment(Align.topLeft);
             ItemSlot item;
             if (inventory.getItemPos(i) == null){
@@ -97,8 +97,8 @@ public class ToolbarDisplay extends UIComponent {
                 idx = 0;
             }
             //Create the label for the item slot
-            Label label = new Label(String.valueOf(idx) + " ", skin); //please please please work
-            label.setColor(Color.DARK_GRAY);
+            Label label = new Label(" " + String.valueOf(idx), skin); //please please please work
+            label.setColor(Color.BLUE);
             label.setAlignment(Align.topLeft);
 
             //Create the itemslot, check if it is the active slot
