@@ -213,7 +213,7 @@ class PlantFactoryTest {
      */
     static Stream<Arguments> plantStatsProvider() {
         return Stream.of(
-                Arguments.of("cosmicCob", "images/plants/corn.png",
+                Arguments.of("cosmicCob", "images/plants/Corn.png",
                         (Callable<Entity>) () -> PlantFactory.createCosmicCob(mockCropTile)),
                 Arguments.of("aloeVera", "images/plants/aloevera.png",
                         (Callable<Entity>) () -> PlantFactory.createAloeVera(mockCropTile)),
