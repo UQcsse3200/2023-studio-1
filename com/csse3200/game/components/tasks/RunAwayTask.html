@@ -72,9 +72,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
 <div class="inheritance"><a href="../../ai/tasks/DefaultTask.html" title="class in com.csse3200.game.ai.tasks">com.csse3200.game.ai.tasks.DefaultTask</a>
-<div class="inheritance"><a href="ChaseTask.html" title="class in com.csse3200.game.components.tasks">com.csse3200.game.components.tasks.ChaseTask</a>
 <div class="inheritance">com.csse3200.game.components.tasks.RunAwayTask</div>
-</div>
 </div>
 </div>
 <section class="class-description" id="class-description">
@@ -84,7 +82,8 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">RunAwayTask</span>
-<span class="extends-implements">extends <a href="ChaseTask.html" title="class in com.csse3200.game.components.tasks">ChaseTask</a></span></div>
+<span class="extends-implements">extends <a href="../../ai/tasks/DefaultTask.html" title="class in com.csse3200.game.ai.tasks">DefaultTask</a>
+implements <a href="../../ai/tasks/PriorityTask.html" title="interface in com.csse3200.game.ai.tasks">PriorityTask</a></span></div>
 <div class="block">Runs from a target entity until they get too far away or line of sight is lost</div>
 </section>
 <section class="summary">
@@ -135,33 +134,34 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getActivePriority()" class="member-name-link">getActivePriority</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="MovementTask.html" title="class in com.csse3200.game.components.tasks">MovementTask</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMovementTask()" class="member-name-link">getMovementTask</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Determines the priority when the RunAwayTask is active based on the distance to the target
- and the visibility of the target entity.</div>
+<div class="block">Gets the movement task associated with this run away task.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#start()" class="member-name-link">start</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPriority()" class="member-name-link">getPriority</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Starts the chase task by initializing the movement task and triggering the run events.</div>
+<div class="block">Gets the priority level of the run away task based on the current status and conditions.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stop()" class="member-name-link">stop</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#start()" class="member-name-link">start</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Stops the RunAwayTask and the associated movement task, and triggers the "runAwayStop" event.</div>
+<div class="block">Starts the chase task by initializing the movement task and triggering the run events.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stop()" class="member-name-link">stop</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Updates the RunAwayTask by updating the movement task and restarting it if necessary.</div>
+<div class="block">Stops the run away task and the associated movement task, and triggers the "runAwayStop" event.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Updates the run away task by updating the movement task and restarting it if necessary.</div>
 </div>
 </div>
 </div>
 </div>
-<div class="inherited-list">
-<h3 id="methods-inherited-from-class-com.csse3200.game.components.tasks.ChaseTask">Methods inherited from class&nbsp;com.csse3200.game.components.tasks.<a href="ChaseTask.html" title="class in com.csse3200.game.components.tasks">ChaseTask</a></h3>
-<code><a href="ChaseTask.html#getDistanceToTarget()">getDistanceToTarget</a>, <a href="ChaseTask.html#getInactivePriority()">getInactivePriority</a>, <a href="ChaseTask.html#getMovementTask()">getMovementTask</a>, <a href="ChaseTask.html#getPriority()">getPriority</a>, <a href="ChaseTask.html#getRawPriority()">getRawPriority</a>, <a href="ChaseTask.html#getTarget()">getTarget</a>, <a href="ChaseTask.html#getViewDistance()">getViewDistance</a>, <a href="ChaseTask.html#isTargetVisible()">isTargetVisible</a>, <a href="ChaseTask.html#setMovementTask(com.csse3200.game.components.tasks.MovementTask)">setMovementTask</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.csse3200.game.ai.tasks.DefaultTask">Methods inherited from class&nbsp;com.csse3200.game.ai.tasks.<a href="../../ai/tasks/DefaultTask.html" title="class in com.csse3200.game.ai.tasks">DefaultTask</a></h3>
 <code><a href="../../ai/tasks/DefaultTask.html#create(com.csse3200.game.ai.tasks.TaskRunner)">create</a>, <a href="../../ai/tasks/DefaultTask.html#getStatus()">getStatus</a></code></div>
@@ -216,7 +216,7 @@ loadScripts(document, 'script');</script>
 <dt>Specified by:</dt>
 <dd><code><a href="../../ai/tasks/Task.html#start()">start</a></code>&nbsp;in interface&nbsp;<code><a href="../../ai/tasks/Task.html" title="interface in com.csse3200.game.ai.tasks">Task</a></code></dd>
 <dt>Overrides:</dt>
-<dd><code><a href="ChaseTask.html#start()">start</a></code>&nbsp;in class&nbsp;<code><a href="ChaseTask.html" title="class in com.csse3200.game.components.tasks">ChaseTask</a></code></dd>
+<dd><code><a href="../../ai/tasks/DefaultTask.html#start()">start</a></code>&nbsp;in class&nbsp;<code><a href="../../ai/tasks/DefaultTask.html" title="class in com.csse3200.game.ai.tasks">DefaultTask</a></code></dd>
 </dl>
 </section>
 </li>
@@ -224,12 +224,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="update()">
 <h3>update</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">update</span>()</div>
-<div class="block">Updates the RunAwayTask by updating the movement task and restarting it if necessary.</div>
+<div class="block">Updates the run away task by updating the movement task and restarting it if necessary.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../../ai/tasks/Task.html#update()">update</a></code>&nbsp;in interface&nbsp;<code><a href="../../ai/tasks/Task.html" title="interface in com.csse3200.game.ai.tasks">Task</a></code></dd>
 <dt>Overrides:</dt>
-<dd><code><a href="ChaseTask.html#update()">update</a></code>&nbsp;in class&nbsp;<code><a href="ChaseTask.html" title="class in com.csse3200.game.components.tasks">ChaseTask</a></code></dd>
+<dd><code><a href="../../ai/tasks/DefaultTask.html#update()">update</a></code>&nbsp;in class&nbsp;<code><a href="../../ai/tasks/DefaultTask.html" title="class in com.csse3200.game.ai.tasks">DefaultTask</a></code></dd>
 </dl>
 </section>
 </li>
@@ -237,26 +237,36 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="stop()">
 <h3>stop</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">stop</span>()</div>
-<div class="block">Stops the RunAwayTask and the associated movement task, and triggers the "runAwayStop" event.</div>
+<div class="block">Stops the run away task and the associated movement task, and triggers the "runAwayStop" event.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../../ai/tasks/Task.html#stop()">stop</a></code>&nbsp;in interface&nbsp;<code><a href="../../ai/tasks/Task.html" title="interface in com.csse3200.game.ai.tasks">Task</a></code></dd>
 <dt>Overrides:</dt>
-<dd><code><a href="ChaseTask.html#stop()">stop</a></code>&nbsp;in class&nbsp;<code><a href="ChaseTask.html" title="class in com.csse3200.game.components.tasks">ChaseTask</a></code></dd>
+<dd><code><a href="../../ai/tasks/DefaultTask.html#stop()">stop</a></code>&nbsp;in class&nbsp;<code><a href="../../ai/tasks/DefaultTask.html" title="class in com.csse3200.game.ai.tasks">DefaultTask</a></code></dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="getActivePriority()">
-<h3>getActivePriority</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getActivePriority</span>()</div>
-<div class="block">Determines the priority when the RunAwayTask is active based on the distance to the target
- and the visibility of the target entity.</div>
+<section class="detail" id="getPriority()">
+<h3>getPriority</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getPriority</span>()</div>
+<div class="block">Gets the priority level of the run away task based on the current status and conditions.</div>
 <dl class="notes">
-<dt>Overrides:</dt>
-<dd><code><a href="ChaseTask.html#getActivePriority()">getActivePriority</a></code>&nbsp;in class&nbsp;<code><a href="ChaseTask.html" title="class in com.csse3200.game.components.tasks">ChaseTask</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code><a href="../../ai/tasks/PriorityTask.html#getPriority()">getPriority</a></code>&nbsp;in interface&nbsp;<code><a href="../../ai/tasks/PriorityTask.html" title="interface in com.csse3200.game.ai.tasks">PriorityTask</a></code></dd>
 <dt>Returns:</dt>
-<dd>The active priority level or -1 if conditions are not met.</dd>
+<dd>The priority level.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getMovementTask()">
+<h3>getMovementTask</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="MovementTask.html" title="class in com.csse3200.game.components.tasks">MovementTask</a></span>&nbsp;<span class="element-name">getMovementTask</span>()</div>
+<div class="block">Gets the movement task associated with this run away task.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The movement task instance.</dd>
 </dl>
 </section>
 </li>
