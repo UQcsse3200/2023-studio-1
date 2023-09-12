@@ -169,7 +169,11 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Adds a weather event to the list of weather events stored in the climate controller class</div>
 </dd>
+<dt><a href="com/csse3200/game/components/plants/PlantComponent.GrowthStage.html#ADULT" class="member-name-link">ADULT</a> - Enum constant in enum class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.GrowthStage.html" title="enum class in com.csse3200.game.components.plants">PlantComponent.GrowthStage</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/plants/BasePlantConfig.html#adultLifeSpan" class="member-name-link">adultLifeSpan</a> - Variable in class com.csse3200.game.entities.configs.plants.<a href="com/csse3200/game/entities/configs/plants/BasePlantConfig.html" title="class in com.csse3200.game.entities.configs.plants">BasePlantConfig</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/entities/configs/plants/BasePlantConfig.html#adultThreshold" class="member-name-link">adultThreshold</a> - Variable in class com.csse3200.game.entities.configs.plants.<a href="com/csse3200/game/entities/configs/plants/BasePlantConfig.html" title="class in com.csse3200.game.entities.configs.plants">BasePlantConfig</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/ai/tasks/AITaskComponent.html" class="type-name-link" title="class in com.csse3200.game.ai.tasks">AITaskComponent</a> - Class in <a href="com/csse3200/game/ai/tasks/package-summary.html">com.csse3200.game.ai.tasks</a></dt>
 <dd>
@@ -232,8 +236,6 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/EntityType.html#Astrolotl" class="member-name-link">Astrolotl</a> - Enum constant in enum class com.csse3200.game.entities.<a href="com/csse3200/game/entities/EntityType.html" title="enum class in com.csse3200.game.entities">EntityType</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/entities/configs/plants/PlantConfigs.html#atropaBelladonna" class="member-name-link">atropaBelladonna</a> - Variable in class com.csse3200.game.entities.configs.plants.<a href="com/csse3200/game/entities/configs/plants/PlantConfigs.html" title="class in com.csse3200.game.entities.configs.plants">PlantConfigs</a></dt>
-<dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:B">B</h2>
 <dl class="index">
@@ -262,6 +264,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/physics/PhysicsContactListener.html#beginContact(com.badlogic.gdx.physics.box2d.Contact)" class="member-name-link">beginContact(Contact)</a> - Method in class com.csse3200.game.physics.<a href="com/csse3200/game/physics/PhysicsContactListener.html" title="class in com.csse3200.game.physics">PhysicsContactListener</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/plants/PlantComponent.html#beginDecay()" class="member-name-link">beginDecay()</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
+<dd>
+<div class="block">An adult plant will live for a certain number of days (adultLifeSpan).</div>
+</dd>
 <dt><a href="com/csse3200/game/physics/BodyUserData.html" class="type-name-link" title="class in com.csse3200.game.physics">BodyUserData</a> - Class in <a href="com/csse3200/game/physics/package-summary.html">com.csse3200.game.physics</a></dt>
 <dd>
 <div class="block">POJO which contains the custom data attached to each box2D entity.</div>
@@ -658,19 +664,13 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Creates an Astrolotl entity</div>
 </dd>
-<dt><a href="com/csse3200/game/entities/factories/PlantFactory.html#createAtomicAlgae(com.csse3200.game.areas.terrain.CropTileComponent)" class="member-name-link">createAtomicAlgae(CropTileComponent)</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/PlantFactory.html" title="class in com.csse3200.game.entities.factories">PlantFactory</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/factories/ItemFactory.html#createAtomicAlgaeSeed()" class="member-name-link">createAtomicAlgaeSeed()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ItemFactory.html" title="class in com.csse3200.game.entities.factories">ItemFactory</a></dt>
 <dd>
 <div class="block">Creates an 'atomic algae seed' item</div>
 </dd>
-<dt><a href="com/csse3200/game/entities/factories/PlantFactory.html#createAtropaBelladonna(com.csse3200.game.areas.terrain.CropTileComponent)" class="member-name-link">createAtropaBelladonna(CropTileComponent)</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/PlantFactory.html" title="class in com.csse3200.game.entities.factories">PlantFactory</a></dt>
-<dd>
-<div class="block">Creates a AtropaBelladonna entity that is a deadly type plant.</div>
-</dd>
 <dt><a href="com/csse3200/game/entities/factories/ItemFactory.html#createBaseItem()" class="member-name-link">createBaseItem()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ItemFactory.html" title="class in com.csse3200.game.entities.factories">ItemFactory</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/entities/factories/PlantFactory.html#createBasePlant()" class="member-name-link">createBasePlant()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/PlantFactory.html" title="class in com.csse3200.game.entities.factories">PlantFactory</a></dt>
+<dt><a href="com/csse3200/game/entities/factories/PlantFactory.html#createBasePlant(com.csse3200.game.entities.configs.plants.BasePlantConfig,com.csse3200.game.areas.terrain.CropTileComponent)" class="member-name-link">createBasePlant(BasePlantConfig, CropTileComponent)</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/PlantFactory.html" title="class in com.csse3200.game.entities.factories">PlantFactory</a></dt>
 <dd>
 <div class="block">Creates a generic plant to be used as a base for more specific plant creation methods.</div>
 </dd>
@@ -698,8 +698,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Creates a 'Cow food' item</div>
 </dd>
-<dt><a href="com/csse3200/game/entities/factories/PlantFactory.html#createDeadlyNightshade(com.csse3200.game.areas.terrain.CropTileComponent)" class="member-name-link">createDeadlyNightshade(CropTileComponent)</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/PlantFactory.html" title="class in com.csse3200.game.entities.factories">PlantFactory</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/factories/ItemFactory.html#createDeadlyNightshadeSeed()" class="member-name-link">createDeadlyNightshadeSeed()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ItemFactory.html" title="class in com.csse3200.game.entities.factories">ItemFactory</a></dt>
 <dd>
 <div class="block">Creates a 'deadly nightshade seed' item</div>
@@ -756,8 +754,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Creates a hoe item</div>
 </dd>
-<dt><a href="com/csse3200/game/entities/factories/PlantFactory.html#createHorticulturalHeater(com.csse3200.game.areas.terrain.CropTileComponent)" class="member-name-link">createHorticulturalHeater(CropTileComponent)</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/PlantFactory.html" title="class in com.csse3200.game.entities.factories">PlantFactory</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/factories/ItemFactory.html#createHorticulturalHeaterSeed()" class="member-name-link">createHorticulturalHeaterSeed()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ItemFactory.html" title="class in com.csse3200.game.entities.factories">ItemFactory</a></dt>
 <dd>
 <div class="block">Creates a 'horticultural heater seed' item</div>
@@ -772,9 +768,9 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Creates a milk item</div>
 </dd>
-<dt><a href="com/csse3200/game/entities/factories/PlantFactory.html#createNicotianaTabacum(com.csse3200.game.areas.terrain.CropTileComponent)" class="member-name-link">createNicotianaTabacum(CropTileComponent)</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/PlantFactory.html" title="class in com.csse3200.game.entities.factories">PlantFactory</a></dt>
+<dt><a href="com/csse3200/game/entities/factories/PlantFactory.html#createNightshade(com.csse3200.game.areas.terrain.CropTileComponent)" class="member-name-link">createNightshade(CropTileComponent)</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/PlantFactory.html" title="class in com.csse3200.game.entities.factories">PlantFactory</a></dt>
 <dd>
-<div class="block">Creates a Nicotiana Tabacum entity that is a deadly type plant.</div>
+<div class="block">Creates a Nightshade entity that is a deadly type plant.</div>
 </dd>
 <dt><a href="com/csse3200/game/entities/factories/NPCFactory.html#createOxygenEater(com.csse3200.game.entities.Entity)" class="member-name-link">createOxygenEater(Entity)</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/NPCFactory.html" title="class in com.csse3200.game.entities.factories">NPCFactory</a></dt>
 <dd>
@@ -806,6 +802,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Creates a 'space snapper seed' item</div>
 </dd>
+<dt><a href="com/csse3200/game/entities/factories/PlantFactory.html#createSunFlower(com.csse3200.game.areas.terrain.CropTileComponent)" class="member-name-link">createSunFlower(CropTileComponent)</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/PlantFactory.html" title="class in com.csse3200.game.entities.factories">PlantFactory</a></dt>
+<dd>
+<div class="block">Creates a sunFlower entity that is a production type plant.</div>
+</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainFactory.html#createTerrain(com.badlogic.gdx.maps.tiled.TiledMap)" class="member-name-link">createTerrain(TiledMap)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainFactory.html" title="class in com.csse3200.game.areas.terrain">TerrainFactory</a></dt>
 <dd>
 <div class="block">Create a terrain of the given type, using the orientation of the factory.</div>
@@ -827,6 +827,10 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/areas/weather/WeatherEventDisplay.html#createTextures()" class="member-name-link">createTextures()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/WeatherEventDisplay.html" title="class in com.csse3200.game.areas.weather">WeatherEventDisplay</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/entities/factories/PlantFactory.html#createTobacco(com.csse3200.game.areas.terrain.CropTileComponent)" class="member-name-link">createTobacco(CropTileComponent)</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/PlantFactory.html" title="class in com.csse3200.game.entities.factories">PlantFactory</a></dt>
+<dd>
+<div class="block">Creates a Tobacco entity that is a deadly type plant.</div>
+</dd>
 <dt><a href="com/csse3200/game/entities/factories/ItemFactory.html#createTobaccoSeed()" class="member-name-link">createTobaccoSeed()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ItemFactory.html" title="class in com.csse3200.game.entities.factories">ItemFactory</a></dt>
 <dd>
 <div class="block">Creates a 'tobacco seed' item</div>
@@ -847,6 +851,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/entities/factories/ItemFactory.html#createWateringcan()" class="member-name-link">createWateringcan()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ItemFactory.html" title="class in com.csse3200.game.entities.factories">ItemFactory</a></dt>
 <dd>
 <div class="block">Creates a watering-can item</div>
+</dd>
+<dt><a href="com/csse3200/game/entities/factories/PlantFactory.html#createWaterWeed(com.csse3200.game.areas.terrain.CropTileComponent)" class="member-name-link">createWaterWeed(CropTileComponent)</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/PlantFactory.html" title="class in com.csse3200.game.entities.factories">PlantFactory</a></dt>
+<dd>
+<div class="block">Creates a waterWeed entity that is a production type plant.</div>
 </dd>
 <dt><a href="com/csse3200/game/areas/terrain/CropTileComponent.html" class="type-name-link" title="class in com.csse3200.game.areas.terrain">CropTileComponent</a> - Class in <a href="com/csse3200/game/areas/terrain/package-summary.html">com.csse3200.game.areas.terrain</a></dt>
 <dd>
@@ -873,6 +881,8 @@ loadScripts(document, 'script');</script>
 </dl>
 <h2 class="title" id="I:D">D</h2>
 <dl class="index">
+<dt><a href="com/csse3200/game/components/plants/PlantComponent.GrowthStage.html#DEAD" class="member-name-link">DEAD</a> - Enum constant in enum class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.GrowthStage.html" title="enum class in com.csse3200.game.components.plants">PlantComponent.GrowthStage</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/ui/terminal/commands/DebugCommand.html" class="type-name-link" title="class in com.csse3200.game.ui.terminal.commands">DebugCommand</a> - Class in <a href="com/csse3200/game/ui/terminal/commands/package-summary.html">com.csse3200.game.ui.terminal.commands</a></dt>
 <dd>
 <div class="block">A command for toggling debug mode on and off.</div>
@@ -886,6 +896,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/rendering/DebugRenderer.html#%3Cinit%3E()" class="member-name-link">DebugRenderer()</a> - Constructor for class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/DebugRenderer.html" title="class in com.csse3200.game.rendering">DebugRenderer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/rendering/DebugRenderer.html#%3Cinit%3E(com.badlogic.gdx.physics.box2d.Box2DDebugRenderer,com.badlogic.gdx.graphics.glutils.ShapeRenderer)" class="member-name-link">DebugRenderer(Box2DDebugRenderer, ShapeRenderer)</a> - Constructor for class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/DebugRenderer.html" title="class in com.csse3200.game.rendering">DebugRenderer</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/plants/PlantComponent.GrowthStage.html#DECAYING" class="member-name-link">DECAYING</a> - Enum constant in enum class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.GrowthStage.html" title="enum class in com.csse3200.game.components.plants">PlantComponent.GrowthStage</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainTile.TerrainCategory.html#DEEPWATER" class="member-name-link">DEEPWATER</a> - Enum constant in enum class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainTile.TerrainCategory.html" title="enum class in com.csse3200.game.areas.terrain">TerrainTile.TerrainCategory</a></dt>
 <dd>&nbsp;</dd>
@@ -1408,9 +1420,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Returns a crop tile entity which occupies the terrain tile</div>
 </dd>
 <dt><a href="com/csse3200/game/components/plants/PlantComponent.html#getCurrentAge()" class="member-name-link">getCurrentAge()</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
-<dd>
-<div class="block">Get the current age of a plant in days</div>
-</dd>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/rendering/AnimationRenderComponent.html#getCurrentAnimation()" class="member-name-link">getCurrentAnimation()</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/AnimationRenderComponent.html" title="class in com.csse3200.game.rendering">AnimationRenderComponent</a></dt>
 <dd>
 <div class="block">Get the name of the animation currently being played.</div>
@@ -1422,6 +1432,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/items/WateringCanLevelComponent.html#getCurrentLevel()" class="member-name-link">getCurrentLevel()</a> - Method in class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/WateringCanLevelComponent.html" title="class in com.csse3200.game.components.items">WateringCanLevelComponent</a></dt>
 <dd>
 <div class="block">Return the current amount of water within the WateringCan</div>
+</dd>
+<dt><a href="com/csse3200/game/components/plants/PlantComponent.html#getCurrentMaxHealth()" class="member-name-link">getCurrentMaxHealth()</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
+<dd>
+<div class="block">Retrieves the current maximum health value of the plant.</div>
 </dd>
 <dt><a href="com/csse3200/game/areas/weather/ClimateController.html#getCurrentWeatherEvent()" class="member-name-link">getCurrentWeatherEvent()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/ClimateController.html" title="class in com.csse3200.game.areas.weather">ClimateController</a></dt>
 <dd>
@@ -1638,6 +1652,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns the position of an item</div>
 </dd>
+<dt><a href="com/csse3200/game/entities/factories/ItemFactory.html#getItemSupplier(java.lang.String)" class="member-name-link">getItemSupplier(String)</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ItemFactory.html" title="class in com.csse3200.game.entities.factories">ItemFactory</a></dt>
+<dd>
+<div class="block">Returns the supplier function for the item with the given unique name.</div>
+</dd>
 <dt><a href="com/csse3200/game/components/items/ItemComponent.html#getItemTexture()" class="member-name-link">getItemTexture()</a> - Method in class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/items/ItemComponent.html#getItemType()" class="member-name-link">getItemType()</a> - Method in class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a></dt>
@@ -1677,7 +1695,9 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainFactory.html#getMapSize()" class="member-name-link">getMapSize()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainFactory.html" title="class in com.csse3200.game.areas.terrain">TerrainFactory</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/plants/PlantComponent.html#getMaxHealth()" class="member-name-link">getMaxHealth()</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns the max health of the plant</div>
+</dd>
 <dt><a href="com/csse3200/game/services/TimeService.html#getMinute()" class="member-name-link">getMinute()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/TimeService.html" title="class in com.csse3200.game.services">TimeService</a></dt>
 <dd>
 <div class="block">Gets the current in-game minute</div>
@@ -1710,6 +1730,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/weather/WeatherEvent.html#getNumHoursUntil()" class="member-name-link">getNumHoursUntil()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/WeatherEvent.html" title="class in com.csse3200.game.areas.weather">WeatherEvent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/plants/PlantComponent.html#getNumOfDaysAsAdult()" class="member-name-link">getNumOfDaysAsAdult()</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
+<dd>
+<div class="block">Retrieves the number of days the plant has been an adult.</div>
+</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainTile.html#getObjects()" class="member-name-link">getObjects()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></dt>
 <dd>
 <div class="block">Not required for game, unimplemented</div>
@@ -1907,6 +1931,10 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/areas/terrain/CropTileComponent.html#getTerrainTile()" class="member-name-link">getTerrainTile()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/CropTileComponent.html" title="class in com.csse3200.game.areas.terrain">CropTileComponent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/plants/PlantComponent.html#getTexture()" class="member-name-link">getTexture()</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
+<dd>
+<div class="block">Retrieves the current texture of the plant.</div>
+</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainTile.html#getTextureRegion()" class="member-name-link">getTextureRegion()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/terrain/GameMap.html#getTile(com.badlogic.gdx.math.GridPoint2)" class="member-name-link">getTile(GridPoint2)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
@@ -1960,6 +1988,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Gets the type of entity</div>
 </dd>
+<dt><a href="com/csse3200/game/components/plants/PlantComponent.GrowthStage.html#getValue()" class="member-name-link">getValue()</a> - Method in enum class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.GrowthStage.html" title="enum class in com.csse3200.game.components.plants">PlantComponent.GrowthStage</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/tasks/ChaseTask.html#getViewDistance()" class="member-name-link">getViewDistance()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/ChaseTask.html" title="class in com.csse3200.game.components.tasks">ChaseTask</a></dt>
 <dd>
 <div class="block">Getter for distance that the entity can ee</div>
@@ -2083,14 +2113,12 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/plants/BasePlantConfig.html#idealWaterLevel" class="member-name-link">idealWaterLevel</a> - Variable in class com.csse3200.game.entities.configs.plants.<a href="com/csse3200/game/entities/configs/plants/BasePlantConfig.html" title="class in com.csse3200.game.entities.configs.plants">BasePlantConfig</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/entities/configs/plants/BasePlantConfig.html#imageFolderPath" class="member-name-link">imageFolderPath</a> - Variable in class com.csse3200.game.entities.configs.plants.<a href="com/csse3200/game/entities/configs/plants/BasePlantConfig.html" title="class in com.csse3200.game.entities.configs.plants">BasePlantConfig</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/input/InputLayer.html#IN_USE" class="member-name-link">IN_USE</a> - Static variable in class com.csse3200.game.input.<a href="com/csse3200/game/input/InputLayer.html" title="class in com.csse3200.game.input">InputLayer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/ai/tasks/Task.Status.html#INACTIVE" class="member-name-link">INACTIVE</a> - Enum constant in enum class com.csse3200.game.ai.tasks.<a href="com/csse3200/game/ai/tasks/Task.Status.html" title="enum class in com.csse3200.game.ai.tasks">Task.Status</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/plants/PlantComponent.html#increaseCurrentAge(float)" class="member-name-link">increaseCurrentAge(float)</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
-<dd>
-<div class="block">Increase the current age of a plant by some integer value</div>
-</dd>
 <dt><a href="com/csse3200/game/components/plants/PlantComponent.html#increaseGrowthStage(int)" class="member-name-link">increaseGrowthStage(int)</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
 <dd>
 <div class="block">Increment the current growth stage of a plant by 1</div>
@@ -2360,6 +2388,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">A job system provides a general-purpose way to run multi-threaded code.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/plants/PlantComponent.GrowthStage.html#JUVENILE" class="member-name-link">JUVENILE</a> - Enum constant in enum class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.GrowthStage.html" title="enum class in com.csse3200.game.components.plants">PlantComponent.GrowthStage</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/entities/configs/plants/BasePlantConfig.html#juvenileThreshold" class="member-name-link">juvenileThreshold</a> - Variable in class com.csse3200.game.entities.configs.plants.<a href="com/csse3200/game/entities/configs/plants/BasePlantConfig.html" title="class in com.csse3200.game.entities.configs.plants">BasePlantConfig</a></dt>
+<dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:K">K</h2>
 <dl class="index">
@@ -2707,7 +2739,7 @@ loadScripts(document, 'script');</script>
 <dl class="index">
 <dt><a href="com/csse3200/game/entities/configs/plants/BasePlantConfig.html#name" class="member-name-link">name</a> - Variable in class com.csse3200.game.entities.configs.plants.<a href="com/csse3200/game/entities/configs/plants/BasePlantConfig.html" title="class in com.csse3200.game.entities.configs.plants">BasePlantConfig</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/entities/configs/plants/PlantConfigs.html#nicotianaTabacum" class="member-name-link">nicotianaTabacum</a> - Variable in class com.csse3200.game.entities.configs.plants.<a href="com/csse3200/game/entities/configs/plants/PlantConfigs.html" title="class in com.csse3200.game.entities.configs.plants">PlantConfigs</a></dt>
+<dt><a href="com/csse3200/game/entities/configs/plants/PlantConfigs.html#nightshade" class="member-name-link">nightshade</a> - Variable in class com.csse3200.game.entities.configs.plants.<a href="com/csse3200/game/entities/configs/plants/PlantConfigs.html" title="class in com.csse3200.game.entities.configs.plants">PlantConfigs</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/player/KeyboardPlayerInputComponent.MenuTypes.html#NONE" class="member-name-link">NONE</a> - Enum constant in enum class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/KeyboardPlayerInputComponent.MenuTypes.html" title="enum class in com.csse3200.game.components.player">KeyboardPlayerInputComponent.MenuTypes</a></dt>
 <dd>&nbsp;</dd>
@@ -2925,6 +2957,15 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Constructor used for plant types that have no extra properties.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/plants/PlantComponent.html#%3Cinit%3E(int,java.lang.String,java.lang.String,java.lang.String,float,int,int,com.csse3200.game.areas.terrain.CropTileComponent,int%5B%5D,java.lang.String%5B%5D,java.lang.String%5B%5D)" class="member-name-link">PlantComponent(int, String, String, String, float, int, int, CropTileComponent, int[], String[], String[])</a> - Constructor for class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
+<dd>
+<div class="block">Constructor used for plant types that have growthStageThresholds different from the default
+ values.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/plants/PlantComponent.GrowthStage.html" class="type-name-link" title="enum class in com.csse3200.game.components.plants">PlantComponent.GrowthStage</a> - Enum Class in <a href="com/csse3200/game/components/plants/package-summary.html">com.csse3200.game.components.plants</a></dt>
+<dd>
+<div class="block">The growth stage of the plant</div>
+</dd>
 <dt><a href="com/csse3200/game/entities/configs/plants/PlantConfigs.html" class="type-name-link" title="class in com.csse3200.game.entities.configs.plants">PlantConfigs</a> - Class in <a href="com/csse3200/game/entities/configs/plants/package-summary.html">com.csse3200.game.entities.configs.plants</a></dt>
 <dd>
 <div class="block">Defines all plant configs to be loaded by the PlantFactory.</div>
@@ -2978,6 +3019,10 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/components/player/PlayerStatsDisplay.html#%3Cinit%3E()" class="member-name-link">PlayerStatsDisplay()</a> - Constructor for class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/PlayerStatsDisplay.html" title="class in com.csse3200.game.components.player">PlayerStatsDisplay</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/plants/PlantComponent.html#playSound(java.lang.String)" class="member-name-link">playSound(String)</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
+<dd>
+<div class="block">Determine what sound needs to be called based on the type of interaction.</div>
+</dd>
 <dt><a href="com/csse3200/game/physics/raycast/RaycastHit.html#point" class="member-name-link">point</a> - Variable in class com.csse3200.game.physics.raycast.<a href="com/csse3200/game/physics/raycast/RaycastHit.html" title="class in com.csse3200.game.physics.raycast">RaycastHit</a></dt>
 <dd>
 <div class="block">Point at which the raycast hit the fixture.</div>
@@ -3373,6 +3418,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/items/ItemType.html#SEED" class="member-name-link">SEED</a> - Enum constant in enum class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/ItemType.html" title="enum class in com.csse3200.game.components.items">ItemType</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/plants/PlantComponent.GrowthStage.html#SEEDLING" class="member-name-link">SEEDLING</a> - Enum constant in enum class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.GrowthStage.html" title="enum class in com.csse3200.game.components.plants">PlantComponent.GrowthStage</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/ServiceLocator.html" class="type-name-link" title="class in com.csse3200.game.services">ServiceLocator</a> - Class in <a href="com/csse3200/game/services/package-summary.html">com.csse3200.game.services</a></dt>
 <dd>
 <div class="block">A simplified implementation of the Service Locator pattern:
@@ -3448,9 +3495,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Sets the crop tile which occupies the terrain tile.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/plants/PlantComponent.html#setCurrentAge(float)" class="member-name-link">setCurrentAge(float)</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
-<dd>
-<div class="block">Sets the current age of a plant in days</div>
-</dd>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/items/WateringCanLevelComponent.html#setCurrentLevel(float)" class="member-name-link">setCurrentLevel(float)</a> - Method in class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/WateringCanLevelComponent.html" title="class in com.csse3200.game.components.items">WateringCanLevelComponent</a></dt>
 <dd>
 <div class="block">Set the value that stores the current amount of water to the parameter 
@@ -3474,9 +3519,9 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/rendering/RenderService.html#setDebug(com.csse3200.game.rendering.DebugRenderer)" class="member-name-link">setDebug(DebugRenderer)</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/RenderService.html" title="class in com.csse3200.game.rendering">RenderService</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/plants/PlantComponent.html#setDecay(boolean)" class="member-name-link">setDecay(boolean)</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
+<dt><a href="com/csse3200/game/components/plants/PlantComponent.html#setDecay()" class="member-name-link">setDecay()</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
 <dd>
-<div class="block">Set the decay boolean.</div>
+<div class="block">Set the plant to decaying stage.</div>
 </dd>
 <dt><a href="com/csse3200/game/physics/components/ColliderComponent.html#setDensity(float)" class="member-name-link">setDensity(float)</a> - Method in class com.csse3200.game.physics.components.<a href="com/csse3200/game/physics/components/ColliderComponent.html" title="class in com.csse3200.game.physics.components">ColliderComponent</a></dt>
 <dd>
@@ -3515,6 +3560,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/plants/PlantComponent.html#setGrowthStage(int)" class="member-name-link">setGrowthStage(int)</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
 <dd>
 <div class="block">Set the growth stage of a plant.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/plants/PlantComponent.html#setHarvestYields(java.util.Map)" class="member-name-link">setHarvestYields(Map&lt;String, Integer&gt;)</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
+<dd>
+<div class="block">Sets the harvest yield of this plant.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/CombatStatsComponent.html#setHealth(int)" class="member-name-link">setHealth(int)</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/CombatStatsComponent.html" title="class in com.csse3200.game.components">CombatStatsComponent</a></dt>
 <dd>
@@ -3592,6 +3641,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/tractor/TractorActions.html#setMuted(boolean)" class="member-name-link">setMuted(boolean)</a> - Method in class com.csse3200.game.components.tractor.<a href="com/csse3200/game/components/tractor/TractorActions.html" title="class in com.csse3200.game.components.tractor">TractorActions</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/plants/PlantComponent.html#setNumOfDaysAsAdult(int)" class="member-name-link">setNumOfDaysAsAdult(int)</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
+<dd>
+<div class="block">Sets the number of days the plant has been an adult.</div>
+</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainTile.html#setOccupied()" class="member-name-link">setOccupied()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></dt>
 <dd>
 <div class="block">labels the terrain tile as being occupied (terrain tile does not store actually entity occupying it)</div>
@@ -3821,6 +3874,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Create a sorted intmap with the specified capacity</div>
 </dd>
+<dt><a href="com/csse3200/game/entities/configs/plants/BasePlantConfig.html#soundFolderPath" class="member-name-link">soundFolderPath</a> - Variable in class com.csse3200.game.entities.configs.plants.<a href="com/csse3200/game/entities/configs/plants/BasePlantConfig.html" title="class in com.csse3200.game.entities.configs.plants">BasePlantConfig</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/SpaceGameArea.html" class="type-name-link" title="class in com.csse3200.game.areas">SpaceGameArea</a> - Class in <a href="com/csse3200/game/areas/package-summary.html">com.csse3200.game.areas</a></dt>
 <dd>
 <div class="block">SpaceGameArea is the area used for the initial game version</div>
@@ -3844,6 +3899,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/utils/SortedIntMap.html#spliterator()" class="member-name-link">spliterator()</a> - Method in class com.csse3200.game.utils.<a href="com/csse3200/game/utils/SortedIntMap.html" title="class in com.csse3200.game.utils">SortedIntMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/GhostKingConfig.html#spookyFactor" class="member-name-link">spookyFactor</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/GhostKingConfig.html" title="class in com.csse3200.game.entities.configs">GhostKingConfig</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/plants/PlantComponent.GrowthStage.html#SPROUT" class="member-name-link">SPROUT</a> - Enum constant in enum class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.GrowthStage.html" title="enum class in com.csse3200.game.components.plants">PlantComponent.GrowthStage</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/entities/configs/plants/BasePlantConfig.html#sproutThreshold" class="member-name-link">sproutThreshold</a> - Variable in class com.csse3200.game.entities.configs.plants.<a href="com/csse3200/game/entities/configs/plants/BasePlantConfig.html" title="class in com.csse3200.game.entities.configs.plants">BasePlantConfig</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/ui/UIComponent.html#stage" class="member-name-link">stage</a> - Variable in class com.csse3200.game.ui.<a href="com/csse3200/game/ui/UIComponent.html" title="class in com.csse3200.game.ui">UIComponent</a></dt>
 <dd>&nbsp;</dd>
@@ -4077,6 +4136,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Constructs a basic TimeService instance to track the in-game time</div>
 </dd>
+<dt><a href="com/csse3200/game/entities/configs/plants/PlantConfigs.html#tobacco" class="member-name-link">tobacco</a> - Variable in class com.csse3200.game.entities.configs.plants.<a href="com/csse3200/game/entities/configs/plants/PlantConfigs.html" title="class in com.csse3200.game.entities.configs.plants">PlantConfigs</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/ui/terminal/Terminal.html#toggleIsOpen()" class="member-name-link">toggleIsOpen()</a> - Method in class com.csse3200.game.ui.terminal.<a href="com/csse3200/game/ui/terminal/Terminal.html" title="class in com.csse3200.game.ui.terminal">Terminal</a></dt>
 <dd>
 <div class="block">Toggles between the terminal being open and closed.</div>
@@ -4385,6 +4446,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Decrements the duration to expiry of the quest by 1.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/plants/PlantComponent.html#updateGrowthStage()" class="member-name-link">updateGrowthStage()</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
+<dd>
+<div class="block">Update the growth stage of a plant based on its current growth level and its adult life span.</div>
+</dd>
 <dt><a href="com/csse3200/game/components/inventory/InventoryDisplay.html#updateInventory()" class="member-name-link">updateInventory()</a> - Method in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/InventoryDisplay.html" title="class in com.csse3200.game.components.inventory">InventoryDisplay</a></dt>
 <dd>
 <div class="block">Force update of the display after update inventory event is called</div>
@@ -4399,9 +4464,17 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Updates the player's inventory toolbar selected itemSlot.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/plants/PlantComponent.html#updateMaxHealth()" class="member-name-link">updateMaxHealth()</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
+<dd>
+<div class="block">Update the maximum health of the plant based on its current growth stage.</div>
+</dd>
 <dt><a href="com/csse3200/game/components/player/PlayerStatsDisplay.html#updatePlayerHealthUI(int)" class="member-name-link">updatePlayerHealthUI(int)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/PlayerStatsDisplay.html" title="class in com.csse3200.game.components.player">PlayerStatsDisplay</a></dt>
 <dd>
 <div class="block">Updates the player's health on the ui.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/plants/PlantComponent.html#updateTexture()" class="member-name-link">updateTexture()</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
+<dd>
+<div class="block">Update the texture of the plant based on its current growth stage.</div>
 </dd>
 <dt><a href="com/csse3200/game/areas/weather/WeatherEvent.html#updateTime()" class="member-name-link">updateTime()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/WeatherEvent.html" title="class in com.csse3200.game.areas.weather">WeatherEvent</a></dt>
 <dd>
@@ -4444,6 +4517,10 @@ loadScripts(document, 'script');</script>
 <div class="block">Returns the enum constant of this class with the specified name.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/items/ItemType.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/ItemType.html" title="enum class in com.csse3200.game.components.items">ItemType</a></dt>
+<dd>
+<div class="block">Returns the enum constant of this class with the specified name.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/plants/PlantComponent.GrowthStage.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.GrowthStage.html" title="enum class in com.csse3200.game.components.plants">PlantComponent.GrowthStage</a></dt>
 <dd>
 <div class="block">Returns the enum constant of this class with the specified name.</div>
 </dd>
@@ -4503,6 +4580,11 @@ the order they are declared.</div>
 the order they are declared.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/items/ItemType.html#values()" class="member-name-link">values()</a> - Static method in enum class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/ItemType.html" title="enum class in com.csse3200.game.components.items">ItemType</a></dt>
+<dd>
+<div class="block">Returns an array containing the constants of this enum class, in
+the order they are declared.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/plants/PlantComponent.GrowthStage.html#values()" class="member-name-link">values()</a> - Static method in enum class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.GrowthStage.html" title="enum class in com.csse3200.game.components.plants">PlantComponent.GrowthStage</a></dt>
 <dd>
 <div class="block">Returns an array containing the constants of this enum class, in
 the order they are declared.</div>
