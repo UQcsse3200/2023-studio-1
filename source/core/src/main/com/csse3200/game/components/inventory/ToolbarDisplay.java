@@ -44,8 +44,6 @@ public class ToolbarDisplay extends UIComponent {
      */
 
     private void resetToolbar(){
-        //logger.info("Reset Toolbar..........................................");
-        //window.remove();
         window.reset();
         Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
         table = new Table(skin);

@@ -66,7 +66,6 @@ public class InventoryDisplay extends UIComponent {
       Label label = new Label(String.valueOf(i), skin.get("default", Label.LabelStyle.class));
       //set the bounds of the label
       label.setBounds(label.getX() + 15, label.getY(), label.getWidth(), label.getHeight());
-      //stack.add(new Image(new Texture("images/itemFrame.png")));
       ItemSlot item;
       if (playerInventory.getItemPos(i) == null) {
         //logger.info("Null Item at "+i );
