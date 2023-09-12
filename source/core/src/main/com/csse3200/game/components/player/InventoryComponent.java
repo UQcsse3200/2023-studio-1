@@ -17,8 +17,23 @@ import java.util.Map;
  * Currently untested, but forms the basis for the UI which will be implemented soon:tm:
  */
 public class InventoryComponent extends Component {
+
+  public int findFirstIndex() {
+    for (int i = 0; i < itemPlace.size();i++) {
+      if (itemPlace.getOrDefault(i,null) == null) {
+        return i;
+      }
+      else {
+        if (i == 30) {
+          return -1;
+        }
+      }
+
+    }
+    return itemPlace.size();
+  }
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
-  private final List<Entity> inventory = new ArrayList<Entity>();
+  private final List<Entity> inventory = new ArrayList<>();
   private final HashMap<Entity, Integer> itemCount = new HashMap<>();
   private final HashMap<Entity, Point> itemPosition = new HashMap<>();
 
@@ -26,7 +41,7 @@ public class InventoryComponent extends Component {
 
   private Entity heldItem = null;
 
-
+  private int heldIndex = 0;
 
   public InventoryComponent(List<Entity> items) {
     setInventory(items);
@@ -81,7 +96,7 @@ public class InventoryComponent extends Component {
    * @param position position of the item in inventory
    * @return entity for that position in inventory
    */
-  public Entity getItemPos(int position){
+  public Entity getItemPos(int position) {
     return itemPlace.get(position);
   }
 
@@ -117,17 +132,13 @@ public class InventoryComponent extends Component {
    * @return
    */
   public boolean setPosition(Entity entity){
-    int lastPlace = itemPlace.size() - 1 ;
-    itemPlace.put(lastPlace+1,entity);
-    entity.getEvents().trigger("updateInventory");
+    int lastPlace = findFirstIndex();
+    if (lastPlace == -1) {
+      return false;
+    }
+    itemPlace.put(lastPlace,entity);
+      entity.getEvents().trigger("updateInventory");
     return true;
-  }
-  /**
-   * Remove item from the inventory display not from the Inventory
-   * @param pos
-   */
-  public void removePosition(int pos){
-    itemPlace.remove(pos);
   }
   /**
    * Adds an item to the Player's inventory
@@ -165,8 +176,9 @@ public class InventoryComponent extends Component {
    * @param index The index of the item in the inventory to be set as the held item.
    */
   public void setHeldItem(int index) {
-    if (index >= 0 && index < inventory.size()) {
-      this.heldItem = inventory.get(index);
+    if (index >= 0 && index < 10) {
+      this.heldItem = itemPlace.get(index);
+      this.heldIndex = index;
     }
   }
 
@@ -174,13 +186,18 @@ public class InventoryComponent extends Component {
    * Retrieves the held item of the Player.
    *
    * @return The Entity representing the held item.
-   * @throws IllegalStateException If the player is not holding an item.
    */
   public Entity getHeldItem() {
-    if (this.heldItem != null) {
-      return this.heldItem;
-    }
-    return null;
+    return this.heldItem;
+  }
+
+  /**
+   * Retrieves the held item index of the Player.
+   *
+   * @return The Entity representing the held item.
+   */
+  public int getHeldIndex() {
+    return this.heldIndex;
   }
 
   /**
