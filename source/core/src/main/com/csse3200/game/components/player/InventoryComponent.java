@@ -74,17 +74,17 @@ private Entity heldItem = null;
     //int pos = 0;
     logger.debug("Setting inventory to {}", this.inventory.toString());
     for (Entity item : items) {
-      itemPlace.put(pos,item);
-      pos++;
-      if (itemCount.containsKey(item)) {
-        itemCount.put(item, itemCount.get(item) + 1);
-      } else {
-        itemCount.put(item, 1); // Setting initial count as 1
-      }
-      itemPosition.put(item, new Point(0, 0)); // Setting a default position (0,0) for now.
-    }
-    logger.debug("Setting inventory to {}", this.inventory.toString());
-  }
+       // Check if the inventory already contains an item with the same ID
+       if (inventoryIds.contains(item.getId())) {
+         // If yes, just increase the count
+         itemCount.put(item.getId(), itemCount.get(item.getId()) + 1);
+       } else {
+         // If no, add the item to the inventory and set its count to 1
+         this.inventory.add(item);
+         inventoryIds.add(item.getId());
+         itemCount.put(item.getId(), 1);
+         itemPosition.put(item.getId(), new Point(0, 0)); // Default position
+       }
 
   /**
    * Function to get the item of a specific position in Inventory.
