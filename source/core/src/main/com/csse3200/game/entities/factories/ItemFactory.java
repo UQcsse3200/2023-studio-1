@@ -124,9 +124,9 @@ public class ItemFactory {
    */
   public static Entity createAloeVeraSeed() {
     Entity seed = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/aloe_vera_seed.png"))
+            .addComponent(new TextureRenderComponent("images/plants/aloevera_seedbag.png"))
             .addComponent(new ItemComponent("aloe vera seed", ItemType.SEED,
-                    "Seed of Aloe Vera", new Texture("images/plants/aloe_vera_seed.png")));
+                    "Seed of Aloe Vera", new Texture("images/plants/aloevera_seedbag.png")));
     return seed;
   }
 
