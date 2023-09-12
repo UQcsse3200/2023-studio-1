@@ -1,21 +1,22 @@
 package com.csse3200.game.components.inventory;
 
+
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.csse3200.game.components.items.ItemComponent;
-import com.csse3200.game.entities.Entity;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.rendering.TextureRenderComponent;
-import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A ui component for displaying player stats, e.g. health.
@@ -25,12 +26,17 @@ public class InventoryDisplay extends UIComponent {
   private Table table;
   private InventoryComponent playerInventory;
   private Window window;
-  private boolean isOpen;
+  private boolean isOpen = false;
+  private DragAndDrop dnd;
+  private Map<ItemSlot,Integer> indexes;
 
+  /**
+   * Constructor for class
+   * @param playerInventory inventory of player
+   */
   public InventoryDisplay(InventoryComponent playerInventory) {
     this.playerInventory = playerInventory;
   }
-
 
   /**
    * Creates reusable ui styles and adds actors to the stage.
@@ -39,50 +45,60 @@ public class InventoryDisplay extends UIComponent {
   public void create() {
     super.create();
     addActors();
-    isOpen = false;
-    entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
     entity.getEvents().addListener("toggleInventory",this::toggleOpen);
     entity.getEvents().addListener("updateInventory",this::updateInventory);
   }
 
+  /**
+   * Re-renders the Inventory UI, when a change is made to the inventory
+   */
   private void resetInventory(){
-    //logger.info("Reset Inventory..........................................");
     window.reset();
+    dnd.clear();
     Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
     table = new Table(skin);
     table.defaults().size(64, 64);
     table.pad(10);
+    ArrayList<Actor> actors = new ArrayList<Actor>();
+    final Map<Image,ItemSlot> map = new HashMap<>();
+
     for (int i = 0; i < 30; i++){
       Label label = new Label(String.valueOf(i), skin.get("default", Label.LabelStyle.class));
       //set the bounds of the label
       label.setBounds(label.getX() + 15, label.getY(), label.getWidth(), label.getHeight());
       //stack.add(new Image(new Texture("images/itemFrame.png")));
-      if (playerInventory.getItemPos(i) == null){
+      ItemSlot item;
+      if (playerInventory.getItemPos(i) == null) {
         //logger.info("Null Item at "+i );
-        ItemSlot item = new ItemSlot();
-        table.add(item).pad(10, 10, 10, 10).fill();
+        item = new ItemSlot(false);
+
       } else {
-        ItemSlot item = new ItemSlot(
+        item = new ItemSlot(
                 playerInventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture(),
-                playerInventory.getItemCount(playerInventory.getItemPos(i)));
-        table.add(item).pad(10, 10, 10, 10).fill();
+                false);
+        actors.add(item.getItemImage());
         //stack.add(new Image(playerInventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture()));
       }
+      map.put(item.getItemImage(), item);
+      if (item.getItemImage() != null) {
+        item.getItemImage().setDebug(false);
+      }
+      indexes.put(item, i);
+      table.add(item).pad(10, 10, 10, 10).fill();
       if ((i + 1) % 10 == 0) {
         //Add a new row every 10 items
         table.row();
       }
-      //table.add(stack).pad(10, 10, 10, 10).fill();
     }
-    //window = new Window("", skin);
-    window.pad(40, 5, 5, 5); // Add padding to with so that the text doesn't go offscreen
-    window.add(table); //Add the table to the window
-    window.pack(); // Pack the window to the size
+    window.pad(40, 5, 5, 5);
+    window.add(table);
+    window.pack();
     window.setMovable(false);
-    window.setPosition(stage.getWidth() / 2 - window.getWidth() / 2, 0); // Clip to the bottom of the window on the stage
+    window.setPosition(stage.getWidth() / 2 - window.getWidth() / 2, 0);
     window.setVisible(isOpen);
     // Add the window to the stage
     stage.addActor(window);
+    setDragItems(actors, map);
   }
 
   /**
@@ -90,16 +106,21 @@ public class InventoryDisplay extends UIComponent {
    * @see Table for positioning options
    */
   private void addActors() {
-    Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
     table = new Table(skin);
     table.defaults().size(64, 64);
     table.pad(10);
-    // Add some items to the table, to be changed once inventory item is improved
-
+    ArrayList<Actor> actors = new ArrayList<Actor>();
+    final Map<Image,ItemSlot> map = new HashMap<>();
+      // Add some items to the table, to be changed once inventory item is improved
+    indexes = new HashMap<>(); // map of items to their index
     for (int i = 0; i < 30; i++) {
       //Add the items to the table
-      ItemSlot item = new ItemSlot();
-        table.add(item).pad(10, 10, 10, 10).fill();
+      ItemSlot item = new ItemSlot(false);
+      //item.setDebug(true);
+      map.put(item.getItemImage(), item);
+
+      table.add(item).width(70).height(70).pad(10, 10, 10, 10);
+      indexes.put(item, i);
       if ((i + 1) % 10 == 0) {
         //Add a new row every 10 items
         table.row();
@@ -116,42 +137,105 @@ public class InventoryDisplay extends UIComponent {
     window.setVisible(false);
     // Add the window to the stage
     stage.addActor(window);
-  }
+    dnd = new DragAndDrop();
+    setDragItems(actors, map);
 
-  @Override
-  public void draw(SpriteBatch batch)  {
-    // draw is handled by the stage
   }
+  public void setDragItems(@NotNull ArrayList<Actor> actors, Map<Image,ItemSlot> map) {
+    for (Actor item : actors) {
+      dnd.addSource(new DragAndDrop.Source(item) {
+        DragAndDrop.Payload payload = new DragAndDrop.Payload();
+        @Override
+        public DragAndDrop.Payload dragStart(InputEvent event, float x, float y, int pointer) {
+          payload.setObject(getActor());
+          payload.setDragActor(getActor());
+          stage.addActor(getActor());
+          dnd.setDragActorPosition(50,-getActor().getHeight()/2);
 
-  public void toggleOpen(){
-    if (isOpen) {
-      window.setVisible(false);
-      isOpen = false;
-    } else {
-      window.setVisible(true);
-      isOpen = true;
+          return payload;
+        }
+
+        @Override
+        public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
+          if (target == null) {
+            ItemSlot itemSlot = map.get(getActor());
+            itemSlot.removeActor(getActor());
+            itemSlot.add(getActor());
+          }
+        }
+      });
+    }
+
+    for (Cell<ItemSlot> targetItem : table.getCells()) {
+      dnd.addTarget(new DragAndDrop.Target(targetItem.getActor()) {
+        ItemSlot slot = targetItem.getActor();
+        @Override
+        public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+          return true;
+        }
+
+        @Override
+        public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+          ItemSlot sourceSlot = map.get((source.getActor()));
+          playerInventory.swapPosition(indexes.get(sourceSlot), indexes.get(slot));
+          map.put(slot.getItemImage(), sourceSlot);
+          sourceSlot.setItemImage(slot.getItemImage());
+          map.put((Image) payload.getDragActor(),slot);
+          slot.setItemImage((Image)payload.getDragActor());
+          int currentIndex = playerInventory.getHeldIndex();
+          if (indexes.get(slot) > 9) {
+            playerInventory.setHeldItem(currentIndex);
+          }
+          else {
+            playerInventory.setHeldItem(indexes.get(slot));
+            entity.getEvents().trigger("hotkeySelection", indexes.get(slot));
+          }
+
+        }
+      });
+
     }
   }
 
+
   /**
-   * Updates the player's health on the ui.
-   * @param health player health
+   * The draw stage of the UIComponent, it is handled by the stage
+   * @param batch Batch to render to.
    */
-  public void updatePlayerHealthUI(int health) {
-    CharSequence text = String.format("Health: %d", health);
+  @Override
+  public void draw(SpriteBatch batch) {
+
   }
 
+  /**
+   * Toggle the inventory open, and changes the window visibility
+   */
+  public void toggleOpen(){
+      entity.getEvents().trigger("updateInventory");
+      isOpen = !isOpen;
+    window.setVisible(isOpen);
+  }
+
+  /**
+   * Fetches the player inventory and returns it
+   * @return playerInventory inventory attached to player
+   */
   public InventoryComponent getInventory(){
     return this.playerInventory;
   }
 
+  /**
+   * Force update of the display after update inventory event is called
+   */
   public void updateInventory(){
     playerInventory = entity.getComponent(InventoryComponent.class);
     resetInventory();
 
   }
 
-
+  /**
+   * Dispose of the component
+   */
   @Override
   public void dispose() {
     super.dispose();
