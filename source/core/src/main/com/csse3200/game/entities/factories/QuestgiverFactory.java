@@ -2,6 +2,7 @@ package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.csse3200.game.components.npc.QuestIndicatorComponent;
 import com.csse3200.game.components.questgiver.MissionDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
@@ -32,12 +33,20 @@ public class QuestgiverFactory {
     return questgiver;
   }
 
+  /**
+   * Create a questgiver indicator entity (i.e. the animation that indicates status changes)
+   *
+   * @return questgiver indicator entity
+   */
   public static Entity createQuestgiverIndicator(Entity questgiver) {
 
     AnimationRenderComponent animator = setupMissionAnimations();
+    QuestIndicatorComponent indicator = new QuestIndicatorComponent();
+    indicator.registerQuestgiver(questgiver);
 
     Entity questgiverIndicator = new Entity(EntityType.QuestgiverIndicator)
-        .addComponent(animator);
+            .addComponent(indicator)
+            .addComponent(animator);
 
     questgiverIndicator.getComponent(AnimationRenderComponent.class).scaleEntity();
     return questgiverIndicator;
@@ -68,7 +77,12 @@ public class QuestgiverFactory {
         ServiceLocator.getResourceService().getAsset("images/missionStatus.atlas", TextureAtlas.class),
         16f);
 
-    animator.addAnimation("reward_available", 100);
+    animator.addAnimation("reward_available", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("empty", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("mission_available", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("out_of_time", 0.2f, Animation.PlayMode.LOOP);
+
+    animator.startAnimation("empty");
     return animator;
   }
 
