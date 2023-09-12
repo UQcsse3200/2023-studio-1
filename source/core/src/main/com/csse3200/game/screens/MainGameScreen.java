@@ -139,8 +139,8 @@ public class MainGameScreen extends ScreenAdapter {
       physicsEngine.update();
       ServiceLocator.getEntityService().update();
     }
-      ServiceLocator.getTimeService().update();
-      renderer.render();
+    ServiceLocator.getTimeService().update();
+    renderer.render();
     if (lose == true) {
       game.setScreen(GdxGame.ScreenType.LOSESCREEN);
     }
@@ -197,19 +197,19 @@ public class MainGameScreen extends ScreenAdapter {
     logger.debug("Creating ui");
     Stage stage = ServiceLocator.getRenderService().getStage();
     InputComponent inputComponent =
-        ServiceLocator.getInputService().getInputFactory().createForTerminal();
+            ServiceLocator.getInputService().getInputFactory().createForTerminal();
 
     Entity ui = new Entity();
     ui.addComponent(new InputDecorator(stage, 10))
-        .addComponent(new PerformanceDisplay())
-        .addComponent(new MainGameActions(this.game))
-        .addComponent(new MainGameExitDisplay())
-        .addComponent(new Terminal())
-        .addComponent(inputComponent)
-        .addComponent(new TerminalDisplay())
-        .addComponent(new GameTimeDisplay())
-        .addComponent(new OxygenDisplay())
-        .addComponent(new WeatherEventDisplay());
+            .addComponent(new PerformanceDisplay())
+            .addComponent(new MainGameActions(this.game))
+            .addComponent(new MainGameExitDisplay())
+            .addComponent(new Terminal())
+            .addComponent(inputComponent)
+            .addComponent(new TerminalDisplay())
+            .addComponent(new GameTimeDisplay())
+            .addComponent(new OxygenDisplay())
+            .addComponent(new WeatherEventDisplay());
 
     ServiceLocator.getEntityService().register(ui);
   }
