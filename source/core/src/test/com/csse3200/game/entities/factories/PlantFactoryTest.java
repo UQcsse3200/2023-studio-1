@@ -184,7 +184,7 @@ class PlantFactoryTest {
      */
     @Test
     void shouldCreateBasePlantWithExpectedComponents() {
-        when(mockResourceService.getAsset("images/plants/Corn.png", Texture.class)).thenReturn(mockTexture);
+        when(mockResourceService.getAsset("images/plants/cosmic_cob/4_adult.png", Texture.class)).thenReturn(mockTexture);
         Entity plant = PlantFactory.createBasePlant(mockConfig, mockCropTile);
         assertNotNull(plant, "Plant Entity should not be null");
 
@@ -215,17 +215,17 @@ class PlantFactoryTest {
      */
     static Stream<Arguments> plantStatsProvider() {
         return Stream.of(
-                Arguments.of("cosmicCob", "images/plants/Corn.png",
+                Arguments.of("cosmicCob", "images/plants/cosmic_cob/4_adult.png",
                         (Callable<Entity>) () -> PlantFactory.createCosmicCob(mockCropTile)),
-                Arguments.of("aloeVera", "images/plants/Corn.png",
+                Arguments.of("aloeVera", "images/plants/cosmic_cob/4_adult.png",
                         (Callable<Entity>) () -> PlantFactory.createAloeVera(mockCropTile)),
-                Arguments.of("hammerPlant", "images/plants/Corn.png",
+                Arguments.of("hammerPlant", "images/plants/cosmic_cob/4_adult.png",
                         (Callable<Entity>) () -> PlantFactory.createHammerPlant(mockCropTile)),
-                Arguments.of("nightshade", "images/plants/Corn.png",
+                Arguments.of("nightshade", "images/plants/cosmic_cob/4_adult.png",
                         (Callable<Entity>) () -> PlantFactory.createNightshade(mockCropTile)),
-                Arguments.of("waterWeed", "images/plants/Corn.png",
+                Arguments.of("waterWeed", "images/plants/cosmic_cob/4_adult.png",
                         (Callable<Entity>) () -> PlantFactory.createWaterWeed(mockCropTile)),
-                Arguments.of("venusFlyTrap", "images/plants/Corn.png",
+                Arguments.of("venusFlyTrap", "images/plants/cosmic_cob/4_adult.png",
                         (Callable<Entity>) () -> PlantFactory.createVenusFlyTrap(mockCropTile))
         );
     }

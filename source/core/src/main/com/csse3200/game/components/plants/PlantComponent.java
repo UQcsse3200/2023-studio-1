@@ -2,8 +2,12 @@ package com.csse3200.game.components.plants;
 import com.badlogic.gdx.audio.Sound;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import static com.badlogic.gdx.math.MathUtils.random;
 
@@ -115,6 +119,12 @@ public class PlantComponent extends Component {
      * The current texture based on the growth stage.
      */
     private DynamicTextureRenderComponent currentTexture;
+
+    /**
+     * The yield to be dropped when this plant is harvested as a map of item names to drop
+     * quantities.
+     */
+    private Map<String, Integer> harvestYields;
 
     /**
      * Constructor used for plant types that have no extra properties. This is just used for testing.
@@ -405,6 +415,18 @@ public class PlantComponent extends Component {
     }
 
     /**
+     * Sets the harvest yield of this plant.
+     *
+     * <p>This will store an unmodifiable copy of the given map. Modifications made to the given
+     * map after being set will not be reflected in the plant.
+     *
+     * @param harvestYields Map of item names to drop quantities.
+     */
+    public void setHarvestYields(Map<String, Integer> harvestYields) {
+        this.harvestYields = Map.copyOf(harvestYields);
+    }
+
+    /**
      * Increase the currentGrowthLevel based on the growth rate provided by the CropTileComponent where the
      * plant is located.
      * If the growthRate received is negative, this indicates that the conditions are inhospitable for the
@@ -440,10 +462,21 @@ public class PlantComponent extends Component {
      * <p>If this plant is not in a growth stage where is can be harvested, nothing will happen.
      */
     private void harvest() {
-        // Stub. When complete will cause the plant to drop items such as seeds and fruits.
-        // If the plant is a one-time use (e.g., carrots), then it will destroy itself.
-        destroyPlant();
+        if (growthStages != GrowthStage.ADULT) {
+            // Cannot harvest when not an adult (or decaying).
+            return;
+        }
+
         playSound("harvest");
+        harvestYields.forEach((itemName, quantity) -> {
+            Supplier<Entity> itemSupplier = ItemFactory.getItemSupplier(itemName);
+            for (int i = 0; i < quantity; i++) {
+                Entity item = itemSupplier.get();
+                item.setPosition(entity.getPosition());
+                ServiceLocator.getEntityService().register(item);
+            }
+        });
+        destroyPlant();
     }
 
     /**

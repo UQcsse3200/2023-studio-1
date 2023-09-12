@@ -12,6 +12,7 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import java.util.Map;
 
 /**
  * Factory to create plant entities.
@@ -57,7 +58,7 @@ public class PlantFactory {
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setSensor(true))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
-                .addComponent(new DynamicTextureRenderComponent("images/plants/Corn.png"))
+                .addComponent(new DynamicTextureRenderComponent("images/plants/cosmic_cob/4_adult.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
                         config.maxHealth, cropTile, growthThresholds, soundsArray,
@@ -81,7 +82,8 @@ public class PlantFactory {
      * @return entity
      */
     public static Entity createCosmicCob(CropTileComponent cropTile) {
-        return createBasePlant(stats.cosmicCob, cropTile);
+        Entity plant = createBasePlant(stats.cosmicCob, cropTile);
+        return plant;
     }
 
     /**
