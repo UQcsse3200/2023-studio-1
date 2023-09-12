@@ -1267,7 +1267,9 @@ loadScripts(document, 'script');</script>
 <div class="block">the GameMap class is used to store and easily access and manage the components related to the game map</div>
 </dd>
 <dt><a href="com/csse3200/game/areas/terrain/GameMap.html#%3Cinit%3E(com.csse3200.game.areas.terrain.TerrainFactory)" class="member-name-link">GameMap(TerrainFactory)</a> - Constructor for class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Creates a new GameMap instance, setting the terrainFactory and instantiating a new TiledMap instance.</div>
+</dd>
 <dt><a href="com/csse3200/game/files/SaveGame.GameState.html#%3Cinit%3E()" class="member-name-link">GameState()</a> - Constructor for class com.csse3200.game.files.<a href="com/csse3200/game/files/SaveGame.GameState.html" title="class in com.csse3200.game.files">SaveGame.GameState</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/GameTime.html" class="type-name-link" title="class in com.csse3200.game.services">GameTime</a> - Class in <a href="com/csse3200/game/services/package-summary.html">com.csse3200.game.services</a></dt>
@@ -1450,8 +1452,6 @@ loadScripts(document, 'script');</script>
 <div class="block">Get the entity to which this component belongs.</div>
 </dd>
 <dt><a href="com/csse3200/game/services/ServiceLocator.html#getEntityService()" class="member-name-link">getEntityService()</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/areas/terrain/GameMap.html#getEventHandler()" class="member-name-link">getEventHandler()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/weather/ClimateController.html#getEvents()" class="member-name-link">getEvents()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/ClimateController.html" title="class in com.csse3200.game.areas.weather">ClimateController</a></dt>
 <dd>
@@ -1806,7 +1806,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Retrieves the movement speed of the entity.</div>
 </dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainTile.html#getSpeedModifier()" class="member-name-link">getSpeedModifier()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns the speed modifier of the terrain tile</div>
+</dd>
 <dt><a href="com/csse3200/game/rendering/Renderer.html#getStage()" class="member-name-link">getStage()</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/Renderer.html" title="class in com.csse3200.game.rendering">Renderer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/rendering/RenderService.html#getStage()" class="member-name-link">getStage()</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/RenderService.html" title="class in com.csse3200.game.rendering">RenderService</a></dt>
@@ -1842,9 +1844,13 @@ loadScripts(document, 'script');</script>
 <div class="block">Returns the terrain tile's terrain category i.e.</div>
 </dd>
 <dt><a href="com/csse3200/game/areas/terrain/GameMap.html#getTerrainComponent()" class="member-name-link">getTerrainComponent()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns the TerrainComponent instance stored in the GameMap class.</div>
+</dd>
 <dt><a href="com/csse3200/game/areas/terrain/GameMap.html#getTerrainFactory()" class="member-name-link">getTerrainFactory()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns the TerrainFactory instance stored in the GameMap class.</div>
+</dd>
 <dt><a href="com/csse3200/game/areas/terrain/CropTileComponent.html#getTerrainTile()" class="member-name-link">getTerrainTile()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/CropTileComponent.html" title="class in com.csse3200.game.areas.terrain">CropTileComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainTile.html#getTextureRegion()" class="member-name-link">getTextureRegion()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></dt>
@@ -1858,7 +1864,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Gets the TerrainTile at the specified Vector2 position.</div>
 </dd>
 <dt><a href="com/csse3200/game/areas/terrain/GameMap.html#getTiledMap()" class="member-name-link">getTiledMap()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns the TiledMap instance stored in the GameMap class.</div>
+</dd>
 <dt><a href="com/csse3200/game/files/SaveGame.GameState.html#getTiles()" class="member-name-link">getTiles()</a> - Method in class com.csse3200.game.files.<a href="com/csse3200/game/files/SaveGame.GameState.html" title="class in com.csse3200.game.files">SaveGame.GameState</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainComponent.html#getTileSize()" class="member-name-link">getTileSize()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a></dt>
@@ -3571,7 +3579,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Sets the terrain category of the terrain tile to the specified terrain category</div>
 </dd>
 <dt><a href="com/csse3200/game/areas/terrain/GameMap.html#setTerrainComponent(com.csse3200.game.areas.terrain.TerrainComponent)" class="member-name-link">setTerrainComponent(TerrainComponent)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Sets the TerrainComponent.</div>
+</dd>
 <dt><a href="com/csse3200/game/areas/terrain/CropTileComponent.html#setTerrainTile(com.csse3200.game.areas.terrain.TerrainTile)" class="member-name-link">setTerrainTile(TerrainTile)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/CropTileComponent.html" title="class in com.csse3200.game.areas.terrain">CropTileComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/rendering/DynamicTextureRenderComponent.html#setTexture(java.lang.String)" class="member-name-link">setTexture(String)</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/DynamicTextureRenderComponent.html" title="class in com.csse3200.game.rendering">DynamicTextureRenderComponent</a></dt>
@@ -4047,10 +4057,6 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/screens/SettingsScreen.html#transitionTextures" class="member-name-link">transitionTextures</a> - Static variable in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/SettingsScreen.html" title="class in com.csse3200.game.screens">SettingsScreen</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/areas/terrain/GameMap.html#traversableTileCoordinatesHelper(java.lang.Boolean)" class="member-name-link">traversableTileCoordinatesHelper(Boolean)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
-<dd>
-<div class="block">Helper function to retrieve a list of grid coordinates based on traversability.</div>
-</dd>
 <dt><a href="com/csse3200/game/events/EventHandler.html#trigger(java.lang.String)" class="member-name-link">trigger(String)</a> - Method in class com.csse3200.game.events.<a href="com/csse3200/game/events/EventHandler.html" title="class in com.csse3200.game.events">EventHandler</a></dt>
 <dd>
 <div class="block">Trigger an event with no arguments</div>
