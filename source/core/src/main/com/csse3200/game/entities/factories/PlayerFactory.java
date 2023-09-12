@@ -62,7 +62,7 @@ public class PlayerFactory {
             .addComponent(new OpenPauseComponent())
             .addComponent(new PlayerAnimationController())
             .addComponent(new ItemPickupComponent())
-            .addComponent(new InteractionColliderComponent(2f))
+            //.addComponent(new InteractionColliderComponent(2f))
             .addComponent(new InteractionDetector(2f))
             .addComponent(new InventoryDisplay(playerInventory))
             .addComponent(new ToolbarDisplay())

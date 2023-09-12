@@ -48,7 +48,28 @@ public class InventoryHotkeyTest {
             }
             inventoryComponent.setInventory(items);
         }
-
+    @ParameterizedTest
+    @MethodSource({"checkHotkeySelectionTriggerParams"})
+    void checkHotkeySelectionTrigger(int num, String expectedItemName) {
+        player.getEvents().trigger("hotkeySelection",num);
+        verify(inventoryComponent).setHeldItem(num);
+        verify(playerActions).hotkeySelection(num);
+        assertEquals(inventoryComponent.getHeldItem().getComponent(ItemComponent.class).getItemName(), expectedItemName);
+    }
+    private static Stream<Arguments> checkHotkeySelectionTriggerParams() {
+        return Stream.of(
+                arguments(0, "Hoe"),
+                arguments(1, "Hoe1"),
+                arguments(2, "Hoe2"),
+                arguments(3, "Hoe3"),
+                arguments(4, "Hoe4"),
+                arguments(5, "Hoe5"),
+                arguments(6, "Hoe6"),
+                arguments(7, "Hoe7"),
+                arguments(8, "Hoe8"),
+                arguments(9, "Hoe9")
+        );
+    }
     @ParameterizedTest
     @MethodSource({"checkKeyboardInputHotkeyParams"})
         void checkKeyboardInputHotkey(int num) {
