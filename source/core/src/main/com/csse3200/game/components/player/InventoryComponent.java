@@ -86,6 +86,12 @@ public class InventoryComponent extends Component {
     return true;
   }
 
+  public void setHeldItem(int index) {
+    if (index >= 0 && index < inventory.size()) {
+      this.heldItem = inventory.get(index);
+    }
+  }
+
   /**
    * add position of an entity into the HashList
    * Only enity is passed into function. Position is next available one.

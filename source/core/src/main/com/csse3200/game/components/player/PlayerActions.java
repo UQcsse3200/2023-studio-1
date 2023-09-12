@@ -169,6 +169,8 @@ public class PlayerActions extends Component {
     this.tractor = tractor;
   }
 
+
+
   /**
    * Makes the player get into tractor.
    */
