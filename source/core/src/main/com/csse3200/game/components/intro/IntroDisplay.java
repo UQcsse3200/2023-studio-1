@@ -91,14 +91,13 @@ public class IntroDisplay extends UIComponent {
                 new Image(
                         ServiceLocator.getResourceService()
                                 .getAsset("images/intro_planet.png", Texture.class));
-        // Scale it to a 10% of screen width
+        // Scale it to a 10% of screen width with a constant aspect ratio
         float planetWidth = (float) (Gdx.graphics.getWidth() * 0.1);
         float planetHeight = planetWidth * (planet.getHeight() / planet.getWidth());
         planet.setSize(planetWidth, planetHeight); // Set to a reasonable fixed size
 
-        // The planet moves at a constant speed, so to make it appear at the right time,
-        // it is to be placed at the right y coordinate above the screen.
-        // The height is informed by the length of the text animation and the game's target FPS.
+        // The planet's speed is variable, it adjusts itself to make the planet appear above the text at the right time
+        // The planet is placed at some offset above the screen in the center of the screen
         float planetOffset = 2500;
         planet.setPosition((float)Gdx.graphics.getWidth()/2, planetOffset, Align.center);
 
@@ -149,9 +148,6 @@ public class IntroDisplay extends UIComponent {
         rootTable.row().padTop(30f);
         rootTable.add(continueButton).bottom().padBottom(30f);
 
-        //spaceSpeed = (planet.getY(Align.center) - storyLabel.getY(Align.top) + planetToTextPadding) /
-            //    (textAnimationDuration * (float)Gdx.graphics.getFramesPerSecond());
-
         // The background and planet are added directly to the stage so that they can be moved and animated freely.
         stage.addActor(background);
         stage.addActor(planet);
@@ -174,20 +170,25 @@ public class IntroDisplay extends UIComponent {
     public void update() {
         // This movement logic is triggered on every frame, until the middle of the planet hits its target position
         // on screen
-        if (planet.getY(Align.center) >= storyLabel.getY(Align.top) + planetToTextPadding) {
+        if (planet.getY(Align.bottom) >= storyLabel.getY(Align.top) + planetToTextPadding) {
             planet.setY(planet.getY() - spaceSpeed); // Move the planet
             background.setY(background.getY() - spaceSpeed); // Move the background
         }
 
-        // Resize and position the planet
+        // Resize the planet to the new screen size, maintaining aspect ratio
         float planetWidth = (float) (Gdx.graphics.getWidth() * 0.1);
         float planetHeight = planetWidth * (planet.getHeight() / planet.getWidth());
         planet.setSize(planetWidth, planetHeight);
+
+        // re-center the planet
         planet.setPosition((float)Gdx.graphics.getWidth()/2, planet.getY(Align.center), Align.center);
+
+        // adjust the speed of movement based on screen size and current fps to ensure planet
+        // hits position at the right time
         spaceSpeed = (planet.getY(Align.center) - storyLabel.getY(Align.top) + planetToTextPadding) /
                 (textAnimationDuration * (float)Gdx.graphics.getFramesPerSecond());
 
-        logger.info(String.format("Space Speed: %s", spaceSpeed));
+        logger.debug(String.format("Space Speed: %s", spaceSpeed));
 
 
         stage.act(ServiceLocator.getTimeSource().getDeltaTime());
