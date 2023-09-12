@@ -77,11 +77,11 @@ private Entity heldItem = null;
       itemPlace.put(pos,item);
       pos++;
       if (itemCount.containsKey(item)) {
-        itemCount.put(item, itemCount.get(item) + 1);
+        itemCount.put(item.getId(), itemCount.get(item) + 1);
       } else {
-        itemCount.put(item, 1); // Setting initial count as 1
+        itemCount.put(item.getId(), 1); // Setting initial count as 1
       }
-      itemPosition.put(item, new Point(0, 0)); // Setting a default position (0,0) for now.
+      itemPosition.put(item.getId(), new Point(0, 0)); // Setting a default position (0,0) for now.
     }
     logger.debug("Setting inventory to {}", this.inventory.toString());
   }
