@@ -117,15 +117,20 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link"><code>String</code></a> description of the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isCompleted()" class="member-name-link">isCompleted</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getShortDescription()" class="member-name-link">getShortDescription</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns a short <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link"><code>String</code></a> description of the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isCompleted()" class="member-name-link">isCompleted</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns true if the number of crops the player has planted is greater than or equal to the
  target number of plants.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#registerMission(com.csse3200.game.events.EventHandler)" class="member-name-link">registerMission</a><wbr>(<a href="../../events/EventHandler.html" title="class in com.csse3200.game.events">EventHandler</a>&nbsp;missionManagerEvents)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#registerMission(com.csse3200.game.events.EventHandler)" class="member-name-link">registerMission</a><wbr>(<a href="../../events/EventHandler.html" title="class in com.csse3200.game.events">EventHandler</a>&nbsp;missionManagerEvents)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Registers the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> to the <a href="../MissionManager.html" title="class in com.csse3200.game.missions"><code>MissionManager</code></a>, by adding all event
  listeners to the service which the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> needs to listen to in order to update its
  state.</div>
@@ -218,6 +223,22 @@ loadScripts(document, 'script');</script>
 <dt>Returns:</dt>
 <dd>A <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link"><code>String</code></a> description of the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>, including any relevant details
          you would like the player to know about.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getShortDescription()">
+<h3>getShortDescription</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getShortDescription</span>()</div>
+<div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="../Mission.html#getShortDescription()">Mission</a></code></span></div>
+<div class="block">Returns a short <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link"><code>String</code></a> description of the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>. This description should be
+ at most around 50 characters. This might simply contain progress information on the
+ <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>, or a shortened form of <a href="../Mission.html#getDescription()"><code>Mission.getDescription()</code></a>.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../Mission.html#getShortDescription()">getShortDescription</a></code>&nbsp;in class&nbsp;<code><a href="../Mission.html" title="class in com.csse3200.game.missions">Mission</a></code></dd>
+<dt>Returns:</dt>
+<dd>A short <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link"><code>String</code></a> description of the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a></dd>
 </dl>
 </section>
 </li>
