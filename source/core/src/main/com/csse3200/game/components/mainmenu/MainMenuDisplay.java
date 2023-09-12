@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.csse3200.game.screens.ControlsScreen;
 import com.csse3200.game.screens.MainMenuScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
@@ -114,8 +113,8 @@ public class MainMenuDisplay extends UIComponent {
             transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
                     .getAsset(MainMenuScreen.transitionTextures[frame], Texture.class))));
             transitionFrames.setWidth(Gdx.graphics.getWidth());
-            transitionFrames.setHeight(Gdx.graphics.getHeight() / 2);
-            transitionFrames.setPosition(0, Gdx.graphics.getHeight() / 2 + 15);
+            transitionFrames.setHeight(Gdx.graphics.getHeight() / (float)2); //https://rules.sonarsource.com/java/tag/overflow/RSPEC-2184/
+            transitionFrames.setPosition(0, Gdx.graphics.getHeight() / (float)2 + 15); //https://rules.sonarsource.com/java/tag/overflow/RSPEC-2184/
             frame++;
             lastFrameTime = System.currentTimeMillis();
         } else {
