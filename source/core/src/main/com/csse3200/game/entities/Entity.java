@@ -458,7 +458,7 @@ public class Entity implements Json.Serializable {
         InventoryComponent inventoryComponent = new InventoryComponent(null);
         HashMap<Entity, Integer> items = new HashMap<>();
         HashMap<Entity, Point> itemPositions = new HashMap<>();
-        ArrayList inventory = new ArrayList();
+        ArrayList<Entity> inventory = new ArrayList();
         JsonValue inv = jsonMap.get("components").get("InventoryComponent").get("inventory");
         inv.forEach(jsonValue -> {
           Entity item = FactoryService.getItemFactories().get(jsonValue.getString("name")).get();
@@ -471,7 +471,7 @@ public class Entity implements Json.Serializable {
           itemPositions.put(item, new Point(jsonValue.getInt("X"), jsonValue.getInt("Y")));
           inventory.add(item);
         });
-        inventoryComponent.setInventory(items, itemPositions, inventory);
+        inventoryComponent.setInventory(inventory);
         this.addComponent(inventoryComponent);
 
       default:

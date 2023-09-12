@@ -26,9 +26,9 @@ import static org.mockito.Mockito.*;
  * the properties stores in 'PlayerConfig'.
  */
 @ExtendWith(GameExtension.class)
-public class TestInventoryUI {
+public class TestToolbarUI {
     Entity player;
-    InventoryDisplay inventoryDisplay;
+    ToolbarDisplay toolbarDisplay;
     InventoryComponent inventory;
 
     /**
@@ -45,22 +45,23 @@ public class TestInventoryUI {
 
         ServiceLocator.registerInputService(new InputService());
         inventory = new InventoryComponent(new ArrayList<>());
-        inventoryDisplay = spy(new InventoryDisplay(inventory));
+        toolbarDisplay = spy(new ToolbarDisplay());
+
         player =
                 new Entity()
                         .addComponent(new PlayerActions())
                         .addComponent(new KeyboardPlayerInputComponent())
-                        .addComponent(inventoryDisplay)
-                        .addComponent(inventory);
+                        .addComponent(toolbarDisplay)
+                        .addComponent(inventory)
+                        .addComponent(new InventoryDisplay(inventory));
     }
     @Test
     void testToggleInventory() {
         player.create();
-        verify(inventoryDisplay).create();
-        assert(inventoryDisplay.getInventory() == player.getComponent(InventoryComponent.class));
+        verify(toolbarDisplay).create();
         player.getComponent(KeyboardPlayerInputComponent.class).setActions(player.getComponent(PlayerActions.class));
         player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.I);
-        verify(inventoryDisplay).toggleOpen();
+       verify(toolbarDisplay).updateInventory();
     }
 
 

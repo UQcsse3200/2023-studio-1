@@ -24,7 +24,7 @@ public class InventoryComponent extends Component {
         return i;
       }
       else {
-        if (i == 30) {
+        if (i == 29) {
           return -1;
         }
       }
@@ -209,52 +209,7 @@ public class InventoryComponent extends Component {
     return itemCount.getOrDefault(item, 0);
   }
 
-  /**
-   * Returns the position of an item
-   * @param item entity that is the item we want to find
-   * @return Point of the positional representation of the inventory
-   */
-  public Point getItemPosition(Entity item) {
-    return itemPosition.get(item);
-  }
 
-  /**
-   * Returns a boolean value representing whether or not an item is at a point representation of the inventory
-   * @param point Point to check whether an item is at that position
-   * @return Boolean representing whether or not item is at point
-   */
-  public Boolean getItemAtPoint( Point point) {
-    for (Map.Entry<Entity, Point> entry : itemPosition.entrySet()) {
-      if (entry.getValue().equals(point)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  /**
-   * Get item at a point
-   * @param point Point representation of inventory position
-   * @return Item at that position or null
-   */
-  public Entity getItem(Point point) {
-    for (Map.Entry<Entity, Point> entry : itemPosition.entrySet()) {
-      if (entry.getValue().equals(point)) {
-        return entry.getKey();
-      }
-    }
-    return null;
-  }
-
-
-  /**
-   * Set point position for item
-   * @param item item to set position of
-   * @param point position to set
-   */
-  public void setItemPosition(Entity item, Point point) {
-    itemPosition.put(item, point);
-  }
   public void updateInventory(){
     entity.getEvents().trigger("updateInventory");
   }
