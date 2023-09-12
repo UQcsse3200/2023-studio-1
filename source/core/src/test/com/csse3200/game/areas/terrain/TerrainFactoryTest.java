@@ -6,17 +6,9 @@ import java.io.InputStreamReader;
 import java.util.regex.Matcher;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.areas.terrain.TerrainComponent.TerrainOrientation;
 import com.csse3200.game.extensions.GameExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -42,7 +34,8 @@ public class TerrainFactoryTest {
 
     /**
      * Test to see all images are pngs
-     * Used code from: https://www.w3schools.blog/validate-image-file-extension-regular-expression-regex-java
+     * Png file pattern check algorithm modified from:
+     *        https://www.w3schools.blog/validate-image-file-extension-regular-expression-regex-java
      */
     @Test
     public void testTileImagesArePNGs(){
@@ -65,7 +58,8 @@ public class TerrainFactoryTest {
 
     /**
      * Test to see map is a txt file
-     * Used code from: https://www.w3schools.blog/validate-image-file-extension-regular-expression-regex-java
+     * Txt file pattern check algorithm modified from:
+     *      *        https://www.w3schools.blog/validate-image-file-extension-regular-expression-regex-java
      */
     @Test
     public void testMapisTxt(){
