@@ -4,12 +4,10 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.inventory.ToolbarDisplay;
-import com.csse3200.game.components.player.*;
-import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.components.player.PlayerActions;
-import com.csse3200.game.components.player.PlayerAnimationController;
 import com.csse3200.game.components.inventory.InventoryDisplay;
+import com.csse3200.game.components.inventory.ToolbarDisplay;
+import com.csse3200.game.components.maingame.PauseMenuActions;
+import com.csse3200.game.components.player.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.configs.PlayerConfig;
@@ -21,7 +19,6 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
-
 
 import java.util.ArrayList;
 
@@ -50,6 +47,7 @@ public class PlayerFactory {
             );
 
     setupPlayerAnimator(animator);
+    InventoryComponent playerInventory = new InventoryComponent(new ArrayList<>());
 
     Entity player =
         new Entity(EntityType.Player)
@@ -58,14 +56,22 @@ public class PlayerFactory {
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
             .addComponent(new PlayerActions())
             .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack))
-            .addComponent(new InventoryComponent(new ArrayList<Entity>()))
+                .addComponent(playerInventory)
             .addComponent(inputComponent)
             .addComponent(animator)
+            .addComponent(new OpenPauseComponent())
             .addComponent(new PlayerAnimationController())
             .addComponent(new ItemPickupComponent())
             .addComponent(new InteractionColliderComponent(2f))
-            .addComponent(new InventoryDisplay())
-            .addComponent(new ToolbarDisplay());
+            .addComponent(new InteractionDetector(2f))
+            .addComponent(new InventoryDisplay(playerInventory))
+            .addComponent(new ToolbarDisplay())
+            .addComponent(new PauseMenuActions());
+
+
+            
+
+               
 
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
     player.getComponent(ColliderComponent.class).setAsBox(new Vector2(1f, 1f), new Vector2(1.5f, 1f));

@@ -25,14 +25,28 @@ public class MissionManager {
 		FERTILISE_CROP
 	}
 
-	private static final EventHandler events = new EventHandler();
-	private static final List<Quest> activeQuests = new ArrayList<>();
-	private static final List<Quest> selectableQuests = List.of(
-			// Item rewards to be decided upon at a later date
-			new FertiliseCropTilesQuest("Haber Hobbyist", new ItemReward(new ArrayList<>()), 24, 10),
-			new FertiliseCropTilesQuest("Fertiliser Fanatic", new ItemReward(new ArrayList<>()), 48, 40)
-	);
-	private static final Achievement[] achievements = new Achievement[]{
+	/**
+	 * The {@link MissionManager}'s {@link EventHandler}. {@link Mission}s should add listeners to
+	 * this {@link EventHandler} to update their state, when said events are triggered by in-game
+	 * interactions
+	 */
+	private final EventHandler events = new EventHandler();
+
+	/**
+	 * A {@link List} of {@link Quest}s which are currently active
+	 */
+	private final List<Quest> activeQuests = new ArrayList<>();
+
+	/**
+	 * A {@link List} of {@link Quest}s which the player may choose to accept by interacting with
+	 * the missions NPC in-game
+	 */
+	private final List<Quest> selectableQuests = new ArrayList<>();
+
+	/**
+	 * An array of all in-game {@link Achievement}s
+	 */
+	private final Achievement[] achievements = new Achievement[]{
 			new PlantCropsAchievement("Plant President", 50),
 			new PlantCropsAchievement("Crop Enjoyer", 200),
 			new PlantCropsAchievement("Gardener of the Galaxy", 800)
@@ -46,6 +60,16 @@ public class MissionManager {
 		for (Achievement mission : achievements) {
 			mission.registerMission(events);
 		}
+
+		// Add initial quests - regardless of GameArea
+		selectableQuests.add(
+				// Item reward to be determined at later date
+				new FertiliseCropTilesQuest("Haber Hobbyist", new ItemReward(new ArrayList<>()), 24, 10)
+		);
+		selectableQuests.add(
+				// Item reward to be determined at later date
+				new FertiliseCropTilesQuest("Fertiliser Fanatic", new ItemReward(new ArrayList<>()), 48, 40)
+		);
 	}
 
 	/**
@@ -86,6 +110,14 @@ public class MissionManager {
 	 */
 	public List<Quest> getSelectableQuests() {
 		return selectableQuests;
+	}
+
+	/**
+	 * Returns all in-game {@link Achievement}s.
+	 * @return All in-game {@link Achievement}s.
+	 */
+	public Achievement[] getAchievements() {
+		return achievements;
 	}
 
 	/**

@@ -129,6 +129,8 @@ public class IntroDisplay extends UIComponent {
 
         TextButton continueButton = new TextButton("Continue", skin);
 
+        continueButton.setVisible(true); // Make the continue button invisible
+
         // The continue button lets the user proceed to the main game
         continueButton.addListener(new ChangeListener() {
             @Override

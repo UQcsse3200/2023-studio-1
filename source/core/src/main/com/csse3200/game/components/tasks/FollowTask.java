@@ -11,23 +11,7 @@ import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.services.ServiceLocator;
 
 /** Follows a target entity until they get too far away or line of sight is lost */
-public class FollowTask extends DefaultTask implements PriorityTask {
-  /** The entity to chase. */
-  private final Entity target;
-  /** Task priority when following (-1 when not following). */
-  private final int priority;
-  /** Maximum distance from the entity at which following can start. */
-  private final float viewDistance;
-  /** Maximum distance from the entity while chasing before giving up. */
-  private final float maxFollowDistance;
-  /** The physics engine for raycasting. */
-  private final PhysicsEngine physics;
-  /** The debug renderer for visualization. */
-  private final DebugRenderer debugRenderer;
-  /** Raycast hit information. */
-  private final RaycastHit hit = new RaycastHit();
-  /** The movement task for following. */
-  private MovementTask movementTask;
+public class FollowTask extends ChaseTask {
   /** Distance to target before stopping. */
   private final float stoppingDistance;
 
@@ -39,13 +23,8 @@ public class FollowTask extends DefaultTask implements PriorityTask {
    * @param stoppingDistance The distance at which the entity stops following target
    */
   public FollowTask(Entity target, int priority, float viewDistance, float maxFollowDistance, float stoppingDistance) {
-    this.target = target;
-    this.priority = priority;
-    this.viewDistance = viewDistance;
-    this.maxFollowDistance = maxFollowDistance;
+    super(target, priority, viewDistance, maxFollowDistance);
     this.stoppingDistance = stoppingDistance;
-    physics = ServiceLocator.getPhysicsService().getPhysics();
-    debugRenderer = ServiceLocator.getRenderService().getDebug();
   }
 
   /**
@@ -53,10 +32,10 @@ public class FollowTask extends DefaultTask implements PriorityTask {
    */
   @Override
   public void start() {
-    super.start();
-    movementTask = new MovementTask(target.getPosition(), (float) 1.5);
-    movementTask.create(owner);
-    movementTask.start();
+    status = Status.ACTIVE;
+    setMovementTask(new MovementTask(getTarget().getCenterPosition(), (float) 1.5));
+    getMovementTask().create(owner);
+    getMovementTask().start();
 
     this.owner.getEntity().getEvents().trigger("followStart");
   }
@@ -70,11 +49,11 @@ public class FollowTask extends DefaultTask implements PriorityTask {
     if(getDistanceToTarget() <= stoppingDistance){
       stop();
     } else {
-      movementTask.setTarget(target.getPosition());
-      movementTask.update();
-      if (movementTask.getStatus() != Status.ACTIVE) {
+      getMovementTask().setTarget(getTarget().getCenterPosition());
+      getMovementTask().update();
+      if (getMovementTask().getStatus() != Status.ACTIVE) {
         this.owner.getEntity().getEvents().trigger("followStart");
-        movementTask.start();
+        getMovementTask().start();
       }
     }
   }
@@ -85,45 +64,7 @@ public class FollowTask extends DefaultTask implements PriorityTask {
   @Override
   public void stop() {
     super.stop();
-    movementTask.stop();
     this.owner.getEntity().getEvents().trigger("followStop");
-  }
-
-  /**
-   * Gets the priority level of the follow task based on the current status and conditions.
-   *
-   * @return The priority level.
-   */
-  @Override
-  public int getPriority() {
-    if (status == Status.ACTIVE) {
-      return getActivePriority();
-    }
-
-    return getInactivePriority();
-  }
-
-  /**
-   * Calculates the distance between the owner's entity and the target entity.
-   *
-   * @return The distance between the owner's entity and the target entity.
-   */
-  private float getDistanceToTarget() {
-    return owner.getEntity().getPosition().dst(target.getPosition());
-  }
-
-  /**
-   * Determines the priority when the follow task is active based on the distance to the target
-   * and the visibility of the target entity.
-   *
-   * @return The active priority level or -1 if following conditions are not met.
-   */
-  private int getActivePriority() {
-    float dst = getDistanceToTarget();
-    if (dst > maxFollowDistance || !isTargetVisible()) {
-      return -1; // Too far, stop following
-    }
-    return priority;
   }
 
   /**
@@ -132,30 +73,12 @@ public class FollowTask extends DefaultTask implements PriorityTask {
    *
    * @return The inactive priority level or -1 if conditions are not met.
    */
-  private int getInactivePriority() {
+  @Override
+  protected int getInactivePriority() {
     float dst = getDistanceToTarget();
-    if (dst < viewDistance && isTargetVisible() && dst > stoppingDistance) {
-      return priority;
+    if (dst < getViewDistance() && isTargetVisible() && dst > stoppingDistance) {
+      return getRawPriority();
     }
     return -1;
-  }
-
-
-  /**
-   * Checks if the target entity is visible from the owner's entity position by performing a raycast.
-   *
-   * @return True if the target entity is visible, false otherwise.
-   */
-  private boolean isTargetVisible() {
-    Vector2 from = owner.getEntity().getCenterPosition();
-    Vector2 to = target.getCenterPosition();
-
-    // If there is an obstacle in the path to the player, not visible.
-    if (physics.raycast(from, to, PhysicsLayer.OBSTACLE, hit)) {
-      debugRenderer.drawLine(from, hit.point);
-      return false;
-    }
-    debugRenderer.drawLine(from, to);
-    return true;
   }
 }

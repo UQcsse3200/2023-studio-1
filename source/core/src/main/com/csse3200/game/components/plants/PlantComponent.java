@@ -1,5 +1,6 @@
 package com.csse3200.game.components.plants;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.utils.Json;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
@@ -595,5 +596,15 @@ public class PlantComponent extends Component {
             soundEffect = ServiceLocator.getResourceService().getAsset(notLore, Sound.class);
         }
         soundEffect.play();
+    }
+
+    @Override
+    public void write(Json json) {
+        json.writeObjectStart(this.getClass().getSimpleName());
+        json.writeValue("name", getPlantName());
+        json.writeValue("health", getPlantHealth());
+        json.writeValue("age", 0);
+        json.writeValue("growth", getCurrentGrowthLevel());
+        json.writeObjectEnd();
     }
 }

@@ -8,6 +8,7 @@ import com.csse3200.game.components.items.WateringCanLevelComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.PhysicsLayer;
+import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
@@ -37,13 +38,9 @@ public class ItemFactory {
           new SimpleEntry<>("scythe", ItemFactory::createScythe),
           new SimpleEntry<>("fertiliser", ItemFactory::createFertiliser),
           new SimpleEntry<>("aloe vera seed", ItemFactory::createAloeVeraSeed),
-          new SimpleEntry<>("atomic algae seed", ItemFactory::createAtomicAlgaeSeed),
           new SimpleEntry<>("cosmic cob seed", ItemFactory::createCosmicCobSeed),
-          new SimpleEntry<>("deadly nightshade seed", ItemFactory::createDeadlyNightshadeSeed),
-          new SimpleEntry<>("hammer plant seed", ItemFactory::createHammerPlantSeed),
-          new SimpleEntry<>("horticultural heater seed", ItemFactory::createHorticulturalHeaterSeed),
-          new SimpleEntry<>("space snapper seed", ItemFactory::createSpaceSnapperSeed),
-          new SimpleEntry<>("tobacco seed", ItemFactory::createTobaccoSeed)
+          new SimpleEntry<>("nightshade seed", ItemFactory::createDeadlyNightshadeSeed),
+          new SimpleEntry<>("hammer plant seed", ItemFactory::createHammerPlantSeed)
           // Add your item and supplier function here.
   );
 
@@ -118,12 +115,39 @@ public class ItemFactory {
   public static Entity createScythe() {
     Entity scythe = createBaseItem()
         .addComponent(new TextureRenderComponent("images/tool_scythe.png"))
-        .addComponent(new ItemComponent("scythe", ItemType.SCYTHE,
-                new Texture("images/tool_scythe.png")));
+        .addComponent(new ItemComponent("scythe", ItemType.SCYTHE, new Texture("images/tool_scythe.png")));
     return scythe;
   }
 
   /**
+   * Creates a milk item
+   *
+   * @return milk item
+   */
+  public static Entity createMilk() {
+    Entity milk = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/milk.png"))
+            .addComponent(new ItemComponent("milk",
+                    ItemType.MILK, new Texture("images/milk.png")));
+    milk.scaleHeight(0.75f);
+    return milk;
+  }
+
+  /**
+   * Creates an egg item
+   *
+   * @return egg item
+   */
+  public static Entity createEgg() {
+    Entity egg = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/egg.png"))
+            .addComponent(new ItemComponent("egg", ItemType.EGG,
+                    new Texture("images/egg.png")));
+    egg.scaleHeight(0.75f);
+    return egg;
+  }
+
+   /**
    * Creates a fertiliser item
    *
    * @return fertiliser
@@ -239,5 +263,18 @@ public class ItemFactory {
             .addComponent(new ItemComponent("tobacco seed", ItemType.SEED,
                     "Seed of Tobacco", new Texture("images/plants/misc/tobacco_seed.png")));
     return seed;
+  }
+
+  /**
+   * Creates a 'Cow food' item
+   *
+   * @return tobacco seed
+   */
+  public static Entity createCowFood() {
+    Entity animalFood = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/plants/tobacco_seed.png"))
+            .addComponent(new ItemComponent("COW FOOD", ItemType.FOOD,
+                    "Cow food", new Texture("images/plants/tobacco_seed.png")));
+    return animalFood;
   }
 }

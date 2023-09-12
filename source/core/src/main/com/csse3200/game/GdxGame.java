@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.screens.*;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.csse3200.game.services.ResourceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +19,11 @@ import static com.badlogic.gdx.Gdx.app;
  */
 public class GdxGame extends Game {
   private static final Logger logger = LoggerFactory.getLogger(GdxGame.class);
+  private ScreenType screenType;
+  private ResourceService resourceService;
+  private String saveState;
+  private boolean loadState = false;
+  private boolean loadSaveOnStart = false;
 
   @Override
   public void create() {
@@ -38,6 +45,19 @@ public class GdxGame extends Game {
     logger.debug("Loading game settings");
     UserSettings.Settings settings = UserSettings.get();
     UserSettings.applySettings(settings);
+  }
+
+   /**
+   * isLoadOnStart lets the game know if the player wants to load up a saved game
+   *    if false the game will load up as default
+   * @return
+   */
+  public boolean isLoadOnStart(){
+    return loadSaveOnStart;
+  }
+
+  public void setLoadOnStart(boolean value){
+    loadSaveOnStart = value;
   }
 
   /**
@@ -68,6 +88,9 @@ public class GdxGame extends Game {
     switch (screenType) {
       case MAIN_MENU:
         return new MainMenuScreen(this);
+      case LOAD_GAME:
+        setLoadOnStart(true);
+        return new MainGameScreen(this);
       case MAIN_GAME:
         return new MainGameScreen(this);
       case SETTINGS:
@@ -75,6 +98,7 @@ public class GdxGame extends Game {
       case CONTROLS:
         return new ControlsScreen(this);
       case INTRO:
+        setLoadOnStart(false);
         return new IntroScreen(this);
       case LOSESCREEN:
         return new LoseScreen(this);
@@ -84,8 +108,10 @@ public class GdxGame extends Game {
   }
 
   public enum ScreenType {
-    MAIN_MENU, MAIN_GAME, SETTINGS, CONTROLS, INTRO, LOSESCREEN
+    MAIN_MENU, LOAD_GAME, MAIN_GAME, SETTINGS, CONTROLS, INTRO, LOSESCREEN
   }
+
+
 
   /**
    * Exit the game.

@@ -1,5 +1,7 @@
 package com.csse3200.game.utils;
 
+import com.badlogic.gdx.math.Vector2;
+
 public class DirectionUtils {
     public static final String UP = "up";
     public static final String DOWN = "down";
@@ -18,5 +20,10 @@ public class DirectionUtils {
         } else {
             return DOWN;
         }
+    }
+
+    public static String vectorToDirection(Vector2 vector) {
+        float angle = vector.angleDeg();
+        return angleToDirection(angle);
     }
 }
