@@ -8,46 +8,63 @@ import com.csse3200.game.areas.SpaceGameArea;
 import com.csse3200.game.events.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 
 /** the GameMap class is used to store and easily access and manage the components related to the game map */
 public class GameMap {
-
+    /** The terrainFactory used for creating the game map */
     private final TerrainFactory terrainFactory;
+    /** The TiledMap that stores the created map and its TerrainTile instances */
     private final TiledMap tiledMap;
+    /** The TerrainComponent used to render the terrain of the map */
     private TerrainComponent terrainComponent;
-    private final EventHandler eventHandler;
+    /** The logger used to log information for debugging and info */
     private static final Logger logger = LoggerFactory.getLogger(SpaceGameArea.class);
 
+    /**
+     * Creates a new GameMap instance, setting the terrainFactory and instantiating a new TiledMap instance.
+     * @param terrainFactory the terrainFactory instantiated in the SpaceGameArea.
+     */
     public GameMap(TerrainFactory terrainFactory) {
         this.terrainFactory = terrainFactory;
         this.tiledMap = new TiledMap();
-        this.eventHandler = new EventHandler();
     }
 
+    /**
+     * Returns the TerrainFactory instance stored in the GameMap class.
+     * @return the terrainFactory variable.
+     */
     public TerrainFactory getTerrainFactory() {
         return terrainFactory;
     }
 
+    /**
+     * Returns the TiledMap instance stored in the GameMap class.
+     * @return the tiledMap variable.
+     */
     public TiledMap getTiledMap() {
         return tiledMap;
     }
 
+    /**
+     * Returns the TerrainComponent instance stored in the GameMap class.
+     * @return the terrainComponent variable.
+     * @throws Exception when the TerrainComponent has not been set.
+     */
     public TerrainComponent getTerrainComponent() throws Exception {
         if (this.terrainComponent != null) {
             return this.terrainComponent;
         } else {
-            throw new Exception("TerrainComponent has not been set in the GameMao class yet");
+            throw new Exception("TerrainComponent has not been set in the GameMap class yet");
         }
     }
 
+    /**
+     * Sets the TerrainComponent.
+     * @param terrainComponent the terrainComponent to be set.
+     */
     public void setTerrainComponent(TerrainComponent terrainComponent) {
         this.terrainComponent = terrainComponent;
-    }
-
-    public EventHandler getEventHandler() {
-        return eventHandler;
     }
 
     /**
@@ -81,8 +98,8 @@ public class GameMap {
      * transformed so that they correspond to the integer positions of the TerrainTile in the map layer.
      *
      * If using the Vector2 position variable from the Entity class, it is important to remember that the vector points
-     * to the bottom left of the entity sprite, not the centre of the sprite (This is important to know if the entity
-     * uses animations since the entity size may be larger than the actual sprite). The Entity class provides the
+     * to the bottom left of the entity , not the centre of the entity (This is important to know if the entity uses
+     * animations since the entity size may be larger than the actual sprite). The Entity class provides the
      * getPosition() and getCentredPosition() methods to help retrieve an appropriate Vector2 instance to use.
      *
      *
@@ -170,7 +187,7 @@ public class GameMap {
      * @return An ArrayList of GridPoint2 objects containing the coordinates of tiles based on the specified
      *         traversability.
      */
-    public ArrayList<GridPoint2> traversableTileCoordinatesHelper(Boolean isTraversable) {
+    private ArrayList<GridPoint2> traversableTileCoordinatesHelper(Boolean isTraversable) {
         GridPoint2 mapBounds = this.getMapSize();
         int xMax = mapBounds.x;
         int yMax = mapBounds.y;

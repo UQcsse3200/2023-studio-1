@@ -14,23 +14,23 @@ import com.csse3200.game.rendering.TextureRenderComponent;
  * <p>Each obstacle entity type should have a creation method that returns a corresponding entity.
  */
 public class ObstacleFactory {
-
+  
   /**
-   * Creates a tree entity.
-   * @return entity
+   * Creates an invisible obstacle entity which located onto the non-traversable area of the map.
+   * @return Invisible obstacle entity
    */
-  public static Entity createTree() {
-    Entity tree =
-        new Entity()
-            .addComponent(new TextureRenderComponent("images/tree.png"))
-            .addComponent(new PhysicsComponent())
-            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+  public static Entity createInvisibleObstacle() {
+    Entity Obstacle =
+            new Entity()
+                    .addComponent(new TextureRenderComponent("images/invisible_sprite.png"))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
-    tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    tree.getComponent(TextureRenderComponent.class).scaleEntity();
-    tree.scaleHeight(2.5f);
-    PhysicsUtils.setScaledCollider(tree, 0.5f, 0.2f);
-    return tree;
+    Obstacle.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    Obstacle.getComponent(TextureRenderComponent.class).scaleEntity();
+    Obstacle.scaleHeight(1f);
+    PhysicsUtils.setScaledCollider(Obstacle, 0.5f, 0.5f);
+    return Obstacle;
   }
 
   /**

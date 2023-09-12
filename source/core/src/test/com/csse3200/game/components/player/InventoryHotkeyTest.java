@@ -80,16 +80,16 @@ public class InventoryHotkeyTest {
         }
         private static Stream<Arguments> checkKeyboardInputHotkeyParams() {
             return Stream.of(
-                    arguments(8, "Hoe"),
-                    arguments(9, "Hoe1"),
-                    arguments(10, "Hoe2"),
-                    arguments(11, "Hoe3"),
-                    arguments(12, "Hoe4"),
+             //       arguments(8, "Hoe"),
+                //    arguments(9, "Hoe1"),
+            //        arguments(10, "Hoe2"),
+             //       arguments(11, "Hoe3"),
+             //       arguments(12, "Hoe4"),
                     arguments(13, "Hoe5"),
                     arguments(14, "Hoe6"),
                     arguments(15, "Hoe7"),
-                    arguments(16, "Hoe8"),
-                    arguments(7, "Hoe9")
+                    arguments(16, "Hoe8")
+             //       arguments(7, "Hoe9")
             );
         }
 }

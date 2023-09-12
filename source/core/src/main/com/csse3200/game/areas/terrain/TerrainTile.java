@@ -44,6 +44,9 @@ public class TerrainTile implements TiledMapTile {
    */
   private Entity cropTile = null;
 
+  /**
+   * Stores the speed modifier of the tile
+   */
   private float speedModifier;
 
   public TerrainTile(TextureRegion textureRegion, TerrainCategory terrainCategory) {
@@ -300,6 +303,10 @@ public class TerrainTile implements TiledMapTile {
     this.setUnOccupied();
   }
 
+  /**
+   * Returns the speed modifier of the terrain tile
+   * @return the speed modifier of the terrain tile
+   */
   public float getSpeedModifier() {
     return this.speedModifier;
   }

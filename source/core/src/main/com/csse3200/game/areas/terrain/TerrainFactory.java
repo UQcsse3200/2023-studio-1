@@ -27,6 +27,7 @@ import java.util.Map;
 
 /** Factory for creating game terrains. */
 public class TerrainFactory {
+
   private static GridPoint2 MAP_SIZE = new GridPoint2(1000, 1000); // this will be updated later in the code
   //protected for testing
   protected static final String mapPath = "configs/Map.txt";

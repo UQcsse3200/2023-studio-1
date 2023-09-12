@@ -213,17 +213,17 @@ class PlantFactoryTest {
      */
     static Stream<Arguments> plantStatsProvider() {
         return Stream.of(
-                Arguments.of("cosmicCob", "images/plants/Corn.png",
+                Arguments.of("cosmicCob", "images/plants/corn.png",
                         (Callable<Entity>) () -> PlantFactory.createCosmicCob(mockCropTile)),
-                Arguments.of("aloeVera", "images/plants/Aloe.png",
+                Arguments.of("aloeVera", "images/plants/aloevera.png",
                         (Callable<Entity>) () -> PlantFactory.createAloeVera(mockCropTile)),
-                Arguments.of("hammerPlant", "images/plants/Hammer.png",
+                Arguments.of("hammerPlant", "images/plants/hammer.png",
                         (Callable<Entity>) () -> PlantFactory.createHammerPlant(mockCropTile)),
                 Arguments.of("atropaBelladonna", "images/plants/belladonna.png",
                         (Callable<Entity>) () -> PlantFactory.createAtropaBelladonna(mockCropTile)),
                 Arguments.of("nicotianaTabacum", "images/plants/waterweed.png",
                         (Callable<Entity>) () -> PlantFactory.createNicotianaTabacum(mockCropTile)),
-                Arguments.of("venusFlyTrap", "images/plants/VenusTrap.png",
+                Arguments.of("venusFlyTrap", "images/plants/venus.png",
                         (Callable<Entity>) () -> PlantFactory.createVenusFlyTrap(mockCropTile))
         );
     }
