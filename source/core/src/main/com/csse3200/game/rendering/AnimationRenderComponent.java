@@ -34,6 +34,8 @@ import java.util.Map;
  * - other third-party tools, e.g. https://www.codeandweb.com/texturepacker <br>
  */
 public class AnimationRenderComponent extends RenderComponent {
+
+  private static final int DEFAULT_LAYER = 4;
   private static final Logger logger = LoggerFactory.getLogger(AnimationRenderComponent.class);
   private final GameTime timeSource;
   private final TextureAtlas atlas;
@@ -42,6 +44,8 @@ public class AnimationRenderComponent extends RenderComponent {
   private String currentAnimationName;
   private float animationPlayTime;
   private final float scaleFactor;
+  private boolean animationPaused = false;
+  private float animationPauseStart;
 
   /**
    * Create the component for a given texture atlas.
@@ -171,6 +175,15 @@ public class AnimationRenderComponent extends RenderComponent {
     return currentAnimationName;
   }
 
+  public void togglePauseAnimation() {
+    animationPaused = !animationPaused;
+    if (animationPaused) {
+      animationPauseStart = animationPlayTime;
+    } else {
+      animationPlayTime = animationPauseStart;
+    }
+  }
+
   /**
    * Has the playing animation finished? This will always be false for looping animations.
    * @return true if animation was playing and has now finished, false otherwise.
@@ -196,8 +209,13 @@ public class AnimationRenderComponent extends RenderComponent {
   }
 
   @Override
+  public int getLayer() {
+    return DEFAULT_LAYER;
+  }
+
+  @Override
   public void dispose() {
-    atlas.dispose();
+    //atlas.dispose();
     super.dispose();
   }
 }

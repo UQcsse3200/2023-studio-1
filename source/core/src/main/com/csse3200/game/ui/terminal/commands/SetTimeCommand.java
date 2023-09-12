@@ -40,7 +40,6 @@ public class SetTimeCommand implements Command {
       logger.debug("Argument provided was not a valid integer");
       return false;
     }
-    // TODO Clarify with time-team on the duration of the days
     if (MIN_TIME > time || time > MAX_TIME) {
       logger.debug("Argument given must be between {} and {} inclusive", MIN_TIME, MAX_TIME);
       return false;

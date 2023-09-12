@@ -234,6 +234,13 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		up: red
 		down: red_pressed
 	}
+	small: {
+		font: pixel-body
+		fontColor: white
+		downFontColor: lightGrey
+		up: red
+		down: red_pressed
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: {

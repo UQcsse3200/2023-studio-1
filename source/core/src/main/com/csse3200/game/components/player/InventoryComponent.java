@@ -1,5 +1,6 @@
 package com.csse3200.game.components.player;
 
+import com.badlogic.gdx.utils.Json;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 
@@ -44,6 +45,9 @@ public class InventoryComponent extends Component {
   private int heldIndex = 0;
 
   public InventoryComponent(List<Entity> items) {
+    if (items == null) {
+      return;
+    }
     setInventory(items);
   }
 
@@ -56,6 +60,14 @@ public class InventoryComponent extends Component {
     return this.inventory;
   }
 
+  public HashMap<Entity, Integer> getItemCount() {
+    return itemCount;
+  }
+
+  public HashMap<Entity, Point> getItemPosition() {
+    return itemPosition;
+  }
+
   /**
    * Returns if the player has a certain amount of gold.
    * @param item item to be checked
@@ -66,7 +78,7 @@ public class InventoryComponent extends Component {
   }
 
   /**
-   * Sets the player's inventory.
+   * Sets the player's inventory to a given List.
    *
    * @param items items to be added to inventory
    */
@@ -87,7 +99,20 @@ public class InventoryComponent extends Component {
       itemPosition.put(item, new Point(0, 0)); // Setting a default position (0,0) for now.
     }
     logger.debug("Setting inventory to {}", this.inventory.toString());
+  }
 
+  /**
+   * Sets the player's inventory to a given HashMap.
+   *
+   * @param items items to be added to inventory
+   */
+  public void setInventory(HashMap<Entity, Integer> items, HashMap<Entity, Point> itemPosition, List inventory) {
+    this.inventory.clear();
+    this.inventory.addAll(inventory);
+    this.itemPosition.clear();
+    this.itemPosition.putAll(itemPosition);
+    this.itemCount.clear();
+    this.itemCount.putAll(items);
   }
 
   /**
@@ -255,7 +280,26 @@ public class InventoryComponent extends Component {
   public void setItemPosition(Entity item, Point point) {
     itemPosition.put(item, point);
   }
+
+
+
+  @Override
+  public void write(Json json) {
+    json.writeObjectStart(this.getClass().getSimpleName());
+    json.writeObjectStart("inventory");
+    for (Entity e : inventory) {
+      json.writeObjectStart("item");
+      e.writeItem(json);
+      json.writeValue("count", getItemCount(e));
+      json.writeValue("X",getItemPosition(e).x);
+      json.writeValue("Y",getItemPosition(e).y);
+      json.writeObjectEnd();
+    }
+    json.writeObjectEnd();
+    json.writeObjectEnd();
+
   public void updateInventory(){
     entity.getEvents().trigger("updateInventory");
+
   }
 }

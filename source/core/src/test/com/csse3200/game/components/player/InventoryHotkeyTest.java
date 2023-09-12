@@ -61,6 +61,7 @@ public class InventoryHotkeyTest {
         }
         private static Stream<Arguments> checkKeyboardInputHotkeyParams() {
             return Stream.of(
+
                     arguments(8),
                     arguments(9),
                     arguments(10),
@@ -71,6 +72,7 @@ public class InventoryHotkeyTest {
                     arguments(15),
                     arguments(16),
                     arguments(7)
+
             );
         }
 }
