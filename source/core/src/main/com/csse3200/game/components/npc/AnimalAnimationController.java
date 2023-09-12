@@ -4,8 +4,6 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.utils.DirectionUtils;
 
-import javax.swing.event.TableModelEvent;
-
 /**
  * This class listens to events relevant to a chicken entity's state and plays the animation when one
  * of the events is triggered.

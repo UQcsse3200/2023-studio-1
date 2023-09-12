@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.screens.*;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.csse3200.game.services.ResourceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

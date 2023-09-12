@@ -13,10 +13,10 @@ import com.csse3200.game.ui.UIComponent;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 
 /**
  * A ui component for displaying player stats, e.g. health.
