@@ -18,6 +18,7 @@ public class ItemSlot extends Stack {
     private Image frame;
 
     private boolean selected;
+    private Image itemImage;
 
     /**
      * Construct an itemSlot with a texture, count and selected state
@@ -59,6 +60,7 @@ public class ItemSlot extends Stack {
         this.frame = new Image(new Texture(Gdx.files.internal("images/itemFrame.png")));
         this.selected = selected;
         this.createItemSlot();
+
     }
 
     /**
@@ -76,6 +78,11 @@ public class ItemSlot extends Stack {
      */
     public void setTexture(Texture itemTexture) {
         this.itemTexture = itemTexture;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 
     /**
@@ -96,7 +103,8 @@ public class ItemSlot extends Stack {
 
         //Add the item image to the itemSlot
         if (this.itemTexture != null) {
-            this.add(new Image(this.itemTexture));
+            itemImage = new Image(this.itemTexture);
+            this.add(itemImage);
         }
 
         //Add the count label if the number is not 0
@@ -105,4 +113,15 @@ public class ItemSlot extends Stack {
         }
     }
 
+    public Image getItemImage() {
+        return itemImage;
+    }
+    public void setItemImage(Image image) {
+        this.removeActor(itemImage);
+        itemImage = null;
+        if (image != null) {
+            this.add(image);
+            this.itemImage = image;
+        }
+    }
 }

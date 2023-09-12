@@ -11,6 +11,7 @@ import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 /**
@@ -21,7 +22,7 @@ public class ToolbarDisplay extends UIComponent {
     private Window window;
     private boolean isOpen;
     private InventoryComponent inventory;
-    private int selectedSlot = 0;
+    private int selectedSlot = -1;
 
     /**
      * Creates the event listeners, ui, and gets the UI.
@@ -52,20 +53,25 @@ public class ToolbarDisplay extends UIComponent {
         table.pad(10);
 
         for (int i = 0; i < 10; i++){
-            Label label = new Label(String.valueOf(i), skin.get("default", Label.LabelStyle.class));
-            label.setBounds(label.getX() + 15, label.getY(), label.getWidth(), label.getHeight());
-            if (inventory.getItemPos(i) == null){
-                ItemSlot item = new ItemSlot(i == selectedSlot);
-                table.add(item).pad(10, 10, 10, 10).fill();
-            } else {
-                ItemSlot item = new ItemSlot(
-                        inventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture(),
-                        inventory.getItemCount(inventory.getItemPos(i)), i == selectedSlot);
-                table.add(item).pad(10, 10, 10, 10).fill();
+            int idx = i + 1;
+            if (idx == 10) {
+                idx = 0;
             }
-        }
+            Label label = new Label(String.valueOf(idx) + " ", skin); //please please please work
+            label.setColor(Color.DARK_GRAY);
+            label.setAlignment(Align.topLeft);
+            ItemSlot item;
+            if (inventory.getItemPos(i) == null){
+                item = new ItemSlot(i == selectedSlot);
+            } else {
+                item = new ItemSlot(
+                        inventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture(),
+                        i == selectedSlot);
 
-        //window = new Window("", skin);
+            }
+            item.add(label);
+            table.add(item).pad(10, 10, 10, 10).fill();
+        }
         window.pad(40, 5 , 5, 5); // Add padding to with so that the text doesn't go offscreen
         window.add(table); //Add the table to the window
         window.pack(); // Pack the window to the size
@@ -84,14 +90,12 @@ public class ToolbarDisplay extends UIComponent {
         Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
         table = new Table(skin);
         table.defaults().size(64, 64);
-
         for (int i = 0; i < 10; i++) {
             //Set the indexes for the toolbar
             int idx = i + 1;
             if (idx == 10) {
                 idx = 0;
             }
-
             //Create the label for the item slot
             Label label = new Label(String.valueOf(idx) + " ", skin); //please please please work
             label.setColor(Color.DARK_GRAY);

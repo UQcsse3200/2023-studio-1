@@ -45,7 +45,6 @@ public class TestInventoryUI {
     }
     @Test
     void testToggleInventory() {
-        //verify(inventoryDisplay);
         player.create();
         verify(inventoryDisplay).create();
         player.getEvents().addListener("toggleInventory",inventoryDisplay::toggleOpen);
