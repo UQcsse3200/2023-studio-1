@@ -35,9 +35,14 @@ public class FactoryService {
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("aloe vera seed", ItemFactory::createAloeVeraSeed),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("atomic algae seed", ItemFactory::createAtomicAlgaeSeed),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("cosmic cob seed", ItemFactory::createCosmicCobSeed),
-            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("nightshade seed", ItemFactory::createDeadlyNightshadeSeed),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("deadly nightshade seed", ItemFactory::createDeadlyNightshadeSeed),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("hammer plant seed", ItemFactory::createHammerPlantSeed),
-            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("COW FOOD", ItemFactory::createCowFood));
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("horticultural heater seed", ItemFactory::createHorticulturalHeaterSeed),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("space snapper seed", ItemFactory::createSpaceSnapperSeed),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("tobacco seed", ItemFactory::createTobaccoSeed),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("COW FOOD", ItemFactory::createCowFood),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("egg", ItemFactory::createEgg),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("milk", ItemFactory::createMilk));
 
     public static Map<String, Function<CropTileComponent, Entity>> getPlantFactories() {
         return plantFactories;
