@@ -13,10 +13,10 @@ import com.csse3200.game.ui.UIComponent;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 
 /**
  * A ui component for displaying player stats, e.g. health.
@@ -66,7 +66,6 @@ public class InventoryDisplay extends UIComponent {
       Label label = new Label(String.valueOf(i), skin.get("default", Label.LabelStyle.class));
       //set the bounds of the label
       label.setBounds(label.getX() + 15, label.getY(), label.getWidth(), label.getHeight());
-      //stack.add(new Image(new Texture("images/itemFrame.png")));
       ItemSlot item;
       if (playerInventory.getItemPos(i) == null) {
         //logger.info("Null Item at "+i );

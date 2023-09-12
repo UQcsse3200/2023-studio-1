@@ -607,4 +607,12 @@ public class PlantComponent extends Component {
         json.writeValue("growth", getCurrentGrowthLevel());
         json.writeObjectEnd();
     }
+
+
+    public void setCurrentAge(float age) {
+    }
+
+    public float getCurrentAge() {
+        return 0;
+    }
 }

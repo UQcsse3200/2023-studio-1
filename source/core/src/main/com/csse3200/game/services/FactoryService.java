@@ -1,16 +1,13 @@
 package com.csse3200.game.services;
 
 import com.csse3200.game.areas.terrain.CropTileComponent;
-import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.PlantFactory;
-import com.csse3200.game.entities.factories.PlayerFactory;
 
 import java.util.AbstractMap;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;

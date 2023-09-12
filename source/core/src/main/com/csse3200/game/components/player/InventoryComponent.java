@@ -291,8 +291,8 @@ public class InventoryComponent extends Component {
       json.writeObjectStart("item");
       e.writeItem(json);
       json.writeValue("count", getItemCount(e));
-      json.writeValue("X",getItemPosition(e).x);
-      json.writeValue("Y",getItemPosition(e).y);
+      json.writeValue("X", getItemPosition(e).x);
+      json.writeValue("Y", getItemPosition(e).y);
       json.writeObjectEnd();
     }
     json.writeObjectEnd();
