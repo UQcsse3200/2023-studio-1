@@ -142,8 +142,8 @@ public class ItemActions extends Component {
     int playerPositionAsIntX = (int)Math.ceil(playerPos.x); 
     int playerPositionAsIntY = (int)Math.ceil(playerPos.y);
     
-    int x = (int)Math.ceil(playerPositionAsIntX + xDelta);
-    int y = (int)Math.ceil(playerPositionAsIntY + yDelta);
+    int x = (int)Math.ceil((double)(playerPositionAsIntX) + xDelta);
+    int y = (int)Math.ceil((double)(playerPositionAsIntY) + yDelta);
     
     return new Vector2(x, y);
   }

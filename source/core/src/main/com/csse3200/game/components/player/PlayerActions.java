@@ -14,8 +14,8 @@ import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 
+import java.security.SecureRandom;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Action component for interacting with the player. Player events should be initialised in create()
@@ -34,6 +34,8 @@ public class PlayerActions extends Component {
   private boolean muted = false;
   private CameraComponent camera;
   private GameMap map;
+
+  private SecureRandom random = new SecureRandom();
 
   @Override
   public void create() {
@@ -67,9 +69,7 @@ public class PlayerActions extends Component {
 
     int max=300; int min=1;
 
-    Random randomNum = new Random();
-
-    int AnimationRandomizer = min + randomNum.nextInt(max);
+    int AnimationRandomizer = min + this.random.nextInt(max);
 
     if (moveDirection.epsilonEquals(Vector2.Zero)) {
       // player is not moving
