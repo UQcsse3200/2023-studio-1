@@ -551,6 +551,11 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/npc/PassiveDropComponent.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/PassiveDropComponent.html" title="class in com.csse3200.game.components.npc">PassiveDropComponent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/npc/QuestIndicatorComponent.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/QuestIndicatorComponent.html" title="class in com.csse3200.game.components.npc">QuestIndicatorComponent</a></dt>
+<dd>
+<div class="block">This will create the questgiver indicator - it listens to events on the mission manager
+ to discover when missions become available, are completed or expire.</div>
+</dd>
 <dt><a href="com/csse3200/game/components/npc/TamableComponent.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/TamableComponent.html" title="class in com.csse3200.game.components.npc">TamableComponent</a></dt>
 <dd>
 <div class="block">Create the event and add it to the event hashmap so the function can be
@@ -768,7 +773,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Creates a questgiver entity</div>
 </dd>
 <dt><a href="com/csse3200/game/entities/factories/QuestgiverFactory.html#createQuestgiverIndicator(com.csse3200.game.entities.Entity)" class="member-name-link">createQuestgiverIndicator(Entity)</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/QuestgiverFactory.html" title="class in com.csse3200.game.entities.factories">QuestgiverFactory</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Create a questgiver indicator entity (i.e.</div>
+</dd>
 <dt><a href="com/csse3200/game/entities/factories/RenderFactory.html#createRenderer()" class="member-name-link">createRenderer()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/RenderFactory.html" title="class in com.csse3200.game.entities.factories">RenderFactory</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/factories/ItemFactory.html#createScythe()" class="member-name-link">createScythe()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ItemFactory.html" title="class in com.csse3200.game.entities.factories">ItemFactory</a></dt>
@@ -2910,7 +2917,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/npc/QuestIndicatorComponent.html" class="type-name-link" title="class in com.csse3200.game.components.npc">QuestIndicatorComponent</a> - Class in <a href="com/csse3200/game/components/npc/package-summary.html">com.csse3200.game.components.npc</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/npc/QuestIndicatorComponent.html#%3Cinit%3E(com.csse3200.game.entities.Entity)" class="member-name-link">QuestIndicatorComponent(Entity)</a> - Constructor for class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/QuestIndicatorComponent.html" title="class in com.csse3200.game.components.npc">QuestIndicatorComponent</a></dt>
+<dt><a href="com/csse3200/game/components/npc/QuestIndicatorComponent.html#%3Cinit%3E()" class="member-name-link">QuestIndicatorComponent()</a> - Constructor for class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/QuestIndicatorComponent.html" title="class in com.csse3200.game.components.npc">QuestIndicatorComponent</a></dt>
 <dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:R">R</h2>
@@ -3006,6 +3013,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/ServiceLocator.html#registerPlanetOxygenService(com.csse3200.game.services.PlanetOxygenService)" class="member-name-link">registerPlanetOxygenService(PlanetOxygenService)</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/npc/QuestIndicatorComponent.html#registerQuestgiver(com.csse3200.game.entities.Entity)" class="member-name-link">registerQuestgiver(Entity)</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/QuestIndicatorComponent.html" title="class in com.csse3200.game.components.npc">QuestIndicatorComponent</a></dt>
+<dd>
+<div class="block">Register the questgiver.</div>
+</dd>
 <dt><a href="com/csse3200/game/services/ServiceLocator.html#registerRenderService(com.csse3200.game.rendering.RenderService)" class="member-name-link">registerRenderService(RenderService)</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/ServiceLocator.html#registerResourceService(com.csse3200.game.services.ResourceService)" class="member-name-link">registerResourceService(ResourceService)</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
@@ -4210,10 +4221,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Updates the player's inventory toolbar on the ui.</div>
 </dd>
-<dt><a href="com/csse3200/game/components/npc/QuestIndicatorComponent.html#updateLocation(com.badlogic.gdx.math.Vector2)" class="member-name-link">updateLocation(Vector2)</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/QuestIndicatorComponent.html" title="class in com.csse3200.game.components.npc">QuestIndicatorComponent</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/npc/QuestIndicatorComponent.html#updateState(com.csse3200.game.components.npc.QuestIndicatorComponent.State)" class="member-name-link">updateState(QuestIndicatorComponent.State)</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/QuestIndicatorComponent.html" title="class in com.csse3200.game.components.npc">QuestIndicatorComponent</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/weather/WeatherEvent.html#updateTime()" class="member-name-link">updateTime()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/WeatherEvent.html" title="class in com.csse3200.game.areas.weather">WeatherEvent</a></dt>
 <dd>
 <div class="block">Updates the duration or countdown timer for the weather event.</div>
