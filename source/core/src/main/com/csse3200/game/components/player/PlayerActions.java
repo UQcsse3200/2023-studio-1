@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.inventory.ToolbarDisplay;
 import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
 import com.csse3200.game.components.tractor.TractorActions;
@@ -14,8 +15,8 @@ import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 
+import java.security.SecureRandom;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Action component for interacting with the player. Player events should be initialised in create()
@@ -34,6 +35,8 @@ public class PlayerActions extends Component {
   private boolean muted = false;
   private CameraComponent camera;
   private GameMap map;
+
+  private SecureRandom random = new SecureRandom();
 
   @Override
   public void create() {
@@ -67,9 +70,7 @@ public class PlayerActions extends Component {
 
     int max=300; int min=1;
 
-    Random randomNum = new Random();
-
-    int AnimationRandomizer = min + randomNum.nextInt(max);
+    int AnimationRandomizer = min + this.random.nextInt(max);
 
     if (moveDirection.epsilonEquals(Vector2.Zero)) {
       // player is not moving
@@ -237,7 +238,11 @@ public class PlayerActions extends Component {
   }
 
   void hotkeySelection(int index) {
-    entity.getComponent(InventoryComponent.class).setHeldItem(index);
+    InventoryComponent inventoryComponent = entity.getComponent(InventoryComponent.class);
+    //Make sure its initialised
+    if (inventoryComponent != null) {
+      inventoryComponent.setHeldItem(index);
+    }
   }
 
   /**

@@ -9,12 +9,6 @@ import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.utils.math.Vector2Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.services.ServiceLocator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Input handler for the player for keyboard and touch (mouse) input.
@@ -80,11 +74,11 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.SPACE:
           touchUp(Gdx.input.getX(), Gdx.input.getY(), 0, 0);
           return true;
+        case Keys.ESCAPE:
+          entity.getEvents().trigger("escInput");
+          return true;
         case Keys.NUM_0: case Keys.NUM_1: case Keys.NUM_2:
         case Keys.NUM_3: case Keys.NUM_4: case Keys.NUM_5:
-        case Keys.ESCAPE:
-            entity.getEvents().trigger("escInput");
-            return true;
         case Keys.NUM_6: case Keys.NUM_7: case Keys.NUM_8:
         case Keys.NUM_9:
           triggerHotKeySelection(keycode);

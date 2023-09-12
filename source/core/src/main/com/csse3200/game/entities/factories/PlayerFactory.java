@@ -47,6 +47,7 @@ public class PlayerFactory {
             );
 
     setupPlayerAnimator(animator);
+    InventoryComponent playerInventory = new InventoryComponent(new ArrayList<>());
 
     Entity player =
         new Entity(EntityType.Player)
@@ -55,14 +56,14 @@ public class PlayerFactory {
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
             .addComponent(new PlayerActions())
             .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack))
-            .addComponent(new InventoryComponent(new ArrayList<Entity>()))
+                .addComponent(playerInventory)
             .addComponent(inputComponent)
             .addComponent(animator)
             .addComponent(new OpenPauseComponent())
             .addComponent(new PlayerAnimationController())
             .addComponent(new ItemPickupComponent())
             .addComponent(new InteractionDetector(2f))
-            .addComponent(new InventoryDisplay())
+            .addComponent(new InventoryDisplay(playerInventory))
             .addComponent(new ToolbarDisplay())
             .addComponent(new PauseMenuActions());
 
