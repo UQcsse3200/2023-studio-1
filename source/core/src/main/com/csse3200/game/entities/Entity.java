@@ -1,5 +1,4 @@
 package com.csse3200.game.entities;
-
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntMap;
@@ -9,6 +8,14 @@ import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ComponentType;
+import com.csse3200.game.components.npc.AnimalAnimationController;
+import com.csse3200.game.components.npc.GhostAnimationController;
+import com.csse3200.game.components.npc.TamableComponent;
+import com.csse3200.game.components.player.ItemPickupComponent;
+import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
+import com.csse3200.game.components.player.PlayerAnimationController;
+import com.csse3200.game.events.EventHandler;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.items.WateringCanLevelComponent;
@@ -24,7 +31,6 @@ import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -291,6 +297,32 @@ public class Entity implements Json.Serializable {
     }
     for (Component component : createdComponents) {
       component.triggerUpdate();
+    }
+  }
+
+  public void togglePauseAnimations(boolean pausePlayer) {
+    if (!pausePlayer) {
+      for (Component component : createdComponents) {
+        if (component instanceof KeyboardPlayerInputComponent ||
+                component instanceof PlayerAnimationController ||
+                component instanceof AnimalAnimationController ||
+                component instanceof GhostAnimationController ||
+                component instanceof TamableComponent ||
+                component instanceof ItemPickupComponent
+        ) {
+          return;
+        }
+      }
+    }
+    for (Component component : createdComponents) {
+      if (component instanceof PlayerAnimationController) {
+        return;
+      }
+    }
+    for (Component component : createdComponents) {
+      if (component instanceof AnimationRenderComponent) {
+        ((AnimationRenderComponent) component).togglePauseAnimation();
+      }
     }
   }
 
