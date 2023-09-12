@@ -6,9 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.SpaceGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.components.Component;
-import com.csse3200.game.components.maingame.MainGameActions;
-import com.csse3200.game.components.maingame.PauseMenuActions;
 import com.csse3200.game.areas.weather.WeatherEventDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.components.maingame.MainGameActions;
@@ -73,14 +70,9 @@ public class MainGameScreen extends ScreenAdapter {
           "images/weather_event/solar-flare.png"
 
   };
-
-  private static final String[] pauseMenuTextures =
-          {"images/PauseMenu/Pausenew.jpg"};
-
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 
   private final GdxGame game;
-  private static Component mainGameActions;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
 
@@ -142,19 +134,12 @@ public class MainGameScreen extends ScreenAdapter {
 
   @Override
   public void render(float delta) {
-    physicsEngine.update();
-    ServiceLocator.getEntityService().update();
-    ServiceLocator.getTimeService().update();
-    renderer.render();
-    if (PauseMenuActions.getQuitGameStatus()) {
-      mainGameActions.getEntity().getEvents().trigger("exit");
-      PauseMenuActions.setQuitGameStatus();
     if (!ServiceLocator.getTimeService().isPaused()) {
       physicsEngine.update();
       ServiceLocator.getEntityService().update();
     }
-      ServiceLocator.getTimeService().update();
-      renderer.render();
+    ServiceLocator.getTimeService().update();
+    renderer.render();
     if (lose == true) {
       game.setScreen(GdxGame.ScreenType.LOSESCREEN);
     }
@@ -209,24 +194,21 @@ public class MainGameScreen extends ScreenAdapter {
    */
   private void createUI() {
     logger.debug("Creating ui");
-    mainGameActions = new MainGameActions(this.game);
     Stage stage = ServiceLocator.getRenderService().getStage();
     InputComponent inputComponent =
-        ServiceLocator.getInputService().getInputFactory().createForTerminal();
+            ServiceLocator.getInputService().getInputFactory().createForTerminal();
 
     Entity ui = new Entity();
     ui.addComponent(new InputDecorator(stage, 10))
-        .addComponent(new PerformanceDisplay())
-        .addComponent(mainGameActions)
-       // .addComponent(new MainGameActions(this.game))
-        .addComponent(new MainGameExitDisplay())
-        .addComponent(new Terminal())
-        .addComponent(inputComponent)
-        .addComponent(new TerminalDisplay())
-        .addComponent(new GameTimeDisplay())
-        .addComponent(new PauseMenuActions());
-        .addComponent(new OxygenDisplay())
-        .addComponent(new WeatherEventDisplay());
+            .addComponent(new PerformanceDisplay())
+            .addComponent(new MainGameActions(this.game))
+            .addComponent(new MainGameExitDisplay())
+            .addComponent(new Terminal())
+            .addComponent(inputComponent)
+            .addComponent(new TerminalDisplay())
+            .addComponent(new GameTimeDisplay())
+            .addComponent(new OxygenDisplay())
+            .addComponent(new WeatherEventDisplay());
 
     ServiceLocator.getEntityService().register(ui);
   }
