@@ -1,7 +1,7 @@
 package com.csse3200.game.services;
 
-import com.badlogic.gdx.Game;
 import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.missions.MissionManager;
@@ -28,11 +28,16 @@ public class ServiceLocator {
   private static TimeService timeService;
   private static GameTime timeSource;
   private static GameArea gameArea;
+  private static CameraComponent cameraComponent;
+  private static SaveLoadService saveLoadService;
   private static MissionManager missions;
+  private static PlanetOxygenService planetOxygenService;
 
   public static GameArea getGameArea() {
     return gameArea;
   }
+
+  public static CameraComponent getCameraComponent() { return cameraComponent; }
 
   public static EntityService getEntityService() {
     return entityService;
@@ -63,10 +68,22 @@ public class ServiceLocator {
   public static MissionManager getMissionManager() {
     return missions;
   }
+  public static PlanetOxygenService getPlanetOxygenService() {
+    return planetOxygenService;
+  }
+
+  public static SaveLoadService getSaveLoadService() {
+    return saveLoadService;
+  }
 
   public static void registerGameArea(GameArea area) {
     logger.debug("Registering game area {}", area);
     gameArea = area;
+  }
+
+  public static void registerCameraComponent(CameraComponent camera) {
+    logger.debug("Registering game area {}", camera);
+    cameraComponent = camera;
   }
 
   public static void registerEntityService(EntityService service) {
@@ -108,7 +125,25 @@ public class ServiceLocator {
     logger.debug("Registering mission manager {}", source);
     missions = source;
   }
+  
+  public static void registerPlanetOxygenService(PlanetOxygenService source) {
+    logger.debug("Registering planet oxygen service {}", source);
+    planetOxygenService = source;
+  }
 
+  /**
+   * Registers the save/load service.
+   * @param source the service to register
+   */
+  public static void registerSaveLoadService(SaveLoadService source) {
+    logger.debug("Registering Save/Load service {}", source);
+    saveLoadService = source;
+  }
+
+  /**
+   * Clears all registered services.
+   * Do not clear saveLoadService
+   */
   public static void clear() {
     entityService = null;
     renderService = null;
@@ -116,6 +151,8 @@ public class ServiceLocator {
     timeSource = null;
     inputService = null;
     resourceService = null;
+    planetOxygenService = null;
+    gameArea = null;
   }
 
   private ServiceLocator() {

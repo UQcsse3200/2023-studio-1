@@ -2,7 +2,6 @@ package com.csse3200.game.missions.rewards;
 
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.missions.rewards.Reward;
 import com.csse3200.game.services.ServiceLocator;
 
 /**
@@ -15,7 +14,7 @@ public class StatReward extends Reward {
     /**
      * Amount the current Player's health will be updated by when collect() method is called.
      */
-    private int healthToAdd;
+    private final int healthToAdd;
 
     /**
      * Creates a new StatReward with a specified value to modify health by.
@@ -31,7 +30,7 @@ public class StatReward extends Reward {
      */
     @Override
     public void collect() {
-        super.isCollected = true;
+        this.setCollected();
 
         Entity player = ServiceLocator.getGameArea().getPlayer();
         CombatStatsComponent playerStats = player.getComponent(CombatStatsComponent.class);

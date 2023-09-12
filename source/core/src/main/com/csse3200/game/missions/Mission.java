@@ -14,7 +14,7 @@ public abstract class Mission {
      *
      * @param name The {@link String} name of the {@link Mission}, visible to the player in-game.
      */
-    public Mission(String name) {
+    protected Mission(String name) {
         this.name = name;
     }
 
@@ -56,5 +56,14 @@ public abstract class Mission {
      *         you would like the player to know about.
      */
     public abstract String getDescription();
+
+    /**
+     * Returns a short {@link String} description of the {@link Mission}. This description should be
+     * at most around 50 characters. This might simply contain progress information on the
+     * {@link Mission}, or a shortened form of {@link #getDescription()}.
+     *
+     * @return A short {@link String} description of the {@link Mission}
+     */
+    public abstract String getShortDescription();
 
 }

@@ -1,10 +1,17 @@
 package com.csse3200.game.areas.terrain;
 
+import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import com.badlogic.gdx.utils.Json;
+import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.ItemFactory;
+
+import java.util.HashMap;
+import java.util.function.Supplier;
 
 /**
  * Custom terrain tile implementation for tiled map terrain that stores additional properties we
@@ -246,6 +253,13 @@ public class TerrainTile implements TiledMapTile {
     return this.isTillable;
   }
 
+  public void write(Json json) {
+    getCropTile().getComponent(CropTileComponent.class).write(json);
+    if (getCropTile().getComponent(CropTileComponent.class).getPlant() != null) {
+      getCropTile().getComponent(CropTileComponent.class).getPlant().getComponent(PlantComponent.class).write(json);
+    }
+  }
+
   public enum TerrainCategory { // wanted to name TerrainType but already enum with that name in TerrainFactory
     PATH,
     BEACHSAND,
@@ -278,6 +292,8 @@ public class TerrainTile implements TiledMapTile {
    */
   public void setCropTile(Entity cropTile) {
     this.cropTile = cropTile;
+    // TODO was removed by Lakshan i believe due to a bug but it is needed so if bug doesn't happen again please leave
+    cropTile.getComponent(CropTileComponent.class).setTerrainTile(this);
     this.setOccupied();
   }
 

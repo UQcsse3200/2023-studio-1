@@ -2,12 +2,19 @@ package com.csse3200.game.components.tractor;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
+import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.services.ServiceLocator;
+
+import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
 
 public class TractorActions extends Component {
   private static final Vector2 MAX_SPEED = new Vector2(5f, 5f); // Metres per second
@@ -18,12 +25,15 @@ public class TractorActions extends Component {
   private boolean moving = false;
   private boolean muted = true;
   private CameraComponent camera;
+  private TractorMode mode = TractorMode.normal;
+  private GameMap map;
 
   @Override
   /**
    * Creates the tractor actions component.
    */
   public void create() {
+    this.map = ServiceLocator.getGameArea().getMap();
     physicsComponent = entity.getComponent(PhysicsComponent.class);
     entity.getEvents().addListener("move", this::move);
     entity.getEvents().addListener("moveStop", this::stopMoving);
@@ -37,7 +47,50 @@ public class TractorActions extends Component {
   public void update() {
     if (this.moving) {
       updateSpeed();
+      use();
     }
+  }
+
+  private void use() {
+    switch (getMode()) {
+      case normal -> {
+      }
+      case tilling -> {
+        TerrainTile tile = map.getTile(entity.getPosition());
+        TerrainTile tile2 = map.getTile(new Vector2(entity.getPosition().x, entity.getPosition().y - 1));
+        hoe(tile, entity.getPosition());
+        hoe(tile2, new Vector2(entity.getPosition().x, entity.getPosition().y - 1));
+      }
+      case harvesting -> {
+        TerrainTile tile = map.getTile(entity.getPosition());
+        TerrainTile tile2 = map.getTile(new Vector2(entity.getPosition().x, entity.getPosition().y - 1));
+        harvest(tile);
+        harvest(tile2);
+      }
+    }
+  }
+
+  private void harvest(TerrainTile tile) {
+    if (tile == null) {
+      return;
+    } else if (tile.getCropTile() == null) {
+      return;
+    }
+    tile.getCropTile().getEvents().trigger("harvest");
+  }
+
+  private void hoe(TerrainTile tile, Vector2 pos) {
+    if (tile == null) {
+      return;
+    }
+    if (tile.getCropTile() != null || !tile.isTillable()) {
+      return;
+    }
+    // Make a new tile
+    Entity cropTile = createTerrainEntity(new Vector2((int)Math.ceil(pos.x), (int)Math.ceil(pos.y)));
+    tile.setCropTile(cropTile);
+    tile.setOccupied();
+    ServiceLocator.getEntityService().register(cropTile);
   }
 
   /**
@@ -65,7 +118,7 @@ public class TractorActions extends Component {
   /**
    * Stops the player from walking.
    */
-  void stopMoving() {
+  public void stopMoving() {
     this.walkDirection = Vector2.Zero.cpy();
     updateSpeed();
     this.moving = false;
@@ -90,6 +143,7 @@ public class TractorActions extends Component {
    */
   void exitTractor() {
     this.stopMoving();
+    this.mode = TractorMode.normal;
     player.getComponent(PlayerActions.class).setMuted(false);
     muted = true;
     player.getComponent(KeyboardPlayerInputComponent.class)
@@ -131,5 +185,20 @@ public class TractorActions extends Component {
 
   public void setCameraVar(CameraComponent cam) {
     this.camera = cam;
+  }
+
+  public TractorMode getMode() {
+    return mode;
+  }
+
+  public void setMode(TractorMode mode) {
+    this.mode = mode;
+  }
+
+  public void write(Json json){
+    json.writeObjectStart(this.getClass().getSimpleName());
+    //Save the muted value to the json file
+    json.writeValue("isMuted", this.isMuted());
+    json.writeObjectEnd();
   }
 }
