@@ -416,7 +416,7 @@ public class Entity implements Json.Serializable {
       type = null;
     }
 
-    if (type != null) { // Line 388 may break the switch statement otherwise
+    if (type != null) { // The try catch above may cause a NullPointerException otherwise
       switch (type) {
         case Tractor:
           jsonMap = jsonMap.get("components").get("TractorActions");
