@@ -59,7 +59,7 @@ public class InventoryDisplay extends UIComponent {
     table = new Table(skin);
     table.defaults().size(64, 64);
     table.pad(10);
-    ArrayList<Actor> actors = new ArrayList<Actor>();
+    ArrayList<Actor> actors = new ArrayList<>();
     final Map<Image,ItemSlot> map = new HashMap<>();
 
     for (int i = 0; i < 30; i++){
@@ -108,7 +108,7 @@ public class InventoryDisplay extends UIComponent {
     table = new Table(skin);
     table.defaults().size(64, 64);
     table.pad(10);
-    ArrayList<Actor> actors = new ArrayList<Actor>();
+    ArrayList<Actor> actors = new ArrayList<>();
     final Map<Image,ItemSlot> map = new HashMap<>();
       // Add some items to the table, to be changed once inventory item is improved
     indexes = new HashMap<>(); // map of items to their index
@@ -157,7 +157,7 @@ public class InventoryDisplay extends UIComponent {
         @Override
         public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
           if (target == null) {
-            ItemSlot itemSlot = map.get(getActor());
+            ItemSlot itemSlot = map.get((Image)getActor());
             itemSlot.removeActor(getActor());
             itemSlot.add(getActor());
           }
@@ -165,9 +165,9 @@ public class InventoryDisplay extends UIComponent {
       });
     }
 
-    for (Cell<ItemSlot> targetItem : table.getCells()) {
+    for (Cell<?> targetItem : table.getCells()) {
       dnd.addTarget(new DragAndDrop.Target(targetItem.getActor()) {
-        ItemSlot slot = targetItem.getActor();
+        ItemSlot slot = (ItemSlot) targetItem.getActor();
         @Override
         public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
           return true;
@@ -175,7 +175,7 @@ public class InventoryDisplay extends UIComponent {
 
         @Override
         public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-          ItemSlot sourceSlot = map.get((source.getActor()));
+          ItemSlot sourceSlot = map.get(((Image)source.getActor()));
           playerInventory.swapPosition(indexes.get(sourceSlot), indexes.get(slot));
           map.put(slot.getItemImage(), sourceSlot);
           sourceSlot.setItemImage(slot.getItemImage());
