@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.inventory.InventoryDisplay;
 import com.csse3200.game.components.inventory.ToolbarDisplay;
+import com.csse3200.game.components.maingame.PauseMenuActions;
 import com.csse3200.game.components.player.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
@@ -57,11 +58,13 @@ public class PlayerFactory {
             .addComponent(new InventoryComponent(new ArrayList<Entity>()))
             .addComponent(inputComponent)
             .addComponent(animator)
+            .addComponent(new OpenPauseComponent())
             .addComponent(new PlayerAnimationController())
             .addComponent(new ItemPickupComponent())
             .addComponent(new InteractionDetector(2f))
             .addComponent(new InventoryDisplay())
-            .addComponent(new ToolbarDisplay());
+            .addComponent(new ToolbarDisplay())
+            .addComponent(new PauseMenuActions());
 
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
     player.getComponent(ColliderComponent.class).setAsBox(new Vector2(1f, 1f), new Vector2(1.5f, 1f));
