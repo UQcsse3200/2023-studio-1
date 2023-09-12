@@ -26,7 +26,7 @@ public class SetDayCommand implements Command {
     return true;
   }
 
-  Boolean isValid(ArrayList<String> args) {
+  boolean isValid(ArrayList<String> args) {
     if (args.size() != 1) {
       logger.debug("Only 1 argument is needed and {} were given", args.size());
       return false;

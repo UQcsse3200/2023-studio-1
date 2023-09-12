@@ -2,6 +2,7 @@ package com.csse3200.game.ui.terminal;
 
 import com.badlogic.gdx.Input;
 import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 

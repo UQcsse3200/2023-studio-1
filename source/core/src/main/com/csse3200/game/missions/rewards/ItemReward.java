@@ -4,7 +4,7 @@ import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An ItemReward class for when a player completes a Quest and receives reward items as a result
@@ -14,13 +14,13 @@ public class ItemReward extends Reward {
     /**
      * Array of reward items for the player to receive.
      */
-    ArrayList<Entity> rewardItems;
+    private final List<Entity> rewardItems;
 
     /**
      * Creates a new reward with a list of reward items for player to receive on collect() method call.
      * @param rewardItems Array of entities added to the reward.
      */
-    public ItemReward(ArrayList<Entity> rewardItems) {
+    public ItemReward(List<Entity> rewardItems) {
         super();
         this.rewardItems = rewardItems;
     }
@@ -30,7 +30,7 @@ public class ItemReward extends Reward {
      */
     @Override
     public void collect() {
-        super.isCollected = true;
+        this.setCollected();
 
         Entity player = ServiceLocator.getGameArea().getPlayer();
         InventoryComponent inventory = player.getComponent(InventoryComponent.class);

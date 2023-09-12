@@ -14,8 +14,10 @@ import org.slf4j.LoggerFactory;
 public class EntityService {
   private static final Logger logger = LoggerFactory.getLogger(EntityService.class);
   private static final int INITIAL_CAPACITY = 16;
-
   private final Array<Entity> entities = new Array<>(false, INITIAL_CAPACITY);
+  private static boolean paused = false;
+  private static boolean pauseStartFlag = false;
+  private static boolean pauseEndFlag = false;
 
   /**
    * Register a new entity with the entity service. The entity will be created and start updating.
@@ -27,6 +29,10 @@ public class EntityService {
     entity.create();
   }
 
+  public Array<Entity> getEntityList() {
+    return entities;
+  }
+
   /**
    * Unregister an entity with the entity service. The entity will be removed and stop updating.
    * @param entity entity to be removed.
@@ -35,15 +41,49 @@ public class EntityService {
     logger.debug("Unregistering {} in entity service", entity);
     entities.removeValue(entity, true);
   }
-
+  
   /**
    * Update all registered entities. Should only be called from the main game loop.
    */
   public void update() {
     for (Entity entity : entities) {
-      entity.earlyUpdate();
-      entity.update();
+      if (!paused) {
+        if(pauseEndFlag) {
+          entity.togglePauseAnimations(true);
+        }
+        entity.earlyUpdate();
+        entity.update();
+      }
+      if(pauseStartFlag) {
+        entity.togglePauseAnimations(true);
+      }
     }
+    pauseStartFlag = false;
+    pauseEndFlag = false;
+
+  }
+
+  public static void pauseAndResume() {
+    paused = !paused;
+    if (paused) {
+      pauseStartFlag = true;
+    } else {
+      pauseEndFlag = true;
+    }
+  }
+
+  public static void pauseGame() {
+    paused = true;
+    pauseStartFlag = true;
+  }
+
+  public static void unpauseGame() {
+    paused = false;
+    pauseEndFlag = true;
+  }
+
+  public static boolean pauseCheck() {
+    return paused;
   }
 
   /**
@@ -53,5 +93,22 @@ public class EntityService {
     for (Entity entity : entities) {
       entity.dispose();
     }
+  }
+
+  /**
+   * Get number of entities registered
+   *
+   * @return number of entities
+   */
+  public int getSize() {
+    return entities.size;
+  }
+
+   /**
+   * Returns Array of entities of all entities in game
+   * @return Array of entities in game
+   */
+  public Array<Entity> getEntities() {
+    return entities;
   }
 }

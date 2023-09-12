@@ -1,11 +1,9 @@
 package com.csse3200.game.components.player;
-import java.util.Random;
+
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.areas.terrain.GameMap;
-import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.inventory.ToolbarDisplay;
@@ -13,8 +11,12 @@ import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
+
+import java.util.List;
+import java.util.Random;
 
 /**
  * Action component for interacting with the player. Player events should be initialised in create()
@@ -151,7 +153,7 @@ public class PlayerActions extends Component {
   /**
    * Stops the player from moving.
    */
-  void stopMoving() {
+  public void stopMoving() {
     this.moveDirection = Vector2.Zero.cpy();
     updateSpeed();
     moving = false;
@@ -165,7 +167,6 @@ public class PlayerActions extends Component {
   }
 
   /**
-<<<<<<< HEAD
    * Increases the velocity of the player when they move.
    */
   void run() {
@@ -175,7 +176,7 @@ public class PlayerActions extends Component {
   /**
    * Removes the velocity increase of the player.
    */
-  void stopRunning() {
+  public void stopRunning() {
     this.running = false;
   }
 
@@ -189,6 +190,16 @@ public class PlayerActions extends Component {
       entity.getEvents().trigger("animationInteract", "left");
     } else if (direction < 315) {
       entity.getEvents().trigger("animationInteract", "down");
+    }
+
+    // if there is a questgiver entity in range, trigger event toggleMissions
+    List<Entity> entitiesInRange = this.entity.getComponent(InteractionDetector.class).getEntitiesInRange();
+
+    for (Entity entity : entitiesInRange) {
+      EntityType entityType = entity.getType();
+      if (entityType.equals(EntityType.Questgiver)) {
+        entity.getEvents().trigger("toggleMissions");
+      }
     }
   }
 
@@ -224,11 +235,11 @@ public class PlayerActions extends Component {
     camera.setTrackEntity(tractor);
   }
 
-  void use(Vector2 playerPos, Vector2 mousePos, Entity itemInHand) {
+  void use(Vector2 mousePos, Entity itemInHand) {
     if (itemInHand != null) {
       if (itemInHand.getComponent(ItemActions.class) != null) {
         pauseMoving();
-        itemInHand.getComponent(ItemActions.class).use(playerPos, mousePos, itemInHand, map);
+        itemInHand.getComponent(ItemActions.class).use(entity, mousePos, map);
       }
     }
   }
@@ -255,6 +266,10 @@ public class PlayerActions extends Component {
 
   public void setCameraVar (CameraComponent cam) {
     this.camera = cam;
+  }
+
+  public CameraComponent getCameraVar () {
+    return camera;
   }
 
   public void setGameMap(GameMap map) {
