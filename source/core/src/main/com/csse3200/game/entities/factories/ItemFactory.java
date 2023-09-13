@@ -271,9 +271,9 @@ public class ItemFactory {
    */
   public static Entity createCowFood() {
     Entity animalFood = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/tobacco_seed.png"))
+            .addComponent(new TextureRenderComponent("images/plants/misc/tobacco_seed.png"))
             .addComponent(new ItemComponent("COW FOOD", ItemType.FOOD,
-                    "Cow food", new Texture("images/plants/tobacco_seed.png")));
+                    "Cow food", new Texture("images/plants/misc//tobacco_seed.png")));
     return animalFood;
   }
 }
