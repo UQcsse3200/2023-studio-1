@@ -202,7 +202,7 @@ public class PlantComponent extends Component {
         this.adultLifeSpan = adultLifeSpan;
         this.maxHealth = maxHealth;
         this.cropTile = cropTile;
-        this.currentGrowthLevel = 0;
+        this.currentGrowthLevel = 1;
         this.sounds = soundsArray;
         this.growthStages = GrowthStage.SEEDLING;
         this.numOfDaysAsAdult = 0;

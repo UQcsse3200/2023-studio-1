@@ -89,7 +89,8 @@ public class SaveGame {
       Array<Entity> tmp = new Array<>(entities);
       for (int i = 0; i < tmp.size; i++) {
         if (tmp.get(i).getType() == EntityType.Item || tmp.get(i).getType() == EntityType.Player || tmp.get(i).getType() == null
-                || tmp.get(i).getType() == EntityType.Tractor || tmp.get(i).getType() == EntityType.Tile) {
+                || tmp.get(i).getType() == EntityType.Tractor || tmp.get(i).getType() == EntityType.Tile
+                || tmp.get(i).getType() == EntityType.Questgiver || tmp.get(i).getType() == EntityType.QuestgiverIndicator || tmp.get(i).getType() == EntityType.Plant) {
           tmp.removeIndex(i);
           // Moves the indexing down when removed so keep index same
           i--;

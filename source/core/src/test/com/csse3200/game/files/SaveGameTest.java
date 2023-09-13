@@ -61,8 +61,7 @@ public class SaveGameTest {
 
     Entity[] entities = { new Entity(EntityType.Astrolotl),
         new Entity(EntityType.Chicken),
-        new Entity(EntityType.Cow),
-        new Entity(EntityType.Plant) };
+        new Entity(EntityType.Cow)};
 
     Array<Entity> entityTest = new Array<Entity>(entities);
 
@@ -100,14 +99,12 @@ public class SaveGameTest {
   public void testFilterEntities() {
     Array<Entity> entities = new Array<Entity>();
     Entity tile = new Entity(EntityType.Tile);
-    Entity plant = new Entity(EntityType.Plant);
     Entity chicken = new Entity(EntityType.Chicken);
-    entities.add(plant, new Entity(), tile, chicken);
+    entities.add(new Entity(), tile, chicken);
     GameState state = new GameState();
     state.setEntities(entities);
-    assertEquals(2,state.getEntities().size);
-    assertEquals(plant,state.getEntities().get(0));
-    assertEquals(chicken,state.getEntities().get(1));
+    assertEquals(1,state.getEntities().size);
+    assertEquals(chicken,state.getEntities().get(0));
   }
 
   @Test
