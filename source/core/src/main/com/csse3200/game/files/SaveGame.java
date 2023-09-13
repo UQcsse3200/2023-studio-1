@@ -88,7 +88,8 @@ public class SaveGame {
 
     /**
      * Filter out all entities that are in the NPC Factory, player or tractor. THis
-     * function is mainly for SaveLoadService.java
+     * function is mainly for SaveLoadService.java. Produces a Array of entities
+     * from the NPC factory that needs to be remade
      * 
      * @param entities the entities to filter in Array<Entity>
      * @return the entities filtered in Array<Entity> for use in SaveLoadService.
