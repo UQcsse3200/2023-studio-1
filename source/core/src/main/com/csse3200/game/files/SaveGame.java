@@ -4,6 +4,7 @@ import java.io.File;
 
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.files.FileLoader.Location;
@@ -41,6 +42,8 @@ public class SaveGame {
   public static class GameState {
     private int day;
     private int hour;
+
+    private ClimateController climate;
 
     private Entity player;
     private Entity tractor;
@@ -129,6 +132,14 @@ public class SaveGame {
 
     public void setTractor(Entity tractor) {
       this.tractor = tractor;
+    }
+
+    public ClimateController getClimate() {
+      return climate;
+    }
+
+    public void setClimate(ClimateController climate) {
+      this.climate = climate;
     }
   }
 }
