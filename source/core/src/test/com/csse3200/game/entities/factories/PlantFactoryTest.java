@@ -302,7 +302,7 @@ class PlantFactoryTest {
         Vector2 expectedPos = new Vector2(5, 5.5f);
         assertEquals(expectedPos, plant.getPosition(), String.format(errMsg, "position"));
 
-        assertEquals(1f, plant.getScale().y, 0.001, String.format(errMsg, "height"));
+        assertEquals(2f, plant.getScale().y, 0.001, String.format(errMsg, "height"));
     }
 
     /**
