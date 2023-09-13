@@ -61,6 +61,7 @@ public class AuraLightComponent extends Component{
 	public void create() {
 		super.create();
 		active = false;
+		light.setActive(active);
 		entity.getEvents().addListener("toggleLight", this::toggleLight);
 	}
 
