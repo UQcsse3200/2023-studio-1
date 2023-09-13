@@ -415,7 +415,6 @@ public class Entity implements Json.Serializable {
     } catch (IllegalArgumentException e) {
       type = null;
     }
-
     if (type != null) { // The try catch above may cause a NullPointerException otherwise
       switch (type) {
         case Tractor:
@@ -471,7 +470,7 @@ public class Entity implements Json.Serializable {
           });
           inventoryComponent.setInventory(items, itemPositions, inventory);
           this.addComponent(inventoryComponent);
-
+          break;
         default:
           // Nothing
       }
