@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import com.badlogic.gdx.utils.Array;
 
 
 /**
@@ -29,6 +30,8 @@ public class InventoryDisplay extends UIComponent {
   private boolean isOpen = false;
   private DragAndDrop dnd;
   private Map<ItemSlot,Integer> indexes;
+  private Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
+  private ArrayList<ItemSlot> slots = new ArrayList<>();
 
   /**
    * Constructor for class
@@ -55,7 +58,6 @@ public class InventoryDisplay extends UIComponent {
   private void resetInventory(){
     window.reset();
     dnd.clear();
-    Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
     table = new Table(skin);
     table.defaults().size(64, 64);
     table.pad(10);
@@ -66,22 +68,22 @@ public class InventoryDisplay extends UIComponent {
       Label label = new Label(String.valueOf(i), skin.get("default", Label.LabelStyle.class));
       //set the bounds of the label
       label.setBounds(label.getX() + 15, label.getY(), label.getWidth(), label.getHeight());
-      ItemSlot item;
+      ItemSlot item = slots.get(i);
       if (playerInventory.getItemPos(i) == null) {
         //logger.info("Null Item at "+i );
-        item = new ItemSlot(false);
+        item.setTexture(null);
+        item.setCount(null);
 
       } else {
-        item = new ItemSlot(
-                playerInventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture(),
-                false);
-        actors.add(item.getItemImage());
+        item.setTexture(playerInventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture());
+        actors.set(i, item.getItemImage());
         //stack.add(new Image(playerInventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture()));
       }
       map.put(item.getItemImage(), item);
       if (item.getItemImage() != null) {
         item.getItemImage().setDebug(false);
       }
+      slots.set(i, item);
       indexes.put(item, i);
       table.add(item).pad(10, 10, 10, 10).fill();
       if ((i + 1) % 10 == 0) {
@@ -124,6 +126,7 @@ public class InventoryDisplay extends UIComponent {
         //Add a new row every 10 items
         table.row();
       }
+      slots.add(item);
     }
 
     // Create a window for the inventory using the skin
