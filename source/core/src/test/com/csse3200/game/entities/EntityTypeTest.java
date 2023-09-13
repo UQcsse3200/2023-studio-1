@@ -32,7 +32,7 @@ public class EntityTypeTest {
    * needs to be loaded into the game.
    * any components need write functions implemented.
    * after you complete that you can add the working enum
-   * type to the list of approved enums below
+   * type to the list of approved enums at the top of this
    * this is all in the documentation at
    * https://github.com/UQcsse3200/2023-studio-1/wiki/Save---Load-game
    * at the bottom
@@ -57,7 +57,7 @@ public class EntityTypeTest {
    * needs to be loaded into the game.
    * any components need write functions implemented.
    * after you complete that you can add the working enum
-   * type to the list of approved enums below
+   * type to the list of approved enums at the top of this
    * this is all in the documentation at
    * https://github.com/UQcsse3200/2023-studio-1/wiki/Save---Load-game
    * at the bottom
