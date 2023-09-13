@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
-import com.csse3200.game.components.npc.AnimalAnimationController;
 import com.csse3200.game.components.TouchAttackComponent;
+import com.csse3200.game.components.npc.AnimalAnimationController;
 import com.csse3200.game.components.npc.PassiveDropComponent;
 import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.components.tasks.ChaseTask;
@@ -25,10 +25,6 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
-
-import javax.lang.model.UnknownEntityException;
-import java.lang.reflect.Method;
-import java.util.HashMap;
 
 /**
  * Factory to create non-playable character (NPC) entities with predefined components.

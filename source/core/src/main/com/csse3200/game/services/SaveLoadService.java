@@ -222,9 +222,10 @@ public class SaveLoadService {
         ServiceLocator.getGameArea().spawnEntity(plant);
         PlantComponent newPlantComponent = plant.getComponent(PlantComponent.class);
         // Sets PlantComponent values to GameState ones
-        newPlantComponent.setGrowthStage(savedPlantComponent.getGrowthStage());
+        newPlantComponent.setGrowthStage(savedPlantComponent.getGrowthStage().getValue());
         newPlantComponent.setPlantHealth(savedPlantComponent.getPlantHealth());
-        newPlantComponent.setCurrentAge(savedPlantComponent.getCurrentAge());
+        // Plant age does not exist. Plant team will sort this out later.
+        //newPlantComponent.setCurrentAge(savedPlantComponent.getCurrentAge());
         // Sets plant to the CropTileComponent
         newComponent.setPlant(plant);
       }

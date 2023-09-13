@@ -2,11 +2,9 @@ package com.csse3200.game.components.tasks;
 
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.PriorityTask;
-import com.csse3200.game.ai.tasks.TaskRunner;
 import com.csse3200.game.ai.tasks.TimedTask;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.utils.math.RandomUtils;
-import com.csse3200.game.utils.math.Vector2Utils;
 
 /**
  * A panic task that causes the owner's entity to move randomly within a specified range for a certain duration.

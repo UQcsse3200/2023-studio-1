@@ -3,7 +3,6 @@ package com.csse3200.game.areas;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Json;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainCropTileFactory;
@@ -11,31 +10,30 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.items.ItemType;
-import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
+import com.csse3200.game.entities.configs.plants.PlantConfigs;
 import com.csse3200.game.entities.factories.*;
+import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
-
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.function.Function;
+import java.util.ArrayList;
 
 /** SpaceGameArea is the area used for the initial game version */
 public class SpaceGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(SpaceGameArea.class);
-  private static final int NUM_TREES = 7;
+
   private static final int NUM_GHOSTS = 5;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final GridPoint2 QUESTGIVER_SPAWN = new GridPoint2(20, 20);
+  private static final GridPoint2 QUESTGIVERIND_SPAWN = new GridPoint2(20, 24);
   private static final GridPoint2 TRACTOR_SPAWN = new GridPoint2(15, 15);
 
   private static final GridPoint2 TOOL_SPAWN = new GridPoint2(15, 10);// temp!!!
@@ -103,20 +101,73 @@ public class SpaceGameArea extends GameArea {
           "images/stonePath_1.png",
           "images/tractor.png",
           "images/fertiliser.png",
-          "images/plants/aloe_vera_seed.png",
-          "images/plants/atomic_algae_seed.png",
-          "images/plants/cosmic_cob_seed.png",
-          "images/plants/deadly_nightshade_seed.png",
-          "images/plants/hammer_plant_seed.png",
-          "images/plants/horticultural_heater_seed.png",
-          "images/plants/space_snapper_seed.png",
-          "images/plants/tobacco_seed.png",
-          "images/plants/Corn.png"
+
+          "images/plants/misc/aloe_vera_seed.png",
+          "images/plants/misc/atomic_algae_seed.png",
+          "images/plants/misc/cosmic_cob_seed.png",
+          "images/plants/misc/deadly_nightshade_seed.png",
+          "images/plants/misc/hammer_plant_seed.png",
+          "images/plants/misc/horticultural_heater_seed.png",
+          "images/plants/misc/space_snapper_seed.png",
+          "images/plants/misc/tobacco_seed.png",
+
+          "images/plants/cosmic_cob/1_seedling.png",
+          "images/plants/cosmic_cob/2_sprout.png",
+          "images/plants/cosmic_cob/3_juvenile.png",
+          "images/plants/cosmic_cob/4_adult.png",
+          "images/plants/cosmic_cob/5_decaying.png",
+          "images/plants/cosmic_cob/item_drop.png",
+
+          "images/plants/aloe_vera/1_seedling.png",
+          "images/plants/aloe_vera/2_sprout.png",
+          "images/plants/aloe_vera/3_juvenile.png",
+          "images/plants/aloe_vera/4_adult.png",
+          "images/plants/aloe_vera/5_decaying.png",
+          "images/plants/aloe_vera/item_drop.png",
+          "images/plants/aloe_vera/seedbag.png",
+
+          "images/plants/hammer_plant/1_seedling.png",
+          "images/plants/hammer_plant/2_sprout.png",
+          "images/plants/hammer_plant/3_juvenile.png",
+          "images/plants/hammer_plant/4_adult.png",
+          "images/plants/hammer_plant/5_decaying.png",
+          "images/plants/hammer_plant/item_drop.png",
+          "images/plants/hammer_plant/seedbag.png",
+
+          "images/plants/venus_trap/1_seedling.png",
+          "images/plants/venus_trap/2_sprout.png",
+          "images/plants/venus_trap/3_juvenile.png",
+          "images/plants/venus_trap/4_adult.png",
+          "images/plants/venus_trap/5_decaying.png",
+
+          "images/plants/waterweed/1_seedling.png",
+          "images/plants/waterweed/2_sprout.png",
+          "images/plants/waterweed/3_juvenile.png",
+          "images/plants/waterweed/4_adult.png",
+          "images/plants/waterweed/5_decaying.png",
+          "images/plants/waterweed/item_drop.png",
+
+          "images/plants/nightshade/1_seedling.png",
+          "images/plants/nightshade/2_sprout.png",
+          "images/plants/nightshade/3_juvenile.png",
+          "images/plants/nightshade/4_adult.png",
+          "images/plants/nightshade/5_decaying.png",
+          "images/plants/nightshade/item_drop.png",
+
+          "images/plants/misc/aloe_vera_seed.png",
+          "images/plants/misc/cosmic_cob_seed.png",
+          "images/plants/misc/deadly_nightshade_seed.png",
+          "images/plants/misc/hammer_plant_seed.png",
+          "images/plants/misc/horticultural_heater_seed.png",
+          "images/plants/misc/space_snapper_seed.png",
+          "images/plants/misc/tobacco_seed.png",
+          "images/invisible_sprite.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
           "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas",
-          "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas", "images/questgiver.atlas"
+          "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas", "images/questgiver.atlas",
+          "images/missionStatus.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg", "sounds/car-horn-6408.mp3"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -150,13 +201,14 @@ public class SpaceGameArea extends GameArea {
     displayUI();
 
     spawnTerrain();
-    //spawnTrees();
+    spawnInvisibleObstacle();// spawn invisible obstacle on the non-traversable area of the map
+
+    spawnCrop(); // temp
 
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
 
     // TODO:
-
 
     tractor = spawnTractor();
     spawnQuestgiver();
@@ -172,7 +224,6 @@ public class SpaceGameArea extends GameArea {
     spawnTool(ItemType.FERTILISER);
     spawnTool(ItemType.SEED);
     spawnTool(ItemType.FOOD);
-
 
     //playMusic();
   }
@@ -221,16 +272,17 @@ public class SpaceGameArea extends GameArea {
         ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
   }
 
-  private void spawnTrees() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-    for (int i = 0; i < NUM_TREES; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity tree = ObstacleFactory.createTree();
-      spawnEntityAt(tree, randomPos, true, false);
-    }
-  }
+    /**
+     * Spawn invisible obstacle on the non-traversable area of the map
+     */
+   private void spawnInvisibleObstacle() {
+     ArrayList<GridPoint2> Non_Traversable_Obs = this.gameMap.getNonTraversableTileCoordinates();
+     for (int i = 0; i < Non_Traversable_Obs.size(); i++) {
+       GridPoint2 Pos = Non_Traversable_Obs.get(i);
+       Entity invisible_obs = ObstacleFactory.createInvisibleObstacle();
+       spawnEntityAt(invisible_obs, Pos, true, false);
+     }
+   }
 
   private Entity spawnCrop() {
     GridPoint2 pos = new GridPoint2(10, 11);
@@ -251,6 +303,9 @@ public class SpaceGameArea extends GameArea {
   private void spawnQuestgiver() {
     Entity newQuestgiver = QuestgiverFactory.createQuestgiver();
     spawnEntityAt(newQuestgiver, QUESTGIVER_SPAWN, true, true);
+
+    Entity newQuestgiverIndicator = QuestgiverFactory.createQuestgiverIndicator(newQuestgiver);
+    spawnEntityAt(newQuestgiverIndicator, QUESTGIVERIND_SPAWN, true, true);
   }
 
   private void spawnTool(ItemType tool) {
