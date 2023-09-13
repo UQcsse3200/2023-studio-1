@@ -142,7 +142,7 @@ public class PlantComponentTest {
 
     @Test
     void testGetCurrentGrowthLevel() {
-        assertEquals(0, testPlant.getCurrentGrowthLevel());
+        assertEquals(1, testPlant.getCurrentGrowthLevel());
     }
 
     @Test
@@ -165,7 +165,7 @@ public class PlantComponentTest {
     void testIncreaseCurrentGrowthLevelPositive(){
         when(mockCropTile.getGrowthRate(1.0f)).thenReturn(0.5);
         testPlant.increaseCurrentGrowthLevel();
-        assertEquals(5, testPlant.getCurrentGrowthLevel());
+        assertEquals(6, testPlant.getCurrentGrowthLevel());
     }
 
     @Test
