@@ -54,7 +54,7 @@ public class GameAreaDisplay extends UIComponent {
     openPauseComponent = ServiceLocator.getGameArea().getPlayer().getComponent(OpenPauseComponent.class);
     Image pauseMenu;
         pauseMenu = new Image(new Texture(Gdx.files.internal
-            ("images/PauseMenu/PauseNew.jpg")));
+            ("images/PauseMenu/Pausenew.jpg")));
     pauseMenu.setSize(1300, 700);
     pauseMenu.setPosition((float) (Gdx.graphics.getWidth()/ (double) 2 - pauseMenu.getWidth()/2),
             (float) (Gdx.graphics.getHeight()/ (double) 2 - pauseMenu.getHeight()/2));
