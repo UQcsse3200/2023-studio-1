@@ -2,14 +2,23 @@ package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.components.npc.QuestIndicatorComponent;
 import com.csse3200.game.components.questgiver.MissionDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.csse3200.game.components.Component;
+import com.csse3200.game.physics.BodyUserData;
 
 public class QuestgiverFactory {
 
@@ -24,12 +33,13 @@ public class QuestgiverFactory {
 
     Entity questgiver = new Entity(EntityType.Questgiver)
         .addComponent(new PhysicsComponent())
+        .addComponent(new PhysicsMovementComponent())
         .addComponent(new ColliderComponent())
         .addComponent(new MissionDisplay())
         .addComponent(animator);
 
     questgiver.getComponent(AnimationRenderComponent.class).scaleEntity();
-    questgiver.getComponent(ColliderComponent.class).setDensity(10000); //set density so the questgiver doesn't get pushed around
+    questgiver.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody); // body type to static body so he won't move
     return questgiver;
   }
 
