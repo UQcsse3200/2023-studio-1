@@ -1,13 +1,8 @@
 package com.csse3200.game.services;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.utils.Array;
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.csse3200.game.areas.SpaceGameArea;
-import com.csse3200.game.services.ServiceLocator;
 
 public class TimeService {
 	private static final Logger logger = LoggerFactory.getLogger(TimeService.class);

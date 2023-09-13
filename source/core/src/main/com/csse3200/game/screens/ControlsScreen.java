@@ -7,13 +7,15 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.controlsmenu.ControlsMenuDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.input.InputDecorator;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
-import com.csse3200.game.services.*;
+import com.csse3200.game.services.GameTime;
+import com.csse3200.game.services.ResourceService;
+import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.TimeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

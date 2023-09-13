@@ -11,8 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.ui.UIComponent;
 
-import java.security.Provider;
-
 /**
  * A ui component for displaying the current oxygen level on the Main Game Screen.
  */
