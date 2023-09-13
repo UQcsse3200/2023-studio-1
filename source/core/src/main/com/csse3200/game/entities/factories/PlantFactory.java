@@ -67,9 +67,10 @@ public class PlantFactory {
         // Set plant position over crop tile.
         var cropTilePosition = cropTile.getEntity().getPosition();
         plant.setPosition(cropTilePosition.x, cropTilePosition.y + 0.5f);
-
         plant.getComponent(DynamicTextureRenderComponent.class).scaleEntity();
-        plant.scaleHeight(1f);
+        plant.getComponent(DynamicTextureRenderComponent.class).setLayer(2);
+
+        plant.scaleHeight(2f);
         PhysicsUtils.setScaledCollider(plant, 0.5f, 0.2f);
 
         return plant;
@@ -82,8 +83,7 @@ public class PlantFactory {
      * @return entity
      */
     public static Entity createCosmicCob(CropTileComponent cropTile) {
-        Entity plant = createBasePlant(stats.cosmicCob, cropTile);
-        return plant;
+        return createBasePlant(stats.cosmicCob, cropTile);
     }
 
     /**
