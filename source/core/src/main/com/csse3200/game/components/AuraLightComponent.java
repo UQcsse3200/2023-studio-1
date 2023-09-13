@@ -6,7 +6,6 @@ import com.csse3200.game.services.ServiceLocator;
 
 public class AuraLightComponent extends Component{
 
-	private static final Color DEFAULT_COLOR = new Color(3,12,33,0.8f);
 	private final PointLight light;
 	private boolean active;
 
@@ -16,7 +15,7 @@ public class AuraLightComponent extends Component{
 	public AuraLightComponent() {
 		light = new PointLight(ServiceLocator.getLightService().getRayHandler(), 25);
 		light.setDistance(4);
-		light.setColor(DEFAULT_COLOR);
+		light.setColor(Color.LIGHT_GRAY);
 		light.setStaticLight(true);
 		light.setXray(true); // Stops most of the shadows and reduces CPU burden
 		light.setSoft(true);
