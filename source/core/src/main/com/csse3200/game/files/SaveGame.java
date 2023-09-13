@@ -87,7 +87,7 @@ public class SaveGame {
     }
 
     /**
-     * Filter out all entities that are in the NPC Factory, player or tractor. THis
+     * Filter out all entities that are in the NPC Factory, player or tractor. This
      * function is mainly for SaveLoadService.java. Produces a Array of entities
      * from the NPC factory that needs to be remade
      * 
@@ -96,16 +96,11 @@ public class SaveGame {
      */
     private Array<Entity> filterEntities(Array<Entity> entities) {
       // If you edit this original array you edit what is in the ResourceService
-      Array<Entity> tmp = new Array<>(entities);
-      for (int i = 0; i < tmp.size; i++) {
-        if (tmp.get(i).getType() == EntityType.Item || tmp.get(i).getType() == EntityType.Player
-            || tmp.get(i).getType() == null
-            || tmp.get(i).getType() == EntityType.Tractor || tmp.get(i).getType() == EntityType.Tile
-            || tmp.get(i).getType() == EntityType.Questgiver || tmp.get(i).getType() == EntityType.QuestgiverIndicator
-            || tmp.get(i).getType() == EntityType.Plant) {
-          tmp.removeIndex(i);
-          // Moves the indexing down when removed so keep index same
-          i--;
+      Array<Entity> tmp = new Array<>();
+      for (Entity e : entities) {
+        if (e.getType() == EntityType.Astrolotl || e.getType() == EntityType.Chicken ||
+                e.getType() == EntityType.Cow || e.getType() == EntityType.OxygenEater) {
+          tmp.add(e);
         }
       }
       return tmp;
