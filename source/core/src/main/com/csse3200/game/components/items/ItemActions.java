@@ -2,13 +2,16 @@ package com.csse3200.game.components.items;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.player.InteractionDetector;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.PlantFactory;
+import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.List;
@@ -50,7 +53,6 @@ public class ItemActions extends Component {
     boolean resultStatus;
     TerrainTile tile = getTileAtPosition(playerPos, mousePos);
     if (tile == null) {
-      System.out.println("Map team pls fix");
       return false;
     }
     switch (type.getItemType()) {
@@ -75,6 +77,7 @@ public class ItemActions extends Component {
           return false;
         }
         resultStatus = feed(interactionCollider.getSuitableEntities(ItemType.FOOD, mouseWorldPos));
+        // TODO remove this who ever wrote it or add it in
 //        if (!resultStatus) {
 //          // consume it yourself instead??
 //          // resultStatus = consume(player)
@@ -89,10 +92,37 @@ public class ItemActions extends Component {
         resultStatus = plant(tile);
         return resultStatus;
       }
+      case PLACEABLE -> {
+        resultStatus = place(tile, getAdjustedPos(playerPos, mousePos));
+        return resultStatus;
+      }
       default -> {
         return false;
       }
     }
+  }
+
+  /**
+   * Places a placeable object based on its name (from ItemComponent) on a TerrainTile
+   *
+   * @param tile - The TerrainTile to place the object on
+   * @param adjustedPos - The position of the tile as a Vector2
+   * @return the result of whether it was placed
+   */
+  private boolean place(TerrainTile tile, Vector2 adjustedPos) {
+    if (tile == null) {
+      return false;
+    }
+    if (tile.isOccupied() || !tile.isTraversable()) {
+      // Do not place
+      return false;
+    }
+    // Make the Entity to place
+    Entity placeable = FactoryService.getPlaceableFactories().get(entity.getComponent(ItemComponent.class).getItemName()).get();
+    ServiceLocator.getGameArea().spawnEntity(placeable);
+    placeable.setPosition(adjustedPos);
+    tile.setPlaceable(placeable);
+    return true;
   }
 
   /**
@@ -240,6 +270,7 @@ public class ItemActions extends Component {
      * @return if planting was successful return true else return false
      */
   private boolean plant(TerrainTile tile) {
+    // TODO can be simplified using FactoryService
     Function<CropTileComponent, Entity> plantFactoryMethod;
     if (isCropTile(tile.getCropTile())) {
         switch (entity.getComponent(ItemComponent.class).getItemName()) {

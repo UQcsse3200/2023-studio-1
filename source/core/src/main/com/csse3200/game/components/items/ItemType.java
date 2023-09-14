@@ -11,4 +11,5 @@ public enum ItemType {
     FERTILISER,
     SEED,
     ANIMAL_FOOD,
+    PLACEABLE     // This does not include seeds, only stuff the can be placed on non-tilled ground
 }
