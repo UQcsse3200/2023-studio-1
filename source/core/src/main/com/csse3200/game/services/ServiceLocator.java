@@ -30,6 +30,7 @@ public class ServiceLocator {
   private static TimeService timeService;
   private static GameTime timeSource;
   private static GameArea gameArea;
+  private static LightService lightService;
   private static GameAreaDisplay pauseMenuArea;
   private static GameAreaDisplay craftArea;
   private static CameraComponent cameraComponent;
@@ -67,6 +68,9 @@ public class ServiceLocator {
   }
   public static TimeService getTimeService() {
     return timeService;
+  }
+  public static LightService getLightService() {
+    return lightService;
   }
 
   public static MissionManager getMissionManager() {
@@ -129,10 +133,15 @@ public class ServiceLocator {
     logger.debug("Registering mission manager {}", source);
     missions = source;
   }
-  
+
   public static void registerPlanetOxygenService(PlanetOxygenService source) {
     logger.debug("Registering planet oxygen service {}", source);
     planetOxygenService = source;
+  }
+
+  public static void registerLightService(LightService source) {
+    logger.debug("Registering light service {}", source);
+    lightService = source;
   }
 
   /**
@@ -155,7 +164,6 @@ public class ServiceLocator {
     timeSource = null;
     inputService = null;
     resourceService = null;
-    planetOxygenService = null;
     gameArea = null;
   }
 
