@@ -113,8 +113,8 @@ public class PlantFactory {
      * @param cropTile Crop tile upon which the plant is planted
      * @return entity
      */
-    public static Entity createVenusFlyTrap(CropTileComponent cropTile) {
-        return createBasePlant(stats.venusFlyTrap, cropTile);
+    public static Entity createSpaceSnapper(CropTileComponent cropTile) {
+        return createBasePlant(stats.spaceSnapper, cropTile);
     }
 
     /**
@@ -123,8 +123,8 @@ public class PlantFactory {
      * @param cropTile Crop tile upon which the plant is planted
      * @return entity
      */
-    public static Entity createWaterWeed(CropTileComponent cropTile) {
-        return createBasePlant(stats.waterWeed, cropTile);
+    public static Entity createAtomicAlgae(CropTileComponent cropTile) {
+        return createBasePlant(stats.atomicAlgae, cropTile);
     }
 
     /**
@@ -133,8 +133,8 @@ public class PlantFactory {
      * @param cropTile Crop tile upon which the plant is planted
      * @return entity
      */
-    public static Entity createNightshade(CropTileComponent cropTile) {
-        return createBasePlant(stats.nightshade, cropTile);
+    public static Entity createDeadlyNightshade(CropTileComponent cropTile) {
+        return createBasePlant(stats.deadlyNightshade, cropTile);
 
     }
 
