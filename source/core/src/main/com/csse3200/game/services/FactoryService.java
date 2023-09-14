@@ -21,9 +21,9 @@ public class FactoryService {
             "Cosmic Cob", PlantFactory::createCosmicCob,
             "Aloe Vera", PlantFactory::createAloeVera,
             "Hammer Plant", PlantFactory::createHammerPlant,
-            "Venus Fly Trap", PlantFactory::createVenusFlyTrap,
-            "Nightshade", PlantFactory::createNightshade,
-            "Water Weed", PlantFactory::createWaterWeed
+            "Space Snapper", PlantFactory::createVenusFlyTrap,
+            "Deadly Nightshade", PlantFactory::createNightshade,
+            "Atomic Algae", PlantFactory::createWaterWeed
     );
 
     private static final Map<String, Supplier<Entity>> itemFactories = Map.ofEntries(
