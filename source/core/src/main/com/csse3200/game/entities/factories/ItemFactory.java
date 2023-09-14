@@ -41,6 +41,7 @@ public class ItemFactory {
           new SimpleEntry<>("nightshade seed", ItemFactory::createDeadlyNightshadeSeed),
           new SimpleEntry<>("hammer plant seed", ItemFactory::createHammerPlantSeed)
           // Add your item and supplier function here.
+          // TODO can be deleted in favor for the FactoryService as it has all factories.
   );
 
   /**

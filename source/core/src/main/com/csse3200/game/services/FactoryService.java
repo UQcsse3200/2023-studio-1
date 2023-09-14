@@ -5,6 +5,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.entities.factories.NPCFactory;
+import com.csse3200.game.entities.factories.PlaceableFactory;
 import com.csse3200.game.entities.factories.PlantFactory;
 
 import java.util.AbstractMap;
@@ -44,6 +45,12 @@ public class FactoryService {
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("egg", ItemFactory::createEgg),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("milk", ItemFactory::createMilk));
 
+    private static final Map<EntityType, Supplier<Entity>> placeableFactories = Map.ofEntries(
+            new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.Chest, PlaceableFactory::createChest),
+            new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.Fence, PlaceableFactory::createFence),
+            new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.Gate, PlaceableFactory::createGate),
+            new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.Sprinkler, PlaceableFactory::createSprinkler));
+
     public static Map<String, Function<CropTileComponent, Entity>> getPlantFactories() {
         return plantFactories;
     }
@@ -54,5 +61,9 @@ public class FactoryService {
 
     public static Map<String, Supplier<Entity>> getItemFactories() {
         return itemFactories;
+    }
+
+    public static Map<EntityType, Supplier<Entity>> getPlaceableFactories() {
+        return placeableFactories;
     }
 }
