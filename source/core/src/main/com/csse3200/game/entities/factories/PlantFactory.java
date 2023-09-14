@@ -67,9 +67,10 @@ public class PlantFactory {
         // Set plant position over crop tile.
         var cropTilePosition = cropTile.getEntity().getPosition();
         plant.setPosition(cropTilePosition.x, cropTilePosition.y + 0.5f);
-
         plant.getComponent(DynamicTextureRenderComponent.class).scaleEntity();
-        plant.scaleHeight(1f);
+        plant.getComponent(DynamicTextureRenderComponent.class).setLayer(2);
+
+        plant.scaleHeight(2f);
         PhysicsUtils.setScaledCollider(plant, 0.5f, 0.2f);
 
         return plant;
@@ -82,8 +83,7 @@ public class PlantFactory {
      * @return entity
      */
     public static Entity createCosmicCob(CropTileComponent cropTile) {
-        Entity plant = createBasePlant(stats.cosmicCob, cropTile);
-        return plant;
+        return createBasePlant(stats.cosmicCob, cropTile);
     }
 
     /**
@@ -136,26 +136,6 @@ public class PlantFactory {
     public static Entity createNightshade(CropTileComponent cropTile) {
         return createBasePlant(stats.nightshade, cropTile);
 
-    }
-
-    /**
-     * Creates a Tobacco entity that is a deadly type plant.
-     *
-     * @param cropTile Crop tile upon which the plant is planted
-     * @return entity
-     */
-    public static Entity createTobacco(CropTileComponent cropTile) {
-        return createBasePlant(stats.tobacco, cropTile);
-    }
-
-    /**
-     * Creates a sunFlower entity that is a production type plant.
-     *
-     * @param cropTile Crop tile upon which the plant is planted
-     * @return entity
-     */
-    public static Entity createSunFlower(CropTileComponent cropTile) {
-        return createBasePlant(stats.sunFlower, cropTile);
     }
 
 }

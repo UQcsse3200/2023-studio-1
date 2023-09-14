@@ -8,9 +8,9 @@
     "adultLifeSpan": 5,
     "maxHealth": 400,
     "soundFolderPath" : "sounds/plants/cosmicCob/",
-    "sproutThreshold": 7,
-    "juvenileThreshold": 22,
-    "adultThreshold": 35,
+    "sproutThreshold": 0,
+    "juvenileThreshold": 0,
+    "adultThreshold": 0,
     "imageFolderPath": "images/plants/cosmic_cob/"
   },
   "aloeVera": {
@@ -22,9 +22,9 @@
     "adultLifeSpan": 5,
     "maxHealth": 300,
     "soundFolderPath" : "sounds/plants/aloeVera/",
-    "sproutThreshold": 13,
-    "juvenileThreshold": 27,
-    "adultThreshold": 46,
+    "sproutThreshold": 0,
+    "juvenileThreshold": 0,
+    "adultThreshold": 0,
     "imageFolderPath": "images/plants/aloe_vera/"
   },
   "hammerPlant": {
@@ -36,9 +36,9 @@
     "adultLifeSpan": 5,
     "maxHealth": 200,
     "soundFolderPath" : "sounds/plants/hammerPlant/",
-    "sproutThreshold": 12,
-    "juvenileThreshold": 19,
-    "adultThreshold": 37,
+    "sproutThreshold": 0,
+    "juvenileThreshold": 0,
+    "adultThreshold": 0,
     "imageFolderPath": "images/plants/hammer_plant/"
   },
   "venusFlyTrap": {
@@ -50,9 +50,9 @@
     "adultLifeSpan": 5,
     "maxHealth": 400,
     "soundFolderPath" : "sounds/plants/venusFlyTrap/",
-    "sproutThreshold": 13,
-    "juvenileThreshold": 22,
-    "adultThreshold": 40,
+    "sproutThreshold": 0,
+    "juvenileThreshold": 0,
+    "adultThreshold": 0,
     "imageFolderPath": "images/plants/venus_trap/"
   },
   "waterWeed": {
@@ -64,9 +64,9 @@
     "adultLifeSpan": 5,
     "maxHealth": 100,
     "soundFolderPath" : "sounds/plants/waterWeed/",
-    "sproutThreshold": 8,
-    "juvenileThreshold": 18,
-    "adultThreshold": 32,
+    "sproutThreshold": 0,
+    "juvenileThreshold": 0,
+    "adultThreshold": 0,
     "imageFolderPath": "images/plants/waterweed/"
   },
   "nightshade": {
@@ -78,9 +78,9 @@
     "adultLifeSpan": 5,
     "maxHealth": 200,
     "soundFolderPath" : "sounds/plants/nightshade/",
-    "sproutThreshold": 11,
-    "juvenileThreshold": 20,
-    "adultThreshold": 38,
+    "sproutThreshold": 0,
+    "juvenileThreshold": 0,
+    "adultThreshold": 0,
     "imageFolderPath": "images/plants/nightshade/"
   }
 }

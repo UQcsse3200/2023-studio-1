@@ -187,7 +187,7 @@ public class PlantComponent extends Component {
      * @param maxHealth - The maximum health a plant can reach as an adult
      * @param cropTile - The cropTileComponent where the plant will be located.
      * @param growthStageThresholds - A list of three integers that represent the growth thresholds.
-     * @param soundsArray - A list of all sound files filepaths as strings
+     * @param soundsArray - A list of all sound files file paths as strings
      * @param growthStageImagePaths - image paths for the different growth stages.
      */
     public PlantComponent(int health, String name, String plantType, String plantDescription,
@@ -241,6 +241,7 @@ public class PlantComponent extends Component {
         ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateGrowthStage);
         ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::beginDecay);
         this.currentTexture = entity.getComponent(DynamicTextureRenderComponent.class);
+        updateTexture();
     }
 
     /**
@@ -468,7 +469,7 @@ public class PlantComponent extends Component {
             return;
         }
 
-        playSound("harvest");
+        //playSound("harvest");
         harvestYields.forEach((itemName, quantity) -> {
             Supplier<Entity> itemSupplier = ItemFactory.getItemSupplier(itemName);
             for (int i = 0; i < quantity; i++) {
@@ -508,7 +509,7 @@ public class PlantComponent extends Component {
         int time = ServiceLocator.getTimeService().getHour();
         if (time == 12) {
             this.increaseCurrentGrowthLevel();
-            if (getGrowthStage().getValue() <= GrowthStage.ADULT.value) {
+            if (getGrowthStage().getValue() < GrowthStage.ADULT.value) {
                 if (this.currentGrowthLevel >= this.growthStageThresholds[getGrowthStage().getValue() - 1]) {
                     setGrowthStage(getGrowthStage().getValue() + 1);
                     updateMaxHealth();
@@ -516,6 +517,8 @@ public class PlantComponent extends Component {
                 }
             }
             if (getGrowthStage() == GrowthStage.ADULT) {
+                updateMaxHealth();
+                updateTexture();
                 beginDecay();
             }
         }
@@ -546,7 +549,7 @@ public class PlantComponent extends Component {
                 setGrowthStage(getGrowthStage().getValue() + 1);
                 setDecay();
                 updateTexture();
-                playSound("decays");
+                //playSound("decays");
             }
         }
     }

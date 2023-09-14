@@ -203,7 +203,12 @@ public class SpaceGameArea extends GameArea {
     spawnTerrain();
     spawnInvisibleObstacle();// spawn invisible obstacle on the non-traversable area of the map
 
-    spawnCrop(); // temp
+    spawnCrop(5, 11, "Cosmic Cob");
+    spawnCrop(7, 11, "Aloe Vera");
+    spawnCrop(9, 11, "Hammer Plant");
+    spawnCrop(11, 11, "Venus Fly Trap");
+    spawnCrop(13, 11, "Nightshade");
+    spawnCrop(15, 11, "Water Weed");
 
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
@@ -289,6 +294,16 @@ public class SpaceGameArea extends GameArea {
     Entity newPlayer = TerrainCropTileFactory.createTerrainEntity(0,0);
     spawnEntityAt(newPlayer, pos, true, true);
     Entity plant = FactoryService.getPlantFactories().get("Cosmic Cob").apply(newPlayer.getComponent(CropTileComponent.class));
+    ServiceLocator.getEntityService().register(plant);
+    newPlayer.getComponent(CropTileComponent.class).setPlant(plant);
+    return newPlayer;
+  }
+
+  private Entity spawnCrop(int x, int y, String plantType) {
+    GridPoint2 pos = new GridPoint2(x, y);
+    Entity newPlayer = TerrainCropTileFactory.createTerrainEntity(0,0);
+    spawnEntityAt(newPlayer, pos, true, true);
+    Entity plant = FactoryService.getPlantFactories().get(plantType).apply(newPlayer.getComponent(CropTileComponent.class));
     ServiceLocator.getEntityService().register(plant);
     newPlayer.getComponent(CropTileComponent.class).setPlant(plant);
     return newPlayer;

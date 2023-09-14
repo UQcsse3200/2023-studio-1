@@ -25,6 +25,7 @@ public class DynamicTextureRenderComponent extends RenderComponent {
     this.layer = 1;
   }
 
+
   public void setTexture(String texturePath) {
     this.texture = ServiceLocator.getResourceService().getAsset(texturePath, Texture.class);
   }
