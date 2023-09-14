@@ -15,7 +15,7 @@ jobs:
       - name: Run Launch Test
         id: tests # Unique ID to reference later to color our message
         run: |
-          sudo apt install xvfb
+          sudo apt install -y xdotool x11-apps
           cd $GRADLE_DIR
           chmod +x ./gradlew
           chmod +x ./headless_run.sh
