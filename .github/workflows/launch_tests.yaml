@@ -14,13 +14,12 @@ jobs:
 
       - name: Run Launch Test
         id: tests # Unique ID to reference later to color our message
-        with:
-          run: |
-            sudo apt install xvfb
-            cd $GRADLE_DIR
-            chmod +x ./gradlew
-            chmod +x ./headless_run.sh
-            ./headless_run.sh
+        run: |
+          sudo apt install xvfb
+          cd $GRADLE_DIR
+          chmod +x ./gradlew
+          chmod +x ./headless_run.sh
+          ./headless_run.sh
         env:
           GRADLE_DIR: 'source' # Modify this to wherever './gradlew' is 
       - name: Archive game screenshot
