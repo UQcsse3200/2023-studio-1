@@ -53,7 +53,7 @@
     "sproutThreshold": 0,
     "juvenileThreshold": 0,
     "adultThreshold": 0,
-    "imageFolderPath": "images/plants/venus_trap/"
+    "imageFolderPath": "images/plants/space_snapper/"
   },
   "atomicAlgae": {
     "health": 10,
@@ -67,7 +67,7 @@
     "sproutThreshold": 0,
     "juvenileThreshold": 0,
     "adultThreshold": 0,
-    "imageFolderPath": "images/plants/waterweed/"
+    "imageFolderPath": "images/plants/atomic_algae/"
   },
   "deadlyNightshade": {
     "health": 10,
@@ -81,6 +81,6 @@
     "sproutThreshold": 0,
     "juvenileThreshold": 0,
     "adultThreshold": 0,
-    "imageFolderPath": "images/plants/nightshade/"
+    "imageFolderPath": "images/plants/deadly_nightshade/"
   }
 }
