@@ -138,24 +138,5 @@ public class PlantFactory {
 
     }
 
-    /**
-     * Creates a Tobacco entity that is a deadly type plant.
-     *
-     * @param cropTile Crop tile upon which the plant is planted
-     * @return entity
-     */
-    public static Entity createTobacco(CropTileComponent cropTile) {
-        return createBasePlant(stats.tobacco, cropTile);
-    }
-
-    /**
-     * Creates a sunFlower entity that is a production type plant.
-     *
-     * @param cropTile Crop tile upon which the plant is planted
-     * @return entity
-     */
-    public static Entity createSunFlower(CropTileComponent cropTile) {
-        return createBasePlant(stats.sunFlower, cropTile);
-    }
 
 }
