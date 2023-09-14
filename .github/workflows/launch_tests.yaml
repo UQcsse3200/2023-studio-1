@@ -13,10 +13,10 @@ jobs:
           java-version: '17'
 
       - name: Run Launch Test
-        uses: coactions/setup-xvfb@v1
         id: tests # Unique ID to reference later to color our message
         with:
           run: |
+            sudo apt install xvfb
             cd $GRADLE_DIR
             chmod +x ./gradlew
             chmod +x ./headless_run.sh
