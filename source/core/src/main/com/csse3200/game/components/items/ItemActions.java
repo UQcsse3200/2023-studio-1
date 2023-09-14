@@ -1,18 +1,17 @@
 package com.csse3200.game.components.items;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.player.InteractionColliderComponent;
+import com.csse3200.game.components.player.InteractionDetector;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.services.ServiceLocator;
-import java.util.List;
 import com.csse3200.game.entities.factories.PlantFactory;
 import com.csse3200.game.services.ServiceLocator;
 
+import java.util.List;
 import java.util.function.Function;
 
 import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
@@ -39,6 +38,7 @@ public class ItemActions extends Component {
 
     Vector2 playerPos = player.getPosition();
     Vector2 mouseWorldPos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
+    InteractionDetector interactionCollider = player.getComponent(InteractionDetector.class);
 
     ItemComponent type = entity.getComponent(ItemComponent.class);
     // Wasn't an item or did not have ItemComponent class
@@ -71,15 +71,14 @@ public class ItemActions extends Component {
         return resultStatus;
       }
       case FOOD -> { // TODO: THIS IS ITEM TYPE IS JUST FOR TESTING PURPOSES, REPLACE WITH PLANT DROP TYPE
-        InteractionColliderComponent interactionCollider = player.getComponent(InteractionColliderComponent.class);
-        List<Entity> entitiesTowardsMouse = interactionCollider.getEntitiesTowardsPosition(mouseWorldPos);
-        Entity feedableEntity = interactionCollider.getSuitableEntity(entitiesTowardsMouse, ItemType.FOOD);
-        resultStatus = feed(feedableEntity);
-        if (!resultStatus) {
-          // consume it yourself instead??
-          // consume(player)
-          resultStatus = true;
+        if (interactionCollider == null) {
+          return false;
         }
+        resultStatus = feed(interactionCollider.getSuitableEntities(ItemType.FOOD, mouseWorldPos));
+//        if (!resultStatus) {
+//          // consume it yourself instead??
+//          // resultStatus = consume(player)
+//        }
         return resultStatus;
       }
       case FERTILISER -> {
@@ -143,8 +142,8 @@ public class ItemActions extends Component {
     int playerPositionAsIntX = (int)Math.ceil(playerPos.x); 
     int playerPositionAsIntY = (int)Math.ceil(playerPos.y);
     
-    int x = (int)Math.ceil(playerPositionAsIntX + xDelta);
-    int y = (int)Math.ceil(playerPositionAsIntY + yDelta);
+    int x = (int)Math.ceil((double)(playerPositionAsIntX) + xDelta);
+    int y = (int)Math.ceil((double)(playerPositionAsIntY) + yDelta);
     
     return new Vector2(x, y);
   }
@@ -235,7 +234,7 @@ public class ItemActions extends Component {
   }
 
     /**
-     * Plants the given seed seed in the tile at the given position
+     * Plants the given seed in the tile at the given position
      *
      * @param tile the tile to be interacted with
      * @return if planting was successful return true else return false
@@ -248,32 +247,28 @@ public class ItemActions extends Component {
                 plantFactoryMethod = PlantFactory::createAloeVera;
                 tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
             }
-            case "atomic algae seed" -> {
-                plantFactoryMethod = PlantFactory::createAtomicAlgae;
-                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
-            }
             case "cosmic cob seed" -> {
                 plantFactoryMethod = PlantFactory::createCosmicCob;
-                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
-            }
-            case "deadly nightshade seed" -> {
-                plantFactoryMethod = PlantFactory::createDeadlyNightshade;
                 tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
             }
             case "hammer plant seed" -> {
                 plantFactoryMethod = PlantFactory::createHammerPlant;
                 tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
             }
-            case "horticultural heater seed" -> {
-                plantFactoryMethod = PlantFactory::createHorticulturalHeater;
-                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
-            }
             case "space snapper seed" -> {
                 plantFactoryMethod = PlantFactory::createVenusFlyTrap;
                 tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
             }
+            case "water weed seed" -> {
+                plantFactoryMethod = PlantFactory::createWaterWeed;
+                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
+            }
+            case "deadly nightshade seed" -> {
+                plantFactoryMethod = PlantFactory::createNightshade;
+                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
+            }
             case "tobacco seed" -> {
-                plantFactoryMethod = PlantFactory::createNicotianaTabacum;
+                plantFactoryMethod = PlantFactory::createTobacco;
                 tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
             }
             default -> {
@@ -298,14 +293,15 @@ public class ItemActions extends Component {
 
   /**
    * Feeds given entity.
-   * @param feedableEntity entity to feed
+   * @param feedableEntities list that should contain the one entity to feed
    * @return true if feed is successful
    */
-  private boolean feed(Entity feedableEntity) {
-    if (feedableEntity == null) {
+  private boolean feed(List<Entity> feedableEntities) {
+    if (feedableEntities.size() != 1) {
       return false;
     }
-    feedableEntity.getEvents().trigger("feed");
+
+    feedableEntities.get(0).getEvents().trigger("feed");
     return true;
   }
 }

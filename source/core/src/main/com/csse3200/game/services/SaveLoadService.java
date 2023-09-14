@@ -5,6 +5,7 @@ import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainCropTileFactory;
 import com.csse3200.game.areas.terrain.TerrainTile;
+import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.components.player.InventoryComponent;
@@ -53,6 +54,7 @@ public class SaveLoadService {
 
     state.setDay(ServiceLocator.getTimeService().getDay());
     state.setHour(ServiceLocator.getTimeService().getHour());
+    state.setClimate(ServiceLocator.getGameArea().getClimateController());
 
     state.setPlayer(ServiceLocator.getGameArea().getPlayer());
     state.setTractor(ServiceLocator.getGameArea().getTractor());
@@ -109,8 +111,16 @@ public class SaveLoadService {
     updateNPCs(state);
     updateTiles(state);
     // Update Misc
+    updateClimate(state);
     updateTime(state);
     updateMissions(state);
+  }
+
+  private void updateClimate(GameState state) {
+    ClimateController climate = ServiceLocator.getGameArea().getClimateController();
+    climate.setHumidity(state.getClimate().getHumidity());
+    climate.setTemperature(state.getClimate().getTemperature());
+    climate.setCurrentWeatherEvent(state.getClimate().getCurrentWeatherEvent());
   }
 
   /**
@@ -212,9 +222,10 @@ public class SaveLoadService {
         ServiceLocator.getGameArea().spawnEntity(plant);
         PlantComponent newPlantComponent = plant.getComponent(PlantComponent.class);
         // Sets PlantComponent values to GameState ones
-        newPlantComponent.setGrowthStage(savedPlantComponent.getGrowthStage());
+        newPlantComponent.setGrowthStage(savedPlantComponent.getGrowthStage().getValue());
         newPlantComponent.setPlantHealth(savedPlantComponent.getPlantHealth());
-        newPlantComponent.setCurrentAge(savedPlantComponent.getCurrentAge());
+        // Plant age does not exist. Plant team will sort this out later.
+        //newPlantComponent.setCurrentAge(savedPlantComponent.getCurrentAge());
         // Sets plant to the CropTileComponent
         newComponent.setPlant(plant);
       }

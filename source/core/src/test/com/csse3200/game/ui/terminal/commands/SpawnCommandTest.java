@@ -36,6 +36,7 @@ class SpawnCommandTest {
 
 	@BeforeEach
 	void beforeEach() {
+		ServiceLocator.clear();
 		command = new SpawnCommand();
 		args = new ArrayList<>();
 

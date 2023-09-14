@@ -27,6 +27,7 @@ public class InputService implements InputProcessor, GestureDetector.GestureList
 
   private final List<InputComponent> inputHandlers = new ArrayList<>();
   private final InputFactory inputFactory;
+  private int activeMask = InputLayer.IN_USE;
 
   public InputService() {
     this(InputFactory.createFromInputType(inputType));
@@ -65,6 +66,18 @@ public class InputService implements InputProcessor, GestureDetector.GestureList
   public void unregister(InputComponent inputHandler) {
     logger.debug("Unregistering input handler {}", inputHandler);
     inputHandlers.remove(inputHandler);
+  }
+
+  public void disableInputType(int inputType) {
+    activeMask &= ~inputType;
+  }
+
+  /**
+   * enable specific type(s) of input
+   * @param inputType the input bits to enable
+   */
+  public void enableInputType(int inputType) {
+    activeMask |= inputType;
   }
 
   /**

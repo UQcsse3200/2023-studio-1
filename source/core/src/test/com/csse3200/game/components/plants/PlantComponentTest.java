@@ -1,34 +1,59 @@
 package com.csse3200.game.components.plants;
 
+import com.badlogic.gdx.audio.Sound;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.rendering.DynamicTextureRenderComponent;
+import com.csse3200.game.services.ResourceService;
+import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import static com.csse3200.game.entities.factories.PlantFactory.createBasePlant;
+import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(GameExtension.class)
 public class PlantComponentTest {
 
-    private PlantComponent testPlant;
+    PlantComponent testPlant;
+    CropTileComponent mockCropTile;
+    Entity mockEntity;
+    DynamicTextureRenderComponent mockTextureComponent;
+    ResourceService mockResourceService;
+    Sound mockSound;
+
+    int health = 100;
+    String name = "testPlant";
+    String type = "DEFENCE";
+    String description = "Test plant";
+    int idealWaterLevel = 1;
+    int adultLifeSpan = 2;
+    int maxHealth = 500;
+    int[] growthStageThresholds = new int[]{1,2,3};
+    String[] soundArray = new String[]{"1", "2", "3", "4", "5", "6", "7", "8"};
+    String[] imagePaths = new String[]{"path1", "path2", "path3", "path4", "path5"};
+
     @BeforeEach
     void beforeEach() {
-        CropTileComponent testCropTile = new CropTileComponent(1, 10);
-        testPlant = new PlantComponent(100, "testPlant", "defence", "This is a " +
-                "plant created for testing.", 1, 2, 500, testCropTile);
+        mockCropTile = mock(CropTileComponent.class);
+        mockEntity = mock(Entity.class);
+        mockTextureComponent = mock(DynamicTextureRenderComponent.class);
+        mockResourceService = mock(ResourceService.class);
+        mockSound = mock(Sound.class);
+        ServiceLocator.registerResourceService(mockResourceService);
+
+        when(mockResourceService.getAsset(anyString(), eq(Sound.class))).thenReturn(mockSound);
+
+        testPlant = new PlantComponent(health, name, type, description, idealWaterLevel,
+                adultLifeSpan, maxHealth, mockCropTile, growthStageThresholds,soundArray,imagePaths);
+        testPlant.setEntity(mockEntity);
     }
 
     @Test
     void testGetPlantHealth() {
-        assertEquals(100, testPlant.getPlantHealth());
-    }
-
-    @Test
-    void testGetMaxHealth() {
-        assertEquals(500, testPlant.getMaxHealth());
+        assertEquals(health, testPlant.getPlantHealth());
     }
 
     @Test
@@ -38,30 +63,42 @@ public class PlantComponentTest {
     }
 
     @Test
+    void testGetMaxHealth() {
+        assertEquals(maxHealth, testPlant.getMaxHealth());
+    }
+
+    @Test
     void testIncreasePlantHealth() {
         int plantHealthIncrement = 2;
         testPlant.increasePlantHealth(plantHealthIncrement);
-        assertEquals(102, testPlant.getPlantHealth());
+        assertEquals(health + plantHealthIncrement, testPlant.getPlantHealth());
+    }
+
+    @Test
+    void testDecreasePlantHealth() {
+        int plantHealthIncrement = -2;
+        testPlant.increasePlantHealth(plantHealthIncrement);
+        assertEquals(health + plantHealthIncrement, testPlant.getPlantHealth());
     }
 
     @Test
     void testGetPlantName() {
-        assertEquals("testPlant", testPlant.getPlantName());
+        assertEquals(name, testPlant.getPlantName());
     }
 
     @Test
     void testGetPlantType() {
-        assertEquals("defence", testPlant.getPlantType());
+        assertEquals(type, testPlant.getPlantType());
     }
 
     @Test
     void testGetPlantDescription() {
-        assertEquals("This is a plant created for testing.", testPlant.getPlantDescription());
+        assertEquals(description, testPlant.getPlantDescription());
     }
 
     @Test
-    void testSetDecay() {
-        testPlant.setDecay(true);
+    void testSetDecayTrue() {
+        testPlant.setDecay();
         assertTrue(testPlant.isDecay());
     }
 
@@ -71,41 +108,24 @@ public class PlantComponentTest {
     }
 
     @Test
-    void testIsDecayTrue() {
-        testPlant.setDecay(true);
-        assertTrue(testPlant.isDecay());
-    }
-
-    @Test
-    void testGetCurrentAge() {
-        assertEquals(0, testPlant.getCurrentAge());
-    }
-
-    @Test
-    void testSetCurrentAge() {
-        testPlant.setCurrentAge(2.5F);
-        assertEquals(2.5F, testPlant.getCurrentAge());
-    }
-
-    @Test
     void testGetIdealWaterLevel() {
-        assertEquals(1, testPlant.getIdealWaterLevel());
+        assertEquals(idealWaterLevel, testPlant.getIdealWaterLevel());
     }
 
     @Test
     void testGetGrowthStage() {
-        assertEquals(1, testPlant.getGrowthStage());
+        assertEquals(1, testPlant.getGrowthStage().getValue());
     }
 
     @Test
     void testSetGrowthStage() {
         testPlant.setGrowthStage(3);
-        assertEquals(3, testPlant.getGrowthStage());
+        assertEquals(3, testPlant.getGrowthStage().getValue());
     }
 
     @Test
     void testGetAdultLifeSpan() {
-        assertEquals(2, testPlant.getAdultLifeSpan());
+        assertEquals(adultLifeSpan, testPlant.getAdultLifeSpan());
     }
 
     @Test
@@ -117,25 +137,110 @@ public class PlantComponentTest {
     @Test
     void testIncreaseGrowthStage() {
         testPlant.increaseGrowthStage(1);
-        assertEquals(2, testPlant.getGrowthStage());
+        assertEquals(2, testPlant.getGrowthStage().getValue());
     }
 
     @Test
-    void testIncreaseCurrentAge() {
-        testPlant.increaseCurrentAge(1);
-        assertEquals(1, testPlant.getCurrentAge());
+    void testGetCurrentGrowthLevel() {
+        assertEquals(1, testPlant.getCurrentGrowthLevel());
+    }
+
+    @Test
+    void testGetCurrentMaxHealth() {
+        assertEquals(maxHealth, testPlant.getCurrentMaxHealth());
+    }
+
+    @Test
+    void testGetNumOfDaysAsAdult() {
+        assertEquals(0, testPlant.getNumOfDaysAsAdult());
+    }
+
+    @Test
+    void testSetNumOfDaysAsAdult() {
+        testPlant.setNumOfDaysAsAdult(1);
+        assertEquals(1, testPlant.getNumOfDaysAsAdult());
+    }
+
+    @Test
+    void testIncreaseCurrentGrowthLevelPositive(){
+        when(mockCropTile.getGrowthRate(1.0f)).thenReturn(0.5);
+        testPlant.increaseCurrentGrowthLevel();
+        assertEquals(6, testPlant.getCurrentGrowthLevel());
+    }
+
+    @Test
+    void testIncreaseCurrentGrowthLevelNegative() {
+        when(mockCropTile.getGrowthRate(1.0f)).thenReturn(-0.5);
+        testPlant.increaseCurrentGrowthLevel();
+        assertEquals(health - 10, testPlant.getPlantHealth());
     }
 
     @Test
     void testIsDeadTrue() {
-        testPlant.setGrowthStage(7);
+        testPlant.setGrowthStage(6);
         assertTrue(testPlant.isDead());
     }
 
     @Test
     void testIsDeadFalse() {
+        testPlant.setGrowthStage(1);
         assertFalse(testPlant.isDead());
     }
 
+    @Test
+    void testUpdateMaxHealth_GrowthStage1() {
+        testPlant.setGrowthStage(1);
+        testPlant.updateMaxHealth();
+        assertEquals(maxHealth * 0.05, testPlant.getCurrentMaxHealth(), 0.01);
+    }
 
+    @Test
+    void testUpdateMaxHealth_GrowthStage2() {
+        testPlant.setGrowthStage(2);
+        testPlant.updateMaxHealth();
+        assertEquals(maxHealth * 0.1, testPlant.getCurrentMaxHealth(), 0.01);
+    }
+
+    @Test
+    void testUpdateMaxHealth_GrowthStage3() {
+        testPlant.setGrowthStage(3);
+        testPlant.updateMaxHealth();
+        assertEquals(maxHealth * 0.3, testPlant.getCurrentMaxHealth(), 0.01);
+    }
+
+    @Test
+    public void testUpdateMaxHealth_GrowthStage4() {
+        testPlant.setGrowthStage(4);
+        testPlant.updateMaxHealth();
+        assertEquals(maxHealth, testPlant.getCurrentMaxHealth(), 0.01);
+    }
+
+    @Test
+    void testUpdateMaxHealth_UnexpectedGrowthStage() {
+        testPlant.setGrowthStage(5);
+        assertThrows(IllegalStateException.class, () -> testPlant.updateMaxHealth());
+    }
+
+    @Test
+    void testBeginDecay_Decay() {
+        testPlant.setGrowthStage(4);
+        testPlant.setNumOfDaysAsAdult(adultLifeSpan);
+        testPlant.beginDecay();
+        assertTrue(testPlant.isDecay());
+    }
+
+    @Test
+    void testBeginDecay_NotDecay() {
+        for (int stage = 1; stage < 4; stage++) {
+            testPlant.setGrowthStage(stage);
+            testPlant.setNumOfDaysAsAdult(adultLifeSpan);
+            testPlant.beginDecay();
+            assertFalse(testPlant.isDecay());
+        }
+    }
+
+    @Test
+    public void testInvalidFunctionForPlaySound() {
+        assertThrows(IllegalStateException.class, () -> testPlant.playSound("invalidFunctionName"));
+    }
 }

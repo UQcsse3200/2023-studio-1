@@ -6,9 +6,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainComponent;
+import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.utils.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,6 +27,8 @@ import java.util.List;
 public abstract class GameArea implements Disposable {
   protected TerrainComponent terrain;
   protected List<Entity> areaEntities;
+  private static final Logger logger = LoggerFactory.getLogger(GameArea.class);
+  private Entity player;
 
   protected GameArea() {
     areaEntities = new ArrayList<>();
@@ -82,11 +88,11 @@ public abstract class GameArea implements Disposable {
   }
 
 
-  
+
   public void removeEntity(Entity entity) {
     entity.setEnabled(false);
     areaEntities.remove(entity);
-    Gdx.app.postRunnable(entity::dispose); 
+    Gdx.app.postRunnable(entity::dispose);
   }
 
   /**
@@ -104,7 +110,12 @@ public abstract class GameArea implements Disposable {
     }
   }
 
-  public abstract Entity getPlayer();
+  public Entity getPlayer() {
+    return player;
+  }
+ // public abstract Entity getPlayer();
+
+  public abstract ClimateController getClimateController();
 
   public abstract Entity getTractor();
 

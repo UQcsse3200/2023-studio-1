@@ -6,7 +6,6 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.intro.IntroDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.input.InputDecorator;
 import com.csse3200.game.input.InputService;
@@ -19,12 +18,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class IntroScreen extends ScreenAdapter {
-    private static final Logger logger = LoggerFactory.getLogger(ControlsScreen.class);
+    private static final Logger logger = LoggerFactory.getLogger(IntroScreen.class);
 
     /**
      * An array of paths to image textures needed for this screen
      */
-    private static final String[] introScreenAssets = {"images/intro_background.png", "images/intro_planet.png"};
+    private static final String[] introScreenAssets = {"images/intro_background_v2.png", "images/intro_planet.png"};
     private final GdxGame game;
     private final Renderer renderer;
 

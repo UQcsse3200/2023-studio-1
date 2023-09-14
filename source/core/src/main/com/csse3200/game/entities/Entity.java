@@ -5,22 +5,24 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
-import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ComponentType;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.items.WateringCanLevelComponent;
+import com.csse3200.game.components.npc.AnimalAnimationController;
+import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.components.player.ItemPickupComponent;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
-import com.csse3200.game.components.player.PlayerActions;
+import com.csse3200.game.components.player.PlayerAnimationController;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.events.EventHandler;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.FactoryService;
-import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -294,6 +296,32 @@ public class Entity implements Json.Serializable {
     }
   }
 
+  public void togglePauseAnimations(boolean pausePlayer) {
+    if (!pausePlayer) {
+      for (Component component : createdComponents) {
+        if (component instanceof KeyboardPlayerInputComponent ||
+                component instanceof PlayerAnimationController ||
+                component instanceof AnimalAnimationController ||
+                component instanceof GhostAnimationController ||
+                component instanceof TamableComponent ||
+                component instanceof ItemPickupComponent
+        ) {
+          return;
+        }
+      }
+    }
+    for (Component component : createdComponents) {
+      if (component instanceof PlayerAnimationController) {
+        return;
+      }
+    }
+    for (Component component : createdComponents) {
+      if (component instanceof AnimationRenderComponent) {
+        ((AnimationRenderComponent) component).togglePauseAnimation();
+      }
+    }
+  }
+
   /**
    * This entity's unique ID. Used for equality checks
    *
@@ -387,63 +415,65 @@ public class Entity implements Json.Serializable {
     } catch (IllegalArgumentException e) {
       type = null;
     }
-    switch (type) {
-      case Tractor:
-        jsonMap = jsonMap.get("components").get("TractorActions");
-        TractorActions tractorActions = new TractorActions();
-        // Update the tractor 'muted' variable based on the info in the json file
-        tractorActions.setMuted(jsonMap.getBoolean("isMuted"));
-        this.addComponent(tractorActions);
-        break;
-      case Tile:
-        jsonMap = jsonMap.get("components").get("CropTileComponent");
-        CropTileComponent c = new CropTileComponent(jsonMap.getFloat("waterContent"), jsonMap.getFloat("soilQuality"));
-        c.setFertilised(jsonMap.getBoolean("isFertilised"));
-        JsonValue plantData = jsonMap.get("plant");
-        if (plantData.get("Entity") != null) {
-          // Has a plant
-          plantData = plantData.get("components").get("PlantComponent");
-          c.setPlant(
-              new Entity().addComponent(new PlantComponent(plantData.getInt("health"), plantData.getString("name"),
-                  "bleh", "bleh", 1f, 999, 999, this.getComponent(CropTileComponent.class))));
-          c.getPlant().getComponent(PlantComponent.class).setCurrentAge(plantData.getFloat("age"));
-          c.getPlant().getComponent(PlantComponent.class).setGrowthStage(plantData.getInt("growth"));
-        }
-        this.addComponent(c);
-        break;
-      case Cow:
-      case Astrolotl:
-      case Chicken:
-        jsonMap = jsonMap.get("components").get("TamableComponent");
-        // Does not need actual values here as it is just used to store the tamed value;
-        Entity emptyPlayer = new Entity(); // empty player, as the real player is not needed for reading in the
-                                           // component
-        TamableComponent tamableComponent = new TamableComponent(emptyPlayer, 1, 1, null);
-        tamableComponent.setTame(jsonMap.getBoolean("Tamed"));
-        this.addComponent(tamableComponent);
-        break;
-      case Player:
-        InventoryComponent inventoryComponent = new InventoryComponent(null);
-        HashMap<Entity, Integer> items = new HashMap<>();
-        HashMap<Entity, Point> itemPositions = new HashMap<>();
-        ArrayList inventory = new ArrayList();
-        JsonValue inv = jsonMap.get("components").get("InventoryComponent").get("inventory");
-        inv.forEach(jsonValue -> {
-          Entity item = FactoryService.getItemFactories().get(jsonValue.getString("name")).get();
-          ItemType itemType = item.getComponent(ItemComponent.class).getItemType();
-          switch (itemType) {
-            case WATERING_CAN ->
-              item.getComponent(WateringCanLevelComponent.class).setCurrentLevel(jsonValue.getFloat("level"));
+    if (type != null) { // The try catch above may cause a NullPointerException otherwise
+      switch (type) {
+        case Tractor:
+          jsonMap = jsonMap.get("components").get("TractorActions");
+          TractorActions tractorActions = new TractorActions();
+          // Update the tractor 'muted' variable based on the info in the json file
+          tractorActions.setMuted(jsonMap.getBoolean("isMuted"));
+          this.addComponent(tractorActions);
+          break;
+        case Tile:
+          jsonMap = jsonMap.get("components").get("CropTileComponent");
+          CropTileComponent c = new CropTileComponent(jsonMap.getFloat("waterContent"), jsonMap.getFloat("soilQuality"));
+          c.setFertilised(jsonMap.getBoolean("isFertilised"));
+          JsonValue plantData = jsonMap.get("plant");
+          if (plantData.get("Entity") != null) {
+            // Has a plant
+            plantData = plantData.get("components").get("PlantComponent");
+            c.setPlant(
+                new Entity().addComponent(new PlantComponent(plantData.getInt("health"), plantData.getString("name"),
+                    "bleh", "bleh", 1f, 999, 999, this.getComponent(CropTileComponent.class))));
+            c.getPlant().getComponent(PlantComponent.class).setCurrentAge(plantData.getFloat("age"));
+            c.getPlant().getComponent(PlantComponent.class).setGrowthStage(plantData.getInt("growth"));
           }
-          items.put(item, jsonValue.getInt("count"));
-          itemPositions.put(item, new Point(jsonValue.getInt("X"), jsonValue.getInt("Y")));
-          inventory.add(item);
-        });
-        inventoryComponent.setInventory(items, itemPositions, inventory);
-        this.addComponent(inventoryComponent);
-
-      default:
-        // Nothing
+          this.addComponent(c);
+          break;
+        case Cow:
+        case Astrolotl:
+        case Chicken:
+          jsonMap = jsonMap.get("components").get("TamableComponent");
+          // Does not need actual values here as it is just used to store the tamed value;
+          Entity emptyPlayer = new Entity(); // empty player, as the real player is not needed for reading in the
+                                             // component
+          TamableComponent tamableComponent = new TamableComponent(emptyPlayer, 1, 1, null);
+          tamableComponent.setTame(jsonMap.getBoolean("Tamed"));
+          this.addComponent(tamableComponent);
+          break;
+        case Player:
+          InventoryComponent inventoryComponent = new InventoryComponent(null);
+          HashMap<Entity, Integer> items = new HashMap<>();
+          HashMap<Entity, Point> itemPositions = new HashMap<>();
+          ArrayList inventory = new ArrayList();
+          JsonValue inv = jsonMap.get("components").get("InventoryComponent").get("inventory");
+          inv.forEach(jsonValue -> {
+            Entity item = FactoryService.getItemFactories().get(jsonValue.getString("name")).get();
+            ItemType itemType = item.getComponent(ItemComponent.class).getItemType();
+            switch (itemType) {
+              case WATERING_CAN ->
+                item.getComponent(WateringCanLevelComponent.class).setCurrentLevel(jsonValue.getFloat("level"));
+            }
+            items.put(item, jsonValue.getInt("count"));
+            itemPositions.put(item, new Point(jsonValue.getInt("X"), jsonValue.getInt("Y")));
+            inventory.add(item);
+          });
+          inventoryComponent.setInventory(items, itemPositions, inventory);
+          this.addComponent(inventoryComponent);
+          break;
+        default:
+          // Nothing
+      }
     }
   }
 

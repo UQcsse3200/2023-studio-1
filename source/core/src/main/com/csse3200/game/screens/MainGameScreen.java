@@ -6,7 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.SpaceGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.areas.weather.WeatherEventDisplay;
 import com.csse3200.game.components.maingame.MainGameActions;
+import com.csse3200.game.components.maingame.PauseMenuActions;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
@@ -34,173 +36,192 @@ import org.slf4j.LoggerFactory;
  *
  * <p>Details on libGDX screens: https://happycoding.io/tutorials/libgdx/game-screens
  */
+
 public class MainGameScreen extends ScreenAdapter {
-  private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
-  private static final String[] mainGameTextures = {
-          "images/heart.png",
-          "images/time_system_ui/clock_frame.png",
-          "images/time_system_ui/indicator_0.png",
-          "images/time_system_ui/indicator_1.png",
-          "images/time_system_ui/indicator_2.png",
-          "images/time_system_ui/indicator_3.png",
-          "images/time_system_ui/indicator_4.png",
-          "images/time_system_ui/indicator_5.png",
-          "images/time_system_ui/indicator_6.png",
-          "images/time_system_ui/indicator_7.png",
-          "images/time_system_ui/indicator_8.png",
-          "images/time_system_ui/indicator_9.png",
-          "images/time_system_ui/indicator_10.png",
-          "images/time_system_ui/indicator_11.png",
-          "images/time_system_ui/indicator_12.png",
-          "images/time_system_ui/indicator_13.png",
-          "images/time_system_ui/indicator_14.png",
-          "images/time_system_ui/indicator_15.png",
-          "images/time_system_ui/indicator_16.png",
-          "images/time_system_ui/indicator_17.png",
-          "images/time_system_ui/indicator_18.png",
-          "images/time_system_ui/indicator_19.png",
-          "images/time_system_ui/indicator_20.png",
-          "images/time_system_ui/indicator_21.png",
-          "images/time_system_ui/indicator_22.png",
-          "images/time_system_ui/indicator_23.png",
-  };
-  private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
+    private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
+    private static final String[] mainGameTextures = {
+            //"images/heart.png",
+            "images/time_system_ui/clock_frame.png",
+            "images/time_system_ui/indicator_0.png",
+            "images/time_system_ui/indicator_1.png",
+            "images/time_system_ui/indicator_2.png",
+            "images/time_system_ui/indicator_3.png",
+            "images/time_system_ui/indicator_4.png",
+            "images/time_system_ui/indicator_5.png",
+            "images/time_system_ui/indicator_6.png",
+            "images/time_system_ui/indicator_7.png",
+            "images/time_system_ui/indicator_8.png",
+            "images/time_system_ui/indicator_9.png",
+            "images/time_system_ui/indicator_10.png",
+            "images/time_system_ui/indicator_11.png",
+            "images/time_system_ui/indicator_12.png",
+            "images/time_system_ui/indicator_13.png",
+            "images/time_system_ui/indicator_14.png",
+            "images/time_system_ui/indicator_15.png",
+            "images/time_system_ui/indicator_16.png",
+            "images/time_system_ui/indicator_17.png",
+            "images/time_system_ui/indicator_18.png",
+            "images/time_system_ui/indicator_19.png",
+            "images/time_system_ui/indicator_20.png",
+            "images/time_system_ui/indicator_21.png",
+            "images/time_system_ui/indicator_22.png",
+            "images/time_system_ui/indicator_23.png",
+            "images/oxygen_ui/oxygen_outline.png",
+            "images/oxygen_ui/oxygen_fill.png",
+            "images/weather_event/weather-border.png",
+            "images/weather_event/acid-rain.png",
+            "images/weather_event/solar-flare.png"
 
-  private final GdxGame game;
-  private final Renderer renderer;
-  private final PhysicsEngine physicsEngine;
+    };
+    private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 
-  private static Boolean lose;
+    private final GdxGame game;
+    private Entity entity;
+    private final Renderer renderer;
+    private final PhysicsEngine physicsEngine;
 
-  public MainGameScreen(GdxGame game) {
-    this.game = game;
+    private static Boolean lose;
 
-    logger.debug("Initialising main game screen services");
-    ServiceLocator.registerTimeSource(new GameTime());
 
-    PhysicsService physicsService = new PhysicsService();
-    ServiceLocator.registerPhysicsService(physicsService);
-    physicsEngine = physicsService.getPhysics();
 
-    ServiceLocator.registerInputService(new InputService());
-    ServiceLocator.registerResourceService(new ResourceService());
+    public MainGameScreen(GdxGame game) {
+        this.game = game;
 
-    ServiceLocator.registerEntityService(new EntityService());
-    ServiceLocator.registerRenderService(new RenderService());
-    ServiceLocator.registerTimeService(new TimeService());
+        logger.debug("Initialising main game screen services");
+        ServiceLocator.registerTimeSource(new GameTime());
 
-    ServiceLocator.registerMissionManager(new MissionManager());
+        PhysicsService physicsService = new PhysicsService();
+        ServiceLocator.registerPhysicsService(physicsService);
+        physicsEngine = physicsService.getPhysics();
 
-    renderer = RenderFactory.createRenderer();
-    renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
-    renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
-    ServiceLocator.registerCameraComponent(renderer.getCamera());
+        ServiceLocator.registerInputService(new InputService());
+        ServiceLocator.registerResourceService(new ResourceService());
 
-    loadAssets();
-    createUI();
+        ServiceLocator.registerEntityService(new EntityService());
+        ServiceLocator.registerRenderService(new RenderService());
+        ServiceLocator.registerTimeService(new TimeService());
+        ServiceLocator.registerPlanetOxygenService(new PlanetOxygenService());
 
-    logger.debug("Initialising main game screen entities");
-    TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-    SpaceGameArea spaceGameArea = new SpaceGameArea(terrainFactory);
-    spaceGameArea.create();
-    renderer.getCamera().setTrackEntity(spaceGameArea.getPlayer());
+        ServiceLocator.registerMissionManager(new MissionManager());
 
-    // Switched to spaceGameArea TODO DELETE
-    //ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
-    //forestGameArea.create();
-    //renderer.getCamera().setTrackEntity(forestGameArea.getPlayer());
-    spaceGameArea.getPlayer().getComponent(PlayerActions.class).setCameraVar(renderer.getCamera());
-    spaceGameArea.getTractor().getComponent(TractorActions.class).setCameraVar(renderer.getCamera());
+        renderer = RenderFactory.createRenderer();
+        renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
+        renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
+        ServiceLocator.registerCameraComponent(renderer.getCamera());
 
-    lose = false;
-    spaceGameArea.getPlayer().getEvents().addListener("loseScreen", this::loseScreenStart);
+        loadAssets();
 
-    // if the LoadSaveOnStart value is set true then load entities saved from file
-    if (game.isLoadOnStart()){
-      ServiceLocator.getSaveLoadService().load();
+        logger.debug("Initialising main game screen entities");
+        TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
+        SpaceGameArea spaceGameArea = new SpaceGameArea(terrainFactory);
+        spaceGameArea.create();
+        renderer.getCamera().setTrackEntity(spaceGameArea.getPlayer());
+
+        createUI();
+        // Switched to spaceGameArea TODO DELETE
+        //ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
+        //forestGameArea.create();
+        //renderer.getCamera().setTrackEntity(forestGameArea.getPlayer());
+        spaceGameArea.getPlayer().getComponent(PlayerActions.class).setCameraVar(renderer.getCamera());
+        spaceGameArea.getTractor().getComponent(TractorActions.class).setCameraVar(renderer.getCamera());
+
+        lose = false;
+        spaceGameArea.getPlayer().getEvents().addListener("loseScreen", this::loseScreenStart);
+
+        // if the LoadSaveOnStart value is set true then load entities saved from file
+        if (game.isLoadOnStart()){
+            ServiceLocator.getSaveLoadService().load();
+        }
     }
-  }
 
-  public void loseScreenStart() {
-    lose = true;
-  }
-
-  @Override
-  public void render(float delta) {
-    if (!ServiceLocator.getTimeService().isPaused()) {
-      physicsEngine.update();
-      ServiceLocator.getEntityService().update();
+    public void loseScreenStart() {
+        lose = true;
     }
-      ServiceLocator.getTimeService().update();
-      renderer.render();
-    if (lose == true) {
-      game.setScreen(GdxGame.ScreenType.LOSESCREEN);
+
+    @Override
+    public void render(float delta) {
+        if (!ServiceLocator.getTimeService().isPaused()) {
+            physicsEngine.update();
+            ServiceLocator.getEntityService().update();
+        }
+        ServiceLocator.getTimeService().update();
+        renderer.render();
+        if (lose == true) {
+            game.setScreen(GdxGame.ScreenType.LOSESCREEN);
+        }
+        if (PauseMenuActions.getQuitGameStatus()) {
+            entity.getEvents().trigger("exit");
+            PauseMenuActions.setQuitGameStatus();
+        }
     }
-  }
 
-  @Override
-  public void resize(int width, int height) {
-    renderer.resize(width, height);
-    logger.trace("Resized renderer: ({} x {})", width, height);
-  }
+    @Override
+    public void resize(int width, int height) {
+        renderer.resize(width, height);
+        logger.trace("Resized renderer: ({} x {})", width, height);
+    }
 
-  @Override
-  public void pause() {
-    logger.info("Game paused");
-  }
+    @Override
+    public void pause() {
+        logger.info("Game paused");
+    }
 
-  @Override
-  public void resume() {
-    logger.info("Game resumed");
-  }
+    @Override
+    public void resume() {
+        logger.info("Game resumed");
+    }
 
-  @Override
-  public void dispose() {
-    logger.debug("Disposing main game screen");
+    @Override
+    public void dispose() {
+        logger.debug("Disposing main game screen");
 
-    renderer.dispose();
-    unloadAssets();
+        renderer.dispose();
+        unloadAssets();
 
-    ServiceLocator.getEntityService().dispose();
-    ServiceLocator.getRenderService().dispose();
-    ServiceLocator.getResourceService().dispose();
+        ServiceLocator.getEntityService().dispose();
+        ServiceLocator.getRenderService().dispose();
+        ServiceLocator.getResourceService().dispose();
 
-    ServiceLocator.clear();
-  }
+        ServiceLocator.clear();
+    }
 
-  private void loadAssets() {
-    logger.debug("Loading assets");
-    ResourceService resourceService = ServiceLocator.getResourceService();
-    resourceService.loadTextures(mainGameTextures);
-    ServiceLocator.getResourceService().loadAll();
-  }
+    private void loadAssets() {
+        logger.debug("Loading assets");
+        ResourceService resourceService = ServiceLocator.getResourceService();
+        resourceService.loadTextures(mainGameTextures);
+        ServiceLocator.getResourceService().loadAll();
+    }
 
-  private void unloadAssets() {
-    logger.debug("Unloading assets");
-    ResourceService resourceService = ServiceLocator.getResourceService();
-    resourceService.unloadAssets(mainGameTextures);
-  }
+    private void unloadAssets() {
+        logger.debug("Unloading assets");
+        ResourceService resourceService = ServiceLocator.getResourceService();
+        resourceService.unloadAssets(mainGameTextures);
+    }
 
-  /**
-   * Creates the main game's ui including components for rendering ui elements to the screen and
-   * capturing and handling ui input.
-   */
-  private void createUI() {
-    logger.debug("Creating ui");
-    Stage stage = ServiceLocator.getRenderService().getStage();
-    InputComponent inputComponent =
-        ServiceLocator.getInputService().getInputFactory().createForTerminal();
 
-    Entity ui = new Entity();
-    ui.addComponent(new InputDecorator(stage, 10))
-        .addComponent(new PerformanceDisplay())
-        .addComponent(new MainGameActions(this.game))
-        .addComponent(new MainGameExitDisplay())
-        .addComponent(new Terminal())
-        .addComponent(inputComponent)
-        .addComponent(new TerminalDisplay())
-        .addComponent(new GameTimeDisplay());
 
-    ServiceLocator.getEntityService().register(ui);
-  }
+    /**
+     * Creates the main game's ui including components for rendering ui elements to the screen and
+     * capturing and handling ui input.
+     */
+    private void createUI() {
+        logger.debug("Creating ui");
+        Stage stage = ServiceLocator.getRenderService().getStage();
+        InputComponent inputComponent =
+                ServiceLocator.getInputService().getInputFactory().createForTerminal();
+
+        Entity ui = new Entity();
+        ui.addComponent(new InputDecorator(stage, 10))
+                .addComponent(new PerformanceDisplay())
+                .addComponent(new MainGameActions(this.game))
+                .addComponent(new MainGameExitDisplay())
+                .addComponent(new Terminal())
+                .addComponent(inputComponent)
+                .addComponent(new TerminalDisplay())
+                .addComponent(new GameTimeDisplay())
+                .addComponent(new OxygenDisplay())
+                .addComponent(new WeatherEventDisplay());
+
+        ServiceLocator.getEntityService().register(ui);
+    }
 }

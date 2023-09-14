@@ -1,12 +1,14 @@
 package com.csse3200.game.services;
 
 import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
+import com.csse3200.game.screens.MainGameScreen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,9 +30,12 @@ public class ServiceLocator {
   private static TimeService timeService;
   private static GameTime timeSource;
   private static GameArea gameArea;
+  private static GameAreaDisplay pauseMenuArea;
+  private static GameAreaDisplay craftArea;
   private static CameraComponent cameraComponent;
   private static SaveLoadService saveLoadService;
   private static MissionManager missions;
+  private static PlanetOxygenService planetOxygenService;
 
   public static GameArea getGameArea() {
     return gameArea;
@@ -66,6 +71,9 @@ public class ServiceLocator {
 
   public static MissionManager getMissionManager() {
     return missions;
+  }
+  public static PlanetOxygenService getPlanetOxygenService() {
+    return planetOxygenService;
   }
 
   public static SaveLoadService getSaveLoadService() {
@@ -121,6 +129,11 @@ public class ServiceLocator {
     logger.debug("Registering mission manager {}", source);
     missions = source;
   }
+  
+  public static void registerPlanetOxygenService(PlanetOxygenService source) {
+    logger.debug("Registering planet oxygen service {}", source);
+    planetOxygenService = source;
+  }
 
   /**
    * Registers the save/load service.
@@ -142,10 +155,23 @@ public class ServiceLocator {
     timeSource = null;
     inputService = null;
     resourceService = null;
+    planetOxygenService = null;
     gameArea = null;
   }
 
   private ServiceLocator() {
     throw new IllegalStateException("Instantiating static util class");
   }
+
+  public static void registerPauseArea(GameAreaDisplay area) {pauseMenuArea = area;}
+
+  public static GameAreaDisplay getPauseMenuArea() {
+    return pauseMenuArea;
+  }
+
+  public static void registerCraftArea(GameAreaDisplay area){
+    craftArea = area;
+  }
+
+
 }

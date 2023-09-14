@@ -68,6 +68,11 @@ public class PhysicsMovementComponent extends Component implements MovementContr
 
   private void updateDirection(Body body) {
     Vector2 desiredVelocity = getDirection().scl(maxSpeed);
+
+    /* Can continue implementation of terrain movement modifiers once the GameMap class has been updated and a way to
+       access the game map class from this component has been implemented. */
+    //Vector2 entityPosition = this.getEntity().getCenterPosition();
+
     setToVelocity(body, desiredVelocity);
   }
 

@@ -1,6 +1,5 @@
 package com.csse3200.game.areas.terrain;
 
-import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
@@ -8,10 +7,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.utils.Json;
 import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.ItemFactory;
-
-import java.util.HashMap;
-import java.util.function.Supplier;
 
 /**
  * Custom terrain tile implementation for tiled map terrain that stores additional properties we
@@ -49,6 +44,9 @@ public class TerrainTile implements TiledMapTile {
    */
   private Entity cropTile = null;
 
+  /**
+   * Stores the speed modifier of the tile
+   */
   private float speedModifier;
 
   public TerrainTile(TextureRegion textureRegion, TerrainCategory terrainCategory) {
@@ -305,6 +303,10 @@ public class TerrainTile implements TiledMapTile {
     this.setUnOccupied();
   }
 
+  /**
+   * Returns the speed modifier of the terrain tile
+   * @return the speed modifier of the terrain tile
+   */
   public float getSpeedModifier() {
     return this.speedModifier;
   }
