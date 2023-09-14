@@ -267,10 +267,6 @@ public class ItemActions extends Component {
                 plantFactoryMethod = PlantFactory::createNightshade;
                 tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
             }
-            case "tobacco seed" -> {
-                plantFactoryMethod = PlantFactory::createTobacco;
-                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
-            }
             default -> {
                 System.out.println("Something went wrong");
                 throw new IllegalArgumentException("Explode");
