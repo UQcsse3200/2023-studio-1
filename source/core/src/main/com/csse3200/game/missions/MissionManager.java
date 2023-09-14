@@ -101,6 +101,7 @@ public class MissionManager {
 	 */
 	public void addQuest(Quest quest) {
 		selectableQuests.add(quest);
+		events.trigger("newQuest");
 	}
 
 	/**
@@ -136,6 +137,9 @@ public class MissionManager {
 	private void updateActiveQuestTimes() {
 		for (Quest quest : activeQuests) {
 			quest.updateExpiry();
+			if (quest.isExpired()) {
+				events.trigger("questExpired");
+			}
 		}
 	}
 

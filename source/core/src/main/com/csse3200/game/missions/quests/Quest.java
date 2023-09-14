@@ -52,7 +52,6 @@ public abstract class Quest extends Mission {
 	public void updateExpiry() {
 		if (--timeToExpiry <= 0) {
 			timeToExpiry = 0;
-			ServiceLocator.getMissionManager().getEvents().trigger("questExpired");
 		}
 	}
 
