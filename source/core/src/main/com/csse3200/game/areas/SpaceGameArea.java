@@ -10,6 +10,7 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.items.ItemType;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
@@ -207,6 +208,7 @@ public class SpaceGameArea extends GameArea {
 
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createGateItem());
 
     // TODO:
 

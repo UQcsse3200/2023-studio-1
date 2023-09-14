@@ -49,11 +49,11 @@ public class FactoryService {
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Gate", ItemFactory::createGateItem),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Sprinkler", ItemFactory::createSprinklerItem));
 
-    private static final Map<EntityType, Supplier<Entity>> placeableFactories = Map.ofEntries(
-            new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.Chest, PlaceableFactory::createChest),
-            new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.Fence, PlaceableFactory::createFence),
-            new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.Gate, PlaceableFactory::createGate),
-            new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.Sprinkler, PlaceableFactory::createSprinkler));
+    private static final Map<String, Supplier<Entity>> placeableFactories = Map.ofEntries(
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Chest", PlaceableFactory::createChest),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Fence", PlaceableFactory::createFence),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Gate", PlaceableFactory::createGate),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Sprinkler", PlaceableFactory::createSprinkler));
 
     public static Map<String, Function<CropTileComponent, Entity>> getPlantFactories() {
         return plantFactories;
@@ -67,7 +67,7 @@ public class FactoryService {
         return itemFactories;
     }
 
-    public static Map<EntityType, Supplier<Entity>> getPlaceableFactories() {
+    public static Map<String, Supplier<Entity>> getPlaceableFactories() {
         return placeableFactories;
     }
 }
