@@ -83,6 +83,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.NUM_9:
           triggerHotKeySelection(keycode);
           return true;
+        case Keys.T:
+          entity.getEvents().trigger("toggleLight");
+          return true;
         default:
           return false;
       }
