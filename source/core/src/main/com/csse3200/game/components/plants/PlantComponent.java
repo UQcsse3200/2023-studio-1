@@ -187,7 +187,7 @@ public class PlantComponent extends Component {
      * @param maxHealth - The maximum health a plant can reach as an adult
      * @param cropTile - The cropTileComponent where the plant will be located.
      * @param growthStageThresholds - A list of three integers that represent the growth thresholds.
-     * @param soundsArray - A list of all sound files filepaths as strings
+     * @param soundsArray - A list of all sound files file paths as strings
      * @param growthStageImagePaths - image paths for the different growth stages.
      */
     public PlantComponent(int health, String name, String plantType, String plantDescription,
