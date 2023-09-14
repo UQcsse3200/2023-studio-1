@@ -277,4 +277,57 @@ public class ItemFactory {
                     "Cow food", new Texture("images/plants/misc//tobacco_seed.png")));
     return animalFood;
   }
+
+  /**
+   * Creates a fence item that allows the player to place fences
+   * @return the fence item
+   */
+  public static Entity createFenceItem() {
+    Entity fence = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/plants/misc/tobacco_seed.png"))
+            .addComponent(new ItemComponent("Fence", ItemType.PLACEABLE,
+                    "A fence to keep animals in or out",
+                    new Texture("images/plants/misc//tobacco_seed.png")));
+    return fence;
+  }
+
+  /**
+   * Creates a gate item that allows the player to place gates
+   * @return the gate item
+   */
+  public static Entity createGateItem() {
+    Entity gate = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/plants/misc/tobacco_seed.png"))
+            .addComponent(new ItemComponent("Gate", ItemType.PLACEABLE,
+                    "Allows the player to walk in and out of enclosed areas",
+                    new Texture("images/plants/misc//tobacco_seed.png")));
+    return gate;
+  }
+
+  /**
+   * Creates a sprinkler item that allows the player to place sprinklers
+   * @return the sprinkler item
+   */
+  public static Entity createSprinklerItem() {
+    Entity fence = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/plants/misc/tobacco_seed.png"))
+            .addComponent(new ItemComponent("Sprinkler", ItemType.PLACEABLE,
+                    "Waters crops in the surrounding area",
+                    new Texture("images/plants/misc//tobacco_seed.png")));
+    return fence;
+  }
+
+  /**
+   * Creates a chest item that allows the player to place chests
+   * @return the chest item
+   */
+  public static Entity createChestItem() {
+    Entity fence = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/plants/misc/tobacco_seed.png"))
+            .addComponent(new ItemComponent("Chest", ItemType.PLACEABLE,
+                    "A storage container to keep your seeds and goodies",
+                    new Texture("images/plants/misc//tobacco_seed.png")));
+    return fence;
+  }
+
 }

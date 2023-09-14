@@ -43,7 +43,11 @@ public class FactoryService {
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("tobacco seed", ItemFactory::createTobaccoSeed),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("COW FOOD", ItemFactory::createCowFood),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("egg", ItemFactory::createEgg),
-            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("milk", ItemFactory::createMilk));
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("milk", ItemFactory::createMilk),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Chest", ItemFactory::createChestItem),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Fence", ItemFactory::createFenceItem),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Gate", ItemFactory::createGateItem),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Sprinkler", ItemFactory::createSprinklerItem));
 
     private static final Map<EntityType, Supplier<Entity>> placeableFactories = Map.ofEntries(
             new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.Chest, PlaceableFactory::createChest),
