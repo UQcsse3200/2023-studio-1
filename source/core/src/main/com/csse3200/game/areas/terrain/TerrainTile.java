@@ -45,6 +45,11 @@ public class TerrainTile implements TiledMapTile {
   private Entity cropTile = null;
 
   /**
+   * Stores a placebale entity which occupies the terrain tile.
+   */
+  private Entity placeable = null;
+
+  /**
    * Stores the speed modifier of the tile
    */
   private float speedModifier;
@@ -255,6 +260,25 @@ public class TerrainTile implements TiledMapTile {
     getCropTile().getComponent(CropTileComponent.class).write(json);
     if (getCropTile().getComponent(CropTileComponent.class).getPlant() != null) {
       getCropTile().getComponent(CropTileComponent.class).getPlant().getComponent(PlantComponent.class).write(json);
+    }
+  }
+
+  /**
+   * Returns the placeable entity that is on the TerrainTile
+   * @return the placeable entity
+   */
+  public Entity getPlaceable() {
+    return placeable;
+  }
+
+  /**
+   * Sets the placeable entity and sets the tile to be occupied if not null
+   * @param placeable the entity to be placed on the tile
+   */
+  public void setPlaceable(Entity placeable) {
+    this.placeable = placeable;
+    if (placeable != null) {
+      setOccupied();
     }
   }
 

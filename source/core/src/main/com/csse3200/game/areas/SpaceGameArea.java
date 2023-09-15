@@ -10,6 +10,7 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.items.ItemType;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
@@ -134,25 +135,25 @@ public class SpaceGameArea extends GameArea {
           "images/plants/hammer_plant/item_drop.png",
           "images/plants/hammer_plant/seedbag.png",
 
-          "images/plants/venus_trap/1_seedling.png",
-          "images/plants/venus_trap/2_sprout.png",
-          "images/plants/venus_trap/3_juvenile.png",
-          "images/plants/venus_trap/4_adult.png",
-          "images/plants/venus_trap/5_decaying.png",
+          "images/plants/space_snapper/1_seedling.png",
+          "images/plants/space_snapper/2_sprout.png",
+          "images/plants/space_snapper/3_juvenile.png",
+          "images/plants/space_snapper/4_adult.png",
+          "images/plants/space_snapper/5_decaying.png",
 
-          "images/plants/waterweed/1_seedling.png",
-          "images/plants/waterweed/2_sprout.png",
-          "images/plants/waterweed/3_juvenile.png",
-          "images/plants/waterweed/4_adult.png",
-          "images/plants/waterweed/5_decaying.png",
-          "images/plants/waterweed/item_drop.png",
+          "images/plants/atomic_algae/1_seedling.png",
+          "images/plants/atomic_algae/2_sprout.png",
+          "images/plants/atomic_algae/3_juvenile.png",
+          "images/plants/atomic_algae/4_adult.png",
+          "images/plants/atomic_algae/5_decaying.png",
+          "images/plants/atomic_algae/item_drop.png",
 
-          "images/plants/nightshade/1_seedling.png",
-          "images/plants/nightshade/2_sprout.png",
-          "images/plants/nightshade/3_juvenile.png",
-          "images/plants/nightshade/4_adult.png",
-          "images/plants/nightshade/5_decaying.png",
-          "images/plants/nightshade/item_drop.png",
+          "images/plants/deadly_nightshade/1_seedling.png",
+          "images/plants/deadly_nightshade/2_sprout.png",
+          "images/plants/deadly_nightshade/3_juvenile.png",
+          "images/plants/deadly_nightshade/4_adult.png",
+          "images/plants/deadly_nightshade/5_decaying.png",
+          "images/plants/deadly_nightshade/item_drop.png",
 
           "images/plants/misc/aloe_vera_seed.png",
           "images/plants/misc/cosmic_cob_seed.png",
@@ -203,10 +204,16 @@ public class SpaceGameArea extends GameArea {
     spawnTerrain();
     spawnInvisibleObstacle();// spawn invisible obstacle on the non-traversable area of the map
 
-    spawnCrop(); // temp
+    spawnCrop(5, 11, "Cosmic Cob");
+    spawnCrop(7, 11, "Aloe Vera");
+    spawnCrop(9, 11, "Hammer Plant");
+    spawnCrop(11, 11, "Space Snapper");
+    spawnCrop(13, 11, "Deadly Nightshade");
+    spawnCrop(15, 11, "Atomic Algae");
 
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createGateItem());
 
     // TODO:
 
@@ -289,6 +296,16 @@ public class SpaceGameArea extends GameArea {
     Entity newPlayer = TerrainCropTileFactory.createTerrainEntity(0,0);
     spawnEntityAt(newPlayer, pos, true, true);
     Entity plant = FactoryService.getPlantFactories().get("Cosmic Cob").apply(newPlayer.getComponent(CropTileComponent.class));
+    ServiceLocator.getEntityService().register(plant);
+    newPlayer.getComponent(CropTileComponent.class).setPlant(plant);
+    return newPlayer;
+  }
+
+  private Entity spawnCrop(int x, int y, String plantType) {
+    GridPoint2 pos = new GridPoint2(x, y);
+    Entity newPlayer = TerrainCropTileFactory.createTerrainEntity(0,0);
+    spawnEntityAt(newPlayer, pos, true, true);
+    Entity plant = FactoryService.getPlantFactories().get(plantType).apply(newPlayer.getComponent(CropTileComponent.class));
     ServiceLocator.getEntityService().register(plant);
     newPlayer.getComponent(CropTileComponent.class).setPlant(plant);
     return newPlayer;

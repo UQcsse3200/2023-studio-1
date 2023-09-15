@@ -82,7 +82,7 @@ public class TractorActions extends Component {
     if (tile == null) {
       return;
     }
-    if (tile.getCropTile() != null || !tile.isTillable()) {
+    if (tile.isOccupied() || !tile.isTillable()) {
       return;
     }
     // Make a new tile

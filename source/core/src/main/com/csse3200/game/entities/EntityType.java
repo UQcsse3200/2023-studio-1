@@ -15,7 +15,11 @@ public enum EntityType {
     OxygenEater(0),
     Item(0),
     Questgiver(0),
-    QuestgiverIndicator(0);
+    QuestgiverIndicator(0),
+    Chest(0),
+    Fence(0),
+    Gate(0),
+    Sprinkler(0);
 
 
     // Negative rate for consumption, positive for production of oxygen
