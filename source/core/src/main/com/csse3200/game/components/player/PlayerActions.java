@@ -200,6 +200,8 @@ public class PlayerActions extends Component {
       if (entityType != null) {
         if (entityType.equals(EntityType.Questgiver)) {
           entity.getEvents().trigger("toggleMissions");
+        } else if (entityType.equals(EntityType.Gate)) {
+          entity.getEvents().trigger("toggleGate");
         }
       }
 

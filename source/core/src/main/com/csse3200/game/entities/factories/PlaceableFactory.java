@@ -1,12 +1,13 @@
 package com.csse3200.game.entities.factories;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.csse3200.game.components.placeables.FenceComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.ColliderComponent;
-import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 
@@ -40,8 +41,8 @@ public class PlaceableFactory {
      * @return the gate entity that was made
      */
     public static Entity createGate() {
-        Entity gate = createBasePlaceable(EntityType.Gate);
-        // Add components here
+        Entity gate = createBasePlaceable(EntityType.Gate)
+                .addComponent(new FenceComponent(true, new Texture("images/plants/misc/tobacco_seed.png")));
         return gate;
     }
 
