@@ -117,6 +117,7 @@ public class SpaceGameArea extends GameArea {
           "images/plants/cosmic_cob/3_juvenile.png",
           "images/plants/cosmic_cob/4_adult.png",
           "images/plants/cosmic_cob/5_decaying.png",
+          "images/plants/cosmic_cob/6_dead.png",
           "images/plants/cosmic_cob/item_drop.png",
 
           "images/plants/aloe_vera/1_seedling.png",
@@ -124,6 +125,7 @@ public class SpaceGameArea extends GameArea {
           "images/plants/aloe_vera/3_juvenile.png",
           "images/plants/aloe_vera/4_adult.png",
           "images/plants/aloe_vera/5_decaying.png",
+          "images/plants/aloe_vera/6_dead.png",
           "images/plants/aloe_vera/item_drop.png",
           "images/plants/aloe_vera/seedbag.png",
 
@@ -132,6 +134,7 @@ public class SpaceGameArea extends GameArea {
           "images/plants/hammer_plant/3_juvenile.png",
           "images/plants/hammer_plant/4_adult.png",
           "images/plants/hammer_plant/5_decaying.png",
+          "images/plants/hammer_plant/6_dead.png",
           "images/plants/hammer_plant/item_drop.png",
           "images/plants/hammer_plant/seedbag.png",
 
@@ -140,20 +143,27 @@ public class SpaceGameArea extends GameArea {
           "images/plants/space_snapper/3_juvenile.png",
           "images/plants/space_snapper/4_adult.png",
           "images/plants/space_snapper/5_decaying.png",
+          "images/plants/space_snapper/6_dead.png",
+          "images/plants/space_snapper/item_drop.png",
+          "images/plants/space_snapper/seedbag.png",
 
           "images/plants/atomic_algae/1_seedling.png",
           "images/plants/atomic_algae/2_sprout.png",
           "images/plants/atomic_algae/3_juvenile.png",
           "images/plants/atomic_algae/4_adult.png",
           "images/plants/atomic_algae/5_decaying.png",
+          "images/plants/atomic_algae/6_dead.png",
           "images/plants/atomic_algae/item_drop.png",
+          "images/plants/atomic_algae/seedbag.png",
 
           "images/plants/deadly_nightshade/1_seedling.png",
           "images/plants/deadly_nightshade/2_sprout.png",
           "images/plants/deadly_nightshade/3_juvenile.png",
           "images/plants/deadly_nightshade/4_adult.png",
           "images/plants/deadly_nightshade/5_decaying.png",
+          "images/plants/deadly_nightshade/6_dead.png",
           "images/plants/deadly_nightshade/item_drop.png",
+          //"images/plants/deadly_nightshade/seedbag.png",
 
           "images/plants/misc/aloe_vera_seed.png",
           "images/plants/misc/cosmic_cob_seed.png",
