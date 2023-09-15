@@ -1,0 +1,17 @@
+deadly_nightshade.png
+size:32,256
+repeat:none
+1_seedling
+bounds:2,172,16,32
+2_sprout
+bounds:2,70,16,32
+3_juvenile
+bounds:2,2,16,32
+4_adult
+bounds:2,36,16,32
+5_decaying
+bounds:2,104,16,32
+6_dead
+bounds:2,206,16,32
+default
+bounds:2,138,16,32

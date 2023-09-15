@@ -1,0 +1,17 @@
+hammer_plant.png
+size:128,64
+repeat:none
+1_seedling
+bounds:2,2,16,32
+2_sprout
+bounds:56,2,16,32
+3_juvenile
+bounds:92,2,16,32
+4_adult
+bounds:74,2,16,32
+5_decaying
+bounds:38,2,16,32
+6_dead
+bounds:110,18,16,16
+default
+bounds:20,2,16,32
