@@ -517,7 +517,7 @@ public class PlantComponent extends Component {
     public void updateGrowthStage() {
         int time = ServiceLocator.getTimeService().getHour();
 
-        if ((time == 12) || (time == 0) || (time == 4) || (time == 8)) {
+        if (time == 12) {
             if ((getGrowthStage().getValue() < GrowthStage.ADULT.getValue())) {
                 if (this.currentGrowthLevel >= this.growthStageThresholds[getGrowthStage().getValue() - 1]) {
                     setGrowthStage(getGrowthStage().getValue() + 1);
