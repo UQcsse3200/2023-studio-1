@@ -1,6 +1,9 @@
 package com.csse3200.game.components.placeables;
 
 import com.csse3200.game.components.Component;
+import com.csse3200.game.physics.PhysicsLayer;
+import com.csse3200.game.physics.components.ColliderComponent;
+import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 
 public class FenceComponent extends Component {
@@ -51,9 +54,12 @@ public class FenceComponent extends Component {
 
         if (isOpen) {
             this.currentTexture.setTexture(openGatePath);
+            //this.entity.getComponent(PhysicsComponent.class).setEnabled(false);
+            this.entity.getComponent(ColliderComponent.class).dispose();;
             return;
         }
-
+        //this.entity.getComponent(PhysicsComponent.class).setEnabled(true);
+        this.entity.addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
         this.currentTexture.setTexture(closedGatePath);
     }
 
