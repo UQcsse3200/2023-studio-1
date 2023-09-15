@@ -282,12 +282,25 @@ public class ItemFactory {
    * @return the sprinkler item
    */
   public static Entity createSprinklerItem() {
-    Entity fence = createBaseItem()
+    Entity sprinkler = createBaseItem()
             .addComponent(new TextureRenderComponent("images/plants/misc/tobacco_seed.png"))
             .addComponent(new ItemComponent("Sprinkler", ItemType.PLACEABLE,
                     "Waters crops in the surrounding area",
                     new Texture("images/plants/misc//tobacco_seed.png")));
-    return fence;
+    return sprinkler;
+  }
+
+  /**
+   * Creates a Pump item that allows the player to power sprinklers
+   * @return the sprinkler item
+   */
+  public static Entity createPumpItem() {
+    Entity pump = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/plants/misc/tobacco_seed.png"))
+            .addComponent(new ItemComponent("Pump", ItemType.PLACEABLE,
+                    "Powers connected sprinklers",
+                    new Texture("images/plants/misc//tobacco_seed.png")));
+    return pump;
   }
 
   /**

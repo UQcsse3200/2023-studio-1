@@ -8,6 +8,7 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 
 public class PlaceableFactory {
@@ -20,7 +21,8 @@ public class PlaceableFactory {
     public static Entity createBasePlaceable(EntityType type) {
         Entity placeable = new Entity(type)
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
-                .addComponent(new TextureRenderComponent("images/plants/misc/tobacco_seed.png"))
+                .addComponent(new DynamicTextureRenderComponent("images/plants/misc/tobacco_seed.png"))
+                //.addComponent(new TextureRenderComponent("images/plants/misc/tobacco_seed.png"))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
         return placeable;
     }
@@ -51,8 +53,22 @@ public class PlaceableFactory {
      */
     public static Entity createSprinkler() {
         Entity sprinkler = createBasePlaceable(EntityType.Sprinkler);
-        // Add components here
+        // set temp texture to differentiate from other entities
+        sprinkler.getComponent(DynamicTextureRenderComponent.class).setTexture("images/plants/misc/horticultural_heater_seed.png");
+        // stop from blocking player movement
+        sprinkler.getComponent(ColliderComponent.class).setLayer(PhysicsLayer.NONE);
         return sprinkler;
+    }
+
+    /**
+     * Creates a pump Entity - used in conjunction with sprinklers
+     * @return the pump that was made
+     */
+    public static Entity createPump() {
+        Entity pump = createBasePlaceable(EntityType.Pump);
+        // set temp texture to differentiate from other entities
+        pump.getComponent(DynamicTextureRenderComponent.class).setTexture("images/plants/misc/cosmic_cob_seed.png");
+        return pump;
     }
 
     /**

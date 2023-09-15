@@ -213,7 +213,6 @@ public class SpaceGameArea extends GameArea {
 
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
-    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createGateItem());
 
     // TODO:
 
@@ -224,6 +223,7 @@ public class SpaceGameArea extends GameArea {
     spawnAstrolotl();
     spawnOxygenEater();
 
+    /*
     spawnTool(ItemType.WATERING_CAN);
     spawnTool(ItemType.SHOVEL);
     spawnTool(ItemType.SCYTHE);
@@ -231,6 +231,7 @@ public class SpaceGameArea extends GameArea {
     spawnTool(ItemType.FERTILISER);
     spawnTool(ItemType.SEED);
     spawnTool(ItemType.FOOD);
+     */
 
     //playMusic();
   }

@@ -19,7 +19,8 @@ public enum EntityType {
     Chest(0),
     Fence(0),
     Gate(0),
-    Sprinkler(0);
+    Sprinkler(0),
+    Pump(0);
 
 
     // Negative rate for consumption, positive for production of oxygen
