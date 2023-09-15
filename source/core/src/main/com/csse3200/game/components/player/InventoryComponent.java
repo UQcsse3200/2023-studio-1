@@ -18,21 +18,6 @@ import java.util.Map;
  * Currently untested, but forms the basis for the UI which will be implemented soon:tm:
  */
 public class InventoryComponent extends Component {
-
-  public int findFirstIndex() {
-    for (int i = 0; i < itemPlace.size();i++) {
-      if (itemPlace.getOrDefault(i,null) == null) {
-        return i;
-      }
-      else {
-        if (i == 30) {
-          return -1;
-        }
-      }
-
-    }
-    return itemPlace.size();
-  }
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
   private final List<Entity> inventory = new ArrayList<>();
   private final HashMap<Entity, Integer> itemCount = new HashMap<>();
@@ -43,6 +28,7 @@ public class InventoryComponent extends Component {
   private Entity heldItem = null;
 
   private int heldIndex = 0;
+  private int pickupOffset = 0;
 
   public InventoryComponent(List<Entity> items) {
     if (items == null) {
@@ -157,7 +143,14 @@ public class InventoryComponent extends Component {
    * @return
    */
   public boolean setPosition(Entity entity){
-    int lastPlace = findFirstIndex();
+    int lastPlace;
+    if (pickupOffset != 0) {
+      lastPlace = findFirstIndex(pickupOffset);
+    }
+    else {
+      lastPlace = findFirstIndex();
+
+    }
     if (lastPlace == -1) {
       return false;
     }
@@ -201,10 +194,8 @@ public class InventoryComponent extends Component {
    * @param index The index of the item in the inventory to be set as the held item.
    */
   public void setHeldItem(int index) {
-    if (index >= 0 && index < 10) {
       this.heldItem = itemPlace.get(index);
       this.heldIndex = index;
-    }
   }
 
   /**
@@ -281,7 +272,31 @@ public class InventoryComponent extends Component {
     itemPosition.put(item, point);
   }
 
-
+  public int findFirstIndex(Integer... arguments) {
+    if (arguments.length == 1) {
+      for (int i = arguments[0]; i < arguments[0] + 10; i++) {
+        if (itemPlace.getOrDefault(i,null) == null) {
+          return i;
+        }
+        else {
+          if (i == 29) {
+            return -1;
+          }
+        }
+      }
+    }
+    for (int i = 0; i < itemPlace.size();i++) {
+      if (itemPlace.getOrDefault(i,null) == null) {
+        return i;
+      }
+      else {
+        if (i == 29) {
+          return -1;
+        }
+      }
+    }
+    return itemPlace.size();
+  }
 
   @Override
   public void write(Json json) {
@@ -303,4 +318,8 @@ public class InventoryComponent extends Component {
     entity.getEvents().trigger("updateInventory");
 
   }
+  public void setPickupOffset(int offset) {
+    this.pickupOffset = offset;
+  }
+
 }

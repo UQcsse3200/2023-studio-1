@@ -182,13 +182,9 @@ public class InventoryDisplay extends UIComponent {
           map.put((Image) payload.getDragActor(),slot);
           slot.setItemImage((Image)payload.getDragActor());
           int currentIndex = playerInventory.getHeldIndex();
-          if (indexes.get(slot) > 9) {
+
             playerInventory.setHeldItem(currentIndex);
-          }
-          else {
-            playerInventory.setHeldItem(indexes.get(slot));
-            entity.getEvents().trigger("hotkeySelection", indexes.get(slot));
-          }
+
 
         }
       });

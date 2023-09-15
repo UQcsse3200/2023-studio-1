@@ -21,6 +21,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private static boolean menuOpened = false;
   private static Enum currentMenu = MenuTypes.NONE;
   private final int hotKeyOffset = 6;
+  private static int hotkeyOffset = 0;
   public enum MenuTypes{
     PAUSEMENU,
     NONE
@@ -82,6 +83,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.NUM_6: case Keys.NUM_7: case Keys.NUM_8:
         case Keys.NUM_9:
           triggerHotKeySelection(keycode);
+          return true;
+        case Keys.TAB:
+          triggerHotkeySwitch();
           return true;
         case Keys.T:
           entity.getEvents().trigger("toggleLight");
@@ -188,6 +192,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
      if (index < 0) {
        index = 9;
      }
-     entity.getEvents().trigger("hotkeySelection", index);
+     entity.getEvents().trigger("hotkeySelection", index + hotkeyOffset);
+   }
+   public void triggerHotkeySwitch() {
+     hotkeyOffset = (hotkeyOffset + 10) % 30;
+     entity.getEvents().trigger("switchRows",hotkeyOffset);
    }
 }

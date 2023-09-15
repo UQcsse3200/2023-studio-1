@@ -140,9 +140,10 @@ public class ToolbarDisplay extends UIComponent {
             isOpen = true;
         }
     }
-    public void toggleThroughInventory() {
-        offset = (offset + 10) % 30;
+    public void toggleThroughInventory(int offset) {
+        this.offset = offset;
         inventory.setHeldItem(selectedSlot + offset);
+        inventory.setPickupOffset(offset);
         resetToolbar();
     }
 
@@ -160,8 +161,7 @@ public class ToolbarDisplay extends UIComponent {
      * @param slotNum updated slot number
      */
     public void updateItemSlot(int slotNum) {
-        this.selectedSlot = slotNum;
-        System.out.println(selectedSlot);
+        this.selectedSlot = slotNum % 10;
         // refresh ui to reflect new selected slot
         resetToolbar();
     }
