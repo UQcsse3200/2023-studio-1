@@ -9,25 +9,28 @@ import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 
 public class PlaceableFactory {
 
     /**
      * Creates the basic most broad Placeable Entity
+     * 
      * @param type the type of entity from the EntityType enum
      * @return the entity that was made
      */
     public static Entity createBasePlaceable(EntityType type) {
         Entity placeable = new Entity(type)
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
-                .addComponent(new TextureRenderComponent("images/plants/misc/tobacco_seed.png"))
+                //.addComponent(new TextureRenderComponent("images/plants/misc/tobacco_seed.png"))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
         return placeable;
     }
 
     /**
      * Creates a fence Entity
+     * 
      * @return the fence entity that was made
      */
     public static Entity createFence() {
@@ -38,16 +41,19 @@ public class PlaceableFactory {
 
     /**
      * Creates a gate Entity
+     * 
      * @return the gate entity that was made
      */
     public static Entity createGate() {
         Entity gate = createBasePlaceable(EntityType.Gate)
-                .addComponent(new FenceComponent(true, new Texture("images/plants/misc/tobacco_seed.png")));
+                .addComponent(new DynamicTextureRenderComponent("images/plants/misc/tobacco_seed.png"))
+                .addComponent(new FenceComponent(true));
         return gate;
     }
 
     /**
      * Creates a sprinkler Entity
+     * 
      * @return the sprinkler that was made
      */
     public static Entity createSprinkler() {
@@ -58,6 +64,7 @@ public class PlaceableFactory {
 
     /**
      * Creates a chest Entity
+     * 
      * @return the chest that was made
      */
     public static Entity createChest() {

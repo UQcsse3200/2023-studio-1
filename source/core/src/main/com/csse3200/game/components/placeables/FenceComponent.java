@@ -1,30 +1,30 @@
 package com.csse3200.game.components.placeables;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 
-/**
- * Class for all plants in the game.
- */
 public class FenceComponent extends Component {
 
     private boolean isGate = false;
     private boolean isOpen = false;
 
-    private Texture texture;
+    /* Current texture of the entity */
+    private DynamicTextureRenderComponent currentTexture;
 
     /**
      * The paths to the sound associated with the gate
      */
     private String[] sounds;
 
-    public FenceComponent(boolean isGate, Texture texture) {
-        this.texture = texture;
+    private String closedGatePath = "images/plants/misc/tobacco_seed.png";
+    private String openGatePath = "images/egg.png";
+    private String fencePath = "";
+
+    public FenceComponent(boolean isGate) {
         this.isGate = isGate;
     }
 
-    public FenceComponent(Texture texture) {
-        this.texture = texture;
+    public FenceComponent() {
     }
 
     /**
@@ -34,16 +34,27 @@ public class FenceComponent extends Component {
     public void create() {
         super.create();
 
+        this.currentTexture = entity.getComponent(DynamicTextureRenderComponent.class);
+
         // Initialise event listener for gate.
         if (isGate) {
             entity.getEvents().addListener("toggleGate", this::toggleGate);
+            this.currentTexture.setTexture(closedGatePath);
+        } else {
+            this.currentTexture.setTexture(fencePath);
         }
 
     }
 
     private void toggleGate() {
         isOpen = !isOpen;
-        System.out.println("TOGGLE GATE");
+
+        if (isOpen) {
+            this.currentTexture.setTexture(openGatePath);
+            return;
+        }
+
+        this.currentTexture.setTexture(closedGatePath);
     }
 
 }
