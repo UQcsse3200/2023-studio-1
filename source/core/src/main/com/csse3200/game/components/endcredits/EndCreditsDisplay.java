@@ -36,32 +36,20 @@ public class EndCreditsDisplay extends UIComponent {
     private void addActors() {
         table = new Table();
         table.setFillParent(true);
-        background = new Image(
-                ServiceLocator.getResourceService().getAsset("images/lose_temp.png", Texture.class));
+        background = new Image(new Texture(Gdx.files.internal("images/intro_background_v2.png")));
         background.setWidth(Gdx.graphics.getWidth());
         background.setHeight(Gdx.graphics.getHeight());
         background.setPosition(0, 0);
 
-        TextButton exitBtn = new TextButton("End Credits Working", skin);
 
-        exitBtn.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("Exit button clicked");
-                        exit();
-                    }
-                });
-
-        table.add(exitBtn).padTop(30f);
 
         stage.addActor(background);
         stage.addActor(table);
     }
 
-    private void exit() {
-        game.setScreen(ScreenType.MAIN_MENU);
-    }
+    //private void exit() {
+      //  game.setScreen(ScreenType.MAIN_MENU);
+    //}
 
     @Override
     public void draw(SpriteBatch batch) {
