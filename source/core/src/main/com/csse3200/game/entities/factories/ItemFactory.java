@@ -180,7 +180,7 @@ public class ItemFactory {
    */
   public static Entity createAtomicAlgaeSeed() {
     Entity seed = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/waterweed/atomic_algae_seed.png"))
+            .addComponent(new TextureRenderComponent("images/plants/misc/atomic_algae_seed.png"))
             .addComponent(new ItemComponent("atomic algae seed", ItemType.SEED,
                     "Seed of Atomic Algae", new Texture("images/plants/misc/atomic_algae_seed.png")));
     return seed;

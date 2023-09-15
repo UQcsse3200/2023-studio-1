@@ -171,9 +171,9 @@ class PlantFactoryTest {
             case "cosmicCob" -> stats.cosmicCob;
             case "aloeVera" -> stats.aloeVera;
             case "hammerPlant" -> stats.hammerPlant;
-            case "venusFlyTrap" -> stats.venusFlyTrap;
-            case "waterWeed" -> stats.waterWeed;
-            case "nightshade" -> stats.nightshade;
+            case "venusFlyTrap" -> stats.spaceSnapper;
+            case "waterWeed" -> stats.atomicAlgae;
+            case "nightshade" -> stats.deadlyNightshade;
             default -> throw new IllegalArgumentException("Unknown plant name: " + id);
         };
     }
@@ -222,11 +222,11 @@ class PlantFactoryTest {
                 Arguments.of("hammerPlant", "images/plants/cosmic_cob/4_adult.png",
                         (Callable<Entity>) () -> PlantFactory.createHammerPlant(mockCropTile)),
                 Arguments.of("nightshade", "images/plants/cosmic_cob/4_adult.png",
-                        (Callable<Entity>) () -> PlantFactory.createNightshade(mockCropTile)),
+                        (Callable<Entity>) () -> PlantFactory.createDeadlyNightshade(mockCropTile)),
                 Arguments.of("waterWeed", "images/plants/cosmic_cob/4_adult.png",
-                        (Callable<Entity>) () -> PlantFactory.createWaterWeed(mockCropTile)),
+                        (Callable<Entity>) () -> PlantFactory.createAtomicAlgae(mockCropTile)),
                 Arguments.of("venusFlyTrap", "images/plants/cosmic_cob/4_adult.png",
-                        (Callable<Entity>) () -> PlantFactory.createVenusFlyTrap(mockCropTile))
+                        (Callable<Entity>) () -> PlantFactory.createSpaceSnapper(mockCropTile))
         );
     }
 

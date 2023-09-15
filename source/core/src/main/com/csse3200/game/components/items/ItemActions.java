@@ -287,15 +287,15 @@ public class ItemActions extends Component {
                 tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
             }
             case "space snapper seed" -> {
-                plantFactoryMethod = PlantFactory::createVenusFlyTrap;
+                plantFactoryMethod = PlantFactory::createSpaceSnapper;
                 tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
             }
-            case "water weed seed" -> {
-                plantFactoryMethod = PlantFactory::createWaterWeed;
+            case "atomic algae seed" -> {
+                plantFactoryMethod = PlantFactory::createAtomicAlgae;
                 tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
             }
             case "deadly nightshade seed" -> {
-                plantFactoryMethod = PlantFactory::createNightshade;
+                plantFactoryMethod = PlantFactory::createDeadlyNightshade;
                 tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
             }
             default -> {
