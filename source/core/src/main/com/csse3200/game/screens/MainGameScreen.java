@@ -82,6 +82,8 @@ public class MainGameScreen extends ScreenAdapter {
 
     private static Boolean lose;
 
+    private static Boolean playCredits;
+
 
 
     public MainGameScreen(GdxGame game) {
@@ -128,6 +130,10 @@ public class MainGameScreen extends ScreenAdapter {
         lose = false;
         spaceGameArea.getPlayer().getEvents().addListener("loseScreen", this::loseScreenStart);
 
+        playCredits = false;
+        spaceGameArea.getPlayer().getEvents().addListener("endCredits", this::playEndCredits);
+
+
         // if the LoadSaveOnStart value is set true then load entities saved from file
         if (game.isLoadOnStart()){
             ServiceLocator.getSaveLoadService().load();
@@ -136,6 +142,10 @@ public class MainGameScreen extends ScreenAdapter {
 
     public void loseScreenStart() {
         lose = true;
+    }
+
+    public void playEndCredits() {
+        playCredits = true;
     }
 
     @Override
@@ -148,6 +158,9 @@ public class MainGameScreen extends ScreenAdapter {
         renderer.render();
         if (lose == true) {
             game.setScreen(GdxGame.ScreenType.LOSESCREEN);
+        }
+        if (playCredits) {
+            game.setScreen(GdxGame.ScreenType.ENDCREDITS);
         }
         if (PauseMenuActions.getQuitGameStatus()) {
             entity.getEvents().trigger("exit");

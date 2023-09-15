@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.input.InputComponent;
+import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,6 +84,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.NUM_9:
           triggerHotKeySelection(keycode);
           return true;
+        case Keys.C :
+          ServiceLocator.getGameArea().getPlayer().getEvents().trigger("endCredits");
         default:
           return false;
       }
