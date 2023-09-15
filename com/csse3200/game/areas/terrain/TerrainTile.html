@@ -82,8 +82,10 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">TerrainTile</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements com.badlogic.gdx.maps.tiled.TiledMapTile</span></div>
-<div class="block">Custom terrain tile implementation for tiled map terrain that stores additional properties we
- may want to have in the game, such as audio, walking speed, traversability by AI, etc.</div>
+<div class="block">Custom terrain tile implementation for tiled map terrain that stores
+ additional properties we
+ may want to have in the game, such as audio, walking speed, traversability by
+ AI, etc.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -209,7 +211,8 @@ implements com.badlogic.gdx.maps.tiled.TiledMapTile</span></div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setOccupied()" class="member-name-link">setOccupied</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">labels the terrain tile as being occupied (terrain tile does not store actually entity occupying it)</div>
+<div class="block">labels the terrain tile as being occupied (terrain tile does not store
+ actually entity occupying it)</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setOffsetX(float)" class="member-name-link">setOffsetX</a><wbr>(float&nbsp;offsetX)</code></div>
@@ -225,7 +228,8 @@ implements com.badlogic.gdx.maps.tiled.TiledMapTile</span></div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTerrainCategory(com.csse3200.game.areas.terrain.TerrainTile.TerrainCategory)" class="member-name-link">setTerrainCategory</a><wbr>(<a href="TerrainTile.TerrainCategory.html" title="enum class in com.csse3200.game.areas.terrain">TerrainTile.TerrainCategory</a>&nbsp;terrainCategory)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the terrain category of the terrain tile to the specified terrain category</div>
+<div class="block">Sets the terrain category of the terrain tile to the specified terrain
+ category</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTextureRegion(com.badlogic.gdx.graphics.g2d.TextureRegion)" class="member-name-link">setTextureRegion</a><wbr>(com.badlogic.gdx.graphics.g2d.TextureRegion&nbsp;textureRegion)</code></div>
@@ -411,7 +415,8 @@ implements com.badlogic.gdx.maps.tiled.TiledMapTile</span></div>
 <section class="detail" id="setTerrainCategory(com.csse3200.game.areas.terrain.TerrainTile.TerrainCategory)">
 <h3>setTerrainCategory</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTerrainCategory</span><wbr><span class="parameters">(<a href="TerrainTile.TerrainCategory.html" title="enum class in com.csse3200.game.areas.terrain">TerrainTile.TerrainCategory</a>&nbsp;terrainCategory)</span></div>
-<div class="block">Sets the terrain category of the terrain tile to the specified terrain category</div>
+<div class="block">Sets the terrain category of the terrain tile to the specified terrain
+ category</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>terrainCategory</code> - new terrain category for terrain tile</dd>
@@ -444,7 +449,8 @@ implements com.badlogic.gdx.maps.tiled.TiledMapTile</span></div>
 <section class="detail" id="setOccupied()">
 <h3>setOccupied</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setOccupied</span>()</div>
-<div class="block">labels the terrain tile as being occupied (terrain tile does not store actually entity occupying it)</div>
+<div class="block">labels the terrain tile as being occupied (terrain tile does not store
+ actually entity occupying it)</div>
 </section>
 </li>
 <li>
@@ -508,7 +514,8 @@ implements com.badlogic.gdx.maps.tiled.TiledMapTile</span></div>
 <section class="detail" id="setCropTile(com.csse3200.game.entities.Entity)">
 <h3>setCropTile</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setCropTile</span><wbr><span class="parameters">(<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;cropTile)</span></div>
-<div class="block">Sets the crop tile which occupies the terrain tile. Replaces any existing crop tile that was already occupying the
+<div class="block">Sets the crop tile which occupies the terrain tile. Replaces any existing
+ crop tile that was already occupying the
  terrain tile. Do not use to set cropTile as null, use removeCropTile instead.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -520,7 +527,8 @@ implements com.badlogic.gdx.maps.tiled.TiledMapTile</span></div>
 <section class="detail" id="removeCropTile()">
 <h3>removeCropTile</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">removeCropTile</span>()</div>
-<div class="block">Removes any crop tile which occupies the terrain tile. Does not return the crop tile.</div>
+<div class="block">Removes any crop tile which occupies the terrain tile. Does not return the
+ crop tile.</div>
 </section>
 </li>
 <li>
