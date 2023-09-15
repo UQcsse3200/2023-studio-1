@@ -237,7 +237,7 @@ public class ItemActions extends Component {
    */
   private boolean hoe(Vector2 playerPos, Vector2 mousePos) {
     TerrainTile tile = getTileAtPosition(playerPos, mousePos);
-    if (tile.getCropTile() != null || !tile.isTillable()) {
+    if (tile.isOccupied() || !tile.isTillable()) {
       return false;
     }
     // Make a new tile
