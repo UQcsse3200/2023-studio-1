@@ -5,6 +5,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.entities.factories.NPCFactory;
+import com.csse3200.game.entities.factories.PlaceableFactory;
 import com.csse3200.game.entities.factories.PlantFactory;
 
 import java.util.AbstractMap;
@@ -40,7 +41,17 @@ public class FactoryService {
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("space snapper seed", ItemFactory::createSpaceSnapperSeed),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("COW FOOD", ItemFactory::createCowFood),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("egg", ItemFactory::createEgg),
-            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("milk", ItemFactory::createMilk));
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("milk", ItemFactory::createMilk),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Chest", ItemFactory::createChestItem),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Fence", ItemFactory::createFenceItem),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Gate", ItemFactory::createGateItem),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Sprinkler", ItemFactory::createSprinklerItem));
+
+    private static final Map<String, Supplier<Entity>> placeableFactories = Map.ofEntries(
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Chest", PlaceableFactory::createChest),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Fence", PlaceableFactory::createFence),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Gate", PlaceableFactory::createGate),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Sprinkler", PlaceableFactory::createSprinkler));
 
     public static Map<String, Function<CropTileComponent, Entity>> getPlantFactories() {
         return plantFactories;
@@ -52,5 +63,9 @@ public class FactoryService {
 
     public static Map<String, Supplier<Entity>> getItemFactories() {
         return itemFactories;
+    }
+
+    public static Map<String, Supplier<Entity>> getPlaceableFactories() {
+        return placeableFactories;
     }
 }
