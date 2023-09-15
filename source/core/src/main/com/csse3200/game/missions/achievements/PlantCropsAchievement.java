@@ -66,8 +66,8 @@ public class PlantCropsAchievement extends Achievement {
     private void updateState(String ignored) {
         if (++numberOfCropsPlanted >= target) {
             numberOfCropsPlanted = target;
-            ServiceLocator.getMissionManager().getEvents().trigger("achievementComplete");
         }
+        notifyUpdate();
     }
 
 }

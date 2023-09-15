@@ -2,7 +2,6 @@ package com.csse3200.game.missions.quests;
 
 import com.csse3200.game.missions.Mission;
 import com.csse3200.game.missions.rewards.Reward;
-import com.csse3200.game.services.ServiceLocator;
 
 public abstract class Quest extends Mission {
 

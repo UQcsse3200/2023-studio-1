@@ -60,8 +60,8 @@ public class FertiliseCropTilesQuest extends Quest {
     private void updateState() {
         if (++numberOfTilesFertilised >= target) {
             numberOfTilesFertilised = target;
-            ServiceLocator.getMissionManager().getEvents().trigger("questComplete");
         }
+        notifyUpdate();
     }
 
     @Override
