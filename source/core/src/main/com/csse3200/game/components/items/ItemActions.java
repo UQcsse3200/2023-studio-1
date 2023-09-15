@@ -31,8 +31,8 @@ public class ItemActions extends Component {
   /**
    * Uses the item at the given position
    * 
-   * @param player the player entity using the item
-   * @param mousePos  the position of the mouse
+   * @param player   the player entity using the item
+   * @param mousePos the position of the mouse
    * @param map      item to use/ interact with tile
    * @return if interaction with tile was success return true else return false.
    */
@@ -72,16 +72,11 @@ public class ItemActions extends Component {
         resultStatus = water(tile);
         return resultStatus;
       }
-      case FOOD -> { // TODO: THIS IS ITEM TYPE IS JUST FOR TESTING PURPOSES, REPLACE WITH PLANT DROP TYPE
+      case FOOD -> {
         if (interactionCollider == null) {
           return false;
         }
         resultStatus = feed(interactionCollider.getSuitableEntities(ItemType.FOOD, mouseWorldPos));
-        // TODO remove this who ever wrote it or add it in
-//        if (!resultStatus) {
-//          // consume it yourself instead??
-//          // resultStatus = consume(player)
-//        }
         return resultStatus;
       }
       case FERTILISER -> {
@@ -103,9 +98,10 @@ public class ItemActions extends Component {
   }
 
   /**
-   * Places a placeable object based on its name (from ItemComponent) on a TerrainTile
+   * Places a placeable object based on its name (from ItemComponent) on a
+   * TerrainTile
    *
-   * @param tile - The TerrainTile to place the object on
+   * @param tile        - The TerrainTile to place the object on
    * @param adjustedPos - The position of the tile as a Vector2
    * @return the result of whether it was placed
    */
