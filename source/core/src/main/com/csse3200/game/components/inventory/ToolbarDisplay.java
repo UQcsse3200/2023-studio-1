@@ -23,6 +23,7 @@ public class ToolbarDisplay extends UIComponent {
     private boolean isOpen;
     private InventoryComponent inventory;
     private int selectedSlot = -1;
+    private int offset;
 
     /**
      * Creates the event listeners, ui, and gets the UI.
@@ -34,6 +35,7 @@ public class ToolbarDisplay extends UIComponent {
         isOpen = true;
         entity.getEvents().addListener("updateInventory", this::updateInventory);
         entity.getEvents().addListener("toggleInventory",this::toggleOpen);
+        entity.getEvents().addListener("switchRows",this::toggleThroughInventory);
         entity.getEvents().addListener("hotkeySelection",this::updateItemSlot);
         inventory = entity.getComponent(InventoryDisplay.class).getInventory();
     }
@@ -59,11 +61,11 @@ public class ToolbarDisplay extends UIComponent {
             label.setColor(Color.BLUE);
             label.setAlignment(Align.topLeft);
             ItemSlot item;
-            if (inventory.getItemPos(i) == null){
+            if (inventory.getItemPos(i + offset) == null){
                 item = new ItemSlot(i == selectedSlot);
             } else {
                 item = new ItemSlot(
-                        inventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture(),
+                        inventory.getItemPos(i + offset).getComponent(ItemComponent.class).getItemTexture(),
                         i == selectedSlot);
 
             }
@@ -85,6 +87,7 @@ public class ToolbarDisplay extends UIComponent {
      *  @see Table for positioning options
      */
     private void addActors() {
+        offset = 0;
         Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
         table = new Table(skin);
         table.defaults().size(64, 64);
@@ -137,6 +140,11 @@ public class ToolbarDisplay extends UIComponent {
             isOpen = true;
         }
     }
+    public void toggleThroughInventory() {
+        offset = (offset + 10) % 30;
+        inventory.setHeldItem(selectedSlot + offset);
+        resetToolbar();
+    }
 
     /**
      * Updates the player's inventory toolbar on the ui.
@@ -152,7 +160,8 @@ public class ToolbarDisplay extends UIComponent {
      * @param slotNum updated slot number
      */
     public void updateItemSlot(int slotNum) {
-        this.selectedSlot = inventory.getHeldIndex();
+        this.selectedSlot = slotNum;
+        System.out.println(selectedSlot);
         // refresh ui to reflect new selected slot
         resetToolbar();
     }
