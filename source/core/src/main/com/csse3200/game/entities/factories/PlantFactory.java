@@ -44,7 +44,8 @@ public class PlantFactory {
                                     config.imageFolderPath + "2_sprout.png",
                                     config.imageFolderPath + "3_juvenile.png",
                                     config.imageFolderPath + "4_adult.png",
-                                    config.imageFolderPath + "5_decaying.png"
+                                    config.imageFolderPath + "5_decaying.png",
+                                    config.imageFolderPath + "6_dead.png"
                                 };
 
         String[] soundsArray =   {

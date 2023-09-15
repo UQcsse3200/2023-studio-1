@@ -33,7 +33,7 @@ public class PlantComponentTest {
     int maxHealth = 500;
     int[] growthStageThresholds = new int[]{1,2,3};
     String[] soundArray = new String[]{"1", "2", "3", "4", "5", "6", "7", "8"};
-    String[] imagePaths = new String[]{"path1", "path2", "path3", "path4", "path5"};
+    String[] imagePaths = new String[]{"path1", "path2", "path3", "path4", "path5", "path6"};
 
     @BeforeEach
     void beforeEach() {
