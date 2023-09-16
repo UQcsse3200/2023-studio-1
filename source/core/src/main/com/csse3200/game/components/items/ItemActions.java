@@ -146,8 +146,6 @@ public class ItemActions extends Component {
     int width = Gdx.graphics.getWidth();
     int height = Gdx.graphics.getHeight();
 
-    System.out.println("PlayerPos" + playerPos);
-
     int screenCentreX = width / 2;
     int screenCentreY = height / 2;
 
