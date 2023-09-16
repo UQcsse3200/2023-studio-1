@@ -8,28 +8,33 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.csse3200.game.services.ServiceLocator;
 
 import java.awt.*;
 import java.util.Iterator;
 
 public class AcidShower extends ApplicationAdapter {
 
+    private WeatherEvent currentWeatherEvent;
     private Iterator<Rectangle> iterator;
     private long lastRaindropTime;
     private Rectangle raindrop;
     private Array<Rectangle> raindrops;
     private Texture raindropImage;
     private SpriteBatch spriteBatch;
+    private Texture weatherImage;
 
     @Override
     public void create() {
+        super.create();
+        ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateDisplay);
         raindrops = new Array<>();
         raindropImage = new Texture(Gdx.files.internal("images/weather_event/acid-rain.png"));
         spriteBatch = new SpriteBatch();
-        spawnRaindrop();
+        updateDisplay();
     }
 
-    private void spawnRaindrop() {
+    private void updateDisplay() {
         raindrop = new Rectangle();
         raindrop.x = MathUtils.random(0, 800-64);
         raindrop.y = 480;
@@ -37,6 +42,14 @@ public class AcidShower extends ApplicationAdapter {
         raindrop.height = 64;
         raindrops.add(raindrop);
         lastRaindropTime = TimeUtils.nanoTime();
+        WeatherEvent currentWeatherEvent = ServiceLocator.getGameArea().getClimateController().getCurrentWeatherEvent();
+        if (currentWeatherEvent instanceof AcidShowerEvent) {
+            weatherImage = raindropImage;
+        } else if (currentWeatherEvent instanceof SolarSurgeEvent) {
+            weatherImage = raindropImage;
+        } else {
+            weatherImage = raindropImage;
+        }
     }
 
     @Override
@@ -52,7 +65,7 @@ public class AcidShower extends ApplicationAdapter {
         spriteBatch.end();
 
         if (TimeUtils.nanoTime() - lastRaindropTime > 1000000000) {
-            spawnRaindrop();
+            updateDisplay();
         }
 
         for (iterator = raindrops.iterator(); iterator.hasNext(); ) {
