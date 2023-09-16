@@ -21,6 +21,7 @@ public class TractorActions extends Component {
 
   private PhysicsComponent physicsComponent;
   private Vector2 walkDirection = Vector2.Zero.cpy();
+  private float prevDirection = 300;
   private boolean moving = false;
   private boolean muted = true;
   private CameraComponent camera;
@@ -44,9 +45,20 @@ public class TractorActions extends Component {
    * Updates the tractor actions component.
    */
   public void update() {
-    if (this.moving) {
-      updateSpeed();
-      use();
+    if (!muted) {
+      if (this.moving) {
+        updateSpeed();
+        use();
+      }
+      updateAnimation();
+    }
+  }
+
+  private void updateAnimation() {
+    if (walkDirection.epsilonEquals(Vector2.Zero)) {
+      entity.getEvents().trigger("stopMoving", prevDirection, getMode().toString());
+    } else {
+      entity.getEvents().trigger("startMoving", walkDirection.angleDeg(), getMode().toString());
     }
   }
 
@@ -111,6 +123,7 @@ public class TractorActions extends Component {
    */
   void move(Vector2 direction) {
     this.walkDirection = direction;
+    this.prevDirection = walkDirection.angleDeg();
     this.moving = true;
   }
 
@@ -145,6 +158,7 @@ public class TractorActions extends Component {
     this.mode = TractorMode.normal;
     player.getComponent(PlayerActions.class).setMuted(false);
     muted = true;
+    entity.getEvents().trigger("idle", prevDirection);
     player.getComponent(KeyboardPlayerInputComponent.class)
         .setWalkDirection(entity.getComponent(KeyboardTractorInputComponent.class).getWalkDirection());
     player.setPosition(this.entity.getPosition());
@@ -162,15 +176,6 @@ public class TractorActions extends Component {
 
   public void setMuted(boolean muted) {
     this.muted = muted;
-  }
-
-  /**
-   * Gets the location of the tractor
-   * 
-   * @return the location of the tractor as Vector2
-   */
-  public Vector2 getTractorLocation() {
-    return entity.getPosition();
   }
 
   /**
