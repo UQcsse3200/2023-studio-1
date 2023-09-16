@@ -114,7 +114,8 @@ public class ItemActions extends Component {
       return false;
     }
     // Make the Entity to place
-    Entity placeable = FactoryService.getPlaceableFactories().get(entity.getComponent(ItemComponent.class).getItemName()).get();
+    Entity placeable = FactoryService.getPlaceableFactories()
+        .get(entity.getComponent(ItemComponent.class).getItemName()).get();
     ServiceLocator.getGameArea().spawnEntity(placeable);
     placeable.setPosition(adjustedPos);
     tile.setPlaceable(placeable);
@@ -147,6 +148,8 @@ public class ItemActions extends Component {
     int width = Gdx.graphics.getWidth();
     int height = Gdx.graphics.getHeight();
 
+    System.out.println("PlayerPos" + playerPos);
+
     int screenCentreX = width / 2;
     int screenCentreY = height / 2;
 
@@ -165,15 +168,14 @@ public class ItemActions extends Component {
       yDelta += 1;
     }
 
-    int playerPositionAsIntX = (int)Math.ceil(playerPos.x); 
-    int playerPositionAsIntY = (int)Math.ceil(playerPos.y);
-    
-    int x = (int)Math.ceil((double)(playerPositionAsIntX) + xDelta);
-    int y = (int)Math.ceil((double)(playerPositionAsIntY) + yDelta);
-    
+    int playerPositionAsIntX = (int) Math.ceil(playerPos.x + 0.5);
+    int playerPositionAsIntY = (int) Math.ceil(playerPos.y);
+
+    int x = (int) Math.ceil((double) (playerPositionAsIntX) + xDelta);
+    int y = (int) Math.ceil((double) (playerPositionAsIntY) + yDelta);
+
     return new Vector2(x, y);
   }
-
 
   /**
    * Waters the tile at the given position.
@@ -189,7 +191,7 @@ public class ItemActions extends Component {
 
     // A water amount of 0.5 was recommended by team 7
     tile.getCropTile().getEvents().trigger("water", 0.5f);
-    //item.getComponent(WateringCanLevelComponent.class).incrementLevel(-5); //TODO
+    // item.getComponent(WateringCanLevelComponent.class).incrementLevel(-5); //TODO
     return true;
   }
 
@@ -245,12 +247,12 @@ public class ItemActions extends Component {
     return true;
   }
 
-    /**
-     * Fertilises the tile at the given position
-     *
-     * @param tile the tile to be interacted with
-     * @return if fertilising was successful return true else return false
-     */
+  /**
+   * Fertilises the tile at the given position
+   *
+   * @param tile the tile to be interacted with
+   * @return if fertilising was successful return true else return false
+   */
   private boolean fertilise(TerrainTile tile) {
     if (isCropTile(tile.getCropTile())) {
       tile.getCropTile().getEvents().trigger("fertilise");
@@ -259,46 +261,46 @@ public class ItemActions extends Component {
     return false;
   }
 
-    /**
-     * Plants the given seed in the tile at the given position
-     *
-     * @param tile the tile to be interacted with
-     * @return if planting was successful return true else return false
-     */
+  /**
+   * Plants the given seed in the tile at the given position
+   *
+   * @param tile the tile to be interacted with
+   * @return if planting was successful return true else return false
+   */
   private boolean plant(TerrainTile tile) {
     // TODO can be simplified using FactoryService
     Function<CropTileComponent, Entity> plantFactoryMethod;
     if (isCropTile(tile.getCropTile())) {
-        switch (entity.getComponent(ItemComponent.class).getItemName()) {
-            case "aloe vera seed" -> {
-                plantFactoryMethod = PlantFactory::createAloeVera;
-                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
-            }
-            case "cosmic cob seed" -> {
-                plantFactoryMethod = PlantFactory::createCosmicCob;
-                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
-            }
-            case "hammer plant seed" -> {
-                plantFactoryMethod = PlantFactory::createHammerPlant;
-                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
-            }
-            case "space snapper seed" -> {
-                plantFactoryMethod = PlantFactory::createSpaceSnapper;
-                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
-            }
-            case "atomic algae seed" -> {
-                plantFactoryMethod = PlantFactory::createAtomicAlgae;
-                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
-            }
-            case "deadly nightshade seed" -> {
-                plantFactoryMethod = PlantFactory::createDeadlyNightshade;
-                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
-            }
-            default -> {
-                System.out.println("Something went wrong");
-                throw new IllegalArgumentException("Explode");
-            }
+      switch (entity.getComponent(ItemComponent.class).getItemName()) {
+        case "aloe vera seed" -> {
+          plantFactoryMethod = PlantFactory::createAloeVera;
+          tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
         }
+        case "cosmic cob seed" -> {
+          plantFactoryMethod = PlantFactory::createCosmicCob;
+          tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
+        }
+        case "hammer plant seed" -> {
+          plantFactoryMethod = PlantFactory::createHammerPlant;
+          tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
+        }
+        case "space snapper seed" -> {
+          plantFactoryMethod = PlantFactory::createSpaceSnapper;
+          tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
+        }
+        case "atomic algae seed" -> {
+          plantFactoryMethod = PlantFactory::createAtomicAlgae;
+          tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
+        }
+        case "deadly nightshade seed" -> {
+          plantFactoryMethod = PlantFactory::createDeadlyNightshade;
+          tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
+        }
+        default -> {
+          System.out.println("Something went wrong");
+          throw new IllegalArgumentException("Explode");
+        }
+      }
       return true;
     }
     return false;
@@ -316,6 +318,7 @@ public class ItemActions extends Component {
 
   /**
    * Feeds given entity.
+   * 
    * @param feedableEntities list that should contain the one entity to feed
    * @return true if feed is successful
    */
