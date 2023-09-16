@@ -41,7 +41,7 @@
     "adultThreshold": 0,
     "imageFolderPath": "images/plants/hammer_plant/"
   },
-  "venusFlyTrap": {
+  "spaceSnapper": {
     "health": 10,
     "name": "Space Snapper",
     "type": "DEFENCE",
@@ -53,9 +53,9 @@
     "sproutThreshold": 0,
     "juvenileThreshold": 0,
     "adultThreshold": 0,
-    "imageFolderPath": "images/plants/venus_trap/"
+    "imageFolderPath": "images/plants/space_snapper/"
   },
-  "waterWeed": {
+  "atomicAlgae": {
     "health": 10,
     "name": "Atomic Algae",
     "type": "PRODUCTION",
@@ -67,9 +67,9 @@
     "sproutThreshold": 0,
     "juvenileThreshold": 0,
     "adultThreshold": 0,
-    "imageFolderPath": "images/plants/waterweed/"
+    "imageFolderPath": "images/plants/atomic_algae/"
   },
-  "nightshade": {
+  "deadlyNightshade": {
     "health": 10,
     "name": "Deadly Nightshade",
     "type": "DEADLY",
@@ -81,6 +81,6 @@
     "sproutThreshold": 0,
     "juvenileThreshold": 0,
     "adultThreshold": 0,
-    "imageFolderPath": "images/plants/nightshade/"
+    "imageFolderPath": "images/plants/deadly_nightshade/"
   }
 }

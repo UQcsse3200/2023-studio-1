@@ -135,25 +135,25 @@ public class SpaceGameArea extends GameArea {
           "images/plants/hammer_plant/item_drop.png",
           "images/plants/hammer_plant/seedbag.png",
 
-          "images/plants/venus_trap/1_seedling.png",
-          "images/plants/venus_trap/2_sprout.png",
-          "images/plants/venus_trap/3_juvenile.png",
-          "images/plants/venus_trap/4_adult.png",
-          "images/plants/venus_trap/5_decaying.png",
+          "images/plants/space_snapper/1_seedling.png",
+          "images/plants/space_snapper/2_sprout.png",
+          "images/plants/space_snapper/3_juvenile.png",
+          "images/plants/space_snapper/4_adult.png",
+          "images/plants/space_snapper/5_decaying.png",
 
-          "images/plants/waterweed/1_seedling.png",
-          "images/plants/waterweed/2_sprout.png",
-          "images/plants/waterweed/3_juvenile.png",
-          "images/plants/waterweed/4_adult.png",
-          "images/plants/waterweed/5_decaying.png",
-          "images/plants/waterweed/item_drop.png",
+          "images/plants/atomic_algae/1_seedling.png",
+          "images/plants/atomic_algae/2_sprout.png",
+          "images/plants/atomic_algae/3_juvenile.png",
+          "images/plants/atomic_algae/4_adult.png",
+          "images/plants/atomic_algae/5_decaying.png",
+          "images/plants/atomic_algae/item_drop.png",
 
-          "images/plants/nightshade/1_seedling.png",
-          "images/plants/nightshade/2_sprout.png",
-          "images/plants/nightshade/3_juvenile.png",
-          "images/plants/nightshade/4_adult.png",
-          "images/plants/nightshade/5_decaying.png",
-          "images/plants/nightshade/item_drop.png",
+          "images/plants/deadly_nightshade/1_seedling.png",
+          "images/plants/deadly_nightshade/2_sprout.png",
+          "images/plants/deadly_nightshade/3_juvenile.png",
+          "images/plants/deadly_nightshade/4_adult.png",
+          "images/plants/deadly_nightshade/5_decaying.png",
+          "images/plants/deadly_nightshade/item_drop.png",
 
           "images/plants/misc/aloe_vera_seed.png",
           "images/plants/misc/cosmic_cob_seed.png",
@@ -165,10 +165,10 @@ public class SpaceGameArea extends GameArea {
           "images/invisible_sprite.png"
   };
   private static final String[] forestTextureAtlases = {
-    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
-          "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas",
-          "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas", "images/questgiver.atlas",
-          "images/missionStatus.atlas"
+      "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
+      "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas",
+      "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas", "images/questgiver.atlas",
+      "images/missionStatus.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg", "sounds/car-horn-6408.mp3"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -183,7 +183,9 @@ public class SpaceGameArea extends GameArea {
 
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
-   * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
+   * 
+   * @param terrainFactory TerrainFactory used to create the terrain for the
+   *                       GameArea.
    * @requires terrainFactory != null
    */
   public SpaceGameArea(TerrainFactory terrainFactory) {
@@ -194,7 +196,10 @@ public class SpaceGameArea extends GameArea {
     ServiceLocator.registerGameArea(this);
   }
 
-  /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
+  /**
+   * Create the game area, including terrain, static entities (trees), dynamic
+   * entities (player)
+   */
   @Override
   public void create() {
     loadAssets();
@@ -213,8 +218,6 @@ public class SpaceGameArea extends GameArea {
 
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
-
-    // TODO:
 
     tractor = spawnTractor();
     spawnQuestgiver();
@@ -239,6 +242,7 @@ public class SpaceGameArea extends GameArea {
   public Entity getPlayer() {
     return player;
   }
+  
   public ClimateController getClimateController() {
     return climateController;
   }

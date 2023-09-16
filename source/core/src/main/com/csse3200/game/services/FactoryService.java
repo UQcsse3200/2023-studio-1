@@ -22,9 +22,9 @@ public class FactoryService {
             "Cosmic Cob", PlantFactory::createCosmicCob,
             "Aloe Vera", PlantFactory::createAloeVera,
             "Hammer Plant", PlantFactory::createHammerPlant,
-            "Space Snapper", PlantFactory::createVenusFlyTrap,
-            "Deadly Nightshade", PlantFactory::createNightshade,
-            "Atomic Algae", PlantFactory::createWaterWeed
+            "Space Snapper", PlantFactory::createSpaceSnapper,
+            "Deadly Nightshade", PlantFactory::createDeadlyNightshade,
+            "Atomic Algae", PlantFactory::createAtomicAlgae
     );
 
     private static final Map<String, Supplier<Entity>> itemFactories = Map.ofEntries(
