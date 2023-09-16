@@ -2778,6 +2778,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Creates a <a href="com/csse3200/game/missions/Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> with the given <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link"><code>String</code></a> name.</div>
 </dd>
+<dt><a href="com/csse3200/game/missions/MissionManager.MissionEvent.html#MISSION_COMPLETE" class="member-name-link">MISSION_COMPLETE</a> - Enum constant in enum class com.csse3200.game.missions.<a href="com/csse3200/game/missions/MissionManager.MissionEvent.html" title="enum class in com.csse3200.game.missions">MissionManager.MissionEvent</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/questgiver/MissionDisplay.html" class="type-name-link" title="class in com.csse3200.game.components.questgiver">MissionDisplay</a> - Class in <a href="com/csse3200/game/components/questgiver/package-summary.html">com.csse3200.game.components.questgiver</a></dt>
 <dd>
 <div class="block">Renders a UI for interacting with Missions.</div>
@@ -2829,6 +2831,8 @@ loadScripts(document, 'script');</script>
 <dl class="index">
 <dt><a href="com/csse3200/game/entities/configs/plants/BasePlantConfig.html#name" class="member-name-link">name</a> - Variable in class com.csse3200.game.entities.configs.plants.<a href="com/csse3200/game/entities/configs/plants/BasePlantConfig.html" title="class in com.csse3200.game.entities.configs.plants">BasePlantConfig</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/missions/MissionManager.MissionEvent.html#NEW_QUEST" class="member-name-link">NEW_QUEST</a> - Enum constant in enum class com.csse3200.game.missions.<a href="com/csse3200/game/missions/MissionManager.MissionEvent.html" title="enum class in com.csse3200.game.missions">MissionManager.MissionEvent</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/player/KeyboardPlayerInputComponent.MenuTypes.html#NONE" class="member-name-link">NONE</a> - Enum constant in enum class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/KeyboardPlayerInputComponent.MenuTypes.html" title="enum class in com.csse3200.game.components.player">KeyboardPlayerInputComponent.MenuTypes</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/physics/PhysicsLayer.html#NONE" class="member-name-link">NONE</a> - Static variable in class com.csse3200.game.physics.<a href="com/csse3200/game/physics/PhysicsLayer.html" title="class in com.csse3200.game.physics">PhysicsLayer</a></dt>
@@ -2838,6 +2842,11 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/physics/raycast/RaycastHit.html#normal" class="member-name-link">normal</a> - Variable in class com.csse3200.game.physics.raycast.<a href="com/csse3200/game/physics/raycast/RaycastHit.html" title="class in com.csse3200.game.physics.raycast">RaycastHit</a></dt>
 <dd>
 <div class="block">the normal vector of the collider surface at the hit point.</div>
+</dd>
+<dt><a href="com/csse3200/game/missions/Mission.html#notifyUpdate()" class="member-name-link">notifyUpdate()</a> - Method in class com.csse3200.game.missions.<a href="com/csse3200/game/missions/Mission.html" title="class in com.csse3200.game.missions">Mission</a></dt>
+<dd>
+<div class="block">Notifies the <a href="com/csse3200/game/missions/MissionManager.html" title="class in com.csse3200.game.missions"><code>MissionManager</code></a> that this <a href="com/csse3200/game/missions/Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> has been completed if <a href="com/csse3200/game/missions/Mission.html#isCompleted()"><code>Mission.isCompleted()</code></a>
+ returns true, else do nothing.</div>
 </dd>
 <dt><a href="com/csse3200/game/physics/PhysicsLayer.html#NPC" class="member-name-link">NPC</a> - Static variable in class com.csse3200.game.physics.<a href="com/csse3200/game/physics/PhysicsLayer.html" title="class in com.csse3200.game.physics">PhysicsLayer</a></dt>
 <dd>&nbsp;</dd>
@@ -3158,6 +3167,8 @@ loadScripts(document, 'script');</script>
  integer duration of the <a href="com/csse3200/game/missions/quests/Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a> (the number of hours before the <a href="com/csse3200/game/missions/quests/Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a> expires), and whether the
  <a href="com/csse3200/game/missions/quests/Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a> is mandatory.</div>
 </dd>
+<dt><a href="com/csse3200/game/missions/MissionManager.MissionEvent.html#QUEST_EXPIRED" class="member-name-link">QUEST_EXPIRED</a> - Enum constant in enum class com.csse3200.game.missions.<a href="com/csse3200/game/missions/MissionManager.MissionEvent.html" title="enum class in com.csse3200.game.missions">MissionManager.MissionEvent</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/EntityType.html#Questgiver" class="member-name-link">Questgiver</a> - Enum constant in enum class com.csse3200.game.entities.<a href="com/csse3200/game/entities/EntityType.html" title="enum class in com.csse3200.game.entities">EntityType</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/QuestgiverConfig.html" class="type-name-link" title="class in com.csse3200.game.entities.configs">QuestgiverConfig</a> - Class in <a href="com/csse3200/game/entities/configs/package-summary.html">com.csse3200.game.entities.configs</a></dt>

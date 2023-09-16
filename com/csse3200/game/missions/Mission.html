@@ -132,9 +132,15 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns a boolean value representing whether the <a href="Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> has been completed.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#registerMission(com.csse3200.game.events.EventHandler)" class="member-name-link">registerMission</a><wbr>(<a href="../events/EventHandler.html" title="class in com.csse3200.game.events">EventHandler</a>&nbsp;missionManagerEvents)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#notifyUpdate()" class="member-name-link">notifyUpdate</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Notifies the <a href="MissionManager.html" title="class in com.csse3200.game.missions"><code>MissionManager</code></a> that this <a href="Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> has been completed if <a href="#isCompleted()"><code>isCompleted()</code></a>
+ returns true, else do nothing.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#registerMission(com.csse3200.game.events.EventHandler)" class="member-name-link">registerMission</a><wbr>(<a href="../events/EventHandler.html" title="class in com.csse3200.game.events">EventHandler</a>&nbsp;missionManagerEvents)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Registers the <a href="Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> to the <a href="MissionManager.html" title="class in com.csse3200.game.missions"><code>MissionManager</code></a>, by adding all event
  listeners to the service which the <a href="Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> needs to listen to in order to update its
  state.</div>
@@ -239,6 +245,14 @@ loadScripts(document, 'script');</script>
 <dt>Returns:</dt>
 <dd>A short <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link"><code>String</code></a> description of the <a href="Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a></dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="notifyUpdate()">
+<h3>notifyUpdate</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">notifyUpdate</span>()</div>
+<div class="block">Notifies the <a href="MissionManager.html" title="class in com.csse3200.game.missions"><code>MissionManager</code></a> that this <a href="Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> has been completed if <a href="#isCompleted()"><code>isCompleted()</code></a>
+ returns true, else do nothing. You should call this method whenever you update the state of your <a href="Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>.</div>
 </section>
 </li>
 </ul>
