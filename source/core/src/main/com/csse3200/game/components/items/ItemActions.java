@@ -119,8 +119,8 @@ public class ItemActions extends Component {
     }
     // Make the Entity to place
     Entity placeable = FactoryService.getPlaceableFactories().get(entity.getComponent(ItemComponent.class).getItemName()).get();
-    ServiceLocator.getGameArea().spawnEntity(placeable);
     placeable.setPosition(adjustedPos);
+    ServiceLocator.getGameArea().spawnEntity(placeable);
     tile.setPlaceable(placeable);
     return true;
   }

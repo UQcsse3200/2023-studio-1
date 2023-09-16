@@ -1,15 +1,14 @@
 package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.csse3200.game.components.placeables.SprinklerComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.ColliderComponent;
-import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
-import com.csse3200.game.rendering.TextureRenderComponent;
 
 public class PlaceableFactory {
 
@@ -57,6 +56,8 @@ public class PlaceableFactory {
         sprinkler.getComponent(DynamicTextureRenderComponent.class).setTexture("images/plants/misc/horticultural_heater_seed.png");
         // stop from blocking player movement
         sprinkler.getComponent(ColliderComponent.class).setLayer(PhysicsLayer.NONE);
+        // add sprinkler component
+        sprinkler.addComponent(new SprinklerComponent());
         return sprinkler;
     }
 
@@ -68,6 +69,10 @@ public class PlaceableFactory {
         Entity pump = createBasePlaceable(EntityType.Pump);
         // set temp texture to differentiate from other entities
         pump.getComponent(DynamicTextureRenderComponent.class).setTexture("images/plants/misc/cosmic_cob_seed.png");
+        // add sprinkler component
+        pump.addComponent(new SprinklerComponent());
+        // set as a pump
+        pump.getComponent(SprinklerComponent.class).setPump();
         return pump;
     }
 
