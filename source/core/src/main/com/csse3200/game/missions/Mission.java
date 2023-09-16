@@ -1,6 +1,7 @@
 package com.csse3200.game.missions;
 
 import com.csse3200.game.events.EventHandler;
+import com.csse3200.game.services.ServiceLocator;
 
 public abstract class Mission {
 
@@ -65,5 +66,15 @@ public abstract class Mission {
      * @return A short {@link String} description of the {@link Mission}
      */
     public abstract String getShortDescription();
+
+    /**
+     * Notifies the {@link MissionManager} that this {@link Mission} has been completed if {@link #isCompleted()}
+     * returns true, else do nothing. You should call this method whenever you update the state of your {@link Mission}.
+     */
+    protected void notifyUpdate() {
+        if (isCompleted()) {
+            ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.MISSION_COMPLETE.name());
+        }
+    }
 
 }

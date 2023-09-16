@@ -165,10 +165,10 @@ public class SpaceGameArea extends GameArea {
           "images/invisible_sprite.png"
   };
   private static final String[] forestTextureAtlases = {
-    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
-          "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas",
-          "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas", "images/questgiver.atlas",
-          "images/missionStatus.atlas"
+      "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
+      "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas",
+      "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas", "images/questgiver.atlas",
+      "images/missionStatus.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg", "sounds/car-horn-6408.mp3"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -183,7 +183,9 @@ public class SpaceGameArea extends GameArea {
 
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
-   * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
+   * 
+   * @param terrainFactory TerrainFactory used to create the terrain for the
+   *                       GameArea.
    * @requires terrainFactory != null
    */
   public SpaceGameArea(TerrainFactory terrainFactory) {
@@ -194,7 +196,10 @@ public class SpaceGameArea extends GameArea {
     ServiceLocator.registerGameArea(this);
   }
 
-  /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
+  /**
+   * Create the game area, including terrain, static entities (trees), dynamic
+   * entities (player)
+   */
   @Override
   public void create() {
     loadAssets();
@@ -214,8 +219,6 @@ public class SpaceGameArea extends GameArea {
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
     player.getComponent(InventoryComponent.class).addItem(ItemFactory.createGateItem());
-
-    // TODO:
 
     tractor = spawnTractor();
     spawnQuestgiver();
@@ -238,6 +241,7 @@ public class SpaceGameArea extends GameArea {
   public Entity getPlayer() {
     return player;
   }
+  
   public ClimateController getClimateController() {
     return climateController;
   }

@@ -49,7 +49,7 @@ public abstract class Quest extends Mission {
 	 * Decrements the duration to expiry of the quest by 1.
 	 */
 	public void updateExpiry() {
-		if (--timeToExpiry < 0) {
+		if (--timeToExpiry <= 0) {
 			timeToExpiry = 0;
 		}
 	}
