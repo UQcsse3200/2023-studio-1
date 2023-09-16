@@ -2,14 +2,12 @@ package com.csse3200.game.components.items;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.player.InteractionDetector;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.PlantFactory;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
@@ -168,7 +166,8 @@ public class ItemActions extends Component {
       yDelta += 1;
     }
 
-    int playerPositionAsIntX = (int) Math.ceil(playerPos.x + 0.5);
+    int playerPositionAsIntX = (int) Math.ceil(playerPos.x + 0.5); // 0.5 as pos of player position has been changed to
+                                                                   // the left corner not the center of the player box
     int playerPositionAsIntY = (int) Math.ceil(playerPos.y);
 
     int x = (int) Math.ceil((double) (playerPositionAsIntX) + xDelta);
