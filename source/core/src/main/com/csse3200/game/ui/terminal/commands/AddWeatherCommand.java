@@ -84,6 +84,11 @@ public class AddWeatherCommand implements Command {
 		return true;
 	}
 
+	/**
+	 * Determines whether the correct number of arguments were given
+	 * @param args commands arguments
+	 * @return whether the number of arguments is valid or not
+	 */
 	boolean isValid(ArrayList<String> args) {
 		return args.size() == 5;
 	}
