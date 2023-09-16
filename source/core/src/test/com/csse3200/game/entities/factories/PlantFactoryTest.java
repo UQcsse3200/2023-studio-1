@@ -144,23 +144,23 @@ class PlantFactoryTest {
      */
     static Stream<Arguments> plantConfigProvider() {
         return Stream.of(
-                Arguments.of("cosmicCob", 10, "Cosmic Cob", "FOOD",
+                Arguments.of("cosmicCob", 200, "Cosmic Cob", "FOOD",
                         "A nutritious snack with everything a human needs to survive, the local " +
                                 "fauna won’t touch it though. Suspiciously high in protein and fat…",
-                        (float) 0.7, 5, 400),
-                Arguments.of("aloeVera", 10, "Aloe Vera", "HEALTH",
+                        (float) 0.7, 1, 600),
+                Arguments.of("aloeVera", 200, "Aloe Vera", "HEALTH",
                         "A unique plant that once ground down to a chunky red paste can be used " +
-                                "to heal significant wounds, it’s a miracle!", (float) 0.7, 5, 400),
-                Arguments.of("hammerPlant", 10, "Hammer Plant", "REPAIR",
+                                "to heal significant wounds, it’s a miracle!", (float) 0.7, 1, 600),
+                Arguments.of("hammerPlant", 200, "Hammer Plant", "REPAIR",
                         "A useful plant resembling a hand holding a hammer that repairs the " +
-                                "other nearby plants, maybe they were friends!", (float) 0.7, 5, 400),
-                Arguments.of("venusFlyTrap", 10, "Space Snapper", "DEFENCE",
+                                "other nearby plants, maybe they were friends!", (float) 0.7, 1, 600),
+                Arguments.of("venusFlyTrap", 200, "Space Snapper", "DEFENCE",
                         "A hangry plant that will gobble any nasty pests nearby. Keep small pets " +
-                                "and children out of snapping distance!", (float) 0.7, 5, 400),
-                Arguments.of("waterWeed", 10, "Atomic Algae", "PRODUCTION",
-                        "A highly efficient oxygen-producing plant.", (float) 0.7, 5, 400),
-                Arguments.of("nightshade", 10, "Deadly Nightshade",
-                        "DEADLY", "Grows deadly poisonous berries.", (float) 0.7, 5, 400)
+                                "and children out of snapping distance!", (float) 0.7, 1, 600),
+                Arguments.of("waterWeed", 200, "Atomic Algae", "PRODUCTION",
+                        "A highly efficient oxygen-producing plant.", (float) 0.7, 1, 600),
+                Arguments.of("nightshade", 200, "Deadly Nightshade",
+                        "DEADLY", "Grows deadly poisonous berries.", (float) 0.7, 1, 600)
         );
     }
 
