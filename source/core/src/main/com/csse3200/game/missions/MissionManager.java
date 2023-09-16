@@ -19,6 +19,12 @@ public class MissionManager {
 	 * a listener for the {@link #name()} of the enum value.
 	 */
 	public enum MissionEvent {
+		// Triggers when a mission is completed
+		MISSION_COMPLETE,
+		// Triggers when a new quest has been added to the mission manager
+		NEW_QUEST,
+		// Triggers when a quest expires
+		QUEST_EXPIRED,
 		// Triggers when a crop is planted, single String representing plant type is provided as argument
 		PLANT_CROP,
 		// Triggers when a crop is fertilised
@@ -101,6 +107,7 @@ public class MissionManager {
 	 */
 	public void addQuest(Quest quest) {
 		selectableQuests.add(quest);
+		events.trigger(MissionEvent.NEW_QUEST.name());
 	}
 
 	/**
@@ -136,6 +143,9 @@ public class MissionManager {
 	private void updateActiveQuestTimes() {
 		for (Quest quest : activeQuests) {
 			quest.updateExpiry();
+			if (quest.isExpired()) {
+				events.trigger(MissionEvent.QUEST_EXPIRED.name());
+			}
 		}
 	}
 
