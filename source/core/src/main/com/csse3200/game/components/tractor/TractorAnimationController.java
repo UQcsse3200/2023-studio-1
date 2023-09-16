@@ -16,7 +16,7 @@ public class TractorAnimationController extends Component {
     entity.getEvents().addListener("stopMoving", this::animateStopMoving);
     entity.getEvents().addListener("startMoving", this::animateMoving);
 
-    animator.startAnimation("move_right_tool");
+    animator.startAnimation("idle_right");
   }
 
   /**
@@ -25,13 +25,13 @@ public class TractorAnimationController extends Component {
    * @param tool tool to animate
    */
   void animateStopMoving(String tool) {
-    animator.startAnimation(String.format("move_stop_tool"));
+    animator.startAnimation(String.format("stop_right_normal"));
   }
 
   /**
    * Animates the tractor to start moving.
    */
   void animateMoving() {
-    animator.startAnimation(String.format("move_right_tool"));
+    animator.startAnimation(String.format("move_right_normal"));
   }
 }

@@ -55,9 +55,41 @@ public class TractorFactory {
     AnimationRenderComponent animator = new AnimationRenderComponent(
         ServiceLocator.getResourceService().getAsset("images/tractor.atlas", TextureAtlas.class),
         16f);
-    animator.addAnimation("move_left_tool", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("move_right_tool", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("move_stop_tool", 0.1f, Animation.PlayMode.LOOP);
+
+    animator.addAnimation("idle_left", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle_right", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle_up", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle_down", 0.1f, Animation.PlayMode.LOOP);
+
+    animator.addAnimation("stop_left_normal", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("stop_right_normal", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("stop_up_normal", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("stop_down_normal", 0.1f, Animation.PlayMode.LOOP);
+
+    animator.addAnimation("move_left_normal", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("move_right_normal", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("move_up_normal", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("move_down_normal", 0.1f, Animation.PlayMode.LOOP);
+
+    animator.addAnimation("stop_left_tilling", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("stop_right_tilling", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("stop_up_tilling", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("stop_down_tilling", 0.1f, Animation.PlayMode.LOOP);
+
+    animator.addAnimation("move_left_tilling", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("move_right_tilling", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("move_up_tilling", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("move_down_tilling", 0.1f, Animation.PlayMode.LOOP);
+
+    animator.addAnimation("stop_left_harvesting", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("stop_right_harvesting", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("stop_up_harvesting", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("stop_down_harvesting", 0.1f, Animation.PlayMode.LOOP);
+
+    animator.addAnimation("move_left_harvesting", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("move_right_harvesting", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("move_up_harvesting", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("move_down_harvesting", 0.1f, Animation.PlayMode.LOOP);
 
     return animator;
   }
