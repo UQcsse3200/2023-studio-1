@@ -426,7 +426,7 @@ public class PlantComponent extends Component {
 
         // Check if the growth rate is negative
         // That the plant is not decaying
-        if ((growthRate < 0) && !isDecay() && (getGrowthStage().getValue() < GrowthStage.ADULT.getValue())) {
+        if ((growthRate < 0) && !isDecay() && (getGrowthStage().getValue() <= GrowthStage.ADULT.getValue())) {
             increasePlantHealth(-10);
         } else if ((getGrowthStage().getValue() != GrowthStage.DECAYING.getValue())
                 && !(getGrowthStage().getValue() >= GrowthStage.ADULT.getValue())) {
@@ -494,6 +494,7 @@ public class PlantComponent extends Component {
         int time = ServiceLocator.getTimeService().getHour();
 
         if (time == 12) {
+            increaseCurrentGrowthLevel();
             if ((getGrowthStage().getValue() < GrowthStage.ADULT.getValue())) {
                 if (this.currentGrowthLevel >= this.growthStageThresholds[getGrowthStage().getValue() - 1]) {
                     setGrowthStage(getGrowthStage().getValue() + 1);
@@ -613,8 +614,14 @@ public class PlantComponent extends Component {
      * Checks if the plant should be set to a dead state every in game minute.
      */
     public void checkDecayStatus() {
-        if (!this.isDead() && this.getPlantHealth() <= 0) {
-            this.setGrowthStage(this.getGrowthStage().getValue() + 1);
+        if ((getGrowthStage().getValue() < GrowthStage.ADULT.getValue()) && (this.getPlantHealth() <= 0)) {
+            destroyPlant();
+        } else if ((getGrowthStage().getValue() == GrowthStage.ADULT.getValue()) && (this.getPlantHealth() < 30)) {
+            this.setGrowthStage(GrowthStage.DECAYING.getValue());
+            updateTexture();
+        } else if ((getGrowthStage().getValue() == GrowthStage.DECAYING.getValue()) && (this.getPlantHealth() <= 0)) {
+            this.setGrowthStage(GrowthStage.DEAD.getValue());
+            updateTexture();
         }
     }
 }
