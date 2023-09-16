@@ -13,15 +13,21 @@ import java.util.Arrays;
  * - when a sprinkler is placed next to a power source it will water its AOE and act as a power source for any
  *   other sprinklers that are placed next to it in future.
  *
+ * NOTES:
+ *  - i have 2 options for updating sprinklers on place/destroy:
+ *  * i can add a trigger on creation and deletion which all sprinklers listen for - pretty simple but all sprinkler update no matter what. - also subject to race cond.
+ *  * i can add a method that iterates through and updates connected sprinklers and only continues to do this if a change of state occurs during the update.
+ *  - I think ill choose the second option, seems more fool proof.
+ *
  * TODO:
- *  - get sprinklers to update each other (on place and destroy).
- *    - use dispose() i think.
- *  - get sprinklers to sprinkle ever 5 seconds or something.
+ *  - Fix sprinklers updating each other (on place and destroy). - currently something strange going on.
+ *  - get sprinklers to sprinkle ever 10 seconds. - implemented but behaviour is strange
  *  - make and set textures accordingly.
  *  - animate watering.
  */
 
 public class SprinklerComponent extends Component {
+
   /**
    * Powered status of sprinkler.
    */
@@ -45,7 +51,6 @@ public class SprinklerComponent extends Component {
    */
   private Entity[] adjSprinklers;
 
-
   public void create() {
     // If this is a pump we just need to turn its power on:
     if (this.pump) {
@@ -53,40 +58,38 @@ public class SprinklerComponent extends Component {
       return;
     }
     // Sprinklers need configuring:
-    setAoe();
-    getAdjSprinklers();
-    configSprinkler(); //TODO: unfinished method
-    //notifyAdj(); // TODO: unfinished *dangerous* method
-
-    if (this.isPowered) {
-      sprinkle();
-    }
+    setAoe();                     // get area to sprinkle.
+    getAdjSprinklers();           // get adjacent sprinklers.
+    configSprinkler();            // set power status and texture orientation      TODO: unfinished method
+    // set to sprinkle every 30 seconds.
+    ServiceLocator.getTimeService().getEvents().addListener("10sec", this::sprinkle);
 
     // TODO: [DEBUGGING]
-    System.out.println("adj sprinklers: "+ Arrays.toString(this.adjSprinklers));
+    System.out.println(this.entity+" power: "+isPowered+", adjSprnklr: "+Arrays.toString(this.adjSprinklers));
   }
 
   /**
    * sprinklerUpdate is called by an adjacent sprinkler, causing this sprinkler to
    * re-configure its adjacent sprinklers and power status.
    * Pumps do not need to be updated.
+   * - if it is discovered that this sprinkler has changed state due to an update, each sprinkler in adjSprinklers
+   *   will be called to check themselves for updates, and so on. This will not cause stack overflow because
+   *   eventually all sprinkles will stop changing state. // TODO explain better.
    */
   public void sprinklerUpdate() {
-    if (!pump) {
-      getAdjSprinklers();
-      configSprinkler();
-      //notifyAdj(); // TODO: careful
+    // pumps do not need updating.
+    if (pump) {
+      return;
     }
-  }
-
-  /**
-   * notifies adjacent sprinklers to call sprinklerUpdate.
-   * TODO: haven't thought this through probably cause recursion bomb.
-   */
-  private void notifyAdj() {
-    for (Entity sprinkler : this.adjSprinklers) {
-      if (sprinkler != null) {
-        sprinkler.getComponent(SprinklerComponent.class).sprinklerUpdate();
+    boolean prevPowerState = this.isPowered;
+    getAdjSprinklers();
+    configSprinkler();
+    if (prevPowerState != this.isPowered) {
+      // powered status has changed we should reconfigure adjacent sprinklers too
+      for (Entity sprinkler : this.adjSprinklers) {
+        if (sprinkler != null) {
+          sprinkler.getComponent(SprinklerComponent.class).sprinklerUpdate();
+        }
       }
     }
   }
@@ -181,10 +184,11 @@ public class SprinklerComponent extends Component {
    * Creating a circular watering effect.
    */
   private void sprinkle() {
+    if (!isPowered) return;
     for (Vector2 pos : aoe) {
       TerrainTile tt = ServiceLocator.getGameArea().getMap().getTile(pos);
       if (tt.getCropTile() != null) {
-        tt.getCropTile().getEvents().trigger("water", 1f);
+        tt.getCropTile().getEvents().trigger("water", 0.5f);
       }
     }
   }

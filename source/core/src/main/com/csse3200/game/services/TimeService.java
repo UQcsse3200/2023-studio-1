@@ -126,6 +126,12 @@ public class TimeService {
 		minute += 1;
 		timeBuffer -= MS_IN_MINUTE;
 
+		// TODO sprinkler testing
+		if (minute % 10 == 0) {
+			events.trigger("10sec");
+			System.out.println("its been 10 seconds");
+		}
+
 		// If minute is between 0 and 59, hour hasn't elapsed - don't do anything
 		if (minute < 60) {
 			events.trigger("minuteUpdate");
