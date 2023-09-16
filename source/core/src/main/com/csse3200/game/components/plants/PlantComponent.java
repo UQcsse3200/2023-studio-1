@@ -5,6 +5,7 @@ import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ItemFactory;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import java.util.Map;
@@ -107,19 +108,19 @@ public class PlantComponent extends Component {
     private double[] maxHealthAtStages = {0, 0, 0};
 
     /**
-     * The paths to the images associated with different growth stages (Seedling, Sprout, Juvenile, Adult, Decaying).
-     */
-    private String[] growthStageImagePaths = {"", "", "", "", "", ""};
-
-    /**
      * Used to track how long a plant has been an adult.
      */
     private int numOfDaysAsAdult;
 
     /**
-     * The current texture based on the growth stage.
+     * The animation render component used to display the correct image based on the current growth stage.
      */
-    private DynamicTextureRenderComponent currentTexture;
+    private AnimationRenderComponent currentAnimator;
+
+    /**
+     * The name of the animation for each growth stage.
+     */
+    private final String[] animationImages = {"1_seedling", "2_sprout", "3_juvenile", "4_adult", "5_decaying", "6_dead"};
 
     /**
      * The yield to be dropped when this plant is harvested as a map of item names to drop
@@ -165,14 +166,6 @@ public class PlantComponent extends Component {
         this.maxHealthAtStages[1] = 0.1 * this.maxHealth;
         this.maxHealthAtStages[2] = 0.3 * this.maxHealth;
 
-        // Initialise the image paths for growth stages
-        // ALl pointing to Corn for now.
-        this.growthStageImagePaths[0] = "images/plants/cosmic_cob/1_seedling.png";
-        this.growthStageImagePaths[1] = "images/plants/cosmic_cob/2_sprout.png";
-        this.growthStageImagePaths[2] = "images/plants/cosmic_cob/3_juvenile.png";
-        this.growthStageImagePaths[3] = "images/plants/cosmic_cob/4_adult.png";
-        this.growthStageImagePaths[4] = "images/plants/cosmic_cob/5_decaying.png";
-        this.growthStageImagePaths[5] = "images/plants/cosmic_cob/6_dead.png";
     }
 
     /**
@@ -189,12 +182,11 @@ public class PlantComponent extends Component {
      * @param cropTile - The cropTileComponent where the plant will be located.
      * @param growthStageThresholds - A list of three integers that represent the growth thresholds.
      * @param soundsArray - A list of all sound files file paths as strings
-     * @param growthStageImagePaths - image paths for the different growth stages.
      */
     public PlantComponent(int health, String name, String plantType, String plantDescription,
                           float idealWaterLevel, int adultLifeSpan, int maxHealth,
                           CropTileComponent cropTile, int[] growthStageThresholds,
-                          String[] soundsArray, String[] growthStageImagePaths) {
+                          String[] soundsArray) {
         this.plantHealth = health;
         this.plantName = name;
         this.plantType = plantType;
@@ -219,14 +211,6 @@ public class PlantComponent extends Component {
         this.maxHealthAtStages[0] = 0.05 * maxHealth;
         this.maxHealthAtStages[1] = 0.1 * maxHealth;
         this.maxHealthAtStages[2] = 0.3 * maxHealth;
-
-        // Initialise the image paths for the growth stages
-        this.growthStageImagePaths[0] = growthStageImagePaths[0];
-        this.growthStageImagePaths[1] = growthStageImagePaths[1];
-        this.growthStageImagePaths[2] = growthStageImagePaths[2];
-        this.growthStageImagePaths[3] = growthStageImagePaths[3];
-        this.growthStageImagePaths[4] = growthStageImagePaths[4];
-        this.growthStageImagePaths[5] = growthStageImagePaths[5];
     }
 
     /**
@@ -243,7 +227,7 @@ public class PlantComponent extends Component {
         ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateGrowthStage);
         ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::beginDecay);
         ServiceLocator.getTimeService().getEvents().addListener("minuteUpdate", this::checkDecayStatus);
-        this.currentTexture = entity.getComponent(DynamicTextureRenderComponent.class);
+        this.currentAnimator = entity.getComponent(AnimationRenderComponent.class);
         updateTexture();
     }
 
@@ -417,14 +401,6 @@ public class PlantComponent extends Component {
     }
 
     /**
-     * Retrieves the current texture of the plant.
-     * @return The current texture of the plant.
-     */
-    public DynamicTextureRenderComponent getTexture() {
-        return this.currentTexture;
-    }
-
-    /**
      * Sets the harvest yield of this plant.
      *
      * <p>This will store an unmodifiable copy of the given map. Modifications made to the given
@@ -517,7 +493,7 @@ public class PlantComponent extends Component {
     public void updateGrowthStage() {
         int time = ServiceLocator.getTimeService().getHour();
 
-        if (time == 12) {
+        if (time == 12 || time == 0 || time == 6) {
             if ((getGrowthStage().getValue() < GrowthStage.ADULT.getValue())) {
                 if (this.currentGrowthLevel >= this.growthStageThresholds[getGrowthStage().getValue() - 1]) {
                     setGrowthStage(getGrowthStage().getValue() + 1);
@@ -575,10 +551,8 @@ public class PlantComponent extends Component {
      */
     public void updateTexture() {
         if (getGrowthStage().getValue() <= GrowthStage.DEAD.getValue()) {
-            String path = this.growthStageImagePaths[getGrowthStage().getValue() - 1];
-
-            if (this.currentTexture != null) {
-                this.currentTexture.setTexture(path);
+            if (this.currentAnimator != null) {
+                this.currentAnimator.startAnimation(this.animationImages[getGrowthStage().getValue() - 1]);
             }
         }
     }
