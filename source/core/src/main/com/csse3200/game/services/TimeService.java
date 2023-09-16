@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 public class TimeService {
 	private static final Logger logger = LoggerFactory.getLogger(TimeService.class);
-	private static final int MS_IN_MINUTE = 500;
+	private static final int MS_IN_MINUTE = 1;
 	private int minute;
 	private int hour;
 	private int day;
