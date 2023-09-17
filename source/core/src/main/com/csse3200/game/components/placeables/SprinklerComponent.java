@@ -18,6 +18,7 @@ import java.util.Arrays;
  * - sprinklers sprinkle every 30 seconds.
  *
  * TODO:
+ *  - BUG: place sprinkler, then pump next to, the sprinkler orthoganal to fist, then connect in diagonal and game crash
  *  - !! if u place a pump it wont update the sprinklers around it to be powered, Fix by adding trigger for pump.
  *  - Domino effect power reconfiguration isn't implemented yet, shouldn't be hard.
  *  - Sometimes watering seems funny, prob due to the power problem mentioned above.
@@ -33,23 +34,41 @@ public class SprinklerComponent extends Component {
    * Texture paths for different sprinkler orientation.
    * The order of this array is very important, correct order ensures a sprinkler gets the correct texture.
    */
-  private static final String[] textures = {
-          "images/placeable/pipe_null.png",
-          "images/placeable/pipe_left.png",
-          "images/placeable/pipe_right.png",
-          "images/placeable/pipe_horizontal.png",
-          "images/placeable/pipe_down.png",
-          "images/placeable/pipe_down_left.png",
-          "images/placeable/pipe_down_right.png",
-          "images/placeable/pipe_down_triple.png",
-          "images/placeable/pipe_up.png",
-          "images/placeable/pipe_up_left.png",
-          "images/placeable/pipe_up_right.png",
-          "images/placeable/pipe_up_triple.png",
-          "images/placeable/pipe_vertical.png",
-          "images/placeable/pipe_left_triple.png",
-          "images/placeable/pipe_right_triple.png",
-          "images/placeable/pipe_quad.png"
+  private static final String[] textures_on = {
+          "images/placeable/sprinkler/pipe_null.png",
+          "images/placeable/sprinkler/on/pipe_left.png",
+          "images/placeable/sprinkler/on/pipe_right.png",
+          "images/placeable/sprinkler/on/pipe_horizontal.png",
+          "images/placeable/sprinkler/on/pipe_down.png",
+          "images/placeable/sprinkler/on/pipe_down_left.png",
+          "images/placeable/sprinkler/on/pipe_down_right.png",
+          "images/placeable/sprinkler/on/pipe_down_triple.png",
+          "images/placeable/sprinkler/on/pipe_up.png",
+          "images/placeable/sprinkler/on/pipe_up_left.png",
+          "images/placeable/sprinkler/on/pipe_up_right.png",
+          "images/placeable/sprinkler/on/pipe_up_triple.png",
+          "images/placeable/sprinkler/on/pipe_vertical.png",
+          "images/placeable/sprinkler/on/pipe_left_triple.png",
+          "images/placeable/sprinkler/on/pipe_right_triple.png",
+          "images/placeable/sprinkler/on/pipe_quad.png"
+  };
+  private static final String[] textures_off = {
+          "images/placeable/sprinkler/pipe_null.png",
+          "images/placeable/sprinkler/off/pipe_left.png",
+          "images/placeable/sprinkler/off/pipe_right.png",
+          "images/placeable/sprinkler/off/pipe_horizontal.png",
+          "images/placeable/sprinkler/off/pipe_down.png",
+          "images/placeable/sprinkler/off/pipe_down_left.png",
+          "images/placeable/sprinkler/off/pipe_down_right.png",
+          "images/placeable/sprinkler/off/pipe_down_triple.png",
+          "images/placeable/sprinkler/off/pipe_up.png",
+          "images/placeable/sprinkler/off/pipe_up_left.png",
+          "images/placeable/sprinkler/off/pipe_up_right.png",
+          "images/placeable/sprinkler/off/pipe_up_triple.png",
+          "images/placeable/sprinkler/off/pipe_vertical.png",
+          "images/placeable/sprinkler/off/pipe_left_triple.png",
+          "images/placeable/sprinkler/off/pipe_right_triple.png",
+          "images/placeable/sprinkler/off/pipe_quad.png"
   };
 
   /**
@@ -223,17 +242,20 @@ public class SprinklerComponent extends Component {
   public void configSprinkler() {
     int orientation = 0b0000;   // 4 bits representing adjacent sprinklers, used as an index to select a texture.
     for (Entity sprinkler : this.adjSprinklers) {
+      orientation <<= 1;
       if (sprinkler != null) {
         // Sets this sprinkler to powered if adj sprinkler is powered, but never sets to this.isPowered to false.
         this.isPowered = sprinkler.getComponent(SprinklerComponent.class).getPowered() || this.isPowered;
         // Set the bit and shift along.
         orientation |= 0b0001;
       }
-      orientation <<= 1;
     }
     // now set the texture.
-    orientation >>= 1; // little ugly but I've shifted 1 too many times and need to shift back, or I go out-of-bounds.
-    entity.getComponent(DynamicTextureRenderComponent.class).setTexture(textures[orientation]);
+    if (this.isPowered) {
+      entity.getComponent(DynamicTextureRenderComponent.class).setTexture(textures_on[orientation]);
+    } else {
+      entity.getComponent(DynamicTextureRenderComponent.class).setTexture(textures_off[orientation]);
+    }
   }
 
   /**

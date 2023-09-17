@@ -165,23 +165,40 @@ public class SpaceGameArea extends GameArea {
           "images/invisible_sprite.png",
 
           /* placeable */
-          // sprinklers
-          "images/placeable/pipe_null.png",
-          "images/placeable/pipe_left.png",
-          "images/placeable/pipe_right.png",
-          "images/placeable/pipe_horizontal.png",
-          "images/placeable/pipe_down.png",
-          "images/placeable/pipe_down_left.png",
-          "images/placeable/pipe_down_right.png",
-          "images/placeable/pipe_down_triple.png",
-          "images/placeable/pipe_up.png",
-          "images/placeable/pipe_up_left.png",
-          "images/placeable/pipe_up_right.png",
-          "images/placeable/pipe_up_triple.png",
-          "images/placeable/pipe_vertical.png",
-          "images/placeable/pipe_left_triple.png",
-          "images/placeable/pipe_right_triple.png",
-          "images/placeable/pipe_quad.png"
+          "images/placeable/sprinkler/pipe_null.png",
+          // sprinklers - on
+          "images/placeable/sprinkler/on/pipe_null.png",
+          "images/placeable/sprinkler/on/pipe_left.png",
+          "images/placeable/sprinkler/on/pipe_right.png",
+          "images/placeable/sprinkler/on/pipe_horizontal.png",
+          "images/placeable/sprinkler/on/pipe_down.png",
+          "images/placeable/sprinkler/on/pipe_down_left.png",
+          "images/placeable/sprinkler/on/pipe_down_right.png",
+          "images/placeable/sprinkler/on/pipe_down_triple.png",
+          "images/placeable/sprinkler/on/pipe_up.png",
+          "images/placeable/sprinkler/on/pipe_up_left.png",
+          "images/placeable/sprinkler/on/pipe_up_right.png",
+          "images/placeable/sprinkler/on/pipe_up_triple.png",
+          "images/placeable/sprinkler/on/pipe_vertical.png",
+          "images/placeable/sprinkler/on/pipe_left_triple.png",
+          "images/placeable/sprinkler/on/pipe_right_triple.png",
+          "images/placeable/sprinkler/on/pipe_quad.png",
+          // sprinklers - off
+          "images/placeable/sprinkler/off/pipe_left.png",
+          "images/placeable/sprinkler/off/pipe_right.png",
+          "images/placeable/sprinkler/off/pipe_horizontal.png",
+          "images/placeable/sprinkler/off/pipe_down.png",
+          "images/placeable/sprinkler/off/pipe_down_left.png",
+          "images/placeable/sprinkler/off/pipe_down_right.png",
+          "images/placeable/sprinkler/off/pipe_down_triple.png",
+          "images/placeable/sprinkler/off/pipe_up.png",
+          "images/placeable/sprinkler/off/pipe_up_left.png",
+          "images/placeable/sprinkler/off/pipe_up_right.png",
+          "images/placeable/sprinkler/off/pipe_up_triple.png",
+          "images/placeable/sprinkler/off/pipe_vertical.png",
+          "images/placeable/sprinkler/off/pipe_left_triple.png",
+          "images/placeable/sprinkler/off/pipe_right_triple.png",
+          "images/placeable/sprinkler/off/pipe_quad.png"
 
   };
   private static final String[] forestTextureAtlases = {
