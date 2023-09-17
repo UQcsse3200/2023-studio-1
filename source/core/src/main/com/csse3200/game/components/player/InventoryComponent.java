@@ -132,7 +132,7 @@ public class InventoryComponent extends Component {
 
   public boolean setPosition(Entity entity, int pos) {
     itemPlace.put(pos, entity);
-    entity.getEvents().trigger("updateInventory");
+    updateInventory();
     return true;
   }
 
@@ -155,7 +155,7 @@ public class InventoryComponent extends Component {
       return false;
     }
     itemPlace.put(lastPlace,entity);
-      entity.getEvents().trigger("updateInventory");
+    //updateInventory();
     return true;
   }
   /**

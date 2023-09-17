@@ -19,6 +19,7 @@ public class ItemSlot extends Stack {
 
     private boolean selected;
     private Image itemImage;
+    private static int name = 0;
 
     /**
      * Construct an itemSlot with a texture, count and selected state
@@ -105,6 +106,7 @@ public class ItemSlot extends Stack {
         if (this.itemTexture != null) {
             itemImage = new Image(this.itemTexture);
             this.add(itemImage);
+            itemImage.setName(Integer.toString(name++));
         }
 
         //Add the count label if the number is not 0
