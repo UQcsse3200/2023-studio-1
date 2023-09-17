@@ -4,8 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.components.Component;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.utils.math.Vector2Utils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Input handler for the player for keyboard and touch (mouse) input.
@@ -14,7 +17,16 @@ import com.csse3200.game.utils.math.Vector2Utils;
 public class KeyboardPlayerInputComponent extends InputComponent {
   private final Vector2 moveDirection = Vector2.Zero.cpy();
   private PlayerActions actions;
+  private static int keyPressedCounter;
+  private static boolean menuOpened = false;
+  private static Enum currentMenu = MenuTypes.NONE;
   private final int hotKeyOffset = 6;
+  public enum MenuTypes{
+    PAUSEMENU,
+    NONE
+  }
+
+  private static final Logger logger = LoggerFactory.getLogger(Component.class);
 
   public KeyboardPlayerInputComponent() {
     super(5);
@@ -62,6 +74,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.SPACE:
           touchUp(Gdx.input.getX(), Gdx.input.getY(), 0, 0);
           return true;
+        case Keys.ESCAPE:
+          entity.getEvents().trigger("escInput");
+          return true;
         case Keys.NUM_0: case Keys.NUM_1: case Keys.NUM_2:
         case Keys.NUM_3: case Keys.NUM_4: case Keys.NUM_5:
         case Keys.NUM_6: case Keys.NUM_7: case Keys.NUM_8:
@@ -77,6 +92,11 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     }
     return false;
   }
+
+  public static void incrementPauseCounter(){
+    keyPressedCounter++;
+  }
+
 
   /** @see InputProcessor#touchUp(int, int, int, int) */
   @Override
@@ -123,6 +143,16 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       }
     }
     return false;
+  }
+
+  public static void setCurrentMenu(Boolean opened, MenuTypes menu) {
+    menuOpened = opened;
+    currentMenu = menu;
+  }
+
+  public static void clearMenuOpening() {
+    menuOpened = false;
+    currentMenu = MenuTypes.NONE;
   }
 
   private void triggerMoveEvent() {

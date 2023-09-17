@@ -2,6 +2,7 @@ package com.csse3200.game.missions.achievements;
 
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.MissionManager;
+import com.csse3200.game.services.ServiceLocator;
 
 /**
  * An {@link Achievement} completed by planting a certain number of crops on crop tiles.
@@ -66,6 +67,7 @@ public class PlantCropsAchievement extends Achievement {
         if (++numberOfCropsPlanted >= target) {
             numberOfCropsPlanted = target;
         }
+        notifyUpdate();
     }
 
 }

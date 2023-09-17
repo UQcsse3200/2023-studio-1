@@ -1,17 +1,20 @@
 package com.csse3200.game.components.items;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.player.InteractionDetector;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.services.ServiceLocator;
-import java.util.List;
+import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.PlantFactory;
+import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
 
+import java.util.List;
 import java.util.function.Function;
 
 import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
@@ -28,8 +31,8 @@ public class ItemActions extends Component {
   /**
    * Uses the item at the given position
    * 
-   * @param player the player entity using the item
-   * @param mousePos  the position of the mouse
+   * @param player   the player entity using the item
+   * @param mousePos the position of the mouse
    * @param map      item to use/ interact with tile
    * @return if interaction with tile was success return true else return false.
    */
@@ -50,7 +53,6 @@ public class ItemActions extends Component {
     boolean resultStatus;
     TerrainTile tile = getTileAtPosition(playerPos, mousePos);
     if (tile == null) {
-      System.out.println("Map team pls fix");
       return false;
     }
     switch (type.getItemType()) {
@@ -70,15 +72,11 @@ public class ItemActions extends Component {
         resultStatus = water(tile);
         return resultStatus;
       }
-      case FOOD -> { // TODO: THIS IS ITEM TYPE IS JUST FOR TESTING PURPOSES, REPLACE WITH PLANT DROP TYPE
+      case FOOD -> {
         if (interactionCollider == null) {
           return false;
         }
         resultStatus = feed(interactionCollider.getSuitableEntities(ItemType.FOOD, mouseWorldPos));
-//        if (!resultStatus) {
-//          // consume it yourself instead??
-//          // resultStatus = consume(player)
-//        }
         return resultStatus;
       }
       case FERTILISER -> {
@@ -89,10 +87,38 @@ public class ItemActions extends Component {
         resultStatus = plant(tile);
         return resultStatus;
       }
+      case PLACEABLE -> {
+        resultStatus = place(tile, getAdjustedPos(playerPos, mousePos));
+        return resultStatus;
+      }
       default -> {
         return false;
       }
     }
+  }
+
+  /**
+   * Places a placeable object based on its name (from ItemComponent) on a
+   * TerrainTile
+   *
+   * @param tile        - The TerrainTile to place the object on
+   * @param adjustedPos - The position of the tile as a Vector2
+   * @return the result of whether it was placed
+   */
+  private boolean place(TerrainTile tile, Vector2 adjustedPos) {
+    if (tile == null) {
+      return false;
+    }
+    if (tile.isOccupied() || !tile.isTraversable()) {
+      // Do not place
+      return false;
+    }
+    // Make the Entity to place
+    Entity placeable = FactoryService.getPlaceableFactories().get(entity.getComponent(ItemComponent.class).getItemName()).get();
+    ServiceLocator.getGameArea().spawnEntity(placeable);
+    placeable.setPosition(adjustedPos);
+    tile.setPlaceable(placeable);
+    return true;
   }
 
   /**
@@ -142,8 +168,8 @@ public class ItemActions extends Component {
     int playerPositionAsIntX = (int)Math.ceil(playerPos.x); 
     int playerPositionAsIntY = (int)Math.ceil(playerPos.y);
     
-    int x = (int)Math.ceil(playerPositionAsIntX + xDelta);
-    int y = (int)Math.ceil(playerPositionAsIntY + yDelta);
+    int x = (int)Math.ceil((double)(playerPositionAsIntX) + xDelta);
+    int y = (int)Math.ceil((double)(playerPositionAsIntY) + yDelta);
     
     return new Vector2(x, y);
   }
@@ -207,7 +233,7 @@ public class ItemActions extends Component {
    */
   private boolean hoe(Vector2 playerPos, Vector2 mousePos) {
     TerrainTile tile = getTileAtPosition(playerPos, mousePos);
-    if (tile.getCropTile() != null || !tile.isTillable()) {
+    if (tile.isOccupied() || !tile.isTillable()) {
       return false;
     }
     // Make a new tile
@@ -234,12 +260,13 @@ public class ItemActions extends Component {
   }
 
     /**
-     * Plants the given seed seed in the tile at the given position
+     * Plants the given seed in the tile at the given position
      *
      * @param tile the tile to be interacted with
      * @return if planting was successful return true else return false
      */
   private boolean plant(TerrainTile tile) {
+    // TODO can be simplified using FactoryService
     Function<CropTileComponent, Entity> plantFactoryMethod;
     if (isCropTile(tile.getCropTile())) {
         switch (entity.getComponent(ItemComponent.class).getItemName()) {
@@ -247,32 +274,24 @@ public class ItemActions extends Component {
                 plantFactoryMethod = PlantFactory::createAloeVera;
                 tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
             }
-            case "atomic algae seed" -> {
-                plantFactoryMethod = PlantFactory::createAtomicAlgae;
-                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
-            }
             case "cosmic cob seed" -> {
                 plantFactoryMethod = PlantFactory::createCosmicCob;
-                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
-            }
-            case "deadly nightshade seed" -> {
-                plantFactoryMethod = PlantFactory::createDeadlyNightshade;
                 tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
             }
             case "hammer plant seed" -> {
                 plantFactoryMethod = PlantFactory::createHammerPlant;
                 tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
             }
-            case "horticultural heater seed" -> {
-                plantFactoryMethod = PlantFactory::createHorticulturalHeater;
-                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
-            }
             case "space snapper seed" -> {
-                plantFactoryMethod = PlantFactory::createVenusFlyTrap;
+                plantFactoryMethod = PlantFactory::createSpaceSnapper;
                 tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
             }
-            case "tobacco seed" -> {
-                plantFactoryMethod = PlantFactory::createNicotianaTabacum;
+            case "atomic algae seed" -> {
+                plantFactoryMethod = PlantFactory::createAtomicAlgae;
+                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
+            }
+            case "deadly nightshade seed" -> {
+                plantFactoryMethod = PlantFactory::createDeadlyNightshade;
                 tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
             }
             default -> {

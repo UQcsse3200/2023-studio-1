@@ -1,4 +1,6 @@
 package com.csse3200.game.entities.factories;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.components.plants.PlantComponent;
@@ -10,8 +12,12 @@ import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.rendering.TextureRenderComponent;
+import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.csse3200.game.services.ServiceLocator;
+
+import java.util.Map;
 
 /**
  * Factory to create plant entities.
@@ -37,13 +43,58 @@ public class PlantFactory {
      *
      * @return entity
      */
-    public static Entity createBasePlant() {
+    public static Entity createBasePlant(BasePlantConfig config, CropTileComponent cropTile) {
+        AnimationRenderComponent animator = setupPlantAnimations(config.atlasPath);
+
+        int[] growthThresholds = {config.sproutThreshold, config.juvenileThreshold, config.adultThreshold};
+
+        String[] soundsArray =   {
+                config.soundFolderPath + "click.wav", config.soundFolderPath + "clickLore.wav",
+                config.soundFolderPath + "decay.wav", config.soundFolderPath + "decayLore.wav",
+                config.soundFolderPath + "destroy.wav", config.soundFolderPath + "destroyLore.wav",
+                config.soundFolderPath + "nearby.wav", config.soundFolderPath + "nearbyLore.wav",
+        };
+
         Entity plant = new Entity(EntityType.Plant)
+                .addComponent(animator)
+
+
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setSensor(true))
-                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE));
+                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
+                //.addComponent(new DynamicTextureRenderComponent("images/plants/cosmic_cob/4_adult.png"))
+                .addComponent(new PlantComponent(config.health, config.name, config.type,
+                        config.description, config.idealWaterLevel, config.adultLifeSpan,
+                        config.maxHealth, cropTile, growthThresholds, soundsArray));
+
+        // Set plant position over crop tile.
+        var cropTilePosition = cropTile.getEntity().getPosition();
+        plant.setPosition(cropTilePosition.x, cropTilePosition.y + 0.5f);
+        //plant.getComponent(DynamicTextureRenderComponent.class).scaleEntity();
+        //plant.getComponent(DynamicTextureRenderComponent.class).setLayer(2);
+        plant.getComponent(AnimationRenderComponent.class).scaleEntity();
+        plant.scaleHeight(2f);
+        PhysicsUtils.setScaledCollider(plant, 0.5f, 0.2f);
 
         return plant;
+    }
+
+    private static AnimationRenderComponent setupPlantAnimations(String atlasPath) {
+        AnimationRenderComponent animator = new AnimationRenderComponent(
+                ServiceLocator.getResourceService().getAsset(atlasPath, TextureAtlas.class),
+                16f);
+
+        animator.addAnimation("default", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("1_seedling", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("2_sprout", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("3_juvenile", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("4_adult", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("5_decaying", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("6_dead", 0.1f, Animation.PlayMode.LOOP);
+
+        animator.startAnimation("4_adult");
+
+        return animator;
     }
 
     /**
@@ -53,22 +104,7 @@ public class PlantFactory {
      * @return entity
      */
     public static Entity createCosmicCob(CropTileComponent cropTile) {
-        BasePlantConfig config = stats.cosmicCob;
-
-        Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/plants/Corn.png"))
-                .addComponent(new PlantComponent(config.health, config.name, config.type,
-                        config.description, config.idealWaterLevel, config.adultLifeSpan,
-                        config.maxHealth, cropTile));
-
-        // Set plant position over crop tile.
-        var cropTilePosition = cropTile.getEntity().getPosition();
-        plant.setPosition(cropTilePosition.x, cropTilePosition.y + 0.5f);
-
-        plant.getComponent(TextureRenderComponent.class).scaleEntity();
-        plant.scaleHeight(1f);
-        PhysicsUtils.setScaledCollider(plant, 0.5f, 0.2f);
-        return plant;
+        return createBasePlant(stats.cosmicCob, cropTile);
     }
 
     /**
@@ -78,22 +114,7 @@ public class PlantFactory {
      * @return entity
      */
     public static Entity createAloeVera(CropTileComponent cropTile) {
-        BasePlantConfig config = stats.aloeVera;
-
-        Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/plants/Aloe.png"))
-                .addComponent(new PlantComponent(config.health, config.name, config.type,
-                        config.description, config.idealWaterLevel, config.adultLifeSpan,
-                        config.maxHealth, cropTile));
-
-        // Set plant position over crop tile.
-        var cropTilePosition = cropTile.getEntity().getPosition();
-        plant.setPosition(cropTilePosition.x, cropTilePosition.y + 0.5f);
-
-        plant.getComponent(TextureRenderComponent.class).scaleEntity();
-        plant.scaleHeight(1f);
-        PhysicsUtils.setScaledCollider(plant, 0.5f, 0.2f);
-        return plant;
+        return createBasePlant(stats.aloeVera, cropTile);
     }
 
     /**
@@ -103,75 +124,9 @@ public class PlantFactory {
      * @return entity
      */
     public static Entity createHammerPlant(CropTileComponent cropTile) {
-        BasePlantConfig config = stats.hammerPlant;
+        return createBasePlant(stats.hammerPlant, cropTile);
 
-        Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/plants/Hammer.png"))
-                .addComponent(new PlantComponent(config.health, config.name, config.type,
-                        config.description, config.idealWaterLevel, config.adultLifeSpan,
-                        config.maxHealth, cropTile));
-
-        // Set plant position over crop tile.
-        var cropTilePosition = cropTile.getEntity().getPosition();
-        plant.setPosition(cropTilePosition.x, cropTilePosition.y + 0.5f);
-
-        plant.getComponent(TextureRenderComponent.class).scaleEntity();
-        plant.scaleHeight(1f);
-        PhysicsUtils.setScaledCollider(plant, 0.5f, 0.2f);
-        return plant;
     }
-
-    /**
-     * Creates a AtropaBelladonna entity that is a deadly type plant.
-     *
-     * @param cropTile Crop tile upon which the plant is planted
-     * @return entity
-     */
-
-    public static Entity createAtropaBelladonna(CropTileComponent cropTile) {
-        BasePlantConfig config = stats.atropaBelladonna;
-
-        Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/plants/belladonna.png"))
-                .addComponent(new PlantComponent(config.health, config.name, config.type,
-                        config.description, config.idealWaterLevel, config.adultLifeSpan,
-                        config.maxHealth, cropTile));
-
-        // Set plant position over crop tile.
-        var cropTilePosition = cropTile.getEntity().getPosition();
-        plant.setPosition(cropTilePosition.x, cropTilePosition.y + 0.5f);
-
-        plant.getComponent(TextureRenderComponent.class).scaleEntity();
-        plant.scaleHeight(1f);
-        PhysicsUtils.setScaledCollider(plant, 0.5f, 0.2f);
-        return plant;
-    }
-
-    /**
-     * Creates a Nicotiana Tabacum entity that is a deadly type plant.
-     *
-     * @param cropTile Crop tile upon which the plant is planted
-     * @return entity
-     */
-    public static Entity createNicotianaTabacum(CropTileComponent cropTile) {
-        BasePlantConfig config = stats.nicotianaTabacum;
-
-        Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/plants/waterweed.png"))
-                .addComponent(new PlantComponent(config.health, config.name, config.type,
-                        config.description, config.idealWaterLevel, config.adultLifeSpan,
-                        config.maxHealth, cropTile));
-
-        // Set plant position over crop tile.
-        var cropTilePosition = cropTile.getEntity().getPosition();
-        plant.setPosition(cropTilePosition.x, cropTilePosition.y + 0.5f);
-
-        plant.getComponent(TextureRenderComponent.class).scaleEntity();
-        plant.scaleHeight(1f);
-        PhysicsUtils.setScaledCollider(plant, 0.5f, 0.2f);
-        return plant;
-    }
-
 
     /**
      * Creates an venusFlyTrap entity that is a defence type plant.
@@ -179,34 +134,29 @@ public class PlantFactory {
      * @param cropTile Crop tile upon which the plant is planted
      * @return entity
      */
-    public static Entity createVenusFlyTrap(CropTileComponent cropTile) {
-        BasePlantConfig config = stats.venusFlyTrap;
-
-        Entity plant = createBasePlant()
-                .addComponent(new TextureRenderComponent("images/plants/VenusTrap.png"))
-                .addComponent(new PlantComponent(config.health, config.name, config.type,
-                        config.description, config.idealWaterLevel, config.adultLifeSpan,
-                        config.maxHealth, cropTile));
-
-        // Set plant position over crop tile.
-        var cropTilePosition = cropTile.getEntity().getPosition();
-        plant.setPosition(cropTilePosition.x, cropTilePosition.y + 0.5f);
-
-        plant.getComponent(TextureRenderComponent.class).scaleEntity();
-        plant.scaleHeight(1f);
-        PhysicsUtils.setScaledCollider(plant, 0.5f, 0.2f);
-        return plant;
+    public static Entity createSpaceSnapper(CropTileComponent cropTile) {
+        return createBasePlant(stats.spaceSnapper, cropTile);
     }
 
+    /**
+     * Creates a waterWeed entity that is a production type plant.
+     *
+     * @param cropTile Crop tile upon which the plant is planted
+     * @return entity
+     */
     public static Entity createAtomicAlgae(CropTileComponent cropTile) {
-        return null;
+        return createBasePlant(stats.atomicAlgae, cropTile);
     }
 
-    public static Entity createHorticulturalHeater(CropTileComponent cropTile) {
-        return null;
-    }
-
+    /**
+     * Creates a Nightshade entity that is a deadly type plant.
+     *
+     * @param cropTile Crop tile upon which the plant is planted
+     * @return entity
+     */
     public static Entity createDeadlyNightshade(CropTileComponent cropTile) {
-        return null;
+        return createBasePlant(stats.deadlyNightshade, cropTile);
+
     }
+
 }

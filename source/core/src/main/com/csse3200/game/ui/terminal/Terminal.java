@@ -44,6 +44,7 @@ public class Terminal extends Component {
     addCommand("spawn", new SpawnCommand());
     addCommand("setDay", new SetDayCommand());
     addCommand("addItem", new AddItemCommand());
+    addCommand("addWeather", new AddWeatherCommand());
   }
 
   /** @return message entered by user */
