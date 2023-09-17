@@ -67,7 +67,6 @@ public class PlayerFactory {
             .addComponent(new ToolbarDisplay())
 	        .addComponent(new AuraLightComponent())
             .addComponent(new InventoryDisplay(playerInventory))
-            .addComponent(new ToolbarDisplay())
             .addComponent(new PauseMenuActions());
 
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
