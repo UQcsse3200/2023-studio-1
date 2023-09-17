@@ -8,11 +8,34 @@ import com.csse3200.game.services.ServiceLocator;
 
 public class ConeLightComponent extends Component {
 
+	/**
+	 * Cone light from box2dlights that gets rendered by the ray handler
+	 */
 	private final ConeLight light;
+
+	/**
+	 * State of the light (on/off)
+	 */
 	private boolean active;
+
+	/**
+	 * Default light distance used if nothing is provided in the constructor
+	 */
 	private static final float DEFAULT_DISTANCE = 8f;
+
+	/**
+	 * Default light colour if nothing is provided in the constructor
+	 */
 	private static final Color DEFAULT_COLOR = Color.LIGHT_GRAY;
+
+	/**
+	 * Default size of the light cone in degrees
+	 */
 	private static final float DEFAULT_CONE_DEGREE = 30f;
+
+	/**
+	 * Default direction that the cone light is pointing in. Value of 0 is right, degrees goes anticlockwise
+	 */
 	private static final float DEFAULT_DIRECTION_DEGREE = 0f;
 
 

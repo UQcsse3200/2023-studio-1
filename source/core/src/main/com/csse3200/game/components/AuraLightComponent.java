@@ -6,9 +6,24 @@ import com.csse3200.game.services.ServiceLocator;
 
 public class AuraLightComponent extends Component{
 
+	/**
+	 * Point light from box2dlights that gets rendered by the ray handler
+	 */
 	private final PointLight light;
+
+	/**
+	 * State of the light (on/off)
+	 */
 	private boolean active;
+
+	/**
+	 * Default light distance used if nothing is provided in the constructor
+	 */
 	private static final float DEFAULT_DISTANCE = 8f;
+
+	/**
+	 * Default light colour if nothing is provided in the constructor
+	 */
 	private static final Color DEFAULT_COLOR = Color.LIGHT_GRAY;
 
 	/**
@@ -85,7 +100,7 @@ public class AuraLightComponent extends Component{
 	}
 
 	/**
-	 * Determines whether or not the light is currently on
+	 * Determines whether the light is currently on
 	 * @return state of the light (on/off)
 	 */
 	public boolean getActive() {
