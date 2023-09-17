@@ -25,38 +25,30 @@ public class TractorAnimationController extends Component {
    * @param direction
    * @param tool
    */
-  void animateStopMoving(float direction, String tool) {
-    String animation = String.format("stop_%s_%s", getDirection(direction), tool);
+  void animateStopMoving(String direction, String tool) {
+    String animation = String.format("stop_%s_%s", direction, tool);
     if (!animator.getCurrentAnimation().equals(animation)) {
       animator.startAnimation(animation);
     }
   }
 
   /**
-   * Animates the tractor to start moving.
+   *
+   * @param direction
+   * @param tool
    */
-  void animateMoving(float direction, String tool) {
-    String animation = String.format("move_%s_%s", getDirection(direction), tool);
+  void animateMoving(String direction, String tool) {
+    String animation = String.format("move_%s_%s", direction, tool);
     if (!animator.getCurrentAnimation().equals(animation)) {
       animator.startAnimation(animation);
     }
   }
 
-  void animateIdle(float direction) {
-    animator.startAnimation(String.format("idle_%s", getDirection(direction)));
-  }
-
-  private String getDirection(float direction) {
-    if (direction < 45) {
-      return "right";
-    } else if (direction < 135) {
-      return "up";
-    } else if (direction < 225) {
-      return "left";
-    } else if (direction < 315) {
-      return "down";
-    }
-    // TODO add logger to provide error here?
-    return "right";
+  /**
+   *
+   * @param direction
+   */
+  void animateIdle(String direction) {
+    animator.startAnimation(String.format("idle_%s", direction));
   }
 }

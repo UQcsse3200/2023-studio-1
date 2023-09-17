@@ -2,6 +2,7 @@ package com.csse3200.game.components.tractor;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
@@ -12,6 +13,8 @@ import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
+
+import java.util.Objects;
 
 import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
 
@@ -54,31 +57,81 @@ public class TractorActions extends Component {
     }
   }
 
+  /**
+   *
+   */
   private void updateAnimation() {
     if (walkDirection.epsilonEquals(Vector2.Zero)) {
-      entity.getEvents().trigger("stopMoving", prevDirection, getMode().toString());
+      entity.getEvents().trigger("stopMoving", getDirection(prevDirection), getMode().toString());
     } else {
-      entity.getEvents().trigger("startMoving", walkDirection.angleDeg(), getMode().toString());
+      entity.getEvents().trigger("startMoving", getDirection(walkDirection.angleDeg()), getMode().toString());
     }
   }
 
+  private String getDirection(float direction) {
+    if (direction < 45) {
+      return "right";
+    } else if (direction < 135) {
+      return "up";
+    } else if (direction < 225) {
+      return "left";
+    } else if (direction < 315) {
+      return "down";
+    }
+    // TODO add logger to provide error here?
+    return "right";
+  }
+
+  /**
+   *
+   */
   private void use() {
     switch (getMode()) {
-      case normal -> {
-      }
       case tilling -> {
-        TerrainTile tile = map.getTile(entity.getPosition());
-        TerrainTile tile2 = map.getTile(new Vector2(entity.getPosition().x, entity.getPosition().y - 1));
-        hoe(tile, entity.getPosition());
-        hoe(tile2, new Vector2(entity.getPosition().x, entity.getPosition().y - 1));
+        Array<Object> tiles = getTiles(TractorMode.tilling, getDirection(walkDirection.angleDeg()));
+        hoe((TerrainTile) tiles.get(0), (Vector2) tiles.get(2));
+        hoe((TerrainTile) tiles.get(1), (Vector2) tiles.get(3));
       }
       case harvesting -> {
-        TerrainTile tile = map.getTile(entity.getPosition());
-        TerrainTile tile2 = map.getTile(new Vector2(entity.getPosition().x, entity.getPosition().y - 1));
-        harvest(tile);
-        harvest(tile2);
+        Array<Object> tiles = getTiles(TractorMode.tilling, getDirection(walkDirection.angleDeg()));
+        harvest((TerrainTile) tiles.get(0));
+        harvest((TerrainTile) tiles.get(1));
       }
     }
+  }
+
+  /**
+   *
+   * @param mode
+   * @param dir
+   * @return
+   */
+  private Array<Object> getTiles(TractorMode mode, String dir) {
+    Array<Object> tiles = new Array<>(2);
+    Vector2 pos1 = new Vector2();
+    Vector2 pos2 = new Vector2();
+    if ((Objects.equals(dir, "right") && mode == TractorMode.tilling) || (Objects.equals(dir, "left") && mode == TractorMode.harvesting)) {
+      pos1 = entity.getPosition();
+      pos2.set(entity.getPosition().x, entity.getPosition().y + 1);
+      tiles.add(map.getTile(pos1), map.getTile(pos2), pos1, pos2);
+      return tiles;
+    } else if ((Objects.equals(dir, "left") && mode == TractorMode.tilling) || (Objects.equals(dir, "right") && mode == TractorMode.harvesting)) {
+      pos1.set(entity.getPosition().x + 5, entity.getPosition().y);
+      pos2.set(entity.getPosition().x + 5, entity.getPosition().y + 1);
+      tiles.add(map.getTile(pos1), map.getTile(pos2), pos1, pos2);
+      return tiles;
+    } else if ((Objects.equals(dir, "up") && mode == TractorMode.tilling) || (Objects.equals(dir, "down") && mode == TractorMode.harvesting)) {
+      pos1.set(entity.getPosition().x + 2, entity.getPosition().y + 1);
+      pos2.set(entity.getPosition().x + 3, entity.getPosition().y + 1);
+      tiles.add(map.getTile(pos1), map.getTile(pos2), pos1, pos2);
+      return tiles;
+    } else if ((Objects.equals(dir, "down") && mode == TractorMode.tilling) || (Objects.equals(dir, "up") && mode == TractorMode.harvesting)) {
+      pos1.set(entity.getPosition().x + 2, entity.getPosition().y + 3);
+      pos2.set(entity.getPosition().x + 3, entity.getPosition().y + 3);
+      tiles.add(map.getTile(pos1), map.getTile(pos2), pos1, pos2);
+      return tiles;
+    }
+    return null;
   }
 
   private void harvest(TerrainTile tile) {
@@ -98,7 +151,7 @@ public class TractorActions extends Component {
       return;
     }
     // Make a new tile
-    Entity cropTile = createTerrainEntity(new Vector2((int)Math.ceil(pos.x), (int)Math.ceil(pos.y)));
+    Entity cropTile = createTerrainEntity(map.tileCoordinatesToVector(map.vectorToTileCoordinates(pos)));
     tile.setCropTile(cropTile);
     tile.setOccupied();
     ServiceLocator.getEntityService().register(cropTile);
@@ -158,7 +211,7 @@ public class TractorActions extends Component {
     this.mode = TractorMode.normal;
     player.getComponent(PlayerActions.class).setMuted(false);
     muted = true;
-    entity.getEvents().trigger("idle", prevDirection);
+    entity.getEvents().trigger("idle", getDirection(prevDirection));
     player.getComponent(KeyboardPlayerInputComponent.class)
         .setWalkDirection(entity.getComponent(KeyboardTractorInputComponent.class).getWalkDirection());
     player.setPosition(this.entity.getPosition());
