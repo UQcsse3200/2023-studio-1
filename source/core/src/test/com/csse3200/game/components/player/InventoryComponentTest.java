@@ -6,7 +6,6 @@ import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.events.EventHandler;
-import com.csse3200.game.events.listeners.EventListener;
 import com.csse3200.game.extensions.GameExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,7 +21,6 @@ import com.csse3200.game.entities.Entity;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
@@ -41,7 +39,6 @@ class InventoryComponentTest {
     item2 = mock(Entity.class);
     items.add(item1);
     items.add(item2);
-    EventHandler listener = new EventHandler();
 
     inventoryComponent = spy(new InventoryComponent(items));
     doNothing().when(inventoryComponent).updateInventory();
