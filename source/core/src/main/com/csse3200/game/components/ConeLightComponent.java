@@ -159,6 +159,14 @@ public class ConeLightComponent extends Component {
 	}
 
 	/**
+	 * Changes the cone degree of the light
+	 * @param coneDegree cone degree of the light
+	 */
+	public void setConeDegree(float coneDegree) {
+		light.setConeDegree(coneDegree);
+	}
+
+	/**
 	 * Called every frame draw to ensure that the position of the light is the same as the entity
 	 */
 	@Override
