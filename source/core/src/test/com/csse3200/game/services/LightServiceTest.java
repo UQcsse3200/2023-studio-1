@@ -1,18 +1,11 @@
 package com.csse3200.game.services;
 
-import box2dLight.Light;
-import box2dLight.PointLight;
 import box2dLight.RayHandler;
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.collision.Ray;
-import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
-import org.junit.After;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
