@@ -7,6 +7,7 @@ import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.placeables.SprinklerComponent;
 import com.csse3200.game.components.player.InteractionDetector;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
@@ -118,6 +119,9 @@ public class ItemActions extends Component {
     placeable.setPosition(adjustedPos);
     ServiceLocator.getGameArea().spawnEntity(placeable);
     tile.setPlaceable(placeable);
+    // now notify the ready placed placeables (sprinklers) that they need to reconfigure to accommodate this new placeable.
+    // TODO move notifyAdjacent to another component so fences can use it
+    placeable.getComponent(SprinklerComponent.class).notifyAdjacent();
     return true;
   }
 
