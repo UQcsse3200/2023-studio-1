@@ -54,10 +54,10 @@ public class FenceComponent extends Component {
 
         if (isOpen) {
             this.currentTexture.setTexture(openGatePath);
-            this.entity.getComponent(ColliderComponent.class).setLayer(PhysicsLayer.NONE);
+            this.entity.getComponent(ColliderComponent.class).setSensor(true);
             return;
         }
-        this.entity.getComponent(ColliderComponent.class).setLayer(PhysicsLayer.NONE);
+        this.entity.getComponent(ColliderComponent.class).setSensor(false);
         this.currentTexture.setTexture(closedGatePath);
     }
 

@@ -16,6 +16,7 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -194,6 +195,7 @@ public class PlayerActions extends Component {
 
     // if there is a questgiver entity in range, trigger event toggleMissions
     List<Entity> entitiesInRange = this.entity.getComponent(InteractionDetector.class).getEntitiesInRange();
+    List<Entity> gates = new ArrayList<>();
 
     for (Entity entity : entitiesInRange) {
       EntityType entityType = entity.getType();
@@ -201,11 +203,21 @@ public class PlayerActions extends Component {
         if (entityType.equals(EntityType.Questgiver)) {
           entity.getEvents().trigger("toggleMissions");
         } else if (entityType.equals(EntityType.Gate)) {
-          entity.getEvents().trigger("toggleGate");
+          gates.add(entity);
         }
       }
 
+
     }
+    System.out.println(this.entity.getComponent(InteractionDetector.class).getNearest(entitiesInRange).get(0).getType());
+
+    // Get the closest gate
+    List<Entity> nearest = this.entity.getComponent(InteractionDetector.class).getNearest(gates);
+    if (!nearest.isEmpty()) {
+      nearest.get(0).getEvents().trigger("toggleGate");
+    }
+
+
   }
 
   /**
