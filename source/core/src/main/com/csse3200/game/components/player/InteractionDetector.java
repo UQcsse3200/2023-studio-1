@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.BodyUserData;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.utils.DirectionUtils;
@@ -18,6 +19,7 @@ import java.util.*;
 public class InteractionDetector extends HitboxComponent {
     /** List of entities currently in the interaction range. */
     private final List<Entity> entitiesInRange = new ArrayList<>();
+
     /** The interaction range within which entities are detected. */
     private final float range;
 
@@ -59,6 +61,13 @@ public class InteractionDetector extends HitboxComponent {
         }
 
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
+        
+        /* We only add interactable entities */
+        EntityType type = target.getType();
+        if (type != EntityType.Questgiver && type != EntityType.Gate && type != EntityType.Chest) {
+            return;
+        }
+
         entitiesInRange.add(target);
     }
 

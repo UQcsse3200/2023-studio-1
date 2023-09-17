@@ -192,18 +192,18 @@ public class PlayerActions extends Component {
       entity.getEvents().trigger("animationInteract", "down");
     }
 
-    // if there is a questgiver entity in range, trigger event toggleMissions
+    /*
+     * Find the closest entity we can interact with. To register a new entity:
+     * 1. Go to InteractionDetector.java
+     * 2. Add the entity to the logic in onCollisionStart
+     */
     List<Entity> entitiesInRange = this.entity.getComponent(InteractionDetector.class).getEntitiesInRange();
+    List<Entity> closestEntity = this.entity.getComponent(InteractionDetector.class).getNearest(entitiesInRange);
 
-    for (Entity entity : entitiesInRange) {
-      EntityType entityType = entity.getType();
-      if (entityType != null) {
-        if (entityType.equals(EntityType.Questgiver)) {
-          entity.getEvents().trigger("toggleMissions");
-        }
-      }
-
+    if (!closestEntity.isEmpty()) {
+      closestEntity.get(0).getEvents().trigger("interact");
     }
+
   }
 
   /**
