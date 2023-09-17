@@ -195,7 +195,7 @@ public class PlayerActions extends Component {
     /*
      * Find the closest entity we can interact with. To register a new entity:
      * 1. Go to InteractionDetector.java
-     * 2. Add the entity to the logic in onCollisionStart
+     * 2. Add the entity to the interactableEntities array
      */
     List<Entity> entitiesInRange = this.entity.getComponent(InteractionDetector.class).getEntitiesInRange();
     List<Entity> closestEntity = this.entity.getComponent(InteractionDetector.class).getNearest(entitiesInRange);
