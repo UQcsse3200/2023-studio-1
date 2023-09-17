@@ -41,7 +41,7 @@ public class FenceComponent extends Component {
 
         // Initialise event listener for gate.
         if (isGate) {
-            entity.getEvents().addListener("toggleGate", this::toggleGate);
+            entity.getEvents().addListener("interact", this::toggleGate);
             this.currentTexture.setTexture(closedGatePath);
         } else {
             this.currentTexture.setTexture(fencePath);
