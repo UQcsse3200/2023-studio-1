@@ -28,6 +28,10 @@ public class EndCreditsDisplay extends UIComponent {
     private Table table;
     private final GdxGame game;
 
+    private boolean hasWon;
+
+    private TextButton returnButton;
+
     /**
      * The time in seconds that it takes for the narration animation to reach the trigger point,
      * at which the planet should enter the frame.
@@ -72,6 +76,7 @@ public class EndCreditsDisplay extends UIComponent {
     }
 
     private void addActors() {
+        this.hasWon = true;
         background = new Image(new Texture(Gdx.files.internal("images/intro_background_v2.png")));
         background.setPosition(0, 0);
         float scaledHeight = Gdx.graphics.getWidth() * (background.getHeight() / background.getWidth());
@@ -90,43 +95,20 @@ public class EndCreditsDisplay extends UIComponent {
         float planetOffset = 2500;
         planet.setPosition((float)Gdx.graphics.getWidth()/2, planetOffset, Align.center);
 
+        String credits = getCredits(this.hasWon);
 
-        // The {TOKENS} in the String below are used by TypingLabel to create the requisite animation effects
-        String credits = """
-                {WAIT=0.5}
-                These are the end credits of the game.
-                
-                {WAIT}
-                Hopefully this is appearing on the screen.
-                {WAIT=0.5}
-                
-                I can't think of anything else to write.
-                {WAIT}
-                
-                I'm just gonna keep writing to take up the space.
-                {WAIT}
-                
-                Maybe I can change the text colour based off of win/lose conditions. 
-                {WAIT=1}
-                
-                {COLOR=green}Here's an example of winning text!
-                {WAIT=1}
-                
-                {COLOR=red}Here's and example of losing text!
-                {WAIT=1}
-                """;
         storyLabel = new TypingLabel(credits, skin); // Create the TypingLabel with the formatted story
         // Reduce the animation speed of all text in the story.
-        String defaultTokens = "{SLOWER}";
+         String defaultTokens = "{SLOWER}";
         storyLabel.setDefaultToken(defaultTokens);
         storyLabel.setAlignment(Align.center); // Center align the text
 
-        TextButton returnButton = new TextButton("Return To Main Menu", skin);
+        this.returnButton = new TextButton("Return To Main Menu", skin);
 
-        returnButton.setVisible(true); // Make the continue button invisible
+        this.returnButton.setVisible(false); // Make the continue button invisible
 
         // The continue button lets the user proceed to the main game
-        returnButton.addListener(new ChangeListener() {
+        this.returnButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.debug("Player Returned to Main Menu");
@@ -149,9 +131,46 @@ public class EndCreditsDisplay extends UIComponent {
         stage.addActor(rootTable);
     }
 
-    //private void exit() {
-      //  game.setScreen(ScreenType.MAIN_MENU);
-    //}
+    private String getCredits(boolean hasWon) {
+        String credits = "";
+        if (hasWon) {
+            credits = """
+                {WAIT=0.5}
+                After 30 long days, you, great farmlord, have succeeded!
+                {WAIT=0.5}
+                
+                The air is rich with oxygen, and the lands filled with greenery.
+                {WAIT}
+                
+                Humanity's hope has been restored.
+                {WAIT}
+                
+                The future is bright, and the human race... {WAIT=1} will live on!
+                {WAIT=1}
+                
+                {COLOR=green}Congrats You Win!!!.{WAIT=1}
+            """;
+        } else {
+            credits = """ 
+                {WAIT=0.5}
+                Despite your best efforts, Alpha Centauri remains a wasteland.
+                
+                {WAIT}
+                As your oxygen supply dwindles, so does humanities hope for survival.
+                {WAIT=0.5}
+                
+                You gave it your all, but in the end... {WAIT=1} it wasn't enough.
+                {WAIT}
+                
+                This is the end of the human race.
+                {WAIT}
+                
+                {COLOR=red}You're a loser!.
+                {WAIT=1}
+            """;
+        }
+        return credits;
+    }
 
     /**
      * Starts the main game
@@ -201,7 +220,7 @@ public class EndCreditsDisplay extends UIComponent {
 
 
         logger.debug(String.format("Space Speed: %s", spaceSpeed));
-
+        //this.returnButton.setVisible(true);
 
         //stage.act(ServiceLocator.getTimeSource().getDeltaTime());
     }
