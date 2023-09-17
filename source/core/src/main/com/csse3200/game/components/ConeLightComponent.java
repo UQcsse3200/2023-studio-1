@@ -159,14 +159,6 @@ public class ConeLightComponent extends Component {
 	}
 
 	/**
-	 * Returns the Box2dLights light
-	 * @return point light
-	 */
-	public ConeLight getLight() {
-		return light;
-	}
-
-	/**
 	 * Called every frame draw to ensure that the position of the light is the same as the entity
 	 */
 	@Override
