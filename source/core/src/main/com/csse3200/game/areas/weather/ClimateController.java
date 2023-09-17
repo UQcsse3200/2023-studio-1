@@ -258,19 +258,20 @@ public class ClimateController implements Json.Serializable {
 	public void read(Json json, JsonValue jsonData) {
 		temperature = jsonData.getFloat("Temp");
 		humidity = jsonData.getFloat("Humidity");
-		// It has a special weather event
-		currentWeatherEvent = null;
 		if (jsonData.has("name")) {
 			switch (jsonData.getString("name")) {
 				case ("AcidShowerEvent") -> {
 					currentWeatherEvent = new AcidShowerEvent(jsonData.getInt("hoursUntil"),
 							jsonData.getInt("duration"), jsonData.getInt("priority"),
 							jsonData.getFloat("severity"));
+					break;
 				} case ("SolarSurgeEvent") -> {
 					currentWeatherEvent = new SolarSurgeEvent(jsonData.getInt("hoursUntil"),
 							jsonData.getInt("duration"), jsonData.getInt("priority"),
 							jsonData.getFloat("severity"));
-
+					break;
+				} default -> {
+					currentWeatherEvent = null;
 				}
 			}
 		}
