@@ -1,41 +1,18 @@
 {
-"hour": 2,
+"hour": 15,
 "climate": {
-	"Temp": -3.180613,
-	"Humidity": 0.6500601,
-	"name": "AcidShowerEvent",
-	"severity": 1,
-	"duration": 5,
-	"hoursUntil": 0,
-	"priority": 3
+	"Temp": 37.27249,
+	"Humidity": 0.275388
 },
 "player": {
 	"Entity": "Player",
-	"x": 5.3115444,
-	"y": 3.75,
+	"x": 3.4867306,
+	"y": 2.699277,
 	"components": {
 		"InventoryComponent": {
 			"inventory": {
 				"item": {
 					"name": "Gate",
-					"count": 1,
-					"X": 0,
-					"Y": 0
-				},
-				"item": {
-					"name": "Gate",
-					"count": 1,
-					"X": 0,
-					"Y": 0
-				},
-				"item": {
-					"name": "hoe",
-					"count": 1,
-					"X": 0,
-					"Y": 0
-				},
-				"item": {
-					"name": "aloe vera seed",
 					"count": 1,
 					"X": 0,
 					"Y": 0
@@ -53,13 +30,19 @@
 					"Y": 0
 				},
 				"item": {
-					"name": "scythe",
+					"name": "hoe",
 					"count": 1,
 					"X": 0,
 					"Y": 0
 				},
 				"item": {
-					"name": "fertiliser",
+					"name": "shovel",
+					"count": 1,
+					"X": 0,
+					"Y": 0
+				},
+				"item": {
+					"name": "aloe vera seed",
 					"count": 1,
 					"X": 0,
 					"Y": 0
@@ -70,8 +53,8 @@
 },
 "tractor": {
 	"Entity": "Tractor",
-	"x": 5.0625,
-	"y": 5.78125,
+	"x": 2.9763465,
+	"y": 11.479099,
 	"components": {
 		"TractorActions": {
 			"isMuted": true
@@ -80,39 +63,159 @@
 },
 "entities": [
 	{
-		"Entity": "OxygenEater",
-		"x": 44.52104,
-		"y": 28.476576,
-		"components": {}
+		"Entity": "Chicken",
+		"x": 28.473494,
+		"y": 11.316065,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
 	},
 	{
-		"Entity": "OxygenEater",
-		"x": 22.236551,
-		"y": 16.217337,
-		"components": {}
+		"Entity": "Chicken",
+		"x": 9.995943,
+		"y": 3.521428,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
 	},
 	{
-		"Entity": "OxygenEater",
-		"x": 17.121576,
-		"y": 27.430683,
-		"components": {}
+		"Entity": "Chicken",
+		"x": 18.333895,
+		"y": 19.941631,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
 	},
 	{
-		"Entity": "OxygenEater",
-		"x": 16.338177,
-		"y": 1.0014708,
-		"components": {}
+		"Entity": "Chicken",
+		"x": 33.222507,
+		"y": 33.702023,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
 	},
 	{
-		"Entity": "OxygenEater",
-		"x": 28.48959,
-		"y": 18.60788,
-		"components": {}
+		"Entity": "Chicken",
+		"x": 43.82333,
+		"y": 6.119507,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 26.34934,
+		"y": 22.359606,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 11.880336,
+		"y": 4.125233,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 46.786217,
+		"y": 40.20404,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 29.220772,
+		"y": 24.573557,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 41.187153,
+		"y": 16.901875,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Cow",
+		"x": 41.730675,
+		"y": 29.349566,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Cow",
+		"x": 46.383007,
+		"y": 22.682629,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Cow",
+		"x": 47.436703,
+		"y": 33.35845,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Cow",
+		"x": 24.273502,
+		"y": 36.242554,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Cow",
+		"x": 40.936703,
+		"y": -0.235,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
 	},
 	{
 		"Entity": "Astrolotl",
-		"x": 38.53785,
-		"y": 17.493925,
+		"x": 2.9743125,
+		"y": 4.9260435,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -120,154 +223,34 @@
 		}
 	},
 	{
-		"Entity": "Cow",
-		"x": 2.2449996,
-		"y": 33.04685,
-		"components": {
-			"TamableComponent": {
-				"tamed": false
-			}
-		}
+		"Entity": "OxygenEater",
+		"x": 10.523388,
+		"y": 33.16792,
+		"components": {}
 	},
 	{
-		"Entity": "Cow",
-		"x": 45.936703,
-		"y": 45.26307,
-		"components": {
-			"TamableComponent": {
-				"tamed": false
-			}
-		}
+		"Entity": "OxygenEater",
+		"x": 15.84682,
+		"y": 40.018364,
+		"components": {}
 	},
 	{
-		"Entity": "Cow",
-		"x": 17.409237,
-		"y": 17.33885,
-		"components": {
-			"TamableComponent": {
-				"tamed": false
-			}
-		}
+		"Entity": "OxygenEater",
+		"x": 39.694557,
+		"y": 17.316868,
+		"components": {}
 	},
 	{
-		"Entity": "Cow",
-		"x": 20.936707,
-		"y": 0.3584518,
-		"components": {
-			"TamableComponent": {
-				"tamed": false
-			}
-		}
+		"Entity": "OxygenEater",
+		"x": 24.036709,
+		"y": 32.431065,
+		"components": {}
 	},
 	{
-		"Entity": "Cow",
-		"x": 44.523018,
-		"y": 13.059478,
-		"components": {
-			"TamableComponent": {
-				"tamed": false
-			}
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 3.5649858,
-		"y": 35.422962,
-		"components": {
-			"TamableComponent": {
-				"tamed": false
-			}
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 42.236168,
-		"y": 4.9261723,
-		"components": {
-			"TamableComponent": {
-				"tamed": false
-			}
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 45.085007,
-		"y": 41.3191,
-		"components": {
-			"TamableComponent": {
-				"tamed": false
-			}
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 9.32362,
-		"y": 13.982321,
-		"components": {
-			"TamableComponent": {
-				"tamed": false
-			}
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 23.627083,
-		"y": 20.143185,
-		"components": {
-			"TamableComponent": {
-				"tamed": false
-			}
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 45.073425,
-		"y": 42.044994,
-		"components": {
-			"TamableComponent": {
-				"tamed": false
-			}
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 9.014484,
-		"y": 29.335436,
-		"components": {
-			"TamableComponent": {
-				"tamed": false
-			}
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 11.67746,
-		"y": 8.366116,
-		"components": {
-			"TamableComponent": {
-				"tamed": false
-			}
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 6.1846466,
-		"y": 28.856796,
-		"components": {
-			"TamableComponent": {
-				"tamed": false
-			}
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 37.820087,
-		"y": 24.425426,
-		"components": {
-			"TamableComponent": {
-				"tamed": false
-			}
-		}
+		"Entity": "OxygenEater",
+		"x": 35.76573,
+		"y": 32.562134,
+		"components": {}
 	}
 ],
 "tiles": [
@@ -287,9 +270,9 @@
 					"components": {
 						"PlantComponent": {
 							"name": "Atomic Algae",
-							"health": 10,
+							"health": 200,
 							"age": 0,
-							"growth": 1
+							"growth": 3
 						}
 					}
 				}
@@ -312,9 +295,9 @@
 					"components": {
 						"PlantComponent": {
 							"name": "Deadly Nightshade",
-							"health": 10,
+							"health": 200,
 							"age": 0,
-							"growth": 1
+							"growth": 3
 						}
 					}
 				}
@@ -337,9 +320,9 @@
 					"components": {
 						"PlantComponent": {
 							"name": "Space Snapper",
-							"health": 10,
+							"health": 200,
 							"age": 0,
-							"growth": 1
+							"growth": 3
 						}
 					}
 				}
@@ -362,9 +345,9 @@
 					"components": {
 						"PlantComponent": {
 							"name": "Hammer Plant",
-							"health": 10,
+							"health": 200,
 							"age": 0,
-							"growth": 1
+							"growth": 3
 						}
 					}
 				}
@@ -387,9 +370,9 @@
 					"components": {
 						"PlantComponent": {
 							"name": "Aloe Vera",
-							"health": 10,
+							"health": 200,
 							"age": 0,
-							"growth": 1
+							"growth": 3
 						}
 					}
 				}
@@ -412,9 +395,9 @@
 					"components": {
 						"PlantComponent": {
 							"name": "Cosmic Cob",
-							"health": 10,
+							"health": 200,
 							"age": 0,
-							"growth": 1
+							"growth": 3
 						}
 					}
 				}
