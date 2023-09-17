@@ -20,7 +20,7 @@ pkill -P $$
 
 # Check if run was successful
 grep Exception game.log
-if [ $? -eq 1 ]; then
+if [ $? -eq 0 ]; then
   echo "Run failed. If this is unexpected, see https://github.com/UQcsse3200/2023-studio-1/wiki/Launch-Testing#my-commits-fail-this-test-and-i-dont-know-why"
   echo "Last 30 lines of log:"
   tail -30 game.log

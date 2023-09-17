@@ -104,7 +104,7 @@ public class SpaceGameArea extends GameArea {
           "images/fertiliser.png",
 
           "images/plants/misc/aloe_vera_seed.png",
-          "images/plants/misc/atomic_algae_seed.png",
+          "images/plants/atomic_algae/1_seedling.png",
           "images/plants/misc/cosmic_cob_seed.png",
           "images/plants/misc/deadly_nightshade_seed.png",
           "images/plants/misc/hammer_plant_seed.png",
