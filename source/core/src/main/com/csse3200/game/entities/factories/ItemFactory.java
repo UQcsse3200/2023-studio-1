@@ -167,9 +167,9 @@ public class ItemFactory {
    */
   public static Entity createAtomicAlgaeSeed() {
     Entity seed = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/misc/atomic_algae_seed.png"))
+            .addComponent(new TextureRenderComponent("images/plants/atomic_algae/1_seedling.png"))
             .addComponent(new ItemComponent("atomic algae seed", ItemType.SEED,
-                    "Seed of Atomic Algae", new Texture("images/plants/misc/atomic_algae_seed.png")));
+                    "Seed of Atomic Algae", new Texture("images/plants/atomic_algae/1_seedling.png")));
     return seed;
   }
 
@@ -244,10 +244,10 @@ public class ItemFactory {
    */
   public static Entity createFenceItem() {
     Entity fence = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/misc/tobacco_seed.png"))
+            .addComponent(new TextureRenderComponent("images/plants/misc/aloe_vera_seed.png"))
             .addComponent(new ItemComponent("Fence", ItemType.PLACEABLE,
                     "A fence to keep animals in or out",
-                    new Texture("images/plants/misc//tobacco_seed.png")));
+                    new Texture("images/plants/misc/aloe_vera_seed.png")));
     return fence;
   }
 
@@ -257,10 +257,10 @@ public class ItemFactory {
    */
   public static Entity createGateItem() {
     Entity gate = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/misc/tobacco_seed.png"))
+            .addComponent(new TextureRenderComponent("images/plants/misc/aloe_vera_seed.png"))
             .addComponent(new ItemComponent("Gate", ItemType.PLACEABLE,
                     "Allows the player to walk in and out of enclosed areas",
-                    new Texture("images/plants/misc//tobacco_seed.png")));
+                    new Texture("images/plants/misc/aloe_vera_seed.png")));
     return gate;
   }
 
@@ -270,10 +270,10 @@ public class ItemFactory {
    */
   public static Entity createSprinklerItem() {
     Entity fence = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/misc/tobacco_seed.png"))
+            .addComponent(new TextureRenderComponent("images/plants/misc/aloe_vera_seed.png"))
             .addComponent(new ItemComponent("Sprinkler", ItemType.PLACEABLE,
                     "Waters crops in the surrounding area",
-                    new Texture("images/plants/misc//tobacco_seed.png")));
+                    new Texture("images/plants/misc/aloe_vera_seed.png")));
     return fence;
   }
 
@@ -283,10 +283,10 @@ public class ItemFactory {
    */
   public static Entity createChestItem() {
     Entity fence = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/misc/tobacco_seed.png"))
+            .addComponent(new TextureRenderComponent("images/plants/misc/aloe_vera_seed.png"))
             .addComponent(new ItemComponent("Chest", ItemType.PLACEABLE,
                     "A storage container to keep your seeds and goodies",
-                    new Texture("images/plants/misc//tobacco_seed.png")));
+                    new Texture("images/plants/misc/aloe_vera_seed.png")));
     return fence;
   }
 

@@ -33,7 +33,6 @@ public class PlantComponentTest {
     int maxHealth = 500;
     int[] growthStageThresholds = new int[]{1,2,3};
     String[] soundArray = new String[]{"1", "2", "3", "4", "5", "6", "7", "8"};
-    String[] imagePaths = new String[]{"path1", "path2", "path3", "path4", "path5"};
 
     @BeforeEach
     void beforeEach() {
@@ -47,7 +46,7 @@ public class PlantComponentTest {
         when(mockResourceService.getAsset(anyString(), eq(Sound.class))).thenReturn(mockSound);
 
         testPlant = new PlantComponent(health, name, type, description, idealWaterLevel,
-                adultLifeSpan, maxHealth, mockCropTile, growthStageThresholds,soundArray,imagePaths);
+                adultLifeSpan, maxHealth, mockCropTile, growthStageThresholds,soundArray);
         testPlant.setEntity(mockEntity);
     }
 
