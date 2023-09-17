@@ -53,7 +53,8 @@ public class PlaceableFactory {
     public static Entity createSprinkler() {
         Entity sprinkler = createBasePlaceable(EntityType.Sprinkler);
         // set temp texture to differentiate from other entities
-        sprinkler.getComponent(DynamicTextureRenderComponent.class).setTexture("images/plants/misc/horticultural_heater_seed.png");
+        //sprinkler.getComponent(DynamicTextureRenderComponent.class).setTexture("images/plants/misc/horticultural_heater_seed.png");
+        sprinkler.getComponent(DynamicTextureRenderComponent.class).setTexture("images/placeable/pipe_null.png");
         // stop from blocking player movement
         sprinkler.getComponent(ColliderComponent.class).setLayer(PhysicsLayer.NONE);
         // add sprinkler component
