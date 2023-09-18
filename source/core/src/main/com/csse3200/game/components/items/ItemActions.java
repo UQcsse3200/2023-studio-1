@@ -143,35 +143,12 @@ public class ItemActions extends Component {
    * @return a vector of the position where the player should hit
    */
   private Vector2 getAdjustedPos(Vector2 playerPos, Vector2 mousePos) {
-    int width = Gdx.graphics.getWidth();
-    int height = Gdx.graphics.getHeight();
+    Vector2 mouseWorldPos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
+    Vector2 adjustedPosition = new Vector2(
+        map.tileCoordinatesToVector(map.vectorToTileCoordinates(new Vector2(mouseWorldPos.x, mouseWorldPos.y))));
 
-    int screenCentreX = width / 2;
-    int screenCentreY = height / 2;
-
-    int xDelta = 0;
-    int yDelta = 0;
-
-    if (screenCentreX - 24 > mousePos.x) {
-      xDelta -= 1;
-    } else if (screenCentreX + 24 < mousePos.x) {
-      xDelta += 1;
-    }
-
-    if (screenCentreY + 48 < mousePos.y) {
-      yDelta -= 1;
-    } else if (screenCentreY - 48 > mousePos.y) {
-      yDelta += 1;
-    }
-
-    int playerPositionAsIntX = (int) Math.ceil(playerPos.x + 0.5); // 0.5 as pos of player position has been changed to
-                                                                   // the left corner not the center of the player box
-    int playerPositionAsIntY = (int) Math.ceil(playerPos.y);
-
-    int x = (int) Math.ceil((double) (playerPositionAsIntX) + xDelta);
-    int y = (int) Math.ceil((double) (playerPositionAsIntY) + yDelta);
-
-    return new Vector2(x, y);
+    // TODO fix so unlimited radius not possible.
+    return adjustedPosition;
   }
 
   /**
