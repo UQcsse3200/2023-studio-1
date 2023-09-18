@@ -153,7 +153,7 @@ public class EventHandler {
    */
   public ScheduledEvent scheduleEvent(float delay, String eventName) {
     if (timeSource == null) {
-      logger.error(String.format("%s event not scheduled. No instance of TimeSource found", eventName));
+      logger.error("{} event not scheduled. No instance of TimeSource found", eventName);
       return null;
     }
 
@@ -175,7 +175,7 @@ public class EventHandler {
    */
   public <T> ScheduledEvent scheduleEvent(float delay, String eventName, T arg0) {
     if (timeSource == null) {
-      logger.error(String.format("%s event not scheduled. No instance of TimeSource found", eventName));
+      logger.error("{} event not scheduled. No instance of TimeSource found", eventName);
       return null;
     }
 
@@ -203,7 +203,7 @@ public class EventHandler {
    */
   public <T0, T1> ScheduledEvent scheduleEvent(float delay, String eventName, T0 arg0, T1 arg1) {
     if (timeSource == null) {
-      logger.error(String.format("%s event not scheduled. No instance of TimeSource found", eventName));
+      logger.error("{} event not scheduled. No instance of TimeSource found", eventName);
       return null;
     }
 
@@ -233,7 +233,7 @@ public class EventHandler {
    */
   public <T0, T1, T2> ScheduledEvent scheduleEvent(float delay, String eventName, T0 arg0, T1 arg1, T2 arg2) {
     if (timeSource == null) {
-      logger.error(String.format("%s event not scheduled. No instance of TimeSource found", eventName));
+      logger.error("{} event not scheduled. No instance of TimeSource found", eventName);
       return null;
     }
 
@@ -266,12 +266,14 @@ public class EventHandler {
       return;
     }
 
-    scheduledEvents.forEach(scheduledEvent -> {
+    for (ScheduledEvent scheduledEvent : scheduledEvents) {
       if (timeSource.getTime() >= scheduledEvent.endTime()) {
         triggerScheduledEvent(scheduledEvent);
-        scheduledEvents.remove(scheduledEvent);
       }
-    });
+    }
+
+    // remove in separate loop to avoid concurrent modification error
+    scheduledEvents.removeIf(scheduledEvent -> timeSource.getTime() >= scheduledEvent.endTime());
   }
 
   public void cancelEvent(ScheduledEvent event) {
