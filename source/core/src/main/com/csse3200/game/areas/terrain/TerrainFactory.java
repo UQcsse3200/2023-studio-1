@@ -33,6 +33,8 @@ public class TerrainFactory {
   protected static final String mapPath = "configs/Map.txt";
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;
+
+  private static final float worldTileSize = 1f;
   private Map<Character, TextureRegion> charToTextureMap = new HashMap<>();
   //protected for testing
   protected static final Map<Character, String> charToTileImageMap;
@@ -156,7 +158,7 @@ public class TerrainFactory {
    */
   public TerrainComponent createTerrain(TiledMap tiledMap) {
     loadTextures();
-    return createGameTerrain(0.5f, tiledMap);
+    return createGameTerrain(worldTileSize, tiledMap);
   }
 
   private TerrainComponent createGameTerrain(float tileWorldSize, TiledMap tiledMap) {
