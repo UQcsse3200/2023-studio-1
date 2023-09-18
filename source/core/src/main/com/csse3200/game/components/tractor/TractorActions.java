@@ -164,13 +164,13 @@ public class TractorActions extends Component {
     Vector2 pos1 = new Vector2();
     Vector2 pos2 = new Vector2();
     if ((Objects.equals(dir, "right") && mode == TractorMode.tilling) || (Objects.equals(dir, "left") && mode == TractorMode.harvesting)) {
-      pos1 = entity.getPosition();
-      pos2.set(entity.getPosition().x, entity.getPosition().y + 1);
+      pos1.set(entity.getPosition().x, entity.getPosition().y + 1);
+      pos2.set(entity.getPosition().x, entity.getPosition().y + 2);
       tiles.add(map.getTile(pos1), map.getTile(pos2), pos1, pos2);
       return tiles;
     } else if ((Objects.equals(dir, "left") && mode == TractorMode.tilling) || (Objects.equals(dir, "right") && mode == TractorMode.harvesting)) {
-      pos1.set(entity.getPosition().x + 5, entity.getPosition().y);
-      pos2.set(entity.getPosition().x + 5, entity.getPosition().y + 1);
+      pos1.set(entity.getPosition().x + 5, entity.getPosition().y + 1);
+      pos2.set(entity.getPosition().x + 5, entity.getPosition().y + 2);
       tiles.add(map.getTile(pos1), map.getTile(pos2), pos1, pos2);
       return tiles;
     } else if ((Objects.equals(dir, "up") && mode == TractorMode.tilling) || (Objects.equals(dir, "down") && mode == TractorMode.harvesting)) {
