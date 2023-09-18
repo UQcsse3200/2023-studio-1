@@ -173,7 +173,6 @@ public class SpaceGameArea extends GameArea {
           /* placeable */
           "images/placeable/sprinkler/pipe_null.png",
           // sprinklers - on
-          "images/placeable/sprinkler/on/pipe_null.png",
           "images/placeable/sprinkler/on/pipe_left.png",
           "images/placeable/sprinkler/on/pipe_right.png",
           "images/placeable/sprinkler/on/pipe_horizontal.png",
