@@ -18,14 +18,17 @@ import java.util.Arrays;
  * - sprinklers sprinkle every 30 seconds.
  *
  * TODO:
- *  - BUG: place sprinkler, then pump next to, the sprinkler orthoganal to fist, then connect in diagonal and game crash
+ *  - BUG: place sprinkler, then pump next to, the sprinkler diagonal to fist, then connect in diagonal and game crash.
+ *    - this happens because pumps aren't set up to be updated through events, pretty sure.
+ *      - temp solution is adding a check for pump in configSprinkler.
+ *      - proper solution is to add events for pump.
  *  - !! if u place a pump it wont update the sprinklers around it to be powered, Fix by adding trigger for pump.
- *  - Domino effect power reconfiguration isn't implemented yet, shouldn't be hard.
+ *  - Domino effect power reconfiguration is not fully working, but is almost there!
  *  - Sometimes watering seems funny, prob due to the power problem mentioned above.
  *  - animate watering.
  *  - integrate with save&load.
  *  - move the notifyAdjacent and alike functions to their own component so fences can use them too.
- *  - need finished textures for all sprinkler bits and the pump. an led type indicator would be cool.
+ *  - need finished textures for all sprinkler bits and the pump.
  */
 
 public class SprinklerComponent extends Component {
@@ -83,6 +86,11 @@ public class SprinklerComponent extends Component {
   private boolean pump;
 
   /**
+   * The coordinates where this sprinkler expects to find adjacent sprinklers.
+   */
+  private Vector2[] adjCoords;
+
+  /**
    * A sprinklers area of effect to water, aoe is circular with radius of 2.
    */
   private Vector2[] aoe;
@@ -101,16 +109,13 @@ public class SprinklerComponent extends Component {
       return;
     }
     // Sprinklers need configuring:
-    setAoe();                     // set area to sprinkle.
-    setListeners();               // set co-ordinates to listen on (for other sprinklers to trigger).
-    setAdjSprinklers();           // set adjacent sprinklers.
-    configSprinkler();            // set power status and texture orientation
+    setAoe();                        // set area to sprinkle.
+    setPlacementListeners();         // set co-ordinates to listen on (for other sprinklers to trigger).
+    setAdjSprinklers();              // set adjacent sprinklers.
+    configSprinkler();               // set power status and texture orientation
 
     // set to sprinkle every 30 seconds.
     ServiceLocator.getTimeService().getEvents().addListener("30sec", this::sprinkle);
-
-    // TODO: [DEBUGGING]
-    System.out.println(this.entity+" power: "+isPowered+", adjSprinklers: "+Arrays.toString(this.adjSprinklers));
   }
 
   /**
@@ -130,7 +135,8 @@ public class SprinklerComponent extends Component {
   }
 
   /**
-   * Sets the coordinates for the watering area-of-effect.
+   * Sets the coordinates for the watering area-of-effect and
+   * set the coordinates for expected adjacent sprinklers.
    * Coordinates are this sprinklers position +2 in all directions, +1 in diagonals.
    */
   private void setAoe() {
@@ -152,9 +158,15 @@ public class SprinklerComponent extends Component {
             new Vector2(x-1, y+1),
             new Vector2(x-1, y-1)
     };
+    this.adjCoords = new Vector2[] {
+            new Vector2(x, y+1), // Above
+            new Vector2(x, y-1), // Below
+            new Vector2(x+1, y), // Right
+            new Vector2(x-1, y)  // Left
+    };
   }
 
-  /**
+  /** TODO: improve this, maybe change method of populating this.adjSprinklers.
    * Sets and adds listeners for directly adjacent sprinklers excluding diagonals.
    * After this call, each index in this.adjSprinklers will either be a sprinkler/pump entity or null.
    */
@@ -173,25 +185,18 @@ public class SprinklerComponent extends Component {
     }
   }
 
-  //TODO make this more efficient and remove magic number 4.
-  private void setListeners() {
+  /**
+   * Adds listeners to listen for newly placed sprinklers on adjacent tiles.
+   */
+  private void setPlacementListeners() {
     // listen for any new sprinklers placed in this spot in-future:
-    for (int i = 0; i < 4; i++) {
-      int dir = i * 2;  // Map adjSprinkler index to aoe index.
-      System.out.println("listening for: " + "placed:" + aoe[dir]);
-      addPlacementListener(aoe[dir]);
+    for (Vector2 pos : this.adjCoords) {
+      entity.getEvents().addListener("placed:" + pos, this::reConfigure);
     }
   }
 
   /**
-   * Adds listeners for newly placed sprinklers on adjacent tiles
-   */
-  private void addPlacementListener(Vector2 pos) {
-    entity.getEvents().addListener("placed:" + pos, this::reConfigure);
-  }
-
-  /**
-   * To be called after spawned in the word
+   * To be called after spawned in the world - Called in ItemActions -> place.
    * Tells all adjacent sprinklers to go reconfigure their power status and orientation.
    */
   public void notifyAdjacent() {
@@ -209,15 +214,18 @@ public class SprinklerComponent extends Component {
   /**
    * Re-configures using configSprinkler and checks if a change of state has occurred.
    * If a change of state has occurred then call notifyAdjacent().
-   * TODO: Add more desc.
+   * TODO: Add more desc, fix bug where chain reconfiguring doesn't reach all necessary sprinklers.
    */
   public void reConfigure() {
+    // Save old state
     boolean prevPowerState = this.isPowered;
+    // Reconfigure
     setAdjSprinklers();
     configSprinkler();
+    // Check for change of state
     if (prevPowerState != this.isPowered) {
       // powered status has changed we should reconfigure adjacent sprinklers too
-      for (Entity sprinkler : this.adjSprinklers) { //TODO un-tested and not efficient
+      for (Entity sprinkler : this.adjSprinklers) { // TODO: temp solution, to be improved.
         if (sprinkler != null) {
           sprinkler.getComponent(SprinklerComponent.class).configSprinkler();
         }
@@ -240,6 +248,7 @@ public class SprinklerComponent extends Component {
    *        * + singular connections in each orientation
    */
   public void configSprinkler() {
+    if (this.pump) return; // TODO TEMP FIX - prevents game crash, see line 21.
     int orientation = 0b0000;   // 4 bits representing adjacent sprinklers, used as an index to select a texture.
     for (Entity sprinkler : this.adjSprinklers) {
       orientation <<= 1;
