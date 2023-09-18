@@ -77,7 +77,7 @@ public class TimeService {
 	 * @param hour in-game hour
 	 */
 	public void setHour(int hour) {
-		this.hour = hour;
+		this.hour = hour % 23;
 		this.timeBuffer = 0;
 		events.trigger("hourUpdate");
 	}
