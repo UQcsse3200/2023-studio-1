@@ -117,9 +117,8 @@ public class MainGameScreen extends ScreenAdapter {
         renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
         ServiceLocator.registerCameraComponent(renderer.getCamera());
 
-    ServiceLocator.registerLightService(new LightService());
+        ServiceLocator.registerLightService(new LightService());
 
-    loadAssets();
         loadAssets();
 
         logger.debug("Initialising main game screen entities");
