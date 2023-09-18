@@ -7,9 +7,7 @@ public class PlantConfigs {
     public BasePlantConfig cosmicCob = new BasePlantConfig();
     public BasePlantConfig aloeVera = new BasePlantConfig();
     public BasePlantConfig hammerPlant = new BasePlantConfig();
-    public BasePlantConfig atropaBelladonna = new BasePlantConfig();
-    public BasePlantConfig nicotianaTabacum = new BasePlantConfig();
-    public BasePlantConfig venusFlyTrap = new BasePlantConfig();
-    public BasePlantConfig waterWeed = new BasePlantConfig();
-    public BasePlantConfig sunFlower = new BasePlantConfig();
+    public BasePlantConfig deadlyNightshade = new BasePlantConfig();
+    public BasePlantConfig spaceSnapper = new BasePlantConfig();
+    public BasePlantConfig atomicAlgae = new BasePlantConfig();
 }

@@ -1,135 +1,260 @@
 package com.csse3200.game.areas.terrain;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
-import com.badlogic.gdx.math.GridPoint2;
-import com.csse3200.game.components.CameraComponent;
-import com.csse3200.game.events.EventHandler;
-import com.csse3200.game.extensions.GameExtension;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
+import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.extensions.GameExtension;
 
 @ExtendWith(GameExtension.class)
 public class GameMapTest {
-
-    /*
     private GameMap gameMap;
-    private TerrainFactory terrainFactory;
-    private TerrainTile terrainTile1, terrainTile2, terrainTile3;
+    private static TerrainTile pathTerrainTile;
+    private static TerrainTile beachSandTerrainTile;
+    private static TerrainTile grassTerrainTile;
+    private static TerrainTile dirtTerrainTile;
+    private static TerrainTile shallowWaterTerrainTile;
+    private static TerrainTile desertTerrainTile;
+    private static TerrainTile snowTerrainTile;
+    private static TerrainTile iceTerrainTile;
+    private static TerrainTile deepWaterTerrainTile;
+    private static TerrainTile rockTerrainTile;
+    private static TerrainTile lavaTerrainTile;
+    private static TerrainTile lavaGroundTerrainTile;
+    private static TerrainTile gravelTerrainTile;
+    private static TerrainTile flowingWaterTerrainTile;
 
     @BeforeAll
     static void config() {
-        Gdx.graphics = mock(Graphics.class);
-        // sampling a 4x4 grid from the map for testing
-        when(Gdx.graphics.getWidth()).thenReturn(64);
-        when(Gdx.graphics.getHeight()).thenReturn(64);
-    }
+        pathTerrainTile = new TerrainTile(null, TerrainTile.TerrainCategory.PATH);
+        beachSandTerrainTile = new TerrainTile(null, TerrainTile.TerrainCategory.BEACHSAND);
+        grassTerrainTile = new TerrainTile(null, TerrainTile.TerrainCategory.GRASS);
+        dirtTerrainTile = new TerrainTile(null, TerrainTile.TerrainCategory.DIRT);
+        shallowWaterTerrainTile = new TerrainTile(null, TerrainTile.TerrainCategory.SHALLOWWATER);
+        desertTerrainTile = new TerrainTile(null, TerrainTile.TerrainCategory.DESERT);
+        snowTerrainTile = new TerrainTile(null, TerrainTile.TerrainCategory.SNOW);
+        iceTerrainTile = new TerrainTile(null, TerrainTile.TerrainCategory.ICE);
+        deepWaterTerrainTile = new TerrainTile(null, TerrainTile.TerrainCategory.DEEPWATER);
+        rockTerrainTile = new TerrainTile(null, TerrainTile.TerrainCategory.ROCK);
+        lavaTerrainTile = new TerrainTile(null, TerrainTile.TerrainCategory.LAVA);
+        lavaGroundTerrainTile = new TerrainTile(null, TerrainTile.TerrainCategory.LAVAGROUND);
+        gravelTerrainTile = new TerrainTile(null, TerrainTile.TerrainCategory.GRAVEL);
+        flowingWaterTerrainTile = new TerrainTile(null, TerrainTile.TerrainCategory.FLOWINGWATER);
+}
 
     @BeforeEach
     void setup() {
-        CameraComponent cameraComponent = mock(CameraComponent.class);
-        terrainFactory = new TerrainFactory(cameraComponent);
+        TerrainFactory terrainFactory = mock(TerrainFactory.class);
+        doReturn(new GridPoint2(4, 4)).when(terrainFactory).getMapSize();
+
+        TerrainComponent terrainComponent = mock(TerrainComponent.class);
+        doReturn(0.5f).when(terrainComponent).getTileSize();
+
         gameMap = new GameMap(terrainFactory);
+        gameMap.setTerrainComponent(terrainComponent);
 
-        TiledMapTileLayer layer = new TiledMapTileLayer(10000,1000,16,16);
-        gameMap.getTiledMap().getLayers().add(layer);
+        TiledMap tiledMap = gameMap.getTiledMap();
 
-        TextureRegion textureRegion = mock(TextureRegion.class);
-        terrainTile1 = new TerrainTile(textureRegion, TerrainTile.TerrainCategory.PATH); // traversable & tillable
-        terrainTile2 = new TerrainTile(textureRegion, TerrainTile.TerrainCategory.BEACHSAND); // traversable & !tillable
-        terrainTile3 = new TerrainTile(textureRegion, TerrainTile.TerrainCategory.DEEPWATER); // !traversable & !tillable
+        TiledMapTileLayer layer = new TiledMapTileLayer(4, 4, 16, 16);
 
-        Cell cell1 = new Cell().setTile(terrainTile1);
-        Cell cell2 = new Cell().setTile(terrainTile2);
-        Cell cell3 = new Cell().setTile(terrainTile3);
+        layer.setCell(0, 0, new Cell().setTile(pathTerrainTile));
+        layer.setCell(0, 1, new Cell().setTile(pathTerrainTile));
+        layer.setCell(0, 2, new Cell().setTile(pathTerrainTile));
+        layer.setCell(0, 3, new Cell().setTile(beachSandTerrainTile));
+        layer.setCell(1, 0, new Cell().setTile(grassTerrainTile));
+        layer.setCell(1, 1, new Cell().setTile(dirtTerrainTile));
+        layer.setCell(1, 2, new Cell().setTile(shallowWaterTerrainTile));
+        layer.setCell(1, 3, new Cell().setTile(desertTerrainTile));
+        layer.setCell(2, 0, new Cell().setTile(snowTerrainTile));
+        layer.setCell(2, 1, new Cell().setTile(iceTerrainTile));
+        layer.setCell(2, 2, new Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(2, 3, new Cell().setTile(rockTerrainTile));
+        layer.setCell(3, 0, new Cell().setTile(lavaTerrainTile));
+        layer.setCell(3, 1, new Cell().setTile(lavaGroundTerrainTile));
+        layer.setCell(3, 2, new Cell().setTile(gravelTerrainTile));
+        layer.setCell(3, 3, new Cell().setTile(flowingWaterTerrainTile));
 
-        ((TiledMapTileLayer) gameMap.getTiledMap().getLayers().get(0)).setCell(0, 0, cell1);
-        ((TiledMapTileLayer) gameMap.getTiledMap().getLayers().get(0)).setCell(0, 2, cell2);
-        ((TiledMapTileLayer) gameMap.getTiledMap().getLayers().get(0)).setCell(3, 1, cell3);
+        tiledMap.getLayers().add(layer);
     }
 
     @Test
-    void testGetTerrainFactory() {
-        assertEquals(terrainFactory, gameMap.getTerrainFactory());
-    }
-
-    @Test
-    void testGetTiledMap() {
+    void testGetTiledMapIsTiledMap() {
         assertInstanceOf(TiledMap.class, gameMap.getTiledMap());
     }
 
     @Test
-    void testGetEventHandler() {
-        assertInstanceOf(EventHandler.class, gameMap.getEventHandler());
+    void testGetMapSize() {
+        assertEquals(new GridPoint2(4,4), gameMap.getMapSize());
     }
 
     @Test
-    void testGetInitialMapSize() {
-        assertEquals(new GridPoint2(1000,1000), gameMap.getMapSize());
+    void testGetTileAtBottomLeft() {
+        assertEquals(pathTerrainTile, gameMap.getTile(new GridPoint2(0, 0)));
     }
 
     @Test
-    void testGetTile() {
-        assertEquals(terrainTile1, gameMap.getTile(0, 0));
-        assertEquals(terrainTile2, gameMap.getTile(0, 2));
-        assertEquals(terrainTile3, gameMap.getTile(3, 1));
+    void testGetTileAtTopLeft() {
+        assertEquals(beachSandTerrainTile, gameMap.getTile(new GridPoint2(0, 3)));
     }
 
     @Test
-    void testWorldCoordinatesToPixelPosition() {
-        assertEquals(new GridPoint2(8, 56), gameMap.worldCoordinatesToPixelPosition(0, 0));
-        assertEquals(new GridPoint2(24, 40), gameMap.worldCoordinatesToPixelPosition(1, 1));
-        assertEquals(new GridPoint2(40, 8), gameMap.worldCoordinatesToPixelPosition(2, 3));
+    void testGetTileAtBottomRight() {
+        assertEquals(lavaTerrainTile, gameMap.getTile(new GridPoint2(3, 0)));
     }
 
     @Test
-    void testPixelPositionToWorldCoordinates() {
-        assertEquals(new GridPoint2(0, 0), gameMap.pixelPositionToWorldCoordinates(6, 50));
-        assertEquals(new GridPoint2(1, 1), gameMap.pixelPositionToWorldCoordinates(26, 39));
-        assertEquals(new GridPoint2(2, 3), gameMap.pixelPositionToWorldCoordinates(38, 7));
+    void testGetTileAtTopRight() {
+        assertEquals(flowingWaterTerrainTile, gameMap.getTile(new GridPoint2(3, 3)));
     }
 
     @Test
-    void testGetTerrainTileCategory() {
-        gameMap.setTileTerrainCategory(TerrainTile.TerrainCategory.DIRT, 0, 0);
-        gameMap.setTileTerrainCategory(TerrainTile.TerrainCategory.SHALLOWWATER, 0, 2);
-        gameMap.setTileTerrainCategory(TerrainTile.TerrainCategory.ICE, 3, 1);
-
-        assertEquals(TerrainTile.TerrainCategory.DIRT, gameMap.getTileTerrainCategory(0, 0));
-        assertEquals(TerrainTile.TerrainCategory.SHALLOWWATER, gameMap.getTileTerrainCategory(0, 2));
-        assertEquals(TerrainTile.TerrainCategory.ICE, gameMap.getTileTerrainCategory(3, 1));
+    void testGetTileAtLeftRow() {
+        assertEquals(pathTerrainTile, gameMap.getTile(new GridPoint2(0, 0)));
+        assertEquals(pathTerrainTile, gameMap.getTile(new GridPoint2(0, 1)));
+        assertEquals(pathTerrainTile, gameMap.getTile(new GridPoint2(0, 2)));
+        assertEquals(beachSandTerrainTile, gameMap.getTile(new GridPoint2(0, 3)));
     }
 
     @Test
-    void testTileTraversable() {
-        assertTrue(gameMap.isTileTraversable(0,0));
-        assertTrue(gameMap.isTileTraversable(0,2));
-        assertFalse(gameMap.isTileTraversable(3,1));
+    void testGetTileAtTopRow() {
+        assertEquals(beachSandTerrainTile, gameMap.getTile(new GridPoint2(0, 3)));
+        assertEquals(desertTerrainTile, gameMap.getTile(new GridPoint2(1, 3)));
+        assertEquals(rockTerrainTile, gameMap.getTile(new GridPoint2(2, 3)));
+        assertEquals(flowingWaterTerrainTile, gameMap.getTile(new GridPoint2(3, 3)));
     }
 
     @Test
-    void testTileOccupied() {
-        gameMap.setTileOccupied(0,0);
-        assertTrue(gameMap.isTileOccupied(0,0));
-        gameMap.setTileUnoccupied(0,0);
-        assertFalse(gameMap.isTileOccupied(0,0));
+    void testGetTileAtRightRow() {
+        assertEquals(lavaTerrainTile, gameMap.getTile(new GridPoint2(3, 0)));
+        assertEquals(lavaGroundTerrainTile, gameMap.getTile(new GridPoint2(3, 1)));
+        assertEquals(gravelTerrainTile, gameMap.getTile(new GridPoint2(3, 2)));
+        assertEquals(flowingWaterTerrainTile, gameMap.getTile(new GridPoint2(3, 3)));
     }
 
     @Test
-    void testTileTillable() {
-        assertTrue(gameMap.isTileTillable(0,0));
-        assertFalse(gameMap.isTileTillable(0,2));
-        assertFalse(gameMap.isTileTillable(3,1));
+    void testGetTileAtBottomRow() {
+        assertEquals(pathTerrainTile, gameMap.getTile(new GridPoint2(0, 0)));
+        assertEquals(grassTerrainTile, gameMap.getTile(new GridPoint2(1, 0)));
+        assertEquals(snowTerrainTile, gameMap.getTile(new GridPoint2(2, 0)));
+        assertEquals(lavaTerrainTile, gameMap.getTile(new GridPoint2(3, 0)));
     }
 
-     */
+    @Test
+    void testGetTileInternalTiles() {
+        assertEquals(dirtTerrainTile, gameMap.getTile(new GridPoint2(1, 1)));
+        assertEquals(shallowWaterTerrainTile, gameMap.getTile(new GridPoint2(1, 2)));
+        assertEquals(iceTerrainTile, gameMap.getTile(new GridPoint2(2, 1)));
+        assertEquals(deepWaterTerrainTile, gameMap.getTile(new GridPoint2(2, 2)));
+    }
+
+    @Test
+    void testVectorToTileCoordinates() {
+        assertEquals(new GridPoint2(0, 0), gameMap.vectorToTileCoordinates(new Vector2(0, 0)));
+        assertEquals(new GridPoint2(0, 1), gameMap.vectorToTileCoordinates(new Vector2(0, 0.5f)));
+        assertEquals(new GridPoint2(0, 2), gameMap.vectorToTileCoordinates(new Vector2(0, 1)));
+        assertEquals(new GridPoint2(0, 3), gameMap.vectorToTileCoordinates(new Vector2(0, 1.5f)));
+        assertEquals(new GridPoint2(1, 0), gameMap.vectorToTileCoordinates(new Vector2(0.5f, 0)));
+        assertEquals(new GridPoint2(1, 1), gameMap.vectorToTileCoordinates(new Vector2(0.5f, 0.5f)));
+        assertEquals(new GridPoint2(1, 2), gameMap.vectorToTileCoordinates(new Vector2(0.5f, 1)));
+        assertEquals(new GridPoint2(1, 3), gameMap.vectorToTileCoordinates(new Vector2(0.5f, 1.5f)));
+        assertEquals(new GridPoint2(2, 0), gameMap.vectorToTileCoordinates(new Vector2(1, 0)));
+        assertEquals(new GridPoint2(2, 1), gameMap.vectorToTileCoordinates(new Vector2(1, 0.5f)));
+        assertEquals(new GridPoint2(2, 2), gameMap.vectorToTileCoordinates(new Vector2(1, 1)));
+        assertEquals(new GridPoint2(2, 3), gameMap.vectorToTileCoordinates(new Vector2(1, 1.5f)));
+        assertEquals(new GridPoint2(3, 0), gameMap.vectorToTileCoordinates(new Vector2(1.5f, 0)));
+        assertEquals(new GridPoint2(3, 1), gameMap.vectorToTileCoordinates(new Vector2(1.5f, 0.5f)));
+        assertEquals(new GridPoint2(3, 2), gameMap.vectorToTileCoordinates(new Vector2(1.5f, 1)));
+        assertEquals(new GridPoint2(3, 3), gameMap.vectorToTileCoordinates(new Vector2(1.5f, 1.5f)));
+    }
+
+    @Test
+    void testTileCoordinatesToVector() {
+        assertEquals(new Vector2(0, 0), gameMap.tileCoordinatesToVector(new GridPoint2(0, 0)));
+        assertEquals(new Vector2(0, 0.5f), gameMap.tileCoordinatesToVector(new GridPoint2(0, 1)));
+        assertEquals(new Vector2(0, 1), gameMap.tileCoordinatesToVector(new GridPoint2(0, 2)));
+        assertEquals(new Vector2(0, 1.5f), gameMap.tileCoordinatesToVector(new GridPoint2(0, 3)));
+        assertEquals(new Vector2(0.5f, 0), gameMap.tileCoordinatesToVector(new GridPoint2(1, 0)));
+        assertEquals(new Vector2(0.5f, 0.5f), gameMap.tileCoordinatesToVector(new GridPoint2(1, 1)));
+        assertEquals(new Vector2(0.5f, 1), gameMap.tileCoordinatesToVector(new GridPoint2(1, 2)));
+        assertEquals(new Vector2(0.5f, 1.5f), gameMap.tileCoordinatesToVector(new GridPoint2(1, 3)));
+        assertEquals(new Vector2(1, 0), gameMap.tileCoordinatesToVector(new GridPoint2(2, 0)));
+        assertEquals(new Vector2(1, 0.5f), gameMap.tileCoordinatesToVector(new GridPoint2(2, 1)));
+        assertEquals(new Vector2(1, 1), gameMap.tileCoordinatesToVector(new GridPoint2(2, 2)));
+        assertEquals(new Vector2(1, 1.5f), gameMap.tileCoordinatesToVector(new GridPoint2(2, 3)));
+        assertEquals(new Vector2(1.5f, 0), gameMap.tileCoordinatesToVector(new GridPoint2(3, 0)));
+        assertEquals(new Vector2(1.5f, 0.5f), gameMap.tileCoordinatesToVector(new GridPoint2(3, 1)));
+        assertEquals(new Vector2(1.5f, 1), gameMap.tileCoordinatesToVector(new GridPoint2(3, 2)));
+        assertEquals(new Vector2(1.5f, 1.5f), gameMap.tileCoordinatesToVector(new GridPoint2(3, 3)));
+    }
+
+    @Test
+    void testGetTraversableTileCoordinatesHasAllTraversableCoordinates() {
+        ArrayList<GridPoint2> arrayList = gameMap.getTraversableTileCoordinates();
+
+        assertTrue(arrayList.contains(new GridPoint2(0, 0))); // path
+        assertTrue(arrayList.contains(new GridPoint2(0, 1))); // path
+        assertTrue(arrayList.contains(new GridPoint2(0, 2))); // path
+        assertTrue(arrayList.contains(new GridPoint2(0, 3))); // beach sand
+        assertTrue(arrayList.contains(new GridPoint2(1, 0))); // grass
+        assertTrue(arrayList.contains(new GridPoint2(1, 1))); // dirt
+        assertTrue(arrayList.contains(new GridPoint2(1, 2))); // shallow water
+        assertTrue(arrayList.contains(new GridPoint2(1, 3))); // desert
+        assertTrue(arrayList.contains(new GridPoint2(2, 0))); // snow
+        assertTrue(arrayList.contains(new GridPoint2(2, 1))); // ice
+        assertTrue(arrayList.contains(new GridPoint2(3, 1))); // lava ground
+        assertTrue(arrayList.contains(new GridPoint2(3, 2))); // gravel
+        assertTrue(arrayList.contains(new GridPoint2(3, 3))); // flowing water
+    }
+
+    @Test
+    void testGetTraversableTileCoordinatesHasNoNonTraversableCoordinates() {
+        ArrayList<GridPoint2> arrayList = gameMap.getTraversableTileCoordinates();
+
+        assertFalse(arrayList.contains(new GridPoint2(2, 2))); // deep water
+        assertFalse(arrayList.contains(new GridPoint2(2, 3))); // rock
+        assertFalse(arrayList.contains(new GridPoint2(3, 0))); // lava
+    }
+
+    @Test
+    void testGetNonTraversableTileCoordinatesHasNoTraversableCoordinates() {
+        ArrayList<GridPoint2> arrayList = gameMap.getNonTraversableTileCoordinates();
+
+        assertFalse(arrayList.contains(new GridPoint2(0, 0))); // path
+        assertFalse(arrayList.contains(new GridPoint2(0, 1))); // path
+        assertFalse(arrayList.contains(new GridPoint2(0, 2))); // path
+        assertFalse(arrayList.contains(new GridPoint2(0, 3))); // beach sand
+        assertFalse(arrayList.contains(new GridPoint2(1, 0))); // grass
+        assertFalse(arrayList.contains(new GridPoint2(1, 1))); // dirt
+        assertFalse(arrayList.contains(new GridPoint2(1, 2))); // shallow water
+        assertFalse(arrayList.contains(new GridPoint2(1, 3))); // desert
+        assertFalse(arrayList.contains(new GridPoint2(2, 0))); // snow
+        assertFalse(arrayList.contains(new GridPoint2(2, 1))); // ice
+        assertFalse(arrayList.contains(new GridPoint2(3, 1))); // lava ground
+        assertFalse(arrayList.contains(new GridPoint2(3, 2))); // gravel
+        assertFalse(arrayList.contains(new GridPoint2(3, 3))); // flowing water
+    }
+
+    @Test
+    void testGetNonTraversableTileCoordinatesHasAllNonTraversableCoordinates() {
+        ArrayList<GridPoint2> arrayList = gameMap.getNonTraversableTileCoordinates();
+
+        assertTrue(arrayList.contains(new GridPoint2(2, 2))); // deep water
+        assertTrue(arrayList.contains(new GridPoint2(2, 3))); // rock
+        assertTrue(arrayList.contains(new GridPoint2(3, 0))); // lava
+    }
 }

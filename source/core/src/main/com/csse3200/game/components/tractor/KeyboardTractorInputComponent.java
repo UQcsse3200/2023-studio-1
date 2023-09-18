@@ -9,9 +9,19 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
 
 public class KeyboardTractorInputComponent extends InputComponent {
+  /**
+   * The direction the tractor will move in
+   */
   private final Vector2 walkDirection = Vector2.Zero.cpy();
+
+  /**
+   * A reference to the TractorActions component from the tractor entity
+   */
   private TractorActions actions;
 
+  /**
+   * Constructor for the tractor, sets same priority as the player's input constructor
+   */
   public KeyboardTractorInputComponent() {
     super(5);
   }
@@ -29,22 +39,18 @@ public class KeyboardTractorInputComponent extends InputComponent {
         case Input.Keys.W:
           walkDirection.add(Vector2Utils.UP);
           triggerMoveEvent();
-          triggerAnimationMoveStartEvent("up");
           return true;
         case Input.Keys.A:
           walkDirection.add(Vector2Utils.LEFT);
           triggerMoveEvent();
-          triggerAnimationMoveStartEvent("left");
           return true;
         case Input.Keys.S:
           walkDirection.add(Vector2Utils.DOWN);
           triggerMoveEvent();
-          triggerAnimationMoveStartEvent("down");
           return true;
         case Input.Keys.D:
           walkDirection.add(Vector2Utils.RIGHT);
           triggerMoveEvent();
-          triggerAnimationMoveStartEvent("right");
           return true;
         case Input.Keys.F:
           walkDirection.sub(Vector2.Zero);
@@ -109,24 +115,9 @@ public class KeyboardTractorInputComponent extends InputComponent {
   private void triggerMoveEvent() {
     if (walkDirection.epsilonEquals(Vector2.Zero)) {
       entity.getEvents().trigger("moveStop");
-      triggerAnimationMoveStopEvent();
     } else {
       entity.getEvents().trigger("move", walkDirection);
     }
-  }
-
-  /**
-   * Triggers the tractors walking animation event for the given direction.
-   */
-  private void triggerAnimationMoveStartEvent(String direction) {
-    entity.getEvents().trigger("startMoving");
-  }
-
-  /**
-   * Triggers the tractor walking animation stop event.
-   */
-  private void triggerAnimationMoveStopEvent() {
-    entity.getEvents().trigger("stopMoving", "Tool");
   }
 
   /**

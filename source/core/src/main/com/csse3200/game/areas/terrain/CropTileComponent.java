@@ -1,17 +1,15 @@
 package com.csse3200.game.areas.terrain;
 
+import java.util.function.Function;
+
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
-
-import java.util.function.Function;
 
 /**
  * Component which stores information about plots of land on which crops and

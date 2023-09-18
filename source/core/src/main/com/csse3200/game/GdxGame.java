@@ -1,14 +1,21 @@
 package com.csse3200.game;
 
+import static com.badlogic.gdx.Gdx.app;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.csse3200.game.files.UserSettings;
-import com.csse3200.game.screens.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import static com.badlogic.gdx.Gdx.app;
+import com.csse3200.game.screens.ControlsScreen;
+import com.csse3200.game.screens.IntroScreen;
+import com.csse3200.game.screens.LoseScreen;
+import com.csse3200.game.screens.MainGameScreen;
+import com.csse3200.game.screens.MainMenuScreen;
+import com.csse3200.game.screens.SettingsScreen;
+import com.csse3200.game.services.ResourceService;
 
 /**
  * Entry point of the non-platform-specific game logic. Controls which screen is currently running.
@@ -17,6 +24,10 @@ import static com.badlogic.gdx.Gdx.app;
  */
 public class GdxGame extends Game {
   private static final Logger logger = LoggerFactory.getLogger(GdxGame.class);
+  private ScreenType screenType;
+  private ResourceService resourceService;
+  private String saveState;
+  private boolean loadState = false;
   private boolean loadSaveOnStart = false;
 
   @Override
@@ -104,6 +115,8 @@ public class GdxGame extends Game {
   public enum ScreenType {
     MAIN_MENU, LOAD_GAME, MAIN_GAME, SETTINGS, CONTROLS, INTRO, LOSESCREEN
   }
+
+
 
   /**
    * Exit the game.

@@ -60,6 +60,7 @@ public class FertiliseCropTilesQuest extends Quest {
         if (++numberOfTilesFertilised >= target) {
             numberOfTilesFertilised = target;
         }
+        notifyUpdate();
     }
 
     @Override

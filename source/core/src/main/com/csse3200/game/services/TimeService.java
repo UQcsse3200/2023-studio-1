@@ -1,36 +1,34 @@
 package com.csse3200.game.services;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.utils.Array;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.events.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.csse3200.game.areas.SpaceGameArea;
-import com.csse3200.game.services.ServiceLocator;
+
+import com.csse3200.game.events.EventHandler;
 
 public class TimeService {
 	private static final Logger logger = LoggerFactory.getLogger(TimeService.class);
 	private static final int MS_IN_MINUTE = 500;
+	private static final int MORNING_HOUR = 6;
+	private static final int NIGHT_HOUR = 18;
 	private int minute;
 	private int hour;
 	private int day;
 	private long timeBuffer;
-	private long lastGameTime;
 	private boolean paused;
 	private final EventHandler events;
+
 
 
 	/**
 	 * Constructs a basic TimeService instance to track the in-game time
 	 */
 	public TimeService() {
-		hour = 0;
+		hour = MORNING_HOUR;
 		day = 0;
 		minute = 0;
 		paused = false;
-		lastGameTime = ServiceLocator.getTimeSource().getTime();
 		events = new EventHandler();
+		events.addListener("morningTime", this::normalGameSpeed);
 	}
 
 	/**
@@ -79,9 +77,38 @@ public class TimeService {
 	 * @param hour in-game hour
 	 */
 	public void setHour(int hour) {
-		this.hour = hour;
+		this.hour = hour % 23;
 		this.timeBuffer = 0;
 		events.trigger("hourUpdate");
+	}
+
+	/**
+	 * Speeds up the game time so that the player can sleep
+	 */
+	public void speedUpSleep() {
+		if (getHour() != MORNING_HOUR) {
+			ServiceLocator.getTimeSource().setTimeScale(15);
+		}
+	}
+
+	private void normalGameSpeed() {
+		ServiceLocator.getTimeSource().setTimeScale(1);
+	}
+
+	/**
+	 * Determines whether it is day or not
+	 * @return whether it is day or not
+	 */
+	public boolean isDay() {
+		return (hour >= MORNING_HOUR) && (hour < NIGHT_HOUR);
+	}
+
+	/**
+	 * Determines whether it is night or not
+	 * @return whether it is night or not
+	 */
+	public boolean isNight() {
+		return !isDay();
 	}
 
 	/**
@@ -118,12 +145,11 @@ public class TimeService {
 	 */
 	public void update() {
 		// this time will be in ms
-		long timePassed = ServiceLocator.getTimeSource().getTimeSince(lastGameTime);
-		lastGameTime = ServiceLocator.getTimeSource().getTime();
+		float timePassed = ServiceLocator.getTimeSource().getDeltaTime() * 1000;
 		if (paused) {
 			return;
 		}
-		timeBuffer += timePassed;
+		timeBuffer += (long) timePassed;
 
 		if (timeBuffer < MS_IN_MINUTE) {
 			return;
@@ -139,6 +165,13 @@ public class TimeService {
 		hour += 1;
 		minute -= 60;
 		events.trigger("minuteUpdate");
+
+		if (hour == MORNING_HOUR) {
+			// Made this an event so other entities can listen
+			events.trigger("morningTime");
+		} else if (hour == NIGHT_HOUR) {
+			events.trigger("nightTime");
+		}
 
 		// If hour is between 0 and 23, day hasn't elapsed, do nothing
 		if (hour < 24) {
