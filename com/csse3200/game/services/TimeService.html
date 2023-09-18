@@ -127,6 +127,16 @@ loadScripts(document, 'script');</script>
 <div class="block">Gets the current in-game minute</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isDay()" class="member-name-link">isDay</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Determines whether it is day or not</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isNight()" class="member-name-link">isNight</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Determines whether it is night or not</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isPaused()" class="member-name-link">isPaused</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns whether the game is paused or not</div>
@@ -152,8 +162,13 @@ loadScripts(document, 'script');</script>
 <div class="block">Changes the pause state of the game</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#speedUpSleep()" class="member-name-link">speedUpSleep</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Speeds up the game time so that the player can sleep</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Tracks the in-game time stored in the time service.</div>
 </div>
 </div>
@@ -251,6 +266,35 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>hour</code> - in-game hour</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="speedUpSleep()">
+<h3>speedUpSleep</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">speedUpSleep</span>()</div>
+<div class="block">Speeds up the game time so that the player can sleep</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isDay()">
+<h3>isDay</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isDay</span>()</div>
+<div class="block">Determines whether it is day or not</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>whether it is day or not</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isNight()">
+<h3>isNight</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isNight</span>()</div>
+<div class="block">Determines whether it is night or not</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>whether it is night or not</dd>
 </dl>
 </section>
 </li>
