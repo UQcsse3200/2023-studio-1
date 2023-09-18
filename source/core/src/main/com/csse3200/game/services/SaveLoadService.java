@@ -120,7 +120,9 @@ public class SaveLoadService {
     ClimateController climate = ServiceLocator.getGameArea().getClimateController();
     climate.setHumidity(state.getClimate().getHumidity());
     climate.setTemperature(state.getClimate().getTemperature());
-    climate.setCurrentWeatherEvent(state.getClimate().getCurrentWeatherEvent());
+    if (state.getClimate().getCurrentWeatherEvent() != null) {
+      climate.addWeatherEvent(state.getClimate().getCurrentWeatherEvent());
+    }
   }
 
   /**

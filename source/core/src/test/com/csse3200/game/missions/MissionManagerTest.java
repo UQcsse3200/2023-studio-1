@@ -6,10 +6,7 @@ import com.csse3200.game.missions.rewards.Reward;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,15 +15,12 @@ class MissionManagerTest {
     private Reward r1, r2, r3;
     private Quest q1, q2, q3;
 
-    @BeforeAll
-    public static void begin() {
+    @BeforeEach
+    public void preTest() {
         ServiceLocator.registerTimeSource(new GameTime());
         ServiceLocator.registerTimeService(new TimeService());
         ServiceLocator.registerMissionManager(new MissionManager());
-    }
 
-    @BeforeEach
-    public void preTest() {
         r1 = new Reward() {
             @Override
             public void collect() {
@@ -48,7 +42,7 @@ class MissionManagerTest {
 
             @Override
             public void registerMission(EventHandler missionManagerEvents) {
-                missionManagerEvents.addListener("event", () -> { count++; });
+                missionManagerEvents.addListener("event", () -> { count++; notifyUpdate(); });
             }
 
             @Override
@@ -75,7 +69,7 @@ class MissionManagerTest {
 
             @Override
             public void registerMission(EventHandler missionManagerEvents) {
-                missionManagerEvents.addListener("event", () -> { count--; });
+                missionManagerEvents.addListener("event", () -> { count--; notifyUpdate(); });
             }
 
             @Override
@@ -103,8 +97,8 @@ class MissionManagerTest {
 
             @Override
             public void registerMission(EventHandler missionManagerEvents) {
-                missionManagerEvents.addListener("event", () -> { count1++; });
-                missionManagerEvents.addListener("otherEvent", () -> { count2 *= 2; });
+                missionManagerEvents.addListener("event", () -> { count1++; notifyUpdate(); });
+                missionManagerEvents.addListener("otherEvent", () -> { count2 *= 2; notifyUpdate(); });
             }
 
             @Override
@@ -128,8 +122,8 @@ class MissionManagerTest {
         };
     }
 
-    @AfterAll
-    public static void end() {
+    @AfterEach
+    public void postTest() {
         ServiceLocator.clear();
     }
 
@@ -402,6 +396,52 @@ class MissionManagerTest {
         assertTrue(q1.isExpired());
         assertTrue(q2.isExpired());
         assertTrue(q3.isExpired());
+    }
+
+    @Test
+    public void testQuestExpiryTriggersEvent() {
+        int[] counts = new int[]{0};
+        ServiceLocator.getMissionManager().getEvents().addListener(
+                MissionManager.MissionEvent.QUEST_EXPIRED.name(),
+                () -> { counts[0]++; }
+        );
+
+        ServiceLocator.getMissionManager().acceptQuest(q1);
+        ServiceLocator.getMissionManager().acceptQuest(q2);
+        ServiceLocator.getMissionManager().acceptQuest(q3);
+
+        assertEquals(0, counts[0]);
+        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        assertEquals(2, counts[0]);
+        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        assertEquals(4, counts[0]);
+        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        assertEquals(6, counts[0]);
+        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        assertEquals(8, counts[0]);
+        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        assertEquals(11, counts[0]);
+    }
+
+    @Test
+    public void testAddingQuestTriggersEvent() {
+        int[] counts = new int[]{0};
+        ServiceLocator.getMissionManager().getEvents().addListener(
+                MissionManager.MissionEvent.NEW_QUEST.name(),
+                () -> { counts[0]++; }
+        );
+
+        assertEquals(0, counts[0]);
+        ServiceLocator.getMissionManager().addQuest(q1);
+        assertEquals(1, counts[0]);
+        ServiceLocator.getMissionManager().addQuest(q2);
+        assertEquals(2, counts[0]);
+        ServiceLocator.getMissionManager().addQuest(q3);
+        assertEquals(3, counts[0]);
+        ServiceLocator.getMissionManager().addQuest(q1);
+        ServiceLocator.getMissionManager().addQuest(q2);
+        ServiceLocator.getMissionManager().addQuest(q3);
+        assertEquals(6, counts[0]);
     }
 
 }
