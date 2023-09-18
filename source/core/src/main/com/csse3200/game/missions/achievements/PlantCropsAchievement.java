@@ -66,6 +66,7 @@ public class PlantCropsAchievement extends Achievement {
         if (++numberOfCropsPlanted >= target) {
             numberOfCropsPlanted = target;
         }
+        notifyUpdate();
     }
 
 }

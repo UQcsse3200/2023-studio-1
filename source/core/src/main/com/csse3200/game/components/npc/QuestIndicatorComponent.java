@@ -45,7 +45,7 @@ public class QuestIndicatorComponent extends Component {
      */
     public void registerQuestgiver(Entity questgiver) {
         this.questgiver = questgiver;
-        questgiver.getEvents().addListener("toggleMissions", this::markRead);
+        questgiver.getEvents().addListener("interact", this::markRead);
     }
 
     /**

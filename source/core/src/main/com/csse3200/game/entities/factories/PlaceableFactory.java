@@ -20,7 +20,7 @@ public class PlaceableFactory {
     public static Entity createBasePlaceable(EntityType type) {
         Entity placeable = new Entity(type)
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
-                .addComponent(new DynamicTextureRenderComponent("images/plants/misc/tobacco_seed.png"))
+                .addComponent(new DynamicTextureRenderComponent("images/plants/misc/aloe_vera_seed.png"))
                 //.addComponent(new TextureRenderComponent("images/plants/misc/tobacco_seed.png"))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
         return placeable;
@@ -53,7 +53,6 @@ public class PlaceableFactory {
     public static Entity createSprinkler() {
         Entity sprinkler = createBasePlaceable(EntityType.Sprinkler);
         // set temp texture to differentiate from other entities
-        //sprinkler.getComponent(DynamicTextureRenderComponent.class).setTexture("images/plants/misc/horticultural_heater_seed.png");
         sprinkler.getComponent(DynamicTextureRenderComponent.class).setTexture("images/placeable/sprinkler/pipe_null.png");
         // stop from blocking player movement
         sprinkler.getComponent(ColliderComponent.class).setLayer(PhysicsLayer.NONE);

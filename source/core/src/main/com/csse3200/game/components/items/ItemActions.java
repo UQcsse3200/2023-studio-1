@@ -1,25 +1,21 @@
 package com.csse3200.game.components.items;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.placeables.SprinklerComponent;
-import com.csse3200.game.components.player.InteractionDetector;
+import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.PlantFactory;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
+import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
 
 import java.util.List;
 import java.util.function.Function;
 
-import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
 
 public class ItemActions extends Component {
 
@@ -140,6 +136,7 @@ public class ItemActions extends Component {
     return map.getTile(pos);
   }
 
+
   /**
    * Gets the correct position for the player to interact with based off of the
    * mouse position. Will always return 1 tile to the left, right,
@@ -151,35 +148,28 @@ public class ItemActions extends Component {
    * @return a vector of the position where the player should hit
    */
   private Vector2 getAdjustedPos(Vector2 playerPos, Vector2 mousePos) {
-    int width = Gdx.graphics.getWidth();
-    int height = Gdx.graphics.getHeight();
-
-    int screenCentreX = width / 2;
-    int screenCentreY = height / 2;
-
-    int xDelta = 0;
-    int yDelta = 0;
-
-    if (screenCentreX - 24 > mousePos.x) {
-      xDelta -= 1;
-    } else if (screenCentreX + 24 < mousePos.x) {
-      xDelta += 1;
-    }
-
-    if (screenCentreY + 48 < mousePos.y) {
-      yDelta -= 1;
-    } else if (screenCentreY - 48 > mousePos.y) {
-      yDelta += 1;
-    }
-
-    int playerPositionAsIntX = (int)Math.ceil(playerPos.x); 
-    int playerPositionAsIntY = (int)Math.ceil(playerPos.y);
+    Vector2 mouseWorldPos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
+    Vector2 adjustedPosition = new Vector2(
+        map.tileCoordinatesToVector(map.vectorToTileCoordinates(new Vector2(mouseWorldPos.x, mouseWorldPos.y))));
     
-    int x = (int)Math.ceil((double)(playerPositionAsIntX) + xDelta);
-    int y = (int)Math.ceil((double)(playerPositionAsIntY) + yDelta);
-    
-    return new Vector2(x, y);
+    Vector2 playerPosCenter = ServiceLocator.getGameArea().getPlayer().getCenterPosition();
+    playerPosCenter.add(0, -1.0f); // Player entity sprite's feet are located -1.0f below the centre of the entity. ty Hunter
+
+    playerPosCenter = map.tileCoordinatesToVector(map.vectorToTileCoordinates(playerPosCenter));
+;
+    if (adjustedPosition.x - 0.5 > playerPosCenter.x) {
+      playerPosCenter.x += 1;
+    } else if (adjustedPosition.x + 0.5 < playerPosCenter.x) {
+      playerPosCenter.x -= 1;
+    }
+    if (adjustedPosition.y - 0.5> playerPosCenter.y) {
+      playerPosCenter.y += 1;
+    } else if (adjustedPosition.y  + 0.5 < playerPosCenter.y) {
+      playerPosCenter.y -= 1;
+    }
+    return playerPosCenter;
   }
+
 
 
   /**

@@ -1,5 +1,18 @@
 package com.csse3200.game.components.plants;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
 import com.badlogic.gdx.audio.Sound;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.entities.Entity;
@@ -7,12 +20,6 @@ import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(GameExtension.class)
 public class PlantComponentTest {
@@ -33,7 +40,6 @@ public class PlantComponentTest {
     int maxHealth = 500;
     int[] growthStageThresholds = new int[]{1,2,3};
     String[] soundArray = new String[]{"1", "2", "3", "4", "5", "6", "7", "8"};
-    String[] imagePaths = new String[]{"path1", "path2", "path3", "path4", "path5"};
 
     @BeforeEach
     void beforeEach() {
@@ -47,7 +53,7 @@ public class PlantComponentTest {
         when(mockResourceService.getAsset(anyString(), eq(Sound.class))).thenReturn(mockSound);
 
         testPlant = new PlantComponent(health, name, type, description, idealWaterLevel,
-                adultLifeSpan, maxHealth, mockCropTile, growthStageThresholds,soundArray,imagePaths);
+                adultLifeSpan, maxHealth, mockCropTile, growthStageThresholds,soundArray);
         testPlant.setEntity(mockEntity);
     }
 
