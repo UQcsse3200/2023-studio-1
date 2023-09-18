@@ -5,6 +5,7 @@ import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ItemFactory;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import java.util.Map;
@@ -107,19 +108,19 @@ public class PlantComponent extends Component {
     private double[] maxHealthAtStages = {0, 0, 0};
 
     /**
-     * The paths to the images associated with different growth stages (Seedling, Sprout, Juvenile, Adult, Decaying).
-     */
-    private String[] growthStageImagePaths = {"", "", "", "", ""};
-
-    /**
      * Used to track how long a plant has been an adult.
      */
     private int numOfDaysAsAdult;
 
     /**
-     * The current texture based on the growth stage.
+     * The animation render component used to display the correct image based on the current growth stage.
      */
-    private DynamicTextureRenderComponent currentTexture;
+    private AnimationRenderComponent currentAnimator;
+
+    /**
+     * The name of the animation for each growth stage.
+     */
+    private final String[] animationImages = {"1_seedling", "2_sprout", "3_juvenile", "4_adult", "5_decaying", "6_dead"};
 
     /**
      * The yield to be dropped when this plant is harvested as a map of item names to drop
@@ -165,13 +166,6 @@ public class PlantComponent extends Component {
         this.maxHealthAtStages[1] = 0.1 * this.maxHealth;
         this.maxHealthAtStages[2] = 0.3 * this.maxHealth;
 
-        // Initialise the image paths for growth stages
-        // ALl pointing to Corn for now.
-        this.growthStageImagePaths[0] = "images/plants/seedling.png";
-        this.growthStageImagePaths[1] = "images/plants/corn_sprout.png";
-        this.growthStageImagePaths[2] = "images/plants/corn_juvenile.png";
-        this.growthStageImagePaths[3] = "images/plants/corn_adult.png";
-        this.growthStageImagePaths[4] = "images/plants/corn_decaying.png";
     }
 
     /**
@@ -188,12 +182,11 @@ public class PlantComponent extends Component {
      * @param cropTile - The cropTileComponent where the plant will be located.
      * @param growthStageThresholds - A list of three integers that represent the growth thresholds.
      * @param soundsArray - A list of all sound files file paths as strings
-     * @param growthStageImagePaths - image paths for the different growth stages.
      */
     public PlantComponent(int health, String name, String plantType, String plantDescription,
                           float idealWaterLevel, int adultLifeSpan, int maxHealth,
                           CropTileComponent cropTile, int[] growthStageThresholds,
-                          String[] soundsArray, String[] growthStageImagePaths) {
+                          String[] soundsArray) {
         this.plantHealth = health;
         this.plantName = name;
         this.plantType = plantType;
@@ -218,13 +211,6 @@ public class PlantComponent extends Component {
         this.maxHealthAtStages[0] = 0.05 * maxHealth;
         this.maxHealthAtStages[1] = 0.1 * maxHealth;
         this.maxHealthAtStages[2] = 0.3 * maxHealth;
-
-        // Initialise the image paths for the growth stages
-        this.growthStageImagePaths[0] = growthStageImagePaths[0];
-        this.growthStageImagePaths[1] = growthStageImagePaths[1];
-        this.growthStageImagePaths[2] = growthStageImagePaths[2];
-        this.growthStageImagePaths[3] = growthStageImagePaths[3];
-        this.growthStageImagePaths[4] = growthStageImagePaths[4];
     }
 
     /**
@@ -240,7 +226,8 @@ public class PlantComponent extends Component {
         entity.getEvents().addListener("attack", this::attack);
         ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateGrowthStage);
         ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::beginDecay);
-        this.currentTexture = entity.getComponent(DynamicTextureRenderComponent.class);
+        ServiceLocator.getTimeService().getEvents().addListener("minuteUpdate", this::checkDecayStatus);
+        this.currentAnimator = entity.getComponent(AnimationRenderComponent.class);
         updateTexture();
     }
 
@@ -276,7 +263,12 @@ public class PlantComponent extends Component {
      * @param plantHealthIncrement - plant health affected value
      */
     public void increasePlantHealth(int plantHealthIncrement) {
+
         this.plantHealth += plantHealthIncrement;
+
+        if (this.plantHealth < 0) {
+            this.plantHealth = 0;
+        }
     }
 
     /**
@@ -409,14 +401,6 @@ public class PlantComponent extends Component {
     }
 
     /**
-     * Retrieves the current texture of the plant.
-     * @return The current texture of the plant.
-     */
-    public DynamicTextureRenderComponent getTexture() {
-        return this.currentTexture;
-    }
-
-    /**
      * Sets the harvest yield of this plant.
      *
      * <p>This will store an unmodifiable copy of the given map. Modifications made to the given
@@ -442,9 +426,10 @@ public class PlantComponent extends Component {
 
         // Check if the growth rate is negative
         // That the plant is not decaying
-        if ((growthRate < 0) && !isDecay() && (getGrowthStage().getValue() < GrowthStage.ADULT.value)) {
+        if ((growthRate < 0) && !isDecay() && (getGrowthStage().getValue() <= GrowthStage.ADULT.getValue())) {
             increasePlantHealth(-10);
-        } else if (!isDecay() && !(getGrowthStage().getValue() >= GrowthStage.ADULT.value)) {
+        } else if ((getGrowthStage().getValue() != GrowthStage.DECAYING.getValue())
+                && !(getGrowthStage().getValue() >= GrowthStage.ADULT.getValue())) {
             this.currentGrowthLevel += (int)(this.cropTile.getGrowthRate(this.idealWaterLevel) * 10);
         }
     }
@@ -455,7 +440,7 @@ public class PlantComponent extends Component {
      * @return if the plant is fully decayed
      */
     public boolean isDead() {
-        return this.growthStages == GrowthStage.DEAD;
+        return this.growthStages.getValue() == GrowthStage.DEAD.getValue();
     }
 
     /**
@@ -507,19 +492,28 @@ public class PlantComponent extends Component {
      */
     public void updateGrowthStage() {
         int time = ServiceLocator.getTimeService().getHour();
+
         if (time == 12) {
-            this.increaseCurrentGrowthLevel();
-            if (getGrowthStage().getValue() < GrowthStage.ADULT.value) {
+            increaseCurrentGrowthLevel();
+            if ((getGrowthStage().getValue() < GrowthStage.ADULT.getValue())) {
                 if (this.currentGrowthLevel >= this.growthStageThresholds[getGrowthStage().getValue() - 1]) {
                     setGrowthStage(getGrowthStage().getValue() + 1);
                     updateMaxHealth();
                     updateTexture();
                 }
-            }
-            if (getGrowthStage() == GrowthStage.ADULT) {
+            } else if (getGrowthStage().getValue() == GrowthStage.ADULT.getValue()) {
                 updateMaxHealth();
                 updateTexture();
                 beginDecay();
+            }
+        }
+
+        if (getGrowthStage().getValue() == GrowthStage.DECAYING.getValue()) {
+            this.increasePlantHealth(-10);
+
+            if (getPlantHealth() <= 0) {
+                setGrowthStage(getGrowthStage().getValue() + 1);
+                updateTexture();
             }
         }
     }
@@ -543,11 +537,10 @@ public class PlantComponent extends Component {
      * exceeded its adultLifeSpan it will begin to decay.
      */
     public void beginDecay() {
-        if (getGrowthStage() == GrowthStage.ADULT) {
+        if (getGrowthStage().getValue() == GrowthStage.ADULT.getValue()) {
             this.numOfDaysAsAdult += 1;
             if (getNumOfDaysAsAdult() > getAdultLifeSpan()) {
                 setGrowthStage(getGrowthStage().getValue() + 1);
-                setDecay();
                 updateTexture();
                 //playSound("decays");
             }
@@ -558,11 +551,9 @@ public class PlantComponent extends Component {
      * Update the texture of the plant based on its current growth stage.
      */
     public void updateTexture() {
-        if (getGrowthStage().getValue() <= GrowthStage.DECAYING.value) {
-            String path = this.growthStageImagePaths[getGrowthStage().getValue() - 1];
-
-            if (this.currentTexture != null) {
-                this.currentTexture.setTexture(path);
+        if (getGrowthStage().getValue() <= GrowthStage.DEAD.getValue()) {
+            if (this.currentAnimator != null) {
+                this.currentAnimator.startAnimation(this.animationImages[getGrowthStage().getValue() - 1]);
             }
         }
     }
@@ -617,5 +608,20 @@ public class PlantComponent extends Component {
 
     public float getCurrentAge() {
         return 0;
+    }
+
+    /**
+     * Checks if the plant should be set to a dead state every in game minute.
+     */
+    public void checkDecayStatus() {
+        if ((getGrowthStage().getValue() < GrowthStage.ADULT.getValue()) && (this.getPlantHealth() <= 0)) {
+            destroyPlant();
+        } else if ((getGrowthStage().getValue() == GrowthStage.ADULT.getValue()) && (this.getPlantHealth() < 30)) {
+            this.setGrowthStage(GrowthStage.DECAYING.getValue());
+            updateTexture();
+        } else if ((getGrowthStage().getValue() == GrowthStage.DECAYING.getValue()) && (this.getPlantHealth() <= 0)) {
+            this.setGrowthStage(GrowthStage.DEAD.getValue());
+            updateTexture();
+        }
     }
 }
