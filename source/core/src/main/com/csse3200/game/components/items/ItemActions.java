@@ -11,6 +11,7 @@ import com.csse3200.game.components.placeables.SprinklerComponent;
 import com.csse3200.game.components.player.InteractionDetector;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.PlantFactory;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
@@ -119,9 +120,11 @@ public class ItemActions extends Component {
     placeable.setPosition(adjustedPos);
     ServiceLocator.getGameArea().spawnEntity(placeable);
     tile.setPlaceable(placeable);
-    // now notify the ready placed placeables (sprinklers) that they need to reconfigure to accommodate this new placeable.
-    // TODO move notifyAdjacent to another component so fences can use it
-    placeable.getComponent(SprinklerComponent.class).notifyAdjacent();
+    // Notify the already placed placeable(s) that they need to reconfigure to accommodate this new placeable.
+    switch (placeable.getType()) {
+      case Sprinkler -> placeable.getComponent(SprinklerComponent.class).notifyAdjacent();
+      case Fence -> System.out.println("i need to do a merge");
+    }
     return true;
   }
 
