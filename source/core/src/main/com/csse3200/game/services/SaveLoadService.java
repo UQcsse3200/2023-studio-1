@@ -1,6 +1,9 @@
 package com.csse3200.game.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainCropTileFactory;
@@ -15,10 +18,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.files.SaveGame;
 import com.csse3200.game.files.SaveGame.GameState;
-import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.missions.MissionManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /* A note of the registering of this service:
