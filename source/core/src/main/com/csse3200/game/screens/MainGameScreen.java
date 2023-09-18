@@ -109,9 +109,9 @@ public class MainGameScreen extends ScreenAdapter {
         renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
         ServiceLocator.registerCameraComponent(renderer.getCamera());
 
-    ServiceLocator.registerLightService(new LightService());
+        ServiceLocator.registerLightService(new LightService());
 
-    loadAssets();
+        loadAssets();
         loadAssets();
 
         logger.debug("Initialising main game screen entities");
@@ -130,6 +130,8 @@ public class MainGameScreen extends ScreenAdapter {
 
         lose = false;
         spaceGameArea.getPlayer().getEvents().addListener("loseScreen", this::loseScreenStart);
+
+        ServiceLocator.getTimeService().setHour(6);
 
         // if the LoadSaveOnStart value is set true then load entities saved from file
         if (game.isLoadOnStart()){
