@@ -1823,7 +1823,9 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/services/ServiceLocator.html#getMissionManager()" class="member-name-link">getMissionManager()</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/tractor/TractorActions.html#getMode()" class="member-name-link">getMode()</a> - Method in class com.csse3200.game.components.tractor.<a href="com/csse3200/game/components/tractor/TractorActions.html" title="class in com.csse3200.game.components.tractor">TractorActions</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns tractor mode the tractor is currently using</div>
+</dd>
 <dt><a href="com/csse3200/game/components/tasks/ChaseTask.html#getMovementTask()" class="member-name-link">getMovementTask()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/ChaseTask.html" title="class in com.csse3200.game.components.tasks">ChaseTask</a></dt>
 <dd>
 <div class="block">Gets the movement task associated with this run away task.</div>
@@ -2100,10 +2102,6 @@ loadScripts(document, 'script');</script>
 <div class="block">Loop through all entities in the save file and if the tractor is there return
  the tractor
  if not return null</div>
-</dd>
-<dt><a href="com/csse3200/game/components/tractor/TractorActions.html#getTractorLocation()" class="member-name-link">getTractorLocation()</a> - Method in class com.csse3200.game.components.tractor.<a href="com/csse3200/game/components/tractor/TractorActions.html" title="class in com.csse3200.game.components.tractor">TractorActions</a></dt>
-<dd>
-<div class="block">Gets the location of the tractor</div>
 </dd>
 <dt><a href="com/csse3200/game/areas/terrain/GameMap.html#getTraversableTileCoordinates()" class="member-name-link">getTraversableTileCoordinates()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
 <dd>
@@ -2546,7 +2544,9 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/tractor/KeyboardTractorInputComponent.html" class="type-name-link" title="class in com.csse3200.game.components.tractor">KeyboardTractorInputComponent</a> - Class in <a href="com/csse3200/game/components/tractor/package-summary.html">com.csse3200.game.components.tractor</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/tractor/KeyboardTractorInputComponent.html#%3Cinit%3E()" class="member-name-link">KeyboardTractorInputComponent()</a> - Constructor for class com.csse3200.game.components.tractor.<a href="com/csse3200/game/components/tractor/KeyboardTractorInputComponent.html" title="class in com.csse3200.game.components.tractor">KeyboardTractorInputComponent</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Constructor for the tractor, sets same priority as the player's input constructor</div>
+</dd>
 <dt><a href="com/csse3200/game/components/player/KeyboardPlayerInputComponent.html#keyDown(int)" class="member-name-link">keyDown(int)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/KeyboardPlayerInputComponent.html" title="class in com.csse3200.game.components.player">KeyboardPlayerInputComponent</a></dt>
 <dd>
 <div class="block">Triggers player events on specific keycodes.</div>
@@ -3622,7 +3622,11 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/player/PlayerActions.html#setCameraVar(com.csse3200.game.components.CameraComponent)" class="member-name-link">setCameraVar(CameraComponent)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/PlayerActions.html" title="class in com.csse3200.game.components.player">PlayerActions</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/tractor/TractorActions.html#setCameraVar(com.csse3200.game.components.CameraComponent)" class="member-name-link">setCameraVar(CameraComponent)</a> - Method in class com.csse3200.game.components.tractor.<a href="com/csse3200/game/components/tractor/TractorActions.html" title="class in com.csse3200.game.components.tractor">TractorActions</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Sets the camera reference to the tractor, used to enter and exit the tractor
+ Will most likely be removed in Sprint 4 as this was code before there was a way to
+ easily get a reference to the camera</div>
+</dd>
 <dt><a href="com/csse3200/game/components/items/WateringCanLevelComponent.html#setCapacity(float)" class="member-name-link">setCapacity(float)</a> - Method in class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/WateringCanLevelComponent.html" title="class in com.csse3200.game.components.items">WateringCanLevelComponent</a></dt>
 <dd>
 <div class="block">Update the max the WateringCan can hold to the parameter
@@ -3801,7 +3805,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Sets the in-game minute to a certain value.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/tractor/TractorActions.html#setMode(com.csse3200.game.components.tractor.TractorMode)" class="member-name-link">setMode(TractorMode)</a> - Method in class com.csse3200.game.components.tractor.<a href="com/csse3200/game/components/tractor/TractorActions.html" title="class in com.csse3200.game.components.tractor">TractorActions</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Sets the mode of the tractor entity to a given mode</div>
+</dd>
 <dt><a href="com/csse3200/game/components/tasks/ChaseTask.html#setMovementTask(com.csse3200.game.components.tasks.MovementTask)" class="member-name-link">setMovementTask(MovementTask)</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/ChaseTask.html" title="class in com.csse3200.game.components.tasks">ChaseTask</a></dt>
 <dd>
 <div class="block">Setter for movementTask</div>
@@ -3815,7 +3821,9 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/player/PlayerActions.html#setMuted(boolean)" class="member-name-link">setMuted(boolean)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/PlayerActions.html" title="class in com.csse3200.game.components.player">PlayerActions</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/tractor/TractorActions.html#setMuted(boolean)" class="member-name-link">setMuted(boolean)</a> - Method in class com.csse3200.game.components.tractor.<a href="com/csse3200/game/components/tractor/TractorActions.html" title="class in com.csse3200.game.components.tractor">TractorActions</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Sets the tractor's actions to be muted, This should be done when exiting the tractor.</div>
+</dd>
 <dt><a href="com/csse3200/game/components/plants/PlantComponent.html#setNumOfDaysAsAdult(int)" class="member-name-link">setNumOfDaysAsAdult(int)</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
 <dd>
 <div class="block">Sets the number of days the plant has been an adult.</div>
@@ -3845,7 +3853,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/tractor/TractorActions.html#setPhysicsComponent(com.csse3200.game.physics.components.PhysicsComponent)" class="member-name-link">setPhysicsComponent(PhysicsComponent)</a> - Method in class com.csse3200.game.components.tractor.<a href="com/csse3200/game/components/tractor/TractorActions.html" title="class in com.csse3200.game.components.tractor">TractorActions</a></dt>
 <dd>
-<div class="block">ONLY USE FOR TESTING PURPOSES</div>
+<div class="block">ONLY USE FOR TESTING PURPOSES, USED TO TEST MOVEMENT</div>
 </dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainTile.html#setPlaceable(com.csse3200.game.entities.Entity)" class="member-name-link">setPlaceable(Entity)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></dt>
 <dd>
@@ -3860,7 +3868,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Set the current plant health</div>
 </dd>
 <dt><a href="com/csse3200/game/components/tractor/TractorActions.html#setPlayer(com.csse3200.game.entities.Entity)" class="member-name-link">setPlayer(Entity)</a> - Method in class com.csse3200.game.components.tractor.<a href="com/csse3200/game/components/tractor/TractorActions.html" title="class in com.csse3200.game.components.tractor">TractorActions</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Sets the player reference to the tractor, used to enter and exit the tractor
+ Will most likely be removed in Sprint 4 as this was code before there was a way to
+ easily get a reference to the player</div>
+</dd>
 <dt><a href="com/csse3200/game/files/SaveGame.GameState.html#setPlayer(com.csse3200.game.entities.Entity)" class="member-name-link">setPlayer(Entity)</a> - Method in class com.csse3200.game.files.<a href="com/csse3200/game/files/SaveGame.GameState.html" title="class in com.csse3200.game.files">SaveGame.GameState</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/Entity.html#setPosition(float,float)" class="member-name-link">setPosition(float, float)</a> - Method in class com.csse3200.game.entities.<a href="com/csse3200/game/entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></dt>
@@ -4430,9 +4442,14 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/ui/terminal/TouchTerminalInputComponent.html#%3Cinit%3E(com.csse3200.game.ui.terminal.Terminal)" class="member-name-link">TouchTerminalInputComponent(Terminal)</a> - Constructor for class com.csse3200.game.ui.terminal.<a href="com/csse3200/game/ui/terminal/TouchTerminalInputComponent.html" title="class in com.csse3200.game.ui.terminal">TouchTerminalInputComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/tractor/TouchTractorInputComponent.html" class="type-name-link" title="class in com.csse3200.game.components.tractor">TouchTractorInputComponent</a> - Class in <a href="com/csse3200/game/components/tractor/package-summary.html">com.csse3200.game.components.tractor</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Almost certain this class does nothing but is needs as when you make a InputController it makes both
+ May need to be updated later to better match the Keyboard verison.</div>
+</dd>
 <dt><a href="com/csse3200/game/components/tractor/TouchTractorInputComponent.html#%3Cinit%3E()" class="member-name-link">TouchTractorInputComponent()</a> - Constructor for class com.csse3200.game.components.tractor.<a href="com/csse3200/game/components/tractor/TouchTractorInputComponent.html" title="class in com.csse3200.game.components.tractor">TouchTractorInputComponent</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Constructor for the tractor, sets same priority as the player's input constructor</div>
+</dd>
 <dt><a href="com/csse3200/game/components/player/KeyboardPlayerInputComponent.html#touchUp(int,int,int,int)" class="member-name-link">touchUp(int, int, int, int)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/KeyboardPlayerInputComponent.html" title="class in com.csse3200.game.components.player">KeyboardPlayerInputComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/input/InputComponent.html#touchUp(int,int,int,int)" class="member-name-link">touchUp(int, int, int, int)</a> - Method in class com.csse3200.game.input.<a href="com/csse3200/game/input/InputComponent.html" title="class in com.csse3200.game.input">InputComponent</a></dt>
@@ -4451,7 +4468,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/tractor/TractorActions.html#%3Cinit%3E()" class="member-name-link">TractorActions()</a> - Constructor for class com.csse3200.game.components.tractor.<a href="com/csse3200/game/components/tractor/TractorActions.html" title="class in com.csse3200.game.components.tractor">TractorActions</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/tractor/TractorAnimationController.html" class="type-name-link" title="class in com.csse3200.game.components.tractor">TractorAnimationController</a> - Class in <a href="com/csse3200/game/components/tractor/package-summary.html">com.csse3200.game.components.tractor</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">This way of controlling the animations was adopted from PlayerActions and PlayerAnimationController which
+ was written by Team 2</div>
+</dd>
 <dt><a href="com/csse3200/game/components/tractor/TractorAnimationController.html#%3Cinit%3E()" class="member-name-link">TractorAnimationController()</a> - Constructor for class com.csse3200.game.components.tractor.<a href="com/csse3200/game/components/tractor/TractorAnimationController.html" title="class in com.csse3200.game.components.tractor">TractorAnimationController</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/factories/TractorFactory.html" class="type-name-link" title="class in com.csse3200.game.entities.factories">TractorFactory</a> - Class in <a href="com/csse3200/game/entities/factories/package-summary.html">com.csse3200.game.entities.factories</a></dt>
@@ -4921,7 +4941,9 @@ the order they are declared.</div>
 <dt><a href="com/csse3200/game/components/player/InventoryComponent.html#write(com.badlogic.gdx.utils.Json)" class="member-name-link">write(Json)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/tractor/TractorActions.html#write(com.badlogic.gdx.utils.Json)" class="member-name-link">write(Json)</a> - Method in class com.csse3200.game.components.tractor.<a href="com/csse3200/game/components/tractor/TractorActions.html" title="class in com.csse3200.game.components.tractor">TractorActions</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Writes to the json in order to store the tractor's state, used to save the game</div>
+</dd>
 <dt><a href="com/csse3200/game/entities/Entity.html#write(com.badlogic.gdx.utils.Json)" class="member-name-link">write(Json)</a> - Method in class com.csse3200.game.entities.<a href="com/csse3200/game/entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></dt>
 <dd>
 <div class="block">Writes to the json info about entities.</div>
