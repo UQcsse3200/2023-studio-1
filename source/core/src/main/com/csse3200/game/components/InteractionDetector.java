@@ -28,7 +28,8 @@ public class InteractionDetector extends HitboxComponent {
     /** The interaction range within which entities are detected. */
     private final float range;
 
-    private static ArrayList<EntityType> interactableEntities = null;
+    private ArrayList<EntityType> interactableEntities = null;
+    private boolean notifyOnDetection = false;
 
     /**
      * Constructs an InteractionDetector with the specified interaction range.
@@ -86,6 +87,10 @@ public class InteractionDetector extends HitboxComponent {
         }
 
         entitiesInRange.add(target);
+
+        if (notifyOnDetection) {
+            entity.getEvents().trigger("entityDetected", target);
+        }
     }
 
     /**
@@ -101,6 +106,14 @@ public class InteractionDetector extends HitboxComponent {
 
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
         entitiesInRange.remove(target);
+
+        if (notifyOnDetection) {
+            entity.getEvents().trigger("entityExitDetected", target);
+        }
+    }
+
+    public void notifyOnDetection(boolean notify) {
+        notifyOnDetection = notify;
     }
 
     /**
