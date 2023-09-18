@@ -291,6 +291,7 @@ public class Entity implements Json.Serializable {
     if (!enabled) {
       return;
     }
+    getEvents().update();
     for (Component component : createdComponents) {
       component.triggerUpdate();
     }
