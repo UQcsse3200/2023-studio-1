@@ -146,9 +146,23 @@ public class ItemActions extends Component {
     Vector2 mouseWorldPos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
     Vector2 adjustedPosition = new Vector2(
         map.tileCoordinatesToVector(map.vectorToTileCoordinates(new Vector2(mouseWorldPos.x, mouseWorldPos.y))));
+    
+    Vector2 playerPosCenter = ServiceLocator.getGameArea().getPlayer().getCenterPosition();
+    playerPosCenter.add(0, -1.0f); // Player entity sprite's feet are located -1.0f below the centre of the entity. ty Hunter
 
-    // TODO fix so unlimited radius not possible.
-    return adjustedPosition;
+    playerPosCenter = map.tileCoordinatesToVector(map.vectorToTileCoordinates(playerPosCenter));
+;
+    if (adjustedPosition.x - 0.5 > playerPosCenter.x) {
+      playerPosCenter.x += 1;
+    } else if (adjustedPosition.x + 0.5 < playerPosCenter.x) {
+      playerPosCenter.x -= 1;
+    }
+    if (adjustedPosition.y - 0.5> playerPosCenter.y) {
+      playerPosCenter.y += 1;
+    } else if (adjustedPosition.y  + 0.5 < playerPosCenter.y) {
+      playerPosCenter.y -= 1;
+    }
+    return playerPosCenter;
   }
 
   /**
