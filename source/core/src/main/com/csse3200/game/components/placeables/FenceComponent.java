@@ -1,9 +1,7 @@
 package com.csse3200.game.components.placeables;
 
 import com.csse3200.game.components.Component;
-import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.ColliderComponent;
-import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 
 public class FenceComponent extends Component {
@@ -13,15 +11,17 @@ public class FenceComponent extends Component {
 
     /* Current texture of the entity */
     private DynamicTextureRenderComponent currentTexture;
+    
+    private String texturePath;
 
     /**
      * The paths to the sound associated with the gate
      */
     private String[] sounds;
 
-    private String closedGatePath = "images/plants/misc/tobacco_seed.png";
-    private String openGatePath = "images/egg.png";
-    private String fencePath = "";
+    private String closedGatePath = "images/fences/f.png";
+    private String openGatePath = "images/fences/f_l.png";
+    private String fenceBase = "";
 
     public FenceComponent(boolean isGate) {
         this.isGate = isGate;
@@ -32,7 +32,7 @@ public class FenceComponent extends Component {
 
     /**
      * {@inheritDoc}
-     */
+    */
     @Override
     public void create() {
         super.create();
@@ -42,10 +42,13 @@ public class FenceComponent extends Component {
         // Initialise event listener for gate.
         if (isGate) {
             entity.getEvents().addListener("interact", this::toggleGate);
-            this.currentTexture.setTexture(closedGatePath);
+            texturePath = closedGatePath;
         } else {
-            this.currentTexture.setTexture(fencePath);
+            texturePath = fenceBase;
         }
+
+        /* Check if we placed next to another gate and update accordingly */
+        this.updateTexture();
 
     }
 
@@ -59,6 +62,10 @@ public class FenceComponent extends Component {
         }
         this.entity.getComponent(ColliderComponent.class).setSensor(false);
         this.currentTexture.setTexture(closedGatePath);
+    }
+
+    public void updateTexture() {
+        this.currentTexture.setTexture(this.texturePath);
     }
 
 }

@@ -244,10 +244,10 @@ public class ItemFactory {
    */
   public static Entity createFenceItem() {
     Entity fence = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/misc/aloe_vera_seed.png"))
+            .addComponent(new TextureRenderComponent("images/fences/f.png"))
             .addComponent(new ItemComponent("Fence", ItemType.PLACEABLE,
                     "A fence to keep animals in or out",
-                    new Texture("images/plants/misc/aloe_vera_seed.png")));
+                    new Texture("images/fences/f.png")));
     return fence;
   }
 
@@ -257,10 +257,10 @@ public class ItemFactory {
    */
   public static Entity createGateItem() {
     Entity gate = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/misc/aloe_vera_seed.png"))
+            .addComponent(new TextureRenderComponent("images/fences/f.png"))
             .addComponent(new ItemComponent("Gate", ItemType.PLACEABLE,
                     "Allows the player to walk in and out of enclosed areas",
-                    new Texture("images/plants/misc/aloe_vera_seed.png")));
+                    new Texture("images/fences/f.png")));
     return gate;
   }
 
