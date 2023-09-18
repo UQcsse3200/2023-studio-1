@@ -25,6 +25,7 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.utils.math.Vector2Utils;
 
 /**
  * Factory to create non-playable character (NPC) entities with predefined components.
@@ -179,12 +180,10 @@ public class NPCFactory {
             16f
     );
 
-    animator.addAnimation("idle_left", 1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("idle_right", 1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("walk_left", 1f, Animation.PlayMode.LOOP_REVERSED);
-    animator.addAnimation("walk_right", 1f, Animation.PlayMode.LOOP);
-
-
+    animator.addAnimation("idle_left", 0.8f, Animation.PlayMode.LOOP);
+    animator.addAnimation("walk_left", 0.8f, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle_right", 0.8f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation("walk_right", 0.8f, Animation.PlayMode.LOOP_REVERSED);
 
 //    animator.addAnimation("idle", 1f, Animation.PlayMode.LOOP);
   // animator.addAnimation("consume", 1f, Animation.PlayMode.LOOP);
@@ -198,8 +197,9 @@ public class NPCFactory {
             .addComponent(new AnimalAnimationController());
 
 
-    oxygenEater.scaleHeight(3f);
-    PhysicsUtils.setScaledCollider(oxygenEater, 0.7f, 0.4f);
+    oxygenEater.scaleHeight(2f);
+    oxygenEater.getComponent(ColliderComponent.class).setAsBoxAligned(new Vector2(1f, 1f),
+            PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.CENTER);
 
 
     return oxygenEater;
