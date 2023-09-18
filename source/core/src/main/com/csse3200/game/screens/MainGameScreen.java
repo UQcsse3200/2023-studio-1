@@ -112,7 +112,6 @@ public class MainGameScreen extends ScreenAdapter {
         ServiceLocator.registerLightService(new LightService());
 
         loadAssets();
-        loadAssets();
 
         logger.debug("Initialising main game screen entities");
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
