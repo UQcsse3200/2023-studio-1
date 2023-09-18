@@ -1,16 +1,16 @@
 package com.csse3200.game.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.csse3200.game.areas.GameArea;
-import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.CameraComponent;
+import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
-import com.csse3200.game.screens.MainGameScreen;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A simplified implementation of the Service Locator pattern:

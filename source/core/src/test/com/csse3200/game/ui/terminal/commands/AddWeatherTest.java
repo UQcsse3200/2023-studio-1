@@ -1,22 +1,25 @@
 package com.csse3200.game.ui.terminal.commands;
 
-import com.badlogic.gdx.Game;
-import com.csse3200.game.areas.GameArea;
-import com.csse3200.game.areas.weather.AcidShowerEvent;
-import com.csse3200.game.areas.weather.ClimateController;
-import com.csse3200.game.areas.weather.SolarSurgeEvent;
-import com.csse3200.game.areas.weather.WeatherEvent;
-import com.csse3200.game.extensions.GameExtension;
-import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.services.TimeService;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.areas.weather.AcidShowerEvent;
+import com.csse3200.game.areas.weather.ClimateController;
+import com.csse3200.game.areas.weather.SolarSurgeEvent;
+import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.services.ServiceLocator;
 
 @ExtendWith(GameExtension.class)
 class AddWeatherTest {

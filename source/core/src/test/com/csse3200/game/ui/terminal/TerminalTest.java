@@ -1,16 +1,21 @@
 package com.csse3200.game.ui.terminal;
 
-import com.csse3200.game.extensions.GameExtension;
-import com.csse3200.game.ui.terminal.commands.Command;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+
+import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.ui.terminal.commands.Command;
 
 @ExtendWith(GameExtension.class)
 class TerminalTest {

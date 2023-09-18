@@ -1,23 +1,27 @@
 package com.csse3200.game.components;
 
-import box2dLight.ConeLight;
-import box2dLight.RayHandler;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.extensions.GameExtension;
-import com.csse3200.game.services.LightService;
-import com.csse3200.game.services.ServiceLocator;
-import org.junit.After;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockConstruction;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.MockedConstruction;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.mockito.Mockito.*;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.services.LightService;
+import com.csse3200.game.services.ServiceLocator;
+
+import box2dLight.ConeLight;
+import box2dLight.RayHandler;
 
 @ExtendWith(GameExtension.class)
 class ConeLightComponentTest {

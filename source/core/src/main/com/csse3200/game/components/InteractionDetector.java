@@ -1,4 +1,10 @@
-package com.csse3200.game.components.player;
+package com.csse3200.game.components;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -11,8 +17,6 @@ import com.csse3200.game.physics.BodyUserData;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.utils.DirectionUtils;
 
-import java.util.*;
-
 /**
  * Represents a component that handles interaction detection with entities
  * within a specified range.
@@ -24,8 +28,7 @@ public class InteractionDetector extends HitboxComponent {
     /** The interaction range within which entities are detected. */
     private final float range;
 
-    private static final ArrayList<EntityType> interactableEntities = new ArrayList<EntityType>(Arrays.asList(EntityType.Questgiver, EntityType.Gate, EntityType.Chest, EntityType.Chicken, 
-        EntityType.Cow, EntityType.Astrolotl, EntityType.OxygenEater));
+    private static ArrayList<EntityType> interactableEntities = null;
 
     /**
      * Constructs an InteractionDetector with the specified interaction range.
@@ -34,6 +37,16 @@ public class InteractionDetector extends HitboxComponent {
      */
     public InteractionDetector(float range) {
         this.range = range;
+    }
+
+    /**
+     * Constructs an InteractionDetector with the specified interaction range.
+     *
+     * @param range The interaction range within which entities are detected.
+     */
+    public InteractionDetector(float range, ArrayList interactableEntities) {
+        this.range = range;
+        this.interactableEntities = interactableEntities;
     }
 
     /**
@@ -65,9 +78,11 @@ public class InteractionDetector extends HitboxComponent {
         }
 
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
-        
-        if (!interactableEntities.contains(target.getType())) {
-            return;
+
+        if (interactableEntities != null) {
+            if (!interactableEntities.contains(target.getType())) {
+                return;
+            }
         }
 
         entitiesInRange.add(target);

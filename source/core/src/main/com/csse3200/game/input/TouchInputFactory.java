@@ -1,10 +1,11 @@
 package com.csse3200.game.input;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.csse3200.game.components.player.TouchPlayerInputComponent;
 import com.csse3200.game.components.tractor.TouchTractorInputComponent;
 import com.csse3200.game.ui.terminal.TouchTerminalInputComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class TouchInputFactory extends InputFactory{
   private static final Logger logger = LoggerFactory.getLogger(TouchInputFactory.class);
