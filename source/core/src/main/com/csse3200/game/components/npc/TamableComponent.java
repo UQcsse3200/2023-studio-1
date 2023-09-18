@@ -107,37 +107,6 @@ public class TamableComponent extends Component {
 //            this.playerInventory.removeItem(this.playerInventory.getHeldItem()); TODO: once inventory works comment it in
           // Remove the food from the players inventory
       }
-
-      // Ensures that the player's held item has the ItemComponent class.
-      if (this.playerInventory.getHeldItem().getComponent(ItemComponent.class) == null) {
-          return;
-      }
-
-      // If so, we can check if player is holding the right item
-
-      // potential of working with null values here.
-      if (this.playerInventory.getHeldItem().getComponent(ItemComponent.class).getItemName().equals(favouriteFood)) {
-
-          // Generate RNG number for taming
-          double randomDecimal = generateRandomDecimal();
-
-          // Try and tame the animal
-          // Check how many times the player has tried to tame the animal
-          // If player has already tried enough times, tame the animal (prevents
-          // frustration).
-          if (numTimesFed == tamingThreshold) {
-              isTamed = true;
-          }
-          // Use RNG to try and tame the animal
-          else if (randomDecimal > tamingProbability) {
-              isTamed = true;
-          } else {
-              numTimesFed++;
-          }
-          // this.playerInventory.removeItem(this.playerInventory.getHeldItem()); TODO:
-          // once inventory works comment it in
-          // Remove the food from the players inventory
-      }
   }
 
 
