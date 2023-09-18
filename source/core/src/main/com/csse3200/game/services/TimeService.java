@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 public class TimeService {
 	private static final Logger logger = LoggerFactory.getLogger(TimeService.class);
-	private static final int MS_IN_MINUTE = 500;
+	private static final int MS_IN_MINUTE = 50;
 	private static final int MORNING_HOUR = 6;
 	private static final int NIGHT_HOUR = 18;
 	private int minute;
@@ -82,6 +82,14 @@ public class TimeService {
 		events.trigger("hourUpdate");
 	}
 
+	/**
+	 * Sets the game time to the default morning time. This would be useful for the implementation of beds in the game.
+	 */
+	public void setMorningTime() {
+		while (getHour() != MORNING_HOUR) {
+			setHour(getHour() + 1);
+		}
+	}
 
 	/**
 	 * Determines whether it is day or not
