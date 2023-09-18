@@ -1,25 +1,25 @@
 package com.csse3200.game.ui.terminal.commands;
 
-import com.csse3200.game.areas.GameArea;
-import com.csse3200.game.areas.SpaceGameArea;
-import com.csse3200.game.components.Component;
-import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.ItemFactory;
-import com.csse3200.game.extensions.GameExtension;
-import com.csse3200.game.physics.PhysicsService;
-import com.csse3200.game.services.ServiceLocator;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.MockedStatic;
 
-import static org.mockito.Mockito.*;
-
-
-import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.*;
+import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.areas.SpaceGameArea;
+import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.ItemFactory;
+import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.services.ServiceLocator;
 
 @ExtendWith(GameExtension.class)
 class AddItemCommandTest {

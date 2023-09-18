@@ -1,16 +1,14 @@
 package com.csse3200.game.ui.terminal.commands;
 
-import com.csse3200.game.areas.weather.AcidShowerEvent;
-import com.csse3200.game.areas.weather.SolarSurgeEvent;
-import com.csse3200.game.areas.weather.WeatherEvent;
-import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.ItemFactory;
-import com.csse3200.game.services.ServiceLocator;
+import java.util.ArrayList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
+import com.csse3200.game.areas.weather.AcidShowerEvent;
+import com.csse3200.game.areas.weather.SolarSurgeEvent;
+import com.csse3200.game.areas.weather.WeatherEvent;
+import com.csse3200.game.services.ServiceLocator;
 
 public class AddWeatherCommand implements Command {
 
