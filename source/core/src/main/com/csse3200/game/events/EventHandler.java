@@ -150,6 +150,7 @@ public class EventHandler {
    *
    * @param delay delay before triggering event
    * @param eventName name of the event
+   * @return the scheduled event
    */
   public ScheduledEvent scheduleEvent(float delay, String eventName) {
     if (timeSource == null) {
@@ -172,6 +173,7 @@ public class EventHandler {
    * @param eventName name of the event
    * @param arg0 arg to pass to event
    * @param <T> argument type
+   * @return the scheduled event
    */
   public <T> ScheduledEvent scheduleEvent(float delay, String eventName, T arg0) {
     if (timeSource == null) {
@@ -200,6 +202,7 @@ public class EventHandler {
    * @param arg1 arg 1 to pass to event
    * @param <T0> Type of arg 0
    * @param <T1> Type of arg 1
+   * @return the scheduled event
    */
   public <T0, T1> ScheduledEvent scheduleEvent(float delay, String eventName, T0 arg0, T1 arg1) {
     if (timeSource == null) {
@@ -230,6 +233,7 @@ public class EventHandler {
    * @param <T0> Type of arg 0
    * @param <T1> Type of arg 1
    * @param <T2> Type of arg 2
+   * @return the scheduled event
    */
   public <T0, T1, T2> ScheduledEvent scheduleEvent(float delay, String eventName, T0 arg0, T1 arg1, T2 arg2) {
     if (timeSource == null) {
@@ -250,6 +254,11 @@ public class EventHandler {
     return scheduledEvent;
   }
 
+  /**
+   * Trigger a scheduled event with given args
+   *
+   * @param scheduledEvent scheduled event to trigger
+   */
   private void triggerScheduledEvent(ScheduledEvent scheduledEvent) {
     List<Object> args = scheduledEvent.args();
     String eventName = scheduledEvent.eventName();
@@ -261,6 +270,12 @@ public class EventHandler {
       }
   }
 
+  /**
+   * Update the event handler, processing and triggering scheduled events that have reached their
+   * scheduled execution time.
+   *
+   * <p>If there is no instance of {@link GameTime} available, this method does nothing.
+   */
   public void update() {
     if (timeSource == null) {
       return;
@@ -276,6 +291,11 @@ public class EventHandler {
     scheduledEvents.removeIf(scheduledEvent -> timeSource.getTime() >= scheduledEvent.endTime());
   }
 
+
+  /**
+   * Cancels the given scheduled event
+   * @param event event to cancel
+   */
   public void cancelEvent(ScheduledEvent event) {
     scheduledEvents.remove(event);
     logger.debug("{} event cancelled", event.eventName());
