@@ -2,6 +2,7 @@ package com.csse3200.game.entities.factories;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.areas.terrain.CropTileComponent;
+import com.csse3200.game.components.plants.PlantAreaOfEffectComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.EntityType;
@@ -13,11 +14,8 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.services.ServiceLocator;
-
-import java.util.Map;
 
 /**
  * Factory to create plant entities.
@@ -57,8 +55,7 @@ public class PlantFactory {
 
         Entity plant = new Entity(EntityType.Plant)
                 .addComponent(animator)
-
-
+                .addComponent(new PlantAreaOfEffectComponent(1f, "None"))
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setSensor(true))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
@@ -69,9 +66,8 @@ public class PlantFactory {
 
         // Set plant position over crop tile.
         var cropTilePosition = cropTile.getEntity().getPosition();
-        plant.setPosition(cropTilePosition.x, cropTilePosition.y + 0.5f);
-        //plant.getComponent(DynamicTextureRenderComponent.class).scaleEntity();
-        //plant.getComponent(DynamicTextureRenderComponent.class).setLayer(2);
+        plant.setPosition(cropTilePosition.x, cropTilePosition.y + 0.4f);
+        plant.getComponent(PlantComponent.class).getCropTile().getEntity().getScale();
         plant.getComponent(AnimationRenderComponent.class).scaleEntity();
         plant.scaleHeight(2f);
         PhysicsUtils.setScaledCollider(plant, 0.5f, 0.2f);
@@ -79,6 +75,11 @@ public class PlantFactory {
         return plant;
     }
 
+    /**
+     * Registers player animations to the AnimationRenderComponent.
+     * @param atlasPath - The path of the relevant animation atlas.
+     * @return animation component
+     */
     private static AnimationRenderComponent setupPlantAnimations(String atlasPath) {
         AnimationRenderComponent animator = new AnimationRenderComponent(
                 ServiceLocator.getResourceService().getAsset(atlasPath, TextureAtlas.class),

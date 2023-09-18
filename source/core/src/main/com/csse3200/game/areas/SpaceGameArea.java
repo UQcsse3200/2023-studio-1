@@ -219,11 +219,11 @@ public class SpaceGameArea extends GameArea {
     spawnInvisibleObstacle();// spawn invisible obstacle on the non-traversable area of the map
 
     spawnCrop(5, 11, "Cosmic Cob");
-    spawnCrop(7, 11, "Aloe Vera");
-    spawnCrop(9, 11, "Hammer Plant");
-    spawnCrop(11, 11, "Space Snapper");
-    spawnCrop(13, 11, "Deadly Nightshade");
-    spawnCrop(15, 11, "Atomic Algae");
+    spawnCrop(6, 11, "Aloe Vera");
+    spawnCrop(7, 11, "Hammer Plant");
+    spawnCrop(8, 11, "Space Snapper");
+    spawnCrop(9, 11, "Deadly Nightshade");
+    spawnCrop(10, 11, "Atomic Algae");
 
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);

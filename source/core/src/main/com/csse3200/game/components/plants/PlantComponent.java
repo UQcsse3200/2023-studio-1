@@ -129,6 +129,26 @@ public class PlantComponent extends Component {
     private Map<String, Integer> harvestYields;
 
     /**
+     * The effect a plant has when it is an adult.
+     */
+    private String adultEffect;
+
+    /**
+     * Indicated whether a plant is eating. Can only be true if the plant is a space snapper.
+     */
+    private boolean isEating;
+
+    /**
+     * Constant used to control how long a space snapper waits before eating again.
+     */
+    private int eatingCoolDown = 12; //12 hours
+
+    /**
+     * The number of hours since the space snapper ate. Used to determine whether the plant is ready to eat again.
+     */
+    private int countOfHoursOfDigestion;
+
+    /**
      * Constructor used for plant types that have no extra properties. This is just used for testing.
      *
      * @param health - health of the plant
@@ -165,6 +185,10 @@ public class PlantComponent extends Component {
         this.maxHealthAtStages[0] = 0.05 * this.maxHealth;
         this.maxHealthAtStages[1] = 0.1 * this.maxHealth;
         this.maxHealthAtStages[2] = 0.3 * this.maxHealth;
+
+        this.adultEffect = "None";
+        this.isEating = false;
+        this.countOfHoursOfDigestion = 0;
 
     }
 
@@ -211,6 +235,15 @@ public class PlantComponent extends Component {
         this.maxHealthAtStages[0] = 0.05 * maxHealth;
         this.maxHealthAtStages[1] = 0.1 * maxHealth;
         this.maxHealthAtStages[2] = 0.3 * maxHealth;
+
+        switch (this.plantName) {
+            case "Hammer Plant" -> this.adultEffect = "Health";
+            case "Space Snapper" -> this.adultEffect = "Eat";
+            case "Deadly Nightshade" -> this.adultEffect = "Poison";
+            default -> this.adultEffect = "None";
+        }
+        this.isEating = false;
+        this.countOfHoursOfDigestion = 0;
     }
 
     /**
@@ -219,7 +252,6 @@ public class PlantComponent extends Component {
     @Override
     public void create() {
         super.create();
-
         // Initialise event listeners.
         entity.getEvents().addListener("harvest", this::harvest);
         entity.getEvents().addListener("destroyPlant", this::destroyPlant);
@@ -491,7 +523,16 @@ public class PlantComponent extends Component {
      * plant becomes and adult exceeds adult life span of a plant, then it starts to decay.
      */
     public void updateGrowthStage() {
+        if (this.isEating) {
+            this.countOfHoursOfDigestion += 1;
+            if (this.countOfHoursOfDigestion >= this.eatingCoolDown) {
+                this.isEating = false;
+                this.countOfHoursOfDigestion = 0;
+            }
+        }
+
         int time = ServiceLocator.getTimeService().getHour();
+
 
         if (time == 12) {
             increaseCurrentGrowthLevel();
@@ -502,6 +543,7 @@ public class PlantComponent extends Component {
                     updateTexture();
                 }
             } else if (getGrowthStage().getValue() == GrowthStage.ADULT.getValue()) {
+                entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType(this.adultEffect);
                 updateMaxHealth();
                 updateTexture();
                 beginDecay();
@@ -540,6 +582,7 @@ public class PlantComponent extends Component {
         if (getGrowthStage().getValue() == GrowthStage.ADULT.getValue()) {
             this.numOfDaysAsAdult += 1;
             if (getNumOfDaysAsAdult() > getAdultLifeSpan()) {
+                entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType("Decay");
                 setGrowthStage(getGrowthStage().getValue() + 1);
                 updateTexture();
                 //playSound("decays");
@@ -623,5 +666,29 @@ public class PlantComponent extends Component {
             this.setGrowthStage(GrowthStage.DEAD.getValue());
             updateTexture();
         }
+    }
+
+    /**
+     * Return the cropTile where the plant is located.
+     * @return the cropTile.
+     */
+    public CropTileComponent getCropTile() {
+        return this.cropTile;
+    }
+
+    /**
+     * Is the plant eating right now.
+     * @return isEating
+     */
+    public boolean getIsEating() {
+        return this.isEating;
+    }
+
+    /**
+     * Tell the plant it is now eating an animal.
+     */
+    public void setIsEating() {
+        this.countOfHoursOfDigestion = 0;
+        this.isEating = true;
     }
 }

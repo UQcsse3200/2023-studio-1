@@ -52,14 +52,23 @@ public class InteractionDetector extends HitboxComponent {
      */
     @Override
     public void create() {
-        CircleShape shape = new CircleShape();
-        shape.setRadius(range);
-        shape.setPosition(entity.getScale().scl(0.5f));
+        setShape();
 
         entity.getEvents().addListener("collisionStart", this::onCollisionStart);
         entity.getEvents().addListener("collisionEnd", this::onCollisionEnd);
-        setShape(shape);
+
         super.create();
+    }
+
+    /**
+     * Set the shape of the collider for the create function. This allows other classes that extend this one
+     * to have the ability to override and set a different shaped collider.
+     */
+    public void setShape() {
+        CircleShape shape = new CircleShape();
+        shape.setRadius(range);
+        shape.setPosition(entity.getScale().scl(0.5f));
+        setShape(shape);
     }
 
     /**
