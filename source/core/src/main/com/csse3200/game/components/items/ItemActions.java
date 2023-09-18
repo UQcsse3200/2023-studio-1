@@ -132,6 +132,7 @@ public class ItemActions extends Component {
     return map.getTile(pos);
   }
 
+
   /**
    * Gets the correct position for the player to interact with based off of the
    * mouse position. Will always return 1 tile to the left, right,
@@ -164,6 +165,8 @@ public class ItemActions extends Component {
     }
     return playerPosCenter;
   }
+
+
 
   /**
    * Waters the tile at the given position.
