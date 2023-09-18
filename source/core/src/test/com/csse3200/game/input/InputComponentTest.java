@@ -1,17 +1,16 @@
 package com.csse3200.game.input;
 
-import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.extensions.GameExtension;
-import com.csse3200.game.services.ServiceLocator;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
+import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.services.ServiceLocator;
 
 @ExtendWith(GameExtension.class)
 class InputComponentTest {

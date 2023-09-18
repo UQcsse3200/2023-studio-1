@@ -1,5 +1,8 @@
 package com.csse3200.game.entities.factories;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
@@ -9,7 +12,12 @@ import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.inventory.InventoryDisplay;
 import com.csse3200.game.components.inventory.ToolbarDisplay;
 import com.csse3200.game.components.maingame.PauseMenuActions;
-import com.csse3200.game.components.player.*;
+import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.components.player.ItemPickupComponent;
+import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
+import com.csse3200.game.components.player.OpenPauseComponent;
+import com.csse3200.game.components.player.PlayerActions;
+import com.csse3200.game.components.player.PlayerAnimationController;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.configs.PlayerConfig;
@@ -21,9 +29,6 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Factory to create a player entity.
@@ -73,7 +78,7 @@ public class PlayerFactory {
             .addComponent(new PauseMenuActions());
 
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
-    player.getComponent(ColliderComponent.class).setAsBox(new Vector2(1f, 1f), new Vector2(1.5f, 1f));
+    player.getComponent(ColliderComponent.class).setAsBox(new Vector2(0.9f, 0.9f), new Vector2(1.5f, 1f));
     player.getComponent(AnimationRenderComponent.class).scaleEntity();
     player.getComponent(KeyboardPlayerInputComponent.class).setActions(player.getComponent(PlayerActions.class));
     return player;

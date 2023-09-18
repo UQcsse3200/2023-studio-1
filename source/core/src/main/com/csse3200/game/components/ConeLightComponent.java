@@ -1,10 +1,9 @@
 package com.csse3200.game.components;
 
-import box2dLight.ConeLight;
-import box2dLight.Light;
-import box2dLight.PointLight;
 import com.badlogic.gdx.graphics.Color;
 import com.csse3200.game.services.ServiceLocator;
+
+import box2dLight.ConeLight;
 
 public class ConeLightComponent extends Component {
 

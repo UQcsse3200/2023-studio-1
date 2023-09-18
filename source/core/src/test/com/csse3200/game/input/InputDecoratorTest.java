@@ -1,13 +1,14 @@
 package com.csse3200.game.input;
 
-import com.badlogic.gdx.InputProcessor;
-import com.csse3200.game.extensions.GameExtension;
+import static org.mockito.Mockito.verify;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.mockito.Mockito.verify;
+import com.badlogic.gdx.InputProcessor;
+import com.csse3200.game.extensions.GameExtension;
 
 @ExtendWith(GameExtension.class)
 @ExtendWith(MockitoExtension.class)

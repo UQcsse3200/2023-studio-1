@@ -1,5 +1,11 @@
 package com.csse3200.game.components;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -10,8 +16,6 @@ import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.BodyUserData;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.utils.DirectionUtils;
-
-import java.util.*;
 
 /**
  * Represents a component that handles interaction detection with entities

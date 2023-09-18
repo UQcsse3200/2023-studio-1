@@ -1,12 +1,12 @@
 package com.csse3200.game.components.npc;
 
+import java.security.SecureRandom;
+
 import com.badlogic.gdx.utils.Json;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
-
-import java.security.SecureRandom;
 
 /**
  * This the class for Tameable Component. These components should

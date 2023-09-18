@@ -6,7 +6,6 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.ColliderComponent;
-import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 
@@ -20,7 +19,7 @@ public class PlaceableFactory {
     public static Entity createBasePlaceable(EntityType type) {
         Entity placeable = new Entity(type)
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
-                .addComponent(new TextureRenderComponent("images/plants/misc/tobacco_seed.png"))
+                .addComponent(new TextureRenderComponent("images/plants/misc/hammer_plant_seed.png"))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
         return placeable;
     }

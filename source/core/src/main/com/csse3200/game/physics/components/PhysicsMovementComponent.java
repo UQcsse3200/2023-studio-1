@@ -1,12 +1,13 @@
 package com.csse3200.game.physics.components;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.ai.movement.MovementController;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.utils.math.Vector2Utils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /** Movement controller for a physics-based entity. */
 public class PhysicsMovementComponent extends Component implements MovementController {
