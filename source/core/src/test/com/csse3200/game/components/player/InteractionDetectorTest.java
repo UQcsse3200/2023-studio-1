@@ -3,6 +3,7 @@ package com.csse3200.game.components.player;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.entities.Entity;
