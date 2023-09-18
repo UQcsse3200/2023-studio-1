@@ -167,7 +167,6 @@ public class SpaceGameArea extends GameArea {
           "images/plants/misc/deadly_nightshade_seed.png",
           "images/plants/misc/hammer_plant_seed.png",
           "images/plants/misc/space_snapper_seed.png",
-          "images/plants/misc/tobacco_seed.png",
           "images/invisible_sprite.png",
 
           /* placeable */
