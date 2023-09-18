@@ -1,20 +1,26 @@
 package com.csse3200.game.services;
 
-import box2dLight.RayHandler;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.csse3200.game.components.CameraComponent;
-import com.csse3200.game.extensions.GameExtension;
-import com.csse3200.game.physics.PhysicsEngine;
-import com.csse3200.game.physics.PhysicsService;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockConstruction;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.MockedConstruction;
 
-import static org.mockito.Mockito.*;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.csse3200.game.components.CameraComponent;
+import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.physics.PhysicsEngine;
+import com.csse3200.game.physics.PhysicsService;
 
-import static org.junit.jupiter.api.Assertions.*;
+import box2dLight.RayHandler;
 
 @ExtendWith(GameExtension.class)
 class LightServiceTest {

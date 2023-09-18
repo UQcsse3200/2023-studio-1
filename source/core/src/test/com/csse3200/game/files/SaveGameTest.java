@@ -1,17 +1,14 @@
 package com.csse3200.game.files;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.csse3200.game.areas.weather.AcidShowerEvent;
-import com.csse3200.game.areas.weather.ClimateController;
-import com.csse3200.game.areas.weather.SolarSurgeEvent;
 import org.junit.Test;
-import com.badlogic.gdx.math.Vector2;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.files.SaveGame.GameState;
