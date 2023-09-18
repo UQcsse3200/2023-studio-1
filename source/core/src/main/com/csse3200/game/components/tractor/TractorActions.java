@@ -19,16 +19,55 @@ import java.util.Objects;
 import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
 
 public class TractorActions extends Component {
+  /**
+   * The maximum speed for the player
+   */
   private static final Vector2 MAX_SPEED = new Vector2(5f, 5f); // Metres per second
+
+  /**
+   * The reference to the player entity
+   */
   private Entity player;
 
+  /**
+   * The reference to the PhysicsComponent
+   */
   private PhysicsComponent physicsComponent;
+
+  /**
+   * The move direction of the tractor
+   */
   private Vector2 walkDirection = Vector2.Zero.cpy();
+
+  /**
+   * The direction the tractor was/is moving in, previous meaning before it stopped moving;
+   * prevDirection == direction.angleDeg() when moving == true.
+   */
   private float prevDirection = 300;
+
+  /**
+   * If the tractor is moving or not
+   */
   private boolean moving = false;
+
+  /**
+   * If the tractor's inputs should be muted or not
+   */
   private boolean muted = true;
+
+  /**
+   * A reference to the camera, used to track the player / tractor on exit / enter
+   */
   private CameraComponent camera;
+
+  /**
+   * The mode the tractor is in, used to interact with tiles
+   */
   private TractorMode mode = TractorMode.normal;
+
+  /**
+   * The map of the tiles, used to aid in getting / setting tiles
+   */
   private GameMap map;
 
   @Override
@@ -58,7 +97,9 @@ public class TractorActions extends Component {
   }
 
   /**
-   *
+   * Updates the animation of the tractor based on direction, mode and whether it is moving or not.
+   * This method of updating animation was adjusted to fit tractor from the code written by Team 2,
+   * in PlayerActions and PlayerAnimationController.
    */
   private void updateAnimation() {
     if (walkDirection.epsilonEquals(Vector2.Zero)) {
@@ -68,6 +109,13 @@ public class TractorActions extends Component {
     }
   }
 
+  /**
+   * This method of getting direction was adjusted to fit tractor (changed return values)
+   * from the code written by Team 2, in PlayerActions and PlayerAnimationController.
+   * @param direction The direction the tractor is facing
+   * @return a String that matches with where the tractor is looking, values can be "right", "left", "up" or "down"
+   *          defaults to "right" in an error situation to avoid crashes.
+   */
   private String getDirection(float direction) {
     if (direction < 45) {
       return "right";
@@ -83,7 +131,9 @@ public class TractorActions extends Component {
   }
 
   /**
-   *
+   * Interacts with the TerrainTiles based on a given TractorMode
+   * Note: should not be used outside of update() as this was not intended to be how it works
+   * and may provide unexpected results.
    */
   private void use() {
     switch (getMode()) {
@@ -101,10 +151,13 @@ public class TractorActions extends Component {
   }
 
   /**
-   *
-   * @param mode
-   * @param dir
-   * @return
+   * Returns the tiles that the tractor should interact with based on the mode (TractorMode) and the direction
+   * of the tractor.
+   * @param mode The current mode of the tractor, either normal, tilling or harvesting, though normal will always
+   *             result in an empty Array to be returned
+   * @param dir The direction of the tractor as a String, accepts values from getDirection()
+   * @return an Array consisting of two tiles in slots 0 and 1, followed by the Vector2 positions of the tiles
+   *          in the same order as the tiles in slots 2 and 3.
    */
   private Array<Object> getTiles(TractorMode mode, String dir) {
     Array<Object> tiles = new Array<>(2);
@@ -134,6 +187,11 @@ public class TractorActions extends Component {
     return null;
   }
 
+  /**
+   * The method used when Harvesting mode is on, triggers the harvest method on a CropTileComponent
+   * for a given TerrainTile.
+   * @param tile The TerrainTile that should be interacted with
+   */
   private void harvest(TerrainTile tile) {
     if (tile == null) {
       return;
@@ -143,6 +201,13 @@ public class TractorActions extends Component {
     tile.getCropTile().getEvents().trigger("harvest");
   }
 
+  /**
+   * The method used when Tilling mode is on, creates a new TerrainEntity and registers it with the
+   * Entity service if there was not a CropTile already on the tile.
+   * @param tile The TerrainTile that will be given a CropTile
+   * @param pos The position to set the location of the CropTile to if there was no CropTile already
+   *
+   */
   private void hoe(TerrainTile tile, Vector2 pos) {
     if (tile == null) {
       return;
@@ -198,6 +263,12 @@ public class TractorActions extends Component {
     return this.moving;
   }
 
+  /**
+   * Sets the player reference to the tractor, used to enter and exit the tractor
+   * Will most likely be removed in Sprint 4 as this was code before there was a way to
+   * easily get a reference to the player
+   * @param player the player Entity
+   */
   public void setPlayer(Entity player) {
     this.player = player;
     player.getComponent(PlayerActions.class).setTractor(this.entity);
@@ -227,31 +298,53 @@ public class TractorActions extends Component {
     return muted;
   }
 
+  /**
+   * Sets the tractor's actions to be muted, This should be done when exiting the tractor.
+   * @param muted
+   */
   public void setMuted(boolean muted) {
     this.muted = muted;
   }
 
   /**
-   * ONLY USE FOR TESTING PURPOSES
+   * ONLY USE FOR TESTING PURPOSES, USED TO TEST MOVEMENT
    * 
-   * @param comp
+   * @param comp a physics component
    */
   public void setPhysicsComponent(PhysicsComponent comp) {
     this.physicsComponent = comp;
   }
 
+  /**
+   * Sets the camera reference to the tractor, used to enter and exit the tractor
+   * Will most likely be removed in Sprint 4 as this was code before there was a way to
+   * easily get a reference to the camera
+   * @param cam The game camera
+   */
   public void setCameraVar(CameraComponent cam) {
     this.camera = cam;
   }
 
+  /**
+   * Returns tractor mode the tractor is currently using
+   * @return the TractorMode value for the mode of the Tractor entity
+   */
   public TractorMode getMode() {
     return mode;
   }
 
+  /**
+   * Sets the mode of the tractor entity to a given mode
+   * @param mode The TractorMode to set the mode to
+   */
   public void setMode(TractorMode mode) {
     this.mode = mode;
   }
 
+  /**
+   * Writes to the json in order to store the tractor's state, used to save the game
+   * @param json The json that will be converted to a file
+   */
   public void write(Json json){
     json.writeObjectStart(this.getClass().getSimpleName());
     //Save the muted value to the json file

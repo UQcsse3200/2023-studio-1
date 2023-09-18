@@ -9,9 +9,19 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
 
 public class KeyboardTractorInputComponent extends InputComponent {
+  /**
+   * The direction the tractor will move in
+   */
   private final Vector2 walkDirection = Vector2.Zero.cpy();
+
+  /**
+   * A reference to the TractorActions component from the tractor entity
+   */
   private TractorActions actions;
 
+  /**
+   * Constructor for the tractor, sets same priority as the player's input constructor
+   */
   public KeyboardTractorInputComponent() {
     super(5);
   }
