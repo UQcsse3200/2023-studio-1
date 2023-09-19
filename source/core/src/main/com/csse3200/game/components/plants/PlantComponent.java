@@ -141,12 +141,13 @@ public class PlantComponent extends Component {
     /**
      * Constant used to control how long a space snapper waits before eating again.
      */
-    private int eatingCoolDown = 12; //12 hours
+    private int eatingCoolDown = 10;
 
     /**
      * The number of hours since the space snapper ate. Used to determine whether the plant is ready to eat again.
      */
     private int countOfHoursOfDigestion;
+    private int countMinutesOfDigestion = 0;
 
     /**
      * Constructor used for plant types that have no extra properties. This is just used for testing.
@@ -256,11 +257,145 @@ public class PlantComponent extends Component {
         entity.getEvents().addListener("harvest", this::harvest);
         entity.getEvents().addListener("destroyPlant", this::destroyPlant);
         entity.getEvents().addListener("attack", this::attack);
-        ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateGrowthStage);
-        ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::beginDecay);
-        ServiceLocator.getTimeService().getEvents().addListener("minuteUpdate", this::checkDecayStatus);
+        ServiceLocator.getTimeService().getEvents().addListener("minuteUpdate", this::minuteUpdate);
+        ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::hourUpdate);
+        ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::dayUpdate);
+        ServiceLocator.getPlantCommandService().getEvents().addListener("forceSeedling", this::forceSeedling);
+        ServiceLocator.getPlantCommandService().getEvents().addListener("forceSprout", this::forceSprout);
+        ServiceLocator.getPlantCommandService().getEvents().addListener("forceJuvenile", this::forceJuvenile);
+        ServiceLocator.getPlantCommandService().getEvents().addListener("forceAdult", this::forceAdult);
+        ServiceLocator.getPlantCommandService().getEvents().addListener("forceDecay", this::forceDecay);
+        ServiceLocator.getPlantCommandService().getEvents().addListener("forceDead", this::forceDead);
         this.currentAnimator = entity.getComponent(AnimationRenderComponent.class);
         updateTexture();
+    }
+
+    /**
+     * Functionality for the plant that needs to update every minute.
+     */
+    public void minuteUpdate() {
+        // Handle digestion functionality.
+        digestion();
+
+        // Check if the plant should be decaying or dead.
+        decayCheck();
+    }
+
+    /**
+     * Functionality for the plant that needs to update every hour.
+     */
+    public void hourUpdate() {
+        int hour = ServiceLocator.getTimeService().getHour();
+
+        // Update the growth stage of the plant twice a day. Midnight and midday.
+        if (hour == 0 || hour == 12) {
+            updateGrowthStage();
+        }
+    }
+
+    /**
+     * Functionality for the plant that needs to update every day.
+     */
+    public void dayUpdate() {
+        adultLifeSpanCheck();
+    }
+
+    /**
+     * Check if the plant has exceeded its adult lifespan.
+     */
+    public void adultLifeSpanCheck() {
+        // If the plant reaches its adult life span then start decaying.
+        if (getGrowthStage().getValue() == GrowthStage.ADULT.getValue()) {
+            this.numOfDaysAsAdult += 1;
+            if (getNumOfDaysAsAdult() > getAdultLifeSpan()) {
+                entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType("Decay");
+                entity.getComponent(PlantAreaOfEffectComponent.class).setRadius(2f);
+                setGrowthStage(getGrowthStage().getValue() + 1);
+                updateTexture();
+            }
+        }
+    }
+
+    /**
+     * Check if the plant is already decaying and needs to die. Also check if the plant
+     * has died before reaching adult growth stage.
+     */
+    public void decayCheck() {
+        // If the plants health drops to zero while decaying, then update the growth stage to dead.
+        if (getGrowthStage().getValue() == GrowthStage.DECAYING.getValue()) {
+            if (getPlantHealth() <= 0) {
+                setGrowthStage(GrowthStage.DEAD.getValue());
+                updateTexture();
+            }
+
+        // If the plants health drops to zero before it becomes an adult, destroy.
+        } else if (getGrowthStage().getValue() < GrowthStage.ADULT.getValue())
+            if (getPlantHealth() <= 0) {
+                destroyPlant();
+        }
+    }
+
+    /**
+     * Set the area of effect radius based on the type of plant.
+     */
+    public void setAreaOfEffectRadius() {
+        switch (this.plantName) {
+            case "Space Snapper" -> entity.getComponent(PlantAreaOfEffectComponent.class).setRadius(1.5f);
+            case "Hammer Plant" -> entity.getComponent(PlantAreaOfEffectComponent.class).setRadius(3f);
+            case "Deadly Nightshade" -> entity.getComponent(PlantAreaOfEffectComponent.class).setRadius(2.5f);
+            default -> entity.getComponent(PlantAreaOfEffectComponent.class).setRadius(2f);
+        }
+
+    }
+
+    /**
+     * Update the growth stage of a plant based on its current growth level.
+     * This method is called every (in game) day at midday (12pm) and midnight.
+     * If the currentGrowthLevel exceeds the corresponding growth threshold, then the plant will
+     * advance to the next growth stage.
+     * When a plant becomes an adult, it has an adult life span.
+     *
+     * Also, if the plant is in a state of decay then decrease the health every hour.
+     */
+    public void updateGrowthStage() {
+        // Increase the growth level of the plant based on the conditions of the crop tile.
+        increaseCurrentGrowthLevel();
+
+        if ((getGrowthStage().getValue() < GrowthStage.ADULT.getValue())) {
+            if (this.currentGrowthLevel >= this.growthStageThresholds[getGrowthStage().getValue() - 1]) {
+                setGrowthStage(getGrowthStage().getValue() + 1);
+                if (getGrowthStage().getValue() == GrowthStage.ADULT.getValue()) {
+                    entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType(this.adultEffect);
+                    setAreaOfEffectRadius();
+                }
+                updateTexture();
+            }
+        }
+
+        if (getGrowthStage().getValue() == GrowthStage.ADULT.getValue()) {
+            updateTexture();
+
+        } else if (getGrowthStage().getValue() == GrowthStage.DECAYING.getValue()) {
+            this.increasePlantHealth(-10);
+        }
+    }
+
+    /**
+     * Check if the space snapper is currently eating. If it is then implement a cool down period before the
+     * plant is ready to eat again.
+     */
+    public void digestion() {
+        if (this.isEating) {
+
+            this.countMinutesOfDigestion += 1;
+            System.out.println(this.countMinutesOfDigestion);
+
+            if (this.countMinutesOfDigestion >= eatingCoolDown) {
+                this.isEating = false;
+                this.countMinutesOfDigestion = 0;
+                updateTexture();
+            }
+        }
     }
 
     /**
@@ -515,58 +650,6 @@ public class PlantComponent extends Component {
     }
 
     /**
-     * Update the growth stage of a plant based on its current growth level and its adult life span.
-     * This method is called every (in game) day at midday (12pm).
-     * If the currentGrowthLevel exceeds the corresponding growth threshold, then the plant will
-     * advance to the next growth stage.
-     * When a plant becomes an adult, it has an adult life span. When the number of days since a
-     * plant becomes and adult exceeds adult life span of a plant, then it starts to decay.
-     */
-    public void updateGrowthStage() {
-        if (this.isEating) {
-            this.countOfHoursOfDigestion += 1;
-            if (this.countOfHoursOfDigestion >= this.eatingCoolDown) {
-                this.isEating = false;
-                this.countOfHoursOfDigestion = 0;
-            }
-        }
-
-        int time = ServiceLocator.getTimeService().getHour();
-
-
-        if (time == 12 || time == 3 || time == 6 || time == 14) {
-            increaseCurrentGrowthLevel();
-            if ((getGrowthStage().getValue() < GrowthStage.ADULT.getValue())) {
-                if (this.currentGrowthLevel >= this.growthStageThresholds[getGrowthStage().getValue() - 1]) {
-                    setGrowthStage(getGrowthStage().getValue() + 1);
-                    updateMaxHealth();
-                    updateTexture();
-                }
-            } else if (getGrowthStage().getValue() == GrowthStage.ADULT.getValue()) {
-                entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType(this.adultEffect);
-                switch (this.plantName) {
-                    case "Space Snapper" -> entity.getComponent(PlantAreaOfEffectComponent.class).setRadius(1.5f);
-                    case "Hammer Plant" -> entity.getComponent(PlantAreaOfEffectComponent.class).setRadius(3f);
-                    case "Deadly Nightshade" -> entity.getComponent(PlantAreaOfEffectComponent.class).setRadius(2.5f);
-                    default -> entity.getComponent(PlantAreaOfEffectComponent.class).setRadius(2f);
-                }
-                updateMaxHealth();
-                updateTexture();
-                beginDecay();
-            }
-        }
-
-        if (getGrowthStage().getValue() == GrowthStage.DECAYING.getValue()) {
-            this.increasePlantHealth(-10);
-
-            if (getPlantHealth() <= 0) {
-                setGrowthStage(getGrowthStage().getValue() + 1);
-                updateTexture();
-            }
-        }
-    }
-
-    /**
      * Update the maximum health of the plant based on its current growth stage.
      * Called whenever the growth stage is changed
      */
@@ -580,31 +663,21 @@ public class PlantComponent extends Component {
         };
     }
 
-    /**
-     * An adult plant will live for a certain number of days (adultLifeSpan). Once a plant has
-     * exceeded its adultLifeSpan it will begin to decay.
-     */
-    public void beginDecay() {
-        if (getGrowthStage().getValue() == GrowthStage.ADULT.getValue()) {
-            this.numOfDaysAsAdult += 1;
-            if (getNumOfDaysAsAdult() > getAdultLifeSpan()) {
-                entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType("Decay");
-                entity.getComponent(PlantAreaOfEffectComponent.class).setRadius(2f);
-                setGrowthStage(getGrowthStage().getValue() + 1);
-                updateTexture();
-                //playSound("decays");
-            }
-        }
-    }
 
     /**
      * Update the texture of the plant based on its current growth stage.
      */
     public void updateTexture() {
-        if (getGrowthStage().getValue() <= GrowthStage.DEAD.getValue()) {
+        if (!this.isEating && (getGrowthStage().getValue() <= GrowthStage.DEAD.getValue())) {
             if (this.currentAnimator != null) {
                 this.currentAnimator.startAnimation(this.animationImages[getGrowthStage().getValue() - 1]);
+
             }
+        } else if (this.isEating) {
+            if (this.currentAnimator != null) {
+                this.currentAnimator.startAnimation("digesting");
+            }
+
         }
     }
 
@@ -661,21 +734,6 @@ public class PlantComponent extends Component {
     }
 
     /**
-     * Checks if the plant should be set to a dead state every in game minute.
-     */
-    public void checkDecayStatus() {
-        if ((getGrowthStage().getValue() < GrowthStage.ADULT.getValue()) && (this.getPlantHealth() <= 0)) {
-            destroyPlant();
-        } else if ((getGrowthStage().getValue() == GrowthStage.ADULT.getValue()) && (this.getPlantHealth() < 30)) {
-            this.setGrowthStage(GrowthStage.DECAYING.getValue());
-            updateTexture();
-        } else if ((getGrowthStage().getValue() == GrowthStage.DECAYING.getValue()) && (this.getPlantHealth() <= 0)) {
-            this.setGrowthStage(GrowthStage.DEAD.getValue());
-            updateTexture();
-        }
-    }
-
-    /**
      * Return the cropTile where the plant is located.
      * @return the cropTile.
      */
@@ -695,7 +753,35 @@ public class PlantComponent extends Component {
      * Tell the plant it is now eating an animal.
      */
     public void setIsEating() {
-        this.countOfHoursOfDigestion = 0;
+        //this.countOfHoursOfDigestion = 0;
+        this.countMinutesOfDigestion = 0;
         this.isEating = true;
+    }
+
+    public void forceSeedling() {
+        this.setGrowthStage(GrowthStage.SEEDLING.getValue());
+        updateTexture();
+    }
+    public void forceSprout() {
+        this.setGrowthStage(GrowthStage.SPROUT.getValue());
+        updateTexture();
+    }
+    public void forceJuvenile() {
+        this.setGrowthStage(GrowthStage.JUVENILE.getValue());
+        updateTexture();
+    }
+    public void forceAdult() {
+        this.setGrowthStage(GrowthStage.ADULT.getValue());
+        updateTexture();
+        entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType(this.adultEffect);
+        setAreaOfEffectRadius();
+    }
+    public void forceDecay() {
+        this.setGrowthStage(GrowthStage.DECAYING.getValue());
+        updateTexture();
+    }
+    public void forceDead() {
+        this.setGrowthStage(GrowthStage.DEAD.getValue());
+        updateTexture();
     }
 }

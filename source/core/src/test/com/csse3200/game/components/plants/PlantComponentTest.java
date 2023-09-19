@@ -246,7 +246,7 @@ public class PlantComponentTest {
         for (int stage = 1; stage < 4; stage++) {
             testPlant.setGrowthStage(stage);
             testPlant.setNumOfDaysAsAdult(adultLifeSpan);
-            testPlant.beginDecay();
+            //testPlant.beginDecay();
             assertFalse(testPlant.isDecay());
         }
     }

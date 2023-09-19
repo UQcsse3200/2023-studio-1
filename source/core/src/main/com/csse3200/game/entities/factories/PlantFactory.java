@@ -61,7 +61,6 @@ public class PlantFactory {
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setSensor(true))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
-                //.addComponent(new DynamicTextureRenderComponent("images/plants/cosmic_cob/4_adult.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
                         config.maxHealth, cropTile, growthThresholds, soundsArray));
@@ -138,7 +137,13 @@ public class PlantFactory {
      * @return entity
      */
     public static Entity createSpaceSnapper(CropTileComponent cropTile) {
-        return createBasePlant(stats.spaceSnapper, cropTile);
+        Entity spaceSnapper = createBasePlant(stats.spaceSnapper, cropTile);
+
+        spaceSnapper.getComponent(AnimationRenderComponent.class).addAnimation("digesting", 0.1f,
+                Animation.PlayMode.LOOP);
+
+
+        return spaceSnapper;
     }
 
     /**

@@ -8,6 +8,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.BodyUserData;
 import com.csse3200.game.physics.components.HitboxComponent;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.ArrayList;
@@ -59,6 +60,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
         entity.getEvents().addListener("collisionStart", this::onCollisionStart);
         entity.getEvents().addListener("collisionEnd", this::onCollisionEnd);
         ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::hourlyEffect);
+        ServiceLocator.getTimeService().getEvents().addListener("minuteUpdate", this::minuteUpdate);
 
         super.create();
     }
@@ -71,8 +73,13 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
             case "Decay" -> decayAndDeadEffect();
             case "Health" -> healthEffect();
             case "Poison" -> poisonEffect();
-            case "Eat" -> eatEffect();
-            case "Sound" -> soundEffect();
+            //case "Sound" -> soundEffect();
+        }
+    }
+
+    private void minuteUpdate() {
+        if (this.effectType.equals("Eat")) {
+            eatEffect();
         }
     }
 
@@ -180,7 +187,6 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
      * cool down period after eating an animal.
      */
     private void eatEffect() {
-
         // Check that the space snapper is not already eating.
         if (!entity.getComponent(PlantComponent.class).getIsEating()) {
 
@@ -193,7 +199,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
 
                     // If a valid entity is in the area, tell the plant it is eating.
                     entity.getComponent(PlantComponent.class).setIsEating();
-
+                    entity.getComponent(AnimationRenderComponent.class).startAnimation("digesting");
                     // just dispose of the entity being eaten. might want to implement a count of
                     // eaten entities in plant component.
                     entityInRange.dispose();
