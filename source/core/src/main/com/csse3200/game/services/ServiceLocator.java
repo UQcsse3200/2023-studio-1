@@ -37,6 +37,7 @@ public class ServiceLocator {
   private static SaveLoadService saveLoadService;
   private static MissionManager missions;
   private static PlanetOxygenService planetOxygenService;
+  private static PlayerHungerService playerHungerService;
 
   public static GameArea getGameArea() {
     return gameArea;
@@ -78,6 +79,10 @@ public class ServiceLocator {
   }
   public static PlanetOxygenService getPlanetOxygenService() {
     return planetOxygenService;
+  }
+
+  public static PlayerHungerService getPlayerHungerService() {
+    return playerHungerService;
   }
 
   public static SaveLoadService getSaveLoadService() {
@@ -137,6 +142,11 @@ public class ServiceLocator {
   public static void registerPlanetOxygenService(PlanetOxygenService source) {
     logger.debug("Registering planet oxygen service {}", source);
     planetOxygenService = source;
+  }
+
+  public static void registerPlayerHungerService(PlayerHungerService source) {
+    logger.debug("Registering player hunger service {}", source);
+    playerHungerService = source;
   }
 
   public static void registerLightService(LightService source) {
