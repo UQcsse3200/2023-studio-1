@@ -381,6 +381,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">When called, changes the isCollected variable to true and adds the reward items to the player's inventory.</div>
 </dd>
+<dt><a href="com/csse3200/game/missions/rewards/QuestReward.html#collect()" class="member-name-link">collect()</a> - Method in class com.csse3200.game.missions.rewards.<a href="com/csse3200/game/missions/rewards/QuestReward.html" title="class in com.csse3200.game.missions.rewards">QuestReward</a></dt>
+<dd>
+<div class="block">When called will add the QuestReward's quests to the MissionManager.</div>
+</dd>
 <dt><a href="com/csse3200/game/missions/rewards/Reward.html#collect()" class="member-name-link">collect()</a> - Method in class com.csse3200.game.missions.rewards.<a href="com/csse3200/game/missions/rewards/Reward.html" title="class in com.csse3200.game.missions.rewards">Reward</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/missions/rewards/StatReward.html#collect()" class="member-name-link">collect()</a> - Method in class com.csse3200.game.missions.rewards.<a href="com/csse3200/game/missions/rewards/StatReward.html" title="class in com.csse3200.game.missions.rewards">StatReward</a></dt>
@@ -820,6 +824,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Creates a fertiliser item</div>
 </dd>
+<dt><a href="com/csse3200/game/missions/quests/QuestFactory.html#createFertiliserFanatic()" class="member-name-link">createFertiliserFanatic()</a> - Static method in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/QuestFactory.html" title="class in com.csse3200.game.missions.quests">QuestFactory</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/input/InputFactory.html#createForPlayer()" class="member-name-link">createForPlayer()</a> - Method in class com.csse3200.game.input.<a href="com/csse3200/game/input/InputFactory.html" title="class in com.csse3200.game.input">InputFactory</a></dt>
 <dd>
 <div class="block">Creates an input handler for the player</div>
@@ -860,6 +866,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Creates a gate item that allows the player to place gates</div>
 </dd>
+<dt><a href="com/csse3200/game/missions/quests/QuestFactory.html#createHaberHobbyist()" class="member-name-link">createHaberHobbyist()</a> - Static method in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/QuestFactory.html" title="class in com.csse3200.game.missions.quests">QuestFactory</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/factories/PlantFactory.html#createHammerPlant(com.csse3200.game.areas.terrain.CropTileComponent)" class="member-name-link">createHammerPlant(CropTileComponent)</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/PlantFactory.html" title="class in com.csse3200.game.entities.factories">PlantFactory</a></dt>
 <dd>
 <div class="block">Creates a HammerPlant entity that is a repair type plant.</div>
@@ -1842,6 +1850,8 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/services/ServiceLocator.html#getMissionManager()" class="member-name-link">getMissionManager()</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/files/SaveGame.GameState.html#getMissions()" class="member-name-link">getMissions()</a> - Method in class com.csse3200.game.files.<a href="com/csse3200/game/files/SaveGame.GameState.html" title="class in com.csse3200.game.files">SaveGame.GameState</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/tractor/TractorActions.html#getMode()" class="member-name-link">getMode()</a> - Method in class com.csse3200.game.components.tractor.<a href="com/csse3200/game/components/tractor/TractorActions.html" title="class in com.csse3200.game.components.tractor">TractorActions</a></dt>
 <dd>
 <div class="block">Returns tractor mode the tractor is currently using</div>
@@ -1975,6 +1985,15 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/input/InputComponent.html#getPriority()" class="member-name-link">getPriority()</a> - Method in class com.csse3200.game.input.<a href="com/csse3200/game/input/InputComponent.html" title="class in com.csse3200.game.input">InputComponent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/missions/achievements/PlantCropsAchievement.html#getProgress()" class="member-name-link">getProgress()</a> - Method in class com.csse3200.game.missions.achievements.<a href="com/csse3200/game/missions/achievements/PlantCropsAchievement.html" title="class in com.csse3200.game.missions.achievements">PlantCropsAchievement</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/missions/Mission.html#getProgress()" class="member-name-link">getProgress()</a> - Method in class com.csse3200.game.missions.<a href="com/csse3200/game/missions/Mission.html" title="class in com.csse3200.game.missions">Mission</a></dt>
+<dd>
+<div class="block">Gets the progress of the <a href="com/csse3200/game/missions/Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> as a <code>JsonValue</code>, which contains children storing the internal
+ progress of the <a href="com/csse3200/game/missions/Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>.</div>
+</dd>
+<dt><a href="com/csse3200/game/missions/quests/FertiliseCropTilesQuest.html#getProgress()" class="member-name-link">getProgress()</a> - Method in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/FertiliseCropTilesQuest.html" title="class in com.csse3200.game.missions.quests">FertiliseCropTilesQuest</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/ResourceService.html#getProgress()" class="member-name-link">getProgress()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ResourceService.html" title="class in com.csse3200.game.services">ResourceService</a></dt>
 <dd>
 <div class="block">Returns the loading completion progress as a percentage.</div>
@@ -1985,6 +2004,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Not required for game, unimplemented</div>
 </dd>
+<dt><a href="com/csse3200/game/services/FactoryService.html#getQuests()" class="member-name-link">getQuests()</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/FactoryService.html" title="class in com.csse3200.game.services">FactoryService</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/maingame/PauseMenuActions.html#getQuitGameStatus()" class="member-name-link">getQuitGameStatus()</a> - Static method in class com.csse3200.game.components.maingame.<a href="com/csse3200/game/components/maingame/PauseMenuActions.html" title="class in com.csse3200.game.components.maingame">PauseMenuActions</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/GameTime.html#getRawDeltaTime()" class="member-name-link">getRawDeltaTime()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/GameTime.html" title="class in com.csse3200.game.services">GameTime</a></dt>
@@ -2000,6 +2021,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/services/ServiceLocator.html#getRenderService()" class="member-name-link">getRenderService()</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/ServiceLocator.html#getResourceService()" class="member-name-link">getResourceService()</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/missions/quests/Quest.html#getReward()" class="member-name-link">getReward()</a> - Method in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/Quest.html" title="class in com.csse3200.game.missions.quests">Quest</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/ServiceLocator.html#getSaveLoadService()" class="member-name-link">getSaveLoadService()</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
 <dd>&nbsp;</dd>
@@ -3245,6 +3268,10 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/missions/MissionManager.MissionEvent.html#QUEST_EXPIRED" class="member-name-link">QUEST_EXPIRED</a> - Enum constant in enum class com.csse3200.game.missions.<a href="com/csse3200/game/missions/MissionManager.MissionEvent.html" title="enum class in com.csse3200.game.missions">MissionManager.MissionEvent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/missions/quests/QuestFactory.html" class="type-name-link" title="class in com.csse3200.game.missions.quests">QuestFactory</a> - Class in <a href="com/csse3200/game/missions/quests/package-summary.html">com.csse3200.game.missions.quests</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/missions/quests/QuestFactory.html#%3Cinit%3E()" class="member-name-link">QuestFactory()</a> - Constructor for class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/QuestFactory.html" title="class in com.csse3200.game.missions.quests">QuestFactory</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/EntityType.html#Questgiver" class="member-name-link">Questgiver</a> - Enum constant in enum class com.csse3200.game.entities.<a href="com/csse3200/game/entities/EntityType.html" title="enum class in com.csse3200.game.entities">EntityType</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/QuestgiverConfig.html" class="type-name-link" title="class in com.csse3200.game.entities.configs">QuestgiverConfig</a> - Class in <a href="com/csse3200/game/entities/configs/package-summary.html">com.csse3200.game.entities.configs</a></dt>
@@ -3263,6 +3290,15 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/npc/QuestIndicatorComponent.html#%3Cinit%3E()" class="member-name-link">QuestIndicatorComponent()</a> - Constructor for class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/QuestIndicatorComponent.html" title="class in com.csse3200.game.components.npc">QuestIndicatorComponent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/missions/rewards/QuestReward.html" class="type-name-link" title="class in com.csse3200.game.missions.rewards">QuestReward</a> - Class in <a href="com/csse3200/game/missions/rewards/package-summary.html">com.csse3200.game.missions.rewards</a></dt>
+<dd>
+<div class="block">The QuestReward can be added as a reward to a quest so that when the quest is complete the collect() method
+ will add the quests from the constructor to the MissionManager.</div>
+</dd>
+<dt><a href="com/csse3200/game/missions/rewards/QuestReward.html#%3Cinit%3E(java.util.List)" class="member-name-link">QuestReward(List&lt;Quest&gt;)</a> - Constructor for class com.csse3200.game.missions.rewards.<a href="com/csse3200/game/missions/rewards/QuestReward.html" title="class in com.csse3200.game.missions.rewards">QuestReward</a></dt>
+<dd>
+<div class="block">A QuestReward that adds quests to the MissionManager on collect().</div>
+</dd>
 </dl>
 <h2 class="title" id="I:R">R</h2>
 <dl class="index">
@@ -3307,6 +3343,8 @@ loadScripts(document, 'script');</script>
 <div class="block">Reads the json file and creates the entities based on the information in the
  json file</div>
 </dd>
+<dt><a href="com/csse3200/game/missions/MissionManager.html#read(com.badlogic.gdx.utils.Json,com.badlogic.gdx.utils.JsonValue)" class="member-name-link">read(Json, JsonValue)</a> - Method in class com.csse3200.game.missions.<a href="com/csse3200/game/missions/MissionManager.html" title="class in com.csse3200.game.missions">MissionManager</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/files/FileLoader.html#readClass(java.lang.Class,java.lang.String)" class="member-name-link">readClass(Class&lt;T&gt;, String)</a> - Static method in class com.csse3200.game.files.<a href="com/csse3200/game/files/FileLoader.html" title="class in com.csse3200.game.files">FileLoader</a></dt>
 <dd>
 <div class="block">Read generic Java classes from a JSON file.</div>
@@ -3653,6 +3691,8 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/rendering/DebugRenderer.html#setActive(boolean)" class="member-name-link">setActive(boolean)</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/DebugRenderer.html" title="class in com.csse3200.game.rendering">DebugRenderer</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/missions/MissionManager.html#setActiveQuests(java.util.List)" class="member-name-link">setActiveQuests(List&lt;Quest&gt;)</a> - Method in class com.csse3200.game.missions.<a href="com/csse3200/game/missions/MissionManager.html" title="class in com.csse3200.game.missions">MissionManager</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/plants/PlantComponent.html#setAdultLifeSpan(int)" class="member-name-link">setAdultLifeSpan(int)</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
 <dd>
 <div class="block">Set the adult life span of a plant.</div>
@@ -3700,6 +3740,8 @@ loadScripts(document, 'script');</script>
 <div class="block">Closes the terminal and clears the stored message.</div>
 </dd>
 <dt><a href="com/csse3200/game/missions/rewards/Reward.html#setCollected()" class="member-name-link">setCollected()</a> - Method in class com.csse3200.game.missions.rewards.<a href="com/csse3200/game/missions/rewards/Reward.html" title="class in com.csse3200.game.missions.rewards">Reward</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/missions/rewards/Reward.html#setCollected(boolean)" class="member-name-link">setCollected(boolean)</a> - Method in class com.csse3200.game.missions.rewards.<a href="com/csse3200/game/missions/rewards/Reward.html" title="class in com.csse3200.game.missions.rewards">Reward</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/AuraLightComponent.html#setColor(com.badlogic.gdx.graphics.Color)" class="member-name-link">setColor(Color)</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/AuraLightComponent.html" title="class in com.csse3200.game.components">AuraLightComponent</a></dt>
 <dd>
@@ -3864,6 +3906,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Sets the in-game minute to a certain value.</div>
 </dd>
+<dt><a href="com/csse3200/game/files/SaveGame.GameState.html#setMissions(com.csse3200.game.missions.MissionManager)" class="member-name-link">setMissions(MissionManager)</a> - Method in class com.csse3200.game.files.<a href="com/csse3200/game/files/SaveGame.GameState.html" title="class in com.csse3200.game.files">SaveGame.GameState</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/tractor/TractorActions.html#setMode(com.csse3200.game.components.tractor.TractorMode)" class="member-name-link">setMode(TractorMode)</a> - Method in class com.csse3200.game.components.tractor.<a href="com/csse3200/game/components/tractor/TractorActions.html" title="class in com.csse3200.game.components.tractor">TractorActions</a></dt>
 <dd>
 <div class="block">Sets the mode of the tractor entity to a given mode</div>
@@ -3963,6 +4007,14 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/input/InputComponent.html#setPriority(int)" class="member-name-link">setPriority(int)</a> - Method in class com.csse3200.game.input.<a href="com/csse3200/game/input/InputComponent.html" title="class in com.csse3200.game.input">InputComponent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/missions/achievements/PlantCropsAchievement.html#setProgress(com.badlogic.gdx.utils.JsonValue)" class="member-name-link">setProgress(JsonValue)</a> - Method in class com.csse3200.game.missions.achievements.<a href="com/csse3200/game/missions/achievements/PlantCropsAchievement.html" title="class in com.csse3200.game.missions.achievements">PlantCropsAchievement</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/missions/Mission.html#setProgress(com.badlogic.gdx.utils.JsonValue)" class="member-name-link">setProgress(JsonValue)</a> - Method in class com.csse3200.game.missions.<a href="com/csse3200/game/missions/Mission.html" title="class in com.csse3200.game.missions">Mission</a></dt>
+<dd>
+<div class="block">Sets the internal progress of the <a href="com/csse3200/game/missions/Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> based on the <code>JsonValue</code> provided.</div>
+</dd>
+<dt><a href="com/csse3200/game/missions/quests/FertiliseCropTilesQuest.html#setProgress(com.badlogic.gdx.utils.JsonValue)" class="member-name-link">setProgress(JsonValue)</a> - Method in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/FertiliseCropTilesQuest.html" title="class in com.csse3200.game.missions.quests">FertiliseCropTilesQuest</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/maingame/PauseMenuActions.html#setQuitGameStatus()" class="member-name-link">setQuitGameStatus()</a> - Static method in class com.csse3200.game.components.maingame.<a href="com/csse3200/game/components/maingame/PauseMenuActions.html" title="class in com.csse3200.game.components.maingame">PauseMenuActions</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/physics/components/ColliderComponent.html#setRestitution(float)" class="member-name-link">setRestitution(float)</a> - Method in class com.csse3200.game.physics.components.<a href="com/csse3200/game/physics/components/ColliderComponent.html" title="class in com.csse3200.game.physics.components">ColliderComponent</a></dt>
@@ -3983,6 +4035,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Sets the game's screen to a new screen of the provided type.</div>
 </dd>
+<dt><a href="com/csse3200/game/missions/MissionManager.html#setSelectableQuests(java.util.List)" class="member-name-link">setSelectableQuests(List&lt;Quest&gt;)</a> - Method in class com.csse3200.game.missions.<a href="com/csse3200/game/missions/MissionManager.html" title="class in com.csse3200.game.missions">MissionManager</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/physics/components/ColliderComponent.html#setSensor(boolean)" class="member-name-link">setSensor(boolean)</a> - Method in class com.csse3200.game.physics.components.<a href="com/csse3200/game/physics/components/ColliderComponent.html" title="class in com.csse3200.game.physics.components">ColliderComponent</a></dt>
 <dd>
 <div class="block">Set whether this physics component is a sensor.</div>
@@ -4045,6 +4099,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/services/GameTime.html#setTimeScale(float)" class="member-name-link">setTimeScale(float)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/GameTime.html" title="class in com.csse3200.game.services">GameTime</a></dt>
 <dd>
 <div class="block">Set the speed of time passing.</div>
+</dd>
+<dt><a href="com/csse3200/game/missions/quests/Quest.html#setTimeToExpiry(int)" class="member-name-link">setTimeToExpiry(int)</a> - Method in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/Quest.html" title="class in com.csse3200.game.missions.quests">Quest</a></dt>
+<dd>
+<div class="block">Sets the time to expire to a given value, mainly used in load</div>
 </dd>
 <dt><a href="com/csse3200/game/files/UserSettings.Settings.html#%3Cinit%3E()" class="member-name-link">Settings()</a> - Constructor for class com.csse3200.game.files.<a href="com/csse3200/game/files/UserSettings.Settings.html" title="class in com.csse3200.game.files">UserSettings.Settings</a></dt>
 <dd>&nbsp;</dd>
@@ -5021,6 +5079,12 @@ the order they are declared.</div>
 <dd>
 <div class="block">Writes to the json info about entities.</div>
 </dd>
+<dt><a href="com/csse3200/game/missions/MissionManager.html#write(com.badlogic.gdx.utils.Json)" class="member-name-link">write(Json)</a> - Method in class com.csse3200.game.missions.<a href="com/csse3200/game/missions/MissionManager.html" title="class in com.csse3200.game.missions">MissionManager</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/missions/quests/Quest.html#write(com.badlogic.gdx.utils.Json)" class="member-name-link">write(Json)</a> - Method in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/Quest.html" title="class in com.csse3200.game.missions.quests">Quest</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/missions/achievements/Achievement.html#write(com.badlogic.gdx.utils.Json,java.lang.Integer)" class="member-name-link">write(Json, Integer)</a> - Method in class com.csse3200.game.missions.achievements.<a href="com/csse3200/game/missions/achievements/Achievement.html" title="class in com.csse3200.game.missions.achievements">Achievement</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/files/FileLoader.html#writeClass(java.lang.Object,java.lang.String)" class="member-name-link">writeClass(Object, String)</a> - Static method in class com.csse3200.game.files.<a href="com/csse3200/game/files/FileLoader.html" title="class in com.csse3200.game.files">FileLoader</a></dt>
 <dd>
 <div class="block">Write generic Java classes to a JSON file.</div>
