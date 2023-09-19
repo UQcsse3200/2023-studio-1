@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 /**
  * Send and receive events between objects. EventHandler provides an implementation of the Observer
@@ -281,14 +282,13 @@ public class EventHandler {
       return;
     }
 
-    for (ScheduledEvent scheduledEvent : scheduledEvents) {
-      if (timeSource.getTime() >= scheduledEvent.endTime()) {
-        triggerScheduledEvent(scheduledEvent);
-      }
-    }
+    List<ScheduledEvent> eventsToTrigger = new ArrayList<>(scheduledEvents);
+    eventsToTrigger.removeIf(event -> !(timeSource.getTime() >= event.endTime()));
+
+    eventsToTrigger.forEach(this::triggerScheduledEvent);
 
     // remove in separate loop to avoid concurrent modification error
-    scheduledEvents.removeIf(scheduledEvent -> timeSource.getTime() >= scheduledEvent.endTime());
+    scheduledEvents.removeIf(eventsToTrigger::contains);
   }
 
 
