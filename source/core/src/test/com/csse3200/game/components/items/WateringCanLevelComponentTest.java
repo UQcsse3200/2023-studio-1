@@ -1,5 +1,7 @@
 package com.csse3200.game.components.items;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 
 public class WateringCanLevelComponentTest {

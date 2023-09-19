@@ -1,8 +1,9 @@
 package com.csse3200.game.services;
 
-import box2dLight.RayHandler;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
+
+import box2dLight.RayHandler;
 
 public class LightService {
 

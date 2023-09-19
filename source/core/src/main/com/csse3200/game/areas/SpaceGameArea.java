@@ -1,5 +1,10 @@
 package com.csse3200.game.areas;
 
+import java.util.ArrayList;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
@@ -13,19 +18,17 @@ import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.EntityType;
-import com.csse3200.game.entities.configs.plants.PlantConfigs;
-import com.csse3200.game.entities.factories.*;
-import com.csse3200.game.files.FileLoader;
+import com.csse3200.game.entities.factories.ItemFactory;
+import com.csse3200.game.entities.factories.NPCFactory;
+import com.csse3200.game.entities.factories.ObstacleFactory;
+import com.csse3200.game.entities.factories.PlayerFactory;
+import com.csse3200.game.entities.factories.QuestgiverFactory;
+import com.csse3200.game.entities.factories.TractorFactory;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
 
 /** SpaceGameArea is the area used for the initial game version */
 public class SpaceGameArea extends GameArea {
@@ -104,19 +107,18 @@ public class SpaceGameArea extends GameArea {
           "images/fertiliser.png",
 
           "images/plants/misc/aloe_vera_seed.png",
-          "images/plants/misc/atomic_algae_seed.png",
+          "images/plants/atomic_algae/1_seedling.png",
           "images/plants/misc/cosmic_cob_seed.png",
           "images/plants/misc/deadly_nightshade_seed.png",
           "images/plants/misc/hammer_plant_seed.png",
-          "images/plants/misc/horticultural_heater_seed.png",
           "images/plants/misc/space_snapper_seed.png",
-          "images/plants/misc/tobacco_seed.png",
 
           "images/plants/cosmic_cob/1_seedling.png",
           "images/plants/cosmic_cob/2_sprout.png",
           "images/plants/cosmic_cob/3_juvenile.png",
           "images/plants/cosmic_cob/4_adult.png",
           "images/plants/cosmic_cob/5_decaying.png",
+          "images/plants/cosmic_cob/6_dead.png",
           "images/plants/cosmic_cob/item_drop.png",
 
           "images/plants/aloe_vera/1_seedling.png",
@@ -124,6 +126,7 @@ public class SpaceGameArea extends GameArea {
           "images/plants/aloe_vera/3_juvenile.png",
           "images/plants/aloe_vera/4_adult.png",
           "images/plants/aloe_vera/5_decaying.png",
+          "images/plants/aloe_vera/6_dead.png",
           "images/plants/aloe_vera/item_drop.png",
           "images/plants/aloe_vera/seedbag.png",
 
@@ -132,6 +135,7 @@ public class SpaceGameArea extends GameArea {
           "images/plants/hammer_plant/3_juvenile.png",
           "images/plants/hammer_plant/4_adult.png",
           "images/plants/hammer_plant/5_decaying.png",
+          "images/plants/hammer_plant/6_dead.png",
           "images/plants/hammer_plant/item_drop.png",
           "images/plants/hammer_plant/seedbag.png",
 
@@ -140,35 +144,43 @@ public class SpaceGameArea extends GameArea {
           "images/plants/space_snapper/3_juvenile.png",
           "images/plants/space_snapper/4_adult.png",
           "images/plants/space_snapper/5_decaying.png",
+          "images/plants/space_snapper/6_dead.png",
+          "images/plants/space_snapper/item_drop.png",
+          "images/plants/space_snapper/seedbag.png",
 
           "images/plants/atomic_algae/1_seedling.png",
           "images/plants/atomic_algae/2_sprout.png",
           "images/plants/atomic_algae/3_juvenile.png",
           "images/plants/atomic_algae/4_adult.png",
           "images/plants/atomic_algae/5_decaying.png",
+          "images/plants/atomic_algae/6_dead.png",
           "images/plants/atomic_algae/item_drop.png",
+          "images/plants/atomic_algae/seedbag.png",
 
           "images/plants/deadly_nightshade/1_seedling.png",
           "images/plants/deadly_nightshade/2_sprout.png",
           "images/plants/deadly_nightshade/3_juvenile.png",
           "images/plants/deadly_nightshade/4_adult.png",
           "images/plants/deadly_nightshade/5_decaying.png",
+          "images/plants/deadly_nightshade/6_dead.png",
           "images/plants/deadly_nightshade/item_drop.png",
+          //"images/plants/deadly_nightshade/seedbag.png",
 
           "images/plants/misc/aloe_vera_seed.png",
           "images/plants/misc/cosmic_cob_seed.png",
           "images/plants/misc/deadly_nightshade_seed.png",
           "images/plants/misc/hammer_plant_seed.png",
-          "images/plants/misc/horticultural_heater_seed.png",
           "images/plants/misc/space_snapper_seed.png",
-          "images/plants/misc/tobacco_seed.png",
+          "images/plants/misc/atomic_algae_seed.png",
           "images/invisible_sprite.png"
   };
   private static final String[] forestTextureAtlases = {
       "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
       "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas",
       "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas", "images/questgiver.atlas",
-      "images/missionStatus.atlas"
+      "images/missionStatus.atlas", "images/plants/cosmic_cob.atlas", "images/plants/aloe_vera.atlas",
+      "images/plants/hammer_plant.atlas", "images/plants/space_snapper.atlas", "images/plants/atomic_algae.atlas",
+      "images/plants/deadly_nightshade.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg", "sounds/car-horn-6408.mp3"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -218,7 +230,7 @@ public class SpaceGameArea extends GameArea {
 
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
-    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createGateItem());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createCowFood());
 
     tractor = spawnTractor();
     spawnQuestgiver();
