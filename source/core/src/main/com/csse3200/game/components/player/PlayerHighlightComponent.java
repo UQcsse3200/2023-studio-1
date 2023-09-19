@@ -8,10 +8,10 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
+//TODO commenting in here is a bit of a mess, clean it up.and junit for this
 public class PlayerHighlightComponent extends Component {
     private DynamicTextureRenderComponent currentTexture;
     private boolean isMuted;
-    private boolean isAnimal; // for highlighting animals
 
 
     @Override
@@ -31,7 +31,6 @@ public class PlayerHighlightComponent extends Component {
 
     public PlayerHighlightComponent() {
         this.isMuted = false;
-        this.isAnimal = false;
     }
 
     @Override
@@ -66,9 +65,6 @@ public class PlayerHighlightComponent extends Component {
         entity.setPosition(playerPosCenter);
     }
 
-    public void setAnimal(boolean isAnimal) {
-        this.isAnimal = isAnimal;
-    }
 
     private String getTexturePath() {
         //TODO implement the other circle thing here as well.

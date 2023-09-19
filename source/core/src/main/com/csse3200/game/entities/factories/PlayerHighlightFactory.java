@@ -4,6 +4,7 @@ import com.csse3200.game.components.player.PlayerHighlightComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 
+//TODO commenting here and junit testing for this.
 public class PlayerHighlightFactory {
     public static Entity createPlayerHighlight() {
         DynamicTextureRenderComponent renderComponent = new DynamicTextureRenderComponent("images/yellowSquare.png");

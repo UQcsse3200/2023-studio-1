@@ -489,6 +489,10 @@ public class SpaceGameArea extends GameArea {
   }
 
 
+  /**
+   * Spawns the player highlight entity
+   * Is the yellow square that highlights the tile the player is hovering over
+   */
   public void spawnPlayerHighlight() {
     Entity playerHighlight = PlayerHighlightFactory.createPlayerHighlight();
     spawnEntityAt(playerHighlight, PLAYER_SPAWN, true, true);
