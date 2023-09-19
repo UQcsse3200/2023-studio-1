@@ -10,6 +10,7 @@ import com.csse3200.game.missions.achievements.Achievement;
 import com.csse3200.game.missions.achievements.PlantCropsAchievement;
 import com.csse3200.game.missions.quests.FertiliseCropTilesQuest;
 import com.csse3200.game.missions.quests.Quest;
+import com.csse3200.game.missions.quests.QuestFactory;
 import com.csse3200.game.missions.rewards.ItemReward;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -70,14 +71,9 @@ public class MissionManager implements Json.Serializable {
 		}
 
 		// Add initial quests - regardless of GameArea
-		selectableQuests.add(
-				// Item reward to be determined at later date
-				new FertiliseCropTilesQuest("Haber Hobbyist", new ItemReward(new ArrayList<>()), 24, 10)
-		);
-		selectableQuests.add(
-				// Item reward to be determined at later date
-				new FertiliseCropTilesQuest("Fertiliser Fanatic", new ItemReward(new ArrayList<>()), 48, 40)
-		);
+		// This will be removed from the constructor at a later date
+		selectableQuests.add(QuestFactory.createHaberHobbyist());
+		selectableQuests.add(QuestFactory.createFertiliserFanatic());
 	}
 
 	/**
