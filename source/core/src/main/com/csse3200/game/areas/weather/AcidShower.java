@@ -5,12 +5,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.csse3200.game.services.ServiceLocator;
 
-import java.awt.*;
 import java.util.Iterator;
 
 public class AcidShower extends ApplicationAdapter {
@@ -57,6 +57,7 @@ public class AcidShower extends ApplicationAdapter {
         ScreenUtils.clear(0, 0, 0.2f, 1);
         spriteBatch.begin();
         spriteBatch.draw(raindropImage, raindrop.x, raindrop.y);
+        spriteBatch.draw(weatherImage, raindrop.x, raindrop.y);
 
         for(Rectangle raindrop: raindrops) {
             spriteBatch.draw(raindropImage, raindrop.x, raindrop.y);
@@ -79,7 +80,7 @@ public class AcidShower extends ApplicationAdapter {
 
     @Override
     public void dispose() {
-        raindropImage.dispose();
+        weatherImage.dispose();
         spriteBatch.dispose();
     }
 }
