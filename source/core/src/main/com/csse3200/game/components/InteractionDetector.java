@@ -191,6 +191,10 @@ public class InteractionDetector extends HitboxComponent {
                 entities.removeIf(entity -> entity.getComponent(TamableComponent.class).isTamed()); //TODO: axolotl? handle that
                 return getNearest(entities);
             }
+            case SHOVEL -> {
+                entities.removeIf(entity -> entity.getType() != EntityType.ShipDebris);
+                return getNearest(entities);
+            }
         }
         return Collections.emptyList();
     }
