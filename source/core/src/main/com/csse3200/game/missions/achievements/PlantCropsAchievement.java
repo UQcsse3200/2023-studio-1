@@ -64,8 +64,8 @@ public class PlantCropsAchievement extends Achievement {
     }
 
     @Override
-    public JsonValue getProgress() {
-        return new JsonValue(numberOfCropsPlanted);
+    public Object getProgress() {
+        return numberOfCropsPlanted;
     }
 
     /**

@@ -60,8 +60,8 @@ public class FertiliseCropTilesQuest extends Quest {
     }
 
     @Override
-    public JsonValue getProgress() {
-        return new JsonValue(numberOfTilesFertilised);
+    public Object getProgress() {
+        return numberOfTilesFertilised;
     }
 
     /**

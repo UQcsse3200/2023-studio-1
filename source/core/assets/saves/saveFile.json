@@ -1,15 +1,20 @@
 {
-"hour": 9,
+"hour": 8,
 "climate": {
-	"Temp": 20.464058,
-	"Humidity": 0.8088165
+	"Temp": 41.96496,
+	"Humidity": 0.5894193,
+	"name": "SolarSurgeEvent",
+	"severity": 0.47848183,
+	"duration": 4,
+	"hoursUntil": 0,
+	"priority": 2
 },
 "missions": {
 	"ActiveQuests": {
 		"Quest": {
 			"name": "Haber Hobbyist",
 			"expiry": 24,
-			"progress": [ 0, 1, 2 ],
+			"progress": 3,
 			"collected": false
 		}
 	},
@@ -17,34 +22,70 @@
 		"Quest": {
 			"name": "Fertiliser Fanatic",
 			"expiry": 48,
-			"progress": [ 0, 1, 2 ],
+			"progress": 0,
 			"collected": false
 		}
 	},
 	"Achievements": {
-		"Quest": {
-			"name": "Plant President",
-			"progress": [ 0, 1, 2 ]
+		"Achievement": {
+			"index": 0,
+			"progress": 0
 		},
-		"Quest": {
-			"name": "Crop Enjoyer",
-			"progress": [ 0, 1, 2 ]
+		"Achievement": {
+			"index": 1,
+			"progress": 0
 		},
-		"Quest": {
-			"name": "Gardener of the Galaxy",
-			"progress": [ 0, 1, 2 ]
+		"Achievement": {
+			"index": 2,
+			"progress": 0
 		}
 	}
 },
 "player": {
 	"Entity": "Player",
-	"x": 7.7350016,
-	"y": 11.589435,
+	"x": 18.035004,
+	"y": 18.74731,
 	"components": {
 		"InventoryComponent": {
 			"inventory": {
 				"item": {
-					"name": "Gate",
+					"name": "aloe vera seed",
+					"count": 1,
+					"X": 0,
+					"Y": 0
+				},
+				"item": {
+					"name": "fertiliser",
+					"count": 1,
+					"X": 0,
+					"Y": 0
+				},
+				"item": {
+					"name": "aloe vera seed",
+					"count": 1,
+					"X": 0,
+					"Y": 0
+				},
+				"item": {
+					"name": "fertiliser",
+					"count": 1,
+					"X": 0,
+					"Y": 0
+				},
+				"item": {
+					"name": "hoe",
+					"count": 1,
+					"X": 0,
+					"Y": 0
+				},
+				"item": {
+					"name": "aloe vera seed",
+					"count": 1,
+					"X": 0,
+					"Y": 0
+				},
+				"item": {
+					"name": "COW FOOD",
 					"count": 1,
 					"X": 0,
 					"Y": 0
@@ -55,12 +96,6 @@
 					"count": 1,
 					"X": 0,
 					"Y": 0
-				},
-				"item": {
-					"name": "fertiliser",
-					"count": 1,
-					"X": 0,
-					"Y": 0
 				}
 			}
 		}
@@ -68,8 +103,8 @@
 },
 "tractor": {
 	"Entity": "Tractor",
-	"x": 5.0618925,
-	"y": 5.778211,
+	"x": 12.9375,
+	"y": 13.09375,
 	"components": {
 		"TractorActions": {
 			"isMuted": true
@@ -78,159 +113,39 @@
 },
 "entities": [
 	{
-		"Entity": "Chicken",
-		"x": 26.37077,
-		"y": 26.123007,
-		"components": {
-			"TamableComponent": {
-				"tamed": false
-			}
-		}
+		"Entity": "OxygenEater",
+		"x": 40.813835,
+		"y": 35.77418,
+		"components": {}
 	},
 	{
-		"Entity": "Chicken",
-		"x": 30.606792,
-		"y": 7.3427815,
-		"components": {
-			"TamableComponent": {
-				"tamed": false
-			}
-		}
+		"Entity": "OxygenEater",
+		"x": 39.815285,
+		"y": 79.78336,
+		"components": {}
 	},
 	{
-		"Entity": "Chicken",
-		"x": 33.383934,
-		"y": 34.143787,
-		"components": {
-			"TamableComponent": {
-				"tamed": false
-			}
-		}
+		"Entity": "OxygenEater",
+		"x": 48.488518,
+		"y": 80.62517,
+		"components": {}
 	},
 	{
-		"Entity": "Chicken",
-		"x": 35.064774,
-		"y": 11.3748255,
-		"components": {
-			"TamableComponent": {
-				"tamed": false
-			}
-		}
+		"Entity": "OxygenEater",
+		"x": 58.259235,
+		"y": 52.8146,
+		"components": {}
 	},
 	{
-		"Entity": "Chicken",
-		"x": 1.4149997,
-		"y": 10.817828,
-		"components": {
-			"TamableComponent": {
-				"tamed": false
-			}
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 19.914995,
-		"y": 39.4893,
-		"components": {
-			"TamableComponent": {
-				"tamed": false
-			}
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 44.490532,
-		"y": 28.208612,
-		"components": {
-			"TamableComponent": {
-				"tamed": false
-			}
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 9.935716,
-		"y": 7.837827,
-		"components": {
-			"TamableComponent": {
-				"tamed": false
-			}
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 32.93114,
-		"y": 20.716286,
-		"components": {
-			"TamableComponent": {
-				"tamed": false
-			}
-		}
-	},
-	{
-		"Entity": "Chicken",
-		"x": 24.02775,
-		"y": 27.324959,
-		"components": {
-			"TamableComponent": {
-				"tamed": false
-			}
-		}
-	},
-	{
-		"Entity": "Cow",
-		"x": -0.06329267,
-		"y": 41.996605,
-		"components": {
-			"TamableComponent": {
-				"tamed": false
-			}
-		}
-	},
-	{
-		"Entity": "Cow",
-		"x": 43.83491,
-		"y": -0.87755394,
-		"components": {
-			"TamableComponent": {
-				"tamed": false
-			}
-		}
-	},
-	{
-		"Entity": "Cow",
-		"x": 1.7449998,
-		"y": 43.53275,
-		"components": {
-			"TamableComponent": {
-				"tamed": false
-			}
-		}
-	},
-	{
-		"Entity": "Cow",
-		"x": 23.089752,
-		"y": 45.795776,
-		"components": {
-			"TamableComponent": {
-				"tamed": false
-			}
-		}
-	},
-	{
-		"Entity": "Cow",
-		"x": 45.54419,
-		"y": 29.19238,
-		"components": {
-			"TamableComponent": {
-				"tamed": false
-			}
-		}
+		"Entity": "OxygenEater",
+		"x": 26.159063,
+		"y": 88.46558,
+		"components": {}
 	},
 	{
 		"Entity": "Astrolotl",
-		"x": 6.1201897,
-		"y": 10.38701,
+		"x": 61.923035,
+		"y": 96.81598,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -238,154 +153,265 @@
 		}
 	},
 	{
-		"Entity": "OxygenEater",
-		"x": 45.361504,
-		"y": 16.74149,
-		"components": {}
+		"Entity": "Cow",
+		"x": 15.096113,
+		"y": 10.004859,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
 	},
 	{
-		"Entity": "OxygenEater",
-		"x": 29.038511,
-		"y": 45.22771,
-		"components": {}
+		"Entity": "Cow",
+		"x": 49.132343,
+		"y": 40.285423,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
 	},
 	{
-		"Entity": "OxygenEater",
-		"x": 19.431807,
-		"y": 45.785007,
-		"components": {}
+		"Entity": "Cow",
+		"x": 50.497437,
+		"y": 92.76068,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
 	},
 	{
-		"Entity": "OxygenEater",
-		"x": 40.06812,
-		"y": 42.712357,
-		"components": {}
+		"Entity": "Cow",
+		"x": 89.63391,
+		"y": 90.43696,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
 	},
 	{
-		"Entity": "OxygenEater",
-		"x": 3.435,
-		"y": 38.849957,
-		"components": {}
+		"Entity": "Chicken",
+		"x": 34.91971,
+		"y": 85.249,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 64.83663,
+		"y": 57.718086,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 38.040737,
+		"y": 39.389484,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 37.17037,
+		"y": 86.5674,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 5.7562284,
+		"y": 31.512703,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 84.08281,
+		"y": 0.84719515,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 86.98852,
+		"y": 79.25794,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 16.884558,
+		"y": 9.617638,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 37.58328,
+		"y": 42.68256,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 46.24325,
+		"y": 84.22902,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Cow",
+		"x": 58.79868,
+		"y": 20.764414,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
 	}
 ],
 "tiles": [
 	{
 		"Entity": "Tile",
-		"x": 7.25,
-		"y": 5.25,
+		"x": 14,
+		"y": 40,
 		"components": {
 			"CropTileComponent": {
 				"waterContent": 0,
 				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": {
-					"Entity": "Plant",
-					"x": 7.25,
-					"y": 5.75,
-					"components": {
-						"PlantComponent": {
-							"name": "Atomic Algae",
-							"health": 10,
-							"age": 0,
-							"growth": 1
-						}
-					}
-				}
+				"isFertilised": true,
+				"plant": null
 			}
 		}
 	},
 	{
 		"Entity": "Tile",
-		"x": 6.25,
-		"y": 5.25,
+		"x": 13,
+		"y": 40,
 		"components": {
 			"CropTileComponent": {
 				"waterContent": 0,
 				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": {
-					"Entity": "Plant",
-					"x": 6.25,
-					"y": 5.75,
-					"components": {
-						"PlantComponent": {
-							"name": "Deadly Nightshade",
-							"health": 10,
-							"age": 0,
-							"growth": 1
-						}
-					}
-				}
+				"isFertilised": true,
+				"plant": null
 			}
 		}
 	},
 	{
 		"Entity": "Tile",
-		"x": 5.25,
-		"y": 5.25,
+		"x": 12,
+		"y": 40,
 		"components": {
 			"CropTileComponent": {
 				"waterContent": 0,
 				"soilQuality": 1,
-				"isFertilised": false,
-				"plant": {
-					"Entity": "Plant",
-					"x": 5.25,
-					"y": 5.75,
-					"components": {
-						"PlantComponent": {
-							"name": "Space Snapper",
-							"health": 10,
-							"age": 0,
-							"growth": 1
-						}
-					}
-				}
+				"isFertilised": true,
+				"plant": null
 			}
 		}
 	},
 	{
 		"Entity": "Tile",
-		"x": 4.25,
-		"y": 5.25,
+		"x": 12,
+		"y": 42,
 		"components": {
 			"CropTileComponent": {
 				"waterContent": 0,
 				"soilQuality": 1,
 				"isFertilised": false,
-				"plant": {
-					"Entity": "Plant",
-					"x": 4.25,
-					"y": 5.75,
-					"components": {
-						"PlantComponent": {
-							"name": "Hammer Plant",
-							"health": 10,
-							"age": 0,
-							"growth": 1
-						}
-					}
-				}
+				"plant": null
 			}
 		}
 	},
 	{
 		"Entity": "Tile",
-		"x": 3.25,
-		"y": 5.25,
+		"x": 12,
+		"y": 41,
 		"components": {
 			"CropTileComponent": {
 				"waterContent": 0,
 				"soilQuality": 1,
 				"isFertilised": false,
+				"plant": null
+			}
+		}
+	},
+	{
+		"Entity": "Tile",
+		"x": 13,
+		"y": 41,
+		"components": {
+			"CropTileComponent": {
+				"waterContent": 0,
+				"soilQuality": 1,
+				"isFertilised": false,
+				"plant": null
+			}
+		}
+	},
+	{
+		"Entity": "Tile",
+		"x": 14,
+		"y": 41,
+		"components": {
+			"CropTileComponent": {
+				"waterContent": 0,
+				"soilQuality": 1,
+				"isFertilised": false,
+				"plant": null
+			}
+		}
+	},
+	{
+		"Entity": "Tile",
+		"x": 14,
+		"y": 42,
+		"components": {
+			"CropTileComponent": {
+				"waterContent": 0,
+				"soilQuality": 1,
+				"isFertilised": true,
 				"plant": {
 					"Entity": "Plant",
-					"x": 3.25,
-					"y": 5.75,
+					"x": 14,
+					"y": 42.5,
 					"components": {
 						"PlantComponent": {
 							"name": "Aloe Vera",
-							"health": 10,
+							"health": 200,
 							"age": 0,
 							"growth": 1
 						}
@@ -396,8 +422,33 @@
 	},
 	{
 		"Entity": "Tile",
-		"x": 2.25,
-		"y": 5.25,
+		"x": 13,
+		"y": 42,
+		"components": {
+			"CropTileComponent": {
+				"waterContent": 0,
+				"soilQuality": 1,
+				"isFertilised": true,
+				"plant": {
+					"Entity": "Plant",
+					"x": 13,
+					"y": 42.5,
+					"components": {
+						"PlantComponent": {
+							"name": "Aloe Vera",
+							"health": 200,
+							"age": 0,
+							"growth": 1
+						}
+					}
+				}
+			}
+		}
+	},
+	{
+		"Entity": "Tile",
+		"x": 15,
+		"y": 11,
 		"components": {
 			"CropTileComponent": {
 				"waterContent": 0,
@@ -405,12 +456,137 @@
 				"isFertilised": false,
 				"plant": {
 					"Entity": "Plant",
-					"x": 2.25,
-					"y": 5.75,
+					"x": 15,
+					"y": 11.5,
+					"components": {
+						"PlantComponent": {
+							"name": "Atomic Algae",
+							"health": 200,
+							"age": 0,
+							"growth": 1
+						}
+					}
+				}
+			}
+		}
+	},
+	{
+		"Entity": "Tile",
+		"x": 13,
+		"y": 11,
+		"components": {
+			"CropTileComponent": {
+				"waterContent": 0,
+				"soilQuality": 1,
+				"isFertilised": false,
+				"plant": {
+					"Entity": "Plant",
+					"x": 13,
+					"y": 11.5,
+					"components": {
+						"PlantComponent": {
+							"name": "Deadly Nightshade",
+							"health": 200,
+							"age": 0,
+							"growth": 1
+						}
+					}
+				}
+			}
+		}
+	},
+	{
+		"Entity": "Tile",
+		"x": 11,
+		"y": 11,
+		"components": {
+			"CropTileComponent": {
+				"waterContent": 0,
+				"soilQuality": 1,
+				"isFertilised": false,
+				"plant": {
+					"Entity": "Plant",
+					"x": 11,
+					"y": 11.5,
+					"components": {
+						"PlantComponent": {
+							"name": "Space Snapper",
+							"health": 200,
+							"age": 0,
+							"growth": 1
+						}
+					}
+				}
+			}
+		}
+	},
+	{
+		"Entity": "Tile",
+		"x": 9,
+		"y": 11,
+		"components": {
+			"CropTileComponent": {
+				"waterContent": 0,
+				"soilQuality": 1,
+				"isFertilised": false,
+				"plant": {
+					"Entity": "Plant",
+					"x": 9,
+					"y": 11.5,
+					"components": {
+						"PlantComponent": {
+							"name": "Hammer Plant",
+							"health": 200,
+							"age": 0,
+							"growth": 1
+						}
+					}
+				}
+			}
+		}
+	},
+	{
+		"Entity": "Tile",
+		"x": 7,
+		"y": 11,
+		"components": {
+			"CropTileComponent": {
+				"waterContent": 0,
+				"soilQuality": 1,
+				"isFertilised": false,
+				"plant": {
+					"Entity": "Plant",
+					"x": 7,
+					"y": 11.5,
+					"components": {
+						"PlantComponent": {
+							"name": "Aloe Vera",
+							"health": 200,
+							"age": 0,
+							"growth": 1
+						}
+					}
+				}
+			}
+		}
+	},
+	{
+		"Entity": "Tile",
+		"x": 5,
+		"y": 11,
+		"components": {
+			"CropTileComponent": {
+				"waterContent": 0,
+				"soilQuality": 1,
+				"isFertilised": false,
+				"plant": {
+					"Entity": "Plant",
+					"x": 5,
+					"y": 11.5,
 					"components": {
 						"PlantComponent": {
 							"name": "Cosmic Cob",
-							"health": 10,
+							"health": 200,
 							"age": 0,
 							"growth": 1
 						}

@@ -244,7 +244,7 @@ public class SaveLoadService {
    */
   private void updateMissions(GameState state) {
     MissionManager missions = ServiceLocator.getMissionManager();
-    // TODO Mission saving
-    // Add in setting missions based off the ones that are done
+    missions.setActiveQuests(state.getMissions().getActiveQuests());
+    missions.setSelectableQuests(state.getMissions().getSelectableQuests());
   }
 }

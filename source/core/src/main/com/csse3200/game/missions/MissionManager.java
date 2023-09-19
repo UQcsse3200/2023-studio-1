@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.JsonValue;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.achievements.Achievement;
 import com.csse3200.game.missions.achievements.PlantCropsAchievement;
@@ -12,6 +13,7 @@ import com.csse3200.game.missions.quests.FertiliseCropTilesQuest;
 import com.csse3200.game.missions.quests.Quest;
 import com.csse3200.game.missions.quests.QuestFactory;
 import com.csse3200.game.missions.rewards.ItemReward;
+import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
 
 public class MissionManager implements Json.Serializable {
@@ -55,7 +57,7 @@ public class MissionManager implements Json.Serializable {
 	/**
 	 * An array of all in-game {@link Achievement}s
 	 */
-	private final Achievement[] achievements = new Achievement[]{
+	private static final Achievement[] achievements = new Achievement[]{
 			new PlantCropsAchievement("Plant President", 50),
 			new PlantCropsAchievement("Crop Enjoyer", 200),
 			new PlantCropsAchievement("Gardener of the Galaxy", 800)
@@ -160,14 +162,53 @@ public class MissionManager implements Json.Serializable {
 		}
 		json.writeObjectEnd();
 		json.writeObjectStart("Achievements");
+		int i = 0;
 		for (Achievement achievement : achievements) {
-			achievement.write(json);
+			achievement.write(json, i);
+			i++;
 		}
 		json.writeObjectEnd();
 	}
 
 	@Override
-	public void read(Json json, JsonValue jsonData) {
+	public void read(Json json, JsonValue jsonMap) {
+		JsonValue active = jsonMap.get("ActiveQuests");
+		activeQuests.clear();
+		if (active.has("Quest")) {
+			active.forEach(jsonValue -> {
+				Quest q = FactoryService.getQuests().get(jsonValue.getString("name")).get();
+				q.setTimeToExpiry(jsonValue.getInt("expiry"));
+				q.setProgress(jsonValue.get("progress"));
+				q.getReward().setCollected(jsonValue.getBoolean("collected"));
+				activeQuests.add(q);
+			});
+		}
+		JsonValue selectable = jsonMap.get("SelectableQuests");
+		selectableQuests.clear();
+		if (selectable.has("Quest")) {
+			selectable.forEach(jsonValue -> {
+				Quest q = FactoryService.getQuests().get(jsonValue.getString("name")).get();
+				q.setTimeToExpiry(jsonValue.getInt("expiry"));
+				q.setProgress(jsonValue.get("progress"));
+				q.getReward().setCollected(jsonValue.getBoolean("collected"));
+				selectableQuests.add(q);
+			});
+		}
+		if (selectable.has("Achievement")) {
+			selectable.forEach(jsonValue -> {
+				Achievement a = achievements[jsonValue.getInt("index")];
+				a.setProgress(jsonValue.get("progress"));
+			});
+		}
+	}
 
+	public void setActiveQuests(List<Quest> activeQuests) {
+		this.activeQuests.clear();
+		this.activeQuests.addAll(activeQuests);
+	}
+
+	public void setSelectableQuests(List<Quest> selectableQuests) {
+		this.selectableQuests.clear();
+		this.selectableQuests.addAll(selectableQuests);
 	}
 }

@@ -12,6 +12,8 @@ import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.PlaceableFactory;
 import com.csse3200.game.entities.factories.PlantFactory;
+import com.csse3200.game.missions.quests.Quest;
+import com.csse3200.game.missions.quests.QuestFactory;
 
 public class FactoryService {
     private static final Map<EntityType, Function<Entity, Entity>> npcFactories = Map.of(EntityType.Chicken, NPCFactory::createChicken,
@@ -53,6 +55,10 @@ public class FactoryService {
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Gate", PlaceableFactory::createGate),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Sprinkler", PlaceableFactory::createSprinkler));
 
+    private static final Map<String, Supplier<Quest>> questFactories = Map.ofEntries(
+            new AbstractMap.SimpleEntry<String, Supplier<Quest>>("Haber Hobbyist", QuestFactory::createHaberHobbyist),
+            new AbstractMap.SimpleEntry<String, Supplier<Quest>>("Fertiliser Fanatic", QuestFactory::createFertiliserFanatic));
+
     public static Map<String, Function<CropTileComponent, Entity>> getPlantFactories() {
         return plantFactories;
     }
@@ -67,5 +73,9 @@ public class FactoryService {
 
     public static Map<String, Supplier<Entity>> getPlaceableFactories() {
         return placeableFactories;
+    }
+
+    public static Map<String, Supplier<Quest>> getQuests() {
+        return questFactories;
     }
 }

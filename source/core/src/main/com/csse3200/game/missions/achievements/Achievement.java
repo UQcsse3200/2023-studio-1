@@ -15,10 +15,10 @@ public abstract class Achievement extends Mission {
 		super(name);
 	}
 
-	public void write(Json json) {
+	public void write(Json json, Integer i) {
 		json.writeObjectStart("Achievement");
-		json.writeValue("name", getName());
-		json.writeValue("progress", new int[]{0, 1, 2});
+		json.writeValue("index", i);
+		json.writeValue("progress", getProgress());
 		json.writeObjectEnd();
 	}
 }

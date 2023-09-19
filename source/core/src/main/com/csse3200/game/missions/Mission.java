@@ -101,6 +101,6 @@ public abstract class Mission {
      *         {@link Mission}. The {@link JsonValue.ValueType} of the returned {@link JsonValue} does not matter, so
      *         long as it is consistent with what you use in {@link #setProgress(JsonValue)}
      */
-    public abstract JsonValue getProgress();
+    public abstract Object getProgress();
 
 }
