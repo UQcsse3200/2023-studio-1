@@ -3,8 +3,11 @@ package com.csse3200.game.components.npc;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractionDetector;
+import com.csse3200.game.components.combat.ProjectileComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.ProjectileFactory;
 import com.csse3200.game.events.ScheduledEvent;
+import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.DirectionUtils;
 import net.dermetfan.gdx.physics.box2d.PositionController;
 
@@ -24,6 +27,7 @@ public class OxygenEaterAttackPattern extends Component {
 
         entity.getEvents().addListener("entityDetected", this::startAttack);
         entity.getEvents().addListener("attack", this::attack);
+        entity.getEvents().addListener("shoot", this::shoot);
     }
 
     public void startAttack(Entity target) {
@@ -46,7 +50,19 @@ public class OxygenEaterAttackPattern extends Component {
 
         entity.getEvents().trigger("directionChange", attackDirection);
         entity.getEvents().trigger("attackStart");
+        entity.getEvents().scheduleEvent(0.2f, "shoot", nearestEntityPosition);
 
         currentAttackEvent = entity.getEvents().scheduleEvent(ATTACK_FREQUENCY, "attack");
+    }
+
+    private void shoot(Vector2 position) {
+        Entity projectile = ProjectileFactory.createOxygenEaterProjectile();
+        projectile.setCenterPosition(entity.getCenterPosition());
+
+        ServiceLocator.getEntityService().register(projectile);
+
+        ProjectileComponent projectileComponent = projectile.getComponent(ProjectileComponent.class);
+        projectileComponent.setSpeed(new Vector2(3f, 3f));
+        projectileComponent.setTargetDirection(position);
     }
 }

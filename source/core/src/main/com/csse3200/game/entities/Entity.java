@@ -3,6 +3,7 @@ package com.csse3200.game.entities;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Vector;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,6 +113,10 @@ public class Entity implements Json.Serializable {
   public void setPosition(Vector2 position) {
     this.position = position.cpy();
     getEvents().trigger(EVT_NAME_POS, position.cpy());
+  }
+
+  public void setCenterPosition(Vector2 position) {
+    this.position = position.cpy().mulAdd(getScale(), -0.5f);
   }
 
   /**
