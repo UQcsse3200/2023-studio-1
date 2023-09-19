@@ -1,17 +1,17 @@
 package com.csse3200.game.components.player;
 
-import com.badlogic.gdx.utils.Json;
-import com.csse3200.game.components.Component;
-import com.csse3200.game.entities.Entity;
+import java.awt.Point; // for positional data
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.awt.Point; // for positional data
-import java.util.HashMap;
-import java.util.Map;
+import com.badlogic.gdx.utils.Json;
+import com.csse3200.game.components.Component;
+import com.csse3200.game.entities.Entity;
 
 /**
  * A component intended to be used by the player to track their inventory.

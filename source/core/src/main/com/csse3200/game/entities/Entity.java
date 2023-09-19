@@ -1,5 +1,12 @@
 package com.csse3200.game.entities;
 
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntMap;
@@ -24,12 +31,6 @@ import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Core entity class. Entities exist in the game and are updated each frame. All
@@ -291,6 +292,7 @@ public class Entity implements Json.Serializable {
     if (!enabled) {
       return;
     }
+    getEvents().update();
     for (Component component : createdComponents) {
       component.triggerUpdate();
     }

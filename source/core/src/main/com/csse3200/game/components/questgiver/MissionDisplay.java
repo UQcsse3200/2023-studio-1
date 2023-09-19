@@ -1,5 +1,8 @@
 package com.csse3200.game.components.questgiver;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -13,9 +16,6 @@ import com.csse3200.game.missions.achievements.Achievement;
 import com.csse3200.game.missions.quests.Quest;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Renders a UI for interacting with Missions.
@@ -35,7 +35,7 @@ public class MissionDisplay extends UIComponent {
 
         addActors();
 
-        entity.getEvents().addListener("toggleMissions", this::toggleOpen);
+        entity.getEvents().addListener("interact", this::toggleOpen);
     }
 
     /**

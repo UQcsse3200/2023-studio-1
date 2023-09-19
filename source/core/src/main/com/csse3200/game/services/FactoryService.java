@@ -1,5 +1,10 @@
 package com.csse3200.game.services;
 
+import java.util.AbstractMap;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
@@ -7,11 +12,6 @@ import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.PlaceableFactory;
 import com.csse3200.game.entities.factories.PlantFactory;
-
-import java.util.AbstractMap;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 public class FactoryService {
     private static final Map<EntityType, Function<Entity, Entity>> npcFactories = Map.of(EntityType.Chicken, NPCFactory::createChicken,
