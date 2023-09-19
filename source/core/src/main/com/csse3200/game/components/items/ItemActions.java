@@ -116,11 +116,6 @@ public class ItemActions extends Component {
     placeable.setPosition(adjustedPos);
     ServiceLocator.getGameArea().spawnEntity(placeable);
     tile.setPlaceable(placeable);
-    // Notify the already placed placeable(s) that they need to reconfigure to accommodate this new placeable.
-    switch (placeable.getType()) {
-      case Sprinkler -> placeable.getComponent(SprinklerComponent.class).notifyAdjacent();
-      case Fence -> System.out.println("i need to do a merge");
-    }
     return true;
   }
 

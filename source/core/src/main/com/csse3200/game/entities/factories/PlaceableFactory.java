@@ -65,9 +65,9 @@ public class PlaceableFactory {
      * @return the pump that was made
      */
     public static Entity createPump() {
-        Entity pump = createBasePlaceable(EntityType.Pump);
+        Entity pump = createBasePlaceable(EntityType.Sprinkler); // hm
         // set temp texture to differentiate from other entities
-        pump.getComponent(DynamicTextureRenderComponent.class).setTexture("images/plants/misc/cosmic_cob_seed.png");
+        pump.getComponent(DynamicTextureRenderComponent.class).setTexture("images/placeable/sprinkler/pump.png");
         // add sprinkler component
         pump.addComponent(new SprinklerComponent());
         // set as a pump
