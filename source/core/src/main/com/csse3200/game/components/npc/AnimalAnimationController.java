@@ -10,11 +10,11 @@ import com.csse3200.game.utils.DirectionUtils;
  */
 public class AnimalAnimationController extends Component {
     /** Render component used to render animals. **/
-    AnimationRenderComponent animator;
+    protected AnimationRenderComponent animator;
     /** Current direction of animal. */
-    private String direction;
+    protected String direction;
     /** Current animation playing (excluding direction suffix) */
-    private String currentAnimation;
+    protected String currentAnimation;
     /** Walk prefix to play walk animation */
     private static final String WALK_PREFIX = "walk";
     /** Run prefix to play run animation */
@@ -60,7 +60,7 @@ public class AnimalAnimationController extends Component {
     /**
      * Play walk animation with current direction
      */
-    void animateWalk() {
+    protected void animateWalk() {
         animator.startAnimation(WALK_PREFIX + "_" + direction + isTamed());
         currentAnimation = WALK_PREFIX;
     }
@@ -68,7 +68,7 @@ public class AnimalAnimationController extends Component {
     /**
      * Play run animation with current direction
      */
-    void animateRun() {
+    protected void animateRun() {
         animator.startAnimation(RUN_PREFIX + "_" + direction + isTamed());
         currentAnimation = RUN_PREFIX;
     }
@@ -76,7 +76,7 @@ public class AnimalAnimationController extends Component {
     /**
      * Play idle animation with current direction
      */
-    void animateIdle() {
+    protected void animateIdle() {
         animator.startAnimation(IDLE_PREFIX + "_" + direction + isTamed());
         currentAnimation = IDLE_PREFIX;
     }
@@ -85,11 +85,8 @@ public class AnimalAnimationController extends Component {
      * Set new direction of animal and retrigger current animation with new direction
      * @param direction new direction
      */
-    void changeDirection(String direction){
+    private void changeDirection(String direction){
         this.direction = direction;
         entity.getEvents().trigger(currentAnimation + "Start");
     }
-
-
-
 }
