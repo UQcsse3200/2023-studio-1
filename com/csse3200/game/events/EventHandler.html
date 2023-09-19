@@ -141,33 +141,77 @@ T2&gt;&nbsp;void</code></div>
 <div class="block">Add a listener to an event with three arguments</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#trigger(java.lang.String)" class="member-name-link">trigger</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;eventName)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#cancelEvent(com.csse3200.game.events.ScheduledEvent)" class="member-name-link">cancelEvent</a><wbr>(<a href="ScheduledEvent.html" title="class in com.csse3200.game.events">ScheduledEvent</a>&nbsp;event)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Trigger an event with no arguments</div>
+<div class="block">Cancels the given scheduled event</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>&lt;T&gt;&nbsp;void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#trigger(java.lang.String,T)" class="member-name-link">trigger</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;eventName,
- T&nbsp;arg0)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ScheduledEvent.html" title="class in com.csse3200.game.events">ScheduledEvent</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#scheduleEvent(float,java.lang.String)" class="member-name-link">scheduleEvent</a><wbr>(float&nbsp;delay,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;eventName)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Trigger an event with one argument</div>
+<div class="block">Schedule an event with no arguments</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>&lt;T0,<wbr>
-T1&gt;&nbsp;void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#trigger(java.lang.String,T0,T1)" class="member-name-link">trigger</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;eventName,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>&lt;T&gt;&nbsp;<a href="ScheduledEvent.html" title="class in com.csse3200.game.events">ScheduledEvent</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#scheduleEvent(float,java.lang.String,T)" class="member-name-link">scheduleEvent</a><wbr>(float&nbsp;delay,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;eventName,
+ T&nbsp;arg0)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Schedule an event with one argument</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>&lt;T0,<wbr>
+T1&gt;&nbsp;<a href="ScheduledEvent.html" title="class in com.csse3200.game.events">ScheduledEvent</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#scheduleEvent(float,java.lang.String,T0,T1)" class="member-name-link">scheduleEvent</a><wbr>(float&nbsp;delay,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;eventName,
  T0&nbsp;arg0,
  T1&nbsp;arg1)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Schedule an event with two arguments</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>&lt;T0,<wbr>
+T1,<wbr>
+T2&gt;&nbsp;<a href="ScheduledEvent.html" title="class in com.csse3200.game.events">ScheduledEvent</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#scheduleEvent(float,java.lang.String,T0,T1,T2)" class="member-name-link">scheduleEvent</a><wbr>(float&nbsp;delay,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;eventName,
+ T0&nbsp;arg0,
+ T1&nbsp;arg1,
+ T2&nbsp;arg2)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Schedule an event with three arguments</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#trigger(java.lang.String)" class="member-name-link">trigger</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;eventName)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Trigger an event with no arguments</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>&lt;T&gt;&nbsp;void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#trigger(java.lang.String,T)" class="member-name-link">trigger</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;eventName,
+ T&nbsp;arg0)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Trigger an event with one argument</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>&lt;T0,<wbr>
+T1&gt;&nbsp;void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#trigger(java.lang.String,T0,T1)" class="member-name-link">trigger</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;eventName,
+ T0&nbsp;arg0,
+ T1&nbsp;arg1)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Trigger an event with one argument</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>&lt;T0,<wbr>
 T1,<wbr>
 T2&gt;&nbsp;void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#trigger(java.lang.String,T0,T1,T2)" class="member-name-link">trigger</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;eventName,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#trigger(java.lang.String,T0,T1,T2)" class="member-name-link">trigger</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;eventName,
  T0&nbsp;arg0,
  T1&nbsp;arg1,
  T2&nbsp;arg2)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Trigger an event with one argument</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Update the event handler, processing and triggering scheduled events that have reached their
+ scheduled execution time.</div>
 </div>
 </div>
 </div>
@@ -329,6 +373,111 @@ T2&gt;</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="eleme
 <dd><code>arg0</code> - arg 0 to pass to event</dd>
 <dd><code>arg1</code> - arg 1 to pass to event</dd>
 <dd><code>arg2</code> - arg 2 to pass to event</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="scheduleEvent(float,java.lang.String)">
+<h3>scheduleEvent</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ScheduledEvent.html" title="class in com.csse3200.game.events">ScheduledEvent</a></span>&nbsp;<span class="element-name">scheduleEvent</span><wbr><span class="parameters">(float&nbsp;delay,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;eventName)</span></div>
+<div class="block">Schedule an event with no arguments</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>delay</code> - delay before triggering event</dd>
+<dd><code>eventName</code> - name of the event</dd>
+<dt>Returns:</dt>
+<dd>the scheduled event</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="scheduleEvent(float,java.lang.String,T)">
+<h3 id="scheduleEvent(float,java.lang.String,java.lang.Object)">scheduleEvent</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type"><a href="ScheduledEvent.html" title="class in com.csse3200.game.events">ScheduledEvent</a></span>&nbsp;<span class="element-name">scheduleEvent</span><wbr><span class="parameters">(float&nbsp;delay,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;eventName,
+ T&nbsp;arg0)</span></div>
+<div class="block">Schedule an event with one argument</div>
+<dl class="notes">
+<dt>Type Parameters:</dt>
+<dd><code>T</code> - argument type</dd>
+<dt>Parameters:</dt>
+<dd><code>delay</code> - delay before triggering event</dd>
+<dd><code>eventName</code> - name of the event</dd>
+<dd><code>arg0</code> - arg to pass to event</dd>
+<dt>Returns:</dt>
+<dd>the scheduled event</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="scheduleEvent(float,java.lang.String,T0,T1)">
+<h3 id="scheduleEvent(float,java.lang.String,java.lang.Object,java.lang.Object)">scheduleEvent</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="type-parameters">&lt;T0,<wbr>
+T1&gt;</span>&nbsp;<span class="return-type"><a href="ScheduledEvent.html" title="class in com.csse3200.game.events">ScheduledEvent</a></span>&nbsp;<span class="element-name">scheduleEvent</span><wbr><span class="parameters">(float&nbsp;delay,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;eventName,
+ T0&nbsp;arg0,
+ T1&nbsp;arg1)</span></div>
+<div class="block">Schedule an event with two arguments</div>
+<dl class="notes">
+<dt>Type Parameters:</dt>
+<dd><code>T0</code> - Type of arg 0</dd>
+<dd><code>T1</code> - Type of arg 1</dd>
+<dt>Parameters:</dt>
+<dd><code>delay</code> - delay before triggering event</dd>
+<dd><code>eventName</code> - name of the event</dd>
+<dd><code>arg0</code> - arg 0 to pass to event</dd>
+<dd><code>arg1</code> - arg 1 to pass to event</dd>
+<dt>Returns:</dt>
+<dd>the scheduled event</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="scheduleEvent(float,java.lang.String,T0,T1,T2)">
+<h3 id="scheduleEvent(float,java.lang.String,java.lang.Object,java.lang.Object,java.lang.Object)">scheduleEvent</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="type-parameters">&lt;T0,<wbr>
+T1,<wbr>
+T2&gt;</span>&nbsp;<span class="return-type"><a href="ScheduledEvent.html" title="class in com.csse3200.game.events">ScheduledEvent</a></span>&nbsp;<span class="element-name">scheduleEvent</span><wbr><span class="parameters">(float&nbsp;delay,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;eventName,
+ T0&nbsp;arg0,
+ T1&nbsp;arg1,
+ T2&nbsp;arg2)</span></div>
+<div class="block">Schedule an event with three arguments</div>
+<dl class="notes">
+<dt>Type Parameters:</dt>
+<dd><code>T0</code> - Type of arg 0</dd>
+<dd><code>T1</code> - Type of arg 1</dd>
+<dd><code>T2</code> - Type of arg 2</dd>
+<dt>Parameters:</dt>
+<dd><code>delay</code> - delay before triggering event</dd>
+<dd><code>eventName</code> - name of the event</dd>
+<dd><code>arg0</code> - arg 0 to pass to event</dd>
+<dd><code>arg1</code> - arg 1 to pass to event</dd>
+<dd><code>arg2</code> - arg 2 to pass to event</dd>
+<dt>Returns:</dt>
+<dd>the scheduled event</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="update()">
+<h3>update</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">update</span>()</div>
+<div class="block">Update the event handler, processing and triggering scheduled events that have reached their
+ scheduled execution time.
+
+ <p>If there is no instance of <a href="../services/GameTime.html" title="class in com.csse3200.game.services"><code>GameTime</code></a> available, this method does nothing.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="cancelEvent(com.csse3200.game.events.ScheduledEvent)">
+<h3>cancelEvent</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">cancelEvent</span><wbr><span class="parameters">(<a href="ScheduledEvent.html" title="class in com.csse3200.game.events">ScheduledEvent</a>&nbsp;event)</span></div>
+<div class="block">Cancels the given scheduled event</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>event</code> - event to cancel</dd>
 </dl>
 </section>
 </li>
