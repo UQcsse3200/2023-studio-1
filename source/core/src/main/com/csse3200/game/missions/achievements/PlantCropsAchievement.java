@@ -1,5 +1,6 @@
 package com.csse3200.game.missions.achievements;
 
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.MissionManager;
 
@@ -55,6 +56,16 @@ public class PlantCropsAchievement extends Achievement {
     @Override
     public String getShortDescription() {
         return numberOfCropsPlanted + " out of " + target + " crops planted";
+    }
+
+    @Override
+    public void setProgress(JsonValue progress) {
+        numberOfCropsPlanted = progress.asInt();
+    }
+
+    @Override
+    public Object getProgress() {
+        return numberOfCropsPlanted;
     }
 
     /**

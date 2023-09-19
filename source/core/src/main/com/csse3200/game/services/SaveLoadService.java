@@ -55,6 +55,7 @@ public class SaveLoadService {
     state.setDay(ServiceLocator.getTimeService().getDay());
     state.setHour(ServiceLocator.getTimeService().getHour());
     state.setClimate(ServiceLocator.getGameArea().getClimateController());
+    state.setMissions(ServiceLocator.getMissionManager());
 
     state.setPlayer(ServiceLocator.getGameArea().getPlayer());
     state.setTractor(ServiceLocator.getGameArea().getTractor());
@@ -243,7 +244,7 @@ public class SaveLoadService {
    */
   private void updateMissions(GameState state) {
     MissionManager missions = ServiceLocator.getMissionManager();
-    // TODO Mission saving
-    // Add in setting missions based off the ones that are done
+    missions.setActiveQuests(state.getMissions().getActiveQuests());
+    missions.setSelectableQuests(state.getMissions().getSelectableQuests());
   }
 }

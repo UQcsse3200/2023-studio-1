@@ -230,7 +230,8 @@ public class SpaceGameArea extends GameArea {
 
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
-    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createCowFood());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createAloeVeraSeed());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createFertiliser());
 
     tractor = spawnTractor();
     spawnQuestgiver();
