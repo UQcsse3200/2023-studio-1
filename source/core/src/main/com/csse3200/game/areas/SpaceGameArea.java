@@ -168,6 +168,7 @@ public class SpaceGameArea extends GameArea {
           "images/plants/misc/hammer_plant_seed.png",
           "images/plants/misc/space_snapper_seed.png",
           "images/invisible_sprite.png",
+          "images/plants/misc/atomic_algae_seed.png",
 
           /* placeable */
           "images/placeable/sprinkler/pipe_null.png",
@@ -205,26 +206,25 @@ public class SpaceGameArea extends GameArea {
           "images/placeable/sprinkler/off/pipe_right_triple.png",
           "images/placeable/sprinkler/off/pipe_quad.png",
 
-          "images/plants/misc/atomic_algae_seed.png",
-          "images/invisible_sprite.png",
-
-          "images/fences/f.png",
-          "images/fences/f_d.png",
-          "images/fences/f_d_u.png",
-          "images/fences/f_d_l.png",
-          "images/fences/f_r_d.png",
-          "images/fences/f_r_l_u.png",
-          "images/fences/f_u.png",
-          "images/fences/f_d_l_u.png",
-          "images/fences/f_l.png",
-          "images/fences/f_r_d_l.png",
-          "images/fences/f_r_d_u.png",
-          "images/fences/f_r.png",
-          "images/fences/f_d.png",
-          "images/fences/f_l_u.png",
-          "images/fences/f_r_d_l_u.png",
-          "images/fences/f_r_l.png",
-          "images/fences/f_r_u.png"
+          "images/placeable/fences/gate.png",
+          "images/placeable/fences/gate_open.png",
+          "images/placeable/fences/f.png",
+          "images/placeable/fences/f_d.png",
+          "images/placeable/fences/f_d_u.png",
+          "images/placeable/fences/f_d_l.png",
+          "images/placeable/fences/f_r_d.png",
+          "images/placeable/fences/f_r_l_u.png",
+          "images/placeable/fences/f_u.png",
+          "images/placeable/fences/f_d_l_u.png",
+          "images/placeable/fences/f_l.png",
+          "images/placeable/fences/f_r_d_l.png",
+          "images/placeable/fences/f_r_d_u.png",
+          "images/placeable/fences/f_r.png",
+          "images/placeable/fences/f_d.png",
+          "images/placeable/fences/f_l_u.png",
+          "images/placeable/fences/f_r_d_l_u.png",
+          "images/placeable/fences/f_r_l.png",
+          "images/placeable/fences/f_r_u.png"
   };
   private static final String[] forestTextureAtlases = {
       "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",

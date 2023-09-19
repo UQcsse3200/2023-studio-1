@@ -22,8 +22,6 @@ public class PlaceableFactory {
     public static Entity createBasePlaceable(EntityType type) {
         Entity placeable = new Entity(type)
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
-                //.addComponent(new DynamicTextureRenderComponent())
-                //.addComponent(new TextureRenderComponent("images/plants/misc/tobacco_seed.png"))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
         return placeable;
     }
@@ -34,7 +32,9 @@ public class PlaceableFactory {
      * @return the fence entity that was made
      */
     public static Entity createFence() {
-        Entity fence = createBasePlaceable(EntityType.Fence);
+        Entity fence = createBasePlaceable(EntityType.Fence)
+                .addComponent(new DynamicTextureRenderComponent("images/placeable/fences/f.png"))
+                .addComponent(new FenceComponent(false));
         // Add components here
         return fence;
     }
@@ -45,8 +45,8 @@ public class PlaceableFactory {
      * @return the gate entity that was made
      */
     public static Entity createGate() {
-        Entity gate = createBasePlaceable(EntityType.Gate)
-                .addComponent(new DynamicTextureRenderComponent("images/fences/f.png"))
+        Entity gate = createBasePlaceable(EntityType.Fence)  //used to be .Gate.
+                .addComponent(new DynamicTextureRenderComponent("images/placeable/fences/gate.png"))
                 .addComponent(new FenceComponent(true));
         return gate;
     }
@@ -57,10 +57,8 @@ public class PlaceableFactory {
      * @return the sprinkler that was made
      */
     public static Entity createSprinkler() {
-        Entity sprinkler = createBasePlaceable(EntityType.Sprinkler);
-        // set temp texture to differentiate from other entities
-        sprinkler.addComponent(new DynamicTextureRenderComponent("images/placeable/sprinkler/pipe_null.png"));
-        //sprinkler.getComponent(DynamicTextureRenderComponent.class).setTexture("images/placeable/sprinkler/pipe_null.png");
+        Entity sprinkler = createBasePlaceable(EntityType.Sprinkler)
+                .addComponent(new DynamicTextureRenderComponent("images/placeable/sprinkler/pipe_null.png"));
         // stop from blocking player movement
         sprinkler.getComponent(ColliderComponent.class).setLayer(PhysicsLayer.NONE);
         // add sprinkler component

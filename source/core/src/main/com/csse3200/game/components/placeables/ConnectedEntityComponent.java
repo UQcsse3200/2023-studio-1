@@ -8,60 +8,40 @@ import com.csse3200.game.services.ServiceLocator;
 import java.util.LinkedHashMap;
 
 /**
- * NOTES;
- * - this could be something that just updates the list of adjacents for use on placement,
- *    that way the sprinklerComponent & fenceComponent can just run through their adj list (rather than handling updates too).
- *
- * - yes okay since this is just updating the adj list the sprinkler still gets to call reconfig (for power and texture),
- *    yes fence too.
- *    - because that part isn't hard it's just a loop with bit masking.
- *
- *  - lets try to implement non-callback(?) updates in sprinkler first then we can move the logic into here!
- */
-
-
-/**
- * proceedure:
- * fill map with things,
- * set up listeners and triggers,
- * trigger surroinding to update,
- * make the values in the map accessible to sprinklerComponent and fenceComponent
- */
-
-
-/**
  * Used by placeable components to handle connected textures and other functionality that requires a Placeable to
  * interact dynamically with other Placeable entities.
  */
 public class ConnectedEntityComponent extends Component {
 
-  private Entity target;
-  private Vector2[] adjPositions;
+  private final Entity target;
 
-  private LinkedHashMap<Vector2, Boolean> adjPlaceable;
+  private final LinkedHashMap<Vector2, Boolean> adjPlaceable;
 
   public ConnectedEntityComponent(Entity target) {
     // Set target entity and the coordinates where it expects to find adjacent Placeable(s).
     this.target = target;
-    this.adjPositions = new Vector2[] {
-            new Vector2(target.getPosition().x,target.getPosition().y+1), // Above
-            new Vector2(target.getPosition().x,target.getPosition().y-1), // Below
-            new Vector2(target.getPosition().x+1,target.getPosition().y), // Right
-            new Vector2(target.getPosition().x-1,target.getPosition().y)  // Left
+    Vector2[] adjPositions = new Vector2[]{
+            new Vector2(target.getPosition().x, target.getPosition().y + 1), // Above
+            new Vector2(target.getPosition().x, target.getPosition().y - 1), // Below
+            new Vector2(target.getPosition().x + 1, target.getPosition().y), // Right
+            new Vector2(target.getPosition().x - 1, target.getPosition().y)  // Left
     };
 
     // Init the adjacent map:
     this.adjPlaceable = new LinkedHashMap<Vector2, Boolean>(4);
-    // TODO Add desc.
-    for (Vector2 pos : this.adjPositions) {
+    // TODO Add desc & clean up this ugly code
+    for (Vector2 pos : adjPositions) {
       // Add listener for new Placeable in this position:
       target.getEvents().addListener("placed:"+pos, this::updateAdjPlaceable);
       // Get an initial mapping of the adjacent Placeable(s).
       Entity p = ServiceLocator.getGameArea().getMap().getTile(pos).getPlaceable();
       if (p != null) {
-        this.adjPlaceable.put(pos, p.getType() == target.getType());
+        if (p.getType() == target.getType()) {
+          System.out.println("p:"+p.getType()+", target:"+target.getType());
+          this.adjPlaceable.put(pos, true); //p.getType() == target.getType());
+          p.getEvents().trigger("placed:"+target.getPosition(), target.getPosition());
+        } else this.adjPlaceable.put(pos, false);
         // Trigger the adjacent Placeable to update its map with this Placeable.
-        p.getEvents().trigger("placed:"+target.getPosition(), target.getPosition());
       } else this.adjPlaceable.put(pos, false);
     }
   }
@@ -83,7 +63,7 @@ public class ConnectedEntityComponent extends Component {
 
   /**
    * Uses the given position as a key in the adjacency map to set the corresponding value to true.
-   * TODO add option to set true of false, (hand for on destroy).
+   * TODO add option to set true of false, (handy for on destroy).
    * @param pos A key into the adjacency map
    */
   public void updateAdjPlaceable(Vector2 pos) {

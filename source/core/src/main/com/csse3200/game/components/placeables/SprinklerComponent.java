@@ -15,10 +15,8 @@ import com.csse3200.game.services.ServiceLocator;
  * - sprinklers sprinkle every 'minute'. (however long a minute in TimeService is).
  *
  * TODO:
- *  - when a sprinkler is placed next to an already placed pump, the sprinkler doesn't connect to it... hmm.
- *  - more untested things.
- *  - when a pump is placed next to an unpowered sprinkler, that sprinkler doesn't update its power status like it should.
- *    - most likely easy fix but not sure the cause.
+ *  - more testing
+ *  - get sprinkler powered/un-powered updates working.
  *  - animate watering.
  *  - integrate with save&load.
  *  - move the notifyAdjacent and alike functions to their own component so fences can use them too.
@@ -155,7 +153,7 @@ public class SprinklerComponent extends Component {
    * Re-configures using configSprinkler() and checks if a change of state has occurred.
    * If a change of state has occurred then this sprinkler tells all its adjacent sprinklers to
    * check themselves for a state change via reConfigure().
-   */
+   */ // TODO: restore functionality
   public void reConfigure() {
     if (this.pump) return;  // A pump shouldn't reconfigure.
     // Save old state
@@ -177,17 +175,11 @@ public class SprinklerComponent extends Component {
 
 
   /**
-   * Sets powered status and texture 'orientation' by scanning the adjacent sprinklers/pump.
+   * Sets powered status and texture 'orientation' based off the adjacent sprinklers.
    *  - A power source is either a pump or a powered sprinkler.
    *  - A texture is selected for this sprinkler based on the surrounding sprinklers,
    *    this illustrates to the player that these sprinklers are connected - like pipes.
-   *    - Available textures are (16 in total):
-   *        * straight horizontal
-   *        * straight vertical
-   *        * 90 degree bend in any orientation
-   *        * 3 way connection in any orientation
-   *        * 4 way connection
-   *        * + singular connections in each orientation
+   *    TODO config power
    */
   public void configSprinkler() {
     // get index into texture array based on surrounding sprinklers
