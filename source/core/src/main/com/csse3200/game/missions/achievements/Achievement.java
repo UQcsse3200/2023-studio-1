@@ -16,7 +16,7 @@ public abstract class Achievement extends Mission {
 	}
 
 	public void write(Json json) {
-		json.writeObjectStart("Quest");
+		json.writeObjectStart("Achievement");
 		json.writeValue("name", getName());
 		json.writeValue("progress", new int[]{0, 1, 2});
 		json.writeObjectEnd();
