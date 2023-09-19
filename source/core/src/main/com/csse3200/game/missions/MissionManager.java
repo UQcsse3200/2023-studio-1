@@ -1,5 +1,7 @@
 package com.csse3200.game.missions;
 
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.achievements.Achievement;
 import com.csse3200.game.missions.achievements.PlantCropsAchievement;
@@ -11,7 +13,7 @@ import com.csse3200.game.services.ServiceLocator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MissionManager {
+public class MissionManager implements Json.Serializable {
 
 	/**
 	 * An enum storing all possible events that the {@link MissionManager}'s {@link EventHandler} should listen to and
@@ -149,4 +151,27 @@ public class MissionManager {
 		}
 	}
 
+	@Override
+	public void write(Json json) {
+		json.writeObjectStart("ActiveQuests");
+		for (Quest q : activeQuests) {
+			q.write(json);
+		}
+		json.writeObjectEnd();
+		json.writeObjectStart("SelectableQuests");
+		for (Quest q : selectableQuests) {
+			q.write(json);
+		}
+		json.writeObjectEnd();
+		json.writeObjectStart("Achievements");
+		for (Achievement achievement : achievements) {
+			achievement.write(json);
+		}
+		json.writeObjectEnd();
+	}
+
+	@Override
+	public void read(Json json, JsonValue jsonData) {
+
+	}
 }

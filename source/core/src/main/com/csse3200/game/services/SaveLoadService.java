@@ -55,6 +55,7 @@ public class SaveLoadService {
     state.setDay(ServiceLocator.getTimeService().getDay());
     state.setHour(ServiceLocator.getTimeService().getHour());
     state.setClimate(ServiceLocator.getGameArea().getClimateController());
+    state.setMissions(ServiceLocator.getMissionManager());
 
     state.setPlayer(ServiceLocator.getGameArea().getPlayer());
     state.setTractor(ServiceLocator.getGameArea().getTractor());

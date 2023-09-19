@@ -1,5 +1,7 @@
 package com.csse3200.game.missions.quests;
 
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
 import com.csse3200.game.missions.Mission;
 import com.csse3200.game.missions.rewards.Reward;
 
@@ -94,4 +96,12 @@ public abstract class Quest extends Mission {
 	 */
 	protected abstract void resetState();
 
+	public void write(Json json) {
+		json.writeObjectStart("Quest");
+		json.writeValue("name", getName());
+		json.writeValue("expiry", timeToExpiry);
+		json.writeValue("progress", new int[]{0, 1, 2});
+		json.writeValue("collected", reward.isCollected());
+		json.writeObjectEnd();
+	}
 }

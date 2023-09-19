@@ -1,5 +1,6 @@
 package com.csse3200.game.missions.achievements;
 
+import com.badlogic.gdx.utils.Json;
 import com.csse3200.game.missions.Mission;
 
 public abstract class Achievement extends Mission {
@@ -14,4 +15,10 @@ public abstract class Achievement extends Mission {
 		super(name);
 	}
 
+	public void write(Json json) {
+		json.writeObjectStart("Quest");
+		json.writeValue("name", getName());
+		json.writeValue("progress", new int[]{0, 1, 2});
+		json.writeObjectEnd();
+	}
 }
