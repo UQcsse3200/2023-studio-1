@@ -1,8 +1,9 @@
 package com.csse3200.game.components;
 
-import box2dLight.PointLight;
 import com.badlogic.gdx.graphics.Color;
 import com.csse3200.game.services.ServiceLocator;
+
+import box2dLight.PointLight;
 
 public class AuraLightComponent extends Component{
 

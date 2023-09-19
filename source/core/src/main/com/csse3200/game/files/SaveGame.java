@@ -1,12 +1,13 @@
 package com.csse3200.game.files;
 
+import java.io.File;
+
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.files.FileLoader.Location;
-
-import java.io.File;
+import com.csse3200.game.missions.MissionManager;
 
 /**
  * Reading, Writing, and applying user settings in the game.
@@ -44,6 +45,8 @@ public class SaveGame {
     private int hour;
 
     private ClimateController climate;
+
+    private MissionManager missions;
 
     private Entity player;
     private Entity tractor;
@@ -149,6 +152,14 @@ public class SaveGame {
 
     public void setClimate(ClimateController climate) {
       this.climate = climate;
+    }
+
+    public MissionManager getMissions() {
+      return missions;
+    }
+
+    public void setMissions(MissionManager missions) {
+      this.missions = missions;
     }
   }
 }

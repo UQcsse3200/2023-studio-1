@@ -1,5 +1,8 @@
 package com.csse3200.game.components.questgiver;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -13,9 +16,6 @@ import com.csse3200.game.missions.achievements.Achievement;
 import com.csse3200.game.missions.quests.Quest;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Renders a UI for interacting with Missions.
@@ -355,6 +355,7 @@ public class MissionDisplay extends UIComponent {
         List<Quest> activeQuests = missionManager.getActiveQuests();
 
         List<Quest> inProgressQuests = activeQuests.stream().filter(quest -> !(quest.isExpired() || quest.isCompleted())).toList();
+        System.out.println(activeQuests);
         List<Quest> expiredQuests = activeQuests.stream().filter(Quest::isExpired).toList();
         List<Quest> completedQuests = activeQuests.stream().filter(Quest::isCompleted).toList();
 

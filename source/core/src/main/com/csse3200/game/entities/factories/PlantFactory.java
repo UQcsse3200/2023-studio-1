@@ -1,11 +1,14 @@
 package com.csse3200.game.entities.factories;
+
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.areas.terrain.CropTileComponent;
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.components.plants.PlantComponent;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
-import com.csse3200.game.entities.configs.plants.*;
+import com.csse3200.game.entities.configs.plants.BasePlantConfig;
+import com.csse3200.game.entities.configs.plants.PlantConfigs;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
@@ -13,11 +16,7 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.rendering.DynamicTextureRenderComponent;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.services.ServiceLocator;
-
-import java.util.Map;
 
 /**
  * Factory to create plant entities.

@@ -1,4 +1,9 @@
 package com.csse3200.game.components.plants;
+import static com.badlogic.gdx.math.MathUtils.random;
+
+import java.util.Map;
+import java.util.function.Supplier;
+
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Json;
 import com.csse3200.game.areas.terrain.CropTileComponent;
@@ -7,11 +12,6 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.rendering.DynamicTextureRenderComponent;
-import java.util.Map;
-import java.util.function.Supplier;
-
-import static com.badlogic.gdx.math.MathUtils.random;
 
 /**
  * Class for all plants in the game.

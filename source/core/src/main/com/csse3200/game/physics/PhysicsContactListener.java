@@ -1,8 +1,13 @@
 package com.csse3200.game.physics;
 
-import com.badlogic.gdx.physics.box2d.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.Manifold;
 
 /**
  * Box2D collision events fire globally on the physics world, not per-object. The contact listener

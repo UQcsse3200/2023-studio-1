@@ -1,14 +1,20 @@
 package com.csse3200.game.missions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import com.badlogic.gdx.utils.JsonValue;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.quests.Quest;
 import com.csse3200.game.missions.rewards.Reward;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
-import org.junit.jupiter.api.*;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class MissionManagerTest {
 
@@ -61,6 +67,15 @@ class MissionManagerTest {
             }
 
             @Override
+            public void setProgress(JsonValue progress) {
+            }
+
+            @Override
+            public JsonValue getProgress() {
+                return null;
+            }
+
+            @Override
             protected void resetState() {
             }
         };
@@ -84,6 +99,15 @@ class MissionManagerTest {
 
             @Override
             public String getShortDescription() {
+                return null;
+            }
+
+            @Override
+            public void setProgress(JsonValue progress) {
+            }
+
+            @Override
+            public JsonValue getProgress() {
                 return null;
             }
 
@@ -113,6 +137,15 @@ class MissionManagerTest {
 
             @Override
             public String getShortDescription() {
+                return null;
+            }
+
+            @Override
+            public void setProgress(JsonValue progress) {
+            }
+
+            @Override
+            public JsonValue getProgress() {
                 return null;
             }
 
