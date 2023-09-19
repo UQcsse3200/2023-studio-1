@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.inventory.InventoryDisplay;
 import com.csse3200.game.components.inventory.ToolbarDisplay;
 import com.csse3200.game.components.maingame.PauseMenuActions;
@@ -22,6 +23,7 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Factory to create a player entity.
@@ -63,11 +65,11 @@ public class PlayerFactory {
             .addComponent(new OpenPauseComponent())
             .addComponent(new PlayerAnimationController())
             .addComponent(new ItemPickupComponent())
-            .addComponent(new InteractionDetector(2f))
+            .addComponent(new InteractionDetector(2f, new ArrayList<EntityType>(Arrays.asList(EntityType.Questgiver, EntityType.Gate, EntityType.Chest, EntityType.Chicken,
+                    EntityType.Cow, EntityType.Astrolotl, EntityType.OxygenEater))))
             .addComponent(new ToolbarDisplay())
 	        .addComponent(new AuraLightComponent())
             .addComponent(new InventoryDisplay(playerInventory))
-            .addComponent(new ToolbarDisplay())
             .addComponent(new PauseMenuActions());
 
     player.getComponent(ColliderComponent.class).setDensity(1.5f);

@@ -1,16 +1,30 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.events.EventHandler;
+import org.junit.After;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class PlanetOxygenServiceTest {
     PlanetOxygenService planetOxygenService;
+    EventHandler eventHandler;
     @BeforeEach
     void setUp() {
+        TimeService timeService = mock(TimeService.class);
+        ServiceLocator.registerTimeService(timeService);
+        eventHandler = new EventHandler();
+        when(timeService.getEvents()).thenReturn(eventHandler);
+
         planetOxygenService = new PlanetOxygenService();
+    }
+
+    @AfterEach
+    void clear() {
+        ServiceLocator.clear();
     }
     
     @Test

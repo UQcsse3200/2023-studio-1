@@ -35,7 +35,7 @@ public class MissionDisplay extends UIComponent {
 
         addActors();
 
-        entity.getEvents().addListener("toggleMissions", this::toggleOpen);
+        entity.getEvents().addListener("interact", this::toggleOpen);
     }
 
     /**
