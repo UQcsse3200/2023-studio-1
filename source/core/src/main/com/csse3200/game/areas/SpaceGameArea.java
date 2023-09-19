@@ -2,6 +2,7 @@ package com.csse3200.game.areas;
 
 import java.util.ArrayList;
 
+import com.csse3200.game.entities.factories.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,12 +19,6 @@ import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.ItemFactory;
-import com.csse3200.game.entities.factories.NPCFactory;
-import com.csse3200.game.entities.factories.ObstacleFactory;
-import com.csse3200.game.entities.factories.PlayerFactory;
-import com.csse3200.game.entities.factories.QuestgiverFactory;
-import com.csse3200.game.entities.factories.TractorFactory;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
@@ -172,7 +167,10 @@ public class SpaceGameArea extends GameArea {
           "images/plants/misc/hammer_plant_seed.png",
           "images/plants/misc/space_snapper_seed.png",
           "images/plants/misc/atomic_algae_seed.png",
-          "images/invisible_sprite.png"
+          "images/invisible_sprite.png",
+
+          "images/yellowSquare.png",
+          "images/yellowCircle.png"
   };
   private static final String[] forestTextureAtlases = {
       "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
@@ -233,6 +231,7 @@ public class SpaceGameArea extends GameArea {
     player.getComponent(InventoryComponent.class).addItem(ItemFactory.createCowFood());
 
     tractor = spawnTractor();
+    spawnPlayerHighlight();
     spawnQuestgiver();
     spawnChickens();
     spawnCows();
@@ -487,5 +486,11 @@ public class SpaceGameArea extends GameArea {
    */
   public GameMap getMap() {
     return gameMap;
+  }
+
+
+  public void spawnPlayerHighlight() {
+    Entity playerHighlight = PlayerHighlightFactory.createPlayerHighlight();
+    spawnEntityAt(playerHighlight, PLAYER_SPAWN, true, true);
   }
 }
