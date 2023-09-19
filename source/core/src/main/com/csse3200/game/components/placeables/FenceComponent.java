@@ -1,5 +1,7 @@
 package com.csse3200.game.components.placeables;
 
+import java.util.HashMap;
+
 import com.csse3200.game.components.Component;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
@@ -62,6 +64,10 @@ public class FenceComponent extends Component {
         }
         this.entity.getComponent(ColliderComponent.class).setSensor(false);
         this.currentTexture.setTexture(closedGatePath);
+    }
+
+    private void updateTexturePath() {
+
     }
 
     public void updateTexture() {
