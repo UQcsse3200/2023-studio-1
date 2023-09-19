@@ -2,6 +2,7 @@ package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.placeables.SprinklerComponent;
+import com.csse3200.game.components.placeables.FenceComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
@@ -14,19 +15,22 @@ public class PlaceableFactory {
 
     /**
      * Creates the basic most broad Placeable Entity
+     * 
      * @param type the type of entity from the EntityType enum
      * @return the entity that was made
      */
     public static Entity createBasePlaceable(EntityType type) {
         Entity placeable = new Entity(type)
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
-                .addComponent(new DynamicTextureRenderComponent("images/plants/misc/aloe_vera_seed.png"))
+                //.addComponent(new DynamicTextureRenderComponent())
+                //.addComponent(new TextureRenderComponent("images/plants/misc/tobacco_seed.png"))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
         return placeable;
     }
 
     /**
      * Creates a fence Entity
+     * 
      * @return the fence entity that was made
      */
     public static Entity createFence() {
@@ -37,22 +41,26 @@ public class PlaceableFactory {
 
     /**
      * Creates a gate Entity
+     * 
      * @return the gate entity that was made
      */
     public static Entity createGate() {
-        Entity gate = createBasePlaceable(EntityType.Gate);
-        // Add components here
+        Entity gate = createBasePlaceable(EntityType.Gate)
+                .addComponent(new DynamicTextureRenderComponent("images/fences/f.png"))
+                .addComponent(new FenceComponent(true));
         return gate;
     }
 
     /**
      * Creates a sprinkler Entity
+     * 
      * @return the sprinkler that was made
      */
     public static Entity createSprinkler() {
         Entity sprinkler = createBasePlaceable(EntityType.Sprinkler);
         // set temp texture to differentiate from other entities
-        sprinkler.getComponent(DynamicTextureRenderComponent.class).setTexture("images/placeable/sprinkler/pipe_null.png");
+        sprinkler.addComponent(new DynamicTextureRenderComponent("images/placeable/sprinkler/pipe_null.png"));
+        //sprinkler.getComponent(DynamicTextureRenderComponent.class).setTexture("images/placeable/sprinkler/pipe_null.png");
         // stop from blocking player movement
         sprinkler.getComponent(ColliderComponent.class).setLayer(PhysicsLayer.NONE);
         // add sprinkler component
@@ -65,9 +73,10 @@ public class PlaceableFactory {
      * @return the pump that was made
      */
     public static Entity createPump() {
-        Entity pump = createBasePlaceable(EntityType.Sprinkler); // hm
+        Entity pump = createBasePlaceable(EntityType.Sprinkler);
         // set temp texture to differentiate from other entities
-        pump.getComponent(DynamicTextureRenderComponent.class).setTexture("images/placeable/sprinkler/pump.png");
+        pump.addComponent(new DynamicTextureRenderComponent("images/placeable/sprinkler/pump.png"));
+        //pump.getComponent(DynamicTextureRenderComponent.class).setTexture("images/placeable/sprinkler/pump.png");
         // add sprinkler component
         pump.addComponent(new SprinklerComponent());
         // set as a pump
@@ -77,6 +86,7 @@ public class PlaceableFactory {
 
     /**
      * Creates a chest Entity
+     * 
      * @return the chest that was made
      */
     public static Entity createChest() {
