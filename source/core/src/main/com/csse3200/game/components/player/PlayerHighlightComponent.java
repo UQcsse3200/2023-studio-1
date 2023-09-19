@@ -13,7 +13,6 @@ public class PlayerHighlightComponent extends Component {
     private DynamicTextureRenderComponent currentTexture;
     private boolean isMuted;
 
-
     @Override
     public void create() {
 		entity.getEvents().addListener("enterTractor", this::mute);
@@ -21,12 +20,16 @@ public class PlayerHighlightComponent extends Component {
         currentTexture = entity.getComponent(DynamicTextureRenderComponent.class);
     }
 
-    private void mute() {
+    public void mute() {
         isMuted = true;
     }
 
-    private void unMute() {
+    public void unMute() {
         isMuted = false;
+    }
+
+    public boolean isMuted() {
+        return isMuted;
     }
 
     public PlayerHighlightComponent() {
