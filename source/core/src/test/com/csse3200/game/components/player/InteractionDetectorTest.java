@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.csse3200.game.physics.components.HitboxComponent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -56,8 +57,8 @@ public class InteractionDetectorTest {
 
         Entity entity1 = makeEntity();
         Entity entity2 = makeEntity();
-        Fixture entity1Fixture = entity1.getComponent(ColliderComponent.class).getFixture();
-        Fixture entity2Fixture = entity2.getComponent(ColliderComponent.class).getFixture();
+        Fixture entity1Fixture = entity1.getComponent(HitboxComponent.class).getFixture();
+        Fixture entity2Fixture = entity2.getComponent(HitboxComponent.class).getFixture();
 
         // Test event listeners work as it inherits from HitBoxComponent so collisions are assumed to work as intended.
         // trigger collisionStart
@@ -277,17 +278,17 @@ public class InteractionDetectorTest {
     }
 
     public Entity makeEntity() {
-        Entity entity = new Entity(EntityType.Gate)
+        Entity entity = new Entity()
                 .addComponent(new PhysicsComponent())
-                .addComponent(new ColliderComponent());
+                .addComponent(new HitboxComponent());
         entity.create();
         return entity;
     }
 
     public Entity makeEntity(Vector2 position) {
-        Entity entity = new Entity(EntityType.Gate)
+        Entity entity = new Entity()
                 .addComponent(new PhysicsComponent())
-                .addComponent(new ColliderComponent());
+                .addComponent(new HitboxComponent());
         entity.setPosition(position);
         entity.setScale(0, 0); // sets scale to 0 so getCenterPosition == setPosition. easier to test
         entity.create();
