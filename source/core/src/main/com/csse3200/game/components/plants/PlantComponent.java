@@ -534,7 +534,7 @@ public class PlantComponent extends Component {
         int time = ServiceLocator.getTimeService().getHour();
 
 
-        if (time == 12) {
+        if (time == 12 || time == 3 || time == 6 || time == 14) {
             increaseCurrentGrowthLevel();
             if ((getGrowthStage().getValue() < GrowthStage.ADULT.getValue())) {
                 if (this.currentGrowthLevel >= this.growthStageThresholds[getGrowthStage().getValue() - 1]) {
@@ -544,6 +544,11 @@ public class PlantComponent extends Component {
                 }
             } else if (getGrowthStage().getValue() == GrowthStage.ADULT.getValue()) {
                 entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType(this.adultEffect);
+                switch (this.plantName) {
+                    case "Space Snapper" -> entity.getComponent(PlantAreaOfEffectComponent.class).setRadius(1.5f);
+                    case "Hammer Plant" -> entity.getComponent(PlantAreaOfEffectComponent.class).setRadius(3f);
+                    case "Deadly Nightshade" -> entity.getComponent(PlantAreaOfEffectComponent.class).setRadius(2.5f);
+                }
                 updateMaxHealth();
                 updateTexture();
                 beginDecay();
@@ -583,6 +588,7 @@ public class PlantComponent extends Component {
             this.numOfDaysAsAdult += 1;
             if (getNumOfDaysAsAdult() > getAdultLifeSpan()) {
                 entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType("Decay");
+                entity.getComponent(PlantAreaOfEffectComponent.class).setRadius(2f);
                 setGrowthStage(getGrowthStage().getValue() + 1);
                 updateTexture();
                 //playSound("decays");

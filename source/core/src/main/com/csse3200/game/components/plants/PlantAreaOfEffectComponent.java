@@ -1,17 +1,22 @@
 package com.csse3200.game.components.plants;
 
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
+import com.csse3200.game.physics.BodyUserData;
+import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.services.ServiceLocator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class to add an Area of Effect to all plants.
  */
-public class PlantAreaOfEffectComponent  extends InteractionDetector {
+public class PlantAreaOfEffectComponent extends HitboxComponent {
     /**
      * The radius of the area of effect.
      */
@@ -23,12 +28,21 @@ public class PlantAreaOfEffectComponent  extends InteractionDetector {
     private String effectType;
 
     /**
+     * List of entities within the area
+     */
+    private List<Entity> entitiesInRange = new ArrayList<>();
+
+    /**
+     * Circle shape of the area.
+     */
+    private CircleShape shape = new CircleShape();
+
+    /**
      * Constructor for the Area of Effect class.
-     * @param radius - The radius of the area.
+     * @param radius - The initial radius of the area.
      * @param effectType - The type of effect.
      */
     public PlantAreaOfEffectComponent(float radius, String effectType) {
-        super(1f);
         this.radius = radius;
         this.effectType = effectType;
     }
@@ -38,20 +52,15 @@ public class PlantAreaOfEffectComponent  extends InteractionDetector {
      */
     @Override
     public void create() {
-        super.create();
-        ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::hourlyEffect);
-    }
-
-    /**
-     * Override the function from the parent class. This allows the area to be centered on the crop tile
-     * where the plant is located.
-     */
-    @Override
-    public void setShape() {
-        CircleShape shape = new CircleShape();
         shape.setRadius(radius);
         shape.setPosition(entity.getComponent(PlantComponent.class).getCropTile().getEntity().getScale().scl(0.5f).add(0, -0.5f));
         setShape(shape);
+
+        entity.getEvents().addListener("collisionStart", this::onCollisionStart);
+        entity.getEvents().addListener("collisionEnd", this::onCollisionEnd);
+        ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::hourlyEffect);
+
+        super.create();
     }
 
     /**
@@ -67,23 +76,65 @@ public class PlantAreaOfEffectComponent  extends InteractionDetector {
     }
 
     /**
+     * Adds entity to entitiesInRange on collision start.
+     * NOTE: This function is copied from the InteractionDetector class, written by
+     * someone else.
+     *
+     * @param me     The fixture of this component.
+     * @param other  The fixture of the colliding entity.
+     */
+    private void onCollisionStart(Fixture me, Fixture other) {
+        if (getFixture() != me) {
+            return;
+        }
+
+        Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
+        entitiesInRange.add(target);
+    }
+
+    /**
+     * Removes entity from entitiesInRange on collision end.
+     * NOTE: This function is copied from the InteractionDetector class, written by
+     * someone else.
+     *
+     * @param me    The fixture of this component.
+     * @param other  The fixture of the colliding entity.
+     */
+    private void onCollisionEnd(Fixture me, Fixture other) {
+        if (getFixture() != me) {
+            return;
+        }
+
+        Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
+        entitiesInRange.remove(target);
+    }
+
+    public List<Entity> getEntitiesInRange() {
+        return new ArrayList<>(entitiesInRange);
+    }
+
+    /**
      * Effect that is triggered when the plant is decaying or dead. This effect decreases the health of all plants
      * near the decaying or dead plant. This encourages the player to remove dead and decaying plants.
      */
     private void decayAndDeadEffect() {
 
         for (Entity entityInRange : getEntitiesInRange()) {
+
             // Check for any crop tiles near the plant.
             if (entityInRange.getType() == EntityType.Tile) {
                 Entity plant = entityInRange.getComponent(CropTileComponent.class).getPlant();
                 if (plant != null) {
+
                     // Make sure the plant does not harm itself.
                     if (entity.getId() != plant.getId()) {
-                        // Decrease the health of plants in the effect area.
+
+                        // Decrease the health of all plants in the effect area.
                         plant.getComponent(PlantComponent.class).increasePlantHealth(-10);
                     }
                 }
             }
+
         }
     }
 
@@ -91,11 +142,10 @@ public class PlantAreaOfEffectComponent  extends InteractionDetector {
      * Effect that increases the health of plants, animals, and the player.
      */
     private void healthEffect() {
-
         for (Entity entityInRange : getEntitiesInRange()) {
-
-            // First check for other plants in the area
             if (entityInRange.getType() == EntityType.Tile) {
+
+                // First check for other plants in the area.
                 Entity plant = entityInRange.getComponent(CropTileComponent.class).getPlant();
                 if (plant != null) {
                     if (entity.getId() != plant.getId()) {
@@ -103,11 +153,10 @@ public class PlantAreaOfEffectComponent  extends InteractionDetector {
                     }
                 }
 
-            // Now check for the player
+            // Now check if the player.
             } else if (entityInRange.getType() == EntityType.Player) {
                 entityInRange.getComponent(CombatStatsComponent.class).addHealth(10);
             }
-
             // add animals to this.
         }
     }
@@ -131,7 +180,7 @@ public class PlantAreaOfEffectComponent  extends InteractionDetector {
      */
     private void eatEffect() {
 
-        // Check that the space snapper is not already eating
+        // Check that the space snapper is not already eating.
         if (!entity.getComponent(PlantComponent.class).getIsEating()) {
 
             for (Entity entityInRange : getEntitiesInRange()) {
@@ -164,10 +213,15 @@ public class PlantAreaOfEffectComponent  extends InteractionDetector {
     }
 
     /**
-     * Set the radius of the area.
+     * Set the radius of the area. This will dispose of the old hitbox component
+     * and create a new one with the desired radius.
      * @param radius - the new radius of the area.
      */
     public void setRadius(float radius) {
         this.radius = radius;
+        shape.setRadius(radius);
+        // Dispose the old HitboxComponent and create a new one with the new radius.
+        super.dispose();
+        super.create();
     }
 }
