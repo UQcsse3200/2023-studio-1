@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.badlogic.gdx.utils.JsonValue;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -84,6 +85,15 @@ class QuestTest {
             public String getShortDescription() {
                 return "Short Description 1";
             }
+
+            @Override
+            public void setProgress(JsonValue progress) {
+            }
+
+            @Override
+            public JsonValue getProgress() {
+                return null;
+            }
         };
         q2 = new Quest("My Quest 2", r2, 1, false) {
             private int count = 0;
@@ -111,6 +121,15 @@ class QuestTest {
             @Override
             public String getShortDescription() {
                 return "Short Description 2";
+            }
+
+            @Override
+            public void setProgress(JsonValue progress) {
+            }
+
+            @Override
+            public JsonValue getProgress() {
+                return null;
             }
         };
         q3 = new Quest("My Quest 3", r3, 1, true) {
@@ -140,6 +159,15 @@ class QuestTest {
             @Override
             public String getShortDescription() {
                 return "Short Description 3";
+            }
+
+            @Override
+            public void setProgress(JsonValue progress) {
+            }
+
+            @Override
+            public JsonValue getProgress() {
+                return null;
             }
         };
         q4 = new Quest("My Quest 4", r4, 4, false) {
@@ -171,6 +199,15 @@ class QuestTest {
             @Override
             public String getShortDescription() {
                 return "" + count;
+            }
+
+            @Override
+            public void setProgress(JsonValue progress) {
+            }
+
+            @Override
+            public JsonValue getProgress() {
+                return null;
             }
         };
         q5 = new Quest("My Quest 5", r5, 4, true) {
@@ -205,6 +242,15 @@ class QuestTest {
             @Override
             public String getShortDescription() {
                 return "At: " + count;
+            }
+
+            @Override
+            public void setProgress(JsonValue progress) {
+            }
+
+            @Override
+            public JsonValue getProgress() {
+                return null;
             }
         };
     }
@@ -426,6 +472,15 @@ class QuestTest {
 
             @Override
             public String getShortDescription() {
+                return null;
+            }
+
+            @Override
+            public void setProgress(JsonValue progress) {
+            }
+
+            @Override
+            public JsonValue getProgress() {
                 return null;
             }
         };
