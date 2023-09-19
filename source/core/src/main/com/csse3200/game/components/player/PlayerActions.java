@@ -196,13 +196,14 @@ public class PlayerActions extends Component {
      * 1. Go to InteractionDetector.java
      * 2. Add the entity to the interactableEntities array
      */
-    List<Entity> entitiesInRange = this.entity.getComponent(InteractionDetector.class).getEntitiesInRange();
-    List<Entity> closestEntity = this.entity.getComponent(InteractionDetector.class).getNearest(entitiesInRange);
+    // TODO: do we want it so that it searches in direction instead of just anything in range? functionality for this already exists
+    InteractionDetector interactionDetector = entity.getComponent(InteractionDetector.class);
+    List<Entity> entitiesInRange = interactionDetector.getEntitiesInRange();
+    Entity closestEntity = interactionDetector.getNearest(entitiesInRange);
 
-    if (!closestEntity.isEmpty()) {
-      closestEntity.get(0).getEvents().trigger("interact");
+    if (closestEntity != null) {
+      closestEntity.getEvents().trigger("interact");
     }
-
   }
 
   /**

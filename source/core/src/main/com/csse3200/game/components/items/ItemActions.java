@@ -2,6 +2,7 @@ package com.csse3200.game.components.items;
 
 import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 
@@ -11,6 +12,7 @@ import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractionDetector;
+import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.PlantFactory;
 import com.csse3200.game.services.FactoryService;
@@ -38,7 +40,6 @@ public class ItemActions extends Component {
 
     Vector2 playerPos = player.getPosition();
     Vector2 mouseWorldPos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
-    InteractionDetector interactionCollider = player.getComponent(InteractionDetector.class);
 
     ItemComponent type = entity.getComponent(ItemComponent.class);
     // Wasn't an item or did not have ItemComponent class
@@ -70,10 +71,7 @@ public class ItemActions extends Component {
         return resultStatus;
       }
       case FOOD -> {
-        if (interactionCollider == null) {
-          return false;
-        }
-        resultStatus = feed(interactionCollider.getSuitableEntities(ItemType.FOOD, mouseWorldPos));
+        resultStatus = feed(player, mouseWorldPos);
         return resultStatus;
       }
       case FERTILISER -> {
@@ -306,16 +304,25 @@ public class ItemActions extends Component {
   }
 
   /**
-   * Feeds given entity.
-   * @param feedableEntities list that should contain the one entity to feed
+   * Feeds held item to suitable entity.
+   * @param player player that will feed item
+   * @param mouseWorldPos position to check for feedable entity
    * @return true if feed is successful
    */
-  private boolean feed(List<Entity> feedableEntities) {
-    if (feedableEntities.size() != 1) {
+  private boolean feed(Entity player, Vector2 mouseWorldPos) {
+    InteractionDetector interactionDetector = player.getComponent(InteractionDetector.class);
+
+    List<Entity> entities = interactionDetector.getEntitiesTowardsPosition(mouseWorldPos);
+    entities.removeIf(entity -> entity.getComponent(TamableComponent.class) == null);
+    entities.removeIf(entity -> entity.getComponent(TamableComponent.class).isTamed()); //TODO: axolotl? handle that
+
+    Entity entityToFeed = interactionDetector.getNearest(entities);
+
+    if (entityToFeed == null) {
       return false;
     }
 
-    feedableEntities.get(0).getEvents().trigger("feed");
+    entityToFeed.getEvents().trigger("feed");
     return true;
   }
 }
