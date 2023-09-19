@@ -240,7 +240,7 @@ public class PlantComponent extends Component {
             case "Hammer Plant" -> this.adultEffect = "Health";
             case "Space Snapper" -> this.adultEffect = "Eat";
             case "Deadly Nightshade" -> this.adultEffect = "Poison";
-            default -> this.adultEffect = "None";
+            default -> this.adultEffect = "Sound";
         }
         this.isEating = false;
         this.countOfHoursOfDigestion = 0;
@@ -548,6 +548,7 @@ public class PlantComponent extends Component {
                     case "Space Snapper" -> entity.getComponent(PlantAreaOfEffectComponent.class).setRadius(1.5f);
                     case "Hammer Plant" -> entity.getComponent(PlantAreaOfEffectComponent.class).setRadius(3f);
                     case "Deadly Nightshade" -> entity.getComponent(PlantAreaOfEffectComponent.class).setRadius(2.5f);
+                    default -> entity.getComponent(PlantAreaOfEffectComponent.class).setRadius(2f);
                 }
                 updateMaxHealth();
                 updateTexture();

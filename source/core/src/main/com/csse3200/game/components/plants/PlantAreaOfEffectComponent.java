@@ -72,6 +72,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
             case "Health" -> healthEffect();
             case "Poison" -> poisonEffect();
             case "Eat" -> eatEffect();
+            case "Sound" -> soundEffect();
         }
     }
 
@@ -200,6 +201,18 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
                     // break once a valid entity has been eaten because space snapper can only eat one entity at a time.
                     break;
                 }
+            }
+        }
+    }
+
+    /**
+     * Plays a Nearby sound if the player comes near the plant.
+     */
+    private void soundEffect() {
+        for (Entity entityInRange : getEntitiesInRange()) {
+
+            if (entityInRange.getType() == EntityType.Player) {
+                entity.getComponent(PlantComponent.class).playSound("nearby");
             }
         }
     }
