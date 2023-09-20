@@ -65,6 +65,7 @@ public class SpaceGameArea extends GameArea {
           "images/watered_cropTile_fertilised.png",
           "images/overwatered_cropTile.png",
           "images/overwatered_cropTile_fertilised.png",
+          "images/Temp-Chest.png",        
 
           "images/beach_1.png",
           "images/beach_2.png",
@@ -462,6 +463,9 @@ public class SpaceGameArea extends GameArea {
         newTool = ItemFactory.createCowFood();
         spawnEntityAt(newTool, randomPos, true, true);
         break;
+      case PLACEABLE:
+        newTool = ItemFactory.createChestItem();
+        spawnEntityAt(newTool, randomPos, true, true);
     }
   }
 

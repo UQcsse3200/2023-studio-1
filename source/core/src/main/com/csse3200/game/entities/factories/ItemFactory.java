@@ -296,12 +296,12 @@ public class ItemFactory {
    * @return the chest item
    */
   public static Entity createChestItem() {
-    Entity fence = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/misc/aloe_vera_seed.png"))
+    Entity chest = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/Temp-Chest.png"))
             .addComponent(new ItemComponent("Chest", ItemType.PLACEABLE,
                     "A storage container to keep your seeds and goodies",
-                    new Texture("images/plants/misc/aloe_vera_seed.png")));
-    return fence;
+                    new Texture("images/Temp-Chest.png")));
+    return chest;
   }
 
 }
