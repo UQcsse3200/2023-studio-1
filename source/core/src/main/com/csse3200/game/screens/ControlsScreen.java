@@ -1,5 +1,8 @@
 package com.csse3200.game.screens;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -7,7 +10,6 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.controlsmenu.ControlsMenuDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.input.InputDecorator;
 import com.csse3200.game.input.InputService;
@@ -17,8 +19,6 @@ import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /** The game screen for the Controls Screen of the game,
  * which explains which keys are to be used for different actions in the game */

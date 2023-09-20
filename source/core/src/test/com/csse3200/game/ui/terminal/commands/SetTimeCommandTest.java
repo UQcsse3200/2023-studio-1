@@ -1,22 +1,21 @@
 package com.csse3200.game.ui.terminal.commands;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
-import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.extensions.GameExtension;
-import com.csse3200.game.physics.PhysicsService;
-import com.csse3200.game.rendering.RenderService;
-import com.csse3200.game.services.GameTime;
-import com.csse3200.game.services.ResourceService;
-import com.csse3200.game.services.ServiceLocator;
 import java.util.ArrayList;
 
-import com.csse3200.game.services.TimeService;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
+import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.services.GameTime;
+import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.TimeService;
 
 
 @ExtendWith(GameExtension.class)

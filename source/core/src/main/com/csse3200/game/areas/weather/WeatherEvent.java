@@ -144,7 +144,7 @@ public abstract class WeatherEvent {
 	}
 
 	public void write(Json json) {
-		json.writeValue("name", getClass().getName());
+		json.writeValue("name", getClass().getSimpleName());
 		json.writeValue("severity", getSeverity());
 		json.writeValue("duration", getDuration());
 		json.writeValue("hoursUntil", getNumHoursUntil());

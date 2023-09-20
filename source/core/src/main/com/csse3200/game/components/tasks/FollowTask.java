@@ -1,14 +1,6 @@
 package com.csse3200.game.components.tasks;
 
-import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.ai.tasks.DefaultTask;
-import com.csse3200.game.ai.tasks.PriorityTask;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.physics.PhysicsEngine;
-import com.csse3200.game.physics.PhysicsLayer;
-import com.csse3200.game.physics.raycast.RaycastHit;
-import com.csse3200.game.rendering.DebugRenderer;
-import com.csse3200.game.services.ServiceLocator;
 
 /** Follows a target entity until they get too far away or line of sight is lost */
 public class FollowTask extends ChaseTask {
@@ -33,7 +25,7 @@ public class FollowTask extends ChaseTask {
   @Override
   public void start() {
     status = Status.ACTIVE;
-    setMovementTask(new MovementTask(getTarget().getPosition(), (float) 1.5));
+    setMovementTask(new MovementTask(getTarget().getCenterPosition(), (float) 1.5));
     getMovementTask().create(owner);
     getMovementTask().start();
 
@@ -49,7 +41,7 @@ public class FollowTask extends ChaseTask {
     if(getDistanceToTarget() <= stoppingDistance){
       stop();
     } else {
-      getMovementTask().setTarget(getTarget().getPosition());
+      getMovementTask().setTarget(getTarget().getCenterPosition());
       getMovementTask().update();
       if (getMovementTask().getStatus() != Status.ACTIVE) {
         this.owner.getEntity().getEvents().trigger("followStart");

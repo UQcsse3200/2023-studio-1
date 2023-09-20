@@ -1,14 +1,14 @@
 package com.csse3200.game.areas.terrain;
 
-import java.io.*;
-import java.nio.Buffer;
-import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -20,7 +20,6 @@ import com.badlogic.gdx.maps.tiled.renderers.HexagonalTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.areas.terrain.TerrainComponent.TerrainOrientation;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.services.ResourceService;
@@ -28,11 +27,14 @@ import com.csse3200.game.services.ServiceLocator;
 
 /** Factory for creating game terrains. */
 public class TerrainFactory {
+
   private static GridPoint2 MAP_SIZE = new GridPoint2(1000, 1000); // this will be updated later in the code
   //protected for testing
   protected static final String mapPath = "configs/Map.txt";
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;
+
+  private static final float worldTileSize = 1f;
   private Map<Character, TextureRegion> charToTextureMap = new HashMap<>();
   //protected for testing
   protected static final Map<Character, String> charToTileImageMap;
@@ -156,7 +158,7 @@ public class TerrainFactory {
    */
   public TerrainComponent createTerrain(TiledMap tiledMap) {
     loadTextures();
-    return createGameTerrain(0.5f, tiledMap);
+    return createGameTerrain(worldTileSize, tiledMap);
   }
 
   private TerrainComponent createGameTerrain(float tileWorldSize, TiledMap tiledMap) {

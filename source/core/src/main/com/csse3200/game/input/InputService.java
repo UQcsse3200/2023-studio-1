@@ -1,15 +1,17 @@
 package com.csse3200.game.input;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.input.GestureDetector;
-import com.badlogic.gdx.math.Vector2;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * Provides a global access point for handling user input and creating input handlers. All active
@@ -27,6 +29,7 @@ public class InputService implements InputProcessor, GestureDetector.GestureList
 
   private final List<InputComponent> inputHandlers = new ArrayList<>();
   private final InputFactory inputFactory;
+  private int activeMask = InputLayer.IN_USE;
 
   public InputService() {
     this(InputFactory.createFromInputType(inputType));
@@ -65,6 +68,18 @@ public class InputService implements InputProcessor, GestureDetector.GestureList
   public void unregister(InputComponent inputHandler) {
     logger.debug("Unregistering input handler {}", inputHandler);
     inputHandlers.remove(inputHandler);
+  }
+
+  public void disableInputType(int inputType) {
+    activeMask &= ~inputType;
+  }
+
+  /**
+   * enable specific type(s) of input
+   * @param inputType the input bits to enable
+   */
+  public void enableInputType(int inputType) {
+    activeMask |= inputType;
   }
 
   /**

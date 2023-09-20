@@ -1,74 +1,86 @@
 {
   "cosmicCob": {
-    "health": 10,
+    "health": 200,
     "name": "Cosmic Cob",
     "type": "FOOD",
-    "description": "Nutritious space corn!",
+    "description": "A nutritious snack with everything a human needs to survive, the local fauna won’t touch it though. Suspiciously high in protein and fat…",
     "idealWaterLevel": 0.7,
-    "adultLifeSpan": 5,
-    "maxHealth": 400
+    "adultLifeSpan": 1,
+    "maxHealth": 600,
+    "soundFolderPath" : "sounds/plants/cosmicCob/",
+    "sproutThreshold": 0,
+    "juvenileThreshold": 0,
+    "adultThreshold": 0,
+    "atlasPath": "images/plants/cosmic_cob.atlas"
   },
   "aloeVera": {
-    "health": 10,
+    "health": 200,
     "name": "Aloe Vera",
     "type": "HEALTH",
-    "description": "Produces gel that can be used for healing",
+    "description": "A unique plant that once ground down to a chunky red paste can be used to heal significant wounds, it’s a miracle!",
     "idealWaterLevel": 0.7,
-    "adultLifeSpan": 5,
-    "maxHealth": 300
+    "adultLifeSpan": 1,
+    "maxHealth": 600,
+    "soundFolderPath" : "sounds/plants/aloeVera/",
+    "sproutThreshold": 0,
+    "juvenileThreshold": 0,
+    "adultThreshold": 0,
+    "atlasPath": "images/plants/aloe_vera.atlas"
   },
   "hammerPlant": {
-    "health": 10,
+    "health": 200,
     "name": "Hammer Plant",
     "type": "REPAIR",
-    "description": "Repairs plants within its healing radius",
+    "description": "A useful plant resembling a hand holding a hammer that repairs the other nearby plants, maybe they were friends!",
     "idealWaterLevel": 0.7,
-    "adultLifeSpan": 5,
-    "maxHealth": 200
+    "adultLifeSpan": 1,
+    "maxHealth": 600,
+    "soundFolderPath" : "sounds/plants/hammerPlant/",
+    "sproutThreshold": 0,
+    "juvenileThreshold": 0,
+    "adultThreshold": 0,
+    "atlasPath": "images/plants/hammer_plant.atlas"
   },
-  "venusFlyTrap": {
-    "health": 10,
+  "spaceSnapper": {
+    "health": 200,
     "name": "Space Snapper",
     "type": "DEFENCE",
-    "description" : "I eat the fauna!",
+    "description" : "A hangry plant that will gobble any nasty pests nearby. Keep small pets and children out of snapping distance!",
     "idealWaterLevel": 0.7,
-    "adultLifeSpan": 5,
-    "maxHealth": 400
+    "adultLifeSpan": 1,
+    "maxHealth": 600,
+    "soundFolderPath" : "sounds/plants/venusFlyTrap/",
+    "sproutThreshold": 0,
+    "juvenileThreshold": 0,
+    "adultThreshold": 0,
+    "atlasPath": "images/plants/space_snapper.atlas"
   },
-  "waterWeed": {
-    "health": 10,
+  "atomicAlgae": {
+    "health": 200,
     "name": "Atomic Algae",
     "type": "PRODUCTION",
-    "description": "Test description",
+    "description": "A highly efficient oxygen-producing plant.",
     "idealWaterLevel": 0.7,
-    "adultLifeSpan": 5,
-    "maxHealth": 100
+    "adultLifeSpan": 1,
+    "maxHealth": 600,
+    "soundFolderPath" : "sounds/plants/waterWeed/",
+    "sproutThreshold": 0,
+    "juvenileThreshold": 0,
+    "adultThreshold": 0,
+    "atlasPath": "images/plants/atomic_algae.atlas"
   },
-  "atropaBelladonna": {
-    "health": 10,
+  "deadlyNightshade": {
+    "health": 200,
     "name": "Deadly Nightshade",
     "type": "DEADLY",
-    "description": "Grows deadly poisonous berries",
+    "description": "Grows deadly poisonous berries.",
     "idealWaterLevel": 0.7,
-    "adultLifeSpan": 5,
-    "maxHealth": 200
-  },
-  "nicotianaTabacum": {
-    "health": 10,
-    "name": "Tobacco",
-    "type": "DEADLY",
-    "description": "Toxic addicted plant leaves",
-    "idealWaterLevel": 0.7,
-    "adultLifeSpan": 5,
-    "maxHealth": 20
-  },
-  "sunFlower": {
-    "health" : 10,
-    "name": "Horticultural Heater",
-    "type": "PRODUCTION",
-    "description": "Warms up the nearby area",
-    "idealWaterLevel": 0.7,
-    "adultLifeSpan": 5,
-    "maxHealth": 100
+    "adultLifeSpan": 1,
+    "maxHealth": 600,
+    "soundFolderPath" : "sounds/plants/nightshade/",
+    "sproutThreshold": 0,
+    "juvenileThreshold": 0,
+    "adultThreshold": 0,
+    "atlasPath": "images/plants/deadly_nightshade.atlas"
   }
 }
