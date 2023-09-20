@@ -44,11 +44,23 @@ public class InventoryComponent extends Component {
 
   private int heldIndex = 0;
 
+  private final int maxInventorySize=30;
+
   public InventoryComponent(List<Entity> items) {
     if (items == null) {
       return;
     }
     setInventory(items);
+  }
+
+
+  /**
+   * Checks if the inventory is full.
+   *
+   * @return true if the inventory is full, false otherwise.
+   */
+  public boolean isFull() {
+    return inventory.size() >= maxInventorySize;
   }
 
   /**
