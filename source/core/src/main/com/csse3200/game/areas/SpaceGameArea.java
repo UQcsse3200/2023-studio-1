@@ -1,10 +1,5 @@
 package com.csse3200.game.areas;
 
-import java.util.ArrayList;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
@@ -18,18 +13,18 @@ import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.ItemFactory;
-import com.csse3200.game.entities.factories.NPCFactory;
-import com.csse3200.game.entities.factories.ObstacleFactory;
-import com.csse3200.game.entities.factories.PlayerFactory;
-import com.csse3200.game.entities.factories.QuestgiverFactory;
-import com.csse3200.game.entities.factories.ShipFactory;
-import com.csse3200.game.entities.factories.TractorFactory;
+import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.stream.IntStream;
 
 /** SpaceGameArea is the area used for the initial game version */
 public class SpaceGameArea extends GameArea {
@@ -174,7 +169,8 @@ public class SpaceGameArea extends GameArea {
           "images/plants/misc/hammer_plant_seed.png",
           "images/plants/misc/space_snapper_seed.png",
           "images/plants/misc/atomic_algae_seed.png",
-          "images/invisible_sprite.png"
+          "images/invisible_sprite.png",
+          "images/ship/ship_debris.png"
   };
   private static final String[] forestTextureAtlases = {
       "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
@@ -197,7 +193,7 @@ public class SpaceGameArea extends GameArea {
 
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
-   * 
+   *
    * @param terrainFactory TerrainFactory used to create the terrain for the
    *                       GameArea.
    * @requires terrainFactory != null
@@ -230,6 +226,8 @@ public class SpaceGameArea extends GameArea {
     spawnCrop(13, 11, "Deadly Nightshade");
     spawnCrop(15, 11, "Atomic Algae");
 
+    spawnShipDebris();
+
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
     player.getComponent(InventoryComponent.class).addItem(ItemFactory.createAloeVeraSeed());
@@ -257,7 +255,7 @@ public class SpaceGameArea extends GameArea {
   public Entity getPlayer() {
     return player;
   }
-  
+
   public ClimateController getClimateController() {
     return climateController;
   }
@@ -329,6 +327,28 @@ public class SpaceGameArea extends GameArea {
     ServiceLocator.getEntityService().register(plant);
     newPlayer.getComponent(CropTileComponent.class).setPlant(plant);
     return newPlayer;
+  }
+
+  /**
+   * Spawns the initial Ship Debris randomly around the Player Ship's location.
+   * Random position generation adapted from Team 1's spawnTool() below.
+   */
+  private void spawnShipDebris() {
+
+    GridPoint2 minPos = new GridPoint2(SHIP_SPAWN.x - 5, SHIP_SPAWN.y - 5);
+    GridPoint2 maxPos = new GridPoint2(SHIP_SPAWN.x + 5, SHIP_SPAWN.y + 5);
+
+    IntStream.range(0,15).forEach(i -> {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+
+      while (!gameMap.getTile(randomPos).isTraversable()) {
+        randomPos = RandomUtils.random(minPos, maxPos);
+
+      }
+
+      Entity shipDebris = ShipDebrisFactory.createShipDebris(player);
+      spawnEntityAt(shipDebris, randomPos, true, true);
+    });
   }
 
   private Entity spawnPlayer() {

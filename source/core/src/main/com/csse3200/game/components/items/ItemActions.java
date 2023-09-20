@@ -59,7 +59,13 @@ public class ItemActions extends Component {
       }
       case SHOVEL -> {
         resultStatus = shovel(tile);
-        return resultStatus;
+        if (!resultStatus) {
+          if (interactionCollider == null) {
+            return false;
+          }
+          return destroy(interactionCollider.getSuitableEntities(ItemType.SHOVEL, mouseWorldPos));
+        }
+        return true;
       }
       case SCYTHE -> {
         resultStatus = harvest(tile);
@@ -316,6 +322,21 @@ public class ItemActions extends Component {
     }
 
     feedableEntities.get(0).getEvents().trigger("feed");
+    return true;
+  }
+
+  /**
+   * Triggers a destroy event on the destroyable entity.
+   *
+   * @param destroyableEntities a single destroyable entity
+   * @return true if destroyed, false otherwise
+   */
+  private boolean destroy(List<Entity> destroyableEntities) {
+    if (destroyableEntities.size() != 1) {
+      return false;
+    }
+
+    destroyableEntities.get(0).getEvents().trigger("destroy");
     return true;
   }
 }
