@@ -230,25 +230,12 @@ public class PlantComponentTest {
         assertThrows(IllegalStateException.class, () -> testPlant.updateMaxHealth());
     }
 
-    /*
     @Test
-    void testBeginDecay_Decay() {
+    void testForceDecay_Decay() {
         testPlant.setGrowthStage(4);
         testPlant.setNumOfDaysAsAdult(adultLifeSpan);
-        testPlant.beginDecay();
+        testPlant.forceDecay();
         assertTrue(testPlant.isDecay());
-    }
-
-     */
-
-    @Test
-    void testBeginDecay_NotDecay() {
-        for (int stage = 1; stage < 4; stage++) {
-            testPlant.setGrowthStage(stage);
-            testPlant.setNumOfDaysAsAdult(adultLifeSpan);
-            //testPlant.beginDecay();
-            assertFalse(testPlant.isDecay());
-        }
     }
 
     @Test
