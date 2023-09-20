@@ -103,13 +103,15 @@ public class GdxGame extends Game {
         return new LoseScreen(this);
       case ENDCREDITS:
         return new EndCreditsScreen(this);
+      case WINSCREEN:
+        return new WinScreen(this);
       default:
         return null;
     }
   }
 
   public enum ScreenType {
-    MAIN_MENU, LOAD_GAME, MAIN_GAME, SETTINGS, CONTROLS, INTRO, LOSESCREEN, ENDCREDITS
+    MAIN_MENU, LOAD_GAME, MAIN_GAME, SETTINGS, CONTROLS, INTRO, LOSESCREEN, WINSCREEN, ENDCREDITS
   }
 
 

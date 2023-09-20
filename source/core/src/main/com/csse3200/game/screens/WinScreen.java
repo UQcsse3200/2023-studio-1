@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.components.endcredits.EndCreditsDisplay;
+import com.csse3200.game.components.losescreen.LoseScreenDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
@@ -21,15 +21,16 @@ import org.slf4j.LoggerFactory;
 /**
  * The game screen for the lose scenario
  */
-public class EndCreditsScreen extends ScreenAdapter {
-    private static final Logger logger = LoggerFactory.getLogger(EndCreditsScreen.class);
+public class WinScreen extends ScreenAdapter {
+    private static final Logger logger = LoggerFactory.getLogger(WinScreen.class);
     private final GdxGame game;
     private final Renderer renderer;
     private static final String[] loseScreenTextures = {"images/lose_temp.png"};
     private Texture backgroundTexture;
     private SpriteBatch batch;
 
-    public EndCreditsScreen(GdxGame game) {
+
+    public WinScreen(GdxGame game) {
         this.game = game;
         logger.debug("Initialising lose screen services");
         //ServiceLocator.registerTimeSource(new GameTime());
@@ -44,6 +45,8 @@ public class EndCreditsScreen extends ScreenAdapter {
         loadAssets();
         createUI();
     }
+
+
 
     @Override
     public void render(float delta) {
@@ -70,7 +73,7 @@ public class EndCreditsScreen extends ScreenAdapter {
 
     @Override
     public void dispose() {
-        logger.debug("Disposing credits screen");
+        logger.debug("Disposing lose screen");
 
         renderer.dispose();
         unloadAssets();
@@ -97,7 +100,7 @@ public class EndCreditsScreen extends ScreenAdapter {
         logger.debug("Creating ui");
         Stage stage = ServiceLocator.getRenderService().getStage();
         Entity ui = new Entity();
-        ui.addComponent(new EndCreditsDisplay(game))
+        ui.addComponent(new LoseScreenDisplay(game))
                 .addComponent(new InputDecorator(stage, 10));
         ServiceLocator.getEntityService().register(ui);
     }

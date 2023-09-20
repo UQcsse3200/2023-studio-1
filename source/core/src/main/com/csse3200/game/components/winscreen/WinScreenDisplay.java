@@ -1,4 +1,4 @@
-package com.csse3200.game.components.endcredits;
+package com.csse3200.game.components.winscreen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,8 +16,8 @@ import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EndCreditsDisplay extends UIComponent {
-    private static final Logger logger = LoggerFactory.getLogger(EndCreditsDisplay.class);
+public class WinScreenDisplay extends UIComponent {
+    private static final Logger logger = LoggerFactory.getLogger(WinScreenDisplay.class);
     private static final float Z_INDEX = 2f;
     /**
      * The Image that forms the background of the page.
@@ -62,7 +62,7 @@ public class EndCreditsDisplay extends UIComponent {
      */
     private TypingLabel storyLabel;
 
-    public EndCreditsDisplay(GdxGame game) {
+    public WinScreenDisplay(GdxGame game) {
         super();
         this.game = game;
     }

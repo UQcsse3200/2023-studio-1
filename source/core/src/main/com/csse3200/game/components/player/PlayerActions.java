@@ -58,7 +58,6 @@ public class PlayerActions extends Component {
     if (entity.getComponent(PlayerAnimationController.class).readyToPlay()) {
       if (moving) {
         updateSpeed();
-
       }
       updateAnimation();
     }
