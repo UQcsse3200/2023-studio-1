@@ -1,6 +1,7 @@
 package com.csse3200.game.components.plants;
 import static com.badlogic.gdx.math.MathUtils.random;
 
+import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -373,11 +374,13 @@ public class PlantComponent extends Component {
                     setAreaOfEffectRadius();
                 }
                 updateTexture();
+                updateMaxHealth();
             }
         }
 
         if (getGrowthStage().getValue() == GrowthStage.ADULT.getValue()) {
             updateTexture();
+            updateMaxHealth();
 
         } else if (getGrowthStage().getValue() == GrowthStage.DECAYING.getValue()) {
             this.increasePlantHealth(-10);
@@ -602,6 +605,8 @@ public class PlantComponent extends Component {
         } else if ((getGrowthStage().getValue() != GrowthStage.DECAYING.getValue())
                 && !(getGrowthStage().getValue() >= GrowthStage.ADULT.getValue())) {
             this.currentGrowthLevel += (int)(this.cropTile.getGrowthRate(this.idealWaterLevel) * 10);
+        } else if (growthRate < 0) {
+            increasePlantHealth(-10);
         }
     }
 
@@ -790,5 +795,18 @@ public class PlantComponent extends Component {
     public void forceDead() {
         this.setGrowthStage(GrowthStage.DEAD.getValue());
         updateTexture();
+    }
+
+    public String currentInfo() {
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        String waterLevel = decimalFormat.format(cropTile.getWaterContent());
+        String idealWaterLevel = decimalFormat.format(this.idealWaterLevel);
+        String growthLevel = decimalFormat.format(currentGrowthLevel);
+        String currentMaxHealth = decimalFormat.format(this.currentMaxHealth);
+        return  plantName +
+                "\nGrowth Stage: " + getGrowthStage().name() +
+                "\nWater level/Ideal water level: " + waterLevel + "/" + idealWaterLevel +
+                "\nHealth: " + plantHealth + "/" + currentMaxHealth +
+                "\nGrowth Level: " + growthLevel;
     }
 }
