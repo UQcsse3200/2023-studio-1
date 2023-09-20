@@ -10,6 +10,9 @@ import java.util.LinkedHashMap;
 /**
  * Used by placeable components to handle connected textures and other functionality that requires a Placeable to
  * interact dynamically with other Placeable entities.
+ * This component should be a composite component of the target entity.
+ * For example an entity adds a SprinklerComponent OR a FenceComponent which creates a new instance of this component,
+ * and passes the entity to its constructor.
  */
 public class ConnectedEntityComponent extends Component {
 
@@ -34,22 +37,40 @@ public class ConnectedEntityComponent extends Component {
             new Vector2(target.getPosition().x + 1, target.getPosition().y), // Right
             new Vector2(target.getPosition().x - 1, target.getPosition().y)  // Left
     };
+    target.getEvents().addListener("destroy", this::destroy);
 
-    // Init the adjacent map:
+    // Init the adjacent map, add listeners, and trigger adjacent Placeable entities to update:
     this.adjPlaceable = new LinkedHashMap<Vector2, Boolean>(4);
-    // Populate map, add listeners for each position, notify any adjacent Placeable entities of the targets placement:
     for (Vector2 pos : adjPositions) {
       boolean occupied = false;
       target.getEvents().addListener("placed:"+pos, this::updateAdjPlaceable);
+      target.getEvents().addListener("destroyed:"+pos, this::updateAdjPlaceable);
       Entity p = ServiceLocator.getGameArea().getMap().getTile(pos).getPlaceable();
       if (p != null) {
         if (p.getType().getPlaceableCategory() == target.getType().getPlaceableCategory()) {
           occupied = true;
-          p.getEvents().trigger("placed:"+target.getPosition(), target.getPosition());
+          p.getEvents().trigger("placed:"+target.getPosition(), target.getPosition(), occupied);
         }
       }
       this.adjPlaceable.put(pos, occupied);
     }
+  }
+
+  /**
+   * Destroys the target entity (along with this component if used correctly),
+   * and notifies its adjacent Placeable entities.
+   */
+  private void destroy() {
+    for (Vector2 pos : this.adjPlaceable.keySet()) {
+      Entity p = ServiceLocator.getGameArea().getMap().getTile(pos).getPlaceable();
+      if (p != null) {
+        if (p.getType().getPlaceableCategory() == this.target.getType().getPlaceableCategory()) {
+          p.getEvents().trigger("destroyed:"+this.target.getPosition(),
+                  this.target.getPosition(), false);
+        }
+      }
+    }
+    target.dispose(); // is this the best place to call .dispose? seems fine.
   }
 
   /**
@@ -69,11 +90,11 @@ public class ConnectedEntityComponent extends Component {
 
   /**
    * Uses the given position as a key in the adjacency map to set the corresponding value to true.
-   * TODO add option to set true of false, (handy for on destroy).
-   * @param pos A key into the adjacency map
+   * @param pos The location (key) of the Placeable to be updated
+   * @param vale The value to update the Placeable entity's presence with.
    */
-  public void updateAdjPlaceable(Vector2 pos) {
-    this.adjPlaceable.replace(pos, true);   // TODO should I check return values...?
+  public void updateAdjPlaceable(Vector2 pos, boolean vale) {
+    this.adjPlaceable.replace(pos, vale);   // TODO should I check return values...?
     target.getEvents().trigger("reconfigure");
   }
 }
