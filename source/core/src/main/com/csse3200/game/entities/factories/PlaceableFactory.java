@@ -3,6 +3,7 @@ package com.csse3200.game.entities.factories;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.AuraLightComponent;
+import com.csse3200.game.components.LightController;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
@@ -21,7 +22,7 @@ public class PlaceableFactory {
     public static Entity createBasePlaceable(EntityType type) {
         Entity placeable = new Entity(type)
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
-                .addComponent(new TextureRenderComponent("images/plants/misc/hammer_plant_seed.png"))
+                .addComponent(new TextureRenderComponent("images/fire.png"))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
         return placeable;
     }
@@ -69,15 +70,8 @@ public class PlaceableFactory {
 
     public static Entity createLight() {
         Entity light = createBasePlaceable(EntityType.Light);
-        System.out.println("made light");
-        AuraLightComponent lightComp = new AuraLightComponent();
-        light.addComponent(new PhysicsComponent());
-        System.out.println(lightComp.getActive());
-        lightComp.toggleLight();
-        lightComp.setActives(true);
-        System.out.println(lightComp.getActive());
-        light.addComponent(lightComp);
-        System.out.println(lightComp.getActive());
+        light.addComponent(new AuraLightComponent(4f, Color.TAN));
+        light.addComponent(new LightController());
         return light;
     }
 }

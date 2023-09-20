@@ -170,6 +170,7 @@ public class SpaceGameArea extends GameArea {
           "images/plants/misc/space_snapper_seed.png",
           "images/plants/misc/atomic_algae_seed.png",
           "images/invisible_sprite.png",
+          "images/fire.png",
           "images/ship/ship_debris.png"
   };
   private static final String[] forestTextureAtlases = {
