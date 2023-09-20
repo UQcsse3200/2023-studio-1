@@ -3,6 +3,8 @@ package com.csse3200.game.missions.quests;
 import com.csse3200.game.missions.Mission;
 import com.csse3200.game.missions.rewards.Reward;
 
+import java.util.List;
+
 public abstract class Quest extends Mission {
 
 	/**
@@ -23,7 +25,7 @@ public abstract class Quest extends Mission {
 	/**
 	 * The {@link Reward} to be collected once the {@link Quest} has been completed
 	 */
-	private final Reward reward;
+	private final List<Reward> rewards;
 
 	/**
 	 * Creates a {@link Mission} with the given {@link String} name, specifying the {@link Reward} for completion, the
@@ -31,14 +33,14 @@ public abstract class Quest extends Mission {
 	 * {@link Quest} is mandatory.
 	 *
 	 * @param name The {@link String} name of the {@link Mission}, visible to the player in-game
-	 * @param reward The {@link Reward} which can be collected upon completion of the {@link Quest}
+	 * @param rewards The {@link Reward} which can be collected upon completion of the {@link Quest}
 	 * @param expiryDuration An integer value representing the number of hours before this {@link Quest} should expire
 	 * @param isMandatory A boolean value representing whether the {@link Quest} is mandatory. Mandatory {@link Quest}s
 	 *                    will result in a game over if it is not completed before it expires.
 	 */
-	protected Quest(String name, Reward reward, int expiryDuration, boolean isMandatory) {
+	protected Quest(String name, List<Reward> rewards, int expiryDuration, boolean isMandatory) {
 		super(name);
-		this.reward = reward;
+		this.rewards = rewards;
 		this.duration = expiryDuration;
 		this.isMandatory = isMandatory;
 
@@ -75,8 +77,10 @@ public abstract class Quest extends Mission {
 	 * {@link Mission} has not been completed, this method will do nothing.
 	 */
 	public void collectReward() {
-		if (isCompleted() && !reward.isCollected()) {
-			reward.collect();
+		for (Reward reward : this.rewards) {
+			if (isCompleted() && !reward.isCollected()) {
+				reward.collect();
+			}
 		}
 	}
 
