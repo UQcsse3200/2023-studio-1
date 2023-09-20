@@ -43,7 +43,7 @@ public class ConnectedEntityComponent extends Component {
       target.getEvents().addListener("placed:"+pos, this::updateAdjPlaceable);
       Entity p = ServiceLocator.getGameArea().getMap().getTile(pos).getPlaceable();
       if (p != null) {
-        if (p.getType() == target.getType()) {
+        if (p.getType().getPlaceableCategory() == target.getType().getPlaceableCategory()) {
           occupied = true;
           p.getEvents().trigger("placed:"+target.getPosition(), target.getPosition());
         }

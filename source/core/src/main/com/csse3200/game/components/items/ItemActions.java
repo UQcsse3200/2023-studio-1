@@ -236,6 +236,7 @@ public class ItemActions extends Component {
       droppedItem.setPosition(newPos);
       //placedItem.getEvents().trigger("destroy"); //TODO: add trigger event to all placeable items so dynamic textures can be updated
       placedItem.dispose();   //Temperary destroy until the trigger event is implemented
+      tile.setUnOccupied();
       return true;
     }
     return false;

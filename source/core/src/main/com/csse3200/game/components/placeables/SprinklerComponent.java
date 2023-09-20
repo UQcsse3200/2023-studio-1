@@ -3,6 +3,7 @@ package com.csse3200.game.components.placeables;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -74,6 +75,12 @@ public class SprinklerComponent extends Component {
    * Powered status of sprinkler.
    */
   private boolean isPowered;
+
+  /**
+   * A list of references to connected pumps.
+   * Allows this sprinkler to determine if it should be powered.
+   */
+  private Entity[] connectedPumps;
 
   /**
    * Indicates if the 'sprinkler' is actually just a pump.
