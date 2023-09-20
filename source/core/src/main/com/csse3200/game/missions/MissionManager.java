@@ -1,18 +1,15 @@
 package com.csse3200.game.missions;
 
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonValue;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.csse3200.game.entities.Entity;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.achievements.Achievement;
 import com.csse3200.game.missions.achievements.PlantCropsAchievement;
-import com.csse3200.game.missions.quests.FertiliseCropTilesQuest;
 import com.csse3200.game.missions.quests.Quest;
 import com.csse3200.game.missions.quests.QuestFactory;
-import com.csse3200.game.missions.rewards.ItemReward;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -33,7 +30,9 @@ public class MissionManager implements Json.Serializable {
 		// Triggers when a crop is planted, single String representing plant type is provided as argument
 		PLANT_CROP,
 		// Triggers when a crop is fertilised
-		FERTILISE_CROP
+		FERTILISE_CROP,
+		// Triggers when ship debris is cleared
+		DEBRIS_CLEARED
 	}
 
 	/**

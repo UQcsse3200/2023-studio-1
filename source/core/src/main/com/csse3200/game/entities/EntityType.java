@@ -2,7 +2,7 @@ package com.csse3200.game.entities;
 
 /**
  * An enum of all the entity types in the game.
- * Feel free to add yours here. Read Documentation for SaveLoad and follow procedure there 
+ * Feel free to add yours here. Read Documentation for SaveLoad and follow procedure there
  */
 public enum EntityType {
     Player(0),
@@ -20,7 +20,9 @@ public enum EntityType {
     Fence(0),
     Gate(0),
     Sprinkler(0),
-    Pump(0);
+    Pump(0),
+    Ship(0),
+    ShipDebris(0);
 
 
     // Negative rate for consumption, positive for production of oxygen
