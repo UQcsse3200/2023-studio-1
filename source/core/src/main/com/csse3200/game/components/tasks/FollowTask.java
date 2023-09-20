@@ -73,4 +73,8 @@ public class FollowTask extends ChaseTask {
     }
     return -1;
   }
+
+  public float getStoppingDistance() {
+    return this.stoppingDistance;
+  }
 }
