@@ -106,7 +106,8 @@ class AuraLightComponentTest {
 			entity.setPosition(position);
 			component.update();
 
-			verify(light, times(1)).setPosition(centrePosition);
+			// Once when created, once when updated
+			verify(light, times(2)).setPosition(centrePosition);
 		}
 	}
 
