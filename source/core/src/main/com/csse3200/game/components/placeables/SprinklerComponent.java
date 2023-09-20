@@ -1,0 +1,200 @@
+package com.csse3200.game.components.placeables;
+
+import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.areas.terrain.TerrainTile;
+import com.csse3200.game.components.Component;
+import com.csse3200.game.rendering.DynamicTextureRenderComponent;
+import com.csse3200.game.services.ServiceLocator;
+
+
+/*
+ * Current functionality:
+ * - when a sprinkler is placed it will identify any adjacent sprinklers and obtain a texture to illustrate its
+ *    connected configuration.
+ *    - DOES NOT set its powered status based off the sprinklers around it. todo.
+ * - sprinklers sprinkle every 'minute'. (however long a minute in TimeService is).
+ *
+ * TODO:
+ *  - more testing
+ *  - get sprinkler powered/un-powered updates working.
+ *  - animate watering.
+ *  - integrate with save&load.
+ *  - need finished textures for all sprinkler bits and the pump.
+ */
+
+public class SprinklerComponent extends Component {
+
+  /**
+   * Handles updates to the adjacent sprinklers.
+   */
+  private ConnectedEntityComponent connectedEntityComponent;
+
+  /**
+   * Texture paths for different sprinkler orientation. (and powered and non-powered)
+   * The order of this array is very important, correct order ensures a sprinkler gets the correct texture.
+   */
+  private static final String[] textures_on = {
+          "images/placeable/sprinkler/pipe_null.png",
+          "images/placeable/sprinkler/on/pipe_left.png",
+          "images/placeable/sprinkler/on/pipe_right.png",
+          "images/placeable/sprinkler/on/pipe_horizontal.png",
+          "images/placeable/sprinkler/on/pipe_down.png",
+          "images/placeable/sprinkler/on/pipe_down_left.png",
+          "images/placeable/sprinkler/on/pipe_down_right.png",
+          "images/placeable/sprinkler/on/pipe_down_triple.png",
+          "images/placeable/sprinkler/on/pipe_up.png",
+          "images/placeable/sprinkler/on/pipe_up_left.png",
+          "images/placeable/sprinkler/on/pipe_up_right.png",
+          "images/placeable/sprinkler/on/pipe_up_triple.png",
+          "images/placeable/sprinkler/on/pipe_vertical.png",
+          "images/placeable/sprinkler/on/pipe_left_triple.png",
+          "images/placeable/sprinkler/on/pipe_right_triple.png",
+          "images/placeable/sprinkler/on/pipe_quad.png"
+  };
+  private static final String[] textures_off = {
+          "images/placeable/sprinkler/pipe_null.png",
+          "images/placeable/sprinkler/off/pipe_left.png",
+          "images/placeable/sprinkler/off/pipe_right.png",
+          "images/placeable/sprinkler/off/pipe_horizontal.png",
+          "images/placeable/sprinkler/off/pipe_down.png",
+          "images/placeable/sprinkler/off/pipe_down_left.png",
+          "images/placeable/sprinkler/off/pipe_down_right.png",
+          "images/placeable/sprinkler/off/pipe_down_triple.png",
+          "images/placeable/sprinkler/off/pipe_up.png",
+          "images/placeable/sprinkler/off/pipe_up_left.png",
+          "images/placeable/sprinkler/off/pipe_up_right.png",
+          "images/placeable/sprinkler/off/pipe_up_triple.png",
+          "images/placeable/sprinkler/off/pipe_vertical.png",
+          "images/placeable/sprinkler/off/pipe_left_triple.png",
+          "images/placeable/sprinkler/off/pipe_right_triple.png",
+          "images/placeable/sprinkler/off/pipe_quad.png"
+  };
+
+  /**
+   * Powered status of sprinkler.
+   */
+  private boolean isPowered;
+
+  /**
+   * Indicates if the 'sprinkler' is actually just a pump.
+   * A pump is a sprinkler that doesn't update or sprinkle but is powered.
+   */
+  private boolean pump;
+
+  /**
+   * A sprinklers area of effect to water, aoe is circular with radius of 2.
+   */
+  private Vector2[] aoe;
+
+  /**
+   * {@inheritDoc}
+   */
+  public void create() {
+    // Init class vars:
+    this.connectedEntityComponent = new ConnectedEntityComponent(entity);
+
+    // todo Temp setting always powered:
+    this.isPowered = true;
+
+    // A pump doesn't need any more configuring.
+    if (!this.pump) {
+      this.aoe = new Vector2[12];
+      configSprinkler();          // set power status and texture orientation.
+      setAoe();
+      // Listen for reconfigure requests:
+      entity.getEvents().addListener("reconfigure", this::reConfigure);
+      // set to sprinkle every minute
+      ServiceLocator.getTimeService().getEvents().addListener("minuteUpdate", this::sprinkle);
+    }
+  }
+
+  /**
+   * Allows other classes to query if this sprinkler has power.
+   * @return powered status
+   */
+  public boolean getPowered() {
+    return isPowered;
+  }
+
+  /**
+   * Sets this sprinkler to be a pump.
+   * Should only be called in PlaceableFactory.
+   */
+  public void setPump() {
+    this.pump = true;
+    this.isPowered = true;
+  }
+
+  /**
+   * set the coordinates for expected adjacent sprinklers.
+   * Sets the coordinates for the watering area-of-effect and
+   * The watering AOE is this sprinklers position +2 in all directions, +1 in diagonals,
+   * this creates a circular watering effect.
+   */
+  private void setAoe() {
+    float x = entity.getPosition().x, y = entity.getPosition().y;
+    this.aoe = new Vector2[]{
+            // 2up, 2down, 2right, 2left.
+            new Vector2(x, y + 1),
+            new Vector2(x, y + 2),
+            new Vector2(x, y - 1),
+            new Vector2(x, y - 2),
+            new Vector2(x + 1, y),
+            new Vector2(x + 2, y),
+            new Vector2(x - 1, y),
+            new Vector2(x - 2, y),
+            // top right, bottom right, top left, bottom left.
+            new Vector2(x + 1, y + 1),
+            new Vector2(x + 1, y - 1),
+            new Vector2(x - 1, y + 1),
+            new Vector2(x - 1, y - 1)
+    };
+  }
+
+  /**
+   * Called via ConnectedEntityComponent's "reconfigure" trigger -
+   * This trigger is called when a new sprinkler is placed in this sprinklers' vicinity.
+   * Re-configures using configSprinkler() and //TODO used to: check if a change of state has occurred.
+   * If a change of state has occurred then this sprinkler tells all its adjacent sprinklers to
+   * check themselves for a state change via reConfigure().
+   */ // TODO: restore functionality
+  public void reConfigure() {
+    if (this.pump) return;  // A pump shouldn't reconfigure.
+    configSprinkler();
+  }
+
+
+  /**
+   * Sets powered status and texture 'orientation' based off the adjacent sprinklers.
+   *  - A power source is either a pump or a powered sprinkler.
+   *  - A texture is selected for this sprinkler based on the surrounding sprinklers,
+   *    this illustrates to the player that these sprinklers are connected - like pipes.
+   *    TODO config power
+   */
+  public void configSprinkler() {
+    // get index into texture array based on surrounding sprinklers
+    byte orientation = this.connectedEntityComponent.getAdjacentBitmap();
+    // now set the texture.
+    if (this.isPowered) {
+      entity.getComponent(DynamicTextureRenderComponent.class).setTexture(textures_on[orientation]);
+    } else {
+      entity.getComponent(DynamicTextureRenderComponent.class).setTexture(textures_off[orientation]);
+    }
+  }
+
+  /**
+   * Waters the aoe, this is relevant to this sprinklers position and looks like:
+   * * 2 tiles: above, below, left, right.
+   * * 1 tile in each diagonal.
+   * Creating a circular watering effect.
+   */
+  private void sprinkle() {
+    if (!isPowered) return;
+    for (Vector2 pos : aoe) {
+      TerrainTile tt = ServiceLocator.getGameArea().getMap().getTile(pos);
+      if (tt.getCropTile() != null) {
+        tt.getCropTile().getEvents().trigger("water", 0.5f);
+      }
+    }
+  }
+}

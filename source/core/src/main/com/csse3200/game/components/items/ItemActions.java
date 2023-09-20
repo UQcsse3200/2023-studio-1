@@ -1,20 +1,21 @@
 package com.csse3200.game.components.items;
 
-import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
-
-import java.util.List;
-import java.util.function.Function;
-
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.placeables.SprinklerComponent;
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.PlantFactory;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
+import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
+
+import java.util.List;
+import java.util.function.Function;
+
 
 public class ItemActions extends Component {
 
@@ -113,8 +114,8 @@ public class ItemActions extends Component {
     // Make the Entity to place
     Entity placeable = FactoryService.getPlaceableFactories()
         .get(entity.getComponent(ItemComponent.class).getItemName()).get();
-    ServiceLocator.getGameArea().spawnEntity(placeable);
     placeable.setPosition(adjustedPos);
+    ServiceLocator.getGameArea().spawnEntity(placeable);
     tile.setPlaceable(placeable);
     return true;
   }

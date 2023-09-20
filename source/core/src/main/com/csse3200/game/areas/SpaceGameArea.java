@@ -34,9 +34,6 @@ public class SpaceGameArea extends GameArea {
   private static final GridPoint2 QUESTGIVER_SPAWN = new GridPoint2(20, 20);
   private static final GridPoint2 QUESTGIVERIND_SPAWN = new GridPoint2(20, 24);
   private static final GridPoint2 TRACTOR_SPAWN = new GridPoint2(15, 15);
-
-  private static final GridPoint2 TOOL_SPAWN = new GridPoint2(15, 10);// temp!!!
-  private static final GridPoint2 TOOL_SPAWN2 = new GridPoint2(15, 15);// temp!!!
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
           "images/tree.png",
@@ -159,19 +156,76 @@ public class SpaceGameArea extends GameArea {
           "images/plants/deadly_nightshade/5_decaying.png",
           "images/plants/deadly_nightshade/6_dead.png",
           "images/plants/deadly_nightshade/item_drop.png",
-          //"images/plants/deadly_nightshade/seedbag.png",
 
           "images/plants/misc/aloe_vera_seed.png",
           "images/plants/misc/cosmic_cob_seed.png",
           "images/plants/misc/deadly_nightshade_seed.png",
           "images/plants/misc/hammer_plant_seed.png",
           "images/plants/misc/space_snapper_seed.png",
+          "images/invisible_sprite.png",
           "images/plants/misc/atomic_algae_seed.png",
           "images/invisible_sprite.png",
 
           "images/yellowSquare.png",
-          "images/yellowCircle.png"
+          "images/yellowCircle.png",
+
+          /* placeable */
+          "images/placeable/sprinkler/pipe_null.png",
+          "images/placeable/sprinkler/pump.png",
+          // sprinklers - on
+          "images/placeable/sprinkler/on/pipe_left.png",
+          "images/placeable/sprinkler/on/pipe_right.png",
+          "images/placeable/sprinkler/on/pipe_horizontal.png",
+          "images/placeable/sprinkler/on/pipe_down.png",
+          "images/placeable/sprinkler/on/pipe_down_left.png",
+          "images/placeable/sprinkler/on/pipe_down_right.png",
+          "images/placeable/sprinkler/on/pipe_down_triple.png",
+          "images/placeable/sprinkler/on/pipe_up.png",
+          "images/placeable/sprinkler/on/pipe_up_left.png",
+          "images/placeable/sprinkler/on/pipe_up_right.png",
+          "images/placeable/sprinkler/on/pipe_up_triple.png",
+          "images/placeable/sprinkler/on/pipe_vertical.png",
+          "images/placeable/sprinkler/on/pipe_left_triple.png",
+          "images/placeable/sprinkler/on/pipe_right_triple.png",
+          "images/placeable/sprinkler/on/pipe_quad.png",
+          // sprinklers - off
+          "images/placeable/sprinkler/off/pipe_left.png",
+          "images/placeable/sprinkler/off/pipe_right.png",
+          "images/placeable/sprinkler/off/pipe_horizontal.png",
+          "images/placeable/sprinkler/off/pipe_down.png",
+          "images/placeable/sprinkler/off/pipe_down_left.png",
+          "images/placeable/sprinkler/off/pipe_down_right.png",
+          "images/placeable/sprinkler/off/pipe_down_triple.png",
+          "images/placeable/sprinkler/off/pipe_up.png",
+          "images/placeable/sprinkler/off/pipe_up_left.png",
+          "images/placeable/sprinkler/off/pipe_up_right.png",
+          "images/placeable/sprinkler/off/pipe_up_triple.png",
+          "images/placeable/sprinkler/off/pipe_vertical.png",
+          "images/placeable/sprinkler/off/pipe_left_triple.png",
+          "images/placeable/sprinkler/off/pipe_right_triple.png",
+          "images/placeable/sprinkler/off/pipe_quad.png",
+
+          "images/placeable/fences/gate.png",
+          "images/placeable/fences/gate_open.png",
+          "images/placeable/fences/f.png",
+          "images/placeable/fences/f_d.png",
+          "images/placeable/fences/f_d_u.png",
+          "images/placeable/fences/f_d_l.png",
+          "images/placeable/fences/f_r_d.png",
+          "images/placeable/fences/f_r_l_u.png",
+          "images/placeable/fences/f_u.png",
+          "images/placeable/fences/f_d_l_u.png",
+          "images/placeable/fences/f_l.png",
+          "images/placeable/fences/f_r_d_l.png",
+          "images/placeable/fences/f_r_d_u.png",
+          "images/placeable/fences/f_r.png",
+          "images/placeable/fences/f_d.png",
+          "images/placeable/fences/f_l_u.png",
+          "images/placeable/fences/f_r_d_l_u.png",
+          "images/placeable/fences/f_r_l.png",
+          "images/placeable/fences/f_r_u.png"
   };
+
   private static final String[] forestTextureAtlases = {
       "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
       "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas",
@@ -228,8 +282,6 @@ public class SpaceGameArea extends GameArea {
 
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
-    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createAloeVeraSeed());
-    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createFertiliser());
 
     tractor = spawnTractor();
     spawnPlayerHighlight();
@@ -238,14 +290,6 @@ public class SpaceGameArea extends GameArea {
     spawnCows();
     spawnAstrolotl();
     spawnOxygenEater();
-
-    spawnTool(ItemType.WATERING_CAN);
-    spawnTool(ItemType.SHOVEL);
-    spawnTool(ItemType.SCYTHE);
-    spawnTool(ItemType.HOE);
-    spawnTool(ItemType.FERTILISER);
-    spawnTool(ItemType.SEED);
-    spawnTool(ItemType.FOOD);
 
     //playMusic();
   }
