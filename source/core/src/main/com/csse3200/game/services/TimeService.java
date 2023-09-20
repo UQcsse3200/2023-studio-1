@@ -10,6 +10,7 @@ public class TimeService {
 	private static final int MS_IN_MINUTE = 500;
 	private static final int MORNING_HOUR = 6;
 	private static final int NIGHT_HOUR = 18;
+	private static final int SLEEP_SPEED = 15;
 	private int minute;
 	private int hour;
 	private int day;
@@ -87,7 +88,7 @@ public class TimeService {
 	 */
 	public void speedUpSleep() {
 		if (getHour() != MORNING_HOUR) {
-			ServiceLocator.getTimeSource().setTimeScale(15);
+			ServiceLocator.getTimeSource().setTimeScale(SLEEP_SPEED);
 		}
 	}
 
