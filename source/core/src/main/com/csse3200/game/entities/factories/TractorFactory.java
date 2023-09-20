@@ -1,8 +1,10 @@
 package com.csse3200.game.entities.factories;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.components.tractor.TractorAnimationController;
@@ -30,12 +32,15 @@ public class TractorFactory {
     AnimationRenderComponent animator = setupTractorAnimations();
     InputComponent inputComponent = ServiceLocator.getInputService().getInputFactory().createForTractor();
 
+    AuraLightComponent light = new AuraLightComponent(3f);
+
     Entity tractor = new Entity(EntityType.Tractor)
         .addComponent(new PhysicsComponent())
         .addComponent(new TractorAnimationController())
         .addComponent(new ColliderComponent())
         .addComponent(animator)
         .addComponent(inputComponent)
+        .addComponent(light)
         .addComponent(new TractorActions());
 
     tractor.getComponent(AnimationRenderComponent.class).scaleEntity();
