@@ -1,6 +1,8 @@
 package com.csse3200.game.entities.factories;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
@@ -63,5 +65,19 @@ public class PlaceableFactory {
         // Add components here
         chest.addComponent(new InventoryComponent(null));
         return chest;
+    }
+
+    public static Entity createLight() {
+        Entity light = createBasePlaceable(EntityType.Light);
+        System.out.println("made light");
+        AuraLightComponent lightComp = new AuraLightComponent();
+        light.addComponent(new PhysicsComponent());
+        System.out.println(lightComp.getActive());
+        lightComp.toggleLight();
+        lightComp.setActives(true);
+        System.out.println(lightComp.getActive());
+        light.addComponent(lightComp);
+        System.out.println(lightComp.getActive());
+        return light;
     }
 }

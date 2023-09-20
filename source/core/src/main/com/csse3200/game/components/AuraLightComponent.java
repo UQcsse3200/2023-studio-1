@@ -100,6 +100,11 @@ public class AuraLightComponent extends Component{
 		light.setActive(active);
 	}
 
+	public void setActives(boolean active) {
+		light.setActive(active);
+		light.update();
+	}
+
 	/**
 	 * Determines whether the light is currently on
 	 * @return state of the light (on/off)

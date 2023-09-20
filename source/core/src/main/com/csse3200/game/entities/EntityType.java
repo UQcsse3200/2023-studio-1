@@ -20,6 +20,7 @@ public enum EntityType {
     Fence(0),
     Gate(0),
     Sprinkler(0),
+    Light(0),
     Ship(0),
     ShipDebris(0);
 
