@@ -11,6 +11,7 @@ import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractionDetector;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.PlantFactory;
 import com.csse3200.game.services.FactoryService;
@@ -216,6 +217,26 @@ public class ItemActions extends Component {
       tile.getCropTile().getEvents().trigger("destroy");
       tile.removeCropTile();
       tile.setUnOccupied();
+      return true;
+    }
+    if(tile.getPlaceable() != null){
+      Entity placedItem = tile.getPlaceable();
+      Vector2 newPos = placedItem.getPosition();
+      tile.setPlaceable(null);    //update the tile
+      tile.setUnOccupied();
+
+      //check if the placeable is a chest and if there is items in that chest
+      //if there is items then return false
+      InventoryComponent chestInventory = placedItem.getComponent(InventoryComponent.class);
+      if (chestInventory != null){
+        if (chestInventory.getInventory().size() >= 1){ return false; }
+      }
+
+      Entity droppedItem = FactoryService.getItemFactories().get(placedItem.getType().toString()).get();
+      ServiceLocator.getGameArea().spawnEntity(droppedItem);
+      droppedItem.setPosition(newPos);
+      //placedItem.getEvents().trigger("destroy"); //TODO: add trigger event to all placeable items so dynamic textures can be updated
+      placedItem.dispose();   //Temperary destroy until the trigger event is implemented
       return true;
     }
     return false;
