@@ -45,7 +45,7 @@ public class PlaceableFactory {
      * @return the gate entity that was made
      */
     public static Entity createGate() {
-        Entity gate = createBasePlaceable(EntityType.Fence)  //used to be .Gate.
+        Entity gate = createBasePlaceable(EntityType.Gate)  //used to be .Gate.
                 .addComponent(new DynamicTextureRenderComponent("images/placeable/fences/gate.png"))
                 .addComponent(new FenceComponent(true));
         return gate;
