@@ -285,6 +285,9 @@ public class SpaceGameArea extends GameArea {
 
     player.getComponent(InventoryComponent.class).addItem(ItemFactory.createGateItem());
     player.getComponent(InventoryComponent.class).addItem(ItemFactory.createFenceItem());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHoe());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createPumpItem());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createSprinklerItem());
 
 
     tractor = spawnTractor();
