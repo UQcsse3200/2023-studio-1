@@ -10,7 +10,7 @@ import com.csse3200.game.rendering.TextureRenderComponent;
 
 public class ShipDebrisFactory {
 
-    public static Entity createShipDebris() {
+    public static Entity createShipDebris(Entity player) {
         Entity shipDebris = new Entity(EntityType.ShipDebris)
                 .addComponent(new TextureRenderComponent("images/ship/ship_debris.png"))
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))

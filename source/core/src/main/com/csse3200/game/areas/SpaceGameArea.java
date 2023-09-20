@@ -342,7 +342,7 @@ public class SpaceGameArea extends GameArea {
 
       }
 
-      Entity shipDebris = ShipDebrisFactory.createShipDebris();
+      Entity shipDebris = ShipDebrisFactory.createShipDebris(player);
       spawnEntityAt(shipDebris, randomPos, true, true);
     });
   }
