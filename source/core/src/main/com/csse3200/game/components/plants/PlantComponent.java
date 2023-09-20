@@ -6,12 +6,15 @@ import java.util.function.Supplier;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Json;
+import com.csse3200.game.areas.SpaceGameArea;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Class for all plants in the game.
@@ -148,6 +151,8 @@ public class PlantComponent extends Component {
      */
     private int countOfHoursOfDigestion;
     private int countMinutesOfDigestion = 0;
+
+    private static final Logger logger = LoggerFactory.getLogger(PlantComponent.class);
 
     /**
      * Constructor used for plant types that have no extra properties. This is just used for testing.
@@ -687,6 +692,8 @@ public class PlantComponent extends Component {
      * @param functionCalled The type of interaction with the plant.
      */
     public void playSound(String functionCalled) {
+        logger.debug("The sound being called: " + functionCalled);
+
         switch (functionCalled) {
             case "click" -> chooseSound(sounds[0], sounds[1]);
             case "decays" -> chooseSound(sounds[2], sounds[3]);
@@ -705,6 +712,7 @@ public class PlantComponent extends Component {
     void chooseSound(String lore, String notLore) {
         boolean playLoreSound = random.nextInt(100) <= 0; //Gives 1% chance of being true
         Sound soundEffect;
+        logger.debug("is the sound lore?: " + playLoreSound);
 
         if (playLoreSound) {
             soundEffect = ServiceLocator.getResourceService().getAsset(lore, Sound.class);
