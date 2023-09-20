@@ -31,6 +31,8 @@ public class PlantComponentTest {
     ResourceService mockResourceService;
     Sound mockSound;
 
+    PlantAreaOfEffectComponent mockPlantAreaOfEffect;
+
     int health = 100;
     String name = "testPlant";
     String type = "DEFENCE";
@@ -48,6 +50,7 @@ public class PlantComponentTest {
         mockTextureComponent = mock(DynamicTextureRenderComponent.class);
         mockResourceService = mock(ResourceService.class);
         mockSound = mock(Sound.class);
+        mockPlantAreaOfEffect = mock(PlantAreaOfEffectComponent.class);
         ServiceLocator.registerResourceService(mockResourceService);
 
         when(mockResourceService.getAsset(anyString(), eq(Sound.class))).thenReturn(mockSound);
@@ -228,21 +231,11 @@ public class PlantComponentTest {
     }
 
     @Test
-    void testBeginDecay_Decay() {
+    void testForceDecay_Decay() {
         testPlant.setGrowthStage(4);
         testPlant.setNumOfDaysAsAdult(adultLifeSpan);
-        testPlant.beginDecay();
+        testPlant.forceDecay();
         assertTrue(testPlant.isDecay());
-    }
-
-    @Test
-    void testBeginDecay_NotDecay() {
-        for (int stage = 1; stage < 4; stage++) {
-            testPlant.setGrowthStage(stage);
-            testPlant.setNumOfDaysAsAdult(adultLifeSpan);
-            testPlant.beginDecay();
-            assertFalse(testPlant.isDecay());
-        }
     }
 
     @Test
