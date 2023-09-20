@@ -23,6 +23,7 @@ import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.QuestgiverFactory;
+import com.csse3200.game.entities.factories.ShipFactory;
 import com.csse3200.game.entities.factories.TractorFactory;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ResourceService;
@@ -37,6 +38,7 @@ public class SpaceGameArea extends GameArea {
   private static final int NUM_GHOSTS = 5;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final GridPoint2 QUESTGIVER_SPAWN = new GridPoint2(20, 20);
+  private static final GridPoint2 SHIP_SPAWN = new GridPoint2(50,50);
   private static final GridPoint2 QUESTGIVERIND_SPAWN = new GridPoint2(20, 22);
   private static final GridPoint2 TRACTOR_SPAWN = new GridPoint2(15, 15);
 
@@ -239,6 +241,7 @@ public class SpaceGameArea extends GameArea {
     spawnCows();
     spawnAstrolotl();
     spawnOxygenEater();
+    spawnShip();
 
     spawnTool(ItemType.WATERING_CAN);
     spawnTool(ItemType.SHOVEL);
@@ -340,6 +343,11 @@ public class SpaceGameArea extends GameArea {
 
     Entity newQuestgiverIndicator = QuestgiverFactory.createQuestgiverIndicator(newQuestgiver);
     spawnEntityAt(newQuestgiverIndicator, QUESTGIVERIND_SPAWN, true, true);
+  }
+
+  private void spawnShip() {
+    Entity newShip = ShipFactory.createShip();
+    spawnEntityAt(newShip, SHIP_SPAWN, true, true);
   }
 
   private void spawnTool(ItemType tool) {
