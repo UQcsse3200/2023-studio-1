@@ -1,6 +1,9 @@
 package com.csse3200.game.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainCropTileFactory;
@@ -15,10 +18,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.files.SaveGame;
 import com.csse3200.game.files.SaveGame.GameState;
-import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.missions.MissionManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /* A note of the registering of this service:
@@ -55,6 +55,7 @@ public class SaveLoadService {
     state.setDay(ServiceLocator.getTimeService().getDay());
     state.setHour(ServiceLocator.getTimeService().getHour());
     state.setClimate(ServiceLocator.getGameArea().getClimateController());
+    state.setMissions(ServiceLocator.getMissionManager());
 
     state.setPlayer(ServiceLocator.getGameArea().getPlayer());
     state.setTractor(ServiceLocator.getGameArea().getTractor());
@@ -243,7 +244,7 @@ public class SaveLoadService {
    */
   private void updateMissions(GameState state) {
     MissionManager missions = ServiceLocator.getMissionManager();
-    // TODO Mission saving
-    // Add in setting missions based off the ones that are done
+    missions.setActiveQuests(state.getMissions().getActiveQuests());
+    missions.setSelectableQuests(state.getMissions().getSelectableQuests());
   }
 }

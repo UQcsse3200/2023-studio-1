@@ -1,9 +1,9 @@
 package com.csse3200.game.missions.quests;
 
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.rewards.Reward;
-import com.csse3200.game.services.ServiceLocator;
 
 public class FertiliseCropTilesQuest extends Quest {
 
@@ -54,6 +54,16 @@ public class FertiliseCropTilesQuest extends Quest {
         return numberOfTilesFertilised + " out of " + target + " crop tiles fertilised";
     }
 
+    @Override
+    public void setProgress(JsonValue progress) {
+        numberOfTilesFertilised = progress.asInt();
+    }
+
+    @Override
+    public Object getProgress() {
+        return numberOfTilesFertilised;
+    }
+
     /**
      * Increments the number of crop tiles the player has fertilised.
      */
@@ -68,4 +78,7 @@ public class FertiliseCropTilesQuest extends Quest {
     protected void resetState() {
         numberOfTilesFertilised = 0;
     }
+
+
+
 }

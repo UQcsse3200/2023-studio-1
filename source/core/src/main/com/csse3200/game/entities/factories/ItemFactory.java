@@ -1,5 +1,9 @@
 package com.csse3200.game.entities.factories;
 
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.function.Supplier;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.components.items.ItemComponent;
@@ -11,9 +15,6 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.function.Supplier;
 import com.csse3200.game.services.FactoryService;
 
 /**

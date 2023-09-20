@@ -2,11 +2,13 @@ package com.csse3200.game.events;
 
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.events.listeners.*;
+import com.csse3200.game.events.listeners.EventListener;
+import com.csse3200.game.services.GameTime;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 
 /**
@@ -22,11 +24,18 @@ import java.util.function.Consumer;
  */
 public class EventHandler {
   private static final Logger logger = LoggerFactory.getLogger(EventHandler.class);
+  private final List<ScheduledEvent> scheduledEvents = new ArrayList<>();
   Map<String, Array<EventListener>> listeners;
+  private final GameTime timeSource;
 
   public EventHandler() {
     // Assume no events by default, which will be the case for most entities
     listeners = new HashMap<>(0);
+    timeSource = ServiceLocator.getTimeSource();
+
+    if (timeSource == null) {
+      logger.debug("No instance of TimeSource found, cannot schedule events");
+    }
   }
 
   /**
@@ -134,6 +143,162 @@ public class EventHandler {
         eventName,
         (EventListener listener) ->
             ((EventListener3<T0, T1, T2>) listener).handle(arg0, arg1, arg2));
+  }
+
+  /**
+   * Schedule an event with no arguments
+   *
+   * @param delay delay before triggering event
+   * @param eventName name of the event
+   * @return the scheduled event
+   */
+  public ScheduledEvent scheduleEvent(float delay, String eventName) {
+    if (timeSource == null) {
+      logger.error("{} event not scheduled. No instance of TimeSource found", eventName);
+      return null;
+    }
+
+    long endTime = timeSource.getTime() + (int)(delay * 1000);
+
+    ScheduledEvent scheduledEvent = new ScheduledEvent(eventName, Collections.emptyList(), endTime);
+    scheduledEvents.add(scheduledEvent);
+
+    return scheduledEvent;
+  }
+
+  /**
+   * Schedule an event with one argument
+   *
+   * @param delay delay before triggering event
+   * @param eventName name of the event
+   * @param arg0 arg to pass to event
+   * @param <T> argument type
+   * @return the scheduled event
+   */
+  public <T> ScheduledEvent scheduleEvent(float delay, String eventName, T arg0) {
+    if (timeSource == null) {
+      logger.error("{} event not scheduled. No instance of TimeSource found", eventName);
+      return null;
+    }
+
+    long endTime = timeSource.getTime() + (int)(delay * 1000);
+
+    ArrayList<Object> args = new ArrayList<>();
+    args.add(arg0);
+
+    ScheduledEvent scheduledEvent = new ScheduledEvent(eventName, args, endTime);
+    scheduledEvents.add(scheduledEvent);
+
+    return scheduledEvent;
+  }
+
+  /**
+   * Schedule an event with two arguments
+   *
+   *
+   * @param delay delay before triggering event
+   * @param eventName name of the event
+   * @param arg0 arg 0 to pass to event
+   * @param arg1 arg 1 to pass to event
+   * @param <T0> Type of arg 0
+   * @param <T1> Type of arg 1
+   * @return the scheduled event
+   */
+  public <T0, T1> ScheduledEvent scheduleEvent(float delay, String eventName, T0 arg0, T1 arg1) {
+    if (timeSource == null) {
+      logger.error("{} event not scheduled. No instance of TimeSource found", eventName);
+      return null;
+    }
+
+    long endTime = timeSource.getTime() + (int)(delay * 1000);
+
+    ArrayList<Object> args = new ArrayList<>();
+    args.add(arg0);
+    args.add(arg1);
+
+    ScheduledEvent scheduledEvent = new ScheduledEvent(eventName, args, endTime);
+    scheduledEvents.add(scheduledEvent);
+
+    return scheduledEvent;
+  }
+
+  /**
+   * Schedule an event with three arguments
+   *
+   * @param delay delay before triggering event
+   * @param eventName name of the event
+   * @param arg0 arg 0 to pass to event
+   * @param arg1 arg 1 to pass to event
+   * @param arg2 arg 2 to pass to event
+   * @param <T0> Type of arg 0
+   * @param <T1> Type of arg 1
+   * @param <T2> Type of arg 2
+   * @return the scheduled event
+   */
+  public <T0, T1, T2> ScheduledEvent scheduleEvent(float delay, String eventName, T0 arg0, T1 arg1, T2 arg2) {
+    if (timeSource == null) {
+      logger.error("{} event not scheduled. No instance of TimeSource found", eventName);
+      return null;
+    }
+
+    long endTime = timeSource.getTime() + (int)(delay * 1000);
+
+    ArrayList<Object> args = new ArrayList<>();
+    args.add(arg0);
+    args.add(arg1);
+    args.add(arg2);
+
+    ScheduledEvent scheduledEvent = new ScheduledEvent(eventName, args, endTime);
+    scheduledEvents.add(scheduledEvent);
+
+    return scheduledEvent;
+  }
+
+  /**
+   * Trigger a scheduled event with given args
+   *
+   * @param scheduledEvent scheduled event to trigger
+   */
+  private void triggerScheduledEvent(ScheduledEvent scheduledEvent) {
+    List<Object> args = scheduledEvent.args();
+    String eventName = scheduledEvent.eventName();
+      switch (args.size()) {
+          case 0 -> trigger(eventName);
+          case 1 -> trigger(eventName, args.get(0));
+          case 2 -> trigger(eventName, args.get(0), args.get(1));
+          case 3 -> trigger(eventName, args.get(0), args.get(1), args.get(2));
+      }
+  }
+
+  /**
+   * Update the event handler, processing and triggering scheduled events that have reached their
+   * scheduled execution time.
+   *
+   * <p>If there is no instance of {@link GameTime} available, this method does nothing.
+   */
+  public void update() {
+    if (timeSource == null) {
+      return;
+    }
+
+    for (ScheduledEvent scheduledEvent : scheduledEvents) {
+      if (timeSource.getTime() >= scheduledEvent.endTime()) {
+        triggerScheduledEvent(scheduledEvent);
+      }
+    }
+
+    // remove in separate loop to avoid concurrent modification error
+    scheduledEvents.removeIf(scheduledEvent -> timeSource.getTime() >= scheduledEvent.endTime());
+  }
+
+
+  /**
+   * Cancels the given scheduled event
+   * @param event event to cancel
+   */
+  public void cancelEvent(ScheduledEvent event) {
+    scheduledEvents.remove(event);
+    logger.debug("{} event cancelled", event.eventName());
   }
 
   private void registerListener(String eventName, EventListener listener) {

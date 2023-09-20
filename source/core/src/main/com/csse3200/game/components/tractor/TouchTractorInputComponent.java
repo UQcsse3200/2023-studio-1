@@ -6,9 +6,20 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.utils.math.Vector2Utils;
 
+
+/**
+ * Almost certain this class does nothing but is needs as when you make a InputController it makes both
+ * May need to be updated later to better match the Keyboard verison.
+ */
 public class TouchTractorInputComponent extends InputComponent {
+  /**
+   * The direction the tractor will move in
+   */
   private final Vector2 walkDirection = Vector2.Zero.cpy();
 
+  /**
+   * Constructor for the tractor, sets same priority as the player's input constructor
+   */
   public TouchTractorInputComponent() {
     super(5);
   }
@@ -76,7 +87,9 @@ public class TouchTractorInputComponent extends InputComponent {
         return false;
     }
   }
-
+  /**
+   * Triggers the move event for the tractor
+   */
   private void triggerWalkEvent() {
     if (walkDirection.epsilonEquals(Vector2.Zero)) {
       entity.getEvents().trigger("walkStop");
