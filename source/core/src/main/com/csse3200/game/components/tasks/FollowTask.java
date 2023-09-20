@@ -7,6 +7,8 @@ public class FollowTask extends ChaseTask {
   /** Distance to target before stopping. */
   private final float stoppingDistance;
 
+
+
   /**
    * @param target The entity to follow.
    * @param priority Task priority when following (0 when not following).

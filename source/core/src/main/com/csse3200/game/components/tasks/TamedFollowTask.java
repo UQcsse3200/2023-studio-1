@@ -17,8 +17,8 @@ public class TamedFollowTask extends FollowTask {
     private String favouriteFood;
 
     public TamedFollowTask(Entity target, int priority, float viewDistance, float maxFollowDistance, float
-            limitDistance, String favouriteFood) {
-        super(target, priority, viewDistance, maxFollowDistance, limitDistance);
+            stoppingDistance, String favouriteFood) {
+        super(target, priority, viewDistance, maxFollowDistance,stoppingDistance);
         this.favouriteFood = favouriteFood;
     }
 
@@ -54,7 +54,7 @@ public class TamedFollowTask extends FollowTask {
         //if status is active, check if player is holding onto animal's favourite food, else status becomes inactive
         if ((playerCurItem.getComponent(ItemComponent.class) == null) ||
                 !(playerCurItem.getComponent(ItemComponent.class).getItemName().equals(favouriteFood)) ||
-                (getDistanceToTarget() > getStoppingDistance())) {
+                getDistanceToTarget() <= getStoppingDistance()) {
             stop();
         } else {
             getMovementTask().setTarget(getTarget().getCenterPosition());
