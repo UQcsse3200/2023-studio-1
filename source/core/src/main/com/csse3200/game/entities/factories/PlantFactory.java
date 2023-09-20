@@ -4,8 +4,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.areas.terrain.CropTileComponent;
-import com.csse3200.game.components.plants.PlantComponent;
+import com.csse3200.game.components.plants.PlantAreaOfEffectComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.configs.plants.BasePlantConfig;
 import com.csse3200.game.entities.configs.plants.PlantConfigs;
@@ -56,21 +57,18 @@ public class PlantFactory {
 
         Entity plant = new Entity(EntityType.Plant)
                 .addComponent(animator)
-
-
+                .addComponent(new PlantAreaOfEffectComponent(1f, "None"))
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setSensor(true))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
-                //.addComponent(new DynamicTextureRenderComponent("images/plants/cosmic_cob/4_adult.png"))
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
                         config.maxHealth, cropTile, growthThresholds, soundsArray));
 
         // Set plant position over crop tile.
         var cropTilePosition = cropTile.getEntity().getPosition();
-        plant.setPosition(cropTilePosition.x, cropTilePosition.y + 0.5f);
-        //plant.getComponent(DynamicTextureRenderComponent.class).scaleEntity();
-        //plant.getComponent(DynamicTextureRenderComponent.class).setLayer(2);
+        plant.setPosition(cropTilePosition.x, cropTilePosition.y + 0.4f);
+        plant.getComponent(PlantComponent.class).getCropTile().getEntity().getScale();
         plant.getComponent(AnimationRenderComponent.class).scaleEntity();
         plant.scaleHeight(2f);
         PhysicsUtils.setScaledCollider(plant, 0.5f, 0.2f);
@@ -78,6 +76,11 @@ public class PlantFactory {
         return plant;
     }
 
+    /**
+     * Registers player animations to the AnimationRenderComponent.
+     * @param atlasPath - The path of the relevant animation atlas.
+     * @return animation component
+     */
     private static AnimationRenderComponent setupPlantAnimations(String atlasPath) {
         AnimationRenderComponent animator = new AnimationRenderComponent(
                 ServiceLocator.getResourceService().getAsset(atlasPath, TextureAtlas.class),
@@ -134,7 +137,13 @@ public class PlantFactory {
      * @return entity
      */
     public static Entity createSpaceSnapper(CropTileComponent cropTile) {
-        return createBasePlant(stats.spaceSnapper, cropTile);
+        Entity spaceSnapper = createBasePlant(stats.spaceSnapper, cropTile);
+
+        spaceSnapper.getComponent(AnimationRenderComponent.class).addAnimation("digesting", 0.1f,
+                Animation.PlayMode.LOOP);
+
+
+        return spaceSnapper;
     }
 
     /**

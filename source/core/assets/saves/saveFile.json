@@ -1,0 +1,415 @@
+{
+"hour": 6,
+"climate": {
+	"Temp": 7.6950254,
+	"Humidity": 0.94980294
+},
+"missions": {
+	"ActiveQuests": {},
+	"SelectableQuests": {
+		"Quest": {
+			"name": "Haber Hobbyist",
+			"expiry": 24,
+			"progress": 0,
+			"collected": false
+		},
+		"Quest": {
+			"name": "Fertiliser Fanatic",
+			"expiry": 48,
+			"progress": 0,
+			"collected": false
+		}
+	},
+	"Achievements": {
+		"Achievement": {
+			"index": 0,
+			"progress": 0
+		},
+		"Achievement": {
+			"index": 1,
+			"progress": 0
+		},
+		"Achievement": {
+			"index": 2,
+			"progress": 0
+		}
+	}
+},
+"player": {
+	"Entity": "Player",
+	"x": 9,
+	"y": 9,
+	"components": {
+		"InventoryComponent": {
+			"inventory": {
+				"item": {
+					"name": "aloe vera seed",
+					"count": 1,
+					"X": 0,
+					"Y": 0
+				},
+				"item": {
+					"name": "fertiliser",
+					"count": 1,
+					"X": 0,
+					"Y": 0
+				}
+			}
+		}
+	}
+},
+"tractor": {
+	"Entity": "Tractor",
+	"x": 12.9375,
+	"y": 13.09375,
+	"components": {
+		"TractorActions": {
+			"isMuted": true
+		}
+	}
+},
+"entities": [
+	{
+		"Entity": "Chicken",
+		"x": 54.019386,
+		"y": 37.61868,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 27.918509,
+		"y": 91.77486,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 47.306404,
+		"y": 66.360916,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 0.9195792,
+		"y": 82.8472,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 31.738615,
+		"y": 49.52729,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 38.45276,
+		"y": 55.41584,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 84.67151,
+		"y": 15.574676,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 37.085007,
+		"y": 22.218708,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 34.3131,
+		"y": 28.183495,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Chicken",
+		"x": 77.99443,
+		"y": 42.281906,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Cow",
+		"x": 55.469044,
+		"y": 80.81951,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Cow",
+		"x": 85.41822,
+		"y": 16.039621,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Cow",
+		"x": 32.27032,
+		"y": 60.74449,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Cow",
+		"x": 50.53687,
+		"y": 18.373354,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Cow",
+		"x": 27.012674,
+		"y": 50.953484,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "Astrolotl",
+		"x": 60.447403,
+		"y": 76.516815,
+		"components": {
+			"TamableComponent": {
+				"tamed": false
+			}
+		}
+	},
+	{
+		"Entity": "OxygenEater",
+		"x": 14.212803,
+		"y": 40.86568,
+		"components": {}
+	},
+	{
+		"Entity": "OxygenEater",
+		"x": 15.782691,
+		"y": 25.460514,
+		"components": {}
+	},
+	{
+		"Entity": "OxygenEater",
+		"x": 21.22945,
+		"y": 7.6102533,
+		"components": {}
+	},
+	{
+		"Entity": "OxygenEater",
+		"x": 15.589969,
+		"y": 80.98423,
+		"components": {}
+	},
+	{
+		"Entity": "OxygenEater",
+		"x": 12.124023,
+		"y": 95.79124,
+		"components": {}
+	}
+],
+"tiles": [
+	{
+		"Entity": "Tile",
+		"x": 15,
+		"y": 11,
+		"components": {
+			"CropTileComponent": {
+				"waterContent": 0.5279855,
+				"soilQuality": 1,
+				"isFertilised": false,
+				"plant": {
+					"Entity": "Plant",
+					"x": 15,
+					"y": 11.4,
+					"components": {
+						"PlantComponent": {
+							"name": "Atomic Algae",
+							"health": 200,
+							"age": 0,
+							"growth": 1
+						}
+					}
+				}
+			}
+		}
+	},
+	{
+		"Entity": "Tile",
+		"x": 13,
+		"y": 11,
+		"components": {
+			"CropTileComponent": {
+				"waterContent": 0.5279855,
+				"soilQuality": 1,
+				"isFertilised": false,
+				"plant": {
+					"Entity": "Plant",
+					"x": 13,
+					"y": 11.4,
+					"components": {
+						"PlantComponent": {
+							"name": "Deadly Nightshade",
+							"health": 200,
+							"age": 0,
+							"growth": 1
+						}
+					}
+				}
+			}
+		}
+	},
+	{
+		"Entity": "Tile",
+		"x": 11,
+		"y": 11,
+		"components": {
+			"CropTileComponent": {
+				"waterContent": 0.5279855,
+				"soilQuality": 1,
+				"isFertilised": false,
+				"plant": {
+					"Entity": "Plant",
+					"x": 11,
+					"y": 11.4,
+					"components": {
+						"PlantComponent": {
+							"name": "Space Snapper",
+							"health": 200,
+							"age": 0,
+							"growth": 1
+						}
+					}
+				}
+			}
+		}
+	},
+	{
+		"Entity": "Tile",
+		"x": 9,
+		"y": 11,
+		"components": {
+			"CropTileComponent": {
+				"waterContent": 0.5279855,
+				"soilQuality": 1,
+				"isFertilised": false,
+				"plant": {
+					"Entity": "Plant",
+					"x": 9,
+					"y": 11.4,
+					"components": {
+						"PlantComponent": {
+							"name": "Hammer Plant",
+							"health": 200,
+							"age": 0,
+							"growth": 1
+						}
+					}
+				}
+			}
+		}
+	},
+	{
+		"Entity": "Tile",
+		"x": 7,
+		"y": 11,
+		"components": {
+			"CropTileComponent": {
+				"waterContent": 0.5279855,
+				"soilQuality": 1,
+				"isFertilised": false,
+				"plant": {
+					"Entity": "Plant",
+					"x": 7,
+					"y": 11.4,
+					"components": {
+						"PlantComponent": {
+							"name": "Aloe Vera",
+							"health": 200,
+							"age": 0,
+							"growth": 1
+						}
+					}
+				}
+			}
+		}
+	},
+	{
+		"Entity": "Tile",
+		"x": 5,
+		"y": 11,
+		"components": {
+			"CropTileComponent": {
+				"waterContent": 0.5279855,
+				"soilQuality": 1,
+				"isFertilised": false,
+				"plant": {
+					"Entity": "Plant",
+					"x": 5,
+					"y": 11.4,
+					"components": {
+						"PlantComponent": {
+							"name": "Cosmic Cob",
+							"health": 200,
+							"age": 0,
+							"growth": 1
+						}
+					}
+				}
+			}
+		}
+	}
+]
+}
