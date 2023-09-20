@@ -1,16 +1,16 @@
 package com.csse3200.game.services;
 
+import box2dLight.RayHandler;
+import com.csse3200.game.events.EventHandler;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedConstruction;
 
 import java.sql.Time;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.mock;
-
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class TimeServiceTest {
 
@@ -89,6 +89,25 @@ class TimeServiceTest {
 	public void testNormalSpeed() {
 		timeService.getEvents().trigger("morningTime");
 		verify(gameTime, times(1)).setTimeScale(1);
+	}
+
+	@Test
+	public void testUpdate() {
+		when(gameTime.getDeltaTime()).thenReturn(0.25f);
+		timeService.update();
+		assertEquals(0, timeService.getMinute());
+		timeService.update();
+		assertEquals(1, timeService.getMinute());
+
+		when(gameTime.getDeltaTime()).thenReturn(30f);
+		timeService.update();
+		System.out.println(timeService.getMinute());
+		timeService.update();
+		System.out.println(timeService.getMinute());
+		timeService.update();
+		System.out.println(timeService.getMinute());
+		timeService.update();
+		System.out.println(timeService.getMinute());
 	}
 
 	@Test
