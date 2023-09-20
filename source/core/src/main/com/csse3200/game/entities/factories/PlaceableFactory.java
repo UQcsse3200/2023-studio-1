@@ -3,7 +3,6 @@ package com.csse3200.game.entities.factories;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.placeables.SprinklerComponent;
 import com.csse3200.game.components.placeables.FenceComponent;
-import com.csse3200.game.components.placeables.ChestComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
@@ -91,9 +90,7 @@ public class PlaceableFactory {
     public static Entity createChest() {
         Entity chest = createBasePlaceable(EntityType.Chest);
         // Add components here
-        chest.addComponent(new InventoryComponent(null))
-            .addComponent(new DynamicTextureRenderComponent("images/Temp-Chest.png"))
-            .addComponent(new ChestComponent());
+        chest.addComponent(new InventoryComponent(null));
         return chest;
     }
 }
