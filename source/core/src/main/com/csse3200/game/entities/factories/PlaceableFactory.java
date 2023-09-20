@@ -3,6 +3,7 @@ package com.csse3200.game.entities.factories;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.placeables.SprinklerComponent;
 import com.csse3200.game.components.placeables.FenceComponent;
+import com.csse3200.game.components.placeables.ChestComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
@@ -71,7 +72,7 @@ public class PlaceableFactory {
      * @return the pump that was made
      */
     public static Entity createPump() {
-        Entity pump = createBasePlaceable(EntityType.Sprinkler);
+        Entity pump = createBasePlaceable(EntityType.Pump);
         // set temp texture to differentiate from other entities
         pump.addComponent(new DynamicTextureRenderComponent("images/placeable/sprinkler/pump.png"));
         //pump.getComponent(DynamicTextureRenderComponent.class).setTexture("images/placeable/sprinkler/pump.png");
@@ -90,7 +91,9 @@ public class PlaceableFactory {
     public static Entity createChest() {
         Entity chest = createBasePlaceable(EntityType.Chest);
         // Add components here
-        chest.addComponent(new InventoryComponent(null));
+        chest.addComponent(new InventoryComponent(null))
+            .addComponent(new DynamicTextureRenderComponent("images/Temp-Chest.png"))
+            .addComponent(new ChestComponent());
         return chest;
     }
 }

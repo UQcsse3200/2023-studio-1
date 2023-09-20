@@ -63,6 +63,7 @@ public class SpaceGameArea extends GameArea {
           "images/watered_cropTile_fertilised.png",
           "images/overwatered_cropTile.png",
           "images/overwatered_cropTile_fertilised.png",
+          "images/Temp-Chest.png",         ///################### Temperary chest image 
 
           "images/beach_1.png",
           "images/beach_2.png",
@@ -286,9 +287,10 @@ public class SpaceGameArea extends GameArea {
     player.getComponent(InventoryComponent.class).addItem(ItemFactory.createGateItem());
     player.getComponent(InventoryComponent.class).addItem(ItemFactory.createFenceItem());
     player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHoe());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createShovel());
     player.getComponent(InventoryComponent.class).addItem(ItemFactory.createPumpItem());
     player.getComponent(InventoryComponent.class).addItem(ItemFactory.createSprinklerItem());
-
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createChestItem());
 
     tractor = spawnTractor();
     spawnPlayerHighlight();
