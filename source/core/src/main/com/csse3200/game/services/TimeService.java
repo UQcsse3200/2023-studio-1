@@ -185,7 +185,7 @@ public class TimeService {
 		events.trigger("dayUpdate");
 
 		// lose the game if the game reaches 30 days
-		if (day >= LOSE_DAY) {
+		if (day >= 30) {
 			ServiceLocator.getGameArea().getPlayer().getEvents().trigger("loseScreen");
 		}
 	}
