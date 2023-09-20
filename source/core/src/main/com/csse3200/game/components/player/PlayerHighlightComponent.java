@@ -9,6 +9,12 @@ import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 //TODO commenting in here is a bit of a mess, clean it up.and junit for this
+
+/**
+ * Component that renders a highlight on current player cursor position
+ * Is bounded by the maximum "reach" of the player.
+ *
+ */
 public class PlayerHighlightComponent extends Component {
     private DynamicTextureRenderComponent currentTexture;
     private boolean isMuted;
@@ -24,6 +30,9 @@ public class PlayerHighlightComponent extends Component {
         isMuted = true;
     }
 
+    private void setMuted(boolean muted) {
+        this.isMuted = muted;
+    }
     public void unMute() {
         isMuted = false;
     }
@@ -36,8 +45,12 @@ public class PlayerHighlightComponent extends Component {
         this.isMuted = false;
     }
 
-    @Override
-    public void update() {
+    public void updateMuted() {
+        boolean isMuted = ServiceLocator.getGameArea().getPlayer().getComponent(PlayerActions.class).isMuted();
+        setMuted(isMuted);
+    }
+
+    public void updatePosition() {
         GameMap map = ServiceLocator.getGameArea().getMap();
         if (currentTexture != null) {
             String texturePath = this.getTexturePath();
@@ -66,6 +79,13 @@ public class PlayerHighlightComponent extends Component {
         }
 
         entity.setPosition(playerPosCenter);
+
+    }
+
+    @Override
+    public void update() {
+        updateMuted();
+        updatePosition();
     }
 
 
