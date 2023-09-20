@@ -10,6 +10,11 @@ import com.csse3200.game.rendering.TextureRenderComponent;
 
 public class ShipDebrisFactory {
 
+    /**
+     * Creates a Ship Debris entity.
+     * @param player unused, needed for save/load compatibility
+     * @return new Ship Debris Entity.
+     */
     public static Entity createShipDebris(Entity player) {
         Entity shipDebris = new Entity(EntityType.ShipDebris)
                 .addComponent(new TextureRenderComponent("images/ship/ship_debris.png"))

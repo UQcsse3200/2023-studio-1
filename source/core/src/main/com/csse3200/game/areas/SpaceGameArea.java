@@ -329,6 +329,10 @@ public class SpaceGameArea extends GameArea {
     return newPlayer;
   }
 
+  /**
+   * Spawns the initial Ship Debris randomly around the Player Ship's location.
+   * Random position generation adapted from Team 1's spawnTool() below.
+   */
   private void spawnShipDebris() {
 
     GridPoint2 minPos = new GridPoint2(SHIP_SPAWN.x - 5, SHIP_SPAWN.y - 5);
