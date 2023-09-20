@@ -19,7 +19,6 @@ import com.csse3200.game.services.ServiceLocator;
  *  - get sprinkler powered/un-powered updates working.
  *  - animate watering.
  *  - integrate with save&load.
- *  - move the notifyAdjacent and alike functions to their own component so fences can use them too.
  *  - need finished textures for all sprinkler bits and the pump.
  */
 
@@ -93,6 +92,10 @@ public class SprinklerComponent extends Component {
   public void create() {
     // Init class vars:
     this.connectedEntityComponent = new ConnectedEntityComponent(entity);
+
+    // todo Temp setting always powered:
+    this.isPowered = true;
+
     // A pump doesn't need any more configuring.
     if (!this.pump) {
       this.aoe = new Vector2[12];
@@ -149,28 +152,15 @@ public class SprinklerComponent extends Component {
   }
 
   /**
-   * Called via the "placed:(x,y)" trigger - when a new sprinkler is placed in this sprinklers' vicinity.
-   * Re-configures using configSprinkler() and checks if a change of state has occurred.
+   * Called via ConnectedEntityComponent's "reconfigure" trigger -
+   * This trigger is called when a new sprinkler is placed in this sprinklers' vicinity.
+   * Re-configures using configSprinkler() and //TODO used to: check if a change of state has occurred.
    * If a change of state has occurred then this sprinkler tells all its adjacent sprinklers to
    * check themselves for a state change via reConfigure().
    */ // TODO: restore functionality
   public void reConfigure() {
     if (this.pump) return;  // A pump shouldn't reconfigure.
-    // Save old state
-    //boolean prevPowerState = this.isPowered;
-    // Reconfigure
     configSprinkler();
-    // Check for change of state
-    /*
-    if (prevPowerState != this.isPowered) {
-      // powered status has changed we should reconfigure adjacent sprinklers too
-      for (Entity sprinkler : this.adjSprinklers) {
-        if (sprinkler != null) {
-          sprinkler.getComponent(SprinklerComponent.class).reConfigure();
-        }
-      }
-    }
-     */
   }
 
 
