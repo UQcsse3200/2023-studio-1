@@ -83,7 +83,7 @@ public class EndCreditsDisplay extends UIComponent {
         background.setHeight(scaledHeight);
 
         // Load the animated planet
-        planet = new Image(new Texture(Gdx.files.internal("images/intro_planet.png")));
+        planet = new Image(new Texture(Gdx.files.internal("images/earth_image.png")));
 
         // Scale it to a 10% of screen width with a constant aspect ratio
         float planetWidth = (float) (Gdx.graphics.getWidth() * 0.1);
@@ -220,9 +220,9 @@ public class EndCreditsDisplay extends UIComponent {
 
 
         logger.debug(String.format("Space Speed: %s", spaceSpeed));
-        //this.returnButton.setVisible(true);
 
         //stage.act(ServiceLocator.getTimeSource().getDeltaTime());
+        //this.returnButton.setVisible(true);
     }
 
     @Override
