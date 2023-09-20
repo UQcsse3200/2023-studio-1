@@ -1,6 +1,9 @@
 package com.csse3200.game.screens;
 
+import com.csse3200.game.components.plants.PlantInfoDisplayComponent;
 import com.csse3200.game.services.*;
+import com.csse3200.game.services.plants.PlantCommandService;
+import com.csse3200.game.services.plants.PlantInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -103,6 +106,7 @@ public class MainGameScreen extends ScreenAdapter {
         ServiceLocator.registerTimeService(new TimeService());
         ServiceLocator.registerPlanetOxygenService(new PlanetOxygenService());
         ServiceLocator.registerPlantCommandService(new PlantCommandService());
+        ServiceLocator.registerPlantInfoService(new PlantInfoService());
 
         ServiceLocator.registerMissionManager(new MissionManager());
 
@@ -225,6 +229,7 @@ public class MainGameScreen extends ScreenAdapter {
                 .addComponent(new TerminalDisplay())
                 .addComponent(new GameTimeDisplay())
                 .addComponent(new OxygenDisplay())
+                .addComponent(new PlantInfoDisplayComponent())
                 .addComponent(new WeatherEventDisplay());
 
         ServiceLocator.getEntityService().register(ui);

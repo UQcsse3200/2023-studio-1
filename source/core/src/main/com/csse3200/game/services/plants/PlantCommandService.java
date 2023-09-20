@@ -1,4 +1,4 @@
-package com.csse3200.game.services;
+package com.csse3200.game.services.plants;
 
 import com.csse3200.game.events.EventHandler;
 

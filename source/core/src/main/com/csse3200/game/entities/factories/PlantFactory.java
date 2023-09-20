@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.components.plants.PlantAreaOfEffectComponent;
+import com.csse3200.game.components.plants.PlantInfoDisplayComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.EntityType;
