@@ -76,14 +76,19 @@ public class EndCreditsDisplay extends UIComponent {
     }
 
     private void addActors() {
-        this.hasWon = true;
+        this.hasWon = false;
         background = new Image(new Texture(Gdx.files.internal("images/intro_background_v2.png")));
         background.setPosition(0, 0);
         float scaledHeight = Gdx.graphics.getWidth() * (background.getHeight() / background.getWidth());
         background.setHeight(scaledHeight);
 
         // Load the animated planet
-        planet = new Image(new Texture(Gdx.files.internal("images/earth_image.png")));
+        if (this.hasWon) {
+            planet = new Image(new Texture(Gdx.files.internal("images/earth_image.png")));
+        } else {
+            planet = new Image(new Texture(Gdx.files.internal("images/dead_planet.png")));
+        }
+
 
         // Scale it to a 10% of screen width with a constant aspect ratio
         float planetWidth = (float) (Gdx.graphics.getWidth() * 0.1);
@@ -222,6 +227,7 @@ public class EndCreditsDisplay extends UIComponent {
         logger.debug(String.format("Space Speed: %s", spaceSpeed));
 
         //stage.act(ServiceLocator.getTimeSource().getDeltaTime());
+
         //this.returnButton.setVisible(true);
     }
 
