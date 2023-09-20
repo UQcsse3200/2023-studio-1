@@ -18,6 +18,7 @@ com.csse3200.game.components.plants
 com.csse3200.game.components.player
 com.csse3200.game.components.questgiver
 com.csse3200.game.components.settingsmenu
+com.csse3200.game.components.ship
 com.csse3200.game.components.tasks
 com.csse3200.game.components.tractor
 com.csse3200.game.concurrency
