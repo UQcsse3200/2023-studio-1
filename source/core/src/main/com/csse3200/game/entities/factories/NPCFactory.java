@@ -1,11 +1,15 @@
 package com.csse3200.game.entities.factories;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
+import com.csse3200.game.components.AuraLightComponent;
+import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.AnimalAnimationController;
+import com.csse3200.game.components.npc.FireflyScareComponent;
 import com.csse3200.game.components.npc.PassiveDropComponent;
 import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.components.tasks.ChaseTask;
@@ -24,7 +28,11 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Factory to create non-playable character (NPC) entities with predefined components.
@@ -203,6 +211,19 @@ public class NPCFactory {
 
 
     return oxygenEater;
+  }
+
+  public static Entity createFireFlies(Entity player) {
+    AuraLightComponent light = new AuraLightComponent(1f, Color.GREEN);
+    light.toggleLight();
+    Entity fireflies = new Entity(EntityType.FireFlies)
+            .addComponent(new TextureRenderComponent("images/tractor.png"))
+            .addComponent(light)
+            .addComponent(new FireflyScareComponent())
+            .addComponent(new PhysicsComponent())
+            .addComponent(new InteractionDetector(5f,
+                    new ArrayList<>(Arrays.asList(EntityType.Player, EntityType.Light, EntityType.Tractor))));
+    return fireflies;
   }
 
   /**

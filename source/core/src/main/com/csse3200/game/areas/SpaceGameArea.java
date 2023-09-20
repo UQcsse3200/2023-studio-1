@@ -240,6 +240,7 @@ public class SpaceGameArea extends GameArea {
     spawnAstrolotl();
     spawnOxygenEater();
     spawnShip();
+    spawnFirefly();
 
 //    spawnTool(ItemType.WATERING_CAN);
 //    spawnTool(ItemType.SHOVEL);
@@ -307,6 +308,10 @@ public class SpaceGameArea extends GameArea {
        Entity invisible_obs = ObstacleFactory.createInvisibleObstacle();
        spawnEntityAt(invisible_obs, Pos, true, false);
      }
+   }
+
+   private void spawnFirefly() {
+     spawnEntityAt(NPCFactory.createFireFlies(player),new GridPoint2(30,30),true, true);
    }
 
   private Entity spawnCrop() {
