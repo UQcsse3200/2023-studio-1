@@ -1,10 +1,12 @@
 package com.csse3200.game.components.items;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.extensions.GameExtension;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(GameExtension.class)
 class ItemComponentTest {

@@ -1,5 +1,8 @@
 package com.csse3200.game.components.gamearea;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,8 +17,6 @@ import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.components.player.OpenPauseComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Displays the name of the current game area.
@@ -54,7 +55,7 @@ public class GameAreaDisplay extends UIComponent {
     openPauseComponent = ServiceLocator.getGameArea().getPlayer().getComponent(OpenPauseComponent.class);
     Image pauseMenu;
         pauseMenu = new Image(new Texture(Gdx.files.internal
-            ("images/PauseMenu/PauseNew.jpg")));
+            ("images/PauseMenu/Pausenew.jpg")));
     pauseMenu.setSize(1300, 700);
     pauseMenu.setPosition((float) (Gdx.graphics.getWidth()/ (double) 2 - pauseMenu.getWidth()/2),
             (float) (Gdx.graphics.getHeight()/ (double) 2 - pauseMenu.getHeight()/2));

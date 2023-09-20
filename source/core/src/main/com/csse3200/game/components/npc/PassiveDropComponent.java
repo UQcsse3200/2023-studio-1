@@ -1,11 +1,11 @@
 package com.csse3200.game.components.npc;
 
+import java.util.function.Supplier;
+
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
-
-import java.util.function.Supplier;
 
 /**
  * Enables entity to drop a specified item at regular intervals

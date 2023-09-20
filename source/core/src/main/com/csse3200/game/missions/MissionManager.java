@@ -1,17 +1,22 @@
 package com.csse3200.game.missions;
 
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.achievements.Achievement;
 import com.csse3200.game.missions.achievements.PlantCropsAchievement;
 import com.csse3200.game.missions.quests.FertiliseCropTilesQuest;
 import com.csse3200.game.missions.quests.Quest;
+import com.csse3200.game.missions.quests.QuestFactory;
 import com.csse3200.game.missions.rewards.ItemReward;
+import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class MissionManager {
+public class MissionManager implements Json.Serializable {
 
 	/**
 	 * An enum storing all possible events that the {@link MissionManager}'s {@link EventHandler} should listen to and
@@ -19,6 +24,12 @@ public class MissionManager {
 	 * a listener for the {@link #name()} of the enum value.
 	 */
 	public enum MissionEvent {
+		// Triggers when a mission is completed
+		MISSION_COMPLETE,
+		// Triggers when a new quest has been added to the mission manager
+		NEW_QUEST,
+		// Triggers when a quest expires
+		QUEST_EXPIRED,
 		// Triggers when a crop is planted, single String representing plant type is provided as argument
 		PLANT_CROP,
 		// Triggers when a crop is fertilised
@@ -46,7 +57,7 @@ public class MissionManager {
 	/**
 	 * An array of all in-game {@link Achievement}s
 	 */
-	private final Achievement[] achievements = new Achievement[]{
+	private static final Achievement[] achievements = new Achievement[]{
 			new PlantCropsAchievement("Plant President", 50),
 			new PlantCropsAchievement("Crop Enjoyer", 200),
 			new PlantCropsAchievement("Gardener of the Galaxy", 800)
@@ -62,14 +73,9 @@ public class MissionManager {
 		}
 
 		// Add initial quests - regardless of GameArea
-		selectableQuests.add(
-				// Item reward to be determined at later date
-				new FertiliseCropTilesQuest("Haber Hobbyist", new ItemReward(new ArrayList<>()), 24, 10)
-		);
-		selectableQuests.add(
-				// Item reward to be determined at later date
-				new FertiliseCropTilesQuest("Fertiliser Fanatic", new ItemReward(new ArrayList<>()), 48, 40)
-		);
+		// This will be removed from the constructor at a later date
+		selectableQuests.add(QuestFactory.createHaberHobbyist());
+		selectableQuests.add(QuestFactory.createFertiliserFanatic());
 	}
 
 	/**
@@ -101,6 +107,7 @@ public class MissionManager {
 	 */
 	public void addQuest(Quest quest) {
 		selectableQuests.add(quest);
+		events.trigger(MissionEvent.NEW_QUEST.name());
 	}
 
 	/**
@@ -136,7 +143,72 @@ public class MissionManager {
 	private void updateActiveQuestTimes() {
 		for (Quest quest : activeQuests) {
 			quest.updateExpiry();
+			if (quest.isExpired()) {
+				events.trigger(MissionEvent.QUEST_EXPIRED.name());
+			}
 		}
 	}
 
+	@Override
+	public void write(Json json) {
+		json.writeObjectStart("ActiveQuests");
+		for (Quest q : activeQuests) {
+			q.write(json);
+		}
+		json.writeObjectEnd();
+		json.writeObjectStart("SelectableQuests");
+		for (Quest q : selectableQuests) {
+			q.write(json);
+		}
+		json.writeObjectEnd();
+		json.writeObjectStart("Achievements");
+		int i = 0;
+		for (Achievement achievement : achievements) {
+			achievement.write(json, i);
+			i++;
+		}
+		json.writeObjectEnd();
+	}
+
+	@Override
+	public void read(Json json, JsonValue jsonMap) {
+		JsonValue active = jsonMap.get("ActiveQuests");
+		activeQuests.clear();
+		if (active.has("Quest")) {
+			active.forEach(jsonValue -> {
+				Quest q = FactoryService.getQuests().get(jsonValue.getString("name")).get();
+				q.setTimeToExpiry(jsonValue.getInt("expiry"));
+				q.setProgress(jsonValue.get("progress"));
+				q.getReward().setCollected(jsonValue.getBoolean("collected"));
+				activeQuests.add(q);
+			});
+		}
+		JsonValue selectable = jsonMap.get("SelectableQuests");
+		selectableQuests.clear();
+		if (selectable.has("Quest")) {
+			selectable.forEach(jsonValue -> {
+				Quest q = FactoryService.getQuests().get(jsonValue.getString("name")).get();
+				q.setTimeToExpiry(jsonValue.getInt("expiry"));
+				q.setProgress(jsonValue.get("progress"));
+				q.getReward().setCollected(jsonValue.getBoolean("collected"));
+				selectableQuests.add(q);
+			});
+		}
+		if (selectable.has("Achievement")) {
+			selectable.forEach(jsonValue -> {
+				Achievement a = achievements[jsonValue.getInt("index")];
+				a.setProgress(jsonValue.get("progress"));
+			});
+		}
+	}
+
+	public void setActiveQuests(List<Quest> activeQuests) {
+		this.activeQuests.clear();
+		this.activeQuests.addAll(activeQuests);
+	}
+
+	public void setSelectableQuests(List<Quest> selectableQuests) {
+		this.selectableQuests.clear();
+		this.selectableQuests.addAll(selectableQuests);
+	}
 }

@@ -21,5 +21,9 @@ public abstract class Reward {
         isCollected = true;
     }
 
+    public void setCollected(boolean collected) {
+        isCollected = collected;
+    }
+
     public abstract void collect();
 }
