@@ -226,7 +226,6 @@ public class PlantComponent extends Component {
         this.numOfDaysAsAdult = 0;
         this.currentMaxHealth = maxHealth;
 
-
         // Initialise growth stage thresholds for specific plants.
         this.growthStageThresholds[0] = growthStageThresholds[0];
         this.growthStageThresholds[1] = growthStageThresholds[1];

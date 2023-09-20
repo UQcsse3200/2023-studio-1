@@ -182,7 +182,33 @@ public class SpaceGameArea extends GameArea {
       "images/plants/hammer_plant.atlas", "images/plants/space_snapper.atlas", "images/plants/atomic_algae.atlas",
       "images/plants/deadly_nightshade.atlas"
   };
-  private static final String[] forestSounds = {"sounds/Impact4.ogg", "sounds/car-horn-6408.mp3"};
+  private static final String[] forestSounds = {
+          "sounds/Impact4.ogg", "sounds/car-horn-6408.mp3",
+          "sounds/plants/aloeVera/click.wav", "sounds/plants/aloeVera/clickLore.wav",
+          "sounds/plants/aloeVera/decay.wav", "sounds/plants/aloeVera/decayLore.wav",
+          "sounds/plants/aloeVera/destroy.wav", "sounds/plants/aloeVera/destroyLore.wav",
+          "sounds/plants/aloeVera/nearby.wav", "sounds/plants/aloeVera/nearbyLore.wav",
+          "sounds/plants/cosmicCob/click.wav", "sounds/plants/cosmicCob/clickLore.wav",
+          "sounds/plants/cosmicCob/decay.wav", "sounds/plants/cosmicCob/decayLore.wav",
+          "sounds/plants/cosmicCob/destroy.wav", "sounds/plants/cosmicCob/destroyLore.wav",
+          "sounds/plants/cosmicCob/nearby.wav", "sounds/plants/cosmicCob/nearbyLore.wav",
+          "sounds/plants/hammerPlant/click.wav", "sounds/plants/hammerPlant/clickLore.wav",
+          "sounds/plants/hammerPlant/decay.wav", "sounds/plants/hammerPlant/decayLore.wav",
+          "sounds/plants/hammerPlant/destroy.wav", "sounds/plants/hammerPlant/destroyLore.wav",
+          "sounds/plants/hammerPlant/nearby.wav", "sounds/plants/hammerPlant/nearbyLore.wav",
+          "sounds/plants/nightshade/click.wav", "sounds/plants/nightshade/clickLore.wav",
+          "sounds/plants/nightshade/decay.wav", "sounds/plants/nightshade/decayLore.wav",
+          "sounds/plants/nightshade/destroy.wav", "sounds/plants/nightshade/destroyLore.wav",
+          "sounds/plants/nightshade/nearby.wav", "sounds/plants/nightshade/nearbyLore.wav",
+          "sounds/plants/venusFlyTrap/click.wav", "sounds/plants/venusFlyTrap/clickLore.wav",
+          "sounds/plants/venusFlyTrap/decay.wav", "sounds/plants/venusFlyTrap/decayLore.wav",
+          "sounds/plants/venusFlyTrap/destroy.wav", "sounds/plants/venusFlyTrap/destroyLore.wav",
+          "sounds/plants/venusFlyTrap/nearby.wav", "sounds/plants/venusFlyTrap/nearbyLore.wav",
+          "sounds/plants/waterWeed/click.wav", "sounds/plants/waterWeed/clickLore.wav",
+          "sounds/plants/waterWeed/decay.wav", "sounds/plants/waterWeed/decayLore.wav",
+          "sounds/plants/waterWeed/destroy.wav", "sounds/plants/waterWeed/destroyLore.wav",
+          "sounds/plants/waterWeed/nearby.wav", "sounds/plants/waterWeed/nearbyLore.wav",
+  };
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
   private static final String[] forestMusic = {backgroundMusic};
 

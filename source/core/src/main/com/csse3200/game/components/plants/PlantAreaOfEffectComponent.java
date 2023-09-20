@@ -73,7 +73,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
             case "Decay" -> decayAndDeadEffect();
             case "Health" -> healthEffect();
             case "Poison" -> poisonEffect();
-            //case "Sound" -> soundEffect();
+            case "Sound" -> soundEffect();
         }
     }
 
