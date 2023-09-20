@@ -183,6 +183,9 @@ public class InventoryComponent extends Component {
    * @return boolean representing if the item was added successfully
    */
   public boolean addItem(Entity item) {
+    if(isFull()){
+      return false;
+    }
     itemCount.put(item, itemCount.getOrDefault(item, 0) + 1);
     setPosition(item);
     if (!itemPosition.containsKey(item)) {
