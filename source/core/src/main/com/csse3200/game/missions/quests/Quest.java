@@ -92,18 +92,6 @@ public abstract class Quest extends Mission {
 	}
 
 	/**
-	 * Sets the time to expire to a given value, mainly used in load
-	 * @param timeToExpiry
-	 */
-	public void setTimeToExpiry(int timeToExpiry) {
-		this.timeToExpiry = timeToExpiry;
-	}
-
-	public Reward getReward() {
-		return reward;
-	}
-
-	/**
 	 * Resets the internal state of the {@link Quest}, to what it was before being accepted/modified.
 	 */
 	protected abstract void resetState();
