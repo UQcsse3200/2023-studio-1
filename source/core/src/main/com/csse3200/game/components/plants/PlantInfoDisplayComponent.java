@@ -20,7 +20,7 @@ public class PlantInfoDisplayComponent extends UIComponent {
         ServiceLocator.getPlantInfoService().getEvents().addListener("showPlantInfo", this::testPlant);
         ServiceLocator.getPlantInfoService().getEvents().addListener("clearPlantInfo", this::clearInfo);
         createWindow();
-        label = new Label("Hover your mouse over a plant", skin);
+        label = new Label("Hover your mouse \nover a plant", skin);
         label.setFontScale(1.5f);
         label.setColor(Color.BROWN);
         window.add(label);
@@ -35,7 +35,7 @@ public class PlantInfoDisplayComponent extends UIComponent {
     private void createWindow() {
         window = new Window("Plant information", skin);
         window.setVisible(true);
-        window.setSize(700f, 300f);
+        window.setSize(450f, 270f);
         window.padBottom(10f);
         window.setPosition(20f, 20f);
         window.setMovable(false);
@@ -58,7 +58,7 @@ public class PlantInfoDisplayComponent extends UIComponent {
 
     public void clearInfo() {
         createWindow();
-        label = new Label("Hover your mouse over a plant", skin);
+        label = new Label("Hover your mouse \nover a plant", skin);
         label.setFontScale(1.5f);
         label.setColor(Color.BROWN);
         window.add(label);
