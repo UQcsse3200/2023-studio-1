@@ -223,6 +223,7 @@ public class ItemActions extends Component {
       Entity placedItem = tile.getPlaceable();
       Vector2 newPos = placedItem.getPosition();
       tile.setPlaceable(null);    //update the tile
+      tile.setUnOccupied();
 
       //check if the placeable is a chest and if there is items in that chest
       //if there is items then return false
