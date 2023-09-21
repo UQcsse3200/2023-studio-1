@@ -69,18 +69,26 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
      * Effect that takes place every hour.
      */
     private void hourlyEffect() {
-        switch (this.effectType) {
-            case "Decay" -> decayAndDeadEffect();
-            case "Health" -> healthEffect();
-            case "Poison" -> poisonEffect();
-            case "Sound" -> soundEffect();
+        if (this.effectType.equals("Sound")) {
+            soundEffect();
         }
     }
 
     private void minuteUpdate() {
+        int min = ServiceLocator.getTimeService().getMinute();
+
+        if (min % 5 == 0) {
+            switch (this.effectType) {
+                case "Decay" -> decayAndDeadEffect();
+                case "Health" -> healthEffect();
+                case "Poison" -> poisonEffect();
+            }
+        }
+
         if (this.effectType.equals("Eat")) {
             eatEffect();
         }
+
     }
 
     /**
@@ -138,7 +146,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
                     if (entity.getId() != plant.getId()) {
 
                         // Decrease the health of all plants in the effect area.
-                        plant.getComponent(PlantComponent.class).increasePlantHealth(-10);
+                        plant.getComponent(PlantComponent.class).increasePlantHealth(-1);
                     }
                 }
             }
@@ -157,7 +165,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
                 Entity plant = entityInRange.getComponent(CropTileComponent.class).getPlant();
                 if (plant != null) {
                     if (entity.getId() != plant.getId()) {
-                        plant.getComponent(PlantComponent.class).increasePlantHealth(10);
+                        plant.getComponent(PlantComponent.class).increasePlantHealth(1);
                     }
                 }
 
@@ -176,7 +184,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
         for (Entity entityInRange : getEntitiesInRange()) {
 
             if (entityInRange.getType() == EntityType.Player) {
-                entityInRange.getComponent(CombatStatsComponent.class).addHealth(-10);
+                entityInRange.getComponent(CombatStatsComponent.class).addHealth(-20);
             }
             // add animals to this.
         }

@@ -145,7 +145,7 @@ public class PlantComponent extends Component {
     /**
      * Constant used to control how long a space snapper waits before eating again.
      */
-    private int eatingCoolDown = 10;
+    private int eatingCoolDown = 60;
 
     /**
      * The number of hours since the space snapper ate. Used to determine whether the plant is ready to eat again.
