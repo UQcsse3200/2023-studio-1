@@ -1,12 +1,12 @@
 package com.csse3200.game.services;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 
 import box2dLight.RayHandler;
 
 public class LightService {
-
 	/**
 	 * Box2dLights ray handler that handles all of the rendering of the lights
 	 */
@@ -21,10 +21,11 @@ public class LightService {
 	 * Creates a LightService which is accessed via the ServiceLocator and used to create lights
 	 */
 	public LightService() {
+		RayHandler.useDiffuseLight(true);
 		rayHandler = new RayHandler(ServiceLocator.getPhysicsService().getPhysics().getWorld());
 		this.camera = (OrthographicCamera) ServiceLocator.getCameraComponent().getCamera();
 		rayHandler.setCulling(true);
-		rayHandler.setAmbientLight(0.8f);
+		rayHandler.setAmbientLight(0.3f, 0.3f, 0.7f, 0.1f);
 	}
 
 	/**
@@ -32,7 +33,8 @@ public class LightService {
 	 */
 	public void renderLight() {
 		float time = ServiceLocator.getTimeService().getHour() + (float) ServiceLocator.getTimeService().getMinute() / 60;
-		rayHandler.setAmbientLight((float) (MathUtils.sin((float) (Math.PI * time / 23)) + 0.1));
+		float brightness = MathUtils.sin((float) ((float) Math.PI * (time-2) / 23 + 0.1));
+		rayHandler.setAmbientLight(brightness, brightness, brightness, brightness);
 		rayHandler.setCombinedMatrix(camera);
 		rayHandler.updateAndRender();
 	}
