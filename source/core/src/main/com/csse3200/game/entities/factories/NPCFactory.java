@@ -216,8 +216,16 @@ public class NPCFactory {
   public static Entity createFireFlies(Entity player) {
     AuraLightComponent light = new AuraLightComponent(3f, Color.LIME);
     light.toggleLight();
+
+    AnimationRenderComponent animator = new AnimationRenderComponent(
+            ServiceLocator.getResourceService().getAsset("images/fireflies.atlas", TextureAtlas.class),
+            16f
+    );
+    animator.addAnimation("default", 0.1f, Animation.PlayMode.LOOP_PINGPONG);
+    animator.startAnimation("default");
+
     Entity fireflies = new Entity(EntityType.FireFlies)
-            .addComponent(new TextureRenderComponent("images/tractor.png"))
+            .addComponent(animator)
             .addComponent(light)
             // Not actually scaring just dying from daylight (named from previous idea for feature)
             .addComponent(new FireflyScareComponent())
