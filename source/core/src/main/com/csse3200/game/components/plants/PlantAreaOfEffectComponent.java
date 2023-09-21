@@ -237,10 +237,13 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
      * @param radius - the new radius of the area.
      */
     public void setRadius(float radius) {
+        /*
         this.radius = radius;
         shape.setRadius(radius);
         // Dispose the old HitboxComponent and create a new one with the new radius.
         super.dispose();
         super.create();
+
+         */
     }
 }

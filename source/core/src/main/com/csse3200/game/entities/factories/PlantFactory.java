@@ -59,7 +59,7 @@ public class PlantFactory {
 
         Entity plant = new Entity(EntityType.Plant)
                 .addComponent(animator)
-                .addComponent(new PlantAreaOfEffectComponent(1f, "None"))
+                .addComponent(new PlantAreaOfEffectComponent(2f, "None"))
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setSensor(true))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))

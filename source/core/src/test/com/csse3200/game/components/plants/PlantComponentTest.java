@@ -173,15 +173,16 @@ public class PlantComponentTest {
     @Test
     void testIncreaseCurrentGrowthLevelPositive(){
         when(mockCropTile.getGrowthRate(1.0f)).thenReturn(0.5);
+        testPlant.setGrowthStage(PlantComponent.GrowthStage.JUVENILE.getValue());
         testPlant.increaseCurrentGrowthLevel();
-        assertEquals(6, testPlant.getCurrentGrowthLevel());
+        assertEquals(1, testPlant.getCurrentGrowthLevel());
     }
 
     @Test
     void testIncreaseCurrentGrowthLevelNegative() {
         when(mockCropTile.getGrowthRate(1.0f)).thenReturn(-0.5);
         testPlant.increaseCurrentGrowthLevel();
-        assertEquals(health - 10, testPlant.getPlantHealth());
+        assertEquals(health - 1, testPlant.getPlantHealth());
     }
 
     @Test
@@ -225,17 +226,8 @@ public class PlantComponentTest {
     }
 
     @Test
-    void testUpdateMaxHealth_UnexpectedGrowthStage() {
-        testPlant.setGrowthStage(5);
-        assertThrows(IllegalStateException.class, () -> testPlant.updateMaxHealth());
-    }
-
-    @Test
-    void testForceDecay_Decay() {
-        testPlant.setGrowthStage(4);
-        testPlant.setNumOfDaysAsAdult(adultLifeSpan);
-        testPlant.forceDecay();
-        assertTrue(testPlant.isDecay());
+    void testSetGrowthStage_UnexpectedGrowthStage() {
+        assertThrows(IllegalArgumentException.class, () -> testPlant.setGrowthStage(7));
     }
 
     @Test

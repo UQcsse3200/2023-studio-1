@@ -279,6 +279,14 @@ public class PlantComponent extends Component {
      * Functionality for the plant that needs to update every minute.
      */
     public void minuteUpdate() {
+        int min = ServiceLocator.getTimeService().getMinute();
+
+        if (min % 20 == 0) {
+            increaseCurrentGrowthLevel();
+            updateGrowthStage();
+            updateMaxHealth();
+        }
+
         // Handle digestion functionality.
         digestion();
 
@@ -290,12 +298,7 @@ public class PlantComponent extends Component {
      * Functionality for the plant that needs to update every hour.
      */
     public void hourUpdate() {
-        int hour = ServiceLocator.getTimeService().getHour();
 
-        // Update the growth stage of the plant twice a day. Midnight and midday.
-        if (hour == 0 || hour == 12) {
-            updateGrowthStage();
-        }
     }
 
     /**
@@ -363,9 +366,6 @@ public class PlantComponent extends Component {
      * Also, if the plant is in a state of decay then decrease the health every hour.
      */
     public void updateGrowthStage() {
-        // Increase the growth level of the plant based on the conditions of the crop tile.
-        increaseCurrentGrowthLevel();
-
         if ((getGrowthStage().getValue() < GrowthStage.ADULT.getValue())) {
             if (this.currentGrowthLevel >= this.growthStageThresholds[getGrowthStage().getValue() - 1]) {
                 setGrowthStage(getGrowthStage().getValue() + 1);
@@ -374,16 +374,7 @@ public class PlantComponent extends Component {
                     setAreaOfEffectRadius();
                 }
                 updateTexture();
-                updateMaxHealth();
             }
-        }
-
-        if (getGrowthStage().getValue() == GrowthStage.ADULT.getValue()) {
-            updateTexture();
-            updateMaxHealth();
-
-        } else if (getGrowthStage().getValue() == GrowthStage.DECAYING.getValue()) {
-            this.increasePlantHealth(-10);
         }
     }
 
@@ -596,17 +587,19 @@ public class PlantComponent extends Component {
      * If the plant is already decaying, do nothing.
      */
     void increaseCurrentGrowthLevel() {
-        double growthRate = this.cropTile.getGrowthRate(this.idealWaterLevel);
-
+        int growthRate = (int)(this.cropTile.getGrowthRate(this.idealWaterLevel) * 10);
+        float waterLevel = cropTile.getWaterContent();
         // Check if the growth rate is negative
         // That the plant is not decaying
         if ((growthRate < 0) && !isDecay() && (getGrowthStage().getValue() <= GrowthStage.ADULT.getValue())) {
-            increasePlantHealth(-10);
-        } else if ((getGrowthStage().getValue() != GrowthStage.DECAYING.getValue())
-                && !(getGrowthStage().getValue() >= GrowthStage.ADULT.getValue())) {
-            this.currentGrowthLevel += (int)(this.cropTile.getGrowthRate(this.idealWaterLevel) * 10);
-        } else if (growthRate < 0) {
-            increasePlantHealth(-10);
+            increasePlantHealth(-1);
+        } else if ( getGrowthStage().getValue() < GrowthStage.ADULT.getValue()
+                    && !isDecay()
+                    && waterLevel > 0) {
+            this.currentGrowthLevel += growthRate;
+            increasePlantHealth(1);
+        } else if (waterLevel == 0) {
+            increasePlantHealth(-1);
         }
     }
 
@@ -667,7 +660,7 @@ public class PlantComponent extends Component {
             case SEEDLING -> this.currentMaxHealth = this.maxHealthAtStages[0];
             case SPROUT -> this.currentMaxHealth = this.maxHealthAtStages[1];
             case JUVENILE -> this.currentMaxHealth = this.maxHealthAtStages[2];
-            case ADULT -> this.currentMaxHealth = this.maxHealth;
+            case ADULT, DECAYING, DEAD -> this.currentMaxHealth = this.maxHealth;
             default -> throw new IllegalStateException("Unexpected value: " + getGrowthStage());
         };
     }
@@ -772,29 +765,39 @@ public class PlantComponent extends Component {
 
     public void forceSeedling() {
         this.setGrowthStage(GrowthStage.SEEDLING.getValue());
+        entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType("None");
         updateTexture();
+        updateMaxHealth();
     }
     public void forceSprout() {
         this.setGrowthStage(GrowthStage.SPROUT.getValue());
+        entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType("None");
         updateTexture();
+        updateMaxHealth();
     }
     public void forceJuvenile() {
         this.setGrowthStage(GrowthStage.JUVENILE.getValue());
+        entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType("None");
         updateTexture();
+        updateMaxHealth();
     }
     public void forceAdult() {
         this.setGrowthStage(GrowthStage.ADULT.getValue());
         updateTexture();
         entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType(this.adultEffect);
         setAreaOfEffectRadius();
+        updateMaxHealth();
     }
     public void forceDecay() {
         this.setGrowthStage(GrowthStage.DECAYING.getValue());
+        entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType("Decay");
         updateTexture();
+        updateMaxHealth();
     }
     public void forceDead() {
         this.setGrowthStage(GrowthStage.DEAD.getValue());
         updateTexture();
+        updateMaxHealth();
     }
 
     public String currentInfo() {
@@ -803,10 +806,18 @@ public class PlantComponent extends Component {
         String idealWaterLevel = decimalFormat.format(this.idealWaterLevel);
         String growthLevel = decimalFormat.format(currentGrowthLevel);
         String currentMaxHealth = decimalFormat.format(this.currentMaxHealth);
-        return  plantName +
+
+        String returnString =   plantName +
                 "\nGrowth Stage: " + getGrowthStage().name() +
-                "\nWater level/Ideal water level: " + waterLevel + "/" + idealWaterLevel +
-                "\nHealth: " + plantHealth + "/" + currentMaxHealth +
-                "\nGrowth Level: " + growthLevel;
+                "\nWater level: " + waterLevel + "/" + idealWaterLevel +
+                "\nHealth: " + plantHealth + "/" + currentMaxHealth;
+
+
+        if (getGrowthStage().getValue() < GrowthStage.ADULT.getValue()) {
+            returnString += "\nGrowth Level: " + growthLevel + "/" +
+                            Integer.toString(growthStageThresholds[getGrowthStage().getValue() - 1]);
+        }
+
+        return  returnString;
     }
 }
