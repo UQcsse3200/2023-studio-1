@@ -5,8 +5,8 @@ import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.placeables.SprinklerComponent;
 import com.csse3200.game.components.InteractionDetector;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.PlantFactory;
 import com.csse3200.game.services.FactoryService;
@@ -15,7 +15,6 @@ import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerra
 
 import java.util.List;
 import java.util.function.Function;
-
 
 public class ItemActions extends Component {
 
@@ -60,7 +59,13 @@ public class ItemActions extends Component {
       }
       case SHOVEL -> {
         resultStatus = shovel(tile);
-        return resultStatus;
+        if (!resultStatus) {
+          if (interactionCollider == null) {
+            return false;
+          }
+          return destroy(interactionCollider.getSuitableEntities(ItemType.SHOVEL, mouseWorldPos));
+        }
+        return true;
       }
       case SCYTHE -> {
         resultStatus = harvest(tile);
@@ -214,6 +219,25 @@ public class ItemActions extends Component {
       tile.setUnOccupied();
       return true;
     }
+    if(tile.getPlaceable() != null){
+      Entity placedItem = tile.getPlaceable();
+      Vector2 newPos = placedItem.getPosition();
+      tile.setPlaceable(null);    //update the tile
+
+      //check if the placeable is a chest and if there is items in that chest
+      //if there is items then return false
+      InventoryComponent chestInventory = placedItem.getComponent(InventoryComponent.class);
+      if (chestInventory != null){
+        if (chestInventory.getInventory().size() >= 1){ return false; }
+      }
+
+      Entity droppedItem = FactoryService.getItemFactories().get(placedItem.getType().toString()).get();
+      ServiceLocator.getGameArea().spawnEntity(droppedItem);
+      droppedItem.setPosition(newPos);
+      placedItem.getEvents().trigger("destroy");
+      tile.setUnOccupied();
+      return true;
+    }
     return false;
   }
 
@@ -319,6 +343,21 @@ public class ItemActions extends Component {
     }
 
     feedableEntities.get(0).getEvents().trigger("feed");
+    return true;
+  }
+
+  /**
+   * Triggers a destroy event on the destroyable entity.
+   *
+   * @param destroyableEntities a single destroyable entity
+   * @return true if destroyed, false otherwise
+   */
+  private boolean destroy(List<Entity> destroyableEntities) {
+    if (destroyableEntities.size() != 1) {
+      return false;
+    }
+
+    destroyableEntities.get(0).getEvents().trigger("destroy");
     return true;
   }
 }

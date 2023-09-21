@@ -3,11 +3,16 @@ package com.csse3200.game.components.placeables;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 
-/*
+/*  game plan:
+ * * we make connectedEntComp have mapping of entities, we can do this by PASSING the newly placed entity as
+ *   the arg for the update function (rather than truth value).
+ * * Then we add a path finding algorithm as a method and we call that from here to find power and stuff.
+ *
  * Current functionality:
  * - when a sprinkler is placed it will identify any adjacent sprinklers and obtain a texture to illustrate its
  *    connected configuration.
@@ -126,8 +131,7 @@ public class SprinklerComponent extends Component {
   }
 
   /**
-   * set the coordinates for expected adjacent sprinklers.
-   * Sets the coordinates for the watering area-of-effect and
+   * Sets the coordinates for the watering area-of-effect.
    * The watering AOE is this sprinklers position +2 in all directions, +1 in diagonals,
    * this creates a circular watering effect.
    */
@@ -172,6 +176,8 @@ public class SprinklerComponent extends Component {
    *    TODO config power
    */
   public void configSprinkler() {
+    // do some pump finding ...
+
     // get index into texture array based on surrounding sprinklers
     byte orientation = this.connectedEntityComponent.getAdjacentBitmap();
     // now set the texture.

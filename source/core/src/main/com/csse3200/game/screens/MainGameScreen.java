@@ -144,6 +144,7 @@ public class MainGameScreen extends ScreenAdapter {
         }
     }
 
+
     public void loseScreenStart() {
         lose = true;
     }

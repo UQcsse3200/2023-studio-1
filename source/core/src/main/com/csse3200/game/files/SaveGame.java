@@ -102,7 +102,7 @@ public class SaveGame {
       Array<Entity> tmp = new Array<>();
       for (Entity e : entities) {
         if (e.getType() == EntityType.Astrolotl || e.getType() == EntityType.Chicken ||
-                e.getType() == EntityType.Cow || e.getType() == EntityType.OxygenEater) {
+                e.getType() == EntityType.Cow || e.getType() == EntityType.OxygenEater || e.getType() == EntityType.ShipDebris) {
           tmp.add(e);
         }
       }
