@@ -38,7 +38,7 @@ public class HungerBar extends UIComponent{
      * the class, and stores them in an array to be called when needed.
      */
     public void createTexture() {
-        Skin oxygenSkin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
+        Skin hungerSkin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
 
         hungerBarOutline = new Image(ServiceLocator.getResourceService().getAsset(
                 "images/Player_Hunger/hunger_bar_outline.png", Texture.class));
@@ -47,12 +47,12 @@ public class HungerBar extends UIComponent{
 
         hungerLabels = new Array<>();
         for (int i = 0; i <= 100; i++) {
-            hungerLabels.add(new Label(String.format("Hunger: %d%%", i), oxygenSkin));
+            hungerLabels.add(new Label(String.format("Hunger: %d%%", i), hungerSkin));
         }
     }
 
     /**
-     * Updates the display, showing the oxygen bar in the top of the main game screen.
+     * Updates the display, showing the hunger bar in the top of the main game screen.
      */
     public void updateDisplay() {
         if (hungerLabels == null) {
@@ -62,20 +62,22 @@ public class HungerBar extends UIComponent{
         int hungerPercent = ServiceLocator.getPlayerHungerService().getHungerPercentage();
         float scaling = (float) hungerPercent / 100;
 
-        // Accounts for scaling of the oxygen bar due to the oxygen percent
+        // Accounts for scaling of the hunger bar due to the hunger percent
         hungerBarFill.setX(hungerBarFill.getImageX() + 14 * (1 - scaling));
         hungerBarFill.setScaleX(scaling);
+
+        hungerBarOutline.setPosition();
 
         // Add a safety check to ensure that the array is always accessed at a possible index
         if (0 <= hungerPercent && hungerPercent <= 100) {
             hungerLabel = hungerLabels.get(hungerPercent);
-            hungerLabel.setPosition(hungerBarOutline.getImageX() + 325f, hungerBarOutline.getImageY() + 18.5f);
+            hungerLabel.setPosition(hungerBarOutline.getImageX() + 1f, hungerBarOutline.getImageY() + 20f);
         }
 
     }
 
     /**
-     * Draws the table and group onto the main game screen. Adds the oxygen elements onto the stage.
+     * Draws the table and group onto the main game screen. Adds the hunger elements onto the stage.
      * @param batch Batch to render to.
      */
     @Override
@@ -85,7 +87,7 @@ public class HungerBar extends UIComponent{
 
         table1.top();
         table1.setFillParent(true);
-        table1.padTop(-130f).padLeft(-180f);
+        table1.padTop(-130f).padLeft(-1000f);
 
         group1.addActor(hungerBarOutline);
         group1.addActor(hungerBarFill);

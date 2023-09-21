@@ -45,7 +45,7 @@ public class PlayerHungerService implements HungerLevel {
 
     public void setHungerGoal() throws IllegalArgumentException {}
 
-    public float getOxygenGoal() { return hungerGoal; }
+    public float getHungerGoal() { return hungerGoal; }
 
 
     public EventHandler getEvents() {
@@ -53,17 +53,17 @@ public class PlayerHungerService implements HungerLevel {
     }
 
     /**
-     * Getter for the default initial oxygen value.
-     * @return the default initial/'starting' oxygen value.
+     * Getter for the default initial hunger value.
+     * @return the default initial/'starting' hunger value.
      */
     public float getDefaultInitialHunger() {
         return DEFAULT_INITIAL_HUNGER;
     }
 
     /**
-     * Perform the update on the oxygen present by applying the recalculated
+     * Perform the update on the hunger present by applying the recalculated
      * hour delta. If level reaches 0, trigger lose screen. Triggers an event to
-     * update the oxygen display.
+     * update the hunger display.
      */
     public void update() {}
 
