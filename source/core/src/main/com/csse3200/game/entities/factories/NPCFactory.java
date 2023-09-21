@@ -214,14 +214,14 @@ public class NPCFactory {
   }
 
   public static Entity createFireFlies(Entity player) {
-    AuraLightComponent light = new AuraLightComponent(3f, Color.LIME);
+    AuraLightComponent light = new AuraLightComponent(3f, Color.ORANGE);
     light.toggleLight();
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/fireflies.atlas", TextureAtlas.class),
             16f
     );
-    animator.addAnimation("default", 0.1f, Animation.PlayMode.LOOP_PINGPONG);
+    animator.addAnimation("default", 0.5f, Animation.PlayMode.LOOP_PINGPONG);
     animator.startAnimation("default");
 
     Entity fireflies = new Entity(EntityType.FireFlies)

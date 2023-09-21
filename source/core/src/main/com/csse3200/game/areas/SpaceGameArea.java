@@ -240,7 +240,6 @@ public class SpaceGameArea extends GameArea {
     spawnAstrolotl();
     spawnOxygenEater();
     spawnShip();
-    spawnFirefly();
 
 //    spawnTool(ItemType.WATERING_CAN);
 //    spawnTool(ItemType.SHOVEL);
