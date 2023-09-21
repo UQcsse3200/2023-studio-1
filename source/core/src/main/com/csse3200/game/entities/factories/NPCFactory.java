@@ -219,6 +219,7 @@ public class NPCFactory {
     Entity fireflies = new Entity(EntityType.FireFlies)
             .addComponent(new TextureRenderComponent("images/tractor.png"))
             .addComponent(light)
+            // Not actually scaring just dying from daylight (named from previous idea for feature)
             .addComponent(new FireflyScareComponent())
             .addComponent(new PhysicsComponent());
     return fireflies;
