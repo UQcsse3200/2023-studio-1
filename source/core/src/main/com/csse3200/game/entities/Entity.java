@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.csse3200.game.components.AuraLightComponent;
+import com.csse3200.game.components.ConeLightComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -421,18 +422,18 @@ public class Entity implements Json.Serializable {
     if (type != null) { // The try catch above may cause a NullPointerException otherwise
       switch (type) {
         case Tractor:
-          JsonValue lightJsonMap = jsonMap.get("components").get("AuraLightComponent");
+          JsonValue lightJsonMap = jsonMap.get("components").get("ConeLightComponent");
           jsonMap = jsonMap.get("components").get("TractorActions");
           TractorActions tractorActions = new TractorActions();
           // Update the tractor 'muted' variable based on the info in the json file
           tractorActions.setMuted(jsonMap.getBoolean("isMuted"));
           this.addComponent(tractorActions);
 
-          AuraLightComponent auraLightComponent = new AuraLightComponent(lightJsonMap.getFloat("distance"));
+          ConeLightComponent coneLightComponent = new ConeLightComponent(lightJsonMap.getFloat("distance"));
           if (lightJsonMap.getBoolean("isActive")) {
-            auraLightComponent.toggleLight();
+            coneLightComponent.toggleLight();
           }
-          this.addComponent(auraLightComponent);
+          this.addComponent(coneLightComponent);
           break;
         case Tile:
           jsonMap = jsonMap.get("components").get("CropTileComponent");

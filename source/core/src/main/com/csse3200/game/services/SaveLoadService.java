@@ -1,6 +1,7 @@
 package com.csse3200.game.services;
 
 import com.csse3200.game.components.AuraLightComponent;
+import com.csse3200.game.components.ConeLightComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -190,12 +191,13 @@ public class SaveLoadService {
       Entity player = ServiceLocator.getGameArea().getPlayer();
       player.setPosition(tractor.getPosition());              // Teleport the player to the tractor (Needed so that they are in 5 units of each other)
       player.getEvents().trigger("enterTractor");   // Trigger the enterTractor event
+      tractor.getComponent(AuraLightComponent.class).toggleLight();
     }
 
     // HeadLights on tractor
-    boolean active = tractorState.getComponent(AuraLightComponent.class).getActive();
-    if (active) {
-      tractor.getComponent(AuraLightComponent.class).toggleLight();
+    boolean active = tractorState.getComponent(ConeLightComponent.class).getActive();
+    if (active != tractor.getComponent(ConeLightComponent.class).getActive()) {
+      tractor.getComponent(ConeLightComponent.class).toggleLight();
     }
   }
 

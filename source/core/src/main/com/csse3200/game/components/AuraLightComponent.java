@@ -125,15 +125,4 @@ public class AuraLightComponent extends Component{
 	public void dispose() {
 		light.dispose();
 	}
-
-	/**
-	 * Writes to the json in order to store the lights state
-	 */
-	public void write(Json json){
-		json.writeObjectStart(this.getClass().getSimpleName());
-		//Save the muted value to the json file
-		json.writeValue("isActive", this.getActive());
-		json.writeValue("distance", this.light.getDistance());
-		json.writeObjectEnd();
-	}
 }
