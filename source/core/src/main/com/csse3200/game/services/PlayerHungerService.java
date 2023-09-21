@@ -20,8 +20,8 @@ public class PlayerHungerService implements HungerLevel {
         hungerGoal = DEFAULT_HUNGER_GOAL;
         hungerPresent = DEFAULT_INITIAL_HUNGER;
         delta = 0;
-//        ServiceLocator.getTimeService().getEvents()
-//                .addListener("hourUpdate", this::update);
+        ServiceLocator.getTimeService().getEvents()
+                .addListener("hourUpdate", this::update);
         eventHandler = new EventHandler();
     }
 

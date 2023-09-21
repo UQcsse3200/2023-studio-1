@@ -26,7 +26,7 @@ public class HungerBar extends UIComponent{
     public void create() {
         super.create();
 
-        // Adds a listener to check for oxygen updates
+        // Adds a listener to check for hunger updates
         ServiceLocator.getPlayerHungerService().getEvents()
                 .addListener("hungerUpdate", this::updateDisplay);
 
@@ -59,21 +59,19 @@ public class HungerBar extends UIComponent{
             createTexture();
         }
 
-        int oxygenPercent = ServiceLocator.getPlanetOxygenService().getOxygenPercentage();
-        float scaling = (float) oxygenPercent / 100;
+        int hungerPercent = ServiceLocator.getPlayerHungerService().getHungerPercentage();
+        float scaling = (float) hungerPercent / 100;
 
         // Accounts for scaling of the oxygen bar due to the oxygen percent
         hungerBarFill.setX(hungerBarFill.getImageX() + 14 * (1 - scaling));
         hungerBarFill.setScaleX(scaling);
 
         // Add a safety check to ensure that the array is always accessed at a possible index
-        if (0 <= oxygenPercent && oxygenPercent <= 100) {
-            hungerLabel = hungerLabels.get(oxygenPercent);
-//            hungerLabel.setPosition(hungerBarOutline.getImageX() + 125f, hungerBarOutline.getImageY() + 8.5f);
+        if (0 <= hungerPercent && hungerPercent <= 100) {
+            hungerLabel = hungerLabels.get(hungerPercent);
+            hungerLabel.setPosition(hungerBarOutline.getImageX() + 325f, hungerBarOutline.getImageY() + 18.5f);
         }
 
-        // Uncomment line below to test that oxygen percent decreases by 1% per hour (till endgame condition reached).
-        //ServiceLocator.getPlanetOxygenService().removeOxygen(10);
     }
 
     /**
@@ -87,13 +85,13 @@ public class HungerBar extends UIComponent{
 
         table1.top();
         table1.setFillParent(true);
-//        table1.padTop(-130f).padLeft(-180f);
+        table1.padTop(-130f).padLeft(-180f);
 
         group1.addActor(hungerBarOutline);
         group1.addActor(hungerBarFill);
         group1.addActor(hungerLabel);
 
-//        table1.add(group1).size(200);
+        table1.add(group1).size(200);
         stage.addActor(table1);
     }
 
