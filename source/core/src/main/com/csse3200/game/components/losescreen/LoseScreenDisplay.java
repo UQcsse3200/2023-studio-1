@@ -150,7 +150,9 @@ public class LoseScreenDisplay extends UIComponent {
                 """
                 + reason +
                 """
-               
+                
+                {WAIT}
+                
                 You gave it your all, but in the end... {WAIT=1} it wasn't enough.
                 {WAIT}
                 
