@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.AuraLightComponent;
-import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.AnimalAnimationController;
 import com.csse3200.game.components.npc.FireflyScareComponent;
@@ -28,11 +27,7 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Factory to create non-playable character (NPC) entities with predefined components.
@@ -221,7 +216,7 @@ public class NPCFactory {
             ServiceLocator.getResourceService().getAsset("images/fireflies.atlas", TextureAtlas.class),
             16f
     );
-    animator.addAnimation("default", 0.5f, Animation.PlayMode.LOOP_PINGPONG);
+    animator.addAnimation("default", 0.5f, Animation.PlayMode.LOOP);
     animator.startAnimation("default");
 
     Entity fireflies = new Entity(EntityType.FireFlies)
