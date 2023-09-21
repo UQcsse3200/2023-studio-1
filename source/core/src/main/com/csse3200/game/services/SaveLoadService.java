@@ -1,5 +1,6 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.components.AuraLightComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -180,6 +181,7 @@ public class SaveLoadService {
     }
     
     boolean inTractor = !tractorState.getComponent(TractorActions.class).isMuted();  // Store the inverse of the muted value from tractor state entity
+
     tractor.setPosition(tractorState.getPosition());   // Update the tractors position to the values stored in the json file
     
     // Check whether the player was in the tractor when they last saved
@@ -188,6 +190,12 @@ public class SaveLoadService {
       Entity player = ServiceLocator.getGameArea().getPlayer();
       player.setPosition(tractor.getPosition());              // Teleport the player to the tractor (Needed so that they are in 5 units of each other)
       player.getEvents().trigger("enterTractor");   // Trigger the enterTractor event
+    }
+
+    // HeadLights on tractor
+    boolean active = tractorState.getComponent(AuraLightComponent.class).getActive();
+    if (active) {
+      tractor.getComponent(AuraLightComponent.class).toggleLight();
     }
   }
 
