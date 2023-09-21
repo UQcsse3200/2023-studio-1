@@ -45,6 +45,7 @@ public class TimeService {
 	 */
 	public void setPaused(boolean state) {
 		paused = state;
+		logger.debug("Setting paused state to: {}", paused);
 		ServiceLocator.getTimeSource().setTimeScale(state ? 0 : 1);
 	}
 
@@ -82,6 +83,7 @@ public class TimeService {
 	 */
 	public void setHour(int hour) {
 		this.hour = hour % 23;
+		logger.debug("Hour is being set to: {}", this.hour);
 		this.timeBuffer = 0;
 		events.trigger("hourUpdate");
 	}
@@ -111,6 +113,7 @@ public class TimeService {
 	 */
 	public void setDay(int day) {
 		this.day = day;
+		logger.debug("Day is being set to: {}", this.day);
 		this.timeBuffer = 0;
 		events.trigger("dayUpdate");
 	}
@@ -122,6 +125,7 @@ public class TimeService {
 	 */
 	public void setMinute(int minute) {
 		this.minute = minute;
+		logger.debug("Minute is being set to: {}", this.minute);
 		this.timeBuffer = 0;
 		events.trigger("minuteUpdate");
 	}
@@ -158,14 +162,17 @@ public class TimeService {
 			events.trigger("minuteUpdate");
 			return;
 		}
+		logger.debug("In-game hour just passed");
 		hour += 1;
 		minute -= 60;
 		events.trigger("minuteUpdate");
 
 		if (hour == MORNING_HOUR) {
 			// Made this an event so other entities can listen
+			logger.debug("Now night time");
 			events.trigger("morningTime");
 		} else if (hour == NIGHT_HOUR) {
+			logger.debug("Now morning time");
 			events.trigger("nightTime");
 		}
 
@@ -174,6 +181,7 @@ public class TimeService {
 			events.trigger("hourUpdate");
 			return;
 		}
+		logger.debug("In-game day just passed");
 		hour -= 24;
 		day += 1;
 		// This event has to be triggered after the hour is checked the hour isn't 24 when the event is sent
