@@ -84,7 +84,7 @@ public class SprinklerComponent extends Component {
    * Indicates if the 'sprinkler' is actually just a pump.
    * A pump is a sprinkler that doesn't update or sprinkle but is powered.
    */
-  private boolean pump;
+  protected boolean pump;
 
   /**
    * A sprinklers area of effect to water, aoe is circular with radius of 2.
@@ -164,7 +164,14 @@ public class SprinklerComponent extends Component {
    */ // TODO: restore functionality
   public void reConfigure() {
     if (this.pump) return;  // A pump shouldn't reconfigure.
+    boolean prevPowerState = this.isPowered;
     configSprinkler();
+    if (prevPowerState != this.isPowered) {
+      // we need to tell the others
+      for (Entity sprinkler : this.connectedEntityComponent.getAdjacentEntities()) {
+        if (sprinkler != null) sprinkler.getComponent(SprinklerComponent.class).reConfigure();
+      }
+    }
   }
 
 
@@ -176,7 +183,8 @@ public class SprinklerComponent extends Component {
    *    TODO config power
    */
   public void configSprinkler() {
-    // do some pump finding ...
+    // try to find a path to a pump
+    this.isPowered = findPump(this.entity);
 
     // get index into texture array based on surrounding sprinklers
     byte orientation = this.connectedEntityComponent.getAdjacentBitmap();
@@ -186,6 +194,16 @@ public class SprinklerComponent extends Component {
     } else {
       entity.getComponent(DynamicTextureRenderComponent.class).setTexture(textures_off[orientation]);
     }
+  }
+
+  /**
+   * finds a path to a pump, returns true if path found, false otherwise.
+   * @param calling the sprinkler calling (used to we don't loop forever)
+   * @return truth value of weather we found a path to a pump or not.
+   */
+  protected boolean findPump(Entity calling) {
+    // could do some recursion to find a pump, but we will run into lots of issues.
+    return true;
   }
 
   /**
