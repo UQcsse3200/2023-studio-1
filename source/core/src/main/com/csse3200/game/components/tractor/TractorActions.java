@@ -13,6 +13,7 @@ import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.ConeLightComponent;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
@@ -95,6 +96,8 @@ public class TractorActions extends Component {
       }
       updateAnimation();
     }
+    float lightDirection = getDirectionAdjusted(prevDirection);
+    entity.getComponent(ConeLightComponent.class).setDirection(lightDirection);
   }
 
   /**
@@ -129,6 +132,27 @@ public class TractorActions extends Component {
     }
     // TODO add logger to provide error here?
     return "right";
+  }
+
+  /**
+   * This method of getting direction was adjusted to fit tractor (changed return values)
+   * from the code written by Team 2, in PlayerActions and PlayerAnimationController.
+   * @param direction The direction the tractor is facing
+   * @return a String that matches with where the tractor is looking, values can be "right", "left", "up" or "down"
+   *          defaults to "right" in an error situation to avoid crashes.
+   */
+  private float getDirectionAdjusted(float direction) {
+    if (direction < 45) {
+      return 0;
+    } else if (direction < 135) {
+      return 90;
+    } else if (direction < 225) {
+      return 180;
+    } else if (direction < 315) {
+      return 270;
+    }
+    // TODO add logger to provide error here?
+    return 0;
   }
 
   /**
