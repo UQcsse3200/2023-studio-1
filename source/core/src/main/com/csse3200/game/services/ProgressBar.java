@@ -9,7 +9,6 @@ import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.ui.UIComponent;
 
 public class ProgressBar extends UIComponent {
-
     Table table = new Table();
     Group group = new Group();
     private Image progressBar;
@@ -26,6 +25,9 @@ public class ProgressBar extends UIComponent {
         updateDisplay();
     }
 
+    /**
+     * Creates each image as an image object then adds to an array of images for later use
+     */
     public void createTexture() {
         for (int i = 1; i <= 2; i++) {
             progressBarImages.add(new Image(ServiceLocator.getResourceService().getAsset(
@@ -33,6 +35,10 @@ public class ProgressBar extends UIComponent {
         }
     }
 
+    /**
+     * Updates the display dependent on what day it is.
+     * Will also call createTexture(), if the array is empty.
+     */
     public void updateDisplay() {
         if (progressBarImages.isEmpty()) {
             createTexture();
@@ -41,6 +47,10 @@ public class ProgressBar extends UIComponent {
         progressBar = progressBarImages.get(day);
     }
 
+    /**
+     * Draws the actors to the game.
+     * @param batch Batch to render to.
+     */
     @Override
     public void draw(SpriteBatch batch) {
         table.clear();
@@ -57,6 +67,9 @@ public class ProgressBar extends UIComponent {
     }
 
 
+    /**
+     * Destroys the UI objects
+     */
     @Override
     public void dispose() {
         super.dispose();
