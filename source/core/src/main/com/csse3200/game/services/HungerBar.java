@@ -66,7 +66,7 @@ public class HungerBar extends UIComponent{
         hungerBarFill.setX(hungerBarFill.getImageX() + 14 * (1 - scaling));
         hungerBarFill.setScaleX(scaling);
 
-        hungerBarOutline.setPosition();
+//        hungerBarOutline.setPosition();
 
         // Add a safety check to ensure that the array is always accessed at a possible index
         if (0 <= hungerPercent && hungerPercent <= 100) {
