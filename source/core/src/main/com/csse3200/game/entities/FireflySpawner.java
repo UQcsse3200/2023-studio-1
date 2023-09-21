@@ -9,7 +9,7 @@ import java.security.SecureRandom;
 
 public class FireflySpawner {
 
-    private static final int MAX_START_FIREFLIES = 100;
+    private static final int MAX_START_FIREFLIES = 50;
 
     private int mapSizeX;
 
