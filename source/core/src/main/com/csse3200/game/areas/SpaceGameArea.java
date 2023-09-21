@@ -205,8 +205,10 @@ public class SpaceGameArea extends GameArea {
           "images/placeable/sprinkler/off/pipe_right_triple.png",
           "images/placeable/sprinkler/off/pipe_quad.png",
 
-          "images/placeable/fences/gate.png",
-          "images/placeable/fences/gate_open.png",
+          "images/placeable/fences/g_d_u.png",
+          "images/placeable/fences/g_d_u.png",
+          "images/placeable/fences/g_r_l.png",
+          "images/placeable/fences/g_r_l_o.png",
           "images/placeable/fences/f.png",
           "images/placeable/fences/f_d.png",
           "images/placeable/fences/f_d_u.png",

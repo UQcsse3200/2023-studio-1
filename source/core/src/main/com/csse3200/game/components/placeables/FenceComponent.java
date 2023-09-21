@@ -33,8 +33,8 @@ public class FenceComponent extends Component {
     };
 
     private static final String[] textures_gate= {
-            "images/placeable/fences/gate.png",
-            "images/placeable/fences/gate_open.png"
+            "images/placeable/fences/g_r_l.png",
+            "images/placeable/fences/g_r_l_o.png"
     };
 
     private String texturePath;
@@ -102,10 +102,6 @@ public class FenceComponent extends Component {
         this.entity.getComponent(ColliderComponent.class).setSensor(false);
         entity.getComponent(DynamicTextureRenderComponent.class).setTexture(closedGatePath);
         //this.currentTexture.setTexture(closedGatePath);
-    }
-
-    private void updateTexturePath() {
-
     }
 
     /*

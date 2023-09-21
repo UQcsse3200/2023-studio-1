@@ -258,10 +258,10 @@ public class ItemFactory {
    */
   public static Entity createGateItem() {
     Entity gate = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/placeable/fences/gate.png"))
+            .addComponent(new TextureRenderComponent("images/placeable/fences/g_r_l.png"))
             .addComponent(new ItemComponent("Gate", ItemType.PLACEABLE,
                     "Allows the player to walk in and out of enclosed areas",
-                    new Texture("images/placeable/fences/gate.png")));
+                    new Texture("images/placeable/fences/g_r_l.png")));
     return gate;
   }
 
