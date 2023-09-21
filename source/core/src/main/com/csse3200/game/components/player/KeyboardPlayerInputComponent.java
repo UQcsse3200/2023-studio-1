@@ -85,7 +85,14 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           triggerHotKeySelection(keycode);
           return true;
         case Keys.C :
+          ServiceLocator.getGameArea().getPlayer().getEvents().trigger("loseScreen");
+          return true;
+        case Keys.L :
           ServiceLocator.getGameArea().getPlayer().getEvents().trigger("endCredits");
+          return true;
+        case Keys.K :
+          ServiceLocator.getGameArea().getPlayer().getEvents().trigger("winScreen");
+          return true;
         default:
           return false;
       }

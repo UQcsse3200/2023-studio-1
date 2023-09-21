@@ -26,8 +26,6 @@ public class WinScreenDisplay extends UIComponent {
     private Table table;
     private final GdxGame game;
 
-    private boolean hasWon;
-
     private TextButton returnButton;
 
     /**
@@ -74,18 +72,14 @@ public class WinScreenDisplay extends UIComponent {
     }
 
     private void addActors() {
-        this.hasWon = true;
         background = new Image(new Texture(Gdx.files.internal("images/intro_background_v2.png")));
         background.setPosition(0, 0);
         float scaledHeight = Gdx.graphics.getWidth() * (background.getHeight() / background.getWidth());
         background.setHeight(scaledHeight);
 
         // Load the animated planet
-        if (this.hasWon) {
-            planet = new Image(new Texture(Gdx.files.internal("images/earth_image.png")));
-        } else {
-            planet = new Image(new Texture(Gdx.files.internal("images/dead_planet.png")));
-        }
+        planet = new Image(new Texture(Gdx.files.internal("images/earth_image.png")));
+
 
 
         // Scale it to a 10% of screen width with a constant aspect ratio
@@ -98,43 +92,7 @@ public class WinScreenDisplay extends UIComponent {
         float planetOffset = 2500;
         planet.setPosition((float)Gdx.graphics.getWidth()/2, planetOffset, Align.center);
 
-        String credits = getCredits(this.hasWon);
-
-        storyLabel = new TypingLabel(credits, skin); // Create the TypingLabel with the formatted story
-        storyLabel.setAlignment(Align.center); // Center align the text
-
-        this.returnButton = new TextButton("Return To Main Menu", skin);
-
-        this.returnButton.setVisible(false); // Make the continue button invisible
-
-        // The continue button lets the user proceed to the main game
-        this.returnButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent changeEvent, Actor actor) {
-                logger.debug("Player Returned to Main Menu");
-                returnToMenu();
-            }
-        });
-
-        rootTable = new Table();
-        rootTable.setFillParent(true); // Make the table fill the screen
-
-        rootTable.row();
-
-        rootTable.add(storyLabel).expandX().center().padTop(150f); // The story label is at the top of the screen
-        rootTable.row().padTop(30f);
-        rootTable.add(returnButton).bottom().padBottom(30f);
-
-        // The background and planet are added directly to the stage so that they can be moved and animated freely.
-        stage.addActor(background);
-        stage.addActor(planet);
-        stage.addActor(rootTable);
-    }
-
-    private String getCredits(boolean hasWon) {
-        String credits = "";
-        if (hasWon) {
-            credits = """
+        String credits = """
                 {WAIT=0.5}
                 After 30 long days, you, great farmlord, have succeeded!
                 {WAIT=0.5}
@@ -150,33 +108,23 @@ public class WinScreenDisplay extends UIComponent {
                 
                 {COLOR=green}Congrats You Win!!!.{WAIT=1}
             """;
-        } else {
-            credits = """ 
-                {WAIT=0.5}
-                Despite your best efforts, Alpha Centauri remains a wasteland.
-                
-                {WAIT}
-                As your oxygen supply dwindles, so does humanities hope for survival.
-                {WAIT=0.5}
-                
-                You gave it your all, but in the end... {WAIT=1} it wasn't enough.
-                {WAIT}
-                
-                This is the end of the human race.
-                {WAIT}
-                
-                {COLOR=red}You're a loser!.
-                {WAIT=1}
-            """;
-        }
-        return credits;
-    }
 
-    /**
-     * Starts the main game
-     */
-    private void returnToMenu() {
-        game.setScreen(ScreenType.MAIN_MENU);
+        storyLabel = new TypingLabel(credits, skin); // Create the TypingLabel with the formatted story
+        storyLabel.setAlignment(Align.center); // Center align the text
+
+        rootTable = new Table();
+        rootTable.setFillParent(true); // Make the table fill the screen
+
+        rootTable.row();
+
+        rootTable.add(storyLabel).expandX().center().padTop(150f); // The story label is at the top of the screen
+        rootTable.row().padTop(30f);
+        rootTable.add(returnButton).bottom().padBottom(30f);
+
+        // The background and planet are added directly to the stage so that they can be moved and animated freely.
+        stage.addActor(background);
+        stage.addActor(planet);
+        stage.addActor(rootTable);
     }
 
     @Override
@@ -219,10 +167,6 @@ public class WinScreenDisplay extends UIComponent {
         }
 
         logger.debug(String.format("Space Speed: %s", spaceSpeed));
-
-        //stage.act(ServiceLocator.getTimeSource().getDeltaTime());
-
-        //this.returnButton.setVisible(true);
     }
 
     @Override
