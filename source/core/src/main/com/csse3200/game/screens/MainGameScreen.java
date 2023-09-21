@@ -219,6 +219,7 @@ public class MainGameScreen extends ScreenAdapter {
                 .addComponent(inputComponent)
                 .addComponent(new TerminalDisplay())
                 .addComponent(new GameTimeDisplay())
+                .addComponent(new ProgressBar())
                 .addComponent(new OxygenDisplay())
                 .addComponent(new WeatherEventDisplay());
 
