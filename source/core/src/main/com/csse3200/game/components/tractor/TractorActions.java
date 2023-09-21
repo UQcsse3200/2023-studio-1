@@ -164,11 +164,17 @@ public class TractorActions extends Component {
     switch (getMode()) {
       case tilling -> {
         Array<Object> tiles = getTiles(TractorMode.tilling, getDirection(walkDirection.angleDeg()));
+        if (tiles.size != 4) {
+          return;
+        }
         hoe((TerrainTile) tiles.get(0), (Vector2) tiles.get(2));
         hoe((TerrainTile) tiles.get(1), (Vector2) tiles.get(3));
       }
       case harvesting -> {
         Array<Object> tiles = getTiles(TractorMode.tilling, getDirection(walkDirection.angleDeg()));
+        if (tiles.size != 4) {
+          return;
+        }
         harvest((TerrainTile) tiles.get(0));
         harvest((TerrainTile) tiles.get(1));
       }
@@ -185,7 +191,7 @@ public class TractorActions extends Component {
    *          in the same order as the tiles in slots 2 and 3.
    */
   private Array<Object> getTiles(TractorMode mode, String dir) {
-    Array<Object> tiles = new Array<>(2);
+    Array<Object> tiles = new Array<>(4);
     Vector2 pos1 = new Vector2();
     Vector2 pos2 = new Vector2();
     if ((Objects.equals(dir, "right") && mode == TractorMode.tilling) || (Objects.equals(dir, "left") && mode == TractorMode.harvesting)) {
