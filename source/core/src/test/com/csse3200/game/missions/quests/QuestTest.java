@@ -87,7 +87,7 @@ class QuestTest {
             }
 
             @Override
-            public void setProgress(JsonValue progress) {
+            public void readProgress(JsonValue progress) {
             }
 
             @Override
@@ -124,7 +124,7 @@ class QuestTest {
             }
 
             @Override
-            public void setProgress(JsonValue progress) {
+            public void readProgress(JsonValue progress) {
             }
 
             @Override
@@ -162,7 +162,7 @@ class QuestTest {
             }
 
             @Override
-            public void setProgress(JsonValue progress) {
+            public void readProgress(JsonValue progress) {
             }
 
             @Override
@@ -202,7 +202,7 @@ class QuestTest {
             }
 
             @Override
-            public void setProgress(JsonValue progress) {
+            public void readProgress(JsonValue progress) {
             }
 
             @Override
@@ -245,7 +245,7 @@ class QuestTest {
             }
 
             @Override
-            public void setProgress(JsonValue progress) {
+            public void readProgress(JsonValue progress) {
             }
 
             @Override
@@ -476,7 +476,7 @@ class QuestTest {
             }
 
             @Override
-            public void setProgress(JsonValue progress) {
+            public void readProgress(JsonValue progress) {
             }
 
             @Override

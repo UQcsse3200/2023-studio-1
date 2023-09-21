@@ -1,6 +1,7 @@
 package com.csse3200.game.missions.quests;
 
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.missions.Mission;
 import com.csse3200.game.missions.rewards.Reward;
 
@@ -114,5 +115,11 @@ public abstract class Quest extends Mission {
 		json.writeValue("progress", getProgress());
 		json.writeValue("collected", reward.isCollected());
 		json.writeObjectEnd();
+	}
+
+	public void read(JsonValue jsonValue) {
+		timeToExpiry = jsonValue.getInt("expiry");
+		reward.read(jsonValue);
+		readProgress(jsonValue.get("progress"));
 	}
 }

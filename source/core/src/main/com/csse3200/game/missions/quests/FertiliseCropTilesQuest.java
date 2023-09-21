@@ -55,7 +55,7 @@ public class FertiliseCropTilesQuest extends Quest {
     }
 
     @Override
-    public void setProgress(JsonValue progress) {
+    public void readProgress(JsonValue progress) {
         numberOfTilesFertilised = progress.asInt();
     }
 
@@ -78,7 +78,5 @@ public class FertiliseCropTilesQuest extends Quest {
     protected void resetState() {
         numberOfTilesFertilised = 0;
     }
-
-
 
 }

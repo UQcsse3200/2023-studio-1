@@ -88,7 +88,7 @@ public abstract class Mission {
      * @param progress The {@link JsonValue} representing the progress of the {@link Mission} as determined by the value
      *                 returned in {@link #getProgress()}.
      */
-    public abstract void setProgress(JsonValue progress);
+    public abstract void readProgress(JsonValue progress);
 
     /**
      * Gets the progress of the {@link Mission} as a {@link JsonValue}, which contains children storing the internal
