@@ -1,13 +1,10 @@
 package com.csse3200.game.components.player;
 
-import com.csse3200.game.components.Component;
-import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.csse3200.game.entities.EntityService;
-
-import java.util.ArrayList;
+import com.csse3200.game.components.Component;
+import com.csse3200.game.services.ServiceLocator;
 
 public class OpenPauseComponent extends Component {
     private static Logger logger = LoggerFactory.getLogger(OpenPauseComponent.class);
@@ -28,6 +25,7 @@ public class OpenPauseComponent extends Component {
             closePauseMenu();
         } else {
             openPauseMenu();
+
         }
     }
 
@@ -35,6 +33,7 @@ public class OpenPauseComponent extends Component {
         logger.info("Opening pause window");
         ServiceLocator.getPauseMenuArea().setPauseMenu();
         pauseOpen = true;
+        ServiceLocator.getTimeService().setPaused(true);
       //  EntityService.pauseGame();
     }
 
@@ -43,5 +42,6 @@ public class OpenPauseComponent extends Component {
         KeyboardPlayerInputComponent.clearMenuOpening();
         ServiceLocator.getPauseMenuArea().disposePauseMenu();
         pauseOpen = false;
+        ServiceLocator.getTimeService().setPaused(false);
     }
 }

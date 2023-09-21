@@ -1,33 +1,24 @@
 package com.csse3200.game.services;
 
-import com.csse3200.game.areas.terrain.CropTileComponent;
-import com.csse3200.game.areas.terrain.GameMap;
-import com.csse3200.game.areas.terrain.TerrainCropTileFactory;
-import com.csse3200.game.areas.terrain.TerrainTile;
-import com.csse3200.game.components.npc.TamableComponent;
-import com.csse3200.game.components.plants.PlantComponent;
-import com.csse3200.game.components.player.PlayerActions;
-import com.csse3200.game.components.tractor.TractorActions;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.EntityType;
-import com.csse3200.game.files.SaveGame;
-import com.csse3200.game.services.SaveLoadService;
-import com.csse3200.game.services.ServiceLocator;
-import com.badlogic.gdx.utils.Array;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.areas.GameArea;
-import com.csse3200.game.services.TimeService;
+
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.math.Vector2;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import com.badlogic.gdx.utils.Array;
+import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.areas.terrain.CropTileComponent;
+import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.components.plants.PlantComponent;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.files.SaveGame;
 
 class SaveLoadServiceTest { 
     @Mock

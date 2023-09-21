@@ -1,16 +1,16 @@
 package com.csse3200.game.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.csse3200.game.areas.GameArea;
-import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.CameraComponent;
+import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
-import com.csse3200.game.screens.MainGameScreen;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A simplified implementation of the Service Locator pattern:
@@ -30,12 +30,17 @@ public class ServiceLocator {
   private static TimeService timeService;
   private static GameTime timeSource;
   private static GameArea gameArea;
+  private static LightService lightService;
   private static GameAreaDisplay pauseMenuArea;
   private static GameAreaDisplay craftArea;
   private static CameraComponent cameraComponent;
   private static SaveLoadService saveLoadService;
   private static MissionManager missions;
   private static PlanetOxygenService planetOxygenService;
+  private static PlantCommandService plantCommandService;
+  public static PlantCommandService getPlantCommandService() {
+    return plantCommandService;
+  }
 
   public static GameArea getGameArea() {
     return gameArea;
@@ -67,6 +72,9 @@ public class ServiceLocator {
   }
   public static TimeService getTimeService() {
     return timeService;
+  }
+  public static LightService getLightService() {
+    return lightService;
   }
 
   public static MissionManager getMissionManager() {
@@ -129,10 +137,20 @@ public class ServiceLocator {
     logger.debug("Registering mission manager {}", source);
     missions = source;
   }
-  
+
   public static void registerPlanetOxygenService(PlanetOxygenService source) {
     logger.debug("Registering planet oxygen service {}", source);
     planetOxygenService = source;
+  }
+
+  public static void registerPlantCommandService(PlantCommandService source) {
+    logger.debug("Registering plant command service {}", source);
+    plantCommandService = source;
+  }
+
+  public static void registerLightService(LightService source) {
+    logger.debug("Registering light service {}", source);
+    lightService = source;
   }
 
   /**
@@ -155,7 +173,6 @@ public class ServiceLocator {
     timeSource = null;
     inputService = null;
     resourceService = null;
-    planetOxygenService = null;
     gameArea = null;
   }
 

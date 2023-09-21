@@ -1,5 +1,10 @@
 package com.csse3200.game.areas;
 
+import java.util.ArrayList;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
@@ -10,21 +15,21 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.items.ItemType;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.EntityType;
-import com.csse3200.game.entities.configs.plants.PlantConfigs;
-import com.csse3200.game.entities.factories.*;
-import com.csse3200.game.files.FileLoader;
+import com.csse3200.game.entities.factories.ItemFactory;
+import com.csse3200.game.entities.factories.NPCFactory;
+import com.csse3200.game.entities.factories.ObstacleFactory;
+import com.csse3200.game.entities.factories.PlayerFactory;
+import com.csse3200.game.entities.factories.QuestgiverFactory;
+import com.csse3200.game.entities.factories.ShipFactory;
+import com.csse3200.game.entities.factories.TractorFactory;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
 
 /** SpaceGameArea is the area used for the initial game version */
 public class SpaceGameArea extends GameArea {
@@ -33,7 +38,8 @@ public class SpaceGameArea extends GameArea {
   private static final int NUM_GHOSTS = 5;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final GridPoint2 QUESTGIVER_SPAWN = new GridPoint2(20, 20);
-  private static final GridPoint2 QUESTGIVERIND_SPAWN = new GridPoint2(20, 24);
+  private static final GridPoint2 SHIP_SPAWN = new GridPoint2(50,50);
+  private static final GridPoint2 QUESTGIVERIND_SPAWN = new GridPoint2(20, 22);
   private static final GridPoint2 TRACTOR_SPAWN = new GridPoint2(15, 15);
 
   private static final GridPoint2 TOOL_SPAWN = new GridPoint2(15, 10);// temp!!!
@@ -103,19 +109,18 @@ public class SpaceGameArea extends GameArea {
           "images/fertiliser.png",
 
           "images/plants/misc/aloe_vera_seed.png",
-          "images/plants/misc/atomic_algae_seed.png",
+          "images/plants/atomic_algae/1_seedling.png",
           "images/plants/misc/cosmic_cob_seed.png",
           "images/plants/misc/deadly_nightshade_seed.png",
           "images/plants/misc/hammer_plant_seed.png",
-          "images/plants/misc/horticultural_heater_seed.png",
           "images/plants/misc/space_snapper_seed.png",
-          "images/plants/misc/tobacco_seed.png",
 
           "images/plants/cosmic_cob/1_seedling.png",
           "images/plants/cosmic_cob/2_sprout.png",
           "images/plants/cosmic_cob/3_juvenile.png",
           "images/plants/cosmic_cob/4_adult.png",
           "images/plants/cosmic_cob/5_decaying.png",
+          "images/plants/cosmic_cob/6_dead.png",
           "images/plants/cosmic_cob/item_drop.png",
 
           "images/plants/aloe_vera/1_seedling.png",
@@ -123,6 +128,7 @@ public class SpaceGameArea extends GameArea {
           "images/plants/aloe_vera/3_juvenile.png",
           "images/plants/aloe_vera/4_adult.png",
           "images/plants/aloe_vera/5_decaying.png",
+          "images/plants/aloe_vera/6_dead.png",
           "images/plants/aloe_vera/item_drop.png",
           "images/plants/aloe_vera/seedbag.png",
 
@@ -131,48 +137,84 @@ public class SpaceGameArea extends GameArea {
           "images/plants/hammer_plant/3_juvenile.png",
           "images/plants/hammer_plant/4_adult.png",
           "images/plants/hammer_plant/5_decaying.png",
+          "images/plants/hammer_plant/6_dead.png",
           "images/plants/hammer_plant/item_drop.png",
           "images/plants/hammer_plant/seedbag.png",
 
-          "images/plants/venus_trap/1_seedling.png",
-          "images/plants/venus_trap/2_sprout.png",
-          "images/plants/venus_trap/3_juvenile.png",
-          "images/plants/venus_trap/4_adult.png",
-          "images/plants/venus_trap/5_decaying.png",
+          "images/plants/space_snapper/1_seedling.png",
+          "images/plants/space_snapper/2_sprout.png",
+          "images/plants/space_snapper/3_juvenile.png",
+          "images/plants/space_snapper/4_adult.png",
+          "images/plants/space_snapper/5_decaying.png",
+          "images/plants/space_snapper/6_dead.png",
+          "images/plants/space_snapper/item_drop.png",
+          "images/plants/space_snapper/seedbag.png",
 
-          "images/plants/waterweed/1_seedling.png",
-          "images/plants/waterweed/2_sprout.png",
-          "images/plants/waterweed/3_juvenile.png",
-          "images/plants/waterweed/4_adult.png",
-          "images/plants/waterweed/5_decaying.png",
-          "images/plants/waterweed/item_drop.png",
+          "images/plants/atomic_algae/1_seedling.png",
+          "images/plants/atomic_algae/2_sprout.png",
+          "images/plants/atomic_algae/3_juvenile.png",
+          "images/plants/atomic_algae/4_adult.png",
+          "images/plants/atomic_algae/5_decaying.png",
+          "images/plants/atomic_algae/6_dead.png",
+          "images/plants/atomic_algae/item_drop.png",
+          "images/plants/atomic_algae/seedbag.png",
 
-          "images/plants/nightshade/1_seedling.png",
-          "images/plants/nightshade/2_sprout.png",
-          "images/plants/nightshade/3_juvenile.png",
-          "images/plants/nightshade/4_adult.png",
-          "images/plants/nightshade/5_decaying.png",
-          "images/plants/nightshade/item_drop.png",
+          "images/plants/deadly_nightshade/1_seedling.png",
+          "images/plants/deadly_nightshade/2_sprout.png",
+          "images/plants/deadly_nightshade/3_juvenile.png",
+          "images/plants/deadly_nightshade/4_adult.png",
+          "images/plants/deadly_nightshade/5_decaying.png",
+          "images/plants/deadly_nightshade/6_dead.png",
+          "images/plants/deadly_nightshade/item_drop.png",
+          //"images/plants/deadly_nightshade/seedbag.png",
 
           "images/plants/misc/aloe_vera_seed.png",
           "images/plants/misc/cosmic_cob_seed.png",
           "images/plants/misc/deadly_nightshade_seed.png",
           "images/plants/misc/hammer_plant_seed.png",
-          "images/plants/misc/horticultural_heater_seed.png",
           "images/plants/misc/space_snapper_seed.png",
           "images/plants/misc/tobacco_seed.png",
+          "images/plants/misc/atomic_algae_seed.png",
           "images/invisible_sprite.png",
 
           "images/progress-bar/day1.png",
           "images/progress-bar/day2.png"
   };
   private static final String[] forestTextureAtlases = {
-    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
-          "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas",
-          "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas", "images/questgiver.atlas",
-          "images/missionStatus.atlas"
+      "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
+      "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas",
+      "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas", "images/questgiver.atlas",
+      "images/missionStatus.atlas", "images/plants/cosmic_cob.atlas", "images/plants/aloe_vera.atlas",
+      "images/plants/hammer_plant.atlas", "images/plants/space_snapper.atlas", "images/plants/atomic_algae.atlas",
+      "images/plants/deadly_nightshade.atlas"
   };
-  private static final String[] forestSounds = {"sounds/Impact4.ogg", "sounds/car-horn-6408.mp3"};
+  private static final String[] forestSounds = {
+          "sounds/Impact4.ogg", "sounds/car-horn-6408.mp3",
+          "sounds/plants/aloeVera/click.wav", "sounds/plants/aloeVera/clickLore.wav",
+          "sounds/plants/aloeVera/decay.wav", "sounds/plants/aloeVera/decayLore.wav",
+          "sounds/plants/aloeVera/destroy.wav", "sounds/plants/aloeVera/destroyLore.wav",
+          "sounds/plants/aloeVera/nearby.wav", "sounds/plants/aloeVera/nearbyLore.wav",
+          "sounds/plants/cosmicCob/click.wav", "sounds/plants/cosmicCob/clickLore.wav",
+          "sounds/plants/cosmicCob/decay.wav", "sounds/plants/cosmicCob/decayLore.wav",
+          "sounds/plants/cosmicCob/destroy.wav", "sounds/plants/cosmicCob/destroyLore.wav",
+          "sounds/plants/cosmicCob/nearby.wav", "sounds/plants/cosmicCob/nearbyLore.wav",
+          "sounds/plants/hammerPlant/click.wav", "sounds/plants/hammerPlant/clickLore.wav",
+          "sounds/plants/hammerPlant/decay.wav", "sounds/plants/hammerPlant/decayLore.wav",
+          "sounds/plants/hammerPlant/destroy.wav", "sounds/plants/hammerPlant/destroyLore.wav",
+          "sounds/plants/hammerPlant/nearby.wav", "sounds/plants/hammerPlant/nearbyLore.wav",
+          "sounds/plants/nightshade/click.wav", "sounds/plants/nightshade/clickLore.wav",
+          "sounds/plants/nightshade/decay.wav", "sounds/plants/nightshade/decayLore.wav",
+          "sounds/plants/nightshade/destroy.wav", "sounds/plants/nightshade/destroyLore.wav",
+          "sounds/plants/nightshade/nearby.wav", "sounds/plants/nightshade/nearbyLore.wav",
+          "sounds/plants/venusFlyTrap/click.wav", "sounds/plants/venusFlyTrap/clickLore.wav",
+          "sounds/plants/venusFlyTrap/decay.wav", "sounds/plants/venusFlyTrap/decayLore.wav",
+          "sounds/plants/venusFlyTrap/destroy.wav", "sounds/plants/venusFlyTrap/destroyLore.wav",
+          "sounds/plants/venusFlyTrap/nearby.wav", "sounds/plants/venusFlyTrap/nearbyLore.wav",
+          "sounds/plants/waterWeed/click.wav", "sounds/plants/waterWeed/clickLore.wav",
+          "sounds/plants/waterWeed/decay.wav", "sounds/plants/waterWeed/decayLore.wav",
+          "sounds/plants/waterWeed/destroy.wav", "sounds/plants/waterWeed/destroyLore.wav",
+          "sounds/plants/waterWeed/nearby.wav", "sounds/plants/waterWeed/nearbyLore.wav",
+  };
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
   private static final String[] forestMusic = {backgroundMusic};
 
@@ -185,7 +227,9 @@ public class SpaceGameArea extends GameArea {
 
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
-   * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
+   * 
+   * @param terrainFactory TerrainFactory used to create the terrain for the
+   *                       GameArea.
    * @requires terrainFactory != null
    */
   public SpaceGameArea(TerrainFactory terrainFactory) {
@@ -196,7 +240,10 @@ public class SpaceGameArea extends GameArea {
     ServiceLocator.registerGameArea(this);
   }
 
-  /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
+  /**
+   * Create the game area, including terrain, static entities (trees), dynamic
+   * entities (player)
+   */
   @Override
   public void create() {
     loadAssets();
@@ -209,14 +256,14 @@ public class SpaceGameArea extends GameArea {
     spawnCrop(5, 11, "Cosmic Cob");
     spawnCrop(7, 11, "Aloe Vera");
     spawnCrop(9, 11, "Hammer Plant");
-    spawnCrop(11, 11, "Venus Fly Trap");
-    spawnCrop(13, 11, "Nightshade");
-    spawnCrop(15, 11, "Water Weed");
+    spawnCrop(11, 11, "Space Snapper");
+    spawnCrop(13, 11, "Deadly Nightshade");
+    spawnCrop(15, 11, "Atomic Algae");
 
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
-
-    // TODO:
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createAloeVeraSeed());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createFertiliser());
 
     tractor = spawnTractor();
     spawnQuestgiver();
@@ -224,6 +271,7 @@ public class SpaceGameArea extends GameArea {
     spawnCows();
     spawnAstrolotl();
     spawnOxygenEater();
+    spawnShip();
 
     spawnTool(ItemType.WATERING_CAN);
     spawnTool(ItemType.SHOVEL);
@@ -239,6 +287,7 @@ public class SpaceGameArea extends GameArea {
   public Entity getPlayer() {
     return player;
   }
+  
   public ClimateController getClimateController() {
     return climateController;
   }
@@ -324,6 +373,11 @@ public class SpaceGameArea extends GameArea {
 
     Entity newQuestgiverIndicator = QuestgiverFactory.createQuestgiverIndicator(newQuestgiver);
     spawnEntityAt(newQuestgiverIndicator, QUESTGIVERIND_SPAWN, true, true);
+  }
+
+  private void spawnShip() {
+    Entity newShip = ShipFactory.createShip();
+    spawnEntityAt(newShip, SHIP_SPAWN, true, true);
   }
 
   private void spawnTool(ItemType tool) {

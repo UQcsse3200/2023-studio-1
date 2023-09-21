@@ -30,13 +30,12 @@ public class QuestIndicatorComponent extends Component {
     public void create() {
         super.create();
         this.parentAnimator = this.entity.getComponent(AnimationRenderComponent.class);
-        updateState(State.QUEST_AVAILABLE);
+        updateState(State.IDLE);
 
         MissionManager manager = ServiceLocator.getMissionManager();
-        manager.getEvents().addListener("questComplete", this::displayFinishedQuest);
-        manager.getEvents().addListener("questComplete", this::displayFinishedQuest);
-        manager.getEvents().addListener("questExpired", this::displayExpiredQuest);
-        manager.getEvents().addListener("questNew", this::displayNewQuest);
+        manager.getEvents().addListener(MissionManager.MissionEvent.MISSION_COMPLETE.name(), this::displayFinishedQuest);
+        manager.getEvents().addListener(MissionManager.MissionEvent.QUEST_EXPIRED.name(), this::displayExpiredQuest);
+        manager.getEvents().addListener(MissionManager.MissionEvent.NEW_QUEST.name(), this::displayNewQuest);
     }
 
     /**
@@ -45,7 +44,7 @@ public class QuestIndicatorComponent extends Component {
      */
     public void registerQuestgiver(Entity questgiver) {
         this.questgiver = questgiver;
-        questgiver.getEvents().addListener("toggleMissions", this::markRead);
+        questgiver.getEvents().addListener("interact", this::markRead);
     }
 
     /**
