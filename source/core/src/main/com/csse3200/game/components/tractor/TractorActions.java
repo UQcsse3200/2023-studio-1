@@ -164,6 +164,9 @@ public class TractorActions extends Component {
     switch (getMode()) {
       case tilling -> {
         Array<Object> tiles = getTiles(TractorMode.tilling, getDirection(walkDirection.angleDeg()));
+        if (tiles == null) {
+          return;
+        }
         if (tiles.size != 4) {
           return;
         }
@@ -172,6 +175,9 @@ public class TractorActions extends Component {
       }
       case harvesting -> {
         Array<Object> tiles = getTiles(TractorMode.tilling, getDirection(walkDirection.angleDeg()));
+        if (tiles == null) {
+          return;
+        }
         if (tiles.size != 4) {
           return;
         }
