@@ -104,12 +104,12 @@ public class PlantComponent extends Component {
     /**
      * The current max health. This limits the amount of health a plant can have at different growth stages.
      */
-    private double currentMaxHealth = 0;
+    private int currentMaxHealth = 0;
 
     /**
      * The maximum health a plant can have at different growth stages (stages 1, 2, 3).
      */
-    private double[] maxHealthAtStages = {0, 0, 0};
+    private int[] maxHealthAtStages = {0, 0, 0};
 
     /**
      * Used to track how long a plant has been an adult.
@@ -189,9 +189,9 @@ public class PlantComponent extends Component {
         this.growthStageThresholds[2] = 41;
 
         // Initialise max health values to be changed at each growth stage
-        this.maxHealthAtStages[0] = 0.05 * this.maxHealth;
-        this.maxHealthAtStages[1] = 0.1 * this.maxHealth;
-        this.maxHealthAtStages[2] = 0.3 * this.maxHealth;
+        this.maxHealthAtStages[0] = (int)(0.05 * this.maxHealth);
+        this.maxHealthAtStages[1] = (int)(0.1 * this.maxHealth);
+        this.maxHealthAtStages[2] = (int)(0.3 * this.maxHealth);
 
         this.adultEffect = "None";
         this.isEating = false;
@@ -238,9 +238,9 @@ public class PlantComponent extends Component {
         this.growthStageThresholds[2] = growthStageThresholds[2];
 
         // Initialise max health values to be changed at each growth stage
-        this.maxHealthAtStages[0] = 0.05 * maxHealth;
-        this.maxHealthAtStages[1] = 0.1 * maxHealth;
-        this.maxHealthAtStages[2] = 0.3 * maxHealth;
+        this.maxHealthAtStages[0] = (int)(0.05 * maxHealth);
+        this.maxHealthAtStages[1] = (int)(0.1 * maxHealth);
+        this.maxHealthAtStages[2] = (int)(0.3 * maxHealth);
 
         switch (this.plantName) {
             case "Hammer Plant" -> this.adultEffect = "Health";
@@ -273,6 +273,7 @@ public class PlantComponent extends Component {
         ServiceLocator.getPlantCommandService().getEvents().addListener("forceDead", this::forceDead);
         this.currentAnimator = entity.getComponent(AnimationRenderComponent.class);
         updateTexture();
+        updateMaxHealth();
     }
 
     /**
@@ -430,6 +431,14 @@ public class PlantComponent extends Component {
     public void increasePlantHealth(int plantHealthIncrement) {
 
         this.plantHealth += plantHealthIncrement;
+        int growthStage = getGrowthStage().getValue();
+        if ((growthStage < GrowthStage.ADULT.getValue())
+                && plantHealth > maxHealthAtStages[growthStage - 1]) {
+            this.plantHealth = maxHealthAtStages[growthStage - 1];
+        } else if (growthStage >= GrowthStage.ADULT.getValue()
+                && plantHealth > maxHealth) {
+            this.plantHealth = maxHealth;
+        }
 
         if (this.plantHealth < 0) {
             this.plantHealth = 0;
@@ -545,7 +554,7 @@ public class PlantComponent extends Component {
      * Retrieves the current maximum health value of the plant.
      * @return The current maximum health of the plant.
      */
-    public double getCurrentMaxHealth() {
+    public int getCurrentMaxHealth() {
         return this.currentMaxHealth;
     }
 
@@ -805,7 +814,7 @@ public class PlantComponent extends Component {
         String waterLevel = decimalFormat.format(cropTile.getWaterContent());
         String idealWaterLevel = decimalFormat.format(this.idealWaterLevel);
         String growthLevel = decimalFormat.format(currentGrowthLevel);
-        String currentMaxHealth = decimalFormat.format(this.currentMaxHealth);
+        String currentMaxHealth = Integer.toString(this.currentMaxHealth);
 
         String returnString =   plantName +
                 "\nGrowth Stage: " + getGrowthStage().name() +
@@ -815,7 +824,7 @@ public class PlantComponent extends Component {
 
         if (getGrowthStage().getValue() < GrowthStage.ADULT.getValue()) {
             returnString += "\nGrowth Level: " + growthLevel + "/" +
-                            Integer.toString(growthStageThresholds[getGrowthStage().getValue() - 1]);
+                    growthStageThresholds[getGrowthStage().getValue() - 1];
         }
 
         return  returnString;

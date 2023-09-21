@@ -143,11 +143,11 @@ class PlantFactoryTest {
      */
     static Stream<Arguments> plantConfigProvider() {
         return Stream.of(
-                Arguments.of("cosmicCob", 10, "Cosmic Cob", "FOOD",
+                Arguments.of("cosmicCob", 3, "Cosmic Cob", "FOOD",
                         "A nutritious snack with everything a human needs to survive, the local " +
                                 "fauna won’t touch it though. Suspiciously high in protein and fat…",
                         (float) 1, 3, 200),
-                Arguments.of("aloeVera", 5, "Aloe Vera", "HEALTH",
+                Arguments.of("aloeVera", 2, "Aloe Vera", "HEALTH",
                         "A unique plant that once ground down to a chunky red paste can be used " +
                                 "to heal significant wounds, it’s a miracle!", (float) 1.2, 5, 150),
                 Arguments.of("hammerPlant", 5, "Hammer Plant", "REPAIR",
@@ -156,9 +156,9 @@ class PlantFactoryTest {
                 Arguments.of("venusFlyTrap", 10, "Space Snapper", "DEFENCE",
                         "A hangry plant that will gobble any nasty pests nearby. Keep small pets " +
                                 "and children out of snapping distance!", (float) 0.5, 15, 300),
-                Arguments.of("waterWeed", 5, "Atomic Algae", "PRODUCTION",
+                Arguments.of("waterWeed", 2, "Atomic Algae", "PRODUCTION",
                         "A highly efficient oxygen-producing plant.", (float) 1.5, 4, 100),
-                Arguments.of("nightshade", 5, "Deadly Nightshade",
+                Arguments.of("nightshade", 2, "Deadly Nightshade",
                         "DEADLY", "Grows deadly poisonous berries.", (float) 1, 2, 130)
         );
     }

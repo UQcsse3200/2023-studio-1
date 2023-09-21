@@ -79,6 +79,7 @@ public class PlantComponentTest {
     @Test
     void testIncreasePlantHealth() {
         int plantHealthIncrement = 2;
+        testPlant.setGrowthStage(PlantComponent.GrowthStage.ADULT.getValue());
         testPlant.increasePlantHealth(plantHealthIncrement);
         assertEquals(health + plantHealthIncrement, testPlant.getPlantHealth());
     }
@@ -86,6 +87,7 @@ public class PlantComponentTest {
     @Test
     void testDecreasePlantHealth() {
         int plantHealthIncrement = -2;
+        testPlant.setGrowthStage(PlantComponent.GrowthStage.ADULT.getValue());
         testPlant.increasePlantHealth(plantHealthIncrement);
         assertEquals(health + plantHealthIncrement, testPlant.getPlantHealth());
     }
@@ -181,6 +183,7 @@ public class PlantComponentTest {
     @Test
     void testIncreaseCurrentGrowthLevelNegative() {
         when(mockCropTile.getGrowthRate(1.0f)).thenReturn(-0.5);
+        testPlant.setGrowthStage(PlantComponent.GrowthStage.ADULT.getValue());
         testPlant.increaseCurrentGrowthLevel();
         assertEquals(health - 1, testPlant.getPlantHealth());
     }
