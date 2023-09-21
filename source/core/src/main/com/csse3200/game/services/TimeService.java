@@ -18,7 +18,6 @@ public class TimeService {
 	private final EventHandler events;
 
 
-
 	/**
 	 * Constructs a basic TimeService instance to track the in-game time
 	 */
@@ -28,11 +27,11 @@ public class TimeService {
 		minute = 0;
 		paused = false;
 		events = new EventHandler();
-		events.addListener("morningTime", this::normalGameSpeed);
 	}
 
 	/**
 	 * Returns whether the game is paused or not
+	 *
 	 * @return boolean value representing whether the game is paused or not
 	 */
 	public boolean isPaused() {
@@ -41,6 +40,7 @@ public class TimeService {
 
 	/**
 	 * Changes the pause state of the game
+	 *
 	 * @param state boolean value for whether the game is paused or not
 	 */
 	public void setPaused(boolean state) {
@@ -50,6 +50,7 @@ public class TimeService {
 
 	/**
 	 * Gets the current in-game hour
+	 *
 	 * @return in-game hour
 	 */
 	public int getHour() {
@@ -58,6 +59,7 @@ public class TimeService {
 
 	/**
 	 * Gets the current in-game day
+	 *
 	 * @return in-game day
 	 */
 	public int getDay() {
@@ -66,6 +68,7 @@ public class TimeService {
 
 	/**
 	 * Gets the current in-game minute
+	 *
 	 * @return in-game minute
 	 */
 	public int getMinute() {
@@ -74,6 +77,7 @@ public class TimeService {
 
 	/**
 	 * Sets the in-game hour to a certain value. Also updates the time buffer and triggers any necessary events
+	 *
 	 * @param hour in-game hour
 	 */
 	public void setHour(int hour) {
@@ -83,20 +87,8 @@ public class TimeService {
 	}
 
 	/**
-	 * Speeds up the game time so that the player can sleep
-	 */
-	public void speedUpSleep() {
-		if (getHour() != MORNING_HOUR) {
-			ServiceLocator.getTimeSource().setTimeScale(15);
-		}
-	}
-
-	private void normalGameSpeed() {
-		ServiceLocator.getTimeSource().setTimeScale(1);
-	}
-
-	/**
 	 * Determines whether it is day or not
+	 *
 	 * @return whether it is day or not
 	 */
 	public boolean isDay() {
@@ -105,6 +97,7 @@ public class TimeService {
 
 	/**
 	 * Determines whether it is night or not
+	 *
 	 * @return whether it is night or not
 	 */
 	public boolean isNight() {
@@ -113,16 +106,18 @@ public class TimeService {
 
 	/**
 	 * Sets the in-game day to a certain value. Also updates the time buffer and triggers any necessary events
+	 *
 	 * @param day in-game day
 	 */
 	public void setDay(int day) {
 		this.day = day;
-		this.timeBuffer= 0;
+		this.timeBuffer = 0;
 		events.trigger("dayUpdate");
 	}
 
 	/**
 	 * Sets the in-game minute to a certain value. Also updates the time buffer and triggers any necessary events
+	 *
 	 * @param minute in-game minute
 	 */
 	public void setMinute(int minute) {
@@ -133,6 +128,7 @@ public class TimeService {
 
 	/**
 	 * Gets the event handler for the TimeService
+	 *
 	 * @return event handler
 	 */
 	public EventHandler getEvents() {
