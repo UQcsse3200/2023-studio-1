@@ -214,15 +214,13 @@ public class NPCFactory {
   }
 
   public static Entity createFireFlies(Entity player) {
-    AuraLightComponent light = new AuraLightComponent(1f, Color.GREEN);
+    AuraLightComponent light = new AuraLightComponent(3f, Color.GREEN);
     light.toggleLight();
     Entity fireflies = new Entity(EntityType.FireFlies)
             .addComponent(new TextureRenderComponent("images/tractor.png"))
             .addComponent(light)
             .addComponent(new FireflyScareComponent())
-            .addComponent(new PhysicsComponent())
-            .addComponent(new InteractionDetector(5f,
-                    new ArrayList<>(Arrays.asList(EntityType.Player, EntityType.Light, EntityType.Tractor))));
+            .addComponent(new PhysicsComponent());
     return fireflies;
   }
 

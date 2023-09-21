@@ -58,7 +58,6 @@ public class PlayerActions extends Component {
     if (entity.getComponent(PlayerAnimationController.class).readyToPlay()) {
       if (moving) {
         updateSpeed();
-
       }
       updateAnimation();
     }
@@ -192,11 +191,6 @@ public class PlayerActions extends Component {
       entity.getEvents().trigger("animationInteract", "down");
     }
 
-    /*
-     * Find the closest entity we can interact with. To register a new entity:
-     * 1. Go to InteractionDetector.java
-     * 2. Add the entity to the interactableEntities array
-     */
     List<Entity> entitiesInRange = this.entity.getComponent(InteractionDetector.class).getEntitiesInRange();
     List<Entity> closestEntity = this.entity.getComponent(InteractionDetector.class).getNearest(entitiesInRange);
 
