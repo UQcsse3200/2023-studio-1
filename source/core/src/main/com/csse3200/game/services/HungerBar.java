@@ -66,12 +66,12 @@ public class HungerBar extends UIComponent{
         hungerBarFill.setX(hungerBarFill.getImageX() + 14 * (1 - scaling));
         hungerBarFill.setScaleX(scaling);
 
-//        hungerBarOutline.setPosition();
+//        hungerBarOutline.setPosition(-550f, -5f);
 
         // Add a safety check to ensure that the array is always accessed at a possible index
         if (0 <= hungerPercent && hungerPercent <= 100) {
             hungerLabel = hungerLabels.get(hungerPercent);
-            hungerLabel.setPosition(hungerBarOutline.getImageX() + 1f, hungerBarOutline.getImageY() + 20f);
+            hungerLabel.setPosition(hungerBarOutline.getImageX() + 125f, hungerBarOutline.getImageY() + 8.5f);
         }
 
     }
