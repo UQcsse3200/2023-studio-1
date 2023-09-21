@@ -1,8 +1,8 @@
 {
 "hour": 6,
 "climate": {
-	"Temp": 7.635536,
-	"Humidity": 0.94830674
+	"Temp": 7.7525225,
+	"Humidity": 0.9511314
 },
 "missions": {
 	"ActiveQuests": {},
@@ -53,12 +53,6 @@
 					"count": 1,
 					"X": 0,
 					"Y": 0
-				},
-				"item": {
-					"name": "fertiliser",
-					"count": 1,
-					"X": 0,
-					"Y": 0
 				}
 			}
 		}
@@ -77,14 +71,8 @@
 "entities": [
 	{
 		"Entity": "ShipDebris",
-		"x": 49,
+		"x": 54,
 		"y": 47,
-		"components": {}
-	},
-	{
-		"Entity": "ShipDebris",
-		"x": 45,
-		"y": 48,
 		"components": {}
 	},
 	{
@@ -95,56 +83,74 @@
 	},
 	{
 		"Entity": "ShipDebris",
+		"x": 47,
+		"y": 45,
+		"components": {}
+	},
+	{
+		"Entity": "ShipDebris",
+		"x": 51,
+		"y": 55,
+		"components": {}
+	},
+	{
+		"Entity": "ShipDebris",
+		"x": 49,
+		"y": 53,
+		"components": {}
+	},
+	{
+		"Entity": "ShipDebris",
+		"x": 49,
+		"y": 54,
+		"components": {}
+	},
+	{
+		"Entity": "ShipDebris",
 		"x": 55,
+		"y": 46,
+		"components": {}
+	},
+	{
+		"Entity": "ShipDebris",
+		"x": 51,
+		"y": 52,
+		"components": {}
+	},
+	{
+		"Entity": "ShipDebris",
+		"x": 46,
+		"y": 49,
+		"components": {}
+	},
+	{
+		"Entity": "ShipDebris",
+		"x": 55,
+		"y": 54,
+		"components": {}
+	},
+	{
+		"Entity": "ShipDebris",
+		"x": 46,
+		"y": 48,
+		"components": {}
+	},
+	{
+		"Entity": "ShipDebris",
+		"x": 49,
+		"y": 50,
+		"components": {}
+	},
+	{
+		"Entity": "ShipDebris",
+		"x": 48,
 		"y": 49,
 		"components": {}
 	},
 	{
 		"Entity": "ShipDebris",
 		"x": 49,
-		"y": 48,
-		"components": {}
-	},
-	{
-		"Entity": "ShipDebris",
-		"x": 55,
-		"y": 51,
-		"components": {}
-	},
-	{
-		"Entity": "ShipDebris",
-		"x": 49,
 		"y": 46,
-		"components": {}
-	},
-	{
-		"Entity": "ShipDebris",
-		"x": 46,
-		"y": 52,
-		"components": {}
-	},
-	{
-		"Entity": "ShipDebris",
-		"x": 52,
-		"y": 51,
-		"components": {}
-	},
-	{
-		"Entity": "ShipDebris",
-		"x": 48,
-		"y": 46,
-		"components": {}
-	},
-	{
-		"Entity": "ShipDebris",
-		"x": 48,
-		"y": 55,
-		"components": {}
-	},
-	{
-		"Entity": "ShipDebris",
-		"x": 51,
-		"y": 51,
 		"components": {}
 	},
 	{
@@ -154,21 +160,9 @@
 		"components": {}
 	},
 	{
-		"Entity": "ShipDebris",
-		"x": 55,
-		"y": 55,
-		"components": {}
-	},
-	{
-		"Entity": "ShipDebris",
-		"x": 52,
-		"y": 48,
-		"components": {}
-	},
-	{
 		"Entity": "Chicken",
-		"x": 89.673874,
-		"y": 80.34432,
+		"x": 88.994194,
+		"y": 32.353348,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -177,8 +171,8 @@
 	},
 	{
 		"Entity": "Chicken",
-		"x": 64.05219,
-		"y": 32.491314,
+		"x": 22.957066,
+		"y": 22.28052,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -187,8 +181,8 @@
 	},
 	{
 		"Entity": "Chicken",
-		"x": 90.04381,
-		"y": 19.714682,
+		"x": 94.50711,
+		"y": 55.884186,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -197,8 +191,8 @@
 	},
 	{
 		"Entity": "Chicken",
-		"x": 62.264847,
-		"y": 51.07285,
+		"x": 84.45329,
+		"y": 25.136614,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -207,8 +201,8 @@
 	},
 	{
 		"Entity": "Chicken",
-		"x": 81.89321,
-		"y": 7.574238,
+		"x": 67.76604,
+		"y": 76.26219,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -217,8 +211,8 @@
 	},
 	{
 		"Entity": "Chicken",
-		"x": 1.0824457,
-		"y": 50.847195,
+		"x": 26.774578,
+		"y": 58.249454,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -227,8 +221,8 @@
 	},
 	{
 		"Entity": "Chicken",
-		"x": 33.96449,
-		"y": 5.847195,
+		"x": 86.02874,
+		"y": 97.8472,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -237,8 +231,8 @@
 	},
 	{
 		"Entity": "Chicken",
-		"x": 28.772593,
-		"y": 49.533688,
+		"x": 42.665318,
+		"y": 72.92776,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -247,8 +241,8 @@
 	},
 	{
 		"Entity": "Chicken",
-		"x": 15.769062,
-		"y": 49.81474,
+		"x": 23.979595,
+		"y": 44.730682,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -257,8 +251,8 @@
 	},
 	{
 		"Entity": "Chicken",
-		"x": 91.86912,
-		"y": 55.471535,
+		"x": 12.667348,
+		"y": 90.47592,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -267,8 +261,8 @@
 	},
 	{
 		"Entity": "Cow",
-		"x": 52.18514,
-		"y": 76.37108,
+		"x": 16.006374,
+		"y": 11.058443,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -277,8 +271,8 @@
 	},
 	{
 		"Entity": "Cow",
-		"x": 22.338072,
-		"y": 83.87488,
+		"x": 16.577223,
+		"y": 22.784649,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -287,8 +281,8 @@
 	},
 	{
 		"Entity": "Cow",
-		"x": 9.309246,
-		"y": 52.014603,
+		"x": 85.6744,
+		"y": 12.767599,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -297,8 +291,8 @@
 	},
 	{
 		"Entity": "Cow",
-		"x": 34.156906,
-		"y": 57.36953,
+		"x": 6.966093,
+		"y": 29.236547,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -307,8 +301,8 @@
 	},
 	{
 		"Entity": "Cow",
-		"x": 75.45914,
-		"y": 65.3807,
+		"x": 54.12916,
+		"y": 93.265015,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -317,8 +311,8 @@
 	},
 	{
 		"Entity": "Astrolotl",
-		"x": 38.101727,
-		"y": 14.34924,
+		"x": 32.923035,
+		"y": 8.815975,
 		"components": {
 			"TamableComponent": {
 				"tamed": false
@@ -327,32 +321,32 @@
 	},
 	{
 		"Entity": "OxygenEater",
-		"x": 60.422905,
-		"y": 89.679245,
+		"x": 1.1240245,
+		"y": 53.791237,
 		"components": {}
 	},
 	{
 		"Entity": "OxygenEater",
-		"x": 87.70425,
-		"y": 92.78211,
+		"x": 21.206577,
+		"y": 74.954216,
 		"components": {}
 	},
 	{
 		"Entity": "OxygenEater",
-		"x": 33.27706,
-		"y": 20.54423,
+		"x": 89.219475,
+		"y": 49.55798,
 		"components": {}
 	},
 	{
 		"Entity": "OxygenEater",
-		"x": 73.55738,
-		"y": 95.18817,
+		"x": 20.223549,
+		"y": 57.259617,
 		"components": {}
 	},
 	{
 		"Entity": "OxygenEater",
-		"x": 38.124023,
-		"y": 0.79123604,
+		"x": 11.693703,
+		"y": 48.920605,
 		"components": {}
 	}
 ],
@@ -363,7 +357,7 @@
 		"y": 11,
 		"components": {
 			"CropTileComponent": {
-				"waterContent": 0.551226,
+				"waterContent": 0.4986055,
 				"soilQuality": 1,
 				"isFertilised": false,
 				"plant": {
@@ -388,7 +382,7 @@
 		"y": 11,
 		"components": {
 			"CropTileComponent": {
-				"waterContent": 0.551226,
+				"waterContent": 0.4986055,
 				"soilQuality": 1,
 				"isFertilised": false,
 				"plant": {
@@ -413,7 +407,7 @@
 		"y": 11,
 		"components": {
 			"CropTileComponent": {
-				"waterContent": 0.551226,
+				"waterContent": 0.4986055,
 				"soilQuality": 1,
 				"isFertilised": false,
 				"plant": {
@@ -438,7 +432,7 @@
 		"y": 11,
 		"components": {
 			"CropTileComponent": {
-				"waterContent": 0.551226,
+				"waterContent": 0.4986055,
 				"soilQuality": 1,
 				"isFertilised": false,
 				"plant": {
@@ -463,7 +457,7 @@
 		"y": 11,
 		"components": {
 			"CropTileComponent": {
-				"waterContent": 0.551226,
+				"waterContent": 0.4986055,
 				"soilQuality": 1,
 				"isFertilised": false,
 				"plant": {
@@ -488,7 +482,7 @@
 		"y": 11,
 		"components": {
 			"CropTileComponent": {
-				"waterContent": 0.551226,
+				"waterContent": 0.4986055,
 				"soilQuality": 1,
 				"isFertilised": false,
 				"plant": {

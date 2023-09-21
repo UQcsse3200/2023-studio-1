@@ -24,9 +24,13 @@ public class PlantMouseHoverComponent extends Component {
 
             String plantInfo = entity.getComponent(PlantComponent.class).currentInfo();
 
-            ServiceLocator.getPlantInfoService().getEvents().trigger("testPlant", plantInfo);
+            ServiceLocator.getPlantInfoService().getEvents().trigger("showPlantInfo", plantInfo);
+            showInfo = true;
         } else {
-            ServiceLocator.getPlantInfoService().getEvents().trigger("clearPlantInfo");
+            if (showInfo) {
+                ServiceLocator.getPlantInfoService().getEvents().trigger("clearPlantInfo");
+                showInfo = false;
+            }
         }
 
 
