@@ -1,5 +1,6 @@
 package com.csse3200.game.entities;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Arrays;
@@ -82,5 +83,13 @@ public class EntityTypeTest {
         fail("Expected enum value '" + expectedEnumName + "' is missing.");
       }
     }
+  }
+
+  @Test
+  void testOxygenReturn() {
+    assertEquals(EntityType.Cow.getOxygenRate(), 0);
+    assertEquals(EntityType.Chicken.getOxygenRate(), 0);
+    assertEquals(EntityType.Gate.getOxygenRate(), 0);
+    assertEquals(EntityType.Fence.getOxygenRate(), 0);
   }
 }

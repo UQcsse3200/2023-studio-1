@@ -43,6 +43,20 @@ public class SaveGameTest {
   }
 
   @Test
+  public void setMinute() {
+    GameState gameState = new SaveGame.GameState();
+
+    gameState.setHour(17);
+    assertEquals(17, gameState.getHour());
+
+    gameState.setHour(-1);
+    assertEquals(-1, gameState.getHour());
+
+    gameState.setHour(2147483647);
+    assertEquals(2147483647, gameState.getHour());
+  }
+
+  @Test
   public void setPlayer() {
     GameState gameState = new SaveGame.GameState();
 
