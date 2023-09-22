@@ -520,6 +520,7 @@ public class MissionDisplay extends UIComponent {
             window.setVisible(false);
             isOpen = false;
         } else {
+            missionManager = ServiceLocator.getMissionManager();
             openMenu();
         }
     }

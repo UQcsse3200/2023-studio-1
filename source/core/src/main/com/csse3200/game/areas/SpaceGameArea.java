@@ -102,6 +102,7 @@ public class SpaceGameArea extends GameArea {
           "images/stonePath_1.png",
           "images/tractor.png",
           "images/fertiliser.png",
+          "images/yellowSquare.png",
 
           "images/plants/misc/aloe_vera_seed.png",
           "images/plants/atomic_algae/1_seedling.png",
@@ -178,7 +179,7 @@ public class SpaceGameArea extends GameArea {
       "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas", "images/questgiver.atlas",
       "images/missionStatus.atlas", "images/plants/cosmic_cob.atlas", "images/plants/aloe_vera.atlas",
       "images/plants/hammer_plant.atlas", "images/plants/space_snapper.atlas", "images/plants/atomic_algae.atlas",
-      "images/plants/deadly_nightshade.atlas"
+      "images/plants/deadly_nightshade.atlas", "images/fireflies.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg", "sounds/car-horn-6408.mp3"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -230,10 +231,11 @@ public class SpaceGameArea extends GameArea {
 
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
-    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createAloeVeraSeed());
-    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createFertiliser());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createLightItem());
+    //player.getComponent(InventoryComponent.class).addItem(ItemFactory.createFertiliser());
 
     tractor = spawnTractor();
+    spawnPlayerHighlight();
     spawnQuestgiver();
     spawnChickens();
     spawnCows();
@@ -241,13 +243,13 @@ public class SpaceGameArea extends GameArea {
     spawnOxygenEater();
     spawnShip();
 
-    spawnTool(ItemType.WATERING_CAN);
-    spawnTool(ItemType.SHOVEL);
-    spawnTool(ItemType.SCYTHE);
-    spawnTool(ItemType.HOE);
-    spawnTool(ItemType.FERTILISER);
-    spawnTool(ItemType.SEED);
-    spawnTool(ItemType.FOOD);
+//    spawnTool(ItemType.WATERING_CAN);
+//    spawnTool(ItemType.SHOVEL);
+//    spawnTool(ItemType.SCYTHE);
+//    spawnTool(ItemType.HOE);
+//    spawnTool(ItemType.FERTILISER);
+//    spawnTool(ItemType.SEED);
+//    spawnTool(ItemType.FOOD);
 
     //playMusic();
   }
@@ -307,6 +309,10 @@ public class SpaceGameArea extends GameArea {
        Entity invisible_obs = ObstacleFactory.createInvisibleObstacle();
        spawnEntityAt(invisible_obs, Pos, true, false);
      }
+   }
+
+   private void spawnFirefly() {
+     spawnEntityAt(NPCFactory.createFireFlies(player),new GridPoint2(30,30),true, true);
    }
 
   private Entity spawnCrop() {
@@ -517,4 +523,14 @@ public class SpaceGameArea extends GameArea {
   public GameMap getMap() {
     return gameMap;
   }
+
+  /**
+   * Spawns the player highlight entity
+   * Is the yellow square that highlights the tile the player is hovering over
+   */
+  public void spawnPlayerHighlight() {
+    Entity playerHighlight = PlayerHighlightFactory.createPlayerHighlight();
+    spawnEntityAt(playerHighlight, PLAYER_SPAWN, true, true);
+  }
+
 }
