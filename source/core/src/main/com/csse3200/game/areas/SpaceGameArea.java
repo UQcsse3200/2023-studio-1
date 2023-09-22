@@ -102,6 +102,7 @@ public class SpaceGameArea extends GameArea {
           "images/stonePath_1.png",
           "images/tractor.png",
           "images/fertiliser.png",
+          "images/yellowSquare.png",
 
           "images/plants/misc/aloe_vera_seed.png",
           "images/plants/atomic_algae/1_seedling.png",
@@ -234,6 +235,7 @@ public class SpaceGameArea extends GameArea {
     player.getComponent(InventoryComponent.class).addItem(ItemFactory.createFertiliser());
 
     tractor = spawnTractor();
+    spawnPlayerHighlight();
     spawnQuestgiver();
     spawnChickens();
     spawnCows();
@@ -517,4 +519,14 @@ public class SpaceGameArea extends GameArea {
   public GameMap getMap() {
     return gameMap;
   }
+
+  /**
+   * Spawns the player highlight entity
+   * Is the yellow square that highlights the tile the player is hovering over
+   */
+  public void spawnPlayerHighlight() {
+    Entity playerHighlight = PlayerHighlightFactory.createPlayerHighlight();
+    spawnEntityAt(playerHighlight, PLAYER_SPAWN, true, true);
+  }
+
 }
