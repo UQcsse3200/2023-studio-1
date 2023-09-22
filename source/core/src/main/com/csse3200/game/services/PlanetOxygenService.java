@@ -19,9 +19,12 @@ public class PlanetOxygenService implements OxygenLevel{
     private final EventHandler eventHandler;
     
     public PlanetOxygenService() {
+        logger.debug("Setting oxygen goal to {}", DEFAULT_OXYGEN_GOAL);
         oxygenGoal = DEFAULT_OXYGEN_GOAL;
+        logger.debug("Setting initial oxygen level to {}", DEFAULT_INITIAL_OXYGEN);
         oxygenPresent = DEFAULT_INITIAL_OXYGEN;
         delta = 0;
+        logger.debug("Adding oxygen listener to hourUpdate event");
         ServiceLocator.getTimeService().getEvents()
                 .addListener("hourUpdate", this::update);
         eventHandler = new EventHandler();
@@ -29,11 +32,13 @@ public class PlanetOxygenService implements OxygenLevel{
     
     @Override
     public void addOxygen(float kilogramsToAdd) {
+        logger.debug("Adding {} kilograms to {}", kilogramsToAdd, oxygenPresent);
         oxygenPresent += kilogramsToAdd;
     }
     
     @Override
     public void removeOxygen(float kilogramsToRemove) {
+        logger.debug("Removing {} kilograms from {}", kilogramsToRemove, oxygenPresent);
         oxygenPresent -= kilogramsToRemove;
     }
     
@@ -45,20 +50,22 @@ public class PlanetOxygenService implements OxygenLevel{
     @Override
     public int getOxygenPercentage() throws IllegalArgumentException {
         if (oxygenGoal > 0) {
+            logger.debug("Calculating {} as a percentage of the oxygen goal", oxygenPresent);
             return (int) ((oxygenPresent / oxygenGoal) * 100);
         }
         // Error, should not occur
-        return -1;
+        throw new IllegalArgumentException("<=0 oxygen goal set");
     }
     
     /**
      * Set the maximum/goal amount of oxygen to be present on the planet
-     * @param kilograms
+     * @param kilograms the number of kilograms the goal is set to.
      */
     public void setOxygenGoal(int kilograms) throws IllegalArgumentException {
         if (kilograms <= 0) {
             throw new IllegalArgumentException("Goal cannot be 0 or negative");
         } else {
+            logger.debug("Setting oxygen goal to {}", kilograms);
             oxygenGoal = kilograms;
         }
     }
@@ -91,19 +98,24 @@ public class PlanetOxygenService implements OxygenLevel{
      * update the oxygen display.
      */
     public void update() {
+        logger.debug("Call private calculateDelta() method in oxygen update");
         delta = calculateDelta();
         
         if (oxygenPresent + delta <= 0) {
             // No oxygen left - trigger lose screen.
+            logger.debug("No oxygen left, triggering final oxygenUpdate and loseScreen event");
             oxygenPresent = 0;
             eventHandler.trigger("oxygenUpdate");
             ServiceLocator.getGameArea().getPlayer().getEvents().trigger("loseScreen");
         } else if (oxygenPresent + delta > oxygenGoal) {
             // Limit the present oxygen to not surpass the oxygen goal.
+            logger.debug("Setting oxygen present to oxygen goal");
             oxygenPresent = oxygenGoal;
         } else {
+            logger.debug("Adding delta of {} to oxygen present", delta);
             oxygenPresent += delta;
         }
+        logger.debug("Calling oxygenUpdate event");
         eventHandler.trigger("oxygenUpdate");
     }
     
@@ -119,11 +131,14 @@ public class PlanetOxygenService implements OxygenLevel{
         EntityType type;
         // Loop through existing entities in the game to sum their oxygen values.
         for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
+            logger.debug("Getting the entity type in delta calculation");
             type = entity.getType();
             if (type != null) {
                 // Loop through registered entity types for a matching type.
                 for (EntityType enumType : EntityType.values()) {
                     if (type.equals(enumType)) {
+                        logger.debug("Adding entity type {}'s oxygen value to the " +
+                                "hourly delta", type);
                         calculatedDelta += entity.getType().getOxygenRate();
                         // Break from inner loop after first match as an entity
                         // should only have one type.

@@ -13,7 +13,9 @@ import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.npc.TamableComponent;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.PlantFactory;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
@@ -60,7 +62,10 @@ public class ItemActions extends Component {
       }
       case SHOVEL -> {
         resultStatus = shovel(tile);
-        return resultStatus;
+        if (!resultStatus) {
+          return destroy(player, mouseWorldPos);
+        }
+        return true;
       }
       case SCYTHE -> {
         resultStatus = harvest(tile);
@@ -210,6 +215,26 @@ public class ItemActions extends Component {
       tile.setUnOccupied();
       return true;
     }
+    if(tile.getPlaceable() != null){
+      Entity placedItem = tile.getPlaceable();
+      Vector2 newPos = placedItem.getPosition();
+      tile.setPlaceable(null);    //update the tile
+      tile.setUnOccupied();
+
+      //check if the placeable is a chest and if there is items in that chest
+      //if there is items then return false
+      InventoryComponent chestInventory = placedItem.getComponent(InventoryComponent.class);
+      if (chestInventory != null){
+        if (chestInventory.getInventory().size() >= 1){ return false; }
+      }
+
+      Entity droppedItem = FactoryService.getItemFactories().get(placedItem.getType().toString()).get();
+      ServiceLocator.getGameArea().spawnEntity(droppedItem);
+      droppedItem.setPosition(newPos);
+      //placedItem.getEvents().trigger("destroy"); //TODO: add trigger event to all placeable items so dynamic textures can be updated
+      placedItem.dispose();   //Temperary destroy until the trigger event is implemented
+      return true;
+    }
     return false;
   }
 
@@ -323,6 +348,29 @@ public class ItemActions extends Component {
     }
 
     entityToFeed.getEvents().trigger("feed");
+    return true;
+  }
+
+  /**
+   * Triggers a destroy event on the destroyable entity.
+   *
+   * @param player player entity
+   * @param mouseWorldPos position to check for destroyable entity
+   * @return true if destroyed, false otherwise
+   */
+  private boolean destroy(Entity player, Vector2 mouseWorldPos) {
+    InteractionDetector interactionDetector = player.getComponent(InteractionDetector.class);
+
+    List<Entity> entities = interactionDetector.getEntitiesTowardsPosition(mouseWorldPos);
+    entities.removeIf(entity -> entity.getType() != EntityType.ShipDebris);
+
+    Entity entityToDestroy = interactionDetector.getNearest(entities);
+
+    if (entityToDestroy == null) {
+      return false;
+    }
+
+    entityToDestroy.getEvents().trigger("destroy");
     return true;
   }
 }

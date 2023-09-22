@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.badlogic.gdx.utils.JsonValue;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -66,6 +67,15 @@ class MissionManagerTest {
             }
 
             @Override
+            public void readProgress(JsonValue progress) {
+            }
+
+            @Override
+            public JsonValue getProgress() {
+                return null;
+            }
+
+            @Override
             protected void resetState() {
             }
         };
@@ -89,6 +99,15 @@ class MissionManagerTest {
 
             @Override
             public String getShortDescription() {
+                return null;
+            }
+
+            @Override
+            public void readProgress(JsonValue progress) {
+            }
+
+            @Override
+            public JsonValue getProgress() {
                 return null;
             }
 
@@ -118,6 +137,15 @@ class MissionManagerTest {
 
             @Override
             public String getShortDescription() {
+                return null;
+            }
+
+            @Override
+            public void readProgress(JsonValue progress) {
+            }
+
+            @Override
+            public JsonValue getProgress() {
                 return null;
             }
 
