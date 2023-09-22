@@ -43,6 +43,7 @@ public class SaveGame {
   public static class GameState {
     private int day;
     private int hour;
+    private int minute;
 
     private ClimateController climate;
 
@@ -160,6 +161,14 @@ public class SaveGame {
 
     public void setMissions(MissionManager missions) {
       this.missions = missions;
+    }
+
+    public int getMinute() {
+      return minute;
+    }
+
+    public void setMinute(int minute) {
+      this.minute = minute;
     }
   }
 }
