@@ -4,9 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.GdxGame;
@@ -60,6 +58,8 @@ public class EndCreditsDisplay extends UIComponent {
      */
     private TypingLabel storyLabel;
 
+    private TypingLabel creditsLabel;
+
     public EndCreditsDisplay(GdxGame game) {
         super();
         this.game = game;
@@ -79,8 +79,8 @@ public class EndCreditsDisplay extends UIComponent {
 
         String credits = getCredits();
 
-        storyLabel = new TypingLabel(credits, skin); // Create the TypingLabel with the formatted story
-        storyLabel.setAlignment(Align.center); // Center align the text
+        creditsLabel = new TypingLabel(credits, skin);
+        creditsLabel.setAlignment(Align.center);
 
         this.returnButton = new TextButton("Return To Main Menu", skin);
 
@@ -100,7 +100,7 @@ public class EndCreditsDisplay extends UIComponent {
 
         rootTable.row();
 
-        rootTable.add(storyLabel).top().padTop(Gdx.graphics.getHeight());
+        rootTable.add(creditsLabel).top().padTop((float) (Gdx.graphics.getHeight() * 3));
         rootTable.row().padTop(30f);
         rootTable.add(returnButton).bottom().padBottom(30f);
 
@@ -111,22 +111,63 @@ public class EndCreditsDisplay extends UIComponent {
 
     private String getCredits() {
 
-        return """
-                {WAIT=0.5}
-                After 30 long days, you, great farmlord, have succeeded!
-                {WAIT=0.5}
+        String credits = """
+                {RAINBOW} END CREDITS {ENDRAINBOW}
                 
-                The air is rich with oxygen, and the lands filled with greenery.
-                {WAIT}
+             
+                This amazing game is brought to you by the amazing efforts of studio one (the better studio)
                 
-                Humanity's hope has been restored.
-                {WAIT}
                 
-                The future is bright, and the human race... {WAIT=1} will live on!
-                {WAIT=1}
                 
-                {COLOR=green}Congrats You Win!!!.{WAIT=1}
+                {COLOR=red} TEAM ONE {CLEARCOLOR}
+                
+                
+                Team one stuff
+               
+                
+                {COLOR=red} TEAM TWO {CLEARCOLOR}
+                
+                
+                Team two stuff
+                
+                
+                {COLOR=green} TEAM THREE {CLEARCOLOR}
+                
+                
+                Team three stuff
+                
+                
+                {COLOR=blue} TEAM FOUR {CLEARCOLOR}
+                
+                
+                Team four stuff
+                
+                
+                {COLOR=yellow} TEAM FIVE {CLEARCOLOR}
+                
+                
+                Team five stuff
+               
+                
+                {COLOR=orange} TEAM SIX {CLEARCOLOR}
+                
+                
+                Team six stuff
+                
+                
+                {COLOR=purple} TEAM SEVEN {CLEARCOLOR}
+                
+                
+                Team seven stuff
+                
+                
+                {COLOR=pink} TEAM EIGHT {CLEARCOLOR}
+                
+                
+                Inventory..... Well kinda
             """;
+
+        return credits;
     }
 
     /**
@@ -149,15 +190,15 @@ public class EndCreditsDisplay extends UIComponent {
     @Override
     public void update() {
         // Calculate the new position for the storyLabel
-        float newY = storyLabel.getY() + spaceSpeed * Gdx.graphics.getDeltaTime();
+        float newY = creditsLabel.getY() + spaceSpeed * Gdx.graphics.getDeltaTime();
 
         // Check if the storyLabel has scrolled past the top of the screen
         if (newY >= Gdx.graphics.getHeight()) {
             // You can hide the text or do something when it exits the screen
-            storyLabel.setVisible(false);
+            creditsLabel.setVisible(false);
         } else {
             // Update the Y position of the storyLabel
-            storyLabel.setPosition(storyLabel.getX(), newY);
+            creditsLabel.setPosition(creditsLabel.getX(), newY);
         }
 
         // Rest of your update logic...
