@@ -7,17 +7,32 @@ import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.BodyUserData;
 import com.csse3200.game.physics.components.HitboxComponent;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * Component to inform the plant when the player is close enough for plant sounds to be played.
+ * This will prevent the game from being clogged up with plant sounds.
+ */
 public class PlantProximityComponent extends HitboxComponent {
+    /**
+     * The radius of the hitbox area.
+     */
     private float radius;
+
+    /**
+     * The shape of the hitbox area.
+     */
     private CircleShape shape = new CircleShape();
 
+    /**
+     * Constructor for the plant proximity component. Just used to setting the
+     * radius of the area. The radius will be the same for all plants.
+     */
     public PlantProximityComponent() {
         this.radius = 5f;
     }
 
+    /**
+     * Sets up the radius for the collider and listen for relevant services.
+     */
     @Override
     public void create() {
         shape.setRadius(radius);
@@ -29,6 +44,13 @@ public class PlantProximityComponent extends HitboxComponent {
         super.create();
     }
 
+    /**
+     * Checks if the entity is the player on collision start. If the entity is the player
+     * then tell the plant that the player is in range.
+     *
+     * @param me        The fixture of this component.
+     * @param other     The fixture of the colliding entity.
+     */
     private void onCollisionStart(Fixture me, Fixture other) {
         if (getFixture() != me) {
             return;
@@ -42,6 +64,12 @@ public class PlantProximityComponent extends HitboxComponent {
 
     }
 
+    /**
+     * Checks if the entity is the player on collision end. If the entity is the player
+     * then tell the plant that the player is no longer in range.
+     * @param me        The fixture of this component.
+     * @param other     The fixture of the colliding entity.
+     */
     private void onCollisionEnd(Fixture me, Fixture other) {
         if (getFixture() != me) {
             return;
