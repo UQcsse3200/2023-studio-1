@@ -1,5 +1,7 @@
 package com.csse3200.game.components.gamearea;
 
+import com.csse3200.game.GdxGame;
+import com.csse3200.game.components.maingame.MainGameActions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +30,7 @@ public class GameAreaDisplay extends UIComponent {
   private Group pausingGroup = new Group();
   private OpenPauseComponent openPauseComponent;
   private Image popUp;
+  private GdxGame game;
 
 
   @Override
@@ -86,7 +89,7 @@ public class GameAreaDisplay extends UIComponent {
         logger.debug("Exit button clicked");
         KeyboardPlayerInputComponent.incrementPauseCounter();
         KeyboardPlayerInputComponent.clearMenuOpening();
-        PauseMenuActions.setQuitGameStatus();
+        MainGameActions.exitToMainMenu();
       }
     });
     pausingGroup.addActor(exitBtn);
