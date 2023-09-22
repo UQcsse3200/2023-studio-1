@@ -2,11 +2,26 @@ package com.csse3200.game.components.ship;
 
 import com.csse3200.game.components.Component;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static java.lang.Math.min;
 
 public class ShipProgressComponent extends Component {
     static int maximum_repair = 20;
     private int progress;
+    private Set<Feature> unlocked_features;
+
+    enum Feature {
+        LIGHT(8),
+        STORAGE(15),
+        BED(3);
+
+        public final int unlockLevel;
+        Feature(int unlockLevel) {
+            this.unlockLevel = unlockLevel;
+        }
+    };
 
     /**
      * This component will handle the Ship's internal state of repair. It will listen for addPart events on the Ship
@@ -17,6 +32,7 @@ public class ShipProgressComponent extends Component {
     @Override
     public void create() {
         this.progress = 0;
+        unlocked_features = new HashSet<Feature>();
         // listen to add artefact call
         entity.getEvents().addListener("addArtefact", this::incrementProgress);
     }
@@ -29,12 +45,21 @@ public class ShipProgressComponent extends Component {
         if (this.progress < maximum_repair) {
             // Bound maximum repair state
             this.progress = min(this.progress + amount, maximum_repair);
-            // TODO: Only send progress update if repair actually happened
+
+            for (Feature feature : Feature.values()) {
+                if (feature.unlockLevel <= this.progress) {
+                    unlocked_features.add(feature);
+                }
+            }
+
+            // Only send progress update if repair actually happened
+            entity.getEvents().trigger("progressUpdated", this.progress, this.unlocked_features);
         }
     }
 
     /**
      * Update the progress of the ship's repair by decrementing it - this would be used by the bonus shipeater entity.
+     * Features do not get re-locked.
      */
     private void decrementProgress(int amount) {
         // Bound progress to being no less than 0
