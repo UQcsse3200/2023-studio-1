@@ -56,11 +56,14 @@ public class SaveLoadService {
 
     state.setDay(ServiceLocator.getTimeService().getDay());
     state.setHour(ServiceLocator.getTimeService().getHour());
+    state.setMinute(ServiceLocator.getTimeService().getMinute());
+
     state.setClimate(ServiceLocator.getGameArea().getClimateController());
     state.setMissions(ServiceLocator.getMissionManager());
 
     state.setPlayer(ServiceLocator.getGameArea().getPlayer());
     state.setTractor(ServiceLocator.getGameArea().getTractor());
+
     state.setEntities(ServiceLocator.getEntityService().getEntities());
     state.setTiles(ServiceLocator.getEntityService().getEntities());
 
@@ -119,15 +122,6 @@ public class SaveLoadService {
     updateMissions(state);
   }
 
-  private void updateClimate(GameState state) {
-    ClimateController climate = ServiceLocator.getGameArea().getClimateController();
-    climate.setHumidity(state.getClimate().getHumidity());
-    climate.setTemperature(state.getClimate().getTemperature());
-    if (state.getClimate().getCurrentWeatherEvent() != null) {
-      climate.addWeatherEvent(state.getClimate().getCurrentWeatherEvent());
-    }
-  }
-
   /**
    * Updates the player entity position based off the saved GameState
    * 
@@ -180,11 +174,11 @@ public class SaveLoadService {
       logger.error("Error, No tractor found!");
       return;
     }
-    
+
     boolean inTractor = !tractorState.getComponent(TractorActions.class).isMuted();  // Store the inverse of the muted value from tractor state entity
 
     tractor.setPosition(tractorState.getPosition());   // Update the tractors position to the values stored in the json file
-    
+
     // Check whether the player was in the tractor when they last saved
     if (inTractor) {
       // Set the player inside the tractor
@@ -201,15 +195,27 @@ public class SaveLoadService {
     }
   }
 
-
-  /**''
-   * Updates the time of the game based off the saved values in the gamestate
+  /**
+   * Destroys all NPCS in the map and then recreates them based off the gamestate
    * 
-   * @param state the state of the saved game
+   * @param state gamestate of the entire game based off safeFile.json
    */
-  private void updateTime(GameState state) {
-    ServiceLocator.getTimeService().setDay(state.getDay());
-    ServiceLocator.getTimeService().setHour(state.getHour());
+  private void updateNPCs(GameState state) {
+    Entity player = ServiceLocator.getGameArea().getPlayer();
+
+    for (Entity entity : state.getEntities()) {
+      EntityType entityType = entity.getType();
+      if (FactoryService.getNpcFactories().containsKey(entityType)) {
+        Entity npc = FactoryService.getNpcFactories().get(entityType).apply(player);
+        npc.setPosition(entity.getPosition());
+        // Non tameable npcs here
+        if (entityType != EntityType.OxygenEater && entityType != EntityType.ShipDebris) {
+          npc.getComponent(TamableComponent.class).setTame(entity.getComponent(TamableComponent.class).isTamed());
+        }
+        // TODO Team 4 please add in saving health here (feel free to talk to us but please read doc or code first)
+        ServiceLocator.getGameArea().spawnEntity(npc);
+      }
+    }
   }
 
   /**
@@ -249,12 +255,34 @@ public class SaveLoadService {
   }
 
   /**
+   *
+   * @param state
+   */
+  private void updateClimate(GameState state) {
+    ClimateController climate = ServiceLocator.getGameArea().getClimateController();
+    climate.setHumidity(state.getClimate().getHumidity());
+    climate.setTemperature(state.getClimate().getTemperature());
+    if (state.getClimate().getCurrentWeatherEvent() != null) {
+      climate.addWeatherEvent(state.getClimate().getCurrentWeatherEvent());
+    }
+  }
+
+  /**''
+   * Updates the time of the game based off the saved values in the gamestate
+   *
+   * @param state the state of the saved game
+   */
+  private void updateTime(GameState state) {
+    ServiceLocator.getTimeService().setDay(state.getDay());
+    ServiceLocator.getTimeService().setHour(state.getHour());
+    ServiceLocator.getTimeService().setMinute(state.getMinute());
+  }
+
+  /**
    * Updates the missions based off the gamestate
    * @param state gamestate of the entire game based off safeFile.json
    */
   private void updateMissions(GameState state) {
-    MissionManager missions = ServiceLocator.getMissionManager();
-    missions.setActiveQuests(state.getMissions().getActiveQuests());
-    missions.setSelectableQuests(state.getMissions().getSelectableQuests());
+    ServiceLocator.registerMissionManager(state.getMissions());
   }
 }

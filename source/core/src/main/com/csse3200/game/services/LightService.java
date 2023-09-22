@@ -33,7 +33,7 @@ public class LightService {
 	 */
 	public void renderLight() {
 		float time = ServiceLocator.getTimeService().getHour() + (float) ServiceLocator.getTimeService().getMinute() / 60;
-		float brightness = MathUtils.sin((float) ((float) Math.PI * (time-2) / 23 + 0.1));
+		float brightness = 1.2f * MathUtils.sin((float) (Math.PI * time / 23 - 0.1f)) - 0.1f;
 		rayHandler.setAmbientLight(brightness, brightness, brightness, brightness);
 		rayHandler.setCombinedMatrix(camera);
 		rayHandler.updateAndRender();

@@ -59,7 +59,7 @@ public class PlantCropsAchievement extends Achievement {
     }
 
     @Override
-    public void setProgress(JsonValue progress) {
+    public void readProgress(JsonValue progress) {
         numberOfCropsPlanted = progress.asInt();
     }
 

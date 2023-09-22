@@ -127,7 +127,7 @@ class ConeLightComponentTest {
 			ConeLightComponent component = entity.getComponent(ConeLightComponent.class);
 			light = mock.constructed().get(0);
 			component.dispose();
-			verify(light, times(1)).dispose();
+			verify(light, times(1)).remove();
 		}
 	}
 

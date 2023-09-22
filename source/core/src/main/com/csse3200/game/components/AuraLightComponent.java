@@ -123,9 +123,6 @@ public class AuraLightComponent extends Component{
 	 */
 	@Override
 	public void dispose() {
-		if (getActive()) {
-			toggleLight();
-		}
-		light.dispose();
+		light.remove();
 	}
 }
