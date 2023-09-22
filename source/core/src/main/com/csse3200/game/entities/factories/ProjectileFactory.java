@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.combat.ProjectileAnimationController;
 import com.csse3200.game.components.combat.ProjectileComponent;
@@ -12,12 +11,20 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
+/**
+ * The ProjectileFactory class is responsible for creating different types of projectile entities
+ * used in the game.
+ */
 public class ProjectileFactory {
 
+    /**
+     * Creates an oxygen eater projectile entity.
+     *
+     * @return The created oxygen eater projectile entity.
+     */
     public static Entity createOxygenEaterProjectile() {
         Entity projectile = createBaseProjectile();
 
@@ -34,11 +41,20 @@ public class ProjectileFactory {
                 .addComponent(new ProjectileComponent(2f))
                 .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 10f))
                 .addComponent(animator);
-//                .addComponent(new AuraLightComponent(1f, Color.CYAN));
-        projectile.getComponent(HitboxComponent.class).setAsBoxAligned(new Vector2(0.4f, 0.4f), PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.CENTER);
+
+        projectile.getComponent(HitboxComponent.class).setAsBoxAligned(
+            new Vector2(0.4f, 0.4f),
+            PhysicsComponent.AlignX.CENTER,
+            PhysicsComponent.AlignY.CENTER);
+
         return projectile;
     }
 
+    /**
+     * Creates an oxygen eater projectile entity.
+     *
+     * @return The created oxygen eater projectile entity.
+     */
     public static Entity createBaseProjectile() {
         return new Entity()
                 .addComponent(new PhysicsComponent())
