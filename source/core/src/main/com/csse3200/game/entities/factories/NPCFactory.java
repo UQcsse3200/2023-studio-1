@@ -178,10 +178,10 @@ public class NPCFactory {
             16f
     );
 
-    animator.addAnimation("idle_left", 0.8f, Animation.PlayMode.LOOP);
-    animator.addAnimation("walk_left", 0.8f, Animation.PlayMode.LOOP);
-    animator.addAnimation("idle_right", 0.8f, Animation.PlayMode.LOOP_REVERSED);
-    animator.addAnimation("walk_right", 0.8f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation("idle_left", 0.5f, Animation.PlayMode.LOOP);
+    animator.addAnimation("walk_left", 0.5f, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle_right", 0.5f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation("walk_right", 0.5f, Animation.PlayMode.LOOP_REVERSED);
     animator.addAnimation("attack_right", 0.1f, Animation.PlayMode.REVERSED);
     animator.addAnimation("attack_left", 0.1f);
 
