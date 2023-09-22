@@ -15,7 +15,8 @@ import com.csse3200.game.missions.quests.QuestFactory;
 public class FactoryService {
     private static final Map<EntityType, Function<Entity, Entity>> npcFactories = Map.of(EntityType.Chicken, NPCFactory::createChicken,
             EntityType.Cow, NPCFactory::createCow, EntityType.Astrolotl, NPCFactory::createAstrolotl,
-            EntityType.OxygenEater, NPCFactory::createOxygenEater, EntityType.ShipDebris, ShipDebrisFactory::createShipDebris);
+            EntityType.OxygenEater, NPCFactory::createOxygenEater, EntityType.ShipDebris, ShipDebrisFactory::createShipDebris,
+            EntityType.FireFlies, NPCFactory::createFireFlies);
 
     private static final Map<String, Function<CropTileComponent, Entity>> plantFactories = Map.of(
             "Cosmic Cob", PlantFactory::createCosmicCob,
@@ -44,12 +45,14 @@ public class FactoryService {
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Chest", ItemFactory::createChestItem),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Fence", ItemFactory::createFenceItem),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Gate", ItemFactory::createGateItem),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Light", ItemFactory::createLightItem),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Sprinkler", ItemFactory::createSprinklerItem));
 
     private static final Map<String, Supplier<Entity>> placeableFactories = Map.ofEntries(
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Chest", PlaceableFactory::createChest),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Fence", PlaceableFactory::createFence),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Gate", PlaceableFactory::createGate),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Light", PlaceableFactory::createLight),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Sprinkler", PlaceableFactory::createSprinkler));
 
     private static final Map<String, Supplier<Quest>> questFactories = Map.ofEntries(

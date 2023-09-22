@@ -270,12 +270,12 @@ public class ItemFactory {
    * @return the sprinkler item
    */
   public static Entity createSprinklerItem() {
-    Entity fence = createBaseItem()
+    Entity sprinkler = createBaseItem()
             .addComponent(new TextureRenderComponent("images/plants/misc/aloe_vera_seed.png"))
             .addComponent(new ItemComponent("Sprinkler", ItemType.PLACEABLE,
                     "Waters crops in the surrounding area",
                     new Texture("images/plants/misc/aloe_vera_seed.png")));
-    return fence;
+    return sprinkler;
   }
 
   /**
@@ -283,12 +283,20 @@ public class ItemFactory {
    * @return the chest item
    */
   public static Entity createChestItem() {
-    Entity fence = createBaseItem()
+    Entity chest = createBaseItem()
             .addComponent(new TextureRenderComponent("images/plants/misc/aloe_vera_seed.png"))
             .addComponent(new ItemComponent("Chest", ItemType.PLACEABLE,
                     "A storage container to keep your seeds and goodies",
                     new Texture("images/plants/misc/aloe_vera_seed.png")));
-    return fence;
+    return chest;
   }
 
+  public static Entity createLightItem() {
+    Entity light = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/plants/misc/aloe_vera_seed.png"))
+            .addComponent(new ItemComponent("Light", ItemType.PLACEABLE,
+                    "A quick and easy fix to being scared of the dark!",
+                    new Texture("images/plants/misc/aloe_vera_seed.png")));
+    return light;
+  }
 }

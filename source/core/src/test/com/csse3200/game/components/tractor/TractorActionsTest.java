@@ -1,8 +1,11 @@
 package com.csse3200.game.components.tractor;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -38,4 +41,13 @@ class TractorActionsTest {
     assertFalse(tractorActions.isMoving()); // Check if moving after stopMoving() is called
   }
 
+  @Test
+  void testGetMode() {
+    Entity tractor = new Entity(EntityType.Tractor).addComponent(new TractorActions());
+    assertEquals(tractor.getComponent(TractorActions.class).getMode(), TractorMode.normal);
+    tractor.getComponent(TractorActions.class).setMode(TractorMode.harvesting);
+    assertEquals(tractor.getComponent(TractorActions.class).getMode(), TractorMode.harvesting);
+    tractor.getComponent(TractorActions.class).setMode(TractorMode.tilling);
+    assertEquals(tractor.getComponent(TractorActions.class).getMode(), TractorMode.tilling);
+  }
 }
