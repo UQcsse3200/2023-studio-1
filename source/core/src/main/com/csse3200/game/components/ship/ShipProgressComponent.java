@@ -34,7 +34,7 @@ public class ShipProgressComponent extends Component {
         this.progress = 0;
         unlocked_features = new HashSet<Feature>();
         // listen to add artefact call
-        entity.getEvents().addListener("addArtefact", this::incrementProgress);
+        entity.getEvents().addListener("addPart", this::incrementProgress);
     }
 
     /**
