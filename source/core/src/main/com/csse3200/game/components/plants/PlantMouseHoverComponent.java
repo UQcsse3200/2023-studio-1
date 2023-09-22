@@ -5,11 +5,18 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.services.ServiceLocator;
 
+/**
+ * Component for telling the PlantInfoDisplayComponent when the player has their mouse cursor hovering
+ * over a plant.
+ */
 public class PlantMouseHoverComponent extends Component {
     private boolean showInfo;
     private boolean plantDead;
     private boolean noMoreUse;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void create() {
         ServiceLocator.getTimeService().getEvents().addListener("minuteUpdate", this::updateInfo);
@@ -18,6 +25,9 @@ public class PlantMouseHoverComponent extends Component {
         noMoreUse = false;
     }
 
+    /**
+     * Used to update the information being shown in the Plant information widget.
+     */
     private void updateInfo() {
         if (!plantDead) {
             Vector2 mousePos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
@@ -44,7 +54,10 @@ public class PlantMouseHoverComponent extends Component {
             }
         }
     }
-    
+
+    /**
+     * Used to signal when the plant has died.
+     */
     public void plantDied() {
         this.plantDead = true;
     }
