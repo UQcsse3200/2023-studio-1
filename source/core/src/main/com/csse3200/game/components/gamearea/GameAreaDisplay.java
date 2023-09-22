@@ -53,18 +53,19 @@ public class GameAreaDisplay extends UIComponent {
   public void setPauseMenu() {
     logger.info("Opening Pause Menu");
     openPauseComponent = ServiceLocator.getGameArea().getPlayer().getComponent(OpenPauseComponent.class);
-    Image pauseMenu;
-        pauseMenu = new Image(new Texture(Gdx.files.internal
-            ("images/PauseMenu/Pausenew.jpg")));
+    Image pauseMenu = new Image(new Texture(Gdx.files.internal("images/PauseMenu/Pausenew.jpg")));
     pauseMenu.setSize(1300, 700);
-    pauseMenu.setPosition((float) (Gdx.graphics.getWidth()/ (double) 2 - pauseMenu.getWidth()/2),
-            (float) (Gdx.graphics.getHeight()/ (double) 2 - pauseMenu.getHeight()/2));
+    pauseMenu.setPosition((float) (Gdx.graphics.getWidth() / 2.0 - pauseMenu.getWidth() / 2),
+            (float) (Gdx.graphics.getHeight() / 2.0 - pauseMenu.getHeight() / 2));
     pausingGroup.addActor(pauseMenu);
     stage.addActor(pausingGroup);
     stage.draw();
-    TextButton resumeBtn = new TextButton("Resume", skin); // Replace 'skin' with your skin reference
-    resumeBtn.setSize(386f, 122.4f);
-    resumeBtn.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 300);
+
+    float buttonHeight = 80f;
+
+    TextButton resumeBtn = new TextButton("Resume", skin);
+    resumeBtn.setSize(386f, buttonHeight);
+    resumeBtn.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 375);
     resumeBtn.addListener(new ChangeListener() {
       @Override
       public void changed(ChangeEvent event, Actor actor) {
@@ -75,11 +76,10 @@ public class GameAreaDisplay extends UIComponent {
       }
     });
     pausingGroup.addActor(resumeBtn);
-    stage.addActor(pausingGroup);
-    stage.draw();
-    TextButton exitBtn = new TextButton("Exit", skin); // Replace 'skin' with your skin reference
-    exitBtn.setSize(386, 122.4f);
-    exitBtn.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 100);
+
+    TextButton exitBtn = new TextButton("Exit", skin);
+    exitBtn.setSize(386f, buttonHeight);
+    exitBtn.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 75);
     exitBtn.addListener(new ChangeListener() {
       @Override
       public void changed(ChangeEvent event, Actor actor) {
@@ -90,8 +90,33 @@ public class GameAreaDisplay extends UIComponent {
       }
     });
     pausingGroup.addActor(exitBtn);
+
+    TextButton loadBtn = new TextButton("Load Previous", skin);
+    loadBtn.setSize(386f, buttonHeight);
+    loadBtn.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 175);
+    loadBtn.addListener(new ChangeListener() {
+      @Override
+      public void changed(ChangeEvent event, Actor actor) {
+        ServiceLocator.getSaveLoadService().load();
+      }
+    });
+    pausingGroup.addActor(loadBtn);
+
+    TextButton saveBtn = new TextButton("Save", skin);
+    saveBtn.setSize(386f, buttonHeight);
+    saveBtn.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 275);
+    saveBtn.addListener(new ChangeListener() {
+      @Override
+      public void changed(ChangeEvent event, Actor actor) {
+        ServiceLocator.getSaveLoadService().save();
+      }
+    });
+    pausingGroup.addActor(saveBtn);
+
     stage.draw();
   }
+
+
 
   public void disposePauseMenu() {
     pausingGroup.clear();
