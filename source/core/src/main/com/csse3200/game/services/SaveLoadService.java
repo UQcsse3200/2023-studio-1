@@ -196,29 +196,6 @@ public class SaveLoadService {
   }
 
   /**
-   * Destroys all NPCS in the map and then recreates them based off the gamestate
-   * 
-   * @param state gamestate of the entire game based off safeFile.json
-   */
-  private void updateNPCs(GameState state) {
-    Entity player = ServiceLocator.getGameArea().getPlayer();
-
-    for (Entity entity : state.getEntities()) {
-      EntityType entityType = entity.getType();
-      if (FactoryService.getNpcFactories().containsKey(entityType)) {
-        Entity npc = FactoryService.getNpcFactories().get(entityType).apply(player);
-        npc.setPosition(entity.getPosition());
-        // Non tameable npcs here
-        if (entityType != EntityType.OxygenEater && entityType != EntityType.ShipDebris) {
-          npc.getComponent(TamableComponent.class).setTame(entity.getComponent(TamableComponent.class).isTamed());
-        }
-        // TODO Team 4 please add in saving health here (feel free to talk to us but please read doc or code first)
-        ServiceLocator.getGameArea().spawnEntity(npc);
-      }
-    }
-  }
-
-  /**
    * Recreates / loads tile back into map after a save.
    * @param state gamestate of the entire game based off safeFile.json
    */
