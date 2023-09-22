@@ -358,7 +358,7 @@ public class Entity implements Json.Serializable {
 
   @Override
   public String toString() {
-    return String.format("Entity{id=%d}", id);
+    return String.format("Entity{id=%d} {type=%s}", id, type == null ? "none" : type.toString());
   }
 
   /**
