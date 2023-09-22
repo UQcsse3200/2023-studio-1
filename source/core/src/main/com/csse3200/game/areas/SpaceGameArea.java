@@ -234,6 +234,7 @@ public class SpaceGameArea extends GameArea {
     player.getComponent(InventoryComponent.class).addItem(ItemFactory.createFertiliser());
 
     tractor = spawnTractor();
+    spawnPlayerHighlight();
     spawnQuestgiver();
     spawnChickens();
     spawnCows();
@@ -517,4 +518,14 @@ public class SpaceGameArea extends GameArea {
   public GameMap getMap() {
     return gameMap;
   }
+
+  /**
+   * Spawns the player highlight entity
+   * Is the yellow square that highlights the tile the player is hovering over
+   */
+  public void spawnPlayerHighlight() {
+    Entity playerHighlight = PlayerHighlightFactory.createPlayerHighlight();
+    spawnEntityAt(playerHighlight, PLAYER_SPAWN, true, true);
+  }
+
 }
