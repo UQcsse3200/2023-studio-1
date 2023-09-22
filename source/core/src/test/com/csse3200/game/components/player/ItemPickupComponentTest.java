@@ -100,7 +100,7 @@ public class ItemPickupComponentTest {
     @Test
     void shouldNotPickupItem() {
         // Try add the item to inventory
-        picker.getEvents().trigger("collisionStart", picker.getComponent(HitboxComponent.class).getFixture(),
+        picker.getEvents().trigger("collisionStart", pickupItem.getComponent(HitboxComponent.class).getFixture(),
                 picker.getComponent(HitboxComponent.class).getFixture());
         assertFalse(picker.getComponent(InventoryComponent.class).hasItem(pickupItem));
 
