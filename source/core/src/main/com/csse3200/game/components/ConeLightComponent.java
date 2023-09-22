@@ -178,6 +178,6 @@ public class ConeLightComponent extends Component {
 	 */
 	@Override
 	public void dispose() {
-		light.dispose();
+		light.remove();
 	}
 }
