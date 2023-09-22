@@ -320,6 +320,7 @@ public class PlantComponent extends Component {
                 entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType("Decay");
                 entity.getComponent(PlantAreaOfEffectComponent.class).setRadius(2f);
                 setGrowthStage(getGrowthStage().getValue() + 1);
+                playSound("decays");
                 updateTexture();
             }
         }
@@ -334,6 +335,7 @@ public class PlantComponent extends Component {
         if (getGrowthStage().getValue() == GrowthStage.DECAYING.getValue()) {
             if (getPlantHealth() <= 0) {
                 setGrowthStage(GrowthStage.DEAD.getValue());
+                playSound("destroy");
                 updateTexture();
             }
 
@@ -387,7 +389,6 @@ public class PlantComponent extends Component {
         if (this.isEating) {
 
             this.countMinutesOfDigestion += 1;
-            System.out.println(this.countMinutesOfDigestion);
 
             if (this.countMinutesOfDigestion >= eatingCoolDown) {
                 this.isEating = false;
@@ -720,12 +721,15 @@ public class PlantComponent extends Component {
         boolean playLoreSound = random.nextInt(100) <= 0; //Gives 1% chance of being true
         Sound soundEffect;
         logger.debug("is the sound lore?: " + playLoreSound);
-
+        soundEffect = ServiceLocator.getResourceService().getAsset(notLore, Sound.class);
+        /*
         if (playLoreSound) {
             soundEffect = ServiceLocator.getResourceService().getAsset(lore, Sound.class);
         } else {
             soundEffect = ServiceLocator.getResourceService().getAsset(notLore, Sound.class);
         }
+
+         */
         soundEffect.play();
     }
 
@@ -800,12 +804,14 @@ public class PlantComponent extends Component {
     public void forceDecay() {
         this.setGrowthStage(GrowthStage.DECAYING.getValue());
         entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType("Decay");
+        playSound("decays");
         updateTexture();
         updateMaxHealth();
     }
     public void forceDead() {
         this.setGrowthStage(GrowthStage.DEAD.getValue());
         updateTexture();
+        playSound("destroy");
         updateMaxHealth();
     }
 
