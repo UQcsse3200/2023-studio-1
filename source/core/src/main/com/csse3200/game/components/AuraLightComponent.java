@@ -122,6 +122,6 @@ public class AuraLightComponent extends Component{
 	 */
 	@Override
 	public void dispose() {
-		light.dispose();
+		light.remove();
 	}
 }
