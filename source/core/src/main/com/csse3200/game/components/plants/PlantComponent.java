@@ -649,6 +649,7 @@ public class PlantComponent extends Component {
      */
     private void destroyPlant() {
         cropTile.setUnoccupied();
+        entity.getComponent(PlantMouseHoverComponent.class).plantDied();
         entity.dispose();
     }
 
