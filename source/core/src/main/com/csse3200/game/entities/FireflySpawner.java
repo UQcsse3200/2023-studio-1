@@ -9,14 +9,30 @@ import java.security.SecureRandom;
 
 public class FireflySpawner {
 
-    private static final int MAX_START_FIREFLIES = 75;
+    /**
+     * The amount of fireflies to spawn in
+     */
+    private static final int MAX_FIREFLIES = 75;
 
+    /**
+     * The width of the map
+     */
     private int mapSizeX;
 
+    /**
+     * The length of the map
+     */
     private int mapSizeY;
 
+    /**
+     * Used to get random variables
+     */
     private SecureRandom random;
 
+    /**
+     * Constructor for the spawner, making this will call startSpawning at nightTime event
+     * triggered by TimeService
+     */
     public FireflySpawner() {
         GridPoint2 mapSize = ServiceLocator.getGameArea().getMap().getMapSize();
         mapSizeX = mapSize.x;
@@ -27,12 +43,19 @@ public class FireflySpawner {
         ServiceLocator.getTimeService().getEvents().addListener("nightTime", this::startSpawning);
     }
 
+    /**
+     * Starts to spawn the fireflies
+     * Spawns MAX_FIREFLIES fireflies
+     */
     private void startSpawning() {
-        for (int i = 0; i < MAX_START_FIREFLIES; i++) {
+        for (int i = 0; i < MAX_FIREFLIES; i++) {
             spawnFirefly();
         }
     }
 
+    /**
+     * Spawns a firefly at a random traversable grid tile
+     */
     private void spawnFirefly() {
         GridPoint2 randomGrid;
         do {

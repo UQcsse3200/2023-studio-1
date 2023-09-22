@@ -7,6 +7,7 @@ public class FireflyScareComponent extends Component {
 
     @Override
     public void update() {
+        // If it is day kill the entity
         if (ServiceLocator.getTimeService().isDay()) {
             // Die
             ServiceLocator.getGameArea().removeEntity(entity);
