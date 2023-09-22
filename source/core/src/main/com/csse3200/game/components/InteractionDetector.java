@@ -112,6 +112,11 @@ public class InteractionDetector extends HitboxComponent {
 
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
 
+        HitboxComponent hitBox = target.getComponent(HitboxComponent.class);
+        if (hitBox == null || hitBox.getFixture() != other) {
+            return;
+        }
+
         if (!entitiesInRange.contains(target)) {
             return;
         }

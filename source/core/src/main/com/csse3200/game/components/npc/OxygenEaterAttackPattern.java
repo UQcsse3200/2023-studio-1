@@ -1,6 +1,8 @@
 package com.csse3200.game.components.npc;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.combat.ProjectileComponent;

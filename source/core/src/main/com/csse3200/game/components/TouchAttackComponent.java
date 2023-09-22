@@ -3,11 +3,14 @@ package com.csse3200.game.components;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.csse3200.game.components.combat.ProjectileComponent;
+import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.BodyUserData;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 
 /**
  * When this entity touches a valid enemy's hitbox, deal damage to them and apply a knockback.
@@ -42,6 +45,11 @@ public class TouchAttackComponent extends Component {
   }
 
   @Override
+  public void setEnabled(boolean enabled) {
+    super.setEnabled(enabled);
+  }
+
+  @Override
   public void create() {
     entity.getEvents().addListener("collisionStart", this::onCollisionStart);
     combatStats = entity.getComponent(CombatStatsComponent.class);
@@ -49,6 +57,10 @@ public class TouchAttackComponent extends Component {
   }
 
   private void onCollisionStart(Fixture me, Fixture other) {
+    if (!enabled) {
+      return;
+    }
+
     if (hitboxComponent.getFixture() != me) {
       // Not triggered by hitbox, ignore
       return;
@@ -62,7 +74,8 @@ public class TouchAttackComponent extends Component {
     // Try to attack target.
     Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
     CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
-    if (targetStats != null) {
+
+    if (targetStats != null && combatStats != null) {
       targetStats.hit(combatStats);
     }
 
@@ -73,6 +86,11 @@ public class TouchAttackComponent extends Component {
       Vector2 direction = target.getCenterPosition().sub(entity.getCenterPosition());
       Vector2 impulse = direction.setLength(knockbackForce);
       targetBody.applyLinearImpulse(impulse, targetBody.getWorldCenter(), true);
+    }
+
+
+    if (entity.getComponent(ProjectileComponent.class) != null) {
+      entity.getEvents().trigger("impactStart"); //
     }
   }
 }

@@ -298,7 +298,13 @@ public class EventHandler {
    */
   public void cancelEvent(ScheduledEvent event) {
     scheduledEvents.remove(event);
-    logger.debug("{} event cancelled", event.eventName());
+  }
+
+  /**
+   * Cancels all scheduled events for an entity
+   */
+  public void cancelAllEvents() {
+    scheduledEvents.clear();
   }
 
   private void registerListener(String eventName, EventListener listener) {
