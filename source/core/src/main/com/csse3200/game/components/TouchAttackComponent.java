@@ -75,11 +75,18 @@ public class TouchAttackComponent extends Component {
     }
 
     // Apply knockback
+    ProjectileComponent projectileComponent = entity.getComponent(ProjectileComponent.class);
     PhysicsComponent physicsComponent = target.getComponent(PhysicsComponent.class);
+    Vector2 knockBackDirection;
     if (physicsComponent != null && knockbackForce > 0f) {
+      if (projectileComponent != null) { // check is projectile
+        knockBackDirection = projectileComponent.getVelocity();
+      } else {
+        knockBackDirection = target.getCenterPosition().sub(entity.getCenterPosition());
+      }
+
       Body targetBody = physicsComponent.getBody();
-      Vector2 direction = target.getCenterPosition().sub(entity.getCenterPosition());
-      Vector2 impulse = direction.setLength(knockbackForce);
+      Vector2 impulse = knockBackDirection.setLength(knockbackForce);
       targetBody.applyLinearImpulse(impulse, targetBody.getWorldCenter(), true);
     }
 
