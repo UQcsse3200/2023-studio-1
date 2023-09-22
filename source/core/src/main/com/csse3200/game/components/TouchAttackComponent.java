@@ -45,11 +45,6 @@ public class TouchAttackComponent extends Component {
   }
 
   @Override
-  public void setEnabled(boolean enabled) {
-    super.setEnabled(enabled);
-  }
-
-  @Override
   public void create() {
     entity.getEvents().addListener("collisionStart", this::onCollisionStart);
     combatStats = entity.getComponent(CombatStatsComponent.class);
@@ -88,9 +83,8 @@ public class TouchAttackComponent extends Component {
       targetBody.applyLinearImpulse(impulse, targetBody.getWorldCenter(), true);
     }
 
-
     if (entity.getComponent(ProjectileComponent.class) != null) {
-      entity.getEvents().trigger("impactStart"); //
+      entity.getEvents().trigger("impactStart");
     }
   }
 }

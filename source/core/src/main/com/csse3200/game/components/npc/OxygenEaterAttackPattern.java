@@ -61,7 +61,7 @@ public class OxygenEaterAttackPattern extends Component {
         Entity projectile = ProjectileFactory.createOxygenEaterProjectile();
         projectile.setCenterPosition(entity.getCenterPosition());
 
-        ServiceLocator.getEntityService().register(projectile);
+        ServiceLocator.getGameArea().spawnEntity(projectile);
 
         ProjectileComponent projectileComponent = projectile.getComponent(ProjectileComponent.class);
         projectileComponent.setSpeed(new Vector2(3f, 3f));
