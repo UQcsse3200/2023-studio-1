@@ -1,6 +1,8 @@
 package com.csse3200.game.components.items;
 
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -8,10 +10,7 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.areas.GameArea;
-import com.csse3200.game.areas.terrain.GameMap;
-import com.csse3200.game.areas.terrain.TerrainComponent;
-import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.areas.terrain.TerrainTile;
+import com.csse3200.game.areas.terrain.*;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.npc.TamableComponent;
@@ -19,19 +18,28 @@ import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.EntityType;
+import com.csse3200.game.entities.configs.plants.BasePlantConfig;
+import com.csse3200.game.entities.configs.plants.PlantConfigs;
 import com.csse3200.game.entities.factories.ItemFactory;
+import com.csse3200.game.entities.factories.PlantFactory;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.physics.components.HitboxComponent;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.RenderService;
+import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.security.Provider;
 import java.util.ArrayList;
 
@@ -217,6 +225,30 @@ public class ItemActionsTest {
         assertFalse(scythe.getComponent(ItemActions.class).use(player, mousePos, gameMap));
         assertTrue(hoe.getComponent(ItemActions.class).use(player, mousePos, gameMap));
         assertTrue(scythe.getComponent(ItemActions.class).use(player, mousePos, gameMap));
+    }
+
+    @Test
+    void testUseSeed() throws IOException {
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+        ServiceLocator.registerEntityService(new EntityService());
+        ServiceLocator.registerRenderService(new RenderService());
+        mousePos = new Vector2(10,10);
+        player.setPosition(gameMap.tileCoordinatesToVector(new GridPoint2(1,1)));
+        CameraComponent cam = mock(CameraComponent.class);
+        doReturn(player.getPosition()).when(cam).screenPositionToWorldPosition(mousePos);
+        ServiceLocator.registerCameraComponent(cam);
+        GameArea area = mock(GameArea.class);
+        doReturn(player).when(area).getPlayer();
+        doReturn(gameMap).when(area).getMap();
+        ServiceLocator.registerGameArea(area);
+        ServiceLocator.registerResourceService(mock(ResourceService.class));
+        FileLoader fl = new FileLoader();
+
+        Entity seed = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("Test seed", ItemType.SEED, null));
+        Entity hoe = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("hoe", ItemType.HOE, null));
+        assertFalse(seed.getComponent(ItemActions.class).use(player, mousePos, gameMap));
+        assertTrue(hoe.getComponent(ItemActions.class).use(player, mousePos, gameMap));
+        assertTrue(seed.getComponent(ItemActions.class).use(player, mousePos, gameMap));
     }
 
     @Test

@@ -288,39 +288,9 @@ public class ItemActions extends Component {
      * @return if planting was successful return true else return false
      */
   private boolean plant(TerrainTile tile) {
-    // TODO can be simplified using FactoryService
-    Function<CropTileComponent, Entity> plantFactoryMethod;
     if (isCropTile(tile.getCropTile())) {
-        switch (entity.getComponent(ItemComponent.class).getItemName()) {
-            case "aloe vera seed" -> {
-                plantFactoryMethod = PlantFactory::createAloeVera;
-                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
-            }
-            case "cosmic cob seed" -> {
-                plantFactoryMethod = PlantFactory::createCosmicCob;
-                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
-            }
-            case "hammer plant seed" -> {
-                plantFactoryMethod = PlantFactory::createHammerPlant;
-                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
-            }
-            case "space snapper seed" -> {
-                plantFactoryMethod = PlantFactory::createSpaceSnapper;
-                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
-            }
-            case "atomic algae seed" -> {
-                plantFactoryMethod = PlantFactory::createAtomicAlgae;
-                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
-            }
-            case "deadly nightshade seed" -> {
-                plantFactoryMethod = PlantFactory::createDeadlyNightshade;
-                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
-            }
-            default -> {
-                System.out.println("Something went wrong");
-                throw new IllegalArgumentException("Explode");
-            }
-        }
+      tile.getCropTile().getEvents().trigger("plant", FactoryService.getPlantFactories()
+              .get(entity.getComponent(ItemComponent.class).getItemName().replace(" seed", "")));
       return true;
     }
     return false;
