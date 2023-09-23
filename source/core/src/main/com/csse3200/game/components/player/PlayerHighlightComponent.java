@@ -2,7 +2,6 @@ package com.csse3200.game.components.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
