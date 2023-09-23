@@ -3,6 +3,7 @@ package com.csse3200.game.entities.factories;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.csse3200.game.components.ship.ShipTimeSkipComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.components.ColliderComponent;
@@ -16,7 +17,7 @@ public class ShipFactory {
 
   /**
    * Creates a ship entity
-   * 
+   *
    * @return ship entity
    */
   public static Entity createShip() {
@@ -27,6 +28,7 @@ public class ShipFactory {
         .addComponent(new PhysicsComponent())
         .addComponent(new PhysicsMovementComponent())
         .addComponent(new ColliderComponent())
+        .addComponent(new ShipTimeSkipComponent())
         .addComponent(animator);
 
     ship.getComponent(AnimationRenderComponent.class).scaleEntity();
