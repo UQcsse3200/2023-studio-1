@@ -113,3 +113,9 @@ Thumbs.db
 /ios/xcode/native/
 /ios/IOSLauncher.app
 /ios/IOSLauncher.app.dSYM
+
+## SaveFile
+/core/assets/saves/saveFile.json
+
+##
+/core/assets/*.log

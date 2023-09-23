@@ -7,6 +7,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractionDetector;
@@ -190,11 +191,6 @@ public class PlayerActions extends Component {
       entity.getEvents().trigger("animationInteract", "down");
     }
 
-    /*
-     * Find the closest entity we can interact with. To register a new entity:
-     * 1. Go to InteractionDetector.java
-     * 2. Add the entity to the interactableEntities array
-     */
     List<Entity> entitiesInRange = this.entity.getComponent(InteractionDetector.class).getEntitiesInRange();
     List<Entity> closestEntity = this.entity.getComponent(InteractionDetector.class).getNearest(entitiesInRange);
 
@@ -232,6 +228,7 @@ public class PlayerActions extends Component {
     }
     this.stopMoving();
     muted = true;
+    tractor.getComponent(AuraLightComponent.class).toggleLight();
     tractor.getComponent(TractorActions.class).setMuted(false);
     tractor.getComponent(KeyboardTractorInputComponent.class)
         .setWalkDirection(entity.getComponent(KeyboardPlayerInputComponent.class).getWalkDirection());

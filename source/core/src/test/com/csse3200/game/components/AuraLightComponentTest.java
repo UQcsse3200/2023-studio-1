@@ -106,7 +106,8 @@ class AuraLightComponentTest {
 			entity.setPosition(position);
 			component.update();
 
-			verify(light, times(1)).setPosition(centrePosition);
+			// Once when created, once when updated
+			verify(light, times(2)).setPosition(centrePosition);
 		}
 	}
 
@@ -117,7 +118,7 @@ class AuraLightComponentTest {
 			AuraLightComponent component = entity.getComponent(AuraLightComponent.class);
 			light = mock.constructed().get(0);
 			component.dispose();
-			verify(light, times(1)).dispose();
+			verify(light, times(1)).remove();
 		}
 	}
 

@@ -1,10 +1,5 @@
 package com.csse3200.game.areas;
 
-import java.util.ArrayList;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
@@ -18,17 +13,18 @@ import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.ItemFactory;
-import com.csse3200.game.entities.factories.NPCFactory;
-import com.csse3200.game.entities.factories.ObstacleFactory;
-import com.csse3200.game.entities.factories.PlayerFactory;
-import com.csse3200.game.entities.factories.QuestgiverFactory;
-import com.csse3200.game.entities.factories.TractorFactory;
+import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.stream.IntStream;
 
 /** SpaceGameArea is the area used for the initial game version */
 public class SpaceGameArea extends GameArea {
@@ -37,7 +33,8 @@ public class SpaceGameArea extends GameArea {
   private static final int NUM_GHOSTS = 5;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final GridPoint2 QUESTGIVER_SPAWN = new GridPoint2(20, 20);
-  private static final GridPoint2 QUESTGIVERIND_SPAWN = new GridPoint2(20, 24);
+  private static final GridPoint2 SHIP_SPAWN = new GridPoint2(50,50);
+
   private static final GridPoint2 TRACTOR_SPAWN = new GridPoint2(15, 15);
 
   private static final GridPoint2 TOOL_SPAWN = new GridPoint2(15, 10);// temp!!!
@@ -105,6 +102,7 @@ public class SpaceGameArea extends GameArea {
           "images/stonePath_1.png",
           "images/tractor.png",
           "images/fertiliser.png",
+          "images/yellowSquare.png",
 
           "images/plants/misc/aloe_vera_seed.png",
           "images/plants/atomic_algae/1_seedling.png",
@@ -172,7 +170,8 @@ public class SpaceGameArea extends GameArea {
           "images/plants/misc/hammer_plant_seed.png",
           "images/plants/misc/space_snapper_seed.png",
           "images/plants/misc/atomic_algae_seed.png",
-          "images/invisible_sprite.png"
+          "images/invisible_sprite.png",
+          "images/ship/ship_debris.png"
   };
   private static final String[] forestTextureAtlases = {
       "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
@@ -180,7 +179,7 @@ public class SpaceGameArea extends GameArea {
       "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas", "images/questgiver.atlas",
       "images/missionStatus.atlas", "images/plants/cosmic_cob.atlas", "images/plants/aloe_vera.atlas",
       "images/plants/hammer_plant.atlas", "images/plants/space_snapper.atlas", "images/plants/atomic_algae.atlas",
-      "images/plants/deadly_nightshade.atlas"
+      "images/plants/deadly_nightshade.atlas", "images/fireflies.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg", "sounds/car-horn-6408.mp3"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -195,7 +194,7 @@ public class SpaceGameArea extends GameArea {
 
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
-   * 
+   *
    * @param terrainFactory TerrainFactory used to create the terrain for the
    *                       GameArea.
    * @requires terrainFactory != null
@@ -228,25 +227,29 @@ public class SpaceGameArea extends GameArea {
     spawnCrop(13, 11, "Deadly Nightshade");
     spawnCrop(15, 11, "Atomic Algae");
 
+    spawnShipDebris();
+
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
-    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createAloeVeraSeed());
-    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createFertiliser());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createLightItem());
+    //player.getComponent(InventoryComponent.class).addItem(ItemFactory.createFertiliser());
 
     tractor = spawnTractor();
+    spawnPlayerHighlight();
     spawnQuestgiver();
     spawnChickens();
     spawnCows();
     spawnAstrolotl();
     spawnOxygenEater();
+    spawnShip();
 
-    spawnTool(ItemType.WATERING_CAN);
-    spawnTool(ItemType.SHOVEL);
-    spawnTool(ItemType.SCYTHE);
-    spawnTool(ItemType.HOE);
-    spawnTool(ItemType.FERTILISER);
-    spawnTool(ItemType.SEED);
-    spawnTool(ItemType.FOOD);
+//    spawnTool(ItemType.WATERING_CAN);
+//    spawnTool(ItemType.SHOVEL);
+//    spawnTool(ItemType.SCYTHE);
+//    spawnTool(ItemType.HOE);
+//    spawnTool(ItemType.FERTILISER);
+//    spawnTool(ItemType.SEED);
+//    spawnTool(ItemType.FOOD);
 
     //playMusic();
   }
@@ -254,7 +257,7 @@ public class SpaceGameArea extends GameArea {
   public Entity getPlayer() {
     return player;
   }
-  
+
   public ClimateController getClimateController() {
     return climateController;
   }
@@ -308,6 +311,10 @@ public class SpaceGameArea extends GameArea {
      }
    }
 
+   private void spawnFirefly() {
+     spawnEntityAt(NPCFactory.createFireFlies(player),new GridPoint2(30,30),true, true);
+   }
+
   private Entity spawnCrop() {
     GridPoint2 pos = new GridPoint2(10, 11);
     Entity newPlayer = TerrainCropTileFactory.createTerrainEntity(0,0);
@@ -328,6 +335,28 @@ public class SpaceGameArea extends GameArea {
     return newPlayer;
   }
 
+  /**
+   * Spawns the initial Ship Debris randomly around the Player Ship's location.
+   * Random position generation adapted from Team 1's spawnTool() below.
+   */
+  private void spawnShipDebris() {
+
+    GridPoint2 minPos = new GridPoint2(SHIP_SPAWN.x - 5, SHIP_SPAWN.y - 5);
+    GridPoint2 maxPos = new GridPoint2(SHIP_SPAWN.x + 5, SHIP_SPAWN.y + 5);
+
+    IntStream.range(0,15).forEach(i -> {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+
+      while (!gameMap.getTile(randomPos).isTraversable()) {
+        randomPos = RandomUtils.random(minPos, maxPos);
+
+      }
+
+      Entity shipDebris = ShipDebrisFactory.createShipDebris(player);
+      spawnEntityAt(shipDebris, randomPos, true, true);
+    });
+  }
+
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
@@ -339,7 +368,12 @@ public class SpaceGameArea extends GameArea {
     spawnEntityAt(newQuestgiver, QUESTGIVER_SPAWN, true, true);
 
     Entity newQuestgiverIndicator = QuestgiverFactory.createQuestgiverIndicator(newQuestgiver);
-    spawnEntityAt(newQuestgiverIndicator, QUESTGIVERIND_SPAWN, true, true);
+    spawnEntityAt(newQuestgiverIndicator, new GridPoint2(QUESTGIVER_SPAWN.x, QUESTGIVER_SPAWN.y+2), true, true);
+  }
+
+  private void spawnShip() {
+    Entity newShip = ShipFactory.createShip();
+    spawnEntityAt(newShip, SHIP_SPAWN, true, true);
   }
 
   private void spawnTool(ItemType tool) {
@@ -489,4 +523,14 @@ public class SpaceGameArea extends GameArea {
   public GameMap getMap() {
     return gameMap;
   }
+
+  /**
+   * Spawns the player highlight entity
+   * Is the yellow square that highlights the tile the player is hovering over
+   */
+  public void spawnPlayerHighlight() {
+    Entity playerHighlight = PlayerHighlightFactory.createPlayerHighlight();
+    spawnEntityAt(playerHighlight, PLAYER_SPAWN, true, true);
+  }
+
 }

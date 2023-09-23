@@ -55,7 +55,7 @@ public class GameMapTest {
         lavaGroundTerrainTile = new TerrainTile(null, TerrainTile.TerrainCategory.LAVAGROUND);
         gravelTerrainTile = new TerrainTile(null, TerrainTile.TerrainCategory.GRAVEL);
         flowingWaterTerrainTile = new TerrainTile(null, TerrainTile.TerrainCategory.FLOWINGWATER);
-}
+    }
 
     @BeforeEach
     void setup() {

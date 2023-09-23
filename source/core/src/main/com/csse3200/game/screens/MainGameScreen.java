@@ -1,5 +1,6 @@
 package com.csse3200.game.screens;
 
+import com.csse3200.game.entities.FireflySpawner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -141,7 +142,7 @@ public class MainGameScreen extends ScreenAdapter {
 
         lose = false;
         spaceGameArea.getPlayer().getEvents().addListener("loseScreen", this::loseScreenStart);
-
+      
         playCredits = false;
         spaceGameArea.getPlayer().getEvents().addListener("endCredits", this::playEndCredits);
 
@@ -150,11 +151,15 @@ public class MainGameScreen extends ScreenAdapter {
 
 
 
+        new FireflySpawner();
+
+
         // if the LoadSaveOnStart value is set true then load entities saved from file
         if (game.isLoadOnStart()){
             ServiceLocator.getSaveLoadService().load();
         }
     }
+
 
     public void loseScreenStart() {
         lose = true;
