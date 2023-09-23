@@ -23,7 +23,7 @@ public class CropTileComponent extends Component {
 	/**
 	 * Default rate that a tile's water level decreases
 	 */
-	private static final float WATER_DECREASE_RATE = 0.05f;
+	private static final float WATER_DECREASE_RATE = 0.005f;
 
 	/**
 	 * Ideal water fall off sharpness to calculate growth rate
