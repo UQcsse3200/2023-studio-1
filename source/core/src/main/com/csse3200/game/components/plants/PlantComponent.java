@@ -155,6 +155,8 @@ public class PlantComponent extends Component {
 
     private static final Logger logger = LoggerFactory.getLogger(PlantComponent.class);
 
+    private boolean playerInProximity;
+
     /**
      * Constructor used for plant types that have no extra properties. This is just used for testing.
      *
@@ -196,6 +198,7 @@ public class PlantComponent extends Component {
         this.adultEffect = "None";
         this.isEating = false;
         this.countOfHoursOfDigestion = 0;
+        this.playerInProximity = false;
 
     }
 
@@ -250,6 +253,7 @@ public class PlantComponent extends Component {
         }
         this.isEating = false;
         this.countOfHoursOfDigestion = 0;
+        this.playerInProximity = false;
     }
 
     /**
@@ -320,6 +324,7 @@ public class PlantComponent extends Component {
                 entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType("Decay");
                 entity.getComponent(PlantAreaOfEffectComponent.class).setRadius(2f);
                 setGrowthStage(getGrowthStage().getValue() + 1);
+                playSound("decays");
                 updateTexture();
             }
         }
@@ -334,6 +339,7 @@ public class PlantComponent extends Component {
         if (getGrowthStage().getValue() == GrowthStage.DECAYING.getValue()) {
             if (getPlantHealth() <= 0) {
                 setGrowthStage(GrowthStage.DEAD.getValue());
+                playSound("destroy");
                 updateTexture();
             }
 
@@ -387,7 +393,6 @@ public class PlantComponent extends Component {
         if (this.isEating) {
 
             this.countMinutesOfDigestion += 1;
-            System.out.println(this.countMinutesOfDigestion);
 
             if (this.countMinutesOfDigestion >= eatingCoolDown) {
                 this.isEating = false;
@@ -695,19 +700,23 @@ public class PlantComponent extends Component {
 
     /**
      * Determine what sound needs to be called based on the type of interaction.
-     * The sounds are separated into tuple pairs for each event.
+     * The sounds are separated into tuple pairs for each event.The sound will only be played if the
+     * player is close enough to the plant. This is determined by the PlantProximityComponent.
      *
      * @param functionCalled The type of interaction with the plant.
      */
     public void playSound(String functionCalled) {
-        logger.debug("The sound being called: " + functionCalled);
+        if (playerInProximity) {
 
-        switch (functionCalled) {
-            case "click" -> chooseSound(sounds[0], sounds[1]);
-            case "decays" -> chooseSound(sounds[2], sounds[3]);
-            case "destroy" -> chooseSound(sounds[4], sounds[5]);
-            case "nearby" -> chooseSound(sounds[6], sounds[7]);
-            default -> throw new IllegalStateException("Unexpected function: " + functionCalled);
+            logger.debug("The sound being called: " + functionCalled);
+
+            switch (functionCalled) {
+                case "click" -> chooseSound(sounds[0], sounds[1]);
+                case "decays" -> chooseSound(sounds[2], sounds[3]);
+                case "destroy" -> chooseSound(sounds[4], sounds[5]);
+                case "nearby" -> chooseSound(sounds[6], sounds[7]);
+                default -> throw new IllegalStateException("Unexpected function: " + functionCalled);
+            }
         }
     }
 
@@ -721,12 +730,13 @@ public class PlantComponent extends Component {
         boolean playLoreSound = random.nextInt(100) <= 0; //Gives 1% chance of being true
         Sound soundEffect;
         logger.debug("is the sound lore?: " + playLoreSound);
-
         if (playLoreSound) {
             soundEffect = ServiceLocator.getResourceService().getAsset(lore, Sound.class);
         } else {
             soundEffect = ServiceLocator.getResourceService().getAsset(notLore, Sound.class);
         }
+
+
         soundEffect.play();
     }
 
@@ -801,12 +811,14 @@ public class PlantComponent extends Component {
     public void forceDecay() {
         this.setGrowthStage(GrowthStage.DECAYING.getValue());
         entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType("Decay");
+        playSound("decays");
         updateTexture();
         updateMaxHealth();
     }
     public void forceDead() {
         this.setGrowthStage(GrowthStage.DEAD.getValue());
         updateTexture();
+        playSound("destroy");
         updateMaxHealth();
     }
 
@@ -827,7 +839,10 @@ public class PlantComponent extends Component {
             returnString += "\nGrowth Level: " + growthLevel + "/" +
                     growthStageThresholds[getGrowthStage().getValue() - 1];
         }
-
         return  returnString;
+    }
+
+    public void setPlayerInProximity(boolean bool) {
+        this.playerInProximity = bool;
     }
 }

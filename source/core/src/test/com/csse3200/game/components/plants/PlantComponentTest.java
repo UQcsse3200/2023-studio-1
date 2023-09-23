@@ -235,6 +235,7 @@ public class PlantComponentTest {
 
     @Test
     public void testInvalidFunctionForPlaySound() {
+        testPlant.setPlayerInProximity(true);
         assertThrows(IllegalStateException.class, () -> testPlant.playSound("invalidFunctionName"));
     }
 }

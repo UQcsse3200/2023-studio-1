@@ -4,11 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.areas.terrain.CropTileComponent;
-import com.csse3200.game.components.plants.PlantAreaOfEffectComponent;
-import com.csse3200.game.components.plants.PlantInfoDisplayComponent;
-import com.csse3200.game.components.plants.PlantMouseHoverComponent;
+import com.csse3200.game.components.plants.*;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.configs.plants.BasePlantConfig;
 import com.csse3200.game.entities.configs.plants.PlantConfigs;
@@ -64,6 +61,7 @@ public class PlantFactory {
                 .addComponent(new ColliderComponent().setSensor(true))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
                 .addComponent(new PlantMouseHoverComponent())
+                .addComponent(new PlantProximityComponent())
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
                         config.maxHealth, cropTile, growthThresholds, soundsArray));
