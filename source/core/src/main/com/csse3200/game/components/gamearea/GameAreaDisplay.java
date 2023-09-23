@@ -31,6 +31,10 @@ public class GameAreaDisplay extends UIComponent {
   private OpenPauseComponent openPauseComponent;
   private Image popUp;
   private GdxGame game;
+  private boolean isPaused = false;
+  private Image backgroundOverlay;
+
+
 
 
   @Override
@@ -38,6 +42,12 @@ public class GameAreaDisplay extends UIComponent {
     super.create();
     ServiceLocator.registerCraftArea(this);
     addActors();
+    backgroundOverlay = new Image(new Texture(Gdx.files.internal("images/PauseMenu/Pause_Overlay.jpg")));
+    backgroundOverlay.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    backgroundOverlay.setColor(0, 0, 0, 0.8f);
+    backgroundOverlay.setVisible(false);
+    stage.addActor(backgroundOverlay);
+
   }
   public GameAreaDisplay(String gameAreaName) {
     this.gameAreaName = gameAreaName;
@@ -56,6 +66,10 @@ public class GameAreaDisplay extends UIComponent {
   public void setPauseMenu() {
     logger.info("Opening Pause Menu");
     openPauseComponent = ServiceLocator.getGameArea().getPlayer().getComponent(OpenPauseComponent.class);
+
+    backgroundOverlay.setVisible(true); // Initially, set it to invisible
+
+
     Image pauseMenu = new Image(new Texture(Gdx.files.internal("images/PauseMenu/Pausenew.jpg")));
     pauseMenu.setSize(1300, 700);
     pauseMenu.setPosition((float) (Gdx.graphics.getWidth() / 2.0 - pauseMenu.getWidth() / 2),
@@ -137,6 +151,7 @@ public class GameAreaDisplay extends UIComponent {
 
 
   public void disposePauseMenu() {
+    backgroundOverlay.setVisible(false);
     pausingGroup.clear();
   }
 
