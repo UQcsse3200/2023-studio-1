@@ -1,12 +1,14 @@
 package com.csse3200.game.areas.weather;
 
-import com.badlogic.gdx.graphics.g3d.particles.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.services.ServiceLocator;
 
 public class ParticleService {
 
     private final Array<ParticleEffect> particleEffectArray;
+    private SpriteBatch spriteBatch;
 
     //TODO
     public ParticleService() {
@@ -36,7 +38,7 @@ public class ParticleService {
 
     public void renderParticleEffect() {
         for (ParticleEffect particleEffect : particleEffectArray) {
-            particleEffect.draw();
+            particleEffect.draw(spriteBatch);
         }
     }
 
