@@ -18,6 +18,8 @@ public class PlayerHighlightComponent extends Component {
     // isMuted is a boolean that is true when the player is muted
     private boolean isMuted;
 
+    private static final String  TEXTURE_PATH = "images/yellowSquare.png";
+
     /**
      * Creates the component and sets the muted boolean to false
      */
@@ -109,6 +111,6 @@ public class PlayerHighlightComponent extends Component {
      * @return path to texture
      */
     public String getTexturePath() {
-        return "images/yellowSquare.png";
+        return TEXTURE_PATH;
     }
 }

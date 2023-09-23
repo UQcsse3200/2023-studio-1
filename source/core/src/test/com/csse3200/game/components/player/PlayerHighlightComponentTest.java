@@ -130,5 +130,14 @@ public class PlayerHighlightComponentTest {
         playerHighlight.getComponent(PlayerHighlightComponent.class).updatePosition();
         assertEquals(playerHighlight.getPosition(), new Vector2(0.5f,0.5f));
 
+        playerHighlight.update();
+        assertEquals(playerHighlight.getPosition(), new Vector2(0.5f,0.5f));
     }
+
+    @Test
+    public void getTexturePath() {
+        assertEquals("images/yellowSquare.png", playerHighlight.getComponent(PlayerHighlightComponent.class).getTexturePath());
+    }
+
+
 }
