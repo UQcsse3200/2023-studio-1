@@ -220,6 +220,30 @@ public class ItemActionsTest {
     }
 
     @Test
+    void testUseSeed() {
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+        ServiceLocator.registerEntityService(new EntityService());
+        ServiceLocator.registerRenderService(new RenderService());
+        mousePos = new Vector2(10,10);
+        player.setPosition(gameMap.tileCoordinatesToVector(new GridPoint2(1,1)));
+        CameraComponent cam = mock(CameraComponent.class);
+        doReturn(player.getPosition()).when(cam).screenPositionToWorldPosition(mousePos);
+        ServiceLocator.registerCameraComponent(cam);
+        GameArea area = mock(GameArea.class);
+        doReturn(player).when(area).getPlayer();
+        doReturn(gameMap).when(area).getMap();
+        ServiceLocator.registerGameArea(area);
+        ServiceLocator.registerResourceService(mock(ResourceService.class));
+        FileLoader fl = new FileLoader();
+
+        Entity seed = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("deadly nightshade seed", ItemType.SEED, null));
+        Entity hoe = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("hoe", ItemType.HOE, null));
+        assertFalse(seed.getComponent(ItemActions.class).use(player, mousePos, gameMap));
+        assertTrue(hoe.getComponent(ItemActions.class).use(player, mousePos, gameMap));
+        assertTrue(seed.getComponent(ItemActions.class).use(player, mousePos, gameMap));
+    }
+
+    @Test
     void testUseFood() {
         ServiceLocator.registerPhysicsService(new PhysicsService());
         ServiceLocator.registerEntityService(new EntityService());
