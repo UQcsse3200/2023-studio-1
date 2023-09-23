@@ -66,7 +66,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
     }
 
     /**
-     * Effect that takes place every hour.
+     * Function is triggered every hour of in game time and checks which effects should be executed.
      */
     private void hourlyEffect() {
         if (this.effectType.equals("Sound")) {
@@ -74,6 +74,9 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
         }
     }
 
+    /**
+     * Function is triggered every minute of in game time and checks which effects should be executed.
+     */
     private void minuteUpdate() {
         int min = ServiceLocator.getTimeService().getMinute();
 
@@ -240,18 +243,10 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
     }
 
     /**
-     * Set the radius of the area. This will dispose of the old hitbox component
-     * and create a new one with the desired radius.
+     * Set the radius of the area.
      * @param radius - the new radius of the area.
      */
     public void setRadius(float radius) {
-        /*
-        this.radius = radius;
-        shape.setRadius(radius);
-        // Dispose the old HitboxComponent and create a new one with the new radius.
-        super.dispose();
-        super.create();
-
-         */
+        // Currently not in use because changing the radius is causing issues.
     }
 }
