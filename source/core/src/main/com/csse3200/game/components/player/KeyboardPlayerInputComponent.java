@@ -1,5 +1,8 @@
 package com.csse3200.game.components.player;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
@@ -8,8 +11,6 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Input handler for the player for keyboard and touch (mouse) input.
@@ -92,6 +93,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           return true;
         case Keys.K :
           ServiceLocator.getGameArea().getPlayer().getEvents().trigger("winScreen");
+          return true;
+        case Keys.T:
+          entity.getEvents().trigger("toggleLight");
           return true;
         default:
           return false;

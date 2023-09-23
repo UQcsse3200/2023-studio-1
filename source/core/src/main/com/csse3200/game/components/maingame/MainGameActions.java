@@ -1,9 +1,10 @@
 package com.csse3200.game.components.maingame;
 
-import com.csse3200.game.GdxGame;
-import com.csse3200.game.components.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.csse3200.game.GdxGame;
+import com.csse3200.game.components.Component;
 
 /**
  * This class listens to events relevant to the Main Game Screen and does something when one of the

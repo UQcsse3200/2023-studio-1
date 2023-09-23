@@ -1,5 +1,7 @@
 package com.csse3200.game.missions.quests;
 
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
 import com.csse3200.game.missions.Mission;
 import com.csse3200.game.missions.rewards.Reward;
 
@@ -49,7 +51,7 @@ public abstract class Quest extends Mission {
 	 * Decrements the duration to expiry of the quest by 1.
 	 */
 	public void updateExpiry() {
-		if (--timeToExpiry < 0) {
+		if (--timeToExpiry <= 0) {
 			timeToExpiry = 0;
 		}
 	}
@@ -90,8 +92,28 @@ public abstract class Quest extends Mission {
 	}
 
 	/**
+	 * Sets the time to expire to a given value, mainly used in load
+	 * @param timeToExpiry
+	 */
+	public void setTimeToExpiry(int timeToExpiry) {
+		this.timeToExpiry = timeToExpiry;
+	}
+
+	public Reward getReward() {
+		return reward;
+	}
+
+	/**
 	 * Resets the internal state of the {@link Quest}, to what it was before being accepted/modified.
 	 */
 	protected abstract void resetState();
 
+	public void write(Json json) {
+		json.writeObjectStart("Quest");
+		json.writeValue("name", getName());
+		json.writeValue("expiry", timeToExpiry);
+		json.writeValue("progress", getProgress());
+		json.writeValue("collected", reward.isCollected());
+		json.writeObjectEnd();
+	}
 }

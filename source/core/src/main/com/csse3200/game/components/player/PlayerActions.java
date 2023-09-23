@@ -1,22 +1,21 @@
 package com.csse3200.game.components.player;
 
+import java.security.SecureRandom;
+import java.util.List;
+
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.inventory.ToolbarDisplay;
+import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
-
-import java.security.SecureRandom;
-import java.util.List;
 
 /**
  * Action component for interacting with the player. Player events should be
@@ -191,18 +190,18 @@ public class PlayerActions extends Component {
       entity.getEvents().trigger("animationInteract", "down");
     }
 
-    // if there is a questgiver entity in range, trigger event toggleMissions
+    /*
+     * Find the closest entity we can interact with. To register a new entity:
+     * 1. Go to InteractionDetector.java
+     * 2. Add the entity to the interactableEntities array
+     */
     List<Entity> entitiesInRange = this.entity.getComponent(InteractionDetector.class).getEntitiesInRange();
+    List<Entity> closestEntity = this.entity.getComponent(InteractionDetector.class).getNearest(entitiesInRange);
 
-    for (Entity entity : entitiesInRange) {
-      EntityType entityType = entity.getType();
-      if (entityType != null) {
-        if (entityType.equals(EntityType.Questgiver)) {
-          entity.getEvents().trigger("toggleMissions");
-        }
-      }
-
+    if (!closestEntity.isEmpty()) {
+      closestEntity.get(0).getEvents().trigger("interact");
     }
+
   }
 
   /**

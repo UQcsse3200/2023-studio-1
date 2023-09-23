@@ -1,6 +1,9 @@
 package com.csse3200.game.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainCropTileFactory;
@@ -15,10 +18,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.files.SaveGame;
 import com.csse3200.game.files.SaveGame.GameState;
-import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.missions.MissionManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /* A note of the registering of this service:
@@ -55,6 +55,7 @@ public class SaveLoadService {
     state.setDay(ServiceLocator.getTimeService().getDay());
     state.setHour(ServiceLocator.getTimeService().getHour());
     state.setClimate(ServiceLocator.getGameArea().getClimateController());
+    state.setMissions(ServiceLocator.getMissionManager());
 
     state.setPlayer(ServiceLocator.getGameArea().getPlayer());
     state.setTractor(ServiceLocator.getGameArea().getTractor());
@@ -120,7 +121,9 @@ public class SaveLoadService {
     ClimateController climate = ServiceLocator.getGameArea().getClimateController();
     climate.setHumidity(state.getClimate().getHumidity());
     climate.setTemperature(state.getClimate().getTemperature());
-    climate.setCurrentWeatherEvent(state.getClimate().getCurrentWeatherEvent());
+    if (state.getClimate().getCurrentWeatherEvent() != null) {
+      climate.addWeatherEvent(state.getClimate().getCurrentWeatherEvent());
+    }
   }
 
   /**
@@ -133,9 +136,9 @@ public class SaveLoadService {
     currentPlayer.setPosition(state.getPlayer().getPosition());
     currentPlayer.getComponent(PlayerActions.class).getCameraVar().setTrackEntity(currentPlayer);
     currentPlayer.getComponent(PlayerActions.class).setMuted(false);
-    currentPlayer.getComponent(InventoryComponent.class).setInventory(state.getPlayer()
-            .getComponent(InventoryComponent.class).getItemCount(), state.getPlayer().getComponent(InventoryComponent.class).getItemPosition(),
-            state.getPlayer().getComponent(InventoryComponent.class).getInventory());
+    for (Entity item : state.getPlayer().getComponent(InventoryComponent.class).getInventory()) {
+      currentPlayer.getComponent(InventoryComponent.class).addItem(item);
+    }
   }
 
   /**
@@ -241,7 +244,7 @@ public class SaveLoadService {
    */
   private void updateMissions(GameState state) {
     MissionManager missions = ServiceLocator.getMissionManager();
-    // TODO Mission saving
-    // Add in setting missions based off the ones that are done
+    missions.setActiveQuests(state.getMissions().getActiveQuests());
+    missions.setSelectableQuests(state.getMissions().getSelectableQuests());
   }
 }

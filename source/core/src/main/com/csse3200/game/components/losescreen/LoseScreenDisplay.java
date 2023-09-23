@@ -1,5 +1,8 @@
 package com.csse3200.game.components.losescreen;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -12,9 +15,11 @@ import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.GdxGame.ScreenType;
 import com.csse3200.game.ui.UIComponent;
+
 import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 public class LoseScreenDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(LoseScreenDisplay.class);
