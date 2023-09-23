@@ -132,7 +132,7 @@ public class ItemActions extends Component {
    * @param mousePos  the position of the mouse
    * @return Entity of tile at location else returns null
    */
-  public TerrainTile getTileAtPosition(Vector2 playerPos, Vector2 mousePos) {
+  private TerrainTile getTileAtPosition(Vector2 playerPos, Vector2 mousePos) {
     Vector2 pos = getAdjustedPos(playerPos, mousePos);
     return ServiceLocator.getGameArea().getMap().getTile(pos);
   }
