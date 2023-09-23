@@ -35,7 +35,7 @@ public class EndCreditsDisplay extends UIComponent {
     /**
      * The speed in pixels/frame that the background and the planet should move at.
      */
-    private float spaceSpeed = 50.0f;
+    private float spaceSpeed = 33.0f;
 
     /**
      * The distance away from the top the text that the planet should stop in pixels.
@@ -59,6 +59,9 @@ public class EndCreditsDisplay extends UIComponent {
     private TypingLabel storyLabel;
 
     private TypingLabel creditsLabel;
+
+    int fontSize = 20; // Adjust this value as needed
+
 
     public EndCreditsDisplay(GdxGame game) {
         super();
@@ -100,7 +103,7 @@ public class EndCreditsDisplay extends UIComponent {
 
         rootTable.row();
 
-        rootTable.add(creditsLabel).top().padTop((float) (Gdx.graphics.getHeight() * 3));
+        rootTable.add(creditsLabel).top().padTop((float) (Gdx.graphics.getHeight() * 2.5));
         rootTable.row().padTop(30f);
         rootTable.add(returnButton).bottom().padBottom(30f);
 
@@ -112,61 +115,77 @@ public class EndCreditsDisplay extends UIComponent {
     private String getCredits() {
 
         String credits = """
-                {RAINBOW} END CREDITS {ENDRAINBOW}
-                
-             
-                This amazing game is brought to you by the amazing efforts of studio one (the better studio)
-                
-                
-                
-                {COLOR=red} TEAM ONE {CLEARCOLOR}
-                
-                
-                Team one stuff
-               
-                
-                {COLOR=red} TEAM TWO {CLEARCOLOR}
-                
-                
-                Team two stuff
-                
-                
-                {COLOR=green} TEAM THREE {CLEARCOLOR}
-                
-                
-                Team three stuff
-                
-                
-                {COLOR=blue} TEAM FOUR {CLEARCOLOR}
-                
-                
-                Team four stuff
-                
-                
-                {COLOR=yellow} TEAM FIVE {CLEARCOLOR}
-                
-                
-                Team five stuff
-               
-                
-                {COLOR=orange} TEAM SIX {CLEARCOLOR}
-                
-                
-                Team six stuff
-                
-                
-                {COLOR=purple} TEAM SEVEN {CLEARCOLOR}
-                
-                
-                Team seven stuff
-                
-                
-                {COLOR=pink} TEAM EIGHT {CLEARCOLOR}
-                
-                
-                Inventory..... Well kinda
-            """;
-
+                    {SLOW}
+                    {RAINBOW}GARDENERS OF THE GALAXY: LEGEND OF THE ASTROHOE{ENDRAINBOW}
+                    
+                    Developed by Studio One
+                      
+                      
+                    
+                    {WAVE}{COLOR=red} TEAM ONE {CLEARCOLOR}{ENDWAVE}
+                                   
+                    Farming tools (Traktor)
+                    Saving and Loading
+                    Pausing Mechanics
+                    Fences and Sprinklers
+                        
+                        
+                        
+                    {WAVE}{COLOR=green} TEAM TWO {CLEARCOLOR}{ENDWAVE}
+                   
+                    Player movement animations
+                    Player quests and story progression
+                    Ship and player artifacts
+        
+        
+        
+                    {WAVE}{COLOR=blue} TEAM THREE {CLEARCOLOR}{ENDWAVE}
+                   
+                    Map generation
+                    Entity movement mechanics
+                    Win and lose conditions
+                    
+                    
+                    
+                    {WAVE}{COLOR=gray} TEAM FOUR {CLEARCOLOR}{ENDWAVE}
+                   
+                    Farming animal animations and mechanics
+                    Hostile animals
+                    Weapons system
+        
+        
+        
+                    {WAVE}{COLOR=yellow} TEAM FIVE {CLEARCOLOR}{ENDWAVE}
+                   
+                    Screen and menu design
+                    Time system
+                    Oxygen system
+                    Sound system
+        
+        
+        
+                    {WAVE}{COLOR=orange} TEAM SIX {CLEARCOLOR}{ENDWAVE}
+                   
+                    Plant design
+                    Plant growth mechanics
+                    Harvesting mechanics
+                    
+                    
+                    
+                    {WAVE}{COLOR=purple} TEAM SEVEN {CLEARCOLOR}{ENDWAVE}
+                   
+                    Tile system
+                    Weather system
+                    Seeds and fertiliser
+                    Day and night cycle
+        
+        
+        
+                    {WAVE}{COLOR=pink} TEAM EIGHT {CLEARCOLOR}{ENDWAVE}
+                   
+                    Player inventory system
+                    Generic inventory system
+                    Win and loss screens""";
         return credits;
     }
 
@@ -196,6 +215,17 @@ public class EndCreditsDisplay extends UIComponent {
         if (newY >= Gdx.graphics.getHeight()) {
             // You can hide the text or do something when it exits the screen
             creditsLabel.setVisible(false);
+
+            // The creditsLabel has scrolled off the screen, make the returnButton visible
+            returnButton.setVisible(true);
+
+            // Calculate the position to center the returnButton on the screen
+            float buttonX = (Gdx.graphics.getWidth() - returnButton.getWidth()) / 2;
+            float buttonY = (Gdx.graphics.getHeight() - returnButton.getHeight()) / 2;
+
+            // Set the position of the returnButton
+            returnButton.setPosition(buttonX, buttonY);
+
         } else {
             // Update the Y position of the storyLabel
             creditsLabel.setPosition(creditsLabel.getX(), newY);

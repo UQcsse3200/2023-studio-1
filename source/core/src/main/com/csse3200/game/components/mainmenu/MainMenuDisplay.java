@@ -45,7 +45,6 @@ public class MainMenuDisplay extends UIComponent {
                 new Image(
                         ServiceLocator.getResourceService()
                                 .getAsset("images/galaxy_home_still.png", Texture.class));
-
         title.setWidth(Gdx.graphics.getWidth());
         title.setHeight(Gdx.graphics.getHeight());
         title.setPosition(0, 0);
@@ -53,8 +52,8 @@ public class MainMenuDisplay extends UIComponent {
         TextButton loadBtn = new TextButton("Continue", skin);
         TextButton controlsBtn = new TextButton("Controls", skin);
         TextButton settingsBtn = new TextButton("Settings", skin);
+        TextButton creditsBtn = new TextButton("Credits", skin);
         TextButton exitBtn = new TextButton("Exit", skin);
-
         // Triggers an event when the button is pressed
         startBtn.addListener(
                 new ChangeListener() {
@@ -92,6 +91,16 @@ public class MainMenuDisplay extends UIComponent {
                     }
                 });
 
+        creditsBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+
+                        logger.debug("Credits button clicked");
+                        entity.getEvents().trigger("credits");
+                    }
+                });
+
         exitBtn.addListener(
                 new ChangeListener() {
                     @Override
@@ -112,10 +121,11 @@ public class MainMenuDisplay extends UIComponent {
         table.row();
         table.add(settingsBtn).padTop(15f);
         table.row();
+        table.add(creditsBtn).padTop(15f);
+        table.row();
         table.add(exitBtn).padTop(15f);
         stage.addActor(title);
         updateAnimation();
-
         stage.addActor(transitionFrames);
         stage.addActor(table);
     }
