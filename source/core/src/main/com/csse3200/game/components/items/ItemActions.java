@@ -132,9 +132,9 @@ public class ItemActions extends Component {
    * @param mousePos  the position of the mouse
    * @return Entity of tile at location else returns null
    */
-  private TerrainTile getTileAtPosition(Vector2 playerPos, Vector2 mousePos) {
+  public TerrainTile getTileAtPosition(Vector2 playerPos, Vector2 mousePos) {
     Vector2 pos = getAdjustedPos(playerPos, mousePos);
-    return map.getTile(pos);
+    return ServiceLocator.getGameArea().getMap().getTile(pos);
   }
 
 
@@ -151,12 +151,12 @@ public class ItemActions extends Component {
   private Vector2 getAdjustedPos(Vector2 playerPos, Vector2 mousePos) {
     Vector2 mouseWorldPos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
     Vector2 adjustedPosition = new Vector2(
-        map.tileCoordinatesToVector(map.vectorToTileCoordinates(new Vector2(mouseWorldPos.x, mouseWorldPos.y))));
+            ServiceLocator.getGameArea().getMap().tileCoordinatesToVector(ServiceLocator.getGameArea().getMap().vectorToTileCoordinates(new Vector2(mouseWorldPos.x, mouseWorldPos.y))));
     
     Vector2 playerPosCenter = ServiceLocator.getGameArea().getPlayer().getCenterPosition();
     playerPosCenter.add(0, -1.0f); // Player entity sprite's feet are located -1.0f below the centre of the entity. ty Hunter
 
-    playerPosCenter = map.tileCoordinatesToVector(map.vectorToTileCoordinates(playerPosCenter));
+    playerPosCenter = ServiceLocator.getGameArea().getMap().tileCoordinatesToVector(ServiceLocator.getGameArea().getMap().vectorToTileCoordinates(playerPosCenter));
 ;
     if (adjustedPosition.x - 0.5 > playerPosCenter.x) {
       playerPosCenter.x += 1;
