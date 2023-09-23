@@ -15,6 +15,7 @@ import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.npc.TamableComponent;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.EntityType;
@@ -156,7 +157,18 @@ public class ItemActionsTest {
         Entity hoe = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("hoe", ItemType.HOE, null));
         assertTrue(hoe.getComponent(ItemActions.class).use(player, mousePos, gameMap));
         assertTrue(shovel.getComponent(ItemActions.class).use(player, mousePos, gameMap));
+        Entity player2 = new Entity();
+        player2.setPosition(player.getPosition());
+        assertFalse(shovel.getComponent(ItemActions.class).use(player2, mousePos, gameMap));
         assertFalse(shovel.getComponent(ItemActions.class).use(player, mousePos, gameMap));
+
+        Entity gate = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("Gate", ItemType.PLACEABLE, null));
+        assertTrue(gate.getComponent(ItemActions.class).use(player, mousePos, gameMap));
+        assertTrue(shovel.getComponent(ItemActions.class).use(player, mousePos, gameMap));
+
+        Entity chest = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("Chest", ItemType.PLACEABLE, null)).addComponent(new InventoryComponent(null));
+        assertTrue(chest.getComponent(ItemActions.class).use(player, mousePos, gameMap));
+        assertTrue(shovel.getComponent(ItemActions.class).use(player, mousePos, gameMap));
     }
 
     @Test
@@ -227,9 +239,6 @@ public class ItemActionsTest {
         Entity food = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("food", ItemType.FOOD, null));
         assertFalse(food.getComponent(ItemActions.class).use(new Entity(), mousePos, gameMap));
         assertFalse(food.getComponent(ItemActions.class).use(player, mousePos, gameMap));
-//        Entity animal = new Entity(EntityType.Cow).addComponent(new TamableComponent(player, 1, 1, null)).addComponent(new HitboxComponent());
-//        player.getEvents().trigger("collisionStart", player.getComponent(HitboxComponent.class).getFixture(), animal.getComponent(HitboxComponent.class).getFixture());
-//        assertTrue(food.getComponent(ItemActions.class).use(player, mousePos, gameMap));
     }
 
     @Test
@@ -251,6 +260,74 @@ public class ItemActionsTest {
 
         Entity gate = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("Gate", ItemType.PLACEABLE, null));
         assertTrue(gate.getComponent(ItemActions.class).use(player, mousePos, gameMap));
+        assertFalse(gate.getComponent(ItemActions.class).use(player, mousePos, gameMap));
+    }
+
+    @Test
+    void testNoUse() {
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+        ServiceLocator.registerEntityService(new EntityService());
+        ServiceLocator.registerRenderService(new RenderService());
+        mousePos = new Vector2(10,10);
+        player.setPosition(gameMap.tileCoordinatesToVector(new GridPoint2(1,1)));
+        CameraComponent cam = mock(CameraComponent.class);
+        doReturn(player.getPosition()).when(cam).screenPositionToWorldPosition(mousePos);
+        ServiceLocator.registerCameraComponent(cam);
+        GameArea area = mock(GameArea.class);
+        doReturn(player).when(area).getPlayer();
+        doReturn(gameMap).when(area).getMap();
+        ServiceLocator.registerGameArea(area);
+        ServiceLocator.registerResourceService(mock(ResourceService.class));
+        FileLoader fl = new FileLoader();
+
+        Entity notItem = new Entity(EntityType.Item).addComponent(new ItemActions());
+        assertFalse(notItem.getComponent(ItemActions.class).use(player, mousePos, gameMap));
+
+        Entity itemWithNoUse = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("milk", ItemType.EGG, null));
+        assertFalse(itemWithNoUse.getComponent(ItemActions.class).use(player, mousePos, gameMap));
+    }
+
+    @Test
+    void testNoTile() {
+        TiledMap tiledMap = gameMap.getTiledMap();
+        tiledMap.getLayers().remove(0);
+        TiledMapTileLayer layer = new TiledMapTileLayer(4, 4, 16, 16);
+
+        layer.setCell(0, 0, new TiledMapTileLayer.Cell().setTile(null));
+        layer.setCell(0, 1, new TiledMapTileLayer.Cell().setTile(null));
+        layer.setCell(0, 2, new TiledMapTileLayer.Cell().setTile(null));
+        layer.setCell(0, 3, new TiledMapTileLayer.Cell().setTile(null));
+        layer.setCell(1, 0, new TiledMapTileLayer.Cell().setTile(null));
+        layer.setCell(1, 1, new TiledMapTileLayer.Cell().setTile(null));
+        layer.setCell(1, 2, new TiledMapTileLayer.Cell().setTile(null));
+        layer.setCell(1, 3, new TiledMapTileLayer.Cell().setTile(null));
+        layer.setCell(2, 0, new TiledMapTileLayer.Cell().setTile(null));
+        layer.setCell(2, 1, new TiledMapTileLayer.Cell().setTile(null));
+        layer.setCell(2, 2, new TiledMapTileLayer.Cell().setTile(null));
+        layer.setCell(2, 3, new TiledMapTileLayer.Cell().setTile(null));
+        layer.setCell(3, 0, new TiledMapTileLayer.Cell().setTile(null));
+        layer.setCell(3, 1, new TiledMapTileLayer.Cell().setTile(null));
+        layer.setCell(3, 2, new TiledMapTileLayer.Cell().setTile(null));
+        layer.setCell(3, 3, new TiledMapTileLayer.Cell().setTile(null));
+
+        tiledMap.getLayers().add(layer);
+
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+        ServiceLocator.registerEntityService(new EntityService());
+        ServiceLocator.registerRenderService(new RenderService());
+        mousePos = new Vector2(10,10);
+        player.setPosition(gameMap.tileCoordinatesToVector(new GridPoint2(1,1)));
+        CameraComponent cam = mock(CameraComponent.class);
+        doReturn(player.getPosition()).when(cam).screenPositionToWorldPosition(mousePos);
+        ServiceLocator.registerCameraComponent(cam);
+        GameArea area = mock(GameArea.class);
+        doReturn(player).when(area).getPlayer();
+        doReturn(gameMap).when(area).getMap();
+        ServiceLocator.registerGameArea(area);
+        ServiceLocator.registerResourceService(mock(ResourceService.class));
+        FileLoader fl = new FileLoader();
+
+        Entity gate = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("Gate", ItemType.PLACEABLE, null));
         assertFalse(gate.getComponent(ItemActions.class).use(player, mousePos, gameMap));
     }
 }
