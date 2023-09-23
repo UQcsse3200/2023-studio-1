@@ -32,4 +32,13 @@ public class PlayerHighlightFactoryTest {
         DynamicTextureRenderComponent renderComponent = playerHighlight.getComponent(DynamicTextureRenderComponent.class);
         Assertions.assertNotNull(renderComponent);
     }
+
+    /**
+     * Tests that the PlayerHighlightFactory class can be created
+     */
+    @Test
+    public void testPlayerHighlightFactoryInstantiation() {
+        Entity playerHighlight = PlayerHighlightFactory.createPlayerHighlight();
+        Assertions.assertNotNull(playerHighlight);
+    }
 }
