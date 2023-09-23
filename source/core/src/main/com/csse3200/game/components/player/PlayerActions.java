@@ -10,6 +10,7 @@ import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.missions.rewards.ClueReward;
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
@@ -236,7 +237,9 @@ public class PlayerActions extends Component {
     camera.setTrackEntity(tractor);
   }
 
+
   void use(Vector2 mousePos, Entity itemInHand) {
+
     if (itemInHand != null) {
       if (itemInHand.getComponent(ItemActions.class) != null) {
         pauseMoving();
