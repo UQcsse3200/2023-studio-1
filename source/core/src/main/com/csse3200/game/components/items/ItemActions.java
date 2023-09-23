@@ -289,7 +289,8 @@ public class ItemActions extends Component {
      */
   private boolean plant(TerrainTile tile) {
     if (isCropTile(tile.getCropTile())) {
-      tile.getCropTile().getEvents().trigger("plant", FactoryService.getPlantFactories().get(entity.getComponent(ItemComponent.class).getItemName()));
+      tile.getCropTile().getEvents().trigger("plant", FactoryService.getPlantFactories()
+              .get(entity.getComponent(ItemComponent.class).getItemName().replace(" seed", "")));
       return true;
     }
     return false;
