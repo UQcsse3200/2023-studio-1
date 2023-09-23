@@ -1,19 +1,11 @@
 package com.csse3200.game.components.controlsmenu;
 
-import java.util.LinkedHashMap;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.GdxGame;
@@ -21,6 +13,10 @@ import com.csse3200.game.GdxGame.ScreenType;
 import com.csse3200.game.screens.ControlsScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.LinkedHashMap;
 
 /**
  * Control menu display and settings.
@@ -62,7 +58,7 @@ public class ControlsMenuDisplay extends UIComponent {
   /**
    * The duration for which each frame should be displayed
    */
-  private final long frameDuration = (long) (800 / fps);
+  private final long frameDuration = 800 / fps;
 
   public ControlsMenuDisplay(GdxGame game) {
     super();
@@ -94,10 +90,11 @@ public class ControlsMenuDisplay extends UIComponent {
       }
     });
 
-    Table controlsTbl = makeControlsTable(); // generate the table that represents the controls of the game
+    Actor controlsTbl = makeControlsTable(); // generate the table that represents the controls of the game
 
     // Set the background image
-    Image background = new Image(
+    // TODO: Make the background images slightly smaller and use inbuilt animation and styling for the title
+    background = new Image(
             ServiceLocator.getResourceService().getAsset("images/galaxy_home_still.png", Texture.class));
     background.setWidth(Gdx.graphics.getWidth());
     background.setHeight(Gdx.graphics.getHeight());
@@ -106,17 +103,15 @@ public class ControlsMenuDisplay extends UIComponent {
 
     rootTable = new Table();
     rootTable.setFillParent(true); // Make the root table fill the screen
-    rootTable.row().padTop(30f); // Padding ensures that there is always space between table and title
 
-    rootTable.add(controlsTbl).expandX().expandY(); // Add the controls table and let it take as much space as needed
+    rootTable.add(transitionFrames);
 
-    rootTable.row().padBottom(30f); // Padding ensures that there is always space between table and exit button
+    rootTable.row(); // Padding ensures that there is always space between table and title
+
+    rootTable.add(controlsTbl).expandX().padBottom(30f); // Add the controls table and let it take as much space as needed
+      rootTable.row().padBottom(50f); // Padding ensures that there is always space between table and exit button
 
     rootTable.add(returnBtn).padBottom(30f); // The return button is anchored to the bottom of the page
-
-    // Trigger the first frame of the animation to be loaded
-    updateAnimation();
-    stage.addActor(transitionFrames);
 
     stage.addActor(rootTable); // Add the root table to the stage
   }
@@ -143,8 +138,12 @@ public class ControlsMenuDisplay extends UIComponent {
    * Helper method to construct the controls table and return it to be added to the root table
    * @return controlsTable - A Table containing the game's controls and their descriptions
    */
-  private Table makeControlsTable() {
+  private Actor makeControlsTable() {
     Table controlsTbl = new Table();
+
+    // Make a scroll pane
+      ScrollPane scrollPane = new ScrollPane(controlsTbl, skin);
+      // TODO: Update scrollpane style to have black labels
 
     // Set column default heights and widths
     controlsTbl.defaults().height(50f).padTop(20f);
@@ -183,7 +182,7 @@ public class ControlsMenuDisplay extends UIComponent {
       controlsTbl.add(descriptionLabel).center();
     }
 
-    return controlsTbl;
+    return scrollPane;
   }
 
   /**
@@ -204,6 +203,17 @@ public class ControlsMenuDisplay extends UIComponent {
     if (System.currentTimeMillis() - lastFrameTime > frameDuration) {
       updateAnimation();
     }
+
+    // Make sure the background image stays full screen even after screen resizes
+    if (background != null &&
+            (Gdx.graphics.getHeight() != background.getHeight()
+            || Gdx.graphics.getWidth() != background.getWidth())) {
+      background.setWidth(Gdx.graphics.getWidth());
+      background.setHeight(Gdx.graphics.getHeight());
+      background.setPosition(0, 0);
+      logger.debug("Background resized");
+    }
+
     stage.act(ServiceLocator.getTimeSource().getDeltaTime());
   }
 
