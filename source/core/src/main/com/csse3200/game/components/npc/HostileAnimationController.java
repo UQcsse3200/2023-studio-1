@@ -37,6 +37,8 @@ public class HostileAnimationController extends AnimalAnimationController {
      */
     @Override
     protected void animateIdle() {
+        currentAnimation = IDLE_PREFIX;
+
         if (!activeAction) {
             super.animateIdle();
         }
@@ -47,6 +49,8 @@ public class HostileAnimationController extends AnimalAnimationController {
      */
     @Override
     protected void animateWalk() {
+        currentAnimation = WALK_PREFIX;
+
         if (!activeAction) {
             super.animateWalk();
         }
@@ -57,6 +61,8 @@ public class HostileAnimationController extends AnimalAnimationController {
      */
     @Override
     protected void animateRun() {
+        currentAnimation = RUN_PREFIX;
+
         if (!activeAction) {
             super.animateRun();
         }

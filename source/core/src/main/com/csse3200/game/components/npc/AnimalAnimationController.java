@@ -16,11 +16,11 @@ public class AnimalAnimationController extends Component {
     /** Current animation playing (excluding direction suffix) */
     protected String currentAnimation;
     /** Walk prefix to play walk animation */
-    private static final String WALK_PREFIX = "walk";
+    protected static final String WALK_PREFIX = "walk";
     /** Run prefix to play run animation */
-    private static final String RUN_PREFIX = "run";
+    protected static final String RUN_PREFIX = "run";
     /** Idle prefix to play idle animation */
-    private static final String IDLE_PREFIX = "idle";
+    protected static final String IDLE_PREFIX = "idle";
     /** Tamed suffix to add tamed indicator */
     private static final String TAMED_SUFFIX = "_tamed";
 
