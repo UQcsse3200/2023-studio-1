@@ -148,13 +148,15 @@ public class PlantComponent extends Component {
     private int eatingCoolDown = 60;
 
     /**
-     * The number of hours since the space snapper ate. Used to determine whether the plant is ready to eat again.
+     * Count of hours since the space snapper ate. Used to determine whether the plant is ready to eat again.
      */
-    private int countOfHoursOfDigestion;
-    private int countMinutesOfDigestion = 0;
+    private int countMinutesOfDigestion;
 
     private static final Logger logger = LoggerFactory.getLogger(PlantComponent.class);
 
+    /**
+     * Indicates whether the player is in close enough proximity for this plant to make sounds.
+     */
     private boolean playerInProximity;
 
     /**
@@ -197,7 +199,7 @@ public class PlantComponent extends Component {
 
         this.adultEffect = "None";
         this.isEating = false;
-        this.countOfHoursOfDigestion = 0;
+        this.countMinutesOfDigestion = 0;
         this.playerInProximity = false;
 
     }
@@ -252,7 +254,7 @@ public class PlantComponent extends Component {
             default -> this.adultEffect = "Sound";
         }
         this.isEating = false;
-        this.countOfHoursOfDigestion = 0;
+        this.countMinutesOfDigestion = 0;
         this.playerInProximity = false;
     }
 
@@ -303,7 +305,7 @@ public class PlantComponent extends Component {
      * Functionality for the plant that needs to update every hour.
      */
     public void hourUpdate() {
-
+        // Currently no hourly updates needed.
     }
 
     /**
@@ -637,7 +639,6 @@ public class PlantComponent extends Component {
             return;
         }
 
-        //playSound("harvest");
         harvestYields.forEach((itemName, quantity) -> {
             Supplier<Entity> itemSupplier = ItemFactory.getItemSupplier(itemName);
             for (int i = 0; i < quantity; i++) {
@@ -678,7 +679,6 @@ public class PlantComponent extends Component {
             default -> throw new IllegalStateException("Unexpected value: " + getGrowthStage());
         };
     }
-
 
     /**
      * Update the texture of the plant based on its current growth stage.
@@ -782,45 +782,82 @@ public class PlantComponent extends Component {
         this.isEating = true;
     }
 
+    /**
+     * Function used when debugging. Allows for the plant to instantly become a seedling from any growth stage.
+     */
     public void forceSeedling() {
         this.setGrowthStage(GrowthStage.SEEDLING.getValue());
+        this.setPlantHealth(2);
+        this.setCurrentGrowthLevel(20);
         entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType("None");
         updateTexture();
         updateMaxHealth();
     }
+
+    /**
+     * Function used when debugging. Allows for the plant to instantly become a sprout from any growth stage.
+     */
     public void forceSprout() {
         this.setGrowthStage(GrowthStage.SPROUT.getValue());
+        this.setPlantHealth(10);
+        this.setCurrentGrowthLevel(50);
         entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType("None");
         updateTexture();
         updateMaxHealth();
     }
+
+    /**
+     * Function used when debugging. Allows for the plant to instantly become a juvenile from any growth stage.
+     */
     public void forceJuvenile() {
         this.setGrowthStage(GrowthStage.JUVENILE.getValue());
+        this.setPlantHealth(20);
+        this.setCurrentGrowthLevel(70);
         entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType("None");
         updateTexture();
         updateMaxHealth();
     }
+
+    /**
+     * Function used when debugging. Allows for the plant to instantly become an adult from any growth stage.
+     */
     public void forceAdult() {
         this.setGrowthStage(GrowthStage.ADULT.getValue());
+        this.setPlantHealth(30);
         updateTexture();
         entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType(this.adultEffect);
         setAreaOfEffectRadius();
         updateMaxHealth();
     }
+
+    /**
+     * Function used when debugging. Allows for the plant to instantly start decaying from any growth stage.
+     */
     public void forceDecay() {
         this.setGrowthStage(GrowthStage.DECAYING.getValue());
+        this.setPlantHealth(30);
         entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType("Decay");
         playSound("decays");
         updateTexture();
         updateMaxHealth();
     }
+
+    /**
+     * Function used when debugging. Allows for the plant to instantly die from any growth stage.
+     */
     public void forceDead() {
         this.setGrowthStage(GrowthStage.DEAD.getValue());
+        this.setPlantHealth(0);
         updateTexture();
         playSound("destroy");
         updateMaxHealth();
     }
 
+    /**
+     * Return a string will all the relevant information about this plant.
+     * The returned string must be formatted such that each piece of information is on a new line.
+     * @return - Formatted string with all relevant information about the plant.
+     */
     public String currentInfo() {
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
         String waterLevel = decimalFormat.format(cropTile.getWaterContent());
@@ -841,6 +878,18 @@ public class PlantComponent extends Component {
         return  returnString;
     }
 
+    /**
+     * Set the currentGrowthLevel of the plant. This is used for testing purposes.
+     * @param currentGrowthLevel - Desired growth level of the plant.
+     */
+    public void setCurrentGrowthLevel(int currentGrowthLevel) {
+        this.currentGrowthLevel = currentGrowthLevel;
+    }
+
+    /**
+     * Indicates when the player is in the plants proximity for playing sounds or not.
+     * @param bool - If the player is/(is not) in proximity.
+     */
     public void setPlayerInProximity(boolean bool) {
         this.playerInProximity = bool;
     }
