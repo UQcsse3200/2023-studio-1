@@ -15,8 +15,6 @@ public class ShipClueFactory {
         Entity shipClue = new Entity(EntityType.ShipDebris)
                 .addComponent(new ClueComponent(possibleLocations));
 
-        shipClue.setScale(1f, 1f);
-
         return shipClue;
     }
 }

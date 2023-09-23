@@ -10,7 +10,6 @@ import java.util.List;
 public class ClueReward extends ItemReward {
 
     private final Entity clueItem;
-
     public ClueReward(Entity clueItem) {
         super(List.of(clueItem));
         this.clueItem = clueItem;
@@ -18,8 +17,8 @@ public class ClueReward extends ItemReward {
 
     @Override
     public void collect() {
-        super.collect();
 
+    }
         ClueComponent clueComponent = clueItem.getComponent(ClueComponent.class);
 
         if (clueComponent != null) {
@@ -29,7 +28,6 @@ public class ClueReward extends ItemReward {
                 // Generate debris for the first location in the list
                 String location = possibleLocations.get(0);
                 generateTileAndDebris(location);
-
                 // Remove the first location from the list
                 possibleLocations.remove(0);
             }
@@ -37,16 +35,11 @@ public class ClueReward extends ItemReward {
     }
 
     private void generateTileAndDebris(String location) {
-        // Assuming you have a method generateDebris that creates a single piece of debris
-      //  Entity debris = generateDebris(location);
+        shipDebris debris = createShipDebris();
+        String[] parts = location.split(",");
+        float x = Float.parseFloat(parts[0]);
+        float y = Float.parseFloat(parts[1]);
+        debris.setPosition(new Vector2(x, y));
 
-        // Assuming you have a way to add the debris entity to the game
-      //  ServiceLocator.getGameArea().addEntity(debris);
     }
 
-//    private Entity generateDebris(String location) {
-//        // Implement logic to generate a single piece of debris based on location
-//        // Create the relevant entity for debris and return it
-//        return
-//    }
-}
