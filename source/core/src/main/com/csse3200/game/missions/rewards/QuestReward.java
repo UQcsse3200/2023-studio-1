@@ -22,6 +22,7 @@ public class QuestReward extends Reward {
      * @param quests - the quests to be added when the Quest attached is complete.
      */
     public QuestReward(List<Quest> quests) {
+        super();
         this.quests = quests;
     }
 
