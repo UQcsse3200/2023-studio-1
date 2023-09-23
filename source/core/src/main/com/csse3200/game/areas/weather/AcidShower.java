@@ -2,6 +2,7 @@ package com.csse3200.game.areas.weather;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -22,7 +23,7 @@ public class AcidShower extends ApplicationAdapter {
     private Array<Rectangle> raindrops;
     private Texture raindropImage;
     private SpriteBatch spriteBatch;
-    private Texture weatherImage;
+    private OrthographicCamera orthographicCamera;
 
     @Override
     public void create() {
@@ -31,6 +32,8 @@ public class AcidShower extends ApplicationAdapter {
         raindrops = new Array<>();
         raindropImage = new Texture(Gdx.files.internal("images/weather_event/acid-rain.png"));
         spriteBatch = new SpriteBatch();
+        orthographicCamera = new OrthographicCamera();
+        orthographicCamera.setToOrtho(false, 800, 480);
         updateDisplay();
     }
 
@@ -42,22 +45,15 @@ public class AcidShower extends ApplicationAdapter {
         raindrop.height = 64;
         raindrops.add(raindrop);
         lastRaindropTime = TimeUtils.nanoTime();
-        WeatherEvent currentWeatherEvent = ServiceLocator.getGameArea().getClimateController().getCurrentWeatherEvent();
-        if (currentWeatherEvent instanceof AcidShowerEvent) {
-            weatherImage = raindropImage;
-        } else if (currentWeatherEvent instanceof SolarSurgeEvent) {
-            weatherImage = raindropImage;
-        } else {
-            weatherImage = raindropImage;
-        }
     }
 
     @Override
     public void render() {
         ScreenUtils.clear(0, 0, 0.2f, 1);
+        orthographicCamera.update();
+        spriteBatch.setProjectionMatrix(orthographicCamera.combined);
         spriteBatch.begin();
         spriteBatch.draw(raindropImage, raindrop.x, raindrop.y);
-        spriteBatch.draw(weatherImage, raindrop.x, raindrop.y);
 
         for(Rectangle raindrop: raindrops) {
             spriteBatch.draw(raindropImage, raindrop.x, raindrop.y);
@@ -80,7 +76,7 @@ public class AcidShower extends ApplicationAdapter {
 
     @Override
     public void dispose() {
-        weatherImage.dispose();
+        raindropImage.dispose();
         spriteBatch.dispose();
     }
 }
