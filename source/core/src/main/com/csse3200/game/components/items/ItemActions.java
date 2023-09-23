@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.function.Function;
 
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
@@ -221,9 +222,6 @@ public class ItemActions extends Component {
     }
     if(tile.getPlaceable() != null){
       Entity placedItem = tile.getPlaceable();
-      Vector2 newPos = placedItem.getPosition();
-      tile.setPlaceable(null);    //update the tile
-      tile.setUnOccupied();
 
       //check if the placeable is a chest and if there is items in that chest
       //if there is items then return false
@@ -232,11 +230,17 @@ public class ItemActions extends Component {
         if (chestInventory.getInventory().size() >= 1){ return false; }
       }
 
+      Vector2 newPos = placedItem.getPosition();
+      tile.setPlaceable(null);    //update the tile
+      tile.setUnOccupied();
+
+
+
       Entity droppedItem = FactoryService.getItemFactories().get(placedItem.getType().toString()).get();
       ServiceLocator.getGameArea().spawnEntity(droppedItem);
       droppedItem.setPosition(newPos);
       //placedItem.getEvents().trigger("destroy"); //TODO: add trigger event to all placeable items so dynamic textures can be updated
-      placedItem.dispose();   //Temperary destroy until the trigger event is implemented
+      ServiceLocator.getGameArea().removeEntity(placedItem);
       return true;
     }
     return false;
