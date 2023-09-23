@@ -144,7 +144,7 @@ public class MovementTask extends DefaultTask {
    *
    * @return True if the entity is within the stop distance from the target, otherwise false.
    */
-  private boolean isAtTarget() {
+  public boolean isAtTarget() {
     return owner.getEntity().getPosition().dst(target) <= stopDistance;
   }
 
@@ -177,7 +177,7 @@ public class MovementTask extends DefaultTask {
    *
    * @return The direction of movement ("right" or "left").
    */
-  private String getDirection() {
+  public String getDirection() {
     Vector2 currentPosition = owner.getEntity().getPosition();
     return currentPosition.sub(target).x < 0 ? DirectionUtils.RIGHT : DirectionUtils.LEFT;
   }

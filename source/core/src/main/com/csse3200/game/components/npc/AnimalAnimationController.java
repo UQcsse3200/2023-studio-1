@@ -23,6 +23,8 @@ public class AnimalAnimationController extends Component {
     private static final String IDLE_PREFIX = "idle";
     /** Tamed suffix to add tamed indicator */
     private static final String TAMED_SUFFIX = "_tamed";
+    /** Attack prefix to play attack animation */
+    private static final String ATTACK_PREFIX = "attack";
 
     /**
      * Returns a suffix if the entity is tamed.
@@ -53,6 +55,7 @@ public class AnimalAnimationController extends Component {
         entity.getEvents().addListener("idleStart", this::animateIdle);
         entity.getEvents().addListener("followStart", this::animateWalk);
         entity.getEvents().addListener("followStop", this::animateIdle);
+        entity.getEvents().addListener("attack", this::animateAttack);
 
         animateIdle();
     }
@@ -85,9 +88,17 @@ public class AnimalAnimationController extends Component {
      * Set new direction of animal and retrigger current animation with new direction
      * @param direction new direction
      */
-    void changeDirection(String direction){
+    void changeDirection(String direction) {
         this.direction = direction;
         entity.getEvents().trigger(currentAnimation + "Start");
+    }
+
+    /**
+     * Play attack animation with current direction
+     */
+    void animateAttack() {
+        entity.getEvents().trigger(ATTACK_PREFIX + "_" + direction);
+        currentAnimation = ATTACK_PREFIX;
     }
 
 

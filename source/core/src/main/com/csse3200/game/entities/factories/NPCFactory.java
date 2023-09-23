@@ -6,15 +6,13 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.AuraLightComponent;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.AnimalAnimationController;
 import com.csse3200.game.components.npc.FireflyScareComponent;
 import com.csse3200.game.components.npc.PassiveDropComponent;
 import com.csse3200.game.components.npc.TamableComponent;
-import com.csse3200.game.components.tasks.ChaseTask;
-import com.csse3200.game.components.tasks.FollowTask;
-import com.csse3200.game.components.tasks.RunAwayTask;
-import com.csse3200.game.components.tasks.WanderTask;
+import com.csse3200.game.components.tasks.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.configs.BaseAnimalConfig;
@@ -190,8 +188,6 @@ public class NPCFactory {
     animator.addAnimation("walk_left", 1f, Animation.PlayMode.LOOP_REVERSED);
     animator.addAnimation("walk_right", 1f, Animation.PlayMode.LOOP);
 
-
-
 //    animator.addAnimation("idle", 1f, Animation.PlayMode.LOOP);
   // animator.addAnimation("consume", 1f, Animation.PlayMode.LOOP);
 
@@ -203,14 +199,18 @@ public class NPCFactory {
             .addComponent(animator)
             .addComponent(new AnimalAnimationController());
 
-
     oxygenEater.scaleHeight(3f);
     PhysicsUtils.setScaledCollider(oxygenEater, 0.7f, 0.4f);
-
 
     return oxygenEater;
   }
 
+
+  /**
+   * Creates a Fire Fly entity.
+   * @param player player entity
+   * @return Fire Fly entity
+   */
   public static Entity createFireFlies(Entity player) {
     SecureRandom random = new SecureRandom();
     AuraLightComponent light = new AuraLightComponent(3f, Color.ORANGE);
@@ -235,6 +235,77 @@ public class NPCFactory {
             .addComponent(new PhysicsComponent());
     return fireflies;
   }
+
+  /**
+   * Creates a Dragonfly entity
+   * @param player player entity
+   * @return Dragonfly entity
+   */
+  public static Entity createDragonfly(Entity player) {
+    Entity dragonfly = createBaseAnimal(EntityType.Dragonfly);
+    BaseAnimalConfig config = configs.dragonfly;
+
+    AnimationRenderComponent animator = new AnimationRenderComponent(
+            ServiceLocator.getResourceService().getAsset("images/animals/dragonfly.atlas",
+                    TextureAtlas.class)
+            , 20f);
+    animator.addAnimation("attack_left", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation("attack_right", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation("walk_left", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation("walk_right", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle_left", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle_right", 0.15f, Animation.PlayMode.LOOP);
+
+    AITaskComponent aiTaskComponent = new AITaskComponent()
+            .addTask(new WanderTask(new Vector2(1.5f, 1.5f), 5f))
+            .addTask(new AttackPlantTask(10, new Vector2(3f, 3f)));
+
+    dragonfly
+            .addComponent(aiTaskComponent)
+            .addComponent(animator)
+            .addComponent(new AnimalAnimationController())
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
+
+
+    dragonfly.scaleHeight(1.2f);
+    PhysicsUtils.setScaledCollider(dragonfly, 0.9f, 0.4f);
+    return dragonfly;
+  }
+
+  /**
+   * Creates a Bat entity
+   * @param player player entity
+   * @return Bat entity
+   */
+  public static Entity createBat(Entity player) {
+    Entity bat = createBaseAnimal(EntityType.Bat);
+    BaseAnimalConfig config = configs.bat;
+
+    AnimationRenderComponent animator = new AnimationRenderComponent(
+            ServiceLocator.getResourceService().getAsset("images/animals/bat.atlas",
+                    TextureAtlas.class)
+            , 20f);
+    animator.addAnimation("attack_left", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation("attack_right", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation("walk_left", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation("walk_right", 0.15f, Animation.PlayMode.LOOP);
+
+    AITaskComponent aiTaskComponent = new AITaskComponent()
+            .addTask(new WanderTask(new Vector2(1.5f, 1.5f), 5f))
+            .addTask(new FollowTask(player, 10, 8, 10, 3f));
+
+    bat
+            .addComponent(aiTaskComponent)
+            .addComponent(animator)
+            .addComponent(new AnimalAnimationController())
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
+
+
+    bat.scaleHeight(1.2f);
+    PhysicsUtils.setScaledCollider(bat, 0.9f, 0.4f);
+    return bat;
+  }
+
 
   /**
    * Creates a generic animal to be used as a base entity by more specific animal creation methods.

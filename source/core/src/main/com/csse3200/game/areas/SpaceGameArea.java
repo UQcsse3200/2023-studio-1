@@ -179,7 +179,8 @@ public class SpaceGameArea extends GameArea {
       "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas", "images/questgiver.atlas",
       "images/missionStatus.atlas", "images/plants/cosmic_cob.atlas", "images/plants/aloe_vera.atlas",
       "images/plants/hammer_plant.atlas", "images/plants/space_snapper.atlas", "images/plants/atomic_algae.atlas",
-      "images/plants/deadly_nightshade.atlas", "images/fireflies.atlas"
+      "images/plants/deadly_nightshade.atlas", "images/fireflies.atlas", "images/animals/dragonfly.atlas",
+          "images/animals/bat.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg", "sounds/car-horn-6408.mp3"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -237,10 +238,15 @@ public class SpaceGameArea extends GameArea {
     tractor = spawnTractor();
     spawnPlayerHighlight();
     spawnQuestgiver();
-    spawnChickens();
-    spawnCows();
-    spawnAstrolotl();
-    spawnOxygenEater();
+
+    // Animals
+    //spawnChickens();
+    //spawnCows();
+   // spawnAstrolotl();
+    //spawnOxygenEater();
+    spawnDragonFlies();
+    //spawnBats();
+
     spawnShip();
 
 //    spawnTool(ItemType.WATERING_CAN);
@@ -468,6 +474,28 @@ public class SpaceGameArea extends GameArea {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity oxygenEater = NPCFactory.createOxygenEater(player);
       spawnEntityAt(oxygenEater, randomPos, true, true);
+    }
+  }
+
+  private void spawnDragonFlies() {
+    GridPoint2 minPos = new GridPoint2(2, 2);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < 1; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity dragonFly = NPCFactory.createDragonfly(player);
+      spawnEntityAt(dragonFly, PLAYER_SPAWN, true, true);
+    }
+  }
+
+  private void spawnBats() {
+    GridPoint2 minPos = new GridPoint2(2, 2);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < 5; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity bat = NPCFactory.createBat(player);
+      spawnEntityAt(bat, randomPos, true, true);
     }
   }
 
