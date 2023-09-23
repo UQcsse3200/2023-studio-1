@@ -243,5 +243,4 @@ public class EndCreditsDisplay extends UIComponent {
         table.clear();
         super.dispose();
     }
-
 }
