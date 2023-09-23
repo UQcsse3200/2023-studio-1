@@ -13,10 +13,11 @@ import com.csse3200.game.GdxGame.ScreenType;
 import com.csse3200.game.screens.ControlsScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
+import net.dermetfan.utils.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 
 /**
  * Control menu display and settings.
@@ -93,7 +94,7 @@ public class ControlsMenuDisplay extends UIComponent {
     Actor controlsTbl = makeControlsTable(); // generate the table that represents the controls of the game
 
     // Set the background image
-    // TODO: Make the background images slightly smaller and use inbuilt animation and styling for the title
+    // TODO: Make the background images smaller and use inbuilt animation and styling for the title so that spacing is easier to handle
     background = new Image(
             ServiceLocator.getResourceService().getAsset("images/galaxy_home_still.png", Texture.class));
     background.setWidth(Gdx.graphics.getWidth());
@@ -103,8 +104,9 @@ public class ControlsMenuDisplay extends UIComponent {
 
     rootTable = new Table();
     rootTable.setFillParent(true); // Make the root table fill the screen
+    rootTable.debug();
 
-    rootTable.add(transitionFrames);
+    rootTable.add(transitionFrames).padBottom(-50f);
 
     rootTable.row(); // Padding ensures that there is always space between table and title
 
@@ -142,7 +144,7 @@ public class ControlsMenuDisplay extends UIComponent {
     Table controlsTbl = new Table();
 
     // Make a scroll pane
-      ScrollPane scrollPane = new ScrollPane(controlsTbl, skin);
+      ScrollPane scrollPane = new ScrollPane(controlsTbl);
       // TODO: Update scrollpane style to have black labels
 
     // Set column default heights and widths
@@ -160,22 +162,22 @@ public class ControlsMenuDisplay extends UIComponent {
     // Create a dictionary to store all the controls
     // LinkedHashMap is the only map the preserves order of insertion.
     // Performance is a non-issue in a static table, so using a linked list structure doesn't matter
-    LinkedHashMap<String, String> controls = new LinkedHashMap<>();
+    ArrayList<Pair<String, String>> controls = new ArrayList<Pair<String, String>>();
 
     // To add another control, simply put it in the map below.
-    controls.put("W", "Moves the character upwards");
-    controls.put("A", "Moves the character to the left");
-    controls.put("S", "Moves the character to the right");
-    controls.put("D", "Moves the character downwards");
-    controls.put("T", "Toggles the player light on and off");
+    controls.add(new Pair<>("W", "Moves the character upwards"));
+    controls.add(new Pair<>("A", "Moves the character to the left"));
+    controls.add(new Pair<>("S", "Moves the character to the right"));
+    controls.add(new Pair<>("D", "Moves the character downwards"));
+    controls.add(new Pair<>("T", "Toggles the player light on and off"));
 
-    for (String key : controls.keySet()) {
+    for (Pair<String, String> control : controls) {
       // Start a new row for each control
       controlsTbl.row();
       // Create a button to represent the key press required
-      TextButton keyButton = new TextButton(key, skin);
+      TextButton keyButton = new TextButton(control.getKey(), skin);
       // Create a button to represent the control's description
-      Label descriptionLabel = new Label(controls.get(key), skin);
+      Label descriptionLabel = new Label(control.getValue(), skin);
 
       // Add the buttons to the table
       controlsTbl.add(keyButton).center();
