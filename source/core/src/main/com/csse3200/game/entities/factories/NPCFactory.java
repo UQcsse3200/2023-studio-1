@@ -1,11 +1,14 @@
 package com.csse3200.game.entities.factories;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
+import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.AnimalAnimationController;
+import com.csse3200.game.components.npc.FireflyScareComponent;
 import com.csse3200.game.components.npc.PassiveDropComponent;
 import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.components.tasks.ChaseTask;
@@ -25,6 +28,9 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+
+import java.security.SecureRandom;
+import java.util.Random;
 
 /**
  * Factory to create non-playable character (NPC) entities with predefined components.
@@ -203,6 +209,31 @@ public class NPCFactory {
 
 
     return oxygenEater;
+  }
+
+  public static Entity createFireFlies(Entity player) {
+    SecureRandom random = new SecureRandom();
+    AuraLightComponent light = new AuraLightComponent(3f, Color.ORANGE);
+    light.toggleLight();
+
+    AnimationRenderComponent animator = new AnimationRenderComponent(
+            ServiceLocator.getResourceService().getAsset("images/fireflies.atlas", TextureAtlas.class),
+            16f
+    );
+    String animation = "default";
+    if (random.nextInt(999) == 0) {
+      animation = "default";
+    }
+    animator.addAnimation(animation, 0.5f, Animation.PlayMode.LOOP);
+    animator.startAnimation(animation);
+
+    Entity fireflies = new Entity(EntityType.FireFlies)
+            .addComponent(animator)
+            .addComponent(light)
+            // Not actually scaring just dying from daylight (named from previous idea for feature)
+            .addComponent(new FireflyScareComponent())
+            .addComponent(new PhysicsComponent());
+    return fireflies;
   }
 
   /**

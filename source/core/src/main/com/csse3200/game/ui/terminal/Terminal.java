@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.csse3200.game.ui.terminal.commands.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,15 +16,6 @@ import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.ui.terminal.commands.AddItemCommand;
-import com.csse3200.game.ui.terminal.commands.AddWeatherCommand;
-import com.csse3200.game.ui.terminal.commands.Command;
-import com.csse3200.game.ui.terminal.commands.DebugCommand;
-import com.csse3200.game.ui.terminal.commands.LoadCommand;
-import com.csse3200.game.ui.terminal.commands.SaveCommand;
-import com.csse3200.game.ui.terminal.commands.SetDayCommand;
-import com.csse3200.game.ui.terminal.commands.SetTimeCommand;
-import com.csse3200.game.ui.terminal.commands.SpawnCommand;
 
 /**
  * State tracker for a debug terminal. Any commands to be actioned through the terminal input should
@@ -50,6 +42,7 @@ public class Terminal extends Component {
     addCommand("setDay", new SetDayCommand());
     addCommand("addItem", new AddItemCommand());
     addCommand("addWeather", new AddWeatherCommand());
+    addCommand("setTimeScale", new SetTimeScaleCommand());
   }
 
   /** @return message entered by user */

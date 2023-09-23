@@ -1,6 +1,7 @@
 package com.csse3200.game.components;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.utils.Json;
 import com.csse3200.game.services.ServiceLocator;
 
 import box2dLight.ConeLight;
@@ -98,6 +99,8 @@ public class ConeLightComponent extends Component {
 		light.setStaticLight(true);
 		light.setXray(true); // Stops most of the shadows and reduces CPU burden
 		light.setSoft(true);
+		active = false;
+		light.setActive(active);
 	}
 
 	/**
@@ -106,8 +109,6 @@ public class ConeLightComponent extends Component {
 	@Override
 	public void create() {
 		super.create();
-		active = false;
-		light.setActive(active);
 		light.setPosition(entity.getCenterPosition());
 		entity.getEvents().addListener("toggleLight", this::toggleLight);
 	}
@@ -178,6 +179,17 @@ public class ConeLightComponent extends Component {
 	 */
 	@Override
 	public void dispose() {
-		light.dispose();
+		light.remove();
+	}
+
+	/**
+	 * Writes to the json in order to store the lights state
+	 */
+	public void write(Json json){
+		json.writeObjectStart(this.getClass().getSimpleName());
+		//Save the muted value to the json file
+		json.writeValue("isActive", active);
+		json.writeValue("distance", light.getDistance());
+		json.writeObjectEnd();
 	}
 }
