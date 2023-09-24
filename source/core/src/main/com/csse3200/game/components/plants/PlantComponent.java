@@ -151,7 +151,7 @@ public class PlantComponent extends Component {
     private int eatingCoolDown = 60;
 
     /**
-     * Count of hours since the space snapper ate. Used to determine whether the plant is ready to eat again.
+     * Count of minutes since the space snapper ate. Used to determine whether the plant is ready to eat again.
      */
     private int countMinutesOfDigestion;
 
