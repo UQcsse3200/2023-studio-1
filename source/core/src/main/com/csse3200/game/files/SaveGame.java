@@ -7,6 +7,7 @@ import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.files.FileLoader.Location;
+import com.csse3200.game.missions.MissionManager;
 
 /**
  * Reading, Writing, and applying user settings in the game.
@@ -42,8 +43,11 @@ public class SaveGame {
   public static class GameState {
     private int day;
     private int hour;
+    private int minute;
 
     private ClimateController climate;
+
+    private MissionManager missions;
 
     private Entity player;
     private Entity tractor;
@@ -99,7 +103,8 @@ public class SaveGame {
       Array<Entity> tmp = new Array<>();
       for (Entity e : entities) {
         if (e.getType() == EntityType.Astrolotl || e.getType() == EntityType.Chicken ||
-                e.getType() == EntityType.Cow || e.getType() == EntityType.OxygenEater) {
+                e.getType() == EntityType.Cow || e.getType() == EntityType.OxygenEater ||
+                e.getType() == EntityType.ShipDebris || e.getType() == EntityType.FireFlies) {
           tmp.add(e);
         }
       }
@@ -149,6 +154,22 @@ public class SaveGame {
 
     public void setClimate(ClimateController climate) {
       this.climate = climate;
+    }
+
+    public MissionManager getMissions() {
+      return missions;
+    }
+
+    public void setMissions(MissionManager missions) {
+      this.missions = missions;
+    }
+
+    public int getMinute() {
+      return minute;
+    }
+
+    public void setMinute(int minute) {
+      this.minute = minute;
     }
   }
 }

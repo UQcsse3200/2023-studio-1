@@ -1,8 +1,5 @@
 package com.csse3200.game.components.player;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -26,6 +23,8 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(GameExtension.class)
 public class ItemPickupComponentTest {
@@ -89,11 +88,25 @@ public class ItemPickupComponentTest {
     void shouldCreateComponent() {
         assertNotEquals(null, picker.getComponent(ItemPickupComponent.class));
     }
+
     @Test
     void shouldPickupItem() {
         // Try add the item to inventory
         picker.getEvents().trigger("collisionStart", picker.getComponent(HitboxComponent.class).getFixture(),
                 pickupItem.getComponent(HitboxComponent.class).getFixture());
         assertTrue(picker.getComponent(InventoryComponent.class).hasItem(pickupItem));
+    }
+
+    @Test
+    void shouldNotPickupItem() {
+        // Try add the item to inventory
+        picker.getEvents().trigger("collisionStart", pickupItem.getComponent(HitboxComponent.class).getFixture(),
+                picker.getComponent(HitboxComponent.class).getFixture());
+        assertFalse(picker.getComponent(InventoryComponent.class).hasItem(pickupItem));
+
+        pickupItem.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.OBSTACLE);
+        picker.getEvents().trigger("collisionStart", picker.getComponent(HitboxComponent.class).getFixture(),
+                picker.getComponent(HitboxComponent.class).getFixture());
+        assertFalse(picker.getComponent(InventoryComponent.class).hasItem(pickupItem));
     }
 }
