@@ -6,6 +6,12 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+import net.dermetfan.gdx.physics.box2d.PositionController;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 
 
 /*
@@ -108,12 +114,35 @@ public class SprinklerComponent extends Component {
   }
 
   /**
+   * Allows other sprinklers to set the power of this sprinkler
+   */
+  protected void setPower(boolean state) {
+    this.isPowered = state;
+  }
+
+  /**
    * Sets this sprinkler to be a pump.
    * Should only be called in PlaceableFactory.
    */
   public void setPump() {
     this.pump = true;
     this.isPowered = true;
+  }
+
+  /**
+   * Returns true if this sprinkler is a pump
+   * @return
+   */
+  public boolean getPump() {
+    return this.pump;
+  }
+
+  /**
+   * Getter for adj entity list TODO
+   * @return list of adj entities
+   */
+  protected Entity[] getAdjList() {
+    return this.connectedEntityComponent.getAdjacentEntities();
   }
 
   /**
@@ -144,6 +173,19 @@ public class SprinklerComponent extends Component {
   }
 
   /**
+   * make use of me TODO
+   * @param powerStatus
+   * @param orientation
+   */
+  protected void setTexture(boolean powerStatus, byte orientation) {
+    if (powerStatus) {
+      entity.getComponent(DynamicTextureRenderComponent.class).setTexture(textures_on[orientation]);
+    } else {
+      entity.getComponent(DynamicTextureRenderComponent.class).setTexture(textures_off[orientation]);
+    }
+  }
+
+  /**
    * Called via ConnectedEntityComponent's "reconfigure" trigger -
    * This trigger is called when a new sprinkler is placed in this sprinklers' vicinity.
    * Re-configures using configSprinkler() and //TODO used to: check if a change of state has occurred.
@@ -152,15 +194,8 @@ public class SprinklerComponent extends Component {
    */ // TODO: restore functionality
   public void reConfigure() {
     if (this.pump) return;  // A pump shouldn't reconfigure.
-    boolean prevPowerState = this.isPowered;
-    configSprinkler();
-    if (prevPowerState != this.isPowered) {
-      // we need to tell the others -- this will even check the one that called us... a single useless iteration
-      for (Entity sprinkler : this.connectedEntityComponent.getAdjacentEntities()) {
-        if (sprinkler != null) sprinkler.getComponent(SprinklerComponent.class).reConfigure();
-          //sprinkler.getEvents().trigger("reconfigure"); // TODO why does this line cause crash?
-      }
-    }
+    notifyConnected(findPump(this.entity));
+    setTexture(this.isPowered, this.connectedEntityComponent.getAdjacentBitmap());
   }
 
   /**
@@ -169,8 +204,49 @@ public class SprinklerComponent extends Component {
    * @return truth value of weather we found a path to a pump or not.
    */
   protected boolean findPump(Entity calling) {
-    // could do some recursion to find a pump, but we will run into lots of issues.
-    return true;
+    // BFS with a queue
+    Queue<Entity> queue = new LinkedList<>();
+    ArrayList<Entity> visited = new ArrayList<>();
+    queue.offer(calling);
+
+    while (!queue.isEmpty()) {
+      calling = queue.poll();
+      for (Entity s : calling.getComponent(SprinklerComponent.class).getAdjList()) {
+        if (s != null && !visited.contains(s)) {
+          if (s.getComponent(SprinklerComponent.class).getPump()) return true;
+          queue.offer(s);
+          visited.add(s);
+        }
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Tells every connected sprinkler to power themselves with the given powerStatus and select a new texture TODO
+   * @param powerStatus
+   */
+  private void notifyConnected(boolean powerStatus) {
+    this.isPowered = powerStatus;
+    // BFS with a queue to tell everyone to update
+    Entity calling = this.entity;
+    Queue<Entity> queue = new LinkedList<>();
+    ArrayList<Entity> visited = new ArrayList<>();
+    queue.offer(calling);
+
+    while (!queue.isEmpty()) {
+      calling = queue.poll();
+      for (Entity s : calling.getComponent(SprinklerComponent.class).getAdjList()) {
+        if (s != null && !visited.contains(s)) {
+          s.getComponent(SprinklerComponent.class).setPower(powerStatus);
+          if (!s.getComponent(SprinklerComponent.class).getPump()) {
+            s.getComponent(SprinklerComponent.class).setTexture(powerStatus, s.getComponent(SprinklerComponent.class).connectedEntityComponent.getAdjacentBitmap());
+          }
+          queue.offer(s);
+          visited.add(s);
+        }
+      }
+    }
   }
 
   /**

@@ -54,9 +54,9 @@ public class ConnectedEntityComponent extends Component { // TODO should it exte
       }
       // set entity at that location
       adjacentEntities[indexMap.get(pos)] = p;
-      // add listeners
-      target.getEvents().addListener("update", this::updateAdjEntity);
     }
+    // add listeners
+    target.getEvents().addListener("update", this::updateAdjEntity);
     target.getEvents().addListener("destroy", this::destroy);
   }
 
@@ -99,9 +99,7 @@ public class ConnectedEntityComponent extends Component { // TODO should it exte
   private void destroy() {
     for (Entity p : this.adjacentEntities) {
       if (p != null) {
-        //if (p.getType().getPlaceableCategory() == this.target.getType().getPlaceableCategory()) {
         p.getEvents().trigger("update", this.target.getPosition(), null);
-        //}
       }
     }
     target.dispose(); // is this the best place to call .dispose? seems fine.
