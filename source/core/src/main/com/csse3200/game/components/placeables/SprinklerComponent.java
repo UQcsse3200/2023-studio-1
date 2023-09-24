@@ -136,7 +136,7 @@ public class SprinklerComponent extends Component {
 
   /**
    * Getter for adj entity list TODO doc
-   * @return list of adj entities
+   * @return array of adj entities
    */
   protected Entity[] getAdjList() {
     return this.connectedEntityComponent.getAdjacentEntities();
@@ -180,12 +180,15 @@ public class SprinklerComponent extends Component {
    * Called via ConnectedEntityComponent's "reconfigure" trigger -
    * This trigger is called when a new sprinkler is placed in this sprinklers' vicinity.
    * Re-configures using pathfinding (see findPump() and notifyConnected() methods).
-   * TODO: findPump and notifyConnected could definitely be cleaned up.
+   * TODO: findPump and notifyConnected could be cleaned up.
    */
   public void reConfigure() {
     // A pump doesn't need to reconfigure, it's power and texture are constant, and cannot be effected.
     if (this.pump) return;
+    // Identify if this sprinkler is connected to a pump,
+    // Then configure every sprinkler in range with that result:
     notifyConnected(findPump(this.entity));
+    // Update this sprinklers texture:
     setTexture(this.isPowered, this.connectedEntityComponent.getAdjacentBitmap());
   }
 
@@ -204,6 +207,7 @@ public class SprinklerComponent extends Component {
       calling = queue.poll();
       for (Entity s : calling.getComponent(SprinklerComponent.class).getAdjList()) {
         if (s != null && !visited.contains(s)) {
+          // If we find a pump we return here:
           if (s.getComponent(SprinklerComponent.class).getPump()) return true;
           queue.offer(s);
           visited.add(s);
@@ -217,7 +221,7 @@ public class SprinklerComponent extends Component {
    * Uses pathfinding to set all connected sprinkles (from this.entity) to the given powerStatus &
    * sets their texture appropriately.
    * @param powerStatus the truth value used to set all sprinklers found via search.
-   * TODO can probably improve efficiency and definitely clean up code for readability.
+   * TODO can probably improve efficiency.
    */
   private void notifyConnected(boolean powerStatus) {
     // Set the calling sprinkler to match powerStatus
@@ -233,6 +237,7 @@ public class SprinklerComponent extends Component {
       for (Entity s : calling.getComponent(SprinklerComponent.class).getAdjList()) {
         if (s != null && !visited.contains(s)) {
           s.getComponent(SprinklerComponent.class).setPower(powerStatus);
+          // Set the powered status and texture of everything we find that's not a pump:
           if (!s.getComponent(SprinklerComponent.class).getPump()) {
             s.getComponent(SprinklerComponent.class)
                     .setTexture(powerStatus, s.getComponent(SprinklerComponent.class)
