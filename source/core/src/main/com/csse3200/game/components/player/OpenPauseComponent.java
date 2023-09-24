@@ -25,6 +25,7 @@ public class OpenPauseComponent extends Component {
             closePauseMenu();
         } else {
             openPauseMenu();
+
         }
     }
 
@@ -32,7 +33,7 @@ public class OpenPauseComponent extends Component {
         logger.info("Opening pause window");
         ServiceLocator.getPauseMenuArea().setPauseMenu();
         pauseOpen = true;
-      //  EntityService.pauseGame();
+        ServiceLocator.getTimeService().setPaused(true);
     }
 
     public void closePauseMenu() {
@@ -40,5 +41,6 @@ public class OpenPauseComponent extends Component {
         KeyboardPlayerInputComponent.clearMenuOpening();
         ServiceLocator.getPauseMenuArea().disposePauseMenu();
         pauseOpen = false;
+        ServiceLocator.getTimeService().setPaused(false);
     }
 }
