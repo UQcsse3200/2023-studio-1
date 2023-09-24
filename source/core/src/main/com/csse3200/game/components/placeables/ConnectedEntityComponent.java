@@ -14,7 +14,7 @@ import java.util.*;
  * For example an entity adds a SprinklerComponent OR a FenceComponent which creates a new instance of this component,
  * and passes the entity to its constructor.
  */
-public class ConnectedEntityComponent extends Component {
+public class ConnectedEntityComponent extends Component { // TODO should it extend component? helps with save&load?
 
   /**
    * The Placeable entity that this instance belongs to.
@@ -50,9 +50,7 @@ public class ConnectedEntityComponent extends Component {
     for (Vector2 pos : indexMap.keySet()) {
       Entity p = ServiceLocator.getGameArea().getMap().getTile(pos).getPlaceable();
       if (p != null) {
-        if (p.getType().getPlaceableCategory() != target.getType().getPlaceableCategory()) {
-          p = null;
-        } else p.getEvents().trigger("placed:"+targetPos, targetPos, this.target); // notify of this placement
+        if (p.getType().getPlaceableCategory() != target.getType().getPlaceableCategory()) p = null;
       }
       // set entity at that location
       adjacentEntities[indexMap.get(pos)] = p;
@@ -61,6 +59,18 @@ public class ConnectedEntityComponent extends Component {
       target.getEvents().addListener("destroyed:"+pos, this::updateAdjEntity);
     }
     target.getEvents().addListener("destroy", this::destroy);
+  }
+
+  /**
+   * Used by a Placeable entity after some update has occurred.
+   * Notifies the calling's adjacent entities via a trigger.
+   */
+  public void notifyAdjacent() {
+    for (Entity p : this.adjacentEntities) {
+      if (p != null) {
+        p.getEvents().trigger("placed:" + target.getPosition(), target.getPosition(), this.target);
+      }
+    }
   }
 
   /**

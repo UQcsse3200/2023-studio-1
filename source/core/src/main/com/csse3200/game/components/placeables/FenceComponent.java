@@ -102,6 +102,9 @@ public class FenceComponent extends Component {
 
         configFence();
         entity.getEvents().addListener("reconfigure", this::configFence);
+
+        // Notify all adjacent of this placement
+        this.connectedEntityComponent.notifyAdjacent();
     }
 
     /**

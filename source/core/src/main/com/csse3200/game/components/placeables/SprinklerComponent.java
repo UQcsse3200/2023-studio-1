@@ -8,19 +8,8 @@ import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 
-/*  game plan:
- * * we make connectedEntComp have mapping of entities, we can do this by PASSING the newly placed entity as
- *   the arg for the update function (rather than truth value).
- * * Then we add a path finding algorithm as a method and we call that from here to find power and stuff.
- *
- * Current functionality:
- * - when a sprinkler is placed it will identify any adjacent sprinklers and obtain a texture to illustrate its
- *    connected configuration.
- *    - DOES NOT set its powered status based off the sprinklers around it. todo.
- * - sprinklers sprinkle every 'minute'. (however long a minute in TimeService is).
- *
+/*
  * TODO:
- *  - more testing
  *  - get sprinkler powered/un-powered updates working.
  *  - animate watering.
  *  - integrate with save&load.
@@ -111,6 +100,7 @@ public class SprinklerComponent extends Component {
       // set to sprinkle every minute
       ServiceLocator.getTimeService().getEvents().addListener("minuteUpdate", this::sprinkle);
     }
+    this.connectedEntityComponent.notifyAdjacent();
   }
 
   /**
