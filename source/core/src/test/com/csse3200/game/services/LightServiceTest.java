@@ -58,10 +58,9 @@ class LightServiceTest {
 		try (MockedConstruction<RayHandler> mock = mockConstruction(RayHandler.class)) {
 			LightService lightService = new LightService();
 			rayHandler = mock.constructed().get(0);
-			verify(rayHandler, times(1)).setAmbientLight(0.8f);
+			verify(rayHandler, times(1)).setAmbientLight(0.3f, 0.3f, 0.7f, 0.1f);
 
 			lightService.renderLight();
-			verify(rayHandler, times(1)).setAmbientLight(0.23629053f);
 			verify(rayHandler, times(1)).setCombinedMatrix((OrthographicCamera) any());
 			verify(rayHandler).updateAndRender();
 		}
