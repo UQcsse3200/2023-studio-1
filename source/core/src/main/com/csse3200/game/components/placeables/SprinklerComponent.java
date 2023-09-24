@@ -87,12 +87,8 @@ public class SprinklerComponent extends Component {
     // Init class vars:
     this.connectedEntityComponent = new ConnectedEntityComponent(entity);
 
-    // todo Temp setting always powered:
-    this.isPowered = true;
-
     // A pump doesn't need any more configuring.
     if (!this.pump) {
-      this.aoe = new Vector2[12];
       configSprinkler();          // set power status and texture orientation.
       setAoe();
       // Listen for reconfigure requests:
@@ -121,11 +117,69 @@ public class SprinklerComponent extends Component {
   }
 
   /**
+   * Sets powered status and texture 'orientation' based off the adjacent sprinklers.
+   *  - A power source is either a pump or a powered sprinkler.
+   *  - A texture is selected for this sprinkler based on the surrounding sprinklers,
+   *    this illustrates to the player that these sprinklers are connected - like pipes.
+   *    TODO config power
+   */
+  public void configSprinkler() {
+    // // try to find a path to a pump
+    // //this.isPowered = findPump(this.entity);
+    // for a placed sprinkler we just need to check if any surrounding sprinklers are powered...
+    byte orientation = 0b0000;
+    for (Entity s : this.connectedEntityComponent.getAdjacentEntities()) {
+      orientation <<= 1;
+      if (s != null) {
+        orientation |= 0b0001;
+        this.isPowered |= s.getComponent(SprinklerComponent.class).getPowered();
+      }
+    }
+    // now set the texture.
+    if (this.isPowered) {
+      entity.getComponent(DynamicTextureRenderComponent.class).setTexture(textures_on[orientation]);
+    } else {
+      entity.getComponent(DynamicTextureRenderComponent.class).setTexture(textures_off[orientation]);
+    }
+  }
+
+  /**
+   * Called via ConnectedEntityComponent's "reconfigure" trigger -
+   * This trigger is called when a new sprinkler is placed in this sprinklers' vicinity.
+   * Re-configures using configSprinkler() and //TODO used to: check if a change of state has occurred.
+   * If a change of state has occurred then this sprinkler tells all its adjacent sprinklers to
+   * check themselves for a state change via reConfigure().
+   */ // TODO: restore functionality
+  public void reConfigure() {
+    if (this.pump) return;  // A pump shouldn't reconfigure.
+    boolean prevPowerState = this.isPowered;
+    configSprinkler();
+    if (prevPowerState != this.isPowered) {
+      // we need to tell the others -- this will even check the one that called us... a single useless iteration
+      for (Entity sprinkler : this.connectedEntityComponent.getAdjacentEntities()) {
+        if (sprinkler != null) sprinkler.getComponent(SprinklerComponent.class).reConfigure();
+          //sprinkler.getEvents().trigger("reconfigure"); // TODO why does this line cause crash?
+      }
+    }
+  }
+
+  /**
+   * finds a path to a pump, returns true if path found, false otherwise.
+   * @param calling the sprinkler calling (used to we don't loop forever)
+   * @return truth value of weather we found a path to a pump or not.
+   */
+  protected boolean findPump(Entity calling) {
+    // could do some recursion to find a pump, but we will run into lots of issues.
+    return true;
+  }
+
+  /**
    * Sets the coordinates for the watering area-of-effect.
    * The watering AOE is this sprinklers position +2 in all directions, +1 in diagonals,
    * this creates a circular watering effect.
    */
   private void setAoe() {
+    this.aoe = new Vector2[12];
     float x = entity.getPosition().x, y = entity.getPosition().y;
     this.aoe = new Vector2[]{
             // 2up, 2down, 2right, 2left.
@@ -143,57 +197,6 @@ public class SprinklerComponent extends Component {
             new Vector2(x - 1, y + 1),
             new Vector2(x - 1, y - 1)
     };
-  }
-
-  /**
-   * Called via ConnectedEntityComponent's "reconfigure" trigger -
-   * This trigger is called when a new sprinkler is placed in this sprinklers' vicinity.
-   * Re-configures using configSprinkler() and //TODO used to: check if a change of state has occurred.
-   * If a change of state has occurred then this sprinkler tells all its adjacent sprinklers to
-   * check themselves for a state change via reConfigure().
-   */ // TODO: restore functionality
-  public void reConfigure() {
-    if (this.pump) return;  // A pump shouldn't reconfigure.
-    boolean prevPowerState = this.isPowered;
-    configSprinkler();
-    if (prevPowerState != this.isPowered) {
-      // we need to tell the others
-      for (Entity sprinkler : this.connectedEntityComponent.getAdjacentEntities()) {
-        if (sprinkler != null) sprinkler.getComponent(SprinklerComponent.class).reConfigure();
-      }
-    }
-  }
-
-
-  /**
-   * Sets powered status and texture 'orientation' based off the adjacent sprinklers.
-   *  - A power source is either a pump or a powered sprinkler.
-   *  - A texture is selected for this sprinkler based on the surrounding sprinklers,
-   *    this illustrates to the player that these sprinklers are connected - like pipes.
-   *    TODO config power
-   */
-  public void configSprinkler() {
-    // try to find a path to a pump
-    this.isPowered = findPump(this.entity);
-
-    // get index into texture array based on surrounding sprinklers
-    byte orientation = this.connectedEntityComponent.getAdjacentBitmap();
-    // now set the texture.
-    if (this.isPowered) {
-      entity.getComponent(DynamicTextureRenderComponent.class).setTexture(textures_on[orientation]);
-    } else {
-      entity.getComponent(DynamicTextureRenderComponent.class).setTexture(textures_off[orientation]);
-    }
-  }
-
-  /**
-   * finds a path to a pump, returns true if path found, false otherwise.
-   * @param calling the sprinkler calling (used to we don't loop forever)
-   * @return truth value of weather we found a path to a pump or not.
-   */
-  protected boolean findPump(Entity calling) {
-    // could do some recursion to find a pump, but we will run into lots of issues.
-    return true;
   }
 
   /**

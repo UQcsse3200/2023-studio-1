@@ -55,10 +55,17 @@ public class ConnectedEntityComponent extends Component { // TODO should it exte
       // set entity at that location
       adjacentEntities[indexMap.get(pos)] = p;
       // add listeners
-      target.getEvents().addListener("placed:"+pos, this::updateAdjEntity);
-      target.getEvents().addListener("destroyed:"+pos, this::updateAdjEntity);
+      target.getEvents().addListener("update", this::updateAdjEntity);
     }
     target.getEvents().addListener("destroy", this::destroy);
+  }
+
+  /**
+   * Getter for this adjacent entity array.
+   * @return this array of adjacent entities.
+   */
+  public Entity[] getAdjacentEntities() {
+    return this.adjacentEntities;
   }
 
   /**
@@ -68,9 +75,21 @@ public class ConnectedEntityComponent extends Component { // TODO should it exte
   public void notifyAdjacent() {
     for (Entity p : this.adjacentEntities) {
       if (p != null) {
-        p.getEvents().trigger("placed:" + target.getPosition(), target.getPosition(), this.target);
+        p.getEvents().trigger("update", target.getPosition(), this.target);
       }
     }
+  }
+
+  /**
+   * Uses the given position as an index into the array of adjacent entities, and sets the entity
+   * at that index to the given entity (placeable).
+   * // TODO redo docstring
+   * @param pos The location (key) of the Placeable entity to be updated.
+   * @param placeable The entity to update the adjacent position with.
+   */
+  private void updateAdjEntity(Vector2 pos, Entity placeable) {
+    this.adjacentEntities[this.indexMap.get(pos)] = placeable;
+    target.getEvents().trigger("reconfigure");
   }
 
   /**
@@ -80,10 +99,9 @@ public class ConnectedEntityComponent extends Component { // TODO should it exte
   private void destroy() {
     for (Entity p : this.adjacentEntities) {
       if (p != null) {
-        if (p.getType().getPlaceableCategory() == this.target.getType().getPlaceableCategory()) {
-          p.getEvents().trigger("destroyed:"+this.target.getPosition(),
-                  this.target.getPosition(), null);
-        }
+        //if (p.getType().getPlaceableCategory() == this.target.getType().getPlaceableCategory()) {
+        p.getEvents().trigger("update", this.target.getPosition(), null);
+        //}
       }
     }
     target.dispose(); // is this the best place to call .dispose? seems fine.
@@ -102,25 +120,5 @@ public class ConnectedEntityComponent extends Component { // TODO should it exte
       if (p != null) mapping |= 0b0001;
     }
     return mapping;
-  }
-
-  /**
-   * Uses the given position as an index into the array of adjacent entities, and sets the entity
-   * at that index to the given entity (placeable).
-   * // TODO redo docstring
-   * @param pos The location (key) of the Placeable entity to be updated.
-   * @param placeable The entity to update the adjacent position with.
-   */
-  public void updateAdjEntity(Vector2 pos, Entity placeable) {  // TODO make this private
-    this.adjacentEntities[this.indexMap.get(pos)] = placeable;
-    target.getEvents().trigger("reconfigure");
-  }
-
-  /**
-   * Getter for this adjacent entity array.
-   * @return this array of adjacent entities.
-   */
-  public Entity[] getAdjacentEntities() {
-    return this.adjacentEntities;
   }
 }

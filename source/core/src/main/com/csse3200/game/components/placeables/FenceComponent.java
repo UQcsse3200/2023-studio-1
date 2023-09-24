@@ -97,6 +97,7 @@ public class FenceComponent extends Component {
             configGate();
             entity.getEvents().addListener("interact", this::toggleGate);
             entity.getEvents().addListener("reconfigure", this::configGate);
+            this.connectedEntityComponent.notifyAdjacent();
             return;
         }
 
