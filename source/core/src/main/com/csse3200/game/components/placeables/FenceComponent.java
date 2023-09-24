@@ -32,15 +32,44 @@ public class FenceComponent extends Component {
             "images/placeable/fences/f_r_d_l_u.png",
     };
 
-    private static final String[] textures_gate= {
-            "images/placeable/fences/gate.png",
-            "images/placeable/fences/gate_open.png"
+    private static final String[] textures_gate_open= {
+            "images/placeable/fences/g_r_l_o.png",
+            "images/placeable/fences/g_r_l_o.png",
+            "images/placeable/fences/g_r_l_o.png",
+            "images/placeable/fences/g_r_l_o.png",
+            "images/placeable/fences/g_d_u_o.png",
+            "images/placeable/fences/g_r_l_o.png",
+            "images/placeable/fences/g_r_l_o.png",
+            "images/placeable/fences/g_r_l_o.png",
+            "images/placeable/fences/g_d_u_o.png",
+            "images/placeable/fences/g_r_l_o.png",
+            "images/placeable/fences/g_r_l_o.png",
+            "images/placeable/fences/g_r_l_o.png",
+            "images/placeable/fences/g_d_u_o.png",
+            "images/placeable/fences/g_r_l_o.png",
+            "images/placeable/fences/g_r_l_o.png",
+            "images/placeable/fences/g_r_l_o.png",
     };
 
-    private String texturePath;
-    private String closedGatePath = textures_gate[0];
-    private String openGatePath = textures_gate[1];
-    private String fenceBase = "";
+    private static final String[] textures_gate_closed= {
+            "images/placeable/fences/g_r_l.png",
+            "images/placeable/fences/g_r_l.png",
+            "images/placeable/fences/g_r_l.png",
+            "images/placeable/fences/g_r_l.png",
+            "images/placeable/fences/g_d_u.png",
+            "images/placeable/fences/g_r_l.png",
+            "images/placeable/fences/g_r_l.png",
+            "images/placeable/fences/g_r_l.png",
+            "images/placeable/fences/g_d_u.png",
+            "images/placeable/fences/g_r_l.png",
+            "images/placeable/fences/g_r_l.png",
+            "images/placeable/fences/g_r_l.png",
+            "images/placeable/fences/g_d_u.png",
+            "images/placeable/fences/g_r_l.png",
+            "images/placeable/fences/g_r_l.png",
+            "images/placeable/fences/g_r_l.png",
+    };
+
 
     private boolean isGate = false;
     private boolean isOpen = false;
@@ -63,25 +92,20 @@ public class FenceComponent extends Component {
     @Override
     public void create() {
         this.connectedEntityComponent = new ConnectedEntityComponent(entity);
-        // leaving the gate out of the texture configuring for now.
-        if (!this.isGate) {
-            configFence();
-            entity.getEvents().addListener("reconfigure", this::configFence);
-        }
-        // Initialise event listener for gate.
+    
         if (isGate) {
+            configGate();
             entity.getEvents().addListener("interact", this::toggleGate);
-            //texturePath = closedGatePath;
+            entity.getEvents().addListener("reconfigure", this::configGate);
+            return;
         }
 
-        /* Check if we placed next to another gate and update accordingly */
-        //this.updateTexture();
-
+        configFence();
+        entity.getEvents().addListener("reconfigure", this::configFence);
     }
 
     /**
      * Sets this fence's texture orientation based off the adjacent fences.
-     * TODO add gates.
      */
     public void configFence() {
         // get index into texture array based on surrounding sprinklers
@@ -90,28 +114,32 @@ public class FenceComponent extends Component {
         entity.getComponent(DynamicTextureRenderComponent.class).setTexture(textures_fence[orientation]);
     }
 
+    /**
+     * Sets this gate's texture orientation based off the adjacent fences.
+     */
+    public void configGate() {
+        // get index into texture array based on surrounding sprinklers
+        byte orientation = this.connectedEntityComponent.getAdjacentBitmap();
+        // now set the texture.
+        if (isOpen) {
+            entity.getComponent(DynamicTextureRenderComponent.class).setTexture(textures_gate_open[orientation]);
+            return;
+        }
+        entity.getComponent(DynamicTextureRenderComponent.class).setTexture(textures_gate_closed[orientation]);
+    }
+
     private void toggleGate() {
         isOpen = !isOpen;
 
         if (isOpen) {
             //this.currentTexture.setTexture(openGatePath);
-            entity.getComponent(DynamicTextureRenderComponent.class).setTexture(openGatePath);
             this.entity.getComponent(ColliderComponent.class).setSensor(true);
+            configGate();
             return;
         }
         this.entity.getComponent(ColliderComponent.class).setSensor(false);
-        entity.getComponent(DynamicTextureRenderComponent.class).setTexture(closedGatePath);
-        //this.currentTexture.setTexture(closedGatePath);
+
+        // Update our texture accordingly
+        configGate();
     }
-
-    private void updateTexturePath() {
-
-    }
-
-    /*
-    public void updateTexture() {
-        this.currentTexture.setTexture(this.texturePath);
-    }
-     */
-
 }

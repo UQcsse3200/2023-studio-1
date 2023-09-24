@@ -51,7 +51,7 @@ public class PlaceableFactory {
         EntityType type = EntityType.Gate;
         type.setPlaceableCategory(PlaceableCategory.Fences);
         Entity gate = createBasePlaceable(type)  //used to be .Gate.
-                .addComponent(new DynamicTextureRenderComponent("images/placeable/fences/gate.png"))
+                .addComponent(new DynamicTextureRenderComponent("images/placeable/fences/g_r_l.png"))
                 .addComponent(new FenceComponent(true));
         return gate;
     }
