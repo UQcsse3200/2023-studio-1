@@ -35,9 +35,7 @@ public class ConnectedEntityComponent extends Component { // TODO should it exte
 
   public ConnectedEntityComponent(Entity target) {
     // Set target entity and the coordinates where it expects to find adjacent Placeable(s).
-    // TODO Add explanatory comments
     this.target = target;
-    Vector2 targetPos = target.getPosition();
     this.indexMap = Map.of(
             new Vector2(target.getPosition().x, target.getPosition().y + 1), 0,
             new Vector2(target.getPosition().x, target.getPosition().y - 1), 1,
@@ -45,17 +43,17 @@ public class ConnectedEntityComponent extends Component { // TODO should it exte
             new Vector2(target.getPosition().x - 1, target.getPosition().y), 3
     );
 
-    // TODO Add explanatory comments
+    // Discover and add adjacent placeable entities to a list.
     this.adjacentEntities = new Entity[4];
     for (Vector2 pos : indexMap.keySet()) {
       Entity p = ServiceLocator.getGameArea().getMap().getTile(pos).getPlaceable();
       if (p != null) {
         if (p.getType().getPlaceableCategory() != target.getType().getPlaceableCategory()) p = null;
       }
-      // set entity at that location
+      // Set entity at that location:
       adjacentEntities[indexMap.get(pos)] = p;
     }
-    // add listeners
+    // Add listeners for update and destroy:
     target.getEvents().addListener("update", this::updateAdjEntity);
     target.getEvents().addListener("destroy", this::destroy);
   }
@@ -64,7 +62,7 @@ public class ConnectedEntityComponent extends Component { // TODO should it exte
    * Getter for this adjacent entity array.
    * @return this array of adjacent entities.
    */
-  public Entity[] getAdjacentEntities() {
+  protected Entity[] getAdjacentEntities() {
     return this.adjacentEntities;
   }
 
@@ -83,7 +81,6 @@ public class ConnectedEntityComponent extends Component { // TODO should it exte
   /**
    * Uses the given position as an index into the array of adjacent entities, and sets the entity
    * at that index to the given entity (placeable).
-   * // TODO redo docstring
    * @param pos The location (key) of the Placeable entity to be updated.
    * @param placeable The entity to update the adjacent position with.
    */

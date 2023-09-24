@@ -6,17 +6,14 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
-import net.dermetfan.gdx.physics.box2d.PositionController;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
 
 /*
  * TODO:
- *  - get sprinkler powered/un-powered updates working.
  *  - animate watering.
  *  - integrate with save&load.
  *  - need finished textures for all sprinkler bits and the pump.
@@ -90,31 +87,31 @@ public class SprinklerComponent extends Component {
    * {@inheritDoc}
    */
   public void create() {
-    // Init class vars:
+    // Create a list of the adjacent sprinklers:
     this.connectedEntityComponent = new ConnectedEntityComponent(entity);
-
-    // A pump doesn't need any more configuring.
     if (!this.pump) {
-      configSprinkler();          // set power status and texture orientation.
+      // Configure the sprinklers dynamic components:
+      configSprinkler();
       setAoe();
-      // Listen for reconfigure requests:
+      // Add listener for reconfigure requests:
       entity.getEvents().addListener("reconfigure", this::reConfigure);
-      // set to sprinkle every minute
+      // set to sprinkle every minute:
       ServiceLocator.getTimeService().getEvents().addListener("minuteUpdate", this::sprinkle);
     }
+    // Update adjacent sprinklers:
     this.connectedEntityComponent.notifyAdjacent();
   }
 
   /**
-   * Allows other classes to query if this sprinkler has power.
+   * Allows other sprinklers to query if this sprinkler has power.
    * @return powered status
    */
-  public boolean getPowered() {
+  protected boolean getPowered() {
     return isPowered;
   }
 
   /**
-   * Allows other sprinklers to set the power of this sprinkler
+   * Allows other sprinklers to set the power of this sprinkler.
    */
   protected void setPower(boolean state) {
     this.isPowered = state;
@@ -130,15 +127,15 @@ public class SprinklerComponent extends Component {
   }
 
   /**
-   * Returns true if this sprinkler is a pump
-   * @return
+   * Returns true if this sprinkler is a pump.
+   * @return pump truth value
    */
   public boolean getPump() {
     return this.pump;
   }
 
   /**
-   * Getter for adj entity list TODO
+   * Getter for adj entity list TODO doc
    * @return list of adj entities
    */
   protected Entity[] getAdjList() {
@@ -150,12 +147,9 @@ public class SprinklerComponent extends Component {
    *  - A power source is either a pump or a powered sprinkler.
    *  - A texture is selected for this sprinkler based on the surrounding sprinklers,
    *    this illustrates to the player that these sprinklers are connected - like pipes.
-   *    TODO config power
    */
   public void configSprinkler() {
-    // // try to find a path to a pump
-    // //this.isPowered = findPump(this.entity);
-    // for a placed sprinkler we just need to check if any surrounding sprinklers are powered...
+    // Find suitable texture and configure power status based off of the adjacent:
     byte orientation = 0b0000;
     for (Entity s : this.connectedEntityComponent.getAdjacentEntities()) {
       orientation <<= 1;
@@ -164,18 +158,15 @@ public class SprinklerComponent extends Component {
         this.isPowered |= s.getComponent(SprinklerComponent.class).getPowered();
       }
     }
-    // now set the texture.
-    if (this.isPowered) {
-      entity.getComponent(DynamicTextureRenderComponent.class).setTexture(textures_on[orientation]);
-    } else {
-      entity.getComponent(DynamicTextureRenderComponent.class).setTexture(textures_off[orientation]);
-    }
+    // Now set the texture:
+    setTexture(this.isPowered, orientation);
   }
 
   /**
-   * make use of me TODO
-   * @param powerStatus
-   * @param orientation
+   * Helper method to set the texture of this sprinkler, using a given power status and orientation
+   * TODO could modify/simplify
+   * @param powerStatus powered status of sprinkler, used for texture selection
+   * @param orientation orientation of sprinkler based off of adjacent sprinklers.
    */
   protected void setTexture(boolean powerStatus, byte orientation) {
     if (powerStatus) {
@@ -188,19 +179,19 @@ public class SprinklerComponent extends Component {
   /**
    * Called via ConnectedEntityComponent's "reconfigure" trigger -
    * This trigger is called when a new sprinkler is placed in this sprinklers' vicinity.
-   * Re-configures using configSprinkler() and //TODO used to: check if a change of state has occurred.
-   * If a change of state has occurred then this sprinkler tells all its adjacent sprinklers to
-   * check themselves for a state change via reConfigure().
-   */ // TODO: restore functionality
+   * Re-configures using pathfinding (see findPump() and notifyConnected() methods).
+   * TODO: findPump and notifyConnected could definitely be cleaned up.
+   */
   public void reConfigure() {
-    if (this.pump) return;  // A pump shouldn't reconfigure.
+    // A pump doesn't need to reconfigure, it's power and texture are constant, and cannot be effected.
+    if (this.pump) return;
     notifyConnected(findPump(this.entity));
     setTexture(this.isPowered, this.connectedEntityComponent.getAdjacentBitmap());
   }
 
   /**
    * finds a path to a pump, returns true if path found, false otherwise.
-   * @param calling the sprinkler calling (used to we don't loop forever)
+   * @param calling the sprinkler calling.
    * @return truth value of weather we found a path to a pump or not.
    */
   protected boolean findPump(Entity calling) {
@@ -223,12 +214,15 @@ public class SprinklerComponent extends Component {
   }
 
   /**
-   * Tells every connected sprinkler to power themselves with the given powerStatus and select a new texture TODO
-   * @param powerStatus
+   * Uses pathfinding to set all connected sprinkles (from this.entity) to the given powerStatus &
+   * sets their texture appropriately.
+   * @param powerStatus the truth value used to set all sprinklers found via search.
+   * TODO can probably improve efficiency and definitely clean up code for readability.
    */
   private void notifyConnected(boolean powerStatus) {
+    // Set the calling sprinkler to match powerStatus
     this.isPowered = powerStatus;
-    // BFS with a queue to tell everyone to update
+    // BFS to tell everyone to update:
     Entity calling = this.entity;
     Queue<Entity> queue = new LinkedList<>();
     ArrayList<Entity> visited = new ArrayList<>();
@@ -240,7 +234,9 @@ public class SprinklerComponent extends Component {
         if (s != null && !visited.contains(s)) {
           s.getComponent(SprinklerComponent.class).setPower(powerStatus);
           if (!s.getComponent(SprinklerComponent.class).getPump()) {
-            s.getComponent(SprinklerComponent.class).setTexture(powerStatus, s.getComponent(SprinklerComponent.class).connectedEntityComponent.getAdjacentBitmap());
+            s.getComponent(SprinklerComponent.class)
+                    .setTexture(powerStatus, s.getComponent(SprinklerComponent.class)
+                            .connectedEntityComponent.getAdjacentBitmap());
           }
           queue.offer(s);
           visited.add(s);
