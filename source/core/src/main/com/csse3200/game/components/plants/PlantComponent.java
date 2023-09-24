@@ -12,6 +12,9 @@ import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ItemFactory;
+import com.csse3200.game.physics.components.ColliderComponent;
+import com.csse3200.game.physics.components.HitboxComponent;
+import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -89,7 +92,7 @@ public class PlantComponent extends Component {
     /**
      * The crop tile on which this plant is planted on.
      */
-    private final CropTileComponent cropTile;
+    private CropTileComponent cropTile;
 
     /**
      * The growth thresholds for different growth stages (Sprout Juvenile, Adult).
@@ -654,10 +657,23 @@ public class PlantComponent extends Component {
      * Destroys this plant and clears the crop tile.
      */
     private void destroyPlant() {
-        cropTile.setUnoccupied();
+        // This is such a cumbersome way of doing this, but there is an annoying bug that
+        // occurs when the PhysicsComponent is disposed of.
+
+        entity.getComponent(PlantAreaOfEffectComponent.class).dispose();
+
+        //entity.getComponent(PhysicsComponent.class).dispose();
+
+        entity.getComponent(ColliderComponent.class).dispose();
+        entity.getComponent(HitboxComponent.class).dispose();
         entity.getComponent(PlantMouseHoverComponent.class).plantDied();
-        entity.dispose();
+        entity.getComponent(PlantMouseHoverComponent.class).dispose();
+        entity.getComponent(PlantProximityComponent.class).dispose();
+        entity.getComponent(PlantComponent.class).dispose();
+        entity.getComponent(AnimationRenderComponent.class).dispose();
+        cropTile.setUnoccupied();
     }
+
 
     /**
      * To attack plants and damage their health.

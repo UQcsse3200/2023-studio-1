@@ -401,7 +401,8 @@ public class SpaceGameArea extends GameArea {
     // create a random places for tool to spawn
     GridPoint2 minPos = new GridPoint2(5, 5);
     GridPoint2 maxPos = new GridPoint2(20, 20);
-    GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+    //GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+    GridPoint2 randomPos = new GridPoint2(8, 8);
 
     switch (tool) {
       case HOE:
