@@ -11,10 +11,7 @@ import com.csse3200.game.components.npc.AnimalAnimationController;
 import com.csse3200.game.components.npc.FireflyScareComponent;
 import com.csse3200.game.components.npc.PassiveDropComponent;
 import com.csse3200.game.components.npc.TamableComponent;
-import com.csse3200.game.components.tasks.ChaseTask;
-import com.csse3200.game.components.tasks.FollowTask;
-import com.csse3200.game.components.tasks.RunAwayTask;
-import com.csse3200.game.components.tasks.WanderTask;
+import com.csse3200.game.components.tasks.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.configs.BaseAnimalConfig;
@@ -77,7 +74,8 @@ public class NPCFactory {
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-            .addTask(new RunAwayTask(player, 10, 2.25f, 4.25f, new Vector2(3f, 3f)));
+            .addTask(new RunAwayTask(player, 10, 2.25f, 4.25f, new Vector2(3f, 3f)))
+            .addTask(new TamedFollowTask(player, 10, 8, 10, 2f, config.favouriteFood));
 
     chicken
             .addComponent(aiTaskComponent)
@@ -118,7 +116,8 @@ public class NPCFactory {
 
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
-            .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+            .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
+            .addTask(new TamedFollowTask(player, 10, 8, 10, 2f, config.favouriteFood));
 
     cow
             .addComponent(aiTaskComponent)
