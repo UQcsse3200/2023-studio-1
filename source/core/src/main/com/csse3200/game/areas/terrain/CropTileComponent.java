@@ -143,6 +143,7 @@ public class CropTileComponent extends Component {
 		}
 	}
 
+
 	/**
 	 * Plants a plant entity on the tile and stores the plant as a member variable in the tile
 	 * component. It is assumed that the {@link Entity} created from the factory contains a {@link PlantComponent}.
@@ -209,7 +210,7 @@ public class CropTileComponent extends Component {
 	 *
 	 * @return whether the tile is occupied by the plant
 	 */
-	private boolean isOccupied() {
+	public boolean isOccupied() {
 		return plant != null;
 	}
 
