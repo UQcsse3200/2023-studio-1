@@ -3,7 +3,9 @@ package com.csse3200.game.missions.quests;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.missions.Mission;
+import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.rewards.Reward;
+import com.csse3200.game.services.ServiceLocator;
 
 
 public abstract class Quest extends Mission {
@@ -80,6 +82,9 @@ public abstract class Quest extends Mission {
 	public void collectReward() {
 		if (isCompleted() && !reward.isCollected()) {
 			reward.collect();
+			ServiceLocator.getMissionManager().getEvents().trigger(
+					MissionManager.MissionEvent.STORY_REWARD_COLLECTED.name(),
+					getName());
 		}
 	}
 
