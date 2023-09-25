@@ -1,9 +1,13 @@
 package com.csse3200.game.missions.cutscenes;
+import com.csse3200.game.screens.MainGameScreen;
+import com.csse3200.game.screens.MainGameScreen.*;
+import net.dermetfan.gdx.CutsceneManager;
+
 public class Cutscene {
 
     // creates an instance of the cutscene class and assigns all variables as they need to be assigned - DOES NOT SPAWN THE ACTUAL CUTSCENE
     public Cutscene() {
-
+        //
     }
 
     // Creates the whole cutscene - to call other methods below this method

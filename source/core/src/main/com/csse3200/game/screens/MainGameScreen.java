@@ -38,6 +38,7 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
+import com.csse3200.game.missions.cutscenes.Cutscene;
 
 
 /**
@@ -82,6 +83,8 @@ public class MainGameScreen extends ScreenAdapter {
             "images/weather_event/solar-flare.png"
 
     };
+
+
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 
     private final GdxGame game;
@@ -91,11 +94,11 @@ public class MainGameScreen extends ScreenAdapter {
 
     private static Boolean lose;
 
-
+    private CUT_SCENE scene;
 
     public MainGameScreen(GdxGame game) {
         this.game = game;
-
+        this.scene = CUT_SCENE.CS0;
         logger.debug("Initialising main game screen services");
         ServiceLocator.registerTimeSource(new GameTime());
 
@@ -129,10 +132,6 @@ public class MainGameScreen extends ScreenAdapter {
         renderer.getCamera().setTrackEntity(spaceGameArea.getPlayer());
 
         createUI();
-        // Switched to spaceGameArea TODO DELETE
-        //ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
-        //forestGameArea.create();
-        //renderer.getCamera().setTrackEntity(forestGameArea.getPlayer());
         spaceGameArea.getPlayer().getComponent(PlayerActions.class).setCameraVar(renderer.getCamera());
         spaceGameArea.getTractor().getComponent(TractorActions.class).setCameraVar(renderer.getCamera());
 
@@ -152,11 +151,22 @@ public class MainGameScreen extends ScreenAdapter {
         lose = true;
     }
 
+
+    public void runCutScene(CUT_SCENE scene) {
+        this.scene = scene;
+    }
+
     @Override
     public void render(float delta) {
         if (!ServiceLocator.getTimeService().isPaused()) {
             physicsEngine.update();
             ServiceLocator.getEntityService().update();
+
+        }
+        if (scene != CUT_SCENE.CS0) {
+            ServiceLocator.getTimeService().setPaused(true);
+
+            ServiceLocator.getTimeService().setPaused(false);
         }
         ServiceLocator.getTimeService().update();
         renderer.render();
@@ -213,7 +223,6 @@ public class MainGameScreen extends ScreenAdapter {
     }
 
 
-
     /**
      * Creates the main game's ui including components for rendering ui elements to the screen and
      * capturing and handling ui input.
@@ -238,4 +247,13 @@ public class MainGameScreen extends ScreenAdapter {
 
         ServiceLocator.getEntityService().register(ui);
     }
+
+    enum CUT_SCENE {
+        CS0, // no cut scene case
+        CS1, //start from 1
+        CS2,
+        CS3
+    }
 }
+
+

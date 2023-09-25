@@ -9,6 +9,7 @@ import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.missions.MissionManager;
+import com.csse3200.game.missions.cutscenes.Cutscene;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
 
@@ -37,6 +38,8 @@ public class ServiceLocator {
   private static SaveLoadService saveLoadService;
   private static MissionManager missions;
   private static PlanetOxygenService planetOxygenService;
+
+  private static Cutscene cutScene;
 
   public static GameArea getGameArea() {
     return gameArea;
@@ -127,6 +130,16 @@ public class ServiceLocator {
   public static void registerTimeSource(GameTime source) {
     logger.debug("Registering time source {}", source);
     timeSource  = source;
+  }
+
+  /**
+   * Registers a cutscene to be played.
+   * 
+   * @param scene the cutscene to play
+   */
+  public static void registerCutscene(Cutscene scene) {
+    logger.debug("Register cutscene {}", scene);
+    cutScene = scene;
   }
 
   public static void registerMissionManager(MissionManager source) {
