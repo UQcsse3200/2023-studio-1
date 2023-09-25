@@ -39,6 +39,26 @@ public class QuestFactory {
         return new AutoQuest(firstContactQuestName, reward, "Wake up after your crash landing.");
     }
 
+    public static ClearDebrisQuest createClearingYourMessQuest() {
+        List<Quest> questsToAdd = new ArrayList<>();
+        List<Quest> questsToActivate = new ArrayList<>();
+
+        String dialogue = """
+                Good. But your {WAIT} "landing" {WAIT} has completely destroyed my crops!
+                {WAIT}
+                Take this hoe and these seeds and start replanting the crops you destroyed.
+                {WAIT}
+                You have 4 hours to plant 12 Cosmic Corn.
+                """;
+
+        MultiReward reward = new MultiReward(List.of(
+                new ItemReward(List.of(ItemFactory.createHoe(), ItemFactory.createCosmicCobSeed())),
+                new QuestReward(questsToAdd, questsToActivate),
+                new DialogueReward(dialogue)
+        ));
+        return new ClearDebrisQuest(clearingYourMessQuestName, 15, reward, 2, true);
+    }
+
     public static MainQuest createActIMainQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
 
@@ -69,24 +89,6 @@ public class QuestFactory {
         ));
 
         return new MainQuest(actIMainQuestName, requiredQuests, reward, 5, "gain ALIEN NPC's trust");
-    }
-
-    public static ClearDebrisQuest createClearingYourMessQuest() {
-        List<Quest> questsToAdd = new ArrayList<>();
-        List<Quest> questsToActivate = new ArrayList<>();
-
-        String dialogue = """
-                Good. Your {WAIT} "landing" {WAIT} has completely destroyed my crops!
-                {WAIT}
-                Take this hoe and these seeds and start replanting the crops you destroyed.
-                """;
-
-        MultiReward reward = new MultiReward(List.of(
-                new ItemReward(List.of(ItemFactory.createHoe(), ItemFactory.createCosmicCobSeed())),
-                new QuestReward(questsToAdd, questsToActivate),
-                new DialogueReward(dialogue)
-        ));
-        return new ClearDebrisQuest(clearingYourMessQuestName, 15, reward, 2, true);
     }
 
     public static MainQuest createActIIMainQuest() {
