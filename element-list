@@ -5,6 +5,7 @@ com.csse3200.game.areas
 com.csse3200.game.areas.terrain
 com.csse3200.game.areas.weather
 com.csse3200.game.components
+com.csse3200.game.components.combat
 com.csse3200.game.components.controlsmenu
 com.csse3200.game.components.gamearea
 com.csse3200.game.components.intro

@@ -153,17 +153,14 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the list of entities currently in the interaction range towards a position.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNearest(java.util.List)" class="member-name-link">getNearest</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;&nbsp;entities)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets a list containing the nearest entity from a list of entities.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSuitableEntities(com.csse3200.game.components.items.ItemType,com.badlogic.gdx.math.Vector2)" class="member-name-link">getSuitableEntities</a><wbr>(<a href="items/ItemType.html" title="enum class in com.csse3200.game.components.items">ItemType</a>&nbsp;itemType,
- com.badlogic.gdx.math.Vector2&nbsp;position)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Retrieves a list of suitable entities of the specified item type based on their proximity to a given position.</div>
-</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#notifyOnDetection(boolean)" class="member-name-link">notifyOnDetection</a><wbr>(boolean&nbsp;notify)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -232,6 +229,12 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="notifyOnDetection(boolean)">
+<h3>notifyOnDetection</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">notifyOnDetection</span><wbr><span class="parameters">(boolean&nbsp;notify)</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="getEntitiesInRange()">
 <h3>getEntitiesInRange</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;</span>&nbsp;<span class="element-name">getEntitiesInRange</span>()</div>
@@ -272,28 +275,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getNearest(java.util.List)">
 <h3>getNearest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;</span>&nbsp;<span class="element-name">getNearest</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;&nbsp;entities)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">getNearest</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;&nbsp;entities)</span></div>
 <div class="block">Gets a list containing the nearest entity from a list of entities.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>entities</code> - The list of entities to search for the nearest entity.</dd>
 <dt>Returns:</dt>
-<dd>A list containing the nearest entity in the list, or an empty list if the input list is empty.</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getSuitableEntities(com.csse3200.game.components.items.ItemType,com.badlogic.gdx.math.Vector2)">
-<h3>getSuitableEntities</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;</span>&nbsp;<span class="element-name">getSuitableEntities</span><wbr><span class="parameters">(<a href="items/ItemType.html" title="enum class in com.csse3200.game.components.items">ItemType</a>&nbsp;itemType,
- com.badlogic.gdx.math.Vector2&nbsp;position)</span></div>
-<div class="block">Retrieves a list of suitable entities of the specified item type based on their proximity to a given position.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>itemType</code> - The type of item to determine suitability criteria (e.g., FOOD).</dd>
-<dd><code>position</code> - The position to evaluate proximity to.</dd>
-<dt>Returns:</dt>
-<dd>A list of suitable entities based on the provided criteria, or an empty list if no suitable entities are found.</dd>
+<dd>nearest Entity or null if list is empty</dd>
 </dl>
 </section>
 </li>
