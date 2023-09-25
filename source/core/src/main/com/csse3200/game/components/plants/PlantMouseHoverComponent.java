@@ -13,16 +13,22 @@ public class PlantMouseHoverComponent extends Component {
     private boolean showInfo;
     private boolean plantDead;
     private boolean noMoreUse;
+    private float lastTime;
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void create() {
-        ServiceLocator.getTimeService().getEvents().addListener("minuteUpdate", this::updateInfo);
         showInfo = false;
         plantDead = false;
         noMoreUse = false;
+        lastTime = ServiceLocator.getTimeSource().getTime();
+    }
+
+    @Override
+    public void update() {
+        updateInfo();
     }
 
     /**
