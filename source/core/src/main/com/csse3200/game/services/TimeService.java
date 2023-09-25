@@ -9,15 +9,19 @@ import com.csse3200.game.events.EventHandler;
 
 public class TimeService {
 	private static final Logger logger = LoggerFactory.getLogger(TimeService.class);
-	private static final int MS_IN_MINUTE = 500;
-	private static final int MORNING_HOUR = 6;
-	private static final int NIGHT_HOUR = 20;
+
 	private int minute;
 	private int hour;
 	private int day;
+
 	private long timeBuffer;
 	private boolean paused;
 	private final EventHandler events;
+
+	private static final int MS_IN_MINUTE = 500;
+
+	public static final int MORNING_HOUR = 6;
+	public static final int NIGHT_HOUR = 20;
 
 
 	/**
@@ -130,6 +134,42 @@ public class TimeService {
 		logger.debug("Minute is being set to: {}", this.minute);
 		this.timeBuffer = 0;
 		events.trigger("minuteUpdate");
+	}
+
+	/**
+	 * Sets the in-game hour to the nearest future hour passed in, rounded to 0 minutes.
+	 * Increments the day if necessary, updates the time buffer, and triggers any necessary events.
+	 *
+	 * @param hour in-game hour
+	 */
+	public void setNearestTime(int hour) {
+		setNearestTime(hour, 0);
+	}
+
+	/**
+	 * Sets the in-game hour and minute to the nearest future value passed in.
+	 * Increments the day if necessary, updates the time buffer, and triggers any necessary events.
+	 *
+	 * @param hour in-game hour
+	 * @param minute in-game minute
+ 	*/
+	public void setNearestTime(int hour, int minute) {
+		if (this.minute > minute) {
+			this.hour += 1;
+		}
+		this.minute = minute;
+		events.trigger("minuteUpdate");
+
+		if (this.hour > hour) {
+			this.day += 1;
+			events.trigger("dayUpdate");
+		}
+		this.hour = hour;
+		events.trigger("hourUpdate");
+
+		this.timeBuffer = 0;
+
+		logger.debug("Time is being set to: {}d, {}h, {}m", this.day, this.hour, this.minute);
 	}
 
 	/**
