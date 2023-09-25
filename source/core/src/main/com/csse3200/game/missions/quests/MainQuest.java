@@ -15,7 +15,7 @@ public class MainQuest extends Quest {
 
     private final String goal;
 
-    public MainQuest(String name, Set<String> questsToComplete, Reward reward, int daysToExpiry, String goal) {
+    public MainQuest(String name, Reward reward, int daysToExpiry, Set<String> questsToComplete, String goal) {
         super(name, reward, daysToExpiry * 24, true);
 
         this.questsToComplete = questsToComplete;
@@ -48,10 +48,14 @@ public class MainQuest extends Quest {
         descriptionBuilder.append(goal);
         descriptionBuilder.append("!\n");
         descriptionBuilder.append("Complete the quests: ");
+        boolean isFirst = true;
         for (String questName : questsToComplete) {
             if (!questsCompleted.contains(questName)) {
+                if (!isFirst) {
+                    descriptionBuilder.append(", ");
+                }
                 descriptionBuilder.append(questName);
-                descriptionBuilder.append(", ");
+                isFirst = false;
             }
         }
         descriptionBuilder.append(".");

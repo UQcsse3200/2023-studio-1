@@ -24,6 +24,7 @@ public class QuestReward extends Reward {
     /**
      * A QuestReward that adds quests to the MissionManager on collect().
      * @param selectableQuests - the quests to be added when the Quest attached is complete.
+     * @param activeQuests - the quests to be activated when the reward is collected.
      */
     public QuestReward(List<Quest> selectableQuests, List<Quest> activeQuests) {
         super();

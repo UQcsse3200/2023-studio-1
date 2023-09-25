@@ -10,7 +10,7 @@ public class ClearDebrisQuest extends Quest {
     private final int numberOfDebrisToClear;
     private int numberOfDebrisCleared;
 
-    public ClearDebrisQuest(String name, int numberOfDebrisToClear, Reward reward, int expiryDuration, boolean isMandatory) {
+    public ClearDebrisQuest(String name, Reward reward, int expiryDuration, boolean isMandatory, int numberOfDebrisToClear) {
         super(name, reward, expiryDuration, isMandatory);
 
         this.numberOfDebrisToClear = numberOfDebrisToClear;

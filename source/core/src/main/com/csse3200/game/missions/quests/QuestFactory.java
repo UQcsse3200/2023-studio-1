@@ -16,6 +16,7 @@ public class QuestFactory {
     public static final String actIMainQuestName = "An Agreement";
     public static final String firstContactQuestName = "First Contact";
     public static final String clearingYourMessQuestName = "Clearing Your Mess";
+    public static final String sowingYourFirstSeedsQuestName = "Sowing Your First Seeds";
     public static final String actIIMainQuestName = "Making Contact";
     public static final String actIIIMainQuestName = "Weather the Storm";
 
@@ -42,13 +43,14 @@ public class QuestFactory {
     public static ClearDebrisQuest createClearingYourMessQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
         List<Quest> questsToActivate = new ArrayList<>();
+        questsToActivate.add(createSowingYourFirstSeedsQuest());
 
         String dialogue = """
                 Good. But your {WAIT} "landing" {WAIT} has completely destroyed my crops!
                 {WAIT}
                 Take this hoe and these seeds and start replanting the crops you destroyed.
                 {WAIT}
-                You have 4 hours to plant 12 Cosmic Corn.
+                You have 6 hours to plant 12 Cosmic Corn.
                 """;
 
         MultiReward reward = new MultiReward(List.of(
@@ -56,7 +58,33 @@ public class QuestFactory {
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
-        return new ClearDebrisQuest(clearingYourMessQuestName, 15, reward, 2, true);
+        return new ClearDebrisQuest(clearingYourMessQuestName, reward, 2, true, 15);
+    }
+
+    public static PlantCropsQuest createSowingYourFirstSeedsQuest() {
+        List<Quest> questsToAdd = new ArrayList<>();
+        List<Quest> questsToActivate = new ArrayList<>();
+
+        String dialogue = """
+                Impressive. I see that you can follow basic instructions.
+                {WAIT}
+                *sigh*
+                {WAIT}
+                I apologise for my hostility.
+                {WAIT}
+                My name is ALIEN NPC. I am an engineer of the ALIEN SPECIES people.
+                {WAIT}
+                I think I might be able to help you out, and get you back to wherever you came from. However, your crash still destroyed all that I was working on. So I'm not going to help you until you show that you are willing to help me.
+                {WAIT}
+                I have a few more tasks for you to do, and then I might consider helping you out.
+                """;
+
+        MultiReward reward = new MultiReward(List.of(
+                new ItemReward(List.of(ItemFactory.createScythe(), ItemFactory.createWateringcan())),
+                new QuestReward(questsToAdd, questsToActivate),
+                new DialogueReward(dialogue)
+        ));
+        return new PlantCropsQuest(sowingYourFirstSeedsQuestName, reward, 6, true, Set.of("Cosmic Cob"), 12);
     }
 
     public static MainQuest createActIMainQuest() {
@@ -88,7 +116,7 @@ public class QuestFactory {
                 new DialogueReward(dialogue)
         ));
 
-        return new MainQuest(actIMainQuestName, requiredQuests, reward, 5, "gain ALIEN NPC's trust");
+        return new MainQuest(actIMainQuestName, reward, 5, requiredQuests, "gain ALIEN NPC's trust");
     }
 
     public static MainQuest createActIIMainQuest() {
@@ -126,13 +154,13 @@ public class QuestFactory {
                 new DialogueReward(dialogue)
         ));
 
-        return new MainQuest(actIIMainQuestName, requiredQuests, reward, 10, "make connection with the Mothership");
+        return new MainQuest(actIIMainQuestName, reward, 10, requiredQuests, "make connection with the Mothership");
     }
 
     public static MainQuest createActIIIMainQuest() {
         Set<String> requiredQuests = new HashSet<>();
         MultiReward reward = new MultiReward(List.of());
-        return new MainQuest(actIIIMainQuestName, requiredQuests, reward, 15, "weather the storm");
+        return new MainQuest(actIIIMainQuestName, reward, 15, requiredQuests, "weather the storm");
     }
 
     public static FertiliseCropTilesQuest createHaberHobbyist() {

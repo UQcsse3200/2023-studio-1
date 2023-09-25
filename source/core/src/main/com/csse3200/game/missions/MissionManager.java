@@ -31,7 +31,7 @@ public class MissionManager implements Json.Serializable {
 		// Triggers when a story quest's reward is collected (to ensure that the player has read the required dialogue),
 		// a single String representing the name of the quest whose reward has been collected is provided as an argument
 		STORY_REWARD_COLLECTED,
-		// Triggers when a crop is planted, a single String representing plant type is provided as an argument
+		// Triggers when a crop is planted, a single String representing plant name is provided as an argument
 		PLANT_CROP,
 		// Triggers when a crop is fertilised
 		FERTILISE_CROP,
