@@ -7,6 +7,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractionDetector;
@@ -57,7 +58,6 @@ public class PlayerActions extends Component {
     if (entity.getComponent(PlayerAnimationController.class).readyToPlay()) {
       if (moving) {
         updateSpeed();
-
       }
       updateAnimation();
     }
@@ -234,6 +234,7 @@ public class PlayerActions extends Component {
     }
     this.stopMoving();
     muted = true;
+    tractor.getComponent(AuraLightComponent.class).toggleLight();
     tractor.getComponent(TractorActions.class).setMuted(false);
     tractor.getComponent(KeyboardTractorInputComponent.class)
         .setWalkDirection(entity.getComponent(KeyboardPlayerInputComponent.class).getWalkDirection());

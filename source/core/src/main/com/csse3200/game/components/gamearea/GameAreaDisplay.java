@@ -1,5 +1,7 @@
 package com.csse3200.game.components.gamearea;
 
+import com.csse3200.game.GdxGame;
+import com.csse3200.game.components.maingame.MainGameActions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +30,11 @@ public class GameAreaDisplay extends UIComponent {
   private Group pausingGroup = new Group();
   private OpenPauseComponent openPauseComponent;
   private Image popUp;
+  private GdxGame game;
+  private boolean isPaused = false;
+  private Image backgroundOverlay;
+
+
 
 
   @Override
@@ -35,6 +42,12 @@ public class GameAreaDisplay extends UIComponent {
     super.create();
     ServiceLocator.registerCraftArea(this);
     addActors();
+    backgroundOverlay = new Image(new Texture(Gdx.files.internal("images/PauseMenu/Pause_Overlay.jpg")));
+    backgroundOverlay.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    backgroundOverlay.setColor(0, 0, 0, 0.8f);
+    backgroundOverlay.setVisible(false);
+    stage.addActor(backgroundOverlay);
+
   }
   public GameAreaDisplay(String gameAreaName) {
     this.gameAreaName = gameAreaName;
@@ -53,6 +66,10 @@ public class GameAreaDisplay extends UIComponent {
   public void setPauseMenu() {
     logger.info("Opening Pause Menu");
     openPauseComponent = ServiceLocator.getGameArea().getPlayer().getComponent(OpenPauseComponent.class);
+
+    backgroundOverlay.setVisible(true); // Initially, set it to invisible
+
+
     Image pauseMenu = new Image(new Texture(Gdx.files.internal("images/PauseMenu/Pausenew.jpg")));
     pauseMenu.setSize(1300, 700);
     pauseMenu.setPosition((float) (Gdx.graphics.getWidth() / 2.0 - pauseMenu.getWidth() / 2),
@@ -63,20 +80,6 @@ public class GameAreaDisplay extends UIComponent {
 
     float buttonHeight = 80f;
 
-    TextButton resumeBtn = new TextButton("Resume", skin);
-    resumeBtn.setSize(386f, buttonHeight);
-    resumeBtn.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 375);
-    resumeBtn.addListener(new ChangeListener() {
-      @Override
-      public void changed(ChangeEvent event, Actor actor) {
-        logger.debug("Resume button clicked");
-        KeyboardPlayerInputComponent.incrementPauseCounter();
-        KeyboardPlayerInputComponent.clearMenuOpening();
-        openPauseComponent.closePauseMenu();
-      }
-    });
-    pausingGroup.addActor(resumeBtn);
-
     TextButton exitBtn = new TextButton("Exit", skin);
     exitBtn.setSize(386f, buttonHeight);
     exitBtn.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 75);
@@ -86,17 +89,28 @@ public class GameAreaDisplay extends UIComponent {
         logger.debug("Exit button clicked");
         KeyboardPlayerInputComponent.incrementPauseCounter();
         KeyboardPlayerInputComponent.clearMenuOpening();
-        PauseMenuActions.setQuitGameStatus();
+        MainGameActions.exitToMainMenu();
       }
     });
     pausingGroup.addActor(exitBtn);
 
+    Label saveMessageLabel = new Label("", skin); // Create an empty label initially
+    saveMessageLabel.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 500);
+    saveMessageLabel.setVisible(false); // Initially, the label is not visible
+    pausingGroup.addActor(saveMessageLabel);
+    Label resumeMessageLabel = new Label("", skin); // Create an empty label initially
+    resumeMessageLabel.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 500);
+    resumeMessageLabel.setVisible(false); // Initially, the label is not visible
+    pausingGroup.addActor(resumeMessageLabel);
     TextButton loadBtn = new TextButton("Load Previous", skin);
     loadBtn.setSize(386f, buttonHeight);
     loadBtn.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 175);
     loadBtn.addListener(new ChangeListener() {
       @Override
       public void changed(ChangeEvent event, Actor actor) {
+        saveMessageLabel.setVisible(false);
+        resumeMessageLabel.setText("                    Previous Game Loaded!");
+        resumeMessageLabel.setVisible(true);
         ServiceLocator.getSaveLoadService().load();
       }
     });
@@ -108,17 +122,36 @@ public class GameAreaDisplay extends UIComponent {
     saveBtn.addListener(new ChangeListener() {
       @Override
       public void changed(ChangeEvent event, Actor actor) {
+        saveMessageLabel.setText("                      Current Game Saved!");
+        saveMessageLabel.setVisible(true);
+        resumeMessageLabel.setVisible(false);
         ServiceLocator.getSaveLoadService().save();
       }
     });
     pausingGroup.addActor(saveBtn);
 
+
+    TextButton resumeBtn = new TextButton("Resume", skin);
+    resumeBtn.setSize(386f, buttonHeight);
+    resumeBtn.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 375);
+    resumeBtn.addListener(new ChangeListener() {
+      @Override
+      public void changed(ChangeEvent event, Actor actor) {
+        logger.debug("Resume button clicked");
+        KeyboardPlayerInputComponent.incrementPauseCounter();
+        KeyboardPlayerInputComponent.clearMenuOpening();
+        openPauseComponent.closePauseMenu();
+        saveMessageLabel.setVisible(false);
+      }
+    });
+    pausingGroup.addActor(resumeBtn);
+
     stage.draw();
   }
 
 
-
   public void disposePauseMenu() {
+    backgroundOverlay.setVisible(false);
     pausingGroup.clear();
   }
 

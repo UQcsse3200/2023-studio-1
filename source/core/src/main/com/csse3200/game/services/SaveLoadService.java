@@ -1,5 +1,7 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.components.AuraLightComponent;
+import com.csse3200.game.components.ConeLightComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -136,6 +138,29 @@ public class SaveLoadService {
   }
 
   /**
+   * Destroys all NPCS in the map and then recreates them based off the gamestate
+   * 
+   * @param state gamestate of the entire game based off safeFile.json
+   */
+  private void updateNPCs(GameState state) {
+    Entity player = ServiceLocator.getGameArea().getPlayer();
+
+    for (Entity entity : state.getEntities()) {
+      EntityType entityType = entity.getType();
+      if (FactoryService.getNpcFactories().containsKey(entityType)) {
+        Entity npc = FactoryService.getNpcFactories().get(entityType).apply(player);
+        npc.setPosition(entity.getPosition());
+        // Non tameable npcs here
+        if (entityType == EntityType.Cow || entityType == EntityType.Chicken || entityType == EntityType.Astrolotl) {
+          npc.getComponent(TamableComponent.class).setTame(entity.getComponent(TamableComponent.class).isTamed());
+        }
+        // TODO Team 4 please add in saving health here (feel free to talk to us but please read doc or code first)
+        ServiceLocator.getGameArea().spawnEntity(npc);
+      }
+    }
+  }
+
+  /**
    * Update the tractors in-game position and check if the player was in the tractor or not
    *  on saving last
    * @param state GameState holding data to be loaded
@@ -151,6 +176,7 @@ public class SaveLoadService {
     }
 
     boolean inTractor = !tractorState.getComponent(TractorActions.class).isMuted();  // Store the inverse of the muted value from tractor state entity
+
     tractor.setPosition(tractorState.getPosition());   // Update the tractors position to the values stored in the json file
 
     // Check whether the player was in the tractor when they last saved
@@ -159,29 +185,13 @@ public class SaveLoadService {
       Entity player = ServiceLocator.getGameArea().getPlayer();
       player.setPosition(tractor.getPosition());              // Teleport the player to the tractor (Needed so that they are in 5 units of each other)
       player.getEvents().trigger("enterTractor");   // Trigger the enterTractor event
+      tractor.getComponent(AuraLightComponent.class).toggleLight();
     }
-  }
 
-  /**
-   * Destroys all NPCS in the map and then recreates them based off the gamestate
-   * 
-   * @param state gamestate of the entire game based off safeFile.json
-   */
-  private void updateNPCs(GameState state) {
-    Entity player = ServiceLocator.getGameArea().getPlayer();
-
-    for (Entity entity : state.getEntities()) {
-      EntityType entityType = entity.getType();
-      if (FactoryService.getNpcFactories().containsKey(entityType)) {
-        Entity npc = FactoryService.getNpcFactories().get(entityType).apply(player);
-        npc.setPosition(entity.getPosition());
-        // Non tameable npcs here
-        if (entityType != EntityType.OxygenEater && entityType != EntityType.ShipDebris) {
-          npc.getComponent(TamableComponent.class).setTame(entity.getComponent(TamableComponent.class).isTamed());
-        }
-        // TODO Team 4 please add in saving health here (feel free to talk to us but please read doc or code first)
-        ServiceLocator.getGameArea().spawnEntity(npc);
-      }
+    // HeadLights on tractor
+    boolean active = tractorState.getComponent(ConeLightComponent.class).getActive();
+    if (active != tractor.getComponent(ConeLightComponent.class).getActive()) {
+      tractor.getComponent(ConeLightComponent.class).toggleLight();
     }
   }
 
