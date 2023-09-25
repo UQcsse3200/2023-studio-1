@@ -9,6 +9,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.csse3200.game.services.plants.PlantInfoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,6 +33,7 @@ public class PlantComponentTest {
     Sound mockSound;
 
     PlantAreaOfEffectComponent mockPlantAreaOfEffect;
+    PlantInfoService mockPlantInfoService;
 
     int health = 100;
     String name = "testPlant";
@@ -52,6 +54,8 @@ public class PlantComponentTest {
         mockSound = mock(Sound.class);
         mockPlantAreaOfEffect = mock(PlantAreaOfEffectComponent.class);
         ServiceLocator.registerResourceService(mockResourceService);
+        mockPlantInfoService = mock(PlantInfoService.class);
+        ServiceLocator.registerPlantInfoService(mockPlantInfoService);
 
         when(mockResourceService.getAsset(anyString(), eq(Sound.class))).thenReturn(mockSound);
 
