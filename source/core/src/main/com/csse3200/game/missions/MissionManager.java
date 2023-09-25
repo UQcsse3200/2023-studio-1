@@ -21,7 +21,8 @@ public class MissionManager implements Json.Serializable {
 	 * a listener for the {@link #name()} of the enum value.
 	 */
 	public enum MissionEvent {
-		// Triggers when a mission is completed
+		// Triggers when a mission is completed, single String representing name of completed mission is provided as
+		// argument
 		MISSION_COMPLETE,
 		// Triggers when a new quest has been added to the mission manager
 		NEW_QUEST,
