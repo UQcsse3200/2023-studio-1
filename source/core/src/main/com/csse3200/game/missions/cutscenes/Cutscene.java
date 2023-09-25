@@ -1,9 +1,13 @@
 package com.csse3200.game.missions.cutscenes;
 import com.csse3200.game.screens.MainGameScreen;
 import com.csse3200.game.screens.MainGameScreen.*;
+import com.csse3200.game.services.ServiceLocator;
 import net.dermetfan.gdx.CutsceneManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Cutscene {
+    private static final Logger logger = LoggerFactory.getLogger(Cutscene.class);
 
     // creates an instance of the cutscene class and assigns all variables as they need to be assigned - DOES NOT SPAWN THE ACTUAL CUTSCENE
     public Cutscene() {
@@ -62,6 +66,8 @@ public class Cutscene {
 
     // unpauses the game
     public void unPauseGame() {
-
+        logger.debug("Setting paused state to: 1");
+        // 1 is for delta time to run in normal speed
+        ServiceLocator.getTimeSource().setTimeScale(1);
     }
 }
