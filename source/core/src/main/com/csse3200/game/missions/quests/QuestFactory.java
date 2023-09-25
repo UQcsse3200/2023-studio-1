@@ -16,7 +16,9 @@ public class QuestFactory {
 
     public static MainQuest createActIMainQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
-        questsToAdd.add(createActIIMainQuest());
+
+        List<Quest> questsToActivate = new ArrayList<>();
+        questsToActivate.add(createActIIMainQuest());
 
         String dialogue = """
                 Well done, human. You have shown me that you can be trusted, and that our cooperation may be mutually beneficial.
@@ -34,7 +36,7 @@ public class QuestFactory {
                 """;
 
         MultiReward reward = new MultiReward(List.of(
-                new QuestReward(questsToAdd),
+                new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
 
@@ -43,7 +45,9 @@ public class QuestFactory {
 
     public static MainQuest createActIIMainQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
-        questsToAdd.add(createActIIIMainQuest());
+
+        List<Quest> questsToActivate = new ArrayList<>();
+        questsToActivate.add(createActIIIMainQuest());
 
         String dialogue = """
                 With the final pieces of the ship in place, a faint static buzzes from the radio.
@@ -68,7 +72,7 @@ public class QuestFactory {
                 """;
 
         MultiReward reward = new MultiReward(List.of(
-                new QuestReward(questsToAdd),
+                new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
 
