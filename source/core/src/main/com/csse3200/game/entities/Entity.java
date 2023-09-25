@@ -443,17 +443,6 @@ public class Entity implements Json.Serializable {
           TerrainTile terrainTile = ServiceLocator.getGameArea().getMap().getTile(tile.getPosition());
           terrainTile.setCropTile(tile);
           break;
-        case Cow:
-        case Astrolotl:
-        case Chicken:
-          // Makes a new NPC
-          Entity npc = FactoryService.getNpcFactories().get(type).apply(ServiceLocator.getGameArea().getPlayer());
-          if (npc.getComponent(TamableComponent.class) != null) {
-            npc.getComponent(TamableComponent.class).read(json, jsonMap.get("components"));
-          }
-          ServiceLocator.getGameArea().spawnEntity(npc);
-          npc.setPosition(position);
-          break;
         case Player:
           // Does not make a new player, instead just updates the current one
           InventoryComponent inventoryComponent = new InventoryComponent(null);
@@ -476,7 +465,16 @@ public class Entity implements Json.Serializable {
           this.addComponent(inventoryComponent);
           break;
         default:
-          // Nothing
+          if (FactoryService.getNpcFactories().containsKey(type) && ServiceLocator.getGameArea().getLoadableTypes().contains(type)) {
+            // Makes a new NPC
+            Entity npc = FactoryService.getNpcFactories().get(type).apply(ServiceLocator.getGameArea().getPlayer());
+            if (npc.getComponent(TamableComponent.class) != null) {
+              npc.getComponent(TamableComponent.class).read(json, jsonMap.get("components"));
+            }
+            ServiceLocator.getGameArea().spawnEntity(npc);
+            npc.setPosition(position);
+          }
+          break;
       }
     }
   }
