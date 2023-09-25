@@ -99,8 +99,8 @@ public class SingleDropHandler {
             Entity item = createItem.get();
             Vector2 position = entity.getPosition();
             //Spawn different items in different locations around entity
-            position.add((float) (Math.random() - 0.5) * 2,
-                    (float) (Math.random() - 0.5) * 2);
+            position.add((float) ((Math.random() - 0.5) * 1.5),
+                    (float) ((Math.random() - 0.5) * 1.5));
             item.setPosition(position);
             gameArea.spawnEntity(item);
         }
