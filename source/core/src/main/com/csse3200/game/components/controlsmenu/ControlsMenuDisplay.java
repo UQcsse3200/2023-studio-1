@@ -169,6 +169,7 @@ public class ControlsMenuDisplay extends UIComponent {
     controls.put("S", "Moves the character to the right");
     controls.put("D", "Moves the character downwards");
     controls.put("T", "Toggles the player light on and off");
+    controls.put("Esc", "Toggles the pause game function");
 
     for (String key : controls.keySet()) {
       // Start a new row for each control

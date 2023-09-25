@@ -34,7 +34,7 @@ public class SpaceGameArea extends GameArea {
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final GridPoint2 QUESTGIVER_SPAWN = new GridPoint2(20, 20);
   private static final GridPoint2 SHIP_SPAWN = new GridPoint2(50,50);
-  private static final GridPoint2 QUESTGIVERIND_SPAWN = new GridPoint2(20, 22);
+
   private static final GridPoint2 TRACTOR_SPAWN = new GridPoint2(15, 15);
 
   private static final GridPoint2 TOOL_SPAWN = new GridPoint2(15, 10);// temp!!!
@@ -102,6 +102,7 @@ public class SpaceGameArea extends GameArea {
           "images/stonePath_1.png",
           "images/tractor.png",
           "images/fertiliser.png",
+          "images/yellowSquare.png",
 
           "images/plants/misc/aloe_vera_seed.png",
           "images/plants/atomic_algae/1_seedling.png",
@@ -170,6 +171,9 @@ public class SpaceGameArea extends GameArea {
           "images/plants/misc/space_snapper_seed.png",
           "images/plants/misc/atomic_algae_seed.png",
           "images/invisible_sprite.png",
+
+          "images/projectiles/oxygen_eater_projectile.png",
+
           "images/ship/ship_debris.png"
   };
   private static final String[] forestTextureAtlases = {
@@ -178,7 +182,8 @@ public class SpaceGameArea extends GameArea {
       "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas", "images/questgiver.atlas",
       "images/missionStatus.atlas", "images/plants/cosmic_cob.atlas", "images/plants/aloe_vera.atlas",
       "images/plants/hammer_plant.atlas", "images/plants/space_snapper.atlas", "images/plants/atomic_algae.atlas",
-      "images/plants/deadly_nightshade.atlas"
+      "images/plants/deadly_nightshade.atlas", "images/projectiles/oxygen_eater_projectile.atlas",
+      "images/fireflies.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg", "sounds/car-horn-6408.mp3"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -224,15 +229,25 @@ public class SpaceGameArea extends GameArea {
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
     player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHoe());
-    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createAloeVeraSeed());
 
     tractor = spawnTractor();
+    spawnPlayerHighlight();
     spawnQuestgiver();
     spawnChickens();
     spawnCows();
     spawnAstrolotl();
     spawnOxygenEater();
     spawnShip();
+
+//    spawnTool(ItemType.WATERING_CAN);
+//    spawnTool(ItemType.SHOVEL);
+//    spawnTool(ItemType.SCYTHE);
+//    spawnTool(ItemType.HOE);
+//    spawnTool(ItemType.FERTILISER);
+//    spawnTool(ItemType.SEED);
+//    spawnTool(ItemType.FOOD);
+
+    //playMusic();
   }
 
   public Entity getPlayer() {
@@ -345,7 +360,7 @@ public class SpaceGameArea extends GameArea {
     spawnEntityAt(newQuestgiver, QUESTGIVER_SPAWN, true, true);
 
     Entity newQuestgiverIndicator = QuestgiverFactory.createQuestgiverIndicator(newQuestgiver);
-    spawnEntityAt(newQuestgiverIndicator, QUESTGIVERIND_SPAWN, true, true);
+    spawnEntityAt(newQuestgiverIndicator, new GridPoint2(QUESTGIVER_SPAWN.x, QUESTGIVER_SPAWN.y+2), true, true);
   }
 
   private void spawnShip() {
@@ -500,6 +515,16 @@ public class SpaceGameArea extends GameArea {
   public GameMap getMap() {
     return gameMap;
   }
+
+  /**
+   * Spawns the player highlight entity
+   * Is the yellow square that highlights the tile the player is hovering over
+   */
+  public void spawnPlayerHighlight() {
+    Entity playerHighlight = PlayerHighlightFactory.createPlayerHighlight();
+    spawnEntityAt(playerHighlight, PLAYER_SPAWN, true, true);
+  }
+
 
   @Override
   public void loadClimate(ClimateController climate) {

@@ -99,7 +99,7 @@ public abstract class Mission {
      *
      * @return A {@link JsonValue}, which contains {@link JsonValue} children storing the internal progress of the
      *         {@link Mission}. The {@link JsonValue.ValueType} of the returned {@link JsonValue} does not matter, so
-     *         long as it is consistent with what you use in {@link #setProgress(JsonValue)}
+     *         long as it is consistent with what you use in {@link #readProgress(JsonValue)}
      */
     public abstract Object getProgress();
 
