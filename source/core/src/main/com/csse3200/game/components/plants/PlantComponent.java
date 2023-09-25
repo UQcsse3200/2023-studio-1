@@ -162,6 +162,8 @@ public class PlantComponent extends Component {
      */
     private boolean playerInProximity;
 
+    private boolean plantDestroyed = false;
+
     /**
      * Constructor used for plant types that have no extra properties. This is just used for testing.
      *
@@ -274,12 +276,8 @@ public class PlantComponent extends Component {
         ServiceLocator.getTimeService().getEvents().addListener("minuteUpdate", this::minuteUpdate);
         ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::hourUpdate);
         ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::dayUpdate);
-        ServiceLocator.getPlantCommandService().getEvents().addListener("forceSeedling", this::forceSeedling);
-        ServiceLocator.getPlantCommandService().getEvents().addListener("forceSprout", this::forceSprout);
-        ServiceLocator.getPlantCommandService().getEvents().addListener("forceJuvenile", this::forceJuvenile);
-        ServiceLocator.getPlantCommandService().getEvents().addListener("forceAdult", this::forceAdult);
-        ServiceLocator.getPlantCommandService().getEvents().addListener("forceDecay", this::forceDecay);
-        ServiceLocator.getPlantCommandService().getEvents().addListener("forceDead", this::forceDead);
+        ServiceLocator.getPlantCommandService().getEvents().addListener("forceGrowthStage", this::forceGrowthStage);
+
         this.currentAnimator = entity.getComponent(AnimationRenderComponent.class);
         updateTexture();
         updateMaxHealth();
@@ -672,6 +670,8 @@ public class PlantComponent extends Component {
         entity.getComponent(PlantComponent.class).dispose();
         entity.getComponent(AnimationRenderComponent.class).dispose();
         cropTile.setUnoccupied();
+
+        plantDestroyed = true;
     }
 
 
@@ -722,7 +722,7 @@ public class PlantComponent extends Component {
      * @param functionCalled The type of interaction with the plant.
      */
     public void playSound(String functionCalled) {
-        if (playerInProximity) {
+        if (!plantDestroyed && playerInProximity) {
 
             logger.debug("The sound being called: " + functionCalled);
 
@@ -868,6 +868,19 @@ public class PlantComponent extends Component {
         updateTexture();
         playSound("destroy");
         updateMaxHealth();
+    }
+
+    public void forceGrowthStage(String growthStage) {
+        if (!plantDestroyed) {
+            switch (growthStage) {
+                case "seedling" -> forceSeedling();
+                case "sprout" -> forceSprout();
+                case "juvenile" -> forceJuvenile();
+                case "adult" -> forceAdult();
+                case "decay" -> forceDecay();
+                case "dead" -> forceDead();
+            }
+        }
     }
 
     /**
