@@ -278,6 +278,8 @@ public class PlantComponent extends Component {
         ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::dayUpdate);
         ServiceLocator.getPlantCommandService().getEvents().addListener("forceGrowthStage", this::forceGrowthStage);
 
+        ServiceLocator.getPlantInfoService().increaseAlivePlantCount(1);
+
         this.currentAnimator = entity.getComponent(AnimationRenderComponent.class);
         updateTexture();
         updateMaxHealth();
@@ -338,18 +340,21 @@ public class PlantComponent extends Component {
      * has died before reaching adult growth stage.
      */
     public void decayCheck() {
-        // If the plants health drops to zero while decaying, then update the growth stage to dead.
-        if (getGrowthStage().getValue() == GrowthStage.DECAYING.getValue()) {
-            if (getPlantHealth() <= 0) {
-                setGrowthStage(GrowthStage.DEAD.getValue());
-                playSound("destroy");
-                updateTexture();
-            }
+        if (!plantDestroyed) {
 
-        // If the plants health drops to zero before it becomes an adult, destroy.
-        } else if (getGrowthStage().getValue() < GrowthStage.ADULT.getValue())
-            if (getPlantHealth() <= 0) {
-                destroyPlant();
+            // If the plants health drops to zero while decaying, then update the growth stage to dead.
+            if (getGrowthStage().getValue() == GrowthStage.DECAYING.getValue()) {
+                if (getPlantHealth() <= 0) {
+                    setGrowthStage(GrowthStage.DEAD.getValue());
+                    playSound("destroy");
+                    updateTexture();
+                }
+
+                // If the plants health drops to zero before it becomes an adult, destroy.
+            } else if (getGrowthStage().getValue() < GrowthStage.ADULT.getValue())
+                if (getPlantHealth() <= 0) {
+                    destroyPlant();
+                }
         }
     }
 
@@ -517,6 +522,10 @@ public class PlantComponent extends Component {
      * @param newGrowthStage - The updated growth stage of the plant, between 1 and 6.
      */
     public void setGrowthStage(int newGrowthStage) {
+        if (newGrowthStage == GrowthStage.DEAD.getValue()) {
+            ServiceLocator.getPlantInfoService().increaseAlivePlantCount(-1);
+        }
+
         if (newGrowthStage >= 1 && newGrowthStage <= GrowthStage.values().length) {
             this.growthStages = GrowthStage.values()[newGrowthStage - 1];
         } else {
@@ -649,12 +658,17 @@ public class PlantComponent extends Component {
             }
         });
         destroyPlant();
+
     }
 
     /**
      * Destroys this plant and clears the crop tile.
      */
     private void destroyPlant() {
+        if (getGrowthStage().getValue() < GrowthStage.DEAD.getValue()) {
+            ServiceLocator.getPlantInfoService().increaseAlivePlantCount(-1);
+        }
+
         // This is such a cumbersome way of doing this, but there is an annoying bug that
         // occurs when the PhysicsComponent is disposed of.
 
@@ -672,6 +686,8 @@ public class PlantComponent extends Component {
         cropTile.setUnoccupied();
 
         plantDestroyed = true;
+
+
     }
 
 
