@@ -1,0 +1,52 @@
+package com.csse3200.game.components.ship;
+
+import com.csse3200.game.components.Component;
+import com.csse3200.game.components.ship.ShipProgressComponent.Feature;
+import com.csse3200.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Set;
+
+import static com.csse3200.game.services.TimeService.MORNING_HOUR;
+
+/**
+ * Handles allowing the player to sleep through the night by interacting
+ * with the ship once the repair threshold is reached.
+ */
+public class ShipTimeSkipComponent extends Component {
+    private static final Logger logger = LoggerFactory.getLogger(ShipTimeSkipComponent.class);
+    private boolean unlocked;
+
+    @Override
+    public void create() {
+        super.create();
+        unlocked = false;
+
+        entity.getEvents().addListener("progressUpdated", this::progressUpdated);
+        entity.getEvents().addListener("interact", this::triggerTimeSkip);
+    }
+
+    /**
+     * If the BED feature has been unlocked on the Ship Entity, set own state to unlocked
+     *
+     * @param repairsMade number of repairs on the Ship Entity
+     * @param unlockedFeatures features that have been unlocked on the Ship Entity
+     */
+    private void progressUpdated(int repairsMade, Set<Feature> unlockedFeatures) {
+        if (unlockedFeatures.contains(Feature.BED)) {
+            logger.debug("Ship TimeSkip unlocked");
+            unlocked = true;
+        }
+    }
+
+    /**
+     * If time skip is unlocked, trigger the sleep function on the time service.
+     */
+    private void triggerTimeSkip() {
+        if (unlocked) {
+            logger.debug("Skipping time to next MORNING_HOUR");
+            ServiceLocator.getTimeService().setNearestTime(MORNING_HOUR);
+        }
+    }
+}
