@@ -4,11 +4,13 @@ import java.util.function.Function;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
+import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
 
 /**
@@ -255,30 +257,6 @@ public class CropTileComponent extends Component {
 		return plant;
 	}
 
-	public boolean isFertilised() {
-		return isFertilised;
-	}
-
-	public void setFertilised(boolean fertilised) {
-		isFertilised = fertilised;
-	}
-
-	public void setSoilQuality(float soilQuality) {
-		this.soilQuality = soilQuality;
-	}
-
-	public void setWaterContent(float waterContent) {
-		this.waterContent = waterContent;
-	}
-
-	public float getSoilQuality() {
-		return soilQuality;
-	}
-
-	public float getWaterContent() {
-		return waterContent;
-	}
-
 	/**
 	 * Only to be used for loading as it can go around the achievement stuff
 	 * @param plant - the plant to set here
@@ -304,8 +282,20 @@ public class CropTileComponent extends Component {
 		json.writeObjectEnd();
 	}
 
-	public TerrainTile getTerrainTile() {
-		return terrainTile;
+	@Override
+	public void read(Json json, JsonValue jsonMap) {
+		jsonMap = jsonMap.get("components").get("CropTileComponent");
+		waterContent = jsonMap.getFloat("waterContent");
+		soilQuality = jsonMap.getFloat("soilQuality");
+		isFertilised = jsonMap.getBoolean("isFertilised");
+		JsonValue plantData = jsonMap.get("plant");
+		if (plantData.get("Entity") != null) {
+			plantData = plantData.get("components").get("PlantComponent");
+			plant = FactoryService.getPlantFactories().get(plantData.getString("name")).apply(this);
+			plant.getComponent(PlantComponent.class).read(json, plantData);
+		} else {
+			plant = null;
+		}
 	}
 
 	public void setTerrainTile(TerrainTile terrainTile) {

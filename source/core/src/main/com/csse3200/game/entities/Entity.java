@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.csse3200.game.areas.terrain.TerrainCropTileFactory;
+import com.csse3200.game.areas.terrain.TerrainTile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -408,8 +410,12 @@ public class Entity implements Json.Serializable {
    * @param jsonMap which is a valid JsonValue that is read from
    */
   public void read(Json json, JsonValue jsonMap) {
+    // This method creates an Entity but will not use that Entity for anything that is being remade as
+    // it makes the code duplication extremely high as it is a whole factory here
+
     // Saves the position
     position = new Vector2(jsonMap.getFloat("x"), jsonMap.getFloat("y"));
+
     // Gets the type of Entity
     String value = jsonMap.getString("Entity");
     try {
@@ -417,9 +423,11 @@ public class Entity implements Json.Serializable {
     } catch (IllegalArgumentException e) {
       type = null;
     }
-    if (type != null) { // The try catch above may cause a NullPointerException otherwise
+
+    if (type != null) {
       switch (type) {
         case Tractor:
+          // Does not need a new one (may change depending on how tractor is obtained)
           jsonMap = jsonMap.get("components").get("TractorActions");
           TractorActions tractorActions = new TractorActions();
           // Update the tractor 'muted' variable based on the info in the json file
@@ -427,33 +435,27 @@ public class Entity implements Json.Serializable {
           this.addComponent(tractorActions);
           break;
         case Tile:
-          jsonMap = jsonMap.get("components").get("CropTileComponent");
-          CropTileComponent c = new CropTileComponent(jsonMap.getFloat("waterContent"), jsonMap.getFloat("soilQuality"));
-          c.setFertilised(jsonMap.getBoolean("isFertilised"));
-          JsonValue plantData = jsonMap.get("plant");
-          if (plantData.get("Entity") != null) {
-            // Has a plant
-            plantData = plantData.get("components").get("PlantComponent");
-            c.setPlant(
-                new Entity().addComponent(new PlantComponent(plantData.getInt("health"), plantData.getString("name"),
-                    "bleh", "bleh", 1f, 999, 999, this.getComponent(CropTileComponent.class))));
-            c.getPlant().getComponent(PlantComponent.class).setCurrentAge(plantData.getFloat("age"));
-            c.getPlant().getComponent(PlantComponent.class).setGrowthStage(plantData.getInt("growth"));
-          }
-          this.addComponent(c);
+          // Makes a new tile
+          Entity tile = TerrainCropTileFactory.createTerrainEntity(position);
+          tile.getComponent(CropTileComponent.class).read(json, jsonMap);
+          ServiceLocator.getGameArea().spawnEntity(tile);
+          tile.setPosition(position);
+          TerrainTile terrainTile = ServiceLocator.getGameArea().getMap().getTile(tile.getPosition());
+          terrainTile.setCropTile(tile);
           break;
         case Cow:
         case Astrolotl:
         case Chicken:
-          jsonMap = jsonMap.get("components").get("TamableComponent");
-          // Does not need actual values here as it is just used to store the tamed value;
-          Entity emptyPlayer = new Entity(); // empty player, as the real player is not needed for reading in the
-                                             // component
-          TamableComponent tamableComponent = new TamableComponent(emptyPlayer, 1, 1, null);
-          tamableComponent.setTame(jsonMap.getBoolean("Tamed"));
-          this.addComponent(tamableComponent);
+          // Makes a new NPC
+          Entity npc = FactoryService.getNpcFactories().get(type).apply(ServiceLocator.getGameArea().getPlayer());
+          if (npc.getComponent(TamableComponent.class) != null) {
+            npc.getComponent(TamableComponent.class).read(json, jsonMap.get("components"));
+          }
+          ServiceLocator.getGameArea().spawnEntity(npc);
+          npc.setPosition(position);
           break;
         case Player:
+          // Does not make a new player, instead just updates the current one
           InventoryComponent inventoryComponent = new InventoryComponent(null);
           HashMap<Entity, Integer> items = new HashMap<>();
           HashMap<Entity, Point> itemPositions = new HashMap<>();

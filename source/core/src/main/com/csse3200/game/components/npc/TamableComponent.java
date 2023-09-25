@@ -3,6 +3,7 @@ package com.csse3200.game.components.npc;
 import java.security.SecureRandom;
 
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.player.InventoryComponent;
@@ -146,4 +147,12 @@ public class TamableComponent extends Component {
     json.writeValue("tamed", isTamed());
     json.writeObjectEnd();
   }
+
+    @Override
+    public void read(Json json, JsonValue jsonMap) {
+        System.out.println("hi");
+      jsonMap = jsonMap.get("TamableComponent");
+        System.out.println("hi");
+      isTamed = jsonMap.getBoolean("Tamed");
+    }
 }

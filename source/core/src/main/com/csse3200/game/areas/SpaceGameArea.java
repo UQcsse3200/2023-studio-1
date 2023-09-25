@@ -219,19 +219,12 @@ public class SpaceGameArea extends GameArea {
     spawnTerrain();
     spawnInvisibleObstacle();// spawn invisible obstacle on the non-traversable area of the map
 
-    spawnCrop(5, 11, "Cosmic Cob");
-    spawnCrop(7, 11, "Aloe Vera");
-    spawnCrop(9, 11, "Hammer Plant");
-    spawnCrop(11, 11, "Space Snapper");
-    spawnCrop(13, 11, "Deadly Nightshade");
-    spawnCrop(15, 11, "Atomic Algae");
-
     spawnShipDebris();
 
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHoe());
     player.getComponent(InventoryComponent.class).addItem(ItemFactory.createAloeVeraSeed());
-    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createFertiliser());
 
     tractor = spawnTractor();
     spawnQuestgiver();
@@ -240,16 +233,6 @@ public class SpaceGameArea extends GameArea {
     spawnAstrolotl();
     spawnOxygenEater();
     spawnShip();
-
-    spawnTool(ItemType.WATERING_CAN);
-    spawnTool(ItemType.SHOVEL);
-    spawnTool(ItemType.SCYTHE);
-    spawnTool(ItemType.HOE);
-    spawnTool(ItemType.FERTILISER);
-    spawnTool(ItemType.SEED);
-    spawnTool(ItemType.FOOD);
-
-    //playMusic();
   }
 
   public Entity getPlayer() {

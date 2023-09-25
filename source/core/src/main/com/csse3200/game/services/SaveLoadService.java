@@ -76,6 +76,11 @@ public class SaveLoadService {
    * Makes the game state match saveFile.json
    */
   public void load() {
+    // Get all entities currently in game:
+    Array<Entity> currentGameEntities = ServiceLocator.getEntityService().getEntities();
+    // Remove them
+    ServiceLocator.getGameArea().removeLoadableEntities(currentGameEntities);
+
     SaveGame.GameState state = SaveGame.get();
     if (state == null) {
       logger.error("Couldn't read the file assets/saves/saveFile.json");
@@ -104,16 +109,9 @@ public class SaveLoadService {
    * @param state state of the game which was saved previously in saveFile.json
    */
   private void updateGame(GameState state) {
-    // Get all entities currently in game:
-    Array<Entity> currentGameEntities = ServiceLocator.getEntityService().getEntities();
-    // Remove entities from game that we will replace on load:
-    ServiceLocator.getGameArea().removeLoadableEntities(currentGameEntities);
     // Update playable characters (Tractor and player)
     updatePlayer(state);
     updateTractor(state);
-    // Remake and reload anything that could've been destroyed since last save.
-    updateNPCs(state);
-    updateTiles(state);
     // Update Misc
     updateClimate(state);
     updateTime(state);
@@ -159,65 +157,6 @@ public class SaveLoadService {
       Entity player = ServiceLocator.getGameArea().getPlayer();
       player.setPosition(tractor.getPosition());              // Teleport the player to the tractor (Needed so that they are in 5 units of each other)
       player.getEvents().trigger("enterTractor");   // Trigger the enterTractor event
-    }
-  }
-
-  /**
-   * Destroys all NPCS in the map and then recreates them based off the gamestate
-   * 
-   * @param state gamestate of the entire game based off safeFile.json
-   */
-  private void updateNPCs(GameState state) {
-    Entity player = ServiceLocator.getGameArea().getPlayer();
-
-    for (Entity entity : state.getEntities()) {
-      EntityType entityType = entity.getType();
-      if (FactoryService.getNpcFactories().containsKey(entityType)) {
-        Entity npc = FactoryService.getNpcFactories().get(entityType).apply(player);
-        npc.setPosition(entity.getPosition());
-        // Non tameable npcs here
-        if (entityType != EntityType.OxygenEater && entityType != EntityType.ShipDebris) {
-          npc.getComponent(TamableComponent.class).setTame(entity.getComponent(TamableComponent.class).isTamed());
-        }
-        // TODO Team 4 please add in saving health here (feel free to talk to us but please read doc or code first)
-        ServiceLocator.getGameArea().spawnEntity(npc);
-      }
-    }
-  }
-
-  /**
-   * Recreates / loads tile back into map after a save.
-   * @param state gamestate of the entire game based off safeFile.json
-   */
-  private void updateTiles(GameState state) {
-    GameMap map = ServiceLocator.getGameArea().getMap();
-    for (Entity savedCropTile : state.getTiles()) {
-      CropTileComponent savedComponent = savedCropTile.getComponent(CropTileComponent.class);
-      // Makes a new crop tile
-      Entity newCropTile = TerrainCropTileFactory.createTerrainEntity(savedCropTile.getPosition());
-      ServiceLocator.getGameArea().spawnEntity(newCropTile);
-      CropTileComponent newComponent = newCropTile.getComponent(CropTileComponent.class);
-      // Sets CropTileComponents values to GameState ones
-      newComponent.setFertilised(savedComponent.isFertilised());
-      newComponent.setWaterContent(savedComponent.getWaterContent());
-      newComponent.setSoilQuality(savedComponent.getSoilQuality());
-      if (savedComponent.getPlant() != null) {
-        PlantComponent savedPlantComponent = savedComponent.getPlant().getComponent(PlantComponent.class);
-        // Makes a new plant
-        Entity plant = FactoryService.getPlantFactories().get(savedPlantComponent.getPlantName()).apply(newComponent);
-        ServiceLocator.getGameArea().spawnEntity(plant);
-        PlantComponent newPlantComponent = plant.getComponent(PlantComponent.class);
-        // Sets PlantComponent values to GameState ones
-        newPlantComponent.setGrowthStage(savedPlantComponent.getGrowthStage().getValue());
-        newPlantComponent.setPlantHealth(savedPlantComponent.getPlantHealth());
-        // Plant age does not exist. Plant team will sort this out later.
-        //newPlantComponent.setCurrentAge(savedPlantComponent.getCurrentAge());
-        // Sets plant to the CropTileComponent
-        newComponent.setPlant(plant);
-      }
-      // Gets the Terrain tile from the map and set the crop tile to it
-      TerrainTile tile = map.getTile(newCropTile.getPosition());
-      tile.setCropTile(newCropTile);
     }
   }
 
