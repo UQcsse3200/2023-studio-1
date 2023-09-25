@@ -310,6 +310,9 @@ public class ItemActions extends Component {
    */
   private boolean feed(Entity player, Vector2 mouseWorldPos) {
     InteractionDetector interactionDetector = player.getComponent(InteractionDetector.class);
+    if (interactionDetector == null) {
+      return false;
+    }
 
     List<Entity> entities = interactionDetector.getEntitiesTowardsPosition(mouseWorldPos);
     entities.removeIf(entity -> entity.getComponent(TamableComponent.class) == null);
@@ -334,6 +337,10 @@ public class ItemActions extends Component {
    */
   private boolean destroy(Entity player, Vector2 mouseWorldPos) {
     InteractionDetector interactionDetector = player.getComponent(InteractionDetector.class);
+
+    if (interactionDetector == null) {
+      return false;
+    }
 
     List<Entity> entities = interactionDetector.getEntitiesTowardsPosition(mouseWorldPos);
     entities.removeIf(entity -> entity.getType() != EntityType.ShipDebris);
