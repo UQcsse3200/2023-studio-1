@@ -126,10 +126,6 @@ public abstract class GameArea implements Disposable {
 
   public void setPlayer(Entity customPlayer) { player = customPlayer; }
 
-  public void loadClimate(ClimateController climate) {
-    return;
-  }
-
   public ArrayList<EntityType> getLoadableTypes() {
     return loadableTypes;
   }

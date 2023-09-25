@@ -260,6 +260,11 @@ public class ClimateController implements Json.Serializable {
 
 	@Override
 	public void read(Json json, JsonValue jsonData) {
+		ServiceLocator.getGameArea().getClimateController().setValues(json, jsonData);
+	}
+
+
+	public void setValues(Json json, JsonValue jsonData) {
 		temperature = jsonData.getFloat("Temp");
 		humidity = jsonData.getFloat("Humidity");
 		jsonData = jsonData.get("Events");

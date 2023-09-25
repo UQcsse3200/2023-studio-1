@@ -115,7 +115,6 @@ public class SaveLoadService {
     updatePlayer(state);
     updateTractor(state);
     // Update Misc
-    updateClimate(state);
     updateTime(state);
     updateMissions(state);
   }
@@ -167,14 +166,6 @@ public class SaveLoadService {
     if (active != tractor.getComponent(ConeLightComponent.class).getActive()) {
       tractor.getComponent(ConeLightComponent.class).toggleLight();
     }
-  }
-
-  /**
-   *
-   * @param state
-   */
-  private void updateClimate(GameState state) {
-    ServiceLocator.getGameArea().loadClimate(state.getClimate());
   }
 
   /**''

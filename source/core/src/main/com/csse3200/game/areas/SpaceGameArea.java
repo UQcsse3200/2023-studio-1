@@ -193,7 +193,7 @@ public class SpaceGameArea extends GameArea {
   private final GameMap gameMap;
 
   private Entity player;
-  private ClimateController climateController;
+  private final ClimateController climateController;
   private Entity tractor;
 
   /**
@@ -523,11 +523,5 @@ public class SpaceGameArea extends GameArea {
   public void spawnPlayerHighlight() {
     Entity playerHighlight = PlayerHighlightFactory.createPlayerHighlight();
     spawnEntityAt(playerHighlight, PLAYER_SPAWN, true, true);
-  }
-
-
-  @Override
-  public void loadClimate(ClimateController climate) {
-    climateController = climate;
   }
 }
