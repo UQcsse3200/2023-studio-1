@@ -5,9 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.TouchAttackComponent;
-import com.csse3200.game.components.npc.AnimalAnimationController;
-import com.csse3200.game.components.npc.PassiveDropComponent;
-import com.csse3200.game.components.npc.TamableComponent;
+import com.csse3200.game.components.npc.*;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.FollowTask;
 import com.csse3200.game.components.tasks.RunAwayTask;
@@ -25,6 +23,9 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Factory to create non-playable character (NPC) entities with predefined components.
@@ -73,9 +74,22 @@ public class NPCFactory {
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
             .addTask(new RunAwayTask(player, 10, 2.25f, 4.25f, new Vector2(3f, 3f)));
 
+    List<SingleDropHandler> singleDropHandlers = new ArrayList<>();
+    MultiDropComponent multiDropComponent = new MultiDropComponent(singleDropHandlers);
+    //Chickens untamed drop eggs
+    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createEgg, 1,
+            ServiceLocator.getTimeService().getEvents()::addListener, "hourUpdate", false));
+    //Once tamed, chickens drop one extra egg
+    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createEgg, 1,
+            ServiceLocator.getTimeService().getEvents()::addListener, "hourUpdate", false));
+    //Once tamed, chickens can be fed to drop golden eggs
+    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createGoldenEgg, 1,
+            ServiceLocator.getTimeService().getEvents()::addListener, "hourUpdate", false));
+    //TODO - meat on death
+
     chicken
             .addComponent(aiTaskComponent)
-            .addComponent(new PassiveDropComponent(ItemFactory::createEgg, 2))
+            .addComponent(multiDropComponent)
             .addComponent(animator)
             .addComponent(new AnimalAnimationController())
             .addComponent(new TamableComponent(player, config.tamingThreshold,
@@ -114,9 +128,22 @@ public class NPCFactory {
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
 
+    List<SingleDropHandler> singleDropHandlers = new ArrayList<>();
+    MultiDropComponent multiDropComponent = new MultiDropComponent(singleDropHandlers);
+    //Cows untamed drop fertiliser
+    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createFertiliser, 1,
+            ServiceLocator.getTimeService().getEvents()::addListener, "hourUpdate", false));
+    //Once tamed, cows drop one extra fertiliser
+    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createFertiliser, 1,
+            ServiceLocator.getTimeService().getEvents()::addListener, "hourUpdate", true));
+    //Once tamed, cows can be fed to drop milk
+    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createMilk, 1,
+            cow.getEvents()::addListener, "feed", false));
+    //TODO - create death drop -> cooked meat
+
     cow
             .addComponent(aiTaskComponent)
-            .addComponent(new PassiveDropComponent(ItemFactory::createFertiliser, 24))
+            .addComponent(multiDropComponent)
             .addComponent(animator)
             .addComponent(new AnimalAnimationController())
             .addComponent(new TamableComponent(

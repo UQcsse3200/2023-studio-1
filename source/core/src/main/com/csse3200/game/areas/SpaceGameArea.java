@@ -59,6 +59,7 @@ public class SpaceGameArea extends GameArea {
           "images/tool_shovel.png",
           "images/egg.png",
           "images/milk.png",
+          "images/golden_egg.png",
 
           "images/tool_hoe.png",
           "images/tool_scythe.png",
