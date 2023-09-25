@@ -5,9 +5,7 @@ import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.rewards.Reward;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class MainQuest extends Quest {
@@ -69,12 +67,12 @@ public class MainQuest extends Quest {
     @Override
     public void readProgress(JsonValue progress) {
         resetState();
-        questsCompleted.addAll(List.of(progress.asStringArray()));
+        questsCompleted.addAll(Set.of(progress.asStringArray()));
     }
 
     @Override
     public Object getProgress() {
-        return questsCompleted;
+        return questsCompleted.toArray();
     }
 
     @Override
