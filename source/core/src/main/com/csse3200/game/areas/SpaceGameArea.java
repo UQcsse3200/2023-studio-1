@@ -172,6 +172,9 @@ public class SpaceGameArea extends GameArea {
           "images/plants/misc/space_snapper_seed.png",
           "images/plants/misc/atomic_algae_seed.png",
           "images/invisible_sprite.png",
+
+          "images/projectiles/oxygen_eater_projectile.png",
+          
           "images/ship/ship_debris.png"
   };
   private static final String[] forestTextureAtlases = {
@@ -180,7 +183,8 @@ public class SpaceGameArea extends GameArea {
       "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas", "images/questgiver.atlas",
       "images/missionStatus.atlas", "images/plants/cosmic_cob.atlas", "images/plants/aloe_vera.atlas",
       "images/plants/hammer_plant.atlas", "images/plants/space_snapper.atlas", "images/plants/atomic_algae.atlas",
-      "images/plants/deadly_nightshade.atlas", "images/fireflies.atlas"
+      "images/plants/deadly_nightshade.atlas", "images/projectiles/oxygen_eater_projectile.atlas",
+      "images/fireflies.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg", "sounds/car-horn-6408.mp3"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
