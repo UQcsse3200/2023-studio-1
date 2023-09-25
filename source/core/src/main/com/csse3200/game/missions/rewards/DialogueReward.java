@@ -26,6 +26,7 @@ public class DialogueReward extends Reward {
      */
     @Override
     public void collect() {
+        setCollected();
         // trigger correct screen (based on team 3 dialogue screen)
     }
 }

@@ -1,5 +1,6 @@
 package com.csse3200.game.missions.quests;
 
+import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.missions.rewards.DialogueReward;
 import com.csse3200.game.missions.rewards.ItemReward;
 import com.csse3200.game.missions.rewards.MultiReward;
@@ -13,8 +14,30 @@ import java.util.Set;
 public class QuestFactory {
 
     public static final String actIMainQuestName = "An Agreement";
+    public static final String firstContactQuestName = "First Contact";
+    public static final String clearingYourMessQuestName = "Clearing Your Mess";
     public static final String actIIMainQuestName = "Making Contact";
     public static final String actIIIMainQuestName = "Weather the Storm";
+
+    public static AutoQuest createFirstContactQuest() {
+        List<Quest> questsToAdd = new ArrayList<>();
+        List<Quest> questsToActivate = new ArrayList<>();
+        questsToActivate.add(createClearingYourMessQuest());
+        questsToActivate.add(createActIMainQuest());
+
+        String dialogue = """
+                WHAT HAVE YOU DONE!!!
+                {WAIT}
+                CLEAR UP THIS MESS AT ONCE, OR {COLOUR=red}THERE WILL BE CONSEQUENCES{COLOUR=white}!!!
+                """;
+
+        MultiReward reward = new MultiReward(List.of(
+                new ItemReward(List.of(ItemFactory.createShovel())),
+                new QuestReward(questsToAdd, questsToActivate),
+                new DialogueReward(dialogue)
+        ));
+        return new AutoQuest(firstContactQuestName, reward, "Wake up after your crash landing.");
+    }
 
     public static MainQuest createActIMainQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
@@ -38,6 +61,7 @@ public class QuestFactory {
                 """;
 
         Set<String> requiredQuests = new HashSet<>();
+        requiredQuests.add(clearingYourMessQuestName);
 
         MultiReward reward = new MultiReward(List.of(
                 new QuestReward(questsToAdd, questsToActivate),
@@ -45,6 +69,24 @@ public class QuestFactory {
         ));
 
         return new MainQuest(actIMainQuestName, requiredQuests, reward, 5, "gain ALIEN NPC's trust");
+    }
+
+    public static ClearDebrisQuest createClearingYourMessQuest() {
+        List<Quest> questsToAdd = new ArrayList<>();
+        List<Quest> questsToActivate = new ArrayList<>();
+
+        String dialogue = """
+                Good. Your {WAIT} "landing" {WAIT} has completely destroyed my crops!
+                {WAIT}
+                Take this hoe and these seeds and start replanting the crops you destroyed.
+                """;
+
+        MultiReward reward = new MultiReward(List.of(
+                new ItemReward(List.of(ItemFactory.createHoe(), ItemFactory.createCosmicCobSeed())),
+                new QuestReward(questsToAdd, questsToActivate),
+                new DialogueReward(dialogue)
+        ));
+        return new ClearDebrisQuest(clearingYourMessQuestName, 15, reward, 2, true);
     }
 
     public static MainQuest createActIIMainQuest() {

@@ -6,8 +6,11 @@ import com.csse3200.game.missions.rewards.Reward;
 
 public class AutoQuest extends Quest {
 
-    public AutoQuest(String name, Reward reward) {
-        super(name, reward, 0, false);
+    private final String description;
+
+    public AutoQuest(String name, Reward reward, String description) {
+        super(name, reward, 1, false);
+        this.description = description;
     }
 
     @Override
@@ -22,12 +25,12 @@ public class AutoQuest extends Quest {
 
     @Override
     public String getDescription() {
-        return "";
+        return description;
     }
 
     @Override
     public String getShortDescription() {
-        return "";
+        return description;
     }
 
     @Override

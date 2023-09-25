@@ -23,6 +23,7 @@ public class MultiReward extends Reward {
      */
     @Override
     public void collect() {
+        setCollected();
         for (Reward reward : this.rewards) {
             reward.collect();
         }

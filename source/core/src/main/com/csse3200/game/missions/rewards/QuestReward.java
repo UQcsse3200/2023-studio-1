@@ -36,6 +36,7 @@ public class QuestReward extends Reward {
      */
     @Override
     public void collect() {
+        setCollected();
         MissionManager missionManager = ServiceLocator.getMissionManager();
 
         for (Quest quest : selectableQuests) {

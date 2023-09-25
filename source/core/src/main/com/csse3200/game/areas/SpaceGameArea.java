@@ -14,6 +14,7 @@ import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.*;
+import com.csse3200.game.missions.quests.QuestFactory;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
@@ -242,6 +243,8 @@ public class SpaceGameArea extends GameArea {
     spawnAstrolotl();
     spawnOxygenEater();
     spawnShip();
+
+    ServiceLocator.getMissionManager().acceptQuest(QuestFactory.createFirstContactQuest());
 
 //    spawnTool(ItemType.WATERING_CAN);
 //    spawnTool(ItemType.SHOVEL);
