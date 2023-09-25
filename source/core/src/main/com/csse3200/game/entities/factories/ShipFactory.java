@@ -43,7 +43,7 @@ public class ShipFactory {
    */
   private static AnimationRenderComponent setupShipAnimations() {
     AnimationRenderComponent animator = new AnimationRenderComponent(
-        ServiceLocator.getResourceService().getAsset("images/questgiver.atlas", TextureAtlas.class),
+        ServiceLocator.getResourceService().getAsset("images/ship/ship.atlas", TextureAtlas.class),
         16f);
     animator.addAnimation("default", 0.1f, Animation.PlayMode.LOOP);
     animator.startAnimation("default");
