@@ -524,6 +524,9 @@ public class PlantComponent extends Component {
     public void setGrowthStage(int newGrowthStage) {
         if (newGrowthStage == GrowthStage.DEAD.getValue()) {
             ServiceLocator.getPlantInfoService().increaseAlivePlantCount(-1);
+            ServiceLocator.getPlantInfoService().increaseDecayingPlantCount(-1);
+        } else if (newGrowthStage == GrowthStage.DECAYING.getValue()) {
+            ServiceLocator.getPlantInfoService().increaseDecayingPlantCount(1);
         }
 
         if (newGrowthStage >= 1 && newGrowthStage <= GrowthStage.values().length) {

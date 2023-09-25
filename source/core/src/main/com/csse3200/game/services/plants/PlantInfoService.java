@@ -6,6 +6,7 @@ public class PlantInfoService {
     private final EventHandler events;
 
     private int alivePlantCount;
+    private int decayingPlantCount;
 
     public PlantInfoService() {
         events = new EventHandler();
@@ -20,11 +21,19 @@ public class PlantInfoService {
         alivePlantCount += num;
     }
 
+    public void increaseDecayingPlantCount(int num) {
+        decayingPlantCount += num;
+    }
+
     public String plantInfoSummary() {
         String returnString = "";
 
         if (alivePlantCount != 0) {
             returnString += "\nAlive Plants: " + String.valueOf(alivePlantCount);
+        }
+
+        if (decayingPlantCount != 0) {
+            returnString += "\nDecaying Plants: " + String.valueOf(decayingPlantCount);
         }
 
         return returnString;
