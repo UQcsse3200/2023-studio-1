@@ -150,9 +150,7 @@ public class TamableComponent extends Component {
 
     @Override
     public void read(Json json, JsonValue jsonMap) {
-        System.out.println("hi");
       jsonMap = jsonMap.get("TamableComponent");
-        System.out.println("hi");
       isTamed = jsonMap.getBoolean("Tamed");
     }
 }

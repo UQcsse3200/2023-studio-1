@@ -165,12 +165,7 @@ public class SaveLoadService {
    * @param state
    */
   private void updateClimate(GameState state) {
-    ClimateController climate = ServiceLocator.getGameArea().getClimateController();
-    climate.setHumidity(state.getClimate().getHumidity());
-    climate.setTemperature(state.getClimate().getTemperature());
-    if (state.getClimate().getCurrentWeatherEvent() != null) {
-      climate.addWeatherEvent(state.getClimate().getCurrentWeatherEvent());
-    }
+    ServiceLocator.getGameArea().loadClimate(state.getClimate());
   }
 
   /**''
@@ -179,9 +174,7 @@ public class SaveLoadService {
    * @param state the state of the saved game
    */
   private void updateTime(GameState state) {
-    ServiceLocator.getTimeService().setDay(state.getDay());
-    ServiceLocator.getTimeService().setHour(state.getHour());
-    ServiceLocator.getTimeService().setMinute(state.getMinute());
+    ServiceLocator.getTimeService().loadTime(state.getDay(), state.getHour(), state.getDay());
   }
 
   /**

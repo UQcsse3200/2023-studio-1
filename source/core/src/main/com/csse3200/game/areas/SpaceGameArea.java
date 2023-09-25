@@ -188,7 +188,7 @@ public class SpaceGameArea extends GameArea {
   private final GameMap gameMap;
 
   private Entity player;
-  private final ClimateController climateController;
+  private ClimateController climateController;
   private Entity tractor;
 
   /**
@@ -499,5 +499,10 @@ public class SpaceGameArea extends GameArea {
    */
   public GameMap getMap() {
     return gameMap;
+  }
+
+  @Override
+  public void loadClimate(ClimateController climate) {
+    climateController = climate;
   }
 }

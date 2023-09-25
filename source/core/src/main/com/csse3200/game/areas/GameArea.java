@@ -123,4 +123,8 @@ public abstract class GameArea implements Disposable {
   public abstract GameMap getMap();
 
   public void setPlayer(Entity customPlayer) { player = customPlayer; }
+
+    public void loadClimate(ClimateController climate) {
+      return;
+    }
 }
