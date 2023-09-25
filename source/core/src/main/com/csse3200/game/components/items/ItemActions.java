@@ -237,8 +237,6 @@ public class ItemActions extends Component {
       tile.setPlaceable(null);    //update the tile
       tile.setUnOccupied();
 
-
-
       Entity droppedItem = FactoryService.getItemFactories().get(placedItem.getType().toString()).get();
       ServiceLocator.getGameArea().spawnEntity(droppedItem);
       droppedItem.setPosition(newPos);
