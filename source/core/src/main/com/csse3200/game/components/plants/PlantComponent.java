@@ -280,6 +280,8 @@ public class PlantComponent extends Component {
 
         ServiceLocator.getPlantInfoService().increaseAlivePlantCount(1);
 
+        ServiceLocator.getPlantInfoService().increaseSeedsPlanted(1, plantName);
+
         this.currentAnimator = entity.getComponent(AnimationRenderComponent.class);
         updateTexture();
         updateMaxHealth();
