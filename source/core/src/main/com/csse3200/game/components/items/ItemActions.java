@@ -316,7 +316,6 @@ public class ItemActions extends Component {
 
     List<Entity> entities = interactionDetector.getEntitiesTowardsPosition(mouseWorldPos);
     entities.removeIf(entity -> entity.getComponent(TamableComponent.class) == null);
-    entities.removeIf(entity -> entity.getComponent(TamableComponent.class).isTamed()); //TODO: axolotl? handle that
 
     Entity entityToFeed = interactionDetector.getNearest(entities);
 

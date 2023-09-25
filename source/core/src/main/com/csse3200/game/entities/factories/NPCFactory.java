@@ -87,14 +87,15 @@ public class NPCFactory {
 
     List<SingleDropHandler> singleDropHandlers = new ArrayList<>();
     MultiDropComponent multiDropComponent = new MultiDropComponent(singleDropHandlers);
+    //TODO - fix drop rates
     //Chickens untamed drop eggs
-    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createEgg, 1,
+    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createEgg, 24,
             ServiceLocator.getTimeService().getEvents()::addListener, "hourUpdate", false));
     //Once tamed, chickens drop one extra egg
-    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createEgg, 1,
+    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createEgg, 24,
             ServiceLocator.getTimeService().getEvents()::addListener, "hourUpdate", true));
     //Once tamed, chickens can be fed to drop golden eggs
-    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createGoldenEgg, 1,
+    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createGoldenEgg, 5,
             ServiceLocator.getTimeService().getEvents()::addListener, "feed", true));
     //TODO - meat on death
 
@@ -142,14 +143,15 @@ public class NPCFactory {
 
     List<SingleDropHandler> singleDropHandlers = new ArrayList<>();
     MultiDropComponent multiDropComponent = new MultiDropComponent(singleDropHandlers);
+    //TODO - fix drop rates
     //Cows untamed drop fertiliser
-    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createFertiliser, 1,
+    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createFertiliser, 24,
             ServiceLocator.getTimeService().getEvents()::addListener, "hourUpdate", false));
     //Once tamed, cows drop one extra fertiliser
-    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createFertiliser, 1,
+    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createFertiliser, 24,
             ServiceLocator.getTimeService().getEvents()::addListener, "hourUpdate", true));
     //Once tamed, cows can be fed to drop milk
-    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createMilk, 1,
+    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createMilk, 3,
             cow.getEvents()::addListener, "feed", true));
     //TODO - create death drop -> cooked meat
 
@@ -188,6 +190,8 @@ public class NPCFactory {
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(1.5f, 1.5f), 5f))
             .addTask(new FollowTask(player, 10, 8, 10, 3f));
+
+    //TODO - add drops
 
     astrolotl
             .addComponent(aiTaskComponent)

@@ -84,8 +84,6 @@ public class SingleDropHandler {
      * and maintains drop rate.
      */
     public void dropItem() {
-        triggerCount++;
-
         if (requiresTamed) {
             TamableComponent tamableComponent = entity.getComponent(TamableComponent.class);
 
@@ -93,6 +91,8 @@ public class SingleDropHandler {
                 return;
             }
         }
+
+        triggerCount++;
 
         if (triggersToNextDrop == triggerCount) {
             triggerCount = 0;
