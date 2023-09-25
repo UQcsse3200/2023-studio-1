@@ -3,21 +3,26 @@ package com.csse3200.game.missions.quests;
 import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.MissionManager;
-import com.csse3200.game.missions.rewards.MultiReward;
+import com.csse3200.game.missions.rewards.Reward;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class MainQuest extends Quest {
 
-    private final List<String> questsToComplete;
-    private final List<String> questsCompleted;
+    private final Set<String> questsToComplete;
+    private final Set<String> questsCompleted;
 
-    public MainQuest(String name, List<String> questsToComplete, MultiReward reward, int daysToExpiry) {
+    private final String goal;
+
+    public MainQuest(String name, Set<String> questsToComplete, Reward reward, int daysToExpiry, String goal) {
         super(name, reward, daysToExpiry * 24, true);
 
         this.questsToComplete = questsToComplete;
-        this.questsCompleted = new ArrayList<>();
+        this.questsCompleted = new HashSet<>();
+        this.goal = goal;
     }
 
     @Override
@@ -39,12 +44,26 @@ public class MainQuest extends Quest {
 
     @Override
     public String getDescription() {
-        return null;
+        StringBuilder descriptionBuilder = new StringBuilder();
+
+        descriptionBuilder.append("You must ");
+        descriptionBuilder.append(goal);
+        descriptionBuilder.append("!\n");
+        descriptionBuilder.append("Complete the quests: ");
+        for (String questName : questsToComplete) {
+            if (!questsCompleted.contains(questName)) {
+                descriptionBuilder.append(questName);
+                descriptionBuilder.append(", ");
+            }
+        }
+        descriptionBuilder.append(".");
+
+        return descriptionBuilder.toString();
     }
 
     @Override
     public String getShortDescription() {
-        return null;
+        return (questsToComplete.size() - questsCompleted.size()) + " required quests to be completed";
     }
 
     @Override

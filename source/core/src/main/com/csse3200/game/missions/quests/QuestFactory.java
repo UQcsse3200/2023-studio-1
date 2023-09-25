@@ -6,7 +6,9 @@ import com.csse3200.game.missions.rewards.MultiReward;
 import com.csse3200.game.missions.rewards.QuestReward;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class QuestFactory {
 
@@ -35,12 +37,14 @@ public class QuestFactory {
                 ... TO BE ADDED
                 """;
 
+        Set<String> requiredQuests = new HashSet<>();
+
         MultiReward reward = new MultiReward(List.of(
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
 
-        return new MainQuest(actIMainQuestName, List.of(), reward, 5);
+        return new MainQuest(actIMainQuestName, requiredQuests, reward, 5, "gain ALIEN NPC's trust");
     }
 
     public static MainQuest createActIIMainQuest() {
@@ -71,17 +75,20 @@ public class QuestFactory {
                 Taken aback by all this information, you attempt to speak to them again, but just as you go to speak, the sky lights up with the power of the sun, and the radio cuts out...
                 """;
 
+        Set<String> requiredQuests = new HashSet<>();
+
         MultiReward reward = new MultiReward(List.of(
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
 
-        return new MainQuest(actIIMainQuestName, List.of(), reward, 10);
+        return new MainQuest(actIIMainQuestName, requiredQuests, reward, 10, "make connection with the Mothership");
     }
 
     public static MainQuest createActIIIMainQuest() {
+        Set<String> requiredQuests = new HashSet<>();
         MultiReward reward = new MultiReward(List.of());
-        return new MainQuest(actIIIMainQuestName, List.of(), reward, 15);
+        return new MainQuest(actIIIMainQuestName, requiredQuests, reward, 15, "weather the storm");
     }
 
     public static FertiliseCropTilesQuest createHaberHobbyist() {
