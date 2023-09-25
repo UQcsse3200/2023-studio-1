@@ -3,6 +3,7 @@ package com.csse3200.game.components.npc;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
+import com.csse3200.game.components.items.ItemActions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,7 +12,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.weather.ClimateController;
-import com.csse3200.game.components.items.ItemActions;
+import com.csse3200.game.components.items.ItemActionsTest;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.entities.Entity;

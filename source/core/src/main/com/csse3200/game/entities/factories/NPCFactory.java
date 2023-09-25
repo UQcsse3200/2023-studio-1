@@ -1,15 +1,22 @@
 package com.csse3200.game.entities.factories;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
+import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.*;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.FollowTask;
 import com.csse3200.game.components.tasks.RunAwayTask;
 import com.csse3200.game.components.tasks.WanderTask;
+import com.csse3200.game.components.npc.AnimalAnimationController;
+import com.csse3200.game.components.npc.FireflyScareComponent;
+import com.csse3200.game.components.npc.PassiveDropComponent;
+import com.csse3200.game.components.npc.TamableComponent;
+import com.csse3200.game.components.tasks.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.configs.BaseAnimalConfig;
@@ -26,6 +33,8 @@ import com.csse3200.game.services.ServiceLocator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.security.SecureRandom;
+import java.util.Random;
 
 /**
  * Factory to create non-playable character (NPC) entities with predefined components.
@@ -72,7 +81,8 @@ public class NPCFactory {
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-            .addTask(new RunAwayTask(player, 10, 2.25f, 4.25f, new Vector2(3f, 3f)));
+            .addTask(new RunAwayTask(player, 10, 2.25f, 4.25f, new Vector2(3f, 3f)))
+            .addTask(new TamedFollowTask(player, 10, 8, 10, 2f, config.favouriteFood));
 
     List<SingleDropHandler> singleDropHandlers = new ArrayList<>();
     MultiDropComponent multiDropComponent = new MultiDropComponent(singleDropHandlers);
@@ -126,7 +136,8 @@ public class NPCFactory {
 
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
-            .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+            .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
+            .addTask(new TamedFollowTask(player, 10, 8, 10, 2f, config.favouriteFood));
 
     List<SingleDropHandler> singleDropHandlers = new ArrayList<>();
     MultiDropComponent multiDropComponent = new MultiDropComponent(singleDropHandlers);
@@ -230,6 +241,31 @@ public class NPCFactory {
 
 
     return oxygenEater;
+  }
+
+  public static Entity createFireFlies(Entity player) {
+    SecureRandom random = new SecureRandom();
+    AuraLightComponent light = new AuraLightComponent(3f, Color.ORANGE);
+    light.toggleLight();
+
+    AnimationRenderComponent animator = new AnimationRenderComponent(
+            ServiceLocator.getResourceService().getAsset("images/fireflies.atlas", TextureAtlas.class),
+            16f
+    );
+    String animation = "default";
+    if (random.nextInt(999) == 0) {
+      animation = "default";
+    }
+    animator.addAnimation(animation, 0.5f, Animation.PlayMode.LOOP);
+    animator.startAnimation(animation);
+
+    Entity fireflies = new Entity(EntityType.FireFlies)
+            .addComponent(animator)
+            .addComponent(light)
+            // Not actually scaring just dying from daylight (named from previous idea for feature)
+            .addComponent(new FireflyScareComponent())
+            .addComponent(new PhysicsComponent());
+    return fireflies;
   }
 
   /**

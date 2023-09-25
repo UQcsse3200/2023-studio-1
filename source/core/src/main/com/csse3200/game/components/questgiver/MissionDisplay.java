@@ -353,7 +353,6 @@ public class MissionDisplay extends UIComponent {
 
         List<Quest> selectableQuests = missionManager.getSelectableQuests();
         List<Quest> activeQuests = missionManager.getActiveQuests();
-
         List<Quest> inProgressQuests = activeQuests.stream().filter(quest -> !(quest.isExpired() || quest.isCompleted())).toList();
         List<Quest> expiredQuests = activeQuests.stream().filter(Quest::isExpired).toList();
         List<Quest> completedQuests = activeQuests.stream().filter(Quest::isCompleted).toList();
@@ -521,6 +520,7 @@ public class MissionDisplay extends UIComponent {
             window.setVisible(false);
             isOpen = false;
         } else {
+            missionManager = ServiceLocator.getMissionManager();
             openMenu();
         }
     }
