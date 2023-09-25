@@ -1,82 +1,56 @@
 package com.csse3200.game.areas.weather;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.TimeUtils;
-import com.csse3200.game.services.ServiceLocator;
 
-import java.util.Iterator;
-
-public class AcidShower extends ApplicationAdapter {
-
-    private WeatherEvent currentWeatherEvent;
-    private Iterator<Rectangle> iterator;
-    private long lastRaindropTime;
-    private Rectangle raindrop;
-    private Array<Rectangle> raindrops;
-    private Texture raindropImage;
+public class AcidShower implements Screen {
+    private ParticleEffect acidShowerParticleEffect;
     private SpriteBatch spriteBatch;
-    private OrthographicCamera orthographicCamera;
 
     @Override
-    public void create() {
-        super.create();
-        ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateDisplay);
-        raindrops = new Array<>();
-        raindropImage = new Texture(Gdx.files.internal("images/weather_event/acid-rain.png"));
+    public void show() {
+        acidShowerParticleEffect = new ParticleEffect();
         spriteBatch = new SpriteBatch();
-        orthographicCamera = new OrthographicCamera();
-        orthographicCamera.setToOrtho(false, 800, 480);
-        updateDisplay();
-    }
-
-    private void updateDisplay() {
-        raindrop = new Rectangle();
-        raindrop.x = MathUtils.random(0, 800-64);
-        raindrop.y = 480;
-        raindrop.width = 64;
-        raindrop.height = 64;
-        raindrops.add(raindrop);
-        lastRaindropTime = TimeUtils.nanoTime();
+        acidShowerParticleEffect.load(Gdx.files.internal("particle-effects/acidrain"), Gdx.files.internal("images"));
+        acidShowerParticleEffect.setPosition((float) Gdx.graphics.getWidth()/2, (float) Gdx.graphics.getHeight()/2);
+        acidShowerParticleEffect.start();
     }
 
     @Override
-    public void render() {
-        ScreenUtils.clear(0, 0, 0.2f, 1);
-        orthographicCamera.update();
-        spriteBatch.setProjectionMatrix(orthographicCamera.combined);
+    public void render(float delta) {
+        Gdx.gl.glClearColor(0,0,0,1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         spriteBatch.begin();
-        spriteBatch.draw(raindropImage, raindrop.x, raindrop.y);
-
-        for(Rectangle raindrop: raindrops) {
-            spriteBatch.draw(raindropImage, raindrop.x, raindrop.y);
-        }
-
+        acidShowerParticleEffect.draw(spriteBatch, delta);
         spriteBatch.end();
+    }
 
-        if (TimeUtils.nanoTime() - lastRaindropTime > 1000000000) {
-            updateDisplay();
-        }
+    @Override
+    public void resize(int width, int height) {
 
-        for (iterator = raindrops.iterator(); iterator.hasNext(); ) {
-            raindrop = iterator.next();
-            raindrop.y -= 200 * Gdx.graphics.getDeltaTime();
-            if(raindrop.y + 64 < 0) {
-                iterator.remove();
-            }
-        }
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+        dispose();
     }
 
     @Override
     public void dispose() {
-        raindropImage.dispose();
-        spriteBatch.dispose();
+
     }
 }
