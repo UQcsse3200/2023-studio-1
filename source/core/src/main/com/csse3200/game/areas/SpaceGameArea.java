@@ -59,6 +59,7 @@ public class SpaceGameArea extends GameArea {
 
           "images/tool_hoe.png",
           "images/tool_scythe.png",
+          "images/tool_sword.png",
           "images/tool_watering_can.png",
           "images/animals/chicken.png",
           "images/animals/cow.png",
@@ -246,7 +247,8 @@ public class SpaceGameArea extends GameArea {
 //    spawnTool(ItemType.WATERING_CAN);
 //    spawnTool(ItemType.SHOVEL);
 //    spawnTool(ItemType.SCYTHE);
-//    spawnTool(ItemType.HOE);
+    spawnTool(ItemType.HOE);
+    spawnTool(ItemType.SWORD);
 //    spawnTool(ItemType.FERTILISER);
 //    spawnTool(ItemType.SEED);
 //    spawnTool(ItemType.FOOD);
@@ -410,6 +412,10 @@ public class SpaceGameArea extends GameArea {
         break;
       case FOOD:
         newTool = ItemFactory.createCowFood();
+        spawnEntityAt(newTool, randomPos, true, true);
+        break;
+      case SWORD:
+        newTool = ItemFactory.createSword();
         spawnEntityAt(newTool, randomPos, true, true);
         break;
     }

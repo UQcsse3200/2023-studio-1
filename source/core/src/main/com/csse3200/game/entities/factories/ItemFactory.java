@@ -108,6 +108,18 @@ public class ItemFactory {
   }
 
   /**
+   * Creates a sword item
+   *
+   * @return sword
+   */
+  public static Entity createSword() {
+    Entity sword = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/tool_sword.png"))
+            .addComponent(new ItemComponent("sword", ItemType.SWORD, new Texture("images/tool_sword.png")));
+    return sword;
+  }
+
+  /**
    * Creates a milk item
    *
    * @return milk item

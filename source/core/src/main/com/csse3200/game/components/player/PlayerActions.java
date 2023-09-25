@@ -12,6 +12,8 @@ import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.items.ItemActions;
+import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
@@ -203,9 +205,10 @@ public class PlayerActions extends Component {
   /**
    * Makes the player attack.
    */
-  void attack() {
+  void attack(Vector2 mousePos) {
     Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
     attackSound.play();
+    System.out.println("hey");
   }
 
   /**
