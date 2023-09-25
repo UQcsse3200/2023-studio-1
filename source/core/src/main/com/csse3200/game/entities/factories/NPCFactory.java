@@ -91,10 +91,10 @@ public class NPCFactory {
             ServiceLocator.getTimeService().getEvents()::addListener, "hourUpdate", false));
     //Once tamed, chickens drop one extra egg
     singleDropHandlers.add(new SingleDropHandler(ItemFactory::createEgg, 1,
-            ServiceLocator.getTimeService().getEvents()::addListener, "hourUpdate", false));
+            ServiceLocator.getTimeService().getEvents()::addListener, "hourUpdate", true));
     //Once tamed, chickens can be fed to drop golden eggs
     singleDropHandlers.add(new SingleDropHandler(ItemFactory::createGoldenEgg, 1,
-            ServiceLocator.getTimeService().getEvents()::addListener, "hourUpdate", false));
+            ServiceLocator.getTimeService().getEvents()::addListener, "feed", true));
     //TODO - meat on death
 
     chicken
@@ -149,7 +149,7 @@ public class NPCFactory {
             ServiceLocator.getTimeService().getEvents()::addListener, "hourUpdate", true));
     //Once tamed, cows can be fed to drop milk
     singleDropHandlers.add(new SingleDropHandler(ItemFactory::createMilk, 1,
-            cow.getEvents()::addListener, "feed", false));
+            cow.getEvents()::addListener, "feed", true));
     //TODO - create death drop -> cooked meat
 
     cow
