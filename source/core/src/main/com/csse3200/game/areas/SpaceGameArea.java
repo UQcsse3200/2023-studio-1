@@ -270,12 +270,12 @@ public class SpaceGameArea extends GameArea {
     spawnOxygenEater();
     spawnShip();
 
-    spawnTool(ItemType.WATERING_CAN);
+//    spawnTool(ItemType.WATERING_CAN);
 //    spawnTool(ItemType.SHOVEL);
 //    spawnTool(ItemType.SCYTHE);
-    spawnTool(ItemType.HOE);
+//    spawnTool(ItemType.HOE);
 //    spawnTool(ItemType.FERTILISER);
-    spawnTool(ItemType.SEED);
+//    spawnTool(ItemType.SEED);
 //    spawnTool(ItemType.FOOD);
 
     //playMusic();
