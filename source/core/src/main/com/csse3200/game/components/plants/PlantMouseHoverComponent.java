@@ -26,6 +26,9 @@ public class PlantMouseHoverComponent extends Component {
         lastTime = ServiceLocator.getTimeSource().getTime();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update() {
         updateInfo();

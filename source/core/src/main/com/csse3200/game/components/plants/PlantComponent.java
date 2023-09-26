@@ -278,8 +278,7 @@ public class PlantComponent extends Component {
         ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::dayUpdate);
         ServiceLocator.getPlantCommandService().getEvents().addListener("forceGrowthStage", this::forceGrowthStage);
 
-        ServiceLocator.getPlantInfoService().increaseAlivePlantCount(1);
-
+        ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(1, "alive");
         ServiceLocator.getPlantInfoService().increaseSeedsPlanted(1, plantName);
 
         this.currentAnimator = entity.getComponent(AnimationRenderComponent.class);
@@ -525,10 +524,10 @@ public class PlantComponent extends Component {
      */
     public void setGrowthStage(int newGrowthStage) {
         if (newGrowthStage == GrowthStage.DEAD.getValue()) {
-            ServiceLocator.getPlantInfoService().increaseAlivePlantCount(-1);
-            ServiceLocator.getPlantInfoService().increaseDecayingPlantCount(-1);
+            ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(-1, "alive");
+            ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(-1, "decay");
         } else if (newGrowthStage == GrowthStage.DECAYING.getValue()) {
-            ServiceLocator.getPlantInfoService().increaseDecayingPlantCount(1);
+            ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(1, "decay");
         }
 
         if (newGrowthStage >= 1 && newGrowthStage <= GrowthStage.values().length) {
@@ -671,7 +670,7 @@ public class PlantComponent extends Component {
      */
     private void destroyPlant() {
         if (getGrowthStage().getValue() < GrowthStage.DEAD.getValue()) {
-            ServiceLocator.getPlantInfoService().increaseAlivePlantCount(-1);
+            ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(-1, "alive");
         }
 
         // This is such a cumbersome way of doing this, but there is an annoying bug that

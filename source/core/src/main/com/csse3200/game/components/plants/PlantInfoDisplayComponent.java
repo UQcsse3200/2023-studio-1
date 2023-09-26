@@ -72,9 +72,6 @@ public class PlantInfoDisplayComponent extends UIComponent {
     public void clearInfo() {
         createWindow();
         String info = ServiceLocator.getPlantInfoService().plantInfoSummary();
-        if (info.isEmpty()) {
-            info = "Hover your mouse \nover a plant";
-        }
         label = new Label(info, skin);
         label.setFontScale(1.5f);
         label.setColor(Color.BROWN);
