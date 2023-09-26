@@ -8,6 +8,7 @@ import java.util.function.Supplier;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Json;
 import com.csse3200.game.areas.SpaceGameArea;
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
@@ -791,17 +792,6 @@ public class PlantComponent extends Component {
         soundEffect.play();
     }
 
-    @Override
-    public void write(Json json) {
-        json.writeObjectStart(this.getClass().getSimpleName());
-        json.writeValue("name", getPlantName());
-        json.writeValue("health", getPlantHealth());
-        json.writeValue("age", 0);
-        json.writeValue("growth", getCurrentGrowthLevel());
-        json.writeObjectEnd();
-    }
-
-
     public void setCurrentAge(float age) {
     }
 
@@ -957,5 +947,23 @@ public class PlantComponent extends Component {
      */
     public void setPlayerInProximity(boolean bool) {
         this.playerInProximity = bool;
+    }
+
+    @Override
+    public void write(Json json) {
+        json.writeObjectStart(this.getClass().getSimpleName());
+        json.writeValue("name", getPlantName());
+        json.writeValue("health", getPlantHealth());
+        json.writeValue("age", 0);
+        json.writeValue("growth", getCurrentGrowthLevel());
+        json.writeObjectEnd();
+    }
+
+    @Override
+    public void read(Json json, JsonValue plantData) {
+        ServiceLocator.getGameArea().spawnEntity(entity);
+        plantHealth = plantData.getInt("health");
+        currentGrowthLevel = plantData.getInt("growth");
+        // age = plantData.getFloat("age");
     }
 }
