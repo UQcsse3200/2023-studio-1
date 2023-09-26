@@ -1,6 +1,7 @@
 package com.csse3200.game.missions.quests;
 
 import com.csse3200.game.entities.factories.ItemFactory;
+import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.rewards.DialogueReward;
 import com.csse3200.game.missions.rewards.ItemReward;
 import com.csse3200.game.missions.rewards.MultiReward;
@@ -16,6 +17,7 @@ public class QuestFactory {
     public static final String firstContactQuestName = "First Contact";
     public static final String clearingYourMessQuestName = "Clearing Your Mess";
     public static final String sowingYourFirstSeedsQuestName = "Sowing Your First Seeds";
+    public static final String reapingYourRewardsQuestName = "Reaping Your Rewards";
     public static final String actIMainQuestName = "An Agreement";
     public static final String actIIMainQuestName = "Making Contact";
     public static final String actIIIMainQuestName = "Weather the Storm";
@@ -61,9 +63,10 @@ public class QuestFactory {
         return new ClearDebrisQuest(clearingYourMessQuestName, reward, 15);
     }
 
-    public static PlantCropsQuest createSowingYourFirstSeedsQuest() {
+    public static PlantInteractionQuest createSowingYourFirstSeedsQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
         List<Quest> questsToActivate = new ArrayList<>();
+        questsToActivate.add(createReapingYourRewardsQuest());
 
         String dialogue = """
                 Impressive. I see that you can follow basic instructions.
@@ -84,7 +87,29 @@ public class QuestFactory {
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
-        return new PlantCropsQuest(sowingYourFirstSeedsQuestName, reward, Set.of("Cosmic Cob"), 12);
+        return new PlantInteractionQuest(sowingYourFirstSeedsQuestName, reward, MissionManager.MissionEvent.PLANT_CROP,
+                Set.of("Cosmic Cob"), 12);
+    }
+
+    public static PlantInteractionQuest createReapingYourRewardsQuest() {
+        String dialogue = """
+                Ahhh, well done. The Cosmic Cob is a favourite of my people.
+                {WAIT}
+                I thank you, truly.
+                {WAIT}
+                But there are more plants that were in my original collection before it was destroyed.
+                {WAIT}
+                Are you familiar with Atomic Algae?
+                {WAIT}
+                Let me see what you are truly capable of...
+                """;
+
+        MultiReward reward = new MultiReward(List.of(
+                new ItemReward(List.of(ItemFactory.createAtomicAlgaeSeed())),
+                new DialogueReward(dialogue)
+        ));
+        return new PlantInteractionQuest(reapingYourRewardsQuestName, reward, MissionManager.MissionEvent.HARVEST_CROP,
+                Set.of("Cosmic Cob"), 12);
     }
 
     public static MainQuest createActIMainQuest() {
