@@ -70,7 +70,7 @@ public class MissionManager implements Json.Serializable {
 	 * Creates the mission manager, registered all game achievements and adds a listener for hourly updates
 	 */
 	public MissionManager() {
-		ServiceLocator.getTimeService().getEvents().addListener("updateHour", this::updateActiveQuestTimes);
+		ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateActiveQuestTimes);
 		for (Achievement mission : achievements) {
 			mission.registerMission(events);
 		}

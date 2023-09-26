@@ -13,10 +13,10 @@ import java.util.Set;
 
 public class QuestFactory {
 
-    public static final String actIMainQuestName = "An Agreement";
     public static final String firstContactQuestName = "First Contact";
     public static final String clearingYourMessQuestName = "Clearing Your Mess";
     public static final String sowingYourFirstSeedsQuestName = "Sowing Your First Seeds";
+    public static final String actIMainQuestName = "An Agreement";
     public static final String actIIMainQuestName = "Making Contact";
     public static final String actIIIMainQuestName = "Weather the Storm";
 
@@ -58,7 +58,7 @@ public class QuestFactory {
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
-        return new ClearDebrisQuest(clearingYourMessQuestName, reward, 2, true, 15);
+        return new ClearDebrisQuest(clearingYourMessQuestName, reward, 15);
     }
 
     public static PlantCropsQuest createSowingYourFirstSeedsQuest() {
@@ -84,7 +84,7 @@ public class QuestFactory {
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
-        return new PlantCropsQuest(sowingYourFirstSeedsQuestName, reward, 6, true, Set.of("Cosmic Cob"), 12);
+        return new PlantCropsQuest(sowingYourFirstSeedsQuestName, reward, Set.of("Cosmic Cob"), 12);
     }
 
     public static MainQuest createActIMainQuest() {
@@ -110,6 +110,7 @@ public class QuestFactory {
 
         Set<String> requiredQuests = new HashSet<>();
         requiredQuests.add(clearingYourMessQuestName);
+        requiredQuests.add(sowingYourFirstSeedsQuestName);
 
         MultiReward reward = new MultiReward(List.of(
                 new QuestReward(questsToAdd, questsToActivate),

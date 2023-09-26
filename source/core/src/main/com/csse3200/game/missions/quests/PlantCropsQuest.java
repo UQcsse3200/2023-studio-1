@@ -14,7 +14,15 @@ public class PlantCropsQuest extends Quest {
     private final int numberOfCropsToPlant;
     private int numberOfCropsPlanted;
 
-    protected PlantCropsQuest(String name, Reward reward, int expiryDuration, boolean isMandatory, Set<String> plantTypes, int numberOfCropsToPlant) {
+    public PlantCropsQuest(String name, Reward reward, Set<String> plantTypes, int numberOfCropsToPlant) {
+        super(name, reward);
+
+        this.plantTypes = plantTypes;
+        this.numberOfCropsToPlant = numberOfCropsToPlant;
+        this.numberOfCropsPlanted = 0;
+    }
+
+    public PlantCropsQuest(String name, Reward reward, int expiryDuration, boolean isMandatory, Set<String> plantTypes, int numberOfCropsToPlant) {
         super(name, reward, expiryDuration, isMandatory);
 
         this.plantTypes = plantTypes;

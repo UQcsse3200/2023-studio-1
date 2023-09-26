@@ -9,7 +9,7 @@ public class AutoQuest extends Quest {
     private final String description;
 
     public AutoQuest(String name, Reward reward, String description) {
-        super(name, reward, 1, false);
+        super(name, reward);
         this.description = description;
     }
 
