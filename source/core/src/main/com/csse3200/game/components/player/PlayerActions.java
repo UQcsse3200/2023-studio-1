@@ -7,6 +7,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractionDetector;
@@ -57,7 +58,6 @@ public class PlayerActions extends Component {
     if (entity.getComponent(PlayerAnimationController.class).readyToPlay()) {
       if (moving) {
         updateSpeed();
-
       }
       updateAnimation();
     }
@@ -196,13 +196,14 @@ public class PlayerActions extends Component {
      * 1. Go to InteractionDetector.java
      * 2. Add the entity to the interactableEntities array
      */
-    List<Entity> entitiesInRange = this.entity.getComponent(InteractionDetector.class).getEntitiesInRange();
-    List<Entity> closestEntity = this.entity.getComponent(InteractionDetector.class).getNearest(entitiesInRange);
+    // TODO: do we want it so that it searches in direction instead of just anything in range? functionality for this already exists
+    InteractionDetector interactionDetector = entity.getComponent(InteractionDetector.class);
+    List<Entity> entitiesInRange = interactionDetector.getEntitiesInRange();
+    Entity closestEntity = interactionDetector.getNearest(entitiesInRange);
 
-    if (!closestEntity.isEmpty()) {
-      closestEntity.get(0).getEvents().trigger("interact");
+    if (closestEntity != null) {
+      closestEntity.getEvents().trigger("interact");
     }
-
   }
 
   /**
@@ -233,6 +234,7 @@ public class PlayerActions extends Component {
     }
     this.stopMoving();
     muted = true;
+    tractor.getEvents().trigger("toggleAuraLight");
     tractor.getComponent(TractorActions.class).setMuted(false);
     tractor.getComponent(KeyboardTractorInputComponent.class)
         .setWalkDirection(entity.getComponent(KeyboardPlayerInputComponent.class).getWalkDirection());

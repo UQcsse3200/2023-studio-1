@@ -1,9 +1,12 @@
 package com.csse3200.game.entities.factories;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.placeables.PlaceableCategory;
 import com.csse3200.game.components.placeables.SprinklerComponent;
 import com.csse3200.game.components.placeables.FenceComponent;
+import com.csse3200.game.components.AuraLightComponent;
+import com.csse3200.game.components.LightController;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
@@ -16,7 +19,7 @@ public class PlaceableFactory {
 
     /**
      * Creates the basic most broad Placeable Entity
-     * 
+     *
      * @param type the type of entity from the EntityType enum
      * @return the entity that was made
      */
@@ -29,7 +32,7 @@ public class PlaceableFactory {
 
     /**
      * Creates a fence Entity
-     * 
+     *
      * @return the fence entity that was made
      */
     public static Entity createFence() {
@@ -44,7 +47,7 @@ public class PlaceableFactory {
 
     /**
      * Creates a gate Entity
-     * 
+     *
      * @return the gate entity that was made
      */
     public static Entity createGate() {
@@ -58,7 +61,7 @@ public class PlaceableFactory {
 
     /**
      * Creates a sprinkler Entity
-     * 
+     *
      * @return the sprinkler that was made
      */
     public static Entity createSprinkler() {
@@ -93,7 +96,7 @@ public class PlaceableFactory {
 
     /**
      * Creates a chest Entity
-     * 
+     *
      * @return the chest that was made
      */
     public static Entity createChest() {
@@ -102,5 +105,12 @@ public class PlaceableFactory {
         chest.addComponent(new InventoryComponent(null))
             .addComponent(new DynamicTextureRenderComponent("images/Temp-Chest.png"));
         return chest;
+    }
+
+    public static Entity createLight() {
+        Entity light = createBasePlaceable(EntityType.Light);
+        light.addComponent(new AuraLightComponent(4f, Color.TAN));
+        light.addComponent(new LightController());
+        return light;
     }
 }

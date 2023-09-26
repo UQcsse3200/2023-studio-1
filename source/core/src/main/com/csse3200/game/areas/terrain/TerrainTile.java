@@ -296,6 +296,8 @@ public class TerrainTile implements TiledMapTile {
     this.placeable = placeable;
     if (placeable != null) {
       setOccupied();
+    } else {
+      setUnOccupied();
     }
   }
 

@@ -34,8 +34,11 @@ public class SpaceGameArea extends GameArea {
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final GridPoint2 QUESTGIVER_SPAWN = new GridPoint2(20, 20);
   private static final GridPoint2 SHIP_SPAWN = new GridPoint2(50,50);
-  private static final GridPoint2 QUESTGIVERIND_SPAWN = new GridPoint2(20, 22);
+
   private static final GridPoint2 TRACTOR_SPAWN = new GridPoint2(15, 15);
+
+  private static final GridPoint2 TOOL_SPAWN = new GridPoint2(15, 10);// temp!!!
+  private static final GridPoint2 TOOL_SPAWN2 = new GridPoint2(15, 15);// temp!!!
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
           "images/tree.png",
@@ -65,7 +68,7 @@ public class SpaceGameArea extends GameArea {
           "images/watered_cropTile_fertilised.png",
           "images/overwatered_cropTile.png",
           "images/overwatered_cropTile_fertilised.png",
-          "images/Temp-Chest.png",        
+          "images/Temp-Chest.png",
 
           "images/beach_1.png",
           "images/beach_2.png",
@@ -100,6 +103,7 @@ public class SpaceGameArea extends GameArea {
           "images/stonePath_1.png",
           "images/tractor.png",
           "images/fertiliser.png",
+          "images/yellowSquare.png",
 
           "images/plants/misc/aloe_vera_seed.png",
           "images/plants/atomic_algae/1_seedling.png",
@@ -159,15 +163,18 @@ public class SpaceGameArea extends GameArea {
           "images/plants/deadly_nightshade/5_decaying.png",
           "images/plants/deadly_nightshade/6_dead.png",
           "images/plants/deadly_nightshade/item_drop.png",
+          //"images/plants/deadly_nightshade/seedbag.png",
 
           "images/plants/misc/aloe_vera_seed.png",
           "images/plants/misc/cosmic_cob_seed.png",
           "images/plants/misc/deadly_nightshade_seed.png",
           "images/plants/misc/hammer_plant_seed.png",
           "images/plants/misc/space_snapper_seed.png",
-          "images/invisible_sprite.png",
           "images/plants/misc/atomic_algae_seed.png",
           "images/invisible_sprite.png",
+
+          "images/projectiles/oxygen_eater_projectile.png",
+
           "images/ship/ship_debris.png",
 
           "images/yellowSquare.png",
@@ -238,7 +245,8 @@ public class SpaceGameArea extends GameArea {
       "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas", "images/questgiver.atlas",
       "images/missionStatus.atlas", "images/plants/cosmic_cob.atlas", "images/plants/aloe_vera.atlas",
       "images/plants/hammer_plant.atlas", "images/plants/space_snapper.atlas", "images/plants/atomic_algae.atlas",
-      "images/plants/deadly_nightshade.atlas"
+      "images/plants/deadly_nightshade.atlas", "images/projectiles/oxygen_eater_projectile.atlas",
+      "images/fireflies.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg", "sounds/car-horn-6408.mp3"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -279,25 +287,11 @@ public class SpaceGameArea extends GameArea {
     spawnTerrain();
     spawnInvisibleObstacle();// spawn invisible obstacle on the non-traversable area of the map
 
-    spawnCrop(5, 11, "Cosmic Cob");
-    spawnCrop(7, 11, "Aloe Vera");
-    spawnCrop(9, 11, "Hammer Plant");
-    spawnCrop(11, 11, "Space Snapper");
-    spawnCrop(13, 11, "Deadly Nightshade");
-    spawnCrop(15, 11, "Atomic Algae");
-
     spawnShipDebris();
 
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
-
-    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createGateItem());
-    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createFenceItem());
     player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHoe());
-    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createShovel());
-    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createPumpItem());
-    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createSprinklerItem());
-    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createChestItem());
 
     tractor = spawnTractor();
     spawnPlayerHighlight();
@@ -421,7 +415,7 @@ public class SpaceGameArea extends GameArea {
     spawnEntityAt(newQuestgiver, QUESTGIVER_SPAWN, true, true);
 
     Entity newQuestgiverIndicator = QuestgiverFactory.createQuestgiverIndicator(newQuestgiver);
-    spawnEntityAt(newQuestgiverIndicator, QUESTGIVERIND_SPAWN, true, true);
+    spawnEntityAt(newQuestgiverIndicator, new GridPoint2(QUESTGIVER_SPAWN.x, QUESTGIVER_SPAWN.y+2), true, true);
   }
 
   private void spawnShip() {
@@ -579,7 +573,6 @@ public class SpaceGameArea extends GameArea {
   public GameMap getMap() {
     return gameMap;
   }
-
 
   /**
    * Spawns the player highlight entity

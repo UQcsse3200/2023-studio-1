@@ -67,7 +67,7 @@ class MissionManagerTest {
             }
 
             @Override
-            public void setProgress(JsonValue progress) {
+            public void readProgress(JsonValue progress) {
             }
 
             @Override
@@ -103,7 +103,7 @@ class MissionManagerTest {
             }
 
             @Override
-            public void setProgress(JsonValue progress) {
+            public void readProgress(JsonValue progress) {
             }
 
             @Override
@@ -141,7 +141,7 @@ class MissionManagerTest {
             }
 
             @Override
-            public void setProgress(JsonValue progress) {
+            public void readProgress(JsonValue progress) {
             }
 
             @Override

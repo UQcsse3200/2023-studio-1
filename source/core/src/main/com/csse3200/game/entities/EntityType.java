@@ -23,8 +23,10 @@ public enum EntityType {
     Gate(0),
     Sprinkler(0),
     Pump(0),
+    Light(0),
     Ship(0),
-    ShipDebris(0);
+    ShipDebris(0),
+    FireFlies(0);
 
 
     // Negative rate for consumption, positive for production of oxygen

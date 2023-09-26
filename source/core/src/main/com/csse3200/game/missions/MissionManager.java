@@ -176,9 +176,7 @@ public class MissionManager implements Json.Serializable {
 		if (active.has("Quest")) {
 			active.forEach(jsonValue -> {
 				Quest q = FactoryService.getQuests().get(jsonValue.getString("name")).get();
-				q.setTimeToExpiry(jsonValue.getInt("expiry"));
-				q.setProgress(jsonValue.get("progress"));
-				q.getReward().setCollected(jsonValue.getBoolean("collected"));
+				q.read(jsonValue);
 				activeQuests.add(q);
 			});
 		}
@@ -187,27 +185,15 @@ public class MissionManager implements Json.Serializable {
 		if (selectable.has("Quest")) {
 			selectable.forEach(jsonValue -> {
 				Quest q = FactoryService.getQuests().get(jsonValue.getString("name")).get();
-				q.setTimeToExpiry(jsonValue.getInt("expiry"));
-				q.setProgress(jsonValue.get("progress"));
-				q.getReward().setCollected(jsonValue.getBoolean("collected"));
+				q.read(jsonValue);
 				selectableQuests.add(q);
 			});
 		}
 		if (selectable.has("Achievement")) {
 			selectable.forEach(jsonValue -> {
 				Achievement a = achievements[jsonValue.getInt("index")];
-				a.setProgress(jsonValue.get("progress"));
+				a.readProgress(jsonValue.get("progress"));
 			});
 		}
-	}
-
-	public void setActiveQuests(List<Quest> activeQuests) {
-		this.activeQuests.clear();
-		this.activeQuests.addAll(activeQuests);
-	}
-
-	public void setSelectableQuests(List<Quest> selectableQuests) {
-		this.selectableQuests.clear();
-		this.selectableQuests.addAll(selectableQuests);
 	}
 }

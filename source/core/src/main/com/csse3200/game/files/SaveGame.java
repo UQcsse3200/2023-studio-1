@@ -43,6 +43,7 @@ public class SaveGame {
   public static class GameState {
     private int day;
     private int hour;
+    private int minute;
 
     private ClimateController climate;
 
@@ -102,7 +103,8 @@ public class SaveGame {
       Array<Entity> tmp = new Array<>();
       for (Entity e : entities) {
         if (e.getType() == EntityType.Astrolotl || e.getType() == EntityType.Chicken ||
-                e.getType() == EntityType.Cow || e.getType() == EntityType.OxygenEater || e.getType() == EntityType.ShipDebris) {
+                e.getType() == EntityType.Cow || e.getType() == EntityType.OxygenEater ||
+                e.getType() == EntityType.ShipDebris || e.getType() == EntityType.FireFlies) {
           tmp.add(e);
         }
       }
@@ -160,6 +162,14 @@ public class SaveGame {
 
     public void setMissions(MissionManager missions) {
       this.missions = missions;
+    }
+
+    public int getMinute() {
+      return minute;
+    }
+
+    public void setMinute(int minute) {
+      this.minute = minute;
     }
   }
 }

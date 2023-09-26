@@ -2,54 +2,70 @@ package com.csse3200.game.components.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
-//TODO commenting in here is a bit of a mess, clean it up.and junit for this
-
 /**
  * Component that renders a highlight on current player cursor position
  * Is bounded by the maximum "reach" of the player.
- *
+ * Also recognises when it should be muted via listeners.
  */
 public class PlayerHighlightComponent extends Component {
+    // currentTexture is the texture that is being rendered
     private DynamicTextureRenderComponent currentTexture;
+    // isMuted is a boolean that is true when the player is muted
     private boolean isMuted;
 
-    @Override
-    public void create() {
-		entity.getEvents().addListener("enterTractor", this::mute);
-		entity.getEvents().addListener("exitTractor", this::unMute);
-        currentTexture = entity.getComponent(DynamicTextureRenderComponent.class);
-    }
+    private static final String  TEXTURE_PATH = "images/yellowSquare.png";
 
-    public void mute() {
-        isMuted = true;
-    }
-
-    private void setMuted(boolean muted) {
-        this.isMuted = muted;
-    }
-    public void unMute() {
-        isMuted = false;
-    }
-
-    public boolean isMuted() {
-        return isMuted;
-    }
-
+    /**
+     * Creates the component and sets the muted boolean to false
+     */
     public PlayerHighlightComponent() {
         this.isMuted = false;
     }
 
-    public void updateMuted() {
-        boolean isMuted = ServiceLocator.getGameArea().getPlayer().getComponent(PlayerActions.class).isMuted();
-        setMuted(isMuted);
+    /**
+     * Creates the component and adds listeners for when the player enters and exits the tractor
+     */
+    @Override
+    public void create() {
+        entity.getEvents().addListener("enterTractor", this::mute);
+        entity.getEvents().addListener("exitTractor", this::unMute);
+        currentTexture = entity.getComponent(DynamicTextureRenderComponent.class);
     }
 
+    /**
+     * Mutes the player highlight (OFF)
+     */
+    public void mute() {
+        isMuted = true;
+    }
+
+
+    /**
+     * Unmutes the player highlight (highlight ON)
+     */
+    public void unMute() {
+        isMuted = false;
+    }
+
+    /**
+     * Returns the muted boolean
+     * @return true if playerHighlight is muted (highlight is off)
+     */
+    public boolean isMuted() {
+        return isMuted;
+    }
+
+    /**
+     * Updates the position of the player highlight to the current player cursor position
+     * Handles translating mouse pos to world pos
+     * And "locking" it to the closest tile
+     * Indicates which tile the player is currently going to act on
+     */
     public void updatePosition() {
         GameMap map = ServiceLocator.getGameArea().getMap();
         if (currentTexture != null) {
@@ -82,15 +98,19 @@ public class PlayerHighlightComponent extends Component {
 
     }
 
+    /**
+     * Updates player highlight
+     */
     @Override
     public void update() {
-        updateMuted();
         updatePosition();
     }
 
-
-    private String getTexturePath() {
-        //TODO implement the other circle thing here as well.
-        return "images/yellowSquare.png";
+    /**
+     * Returns the path to the texture
+     * @return path to texture
+     */
+    public String getTexturePath() {
+        return TEXTURE_PATH;
     }
 }

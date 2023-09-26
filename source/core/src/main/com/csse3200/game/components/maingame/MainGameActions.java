@@ -12,11 +12,12 @@ import com.csse3200.game.components.Component;
  */
 public class MainGameActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(MainGameActions.class);
-  private GdxGame game;
+  private static GdxGame game;
 
   public MainGameActions(GdxGame game) {
     this.game = game;
   }
+
 
   @Override
   public void create() {
@@ -28,6 +29,11 @@ public class MainGameActions extends Component {
    */
   private void onExit() {
     logger.info("Exiting main game screen");
+    game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+  }
+
+  public static void exitToMainMenu() {
+    logger.debug("Exiting to main menu");
     game.setScreen(GdxGame.ScreenType.MAIN_MENU);
   }
 }
