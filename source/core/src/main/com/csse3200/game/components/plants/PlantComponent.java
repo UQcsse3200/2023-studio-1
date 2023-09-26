@@ -672,6 +672,7 @@ public class PlantComponent extends Component {
                 ServiceLocator.getEntityService().register(item);
             }
         });
+        ServiceLocator.getPlantInfoService().increasePlantsHarvested(1, plantName);
         destroyPlant();
 
     }

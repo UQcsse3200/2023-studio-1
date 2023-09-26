@@ -2,6 +2,9 @@ package com.csse3200.game.services.plants;
 
 import com.csse3200.game.events.EventHandler;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Keeps track of all info and stats relating to plants.
  */
@@ -27,34 +30,21 @@ public class PlantInfoService {
     private int totalSeedsPlanted;
 
     /**
-     * Count of the total number of cosmic cob seeds planted.
+     * Count of the total number of plant seeds counted.
+     * Indexes 0-5 correspond to: Cosmic Cob, Aloe Vera, Hammer Plant, Space Snapper, Deadly Nightshade, Atomic Algae.
      */
-    private int cosmicCobSeedsPlanted;
+    private int[] seedPlantCount = {0, 0, 0, 0, 0, 0};
 
     /**
-     * Count of the total number of aloe vera seeds planted.
+     * The total number of plants that have been harvested.
      */
-    private int aloeVeraSeedsPlanted;
+    private int totalPlantHarvestCount;
 
     /**
-     * Count of the total number of hammer plant seeds planted.
+     * Number of times each plant type has been harvested.
+     * Indexes 0-5 correspond to: Cosmic Cob, Aloe Vera, Hammer Plant, Space Snapper, Deadly Nightshade, Atomic Algae.
      */
-    private int hammerPlantSeedsPlanted;
-
-    /**
-     * Count of the total number of space snapper seeds planted.
-     */
-    private int spaceSnapperSeedsPlanted;
-
-    /**
-     * Count of the total number of deadly nightshade seeds planted.
-     */
-    private int deadlyNightshadeSeedsPlanted;
-
-    /**
-     * Count of the total number of atomic algae seeds planted.
-     */
-    private int atomicAlgaeSeedsPlanted;
+    private int[] plantHarvestCount = {0, 0, 0, 0, 0, 0};
 
     /**
      * Constructor for the plant info service. Initialise all counts to zero.
@@ -63,12 +53,7 @@ public class PlantInfoService {
         events = new EventHandler();
         alivePlantCount = 0;
         totalSeedsPlanted = 0;
-        cosmicCobSeedsPlanted = 0;
-        aloeVeraSeedsPlanted = 0;
-        hammerPlantSeedsPlanted = 0;
-        spaceSnapperSeedsPlanted = 0;
-        deadlyNightshadeSeedsPlanted = 0;
-        atomicAlgaeSeedsPlanted = 0;
+        totalPlantHarvestCount = 0;
     }
 
     /**
@@ -100,20 +85,36 @@ public class PlantInfoService {
      */
     public void increaseSeedsPlanted(int num, String plantName) {
         switch (plantName) {
-            case "Cosmic Cob" -> cosmicCobSeedsPlanted += num;
-            case "Aloe Vera" -> aloeVeraSeedsPlanted += num;
-            case "Hammer Plant" -> hammerPlantSeedsPlanted += num;
-            case "Space Snapper" -> spaceSnapperSeedsPlanted += num;
-            case "Deadly Nightshade" -> deadlyNightshadeSeedsPlanted += num;
-            case "Atomic Algae" -> atomicAlgaeSeedsPlanted += num;
+            case "Cosmic Cob" -> seedPlantCount[0] += num;
+            case "Aloe Vera" -> seedPlantCount[1] += num;
+            case "Hammer Plant" -> seedPlantCount[2] += num;
+            case "Space Snapper" -> seedPlantCount[3] += num;
+            case "Deadly Nightshade" -> seedPlantCount[4] += num;
+            case "Atomic Algae" -> seedPlantCount[5] += num;
         }
+        int sum = 0;
+        for (int i : seedPlantCount) {
+            sum += i;
+        }
+        totalSeedsPlanted = sum;
+        updateClearInfo();
+    }
 
-        totalSeedsPlanted = cosmicCobSeedsPlanted +
-                            aloeVeraSeedsPlanted +
-                            hammerPlantSeedsPlanted +
-                            spaceSnapperSeedsPlanted +
-                            deadlyNightshadeSeedsPlanted +
-                            atomicAlgaeSeedsPlanted;
+    public void increasePlantsHarvested(int num, String plantName) {
+        switch (plantName) {
+            case "Cosmic Cob" -> plantHarvestCount[0] += num;
+            case "Aloe Vera" -> plantHarvestCount[1] += num;
+            case "Hammer Plant" -> plantHarvestCount[2] += num;
+            case "Space Snapper" -> plantHarvestCount[3] += num;
+            case "Deadly Nightshade" -> plantHarvestCount[4] += num;
+            case "Atomic Algae" -> plantHarvestCount[5] += num;
+        }
+        int sum = 0;
+        for (int i : plantHarvestCount) {
+            sum += i;
+        }
+        totalPlantHarvestCount = sum;
+        updateClearInfo();
     }
 
     /**
@@ -129,6 +130,10 @@ public class PlantInfoService {
      */
     public String plantInfoSummary() {
         String returnString = "Total Seeds Planted: " + String.valueOf(totalSeedsPlanted);
+
+        if (totalPlantHarvestCount != 0) {
+            returnString += "\nPlants Harvested: " + String.valueOf(totalPlantHarvestCount);
+         }
 
         if (alivePlantCount != 0) {
             returnString += "\nAlive Plants: " + String.valueOf(alivePlantCount);
