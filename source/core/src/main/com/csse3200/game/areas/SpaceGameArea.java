@@ -3,10 +3,7 @@ package com.csse3200.game.areas;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.areas.terrain.CropTileComponent;
-import com.csse3200.game.areas.terrain.GameMap;
-import com.csse3200.game.areas.terrain.TerrainCropTileFactory;
-import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.areas.terrain.*;
 import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.items.ItemType;
@@ -372,14 +369,19 @@ public class SpaceGameArea extends GameArea {
 
     IntStream.range(0,15).forEach(i -> {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      TerrainTile tile = gameMap.getTile(randomPos);
 
-      while (!gameMap.getTile(randomPos).isTraversable()) {
+      while (!tile.isTraversable() || tile.isOccupied()) {
         randomPos = RandomUtils.random(minPos, maxPos);
-
+        tile = gameMap.getTile(randomPos);
       }
 
       Entity shipDebris = ShipDebrisFactory.createShipDebris(player);
-      spawnEntityAt(shipDebris, randomPos, true, true);
+      ServiceLocator.getEntityService().register(shipDebris);
+      tile.setOccupant(shipDebris);
+      tile.setOccupied();
+
+      shipDebris.setPosition(terrain.tileToWorldPosition(randomPos));
     });
   }
 
