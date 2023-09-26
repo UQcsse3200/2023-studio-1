@@ -173,8 +173,9 @@ public class SpaceGameArea extends GameArea {
           "images/invisible_sprite.png",
 
           "images/projectiles/oxygen_eater_projectile.png",
-
-          "images/ship/ship_debris.png"
+          
+          "images/ship/ship_debris.png",
+          "images/ship/ship.png"
   };
   private static final String[] forestTextureAtlases = {
       "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
@@ -183,7 +184,7 @@ public class SpaceGameArea extends GameArea {
       "images/missionStatus.atlas", "images/plants/cosmic_cob.atlas", "images/plants/aloe_vera.atlas",
       "images/plants/hammer_plant.atlas", "images/plants/space_snapper.atlas", "images/plants/atomic_algae.atlas",
       "images/plants/deadly_nightshade.atlas", "images/projectiles/oxygen_eater_projectile.atlas",
-      "images/fireflies.atlas"
+      "images/fireflies.atlas", "images/ship/ship.atlas"
   };
   private static final String[] forestSounds = {
           "sounds/Impact4.ogg", "sounds/car-horn-6408.mp3",
@@ -254,7 +255,11 @@ public class SpaceGameArea extends GameArea {
 
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createLightItem());
     player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHoe());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createScythe());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createWateringcan());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createShovel());
 
     tractor = spawnTractor();
     spawnPlayerHighlight();
