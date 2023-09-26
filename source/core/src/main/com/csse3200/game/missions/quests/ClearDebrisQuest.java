@@ -45,7 +45,7 @@ public class ClearDebrisQuest extends Quest {
     public String getDescription() {
         return "Gather scattered parts of your ship.\nUse your shovel to clear "
                 + numberOfDebrisToClear + " Ship Debris in the world!\n"
-                + numberOfDebrisCleared + " out of " + numberOfDebrisToClear + " debris pieces cleared.";
+                + getShortDescription() + ".";
     }
 
     @Override

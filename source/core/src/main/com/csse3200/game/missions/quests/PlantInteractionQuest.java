@@ -69,20 +69,19 @@ public class PlantInteractionQuest extends Quest {
             isFirst = false;
         }
         descriptionBuilder.append(".\n");
-        descriptionBuilder.append(numberOfInteractions);
-        descriptionBuilder.append(" out of ");
-        descriptionBuilder.append(interactionsTarget);
-        switch (interactionType) {
-            case PLANT_CROP -> descriptionBuilder.append(" crops planted.");
-            case HARVEST_CROP -> descriptionBuilder.append(" crops harvested.");
-        }
+        descriptionBuilder.append(getShortDescription());
+        descriptionBuilder.append(".");
 
         return descriptionBuilder.toString();
     }
 
     @Override
     public String getShortDescription() {
-        return numberOfInteractions + " out of " + interactionsTarget + " crops planted.";
+        return numberOfInteractions + " out of " + interactionsTarget + switch (interactionType) {
+            case PLANT_CROP -> " crops planted";
+            case HARVEST_CROP -> " crops harvested";
+            default -> "";
+        };
     }
 
     @Override

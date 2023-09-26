@@ -18,6 +18,7 @@ public class QuestFactory {
     public static final String clearingYourMessQuestName = "Clearing Your Mess";
     public static final String sowingYourFirstSeedsQuestName = "Sowing Your First Seeds";
     public static final String reapingYourRewardsQuestName = "Reaping Your Rewards";
+    public static final String makingFriendsQuestName = "Making Friends";
     public static final String actIMainQuestName = "An Agreement";
     public static final String actIIMainQuestName = "Making Contact";
     public static final String actIIIMainQuestName = "Weather the Storm";
@@ -92,6 +93,10 @@ public class QuestFactory {
     }
 
     public static PlantInteractionQuest createReapingYourRewardsQuest() {
+        List<Quest> questsToAdd = new ArrayList<>();
+        List<Quest> questsToActivate = new ArrayList<>();
+        questsToActivate.add(createMakingFriendsQuest());
+
         String dialogue = """
                 Ahhh, well done. The Cosmic Cob is a favourite of my people.
                 {WAIT}
@@ -99,17 +104,46 @@ public class QuestFactory {
                 {WAIT}
                 But there are more plants that were in my original collection before it was destroyed.
                 {WAIT}
-                Are you familiar with Atomic Algae?
+                Atomic Algae <TO BE ADDED>
                 {WAIT}
-                Let me see what you are truly capable of...
+                Also...
+                {WAIT}
+                You might find your harvested crops desirable by our local wildlife.
+                {WAIT}
+                Who knows, maybe you will be able to get something from them if you treat them nicely.
                 """;
 
         MultiReward reward = new MultiReward(List.of(
                 new ItemReward(List.of(ItemFactory.createAtomicAlgaeSeed())),
+                new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
         return new PlantInteractionQuest(reapingYourRewardsQuestName, reward, MissionManager.MissionEvent.HARVEST_CROP,
                 Set.of("Cosmic Cob"), 12);
+    }
+
+    public static TameAnimalsQuest createMakingFriendsQuest() {
+        List<Quest> questsToAdd = new ArrayList<>();
+        List<Quest> questsToActivate = new ArrayList<>();
+
+        String dialogue = """
+                So you've met our kind fauna.
+                {WAIT}
+                Good. You're starting to learn.
+                {WAIT}
+                How about you try to use their gifts next?
+                {WAIT}
+                Oh... and one more thing.
+                {WAIT}
+                Be aware - not all of our fauna take so kindly to aliens from outer space.
+                """;
+
+        MultiReward reward = new MultiReward(List.of(
+                new ItemReward(List.of(ItemFactory.createAloeVeraSeed())),
+                new QuestReward(questsToAdd, questsToActivate),
+                new DialogueReward(dialogue)
+        ));
+        return new TameAnimalsQuest(makingFriendsQuestName, reward, 3);
     }
 
     public static MainQuest createActIMainQuest() {

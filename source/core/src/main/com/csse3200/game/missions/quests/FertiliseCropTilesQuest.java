@@ -53,7 +53,7 @@ public class FertiliseCropTilesQuest extends Quest {
     public String getDescription() {
         return "Fertilising crop tiles will cause your plants to grow faster.\nApply fertiliser to "
                 + target + " tiles and become a " + getName() + "!\n"
-                + numberOfTilesFertilised + " out of " + target + " crop tiles fertilised.";
+                + getShortDescription() + ".";
     }
 
     @Override

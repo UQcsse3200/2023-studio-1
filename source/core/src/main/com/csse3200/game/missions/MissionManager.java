@@ -38,7 +38,9 @@ public class MissionManager implements Json.Serializable {
 		// Triggers when ship debris is cleared
 		DEBRIS_CLEARED,
 		// Triggers when a crop is harvested, a single String representing the plant name is provided as an argument
-		HARVEST_CROP
+		HARVEST_CROP,
+		// Triggers when an animal is tamed
+		TAME_ANIMAL,
 	}
 
 	/**
