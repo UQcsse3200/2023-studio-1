@@ -300,8 +300,8 @@ public class CropTileComponent extends Component {
 
 	public void setTerrainTile(TerrainTile terrainTile) {
 		this.terrainTile = terrainTile;
-		if (terrainTile.getCropTile() == null) {
-			terrainTile.setCropTile(entity);
+		if (terrainTile.getOccupant() == null) {
+			terrainTile.setOccupant(entity);
 		}
 	}
 }
