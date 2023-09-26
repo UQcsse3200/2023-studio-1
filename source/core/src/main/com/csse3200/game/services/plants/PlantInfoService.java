@@ -100,6 +100,12 @@ public class PlantInfoService {
         updateClearInfo();
     }
 
+    /**
+     * Increase the total count of plants harvested by an integer value. Also keeps track of how many of each type of
+     * plant have been harvested.
+     * @param num - Integer value.
+     * @param plantName - Name of the plant that has been harvested.
+     */
     public void increasePlantsHarvested(int num, String plantName) {
         switch (plantName) {
             case "Cosmic Cob" -> plantHarvestCount[0] += num;
