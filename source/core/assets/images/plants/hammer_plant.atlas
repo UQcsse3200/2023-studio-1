@@ -392,6 +392,8 @@ bounds:272,36,16,32
 index:34
 bounds:290,36,16,32
 6_dead
-bounds:308,36,16,16
-default
+bounds:308,36,16,32
+6_sprout_dead
 bounds:326,36,16,32
+default
+bounds:344,36,16,32

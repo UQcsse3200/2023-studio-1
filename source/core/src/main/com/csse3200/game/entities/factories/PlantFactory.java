@@ -94,8 +94,9 @@ public class PlantFactory {
         animator.addAnimation("4_adult", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("5_decaying", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("6_dead", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("6_sprout_dead", 0.1f, Animation.PlayMode.LOOP);
 
-        animator.startAnimation("4_adult");
+        animator.startAnimation("1_seedling");
 
         return animator;
     }
