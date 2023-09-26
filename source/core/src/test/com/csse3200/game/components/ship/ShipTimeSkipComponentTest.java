@@ -5,6 +5,7 @@ import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -19,17 +20,31 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
 class ShipTimeSkipComponentTest {
+    private boolean isMorningHour;
+
+    @BeforeEach
+    void setupTest() {
+        isMorningHour = false;
+    }
+
+    void setMorningHour() {
+        isMorningHour = true;
+    }
+
     @ParameterizedTest(name = "Updates the time from {0}d {1}h {2}m to {3}d 6h 0m when unlocked")
     @MethodSource({"updatesTimeWhenUnlockedParams"})
     void updatesTimeWhenUnlocked(int initialDay, int initialHour, int initialMinute, int expectedDay) {
-        ServiceLocator.registerTimeSource(new GameTime());
+        GameTime mockTimeSource = spy(GameTime.class);
+        ServiceLocator.registerTimeSource(mockTimeSource);
 
-        TimeService mockTimeService = spy(TimeService.class);
-        ServiceLocator.registerTimeService(mockTimeService);
+        TimeService timeService = new TimeService();
+        ServiceLocator.registerTimeService(timeService);
 
-        mockTimeService.setDay(initialDay);
-        mockTimeService.setHour(initialHour);
-        mockTimeService.setMinute(initialMinute);
+        timeService.setDay(initialDay);
+        timeService.setHour(initialHour);
+        timeService.setMinute(initialMinute);
+
+        timeService.getEvents().addListener("morningTime", this::setMorningHour);
 
         ShipTimeSkipComponent component = new ShipTimeSkipComponent();
         Entity testEntity = new Entity().addComponent(component);
@@ -37,18 +52,21 @@ class ShipTimeSkipComponentTest {
 
         // not unlocked yet, shouldn't do anything
         testEntity.getEvents().trigger("interact");
-        verify(mockTimeService, times(0)).setNearestTime(TimeService.MORNING_HOUR);
+        verify(mockTimeSource, times(0)).setTimeScale(100f);
 
         // unlock the feature
         testEntity.getEvents().trigger("progressUpdated", 4, new HashSet<>(List.of(ShipProgressComponent.Feature.BED)));
 
         // should trigger a time change now
         testEntity.getEvents().trigger("interact");
-        verify(mockTimeService, times(1)).setNearestTime(TimeService.MORNING_HOUR);
+        verify(mockTimeSource, times(1)).setTimeScale(100f);
 
-        assert mockTimeService.getDay() == expectedDay;
-        assert mockTimeService.getHour() == TimeService.MORNING_HOUR;
-        assert mockTimeService.getMinute() == 0;
+        while (!isMorningHour) {
+            timeService.update();
+        }
+
+        assert timeService.getDay() == expectedDay;
+        verify(mockTimeSource, times(1)).setTimeScale(1f);
     }
 
     private static Stream<Arguments> updatesTimeWhenUnlockedParams() {
@@ -56,7 +74,7 @@ class ShipTimeSkipComponentTest {
                 // (initialDay, initialHour, initialMinute, expectedDay)
                 arguments(0, 5, 0, 0),
                 arguments(0, 5, 59, 0),
-                arguments(0, 6, 0, 0),
+                arguments(0, 6, 0, 1),
                 arguments(0, 6, 1, 1)
         );
     }

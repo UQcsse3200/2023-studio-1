@@ -8,8 +8,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Set;
 
-import static com.csse3200.game.services.TimeService.MORNING_HOUR;
-
 /**
  * Handles allowing the player to sleep through the night by interacting
  * with the ship once the repair threshold is reached.
@@ -25,6 +23,8 @@ public class ShipTimeSkipComponent extends Component {
 
         entity.getEvents().addListener("progressUpdated", this::progressUpdated);
         entity.getEvents().addListener("interact", this::triggerTimeSkip);
+
+        ServiceLocator.getTimeService().getEvents().addListener("morningTime", this::stopTimeSkip);
     }
 
     /**
@@ -46,7 +46,11 @@ public class ShipTimeSkipComponent extends Component {
     private void triggerTimeSkip() {
         if (unlocked) {
             logger.debug("Skipping time to next MORNING_HOUR");
-            ServiceLocator.getTimeService().setNearestTime(MORNING_HOUR);
+            ServiceLocator.getTimeSource().setTimeScale(100f);
         }
+    }
+
+    private void stopTimeSkip() {
+        ServiceLocator.getTimeSource().setTimeScale(1f);
     }
 }
