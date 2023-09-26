@@ -52,14 +52,14 @@ class ShipTimeSkipComponentTest {
 
         // not unlocked yet, shouldn't do anything
         testEntity.getEvents().trigger("interact");
-        verify(mockTimeSource, times(0)).setTimeScale(100f);
+        verify(mockTimeSource, times(0)).setTimeScale(200f);
 
         // unlock the feature
         testEntity.getEvents().trigger("progressUpdated", 4, new HashSet<>(List.of(ShipProgressComponent.Feature.BED)));
 
         // should trigger a time change now
         testEntity.getEvents().trigger("interact");
-        verify(mockTimeSource, times(1)).setTimeScale(100f);
+        verify(mockTimeSource, times(1)).setTimeScale(200f);
 
         while (!isMorningHour) {
             timeService.update();

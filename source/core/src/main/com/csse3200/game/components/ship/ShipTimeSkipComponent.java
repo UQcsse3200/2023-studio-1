@@ -46,7 +46,7 @@ public class ShipTimeSkipComponent extends Component {
     private void triggerTimeSkip() {
         if (unlocked) {
             logger.debug("Skipping time to next MORNING_HOUR");
-            ServiceLocator.getTimeSource().setTimeScale(100f);
+            ServiceLocator.getTimeSource().setTimeScale(200f);
         }
     }
 
