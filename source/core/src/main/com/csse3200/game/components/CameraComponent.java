@@ -103,4 +103,9 @@ public class CameraComponent extends Component {
 
     return new Vector2(worldPosition.x, worldPosition.y);
   }
+
+  public boolean entityOnScreen(Entity entity) {
+    Vector2 position = entity.getCenterPosition();
+    return camera.frustum.pointInFrustum(position.x, position.y, 0);
+  }
 }
