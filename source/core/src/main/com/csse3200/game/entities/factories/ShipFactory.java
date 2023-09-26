@@ -45,7 +45,14 @@ public class ShipFactory {
     AnimationRenderComponent animator = new AnimationRenderComponent(
         ServiceLocator.getResourceService().getAsset("images/ship/ship.atlas", TextureAtlas.class),
         16f);
-    animator.addAnimation("default", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("default", 0.1f, Animation.PlayMode.NORMAL);
+    
+    animator.addAnimation("ship_0", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("ship_1", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("ship_2", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("ship_3", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("ship_4", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("ship_5", 0.1f, Animation.PlayMode.NORMAL);
     animator.startAnimation("default");
     // this will get updated in a future sprint to include proper animations
     return animator;
