@@ -275,7 +275,7 @@ public class SpaceGameArea extends GameArea {
 //    spawnTool(ItemType.SCYTHE);
 //    spawnTool(ItemType.HOE);
 //    spawnTool(ItemType.FERTILISER);
-//    spawnTool(ItemType.SEED);
+    spawnTool(ItemType.SEED);
 //    spawnTool(ItemType.FOOD);
 
     //playMusic();
