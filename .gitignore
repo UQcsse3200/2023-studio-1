@@ -3,6 +3,3 @@
 ### Gradle ###
 .gradle/
 gradle/*.log
-
-### SaveFile.json only one file incase there is a need for other to be kept ###
-source/core/assests/saves/saveFile.json

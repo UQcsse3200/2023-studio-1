@@ -52,6 +52,11 @@ public class PlantInfoService {
     private int deadlyNightshadeSeedsPlanted;
 
     /**
+     * Count of the total number of atomic algae seeds planted.
+     */
+    private int atomicAlgaeSeedsPlanted;
+
+    /**
      * Constructor for the plant info service. Initialise all counts to zero.
      */
     public PlantInfoService() {
@@ -63,6 +68,7 @@ public class PlantInfoService {
         hammerPlantSeedsPlanted = 0;
         spaceSnapperSeedsPlanted = 0;
         deadlyNightshadeSeedsPlanted = 0;
+        atomicAlgaeSeedsPlanted = 0;
     }
 
     /**
@@ -99,13 +105,15 @@ public class PlantInfoService {
             case "Hammer Plant" -> hammerPlantSeedsPlanted += num;
             case "Space Snapper" -> spaceSnapperSeedsPlanted += num;
             case "Deadly Nightshade" -> deadlyNightshadeSeedsPlanted += num;
+            case "Atomic Algae" -> atomicAlgaeSeedsPlanted += num;
         }
 
         totalSeedsPlanted = cosmicCobSeedsPlanted +
                             aloeVeraSeedsPlanted +
                             hammerPlantSeedsPlanted +
                             spaceSnapperSeedsPlanted +
-                            deadlyNightshadeSeedsPlanted;
+                            deadlyNightshadeSeedsPlanted +
+                            atomicAlgaeSeedsPlanted;
     }
 
     /**

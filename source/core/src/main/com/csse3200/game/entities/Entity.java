@@ -3,7 +3,10 @@ package com.csse3200.game.entities;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Vector;
 
+import com.csse3200.game.components.AuraLightComponent;
+import com.csse3200.game.components.ConeLightComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -112,6 +115,10 @@ public class Entity implements Json.Serializable {
   public void setPosition(Vector2 position) {
     this.position = position.cpy();
     getEvents().trigger(EVT_NAME_POS, position.cpy());
+  }
+
+  public void setCenterPosition(Vector2 position) {
+    this.position = position.cpy().mulAdd(getScale(), -0.5f);
   }
 
   /**
@@ -356,7 +363,7 @@ public class Entity implements Json.Serializable {
 
   @Override
   public String toString() {
-    return String.format("Entity{id=%d}", id);
+    return String.format("Entity{id=%d} {type=%s}", id, type == null ? "none" : type.toString());
   }
 
   /**
@@ -420,11 +427,18 @@ public class Entity implements Json.Serializable {
     if (type != null) { // The try catch above may cause a NullPointerException otherwise
       switch (type) {
         case Tractor:
+          JsonValue lightJsonMap = jsonMap.get("components").get("ConeLightComponent");
           jsonMap = jsonMap.get("components").get("TractorActions");
           TractorActions tractorActions = new TractorActions();
           // Update the tractor 'muted' variable based on the info in the json file
           tractorActions.setMuted(jsonMap.getBoolean("isMuted"));
           this.addComponent(tractorActions);
+
+          ConeLightComponent coneLightComponent = new ConeLightComponent(lightJsonMap.getFloat("distance"));
+          if (lightJsonMap.getBoolean("isActive")) {
+            coneLightComponent.toggleLight();
+          }
+          this.addComponent(coneLightComponent);
           break;
         case Tile:
           jsonMap = jsonMap.get("components").get("CropTileComponent");

@@ -863,7 +863,7 @@ public class PlantComponent extends Component {
      */
     public void forceJuvenile() {
         this.setGrowthStage(GrowthStage.JUVENILE.getValue());
-        this.setPlantHealth(2);
+        this.setPlantHealth(20);
         this.setCurrentGrowthLevel(70);
         entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType("None");
         updateTexture();

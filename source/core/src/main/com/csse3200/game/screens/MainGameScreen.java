@@ -4,6 +4,7 @@ import com.csse3200.game.components.plants.PlantInfoDisplayComponent;
 import com.csse3200.game.services.*;
 import com.csse3200.game.services.plants.PlantCommandService;
 import com.csse3200.game.services.plants.PlantInfoService;
+import com.csse3200.game.entities.FireflySpawner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -135,6 +136,8 @@ public class MainGameScreen extends ScreenAdapter {
 
         lose = false;
         spaceGameArea.getPlayer().getEvents().addListener("loseScreen", this::loseScreenStart);
+
+        new FireflySpawner();
 
         // if the LoadSaveOnStart value is set true then load entities saved from file
         if (game.isLoadOnStart()){

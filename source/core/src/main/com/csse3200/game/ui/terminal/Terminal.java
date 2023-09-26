@@ -43,6 +43,7 @@ public class Terminal extends Component {
     addCommand("addItem", new AddItemCommand());
     addCommand("addWeather", new AddWeatherCommand());
     addCommand("plant", new PlantCommand());
+    addCommand("setTimeScale", new SetTimeScaleCommand());
   }
 
   /** @return message entered by user */

@@ -169,4 +169,8 @@ public class PlantFactory {
 
     }
 
+
+    public static Entity createTest(CropTileComponent cropTile) {
+        return new Entity(EntityType.Plant);
+    }
 }

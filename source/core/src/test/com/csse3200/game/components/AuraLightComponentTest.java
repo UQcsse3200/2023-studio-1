@@ -118,7 +118,7 @@ class AuraLightComponentTest {
 			AuraLightComponent component = entity.getComponent(AuraLightComponent.class);
 			light = mock.constructed().get(0);
 			component.dispose();
-			verify(light, times(1)).dispose();
+			verify(light, times(1)).remove();
 		}
 	}
 
