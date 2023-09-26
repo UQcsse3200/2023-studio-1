@@ -157,13 +157,13 @@ public class CropTileComponent extends Component {
 		plant = plantFactoryMethod.apply(this);
 		ServiceLocator.getEntityService().register(plant);
 
-//		PlantComponent plantComponent = plant.getComponent(PlantComponent.class);
-//		if (plantComponent != null) {
-//			ServiceLocator.getMissionManager().getEvents().trigger(
-//					MissionManager.MissionEvent.PLANT_CROP.name(),
-//					plantComponent.getPlantType()
-//			);
-//		}
+		PlantComponent plantComponent = plant.getComponent(PlantComponent.class);
+		if (plantComponent != null) {
+			ServiceLocator.getMissionManager().getEvents().trigger(
+					MissionManager.MissionEvent.PLANT_CROP.name(),
+					plantComponent.getPlantName()
+			);
+		}
 	}
 
 	/**
