@@ -5,24 +5,25 @@ package com.csse3200.game.missions.rewards;
  * given dialogue.
  */
 public class DialogueReward extends Reward {
+
     /**
-     * The path to the file storing the relevant dialogue.
+     * The {@link String} dialogue to be displayed
      */
-    private String dialogueFilePath;
+    private String dialogue;
 
     /**
      * The type of dialogue screen the dialogue will be shown on.
      */
     // private DialogueScreenType type; - based on team 3 screen implementation
 
-    public DialogueReward(String dialogueFilePath/*, DialogueScreenType type*/) {
+    public DialogueReward(String dialogue/*, DialogueScreenType type*/) {
         super();
-        this.dialogueFilePath = dialogueFilePath;
+        this.dialogue = dialogue;
         // this.type = type;
     }
 
     /**
-     * This method will display the dialogue on the correct dialogue screen.
+     * This method will display the dialogue on the correct dialogue screen
      */
     @Override
     public void collect() {
