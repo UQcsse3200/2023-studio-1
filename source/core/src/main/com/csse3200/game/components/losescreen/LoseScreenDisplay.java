@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.GdxGame.ScreenType;
 import com.csse3200.game.ui.UIComponent;
+import com.rafaskoberg.gdx.typinglabel.TypingAdapter;
 import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,12 +22,13 @@ public class LoseScreenDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(LoseScreenDisplay.class);
     private static final float Z_INDEX = 2f;
     /**
-     * The Image that forms the background of the page.
+     * The Image that forms the background of the page
      */
     private Image background;
     private Table table;
     private final GdxGame game;
 
+    private boolean typingAnimationComplete;
     private boolean hasWon;
 
     private TextButton returnButton;
@@ -39,7 +42,7 @@ public class LoseScreenDisplay extends UIComponent {
     /**
      * The speed in pixels/frame that the background and the planet should move at.
      */
-    private float spaceSpeed = 0.5f;
+    private float spaceSpeed = 0.33f;
 
     /**
      * The distance away from the top the text that the planet should stop in pixels.
@@ -81,12 +84,12 @@ public class LoseScreenDisplay extends UIComponent {
         background.setHeight(scaledHeight);
 
         // Load the animated planet
-        planet = new Image(new Texture(Gdx.files.internal("images/dead_planet.png")));
+        planet = new Image(new Texture(Gdx.files.internal("images/dead_planet2.png")));
 
 
 
         // Scale it to a 10% of screen width with a constant aspect ratio
-        float planetWidth = (float) (Gdx.graphics.getWidth() * 0.1);
+        float planetWidth = (float) (Gdx.graphics.getWidth() * 0.15);
         float planetHeight = planetWidth * (planet.getHeight() / planet.getWidth());
         planet.setSize(planetWidth, planetHeight); // Set to a reasonable fixed size
 
@@ -102,7 +105,7 @@ public class LoseScreenDisplay extends UIComponent {
 
         this.returnButton = new TextButton("Return To Main Menu", skin);
 
-        this.returnButton.setVisible(false); // Make the continue button invisible
+        this.returnButton.setVisible(true); // Make the continue button invisible
 
         // The continue button lets the user proceed to the main game
         this.returnButton.addListener(new ChangeListener() {
@@ -126,6 +129,8 @@ public class LoseScreenDisplay extends UIComponent {
         stage.addActor(background);
         stage.addActor(planet);
         stage.addActor(rootTable);
+
+
     }
 
     private String getCredits(String causeOfDeath) {
@@ -143,7 +148,7 @@ public class LoseScreenDisplay extends UIComponent {
         }
 
         return """ 
-                {WAIT=0.5}
+                {SLOW}
                 Despite your best efforts, Alpha Centauri remains a wasteland.
                 
                 {WAIT}
@@ -159,7 +164,7 @@ public class LoseScreenDisplay extends UIComponent {
                 This is the end of the human race.
                 {WAIT}
                 
-                {COLOR=red}You're a loser!.
+                {COLOR=red}Game Over
                 {WAIT=1}
             """;
     }
@@ -191,7 +196,7 @@ public class LoseScreenDisplay extends UIComponent {
         }
 
         // Resize the planet to the new screen size, maintaining aspect ratio
-        float planetWidth = (float) (Gdx.graphics.getWidth() * 0.1);
+        float planetWidth = (float) (Gdx.graphics.getWidth() * 0.15);
         float planetHeight = planetWidth * (planet.getHeight() / planet.getWidth());
         planet.setSize(planetWidth, planetHeight);
 

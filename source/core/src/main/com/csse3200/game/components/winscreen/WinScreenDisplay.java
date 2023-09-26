@@ -37,7 +37,7 @@ public class WinScreenDisplay extends UIComponent {
     /**
      * The speed in pixels/frame that the background and the planet should move at.
      */
-    private float spaceSpeed = 0.5f;
+    private float spaceSpeed = 0.33f;
 
     /**
      * The distance away from the top the text that the planet should stop in pixels.
@@ -78,12 +78,12 @@ public class WinScreenDisplay extends UIComponent {
         background.setHeight(scaledHeight);
 
         // Load the animated planet
-        planet = new Image(new Texture(Gdx.files.internal("images/earth_image.png")));
+        planet = new Image(new Texture(Gdx.files.internal("images/good_planet.png")));
 
 
 
         // Scale it to a 10% of screen width with a constant aspect ratio
-        float planetWidth = (float) (Gdx.graphics.getWidth() * 0.1);
+        float planetWidth = (float) (Gdx.graphics.getWidth() * 0.15);
         float planetHeight = planetWidth * (planet.getHeight() / planet.getWidth());
         planet.setSize(planetWidth, planetHeight); // Set to a reasonable fixed size
 
@@ -93,7 +93,7 @@ public class WinScreenDisplay extends UIComponent {
         planet.setPosition((float)Gdx.graphics.getWidth()/2, planetOffset, Align.center);
 
         String credits = """
-                {WAIT=0.5}
+                {SLOW}
                 After 30 long days, you, great farmlord, have succeeded!
                 {WAIT=0.5}
                 
@@ -106,11 +106,24 @@ public class WinScreenDisplay extends UIComponent {
                 The future is bright, and the human race... {WAIT=1} will live on!
                 {WAIT=1}
                 
-                {COLOR=green}Congrats You Win!!!.{WAIT=1}
+                {COLOR=green}Congrats You Win!!!{WAIT=1}
             """;
 
         storyLabel = new TypingLabel(credits, skin); // Create the TypingLabel with the formatted story
         storyLabel.setAlignment(Align.center); // Center align the text
+
+        this.returnButton = new TextButton("Return To Main Menu", skin);
+
+        this.returnButton.setVisible(true); // Make the continue button invisible
+
+        // The continue button lets the user proceed to the main game
+        this.returnButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                logger.debug("Player Returned to Main Menu");
+                returnToMenu();
+            }
+        });
 
         rootTable = new Table();
         rootTable.setFillParent(true); // Make the table fill the screen
@@ -125,6 +138,10 @@ public class WinScreenDisplay extends UIComponent {
         stage.addActor(background);
         stage.addActor(planet);
         stage.addActor(rootTable);
+    }
+
+    private void returnToMenu() {
+        game.setScreen(ScreenType.MAIN_MENU);
     }
 
     @Override
@@ -147,7 +164,7 @@ public class WinScreenDisplay extends UIComponent {
         }
 
         // Resize the planet to the new screen size, maintaining aspect ratio
-        float planetWidth = (float) (Gdx.graphics.getWidth() * 0.1);
+        float planetWidth = (float) (Gdx.graphics.getWidth() * 0.15);
         float planetHeight = planetWidth * (planet.getHeight() / planet.getWidth());
         planet.setSize(planetWidth, planetHeight);
 
