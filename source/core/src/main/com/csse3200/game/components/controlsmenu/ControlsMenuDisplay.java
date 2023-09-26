@@ -148,8 +148,8 @@ public class ControlsMenuDisplay extends UIComponent {
       // TODO: Update scrollpane style to have black labels
 
     // Set column default heights and widths
-    controlsTbl.defaults().height(50f).padTop(20f);
-    controlsTbl.columnDefaults(0).width(50f);
+    controlsTbl.defaults().minHeight(50f).padTop(20f);
+    controlsTbl.columnDefaults(0).minWidth(50f);
     controlsTbl.columnDefaults(1).padLeft(50f);
 
     // Add the header row
