@@ -173,7 +173,7 @@ public class SpaceGameArea extends GameArea {
           "images/invisible_sprite.png",
 
           "images/projectiles/oxygen_eater_projectile.png",
-          
+
           "images/ship/ship_debris.png"
   };
   private static final String[] forestTextureAtlases = {
@@ -250,19 +250,11 @@ public class SpaceGameArea extends GameArea {
     spawnTerrain();
     spawnInvisibleObstacle();// spawn invisible obstacle on the non-traversable area of the map
 
-    spawnCrop(5, 11, "Cosmic Cob");
-    spawnCrop(7, 11, "Aloe Vera");
-    spawnCrop(9, 11, "Hammer Plant");
-    spawnCrop(11, 11, "Space Snapper");
-    spawnCrop(13, 11, "Deadly Nightshade");
-    spawnCrop(15, 11, "Atomic Algae");
-
     spawnShipDebris();
 
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
-    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createLightItem());
-    //player.getComponent(InventoryComponent.class).addItem(ItemFactory.createFertiliser());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHoe());
 
     tractor = spawnTractor();
     spawnPlayerHighlight();
@@ -294,7 +286,7 @@ public class SpaceGameArea extends GameArea {
 
   private void displayUI() {
     Entity ui = new Entity();
-    //ui.addComponent(new GameAreaDisplay("Box Forest"));
+    ui.addComponent(new GameAreaDisplay("Box Forest"));
     spawnEntity(ui);
   }
 
@@ -339,10 +331,6 @@ public class SpaceGameArea extends GameArea {
        Entity invisible_obs = ObstacleFactory.createInvisibleObstacle();
        spawnEntityAt(invisible_obs, Pos, true, false);
      }
-   }
-
-   private void spawnFirefly() {
-     spawnEntityAt(NPCFactory.createFireFlies(player),new GridPoint2(30,30),true, true);
    }
 
   private Entity spawnCrop() {
@@ -563,5 +551,4 @@ public class SpaceGameArea extends GameArea {
     Entity playerHighlight = PlayerHighlightFactory.createPlayerHighlight();
     spawnEntityAt(playerHighlight, PLAYER_SPAWN, true, true);
   }
-
 }
