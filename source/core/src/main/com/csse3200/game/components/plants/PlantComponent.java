@@ -167,6 +167,8 @@ public class PlantComponent extends Component {
     private boolean plantDestroyed = false;
     private boolean deadBeforeMaturity = false;
 
+    private boolean forced = false;
+
     /**
      * Constructor used for plant types that have no extra properties. This is just used for testing.
      *
@@ -345,6 +347,12 @@ public class PlantComponent extends Component {
      */
     public void decayCheck() {
         if (!plantDestroyed) {
+            if (getGrowthStage().getValue() == GrowthStage.ADULT.getValue()) {
+                if (getPlantHealth() <= 0) {
+                    setGrowthStage(GrowthStage.DECAYING.getValue());
+                    updateTexture();
+                }
+            }
 
             // If the plants health drops to zero while decaying, then update the growth stage to dead.
             if (getGrowthStage().getValue() == GrowthStage.DECAYING.getValue()) {
@@ -454,12 +462,17 @@ public class PlantComponent extends Component {
      */
     public void increasePlantHealth(int plantHealthIncrement) {
 
-        this.plantHealth += plantHealthIncrement;
+        if (getGrowthStage().getValue() <= GrowthStage.ADULT.getValue()) {
+            this.plantHealth += plantHealthIncrement;
+        } else {
+            return;
+        }
+
         int growthStage = getGrowthStage().getValue();
         if ((growthStage < GrowthStage.ADULT.getValue())
                 && plantHealth > maxHealthAtStages[growthStage - 1]) {
             this.plantHealth = maxHealthAtStages[growthStage - 1];
-        } else if (growthStage >= GrowthStage.ADULT.getValue()
+        } else if (growthStage == GrowthStage.ADULT.getValue()
                 && plantHealth > maxHealth) {
             this.plantHealth = maxHealth;
         }
@@ -533,10 +546,13 @@ public class PlantComponent extends Component {
      * @param newGrowthStage - The updated growth stage of the plant, between 1 and 6.
      */
     public void setGrowthStage(int newGrowthStage) {
+
         if (newGrowthStage == GrowthStage.DEAD.getValue()) {
             ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(-1, "alive");
-            if (!deadBeforeMaturity) {
+            if (!deadBeforeMaturity && !forced) {
                 ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(-1, "decay");
+            } else if (forced) {
+                forced = false;
             }
         } else if (newGrowthStage == GrowthStage.DECAYING.getValue()) {
             ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(1, "decay");
@@ -827,6 +843,20 @@ public class PlantComponent extends Component {
      * Function used when debugging. Allows for the plant to instantly become a seedling from any growth stage.
      */
     public void forceSeedling() {
+
+        // If the plant is already a seedling do nothing.
+        if (getGrowthStage().getValue() == GrowthStage.SEEDLING.getValue()) {
+            return;
+        }
+
+        if (deadBeforeMaturity) {
+            deadBeforeMaturity = false;
+        }
+
+        if (getGrowthStage() == GrowthStage.DEAD) {
+            ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(1, "alive");
+        }
+
         this.setGrowthStage(GrowthStage.SEEDLING.getValue());
         this.setPlantHealth(2);
         this.setCurrentGrowthLevel(20);
@@ -839,6 +869,20 @@ public class PlantComponent extends Component {
      * Function used when debugging. Allows for the plant to instantly become a sprout from any growth stage.
      */
     public void forceSprout() {
+
+        // If the plant is already a sprout do nothing.
+        if (getGrowthStage().getValue() == GrowthStage.SPROUT.getValue()) {
+            return;
+        }
+
+        if (deadBeforeMaturity) {
+            deadBeforeMaturity = false;
+        }
+
+        if (getGrowthStage() == GrowthStage.DEAD) {
+            ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(1, "alive");
+        }
+
         this.setGrowthStage(GrowthStage.SPROUT.getValue());
         this.setPlantHealth(10);
         this.setCurrentGrowthLevel(50);
@@ -851,6 +895,20 @@ public class PlantComponent extends Component {
      * Function used when debugging. Allows for the plant to instantly become a juvenile from any growth stage.
      */
     public void forceJuvenile() {
+
+        // If the plant is already a juvenile do nothing.
+        if (getGrowthStage().getValue() == GrowthStage.JUVENILE.getValue()) {
+            return;
+        }
+
+        if (deadBeforeMaturity) {
+            deadBeforeMaturity = false;
+        }
+
+        if (getGrowthStage() == GrowthStage.DEAD) {
+            ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(1, "alive");
+        }
+
         this.setGrowthStage(GrowthStage.JUVENILE.getValue());
         this.setPlantHealth(20);
         this.setCurrentGrowthLevel(70);
@@ -863,6 +921,20 @@ public class PlantComponent extends Component {
      * Function used when debugging. Allows for the plant to instantly become an adult from any growth stage.
      */
     public void forceAdult() {
+
+        // If the plant is already an adult do nothing.
+        if (getGrowthStage().getValue() == GrowthStage.ADULT.getValue()) {
+            return;
+        }
+
+        if (deadBeforeMaturity) {
+            deadBeforeMaturity = false;
+        }
+
+        if (getGrowthStage() == GrowthStage.DEAD) {
+            ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(1, "alive");
+        }
+
         this.setGrowthStage(GrowthStage.ADULT.getValue());
         this.setPlantHealth(30);
         updateTexture();
@@ -875,6 +947,20 @@ public class PlantComponent extends Component {
      * Function used when debugging. Allows for the plant to instantly start decaying from any growth stage.
      */
     public void forceDecay() {
+
+        // If the plant is already decaying do nothing.
+        if (getGrowthStage().getValue() == GrowthStage.DECAYING.getValue()) {
+            return;
+        }
+
+        if (deadBeforeMaturity) {
+            deadBeforeMaturity = false;
+        }
+
+        if (getGrowthStage() == GrowthStage.DEAD) {
+            ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(1, "alive");
+        }
+
         this.setGrowthStage(GrowthStage.DECAYING.getValue());
         this.setPlantHealth(30);
         entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType("Decay");
@@ -887,6 +973,17 @@ public class PlantComponent extends Component {
      * Function used when debugging. Allows for the plant to instantly die from any growth stage.
      */
     public void forceDead() {
+        forced = true;
+        if (deadBeforeMaturity) {
+            deadBeforeMaturity = false;
+        }
+        // If the plant is already dead do nothing.
+        if (getGrowthStage().getValue() == GrowthStage.DEAD.getValue()) {
+            return;
+        }
+
+        ServiceLocator.getPlantInfoService().setDecayingPlantCount(0);
+
         this.setGrowthStage(GrowthStage.DEAD.getValue());
         this.setPlantHealth(0);
         updateTexture();

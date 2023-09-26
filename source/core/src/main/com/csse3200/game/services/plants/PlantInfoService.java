@@ -151,4 +151,12 @@ public class PlantInfoService {
 
         return returnString;
     }
+
+    public void setDecayingPlantCount(int num) {
+        decayingPlantCount = num;
+    }
+
+    public int getAlivePlantCount() {
+        return alivePlantCount;
+    }
 }
