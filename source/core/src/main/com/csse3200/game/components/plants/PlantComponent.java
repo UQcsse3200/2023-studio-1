@@ -127,7 +127,8 @@ public class PlantComponent extends Component {
     /**
      * The name of the animation for each growth stage.
      */
-    private final String[] animationImages = {"1_seedling", "2_sprout", "3_juvenile", "4_adult", "5_decaying", "6_dead"};
+    private final String[] animationImages = {"1_seedling", "2_sprout", "3_juvenile", "4_adult", "5_decaying", "6_dead",
+            "6_sprout_dead"};
 
     /**
      * The yield to be dropped when this plant is harvested as a map of item names to drop
@@ -151,7 +152,7 @@ public class PlantComponent extends Component {
     private int eatingCoolDown = 60;
 
     /**
-     * Count of hours since the space snapper ate. Used to determine whether the plant is ready to eat again.
+     * Count of minutes since the space snapper ate. Used to determine whether the plant is ready to eat again.
      */
     private int countMinutesOfDigestion;
 
@@ -163,6 +164,7 @@ public class PlantComponent extends Component {
     private boolean playerInProximity;
 
     private boolean plantDestroyed = false;
+    private boolean deadBeforeMaturity = false;
 
     /**
      * Constructor used for plant types that have no extra properties. This is just used for testing.
@@ -351,10 +353,17 @@ public class PlantComponent extends Component {
                     updateTexture();
                 }
 
-                // If the plants health drops to zero before it becomes an adult, destroy.
+            // If the plants health drops to zero before it becomes an adult its dead.
+            // Only destroyed immediately if the plant is a seedling.
             } else if (getGrowthStage().getValue() < GrowthStage.ADULT.getValue())
                 if (getPlantHealth() <= 0) {
-                    destroyPlant();
+                    if (getGrowthStage().getValue() != GrowthStage.SEEDLING.getValue()) {
+                        deadBeforeMaturity = true;
+                        setGrowthStage(GrowthStage.DEAD.getValue());
+                        updateTexture();
+                    } else {
+                        destroyPlant();
+                    }
                 }
         }
     }
@@ -525,7 +534,9 @@ public class PlantComponent extends Component {
     public void setGrowthStage(int newGrowthStage) {
         if (newGrowthStage == GrowthStage.DEAD.getValue()) {
             ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(-1, "alive");
-            ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(-1, "decay");
+            if (!deadBeforeMaturity) {
+                ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(-1, "decay");
+            }
         } else if (newGrowthStage == GrowthStage.DECAYING.getValue()) {
             ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(1, "decay");
         }
@@ -723,7 +734,11 @@ public class PlantComponent extends Component {
     public void updateTexture() {
         if (!this.isEating && (getGrowthStage().getValue() <= GrowthStage.DEAD.getValue())) {
             if (this.currentAnimator != null) {
-                this.currentAnimator.startAnimation(this.animationImages[getGrowthStage().getValue() - 1]);
+                if (deadBeforeMaturity) {
+                    currentAnimator.startAnimation("6_sprout_dead");
+                } else {
+                    this.currentAnimator.startAnimation(this.animationImages[getGrowthStage().getValue() - 1]);
+                }
 
             }
         } else if (this.isEating) {
@@ -848,7 +863,7 @@ public class PlantComponent extends Component {
      */
     public void forceJuvenile() {
         this.setGrowthStage(GrowthStage.JUVENILE.getValue());
-        this.setPlantHealth(20);
+        this.setPlantHealth(2);
         this.setCurrentGrowthLevel(70);
         entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType("None");
         updateTexture();

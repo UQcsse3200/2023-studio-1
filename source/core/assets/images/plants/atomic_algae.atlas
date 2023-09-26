@@ -371,5 +371,7 @@ index:36
 bounds:164,36,16,32
 6_dead
 bounds:182,36,16,32
-default
+6_sprout_dead
 bounds:200,36,16,32
+default
+bounds:218,36,16,32
