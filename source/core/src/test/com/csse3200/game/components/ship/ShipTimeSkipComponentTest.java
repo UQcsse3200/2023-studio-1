@@ -6,6 +6,7 @@ import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -77,5 +78,26 @@ class ShipTimeSkipComponentTest {
                 arguments(0, 6, 0, 1),
                 arguments(0, 6, 1, 1)
         );
+    }
+
+    @Test
+    void doesNotTriggerTimeScaleWhenTimeSkipNotInProgress() {
+        GameTime mockTimeSource = spy(GameTime.class);
+        ServiceLocator.registerTimeSource(mockTimeSource);
+
+        TimeService timeService = new TimeService();
+        ServiceLocator.registerTimeService(timeService);
+
+        timeService.getEvents().addListener("morningTime", this::setMorningHour);
+
+        ShipTimeSkipComponent component = new ShipTimeSkipComponent();
+        Entity testEntity = new Entity().addComponent(component);
+        testEntity.create();
+
+        while (!isMorningHour) {
+            timeService.update();
+        }
+
+        verify(mockTimeSource, times(0)).setTimeScale(1f);
     }
 }

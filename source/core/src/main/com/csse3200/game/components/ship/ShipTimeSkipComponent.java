@@ -15,11 +15,13 @@ import java.util.Set;
 public class ShipTimeSkipComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(ShipTimeSkipComponent.class);
     private boolean unlocked;
+    private boolean timeSkipInProgress;
 
     @Override
     public void create() {
         super.create();
         unlocked = false;
+        timeSkipInProgress = false;
 
         entity.getEvents().addListener("progressUpdated", this::progressUpdated);
         entity.getEvents().addListener("interact", this::triggerTimeSkip);
@@ -47,10 +49,15 @@ public class ShipTimeSkipComponent extends Component {
         if (unlocked) {
             logger.debug("Skipping time to next MORNING_HOUR");
             ServiceLocator.getTimeSource().setTimeScale(200f);
+            timeSkipInProgress = true;
         }
     }
 
     private void stopTimeSkip() {
-        ServiceLocator.getTimeSource().setTimeScale(1f);
+        // Don't do anything if the morningTime event was triggered, but we're not sleeping
+        if (timeSkipInProgress) {
+            ServiceLocator.getTimeSource().setTimeScale(1f);
+            timeSkipInProgress = false;
+        }
     }
 }
