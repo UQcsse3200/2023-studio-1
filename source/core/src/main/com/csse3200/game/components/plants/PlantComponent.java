@@ -782,13 +782,11 @@ public class PlantComponent extends Component {
         boolean playLoreSound = random.nextInt(100) <= 0; //Gives 1% chance of being true
         Sound soundEffect;
         logger.debug("is the sound lore?: " + playLoreSound);
-        if (playLoreSound) {
+        if (!playLoreSound) {
             soundEffect = ServiceLocator.getResourceService().getAsset(lore, Sound.class);
         } else {
             soundEffect = ServiceLocator.getResourceService().getAsset(notLore, Sound.class);
         }
-
-
         soundEffect.play();
     }
 
