@@ -3,6 +3,7 @@ package com.csse3200.game.entities;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Vector;
 
 import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.ConeLightComponent;
@@ -114,6 +115,10 @@ public class Entity implements Json.Serializable {
   public void setPosition(Vector2 position) {
     this.position = position.cpy();
     getEvents().trigger(EVT_NAME_POS, position.cpy());
+  }
+
+  public void setCenterPosition(Vector2 position) {
+    this.position = position.cpy().mulAdd(getScale(), -0.5f);
   }
 
   /**
