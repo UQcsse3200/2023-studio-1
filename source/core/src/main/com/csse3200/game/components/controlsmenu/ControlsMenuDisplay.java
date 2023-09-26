@@ -170,6 +170,7 @@ public class ControlsMenuDisplay extends UIComponent {
     controls.add(new Pair<>("S", "Moves the character to the right"));
     controls.add(new Pair<>("D", "Moves the character downwards"));
     controls.add(new Pair<>("T", "Toggles the player light on and off"));
+    controls.add(new Pair<>("Esc", "Toggles the pause game function"));
 
     for (Pair<String, String> control : controls) {
       // Start a new row for each control
