@@ -240,7 +240,7 @@ public class ItemActions extends Component {
       Entity droppedItem = FactoryService.getItemFactories().get(placedItem.getType().toString()).get();
       ServiceLocator.getGameArea().spawnEntity(droppedItem);
       droppedItem.setPosition(newPos);
-      //placedItem.getEvents().trigger("destroy"); //TODO: add trigger event to all placeable items so dynamic textures can be updated
+      placedItem.getEvents().trigger("destroy"); //TODO: add trigger event to all placeable items so dynamic textures can be updated
       ServiceLocator.getGameArea().removeEntity(placedItem);
       return true;
     }

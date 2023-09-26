@@ -99,7 +99,7 @@ public class ConnectedEntityComponent extends Component { // TODO should it exte
         p.getEvents().trigger("update", this.target.getPosition(), null);
       }
     }
-    target.dispose(); // is this the best place to call .dispose? seems fine.
+    //target.dispose();
   }
 
   /**
