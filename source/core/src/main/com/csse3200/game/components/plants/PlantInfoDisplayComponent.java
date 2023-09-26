@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
@@ -43,7 +44,7 @@ public class PlantInfoDisplayComponent extends UIComponent {
     private void createWindow() {
         window = new Window("Plant information", skin);
         window.setVisible(true);
-        window.setSize(450f, 270f);
+        window.setSize(450f, 275f);
         window.padBottom(10f);
         window.setPosition(20f, 20f);
         window.setMovable(false);
@@ -60,7 +61,7 @@ public class PlantInfoDisplayComponent extends UIComponent {
         window.reset();
         createWindow();
         label = new Label(plantInfo, skin);
-        label.setFontScale(1.5f);
+        label.setFontScale(1.4f);
         label.setColor(Color.BROWN);
         window.add(label);
         stage.addActor(window);
@@ -73,7 +74,7 @@ public class PlantInfoDisplayComponent extends UIComponent {
         createWindow();
         String info = ServiceLocator.getPlantInfoService().plantInfoSummary();
         label = new Label(info, skin);
-        label.setFontScale(1.5f);
+        label.setFontScale(1.4f);
         label.setColor(Color.BROWN);
         window.add(label);
         stage.addActor(window);

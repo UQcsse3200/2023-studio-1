@@ -918,10 +918,23 @@ public class PlantComponent extends Component {
         String idealWaterLevel = decimalFormat.format(this.idealWaterLevel);
         String growthLevel = decimalFormat.format(currentGrowthLevel);
         String currentMaxHealth = Integer.toString(this.currentMaxHealth);
+        String waterLevelStatus = "";
+
+        float waterLevelDiff = cropTile.getWaterContent() - this.idealWaterLevel;
+
+        if (waterLevelDiff < -0.2) {
+            waterLevelStatus = "Under watered";
+        } else if (waterLevelDiff > 0.2) {
+            waterLevelStatus = "Over watered";
+        } else {
+            waterLevelStatus = "Ideal water level";
+        }
+
 
         String returnString =   plantName +
                 "\nGrowth Stage: " + getGrowthStage().name() +
                 "\nWater level: " + waterLevel + "/" + idealWaterLevel +
+                "\nWater Status: " + waterLevelStatus +
                 "\nHealth: " + plantHealth + "/" + currentMaxHealth;
 
 
