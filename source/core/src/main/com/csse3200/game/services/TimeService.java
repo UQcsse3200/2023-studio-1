@@ -1,5 +1,7 @@
 package com.csse3200.game.services;
 
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -194,4 +196,9 @@ public class TimeService {
 		}
 	}
 
+	public void loadTime(int day, int hour, int minute) {
+		this.day = day;
+		this.hour = hour;
+		this.minute = minute;
+	}
 }

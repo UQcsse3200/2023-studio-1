@@ -62,7 +62,7 @@ public class KeyboardTractorInputComponent extends InputComponent {
           honkSound.play();
           return true;
         case Input.Keys.T:
-          entity.getComponent(ConeLightComponent.class).toggleLight();
+          entity.getEvents().trigger("toggleConeLight");
           return true;
         case Input.Keys.NUM_1:
           actions.setMode(TractorMode.normal);
