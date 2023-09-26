@@ -162,6 +162,17 @@ loadScripts(document, 'script');</script>
 <div class="block">Sets the in-game minute to a certain value.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setNearestTime(int)" class="member-name-link">setNearestTime</a><wbr>(int&nbsp;hour)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the in-game hour to the nearest future hour passed in, rounded to 0 minutes.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setNearestTime(int,int)" class="member-name-link">setNearestTime</a><wbr>(int&nbsp;hour,
+ int&nbsp;minute)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the in-game hour and minute to the nearest future value passed in.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPaused(boolean)" class="member-name-link">setPaused</a><wbr>(boolean&nbsp;state)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Changes the pause state of the game</div>
@@ -309,6 +320,32 @@ loadScripts(document, 'script');</script>
 <div class="block">Sets the in-game minute to a certain value. Also updates the time buffer and triggers any necessary events</div>
 <dl class="notes">
 <dt>Parameters:</dt>
+<dd><code>minute</code> - in-game minute</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setNearestTime(int)">
+<h3>setNearestTime</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setNearestTime</span><wbr><span class="parameters">(int&nbsp;hour)</span></div>
+<div class="block">Sets the in-game hour to the nearest future hour passed in, rounded to 0 minutes.
+ Increments the day if necessary, updates the time buffer, and triggers any necessary events.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>hour</code> - in-game hour</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setNearestTime(int,int)">
+<h3>setNearestTime</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setNearestTime</span><wbr><span class="parameters">(int&nbsp;hour,
+ int&nbsp;minute)</span></div>
+<div class="block">Sets the in-game hour and minute to the nearest future value passed in.
+ Increments the day if necessary, updates the time buffer, and triggers any necessary events.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>hour</code> - in-game hour</dd>
 <dd><code>minute</code> - in-game minute</dd>
 </dl>
 </section>
