@@ -1,4 +1,4 @@
-package com.csse3200.game.entities;
+  package com.csse3200.game.entities;
 
 import java.awt.Point;
 import java.util.ArrayList;

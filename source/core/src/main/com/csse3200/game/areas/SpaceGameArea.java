@@ -12,6 +12,7 @@ import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
+import com.csse3200.game.components.HostileIndicator;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.services.FactoryService;
@@ -437,6 +438,7 @@ public class SpaceGameArea extends GameArea {
     for (int i = 0; i < 5; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity cow = NPCFactory.createCow(player);
+      cow.addComponent(new HostileIndicator(cow));
       spawnEntityAt(cow, randomPos, true, true);
     }
   }
