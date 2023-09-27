@@ -13,7 +13,7 @@ public interface MusicService {
      * @param sound - An enum value that implements the SoundFile interface
      * @param looping - A flag to control if the sound loops
      * @return a long integer corresponding to the specific sound effect that is playing,
-     * will return -1 for background music or throw
+     * will return -1 when muted or for background music.
      */
     public long play(SoundFile sound, boolean looping) throws InvalidSoundFileException;
 
