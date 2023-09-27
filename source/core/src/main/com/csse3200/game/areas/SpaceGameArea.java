@@ -184,7 +184,7 @@ public class SpaceGameArea extends GameArea {
       "images/plants/hammer_plant.atlas", "images/plants/space_snapper.atlas", "images/plants/atomic_algae.atlas",
       "images/plants/deadly_nightshade.atlas", "images/fireflies.atlas", "images/animals/dragonfly.atlas",
           "images/animals/bat.atlas", "images/projectiles/oxygen_eater_projectile.atlas",
-          "images/ship/ship.atlas", "images/light.atlas"
+          "images/ship/ship.atlas", "images/light.atlas", "images/projectiles/dragon_fly_projectile.atlas"
 
   };
   private static final String[] forestSounds = {

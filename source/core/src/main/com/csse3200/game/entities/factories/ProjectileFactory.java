@@ -47,6 +47,37 @@ public class ProjectileFactory {
             PhysicsComponent.AlignX.CENTER,
             PhysicsComponent.AlignY.CENTER);
 
+        projectile.getComponent(ProjectileComponent.class).setSpeed(new Vector2(3f, 3f));
+        projectile.getComponent(ProjectileComponent.class).setDestroyOnImpact(true);
+        projectile.getComponent(ProjectileComponent.class).setConstantVelocity(true);
+
+        return projectile;
+    }
+
+    public static Entity createDragonflyProjectile() {
+        Entity projectile = createBaseProjectile();
+
+        AnimationRenderComponent animator = new AnimationRenderComponent(
+                ServiceLocator.getResourceService().getAsset("images/projectiles/dragon_fly_projectile.atlas",
+                        TextureAtlas.class),
+                16f
+        );
+
+        animator.addAnimation("flight", 0.5f, Animation.PlayMode.LOOP);
+        animator.addAnimation("impact", 0.1f);
+
+        projectile
+                .addComponent(new ProjectileComponent(3f))
+                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 2f, 0.1f))
+                .addComponent(animator);
+
+        projectile.getComponent(HitboxComponent.class).setAsBoxAligned(
+                new Vector2(0.4f, 0.4f),
+                PhysicsComponent.AlignX.CENTER,
+                PhysicsComponent.AlignY.CENTER);
+
+        projectile.getComponent(ProjectileComponent.class).setDestroyOnImpact(true);
+
         return projectile;
     }
 

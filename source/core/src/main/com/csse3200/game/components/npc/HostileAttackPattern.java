@@ -1,36 +1,36 @@
 package com.csse3200.game.components.npc;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.combat.ProjectileComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.ProjectileFactory;
 import com.csse3200.game.events.ScheduledEvent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.DirectionUtils;
-import net.dermetfan.gdx.physics.box2d.PositionController;
 
-import java.awt.*;
-import java.util.List;
-import java.util.Vector;
+import java.util.Random;
 
 /**
- * The OxygenEaterAttackPattern class defines the attack behavior of an oxygen eater NPC entity in the game.
+ * The HostileAttackPattern class defines the attack behavior of an oxygen eater NPC entity in the game.
  * It allows the oxygen eater to detect nearby entities and initiate attacks by shooting projectiles at them.
  */
-public class OxygenEaterAttackPattern extends Component {
+public class HostileAttackPattern extends Component {
     /** Frequency of attacks in seconds */
-    private static final float ATTACK_FREQUENCY = 1.5f;
+    private final float attackFrequency;
     /** Entity's interaction detector */
     private InteractionDetector interactionDetector;
     /** Scheduled attack event */
     private ScheduledEvent currentAttackEvent;
 
+    public HostileAttackPattern(float attackFrequency) {
+        this.attackFrequency = attackFrequency;
+    }
+
     /**
-     * Initializes the OxygenEaterAttackPattern component when it is created.
+     * Initializes the HostileAttackPattern component when it is created.
      * This method sets up event listeners and interaction detection for the oxygen eater.
      */
     @Override
@@ -75,10 +75,16 @@ public class OxygenEaterAttackPattern extends Component {
         entity.getEvents().trigger("attackStart");
 
         // Shoot projectile with delay after entity's attack animation
-        entity.getEvents().scheduleEvent(0.2f, "shoot", nearestEntityPosition);
+        if (entity.getType() == EntityType.OxygenEater) {
+            entity.getEvents().scheduleEvent(0.2f, "shoot", nearestEntityPosition);
+        } else if (entity.getType() == EntityType.Dragonfly) {
+            entity.getEvents().scheduleEvent(0.2f, "shoot", nearestEntityPosition);
+            entity.getEvents().scheduleEvent(0.3f, "shoot", nearestEntityPosition);
+            entity.getEvents().scheduleEvent(0.4f, "shoot", nearestEntityPosition);
+        }
 
         // Schedule the next attack event
-        currentAttackEvent = entity.getEvents().scheduleEvent(ATTACK_FREQUENCY, "attack");
+        currentAttackEvent = entity.getEvents().scheduleEvent(attackFrequency, "attack");
     }
 
     /**
@@ -87,13 +93,24 @@ public class OxygenEaterAttackPattern extends Component {
      * @param position The position to which the projectile should be aimed.
      */
     private void shoot(Vector2 position) {
-        Entity projectile = ProjectileFactory.createOxygenEaterProjectile();
-        projectile.setCenterPosition(entity.getCenterPosition());
+        Entity projectile;
+        if (entity.getType() == EntityType.OxygenEater) {
+            projectile = ProjectileFactory.createOxygenEaterProjectile();
+        } else if (entity.getType() == EntityType.Dragonfly) {
+            projectile = ProjectileFactory.createDragonflyProjectile();
+            Random random = new Random();
+            position.add(random.nextFloat() - 1f, random.nextFloat() -1f);
 
+            float randomSpeed = 6f + 4f * random.nextFloat();
+            projectile.getComponent(ProjectileComponent.class).setSpeed(new Vector2(randomSpeed, randomSpeed));
+        } else {
+            return;
+        }
+
+        projectile.setCenterPosition(entity.getCenterPosition());
         ServiceLocator.getGameArea().spawnEntity(projectile);
 
         ProjectileComponent projectileComponent = projectile.getComponent(ProjectileComponent.class);
-        projectileComponent.setSpeed(new Vector2(3f, 3f));
         projectileComponent.setTargetDirection(position);
     }
 }

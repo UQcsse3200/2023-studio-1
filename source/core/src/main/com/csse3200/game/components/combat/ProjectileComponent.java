@@ -28,6 +28,7 @@ public class ProjectileComponent extends Component {
     /** Velocity vector of projectile */
     private Vector2 velocity;
     private boolean constantVelocity = false;
+    private boolean destroyOnImpact = false;
 
     /**
      * Constructs a ProjectileComponent with a specified duration.
@@ -96,9 +97,12 @@ public class ProjectileComponent extends Component {
      * Handles the impact event, cancelling the bullet expiration event and disabling touch attack functionality.
      */
     private void impact() {
-        entity.getEvents().cancelEvent(bulletExpiredEvent);
-        physicsComponent.getBody().setLinearVelocity(0,  0);
-        entity.getComponent(TouchAttackComponent.class).setEnabled(false);
+        if (destroyOnImpact) {
+            entity.getEvents().cancelEvent(bulletExpiredEvent);
+            physicsComponent.getBody().setLinearVelocity(0,  0);
+            entity.getComponent(TouchAttackComponent.class).setEnabled(false);
+        }
+
         hasImpact = true;
     }
 
@@ -107,13 +111,16 @@ public class ProjectileComponent extends Component {
      */
     @Override
     public void update() {
-        if (hasImpact) {
+        if (hasImpact && destroyOnImpact) {
             if (entity.getComponent(AnimationRenderComponent.class).isFinished()) {
                 destroyProjectile();
             }
         }
     }
 
+    public void setDestroyOnImpact(boolean destroyOnImpact) {
+        this.destroyOnImpact = destroyOnImpact;
+    }
     /**
      * Gets the velocity vector of the projectile.
      *

@@ -29,7 +29,6 @@ import com.csse3200.game.utils.math.Vector2Utils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.security.SecureRandom;
-import java.util.Random;
 
 /**
  * Factory to create non-playable character (NPC) entities with predefined components.
@@ -194,13 +193,14 @@ public class NPCFactory {
     animator.addAnimation("attack_left", 0.1f);
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
-            .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+            .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
+            .addTask(new RunAwayTask(player, 10, 3f, 4f, new Vector2(2f, 2f)));
 
     oxygenEater
             .addComponent(aiTaskComponent)
             .addComponent(animator)
             .addComponent(new HostileAnimationController())
-            .addComponent(new OxygenEaterAttackPattern())
+            .addComponent(new HostileAttackPattern(1.5f))
             .addComponent(new InteractionDetector(5f, new ArrayList<>(Arrays.asList(EntityType.Player)))); // TODO: Do we want it to attack anything
 
     oxygenEater.scaleHeight(2f);
