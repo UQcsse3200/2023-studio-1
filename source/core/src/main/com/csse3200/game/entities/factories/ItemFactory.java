@@ -1,5 +1,6 @@
 package com.csse3200.game.entities.factories;
 
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.function.Supplier;
@@ -9,6 +10,8 @@ import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.items.WateringCanLevelComponent;
+import com.csse3200.game.components.ship.ClueComponent;
+import com.csse3200.game.components.ship.CoordinatesDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -134,7 +137,16 @@ public class ItemFactory {
     egg.scaleHeight(0.75f);
     return egg;
   }
+  public static Entity createMapItem( List<String> possibleLocations) {
+    ClueComponent clueComponent = new ClueComponent(possibleLocations);
+    Entity mapItem = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/ship/ship_clue.png"))
+            .addComponent(new ItemComponent("map", ItemType.CLUE_ITEM, new Texture("images/ship/ship_clue.png")))
+            .addComponent(clueComponent)
+            .addComponent(new CoordinatesDisplay(clueComponent));
 
+    return mapItem;
+  }
    /**
    * Creates a fertiliser item
    *
