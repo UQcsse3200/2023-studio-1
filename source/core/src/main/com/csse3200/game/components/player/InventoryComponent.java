@@ -266,6 +266,8 @@ public class InventoryComponent extends Component {
         ItemType temp = this.itemPlace.get(pos1);
         this.itemPlace.put(pos1,this.itemPlace.get(pos2));
         this.itemPlace.put(pos2,temp);
+        itemChange(pos1);
+        itemChange(pos2);
         return true;
     }
   }
@@ -290,6 +292,7 @@ public class InventoryComponent extends Component {
       return false;
     } else {
       this.itemPlace.put(position, entity.getComponent(ItemComponent.class).getItemType());
+      itemChange(position);
       return true;
     }
   }
@@ -312,6 +315,7 @@ public class InventoryComponent extends Component {
         return false;
     } else {
       this.itemPlace.put(position, entity.getComponent(ItemComponent.class).getItemType());
+      itemChange(position);
       return true;
     }
   }
@@ -370,6 +374,7 @@ public class InventoryComponent extends Component {
             for (int i = 0; i < this.itemPlace.size(); i++) {
                 if (this.itemPlace.get(i) == item.getComponent(ItemComponent.class).getItemType()) {
                   this.itemPlace.remove(i);
+                  itemChange(i);
                     break;
                 }
             }
@@ -438,5 +443,20 @@ public class InventoryComponent extends Component {
 
   public Integer getItemCount(int i) {
     return this.itemCount.getOrDefault(this.itemPlace.get(i), 0);
+  }
+
+  /**
+   * Function to trigger the update of ItemSlot at the pass index.
+   * @param index
+   */
+
+  public void itemChange(int index) {
+    if(index >= 0 && index < 10) {
+      // Only update toolbar
+
+    } else {
+      // update both toolbar and inventory
+
+    }
   }
 }
