@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
+import com.csse3200.game.missions.quests.QuestFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -57,6 +58,8 @@ class MissionDisplayTest {
 
         missionManager = new MissionManager();
         ServiceLocator.registerMissionManager(missionManager);
+        missionManager.addQuest(QuestFactory.createHaberHobbyist());
+        missionManager.addQuest(QuestFactory.createFertiliserFanatic());
 
         Entity questgiver = new Entity();
         missionDisplay = new MissionDisplay();

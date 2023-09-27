@@ -25,7 +25,7 @@ public class CropTileComponent extends Component {
 	/**
 	 * Default rate that a tile's water level decreases
 	 */
-	private static final float WATER_DECREASE_RATE = 0.05f;
+	private static final float WATER_DECREASE_RATE = 0.005f;
 
 	/**
 	 * Ideal water fall off sharpness to calculate growth rate
@@ -145,6 +145,7 @@ public class CropTileComponent extends Component {
 		}
 	}
 
+
 	/**
 	 * Plants a plant entity on the tile and stores the plant as a member variable in the tile
 	 * component. It is assumed that the {@link Entity} created from the factory contains a {@link PlantComponent}.
@@ -158,13 +159,13 @@ public class CropTileComponent extends Component {
 		plant = plantFactoryMethod.apply(this);
 		ServiceLocator.getEntityService().register(plant);
 
-//		PlantComponent plantComponent = plant.getComponent(PlantComponent.class);
-//		if (plantComponent != null) {
-//			ServiceLocator.getMissionManager().getEvents().trigger(
-//					MissionManager.MissionEvent.PLANT_CROP.name(),
-//					plantComponent.getPlantType()
-//			);
-//		}
+		PlantComponent plantComponent = plant.getComponent(PlantComponent.class);
+		if (plantComponent != null) {
+			ServiceLocator.getMissionManager().getEvents().trigger(
+					MissionManager.MissionEvent.PLANT_CROP.name(),
+					plantComponent.getPlantName()
+			);
+		}
 	}
 
 	/**
@@ -215,7 +216,7 @@ public class CropTileComponent extends Component {
 	 *
 	 * @return whether the tile is occupied by the plant
 	 */
-	private boolean isOccupied() {
+	public boolean isOccupied() {
 		return plant != null;
 	}
 

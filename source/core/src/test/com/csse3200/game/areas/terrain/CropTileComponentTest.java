@@ -127,7 +127,7 @@ public class CropTileComponentTest {
         cropTile7.create();
         GameTime gameTime = mock(GameTime.class);
         ServiceLocator.registerTimeSource(gameTime);
-        when(gameTime.getDeltaTime()).thenReturn(400f / 1000);
+        when(gameTime.getDeltaTime()).thenReturn(4000f / 1000);
         cropTile1.update();
         cropTile2.update();
         cropTile3.update();

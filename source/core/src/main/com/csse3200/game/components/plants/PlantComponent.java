@@ -13,6 +13,7 @@ import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ItemFactory;
+import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
@@ -689,6 +690,9 @@ public class PlantComponent extends Component {
                 ServiceLocator.getEntityService().register(item);
             }
         });
+        ServiceLocator.getMissionManager().getEvents().trigger(
+                MissionManager.MissionEvent.HARVEST_CROP.name(),
+                getPlantName());
         ServiceLocator.getPlantInfoService().increasePlantsHarvested(1, plantName);
         destroyPlant();
 
