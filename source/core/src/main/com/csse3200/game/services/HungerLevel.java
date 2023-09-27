@@ -7,13 +7,14 @@ public interface HungerLevel {
 
     /**
      * Add x hunger to the player in the game.
+     * @param foodHunger the amount of food the player is hungry
      */
-    void addHunger();
+    void addHunger(float addFoodHunger);
 
     /**
      * Remove x Hunger from the player in the game.
      */
-    void removeHunger();
+    void removeHunger(float removeFoodHunger);
 
     /**
      * Gets the amount of Hunger the player is at a current time in the game.

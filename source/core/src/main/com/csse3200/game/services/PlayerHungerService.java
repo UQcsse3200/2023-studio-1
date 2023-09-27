@@ -26,10 +26,14 @@ public class PlayerHungerService implements HungerLevel {
     }
 
     @Override
-    public void addHunger() {}
+    public void addHunger(float addFoodHunger) {
+        hungerPresent += addFoodHunger;
+    }
 
     @Override
-    public void removeHunger() {}
+    public void removeHunger(float removeFoodHunger) {
+        hungerPresent -= removeFoodHunger;
+    }
 
     @Override
     public float getHunger() {return hungerPresent;}
@@ -43,7 +47,13 @@ public class PlayerHungerService implements HungerLevel {
         return -1;
     }
 
-    public void setHungerGoal() throws IllegalArgumentException {}
+    public void setHungerGoal(int foodHunger) throws IllegalArgumentException {
+        if (foodHunger <= 0) {
+            throw new IllegalArgumentException("Goal cannot be less than or equal to 0");
+        } else {
+            hungerGoal = foodHunger;
+        }
+    }
 
     public float getHungerGoal() { return hungerGoal; }
 
@@ -65,6 +75,40 @@ public class PlayerHungerService implements HungerLevel {
      * hour delta. If level reaches 0, trigger lose screen. Triggers an event to
      * update the hunger display.
      */
-    public void update() {}
+    public void update() {
+        delta = calculateDelta();
 
+        if (hungerPresent + delta <= 0) {
+
+            hungerPresent = 0;
+            eventHandler.trigger("hungerUpdate");
+            ServiceLocator.getGameArea().getPlayer().getEvents().trigger("loseScreen");
+        } else if (hungerPresent + delta > hungerGoal) {
+            hungerPresent += hungerGoal;
+        } else {
+            hungerPresent += delta;
+        }
+
+        eventHandler.trigger("hungerUpdate");
+    }
+
+    private float calculateDelta() {
+        float calculatedDelta = 0;
+        EntityType type;
+
+        for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
+            type = entity.getType();
+            if (type != null) {
+                for (EntityType enumType : EntityType.values()) {
+                    if (type.equals(enumType)) {
+                        calculatedDelta += entity.getType().getOxygenRate();  // I am not able to change it even though I tried on making a whole new file
+                        // Break from inner loop after first match as an entity
+                        // should only have one type.
+                        break;
+                    }
+                }
+            }
+        }
+        return calculatedDelta;
+    }
 }
