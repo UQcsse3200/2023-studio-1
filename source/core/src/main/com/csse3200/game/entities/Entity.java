@@ -468,7 +468,7 @@ public class Entity implements Json.Serializable {
           this.addComponent(tamableComponent);
           break;
         case Player:
-          InventoryComponent inventoryComponent = new InventoryComponent(null);
+          InventoryComponent inventoryComponent = new InventoryComponent();
           HashMap<Entity, Integer> items = new HashMap<>();
           HashMap<Entity, Point> itemPositions = new HashMap<>();
           ArrayList inventory = new ArrayList();
@@ -484,8 +484,8 @@ public class Entity implements Json.Serializable {
             itemPositions.put(item, new Point(jsonValue.getInt("X"), jsonValue.getInt("Y")));
             inventory.add(item);
           });
-          inventoryComponent.setInventory(items, itemPositions, inventory);
-          this.addComponent(inventoryComponent);
+//          inventoryComponent.setInventory(items, itemPositions, inventory);
+//          this.addComponent(inventoryComponent);
           break;
         default:
           // Nothing

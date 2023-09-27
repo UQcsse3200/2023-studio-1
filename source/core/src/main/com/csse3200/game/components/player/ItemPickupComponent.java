@@ -29,12 +29,6 @@ public class ItemPickupComponent extends Component {
             return;
         }
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
-        InventoryComponent playerInventory = this.entity.getComponent(InventoryComponent.class);
-
-        if (playerInventory.isFull()) {
-            System.out.println("Inventory is full! Cannot pick up the item."); // Example feedback
-            return; // Exit early since inventory is full
-        }
         // Add item to inventory
         boolean added = this.entity.getComponent(InventoryComponent.class).addItem(target);
         // if item was successfully added to player inventory, remove it from game area (map):

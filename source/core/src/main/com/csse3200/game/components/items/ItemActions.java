@@ -223,7 +223,7 @@ public class ItemActions extends Component {
       //if there is items then return false
       InventoryComponent chestInventory = placedItem.getComponent(InventoryComponent.class);
       if (chestInventory != null){
-        if (chestInventory.getInventory().size() >= 1){ return false; }
+        if (!chestInventory.getItemCount().isEmpty()){ return false; }
       }
 
       Vector2 newPos = placedItem.getPosition();

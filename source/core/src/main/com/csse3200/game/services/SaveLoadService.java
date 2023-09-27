@@ -132,9 +132,9 @@ public class SaveLoadService {
     currentPlayer.setPosition(state.getPlayer().getPosition());
     currentPlayer.getComponent(PlayerActions.class).getCameraVar().setTrackEntity(currentPlayer);
     currentPlayer.getComponent(PlayerActions.class).setMuted(false);
-    for (Entity item : state.getPlayer().getComponent(InventoryComponent.class).getInventory()) {
-      currentPlayer.getComponent(InventoryComponent.class).addItem(item);
-    }
+//    for (Entity item : state.getPlayer().getComponent(InventoryComponent.class).getInventory()) {
+//      currentPlayer.getComponent(InventoryComponent.class).addItem(item);
+//    }
   }
 
   /**
