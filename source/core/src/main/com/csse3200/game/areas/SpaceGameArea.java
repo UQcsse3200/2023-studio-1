@@ -383,18 +383,6 @@ public class SpaceGameArea extends GameArea {
 
       shipDebris.setPosition(terrain.tileToWorldPosition(randomPos));
     });
-
-    // FOR TESTINGGGGG (aka TODO: get rid of later)
-    TerrainTile tile = gameMap.getTile(new Vector2(40, 40));
-
-    Entity partTile = ShipPartTileFactory.createShipPartTile(new Vector2(40, 40));
-    ServiceLocator.getEntityService().register(partTile);
-    tile.setOccupant(partTile);
-    tile.setOccupied();
-
-    Entity shipDebris = ShipDebrisFactory.createShipDebris(player);
-
-    partTile.getComponent(ShipPartTileComponent.class).addShipDebris(shipDebris);
   }
 
   private Entity spawnPlayer() {
