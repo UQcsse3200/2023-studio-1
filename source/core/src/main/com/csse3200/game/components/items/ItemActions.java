@@ -218,8 +218,7 @@ public class ItemActions extends Component {
                       .contains(tile.getOccupant().getType())
       ) {
         // TODO this good
-        tile.getOccupant().getEvents().trigger("destroy");
-        tile.removeOccupant();
+        tile.getOccupant().getEvents().trigger("destroy", tile);
         return true;
         // TODO Above this is amazing
       } else {

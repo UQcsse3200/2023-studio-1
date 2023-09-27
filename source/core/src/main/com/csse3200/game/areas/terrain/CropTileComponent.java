@@ -136,11 +136,12 @@ public class CropTileComponent extends Component {
 	/**
 	 * Destroys both the tile and any plant that is on it
 	 */
-	private void destroyTile() {
+	private void destroyTile(TerrainTile tile) {
 		if (isOccupied()) {
 			plant.getEvents().trigger("destroyPlant");
 			this.setUnoccupied();
 		} else {
+			if (tile != null) tile.removeOccupant();
 			entity.dispose();
 		}
 	}
@@ -216,7 +217,7 @@ public class CropTileComponent extends Component {
 	 *
 	 * @return whether the tile is occupied by the plant
 	 */
-	public boolean isOccupied() {
+	private boolean isOccupied() {
 		return plant != null;
 	}
 

@@ -1,5 +1,6 @@
 package com.csse3200.game.components.ship;
 
+import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.services.ServiceLocator;
@@ -23,8 +24,9 @@ public class ShipDebrisComponent extends Component {
     /**
      * Trigger the mission manager's DEBRIS_CLEARED event then self destruct.
      */
-    void destroy() {
+    void destroy(TerrainTile tile) {
         missionManager.getEvents().trigger(MissionManager.MissionEvent.DEBRIS_CLEARED.name());
+        if (tile != null) tile.removeOccupant();
         entity.dispose();
     }
 }
