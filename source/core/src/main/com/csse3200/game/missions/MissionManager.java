@@ -78,11 +78,6 @@ public class MissionManager implements Json.Serializable {
 		for (Achievement mission : achievements) {
 			mission.registerMission(events);
 		}
-
-		// Add initial quests - regardless of GameArea
-		// This will be removed from the constructor at a later date
-		selectableQuests.add(QuestFactory.createHaberHobbyist());
-		selectableQuests.add(QuestFactory.createFertiliserFanatic());
 	}
 
 	/**
