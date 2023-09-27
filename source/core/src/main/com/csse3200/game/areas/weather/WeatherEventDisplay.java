@@ -1,5 +1,6 @@
 package com.csse3200.game.areas.weather;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -18,6 +19,8 @@ public class WeatherEventDisplay extends UIComponent {
 	private Image clockImage;
 	private Group group = new Group();
 	private Table table = new Table();
+	private AcidShower acidShower;
+	private boolean isAcidShowerActive = false;
 
 	/**
 	 * Initializes the display and listens to the updates in the game hours.
@@ -50,10 +53,19 @@ public class WeatherEventDisplay extends UIComponent {
 
 		if (currentEvent instanceof AcidShowerEvent) {
 			weatherImage = weatherImages.get(0);
-		} else if (currentEvent instanceof SolarSurgeEvent) {
-			weatherImage = weatherImages.get(1);
+			if (!isAcidShowerActive) {
+				if (acidShower == null) {
+					acidShower = new AcidShower();
+				}
+				acidShower.show();
+				isAcidShowerActive = true;
+			}
 		} else {
-			weatherImage = weatherImages.get(2);
+			weatherImage = (currentEvent instanceof SolarSurgeEvent) ? weatherImages.get(1) : weatherImages.get(2);
+			if (isAcidShowerActive && acidShower != null) {
+				acidShower.hide();
+				isAcidShowerActive = false;
+			}
 		}
 	}
 
@@ -74,6 +86,10 @@ public class WeatherEventDisplay extends UIComponent {
 
 		table.add(group).size(200);
 		stage.addActor(table);
+
+		if (acidShower != null) {
+			acidShower.render(Gdx.graphics.getDeltaTime());
+		}
 	}
 
 	/**
@@ -84,5 +100,8 @@ public class WeatherEventDisplay extends UIComponent {
 		super.dispose();
 		clockImage.remove();
 		weatherImage.remove();
+		if (acidShower != null) {
+			acidShower.dispose();
+		}
 	}
 }
