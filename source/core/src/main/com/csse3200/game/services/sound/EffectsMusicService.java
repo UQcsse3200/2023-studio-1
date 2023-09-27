@@ -15,13 +15,14 @@ public class EffectsMusicService implements MusicService {
     }
 
     @Override
-    public void play(SoundFile sound, boolean looping) {
+    public long play(SoundFile sound, boolean looping) {
 
+        return 0;
     }
 
     @Override
-    public void play(SoundFile sound) {
-
+    public long play(SoundFile sound) {
+        return 0;
     }
 
     @Override

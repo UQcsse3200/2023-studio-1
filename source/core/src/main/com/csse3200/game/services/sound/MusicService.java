@@ -12,14 +12,19 @@ public interface MusicService {
      * Play a given SoundFile, with it optionally looping
      * @param sound - An enum value that implements the SoundFile interface
      * @param looping - A flag to control if the sound loops
+     * @return a long integer corresponding to the specific sound effect that is playing,
+     * will return -1 for background music
      */
-    public void play(SoundFile sound, boolean looping);
+    public long play(SoundFile sound, boolean looping);
 
     /**
      * A convenience method to play a sound without explicitly controlling the loop property
-     * @param sound - An enum value that implements the SoundFile interface
+     *
+     * @param sound An enum value that implements the SoundFile interface
+     * @return a long integer corresponding to the specific sound effect that is playing,
+     * will return -1 for background music
      */
-    public void play(SoundFile sound);
+    public long play(SoundFile sound);
 
     /**
      * Pause a SoundFile that is currently playing without losing the progress of that track.
