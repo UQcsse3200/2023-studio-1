@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.AuraLightComponent;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.AnimalAnimationController;
 import com.csse3200.game.components.npc.FireflyScareComponent;
@@ -75,6 +76,7 @@ public class NPCFactory {
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
             .addTask(new RunAwayTask(player, 10, 2.25f, 4.25f, new Vector2(3f, 3f)))
+            .addTask(new PanicTask("panicStart", 10f, 20, new Vector2(10f, 10f), new Vector2(10f, 10f)))
             .addTask(new TamedFollowTask(player, 10, 8, 10, 2f, config.favouriteFood));
 
     chicken
@@ -82,6 +84,7 @@ public class NPCFactory {
             .addComponent(new PassiveDropComponent(ItemFactory::createEgg, 2))
             .addComponent(animator)
             .addComponent(new AnimalAnimationController())
+            .addComponent(new CombatStatsComponent(10, 0))
             .addComponent(new TamableComponent(player, config.tamingThreshold,
                     config.tamingProbability, config.favouriteFood));
 

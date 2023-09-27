@@ -120,6 +120,18 @@ public class ItemFactory {
   }
 
   /**
+   * Creates a gun item
+   *
+   * @return gun
+   */
+  public static Entity createGun() {
+    Entity gun = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/tool_gun.png"))
+            .addComponent(new ItemComponent("gun", ItemType.GUN, new Texture("images/tool_gun.png")));
+    return gun;
+  }
+
+  /**
    * Creates a milk item
    *
    * @return milk item

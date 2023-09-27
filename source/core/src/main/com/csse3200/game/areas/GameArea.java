@@ -124,4 +124,8 @@ public abstract class GameArea implements Disposable {
   public abstract GameMap getMap();
 
   public void setPlayer(Entity customPlayer) { player = customPlayer; }
+
+  public List<Entity> getAreaEntities() {
+    return areaEntities;
+  }
 }

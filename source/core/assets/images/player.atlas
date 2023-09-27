@@ -1613,3 +1613,115 @@ scythe_right
   orig: 48, 48
   offset: 0, 0
   rotate: false
+  sword_up
+    xy: 0, 528
+    index: 0
+    size: 48, 48
+    orig: 48, 48
+    offset: 0, 0
+    rotate: false
+  sword_up
+    xy: 48, 528
+    index: 1
+    size: 48, 48
+    orig: 48, 48
+    offset: 0, 0
+    rotate: false
+  sword_up
+    xy: 96, 528
+    index: 2
+    size: 48, 48
+    orig: 48, 48
+    offset: 0, 0
+    rotate: false
+  sword_up
+    xy: 144, 528
+    index: 3
+    size: 48, 48
+    orig: 48, 48
+    offset: 0, 0
+    rotate: false
+  sword_down
+    xy: 192, 528
+    index: 0
+    size: 48, 48
+    orig: 48, 48
+    offset: 0, 0
+    rotate: false
+  sword_down
+    xy: 240, 528
+    index: 1
+    size: 48, 48
+    orig: 48, 48
+    offset: 0, 0
+    rotate: false
+  sword_down
+    xy: 288, 528
+    index: 2
+    size: 48, 48
+    orig: 48, 48
+    offset: 0, 0
+    rotate: false
+  sword_down
+    xy: 336, 528
+    index: 3
+    size: 48, 48
+    orig: 48, 48
+    offset: 0, 0
+    rotate: false
+  sword_left
+    xy: 384, 528
+    index: 0
+    size: 48, 48
+    orig: 48, 48
+    offset: 0, 0
+    rotate: false
+  sword_left
+    xy: 432, 528
+    index: 1
+    size: 48, 48
+    orig: 48, 48
+    offset: 0, 0
+    rotate: false
+  sword_left
+    xy: 480, 528
+    index: 2
+    size: 48, 48
+    orig: 48, 48
+    offset: 0, 0
+    rotate: false
+  sword_left
+    xy: 528, 528
+    index: 3
+    size: 48, 48
+    orig: 48, 48
+    offset: 0, 0
+    rotate: false
+  sword_right
+    xy: 576, 528
+    index: 0
+    size: 48, 48
+    orig: 48, 48
+    offset: 0, 0
+    rotate: false
+  sword_right
+    xy: 624, 528
+    index: 1
+    size: 48, 48
+    orig: 48, 48
+    offset: 0, 0
+    rotate: false
+  sword_right
+    xy: 672, 528
+    index: 2
+    size: 48, 48
+    orig: 48, 48
+    offset: 0, 0
+    rotate: false
+  sword_right
+    xy: 720, 528
+    index: 3
+    size: 48, 48
+    orig: 48, 48
+    offset: 0, 0
+    rotate: false

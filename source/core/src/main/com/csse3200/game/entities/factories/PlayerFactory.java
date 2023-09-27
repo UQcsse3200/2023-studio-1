@@ -130,6 +130,10 @@ public class PlayerFactory {
     animator.addAnimation("scythe_left",0.1f,Animation.PlayMode.NORMAL);
     animator.addAnimation("scythe_right",0.1f,Animation.PlayMode.NORMAL);
     animator.addAnimation("scythe_down",0.1f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("sword_up",0.1f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("sword_left",0.1f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("sword_right",0.1f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("sword_down",0.1f,Animation.PlayMode.NORMAL);
   }
 
   private PlayerFactory() {

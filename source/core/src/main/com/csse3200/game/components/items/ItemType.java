@@ -6,6 +6,7 @@ public enum ItemType {
   WATERING_CAN,
   SCYTHE,
   SWORD,
+  GUN,
   MILK,
   EGG,
   FOOD,

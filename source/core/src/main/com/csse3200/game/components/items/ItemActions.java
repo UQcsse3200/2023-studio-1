@@ -82,6 +82,10 @@ public class ItemActions extends Component {
         player.getEvents().trigger("attack", mousePos);
         return true;
       }
+      case GUN -> {
+        player.getEvents().trigger("shoot", mousePos);
+        return true;
+      }
       case FOOD -> {
         if (interactionCollider == null) {
           return false;

@@ -60,6 +60,7 @@ public class SpaceGameArea extends GameArea {
           "images/tool_hoe.png",
           "images/tool_scythe.png",
           "images/tool_sword.png",
+          "images/tool_gun.png",
           "images/tool_watering_can.png",
           "images/animals/chicken.png",
           "images/animals/cow.png",
@@ -247,7 +248,8 @@ public class SpaceGameArea extends GameArea {
 //    spawnTool(ItemType.WATERING_CAN);
 //    spawnTool(ItemType.SHOVEL);
 //    spawnTool(ItemType.SCYTHE);
-    spawnTool(ItemType.HOE);
+//    spawnTool(ItemType.HOE);
+    spawnTool(ItemType.GUN);
     spawnTool(ItemType.SWORD);
 //    spawnTool(ItemType.FERTILISER);
 //    spawnTool(ItemType.SEED);
@@ -418,7 +420,20 @@ public class SpaceGameArea extends GameArea {
         newTool = ItemFactory.createSword();
         spawnEntityAt(newTool, randomPos, true, true);
         break;
+      case GUN:
+        newTool = ItemFactory.createGun();
+        spawnEntityAt(newTool, randomPos, true, true);
+        break;
     }
+  }
+
+  /**
+   * Spawns a Bullet Entity
+   *
+   * @param target Given target for the bullet to travel towards
+   */
+  public void spawnBullet(Vector2 target){
+    System.out.println(target);
   }
 
   /**
