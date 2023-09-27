@@ -1,13 +1,6 @@
 package com.csse3200.game.components.items;
 
-import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.function.Function;
-
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainCropTileFactory;
@@ -18,9 +11,12 @@ import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
-import com.csse3200.game.entities.factories.PlantFactory;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
+
+import java.util.List;
+
+import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
 
 public class ItemActions extends Component {
 
@@ -64,10 +60,7 @@ public class ItemActions extends Component {
       }
       case SHOVEL -> {
         resultStatus = shovel(tile);
-        if (!resultStatus) {
-          return destroy(player, mouseWorldPos);
-        }
-        return true;
+        return resultStatus;
       }
       case SCYTHE -> {
         resultStatus = harvest(tile);
@@ -220,10 +213,12 @@ public class ItemActions extends Component {
       }
       // TODO Below here is temp code all that should be called here is whatever is surronding by the other two todos
       // Just dont have time and want it out
-      if (tile.getOccupant().getType() == EntityType.Tile) {
+      if (
+              List.of(EntityType.Tile, EntityType.ShipDebris)
+                      .contains(tile.getOccupant().getType())
+      ) {
         // TODO this good
-        tile.getOccupant().getEvents().trigger("destroy");
-        tile.removeOccupant();
+        tile.getOccupant().getEvents().trigger("destroy", tile);
         return true;
         // TODO Above this is amazing
       } else {
@@ -325,33 +320,6 @@ public class ItemActions extends Component {
     }
 
     entityToFeed.getEvents().trigger("feed");
-    return true;
-  }
-
-  /**
-   * Triggers a destroy event on the destroyable entity.
-   *
-   * @param player player entity
-   * @param mouseWorldPos position to check for destroyable entity
-   * @return true if destroyed, false otherwise
-   */
-  private boolean destroy(Entity player, Vector2 mouseWorldPos) {
-    InteractionDetector interactionDetector = player.getComponent(InteractionDetector.class);
-
-    if (interactionDetector == null) {
-      return false;
-    }
-
-    List<Entity> entities = interactionDetector.getEntitiesTowardsPosition(mouseWorldPos);
-    entities.removeIf(entity -> entity.getType() != EntityType.ShipDebris);
-
-    Entity entityToDestroy = interactionDetector.getNearest(entities);
-
-    if (entityToDestroy == null) {
-      return false;
-    }
-
-    entityToDestroy.getEvents().trigger("destroy");
     return true;
   }
 }

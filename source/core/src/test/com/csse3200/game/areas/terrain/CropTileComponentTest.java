@@ -226,11 +226,11 @@ public class CropTileComponentTest {
         Function<CropTileComponent, Entity> plantFactoryMethod = cropTileComponent -> plant;
         cropTile1.getEvents().trigger("plant", plantFactoryMethod);
         verify(mockEntityService).register(plant);
-        cropTile1.getEvents().trigger("destroy");
+        cropTile1.getEvents().trigger("destroy", null);
         verify(mockEntityService, never()).unregister(cropTile1);
-        cropTile1.getEvents().trigger("destroy");
+        cropTile1.getEvents().trigger("destroy", null);
         verify(mockEntityService).unregister(cropTile1);
-        cropTile2.getEvents().trigger("destroy");
+        cropTile2.getEvents().trigger("destroy", null);
         verify(mockEntityService).unregister(cropTile2);
     }
 }
