@@ -63,7 +63,7 @@ public class ShipPartTileComponent extends Component {
         } else {
             // drop a ship part
             Entity item = ItemFactory.createEgg(); // the ship is made of eggs apparently
-            item.setPosition(entity.getPosition());
+            item.setCenterPosition(entity.getCenterPosition());
             ServiceLocator.getEntityService().register(item);
 
             // remove self from the terrain tile & self-destruct
