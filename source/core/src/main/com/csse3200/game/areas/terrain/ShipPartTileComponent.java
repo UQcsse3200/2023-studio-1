@@ -23,7 +23,8 @@ public class ShipPartTileComponent extends Component {
 
     /**
      * Set the ship debris associated with this tile.
-     * @param shipDebris
+     *
+     * @param shipDebris entity to be added
      */
     public void addShipDebris(Entity shipDebris) {
         this.shipDebris = shipDebris;
@@ -33,6 +34,7 @@ public class ShipPartTileComponent extends Component {
 
     /**
      * A ship debris is present in this tile.
+     *
      * @return true if there is ship debris present
      */
     private boolean containsShipDebris() {
@@ -65,7 +67,7 @@ public class ShipPartTileComponent extends Component {
             ServiceLocator.getEntityService().register(item);
 
             // remove self from the terrain tile & self-destruct
-            tile.removeOccupant();
+            if (tile != null) tile.removeOccupant();
             entity.dispose();
         }
     }
