@@ -10,6 +10,7 @@ import com.csse3200.game.components.inventory.InventoryDisplay;
 import com.csse3200.game.components.inventory.ToolbarDisplay;
 import com.csse3200.game.components.maingame.PauseMenuActions;
 import com.csse3200.game.components.player.*;
+import com.csse3200.game.components.tractor.StunComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.configs.PlayerConfig;
@@ -73,6 +74,7 @@ public class PlayerFactory {
 	        .addComponent(new AuraLightComponent(6f))
             .addComponent(new InventoryDisplay("updateInventory", "toggleInventory", 30, 10, true))
             .addComponent(new BlinkComponent())
+            .addComponent(new StunComponent())
             .addComponent(new PauseMenuActions());
 
     player.getComponent(ColliderComponent.class).setDensity(1.5f);

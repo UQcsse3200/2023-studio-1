@@ -12,6 +12,7 @@ import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
+import com.csse3200.game.components.tractor.StunComponent;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ProjectileFactory;
@@ -64,7 +65,7 @@ public class PlayerActions extends Component {
   @Override
   public void update() {
     if (entity.getComponent(PlayerAnimationController.class).readyToPlay()) {
-      if (moving) {
+      if (moving && isStunned()) {
         updateSpeed();
       }
       updateAnimation();
@@ -322,6 +323,15 @@ public class PlayerActions extends Component {
    */
   public boolean isMuted() {
     return muted;
+  }
+
+  public boolean isStunned() {
+    StunComponent stunComponent = entity.getComponent(StunComponent.class);
+    if (stunComponent == null) {
+      return true;
+    }
+
+    return stunComponent.isStunned();
   }
 
   public void setMuted(boolean muted) {

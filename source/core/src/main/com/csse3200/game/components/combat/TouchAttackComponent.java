@@ -24,6 +24,7 @@ public class TouchAttackComponent extends Component {
   private float knockbackForce = 0f;
   private CombatStatsComponent combatStats;
   private HitboxComponent hitboxComponent;
+  private float stunDuration = 0f;
 
   /**
    * Create a component which attacks entities on collision, without knockback.
@@ -41,6 +42,11 @@ public class TouchAttackComponent extends Component {
   public TouchAttackComponent(short targetLayer, float knockback) {
     this.targetLayer = targetLayer;
     this.knockbackForce = knockback;
+  }
+
+  public TouchAttackComponent(short targetLayer, float knockback, float stunDuration) {
+    this(targetLayer, knockback);
+    this.stunDuration = stunDuration;
   }
 
   @Override
@@ -80,6 +86,7 @@ public class TouchAttackComponent extends Component {
       }
 
       Body targetBody = physicsComponent.getBody();
+      targetBody.setLinearVelocity(0,  0);
       Vector2 impulse = knockBackDirection.setLength(knockbackForce);
       targetBody.applyLinearImpulse(impulse, targetBody.getWorldCenter(), true);
     }
@@ -88,6 +95,7 @@ public class TouchAttackComponent extends Component {
       entity.getEvents().trigger("impactStart");
     }
 
-    target.getEvents().trigger("hit", target);
+    target.getEvents().trigger("hit", entity);
+    target.getEvents().trigger("triggerStunDuration", stunDuration);
   }
 }
