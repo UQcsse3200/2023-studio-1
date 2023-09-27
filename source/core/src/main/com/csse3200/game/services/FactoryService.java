@@ -16,7 +16,8 @@ public class FactoryService {
     private static final Map<EntityType, Function<Entity, Entity>> npcFactories = Map.of(EntityType.Chicken, NPCFactory::createChicken,
             EntityType.Cow, NPCFactory::createCow, EntityType.Astrolotl, NPCFactory::createAstrolotl,
             EntityType.OxygenEater, NPCFactory::createOxygenEater, EntityType.ShipDebris, ShipDebrisFactory::createShipDebris,
-            EntityType.FireFlies, NPCFactory::createFireFlies);
+            EntityType.FireFlies, NPCFactory::createFireFlies, EntityType.Bat, NPCFactory::createBat,
+            EntityType.Dragonfly, NPCFactory::createDragonfly);
 
     private static final Map<String, Function<CropTileComponent, Entity>> plantFactories = Map.of(
             "Cosmic Cob", PlantFactory::createCosmicCob,
