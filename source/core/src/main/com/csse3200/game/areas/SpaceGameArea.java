@@ -173,7 +173,9 @@ public class SpaceGameArea extends GameArea {
           "images/projectiles/oxygen_eater_projectile.png",
           
           "images/ship/ship_debris.png",
-          "images/ship/ship.png"
+          "images/ship/ship.png",
+
+          "images/light.png"
   };
   private static final String[] forestTextureAtlases = {
       "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
@@ -253,7 +255,7 @@ public class SpaceGameArea extends GameArea {
 
     player = spawnPlayer();
 //    player.getComponent(PlayerActions.class).setGameMap(gameMap);
-//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createLightItem());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createLightItem());
 //    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHoe());
 //    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createScythe());
 //    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createWateringcan());
