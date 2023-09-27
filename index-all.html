@@ -177,6 +177,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Adds a <a href="com/csse3200/game/missions/quests/Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a> to the <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link"><code>List</code></a> of selectable <a href="com/csse3200/game/missions/quests/Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a>s.</div>
 </dd>
+<dt><a href="com/csse3200/game/areas/terrain/ShipPartTileComponent.html#addShipDebris(com.csse3200.game.entities.Entity)" class="member-name-link">addShipDebris(Entity)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/ShipPartTileComponent.html" title="class in com.csse3200.game.areas.terrain">ShipPartTileComponent</a></dt>
+<dd>
+<div class="block">Set the ship debris associated with this tile.</div>
+</dd>
 <dt><a href="com/csse3200/game/ai/tasks/AITaskComponent.html#addTask(com.csse3200.game.ai.tasks.PriorityTask)" class="member-name-link">addTask(PriorityTask)</a> - Method in class com.csse3200.game.ai.tasks.<a href="com/csse3200/game/ai/tasks/AITaskComponent.html" title="class in com.csse3200.game.ai.tasks">AITaskComponent</a></dt>
 <dd>
 <div class="block">Add a priority task to the list of tasks.</div>
@@ -665,6 +669,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Adds player-triggered events listeners to the entity.</div>
 </dd>
+<dt><a href="com/csse3200/game/areas/terrain/ShipPartTileComponent.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/ShipPartTileComponent.html" title="class in com.csse3200.game.areas.terrain">ShipPartTileComponent</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/weather/WeatherEventDisplay.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/WeatherEventDisplay.html" title="class in com.csse3200.game.areas.weather">WeatherEventDisplay</a></dt>
 <dd>
 <div class="block">Initializes the display and listens to the updates in the game hours.</div>
@@ -1067,6 +1073,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/entities/factories/ShipDebrisFactory.html#createShipDebris(com.csse3200.game.entities.Entity)" class="member-name-link">createShipDebris(Entity)</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ShipDebrisFactory.html" title="class in com.csse3200.game.entities.factories">ShipDebrisFactory</a></dt>
 <dd>
 <div class="block">Creates a Ship Debris entity.</div>
+</dd>
+<dt><a href="com/csse3200/game/areas/terrain/ShipPartTileFactory.html#createShipPartTile(com.badlogic.gdx.math.Vector2)" class="member-name-link">createShipPartTile(Vector2)</a> - Static method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/ShipPartTileFactory.html" title="class in com.csse3200.game.areas.terrain">ShipPartTileFactory</a></dt>
+<dd>
+<div class="block">Creates an Entity that contains a ShipPartTileComponent.</div>
 </dd>
 <dt><a href="com/csse3200/game/entities/factories/ItemFactory.html#createShovel()" class="member-name-link">createShovel()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ItemFactory.html" title="class in com.csse3200.game.entities.factories">ItemFactory</a></dt>
 <dd>
@@ -2805,10 +2815,6 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainFactory.html#isNumeric(java.lang.String)" class="member-name-link">isNumeric(String)</a> - Static method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainFactory.html" title="class in com.csse3200.game.areas.terrain">TerrainFactory</a></dt>
 <dd>
 <div class="block">This function will be used to check if a string is numeric</div>
-</dd>
-<dt><a href="com/csse3200/game/areas/terrain/CropTileComponent.html#isOccupied()" class="member-name-link">isOccupied()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/CropTileComponent.html" title="class in com.csse3200.game.areas.terrain">CropTileComponent</a></dt>
-<dd>
-<div class="block">Helper function to determine whether the tile is occupied by a plant</div>
 </dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainTile.html#isOccupied()" class="member-name-link">isOccupied()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></dt>
 <dd>
@@ -4748,6 +4754,16 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/entities/factories/ShipFactory.html" class="type-name-link" title="class in com.csse3200.game.entities.factories">ShipFactory</a> - Class in <a href="com/csse3200/game/entities/factories/package-summary.html">com.csse3200.game.entities.factories</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/factories/ShipFactory.html#%3Cinit%3E()" class="member-name-link">ShipFactory()</a> - Constructor for class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ShipFactory.html" title="class in com.csse3200.game.entities.factories">ShipFactory</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/areas/terrain/ShipPartTileComponent.html" class="type-name-link" title="class in com.csse3200.game.areas.terrain">ShipPartTileComponent</a> - Class in <a href="com/csse3200/game/areas/terrain/package-summary.html">com.csse3200.game.areas.terrain</a></dt>
+<dd>
+<div class="block">A tile that drops a ship part on destroy.</div>
+</dd>
+<dt><a href="com/csse3200/game/areas/terrain/ShipPartTileComponent.html#%3Cinit%3E()" class="member-name-link">ShipPartTileComponent()</a> - Constructor for class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/ShipPartTileComponent.html" title="class in com.csse3200.game.areas.terrain">ShipPartTileComponent</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/areas/terrain/ShipPartTileFactory.html" class="type-name-link" title="class in com.csse3200.game.areas.terrain">ShipPartTileFactory</a> - Class in <a href="com/csse3200/game/areas/terrain/package-summary.html">com.csse3200.game.areas.terrain</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/areas/terrain/ShipPartTileFactory.html#%3Cinit%3E()" class="member-name-link">ShipPartTileFactory()</a> - Constructor for class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/ShipPartTileFactory.html" title="class in com.csse3200.game.areas.terrain">ShipPartTileFactory</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/ship/ShipProgressComponent.html" class="type-name-link" title="class in com.csse3200.game.components.ship">ShipProgressComponent</a> - Class in <a href="com/csse3200/game/components/ship/package-summary.html">com.csse3200.game.components.ship</a></dt>
 <dd>&nbsp;</dd>
