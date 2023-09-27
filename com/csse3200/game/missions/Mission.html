@@ -125,8 +125,8 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getProgress()" class="member-name-link">getProgress</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Gets the progress of the <a href="Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> as a <code>JsonValue</code>, which contains children storing the internal
- progress of the <a href="Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>.</div>
+<div class="block">Gets the progress of the <a href="Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> as an <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link"><code>Object</code></a>, which contains all relevant information about the
+ internal progress of the <a href="Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getShortDescription()" class="member-name-link">getShortDescription</a>()</code></div>
@@ -271,10 +271,9 @@ loadScripts(document, 'script');</script>
 <h3>readProgress</h3>
 <div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">readProgress</span><wbr><span class="parameters">(com.badlogic.gdx.utils.JsonValue&nbsp;progress)</span></div>
 <div class="block">Sets the internal progress of the <a href="Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> based on the <code>JsonValue</code> provided. The <code>JsonValue</code>
- provided should be of the same <code>JsonValue.ValueType</code> and format as the <code>JsonValue</code> returned by
- <a href="#getProgress()"><code>getProgress()</code></a>, so you should use the same naming conventions as you did to write values in
- <a href="#getProgress()"><code>getProgress()</code></a>. An <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link"><code>Exception</code></a> might be raised otherwise (depending on the methods you use to get
- the state of the <code>JsonValue</code>).</div>
+ provided should match the same <code>JsonValue.ValueType</code> returned by <a href="#getProgress()"><code>getProgress()</code></a>. An
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link"><code>Exception</code></a> might be raised otherwise (depending on the methods you use to get the state of the
+ <code>JsonValue</code>).</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>progress</code> - The <code>JsonValue</code> representing the progress of the <a href="Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> as determined by the value
@@ -286,16 +285,20 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getProgress()">
 <h3>getProgress</h3>
 <div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">getProgress</span>()</div>
-<div class="block">Gets the progress of the <a href="Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> as a <code>JsonValue</code>, which contains children storing the internal
- progress of the <a href="Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>. All stats which dynamically change should be stored in this <code>JsonValue</code>
- (i.e., all non-final values). Note that for <a href="quests/Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a>s, you do not need to
- store the time to expiry or whether the reward has been collected - you only need to store the changing state
- specific to the created <a href="quests/Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a>.</div>
+<div class="block">Gets the progress of the <a href="Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> as an <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link"><code>Object</code></a>, which contains all relevant information about the
+ internal progress of the <a href="Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>. All stats which dynamically change should be stored in this
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link"><code>Object</code></a> in some way (i.e., all non-final values). Since this value will need to be read later using
+ <a href="#readProgress(com.badlogic.gdx.utils.JsonValue)"><code>readProgress(JsonValue)</code></a> as a <code>JsonValue</code>, you should make sure the returned <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link"><code>Object</code></a>'s
+ serialisation is known to you. This is easy for primitive types, lists, and maps, so try to make the data that
+ you actively track of primitive type (or a list/map of primitive types). Note that for
+ <a href="quests/Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a>s, you do not need to store the time to expiry or whether the
+ reward has been collected - you only need to store the changing state specific to the
+ <a href="quests/Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a>.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>A <code>JsonValue</code>, which contains <code>JsonValue</code> children storing the internal progress of the
-         <a href="Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>. The <code>JsonValue.ValueType</code> of the returned <code>JsonValue</code> does not matter, so
-         long as it is consistent with what you use in <a href="#readProgress(com.badlogic.gdx.utils.JsonValue)"><code>readProgress(JsonValue)</code></a></dd>
+<dd>An <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link"><code>Object</code></a>, which stores the internal progress of the <a href="Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>. This <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link"><code>Object</code></a> should
+         be serialisable, and the data should be able to be read as a <code>JsonValue</code> in
+         <a href="#readProgress(com.badlogic.gdx.utils.JsonValue)"><code>readProgress(JsonValue)</code></a>.</dd>
 </dl>
 </section>
 </li>

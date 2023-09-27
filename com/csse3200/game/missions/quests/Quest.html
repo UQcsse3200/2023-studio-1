@@ -78,7 +78,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="FertiliseCropTilesQuest.html" title="class in com.csse3200.game.missions.quests">FertiliseCropTilesQuest</a></code></dd>
+<dd><code><a href="AutoQuest.html" title="class in com.csse3200.game.missions.quests">AutoQuest</a></code>, <code><a href="ClearDebrisQuest.html" title="class in com.csse3200.game.missions.quests">ClearDebrisQuest</a></code>, <code><a href="FertiliseCropTilesQuest.html" title="class in com.csse3200.game.missions.quests">FertiliseCropTilesQuest</a></code>, <code><a href="MainQuest.html" title="class in com.csse3200.game.missions.quests">MainQuest</a></code>, <code><a href="PlantInteractionQuest.html" title="class in com.csse3200.game.missions.quests">PlantInteractionQuest</a></code>, <code><a href="TameAnimalsQuest.html" title="class in com.csse3200.game.missions.quests">TameAnimalsQuest</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">Quest</span>
@@ -96,12 +96,18 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>protected </code></div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,com.csse3200.game.missions.rewards.Reward,int,boolean)" class="member-name-link">Quest</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,com.csse3200.game.missions.rewards.Reward)" class="member-name-link">Quest</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="../rewards/Reward.html" title="class in com.csse3200.game.missions.rewards">Reward</a>&nbsp;reward)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a> with the given <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link"><code>String</code></a> name, specifying the <a href="../rewards/Reward.html" title="class in com.csse3200.game.missions.rewards"><code>Reward</code></a> for completion.</div>
+</div>
+<div class="col-first odd-row-color"><code>protected </code></div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.String,com.csse3200.game.missions.rewards.Reward,int,boolean)" class="member-name-link">Quest</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="../rewards/Reward.html" title="class in com.csse3200.game.missions.rewards">Reward</a>&nbsp;reward,
  int&nbsp;expiryDuration,
  boolean&nbsp;isMandatory)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Creates a <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> with the given <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link"><code>String</code></a> name, specifying the <a href="../rewards/Reward.html" title="class in com.csse3200.game.missions.rewards"><code>Reward</code></a> for completion, the
+<div class="col-last odd-row-color">
+<div class="block">Creates a <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a> with the given <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link"><code>String</code></a> name, specifying the <a href="../rewards/Reward.html" title="class in com.csse3200.game.missions.rewards"><code>Reward</code></a> for completion, the
  integer duration of the <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a> (the number of hours before the <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a> expires), and whether the
  <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a> is mandatory.</div>
 </div>
@@ -151,7 +157,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateExpiry()" class="member-name-link">updateExpiry</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Decrements the duration to expiry of the quest by 1.</div>
+<div class="block">Decrements the duration to expiry of the quest by 1, if the <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a> can expire.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#write(com.badlogic.gdx.utils.Json)" class="member-name-link">write</a><wbr>(com.badlogic.gdx.utils.Json&nbsp;json)</code></div>
@@ -177,18 +183,33 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="&lt;init&gt;(java.lang.String,com.csse3200.game.missions.rewards.Reward)">
+<h3>Quest</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="element-name">Quest</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="../rewards/Reward.html" title="class in com.csse3200.game.missions.rewards">Reward</a>&nbsp;reward)</span></div>
+<div class="block">Creates a <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a> with the given <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link"><code>String</code></a> name, specifying the <a href="../rewards/Reward.html" title="class in com.csse3200.game.missions.rewards"><code>Reward</code></a> for completion.
+ <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a>s created using this constructor cannot expire.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - The <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link"><code>String</code></a> name of the <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a>, visible to the player in-game</dd>
+<dd><code>reward</code> - The <a href="../rewards/Reward.html" title="class in com.csse3200.game.missions.rewards"><code>Reward</code></a> which can be collected upon completion of the <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a></dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="&lt;init&gt;(java.lang.String,com.csse3200.game.missions.rewards.Reward,int,boolean)">
 <h3>Quest</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="element-name">Quest</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="../rewards/Reward.html" title="class in com.csse3200.game.missions.rewards">Reward</a>&nbsp;reward,
  int&nbsp;expiryDuration,
  boolean&nbsp;isMandatory)</span></div>
-<div class="block">Creates a <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> with the given <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link"><code>String</code></a> name, specifying the <a href="../rewards/Reward.html" title="class in com.csse3200.game.missions.rewards"><code>Reward</code></a> for completion, the
+<div class="block">Creates a <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a> with the given <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link"><code>String</code></a> name, specifying the <a href="../rewards/Reward.html" title="class in com.csse3200.game.missions.rewards"><code>Reward</code></a> for completion, the
  integer duration of the <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a> (the number of hours before the <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a> expires), and whether the
- <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a> is mandatory.</div>
+ <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a> is mandatory. <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a>s created using this constructor will expire after the specified time
+ limit.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>name</code> - The <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link"><code>String</code></a> name of the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>, visible to the player in-game</dd>
+<dd><code>name</code> - The <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link"><code>String</code></a> name of the <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a>, visible to the player in-game</dd>
 <dd><code>reward</code> - The <a href="../rewards/Reward.html" title="class in com.csse3200.game.missions.rewards"><code>Reward</code></a> which can be collected upon completion of the <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a></dd>
 <dd><code>expiryDuration</code> - An integer value representing the number of hours before this <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a> should expire</dd>
 <dd><code>isMandatory</code> - A boolean value representing whether the <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a> is mandatory. Mandatory <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a>s
@@ -208,17 +229,18 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="updateExpiry()">
 <h3>updateExpiry</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateExpiry</span>()</div>
-<div class="block">Decrements the duration to expiry of the quest by 1.</div>
+<div class="block">Decrements the duration to expiry of the quest by 1, if the <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a> can expire.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isExpired()">
 <h3>isExpired</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isExpired</span>()</div>
-<div class="block">Returns a boolean value representing whether the quest has expired.</div>
+<div class="block">Returns a boolean value representing whether the quest has expired. If the <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a> does not expire, then
+ this method will always return false.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>True if the quest has expired, false otherwise.</dd>
+<dd>True if the <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a> can expire and has expired, false otherwise.</dd>
 </dl>
 </section>
 </li>
@@ -246,7 +268,7 @@ loadScripts(document, 'script');</script>
 <h3>resetExpiry</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">resetExpiry</span>()</div>
 <div class="block">Resets the <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a>'s time to expiry back to the original expiry duration, and calls the
- <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a>'s <a href="#resetState()"><code>resetState()</code></a> method.</div>
+ <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a>'s <a href="#resetState()"><code>resetState()</code></a> method. This method only calls <a href="#resetState()"><code>resetState()</code></a> if it cannot expire.</div>
 </section>
 </li>
 <li>
