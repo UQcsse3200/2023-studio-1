@@ -147,22 +147,22 @@ class TerrainTileTest {
 
     @Test
     public void testTerrainTileCropEntityNullAfterInitialisation() {
-        assertNull(basicTestTile.getCropTile());
+        assertNull(basicTestTile.getOccupant());
     }
 
     @Test
     public void testSetCropTileSetsCropTile() {
         Entity cropTile = new Entity();
         cropTile.addComponent(new CropTileComponent());
-        basicTestTile.setCropTile(cropTile);
-        assertEquals(cropTile, basicTestTile.getCropTile());
+        basicTestTile.setOccupant(cropTile);
+        assertEquals(cropTile, basicTestTile.getOccupant());
     }
 
     @Test
     public void testSetCropTileSetsTileOccupied() {
         Entity cropTile = new Entity();
         cropTile.addComponent(new CropTileComponent());
-        basicTestTile.setCropTile(cropTile);
+        basicTestTile.setOccupant(cropTile);
         assertTrue(basicTestTile.isOccupied());
     }
 
@@ -170,8 +170,8 @@ class TerrainTileTest {
     public void testRemoveCropTileSetsTileUnoccupied() {
         Entity cropTile = new Entity();
         cropTile.addComponent(new CropTileComponent());
-        basicTestTile.setCropTile(cropTile);
-        basicTestTile.removeCropTile();
+        basicTestTile.setOccupant(cropTile);
+        basicTestTile.removeOccupant();
         assertFalse(basicTestTile.isOccupied());
     }
 
@@ -179,9 +179,9 @@ class TerrainTileTest {
     public void testRemoveCropTileSetsCropTileAsNull() {
         Entity cropTile = new Entity();
         cropTile.addComponent(new CropTileComponent());
-        basicTestTile.setCropTile(cropTile);
-        basicTestTile.removeCropTile();
-        assertNull(basicTestTile.getCropTile());
+        basicTestTile.setOccupant(cropTile);
+        basicTestTile.removeOccupant();
+        assertNull(basicTestTile.getOccupant());
     }
 
     @Test

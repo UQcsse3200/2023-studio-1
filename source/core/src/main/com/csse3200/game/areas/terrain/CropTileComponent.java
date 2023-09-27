@@ -207,6 +207,10 @@ public class CropTileComponent extends Component {
 		return waterMultiplier > 0 ? soilQuality * fertiliserMultiplier * waterMultiplier : -1.0;
 	}
 
+	public float getWaterContent() {
+		return waterContent;
+	}
+
 	/**
 	 * Helper function to determine whether the tile is occupied by a plant
 	 *
@@ -301,8 +305,8 @@ public class CropTileComponent extends Component {
 
 	public void setTerrainTile(TerrainTile terrainTile) {
 		this.terrainTile = terrainTile;
-		if (terrainTile.getCropTile() == null) {
-			terrainTile.setCropTile(entity);
+		if (terrainTile.getOccupant() == null) {
+			terrainTile.setOccupant(entity);
 		}
 	}
 }

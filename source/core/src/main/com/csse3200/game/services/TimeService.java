@@ -2,23 +2,23 @@ package com.csse3200.game.services;
 
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
+import com.csse3200.game.events.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.csse3200.game.events.EventHandler;
 
 public class TimeService {
 	private static final Logger logger = LoggerFactory.getLogger(TimeService.class);
 	private static final int MS_IN_MINUTE = 500;
 	private static final int MORNING_HOUR = 6;
 	private static final int NIGHT_HOUR = 20;
+
 	private int minute;
 	private int hour;
 	private int day;
+
 	private long timeBuffer;
 	private boolean paused;
 	private final EventHandler events;
-
 
 	/**
 	 * Constructs a basic TimeService instance to track the in-game time
@@ -133,12 +133,65 @@ public class TimeService {
 	}
 
 	/**
+	 * Sets the in-game hour to the nearest future hour passed in, rounded to 0 minutes.
+	 * Increments the day if necessary, updates the time buffer, and triggers any necessary events.
+	 *
+	 * @param hour in-game hour
+	 */
+	public void setNearestTime(int hour) {
+		setNearestTime(hour, 0);
+	}
+
+	/**
+	 * Sets the in-game hour and minute to the nearest future value passed in.
+	 * Increments the day if necessary, updates the time buffer, and triggers any necessary events.
+	 *
+	 * @param hour in-game hour
+	 * @param minute in-game minute
+ 	*/
+	public void setNearestTime(int hour, int minute) {
+		if (this.minute > minute) {
+			this.hour += 1;
+		}
+		this.minute = minute;
+		events.trigger("minuteUpdate");
+
+		if (this.hour > hour) {
+			this.day += 1;
+			events.trigger("dayUpdate");
+		}
+		this.hour = hour;
+		events.trigger("hourUpdate");
+
+		this.timeBuffer = 0;
+
+		logger.debug("Time is being set to: {}d, {}h, {}m", this.day, this.hour, this.minute);
+	}
+
+	/**
 	 * Gets the event handler for the TimeService
 	 *
 	 * @return event handler
 	 */
 	public EventHandler getEvents() {
 		return events;
+	}
+
+	/**
+	 * Trigger relevant events once the hour has been updated.
+	 */
+	private void triggerHourEvents() {
+		if (hour == MORNING_HOUR) {
+			// Made this an event so other entities can listen
+			logger.debug("Now night time");
+			events.trigger("morningTime");
+		} else if (hour == NIGHT_HOUR) {
+			logger.debug("Now morning time");
+			events.trigger("nightTime");
+		}
+
+		// Always trigger an hour update event
+		events.trigger("hourUpdate");
 	}
 
 	/**
@@ -156,38 +209,38 @@ public class TimeService {
 		if (timeBuffer < MS_IN_MINUTE) {
 			return;
 		}
-		minute += 1;
-		timeBuffer -= MS_IN_MINUTE;
+
+		int minutesPassed = (int) (timeBuffer / MS_IN_MINUTE);
+		minute += minutesPassed;
+		timeBuffer -= ((long) minutesPassed * MS_IN_MINUTE);
 
 		// If minute is between 0 and 59, hour hasn't elapsed - don't do anything
 		if (minute < 60) {
 			events.trigger("minuteUpdate");
 			return;
 		}
-		logger.debug("In-game hour just passed");
-		hour += 1;
-		minute -= 60;
-		events.trigger("minuteUpdate");
 
-		if (hour == MORNING_HOUR) {
-			// Made this an event so other entities can listen
-			logger.debug("Now night time");
-			events.trigger("morningTime");
-		} else if (hour == NIGHT_HOUR) {
-			logger.debug("Now morning time");
-			events.trigger("nightTime");
-		}
+		logger.debug("In-game hour has updated");
+
+		int hoursPassed = minute / 60;
+		hour += hoursPassed;
+		minute -= (hoursPassed * 60);
+		events.trigger("minuteUpdate");
 
 		// If hour is between 0 and 23, day hasn't elapsed, do nothing
 		if (hour < 24) {
-			events.trigger("hourUpdate");
+			triggerHourEvents();
 			return;
 		}
-		logger.debug("In-game day just passed");
-		hour -= 24;
-		day += 1;
+
+		logger.debug("In-game day has updated");
+
+		int daysPassed = hour / 24;
+		day += daysPassed;
+		hour -= (daysPassed * 24);
+		triggerHourEvents();
+
 		// This event has to be triggered after the hour is checked the hour isn't 24 when the event is sent
-		events.trigger("hourUpdate");
 		events.trigger("dayUpdate");
 
 		// lose the game if the game reaches 30 days
