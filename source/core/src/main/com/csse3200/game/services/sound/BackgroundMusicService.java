@@ -13,23 +13,23 @@ public class BackgroundMusicService implements MusicService {
     }
 
     @Override
-    public long play(SoundFile sound, boolean looping) {
+    public long play(SoundFile sound, boolean looping) throws InvalidSoundFileException {
 
         return 0;
     }
 
     @Override
-    public long play(SoundFile sound) {
+    public long play(SoundFile sound) throws InvalidSoundFileException {
         return 0;
     }
 
     @Override
-    public void pause(SoundFile sound) {
+    public void pause(SoundFile sound) throws InvalidSoundFileException {
 
     }
 
     @Override
-    public void stop(SoundFile sound) {
+    public void stop(SoundFile sound) throws InvalidSoundFileException {
 
     }
 
@@ -44,12 +44,12 @@ public class BackgroundMusicService implements MusicService {
     }
 
     @Override
-    public boolean isPlaying(SoundFile sound) {
+    public boolean isPlaying(SoundFile sound) throws InvalidSoundFileException {
         return false;
     }
 
     @Override
-    public void loadSounds(List<SoundFile> sounds) {
+    public void loadSounds(List<SoundFile> sounds) throws InvalidSoundFileException {
 
     }
 

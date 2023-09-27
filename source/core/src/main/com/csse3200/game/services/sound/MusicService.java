@@ -13,18 +13,18 @@ public interface MusicService {
      * @param sound - An enum value that implements the SoundFile interface
      * @param looping - A flag to control if the sound loops
      * @return a long integer corresponding to the specific sound effect that is playing,
-     * will return -1 for background music
+     * will return -1 for background music or throw
      */
-    public long play(SoundFile sound, boolean looping);
+    public long play(SoundFile sound, boolean looping) throws InvalidSoundFileException;
 
     /**
      * A convenience method to play a sound without explicitly controlling the loop property
      *
      * @param sound An enum value that implements the SoundFile interface
      * @return a long integer corresponding to the specific sound effect that is playing,
-     * will return -1 for background music
+     * will return -1 for background music or -2 for an invalid sound file
      */
-    public long play(SoundFile sound);
+    public long play(SoundFile sound) throws InvalidSoundFileException;
 
     /**
      * Pause a SoundFile that is currently playing without losing the progress of that track.
@@ -32,7 +32,7 @@ public interface MusicService {
      * (this will be logged on the debug channel).
      * @param sound - An enum value that implements the SoundFile interface
      */
-    public void pause(SoundFile sound);
+    public void pause(SoundFile sound) throws InvalidSoundFileException;
 
     /**
      * Stop a SoundFile that is currently playing. You will lose the progress of the track.
@@ -40,7 +40,7 @@ public interface MusicService {
      * (this will be logged on the debug channel).
      * @param sound - An enum value that implements the SoundFile interface
      */
-    public void stop(SoundFile sound);
+    public void stop(SoundFile sound) throws InvalidSoundFileException;
 
     /**
      * Mutes the playback of a given MusicService.
@@ -59,13 +59,13 @@ public interface MusicService {
      * @param sound - An enum value that implements the SoundFile interface
      * @return The playback status of a given SoundFile
      */
-    public boolean isPlaying(SoundFile sound);
+    public boolean isPlaying(SoundFile sound) throws InvalidSoundFileException;
 
     /**
      * Given a list of SoundFiles, load them all into memory.
      * @param sounds - A list of SoundFiles to be loaded into memory
      */
-    public void loadSounds(List<SoundFile> sounds);
+    public void loadSounds(List<SoundFile> sounds) throws InvalidSoundFileException;
 
     /**
      * Dispose all the currently loaded SoundFiles from memory before closing the service.
@@ -73,3 +73,4 @@ public interface MusicService {
      */
     public void dispose();
 }
+
