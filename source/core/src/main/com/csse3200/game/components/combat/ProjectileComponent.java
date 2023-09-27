@@ -27,6 +27,7 @@ public class ProjectileComponent extends Component {
     private ScheduledEvent bulletExpiredEvent;
     /** Velocity vector of projectile */
     private Vector2 velocity;
+    private boolean constantVelocity = false;
 
     /**
      * Constructs a ProjectileComponent with a specified duration.
@@ -63,9 +64,16 @@ public class ProjectileComponent extends Component {
         velocity = directionVector.scl(speed);
 
         Body body = physicsComponent.getBody();
-        body.setAngularDamping(0f);
-        body.setLinearDamping(0f);
+        if (constantVelocity) {
+            body.setAngularDamping(0f);
+            body.setLinearDamping(0f);
+        }
+
         body.applyLinearImpulse(velocity, body.getWorldCenter(), true);
+    }
+
+    public void setConstantVelocity(boolean constantVelocity) {
+        this.constantVelocity = constantVelocity;
     }
 
     /**
