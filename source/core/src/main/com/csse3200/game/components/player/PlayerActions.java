@@ -6,7 +6,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.inventory.ToolbarDisplay;
 import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
 import com.csse3200.game.components.tractor.TractorActions;

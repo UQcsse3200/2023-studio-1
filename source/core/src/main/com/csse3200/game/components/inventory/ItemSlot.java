@@ -71,6 +71,13 @@ public class ItemSlot extends Stack {
         this.count = count;
     }
 
+    /**
+     * Get the item count
+     * @return count integer of number of item
+     */
+    public Integer getCount() {
+        return count;
+    }
 
     /**
      * Set the item texture
@@ -78,6 +85,14 @@ public class ItemSlot extends Stack {
      */
     public void setTexture(Texture itemTexture) {
         this.itemTexture = itemTexture;
+    }
+
+    /**
+     * Set the item texture
+     * @return  itemTexture texture of item's image
+     */
+    public Texture getItemTexture() {
+        return this.itemTexture;
     }
 
     @Override
