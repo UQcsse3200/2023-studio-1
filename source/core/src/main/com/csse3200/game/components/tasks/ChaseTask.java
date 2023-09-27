@@ -88,7 +88,6 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     if (status == Status.ACTIVE) {
       return getActivePriority();
     }
-
     return getInactivePriority();
   }
 
