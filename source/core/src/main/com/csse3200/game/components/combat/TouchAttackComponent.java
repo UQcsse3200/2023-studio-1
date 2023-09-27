@@ -67,18 +67,13 @@ public class TouchAttackComponent extends Component {
 
     // Try to attack target.
     Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
-    CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
-
-    if (targetStats != null && combatStats != null) {
-      targetStats.hit(combatStats);
-    }
 
     // Apply knockback
     ProjectileComponent projectileComponent = entity.getComponent(ProjectileComponent.class);
     PhysicsComponent physicsComponent = target.getComponent(PhysicsComponent.class);
     Vector2 knockBackDirection;
     if (physicsComponent != null && knockbackForce > 0f) {
-      if (projectileComponent != null) { // check is projectile
+      if (projectileComponent != null) {
         knockBackDirection = projectileComponent.getVelocity();
       } else {
         knockBackDirection = target.getCenterPosition().sub(entity.getCenterPosition());
@@ -92,5 +87,7 @@ public class TouchAttackComponent extends Component {
     if (entity.getComponent(ProjectileComponent.class) != null) {
       entity.getEvents().trigger("impactStart");
     }
+
+    target.getEvents().trigger("hit", target);
   }
 }

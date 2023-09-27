@@ -36,6 +36,7 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.rendering.BlinkComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
 
@@ -400,7 +401,8 @@ public class NPCFactory {
     Entity animal = new Entity(type)
             .addComponent(new PhysicsComponent())
             .addComponent(new PhysicsMovementComponent())
-            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC));
+            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+            .addComponent(new BlinkComponent());
 
     if (type != EntityType.DRAGONFLY && type != EntityType.BAT) {
       animal.addComponent(new ColliderComponent());

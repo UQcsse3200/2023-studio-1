@@ -20,6 +20,7 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.rendering.BlinkComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.ArrayList;
@@ -71,6 +72,7 @@ public class PlayerFactory {
             .addComponent(new ToolbarDisplay())
 	        .addComponent(new AuraLightComponent(6f))
             .addComponent(new InventoryDisplay("updateInventory", "toggleInventory", 30, 10, true))
+            .addComponent(new BlinkComponent())
             .addComponent(new PauseMenuActions());
 
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
