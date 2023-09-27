@@ -82,7 +82,6 @@ public class InventoryDisplay extends UIComponent {
 
   private void refreshTable() {
     table.clear();
-    window.clear();
     for (int i = 0; i < 30; i++) {
       ItemSlot slot = slots.get(i);
 
@@ -92,13 +91,6 @@ public class InventoryDisplay extends UIComponent {
         table.row();
       }
     }
-    window.pad(40, 20, 20, 20); // Add padding to with so that the text doesn't go offscreen
-    window.add(table); //Add the table to the window
-    window.pack(); // Pack the window to the size
-    window.setMovable(false);
-    window.setPosition(stage.getWidth() / 2 - window.getWidth() / 2, stage.getHeight() / 2 - window.getHeight() / 2); // Center the window on the stage
-    window.setVisible(false);
-    stage.addActor(window);
   }
 
   /**

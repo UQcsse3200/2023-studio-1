@@ -84,7 +84,9 @@ public class ItemSlot extends Stack {
      * @param itemTexture texture of item's image
      */
     public void setTexture(Texture itemTexture) {
+
         this.itemTexture = itemTexture;
+        createItemSlot();
     }
 
     /**
