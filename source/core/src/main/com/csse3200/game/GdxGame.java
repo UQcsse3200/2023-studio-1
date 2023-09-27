@@ -1,17 +1,25 @@
 package com.csse3200.game;
 
+import static com.badlogic.gdx.Gdx.app;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.csse3200.game.files.UserSettings;
+
 import com.csse3200.game.screens.*;
 import com.csse3200.game.screens.EndCreditsScreen;
 import com.csse3200.game.screens.WinScreen;
+import com.csse3200.game.screens.ControlsScreen;
+import com.csse3200.game.screens.IntroScreen;
+import com.csse3200.game.screens.LoseScreen;
+import com.csse3200.game.screens.MainGameScreen;
+import com.csse3200.game.screens.MainMenuScreen;
+import com.csse3200.game.screens.SettingsScreen;
 import com.csse3200.game.services.ResourceService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import static com.badlogic.gdx.Gdx.app;
 
 /**
  * Entry point of the non-platform-specific game logic. Controls which screen is currently running.

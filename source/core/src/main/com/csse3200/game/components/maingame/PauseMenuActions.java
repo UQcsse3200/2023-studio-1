@@ -1,9 +1,10 @@
 package com.csse3200.game.components.maingame;
 
-import com.csse3200.game.GdxGame;
-import com.csse3200.game.components.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.csse3200.game.GdxGame;
+import com.csse3200.game.components.Component;
 
 public class PauseMenuActions extends Component {
     private static final Logger logger = LoggerFactory.getLogger(PauseMenuActions.class);
@@ -18,7 +19,7 @@ public class PauseMenuActions extends Component {
 
     private void onExit() {
         logger.info("Exiting main game screen");
-        game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+        game.setScreen(GdxGame.ScreenType.MAIN_MENU);
     }
 
     public static void setQuitGameStatus() {

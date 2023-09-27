@@ -1,12 +1,12 @@
 package com.csse3200.game.components;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-import com.csse3200.game.components.Component;
-import com.csse3200.game.components.ComponentType;
-import com.csse3200.game.extensions.GameExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
+import com.csse3200.game.extensions.GameExtension;
 
 @ExtendWith(GameExtension.class)
 class ComponentTypeTest {

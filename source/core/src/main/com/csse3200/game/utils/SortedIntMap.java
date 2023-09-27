@@ -1,11 +1,11 @@
 package com.csse3200.game.utils;
 
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.IntArray;
-
 import java.util.Iterator;
 import java.util.Spliterator;
 import java.util.function.Consumer;
+
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.IntArray;
 
 /**
  * A map sorted by the value of key with O(1) iteration. put/get/contains are O(n). useful when we

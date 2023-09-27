@@ -1,20 +1,22 @@
 package com.csse3200.game.components.items;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.areas.terrain.CropTileComponent;
-import com.csse3200.game.areas.terrain.GameMap;
-import com.csse3200.game.areas.terrain.TerrainTile;
-import com.csse3200.game.components.Component;
-import com.csse3200.game.components.player.InteractionDetector;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.PlantFactory;
-import com.csse3200.game.services.ServiceLocator;
+import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
 
 import java.util.List;
 import java.util.function.Function;
 
-import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
+import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.areas.terrain.CropTileComponent;
+import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.areas.terrain.TerrainTile;
+import com.csse3200.game.components.Component;
+import com.csse3200.game.components.InteractionDetector;
+import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.PlantFactory;
+import com.csse3200.game.services.FactoryService;
+import com.csse3200.game.services.ServiceLocator;
 
 public class ItemActions extends Component {
 
@@ -28,8 +30,8 @@ public class ItemActions extends Component {
   /**
    * Uses the item at the given position
    * 
-   * @param player the player entity using the item
-   * @param mousePos  the position of the mouse
+   * @param player   the player entity using the item
+   * @param mousePos the position of the mouse
    * @param map      item to use/ interact with tile
    * @return if interaction with tile was success return true else return false.
    */
@@ -50,7 +52,6 @@ public class ItemActions extends Component {
     boolean resultStatus;
     TerrainTile tile = getTileAtPosition(playerPos, mousePos);
     if (tile == null) {
-      System.out.println("Map team pls fix");
       return false;
     }
     switch (type.getItemType()) {
@@ -60,7 +61,13 @@ public class ItemActions extends Component {
       }
       case SHOVEL -> {
         resultStatus = shovel(tile);
-        return resultStatus;
+        if (!resultStatus) {
+          if (interactionCollider == null) {
+            return false;
+          }
+          return destroy(interactionCollider.getSuitableEntities(ItemType.SHOVEL, mouseWorldPos));
+        }
+        return true;
       }
       case SCYTHE -> {
         resultStatus = harvest(tile);
@@ -70,15 +77,11 @@ public class ItemActions extends Component {
         resultStatus = water(tile);
         return resultStatus;
       }
-      case FOOD -> { // TODO: THIS IS ITEM TYPE IS JUST FOR TESTING PURPOSES, REPLACE WITH PLANT DROP TYPE
+      case FOOD -> {
         if (interactionCollider == null) {
           return false;
         }
         resultStatus = feed(interactionCollider.getSuitableEntities(ItemType.FOOD, mouseWorldPos));
-//        if (!resultStatus) {
-//          // consume it yourself instead??
-//          // resultStatus = consume(player)
-//        }
         return resultStatus;
       }
       case FERTILISER -> {
@@ -89,10 +92,38 @@ public class ItemActions extends Component {
         resultStatus = plant(tile);
         return resultStatus;
       }
+      case PLACEABLE -> {
+        resultStatus = place(tile, getAdjustedPos(playerPos, mousePos));
+        return resultStatus;
+      }
       default -> {
         return false;
       }
     }
+  }
+
+  /**
+   * Places a placeable object based on its name (from ItemComponent) on a
+   * TerrainTile
+   *
+   * @param tile        - The TerrainTile to place the object on
+   * @param adjustedPos - The position of the tile as a Vector2
+   * @return the result of whether it was placed
+   */
+  private boolean place(TerrainTile tile, Vector2 adjustedPos) {
+    if (tile == null) {
+      return false;
+    }
+    if (tile.isOccupied() || !tile.isTraversable()) {
+      // Do not place
+      return false;
+    }
+    // Make the Entity to place
+    Entity placeable = FactoryService.getPlaceableFactories().get(entity.getComponent(ItemComponent.class).getItemName()).get();
+    ServiceLocator.getGameArea().spawnEntity(placeable);
+    placeable.setPosition(adjustedPos);
+    tile.setPlaceable(placeable);
+    return true;
   }
 
   /**
@@ -104,8 +135,9 @@ public class ItemActions extends Component {
    */
   private TerrainTile getTileAtPosition(Vector2 playerPos, Vector2 mousePos) {
     Vector2 pos = getAdjustedPos(playerPos, mousePos);
-    return map.getTile(pos);
+    return ServiceLocator.getGameArea().getMap().getTile(pos);
   }
+
 
   /**
    * Gets the correct position for the player to interact with based off of the
@@ -118,35 +150,28 @@ public class ItemActions extends Component {
    * @return a vector of the position where the player should hit
    */
   private Vector2 getAdjustedPos(Vector2 playerPos, Vector2 mousePos) {
-    int width = Gdx.graphics.getWidth();
-    int height = Gdx.graphics.getHeight();
-
-    int screenCentreX = width / 2;
-    int screenCentreY = height / 2;
-
-    int xDelta = 0;
-    int yDelta = 0;
-
-    if (screenCentreX - 24 > mousePos.x) {
-      xDelta -= 1;
-    } else if (screenCentreX + 24 < mousePos.x) {
-      xDelta += 1;
-    }
-
-    if (screenCentreY + 48 < mousePos.y) {
-      yDelta -= 1;
-    } else if (screenCentreY - 48 > mousePos.y) {
-      yDelta += 1;
-    }
-
-    int playerPositionAsIntX = (int)Math.ceil(playerPos.x); 
-    int playerPositionAsIntY = (int)Math.ceil(playerPos.y);
+    Vector2 mouseWorldPos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
+    Vector2 adjustedPosition = new Vector2(
+            ServiceLocator.getGameArea().getMap().tileCoordinatesToVector(ServiceLocator.getGameArea().getMap().vectorToTileCoordinates(new Vector2(mouseWorldPos.x, mouseWorldPos.y))));
     
-    int x = (int)Math.ceil((double)(playerPositionAsIntX) + xDelta);
-    int y = (int)Math.ceil((double)(playerPositionAsIntY) + yDelta);
-    
-    return new Vector2(x, y);
+    Vector2 playerPosCenter = ServiceLocator.getGameArea().getPlayer().getCenterPosition();
+    playerPosCenter.add(0, -1.0f); // Player entity sprite's feet are located -1.0f below the centre of the entity. ty Hunter
+
+    playerPosCenter = ServiceLocator.getGameArea().getMap().tileCoordinatesToVector(ServiceLocator.getGameArea().getMap().vectorToTileCoordinates(playerPosCenter));
+;
+    if (adjustedPosition.x - 0.5 > playerPosCenter.x) {
+      playerPosCenter.x += 1;
+    } else if (adjustedPosition.x + 0.5 < playerPosCenter.x) {
+      playerPosCenter.x -= 1;
+    }
+    if (adjustedPosition.y - 0.5> playerPosCenter.y) {
+      playerPosCenter.y += 1;
+    } else if (adjustedPosition.y  + 0.5 < playerPosCenter.y) {
+      playerPosCenter.y -= 1;
+    }
+    return playerPosCenter;
   }
+
 
 
   /**
@@ -195,6 +220,29 @@ public class ItemActions extends Component {
       tile.setUnOccupied();
       return true;
     }
+    if(tile.getPlaceable() != null){
+      Entity placedItem = tile.getPlaceable();
+
+      //check if the placeable is a chest and if there is items in that chest
+      //if there is items then return false
+      InventoryComponent chestInventory = placedItem.getComponent(InventoryComponent.class);
+      if (chestInventory != null){
+        if (chestInventory.getInventory().size() >= 1){ return false; }
+      }
+
+      Vector2 newPos = placedItem.getPosition();
+      tile.setPlaceable(null);    //update the tile
+      tile.setUnOccupied();
+
+
+
+      Entity droppedItem = FactoryService.getItemFactories().get(placedItem.getType().toString()).get();
+      ServiceLocator.getGameArea().spawnEntity(droppedItem);
+      droppedItem.setPosition(newPos);
+      //placedItem.getEvents().trigger("destroy"); //TODO: add trigger event to all placeable items so dynamic textures can be updated
+      ServiceLocator.getGameArea().removeEntity(placedItem);
+      return true;
+    }
     return false;
   }
 
@@ -207,7 +255,7 @@ public class ItemActions extends Component {
    */
   private boolean hoe(Vector2 playerPos, Vector2 mousePos) {
     TerrainTile tile = getTileAtPosition(playerPos, mousePos);
-    if (tile.getCropTile() != null || !tile.isTillable()) {
+    if (tile.isOccupied() || !tile.isTillable()) {
       return false;
     }
     // Make a new tile
@@ -240,42 +288,9 @@ public class ItemActions extends Component {
      * @return if planting was successful return true else return false
      */
   private boolean plant(TerrainTile tile) {
-    Function<CropTileComponent, Entity> plantFactoryMethod;
     if (isCropTile(tile.getCropTile())) {
-        switch (entity.getComponent(ItemComponent.class).getItemName()) {
-            case "aloe vera seed" -> {
-                plantFactoryMethod = PlantFactory::createAloeVera;
-                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
-            }
-            case "cosmic cob seed" -> {
-                plantFactoryMethod = PlantFactory::createCosmicCob;
-                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
-            }
-            case "hammer plant seed" -> {
-                plantFactoryMethod = PlantFactory::createHammerPlant;
-                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
-            }
-            case "space snapper seed" -> {
-                plantFactoryMethod = PlantFactory::createVenusFlyTrap;
-                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
-            }
-            case "water weed seed" -> {
-                plantFactoryMethod = PlantFactory::createWaterWeed;
-                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
-            }
-            case "deadly nightshade seed" -> {
-                plantFactoryMethod = PlantFactory::createNightshade;
-                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
-            }
-            case "tobacco seed" -> {
-                plantFactoryMethod = PlantFactory::createTobacco;
-                tile.getCropTile().getEvents().trigger("plant", plantFactoryMethod);
-            }
-            default -> {
-                System.out.println("Something went wrong");
-                throw new IllegalArgumentException("Explode");
-            }
-        }
+      tile.getCropTile().getEvents().trigger("plant", FactoryService.getPlantFactories()
+              .get(entity.getComponent(ItemComponent.class).getItemName().replace(" seed", "")));
       return true;
     }
     return false;
@@ -302,6 +317,21 @@ public class ItemActions extends Component {
     }
 
     feedableEntities.get(0).getEvents().trigger("feed");
+    return true;
+  }
+
+  /**
+   * Triggers a destroy event on the destroyable entity.
+   *
+   * @param destroyableEntities a single destroyable entity
+   * @return true if destroyed, false otherwise
+   */
+  private boolean destroy(List<Entity> destroyableEntities) {
+    if (destroyableEntities.size() != 1) {
+      return false;
+    }
+
+    destroyableEntities.get(0).getEvents().trigger("destroy");
     return true;
   }
 }

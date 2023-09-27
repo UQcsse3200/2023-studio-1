@@ -1,5 +1,14 @@
 package com.csse3200.game.entities;
 
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.csse3200.game.components.AuraLightComponent;
+import com.csse3200.game.components.ConeLightComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntMap;
@@ -24,12 +33,6 @@ import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Core entity class. Entities exist in the game and are updated each frame. All
@@ -291,6 +294,7 @@ public class Entity implements Json.Serializable {
     if (!enabled) {
       return;
     }
+    getEvents().update();
     for (Component component : createdComponents) {
       component.triggerUpdate();
     }
@@ -354,7 +358,7 @@ public class Entity implements Json.Serializable {
 
   @Override
   public String toString() {
-    return String.format("Entity{id=%d}", id);
+    return String.format("Entity{id=%d} {type=%s}", id, type == null ? "none" : type.toString());
   }
 
   /**
@@ -418,11 +422,18 @@ public class Entity implements Json.Serializable {
     if (type != null) { // The try catch above may cause a NullPointerException otherwise
       switch (type) {
         case Tractor:
+          JsonValue lightJsonMap = jsonMap.get("components").get("ConeLightComponent");
           jsonMap = jsonMap.get("components").get("TractorActions");
           TractorActions tractorActions = new TractorActions();
           // Update the tractor 'muted' variable based on the info in the json file
           tractorActions.setMuted(jsonMap.getBoolean("isMuted"));
           this.addComponent(tractorActions);
+
+          ConeLightComponent coneLightComponent = new ConeLightComponent(lightJsonMap.getFloat("distance"));
+          if (lightJsonMap.getBoolean("isActive")) {
+            coneLightComponent.toggleLight();
+          }
+          this.addComponent(coneLightComponent);
           break;
         case Tile:
           jsonMap = jsonMap.get("components").get("CropTileComponent");

@@ -29,6 +29,8 @@ public class ItemPickupComponent extends Component {
             return;
         }
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
+        InventoryComponent playerInventory = this.entity.getComponent(InventoryComponent.class);
+
 
         // Add item to inventory
         boolean added = this.entity.getComponent(InventoryComponent.class).addItem(target);

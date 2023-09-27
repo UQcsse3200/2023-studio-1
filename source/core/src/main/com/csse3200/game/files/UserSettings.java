@@ -1,10 +1,10 @@
 package com.csse3200.game.files;
 
+import java.io.File;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.csse3200.game.files.FileLoader.Location;
-
-import java.io.File;
 
 /**
  * Reading, Writing, and applying user settings in the game.

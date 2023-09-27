@@ -1,10 +1,13 @@
 package com.csse3200.game.components.items;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.extensions.GameExtension;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(GameExtension.class)
 class ItemComponentTest {
@@ -16,6 +19,20 @@ class ItemComponentTest {
     assertEquals("", item.getItemDescription());
     assertEquals(false, item.isSellable());
     assertEquals(ItemType.SHOVEL, item.getItemType());
+  }
+
+  @Test
+  void createItemGetPrice() {
+    Texture texture = new Texture("images/tool_hoe.png");
+    ItemComponent item = new ItemComponent("hoe", ItemType.HOE, 3, texture);
+    assertEquals("hoe", item.getItemName());
+    assertEquals(3, item.getPrice());
+    assertEquals(true, item.isSellable());
+    assertEquals(ItemType.HOE, item.getItemType());
+    assertEquals(texture, item.getItemTexture());
+    Texture texture2 = new Texture("images/tool_shovel.png");
+    item.setItemTexture(texture2);
+    assertEquals(texture2, item.getItemTexture());
   }
 
   @Test
@@ -57,5 +74,12 @@ class ItemComponentTest {
     ItemComponent item = new ItemComponent("test", ItemType.HOE, new Texture("images/tool_shovel.png"));
     item.setItemDescription("test description");
     assertEquals("test description", item.getItemDescription());
+  }
+
+  @Test
+  void idUnique() {
+    ItemComponent item = new ItemComponent("test", ItemType.HOE, new Texture("images/tool_shovel.png"));
+    ItemComponent item2 = new ItemComponent("test", ItemType.HOE, new Texture("images/tool_shovel.png"));
+    assertNotEquals(item.getItemId(), item2.getItemId());
   }
 }
