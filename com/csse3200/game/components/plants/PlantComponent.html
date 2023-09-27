@@ -161,47 +161,105 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#beginDecay()" class="member-name-link">beginDecay</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#adultLifeSpanCheck()" class="member-name-link">adultLifeSpanCheck</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">An adult plant will live for a certain number of days (adultLifeSpan).</div>
+<div class="block">Check if the plant has exceeded its adult lifespan.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#checkDecayStatus()" class="member-name-link">checkDecayStatus</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Checks if the plant should be set to a dead state every in game minute.</div>
+<div class="block">Called when the entity is created and registered.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#currentInfo()" class="member-name-link">currentInfo</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Return a string will all the relevant information about this plant.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dayUpdate()" class="member-name-link">dayUpdate</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Functionality for the plant that needs to update every day.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#decayCheck()" class="member-name-link">decayCheck</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Called when the entity is created and registered.</div>
+<div class="block">Check if the plant is already decaying and needs to die.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#digestion()" class="member-name-link">digestion</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Check if the space snapper is currently eating.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#forceAdult()" class="member-name-link">forceAdult</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Function used when debugging.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#forceDead()" class="member-name-link">forceDead</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Function used when debugging.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#forceDecay()" class="member-name-link">forceDecay</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Function used when debugging.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#forceGrowthStage(java.lang.String)" class="member-name-link">forceGrowthStage</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;growthStage)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#forceJuvenile()" class="member-name-link">forceJuvenile</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Function used when debugging.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#forceSeedling()" class="member-name-link">forceSeedling</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Function used when debugging.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#forceSprout()" class="member-name-link">forceSprout</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Function used when debugging.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAdultLifeSpan()" class="member-name-link">getAdultLifeSpan</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">get the adult life span of a plant</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCurrentAge()" class="member-name-link">getCurrentAge</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCurrentGrowthLevel()" class="member-name-link">getCurrentGrowthLevel</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../areas/terrain/CropTileComponent.html" title="class in com.csse3200.game.areas.terrain">CropTileComponent</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCropTile()" class="member-name-link">getCropTile</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Return the cropTile where the plant is located.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCurrentAge()" class="member-name-link">getCurrentAge</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCurrentGrowthLevel()" class="member-name-link">getCurrentGrowthLevel</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Return the current growth level of the plant.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCurrentMaxHealth()" class="member-name-link">getCurrentMaxHealth</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCurrentMaxHealth()" class="member-name-link">getCurrentMaxHealth</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Retrieves the current maximum health value of the plant.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PlantComponent.GrowthStage.html" title="enum class in com.csse3200.game.components.plants">PlantComponent.GrowthStage</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getGrowthStage()" class="member-name-link">getGrowthStage</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PlantComponent.GrowthStage.html" title="enum class in com.csse3200.game.components.plants">PlantComponent.GrowthStage</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getGrowthStage()" class="member-name-link">getGrowthStage</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Get the current growth stage of a plant</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIdealWaterLevel()" class="member-name-link">getIdealWaterLevel</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIdealWaterLevel()" class="member-name-link">getIdealWaterLevel</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Get the ideal water level of a plant</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIsEating()" class="member-name-link">getIsEating</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Is the plant eating right now.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMaxHealth()" class="member-name-link">getMaxHealth</a>()</code></div>
@@ -234,24 +292,34 @@ loadScripts(document, 'script');</script>
 <div class="block">Returns the type of the plant</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#increaseGrowthStage(int)" class="member-name-link">increaseGrowthStage</a><wbr>(int&nbsp;growthIncrement)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hourUpdate()" class="member-name-link">hourUpdate</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Increment the current growth stage of a plant by 1</div>
+<div class="block">Functionality for the plant that needs to update every hour.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#increasePlantHealth(int)" class="member-name-link">increasePlantHealth</a><wbr>(int&nbsp;plantHealthIncrement)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#increaseGrowthStage(int)" class="member-name-link">increaseGrowthStage</a><wbr>(int&nbsp;growthIncrement)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Increment the current growth stage of a plant by 1</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#increasePlantHealth(int)" class="member-name-link">increasePlantHealth</a><wbr>(int&nbsp;plantHealthIncrement)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Increase (or decrease) the plant health by some value</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isDead()" class="member-name-link">isDead</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isDead()" class="member-name-link">isDead</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Check if a plant is dead</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isDecay()" class="member-name-link">isDecay</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isDecay()" class="member-name-link">isDecay</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Find out if the plant is decaying or not.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#minuteUpdate()" class="member-name-link">minuteUpdate</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Functionality for the plant that needs to update every minute.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#playSound(java.lang.String)" class="member-name-link">playSound</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;functionCalled)</code></div>
@@ -268,8 +336,18 @@ loadScripts(document, 'script');</script>
 <div class="block">Set the adult life span of a plant.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCurrentAge(float)" class="member-name-link">setCurrentAge</a><wbr>(float&nbsp;age)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setAreaOfEffectRadius()" class="member-name-link">setAreaOfEffectRadius</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Set the area of effect radius based on the type of plant.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCurrentAge(float)" class="member-name-link">setCurrentAge</a><wbr>(float&nbsp;age)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCurrentGrowthLevel(int)" class="member-name-link">setCurrentGrowthLevel</a><wbr>(int&nbsp;currentGrowthLevel)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Set the currentGrowthLevel of the plant.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDecay()" class="member-name-link">setDecay</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -286,19 +364,29 @@ loadScripts(document, 'script');</script>
 <div class="block">Sets the harvest yield of this plant.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setNumOfDaysAsAdult(int)" class="member-name-link">setNumOfDaysAsAdult</a><wbr>(int&nbsp;numOfDaysAsAdult)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setIsEating()" class="member-name-link">setIsEating</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the number of days the plant has been an adult.</div>
+<div class="block">Tell the plant it is now eating an animal.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPlantHealth(int)" class="member-name-link">setPlantHealth</a><wbr>(int&nbsp;health)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setNumOfDaysAsAdult(int)" class="member-name-link">setNumOfDaysAsAdult</a><wbr>(int&nbsp;numOfDaysAsAdult)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the number of days the plant has been an adult.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPlantHealth(int)" class="member-name-link">setPlantHealth</a><wbr>(int&nbsp;health)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Set the current plant health</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPlayerInProximity(boolean)" class="member-name-link">setPlayerInProximity</a><wbr>(boolean&nbsp;bool)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Indicates when the player is in the plants proximity for playing sounds or not.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateGrowthStage()" class="member-name-link">updateGrowthStage</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Update the growth stage of a plant based on its current growth level and its adult life span.</div>
+<div class="block">Update the growth stage of a plant based on its current growth level.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateMaxHealth()" class="member-name-link">updateMaxHealth</a>()</code></div>
@@ -406,6 +494,70 @@ loadScripts(document, 'script');</script>
 <dt>Overrides:</dt>
 <dd><code><a href="../Component.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../Component.html" title="class in com.csse3200.game.components">Component</a></code></dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="minuteUpdate()">
+<h3>minuteUpdate</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">minuteUpdate</span>()</div>
+<div class="block">Functionality for the plant that needs to update every minute.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="hourUpdate()">
+<h3>hourUpdate</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">hourUpdate</span>()</div>
+<div class="block">Functionality for the plant that needs to update every hour.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="dayUpdate()">
+<h3>dayUpdate</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">dayUpdate</span>()</div>
+<div class="block">Functionality for the plant that needs to update every day.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="adultLifeSpanCheck()">
+<h3>adultLifeSpanCheck</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">adultLifeSpanCheck</span>()</div>
+<div class="block">Check if the plant has exceeded its adult lifespan.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="decayCheck()">
+<h3>decayCheck</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">decayCheck</span>()</div>
+<div class="block">Check if the plant is already decaying and needs to die. Also check if the plant
+ has died before reaching adult growth stage.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setAreaOfEffectRadius()">
+<h3>setAreaOfEffectRadius</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setAreaOfEffectRadius</span>()</div>
+<div class="block">Set the area of effect radius based on the type of plant.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="updateGrowthStage()">
+<h3>updateGrowthStage</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateGrowthStage</span>()</div>
+<div class="block">Update the growth stage of a plant based on its current growth level.
+ This method is called every (in game) day at midday (12pm) and midnight.
+ If the currentGrowthLevel exceeds the corresponding growth threshold, then the plant will
+ advance to the next growth stage.
+ When a plant becomes an adult, it has an adult life span.
+
+ Also, if the plant is in a state of decay then decrease the health every hour.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="digestion()">
+<h3>digestion</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">digestion</span>()</div>
+<div class="block">Check if the space snapper is currently eating. If it is then implement a cool down period before the
+ plant is ready to eat again.</div>
 </section>
 </li>
 <li>
@@ -583,7 +735,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCurrentMaxHealth()">
 <h3>getCurrentMaxHealth</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">getCurrentMaxHealth</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getCurrentMaxHealth</span>()</div>
 <div class="block">Retrieves the current maximum health value of the plant.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -639,31 +791,11 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="updateGrowthStage()">
-<h3>updateGrowthStage</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateGrowthStage</span>()</div>
-<div class="block">Update the growth stage of a plant based on its current growth level and its adult life span.
- This method is called every (in game) day at midday (12pm).
- If the currentGrowthLevel exceeds the corresponding growth threshold, then the plant will
- advance to the next growth stage.
- When a plant becomes an adult, it has an adult life span. When the number of days since a
- plant becomes and adult exceeds adult life span of a plant, then it starts to decay.</div>
-</section>
-</li>
-<li>
 <section class="detail" id="updateMaxHealth()">
 <h3>updateMaxHealth</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateMaxHealth</span>()</div>
 <div class="block">Update the maximum health of the plant based on its current growth stage.
  Called whenever the growth stage is changed</div>
-</section>
-</li>
-<li>
-<section class="detail" id="beginDecay()">
-<h3>beginDecay</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">beginDecay</span>()</div>
-<div class="block">An adult plant will live for a certain number of days (adultLifeSpan). Once a plant has
- exceeded its adultLifeSpan it will begin to decay.</div>
 </section>
 </li>
 <li>
@@ -678,7 +810,8 @@ loadScripts(document, 'script');</script>
 <h3>playSound</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">playSound</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;functionCalled)</span></div>
 <div class="block">Determine what sound needs to be called based on the type of interaction.
- The sounds are separated into tuple pairs for each event.</div>
+ The sounds are separated into tuple pairs for each event.The sound will only be played if the
+ player is close enough to the plant. This is determined by the PlantProximityComponent.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>functionCalled</code> - The type of interaction with the plant.</dd>
@@ -698,10 +831,114 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="checkDecayStatus()">
-<h3>checkDecayStatus</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">checkDecayStatus</span>()</div>
-<div class="block">Checks if the plant should be set to a dead state every in game minute.</div>
+<section class="detail" id="getCropTile()">
+<h3>getCropTile</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../areas/terrain/CropTileComponent.html" title="class in com.csse3200.game.areas.terrain">CropTileComponent</a></span>&nbsp;<span class="element-name">getCropTile</span>()</div>
+<div class="block">Return the cropTile where the plant is located.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the cropTile.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getIsEating()">
+<h3>getIsEating</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">getIsEating</span>()</div>
+<div class="block">Is the plant eating right now.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>isEating</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setIsEating()">
+<h3>setIsEating</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setIsEating</span>()</div>
+<div class="block">Tell the plant it is now eating an animal.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="forceSeedling()">
+<h3>forceSeedling</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">forceSeedling</span>()</div>
+<div class="block">Function used when debugging. Allows for the plant to instantly become a seedling from any growth stage.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="forceSprout()">
+<h3>forceSprout</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">forceSprout</span>()</div>
+<div class="block">Function used when debugging. Allows for the plant to instantly become a sprout from any growth stage.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="forceJuvenile()">
+<h3>forceJuvenile</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">forceJuvenile</span>()</div>
+<div class="block">Function used when debugging. Allows for the plant to instantly become a juvenile from any growth stage.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="forceAdult()">
+<h3>forceAdult</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">forceAdult</span>()</div>
+<div class="block">Function used when debugging. Allows for the plant to instantly become an adult from any growth stage.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="forceDecay()">
+<h3>forceDecay</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">forceDecay</span>()</div>
+<div class="block">Function used when debugging. Allows for the plant to instantly start decaying from any growth stage.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="forceDead()">
+<h3>forceDead</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">forceDead</span>()</div>
+<div class="block">Function used when debugging. Allows for the plant to instantly die from any growth stage.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="forceGrowthStage(java.lang.String)">
+<h3>forceGrowthStage</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">forceGrowthStage</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;growthStage)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="currentInfo()">
+<h3>currentInfo</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">currentInfo</span>()</div>
+<div class="block">Return a string will all the relevant information about this plant.
+ The returned string must be formatted such that each piece of information is on a new line.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>- Formatted string with all relevant information about the plant.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setCurrentGrowthLevel(int)">
+<h3>setCurrentGrowthLevel</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setCurrentGrowthLevel</span><wbr><span class="parameters">(int&nbsp;currentGrowthLevel)</span></div>
+<div class="block">Set the currentGrowthLevel of the plant. This is used for testing purposes.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>currentGrowthLevel</code> - - Desired growth level of the plant.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setPlayerInProximity(boolean)">
+<h3>setPlayerInProximity</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setPlayerInProximity</span><wbr><span class="parameters">(boolean&nbsp;bool)</span></div>
+<div class="block">Indicates when the player is in the plants proximity for playing sounds or not.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>bool</code> - - If the player is/(is not) in proximity.</dd>
+</dl>
 </section>
 </li>
 <li>

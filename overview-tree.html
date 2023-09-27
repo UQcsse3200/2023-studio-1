@@ -93,6 +93,7 @@ loadScripts(document, 'script');</script>
 <li><a href="com/csse3200/game/rendering/package-tree.html">com.csse3200.game.rendering</a>, </li>
 <li><a href="com/csse3200/game/screens/package-tree.html">com.csse3200.game.screens</a>, </li>
 <li><a href="com/csse3200/game/services/package-tree.html">com.csse3200.game.services</a>, </li>
+<li><a href="com/csse3200/game/services/plants/package-tree.html">com.csse3200.game.services.plants</a>, </li>
 <li><a href="com/csse3200/game/ui/package-tree.html">com.csse3200.game.ui</a>, </li>
 <li><a href="com/csse3200/game/ui/terminal/package-tree.html">com.csse3200.game.ui.terminal</a>, </li>
 <li><a href="com/csse3200/game/ui/terminal/commands/package-tree.html">com.csse3200.game.ui.terminal.commands</a>, </li>
@@ -152,6 +153,8 @@ loadScripts(document, 'script');</script>
 <li class="circle">com.csse3200.game.physics.components.<a href="com/csse3200/game/physics/components/HitboxComponent.html" class="type-name-link" title="class in com.csse3200.game.physics.components">HitboxComponent</a>
 <ul>
 <li class="circle">com.csse3200.game.components.<a href="com/csse3200/game/components/InteractionDetector.html" class="type-name-link" title="class in com.csse3200.game.components">InteractionDetector</a></li>
+<li class="circle">com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantAreaOfEffectComponent.html" class="type-name-link" title="class in com.csse3200.game.components.plants">PlantAreaOfEffectComponent</a></li>
+<li class="circle">com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantProximityComponent.html" class="type-name-link" title="class in com.csse3200.game.components.plants">PlantProximityComponent</a></li>
 </ul>
 </li>
 </ul>
@@ -186,6 +189,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">com.csse3200.game.physics.components.<a href="com/csse3200/game/physics/components/PhysicsComponent.html" class="type-name-link" title="class in com.csse3200.game.physics.components">PhysicsComponent</a></li>
 <li class="circle">com.csse3200.game.physics.components.<a href="com/csse3200/game/physics/components/PhysicsMovementComponent.html" class="type-name-link" title="class in com.csse3200.game.physics.components">PhysicsMovementComponent</a> (implements com.csse3200.game.ai.movement.<a href="com/csse3200/game/ai/movement/MovementController.html" title="interface in com.csse3200.game.ai.movement">MovementController</a>)</li>
 <li class="circle">com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" class="type-name-link" title="class in com.csse3200.game.components.plants">PlantComponent</a></li>
+<li class="circle">com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantMouseHoverComponent.html" class="type-name-link" title="class in com.csse3200.game.components.plants">PlantMouseHoverComponent</a></li>
 <li class="circle">com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/PlayerActions.html" class="type-name-link" title="class in com.csse3200.game.components.player">PlayerActions</a></li>
 <li class="circle">com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/PlayerAnimationController.html" class="type-name-link" title="class in com.csse3200.game.components.player">PlayerAnimationController</a></li>
 <li class="circle">com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/PlayerHighlightComponent.html" class="type-name-link" title="class in com.csse3200.game.components.player">PlayerHighlightComponent</a></li>
@@ -211,6 +215,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">com.csse3200.game.components.questgiver.<a href="com/csse3200/game/components/questgiver/MissionDisplay.html" class="type-name-link" title="class in com.csse3200.game.components.questgiver">MissionDisplay</a></li>
 <li class="circle">com.csse3200.game.services.<a href="com/csse3200/game/services/OxygenDisplay.html" class="type-name-link" title="class in com.csse3200.game.services">OxygenDisplay</a></li>
 <li class="circle">com.csse3200.game.components.gamearea.<a href="com/csse3200/game/components/gamearea/PerformanceDisplay.html" class="type-name-link" title="class in com.csse3200.game.components.gamearea">PerformanceDisplay</a></li>
+<li class="circle">com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantInfoDisplayComponent.html" class="type-name-link" title="class in com.csse3200.game.components.plants">PlantInfoDisplayComponent</a></li>
 <li class="circle">com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/PlayerStatsDisplay.html" class="type-name-link" title="class in com.csse3200.game.components.player">PlayerStatsDisplay</a></li>
 <li class="circle">com.csse3200.game.components.settingsmenu.<a href="com/csse3200/game/components/settingsmenu/SettingsMenuDisplay.html" class="type-name-link" title="class in com.csse3200.game.components.settingsmenu">SettingsMenuDisplay</a></li>
 <li class="circle">com.csse3200.game.ui.terminal.<a href="com/csse3200/game/ui/terminal/TerminalDisplay.html" class="type-name-link" title="class in com.csse3200.game.ui.terminal">TerminalDisplay</a></li>
@@ -315,8 +320,11 @@ loadScripts(document, 'script');</script>
 <li class="circle">com.csse3200.game.physics.<a href="com/csse3200/game/physics/PhysicsUtils.html" class="type-name-link" title="class in com.csse3200.game.physics">PhysicsUtils</a></li>
 <li class="circle">com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/PlaceableFactory.html" class="type-name-link" title="class in com.csse3200.game.entities.factories">PlaceableFactory</a></li>
 <li class="circle">com.csse3200.game.services.<a href="com/csse3200/game/services/PlanetOxygenService.html" class="type-name-link" title="class in com.csse3200.game.services">PlanetOxygenService</a> (implements com.csse3200.game.services.<a href="com/csse3200/game/services/OxygenLevel.html" title="interface in com.csse3200.game.services">OxygenLevel</a>)</li>
+<li class="circle">com.csse3200.game.ui.terminal.commands.<a href="com/csse3200/game/ui/terminal/commands/PlantCommand.html" class="type-name-link" title="class in com.csse3200.game.ui.terminal.commands">PlantCommand</a> (implements com.csse3200.game.ui.terminal.commands.<a href="com/csse3200/game/ui/terminal/commands/Command.html" title="interface in com.csse3200.game.ui.terminal.commands">Command</a>)</li>
+<li class="circle">com.csse3200.game.services.plants.<a href="com/csse3200/game/services/plants/PlantCommandService.html" class="type-name-link" title="class in com.csse3200.game.services.plants">PlantCommandService</a></li>
 <li class="circle">com.csse3200.game.entities.configs.plants.<a href="com/csse3200/game/entities/configs/plants/PlantConfigs.html" class="type-name-link" title="class in com.csse3200.game.entities.configs.plants">PlantConfigs</a></li>
 <li class="circle">com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/PlantFactory.html" class="type-name-link" title="class in com.csse3200.game.entities.factories">PlantFactory</a></li>
+<li class="circle">com.csse3200.game.services.plants.<a href="com/csse3200/game/services/plants/PlantInfoService.html" class="type-name-link" title="class in com.csse3200.game.services.plants">PlantInfoService</a></li>
 <li class="circle">com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/PlayerFactory.html" class="type-name-link" title="class in com.csse3200.game.entities.factories">PlayerFactory</a></li>
 <li class="circle">com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/PlayerHighlightFactory.html" class="type-name-link" title="class in com.csse3200.game.entities.factories">PlayerHighlightFactory</a></li>
 <li class="circle">com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ProjectileFactory.html" class="type-name-link" title="class in com.csse3200.game.entities.factories">ProjectileFactory</a></li>
