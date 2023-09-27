@@ -159,6 +159,20 @@ public class ItemFactory {
     return egg;
   }
 
+  /**
+   * Creates a golden egg item
+   *
+   * @return golden egg item
+   */
+  public static Entity createGoldenEgg() {
+    Entity egg = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/golden_egg.png"))
+            .addComponent(new ItemComponent("golden egg", ItemType.EGG,
+                    new Texture("images/golden_egg.png")));
+    egg.scaleHeight(0.75f);
+    return egg;
+  }
+
    /**
    * Creates a fertiliser item
    *

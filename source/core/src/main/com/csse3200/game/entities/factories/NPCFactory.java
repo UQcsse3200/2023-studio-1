@@ -5,12 +5,17 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
+import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.TouchAttackComponent;
+import com.csse3200.game.components.npc.*;
+import com.csse3200.game.components.tasks.ChaseTask;
+import com.csse3200.game.components.tasks.FollowTask;
+import com.csse3200.game.components.tasks.RunAwayTask;
+import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.components.npc.AnimalAnimationController;
 import com.csse3200.game.components.npc.FireflyScareComponent;
-import com.csse3200.game.components.npc.PassiveDropComponent;
 import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.components.tasks.*;
 import com.csse3200.game.entities.Entity;
@@ -27,6 +32,9 @@ import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;
 import java.security.SecureRandom;
 import java.util.Random;
 
@@ -79,9 +87,23 @@ public class NPCFactory {
             .addTask(new PanicTask("panicStart", 10f, 20, new Vector2(10f, 10f), new Vector2(10f, 10f)))
             .addTask(new TamedFollowTask(player, 10, 8, 10, 2f, config.favouriteFood));
 
+    List<SingleDropHandler> singleDropHandlers = new ArrayList<>();
+    MultiDropComponent multiDropComponent = new MultiDropComponent(singleDropHandlers);
+    //TODO - fix drop rates
+    //Chickens untamed drop eggs
+    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createEgg, 24,
+            ServiceLocator.getTimeService().getEvents()::addListener, "hourUpdate", false));
+    //Once tamed, chickens drop one extra egg
+    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createEgg, 24,
+            ServiceLocator.getTimeService().getEvents()::addListener, "hourUpdate", true));
+    //Once tamed, chickens can be fed to drop golden eggs
+    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createGoldenEgg, 5,
+            ServiceLocator.getTimeService().getEvents()::addListener, "feed", true));
+    //TODO - meat on death
+
     chicken
             .addComponent(aiTaskComponent)
-            .addComponent(new PassiveDropComponent(ItemFactory::createEgg, 2))
+            .addComponent(multiDropComponent)
             .addComponent(animator)
             .addComponent(new AnimalAnimationController())
             .addComponent(new CombatStatsComponent(10, 0))
@@ -122,9 +144,23 @@ public class NPCFactory {
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
             .addTask(new TamedFollowTask(player, 10, 8, 10, 2f, config.favouriteFood));
 
+    List<SingleDropHandler> singleDropHandlers = new ArrayList<>();
+    MultiDropComponent multiDropComponent = new MultiDropComponent(singleDropHandlers);
+    //TODO - fix drop rates
+    //Cows untamed drop fertiliser
+    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createFertiliser, 24,
+            ServiceLocator.getTimeService().getEvents()::addListener, "hourUpdate", false));
+    //Once tamed, cows drop one extra fertiliser
+    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createFertiliser, 24,
+            ServiceLocator.getTimeService().getEvents()::addListener, "hourUpdate", true));
+    //Once tamed, cows can be fed to drop milk
+    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createMilk, 3,
+            cow.getEvents()::addListener, "feed", true));
+    //TODO - create death drop -> cooked meat
+
     cow
             .addComponent(aiTaskComponent)
-            .addComponent(new PassiveDropComponent(ItemFactory::createFertiliser, 24))
+            .addComponent(multiDropComponent)
             .addComponent(animator)
             .addComponent(new AnimalAnimationController())
             .addComponent(new TamableComponent(
@@ -158,6 +194,8 @@ public class NPCFactory {
             .addTask(new WanderTask(new Vector2(1.5f, 1.5f), 5f))
             .addTask(new FollowTask(player, 10, 8, 10, 3f));
 
+    //TODO - add drops
+
     astrolotl
             .addComponent(aiTaskComponent)
             .addComponent(animator)
@@ -187,15 +225,12 @@ public class NPCFactory {
             16f
     );
 
-    animator.addAnimation("idle_left", 1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("idle_right", 1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("walk_left", 1f, Animation.PlayMode.LOOP_REVERSED);
-    animator.addAnimation("walk_right", 1f, Animation.PlayMode.LOOP);
-
-
-
-//    animator.addAnimation("idle", 1f, Animation.PlayMode.LOOP);
-  // animator.addAnimation("consume", 1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle_left", 0.5f, Animation.PlayMode.LOOP);
+    animator.addAnimation("walk_left", 0.5f, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle_right", 0.5f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation("walk_right", 0.5f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation("attack_right", 0.1f, Animation.PlayMode.REVERSED);
+    animator.addAnimation("attack_left", 0.1f);
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
@@ -203,12 +238,15 @@ public class NPCFactory {
     oxygenEater
             .addComponent(aiTaskComponent)
             .addComponent(animator)
-            .addComponent(new AnimalAnimationController());
+            .addComponent(new HostileAnimationController())
+            .addComponent(new OxygenEaterAttackPattern())
+            .addComponent(new InteractionDetector(5f, new ArrayList<>(Arrays.asList(EntityType.Player)))); // TODO: Do we want it to attack anything
 
-
-    oxygenEater.scaleHeight(3f);
-    PhysicsUtils.setScaledCollider(oxygenEater, 0.7f, 0.4f);
-
+    oxygenEater.scaleHeight(2f);
+    oxygenEater.getComponent(ColliderComponent.class).setAsBoxAligned(new Vector2(1f, 1f),
+            PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.CENTER);
+    oxygenEater.getComponent(HitboxComponent.class).setAsBoxAligned(new Vector2(1f, 1f),
+            PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.CENTER);
 
     return oxygenEater;
   }
@@ -247,7 +285,8 @@ public class NPCFactory {
     Entity animal = new Entity(type)
             .addComponent(new PhysicsComponent())
             .addComponent(new PhysicsMovementComponent())
-            .addComponent(new ColliderComponent());
+            .addComponent(new ColliderComponent())
+            .addComponent(new HitboxComponent());
 
     return animal;
   }
