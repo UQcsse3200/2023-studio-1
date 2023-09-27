@@ -8,6 +8,9 @@ import org.slf4j.LoggerFactory;
 
 public class TimeService {
 	private static final Logger logger = LoggerFactory.getLogger(TimeService.class);
+	private static final int MS_IN_MINUTE = 500;
+	private static final int MORNING_HOUR = 6;
+	private static final int NIGHT_HOUR = 20;
 
 	private int minute;
 	private int hour;
@@ -16,12 +19,6 @@ public class TimeService {
 	private long timeBuffer;
 	private boolean paused;
 	private final EventHandler events;
-
-	private static final int MS_IN_MINUTE = 500;
-
-	private static final int MORNING_HOUR = 6;
-	private static final int NIGHT_HOUR = 20;
-
 
 	/**
 	 * Constructs a basic TimeService instance to track the in-game time
