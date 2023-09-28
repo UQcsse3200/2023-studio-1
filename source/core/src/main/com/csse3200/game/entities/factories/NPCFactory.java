@@ -201,7 +201,7 @@ public class NPCFactory {
             .addComponent(aiTaskComponent)
             .addComponent(animator)
             .addComponent(new HostileAnimationController())
-            .addComponent(new OxygenEaterAttackPattern(1.5f))
+            .addComponent(new OxygenEaterAttackPattern(1.5f, ProjectileFactory::createOxygenEaterProjectile))
             .addComponent(new InteractionDetector(5f, new ArrayList<>(Arrays.asList(EntityType.Player)))); // TODO: Do we want it to attack anything
 
     oxygenEater.scaleHeight(2f);

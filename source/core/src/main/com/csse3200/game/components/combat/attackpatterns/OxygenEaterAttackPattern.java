@@ -9,10 +9,13 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.DirectionUtils;
 
 import java.util.Random;
+import java.util.function.Supplier;
 
 public class OxygenEaterAttackPattern extends AttackPatternComponent {
-    public OxygenEaterAttackPattern(float attackFrequency) {
+    private final Supplier<Entity> projectileSupplier;
+    public OxygenEaterAttackPattern(float attackFrequency, Supplier<Entity> projectileSupplier) {
         super(attackFrequency);
+        this.projectileSupplier = projectileSupplier;
     }
 
     @Override
@@ -50,7 +53,7 @@ public class OxygenEaterAttackPattern extends AttackPatternComponent {
      * @param position The position to which the projectile should be aimed.
      */
     private void shoot(Vector2 position) {
-        Entity projectile = ProjectileFactory.createOxygenEaterProjectile();
+        Entity projectile = projectileSupplier.get();
 
         projectile.setCenterPosition(entity.getCenterPosition());
         ServiceLocator.getGameArea().spawnEntity(projectile);

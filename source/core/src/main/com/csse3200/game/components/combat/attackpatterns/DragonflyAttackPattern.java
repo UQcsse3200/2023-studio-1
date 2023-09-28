@@ -8,10 +8,14 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.DirectionUtils;
 
 import java.util.Random;
+import java.util.function.Supplier;
 
 public class DragonflyAttackPattern extends AttackPatternComponent {
-    public DragonflyAttackPattern(float attackFrequency) {
+    private final Supplier<Entity> projectileSupplier;
+
+    public DragonflyAttackPattern(float attackFrequency, Supplier<Entity> projectileSupplier) {
         super(attackFrequency);
+        this.projectileSupplier = projectileSupplier;
     }
 
     @Override
@@ -55,7 +59,7 @@ public class DragonflyAttackPattern extends AttackPatternComponent {
      * @param position The position to which the projectile should be aimed.
      */
     private void shoot(Vector2 position) {
-        Entity projectile = ProjectileFactory.createDragonflyProjectile();
+        Entity projectile = projectileSupplier.get();
         Random random = new Random();
         position.add(random.nextFloat() - 1f, random.nextFloat() -1f);
 
