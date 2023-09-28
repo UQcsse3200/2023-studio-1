@@ -431,15 +431,6 @@ public class SpaceGameArea extends GameArea {
   }
 
   /**
-   * Spawns a Bullet Entity
-   *
-   * @param target Given target for the bullet to travel towards
-   */
-  public void spawnBullet(Vector2 target){
-    System.out.println(target);
-  }
-
-  /**
    * Spawns the Tractor Entity be calling upon it's factory
    *
    * @return a reference to the tractor

@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.areas.SpaceGameArea;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.components.*;
+import com.csse3200.game.components.combat.ProjectileComponent;
 import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
@@ -16,6 +17,7 @@ import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
+import com.csse3200.game.entities.factories.ProjectileFactory;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -255,8 +257,12 @@ public class PlayerActions extends Component {
     Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
     attackSound.play();
     mousePos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
-    SpaceGameArea spaceGameArea = (SpaceGameArea) ServiceLocator.getGameArea();
-    spaceGameArea.spawnBullet(mousePos);
+    Entity projectile = ProjectileFactory.createPlayerProjectile();
+    projectile.setCenterPosition(entity.getCenterPosition());
+    ServiceLocator.getGameArea().spawnEntity(projectile);
+    ProjectileComponent projectileComponent = projectile.getComponent(ProjectileComponent.class);
+    projectileComponent.setSpeed(new Vector2(3f, 3f));
+    projectileComponent.setTargetDirection(mousePos);
   }
 
   /**
