@@ -1,5 +1,6 @@
 package com.csse3200.game.missions.quests;
 
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.missions.MissionManager;
@@ -19,6 +20,7 @@ public class QuestFactory {
     public static final String reapingYourRewardsQuestName = "Reaping Your Rewards";
     public static final String makingFriendsQuestName = "Making Friends";
     public static final String fertilisingFiestaQuestName = "Fertilising Fiesta";
+    public static final String aliensAttackQuestName = "Aliens Attack";
     public static final String actIMainQuestName = "An Agreement";
     public static final String actIIMainQuestName = "Making Contact";
     public static final String actIIIMainQuestName = "Weather the Storm";
@@ -150,6 +152,7 @@ public class QuestFactory {
     public static FertiliseCropTilesQuest createFertilisingFiestaQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
         List<Quest> questsToActivate = new ArrayList<>();
+        questsToActivate.add(createAliensAttackQuest());
 
         String dialogue = """
                 Well done! You seem to really be getting the hang of this.
@@ -184,6 +187,33 @@ public class QuestFactory {
         return new FertiliseCropTilesQuest(fertilisingFiestaQuestName, reward, 12);
     }
 
+    public static ManageHostilesQuest createAliensAttackQuest() {
+        String dialogue = """
+                Impressive.
+                {WAIT}
+                Well, I suppose you have shown me that you can be trusted.
+                {WAIT}
+                I give you these seeds as boons for your good work.
+                {WAIT}
+                The trusty Hammer Plant shall heal all creatures and plants around it.
+                {WAIT}
+                Aloe Vera yields a gel which can heal even the gravest of injuries.
+                {WAIT}
+                Seeing as though you have been obedi- generous in offering your help to reconstruct what was lost, I am ready to help you.
+                {WAIT}
+                Come speak with me when you are ready, and we can talk about repairing that ship of yours.
+                """;
+
+        MultiReward reward = new MultiReward(List.of(
+                new ItemReward(List.of(
+                        ItemFactory.createHammerPlantSeed(),
+                        ItemFactory.createAloeVeraSeed()
+                )),
+                new DialogueReward(dialogue)
+        ));
+        return new ManageHostilesQuest(aliensAttackQuestName, reward, Set.of(EntityType.OxygenEater), 5);
+    }
+
     public static MainQuest createActIMainQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
 
@@ -211,6 +241,7 @@ public class QuestFactory {
         requiredQuests.add(reapingYourRewardsQuestName);
         requiredQuests.add(makingFriendsQuestName);
         requiredQuests.add(fertilisingFiestaQuestName);
+        requiredQuests.add(aliensAttackQuestName);
 
         MultiReward reward = new MultiReward(List.of(
                 new QuestReward(questsToAdd, questsToActivate),
