@@ -1,11 +1,10 @@
 package com.csse3200.game.missions.quests;
 
 import com.csse3200.game.entities.factories.ItemFactory;
+import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.missions.MissionManager;
-import com.csse3200.game.missions.rewards.DialogueReward;
-import com.csse3200.game.missions.rewards.ItemReward;
-import com.csse3200.game.missions.rewards.MultiReward;
-import com.csse3200.game.missions.rewards.QuestReward;
+import com.csse3200.game.missions.rewards.*;
+import com.csse3200.game.services.ServiceLocator;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -19,6 +18,7 @@ public class QuestFactory {
     public static final String sowingYourFirstSeedsQuestName = "Sowing Your First Seeds";
     public static final String reapingYourRewardsQuestName = "Reaping Your Rewards";
     public static final String makingFriendsQuestName = "Making Friends";
+    public static final String fertilisingFiestaQuestName = "Fertilising Fiesta";
     public static final String actIMainQuestName = "An Agreement";
     public static final String actIIMainQuestName = "Making Contact";
     public static final String actIIIMainQuestName = "Weather the Storm";
@@ -115,7 +115,6 @@ public class QuestFactory {
 
         MultiReward reward = new MultiReward(List.of(
                 new ItemReward(List.of(
-                        ItemFactory.createAtomicAlgaeSeed(),
                         ItemFactory.createCowFood()
                 )),
                 new QuestReward(questsToAdd, questsToActivate),
@@ -128,25 +127,61 @@ public class QuestFactory {
     public static TameAnimalsQuest createMakingFriendsQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
         List<Quest> questsToActivate = new ArrayList<>();
+        questsToActivate.add(createFertilisingFiestaQuest());
 
         String dialogue = """
                 So you've met our kind fauna.
                 {WAIT}
                 Good. You're starting to learn.
                 {WAIT}
-                How about you try to use their gifts next?
+                You might have noticed that once you treat our wildlife kindly, they drop rewards for you.
                 {WAIT}
-                Oh... and one more thing.
-                {WAIT}
-                Be aware - not all of our fauna take so kindly to aliens from outer space.
+                Why don't you try using them?
                 """;
 
         MultiReward reward = new MultiReward(List.of(
-                new ItemReward(List.of(ItemFactory.createAloeVeraSeed())),
+                new ItemReward(List.of(ItemFactory.createFertiliser())),
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
         return new TameAnimalsQuest(makingFriendsQuestName, reward, 1);
+    }
+
+    public static FertiliseCropTilesQuest createFertilisingFiestaQuest() {
+        List<Quest> questsToAdd = new ArrayList<>();
+        List<Quest> questsToActivate = new ArrayList<>();
+
+        String dialogue = """
+                Well done! You seem to really be getting the hang of this.
+                {WAIT}
+                There is one more thing you must do, however, before I can truly trust you.
+                {WAIT}
+                Some of our wildlife does not take too kindly to aliens from outer space invading our plant.
+                {WAIT}
+                And to be honest, a lot are even pests for us locals.
+                {WAIT}
+                A few of these hostile creatures will be attacking soon.
+                {WAIT}
+                Take this WEAPON, and defend our crops.
+                {WAIT}
+                I've also given you a seed for a special type of plant, the Space Snapper, which will eat up these types of hostiles once grown to maturity.
+                """;
+
+        MultiReward reward = new MultiReward(List.of(
+                new ItemReward(List.of(
+                        // TODO - Add weapon to defeat incoming enemies
+                        ItemFactory.createSpaceSnapperSeed()
+                )),
+                new QuestReward(questsToAdd, questsToActivate),
+                new TriggerHostilesReward(List.of(
+                        // TODO - Add extra hostiles
+                        NPCFactory.createOxygenEater(ServiceLocator.getGameArea().getPlayer()),
+                        NPCFactory.createOxygenEater(ServiceLocator.getGameArea().getPlayer()),
+                        NPCFactory.createOxygenEater(ServiceLocator.getGameArea().getPlayer())
+                )),
+                new DialogueReward(dialogue)
+        ));
+        return new FertiliseCropTilesQuest(fertilisingFiestaQuestName, reward, 12);
     }
 
     public static MainQuest createActIMainQuest() {
@@ -173,6 +208,9 @@ public class QuestFactory {
         Set<String> requiredQuests = new HashSet<>();
         requiredQuests.add(clearingYourMessQuestName);
         requiredQuests.add(sowingYourFirstSeedsQuestName);
+        requiredQuests.add(reapingYourRewardsQuestName);
+        requiredQuests.add(makingFriendsQuestName);
+        requiredQuests.add(fertilisingFiestaQuestName);
 
         MultiReward reward = new MultiReward(List.of(
                 new QuestReward(questsToAdd, questsToActivate),
