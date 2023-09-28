@@ -42,6 +42,7 @@ public class NPCSpawnInfo {
         ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::dayUpdate);
     }
 
+    //TODO change to use getHour()?
     public void hourUpdate() {
         if (days == daysToNextSpawn) {
             hours++;
