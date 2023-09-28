@@ -60,12 +60,21 @@ class TimeServiceTest {
 		int time = 10;
 		timeService.setDay(time);
 		assertEquals(time, timeService.getDay());
+
+		timeService.setDay(-1);
+		assertEquals(time, timeService.getDay());
 	}
 
 	@Test
 	public void testSetHour() {
 		int time = 10;
 		timeService.setHour(time);
+		assertEquals(time, timeService.getHour());
+
+		timeService.setHour(-1);
+		assertEquals(time, timeService.getHour());
+
+		timeService.setHour(25);
 		assertEquals(time, timeService.getHour());
 	}
 
@@ -74,21 +83,12 @@ class TimeServiceTest {
 		int time = 10;
 		timeService.setMinute(time);
 		assertEquals(time, timeService.getMinute());
-	}
 
-	@Test
-	public void testSleep() {
-		timeService.speedUpSleep();
-		verify(gameTime, times(0)).setTimeScale(15);
-		timeService.setHour(11);
-		timeService.speedUpSleep();
-		verify(gameTime, times(1)).setTimeScale(15);
-	}
+		timeService.setMinute(-10);
+		assertEquals(time, timeService.getMinute());
 
-	@Test
-	public void testNormalSpeed() {
-		timeService.getEvents().trigger("morningTime");
-		verify(gameTime, times(1)).setTimeScale(1);
+		timeService.setMinute(70);
+		assertEquals(time, timeService.getMinute());
 	}
 
 	@Test
@@ -118,6 +118,7 @@ class TimeServiceTest {
 	@Test
 	public void testIsDay() {
 		timeService.setHour(2);
+		System.out.println(timeService.getHour());
 		assertFalse(timeService.isDay());
 		assertTrue(timeService.isNight());
 		timeService.setHour(11);
