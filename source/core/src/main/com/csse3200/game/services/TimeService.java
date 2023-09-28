@@ -78,18 +78,6 @@ public class TimeService {
 	}
 
 	/**
-	 * Sets the in-game hour to a certain value. Also updates the time buffer and triggers any necessary events
-	 *
-	 * @param hour in-game hour
-	 */
-	public void setHour(int hour) {
-		this.hour = hour % 23;
-		logger.debug("Hour is being set to: {}", this.hour);
-		this.timeBuffer = 0;
-		events.trigger("hourUpdate");
-	}
-
-	/**
 	 * Determines whether it is day or not
 	 *
 	 * @return whether it is day or not
@@ -113,10 +101,29 @@ public class TimeService {
 	 * @param day in-game day
 	 */
 	public void setDay(int day) {
+		if (day < 0) {
+			logger.warn("Incorrect day value given: {}", day);
+			return;
+		}
 		this.day = day;
 		logger.debug("Day is being set to: {}", this.day);
 		this.timeBuffer = 0;
 		events.trigger("dayUpdate");
+	}
+
+	/**
+	 * Sets the in-game hour to a certain value. Also updates the time buffer and triggers any necessary events
+	 *
+	 * @param hour in-game hour
+	 */
+	public void setHour(int hour) {
+		if (hour < 0 || hour > 23) {
+			logger.warn("Incorrect hour value given: {}", hour);
+			return;
+		}
+		logger.debug("Hour is being set to: {}", this.hour);
+		this.timeBuffer = 0;
+		events.trigger("hourUpdate");
 	}
 
 	/**
@@ -125,6 +132,10 @@ public class TimeService {
 	 * @param minute in-game minute
 	 */
 	public void setMinute(int minute) {
+		if (minute < 0 || minute > 59) {
+			logger.warn("Incorrect minute value given: {}", minute);
+			return;
+		}
 		this.minute = minute;
 		logger.debug("Minute is being set to: {}", this.minute);
 		this.timeBuffer = 0;
