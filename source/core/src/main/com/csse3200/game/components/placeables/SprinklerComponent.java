@@ -269,10 +269,12 @@ public class SprinklerComponent extends Component {
             new Vector2(x - 1, y),
             new Vector2(x - 2, y),
             // top right, bottom right, top left, bottom left.
+            /*
             new Vector2(x + 1, y + 1),
             new Vector2(x + 1, y - 1),
             new Vector2(x - 1, y + 1),
             new Vector2(x - 1, y - 1)
+             */
     };
   }
 
