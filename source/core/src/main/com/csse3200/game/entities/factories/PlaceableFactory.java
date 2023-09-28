@@ -1,16 +1,12 @@
 package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.areas.terrain.TerrainTile;
-import com.csse3200.game.components.placeables.PlaceableCategory;
-import com.csse3200.game.components.placeables.SprinklerComponent;
-import com.csse3200.game.components.placeables.FenceComponent;
+import com.csse3200.game.components.placeables.*;
 import com.csse3200.game.components.AuraLightComponent;
-import com.csse3200.game.components.LightController;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
@@ -19,11 +15,9 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.services.FactoryService;
-import com.csse3200.game.services.ServiceLocator;
 
 public class PlaceableFactory {
 
@@ -35,30 +29,11 @@ public class PlaceableFactory {
      */
     public static Entity createBasePlaceable(EntityType type) {
         Entity placeable = new Entity(type)
+                .addComponent(new PlaceableEvents())
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
                 .addComponent(new HitboxComponent())
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-        placeable.getEvents().addListener("destroy", PlaceableFactory::destoryPlaceable);
         return placeable;
-    }
-
-    private void destoryPlaceable(TerrainTile tile) {
-        Entity placedItem = tile.getPlaceable();
-        // Check if the placeable is a chest and if there is items in that chest
-        InventoryComponent chestInventory = placedItem.getComponent(InventoryComponent.class);
-        if (chestInventory != null){
-            if (chestInventory.getInventory().size() >= 1) {
-                return;
-            }
-        }
-        // Removes references from the tile to the placeable and set it as unoccupied
-        tile.removeCropTile();
-        // Spawn in the item that corresponds to the removed placeable
-        Entity droppedItem = FactoryService.getItemFactories().get(placedItem.getType().toString()).get();
-        ServiceLocator.getGameArea().spawnEntity(droppedItem);
-        droppedItem.setPosition(placedItem.getPosition());
-        // Remove the placeable from the game area
-        ServiceLocator.getGameArea().removeEntity(placedItem);
     }
 
     /**

@@ -233,7 +233,7 @@ public class SpaceGameArea extends GameArea {
           "images/placeable/fences/f_l_u.png",
           "images/placeable/fences/f_r_d_l_u.png",
           "images/placeable/fences/f_r_l.png",
-          "images/placeable/fences/f_r_u.png"
+          "images/placeable/fences/f_r_u.png",
 
           "images/ship/ship_debris.png",
           "images/ship/ship.png",

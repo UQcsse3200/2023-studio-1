@@ -212,33 +212,8 @@ public class ItemActions extends Component {
   private boolean shovel(TerrainTile tile) {
     // If there is something to remove
     if (tile.getOccupant() != null) {
-      // If it is a chest check if it has stuff in it
-      if (tile.getOccupant().getComponent(InventoryComponent.class) != null) {
-        if (tile.getOccupant().getComponent(InventoryComponent.class).getInventory().size() >= 1) {
-          return false;
-        }
-      }
-      // TODO Below here is temp code all that should be called here is whatever is surronding by the other two todos
-      // Just dont have time and want it out
-      if (
-              List.of(EntityType.Tile, EntityType.ShipDebris)
-                      .contains(tile.getOccupant().getType())
-      ) {
-        // TODO this good
-        tile.getOccupant().getEvents().trigger("destroy", tile);
-        return true;
-        // TODO Above this is amazing
-      } else {
-        Entity placedItem = tile.getOccupant();
-        Vector2 newPos = placedItem.getPosition();
-        tile.removeOccupant();
-
-        Entity droppedItem = FactoryService.getItemFactories().get(placedItem.getType().toString()).get();
-        ServiceLocator.getGameArea().spawnEntity(droppedItem);
-        droppedItem.setPosition(newPos);
-        //placedItem.getEvents().trigger("destroy"); //TODO: add trigger event to all placeable items so dynamic textures can be updated
-        ServiceLocator.getGameArea().removeEntity(placedItem);
-      }
+      // Trigger the destroy method within that occupant
+      tile.getOccupant().getEvents().trigger("destroy", tile);
       return true;
     }
     return false;
