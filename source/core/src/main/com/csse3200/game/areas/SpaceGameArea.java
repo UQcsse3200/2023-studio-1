@@ -185,7 +185,7 @@ public class SpaceGameArea extends GameArea {
   private static final String[] forestSounds = {"sounds/Impact4.ogg", "sounds/car-horn-6408.mp3"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
   private static final String[] forestMusic = {backgroundMusic};
-  private static final String[] particles = {"images/particle-effects/acid_rain.pe"};
+  private static final String[] particles = {"particle-effects/acid_rain.pe"};
 
   private final TerrainFactory terrainFactory;
   private final GameMap gameMap;
