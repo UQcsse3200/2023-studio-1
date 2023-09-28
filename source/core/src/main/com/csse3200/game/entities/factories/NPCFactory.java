@@ -8,7 +8,8 @@ import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.TouchAttackComponent;
+import com.csse3200.game.components.combat.TouchAttackComponent;
+import com.csse3200.game.components.combat.attackpatterns.OxygenEaterAttackPattern;
 import com.csse3200.game.components.npc.*;
 import com.csse3200.game.components.tasks.*;
 import com.csse3200.game.entities.Entity;
@@ -200,7 +201,7 @@ public class NPCFactory {
             .addComponent(aiTaskComponent)
             .addComponent(animator)
             .addComponent(new HostileAnimationController())
-            .addComponent(new HostileAttackPattern(1.5f))
+            .addComponent(new OxygenEaterAttackPattern(1.5f))
             .addComponent(new InteractionDetector(5f, new ArrayList<>(Arrays.asList(EntityType.Player)))); // TODO: Do we want it to attack anything
 
     oxygenEater.scaleHeight(2f);

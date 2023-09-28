@@ -1,6 +1,5 @@
 package com.csse3200.game.entities.factories;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
@@ -47,7 +46,7 @@ public class ProjectileFactory {
             PhysicsComponent.AlignX.CENTER,
             PhysicsComponent.AlignY.CENTER);
 
-        projectile.getComponent(ProjectileComponent.class).setSpeed(new Vector2(3f, 3f));
+        projectile.getComponent(ProjectileComponent.class).setSpeed(new Vector2(4f, 4f));
         projectile.getComponent(ProjectileComponent.class).setDestroyOnImpact(true);
         projectile.getComponent(ProjectileComponent.class).setConstantVelocity(true);
 
