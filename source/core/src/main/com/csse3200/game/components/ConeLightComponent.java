@@ -111,6 +111,7 @@ public class ConeLightComponent extends Component {
 		super.create();
 		light.setPosition(entity.getCenterPosition());
 		entity.getEvents().addListener("toggleLight", this::toggleLight);
+		entity.getEvents().addListener("toggleConeLight", this::toggleLight);
 	}
 
 	/**

@@ -4,11 +4,13 @@ import java.util.function.Function;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
+import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
 
 /**
@@ -23,7 +25,7 @@ public class CropTileComponent extends Component {
 	/**
 	 * Default rate that a tile's water level decreases
 	 */
-	private static final float WATER_DECREASE_RATE = 0.05f;
+	private static final float WATER_DECREASE_RATE = 0.005f;
 
 	/**
 	 * Ideal water fall off sharpness to calculate growth rate
@@ -134,14 +136,16 @@ public class CropTileComponent extends Component {
 	/**
 	 * Destroys both the tile and any plant that is on it
 	 */
-	private void destroyTile() {
+	private void destroyTile(TerrainTile tile) {
 		if (isOccupied()) {
 			plant.getEvents().trigger("destroyPlant");
 			this.setUnoccupied();
 		} else {
+			if (tile != null) tile.removeOccupant();
 			entity.dispose();
 		}
 	}
+
 
 	/**
 	 * Plants a plant entity on the tile and stores the plant as a member variable in the tile
@@ -156,13 +160,13 @@ public class CropTileComponent extends Component {
 		plant = plantFactoryMethod.apply(this);
 		ServiceLocator.getEntityService().register(plant);
 
-//		PlantComponent plantComponent = plant.getComponent(PlantComponent.class);
-//		if (plantComponent != null) {
-//			ServiceLocator.getMissionManager().getEvents().trigger(
-//					MissionManager.MissionEvent.PLANT_CROP.name(),
-//					plantComponent.getPlantType()
-//			);
-//		}
+		PlantComponent plantComponent = plant.getComponent(PlantComponent.class);
+		if (plantComponent != null) {
+			ServiceLocator.getMissionManager().getEvents().trigger(
+					MissionManager.MissionEvent.PLANT_CROP.name(),
+					plantComponent.getPlantName()
+			);
+		}
 	}
 
 	/**
@@ -202,6 +206,10 @@ public class CropTileComponent extends Component {
 		waterMultiplier = waterMultiplier > 0 ? Math.pow(waterMultiplier, IDEAL_WATER_FALL_OFF_TOLERANCE) : -1.0;
 		int fertiliserMultiplier = isFertilised ? 2 : 1;
 		return waterMultiplier > 0 ? soilQuality * fertiliserMultiplier * waterMultiplier : -1.0;
+	}
+
+	public float getWaterContent() {
+		return waterContent;
 	}
 
 	/**
@@ -255,30 +263,6 @@ public class CropTileComponent extends Component {
 		return plant;
 	}
 
-	public boolean isFertilised() {
-		return isFertilised;
-	}
-
-	public void setFertilised(boolean fertilised) {
-		isFertilised = fertilised;
-	}
-
-	public void setSoilQuality(float soilQuality) {
-		this.soilQuality = soilQuality;
-	}
-
-	public void setWaterContent(float waterContent) {
-		this.waterContent = waterContent;
-	}
-
-	public float getSoilQuality() {
-		return soilQuality;
-	}
-
-	public float getWaterContent() {
-		return waterContent;
-	}
-
 	/**
 	 * Only to be used for loading as it can go around the achievement stuff
 	 * @param plant - the plant to set here
@@ -304,14 +288,26 @@ public class CropTileComponent extends Component {
 		json.writeObjectEnd();
 	}
 
-	public TerrainTile getTerrainTile() {
-		return terrainTile;
+	@Override
+	public void read(Json json, JsonValue jsonMap) {
+		jsonMap = jsonMap.get("components").get("CropTileComponent");
+		waterContent = jsonMap.getFloat("waterContent");
+		soilQuality = jsonMap.getFloat("soilQuality");
+		isFertilised = jsonMap.getBoolean("isFertilised");
+		JsonValue plantData = jsonMap.get("plant");
+		if (plantData.get("Entity") != null) {
+			plantData = plantData.get("components").get("PlantComponent");
+			plant = FactoryService.getPlantFactories().get(plantData.getString("name")).apply(this);
+			plant.getComponent(PlantComponent.class).read(json, plantData);
+		} else {
+			plant = null;
+		}
 	}
 
 	public void setTerrainTile(TerrainTile terrainTile) {
 		this.terrainTile = terrainTile;
-		if (terrainTile.getCropTile() == null) {
-			terrainTile.setCropTile(entity);
+		if (terrainTile.getOccupant() == null) {
+			terrainTile.setOccupant(entity);
 		}
 	}
 }
