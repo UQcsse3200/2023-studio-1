@@ -4,7 +4,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.areas.terrain.GameMap;
-import com.csse3200.game.components.*;
+import com.csse3200.game.components.combat.CombatStatsComponent;
 import com.csse3200.game.components.combat.ProjectileComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractionDetector;
@@ -12,7 +12,7 @@ import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
-import com.csse3200.game.components.tractor.StunComponent;
+import com.csse3200.game.components.combat.StunComponent;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ProjectileFactory;
@@ -328,7 +328,7 @@ public class PlayerActions extends Component {
   public boolean isStunned() {
     StunComponent stunComponent = entity.getComponent(StunComponent.class);
     if (stunComponent == null) {
-      return true;
+      return false;
     }
 
     return stunComponent.isStunned();
