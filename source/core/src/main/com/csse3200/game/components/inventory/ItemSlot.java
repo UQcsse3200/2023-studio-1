@@ -14,7 +14,7 @@ public class ItemSlot extends Stack {
     private Integer count;
     private final Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
 
-    private final Image background;
+    private Image background;
     private Image frame;
 
     private boolean selected;
@@ -134,5 +134,22 @@ public class ItemSlot extends Stack {
             this.add(image);
             this.itemImage = image;
         }
+    }
+
+    /**
+     * Make the slot selected
+     */
+    public void setSelected() {
+
+        this.background = new Image(new Texture(Gdx.files.internal("images/selected.png")));
+        this.createItemSlot();
+    }
+
+    /**
+     * Make the slot unselected
+     */
+    public void setUnselected() {
+        this.background = null;
+        this.createItemSlot();
     }
 }

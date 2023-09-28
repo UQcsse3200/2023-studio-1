@@ -127,6 +127,7 @@ public class InventoryDisplay extends UIComponent {
       Texture itemTexture;
       int itemCount;
 
+      // if the item isn't null we will update the position, this will be in future replaced by an event
       if (playerInventory.getItemPos(i) != null) {
         item = playerInventory.getItemPos(i).getComponent(ItemComponent.class);
         itemCount = playerInventory.getItemCount(item.getEntity());
@@ -204,7 +205,6 @@ public class InventoryDisplay extends UIComponent {
 
         }
       });
-
     }
   }
 
