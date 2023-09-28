@@ -46,6 +46,7 @@ public class ClueReward extends ItemReward {
         Entity shipDebris = ShipDebrisFactory.createShipDebris(null);
 
         partTile.getComponent(ShipPartTileComponent.class).addShipDebris(shipDebris);
+        partTile.getComponent(ShipPartTileComponent.class).addClueItem(mapItem);
     }
 }
 

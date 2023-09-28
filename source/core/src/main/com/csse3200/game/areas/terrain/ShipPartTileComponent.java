@@ -11,6 +11,7 @@ import com.csse3200.game.services.ServiceLocator;
  */
 public class ShipPartTileComponent extends Component {
     private Entity shipDebris;
+    private Entity shipClueItem;
 
     public ShipPartTileComponent() {
         shipDebris = null;
@@ -30,6 +31,14 @@ public class ShipPartTileComponent extends Component {
         this.shipDebris = shipDebris;
         this.shipDebris.setPosition(entity.getPosition());
         ServiceLocator.getEntityService().register(this.shipDebris);
+    }
+
+    /**
+     * Set the ship clue item associated with this tile.
+     * @param shipClueItem entity to be added
+     */
+    public void addClueItem(Entity shipClueItem) {
+        this.shipClueItem = shipClueItem;
     }
 
     /**
@@ -66,8 +75,9 @@ public class ShipPartTileComponent extends Component {
             item.setCenterPosition(entity.getCenterPosition());
             ServiceLocator.getEntityService().register(item);
 
-            // remove self from the terrain tile & self-destruct
+            // remove self from the terrain tile, destroy clue item & self-destruct
             if (tile != null) tile.removeOccupant();
+            if (shipClueItem != null) shipClueItem.getEvents().trigger("destroy");
             entity.dispose();
         }
     }
