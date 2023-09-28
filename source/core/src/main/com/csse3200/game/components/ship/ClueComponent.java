@@ -1,8 +1,9 @@
 package com.csse3200.game.components.ship;
 
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.services.ServiceLocator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,7 +35,8 @@ public class ClueComponent extends Component {
         return currentLocation;
     }
 
-    void destroy(TerrainTile tile) {
+    void destroy() {
+        ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class).removeItem(entity);
         entity.dispose();
     }
 }
