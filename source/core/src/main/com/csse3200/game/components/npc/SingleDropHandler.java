@@ -17,15 +17,15 @@ public class SingleDropHandler {
     /**
      * Method to create item to be dropped.
      */
-    private Supplier<Entity> createItem;
+    private final Supplier<Entity> createItem;
     /**
      * Method to add listener to
      */
-    private BiConsumer<String, EventListener0> listener;
+    private final BiConsumer<String, EventListener0> listener;
     /**
      * Trigger that will prompt item drop
      */
-    private String trigger;
+    private final String trigger;
     /**
      * Number of triggers until an item is dropped
      */
@@ -42,11 +42,11 @@ public class SingleDropHandler {
      * GameArea that the entity is on, and where the item
      * will spawn
      */
-    private GameArea gameArea;
+    private final GameArea gameArea;
     /**
      * Whether animal needs to be tamed before the item is dropped
      */
-    private boolean requiresTamed;
+    private final boolean requiresTamed;
 
     /**
      * Constructor for SingleDropHandler

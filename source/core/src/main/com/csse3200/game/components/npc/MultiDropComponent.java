@@ -14,7 +14,7 @@ public class MultiDropComponent extends Component {
     /**
      * List of handlers for dropping individual items
      */
-    private List<SingleDropHandler> singleDropHandlers;
+    private final List<SingleDropHandler> singleDropHandlers;
 
     /**
      * Constructor for MultiDropComponent
