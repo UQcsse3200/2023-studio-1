@@ -16,31 +16,31 @@ public class AcidShower implements Screen {
 
     @Override
     public void show() {
-        acidShowerParticleEffect = new ParticleEffect();
-        acidShowerParticleEffect.load(Gdx.files.internal("particle-effects/acidrain"), Gdx.files.internal("images"));
-        acidShowerParticleEffect.setEmittersCleanUpBlendFunction(false);
-        acidShowerParticleEffectPool = new ParticleEffectPool(acidShowerParticleEffect, 1, 10);
-        spriteBatch = new SpriteBatch();
-        pooledEffectsArray = new Array<>();
-
-        addMultipleParticleEffects();
+//        acidShowerParticleEffect = new ParticleEffect();
+//        acidShowerParticleEffect.load(Gdx.files.internal("particle-effects/acidrain"), Gdx.files.internal("images"));
+//        acidShowerParticleEffect.setEmittersCleanUpBlendFunction(false);
+//        acidShowerParticleEffectPool = new ParticleEffectPool(acidShowerParticleEffect, 1, 10);
+//        spriteBatch = new SpriteBatch();
+//        pooledEffectsArray = new Array<>();
+//
+//        addMultipleParticleEffects();
     }
 
     @Override
     public void render(float delta) {
-        spriteBatch.begin();
-        if (pooledEffectsArray != null) {
-            for (int i = pooledEffectsArray.size - 1; i >= 0; i--) {
-                ParticleEffectPool.PooledEffect pooledEffect = pooledEffectsArray.get(i);
-                pooledEffect.draw(spriteBatch, delta);
-                if (pooledEffect.isComplete()) {
-                    pooledEffect.free();
-                    pooledEffectsArray.removeIndex(i);
-                }
-            }
-        }
-        spriteBatch.end();
-        addMultipleParticleEffects();
+//        spriteBatch.begin();
+//        if (pooledEffectsArray != null) {
+//            for (int i = pooledEffectsArray.size - 1; i >= 0; i--) {
+//                ParticleEffectPool.PooledEffect pooledEffect = pooledEffectsArray.get(i);
+//                pooledEffect.draw(spriteBatch, delta);
+//                if (pooledEffect.isComplete()) {
+//                    pooledEffect.free();
+//                    pooledEffectsArray.removeIndex(i);
+//                }
+//            }
+//        }
+//        spriteBatch.end();
+//        addMultipleParticleEffects();
     }
 
     @Override
@@ -65,34 +65,34 @@ public class AcidShower implements Screen {
 
     @Override
     public void dispose() {
-        clearPooledEffectsArray();
-        if (spriteBatch != null) {
-            spriteBatch.dispose();
-        }
-        if (acidShowerParticleEffect != null) {
-            acidShowerParticleEffect.dispose();
-        }
+//        clearPooledEffectsArray();
+//        if (spriteBatch != null) {
+//            spriteBatch.dispose();
+//        }
+//        if (acidShowerParticleEffect != null) {
+//            acidShowerParticleEffect.dispose();
+//        }
     }
 
     private void addMultipleParticleEffects() {
-        if (pooledEffectsArray != null) {
-            while (pooledEffectsArray.size < 10) {
-                ParticleEffectPool.PooledEffect pooledEffect = acidShowerParticleEffectPool.obtain();
-                float randomX = MathUtils.random(0, Gdx.graphics.getWidth());
-                float randomY = MathUtils.random(0, Gdx.graphics.getHeight());
-                pooledEffect.setPosition(randomX, randomY);
-                pooledEffectsArray.add(pooledEffect);
-                pooledEffect.start();
-            }
-        }
+//        if (pooledEffectsArray != null) {
+//            while (pooledEffectsArray.size < 10) {
+//                ParticleEffectPool.PooledEffect pooledEffect = acidShowerParticleEffectPool.obtain();
+//                float randomX = MathUtils.random(0, Gdx.graphics.getWidth());
+//                float randomY = MathUtils.random(0, Gdx.graphics.getHeight());
+//                pooledEffect.setPosition(randomX, randomY);
+//                pooledEffectsArray.add(pooledEffect);
+//                pooledEffect.start();
+//            }
+//        }
     }
 
     private void clearPooledEffectsArray() {
-        if (pooledEffectsArray != null) {
-            for (ParticleEffectPool.PooledEffect pooledEffect : pooledEffectsArray) {
-                pooledEffect.free();
-            }
-            pooledEffectsArray.clear();
-        }
+//        if (pooledEffectsArray != null) {
+//            for (ParticleEffectPool.PooledEffect pooledEffect : pooledEffectsArray) {
+//                pooledEffect.free();
+//            }
+//            pooledEffectsArray.clear();
+//        }
     }
 }
