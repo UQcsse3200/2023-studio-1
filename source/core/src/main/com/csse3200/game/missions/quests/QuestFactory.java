@@ -114,7 +114,10 @@ public class QuestFactory {
                 """;
 
         MultiReward reward = new MultiReward(List.of(
-                new ItemReward(List.of(ItemFactory.createAtomicAlgaeSeed())),
+                new ItemReward(List.of(
+                        ItemFactory.createAtomicAlgaeSeed(),
+                        ItemFactory.createCowFood()
+                )),
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
@@ -143,7 +146,7 @@ public class QuestFactory {
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
-        return new TameAnimalsQuest(makingFriendsQuestName, reward, 3);
+        return new TameAnimalsQuest(makingFriendsQuestName, reward, 1);
     }
 
     public static MainQuest createActIMainQuest() {
