@@ -10,6 +10,7 @@ import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.NPCSpawner;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.missions.quests.QuestFactory;
 import com.csse3200.game.services.FactoryService;
@@ -38,6 +39,10 @@ public class SpaceGameArea extends GameArea {
   private static final GridPoint2 TOOL_SPAWN = new GridPoint2(15, 10);// temp!!!
   private static final GridPoint2 TOOL_SPAWN2 = new GridPoint2(15, 15);// temp!!!
   private static final float WALL_WIDTH = 0.1f;
+
+  private NPCSpawner passiveSpawner;
+  private NPCSpawner hostileSpawner;
+
   private static final String[] forestTextures = {
           "images/tree.png",
           "images/ghost_king.png",
@@ -281,6 +286,12 @@ public class SpaceGameArea extends GameArea {
 //    spawnTool(ItemType.FOOD);
 
     //playMusic();
+
+    passiveSpawner = new NPCSpawner(null);
+    passiveSpawner.setGameAreas(this);
+    hostileSpawner = new NPCSpawner(null);
+    hostileSpawner.setGameAreas(this);
+
   }
 
   public Entity getPlayer() {
