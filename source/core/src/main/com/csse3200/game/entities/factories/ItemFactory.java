@@ -138,9 +138,9 @@ public class ItemFactory {
    */
   public static Entity createMilk() {
     Entity milk = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/milk.png"))
+            .addComponent(new TextureRenderComponent("images/animals/milk.png"))
             .addComponent(new ItemComponent("milk",
-                    ItemType.MILK, new Texture("images/milk.png")));
+                    ItemType.MILK, new Texture("images/animals/milk.png")));
     milk.scaleHeight(0.75f);
     return milk;
   }
@@ -152,9 +152,9 @@ public class ItemFactory {
    */
   public static Entity createEgg() {
     Entity egg = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/egg.png"))
+            .addComponent(new TextureRenderComponent("images/animals/egg.png"))
             .addComponent(new ItemComponent("egg", ItemType.EGG,
-                    new Texture("images/egg.png")));
+                    new Texture("images/animals/egg.png")));
     egg.scaleHeight(0.75f);
     return egg;
   }
@@ -166,9 +166,9 @@ public class ItemFactory {
    */
   public static Entity createGoldenEgg() {
     Entity egg = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/golden_egg.png"))
+            .addComponent(new TextureRenderComponent("images/animals/golden_egg.png"))
             .addComponent(new ItemComponent("golden egg", ItemType.EGG,
-                    new Texture("images/golden_egg.png")));
+                    new Texture("images/animals/golden_egg.png")));
     egg.scaleHeight(0.75f);
     return egg;
   }
@@ -265,16 +265,69 @@ public class ItemFactory {
   }
 
   /**
-   * Creates a 'Cow food' item
+   * Creates cosmic cob drop item
    *
-   * @return tobacco seed
+   * @return cosmic cob drop
    */
-  public static Entity createCowFood() {
+  public static Entity createCosmicCobDrop() {
+    Entity cosmicCopDrop = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/plants/cosmic_cob/item_drop.png"))
+            .addComponent(new ItemComponent("Cosmic Cob drop", ItemType.FOOD,
+                    "Cosmic Cob drop", new Texture("images/plants/cosmic_cob/item_drop.png")));
+    return cosmicCopDrop;
+  }
+
+  /**
+   * Creates a hammer plant drop item
+   *
+   * @return hammer plant drop
+   */
+  public static Entity createHammerPlantDrop() {
+    Entity hammerPlantDrop = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/plants/hammer_plant/item_drop.png"))
+            .addComponent(new ItemComponent("Hammer Plant drop", ItemType.FOOD,
+                    "Hammer Plant drop", new Texture("images/plants/hammer_plant/item_drop.png")));
+    return hammerPlantDrop;
+  }
+
+  /**
+   * Creates a deadly nightshade drop item
+   *
+   * @return deadly nightshade drop
+   */
+  public static Entity createDeadlyNightshadeDrop() {
+    Entity deadlyNightshadeDrop = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/plants/deadly_nightshade/item_drop.png"))
+            .addComponent(new ItemComponent("Deadly Nightshade drop", ItemType.FOOD,
+                    "Deadly Nightshade drop", new Texture("images/plants/deadly_nightshade/item_drop.png")));
+    return deadlyNightshadeDrop;
+  }
+
+  /**
+   * Creates a beef item
+   *
+   * @return beef item
+   */
+  public static Entity createBeef() {
     Entity animalFood = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/cosmic_cob/1_seedling.png"))
-            .addComponent(new ItemComponent("COW FOOD", ItemType.FOOD,
-                    "Cow food", new Texture("images/plants/cosmic_cob/1_seedling.png")));
+            .addComponent(new TextureRenderComponent("images/animals/beef.png"))
+            .addComponent(new ItemComponent("Beef", ItemType.FOOD,
+                    "Beef", new Texture("images/animals/beef.png")));
     return animalFood;
+  }
+
+  /**
+   * Creates a chicken item
+   *
+   * @return chicken item
+   */
+  public static Entity createChickenMeat() {
+    Entity chickenMeat = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/animals/chicken_meat.png"))
+            .addComponent(new ItemComponent("Chicken", ItemType.FOOD,
+                    "Chicken", new Texture("images/animals/chicken_meat.png")));
+    chickenMeat.scaleHeight(0.6f);
+    return chickenMeat;
   }
 
   /**

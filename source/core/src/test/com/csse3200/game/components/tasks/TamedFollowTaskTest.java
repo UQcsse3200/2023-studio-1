@@ -44,7 +44,7 @@ public class TamedFollowTaskTest {
         target.create();
 
         foodEntity = new Entity(EntityType.Item);
-        fooditem = new ItemComponent("AFood", ItemType.ANIMAL_FOOD, new Texture("images/egg.png"));
+        fooditem = new ItemComponent("AFood", ItemType.ANIMAL_FOOD, new Texture("images/animals/egg.png"));
         //texture is just used as a placeholder.
         //add Animal's favourite food to player/target's spy inventory. (Will be the only item in inventory).
         foodEntity.addComponent(fooditem);

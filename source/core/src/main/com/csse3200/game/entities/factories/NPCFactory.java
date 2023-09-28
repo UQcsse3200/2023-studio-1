@@ -66,6 +66,7 @@ public class NPCFactory {
             ServiceLocator.getResourceService().getAsset("images/animals/chicken.atlas", TextureAtlas.class),
             16f
     );
+
     animator.addAnimation("idle_left", Float.MAX_VALUE);
     animator.addAnimation("idle_right", Float.MAX_VALUE);
     animator.addAnimation("walk_left", 0.2f, Animation.PlayMode.LOOP_REVERSED);
@@ -85,22 +86,22 @@ public class NPCFactory {
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
             .addTask(new RunAwayTask(player, 10, 2.25f, 4.25f, new Vector2(3f, 3f)))
             .addTask(new PanicTask("panicStart", 10f, 20, new Vector2(10f, 10f), new Vector2(10f, 10f)))
-            .addTask(new TamedFollowTask(player, 10, 8, 10, 2f, config.favouriteFood));
+            .addTask(new TamedFollowTask(player, 11, 8, 10, 2f, config.favouriteFood));
 
     List<SingleDropHandler> singleDropHandlers = new ArrayList<>();
     MultiDropComponent multiDropComponent = new MultiDropComponent(singleDropHandlers);
-    //TODO - fix drop rates
     //Chickens untamed drop eggs
-    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createEgg, 24,
+    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createEgg, 1,
             ServiceLocator.getTimeService().getEvents()::addListener, "hourUpdate", false));
     //Once tamed, chickens drop one extra egg
-    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createEgg, 24,
+    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createEgg, 1,
             ServiceLocator.getTimeService().getEvents()::addListener, "hourUpdate", true));
     //Once tamed, chickens can be fed to drop golden eggs
-    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createGoldenEgg, 5,
-            ServiceLocator.getTimeService().getEvents()::addListener, "feed", true));
-    //TODO - meat on death
-
+    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createGoldenEgg, 3,
+            chicken.getEvents()::addListener, "feed", true));
+    //Drop chicken on death
+    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createChickenMeat, 1,
+            chicken.getEvents()::addListener, "death", false));
     chicken
             .addComponent(aiTaskComponent)
             .addComponent(multiDropComponent)
@@ -146,17 +147,18 @@ public class NPCFactory {
 
     List<SingleDropHandler> singleDropHandlers = new ArrayList<>();
     MultiDropComponent multiDropComponent = new MultiDropComponent(singleDropHandlers);
-    //TODO - fix drop rates
     //Cows untamed drop fertiliser
-    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createFertiliser, 24,
+    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createFertiliser, 1,
             ServiceLocator.getTimeService().getEvents()::addListener, "hourUpdate", false));
     //Once tamed, cows drop one extra fertiliser
-    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createFertiliser, 24,
+    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createFertiliser, 1,
             ServiceLocator.getTimeService().getEvents()::addListener, "hourUpdate", true));
     //Once tamed, cows can be fed to drop milk
-    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createMilk, 3,
+    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createMilk, 2,
             cow.getEvents()::addListener, "feed", true));
-    //TODO - create death drop -> cooked meat
+    //Drop beef on death
+    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createBeef, 1,
+            cow.getEvents()::addListener, "death", false));
 
     cow
             .addComponent(aiTaskComponent)
@@ -193,8 +195,6 @@ public class NPCFactory {
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(1.5f, 1.5f), 5f))
             .addTask(new FollowTask(player, 10, 8, 10, 3f));
-
-    //TODO - add drops
 
     astrolotl
             .addComponent(aiTaskComponent)
@@ -240,7 +240,7 @@ public class NPCFactory {
             .addComponent(animator)
             .addComponent(new HostileAnimationController())
             .addComponent(new OxygenEaterAttackPattern())
-            .addComponent(new InteractionDetector(5f, new ArrayList<>(Arrays.asList(EntityType.Player)))); // TODO: Do we want it to attack anything
+            .addComponent(new InteractionDetector(5f, new ArrayList<>(Arrays.asList(EntityType.Player))));
 
     oxygenEater.scaleHeight(2f);
     oxygenEater.getComponent(ColliderComponent.class).setAsBoxAligned(new Vector2(1f, 1f),
@@ -290,7 +290,6 @@ public class NPCFactory {
 
     return animal;
   }
-
 
   /**
    * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.

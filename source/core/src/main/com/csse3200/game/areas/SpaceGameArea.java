@@ -54,9 +54,11 @@ public class SpaceGameArea extends GameArea {
           "images/iso_grass_2.png",
           "images/iso_grass_3.png",
           "images/tool_shovel.png",
-          "images/egg.png",
-          "images/milk.png",
-          "images/golden_egg.png",
+          "images/animals/egg.png",
+          "images/animals/milk.png",
+          "images/animals/golden_egg.png",
+          "images/animals/beef.png",
+          "images/animals/chicken_meat.png",
 
           "images/tool_hoe.png",
           "images/tool_scythe.png",
@@ -241,6 +243,11 @@ public class SpaceGameArea extends GameArea {
     player.getComponent(InventoryComponent.class).addItem(ItemFactory.createLightItem());
     //player.getComponent(InventoryComponent.class).addItem(ItemFactory.createFertiliser());
 
+    //TODO remove
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHammerPlantDrop());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createDeadlyNightshadeDrop());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createCosmicCobDrop());
+
     tractor = spawnTractor();
     spawnPlayerHighlight();
     spawnQuestgiver();
@@ -415,10 +422,6 @@ public class SpaceGameArea extends GameArea {
         break;
       case SEED:
         newTool = ItemFactory.createAloeVeraSeed();
-        spawnEntityAt(newTool, randomPos, true, true);
-        break;
-      case FOOD:
-        newTool = ItemFactory.createCowFood();
         spawnEntityAt(newTool, randomPos, true, true);
         break;
       case SWORD:

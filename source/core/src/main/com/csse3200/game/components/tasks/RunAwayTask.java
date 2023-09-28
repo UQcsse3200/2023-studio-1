@@ -1,6 +1,7 @@
 package com.csse3200.game.components.tasks;
 
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.entities.Entity;
 
 /** Runs from a target entity until they get too far away or line of sight is lost */
@@ -70,16 +71,29 @@ public class RunAwayTask extends ChaseTask {
 
   /**
    * Determines the priority when the RunAwayTask is active based on the distance to the target
-   * and the visibility of the target entity.
+   * and the visibility of the target entity and whether the animal is tamed.
    *
    * @return The active priority level or -1 if conditions are not met.
    */
   @Override
   protected int getActivePriority() {
     float dst = getDistanceToTarget();
-    if (dst > maxRunDistance || !isTargetVisible()) {
+    TamableComponent tamableComponent = owner.getEntity().getComponent(TamableComponent.class);
+
+    if (dst > maxRunDistance || !isTargetVisible() || (tamableComponent != null && tamableComponent.isTamed())) {
       return -1; // Too far, stop running away
     }
     return getRawPriority();
+  }
+
+
+  protected int getInactivePriority() {
+    float dst = getDistanceToTarget();
+    TamableComponent tamableComponent = owner.getEntity().getComponent(TamableComponent.class);
+
+    if (dst < getViewDistance() && isTargetVisible() && (tamableComponent == null || !tamableComponent.isTamed())) {
+      return getRawPriority();
+    }
+    return -1;
   }
 }
