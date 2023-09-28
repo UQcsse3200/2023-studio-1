@@ -67,7 +67,7 @@ public class ProjectileComponent extends Component {
             body.setAngularDamping(0f);
             body.setLinearDamping(0f);
         }
-
+        body.setLinearVelocity(0, 0);
         body.applyLinearImpulse(velocity, body.getWorldCenter(), true);
     }
 
@@ -119,12 +119,22 @@ public class ProjectileComponent extends Component {
     public void setDestroyOnImpact(boolean destroyOnImpact) {
         this.destroyOnImpact = destroyOnImpact;
     }
+
     /**
      * Gets the velocity vector of the projectile.
      *
      * @return The velocity vector of the projectile.
      */
     public Vector2 getVelocity() {
-        return velocity;
+        return velocity.cpy();
+    }
+
+
+    /**
+     * Set velocity without triggering movement, used for setting knockback velocity
+     * @param velocity velocity to set
+     */
+    public void setVelocity(Vector2 velocity) {
+        this.velocity = velocity;
     }
 }
