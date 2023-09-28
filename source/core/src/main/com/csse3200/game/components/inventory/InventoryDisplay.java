@@ -23,6 +23,7 @@ import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.ui.UIComponent;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.Gdx;
 
 
 /**
@@ -65,16 +66,21 @@ public class InventoryDisplay extends UIComponent {
   }
 
   /**
-   * Creates actors and positions them on the stage using a table.
+   * Initialises the inventoryDisplay and adds it to the stage.
    * @see Table for positioning options
    */
   private void initialiseInventory() {
+    // create variables needed for drag and drop
     dnd = new DragAndDrop();
     actors = new ArrayList<>();
     map = new HashMap<>();
     indexes  = new HashMap<>();
+
+    // set the table cell size and add necessary padding
     table.defaults().size(64, 64);
     table.pad(10);
+
+    // loop through entire table and create itemSlots and add the slots to the stored array
     for (int i = 0; i < size; i++) {
       ItemSlot slot;
       if (this.playerInventory.getItemPos(i) != null) {
@@ -107,19 +113,6 @@ public class InventoryDisplay extends UIComponent {
     setDragItems(actors, map);
   }
 
-  private void refreshTable() {
-    table.clear();
-    for (int i = 0; i < size; i++) {
-      ItemSlot slot = slots.get(i);
-
-      table.add(slot).width(70).height(70).pad(10, 10, 10, 10);
-
-      if ((i + 1) % rowSize == 0) {
-        table.row();
-      }
-    }
-  }
-
   /**
    * Update Inventory
    */
@@ -139,7 +132,7 @@ public class InventoryDisplay extends UIComponent {
         itemCount = playerInventory.getItemCount(item.getEntity());
         itemTexture = item.getItemTexture();
         ItemSlot curSlot = slots.get(i);
-        curSlot.setTexture(itemTexture);
+        curSlot.setItemImage(new Image(itemTexture));
         actors.add(curSlot.getItemImage());
 
         if (curSlot.getCount() != null && !curSlot.getCount().equals(itemCount)) {
@@ -152,7 +145,6 @@ public class InventoryDisplay extends UIComponent {
         slots.set(i, curSlot);
       }
     }
-    refreshTable();
   }
 
   /**
