@@ -54,15 +54,15 @@ public class PlayerFactory {
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
             .addComponent(new PlayerActions())
-            .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack))
-                .addComponent(playerInventory)
+            .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack)
+            .addComponent(playerInventory)
             .addComponent(inputComponent)
             .addComponent(animator)
             .addComponent(new OpenPauseComponent())
             .addComponent(new PlayerAnimationController())
             .addComponent(new ItemPickupComponent())
             .addComponent(new InteractionDetector(2f))
-            .addComponent(new InventoryDisplay(playerInventory))
+            .addComponent(new InventoryDisplay(playerInventory, 30 , 10))
             .addComponent(new PauseMenuActions());
 
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
