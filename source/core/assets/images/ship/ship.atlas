@@ -1,0 +1,54 @@
+ship.png
+size: 3600, 1036
+format: RGBA8888
+filter: Nearest, Nearest
+repeat:
+default
+    rotate: false
+    xy: 0, 54
+    size: 56, 46
+    orig: 56, 46
+    offset: 0, 0
+    index: 0
+ship_0
+    rotate: false
+    xy: 0, 54
+    size: 56, 46
+    orig: 56, 46
+    offset: 0, 0
+    index: 0
+ship_1
+    rotate: false
+    xy: 57, 52
+    size: 66, 48
+    orig: 66, 48
+    offset: 0, 0
+    index: 0
+ship_2
+    rotate: false
+    xy: 124, 42
+    size: 72, 58
+    orig: 72, 58
+    offset: 0, 0
+    index: 0
+ship_3
+    rotate: false
+    xy: 197, 13
+    size: 72, 87
+    orig: 72, 87
+    offset: 0, 0
+    index: 0
+ship_4
+    rotate: false
+    xy: 270, 1
+    size: 72, 99
+    orig: 72, 99
+    offset: 0, 0
+    index: 0
+ship_5
+    rotate: false
+    xy: 343, 0
+    size: 72, 100
+    orig: 72, 100
+    offset: 0, 0
+    index: 0

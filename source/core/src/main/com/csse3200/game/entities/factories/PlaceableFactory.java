@@ -2,6 +2,8 @@ package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.placeables.PlaceableCategory;
@@ -16,6 +18,9 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.rendering.TextureRenderComponent;
+import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
@@ -134,9 +139,20 @@ public class PlaceableFactory {
     }
 
     public static Entity createLight() {
-        Entity light = createBasePlaceable(EntityType.Light);
-        light.addComponent(new AuraLightComponent(4f, Color.TAN));
-        light.addComponent(new LightController());
+        AnimationRenderComponent animator = new AnimationRenderComponent(
+                ServiceLocator.getResourceService().getAsset("images/light.atlas", TextureAtlas.class),
+                16f
+        );
+
+        animator.addAnimation("light_off", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("light_on", 0.1f, Animation.PlayMode.LOOP);
+
+        animator.startAnimation("light_off");
+
+        Entity light = createBasePlaceable(EntityType.Light)
+                .addComponent(new AuraLightComponent(4f, Color.TAN))
+                .addComponent(new LightController())
+                .addComponent(animator);
         return light;
     }
 }

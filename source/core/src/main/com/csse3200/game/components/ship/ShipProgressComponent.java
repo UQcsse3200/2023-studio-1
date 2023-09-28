@@ -12,7 +12,7 @@ public class ShipProgressComponent extends Component {
     private int progress;
     private Set<Feature> unlocked_features;
 
-    enum Feature {
+    public enum Feature {
         LIGHT(8),
         STORAGE(15),
         BED(3);
@@ -35,6 +35,7 @@ public class ShipProgressComponent extends Component {
         unlocked_features = new HashSet<Feature>();
         // listen to add artefact call
         entity.getEvents().addListener("addPart", this::incrementProgress);
+        entity.getEvents().addListener("removePart", this::decrementProgress);
     }
 
     /**
@@ -64,5 +65,22 @@ public class ShipProgressComponent extends Component {
     private void decrementProgress(int amount) {
         // Bound progress to being no less than 0
         this.progress -= Math.max(progress, 0);
+    }
+
+    /**
+     * Get current repair status. Do not use this to infer unlocked features - use getUnlockedFeatures() for that.
+     * @return current repair status
+     */
+    public int getProgress() {
+        return this.progress;
+    }
+
+    /**
+     * Get unlocked features. Features may be unlocked even if the repair status wouldn't indicate this to be the case
+     * currently.
+     * @return A set of unlocked features
+     */
+    public Set<Feature> getUnlockedFeatures() {
+        return this.unlocked_features;
     }
 }
