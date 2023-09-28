@@ -1,16 +1,13 @@
 package com.csse3200.game.components.ship;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.badlogic.gdx.utils.Align;
-import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.ui.UIComponent;
-import com.csse3200.game.components.ship.ClueComponent;
 
 public class CoordinatesDisplay extends UIComponent {
-    private Label coordinatesLabel;
     private Window window;
     private boolean isOpen;
     private final ClueComponent clueComponent;
@@ -34,10 +31,17 @@ public class CoordinatesDisplay extends UIComponent {
     }
 
     private void addActors() {
-    }
+        window = new Window("Ship Part Clue", skin);
 
-    public void setCoordinates(float x, float y) {
-        coordinatesLabel.setText("X: " + x + "\nY: " + y);
+        Vector2 clueLocation = clueComponent.getCurrentLocation();
+        Label coordinatesLabel = new Label("X: " + clueLocation.x + "\nY: " + clueLocation.y, skin);
+        coordinatesLabel.setColor(Color.BROWN);
+
+        window.add(coordinatesLabel);
+
+        window.setVisible(false);
+        window.pack();
+        stage.addActor(window);
     }
 
     public void toggleOpen() {
@@ -45,12 +49,6 @@ public class CoordinatesDisplay extends UIComponent {
             window.setVisible(false);
             isOpen = false;
         } else {
-            String clue = clueComponent.getPossibleLocations().get(0);
-            String[] parts = clue.split(",");
-            float x = Float.parseFloat(parts[0]);
-            float y = Float.parseFloat(parts[1]);
-            setCoordinates(x, y);
-
             window.setVisible(true);
             isOpen = true;
         }

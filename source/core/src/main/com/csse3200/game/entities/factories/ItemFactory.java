@@ -137,8 +137,8 @@ public class ItemFactory {
     egg.scaleHeight(0.75f);
     return egg;
   }
-  public static Entity createMapItem( List<String> possibleLocations) {
-    ClueComponent clueComponent = new ClueComponent(possibleLocations);
+  public static Entity createMapItem() {
+    ClueComponent clueComponent = new ClueComponent();
     Entity mapItem = createBaseItem()
             .addComponent(new TextureRenderComponent("images/ship/ship_clue.png"))
             .addComponent(new ItemComponent("map", ItemType.CLUE_ITEM, new Texture("images/ship/ship_clue.png")))

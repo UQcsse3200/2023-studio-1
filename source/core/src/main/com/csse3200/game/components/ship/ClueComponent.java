@@ -1,32 +1,37 @@
 package com.csse3200.game.components.ship;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.missions.MissionManager;
-import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.missions.MissionManager;
-import com.csse3200.game.services.ServiceLocator;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class ClueComponent extends Component {
 
-    private List<String> possibleLocations;
-    private MissionManager missionManager;
+    // TODO: update to a proper list of desired locations
+    private static final List<Vector2> possibleLocations = new ArrayList<>(Arrays.asList(
+            new Vector2(7, 7),
+            new Vector2(12, 12),
+            new Vector2(32, 32)
+    ));
 
-    public ClueComponent(List<String> possibleLocations) {
-        this.possibleLocations = possibleLocations;
+    private final Vector2 currentLocation;
+
+    public ClueComponent() {
+        currentLocation = possibleLocations.get(0);
+        Collections.rotate(possibleLocations, 1);
     }
 
-    public void create(List<String> possibleLocations) {
+    public void create() {
         super.create();
-        missionManager = ServiceLocator.getMissionManager();
-        this.possibleLocations = possibleLocations;
         entity.getEvents().addListener("destroy", this::destroy);
     }
 
-    public List<String> getPossibleLocations() {
-        return possibleLocations;
+    public Vector2 getCurrentLocation() {
+        return currentLocation;
     }
 
     void destroy(TerrainTile tile) {
