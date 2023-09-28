@@ -1,5 +1,6 @@
 package com.csse3200.game.ui.terminal.commands;
 
+import com.csse3200.game.missions.cutscenes.Cutscene;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +15,9 @@ public class DialogueScreenCommand implements Command {
             logger.debug("Invalid arguments received for 'SpawnDialogue' command: {}", args);
             return false;
         }
+        Cutscene cutscene;
+        cutscene = new Cutscene();
+        cutscene.spawnCutscene();
         return true;
     };
 

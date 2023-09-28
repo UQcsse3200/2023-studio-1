@@ -16,7 +16,7 @@ public class Cutscene {
 
     // Creates the whole cutscene - to call other methods below this method
     public void spawnCutscene() {
-
+        System.out.println("CUTSCENE SPAWNED");
     }
 
     // pauses the game
