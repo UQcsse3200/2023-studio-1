@@ -105,8 +105,8 @@ public class TimeService {
 			logger.warn("Incorrect day value given: {}", day);
 			return;
 		}
-		this.day = day;
 		logger.debug("Day is being set to: {}", this.day);
+		this.day = day;
 		this.timeBuffer = 0;
 		events.trigger("dayUpdate");
 	}
@@ -122,6 +122,7 @@ public class TimeService {
 			return;
 		}
 		logger.debug("Hour is being set to: {}", this.hour);
+		this.hour = hour;
 		this.timeBuffer = 0;
 		events.trigger("hourUpdate");
 	}
@@ -136,8 +137,8 @@ public class TimeService {
 			logger.warn("Incorrect minute value given: {}", minute);
 			return;
 		}
-		this.minute = minute;
 		logger.debug("Minute is being set to: {}", this.minute);
+		this.minute = minute;
 		this.timeBuffer = 0;
 		events.trigger("minuteUpdate");
 	}
