@@ -1,5 +1,6 @@
 package com.csse3200.game.components;
 
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 /**
@@ -24,6 +25,7 @@ public class LightController extends Component {
         if (light != null) {
             if (!light.getActive()) {
                 light.toggleLight();
+                entity.getComponent(AnimationRenderComponent.class).startAnimation("light_on");
             }
         }
     }
@@ -33,6 +35,7 @@ public class LightController extends Component {
         if (light != null) {
             if (light.getActive()) {
                 light.toggleLight();
+                entity.getComponent(AnimationRenderComponent.class).startAnimation("light_off");
             }
         }
     }

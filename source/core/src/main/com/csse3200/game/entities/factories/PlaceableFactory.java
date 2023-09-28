@@ -79,8 +79,11 @@ public class PlaceableFactory {
                 ServiceLocator.getResourceService().getAsset("images/light.atlas", TextureAtlas.class),
                 16f
         );
-        animator.addAnimation("default", 0.1f, Animation.PlayMode.LOOP);
-        animator.startAnimation("default");
+
+        animator.addAnimation("light_off", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("light_on", 0.1f, Animation.PlayMode.LOOP);
+
+        animator.startAnimation("light_off");
 
         Entity light = createBasePlaceable(EntityType.Light)
                 .addComponent(new AuraLightComponent(4f, Color.TAN))

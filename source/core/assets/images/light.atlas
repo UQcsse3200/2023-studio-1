@@ -3,213 +3,220 @@ size: 496, 16
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-default
+light_on
   rotate: false
   xy: 0, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 0
-default
+light_on
   rotate: false
   xy: 16, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 1
-default
+light_on
   rotate: false
   xy: 32, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 2
-default
+light_on
   rotate: false
   xy: 48, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 3
-default
+light_on
   rotate: false
   xy: 64, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 4
-default
+light_on
   rotate: false
   xy: 80, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 5
-default
+light_on
   rotate: false
   xy: 96, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 6
-default
+light_on
   rotate: false
   xy: 112, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 7
-default
+light_on
   rotate: false
   xy: 128, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 8
-default
+light_on
   rotate: false
   xy: 144, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 9
-default
+light_on
   rotate: false
   xy: 160, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 10
-default
+light_on
   rotate: false
   xy: 176, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 11
-default
+light_on
   rotate: false
   xy: 192, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 12
-default
+light_on
   rotate: false
   xy: 208, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 13
-default
+light_on
   rotate: false
   xy: 224, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 14
-default
+light_on
   rotate: false
   xy: 240, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 15
-default
+light_on
   rotate: false
   xy: 256, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 16
-default
+light_on
   rotate: false
   xy: 272, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 17
-default
+light_on
   rotate: false
   xy: 288, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 18
-default
+light_on
   rotate: false
   xy: 304, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 19
-default
+light_on
   rotate: false
   xy: 320, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 20
-default
+light_on
   rotate: false
   xy: 336, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 21
-default
+light_on
   rotate: false
   xy: 352, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 22
-default
+light_on
   rotate: false
   xy: 368, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 23
-default
+light_on
   rotate: false
   xy: 384, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 24
-default
+light_on
   rotate: false
   xy: 400, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 25
-default
+light_on
   rotate: false
   xy: 416, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 26
-default
+light_on
   rotate: false
   xy: 432, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 27
-default
+light_on
   rotate: false
   xy: 448, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 28
-default
+light_on
   rotate: false
   xy: 464, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 29
+light_off
+  rotate: false
+  xy: 480, 0
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 0
