@@ -9,8 +9,7 @@ public class TimeService {
 	private static final Logger logger = LoggerFactory.getLogger(TimeService.class);
 	private static final int MS_IN_MINUTE = 500;
 	private static final int MORNING_HOUR = 6;
-	private static final int NIGHT_HOUR = 18;
-	private static final int SLEEP_SPEED = 15;
+	private static final int NIGHT_HOUR = 20;
 	private int minute;
 	private int hour;
 	private int day;
@@ -29,11 +28,11 @@ public class TimeService {
 		minute = 0;
 		paused = false;
 		events = new EventHandler();
-		events.addListener("morningTime", this::normalGameSpeed);
 	}
 
 	/**
 	 * Returns whether the game is paused or not
+	 *
 	 * @return boolean value representing whether the game is paused or not
 	 */
 	public boolean isPaused() {
@@ -42,15 +41,18 @@ public class TimeService {
 
 	/**
 	 * Changes the pause state of the game
+	 *
 	 * @param state boolean value for whether the game is paused or not
 	 */
 	public void setPaused(boolean state) {
 		paused = state;
+		logger.debug("Setting paused state to: {}", paused);
 		ServiceLocator.getTimeSource().setTimeScale(state ? 0 : 1);
 	}
 
 	/**
 	 * Gets the current in-game hour
+	 *
 	 * @return in-game hour
 	 */
 	public int getHour() {
@@ -59,6 +61,7 @@ public class TimeService {
 
 	/**
 	 * Gets the current in-game day
+	 *
 	 * @return in-game day
 	 */
 	public int getDay() {
@@ -67,6 +70,7 @@ public class TimeService {
 
 	/**
 	 * Gets the current in-game minute
+	 *
 	 * @return in-game minute
 	 */
 	public int getMinute() {
@@ -75,29 +79,19 @@ public class TimeService {
 
 	/**
 	 * Sets the in-game hour to a certain value. Also updates the time buffer and triggers any necessary events
+	 *
 	 * @param hour in-game hour
 	 */
 	public void setHour(int hour) {
 		this.hour = hour % 23;
+		logger.debug("Hour is being set to: {}", this.hour);
 		this.timeBuffer = 0;
 		events.trigger("hourUpdate");
 	}
 
 	/**
-	 * Speeds up the game time so that the player can sleep
-	 */
-	public void speedUpSleep() {
-		if (getHour() != MORNING_HOUR) {
-			ServiceLocator.getTimeSource().setTimeScale(SLEEP_SPEED);
-		}
-	}
-
-	private void normalGameSpeed() {
-		ServiceLocator.getTimeSource().setTimeScale(1);
-	}
-
-	/**
 	 * Determines whether it is day or not
+	 *
 	 * @return whether it is day or not
 	 */
 	public boolean isDay() {
@@ -106,6 +100,7 @@ public class TimeService {
 
 	/**
 	 * Determines whether it is night or not
+	 *
 	 * @return whether it is night or not
 	 */
 	public boolean isNight() {
@@ -114,26 +109,31 @@ public class TimeService {
 
 	/**
 	 * Sets the in-game day to a certain value. Also updates the time buffer and triggers any necessary events
+	 *
 	 * @param day in-game day
 	 */
 	public void setDay(int day) {
 		this.day = day;
-		this.timeBuffer= 0;
+		logger.debug("Day is being set to: {}", this.day);
+		this.timeBuffer = 0;
 		events.trigger("dayUpdate");
 	}
 
 	/**
 	 * Sets the in-game minute to a certain value. Also updates the time buffer and triggers any necessary events
+	 *
 	 * @param minute in-game minute
 	 */
 	public void setMinute(int minute) {
 		this.minute = minute;
+		logger.debug("Minute is being set to: {}", this.minute);
 		this.timeBuffer = 0;
 		events.trigger("minuteUpdate");
 	}
 
 	/**
 	 * Gets the event handler for the TimeService
+	 *
 	 * @return event handler
 	 */
 	public EventHandler getEvents() {
@@ -163,14 +163,17 @@ public class TimeService {
 			events.trigger("minuteUpdate");
 			return;
 		}
+		logger.debug("In-game hour just passed");
 		hour += 1;
 		minute -= 60;
 		events.trigger("minuteUpdate");
 
 		if (hour == MORNING_HOUR) {
 			// Made this an event so other entities can listen
+			logger.debug("Now night time");
 			events.trigger("morningTime");
 		} else if (hour == NIGHT_HOUR) {
+			logger.debug("Now morning time");
 			events.trigger("nightTime");
 		}
 
@@ -179,6 +182,7 @@ public class TimeService {
 			events.trigger("hourUpdate");
 			return;
 		}
+		logger.debug("In-game day just passed");
 		hour -= 24;
 		day += 1;
 		// This event has to be triggered after the hour is checked the hour isn't 24 when the event is sent

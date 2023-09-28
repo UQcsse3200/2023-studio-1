@@ -237,4 +237,43 @@ class EventHandlerTest {
     assertNull(handler.scheduleEvent(4f, "event", 1,2,3));
   }
 
+  @Test
+  void cancelNullEventNoError() {
+    GameTime gameTime = mock(GameTime.class);
+    when(gameTime.getTime()).thenReturn(0L);
+    ServiceLocator.registerTimeSource(gameTime);
+
+    // set up handler with GameTime
+    EventHandler scheduledHandler = spy(new EventHandler());
+
+    ScheduledEvent event0 = scheduledHandler.scheduleEvent(1f, "event");
+
+    scheduledHandler.cancelEvent(null);
+  }
+
+  @Test
+  void shouldCancelALlEvents() {
+    GameTime gameTime = mock(GameTime.class);
+    when(gameTime.getTime()).thenReturn(0L);
+    ServiceLocator.registerTimeSource(gameTime);
+
+    // set up handler with GameTime
+    EventHandler scheduledHandler = spy(new EventHandler());
+
+    ScheduledEvent event0 = scheduledHandler.scheduleEvent(1f, "event");
+    ScheduledEvent event1 = scheduledHandler.scheduleEvent(2f, "event", 1);
+    ScheduledEvent event2 = scheduledHandler.scheduleEvent(3f, "event", 1,2);
+    ScheduledEvent event3 = scheduledHandler.scheduleEvent(4f, "event", 1,2,3);
+
+
+    scheduledHandler.cancelAllEvents();
+
+    when(gameTime.getTime()).thenReturn(4000L);
+    scheduledHandler.update();
+    verify(scheduledHandler, times(0)).trigger("event");
+    verify(scheduledHandler, times(0)).trigger("event", 1);
+    verify(scheduledHandler, times(0)).trigger("event", 1, 2);
+    verify(scheduledHandler, times(0)).trigger("event", 1, 2, 3);
+  }
+
 }

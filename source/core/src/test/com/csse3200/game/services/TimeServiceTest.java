@@ -93,21 +93,26 @@ class TimeServiceTest {
 
 	@Test
 	public void testUpdate() {
-		when(gameTime.getDeltaTime()).thenReturn(0.25f);
-		timeService.update();
+		when(gameTime.getDeltaTime()).thenReturn(0.50f);
+		assertEquals(6, timeService.getHour());
 		assertEquals(0, timeService.getMinute());
 		timeService.update();
 		assertEquals(1, timeService.getMinute());
+		timeService.update();
+		assertEquals(2, timeService.getMinute());
 
-		when(gameTime.getDeltaTime()).thenReturn(30f);
+		timeService.setMinute(59);
 		timeService.update();
-		System.out.println(timeService.getMinute());
+		assertEquals(0, timeService.getMinute());
+		assertEquals(7, timeService.getHour());
+
+		timeService.setMinute(59);
+		timeService.setHour(23);
 		timeService.update();
-		System.out.println(timeService.getMinute());
-		timeService.update();
-		System.out.println(timeService.getMinute());
-		timeService.update();
-		System.out.println(timeService.getMinute());
+		assertEquals(0, timeService.getMinute());
+		assertEquals(0, timeService.getHour());
+		assertEquals(1, timeService.getDay());
+
 	}
 
 	@Test

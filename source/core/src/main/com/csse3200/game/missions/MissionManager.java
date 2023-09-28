@@ -1,18 +1,15 @@
 package com.csse3200.game.missions;
 
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonValue;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.csse3200.game.entities.Entity;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.achievements.Achievement;
 import com.csse3200.game.missions.achievements.PlantCropsAchievement;
-import com.csse3200.game.missions.quests.FertiliseCropTilesQuest;
 import com.csse3200.game.missions.quests.Quest;
 import com.csse3200.game.missions.quests.QuestFactory;
-import com.csse3200.game.missions.rewards.ItemReward;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -33,7 +30,9 @@ public class MissionManager implements Json.Serializable {
 		// Triggers when a crop is planted, single String representing plant type is provided as argument
 		PLANT_CROP,
 		// Triggers when a crop is fertilised
-		FERTILISE_CROP
+		FERTILISE_CROP,
+		// Triggers when ship debris is cleared
+		DEBRIS_CLEARED
 	}
 
 	/**
@@ -177,9 +176,7 @@ public class MissionManager implements Json.Serializable {
 		if (active.has("Quest")) {
 			active.forEach(jsonValue -> {
 				Quest q = FactoryService.getQuests().get(jsonValue.getString("name")).get();
-				q.setTimeToExpiry(jsonValue.getInt("expiry"));
-				q.setProgress(jsonValue.get("progress"));
-				q.getReward().setCollected(jsonValue.getBoolean("collected"));
+				q.read(jsonValue);
 				activeQuests.add(q);
 			});
 		}
@@ -188,27 +185,15 @@ public class MissionManager implements Json.Serializable {
 		if (selectable.has("Quest")) {
 			selectable.forEach(jsonValue -> {
 				Quest q = FactoryService.getQuests().get(jsonValue.getString("name")).get();
-				q.setTimeToExpiry(jsonValue.getInt("expiry"));
-				q.setProgress(jsonValue.get("progress"));
-				q.getReward().setCollected(jsonValue.getBoolean("collected"));
+				q.read(jsonValue);
 				selectableQuests.add(q);
 			});
 		}
 		if (selectable.has("Achievement")) {
 			selectable.forEach(jsonValue -> {
 				Achievement a = achievements[jsonValue.getInt("index")];
-				a.setProgress(jsonValue.get("progress"));
+				a.readProgress(jsonValue.get("progress"));
 			});
 		}
-	}
-
-	public void setActiveQuests(List<Quest> activeQuests) {
-		this.activeQuests.clear();
-		this.activeQuests.addAll(activeQuests);
-	}
-
-	public void setSelectableQuests(List<Quest> selectableQuests) {
-		this.selectableQuests.clear();
-		this.selectableQuests.addAll(selectableQuests);
 	}
 }

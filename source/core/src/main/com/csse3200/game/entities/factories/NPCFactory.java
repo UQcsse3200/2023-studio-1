@@ -1,17 +1,15 @@
 package com.csse3200.game.entities.factories;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
+import com.csse3200.game.components.InteractionDetector;
+import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.TouchAttackComponent;
-import com.csse3200.game.components.npc.AnimalAnimationController;
-import com.csse3200.game.components.npc.PassiveDropComponent;
-import com.csse3200.game.components.npc.TamableComponent;
-import com.csse3200.game.components.tasks.ChaseTask;
-import com.csse3200.game.components.tasks.FollowTask;
-import com.csse3200.game.components.tasks.RunAwayTask;
-import com.csse3200.game.components.tasks.WanderTask;
+import com.csse3200.game.components.npc.*;
+import com.csse3200.game.components.tasks.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.configs.BaseAnimalConfig;
@@ -25,6 +23,11 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.security.SecureRandom;
+import java.util.Random;
 
 /**
  * Factory to create non-playable character (NPC) entities with predefined components.
@@ -71,7 +74,8 @@ public class NPCFactory {
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-            .addTask(new RunAwayTask(player, 10, 2.25f, 4.25f, new Vector2(3f, 3f)));
+            .addTask(new RunAwayTask(player, 10, 2.25f, 4.25f, new Vector2(3f, 3f)))
+            .addTask(new TamedFollowTask(player, 10, 8, 10, 2f, config.favouriteFood));
 
     chicken
             .addComponent(aiTaskComponent)
@@ -112,7 +116,8 @@ public class NPCFactory {
 
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
-            .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+            .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
+            .addTask(new TamedFollowTask(player, 10, 8, 10, 2f, config.favouriteFood));
 
     cow
             .addComponent(aiTaskComponent)
@@ -179,15 +184,12 @@ public class NPCFactory {
             16f
     );
 
-    animator.addAnimation("idle_left", 1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("idle_right", 1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("walk_left", 1f, Animation.PlayMode.LOOP_REVERSED);
-    animator.addAnimation("walk_right", 1f, Animation.PlayMode.LOOP);
-
-
-
-//    animator.addAnimation("idle", 1f, Animation.PlayMode.LOOP);
-  // animator.addAnimation("consume", 1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle_left", 0.5f, Animation.PlayMode.LOOP);
+    animator.addAnimation("walk_left", 0.5f, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle_right", 0.5f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation("walk_right", 0.5f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation("attack_right", 0.1f, Animation.PlayMode.REVERSED);
+    animator.addAnimation("attack_left", 0.1f);
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
@@ -195,14 +197,42 @@ public class NPCFactory {
     oxygenEater
             .addComponent(aiTaskComponent)
             .addComponent(animator)
-            .addComponent(new AnimalAnimationController());
+            .addComponent(new HostileAnimationController())
+            .addComponent(new OxygenEaterAttackPattern())
+            .addComponent(new InteractionDetector(5f, new ArrayList<>(Arrays.asList(EntityType.Player)))); // TODO: Do we want it to attack anything
 
-
-    oxygenEater.scaleHeight(3f);
-    PhysicsUtils.setScaledCollider(oxygenEater, 0.7f, 0.4f);
-
+    oxygenEater.scaleHeight(2f);
+    oxygenEater.getComponent(ColliderComponent.class).setAsBoxAligned(new Vector2(1f, 1f),
+            PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.CENTER);
+    oxygenEater.getComponent(HitboxComponent.class).setAsBoxAligned(new Vector2(1f, 1f),
+            PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.CENTER);
 
     return oxygenEater;
+  }
+
+  public static Entity createFireFlies(Entity player) {
+    SecureRandom random = new SecureRandom();
+    AuraLightComponent light = new AuraLightComponent(3f, Color.ORANGE);
+    light.toggleLight();
+
+    AnimationRenderComponent animator = new AnimationRenderComponent(
+            ServiceLocator.getResourceService().getAsset("images/fireflies.atlas", TextureAtlas.class),
+            16f
+    );
+    String animation = "default";
+    if (random.nextInt(999) == 0) {
+      animation = "default";
+    }
+    animator.addAnimation(animation, 0.5f, Animation.PlayMode.LOOP);
+    animator.startAnimation(animation);
+
+    Entity fireflies = new Entity(EntityType.FireFlies)
+            .addComponent(animator)
+            .addComponent(light)
+            // Not actually scaring just dying from daylight (named from previous idea for feature)
+            .addComponent(new FireflyScareComponent())
+            .addComponent(new PhysicsComponent());
+    return fireflies;
   }
 
   /**
@@ -214,7 +244,8 @@ public class NPCFactory {
     Entity animal = new Entity(type)
             .addComponent(new PhysicsComponent())
             .addComponent(new PhysicsMovementComponent())
-            .addComponent(new ColliderComponent());
+            .addComponent(new ColliderComponent())
+            .addComponent(new HitboxComponent());
 
     return animal;
   }
