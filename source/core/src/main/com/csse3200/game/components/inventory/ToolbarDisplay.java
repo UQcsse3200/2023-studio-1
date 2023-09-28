@@ -20,13 +20,14 @@ import com.badlogic.gdx.graphics.Texture;
  * Display the UI for the toolbar
  */
 public class ToolbarDisplay extends UIComponent {
+    private static final Logger logger = LoggerFactory.getLogger(InventoryDisplay.class);
     private final Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
     private Table table = new Table(skin);
     private Window window = new Window("", skin);
     private boolean isOpen;
     private InventoryComponent inventory;
     private int selectedSlot = -1;
-    private ArrayList<ItemSlot> slots = new ArrayList<>();
+    private final ArrayList<ItemSlot> slots = new ArrayList<>();
 
     /**
      * Creates the event listeners, ui, and gets the UI.
@@ -49,6 +50,7 @@ public class ToolbarDisplay extends UIComponent {
 
     private void updateToolbar(){
         for (int i = 0; i < 10; i++){
+            logger.info(String.valueOf(selectedSlot));
             int idx = i + 1;
             if (idx == 10) {
                 idx = 0;
@@ -74,6 +76,12 @@ public class ToolbarDisplay extends UIComponent {
                 curSlot.add(label);
                 slots.set(i, curSlot);
             }
+            else {
+                ItemSlot curSlot = slots.get(i);
+                curSlot.setItemImage(null);
+                curSlot.setCount(null);
+                slots.set(i, curSlot);
+            }
         }
     }
 
@@ -94,7 +102,7 @@ public class ToolbarDisplay extends UIComponent {
             label.setColor(Color.BLUE);
             label.setAlignment(Align.topLeft);
 
-            //Create the itemslot, check if it is the active slot
+            //Create the itemSlot, check if it is the active slot
             ItemSlot item = new ItemSlot(i == selectedSlot);
             item.add(label);
             table.add(item).pad(10, 10, 10, 10).fill();
@@ -151,16 +159,14 @@ public class ToolbarDisplay extends UIComponent {
 
         for (int i = 0; i < 10; i++) {
             ItemSlot curSlot = slots.get(i);
-//            if (i != slotNum) {
-//                curSlot.setUnselected();
-//            }
-//            else {
-//                curSlot.setSelected();
-//            }
-            curSlot = new ItemSlot(true);
+            if (i != slotNum) {
+                curSlot.setUnselected();
+            }
+            else {
+                curSlot.setSelected();
+            }
             slots.set(i, curSlot);
         }
-        updateToolbar();
     }
 
     /**

@@ -118,9 +118,6 @@ public class InventoryDisplay extends UIComponent {
    */
   private void updateInventory() {
     dnd.clear();
-    actors.clear();
-    map.clear();
-    indexes.clear();
 
     for (int i = 0; i < size; i++) {
       ItemComponent item;
@@ -146,6 +143,8 @@ public class InventoryDisplay extends UIComponent {
         slots.set(i, curSlot);
       }
     }
+    dnd = new DragAndDrop();
+    setDragItems(actors, map);
   }
 
   /**
@@ -194,15 +193,6 @@ public class InventoryDisplay extends UIComponent {
           sourceSlot.setItemImage(slot.getItemImage());
           map.put((Image) payload.getDragActor(),slot);
           slot.setItemImage((Image)payload.getDragActor());
-          int currentIndex = playerInventory.getHeldIndex();
-          if (indexes.get(slot) > 9) {
-            playerInventory.setHeldItem(currentIndex);
-          }
-          else {
-            playerInventory.setHeldItem(indexes.get(slot));
-            entity.getEvents().trigger("hotkeySelection", indexes.get(slot));
-          }
-
         }
       });
     }
