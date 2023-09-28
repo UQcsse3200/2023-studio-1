@@ -5,7 +5,7 @@ import com.csse3200.game.areas.GameArea;
 import java.util.List;
 
 public class NPCSpawner {
-    private List<NPCSpawnInfo> toSpawn;
+    private final List<NPCSpawnInfo> toSpawn;
 
     //Give list of animals to spawn
     public NPCSpawner(List<NPCSpawnInfo> toSpawn) {

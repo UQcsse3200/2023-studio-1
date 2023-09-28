@@ -8,29 +8,29 @@ import java.util.List;
 import java.util.function.Function;
 
 public class NPCSpawnInfo {
-    private static final double GROWTH_RATE = 1.2;
-    private int maxSpawnCount;
-    private Function<Entity, Entity> spawner;
-    private Entity player;
-    private double growthFactor;
+    private final int maxSpawnCount;
+    private final Function<Entity, Entity> spawner;
+    private final Entity player;
+    private int growthRate;
     private int spawnCount;
-    private int daysToNextSpawn;
-    private int days;
-    private int hoursToNextSpawn;
-    private int hours;
+    private final int spawnHour;
     private GameArea gameArea;
+    private boolean hourReached;
+    private final int randomRange;
+    private int randomGoal;
+    private int randomCount;
 
-    public NPCSpawnInfo(int maxSpawnCount, Function<Entity, Entity> spawner, Entity player, int growthFactor,
-                        int initialSpawnCount, int daysToNextSpawn, int hoursToNextSpawn) {
+    public NPCSpawnInfo(int maxSpawnCount, Function<Entity, Entity> spawner, Entity player, int growthRate,
+                        int initialSpawnCount, int spawnHour, int randomRange) {
         this.maxSpawnCount = maxSpawnCount;
         this.spawner = spawner;
         this.player = player;
-        this.growthFactor = growthFactor;
+        this.growthRate = growthRate;
         this.spawnCount = initialSpawnCount;
-        this.daysToNextSpawn = daysToNextSpawn;
-        this.hoursToNextSpawn = hoursToNextSpawn;
-        days = 0;
-        hours = 0;
+        this.spawnHour = spawnHour;
+        this.randomRange = randomRange;
+        randomCount = 0;
+        hourReached = false;
     }
 
     public void setGameArea(GameArea gameArea) {
@@ -39,31 +39,37 @@ public class NPCSpawnInfo {
 
     public void startSpawner() {
         ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::hourUpdate);
-        ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::dayUpdate);
     }
 
-    //TODO change to use getHour()?
     public void hourUpdate() {
-        if (days == daysToNextSpawn) {
-            hours++;
-            spawnNPC();
+        //Spawn exactly on spawnHour, no randomisation
+        if (randomRange == 0) {
+            if (ServiceLocator.getTimeService().getHour() == spawnHour) {
+                spawnNPC();
+            }
+
+        } else {
+            //Spawn on a random hour (in 'randomRange') after spawnHour
+            if (hourReached && randomCount == randomGoal) {
+                spawnNPC();
+
+            } else if (!hourReached && ServiceLocator.getTimeService().getHour() == spawnHour) {
+                //Once at spawnHour, get randomGoal for next spawn
+                hourReached = true;
+                randomGoal = (int) (Math.random() * randomRange);
+
+            } else if (hourReached) {
+                //Increment randomCount on next hour once hourReached
+                randomCount++;
+            }
         }
-    }
-
-    public void dayUpdate() {
-        days++;
-        spawnNPC();
-
     }
 
     public void spawnNPC() {
-        if (hours != hoursToNextSpawn || days != daysToNextSpawn) {
-            return;
-        }
-
-        //Reset day and hour counters for next spawn
-        hours = 0;
-        days = 0;
+        //Reset for next spawn
+        randomCount = 0;
+        randomGoal = 0;
+        hourReached = false;
 
         //Spawn entities
         for (int i = 0; i < spawnCount; i++) {
@@ -78,9 +84,8 @@ public class NPCSpawnInfo {
         }
 
         //Apply growth rate
-        growthFactor *= GROWTH_RATE;
-        if (maxSpawnCount > (int) (spawnCount * growthFactor)) {
-            spawnCount = (int) (spawnCount * growthFactor);
+        if (maxSpawnCount > (spawnCount + growthRate)) {
+            spawnCount = (spawnCount + growthRate);
         }
     }
 }
