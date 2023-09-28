@@ -286,12 +286,6 @@ public class SpaceGameArea extends GameArea {
 //    spawnTool(ItemType.FOOD);
 
     //playMusic();
-
-    passiveSpawner = new NPCSpawner(null);
-    passiveSpawner.setGameAreas(this);
-    hostileSpawner = new NPCSpawner(null);
-    hostileSpawner.setGameAreas(this);
-
   }
 
   public Entity getPlayer() {
