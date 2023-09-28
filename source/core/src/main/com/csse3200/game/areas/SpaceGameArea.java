@@ -243,11 +243,6 @@ public class SpaceGameArea extends GameArea {
     player.getComponent(InventoryComponent.class).addItem(ItemFactory.createLightItem());
     //player.getComponent(InventoryComponent.class).addItem(ItemFactory.createFertiliser());
 
-    //TODO remove
-    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHammerPlantDrop());
-    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createDeadlyNightshadeDrop());
-    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createCosmicCobDrop());
-
     tractor = spawnTractor();
     spawnPlayerHighlight();
     spawnQuestgiver();
