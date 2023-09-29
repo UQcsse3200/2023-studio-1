@@ -292,6 +292,7 @@ public class QuestFactory {
     public static PlantInteractionQuest createHomeSickQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
         List<Quest> questsToActivate = new ArrayList<>();
+        questsToActivate.add(createShipRepairsQuest());
 
         String dialogue = """
                 ALIEN NPC takes the berries you offer, and consumes them.
@@ -326,6 +327,38 @@ public class QuestFactory {
         ));
         return new PlantInteractionQuest(homeSickQuestName, reward, MissionManager.MissionEvent.HARVEST_CROP,
                 Set.of("Deadly Nightshade"), 5);
+    }
+
+    public static ShipRepairQuest createShipRepairsQuest() {
+        List<Quest> questsToAdd = new ArrayList<>();
+        List<Quest> questsToActivate = new ArrayList<>();
+        questsToActivate.add(createBringingItAllTogetherQuest());
+
+        String dialogue = """
+                Good job. I believe you will need to make a lot more progress in order to successfully repair the ship.
+                {WAIT}
+                Continue repairing your ship, and I will work on the radio device.
+                {WAIT}
+                I might even have some additional tasks for you, for which I could provide some help in finding other parts of your ship.
+                """;
+
+        MultiReward reward = new MultiReward(List.of(
+                new ItemReward(List.of(ItemFactory.createShipPart())),
+                new QuestReward(questsToAdd, questsToActivate),
+                new DialogueReward(dialogue)
+        ));
+        return new ShipRepairQuest(shipRepairsQuestName, reward, 3);
+    }
+
+    public static ShipRepairQuest createBringingItAllTogetherQuest() {
+        String dialogue = """
+                Your repairs appear to be successful.
+                {WAIT}
+                Come and talk to me when you want to try and reach out.
+                """;
+
+        DialogueReward reward = new DialogueReward(dialogue);
+        return new ShipRepairQuest(bringingItAllTogether, reward, 17);
     }
 
     public static MainQuest createActIIMainQuest() {

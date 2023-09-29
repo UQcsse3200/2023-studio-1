@@ -46,6 +46,8 @@ public class MissionManager implements Json.Serializable {
 		// Triggers when an animal is eaten by a Space Snapper, a EntityType enum value is provided representing the
 		// type of entity eaten is provided as an argument
 		ANIMAL_EATEN,
+		// Triggers when a ship part is added to the Ship
+		SHIP_PART_ADDED,
 	}
 
 	/**
