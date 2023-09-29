@@ -21,6 +21,7 @@ public class QuestFactory {
     public static final String actIMainQuestName = "An Agreement";
     public static final String actIIMainQuestName = "Making Contact";
     public static final String actIIIMainQuestName = "Weather the Storm";
+    public static final String missionCompleteTractor = "Tractor Go BRRRRRR";
 
     public static AutoQuest createFirstContactQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
@@ -132,7 +133,7 @@ public class QuestFactory {
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
-        return new MissionCompleteQuest("Mission Complete", reward, 5);
+        return new MissionCompleteQuest(missionCompleteTractor, reward, 5);
     }
 
     public static TameAnimalsQuest createMakingFriendsQuest() {
