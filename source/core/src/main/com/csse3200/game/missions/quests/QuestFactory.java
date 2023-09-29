@@ -165,7 +165,7 @@ public class QuestFactory {
 
         List<Quest> questsToActivate = new ArrayList<>();
         questsToActivate.add(createActIIMainQuest());
-        // TODO mission here go
+        questsToActivate.add(createMissionCompleteQuest());
 
         String dialogue = """
                 Well done, human. You have shown me that you can be trusted, and that our cooperation may be mutually beneficial.
