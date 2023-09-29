@@ -8,7 +8,7 @@ import com.csse3200.game.missions.rewards.Reward;
 /**
  * A MissionCompleteQuest class for when a quest which is based around completing a number of missions
  */
-public class TractorQuest extends Quest {
+public class MissionCompleteQuest extends Quest {
     private final int numberOfQuestsToComplete; // The number of quests to complete
     private int numberOfQuestsComplete; // The number of quests completed
 
@@ -18,7 +18,7 @@ public class TractorQuest extends Quest {
      * @param reward The reward for completing the quest
      * @param numberOfQuestsToComplete The number of quests to complete
      */
-    public TractorQuest(String name, Reward reward, int numberOfQuestsToComplete) {
+    public MissionCompleteQuest(String name, Reward reward, int numberOfQuestsToComplete) {
         super(name, reward);
 
         this.numberOfQuestsToComplete = numberOfQuestsToComplete;
@@ -33,7 +33,7 @@ public class TractorQuest extends Quest {
      * @param isMandatory Whether the quest is mandatory
      * @param numberOfQuestsToComplete The number of quests to complete
      */
-    public TractorQuest(String name, Reward reward, int expiryDuration, boolean isMandatory, int numberOfQuestsToComplete) {
+    public MissionCompleteQuest(String name, Reward reward, int expiryDuration, boolean isMandatory, int numberOfQuestsToComplete) {
         super(name, reward, expiryDuration, isMandatory);
         this.numberOfQuestsToComplete = numberOfQuestsToComplete;
         this.numberOfQuestsComplete = 0;
@@ -44,9 +44,7 @@ public class TractorQuest extends Quest {
      */
     @Override
     public void registerMission(EventHandler missionManagerEvents) {
-        //missionManagerEvents.addListener(MissionManager.MissionEvent.REWARD_COMPLETE.name(), this::updateState);
-        //missionManagerEvents.addListener(MissionManager.MissionEvent.MISSION_COMPLETE.name(), this::updateState);
-        missionManagerEvents.addListener(MissionManager.MissionEvent.STORY_REWARD_COLLECTED.name(), this::updateState);
+        missionManagerEvents.addListener(MissionManager.MissionEvent.REWARD_COMPLETE.name(), this::updateState);
     }
 
     /**

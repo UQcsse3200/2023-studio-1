@@ -123,16 +123,15 @@ public class QuestFactory {
                 Set.of("Cosmic Cob"), 12);
     }
 
-    public static TractorQuest createTractorQuest() {
+    public static MissionCompleteQuest createTractorQuest() {
         String dialogue = """
                 Traktor Go BRRRR!!!
                 """;
-//        MultiReward reward = new MultiReward(List.of(
-//                new EntityReward(List.of(TractorFactory.createTractor(ServiceLocator.getGameArea().getPlayer()))),
-//                new DialogueReward(dialogue)
         MultiReward reward = new MultiReward(List.of(
+                new EntityReward(List.of(TractorFactory.createTractor(ServiceLocator.getGameArea().getPlayer()))),
+                new DialogueReward(dialogue)
         ));
-        return new TractorQuest(missionCompleteTractor, reward, 3);
+        return new MissionCompleteQuest(missionCompleteTractor, reward, 3);
     }
 
     public static TameAnimalsQuest createMakingFriendsQuest() {

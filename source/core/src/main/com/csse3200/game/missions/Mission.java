@@ -77,6 +77,8 @@ public abstract class Mission {
             ServiceLocator.getMissionManager().getEvents().trigger(
                     MissionManager.MissionEvent.MISSION_COMPLETE.name(),
                     getName());
+            ServiceLocator.getMissionManager().getEvents().trigger(
+                    MissionManager.MissionEvent.REWARD_COMPLETE.name());
         }
     }
 
