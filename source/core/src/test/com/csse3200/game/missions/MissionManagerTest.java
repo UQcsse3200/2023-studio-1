@@ -67,7 +67,7 @@ class MissionManagerTest {
             }
 
             @Override
-            public void setProgress(JsonValue progress) {
+            public void readProgress(JsonValue progress) {
             }
 
             @Override
@@ -103,7 +103,7 @@ class MissionManagerTest {
             }
 
             @Override
-            public void setProgress(JsonValue progress) {
+            public void readProgress(JsonValue progress) {
             }
 
             @Override
@@ -141,7 +141,7 @@ class MissionManagerTest {
             }
 
             @Override
-            public void setProgress(JsonValue progress) {
+            public void readProgress(JsonValue progress) {
             }
 
             @Override
@@ -340,16 +340,16 @@ class MissionManagerTest {
         assertFalse(q2.isExpired());
         assertFalse(q3.isExpired());
 
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
 
         assertTrue(q1.isExpired());
         assertFalse(q2.isExpired());
         assertFalse(q3.isExpired());
 
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
 
         assertTrue(q1.isExpired());
         assertFalse(q2.isExpired());
@@ -366,16 +366,16 @@ class MissionManagerTest {
         assertFalse(q2.isExpired());
         assertFalse(q3.isExpired());
 
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
 
         assertTrue(q1.isExpired());
         assertTrue(q2.isExpired());
         assertFalse(q3.isExpired());
 
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
 
         assertTrue(q1.isExpired());
         assertTrue(q2.isExpired());
@@ -392,16 +392,16 @@ class MissionManagerTest {
         assertFalse(q2.isExpired());
         assertFalse(q3.isExpired());
 
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
 
         assertTrue(q1.isExpired());
         assertFalse(q2.isExpired());
         assertFalse(q3.isExpired());
 
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
 
         assertTrue(q1.isExpired());
         assertFalse(q2.isExpired());
@@ -415,16 +415,16 @@ class MissionManagerTest {
         assertFalse(q2.isExpired());
         assertFalse(q3.isExpired());
 
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
 
         assertTrue(q1.isExpired());
         assertTrue(q2.isExpired());
         assertFalse(q3.isExpired());
 
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
 
         assertTrue(q1.isExpired());
         assertTrue(q2.isExpired());
@@ -444,15 +444,15 @@ class MissionManagerTest {
         ServiceLocator.getMissionManager().acceptQuest(q3);
 
         assertEquals(0, counts[0]);
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
         assertEquals(2, counts[0]);
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
         assertEquals(4, counts[0]);
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
         assertEquals(6, counts[0]);
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
         assertEquals(8, counts[0]);
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
         assertEquals(11, counts[0]);
     }
 

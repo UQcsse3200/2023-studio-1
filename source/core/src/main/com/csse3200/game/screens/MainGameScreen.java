@@ -1,5 +1,10 @@
 package com.csse3200.game.screens;
 
+import com.csse3200.game.components.plants.PlantInfoDisplayComponent;
+import com.csse3200.game.services.*;
+import com.csse3200.game.services.plants.PlantCommandService;
+import com.csse3200.game.services.plants.PlantInfoService;
+import com.csse3200.game.entities.FireflySpawner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,14 +32,6 @@ import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
-import com.csse3200.game.services.GameTime;
-import com.csse3200.game.services.GameTimeDisplay;
-import com.csse3200.game.services.LightService;
-import com.csse3200.game.services.OxygenDisplay;
-import com.csse3200.game.services.PlanetOxygenService;
-import com.csse3200.game.services.ResourceService;
-import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.services.TimeService;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
 
@@ -109,6 +106,8 @@ public class MainGameScreen extends ScreenAdapter {
         ServiceLocator.registerRenderService(new RenderService());
         ServiceLocator.registerTimeService(new TimeService());
         ServiceLocator.registerPlanetOxygenService(new PlanetOxygenService());
+        ServiceLocator.registerPlantCommandService(new PlantCommandService());
+        ServiceLocator.registerPlantInfoService(new PlantInfoService());
 
         ServiceLocator.registerMissionManager(new MissionManager());
 
@@ -138,11 +137,14 @@ public class MainGameScreen extends ScreenAdapter {
         lose = false;
         spaceGameArea.getPlayer().getEvents().addListener("loseScreen", this::loseScreenStart);
 
+        new FireflySpawner();
+
         // if the LoadSaveOnStart value is set true then load entities saved from file
         if (game.isLoadOnStart()){
             ServiceLocator.getSaveLoadService().load();
         }
     }
+
 
     public void loseScreenStart() {
         lose = true;
@@ -230,6 +232,7 @@ public class MainGameScreen extends ScreenAdapter {
                 .addComponent(new TerminalDisplay())
                 .addComponent(new GameTimeDisplay())
                 .addComponent(new OxygenDisplay())
+                .addComponent(new PlantInfoDisplayComponent())
                 .addComponent(new WeatherEventDisplay());
 
         ServiceLocator.getEntityService().register(ui);

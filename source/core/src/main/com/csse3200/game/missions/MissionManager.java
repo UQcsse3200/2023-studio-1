@@ -1,18 +1,15 @@
 package com.csse3200.game.missions;
 
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonValue;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.csse3200.game.entities.Entity;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.achievements.Achievement;
 import com.csse3200.game.missions.achievements.PlantCropsAchievement;
-import com.csse3200.game.missions.quests.FertiliseCropTilesQuest;
 import com.csse3200.game.missions.quests.Quest;
 import com.csse3200.game.missions.quests.QuestFactory;
-import com.csse3200.game.missions.rewards.ItemReward;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -24,16 +21,26 @@ public class MissionManager implements Json.Serializable {
 	 * a listener for the {@link #name()} of the enum value.
 	 */
 	public enum MissionEvent {
-		// Triggers when a mission is completed
+		// Triggers when a mission is completed, a single String representing name of completed mission is provided as
+		// an argument
 		MISSION_COMPLETE,
 		// Triggers when a new quest has been added to the mission manager
 		NEW_QUEST,
 		// Triggers when a quest expires
 		QUEST_EXPIRED,
-		// Triggers when a crop is planted, single String representing plant type is provided as argument
+		// Triggers when a story quest's reward is collected (to ensure that the player has read the required dialogue),
+		// a single String representing the name of the quest whose reward has been collected is provided as an argument
+		STORY_REWARD_COLLECTED,
+		// Triggers when a crop is planted, a single String representing plant name is provided as an argument
 		PLANT_CROP,
 		// Triggers when a crop is fertilised
-		FERTILISE_CROP
+		FERTILISE_CROP,
+		// Triggers when ship debris is cleared
+		DEBRIS_CLEARED,
+		// Triggers when a crop is harvested, a single String representing the plant name is provided as an argument
+		HARVEST_CROP,
+		// Triggers when an animal is tamed
+		TAME_ANIMAL,
 	}
 
 	/**
@@ -67,15 +74,10 @@ public class MissionManager implements Json.Serializable {
 	 * Creates the mission manager, registered all game achievements and adds a listener for hourly updates
 	 */
 	public MissionManager() {
-		ServiceLocator.getTimeService().getEvents().addListener("updateHour", this::updateActiveQuestTimes);
+		ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateActiveQuestTimes);
 		for (Achievement mission : achievements) {
 			mission.registerMission(events);
 		}
-
-		// Add initial quests - regardless of GameArea
-		// This will be removed from the constructor at a later date
-		selectableQuests.add(QuestFactory.createHaberHobbyist());
-		selectableQuests.add(QuestFactory.createFertiliserFanatic());
 	}
 
 	/**
@@ -177,9 +179,7 @@ public class MissionManager implements Json.Serializable {
 		if (active.has("Quest")) {
 			active.forEach(jsonValue -> {
 				Quest q = FactoryService.getQuests().get(jsonValue.getString("name")).get();
-				q.setTimeToExpiry(jsonValue.getInt("expiry"));
-				q.setProgress(jsonValue.get("progress"));
-				q.getReward().setCollected(jsonValue.getBoolean("collected"));
+				q.read(jsonValue);
 				activeQuests.add(q);
 			});
 		}
@@ -188,27 +188,15 @@ public class MissionManager implements Json.Serializable {
 		if (selectable.has("Quest")) {
 			selectable.forEach(jsonValue -> {
 				Quest q = FactoryService.getQuests().get(jsonValue.getString("name")).get();
-				q.setTimeToExpiry(jsonValue.getInt("expiry"));
-				q.setProgress(jsonValue.get("progress"));
-				q.getReward().setCollected(jsonValue.getBoolean("collected"));
+				q.read(jsonValue);
 				selectableQuests.add(q);
 			});
 		}
 		if (selectable.has("Achievement")) {
 			selectable.forEach(jsonValue -> {
 				Achievement a = achievements[jsonValue.getInt("index")];
-				a.setProgress(jsonValue.get("progress"));
+				a.readProgress(jsonValue.get("progress"));
 			});
 		}
-	}
-
-	public void setActiveQuests(List<Quest> activeQuests) {
-		this.activeQuests.clear();
-		this.activeQuests.addAll(activeQuests);
-	}
-
-	public void setSelectableQuests(List<Quest> selectableQuests) {
-		this.selectableQuests.clear();
-		this.selectableQuests.addAll(selectableQuests);
 	}
 }

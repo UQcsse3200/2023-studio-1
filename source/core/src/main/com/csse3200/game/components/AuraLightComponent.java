@@ -1,6 +1,7 @@
 package com.csse3200.game.components;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.utils.Json;
 import com.csse3200.game.services.ServiceLocator;
 
 import box2dLight.PointLight;
@@ -63,6 +64,8 @@ public class AuraLightComponent extends Component{
 		light.setStaticLight(true);
 		light.setXray(true); // Stops most of the shadows and reduces CPU burden
 		light.setSoft(true);
+		active = false;
+		light.setActive(active);
 	}
 
 	/**
@@ -71,9 +74,9 @@ public class AuraLightComponent extends Component{
 	@Override
 	public void create() {
 		super.create();
-		active = false;
-		light.setActive(active);
+		light.setPosition(entity.getCenterPosition());
 		entity.getEvents().addListener("toggleLight", this::toggleLight);
+		entity.getEvents().addListener("toggleAuraLight", this::toggleLight);
 	}
 
 	/**
@@ -121,6 +124,6 @@ public class AuraLightComponent extends Component{
 	 */
 	@Override
 	public void dispose() {
-		light.dispose();
+		light.remove();
 	}
 }
