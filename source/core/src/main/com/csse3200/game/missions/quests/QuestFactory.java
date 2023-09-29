@@ -21,7 +21,7 @@ public class QuestFactory {
     public static final String actIMainQuestName = "An Agreement";
     public static final String actIIMainQuestName = "Making Contact";
     public static final String actIIIMainQuestName = "Weather the Storm";
-    public static final String missionCompleteTractor = "Tractor Go BRRRRRR";
+    public static final String TRACTOR_GO_BRRRRRR = "Tractor Go BRRRRRR";
 
     public static AutoQuest createFirstContactQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
@@ -131,7 +131,7 @@ public class QuestFactory {
                 new EntityReward(List.of(TractorFactory.createTractor(ServiceLocator.getGameArea().getPlayer()))),
                 new DialogueReward(dialogue)
         ));
-        return new MissionCompleteQuest(missionCompleteTractor, reward, 1);
+        return new MissionCompleteQuest(TRACTOR_GO_BRRRRRR, reward, 1);
     }
 
     public static TameAnimalsQuest createMakingFriendsQuest() {
