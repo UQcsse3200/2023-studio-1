@@ -14,7 +14,7 @@ public class EntitiesSpawner {
     private final List<EntitySpawner> toSpawn;
 
     /**
-     * Constructor for NPCSpawner
+     * Constructor for EntitiesSpawner
      *
      * @param toSpawn list of NPCSpawnInfo objects that correspond to the entities to spawn
      */

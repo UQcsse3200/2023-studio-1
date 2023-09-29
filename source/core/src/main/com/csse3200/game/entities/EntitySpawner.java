@@ -68,7 +68,7 @@ public class EntitySpawner {
     private int dayCounter;
 
     /**
-     * Constructor for NPCSpawnInfo
+     * Constructor for EntitySpawner
      *
      * @param maxSpawnCount maximum number of entities that can be spawned in one cycle
      * @param spawner method that creates the entity
