@@ -28,6 +28,9 @@ public class WinScreenDisplay extends UIComponent {
 
     private TextButton returnButton;
 
+    private boolean animationFinished = false;
+
+
     /**
      * The time in seconds that it takes for the narration animation to reach the trigger point,
      * at which the planet should enter the frame.
@@ -80,8 +83,6 @@ public class WinScreenDisplay extends UIComponent {
         // Load the animated planet
         planet = new Image(new Texture(Gdx.files.internal("images/good_planet.png")));
 
-
-
         // Scale it to a 10% of screen width with a constant aspect ratio
         float planetWidth = (float) (Gdx.graphics.getWidth() * 0.15);
         float planetHeight = planetWidth * (planet.getHeight() / planet.getWidth());
@@ -114,7 +115,7 @@ public class WinScreenDisplay extends UIComponent {
 
         this.returnButton = new TextButton("Return To Main Menu", skin);
 
-        this.returnButton.setVisible(true); // Make the continue button invisible
+        this.returnButton.setVisible(false); // Make the continue button invisible
 
         // The continue button lets the user proceed to the main game
         this.returnButton.addListener(new ChangeListener() {
@@ -157,10 +158,15 @@ public class WinScreenDisplay extends UIComponent {
     @Override
     public void update() {
         // This movement logic is triggered on every frame, until the middle of the planet hits its target position
-        // on screen
-        if (planet.getY(Align.center) >= storyLabel.getY(Align.top) + planetToTextPadding) {
-            planet.setY(planet.getY() - spaceSpeed); // Move the planet
-            background.setY(background.getY() - spaceSpeed); // Move the background
+        if (!animationFinished) {
+            if (planet.getY(Align.center) >= storyLabel.getY(Align.top) + planetToTextPadding) {
+                planet.setY(planet.getY() - spaceSpeed); // Move the planet
+                background.setY(background.getY() - spaceSpeed); // Move the background
+            } else {
+                // Animation has finished
+                animationFinished = true;
+                returnButton.setVisible(true); // Make the return button visible
+            }
         }
 
         // Resize the planet to the new screen size, maintaining aspect ratio

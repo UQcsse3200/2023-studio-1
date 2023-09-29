@@ -4,8 +4,6 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.csse3200.game.components.AuraLightComponent;
-import com.csse3200.game.components.ConeLightComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -428,12 +426,6 @@ public class Entity implements Json.Serializable {
           // Update the tractor 'muted' variable based on the info in the json file
           tractorActions.setMuted(jsonMap.getBoolean("isMuted"));
           this.addComponent(tractorActions);
-
-          ConeLightComponent coneLightComponent = new ConeLightComponent(lightJsonMap.getFloat("distance"));
-          if (lightJsonMap.getBoolean("isActive")) {
-            coneLightComponent.toggleLight();
-          }
-          this.addComponent(coneLightComponent);
           break;
         case Tile:
           jsonMap = jsonMap.get("components").get("CropTileComponent");

@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
-import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.AnimalAnimationController;
 import com.csse3200.game.components.npc.FireflyScareComponent;
@@ -30,7 +29,6 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.security.SecureRandom;
-import java.util.Random;
 
 /**
  * Factory to create non-playable character (NPC) entities with predefined components.
@@ -213,8 +211,6 @@ public class NPCFactory {
 
   public static Entity createFireFlies(Entity player) {
     SecureRandom random = new SecureRandom();
-    AuraLightComponent light = new AuraLightComponent(3f, Color.ORANGE);
-    light.toggleLight();
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/fireflies.atlas", TextureAtlas.class),
@@ -229,7 +225,6 @@ public class NPCFactory {
 
     Entity fireflies = new Entity(EntityType.FireFlies)
             .addComponent(animator)
-            .addComponent(light)
             // Not actually scaring just dying from daylight (named from previous idea for feature)
             .addComponent(new FireflyScareComponent())
             .addComponent(new PhysicsComponent());

@@ -31,7 +31,6 @@ allprojects {
         appName = "csse3200-game"
         gdxVersion = '1.11.0'
         roboVMVersion = '2.3.16'
-        box2DLightsVersion = '1.5'
         ashleyVersion = '1.7.4'
         aiVersion = '1.8.2'
         gdxControllersVersion = '2.2.2'
@@ -96,9 +95,6 @@ project(":core") {
 
         // Typewriter Label for Intro
         api "com.rafaskoberg.gdx:typing-label:$typingLabelVersion"
-
-        // Box 2D Lighting
-        implementation "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
 
         // Unit Testing
         testImplementation "org.junit.jupiter:junit-jupiter-api:$junit5Version"

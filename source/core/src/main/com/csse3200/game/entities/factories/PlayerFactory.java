@@ -6,7 +6,6 @@ import java.util.Arrays;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.inventory.InventoryDisplay;
@@ -73,7 +72,6 @@ public class PlayerFactory {
             .addComponent(new InteractionDetector(2f, new ArrayList<EntityType>(Arrays.asList(EntityType.Questgiver, EntityType.Gate, EntityType.Chest, EntityType.Chicken,
                     EntityType.Cow, EntityType.Astrolotl, EntityType.OxygenEater, EntityType.ShipDebris))))
             .addComponent(new ToolbarDisplay())
-	        .addComponent(new AuraLightComponent(6f))
             .addComponent(new InventoryDisplay(playerInventory))
             .addComponent(new PauseMenuActions());
 

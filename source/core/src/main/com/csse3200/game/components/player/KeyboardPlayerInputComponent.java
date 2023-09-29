@@ -1,5 +1,6 @@
 package com.csse3200.game.components.player;
 
+import com.csse3200.game.components.losescreen.LoseScreenDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -89,6 +90,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           ServiceLocator.getGameArea().getPlayer().getEvents().trigger("endCredits");
           return true;
         case Keys.L :
+          LoseScreenDisplay.setLoseReason("mission1");
           ServiceLocator.getGameArea().getPlayer().getEvents().trigger("loseScreen");
           return true;
         case Keys.K :

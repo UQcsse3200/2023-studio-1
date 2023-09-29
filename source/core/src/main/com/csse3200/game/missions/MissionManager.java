@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
+import com.csse3200.game.components.losescreen.LoseScreenDisplay;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.achievements.Achievement;
 import com.csse3200.game.missions.achievements.PlantCropsAchievement;
@@ -89,6 +90,23 @@ public class MissionManager implements Json.Serializable {
 		activeQuests.add(quest);
 		quest.registerMission(events);
 	}
+
+	/**
+	 * Plays the losing screen with the specific message of how they lost
+	 */
+	public void playLoseScreen(String reason) {
+		LoseScreenDisplay.setLoseReason(reason);
+		ServiceLocator.getGameArea().getPlayer().getEvents().trigger("loseScreen");
+	}
+
+	/**
+	 * Plays the win screen once the player has successfully completed the game
+	 */
+	public void playWinScreen() {
+		ServiceLocator.getGameArea().getPlayer().getEvents().trigger("winScreen");
+	}
+
+
 
 	/**
 	 * Returns a {@link List} of currently active (tracked) {@link Quest}s. This includes all {@link Quest}s which have not

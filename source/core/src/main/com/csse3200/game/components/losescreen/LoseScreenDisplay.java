@@ -1,5 +1,6 @@
 package com.csse3200.game.components.losescreen;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +38,8 @@ public class LoseScreenDisplay extends UIComponent {
 
     private TextButton returnButton;
 
+    private boolean animationFinished = false;
+
     /**
      * The time in seconds that it takes for the narration animation to reach the trigger point,
      * at which the planet should enter the frame.
@@ -69,6 +72,8 @@ public class LoseScreenDisplay extends UIComponent {
      */
     private TypingLabel storyLabel;
 
+    public static String losingMessage;
+
     public LoseScreenDisplay(GdxGame game) {
         super();
         this.game = game;
@@ -90,8 +95,6 @@ public class LoseScreenDisplay extends UIComponent {
         // Load the animated planet
         planet = new Image(new Texture(Gdx.files.internal("images/dead_planet2.png")));
 
-
-
         // Scale it to a 10% of screen width with a constant aspect ratio
         float planetWidth = (float) (Gdx.graphics.getWidth() * 0.15);
         float planetHeight = planetWidth * (planet.getHeight() / planet.getWidth());
@@ -102,14 +105,12 @@ public class LoseScreenDisplay extends UIComponent {
         float planetOffset = 2500;
         planet.setPosition((float)Gdx.graphics.getWidth()/2, planetOffset, Align.center);
 
-        String credits = getCredits("oxygen");
-
-        storyLabel = new TypingLabel(credits, skin); // Create the TypingLabel with the formatted story
+        storyLabel = new TypingLabel(losingMessage, skin); // Create the TypingLabel with the formatted story
         storyLabel.setAlignment(Align.center); // Center align the text
 
         this.returnButton = new TextButton("Return To Main Menu", skin);
 
-        this.returnButton.setVisible(true); // Make the continue button invisible
+        this.returnButton.setVisible(false); // Make the continue button invisible
 
         // The continue button lets the user proceed to the main game
         this.returnButton.addListener(new ChangeListener() {
@@ -133,25 +134,12 @@ public class LoseScreenDisplay extends UIComponent {
         stage.addActor(background);
         stage.addActor(planet);
         stage.addActor(rootTable);
-
-
     }
 
-    private String getCredits(String causeOfDeath) {
-        // Add switch statement for different causes of death
-        String reason = null;
-        switch (causeOfDeath) {
-            case "oxygen" -> reason = "As your oxygen supply dwindles, so does humanities hope for survival.";
-            case "mission1" -> reason = "Failed mission 1.";
-            case "mission2" -> reason = "Failed mission 2.";
-            case "mission3" -> reason = "Failed mission 3.";
-            case "mission4" -> reason = "Failed mission 4.";
-            case "mission5" -> reason = "Failed mission 5.";
-            case "mission6" -> reason = "Failed mission 6.";
-            default -> reason = "default reason";
-        }
+    public static void setLoseReason(String causeOfDeath) {
+        String reason = getString(causeOfDeath);
 
-        return """ 
+        losingMessage = """ 
                 {SLOW}
                 Despite your best efforts, Alpha Centauri remains a wasteland.
                 
@@ -171,6 +159,22 @@ public class LoseScreenDisplay extends UIComponent {
                 {COLOR=red}Game Over
                 {WAIT=1}
             """;
+    }
+
+    @NotNull
+    private static String getString(String causeOfDeath) {
+        String reason = null;
+        switch (causeOfDeath) {
+            case "oxygen" -> reason = "As your oxygen supply dwindles, so does humanities hope for survival.";
+            case "mission1" -> reason = "Failed mission 1.";
+            case "mission2" -> reason = "Failed mission 2.";
+            case "mission3" -> reason = "Failed mission 3.";
+            case "mission4" -> reason = "Failed mission 4.";
+            case "mission5" -> reason = "Failed mission 5.";
+            case "mission6" -> reason = "Failed mission 6.";
+            default -> reason = "default reason";
+        }
+        return reason;
     }
 
     /**
@@ -193,10 +197,15 @@ public class LoseScreenDisplay extends UIComponent {
     @Override
     public void update() {
         // This movement logic is triggered on every frame, until the middle of the planet hits its target position
-        // on screen
-        if (planet.getY(Align.center) >= storyLabel.getY(Align.top) + planetToTextPadding) {
-            planet.setY(planet.getY() - spaceSpeed); // Move the planet
-            background.setY(background.getY() - spaceSpeed); // Move the background
+        if (!animationFinished) {
+            if (planet.getY(Align.center) >= storyLabel.getY(Align.top) + planetToTextPadding) {
+                planet.setY(planet.getY() - spaceSpeed); // Move the planet
+                background.setY(background.getY() - spaceSpeed); // Move the background
+            } else {
+                // Animation has finished
+                animationFinished = true;
+                returnButton.setVisible(true); // Make the return button visible
+            }
         }
 
         // Resize the planet to the new screen size, maintaining aspect ratio
@@ -220,10 +229,6 @@ public class LoseScreenDisplay extends UIComponent {
         }
 
         logger.debug(String.format("Space Speed: %s", spaceSpeed));
-
-        //stage.act(ServiceLocator.getTimeSource().getDeltaTime());
-
-        //this.returnButton.setVisible(true);
     }
 
     @Override
@@ -232,5 +237,4 @@ public class LoseScreenDisplay extends UIComponent {
         table.clear();
         super.dispose();
     }
-
 }

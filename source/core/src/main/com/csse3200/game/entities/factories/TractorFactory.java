@@ -4,8 +4,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.components.AuraLightComponent;
-import com.csse3200.game.components.ConeLightComponent;
 import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.components.tractor.TractorAnimationController;
@@ -39,8 +37,6 @@ public class TractorFactory {
         .addComponent(new ColliderComponent())
         .addComponent(animator)
         .addComponent(inputComponent)
-        .addComponent(new AuraLightComponent(3f))
-        .addComponent(new ConeLightComponent(10f, Color.TAN))
         .addComponent(new TractorActions());
 
     tractor.getComponent(AnimationRenderComponent.class).scaleEntity();

@@ -10,10 +10,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
-import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.ConeLightComponent;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
@@ -96,8 +94,6 @@ public class TractorActions extends Component {
       }
       updateAnimation();
     }
-    float lightDirection = getDirectionAdjusted(prevDirection);
-    entity.getComponent(ConeLightComponent.class).setDirection(lightDirection);
   }
 
   /**
@@ -319,7 +315,6 @@ public class TractorActions extends Component {
     this.mode = TractorMode.normal;
     player.getComponent(PlayerActions.class).setMuted(false);
     muted = true;
-    entity.getComponent(AuraLightComponent.class).toggleLight();
     entity.getEvents().trigger("idle", getDirection(prevDirection));
     player.getComponent(KeyboardPlayerInputComponent.class)
         .setWalkDirection(entity.getComponent(KeyboardTractorInputComponent.class).getWalkDirection());

@@ -30,7 +30,6 @@ import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.GameTimeDisplay;
-import com.csse3200.game.services.LightService;
 import com.csse3200.game.services.OxygenDisplay;
 import com.csse3200.game.services.PlanetOxygenService;
 import com.csse3200.game.services.ResourceService;
@@ -121,8 +120,6 @@ public class MainGameScreen extends ScreenAdapter {
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
         renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
         ServiceLocator.registerCameraComponent(renderer.getCamera());
-
-        ServiceLocator.registerLightService(new LightService());
 
         loadAssets();
 
