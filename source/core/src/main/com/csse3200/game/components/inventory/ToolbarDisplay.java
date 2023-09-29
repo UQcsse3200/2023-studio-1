@@ -43,6 +43,41 @@ public class ToolbarDisplay extends UIComponent {
     }
 
     /**
+     *  Creates actors and positions them on the stage using a table.
+     *  @see Table for positioning options
+     */
+    private void initialiseToolbar() {
+        table.defaults().size(64, 64);
+
+        for (int i = 0; i < 10; i++) {
+            //Set the indexes for the toolbar
+            int idx = i + 1;
+            if (idx == 10) {
+                idx = 0;
+            }
+            // Create the label for the item slot
+            Label label = new Label(" " + String.valueOf(idx), skin); //please please please work
+            label.setColor(Color.BLUE);
+            label.setAlignment(Align.topLeft);
+
+            // Check if slot is selected
+            ItemSlot item = new ItemSlot(i == selectedSlot);
+            item.add(label);
+            table.add(item).pad(10, 10, 10, 10).fill();
+            slots.add(item);
+        }
+
+        // Customise window to ensure it meets functionality
+        window.pad(40, 5, 5, 5);
+        window.add(table);
+        window.pack();
+        window.setMovable(false);
+        window.setPosition(stage.getWidth() / 2 - window.getWidth() / 2, 0);
+        window.setVisible(true);
+        stage.addActor(window);
+    }
+
+    /**
      * Updates actors and re-positions them on the stage using a table.
      * @see Table for positioning options
      */
@@ -53,7 +88,7 @@ public class ToolbarDisplay extends UIComponent {
             if (idx == 10) {
                 idx = 0;
             }
-            Label label = new Label(" " + String.valueOf(idx), skin); //please please please work
+            Label label = new Label(" " + String.valueOf(idx), skin);
             label.setColor(Color.BLUE);
             label.setAlignment(Align.topLeft);
 
@@ -62,6 +97,7 @@ public class ToolbarDisplay extends UIComponent {
             Texture itemTexture;
 
             if (inventory.getItemPos(i) != null) {
+                // Since the item isn't null, we want to make sure that the itemSlot at that position is modified
                 item = inventory.getItemPos(i).getComponent(ItemComponent.class);
                 itemCount = inventory.getItemCount(item.getEntity());
                 itemTexture = item.getItemTexture();
@@ -71,44 +107,13 @@ public class ToolbarDisplay extends UIComponent {
                 if (curSlot.getCount() != null && !curSlot.getCount().equals(itemCount)) {
                     curSlot.setCount(itemCount);
                 }
+
                 curSlot.add(label);
+
+                // Update slots array
                 slots.set(i, curSlot);
             }
         }
-    }
-
-    /**
-     *  Creates actors and positions them on the stage using a table.
-     *  @see Table for positioning options
-     */
-    private void initialiseToolbar() {
-        table.defaults().size(64, 64);
-        for (int i = 0; i < 10; i++) {
-            //Set the indexes for the toolbar
-            int idx = i + 1;
-            if (idx == 10) {
-                idx = 0;
-            }
-            //Create the label for the item slot
-            Label label = new Label(" " + String.valueOf(idx), skin); //please please please work
-            label.setColor(Color.BLUE);
-            label.setAlignment(Align.topLeft);
-
-            //Create the itemslot, check if it is the active slot
-            ItemSlot item = new ItemSlot(i == selectedSlot);
-            item.add(label);
-            table.add(item).pad(10, 10, 10, 10).fill();
-            slots.add(item);
-        }
-
-        window.pad(40, 5, 5, 5); // Add padding to with so that the text doesn't go offscreen
-        window.add(table); //Add the table to the window
-        window.pack(); // Pack the window to the size
-        window.setMovable(false);
-        window.setPosition(stage.getWidth() / 2 - window.getWidth() / 2, 0); // Clip to the bottom of the window on the stage
-        window.setVisible(true);
-        // Add the window to the stage
-        stage.addActor(window);
     }
 
     /**
@@ -137,7 +142,6 @@ public class ToolbarDisplay extends UIComponent {
      */
     public void updateInventory() {
         inventory = entity.getComponent(InventoryDisplay.class).getInventory();
-        // refresh the ui as per the new inventory.
         updateToolbar();
     }
 
