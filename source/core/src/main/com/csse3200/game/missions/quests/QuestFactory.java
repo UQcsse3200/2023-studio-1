@@ -22,10 +22,12 @@ public class QuestFactory {
     public static final String fertilisingFiestaQuestName = "Fertilising Fiesta";
     public static final String aliensAttackQuestName = "Aliens Attack";
     public static final String actIMainQuestName = "An Agreement";
-    public static final String shipRepairsQuestName = "Ship Repairs";
+    public static final String connectionQuestName = "Connection";
     public static final String homeSickQuestName = "Home Sick";
+    public static final String shipRepairsQuestName = "Ship Repairs";
     public static final String bringingItAllTogether = "Bringing It All Together";
     public static final String actIIMainQuestName = "Making Contact";
+    public static final String anImminentThreatQuestName = "An Imminent Threat";
     public static final String airAndAlgaeQuestName = "Air and Algae";
     public static final String stratosphericSentinel = "Stratospheric Sentinel";
     public static final String actIIIMainQuestName = "Weather the Storm";
@@ -221,9 +223,8 @@ public class QuestFactory {
 
     public static MainQuest createActIMainQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
-
         List<Quest> questsToActivate = new ArrayList<>();
-        questsToActivate.add(createActIIMainQuest());
+        questsToActivate.add(createConnectionQuest());
 
         String dialogue = """
                 Well done, human. You have shown me that you can be trusted, and that our cooperation may be mutually beneficial.
@@ -233,11 +234,13 @@ public class QuestFactory {
                 {WAIT}
                 You begin to explain what happened, how you lost contact with the Mothership, how your controls failed and how you fell into an uncontrolled descent onto the planet's surface.
                 {WAIT}
-                I see... {WAIT=1} The storm has also devastated our planet, and is part of the reason I was sent here.
+                I see... {WAIT=1} Our sun, though it gives us life, is also an unforgiving force of nature.
                 {WAIT}
-                As you continue to go over the details, a ravenous anxiety begins to claw at your chest as the possibility of you becoming stranded forever becomes a terrifying possibility.
+                As you continue to go over the details, an anxiety begins to claw at your chest, as the possibility of you being forever separated from your people becomes a terrifying possibility.
                 {WAIT}
-                ... TO BE ADDED
+                ALIEN NPC looks down into your eyes.
+                {WAIT=2}
+                It's okay. {WAIT=1} I have an idea...
                 """;
 
         Set<String> requiredQuests = new HashSet<>();
@@ -256,11 +259,39 @@ public class QuestFactory {
         return new MainQuest(actIMainQuestName, reward, 5, requiredQuests, "gain ALIEN NPC's trust");
     }
 
+    public static AutoQuest createConnectionQuest() {
+        List<Quest> questsToAdd = new ArrayList<>();
+        List<Quest> questsToActivate = new ArrayList<>();
+        questsToActivate.add(createActIIMainQuest());
+
+        String dialogue = """
+                I will need some time to think of a solution to your issue.
+                {WAIT}
+                In the mean time, I have a small favour to ask - maybe it will help keep your mind off things.
+                {WAIT}
+                There is a plant that is- was sacred to our people.
+                {WAIT}
+                It is known as the Nightshade, although for you, a more apt description might be Deadly Nightshade.
+                {WAIT}
+                It's berries are poisonous to fleshy life-forms such as yourself.
+                {WAIT}
+                But to us, it is a delicacy.
+                {WAIT}
+                If you harvest a batch of them, I'm sure I will have thought of a solution to your problem.
+                """;
+
+        MultiReward reward = new MultiReward(List.of(
+                new ItemReward(List.of(ItemFactory.createDeadlyNightshadeSeed())),
+                new QuestReward(questsToAdd, questsToActivate),
+                new DialogueReward(dialogue)
+        ));
+        return new AutoQuest(connectionQuestName, reward, "Make a connection with ALIEN NPC, figure out how you can be reunited with Humanity.");
+    }
+
     public static MainQuest createActIIMainQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
-
         List<Quest> questsToActivate = new ArrayList<>();
-        questsToActivate.add(createActIIIMainQuest());
+        questsToActivate.add(createAnImminentThreatQuest());
 
         String dialogue = """
                 With the final pieces of the ship in place, a faint static buzzes from the radio.
@@ -281,23 +312,97 @@ public class QuestFactory {
                 {WAIT}
                 "We need you to do all you can to ensure the atmosphere is at least survivable for us when we land."
                 {WAIT}
-                Taken aback by all this information, you attempt to speak to them again, but just as you go to speak, the sky lights up with the power of the sun, and the radio cuts out...
+                Taken aback by all this information, you attempt to speak to them again, but just as you go to speak, the sky lights up with the power of the sun as another powerful Solar Surge strikes.
+                {WAIT}
+                The radio cuts out...
                 """;
 
         Set<String> requiredQuests = new HashSet<>();
+        requiredQuests.add(connectionQuestName);
+        requiredQuests.add(homeSickQuestName);
+        requiredQuests.add(shipRepairsQuestName);
+        requiredQuests.add(bringingItAllTogether);
 
         MultiReward reward = new MultiReward(List.of(
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
 
-        return new MainQuest(actIIMainQuestName, reward, 10, requiredQuests, "make connection with the Mothership");
+        return new MainQuest(actIIMainQuestName, reward, 10, requiredQuests, "make connection with the rest of your people");
+    }
+
+    public static AutoQuest createAnImminentThreatQuest() {
+        List<Quest> questsToAdd = new ArrayList<>();
+        List<Quest> questsToActivate = new ArrayList<>();
+        questsToActivate.add(createAirAndAlgaeQuest());
+        questsToActivate.add(createActIIIMainQuest());
+
+        String dialogue = """
+                You let out a cry of anger.
+                {WAIT}
+                ALIEN NPC walks up to.
+                {WAIT}
+                If this storm, the one they are talking about, is as bad as they say, you could lose the technology allowing you to survive on this planet.
+                {WAIT}
+                I have an idea.
+                {WAIT}
+                I only have a few seeds left, but in the remaining seeds, there is one type of plant that I haven't given to you before.
+                {WAIT}
+                It's known as the Atomic Algae - it is supposed to be a powerful photosynthesiser.
+                {WAIT}
+                It is so strong it is said a few of these, if cared for correctly, can produce enough oxygen to change the atmosphere itself.
+                {WAIT}
+                However, I suspect Solar Surges are only going to get stronger in the coming days.
+                {WAIT}
+                And my guess is that our hostile wildlife won't like such melding with the atmosphere.
+                {WAIT}
+                Good luck, my friend.
+                """;
+
+        MultiReward reward = new MultiReward(List.of(
+                new ItemReward(List.of(
+                        ItemFactory.createAloeVeraSeed(),
+                        ItemFactory.createAtomicAlgaeSeed(),
+                        ItemFactory.createCosmicCobSeed(),
+                        ItemFactory.createDeadlyNightshadeSeed(),
+                        ItemFactory.createHammerPlantSeed(),
+                        ItemFactory.createSpaceSnapperSeed()
+                )),
+                new QuestReward(questsToAdd, questsToActivate),
+                new DialogueReward(dialogue)
+        ));
+        return new AutoQuest(anImminentThreatQuestName, reward, "Learn about the imminent threat.");
+    }
+
+    public static PlantInteractionQuest createAirAndAlgaeQuest() {
+        String dialogue = """
+                Keep at it.
+                {WAIT}
+                If your people are to be able to survive on this planet, you need to ensure the oxygen content in the atmosphere is at least 80%.
+                {WAIT}
+                I've found 4 more seeds of Atomic Algae to spare - the rest you will have to get from harvesting your current crops.
+                """;
+        MultiReward reward = new MultiReward(List.of(
+                new ItemReward(List.of(
+                        ItemFactory.createAtomicAlgaeSeed(),
+                        ItemFactory.createAtomicAlgaeSeed(),
+                        ItemFactory.createAtomicAlgaeSeed(),
+                        ItemFactory.createAtomicAlgaeSeed()
+                )),
+                new DialogueReward(dialogue)
+        ));
+        return new PlantInteractionQuest(airAndAlgaeQuestName, reward, MissionManager.MissionEvent.PLANT_CROP,
+                Set.of("Atomic Algae"), 10);
     }
 
     public static MainQuest createActIIIMainQuest() {
         Set<String> requiredQuests = new HashSet<>();
+        requiredQuests.add(airAndAlgaeQuestName);
+        requiredQuests.add(stratosphericSentinel);
+
         MultiReward reward = new MultiReward(List.of());
-        return new MainQuest(actIIIMainQuestName, reward, 15, requiredQuests, "weather the storm");
+
+        return new MainQuest(actIIIMainQuestName, reward, 15, requiredQuests, "weather the incoming storm, provide a haven for humanity");
     }
 
     public static FertiliseCropTilesQuest createHaberHobbyist() {
