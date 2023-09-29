@@ -38,3 +38,38 @@ default
   orig: 32, 32
   offset: 0, 0
   rotate: false
+DancinInTheMoonlight
+  xy: 0, 32
+  index: 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  rotate: false
+DancinInTheMoonlight
+  xy: 32, 32
+  index: 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  rotate: false
+DancinInTheMoonlight
+xy: 64, 32
+index: 2
+size: 32, 32
+orig: 32, 32
+offset: 0, 0
+rotate: false
+DancinInTheMoonlight
+xy: 96, 32
+index: 3
+size: 32, 32
+orig: 32, 32
+offset: 0, 0
+rotate: false
+DancinInTheMoonlight
+xy: 128, 32
+index: 4
+size: 32, 32
+orig: 32, 32
+offset: 0, 0
+rotate: false

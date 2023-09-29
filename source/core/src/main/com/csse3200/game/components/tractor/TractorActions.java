@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
+import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.AuraLightComponent;
@@ -232,10 +233,15 @@ public class TractorActions extends Component {
   private void harvest(TerrainTile tile) {
     if (tile == null) {
       return;
-    } else if (tile.getCropTile() == null) {
+    } else if (tile.getOccupant() == null) {
       return;
+    } else if (isCropTile(tile.getOccupant())) {
+      tile.getOccupant().getEvents().trigger("harvest");
     }
-    tile.getCropTile().getEvents().trigger("harvest");
+  }
+
+  private boolean isCropTile(Entity tile) {
+    return (tile != null) && (tile.getComponent(CropTileComponent.class) != null);
   }
 
   /**
@@ -254,7 +260,7 @@ public class TractorActions extends Component {
     }
     // Make a new tile
     Entity cropTile = createTerrainEntity(map.tileCoordinatesToVector(map.vectorToTileCoordinates(pos)));
-    tile.setCropTile(cropTile);
+    tile.setOccupant(cropTile);
     tile.setOccupied();
     ServiceLocator.getEntityService().register(cropTile);
   }

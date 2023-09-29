@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.csse3200.game.physics.PhysicsLayer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +31,9 @@ public abstract class GameArea implements Disposable {
   protected List<Entity> areaEntities;
   private static final Logger logger = LoggerFactory.getLogger(GameArea.class);
   private Entity player;
+  private final ArrayList<EntityType> loadableTypes = new ArrayList<>(Arrays.asList(EntityType.Tile, EntityType.Cow,
+          EntityType.Cow, EntityType.Chicken, EntityType.Astrolotl, EntityType.Plant, EntityType.Tile,
+          EntityType.OxygenEater, EntityType.ShipDebris));
 
   protected GameArea() {
     areaEntities = new ArrayList<>();
@@ -102,9 +106,12 @@ public abstract class GameArea implements Disposable {
    * @param entities Array of entities currently in game.
    */
   public void removeLoadableEntities(Array<Entity> entities) {
+<<<<<<< HEAD
     ArrayList<EntityType> loadableTypes = new ArrayList<>(Arrays.asList(EntityType.Tile, EntityType.Cow,
             EntityType.Cow, EntityType.Chicken, EntityType.Astrolotl, EntityType.Plant, EntityType.Tile,
             EntityType.OxygenEater, EntityType.ShipDebris, EntityType.FireFlies, EntityType.Dragonfly, EntityType.Bat));
+=======
+>>>>>>> origin
     for (Entity e : entities) {
       if (loadableTypes.contains(e.getType())) {
         removeEntity(e);
@@ -124,4 +131,8 @@ public abstract class GameArea implements Disposable {
   public abstract GameMap getMap();
 
   public void setPlayer(Entity customPlayer) { player = customPlayer; }
+
+  public ArrayList<EntityType> getLoadableTypes() {
+    return loadableTypes;
+  }
 }

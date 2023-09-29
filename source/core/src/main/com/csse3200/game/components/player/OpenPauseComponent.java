@@ -34,7 +34,6 @@ public class OpenPauseComponent extends Component {
         ServiceLocator.getPauseMenuArea().setPauseMenu();
         pauseOpen = true;
         ServiceLocator.getTimeService().setPaused(true);
-      //  EntityService.pauseGame();
     }
 
     public void closePauseMenu() {
