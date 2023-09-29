@@ -28,7 +28,7 @@ public class NPCSpawnInfo {
         this.growthRate = growthRate;
         this.spawnCount = initialSpawnCount;
         this.spawnHour = spawnHour;
-        this.randomRange = randomRange;
+        this.randomRange = randomRange % 24;
         randomCount = 0;
         hourReached = false;
     }
@@ -48,20 +48,20 @@ public class NPCSpawnInfo {
                 spawnNPC();
             }
 
-        } else {
-            //Spawn on a random hour (in 'randomRange') after spawnHour
-            if (hourReached && randomCount == randomGoal) {
+        //Spawn on a random hour (in 'randomRange') after spawnHour
+        } else if (hourReached){
+            if (randomCount == randomGoal) {
                 spawnNPC();
 
-            } else if (!hourReached && ServiceLocator.getTimeService().getHour() == spawnHour) {
-                //Once at spawnHour, get randomGoal for next spawn
-                hourReached = true;
-                randomGoal = (int) (Math.random() * randomRange);
-
-            } else if (hourReached) {
-                //Increment randomCount on next hour once hourReached
+            //Increment randomCount on next hour once hourReached
+            } else {
                 randomCount++;
             }
+
+        //Once at spawnHour, get randomGoal for next spawn
+        } else if (ServiceLocator.getTimeService().getHour() == spawnHour) {
+            hourReached = true;
+            randomGoal = (int) (Math.random() * randomRange);
         }
     }
 
