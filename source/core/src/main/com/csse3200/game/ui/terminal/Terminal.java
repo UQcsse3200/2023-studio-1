@@ -42,6 +42,7 @@ public class Terminal extends Component {
     addCommand("setDay", new SetDayCommand());
     addCommand("addItem", new AddItemCommand());
     addCommand("addWeather", new AddWeatherCommand());
+    addCommand("plant", new PlantCommand());
     addCommand("setTimeScale", new SetTimeScaleCommand());
   }
 

@@ -1,15 +1,9 @@
 package com.csse3200.game.components.items;
 
-import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.function.Function;
-
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.areas.terrain.TerrainCropTileFactory;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractionDetector;
@@ -17,9 +11,12 @@ import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
-import com.csse3200.game.entities.factories.PlantFactory;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
+
+import java.util.List;
+
+import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
 
 public class ItemActions extends Component {
 
@@ -32,7 +29,7 @@ public class ItemActions extends Component {
 
   /**
    * Uses the item at the given position
-   * 
+   *
    * @param player   the player entity using the item
    * @param mousePos the position of the mouse
    * @param map      item to use/ interact with tile
@@ -63,10 +60,7 @@ public class ItemActions extends Component {
       }
       case SHOVEL -> {
         resultStatus = shovel(tile);
-        if (!resultStatus) {
-          return destroy(player, mouseWorldPos);
-        }
-        return true;
+        return resultStatus;
       }
       case SCYTHE -> {
         resultStatus = harvest(tile);
@@ -118,7 +112,7 @@ public class ItemActions extends Component {
     Entity placeable = FactoryService.getPlaceableFactories().get(entity.getComponent(ItemComponent.class).getItemName()).get();
     ServiceLocator.getGameArea().spawnEntity(placeable);
     placeable.setPosition(adjustedPos);
-    tile.setPlaceable(placeable);
+    tile.setOccupant(placeable);
     return true;
   }
 
@@ -149,25 +143,24 @@ public class ItemActions extends Component {
     Vector2 mouseWorldPos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
     Vector2 adjustedPosition = new Vector2(
             ServiceLocator.getGameArea().getMap().tileCoordinatesToVector(ServiceLocator.getGameArea().getMap().vectorToTileCoordinates(new Vector2(mouseWorldPos.x, mouseWorldPos.y))));
-    
+
     Vector2 playerPosCenter = ServiceLocator.getGameArea().getPlayer().getCenterPosition();
     playerPosCenter.add(0, -1.0f); // Player entity sprite's feet are located -1.0f below the centre of the entity. ty Hunter
 
     playerPosCenter = ServiceLocator.getGameArea().getMap().tileCoordinatesToVector(ServiceLocator.getGameArea().getMap().vectorToTileCoordinates(playerPosCenter));
-;
+    ;
     if (adjustedPosition.x - 0.5 > playerPosCenter.x) {
       playerPosCenter.x += 1;
     } else if (adjustedPosition.x + 0.5 < playerPosCenter.x) {
       playerPosCenter.x -= 1;
     }
-    if (adjustedPosition.y - 0.5> playerPosCenter.y) {
+    if (adjustedPosition.y - 0.5 > playerPosCenter.y) {
       playerPosCenter.y += 1;
-    } else if (adjustedPosition.y  + 0.5 < playerPosCenter.y) {
+    } else if (adjustedPosition.y + 0.5 < playerPosCenter.y) {
       playerPosCenter.y -= 1;
     }
     return playerPosCenter;
   }
-
 
 
   /**
@@ -177,13 +170,13 @@ public class ItemActions extends Component {
    * @return if watering was successful return true else return false
    */
   private boolean water(TerrainTile tile) {
-    boolean tileWaterable = isCropTile(tile.getCropTile());
+    boolean tileWaterable = isCropTile(tile.getOccupant());
     if (!tileWaterable) {
       return false;
     }
 
     // A water amount of 0.5 was recommended by team 7
-    tile.getCropTile().getEvents().trigger("water", 0.5f);
+    tile.getOccupant().getEvents().trigger("water", 0.5f);
     //item.getComponent(WateringCanLevelComponent.class).incrementLevel(-5); //TODO
     return true;
   }
@@ -195,9 +188,9 @@ public class ItemActions extends Component {
    * @return if harvesting was successful return true else return false
    */
   private boolean harvest(TerrainTile tile) {
-    boolean tileHarvestable = isCropTile(tile.getCropTile());
+    boolean tileHarvestable = isCropTile(tile.getOccupant());
     if (tileHarvestable) {
-      tile.getCropTile().getEvents().trigger("harvest");
+      tile.getOccupant().getEvents().trigger("harvest");
       return true;
     }
     return false;
@@ -210,33 +203,35 @@ public class ItemActions extends Component {
    * @return if shoveling was successful return true else return false
    */
   private boolean shovel(TerrainTile tile) {
-    if (tile.getCropTile() != null) {
-      tile.getCropTile().getEvents().trigger("destroy");
-      tile.removeCropTile();
-      tile.setUnOccupied();
-      return true;
-    }
-    if(tile.getPlaceable() != null){
-      Entity placedItem = tile.getPlaceable();
-
-      //check if the placeable is a chest and if there is items in that chest
-      //if there is items then return false
-      InventoryComponent chestInventory = placedItem.getComponent(InventoryComponent.class);
-      if (chestInventory != null){
-        if (chestInventory.getInventory().size() >= 1){ return false; }
+    // If there is something to remove
+    if (tile.getOccupant() != null) {
+      // If it is a chest check if it has stuff in it
+      if (tile.getOccupant().getComponent(InventoryComponent.class) != null) {
+        if (tile.getOccupant().getComponent(InventoryComponent.class).getInventory().size() >= 1) {
+          return false;
+        }
       }
+      // TODO Below here is temp code all that should be called here is whatever is surronding by the other two todos
+      // Just dont have time and want it out
+      if (
+              List.of(EntityType.Tile, EntityType.ShipDebris)
+                      .contains(tile.getOccupant().getType())
+      ) {
+        // TODO this good
+        tile.getOccupant().getEvents().trigger("destroy", tile);
+        return true;
+        // TODO Above this is amazing
+      } else {
+        Entity placedItem = tile.getOccupant();
+        Vector2 newPos = placedItem.getPosition();
+        tile.removeOccupant();
 
-      Vector2 newPos = placedItem.getPosition();
-      tile.setPlaceable(null);    //update the tile
-      tile.setUnOccupied();
-
-
-
-      Entity droppedItem = FactoryService.getItemFactories().get(placedItem.getType().toString()).get();
-      ServiceLocator.getGameArea().spawnEntity(droppedItem);
-      droppedItem.setPosition(newPos);
-      //placedItem.getEvents().trigger("destroy"); //TODO: add trigger event to all placeable items so dynamic textures can be updated
-      ServiceLocator.getGameArea().removeEntity(placedItem);
+        Entity droppedItem = FactoryService.getItemFactories().get(placedItem.getType().toString()).get();
+        ServiceLocator.getGameArea().spawnEntity(droppedItem);
+        droppedItem.setPosition(newPos);
+        //placedItem.getEvents().trigger("destroy"); //TODO: add trigger event to all placeable items so dynamic textures can be updated
+        ServiceLocator.getGameArea().removeEntity(placedItem);
+      }
       return true;
     }
     return false;
@@ -258,7 +253,7 @@ public class ItemActions extends Component {
     Vector2 newPos = getAdjustedPos(playerPos, mousePos);
     Entity cropTile = createTerrainEntity(newPos);
     ServiceLocator.getEntityService().register(cropTile);
-    tile.setCropTile(cropTile);
+    tile.setOccupant(cropTile);
     tile.setOccupied();
     return true;
   }
@@ -270,8 +265,8 @@ public class ItemActions extends Component {
      * @return if fertilising was successful return true else return false
      */
   private boolean fertilise(TerrainTile tile) {
-    if (isCropTile(tile.getCropTile())) {
-      tile.getCropTile().getEvents().trigger("fertilise");
+    if (isCropTile(tile.getOccupant())) {
+      tile.getOccupant().getEvents().trigger("fertilise");
       return true;
     }
     return false;
@@ -284,8 +279,8 @@ public class ItemActions extends Component {
      * @return if planting was successful return true else return false
      */
   private boolean plant(TerrainTile tile) {
-    if (isCropTile(tile.getCropTile())) {
-      tile.getCropTile().getEvents().trigger("plant", FactoryService.getPlantFactories()
+    if (isCropTile(tile.getOccupant())) {
+      tile.getOccupant().getEvents().trigger("plant", FactoryService.getPlantFactories()
               .get(entity.getComponent(ItemComponent.class).getItemName().replace(" seed", "")));
       return true;
     }
@@ -325,33 +320,6 @@ public class ItemActions extends Component {
     }
 
     entityToFeed.getEvents().trigger("feed");
-    return true;
-  }
-
-  /**
-   * Triggers a destroy event on the destroyable entity.
-   *
-   * @param player player entity
-   * @param mouseWorldPos position to check for destroyable entity
-   * @return true if destroyed, false otherwise
-   */
-  private boolean destroy(Entity player, Vector2 mouseWorldPos) {
-    InteractionDetector interactionDetector = player.getComponent(InteractionDetector.class);
-
-    if (interactionDetector == null) {
-      return false;
-    }
-
-    List<Entity> entities = interactionDetector.getEntitiesTowardsPosition(mouseWorldPos);
-    entities.removeIf(entity -> entity.getType() != EntityType.ShipDebris);
-
-    Entity entityToDestroy = interactionDetector.getNearest(entities);
-
-    if (entityToDestroy == null) {
-      return false;
-    }
-
-    entityToDestroy.getEvents().trigger("destroy");
     return true;
   }
 }

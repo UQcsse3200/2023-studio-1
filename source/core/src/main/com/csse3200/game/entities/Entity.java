@@ -455,7 +455,7 @@ public class Entity implements Json.Serializable {
           ServiceLocator.getGameArea().spawnEntity(tile);
           tile.setPosition(position);
           TerrainTile terrainTile = ServiceLocator.getGameArea().getMap().getTile(tile.getPosition());
-          terrainTile.setCropTile(tile);
+          terrainTile.setOccupant(tile);
           break;
         case Player:
           // Does not make a new player, instead just updates the current one

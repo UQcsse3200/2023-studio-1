@@ -299,4 +299,18 @@ public class ItemFactory {
                     new Texture("images/plants/misc/aloe_vera_seed.png")));
     return light;
   }
+
+  /**
+   * Creates a ship part item that can be used to repair the ship
+   * @return ship part
+   */
+  public static Entity createShipPart() {
+    Entity ShipPart = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/ship/ship_part.png"))
+            .addComponent(new ItemComponent("Ship Part", ItemType.SHIP_PART,
+                    "Pieces of scrap metal in surprisingly good condition. Seems like it could be used" +
+                            " for ship repairs...",
+                    new Texture("images/ship/ship_part.png")));
+    return ShipPart;
+  }
 }

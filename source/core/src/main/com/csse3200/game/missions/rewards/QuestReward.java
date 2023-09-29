@@ -15,14 +15,21 @@ public class QuestReward extends Reward {
     /**
      * A list of quests to be unlocked when this reward is marked as complete.
      */
-    private List<Quest> quests;
+    private final List<Quest> selectableQuests;
+    /**
+     * A list of quests to be made active when this reward is collected.
+     */
+    private final List<Quest> activeQuests;
 
     /**
      * A QuestReward that adds quests to the MissionManager on collect().
-     * @param quests - the quests to be added when the Quest attached is complete.
+     * @param selectableQuests - the quests to be added when the Quest attached is complete.
+     * @param activeQuests - the quests to be activated when the reward is collected.
      */
-    public QuestReward(List<Quest> quests) {
-        this.quests = quests;
+    public QuestReward(List<Quest> selectableQuests, List<Quest> activeQuests) {
+        super();
+        this.selectableQuests = selectableQuests;
+        this.activeQuests = activeQuests;
     }
 
     /**
@@ -30,10 +37,15 @@ public class QuestReward extends Reward {
      */
     @Override
     public void collect() {
+        setCollected();
         MissionManager missionManager = ServiceLocator.getMissionManager();
 
-        for (Quest quest : this.quests) {
+        for (Quest quest : selectableQuests) {
             missionManager.addQuest(quest);
+        }
+
+        for (Quest quest : activeQuests) {
+            missionManager.acceptQuest(quest);
         }
     }
 }
