@@ -104,9 +104,7 @@ public class AttackPlantTask extends DefaultTask implements PriorityTask {
 
         System.out.println(currentTarget.getComponent(PlantComponent.class).getPlantHealth());
         System.out.println(currentTarget.getComponent(PlantComponent.class).getPlantName());
-//        currentTarget.getComponent(PlantComponent.class)
-//                .increasePlantHealth(-(this.owner.getEntity()
-//                        .getComponent(CombatStatsComponent.class).getBaseAttack()));
+
     }
 
     private void moveToTarget(Entity target) {
