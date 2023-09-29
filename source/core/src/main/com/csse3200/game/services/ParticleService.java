@@ -16,8 +16,8 @@ public class ParticleService {
 
 	public static final String WEATHER_EVENT = "WEATHER_EVENT";
 
-	ArrayList<ParticleEffectWrapper> queuedEffects;
-	private HashMap<ParticleEffectType, ParticleEffectPool> particleEffectPools;
+	private final ArrayList<ParticleEffectWrapper> queuedEffects;
+	private final HashMap<ParticleEffectType, ParticleEffectPool> particleEffectPools;
 
 	public enum ParticleEffectType {
 		ACID_RAIN(WEATHER_EVENT, "particle-effects/acid_rain.p", 1, 10);
@@ -36,6 +36,9 @@ public class ParticleService {
 	}
 
 	public ParticleService() {
+		queuedEffects = new ArrayList<>();
+		particleEffectPools = new HashMap<>();
+
 		String[] particleNames = new String[ParticleEffectType.values().length];
 		int i = 0;
 		// Loads the particles
@@ -66,7 +69,9 @@ public class ParticleService {
 	}
 
 	public void startEffect(ParticleEffectType effectType) {
+		// Grabs the effect from the effect pool using the enum
 		ParticleEffectWrapper effectWrapper = new ParticleEffectWrapper(particleEffectPools.get(effectType).obtain(), effectType.category, effectType.name());
+		// Adds the effect to the queued effects so the particle service knows to draw it
 		queuedEffects.add(effectWrapper);
 		effectWrapper.getPooledEffect().start();
 	}
