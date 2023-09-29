@@ -22,6 +22,20 @@ public class FollowTask extends ChaseTask {
     this.stoppingDistance = stoppingDistance;
   }
 
+
+  /**
+   * @param target The entity to follow.
+   * @param priority Task priority when following (0 when not following).
+   * @param viewDistance Maximum distance from the entity at which following can start.
+   * @param maxFollowDistance Maximum distance from the entity while following before giving up.
+   * @param stoppingDistance The distance at which the entity stops following target
+   */
+  public FollowTask(Entity target, int priority, float viewDistance, float maxFollowDistance,
+                    float stoppingDistance, Vector2 speed, boolean checkVisibility) {
+    super(target, priority, viewDistance, maxFollowDistance, speed, checkVisibility);
+    this.stoppingDistance = stoppingDistance;
+  }
+
   /**
    * Starts the follow task by initializing the movement task and triggering the "followStart" event.
    */
@@ -41,7 +55,7 @@ public class FollowTask extends ChaseTask {
   @Override
   public void update() {
     //Stops follow if entity is too close to target
-    if(getDistanceToTarget() <= stoppingDistance){
+    if(getDistanceToTarget() <= stoppingDistance) {
       stop();
     } else {
       getMovementTask().setTarget(getTarget().getCenterPosition());

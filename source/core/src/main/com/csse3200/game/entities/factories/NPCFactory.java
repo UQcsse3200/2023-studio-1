@@ -299,9 +299,10 @@ public class NPCFactory {
     animator.addAnimation("idle_left", 0.15f, Animation.PlayMode.LOOP);
     animator.addAnimation("idle_right", 0.15f, Animation.PlayMode.LOOP);
 
+
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(1.5f, 1.5f), 5f))
-            .addTask(new ChaseTask(player, 10, 8, 10, new Vector2(4f, 4f)));
+            .addTask(new FollowTask(player, 10, 8, 10, 0.5f, new Vector2(4f, 4f), false));
 
     bat
             .addComponent(aiTaskComponent)
@@ -313,8 +314,8 @@ public class NPCFactory {
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
 
 
+
     bat.scaleHeight(1.2f);
-    PhysicsUtils.setScaledCollider(bat, 0.9f, 0.4f);
     return bat;
   }
 
@@ -328,8 +329,11 @@ public class NPCFactory {
     Entity animal = new Entity(type)
             .addComponent(new PhysicsComponent())
             .addComponent(new PhysicsMovementComponent())
-            .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent());
+
+    if (type != EntityType.Dragonfly && type != EntityType.Bat) {
+      animal.addComponent(new ColliderComponent());
+    }
 
     return animal;
   }
