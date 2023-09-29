@@ -9,6 +9,7 @@ import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.combat.TouchAttackComponent;
+import com.csse3200.game.components.combat.attackpatterns.DragonflyAttackPattern;
 import com.csse3200.game.components.combat.attackpatterns.OxygenEaterAttackPattern;
 import com.csse3200.game.components.npc.*;
 import com.csse3200.game.components.tasks.*;
@@ -194,14 +195,13 @@ public class NPCFactory {
     animator.addAnimation("attack_left", 0.1f);
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
-            .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-            .addTask(new RunAwayTask(player, 10, 3f, 4f, new Vector2(2f, 2f)));
+            .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
 
     oxygenEater
             .addComponent(aiTaskComponent)
             .addComponent(animator)
             .addComponent(new HostileAnimationController())
-            .addComponent(new OxygenEaterAttackPattern(1.5f, ProjectileFactory::createOxygenEaterProjectile))
+            .addComponent(new DragonflyAttackPattern(1.5f, ProjectileFactory::createDragonflyProjectile))
             .addComponent(new InteractionDetector(5f, new ArrayList<>(Arrays.asList(EntityType.Player)))); // TODO: Do we want it to attack anything
 
     oxygenEater.scaleHeight(2f);

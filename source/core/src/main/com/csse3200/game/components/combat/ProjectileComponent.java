@@ -27,7 +27,7 @@ public class ProjectileComponent extends Component {
     private Vector2 velocity;
     private boolean constantVelocity = false;
     private boolean destroyOnImpact = false;
-
+    private boolean destroyed = false;
     /**
      * Constructs a ProjectileComponent with a specified duration.
      *
@@ -88,6 +88,11 @@ public class ProjectileComponent extends Component {
      * Destroys the projectile entity by removing it from the game area.
      */
     private void destroyProjectile() {
+        if (destroyed) {
+            return;
+        }
+
+        destroyed = true;
         ServiceLocator.getGameArea().removeEntity(entity);
     }
 

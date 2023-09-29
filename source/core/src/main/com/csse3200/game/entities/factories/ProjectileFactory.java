@@ -3,7 +3,7 @@ package com.csse3200.game.entities.factories;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.components.TouchAttackComponent;
+import com.csse3200.game.components.combat.TouchAttackComponent;
 import com.csse3200.game.components.combat.ProjectileAnimationController;
 import com.csse3200.game.components.combat.ProjectileComponent;
 import com.csse3200.game.entities.Entity;
@@ -67,7 +67,7 @@ public class ProjectileFactory {
 
         projectile
                 .addComponent(new ProjectileComponent(3f))
-                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 2f, 0.1f))
+                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 5f))
                 .addComponent(animator);
 
         projectile.getComponent(HitboxComponent.class).setAsBoxAligned(
