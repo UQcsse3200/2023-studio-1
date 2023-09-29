@@ -4,10 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
+import com.badlogic.gdx.utils.Json;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -97,6 +96,24 @@ public class WeatherEventTest {
         verify(weatherEventSpy3, times(1)).isActive();
         verify(weatherEventSpy4, times(0)).isActive();
         verify(weatherEventSpy5, times(0)).isActive();
+    }
+
+    @Test
+    public void testGetDuration() {
+        assertEquals(weatherEvent1.getDuration(), 10);
+        assertEquals(weatherEvent2.getDuration(), 2);
+        assertEquals(weatherEvent3.getDuration(), 4);
+        assertEquals(weatherEvent4.getDuration(), 3);
+        assertEquals(weatherEvent5.getDuration(), 5);
+    }
+
+    @Test
+    public void testGetNumHoursUntil() {
+        assertEquals(weatherEvent1.getNumHoursUntil(), 0);
+        assertEquals(weatherEvent2.getNumHoursUntil(), 1);
+        assertEquals(weatherEvent3.getNumHoursUntil(), 2);
+        assertEquals(weatherEvent4.getNumHoursUntil(), 3);
+        assertEquals(weatherEvent5.getNumHoursUntil(), 5);
     }
 
     @Test
@@ -238,5 +255,36 @@ public class WeatherEventTest {
 
             }
         }, "Severity must be greater than 0.");
+    }
+
+    @Test
+    public void testWrite() {
+        Json mockJson1 = mock(Json.class);
+        weatherEvent1.write(mockJson1);
+        verify(mockJson1).writeObjectStart("Event");
+        verify(mockJson1).writeValue("name", weatherEvent1.getClass().getSimpleName());
+        verify(mockJson1).writeValue("hoursUntil", 0);
+        verify(mockJson1).writeValue("duration", 10);
+        verify(mockJson1).writeValue("priority", 1);
+        verify(mockJson1).writeValue("severity", 1.2f);
+        verify(mockJson1).writeObjectEnd();
+        Json mockJson2 = mock(Json.class);
+        weatherEvent2.write(mockJson2);
+        verify(mockJson2).writeObjectStart("Event");
+        verify(mockJson2).writeValue("name", weatherEvent1.getClass().getSimpleName());
+        verify(mockJson2).writeValue("hoursUntil", 1);
+        verify(mockJson2).writeValue("duration", 2);
+        verify(mockJson2).writeValue("priority", 2);
+        verify(mockJson2).writeValue("severity", 1.4f);
+        verify(mockJson2).writeObjectEnd();
+        Json mockJson3 = mock(Json.class);
+        weatherEvent3.write(mockJson3);
+        verify(mockJson3).writeObjectStart("Event");
+        verify(mockJson3).writeValue("name", weatherEvent1.getClass().getSimpleName());
+        verify(mockJson3).writeValue("hoursUntil", 2);
+        verify(mockJson3).writeValue("duration", 4);
+        verify(mockJson3).writeValue("priority", 5);
+        verify(mockJson3).writeValue("severity", 1.0f);
+        verify(mockJson3).writeObjectEnd();
     }
 }
