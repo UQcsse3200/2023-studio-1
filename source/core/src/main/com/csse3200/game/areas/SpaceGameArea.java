@@ -28,9 +28,9 @@ public class SpaceGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(SpaceGameArea.class);
 
   private static final int NUM_GHOSTS = 5;
-  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
-  private static final GridPoint2 QUESTGIVER_SPAWN = new GridPoint2(20, 20);
-  private static final GridPoint2 SHIP_SPAWN = new GridPoint2(50,50);
+  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(24, 86);
+  private static final GridPoint2 QUESTGIVER_SPAWN = new GridPoint2(42, 87);
+  private static final GridPoint2 SHIP_SPAWN = new GridPoint2(20,85);
 
   private static final GridPoint2 TRACTOR_SPAWN = new GridPoint2(15, 15);
 
@@ -173,6 +173,7 @@ public class SpaceGameArea extends GameArea {
           
           "images/ship/ship_debris.png",
           "images/ship/ship.png",
+          "images/ship/ship_part.png",
   };
   private static final String[] forestTextureAtlases = {
       "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
