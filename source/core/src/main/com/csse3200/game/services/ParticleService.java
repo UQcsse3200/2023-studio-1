@@ -2,15 +2,21 @@ package com.csse3200.game.services;
 
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.csse3200.game.rendering.ParticleEffectWrapper;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class ParticleService {
 
 	public static final String WEATHER_EVENT = "WEATHER_EVENT";
 
-	private HashMap<ParticleEffectType, ParticleEffect> queuedEffects;
+	ArrayList<ParticleEffectWrapper> queuedEffects;
 	private HashMap<ParticleEffectType, ParticleEffectPool> particleEffectPools;
 
 	public enum ParticleEffectType {
@@ -44,5 +50,38 @@ public class ParticleService {
 			effect = ServiceLocator.getResourceService().getAsset(effectType.effectPath, ParticleEffect.class);
 			particleEffectPools.put(effectType, new ParticleEffectPool(effect, effectType.minCapacity, effectType.maxCapacity));
 		}
+	}
+
+	public void render (SpriteBatch batch, float delta) {
+		for (ParticleEffectWrapper wrapper : queuedEffects) {
+			if (wrapper.getPooledEffect().isComplete()) {
+				wrapper.getPooledEffect().reset();
+			}
+			wrapper.getPooledEffect().draw(batch, delta);
+		}
+	}
+
+	public void startEffect(ParticleEffectType effectType) {
+		ParticleEffectWrapper effectWrapper = new ParticleEffectWrapper(particleEffectPools.get(effectType).obtain(), effectType.category, effectType.name());
+		queuedEffects.add(effectWrapper);
+		effectWrapper.getPooledEffect().start();
+	}
+
+	public void stopEffect(String type) {
+		Predicate<ParticleEffectWrapper> predicate = effectWrapper -> effectWrapper.getType().equals(type);
+		List<ParticleEffectWrapper> wrappers = queuedEffects.stream().filter(predicate).toList();
+		for (ParticleEffectWrapper wrapper : wrappers) {
+			wrapper.getPooledEffect().free();
+		}
+		queuedEffects.removeIf(predicate);
+	}
+
+	public void stopEffectCategory(String category) {
+		Predicate<ParticleEffectWrapper> predicate = effectWrapper -> effectWrapper.getCategory().equals(category);
+		List<ParticleEffectWrapper> wrappers = queuedEffects.stream().filter(predicate).toList();
+		for (ParticleEffectWrapper wrapper : wrappers) {
+			wrapper.getPooledEffect().free();
+		}
+		queuedEffects.removeIf(predicate);
 	}
 }
