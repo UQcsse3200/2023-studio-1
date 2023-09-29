@@ -1,5 +1,6 @@
 package com.csse3200.game.services;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -17,6 +18,7 @@ public class ParticleService {
 	public static final String WEATHER_EVENT = "WEATHER_EVENT";
 
 	private final ArrayList<ParticleEffectWrapper> queuedEffects;
+	private final HashMap<ParticleEffectType, ParticleEffect> particleEffects;
 	private final HashMap<ParticleEffectType, ParticleEffectPool> particleEffectPools;
 
 	public enum ParticleEffectType {
@@ -38,6 +40,7 @@ public class ParticleService {
 	public ParticleService() {
 		queuedEffects = new ArrayList<>();
 		particleEffectPools = new HashMap<>();
+		particleEffects = new HashMap<>();
 
 		String[] particleNames = new String[ParticleEffectType.values().length];
 		int i = 0;
@@ -54,17 +57,19 @@ public class ParticleService {
 		// Creates pools for all the particles
 		ParticleEffect effect;
 		for (ParticleEffectType effectType : ParticleEffectType.values()) {
-			effect = ServiceLocator.getResourceService().getAsset(effectType.effectPath, ParticleEffect.class);
-			particleEffectPools.put(effectType, new ParticleEffectPool(effect, effectType.minCapacity, effectType.maxCapacity));
+			particleEffects.put(effectType, ServiceLocator.getResourceService().getAsset(effectType.effectPath, ParticleEffect.class));
+			particleEffectPools.put(effectType, new ParticleEffectPool(particleEffects.get(effectType), effectType.minCapacity, effectType.maxCapacity));
 		}
+
+		startEffect(ParticleEffectType.ACID_RAIN);
 	}
 
 	public void render (SpriteBatch batch, float delta) {
 		for (ParticleEffectWrapper wrapper : queuedEffects) {
+			wrapper.getPooledEffect().draw(batch, delta);
 			if (wrapper.getPooledEffect().isComplete()) {
 				wrapper.getPooledEffect().reset();
 			}
-			wrapper.getPooledEffect().draw(batch, delta);
 		}
 	}
 
@@ -73,6 +78,8 @@ public class ParticleService {
 		ParticleEffectWrapper effectWrapper = new ParticleEffectWrapper(particleEffectPools.get(effectType).obtain(), effectType.category, effectType.name());
 		// Adds the effect to the queued effects so the particle service knows to draw it
 		queuedEffects.add(effectWrapper);
+		// Just for now since effect is too big - TODO Make Smaller
+		effectWrapper.getPooledEffect().scaleEffect(0.1f);
 		effectWrapper.getPooledEffect().start();
 	}
 
