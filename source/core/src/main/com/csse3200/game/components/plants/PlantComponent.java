@@ -1032,8 +1032,8 @@ public class PlantComponent extends Component {
         }
 
 
-        String returnString =   plantName +
-                "\nGrowth Stage: " + getGrowthStage().name() +
+        String returnString =
+                "Growth Stage: " + getGrowthStage().name() +
                 "\nWater level: " + waterLevel + "/" + idealWaterLevel +
                 "\nWater Status: " + waterLevelStatus +
                 "\nHealth: " + plantHealth + "/" + currentMaxHealth;
