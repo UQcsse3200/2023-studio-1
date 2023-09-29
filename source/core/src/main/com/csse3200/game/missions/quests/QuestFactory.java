@@ -1,11 +1,13 @@
 package com.csse3200.game.missions.quests;
 
 import com.csse3200.game.entities.factories.ItemFactory;
+import com.csse3200.game.entities.factories.TractorFactory;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.rewards.DialogueReward;
 import com.csse3200.game.missions.rewards.ItemReward;
 import com.csse3200.game.missions.rewards.MultiReward;
 import com.csse3200.game.missions.rewards.QuestReward;
+import com.csse3200.game.services.ServiceLocator;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -122,6 +124,20 @@ public class QuestFactory {
                 Set.of("Cosmic Cob"), 12);
     }
 
+    public static MissionCompleteQuest createMissionCompleteQuest() {
+        List<Quest> questsToAdd = new ArrayList<>();
+        List<Quest> questsToActivate = new ArrayList<>();
+        String dialogue = """
+                Traktor Go BRRRR!!!
+                """;
+        MultiReward reward = new MultiReward(List.of(
+                new ItemReward(List.of(TractorFactory.createTractor(ServiceLocator.getGameArea().getPlayer()))),
+                new QuestReward(questsToAdd, questsToActivate),
+                new DialogueReward(dialogue)
+        ));
+        return new MissionCompleteQuest("Mission Complete", reward, 5);
+    }
+
     public static TameAnimalsQuest createMakingFriendsQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
         List<Quest> questsToActivate = new ArrayList<>();
@@ -151,6 +167,7 @@ public class QuestFactory {
 
         List<Quest> questsToActivate = new ArrayList<>();
         questsToActivate.add(createActIIMainQuest());
+        // TODO mission here go
 
         String dialogue = """
                 Well done, human. You have shown me that you can be trusted, and that our cooperation may be mutually beneficial.
