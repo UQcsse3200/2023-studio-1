@@ -13,7 +13,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainFactory;
@@ -95,7 +96,7 @@ public class FenceComponentTest {
                 .addComponent(new HitboxComponent())
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
                 .addComponent(dtrc)
-                .addComponent(new FenceComponent(false));
+                .addComponent(new FenceComponent(true));
 
         f1.create();
         g1.create();
@@ -105,5 +106,41 @@ public class FenceComponentTest {
     public void shouldCreateComponent() {
         assertNotNull(f1.getComponent(FenceComponent.class));
         assertNotNull(g1.getComponent(FenceComponent.class));
+    }
+
+    @Test
+    public void shouldOpenGate() {
+        /* Pretend we open the gate */
+        g1.getEvents().trigger("interact");
+        Fixture fix = g1.getComponent(ColliderComponent.class).getFixture();
+
+        if (fix != null) {
+            assertTrue(fix.isSensor());
+            return;
+        }
+    }
+
+    @Test
+    public void shouldCloseGate() {
+        /* Open and close gate */
+        g1.getEvents().trigger("interact");
+        g1.getEvents().trigger("interact");
+        Fixture fix = g1.getComponent(ColliderComponent.class).getFixture();
+
+        if (fix != null) {
+            assertFalse(fix.isSensor());
+            return;
+        }
+    }
+
+    @Test
+    public void shouldNotInteractFence() {
+        f1.getEvents().trigger("interact");
+        Fixture fix = f1.getComponent(ColliderComponent.class).getFixture();
+
+        if (fix != null) {
+            assertFalse(fix.isSensor());
+            return;
+        }
     }
 }
