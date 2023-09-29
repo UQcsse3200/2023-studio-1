@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.rendering.ParticleEffectWrapper;
 
 import java.util.ArrayList;
@@ -67,7 +68,9 @@ public class ParticleService {
 	}
 
 	public void render (SpriteBatch batch, float delta) {
+		Vector2 playerPosition = ServiceLocator.getGameArea().getPlayer().getCenterPosition();
 		for (ParticleEffectWrapper wrapper : queuedEffects) {
+			wrapper.getPooledEffect().setPosition(playerPosition.x,playerPosition.y);
 			wrapper.getPooledEffect().draw(batch, delta);
 			if (wrapper.getPooledEffect().isComplete()) {
 				wrapper.getPooledEffect().reset();
