@@ -1,5 +1,6 @@
 package com.csse3200.game.components.player;
 
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +23,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private static boolean menuOpened = false;
   private static Enum currentMenu = MenuTypes.NONE;
   private final int hotKeyOffset = 6;
+  private static boolean showPlantInfoUI = true;
   public enum MenuTypes{
     PAUSEMENU,
     NONE
@@ -86,6 +88,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           return true;
         case Keys.T:
           entity.getEvents().trigger("toggleLight");
+          return true;
+        case Keys.Q:
+          showPlantInfoUI = !showPlantInfoUI;
+          ServiceLocator.getPlantInfoService().getEvents().trigger("toggleOpen", showPlantInfoUI);
           return true;
         default:
           return false;
