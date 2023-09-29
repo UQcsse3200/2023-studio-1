@@ -9,14 +9,7 @@ import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.TouchAttackComponent;
-<<<<<<< HEAD
-import com.csse3200.game.components.npc.AnimalAnimationController;
-import com.csse3200.game.components.npc.FireflyScareComponent;
-import com.csse3200.game.components.npc.PassiveDropComponent;
-import com.csse3200.game.components.npc.TamableComponent;
-=======
 import com.csse3200.game.components.npc.*;
->>>>>>> origin
 import com.csse3200.game.components.tasks.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
@@ -192,22 +185,12 @@ public class NPCFactory {
             16f
     );
 
-<<<<<<< HEAD
-    animator.addAnimation("idle_left", 1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("idle_right", 1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("walk_left", 1f, Animation.PlayMode.LOOP_REVERSED);
-    animator.addAnimation("walk_right", 1f, Animation.PlayMode.LOOP);
-
-//    animator.addAnimation("idle", 1f, Animation.PlayMode.LOOP);
-  // animator.addAnimation("consume", 1f, Animation.PlayMode.LOOP);
-=======
     animator.addAnimation("idle_left", 0.5f, Animation.PlayMode.LOOP);
     animator.addAnimation("walk_left", 0.5f, Animation.PlayMode.LOOP);
     animator.addAnimation("idle_right", 0.5f, Animation.PlayMode.LOOP_REVERSED);
     animator.addAnimation("walk_right", 0.5f, Animation.PlayMode.LOOP_REVERSED);
     animator.addAnimation("attack_right", 0.1f, Animation.PlayMode.REVERSED);
     animator.addAnimation("attack_left", 0.1f);
->>>>>>> origin
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
@@ -215,13 +198,6 @@ public class NPCFactory {
     oxygenEater
             .addComponent(aiTaskComponent)
             .addComponent(animator)
-<<<<<<< HEAD
-            .addComponent(new AnimalAnimationController());
-
-    oxygenEater.scaleHeight(3f);
-    PhysicsUtils.setScaledCollider(oxygenEater, 0.7f, 0.4f);
-
-=======
             .addComponent(new HostileAnimationController())
             .addComponent(new OxygenEaterAttackPattern())
             .addComponent(new InteractionDetector(5f, new ArrayList<>(Arrays.asList(EntityType.Player)))); // TODO: Do we want it to attack anything
@@ -232,7 +208,6 @@ public class NPCFactory {
     oxygenEater.getComponent(HitboxComponent.class).setAsBoxAligned(new Vector2(1f, 1f),
             PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.CENTER);
 
->>>>>>> origin
     return oxygenEater;
   }
 

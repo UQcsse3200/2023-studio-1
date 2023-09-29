@@ -71,7 +71,6 @@ public class AnimalAnimationController extends Component {
         entity.getEvents().addListener("idleStart", this::animateIdle);
         entity.getEvents().addListener("followStart", this::animateWalk);
         entity.getEvents().addListener("followStop", this::animateIdle);
-        entity.getEvents().addListener("attack", this::animateAttack);
 
         animateIdle();
     }
@@ -110,13 +109,6 @@ public class AnimalAnimationController extends Component {
         entity.getEvents().trigger(currentAnimation + "Start");
     }
 
-    /**
-     * Play attack animation with current direction
-     */
-    void animateAttack() {
-        entity.getEvents().trigger(ATTACK_PREFIX + "_" + direction);
-        currentAnimation = ATTACK_PREFIX;
-    }
 }
 
 

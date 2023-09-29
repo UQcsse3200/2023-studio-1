@@ -182,12 +182,10 @@ public class SpaceGameArea extends GameArea {
       "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas", "images/questgiver.atlas",
       "images/missionStatus.atlas", "images/plants/cosmic_cob.atlas", "images/plants/aloe_vera.atlas",
       "images/plants/hammer_plant.atlas", "images/plants/space_snapper.atlas", "images/plants/atomic_algae.atlas",
-<<<<<<< HEAD
       "images/plants/deadly_nightshade.atlas", "images/fireflies.atlas", "images/animals/dragonfly.atlas",
-          "images/animals/bat.atlas"
-=======
-      "images/plants/deadly_nightshade.atlas", "images/projectiles/oxygen_eater_projectile.atlas",
-      "images/fireflies.atlas", "images/ship/ship.atlas", "images/light.atlas"
+          "images/animals/bat.atlas", "images/projectiles/oxygen_eater_projectile.atlas",
+          "images/ship/ship.atlas", "images/light.atlas"
+
   };
   private static final String[] forestSounds = {
           "sounds/Impact4.ogg", "sounds/car-horn-6408.mp3",
@@ -215,7 +213,6 @@ public class SpaceGameArea extends GameArea {
           "sounds/plants/waterWeed/decay.wav", "sounds/plants/waterWeed/decayLore.wav",
           "sounds/plants/waterWeed/destroy.wav", "sounds/plants/waterWeed/destroyLore.wav",
           "sounds/plants/waterWeed/nearby.wav", "sounds/plants/waterWeed/nearbyLore.wav",
->>>>>>> origin
   };
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
   private static final String[] forestMusic = {backgroundMusic};

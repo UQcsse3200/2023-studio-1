@@ -106,12 +106,11 @@ public abstract class GameArea implements Disposable {
    * @param entities Array of entities currently in game.
    */
   public void removeLoadableEntities(Array<Entity> entities) {
-<<<<<<< HEAD
+
     ArrayList<EntityType> loadableTypes = new ArrayList<>(Arrays.asList(EntityType.Tile, EntityType.Cow,
             EntityType.Cow, EntityType.Chicken, EntityType.Astrolotl, EntityType.Plant, EntityType.Tile,
             EntityType.OxygenEater, EntityType.ShipDebris, EntityType.FireFlies, EntityType.Dragonfly, EntityType.Bat));
-=======
->>>>>>> origin
+
     for (Entity e : entities) {
       if (loadableTypes.contains(e.getType())) {
         removeEntity(e);
