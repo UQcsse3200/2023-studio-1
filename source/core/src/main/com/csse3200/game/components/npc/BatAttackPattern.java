@@ -15,7 +15,7 @@ import com.csse3200.game.utils.DirectionUtils;
  */
 public class BatAttackPattern extends Component {
     /** Frequency of attacks in seconds */
-    private static final float ATTACK_FREQUENCY = 2f;
+    private static final float ATTACK_FREQUENCY = 1.5f;
     /** Entity's interaction detector */
     private InteractionDetector interactionDetector;
     /** Scheduled attack event */

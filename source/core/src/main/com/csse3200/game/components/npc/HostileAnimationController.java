@@ -73,7 +73,6 @@ public class HostileAnimationController extends AnimalAnimationController {
      */
     @Override
     public void update() {
-        System.out.println(animator.getCurrentAnimation());
         if (activeAction && animator.isFinished()) {
             activeAction = false;
             entity.getEvents().trigger(currentAnimation + "Start");

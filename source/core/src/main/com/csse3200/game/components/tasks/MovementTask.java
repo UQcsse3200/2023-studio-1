@@ -108,7 +108,6 @@ public class MovementTask extends DefaultTask {
     lastPos = owner.getEntity().getPosition();
 
     this.currentDirection = getDirection();
-    System.out.println("Direction change start");
     this.owner.getEntity().getEvents().trigger("directionChange", currentDirection);
   }
 
@@ -125,7 +124,6 @@ public class MovementTask extends DefaultTask {
       // If direction changes during movement task, animation must be re-triggered with new direction.
       if (!Objects.equals(currentDirection, getDirection())) {
         this.currentDirection = getDirection();
-        System.out.println("Direction change update");
         this.owner.getEntity().getEvents().trigger("directionChange", currentDirection);
       }
 

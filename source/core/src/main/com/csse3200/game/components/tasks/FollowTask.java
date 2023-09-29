@@ -17,7 +17,8 @@ public class FollowTask extends ChaseTask {
    * @param priority Task priority when following (0 when not following).
    * @param viewDistance Maximum distance from the entity at which following can start.
    * @param maxFollowDistance Maximum distance from the entity while following before giving up.
-   * @param stoppingDistance The distance at which the entity stops following target
+   * @param stoppingDistance The distance at which the entity stops following target.
+   * @param speed The speed at which the entity follows the player.
    */
   public FollowTask(Entity target, int priority, float viewDistance, float maxFollowDistance,
                     float stoppingDistance, Vector2 speed) {
@@ -32,7 +33,9 @@ public class FollowTask extends ChaseTask {
    * @param priority Task priority when following (0 when not following).
    * @param viewDistance Maximum distance from the entity at which following can start.
    * @param maxFollowDistance Maximum distance from the entity while following before giving up.
-   * @param stoppingDistance The distance at which the entity stops following target
+   * @param stoppingDistance The distance at which the entity stops following target.
+   * @param speed The speed at which the entity follows the player.
+   * @param checkVisibility  Checks to see if the entity will consider obstacles in its path.
    */
   public FollowTask(Entity target, int priority, float viewDistance, float maxFollowDistance,
                     float stoppingDistance, Vector2 speed, boolean checkVisibility) {
@@ -60,8 +63,7 @@ public class FollowTask extends ChaseTask {
   @Override
   public void update() {
     //Stops follow if entity is too close to target
-    if(getDistanceToTarget() <= 1.5f) {
-      //System.out.println("First");
+    if(getDistanceToTarget() <= stoppingDistance) {
       owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(false);
       return;
     } else {
