@@ -21,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.IntStream;
 
 /** SpaceGameArea is the area used for the initial game version */
@@ -364,14 +365,22 @@ public class SpaceGameArea extends GameArea {
    */
   private void spawnShipDebris() {
 
-    GridPoint2 minPos = new GridPoint2(SHIP_SPAWN.x - 5, SHIP_SPAWN.y - 5);
-    GridPoint2 maxPos = new GridPoint2(SHIP_SPAWN.x + 5, SHIP_SPAWN.y + 5);
+    GridPoint2 minPos = new GridPoint2(SHIP_SPAWN.x - 7, SHIP_SPAWN.y - 5);
+    GridPoint2 maxPos = new GridPoint2(SHIP_SPAWN.x + 7, SHIP_SPAWN.y + 7);
+
+    List<GridPoint2> clearedTilesAroundShip = List.of(
+            SHIP_SPAWN,
+            new GridPoint2(SHIP_SPAWN.x - 1, SHIP_SPAWN.y - 1),
+            new GridPoint2(SHIP_SPAWN.x + 1, SHIP_SPAWN.y - 1),
+            new GridPoint2(SHIP_SPAWN.x - 1, SHIP_SPAWN.y + 1),
+            new GridPoint2(SHIP_SPAWN.x + 1, SHIP_SPAWN.y + 1)
+    );
 
     IntStream.range(0,15).forEach(i -> {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       TerrainTile tile = gameMap.getTile(randomPos);
 
-      while (!tile.isTraversable() || tile.isOccupied()) {
+      while (!tile.isTraversable() || tile.isOccupied() || clearedTilesAroundShip.contains(randomPos)) {
         randomPos = RandomUtils.random(minPos, maxPos);
         tile = gameMap.getTile(randomPos);
       }
