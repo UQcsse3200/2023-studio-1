@@ -10,6 +10,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.when;
 
+import com.csse3200.game.services.ParticleService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,6 +37,7 @@ class ClimateControllerTest {
 		TimeService timeService = mock(TimeService.class);
 		ServiceLocator.registerTimeSource(gameTime);
 		ServiceLocator.registerTimeService(timeService);
+		ServiceLocator.registerParticleService(mock(ParticleService.class));
 		EventHandler handler = new EventHandler();
 		when(timeService.getEvents()).thenReturn(handler);
 		controller = new ClimateController();
