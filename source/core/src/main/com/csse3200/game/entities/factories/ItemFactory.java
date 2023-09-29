@@ -310,7 +310,7 @@ public class ItemFactory {
             .addComponent(new ItemComponent("Ship Part", ItemType.SHIP_PART,
                     "Pieces of scrap metal in surprisingly good condition. Seems like it could be used" +
                             " for ship repairs...",
-                    new Texture("images/plants/misc/ship_part.png")));
+                    new Texture("images/ship/ship_part.png")));
     return ShipPart;
   }
 }
