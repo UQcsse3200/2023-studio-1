@@ -175,7 +175,9 @@ public class SpaceGameArea extends GameArea {
 
           "images/projectiles/oxygen_eater_projectile.png",
 
-          "images/ship/ship_debris.png"
+          "images/ship/ship_debris.png",
+
+          "images/hostile_indicator.png"
   };
   private static final String[] forestTextureAtlases = {
       "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
