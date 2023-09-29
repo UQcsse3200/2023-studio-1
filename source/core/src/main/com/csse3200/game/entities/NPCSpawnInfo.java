@@ -8,20 +8,63 @@ import java.util.List;
 import java.util.function.Function;
 
 public class NPCSpawnInfo {
+    /**
+     * Maximum number of entities that can be spawned in one cycle
+     */
     private final int maxSpawnCount;
+    /**
+     * Method that creates the entity
+     */
     private final Function<Entity, Entity> spawner;
+    /**
+     * The player entity of the game
+     */
     private final Entity player;
-    private int growthRate;
+    /**
+     * Linear growth rate of number of entities spawned each spawn cycle.
+     */
+    private final int growthRate;
+    /**
+     * Number of entities to spawn this cycle.
+     */
     private int spawnCount;
+    /**
+     * The hour that the entities will be spawned or the hour after which a
+     * randomGoal will be determined.
+     */
     private final int spawnHour;
+    /**
+     * The game area to spawn the entities on.
+     */
     private GameArea gameArea;
+    /**
+     * True iff time of day is after spawnHour for this spawn cycle.
+     */
     private boolean hourReached;
+    /**
+     * Determines range, [0, randomRange], from which randomGoal will be randomly selected.
+     * Set to 0 to disable and spawn exactly on spawnHour.
+     */
     private final int randomRange;
+    /**
+     * The number of hours after spawnHour that must pass before a spawn occurs
+     */
     private int randomGoal;
+    /**
+     * The number of hours since a randomGoal has been determined.
+     */
     private int randomCount;
+    /**
+     * Minimum number of times spawnHour must occur between spawns
+     */
+    private final int daysBetweenSpawns;
+    /**
+     * Number of times spawnHour has occurred this spawn cycle
+     */
+    private int dayCounter;
 
     public NPCSpawnInfo(int maxSpawnCount, Function<Entity, Entity> spawner, Entity player, int growthRate,
-                        int initialSpawnCount, int spawnHour, int randomRange) {
+                        int initialSpawnCount, int spawnHour, int randomRange, int daysBetweenSpawns) {
         this.maxSpawnCount = maxSpawnCount;
         this.spawner = spawner;
         this.player = player;
@@ -29,8 +72,10 @@ public class NPCSpawnInfo {
         this.spawnCount = initialSpawnCount;
         this.spawnHour = spawnHour;
         this.randomRange = randomRange % 24;
+        this.daysBetweenSpawns = daysBetweenSpawns;
         randomCount = 0;
         hourReached = false;
+        dayCounter = 0;
     }
 
     public void setGameArea(GameArea gameArea) {
@@ -42,31 +87,39 @@ public class NPCSpawnInfo {
     }
 
     public void hourUpdate() {
-        //Spawn exactly on spawnHour, no randomisation
-        if (randomRange == 0) {
-            if (ServiceLocator.getTimeService().getHour() == spawnHour) {
-                spawnNPC();
-            }
+        int hour = ServiceLocator.getTimeService().getHour();
 
-        //Spawn on a random hour (in 'randomRange') after spawnHour
-        } else if (hourReached){
-            if (randomCount == randomGoal) {
-                spawnNPC();
+        //Track number of spawnHours that have occurred
+        if (hour == spawnHour) {
+            dayCounter++;
+        }
 
-            //Increment randomCount on next hour once hourReached
-            } else {
-                randomCount++;
-            }
+        //Only progress to randomisation or spawning if enough time
+        //has passed between spawns
+        if (dayCounter < daysBetweenSpawns) {
+            return;
+        }
 
-        //Once at spawnHour, get randomGoal for next spawn
-        } else if (ServiceLocator.getTimeService().getHour() == spawnHour) {
+        if (hour == spawnHour && !hourReached) {
             hourReached = true;
             randomGoal = (int) (Math.random() * randomRange);
+        }
+
+         if (hourReached) {
+             //If randomRange == 0 (not doing randomisation) or have completed
+             // randomisation count - begin spawning
+             if (randomCount == randomGoal) {
+                spawnNPC();
+
+             } else {
+                randomCount++;
+             }
         }
     }
 
     public void spawnNPC() {
         //Reset for next spawn
+        dayCounter = 0;
         randomCount = 0;
         randomGoal = 0;
         hourReached = false;
@@ -89,3 +142,43 @@ public class NPCSpawnInfo {
         }
     }
 }
+
+
+
+//
+//    public void hourUpdate() {
+//        int hour = ServiceLocator.getTimeService().getHour();
+//
+//        //Track number of spawnHours that have occurred
+//        if (hour == spawnHour) {
+//            dayCounter++;
+//        }
+//
+//        //Only progress to randomisation or spawning if enough time
+//        //has passed between spawns
+//        if (dayCounter < daysBetweenSpawns) {
+//            return;
+//        }
+//
+//        //No randomisation check. Subsequent if blocks are with randomisation.
+//        if (randomRange == 0) {
+//            if (hour == spawnHour) {
+//                spawnNPC();
+//            }
+//
+//        //Once at spawnHour, get randomGoal for next spawn
+//        } else if (hour == spawnHour) {
+//            hourReached = true;
+//            randomGoal = (int) (Math.random() * randomRange);
+//
+//        //Spawn on a random hour in randomRange after spawnHour
+//        } else if (hourReached) {
+//            if (randomCount == randomGoal) {
+//                spawnNPC();
+//
+//                //Increment randomCount on next hour once hourReached
+//            } else {
+//                randomCount++;
+//            }
+//        }
+//    }
