@@ -489,7 +489,7 @@ public class SpaceGameArea extends GameArea {
     for (int i = 0; i < 5; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity cow = NPCFactory.createCow(player);
-      //cow.addComponent(new HostileIndicator(cow));
+      cow.addComponent(new HostileIndicator(cow));
       spawnEntityAt(cow, randomPos, true, true);
     }
   }
