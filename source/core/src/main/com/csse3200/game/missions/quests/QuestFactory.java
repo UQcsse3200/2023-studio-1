@@ -131,7 +131,7 @@ public class QuestFactory {
                 new EntityReward(List.of(TractorFactory.createTractor(ServiceLocator.getGameArea().getPlayer()))),
                 new DialogueReward(dialogue)
         ));
-        return new MissionCompleteQuest(missionCompleteTractor, reward, 3);
+        return new MissionCompleteQuest(missionCompleteTractor, reward, 1);
     }
 
     public static TameAnimalsQuest createMakingFriendsQuest() {

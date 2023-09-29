@@ -107,6 +107,8 @@ public abstract class Quest extends Mission {
 	 */
 	public void collectReward() {
 		if (isCompleted() && !reward.isCollected()) {
+			ServiceLocator.getMissionManager().getEvents().trigger(
+					MissionManager.MissionEvent.REWARD_COMPLETE.name());
 			reward.collect();
 			ServiceLocator.getMissionManager().getEvents().trigger(
 					MissionManager.MissionEvent.STORY_REWARD_COLLECTED.name(),
