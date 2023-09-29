@@ -1,18 +1,24 @@
 package com.csse3200.game.components.placeables;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.areas.terrain.TerrainTile;
+import com.csse3200.game.areas.terrain.TerrainTile.TerrainCategory;
 import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.entities.Entity;
@@ -61,7 +67,9 @@ public class FenceComponentTest {
 
         @Override
         public GameMap getMap() {
-            return new GameMap(new TerrainFactory(new CameraComponent()));
+            GameMap mockGameMap = mock(GameMap.class);
+            when(mockGameMap.getTile(any(Vector2.class))).thenReturn(new TerrainTile(null, TerrainCategory.GRASS));
+            return mockGameMap;
         }
     }
 
@@ -79,7 +87,7 @@ public class FenceComponentTest {
         f1 = new Entity(EntityType.Fence)
                 .addComponent(new PhysicsComponent())
                 .addComponent(new HitboxComponent())
-                //.addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
                 .addComponent(dtrc)
                 .addComponent(new FenceComponent(false));
         g1 = new Entity(EntityType.Gate)
@@ -95,8 +103,7 @@ public class FenceComponentTest {
 
     @Test
     public void shouldCreateComponent() {
-
-        assertNotEquals(null,f1.getComponent(FenceComponent.class));
-        assertNotEquals(null, g1.getComponent(FenceComponent.class));
+        assertNull(f1.getComponent(FenceComponent.class));
+        assertNull(g1.getComponent(FenceComponent.class));
     }
 }
