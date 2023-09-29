@@ -78,7 +78,7 @@ public class EntitySpawner {
      * @param spawnHour the hour that the entities will be spawned or the hour after which a
      *                  randomGoal will be determined.
      * @param randomRange max number of hours that the entity may spawn after spawnHour
-     * @param daysBetweenSpawns number of times spawnHour has occurred this spawn cycle
+     * @param daysBetweenSpawns minimum number of times spawnHour must occur between spawns
      */
     public EntitySpawner(int maxSpawnCount, Function<Entity, Entity> spawner, Entity player, int growthRate,
                          int initialSpawnCount, int spawnHour, int randomRange, int daysBetweenSpawns) {
