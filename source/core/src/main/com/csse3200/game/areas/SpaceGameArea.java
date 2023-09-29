@@ -172,7 +172,9 @@ public class SpaceGameArea extends GameArea {
           "images/plants/misc/hammer_plant_seed.png",
           "images/plants/misc/space_snapper_seed.png",
           "images/plants/misc/atomic_algae_seed.png",
-          "images/invisible_sprite.png"
+          "images/invisible_sprite.png",
+
+          "particle-effects/particle.png"
   };
   private static final String[] forestTextureAtlases = {
       "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
@@ -185,7 +187,7 @@ public class SpaceGameArea extends GameArea {
   private static final String[] forestSounds = {"sounds/Impact4.ogg", "sounds/car-horn-6408.mp3"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
   private static final String[] forestMusic = {backgroundMusic};
-  private static final String[] particles = {"particle-effects/acid_rain.pe"};
+  private static final String[] particles = {"particle-effects/acid_rain.p"};
 
   private final TerrainFactory terrainFactory;
   private final GameMap gameMap;
