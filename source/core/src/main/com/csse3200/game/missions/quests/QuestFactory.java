@@ -3,10 +3,7 @@ package com.csse3200.game.missions.quests;
 import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.entities.factories.TractorFactory;
 import com.csse3200.game.missions.MissionManager;
-import com.csse3200.game.missions.rewards.DialogueReward;
-import com.csse3200.game.missions.rewards.ItemReward;
-import com.csse3200.game.missions.rewards.MultiReward;
-import com.csse3200.game.missions.rewards.QuestReward;
+import com.csse3200.game.missions.rewards.*;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.ArrayList;
@@ -131,7 +128,7 @@ public class QuestFactory {
                 Traktor Go BRRRR!!!
                 """;
         MultiReward reward = new MultiReward(List.of(
-                new ItemReward(List.of(TractorFactory.createTractor(ServiceLocator.getGameArea().getPlayer()))),
+                new EntityReward(List.of(TractorFactory.createTractor(ServiceLocator.getGameArea().getPlayer()))),
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
