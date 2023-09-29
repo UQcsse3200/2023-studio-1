@@ -46,7 +46,7 @@ public class ConnectedEntityComponent extends Component { // TODO should it exte
     // Discover and add adjacent placeable entities to a list.
     this.adjacentEntities = new Entity[4];
     for (Vector2 pos : indexMap.keySet()) {
-      Entity p = ServiceLocator.getGameArea().getMap().getTile(pos).getPlaceable();
+      Entity p = ServiceLocator.getGameArea().getMap().getTile(pos).getOccupant();
       if (p != null) {
         if (p.getType().getPlaceableCategory() != target.getType().getPlaceableCategory()) p = null;
       }
@@ -99,7 +99,7 @@ public class ConnectedEntityComponent extends Component { // TODO should it exte
         p.getEvents().trigger("update", this.target.getPosition(), null);
       }
     }
-    target.dispose(); // is this the best place to call .dispose? seems fine.
+    //target.dispose();
   }
 
   /**

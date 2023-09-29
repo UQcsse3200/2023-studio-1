@@ -10,6 +10,13 @@ public class FertiliseCropTilesQuest extends Quest {
     private final int target;
     private int numberOfTilesFertilised;
 
+    public FertiliseCropTilesQuest(String name, Reward reward, int numberOfTilesToFertilise) {
+        super(name, reward);
+
+        target = numberOfTilesToFertilise;
+        numberOfTilesFertilised = 0;
+    }
+
     /**
      * Creates a {@link FertiliseCropTilesQuest}.
      * @param name The name of the {@link FertiliseCropTilesQuest}
@@ -46,7 +53,7 @@ public class FertiliseCropTilesQuest extends Quest {
     public String getDescription() {
         return "Fertilising crop tiles will cause your plants to grow faster.\nApply fertiliser to "
                 + target + " tiles and become a " + getName() + "!\n"
-                + numberOfTilesFertilised + " out of " + target + " crop tiles fertilised.";
+                + getShortDescription() + ".";
     }
 
     @Override
