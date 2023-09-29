@@ -325,7 +325,7 @@ public class QuestFactory {
                 new DialogueReward(dialogue)
         ));
         return new PlantInteractionQuest(homeSickQuestName, reward, MissionManager.MissionEvent.HARVEST_CROP,
-                Set.of("Atomic Algae"), 5);
+                Set.of("Deadly Nightshade"), 5);
     }
 
     public static MainQuest createActIIMainQuest() {
