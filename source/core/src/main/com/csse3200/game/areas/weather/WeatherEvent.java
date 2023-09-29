@@ -143,6 +143,9 @@ public abstract class WeatherEvent {
 		return severity;
 	}
 
+	public abstract void startEffect();
+	public abstract void stopEffect();
+
 	public void write(Json json) {
 		json.writeObjectStart("Event");
 		json.writeValue("name", getClass().getSimpleName());
