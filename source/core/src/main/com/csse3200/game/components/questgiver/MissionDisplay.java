@@ -515,6 +515,7 @@ public class MissionDisplay extends UIComponent {
      * Toggles the visibility of the main mission ui.
      */
     public void toggleOpen() {
+        ServiceLocator.getPlantInfoService().getEvents().trigger("madeFirstContact");
         ServiceLocator.getPlantInfoService().getEvents().trigger("clearPlantInfo");
         
         if (isOpen) {
