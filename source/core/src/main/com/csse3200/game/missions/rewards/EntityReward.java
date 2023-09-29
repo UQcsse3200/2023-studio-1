@@ -9,17 +9,26 @@ import com.csse3200.game.services.ServiceLocator;
 
 import java.util.List;
 
+/**
+    An Entity Reward class for when a player completes a Quest and receives reward entity as a result
+ */
 public class EntityReward extends Reward {
 
-    private final List<Entity> rewardEntities;
+    private final List<Entity> rewardEntities; // The list of entities to be rewarded
 
-
+/**
+    Constructor for the EntityReward class
+    @param rewardEntities The list of entities to be rewarded
+ */
     public EntityReward(List<Entity> rewardEntities) {
         super();
         this.rewardEntities = rewardEntities;
     }
 
-    @Override
+/**
+    Collects the reward by spawning the reward entities at the player's position
+ */
+@Override
     public void collect() {
         setCollected();
         Vector2 playerPosition = ServiceLocator.getGameArea().getPlayer().getPosition();
