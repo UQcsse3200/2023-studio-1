@@ -22,7 +22,12 @@ public class QuestFactory {
     public static final String fertilisingFiestaQuestName = "Fertilising Fiesta";
     public static final String aliensAttackQuestName = "Aliens Attack";
     public static final String actIMainQuestName = "An Agreement";
+    public static final String shipRepairsQuestName = "Ship Repairs";
+    public static final String homeSickQuestName = "Home Sick";
+    public static final String bringingItAllTogether = "Bringing It All Together";
     public static final String actIIMainQuestName = "Making Contact";
+    public static final String airAndAlgaeQuestName = "Air and Algae";
+    public static final String stratosphericSentinel = "Stratospheric Sentinel";
     public static final String actIIIMainQuestName = "Weather the Storm";
 
     public static AutoQuest createFirstContactQuest() {
