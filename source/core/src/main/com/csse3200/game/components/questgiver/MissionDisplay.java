@@ -2,7 +2,10 @@ package com.csse3200.game.components.questgiver;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.missions.MissionManager;
@@ -68,11 +71,11 @@ public class MissionDisplay extends UIComponent {
     private void createAchievementsTable(Table achievementsTable, List<Achievement> achievements) {
         achievementsTable.clearChildren();
         for (Achievement achievement : achievements) {
-            Label titleLabel = new Label(" " + achievement.getName(), skin, "pixel-mid", "black");
-            Label descriptionLabel = new Label(" " + achievement.getDescription(), skin, "pixel-body", "black");
+            Label titleLabel = new Label(achievement.getName(), skin, "pixel-mid", "black");
+            Label descriptionLabel = new Label(achievement.getDescription(), skin, "pixel-body", "black");
 
-            achievementsTable.add(titleLabel).left().row();
-            achievementsTable.add(descriptionLabel).left().row();
+            achievementsTable.add(titleLabel).left().expand().fill().row();
+            achievementsTable.add(descriptionLabel).left().expand().fill().padBottom(10f).row();
         }
     }
 
@@ -81,7 +84,7 @@ public class MissionDisplay extends UIComponent {
      */
     private void generateAchievements() {
         window.clear();
-        window.getTitleLabel().setText("Achievements");
+        window.getTitleLabel().setText("Incomplete Achievements");
 
         Achievement[] achievements = missionManager.getAchievements();
 
@@ -98,19 +101,50 @@ public class MissionDisplay extends UIComponent {
             }
         });
 
-        TextButton toggleButton = new TextButton("Show Completed", skin, "small");
-        toggleButton.addListener(new ChangeListener() {
+        TextButton completeButton = new TextButton(
+                "Complete",
+                skin,
+                "small-grey"
+        );
+        TextButton incompleteButton = new TextButton(
+                "Incomplete",
+                skin,
+                "small-grey"
+        );
+
+        completeButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
-                showCompletedMissions = !showCompletedMissions;
-                toggleButton.setText(showCompletedMissions ? "Show Uncompleted" : "Show Completed");
+                showCompletedMissions = true;
                 // Clear the current achievement table and rebuild it based on the toggle
                 createAchievementsTable(
                         achievementsTable,
                         Arrays.stream(achievements).filter(achievement -> showCompletedMissions == achievement.isCompleted()).toList()
                 );
+
+                window.getTitleLabel().setText("Complete Achievements");
+                updateWindow();
             }
         });
+
+        incompleteButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                showCompletedMissions = false;
+                // Clear the current achievement table and rebuild it based on the toggle
+                createAchievementsTable(
+                        achievementsTable,
+                        Arrays.stream(achievements).filter(achievement -> showCompletedMissions == achievement.isCompleted()).toList()
+                );
+
+                window.getTitleLabel().setText("Incomplete Achievements");
+                updateWindow();
+            }
+        });
+
+        Table tabs = new Table();
+        tabs.add(incompleteButton).expand().fill();
+        tabs.add(completeButton).expand().fill();
 
         // Populate the tables based on the initial state
         createAchievementsTable(
@@ -118,14 +152,14 @@ public class MissionDisplay extends UIComponent {
                 Arrays.stream(achievements).filter(achievement -> showCompletedMissions == achievement.isCompleted()).toList()
         );
 
-        contentTable.add(achievementsTable).expand().fill().padRight(20);
 
+        contentTable.add(tabs).colspan(2).bottom().center().fill();
         contentTable.row();
-        contentTable.add(toggleButton).colspan(2).bottom().center().fill();
+        contentTable.add(achievementsTable).expand().fill().pad(10f);
         contentTable.row();
         contentTable.add(backButton).colspan(2).bottom().center().fill();
 
-        window.add(contentTable);
+        window.add(contentTable).expand().fill();
         updateWindow();
     }
 
