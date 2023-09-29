@@ -72,33 +72,8 @@ public class HostileIndicator extends UIComponent{
         float indicatorWidth = indicator.getWidth();
         float indicatorHeight = indicator.getHeight();
 
-        if (entityPos.x < indicatorOffset) {
-            indicatorPosX = indicatorOffset;
-        } else if (entityPos.x > screenWidth - indicatorOffset) {
-            indicatorPosX = screenWidth - indicatorOffset;
-        } else {
-            indicatorPosX = entityPos.x - indicatorOffset;
-        }
-
-        if (entityPos.y < indicatorOffset) {
-            indicatorPosY = indicatorOffset;
-        } else if (entityPos.y > screenHeight - indicatorOffset) {
-            indicatorPosY = screenHeight - indicatorOffset;
-        } else {
-            indicatorPosY = entityPos.y - indicatorOffset;
-        }
-
-        if (indicatorPosX + indicatorWidth > screenWidth - indicatorOffset) {
-            indicatorPosX = screenWidth - indicatorWidth - indicatorOffset;
-        } else if (indicatorPosX < indicatorOffset) {
-            indicatorPosX = indicatorOffset;
-        }
-
-        if (indicatorPosY + indicatorHeight > screenHeight - indicatorOffset) {
-            indicatorPosY = screenHeight - indicatorHeight - indicatorOffset;
-        } else if (indicatorPosY < indicatorOffset) {
-            indicatorPosY = indicatorOffset;
-        }
+        indicatorPosX = MathUtils.clamp(entityPos.x - indicatorOffset, indicatorOffset, screenWidth - indicatorWidth - indicatorOffset);
+        indicatorPosY = MathUtils.clamp(entityPos.y - indicatorOffset, indicatorOffset, screenHeight - indicatorHeight - indicatorOffset);
 
         indicator.setPosition(indicatorPosX, indicatorPosY);
     }
