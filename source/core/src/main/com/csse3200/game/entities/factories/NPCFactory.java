@@ -275,7 +275,6 @@ public class NPCFactory {
 
 
     dragonfly.scaleHeight(1.2f);
-    PhysicsUtils.setScaledCollider(dragonfly, 0.9f, 0.4f);
     return dragonfly;
   }
 
@@ -292,8 +291,8 @@ public class NPCFactory {
             ServiceLocator.getResourceService().getAsset("images/animals/bat.atlas",
                     TextureAtlas.class)
             , 20f);
-    animator.addAnimation("attack_left", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("attack_right", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation("attack_left", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("attack_right", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("walk_left", 0.15f, Animation.PlayMode.LOOP);
     animator.addAnimation("walk_right", 0.15f, Animation.PlayMode.LOOP);
     animator.addAnimation("idle_left", 0.15f, Animation.PlayMode.LOOP);
@@ -302,14 +301,14 @@ public class NPCFactory {
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(1.5f, 1.5f), 5f))
-            .addTask(new FollowTask(player, 10, 8, 10, 0.5f, new Vector2(4f, 4f), false));
+            .addTask(new FollowTask(player, 10, 8, 10, 1.5f, new Vector2(3f, 3f), false));
 
     bat
             .addComponent(aiTaskComponent)
             .addComponent(animator)
             .addComponent(new HostileAnimationController())
             .addComponent(new BatAttackPattern())
-            .addComponent(new InteractionDetector(0.5f,
+            .addComponent(new InteractionDetector(1.5f,
                     new ArrayList<>(Arrays.asList(EntityType.Player))))
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
 

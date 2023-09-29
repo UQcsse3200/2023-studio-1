@@ -2,12 +2,15 @@ package com.csse3200.game.components.tasks;
 
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.utils.math.Vector2Utils;
+import com.csse3200.game.physics.components.PhysicsMovementComponent;
+
 
 /** Follows a target entity until they get too far away or line of sight is lost */
 public class FollowTask extends ChaseTask {
   /** Distance to target before stopping. */
   private final float stoppingDistance;
+  /** Speed to follow the player. */
+  private final Vector2 speed;
 
   /**
    * @param target The entity to follow.
@@ -20,6 +23,7 @@ public class FollowTask extends ChaseTask {
                     float stoppingDistance, Vector2 speed) {
     super(target, priority, viewDistance, maxFollowDistance, speed);
     this.stoppingDistance = stoppingDistance;
+    this.speed = speed;
   }
 
 
@@ -34,6 +38,7 @@ public class FollowTask extends ChaseTask {
                     float stoppingDistance, Vector2 speed, boolean checkVisibility) {
     super(target, priority, viewDistance, maxFollowDistance, speed, checkVisibility);
     this.stoppingDistance = stoppingDistance;
+    this.speed = speed;
   }
 
   /**
@@ -42,7 +47,7 @@ public class FollowTask extends ChaseTask {
   @Override
   public void start() {
     status = Status.ACTIVE;
-    setMovementTask(new MovementTask(getTarget().getCenterPosition(), (float) 1.5));
+    setMovementTask(new MovementTask(getTarget().getCenterPosition(), speed, 1.5f));
     getMovementTask().create(owner);
     getMovementTask().start();
 
@@ -55,9 +60,12 @@ public class FollowTask extends ChaseTask {
   @Override
   public void update() {
     //Stops follow if entity is too close to target
-    if(getDistanceToTarget() <= stoppingDistance) {
-      stop();
+    if(getDistanceToTarget() <= 1.5f) {
+      //System.out.println("First");
+      owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(false);
+      return;
     } else {
+      owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(true);
       getMovementTask().setTarget(getTarget().getCenterPosition());
       getMovementTask().update();
       if (getMovementTask().getStatus() != Status.ACTIVE) {
@@ -72,6 +80,7 @@ public class FollowTask extends ChaseTask {
    */
   @Override
   public void stop() {
+    owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(true);
     super.stop();
     this.owner.getEntity().getEvents().trigger("followStop");
   }

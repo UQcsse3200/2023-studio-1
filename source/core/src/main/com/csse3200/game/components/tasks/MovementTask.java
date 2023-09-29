@@ -71,6 +71,19 @@ public class MovementTask extends DefaultTask {
   }
 
   /**
+   * Creates a movement task with a target position and a specified speed.
+   *
+   * @param target The target position to move towards.
+   * @param speed The movement speed of the entity.
+   * @param stopDistance The distance at which the task is considered finished.
+   */
+  public MovementTask(Vector2 target, Vector2 speed, float stopDistance) {
+    this(target);
+    this.speed = speed;
+    this.stopDistance = stopDistance;
+  }
+
+  /**
    * Retrieves the necessary components and initializes the movement task.
    *
    * @param taskRunner The task runner associated with this task.
@@ -95,6 +108,7 @@ public class MovementTask extends DefaultTask {
     lastPos = owner.getEntity().getPosition();
 
     this.currentDirection = getDirection();
+    System.out.println("Direction change start");
     this.owner.getEntity().getEvents().trigger("directionChange", currentDirection);
   }
 
@@ -111,6 +125,7 @@ public class MovementTask extends DefaultTask {
       // If direction changes during movement task, animation must be re-triggered with new direction.
       if (!Objects.equals(currentDirection, getDirection())) {
         this.currentDirection = getDirection();
+        System.out.println("Direction change update");
         this.owner.getEntity().getEvents().trigger("directionChange", currentDirection);
       }
 
