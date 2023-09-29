@@ -28,17 +28,26 @@ public class EntitiesSpawner {
      * @param gameArea
      */
     public void setGameAreas(GameArea gameArea) {
-        for (EntitySpawner spawnInfo : toSpawn) {
-            spawnInfo.setGameArea(gameArea);
+        for (EntitySpawner entitySpawner : toSpawn) {
+            entitySpawner.setGameArea(gameArea);
+        }
+    }
+
+    /**
+     * Spawns entities from all spawners
+     */
+    public void spawnNow() {
+        for (EntitySpawner entitySpawner : toSpawn) {
+            entitySpawner.spawnEntities();
         }
     }
 
     /**
      * Start periodic spawning for all spawners
      */
-    public void startSpawning() {
-        for (EntitySpawner spawnInfo : toSpawn) {
-            spawnInfo.startSpawner();
+    public void startPeriodicSpawning() {
+        for (EntitySpawner entitySpawner : toSpawn) {
+            entitySpawner.startSpawner();
         }
     }
 }

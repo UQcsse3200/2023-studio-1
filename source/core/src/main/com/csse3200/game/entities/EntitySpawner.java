@@ -46,7 +46,7 @@ public class EntitySpawner {
     private boolean hourReached;
     /**
      * Determines range, [0, randomRange], from which randomGoal will be randomly selected.
-     * Set to 0 to disable and spawn exactly on spawnHour.
+     * Set to 0 to disable and spawn exactly on spawnHour. Maximum of 23.
      */
     private final int randomRange;
     /**
@@ -137,7 +137,7 @@ public class EntitySpawner {
              //If randomRange == 0 (not doing randomisation) or have completed
              // randomisation count - begin spawning
              if (randomCount == randomGoal) {
-                spawnNPC();
+                spawnEntities();
 
              } else {
                 randomCount++;
@@ -148,7 +148,7 @@ public class EntitySpawner {
     /**
      * Spawns entities onto the GameArea
      */
-    public void spawnNPC() {
+    public void spawnEntities() {
         //Reset for next spawn
         dayCounter = 0;
         randomCount = 0;
