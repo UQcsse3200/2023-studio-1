@@ -43,9 +43,13 @@ public class ParticleService {
 			particleNames[i] = effectType.effectPath;
 			i++;
 		}
+		ServiceLocator.getResourceService().loadParticleEffects(particleNames);
+
+		// Block until all particle effects are loaded
+		ServiceLocator.getResourceService().loadAll();
+
 		// Creates pools for all the particles
 		ParticleEffect effect;
-		ServiceLocator.getResourceService().loadParticleEffects(particleNames);
 		for (ParticleEffectType effectType : ParticleEffectType.values()) {
 			effect = ServiceLocator.getResourceService().getAsset(effectType.effectPath, ParticleEffect.class);
 			particleEffectPools.put(effectType, new ParticleEffectPool(effect, effectType.minCapacity, effectType.maxCapacity));
