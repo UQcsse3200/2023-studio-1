@@ -194,6 +194,7 @@ public class InventoryComponent extends Component {
     for (var entry: itemPlace.entrySet()) {
       if (entry.getValue() == item) {
         itemPlace.remove(entry.getKey());
+        break;
       }
     }
 

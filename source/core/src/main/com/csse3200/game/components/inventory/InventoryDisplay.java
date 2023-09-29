@@ -8,13 +8,12 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
+
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
@@ -24,13 +23,15 @@ import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.ui.UIComponent;
 import com.badlogic.gdx.graphics.Texture;
 
+import static com.badlogic.gdx.Gdx.files;
+
 /**
  * A ui component for displaying player stats, e.g. health.
  */
 public class InventoryDisplay extends UIComponent {
   private static final Logger logger = LoggerFactory.getLogger(InventoryDisplay.class);
   private InventoryComponent playerInventory;
-  private final Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
+  private final Skin skin = new Skin(files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
   private Table table = new Table(skin);
   private Window window = new Window("Inventory", skin);
   private ArrayList<ItemSlot> slots = new ArrayList<>();
@@ -100,8 +101,7 @@ public class InventoryDisplay extends UIComponent {
         slot.getItemImage().setDebug(false);
       }
     }
-    table.setDebug(true);
-    table.add(new Image()).expandX().colspan(10);
+    table.add(new Image(new Texture(files.internal("images/selected.png")))).expandX().colspan(10);
 
     // Create a window for the inventory using the skin
     window.pad(40, 20, 20, 20);
@@ -206,7 +206,6 @@ public class InventoryDisplay extends UIComponent {
         });
       } else if (targetItem.getActor() instanceof Image) {
         dnd.addTarget(new DragAndDrop.Target(targetItem.getActor()) {
-          final Image slot = (Image) targetItem.getActor();
 
           @Override
           public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
@@ -217,18 +216,14 @@ public class InventoryDisplay extends UIComponent {
           public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
             payload.getDragActor().clear();
             actors.remove(payload.getDragActor());
-            System.out.println(actors);
             payload.getDragActor().remove();
             ItemSlot sourceSlot = map.get(((Image) source.getActor()));
             playerInventory.removeItem(playerInventory.getItemPos(indexes.get(sourceSlot)));
 
-            System.out.println(playerInventory.getItemPos(indexes.get(sourceSlot)));
-            System.out.println(playerInventory.getInventory());
             //playerInventory.swapPosition(indexes.get(sourceSlot), indexes.get(slot)); need to remove item from inv
             map.put(null, sourceSlot);
             sourceSlot.setItemImage(null);
-            //map.put((Image) payload.getDragActor(), slot);
-            //slot.setItemImage((Image) payload.getDragActor());
+
 
           }
         });
