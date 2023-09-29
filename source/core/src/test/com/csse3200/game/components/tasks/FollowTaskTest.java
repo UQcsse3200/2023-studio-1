@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.utils.math.Vector2Utils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,7 +41,8 @@ class FollowTaskTest {
         Entity target = new Entity();
         target.setPosition(2f, 2f);
 
-        AITaskComponent ai = new AITaskComponent().addTask(new FollowTask(target, 10, 5, 10,1.5f));
+        AITaskComponent ai = new AITaskComponent().addTask(new FollowTask(target, 10, 5, 10,1.5f,
+                Vector2Utils.ONE));
         Entity entity = makePhysicsEntity().addComponent(ai);
         entity.create();
         entity.setPosition(0f, 0f);
@@ -60,7 +63,8 @@ class FollowTaskTest {
         Entity target = new Entity();
         target.setPosition(0, 1f);
         float stoppingDistance = 0.5f;
-        AITaskComponent ai = new AITaskComponent().addTask(new FollowTask(target, 10, 10, 10,stoppingDistance));
+        AITaskComponent ai = new AITaskComponent().addTask(new FollowTask(target, 10, 10, 10,
+                stoppingDistance, Vector2Utils.ONE));
         Entity entity = makePhysicsEntity().addComponent(ai);
         entity.create();
         entity.setPosition(0f, 1.6f);
@@ -87,7 +91,7 @@ class FollowTaskTest {
         entity.create();
         entity.setPosition(0f, 0f);
 
-        FollowTask followTask = new FollowTask(target, 10, 5, 10, 1.5f);
+        FollowTask followTask = new FollowTask(target, 10, 5, 10, 1.5f, Vector2Utils.ONE);
         followTask.create(() -> entity);
 
         // Not currently active, target is too far, should have negative priority
@@ -117,7 +121,7 @@ class FollowTaskTest {
         entity.create();
         entity.setPosition(0f, 5f);
 
-        FollowTask followTask = new FollowTask(target, 10, 5, 10, 2f);
+        FollowTask followTask = new FollowTask(target, 10, 5, 10, 2f, Vector2Utils.ONE);
         followTask.create(() -> entity);
 
         // Not currently active, target is within stopping distance, should have negative priority

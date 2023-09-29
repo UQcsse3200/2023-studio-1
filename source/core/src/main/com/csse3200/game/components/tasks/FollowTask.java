@@ -1,6 +1,8 @@
 package com.csse3200.game.components.tasks;
 
+import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.utils.math.Vector2Utils;
 
 /** Follows a target entity until they get too far away or line of sight is lost */
 public class FollowTask extends ChaseTask {
@@ -14,8 +16,9 @@ public class FollowTask extends ChaseTask {
    * @param maxFollowDistance Maximum distance from the entity while following before giving up.
    * @param stoppingDistance The distance at which the entity stops following target
    */
-  public FollowTask(Entity target, int priority, float viewDistance, float maxFollowDistance, float stoppingDistance) {
-    super(target, priority, viewDistance, maxFollowDistance);
+  public FollowTask(Entity target, int priority, float viewDistance, float maxFollowDistance,
+                    float stoppingDistance, Vector2 speed) {
+    super(target, priority, viewDistance, maxFollowDistance, speed);
     this.stoppingDistance = stoppingDistance;
   }
 

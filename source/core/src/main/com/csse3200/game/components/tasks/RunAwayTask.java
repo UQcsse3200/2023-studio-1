@@ -18,7 +18,7 @@ public class RunAwayTask extends ChaseTask {
    * @param maxRunDistance Maximum distance from the entity before stopping.
    */
   public RunAwayTask(Entity target, int priority, float viewDistance, float maxRunDistance, Vector2 runSpeed) {
-    super(target, priority, viewDistance, maxRunDistance);
+    super(target, priority, viewDistance, maxRunDistance, runSpeed);
     this.maxRunDistance = maxRunDistance;
     this.runSpeed = runSpeed;
   }

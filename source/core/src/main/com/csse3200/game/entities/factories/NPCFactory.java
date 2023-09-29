@@ -24,6 +24,7 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.utils.math.Vector2Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -76,7 +77,7 @@ public class NPCFactory {
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
             .addTask(new RunAwayTask(player, 10, 2.25f, 4.25f, new Vector2(3f, 3f)))
-            .addTask(new TamedFollowTask(player, 10, 8, 10, 2f, config.favouriteFood));
+            .addTask(new TamedFollowTask(player, 10, 8, 10, 2f, config.favouriteFood, Vector2Utils.ONE));
 
     chicken
             .addComponent(aiTaskComponent)
@@ -118,7 +119,7 @@ public class NPCFactory {
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-            .addTask(new TamedFollowTask(player, 10, 8, 10, 2f, config.favouriteFood));
+            .addTask(new TamedFollowTask(player, 10, 8, 10, 2f, config.favouriteFood, Vector2Utils.ONE));
 
     cow
             .addComponent(aiTaskComponent)
@@ -154,7 +155,7 @@ public class NPCFactory {
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(1.5f, 1.5f), 5f))
-            .addTask(new FollowTask(player, 10, 8, 10, 3f));
+            .addTask(new FollowTask(player, 10, 8, 10, 3f, new Vector2(3f, 3f)));
 
     astrolotl
             .addComponent(aiTaskComponent)
@@ -295,15 +296,20 @@ public class NPCFactory {
     animator.addAnimation("attack_right", 0.15f, Animation.PlayMode.LOOP);
     animator.addAnimation("walk_left", 0.15f, Animation.PlayMode.LOOP);
     animator.addAnimation("walk_right", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle_left", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle_right", 0.15f, Animation.PlayMode.LOOP);
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(1.5f, 1.5f), 5f))
-            .addTask(new FollowTask(player, 10, 8, 10, 3f));
+            .addTask(new ChaseTask(player, 10, 8, 10, new Vector2(4f, 4f)));
 
     bat
             .addComponent(aiTaskComponent)
             .addComponent(animator)
-            .addComponent(new AnimalAnimationController())
+            .addComponent(new HostileAnimationController())
+            .addComponent(new BatAttackPattern())
+            .addComponent(new InteractionDetector(0.5f,
+                    new ArrayList<>(Arrays.asList(EntityType.Player))))
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
 
 
@@ -338,7 +344,7 @@ public class NPCFactory {
     AITaskComponent aiComponent =
         new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-            .addTask(new ChaseTask(target, 10, 3f, 4f));
+            .addTask(new ChaseTask(target, 10, 3f, 4f, Vector2Utils.ONE));
     Entity npc =
         new Entity()
             .addComponent(new PhysicsComponent())

@@ -252,6 +252,14 @@ public class SpaceGameArea extends GameArea {
     spawnTerrain();
     spawnInvisibleObstacle();// spawn invisible obstacle on the non-traversable area of the map
 
+    // Todo: Remove this code that automatically spawns plants
+    spawnCrop(20, 80, "Cosmic Cob");
+    spawnCrop(22, 80, "Aloe Vera");
+    spawnCrop(24, 80, "Hammer Plant");
+    spawnCrop(26, 80, "Space Snapper");
+    spawnCrop(28, 80, "Deadly Nightshade");
+    spawnCrop(30, 80, "Atomic Algae");
+
     spawnShipDebris();
 
     player = spawnPlayer();
@@ -271,8 +279,8 @@ public class SpaceGameArea extends GameArea {
     //spawnCows();
    // spawnAstrolotl();
     //spawnOxygenEater();
-    spawnDragonFlies();
-    //spawnBats();
+    //spawnDragonFlies();
+    spawnBats();
 
     spawnShip();
 
@@ -531,10 +539,10 @@ public class SpaceGameArea extends GameArea {
     GridPoint2 minPos = new GridPoint2(2, 2);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 1; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity bat = NPCFactory.createBat(player);
-      spawnEntityAt(bat, randomPos, true, true);
+      spawnEntityAt(bat, PLAYER_SPAWN, true, true);
     }
   }
 
