@@ -44,7 +44,9 @@ public class TractorQuest extends Quest {
      */
     @Override
     public void registerMission(EventHandler missionManagerEvents) {
-        missionManagerEvents.addListener(MissionManager.MissionEvent.REWARD_COMPLETE.name(), this::updateState);
+        //missionManagerEvents.addListener(MissionManager.MissionEvent.REWARD_COMPLETE.name(), this::updateState);
+        //missionManagerEvents.addListener(MissionManager.MissionEvent.MISSION_COMPLETE.name(), this::updateState);
+        missionManagerEvents.addListener(MissionManager.MissionEvent.STORY_REWARD_COLLECTED.name(), this::updateState);
     }
 
     /**
@@ -83,7 +85,7 @@ public class TractorQuest extends Quest {
      */
     @Override
     public String getShortDescription() {
-        return numberOfQuestsComplete + " out of " + numberOfQuestsToComplete + " debris pieces cleared";
+        return numberOfQuestsComplete + " out of " + numberOfQuestsToComplete + " required quests completed";
     }
 
     /**

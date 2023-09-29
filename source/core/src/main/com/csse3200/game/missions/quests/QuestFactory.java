@@ -47,6 +47,7 @@ public class QuestFactory {
         List<Quest> questsToAdd = new ArrayList<>();
         List<Quest> questsToActivate = new ArrayList<>();
         questsToActivate.add(createSowingYourFirstSeedsQuest());
+        questsToActivate.add(createTractorQuest());
 
         String dialogue = """
                 Good. But your {WAIT} "landing" {WAIT} has completely destroyed my crops!
@@ -126,9 +127,10 @@ public class QuestFactory {
         String dialogue = """
                 Traktor Go BRRRR!!!
                 """;
+//        MultiReward reward = new MultiReward(List.of(
+//                new EntityReward(List.of(TractorFactory.createTractor(ServiceLocator.getGameArea().getPlayer()))),
+//                new DialogueReward(dialogue)
         MultiReward reward = new MultiReward(List.of(
-                new EntityReward(List.of(TractorFactory.createTractor(ServiceLocator.getGameArea().getPlayer()))),
-                new DialogueReward(dialogue)
         ));
         return new TractorQuest(missionCompleteTractor, reward, 3);
     }
@@ -162,7 +164,6 @@ public class QuestFactory {
 
         List<Quest> questsToActivate = new ArrayList<>();
         questsToActivate.add(createActIIMainQuest());
-        questsToActivate.add(createTractorQuest());
 
         String dialogue = """
                 Well done, human. You have shown me that you can be trusted, and that our cooperation may be mutually beneficial.
