@@ -140,16 +140,15 @@ public class ItemSlot extends Stack {
      * Make the slot selected
      */
     public void setSelected() {
-
-        this.background = new Image(new Texture(Gdx.files.internal("images/selected.png")));
-        this.createItemSlot();
+        selected = true;
+        this.addActorAt(0, this.background);
     }
 
     /**
      * Make the slot unselected
      */
     public void setUnselected() {
-        this.background = null;
-        this.createItemSlot();
+        selected = false;
+        this.removeActor(this.background);
     }
 }

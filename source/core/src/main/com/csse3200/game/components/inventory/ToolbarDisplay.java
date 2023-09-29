@@ -20,13 +20,14 @@ import com.badlogic.gdx.graphics.Texture;
  * Display the UI for the toolbar
  */
 public class ToolbarDisplay extends UIComponent {
+    private static final Logger logger = LoggerFactory.getLogger(InventoryDisplay.class);
     private final Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
     private Table table = new Table(skin);
     private Window window = new Window("", skin);
     private boolean isOpen;
     private InventoryComponent inventory;
     private int selectedSlot = -1;
-    private ArrayList<ItemSlot> slots = new ArrayList<>();
+    private final ArrayList<ItemSlot> slots = new ArrayList<>();
 
     /**
      * Creates the event listeners, ui, and gets the UI.
@@ -40,6 +41,52 @@ public class ToolbarDisplay extends UIComponent {
         entity.getEvents().addListener("toggleInventory",this::toggleOpen);
         entity.getEvents().addListener("hotkeySelection",this::updateItemSlot);
         inventory = entity.getComponent(InventoryDisplay.class).getInventory();
+    }
+
+    /**
+     * Updates actors and re-positions them on the stage using a table.
+     * @see Table for positioning options
+     */
+
+    private void updateToolbar(){
+        for (int i = 0; i < 10; i++){
+            logger.info(String.valueOf(selectedSlot));
+            int idx = i + 1;
+            if (idx == 10) {
+                idx = 0;
+            }
+            Label label = new Label(" " + String.valueOf(idx), skin);
+            label.setColor(Color.BLUE);
+            label.setAlignment(Align.topLeft);
+
+            ItemComponent item;
+            int itemCount;
+            Texture itemTexture;
+
+            if (inventory.getItemPos(i) != null) {
+                // Since the item isn't null, we want to make sure that the itemSlot at that position is modified
+                item = inventory.getItemPos(i).getComponent(ItemComponent.class);
+                itemCount = inventory.getItemCount(item.getEntity());
+                itemTexture = item.getItemTexture();
+                ItemSlot curSlot = slots.get(i);
+                curSlot.setItemImage(new Image(itemTexture));
+
+                if (curSlot.getCount() != null && !curSlot.getCount().equals(itemCount)) {
+                    curSlot.setCount(itemCount);
+                }
+
+                curSlot.add(label);
+
+                // Update slots array
+                slots.set(i, curSlot);
+            }
+            else {
+                ItemSlot curSlot = slots.get(i);
+                curSlot.setItemImage(null);
+                curSlot.setCount(null);
+                slots.set(i, curSlot);
+            }
+        }
     }
 
     /**
@@ -75,45 +122,6 @@ public class ToolbarDisplay extends UIComponent {
         window.setPosition(stage.getWidth() / 2 - window.getWidth() / 2, 0);
         window.setVisible(true);
         stage.addActor(window);
-    }
-
-    /**
-     * Updates actors and re-positions them on the stage using a table.
-     * @see Table for positioning options
-     */
-
-    private void updateToolbar(){
-        for (int i = 0; i < 10; i++){
-            int idx = i + 1;
-            if (idx == 10) {
-                idx = 0;
-            }
-            Label label = new Label(" " + String.valueOf(idx), skin);
-            label.setColor(Color.BLUE);
-            label.setAlignment(Align.topLeft);
-
-            ItemComponent item;
-            int itemCount;
-            Texture itemTexture;
-
-            if (inventory.getItemPos(i) != null) {
-                // Since the item isn't null, we want to make sure that the itemSlot at that position is modified
-                item = inventory.getItemPos(i).getComponent(ItemComponent.class);
-                itemCount = inventory.getItemCount(item.getEntity());
-                itemTexture = item.getItemTexture();
-                ItemSlot curSlot = slots.get(i);
-                curSlot.setItemImage(new Image(itemTexture));
-
-                if (curSlot.getCount() != null && !curSlot.getCount().equals(itemCount)) {
-                    curSlot.setCount(itemCount);
-                }
-
-                curSlot.add(label);
-
-                // Update slots array
-                slots.set(i, curSlot);
-            }
-        }
     }
 
     /**
@@ -155,16 +163,14 @@ public class ToolbarDisplay extends UIComponent {
 
         for (int i = 0; i < 10; i++) {
             ItemSlot curSlot = slots.get(i);
-//            if (i != slotNum) {
-//                curSlot.setUnselected();
-//            }
-//            else {
-//                curSlot.setSelected();
-//            }
-            curSlot = new ItemSlot(true);
+            if (i != slotNum) {
+                curSlot.setUnselected();
+            }
+            else {
+                curSlot.setSelected();
+            }
             slots.set(i, curSlot);
         }
-        updateToolbar();
     }
 
     /**
