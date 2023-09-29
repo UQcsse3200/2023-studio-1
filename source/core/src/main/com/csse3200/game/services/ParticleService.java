@@ -64,8 +64,6 @@ public class ParticleService {
 			particleEffects.put(effectType, ServiceLocator.getResourceService().getAsset(effectType.effectPath, ParticleEffect.class));
 			particleEffectPools.put(effectType, new ParticleEffectPool(particleEffects.get(effectType), effectType.minCapacity, effectType.maxCapacity));
 		}
-
-		startEffect(ParticleEffectType.ACID_RAIN);
 	}
 
 	public void render (SpriteBatch batch, float delta) {
