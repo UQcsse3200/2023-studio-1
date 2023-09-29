@@ -103,7 +103,7 @@ public class FenceComponentTest {
 
     @Test
     public void shouldCreateComponent() {
-        assertNull(f1.getComponent(FenceComponent.class));
-        assertNull(g1.getComponent(FenceComponent.class));
+        assertNotNull(f1.getComponent(FenceComponent.class));
+        assertNotNull(g1.getComponent(FenceComponent.class));
     }
 }
