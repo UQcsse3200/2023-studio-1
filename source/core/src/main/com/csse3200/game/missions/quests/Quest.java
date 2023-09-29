@@ -79,7 +79,7 @@ public abstract class Quest extends Mission {
 	 * Decrements the duration to expiry of the quest by 1, if the {@link Quest} can expire.
 	 */
 	public void updateExpiry() {
-		if (canExpire && --timeToExpiry <= 0) {
+		if (canExpire && !isCompleted() && --timeToExpiry <= 0) {
 			timeToExpiry = 0;
 		}
 	}

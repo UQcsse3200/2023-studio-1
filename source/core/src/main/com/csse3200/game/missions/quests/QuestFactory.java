@@ -263,6 +263,7 @@ public class QuestFactory {
         List<Quest> questsToAdd = new ArrayList<>();
         List<Quest> questsToActivate = new ArrayList<>();
         questsToActivate.add(createActIIMainQuest());
+        questsToActivate.add(createHomeSickQuest());
 
         String dialogue = """
                 I will need some time to think of a solution to your issue.
@@ -286,6 +287,45 @@ public class QuestFactory {
                 new DialogueReward(dialogue)
         ));
         return new AutoQuest(connectionQuestName, reward, "Make a connection with ALIEN NPC, figure out how you can be reunited with Humanity.");
+    }
+
+    public static PlantInteractionQuest createHomeSickQuest() {
+        List<Quest> questsToAdd = new ArrayList<>();
+        List<Quest> questsToActivate = new ArrayList<>();
+
+        String dialogue = """
+                ALIEN NPC takes the berries you offer, and consumes them.
+                {WAIT}
+                A spark lights up in ALIEN NPC's eye.
+                {WAIT}
+                Ah... a taste of home. It reminds me of what life was like before- before the {COLOUR=red}Night of the Burning Sky{COLOUR=white}.
+                {WAIT}
+                *sigh*
+                {WAIT}
+                Nevermind...
+                {WAIT}
+                I've though of a solution to your predicament.
+                {WAIT}
+                Your ship is in need of repair. I don't greatly understand your technology, but I know physics, and how radio communication works.
+                {WAIT}
+                If you continue to repair your ship, I will be able to work on repairing your radio device.
+                {WAIT}
+                Here, take a few ship parts I found lying around and talk to me once you've done that.
+                """;
+
+        MultiReward reward = new MultiReward(List.of(
+                new ItemReward(List.of(
+                        ItemFactory.createShipPart(),
+                        ItemFactory.createShipPart(),
+                        ItemFactory.createShipPart(),
+                        ItemFactory.createShipPart(),
+                        ItemFactory.createShipPart()
+                )),
+                new QuestReward(questsToAdd, questsToActivate),
+                new DialogueReward(dialogue)
+        ));
+        return new PlantInteractionQuest(homeSickQuestName, reward, MissionManager.MissionEvent.HARVEST_CROP,
+                Set.of("Atomic Algae"), 5);
     }
 
     public static MainQuest createActIIMainQuest() {
@@ -335,6 +375,7 @@ public class QuestFactory {
         List<Quest> questsToAdd = new ArrayList<>();
         List<Quest> questsToActivate = new ArrayList<>();
         questsToActivate.add(createAirAndAlgaeQuest());
+        questsToActivate.add(createStratosphericSentinelQuest());
         questsToActivate.add(createActIIIMainQuest());
 
         String dialogue = """
@@ -395,13 +436,25 @@ public class QuestFactory {
                 Set.of("Atomic Algae"), 10);
     }
 
+    public static OxygenLevelQuest createStratosphericSentinelQuest() {
+        String dialogue = """
+                Well done!
+                {WAIT}
+                With the work you've done, your people should be able to live here without life support systems.
+                {WAIT}
+                «Something sentimental to be added...»
+                """;
+        DialogueReward reward = new DialogueReward(dialogue);
+        return new OxygenLevelQuest(stratosphericSentinel, reward, ServiceLocator.getPlanetOxygenService(),
+                "the planet's oxygen level", 348, 95);
+    }
+
     public static MainQuest createActIIIMainQuest() {
         Set<String> requiredQuests = new HashSet<>();
         requiredQuests.add(airAndAlgaeQuestName);
         requiredQuests.add(stratosphericSentinel);
 
         MultiReward reward = new MultiReward(List.of());
-
         return new MainQuest(actIIIMainQuestName, reward, 15, requiredQuests, "weather the incoming storm, provide a haven for humanity");
     }
 
