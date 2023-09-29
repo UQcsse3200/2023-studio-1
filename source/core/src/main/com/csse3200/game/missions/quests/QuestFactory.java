@@ -122,15 +122,12 @@ public class QuestFactory {
                 Set.of("Cosmic Cob"), 12);
     }
 
-    public static MissionCompleteQuest createMissionCompleteQuest() {
-        List<Quest> questsToAdd = new ArrayList<>();
-        List<Quest> questsToActivate = new ArrayList<>();
+    public static MissionCompleteQuest createTractorQuest() {
         String dialogue = """
                 Traktor Go BRRRR!!!
                 """;
         MultiReward reward = new MultiReward(List.of(
                 new EntityReward(List.of(TractorFactory.createTractor(ServiceLocator.getGameArea().getPlayer()))),
-                new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
         return new MissionCompleteQuest(missionCompleteTractor, reward, 5);
@@ -165,7 +162,7 @@ public class QuestFactory {
 
         List<Quest> questsToActivate = new ArrayList<>();
         questsToActivate.add(createActIIMainQuest());
-        questsToActivate.add(createMissionCompleteQuest());
+        questsToActivate.add(createTractorQuest());
 
         String dialogue = """
                 Well done, human. You have shown me that you can be trusted, and that our cooperation may be mutually beneficial.

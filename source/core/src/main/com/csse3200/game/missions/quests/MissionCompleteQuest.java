@@ -44,7 +44,7 @@ public class MissionCompleteQuest extends Quest {
      */
     @Override
     public void registerMission(EventHandler missionManagerEvents) {
-        missionManagerEvents.addListener(MissionManager.MissionEvent.MISSION_COMPLETE.name(), this::updateState);
+        missionManagerEvents.addListener(MissionManager.MissionEvent.REWARD_COMPLETE.name(), this::updateState);
     }
 
     /**

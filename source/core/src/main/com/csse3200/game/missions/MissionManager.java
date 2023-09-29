@@ -41,6 +41,8 @@ public class MissionManager implements Json.Serializable {
 		HARVEST_CROP,
 		// Triggers when an animal is tamed
 		TAME_ANIMAL,
+		// Triggers when a reward is collected used for MissionCompleteQuests
+		REWARD_COMPLETE,
 	}
 
 	/**
