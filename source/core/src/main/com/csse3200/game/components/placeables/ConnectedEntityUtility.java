@@ -1,7 +1,6 @@
 package com.csse3200.game.components.placeables;
 
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -14,7 +13,7 @@ import java.util.*;
  * For example an entity adds a SprinklerComponent OR a FenceComponent which creates a new instance of this component,
  * and passes the entity to its constructor.
  */
-public class ConnectedEntityComponent extends Component { // TODO should it extend component? helps with save&load?
+public class ConnectedEntityUtility {
 
   /**
    * The Placeable entity that this instance belongs to.
@@ -33,7 +32,7 @@ public class ConnectedEntityComponent extends Component { // TODO should it exte
    */
   private final Entity[] adjacentEntities;
 
-  public ConnectedEntityComponent(Entity target) {
+  public ConnectedEntityUtility(Entity target) {
     // Set target entity and the coordinates where it expects to find adjacent Placeable(s).
     this.target = target;
     this.indexMap = Map.of(
