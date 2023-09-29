@@ -35,6 +35,10 @@ public class ParticleService {
 			this.minCapacity = minCapacity;
 			this.maxCapacity = maxCapacity;
 		}
+
+		public String getCategory() {
+			return category;
+		}
 	}
 
 	public ParticleService() {
