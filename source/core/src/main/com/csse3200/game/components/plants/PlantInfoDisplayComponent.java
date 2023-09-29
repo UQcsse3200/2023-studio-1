@@ -6,8 +6,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Align;
+import com.csse3200.game.events.EventHandler;
+import com.csse3200.game.missions.MissionManager;
+import com.csse3200.game.missions.quests.Quest;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
+
+import java.util.List;
 
 public class PlantInfoDisplayComponent extends UIComponent {
 
@@ -21,6 +26,8 @@ public class PlantInfoDisplayComponent extends UIComponent {
      */
     private Label label;
 
+    private MissionManager missionManager;
+
     /**
      * {@inheritDoc}
      */
@@ -29,20 +36,22 @@ public class PlantInfoDisplayComponent extends UIComponent {
         super.create();
         ServiceLocator.getPlantInfoService().getEvents().addListener("showPlantInfo", this::showPlantInfo);
         ServiceLocator.getPlantInfoService().getEvents().addListener("clearPlantInfo", this::clearInfo);
-        createWindow();
-        label = new Label("Hover your mouse \nover a plant", skin);
-        label.setFontScale(1.5f);
+        createWindow("First Contact");
+        label = new Label("You have crash landed\nand you're all alone...\nor are you?", skin);
+        label.setFontScale(1.4f);
         label.setColor(Color.BROWN);
         window.add(label);
         stage.addActor(window);
+
+        missionManager = ServiceLocator.getMissionManager();
 
     }
 
     /**
      * Create the window used to display the plant information.
      */
-    private void createWindow() {
-        window = new Window("Plant information", skin);
+    private void createWindow(String windowName) {
+        window = new Window(windowName, skin);
         window.setVisible(true);
         window.setSize(450f, 275f);
         window.padBottom(10f);
@@ -57,9 +66,9 @@ public class PlantInfoDisplayComponent extends UIComponent {
      * player hovers their mouse cursor over a plant.
      * @param plantInfo - Information about the current state of the plant.
      */
-    public void showPlantInfo(String plantInfo) {
+    public void showPlantInfo(String plantName, String plantInfo) {
         window.reset();
-        createWindow();
+        createWindow(plantName);
         label = new Label(plantInfo, skin);
         label.setFontScale(1.4f);
         label.setColor(Color.BROWN);
@@ -71,9 +80,26 @@ public class PlantInfoDisplayComponent extends UIComponent {
      * Clears the window of any plant information.
      */
     public void clearInfo() {
-        createWindow();
-        String info = ServiceLocator.getPlantInfoService().plantInfoSummary();
-        label = new Label(info, skin);
+        createWindow("Active Quests");
+        List<Quest> quests = missionManager.getActiveQuests();
+
+        String activeQuestsString = "";
+        int numOfLines = 0; // will be used to configure that max amount of information in the window l8er
+        if (!quests.isEmpty()) {
+            for (Quest q : quests) {
+                if (numOfLines == 0) {
+                    activeQuestsString += q.getName();
+                } else {
+                    activeQuestsString += "\n" + q.getName();
+                }
+                numOfLines += 1;
+
+            }
+        } else {
+            activeQuestsString = "No Active Quests";
+        }
+
+        label = new Label(activeQuestsString, skin);
         label.setFontScale(1.4f);
         label.setColor(Color.BROWN);
         window.add(label);
@@ -88,4 +114,5 @@ public class PlantInfoDisplayComponent extends UIComponent {
     protected void draw(SpriteBatch batch) {
         // No use but required.
     }
+
 }
