@@ -122,7 +122,7 @@ public class QuestFactory {
                 Set.of("Cosmic Cob"), 12);
     }
 
-    public static MissionCompleteQuest createTractorQuest() {
+    public static TractorQuest createTractorQuest() {
         String dialogue = """
                 Traktor Go BRRRR!!!
                 """;
@@ -130,7 +130,7 @@ public class QuestFactory {
                 new EntityReward(List.of(TractorFactory.createTractor(ServiceLocator.getGameArea().getPlayer()))),
                 new DialogueReward(dialogue)
         ));
-        return new MissionCompleteQuest(missionCompleteTractor, reward, 5);
+        return new TractorQuest(missionCompleteTractor, reward, 3);
     }
 
     public static TameAnimalsQuest createMakingFriendsQuest() {

@@ -8,7 +8,7 @@ import com.csse3200.game.missions.rewards.Reward;
 /**
  * A MissionCompleteQuest class for when a quest which is based around completing a number of missions
  */
-public class MissionCompleteQuest extends Quest {
+public class TractorQuest extends Quest {
     private final int numberOfQuestsToComplete; // The number of quests to complete
     private int numberOfQuestsComplete; // The number of quests completed
 
@@ -18,7 +18,7 @@ public class MissionCompleteQuest extends Quest {
      * @param reward The reward for completing the quest
      * @param numberOfQuestsToComplete The number of quests to complete
      */
-    public MissionCompleteQuest(String name, Reward reward, int numberOfQuestsToComplete) {
+    public TractorQuest(String name, Reward reward, int numberOfQuestsToComplete) {
         super(name, reward);
 
         this.numberOfQuestsToComplete = numberOfQuestsToComplete;
@@ -33,7 +33,7 @@ public class MissionCompleteQuest extends Quest {
      * @param isMandatory Whether the quest is mandatory
      * @param numberOfQuestsToComplete The number of quests to complete
      */
-    public MissionCompleteQuest(String name, Reward reward, int expiryDuration, boolean isMandatory, int numberOfQuestsToComplete) {
+    public TractorQuest(String name, Reward reward, int expiryDuration, boolean isMandatory, int numberOfQuestsToComplete) {
         super(name, reward, expiryDuration, isMandatory);
         this.numberOfQuestsToComplete = numberOfQuestsToComplete;
         this.numberOfQuestsComplete = 0;
@@ -72,8 +72,8 @@ public class MissionCompleteQuest extends Quest {
      */
     @Override
     public String getDescription() {
-        return "Gather scattered parts of your ship.\nUse your shovel to clear "
-                + numberOfQuestsToComplete + " Ship Debris in the world!\n"
+        return "Complete"
+                + numberOfQuestsToComplete + " missions to get a tractor.\n"
                 + getShortDescription() + ".";
     }
 
