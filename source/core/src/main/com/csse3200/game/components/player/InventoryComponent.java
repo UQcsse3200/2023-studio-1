@@ -191,6 +191,12 @@ public class InventoryComponent extends Component {
       itemCount.remove(item);
       itemPosition.remove(item);
     }
+    for (var entry: itemPlace.entrySet()) {
+      if (entry.getValue() == item) {
+        itemPlace.remove(entry.getKey());
+      }
+    }
+
     updateInventory();
     return this.inventory.remove(item);
   }

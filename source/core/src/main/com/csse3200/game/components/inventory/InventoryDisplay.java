@@ -70,9 +70,9 @@ public class InventoryDisplay extends UIComponent {
   private void initialiseInventory() {
     // create variables needed for drag and drop
     dnd = new DragAndDrop();
-    actors = new ArrayList<>();
-    map = new HashMap<>();
-    indexes  = new HashMap<>();
+    actors = new ArrayList<>(); // drag actors
+    map = new HashMap<>(); // maps Images to their ItemSlot
+    indexes  = new HashMap<>(); // maps an ItemSlot to the index of the inventory
 
     // set the table cell size and add necessary padding
     table.defaults().size(64, 64);
@@ -100,6 +100,8 @@ public class InventoryDisplay extends UIComponent {
         slot.getItemImage().setDebug(false);
       }
     }
+    table.setDebug(true);
+    table.add(new Image()).expandX().colspan(10);
 
     // Create a window for the inventory using the skin
     window.pad(40, 20, 20, 20);
@@ -117,6 +119,7 @@ public class InventoryDisplay extends UIComponent {
    */
   private void updateInventory() {
     dnd.clear();
+    actors.clear();
 
     for (int i = 0; i < size; i++) {
       ItemComponent item;
@@ -137,12 +140,11 @@ public class InventoryDisplay extends UIComponent {
         }
 
         map.put(curSlot.getItemImage(), curSlot);
-        indexes.put(curSlot, i);
 
         slots.set(i, curSlot);
       }
     }
-    dnd = new DragAndDrop();
+    //dnd = new DragAndDrop();
     setDragItems(actors, map);
   }
 
@@ -152,6 +154,8 @@ public class InventoryDisplay extends UIComponent {
    * @param map images and their respective item slot
    */
   public void setDragItems(@NotNull ArrayList<Actor> actors, Map<Image,ItemSlot> map) {
+
+    // make each item a drag actor that can be dragged.
     for (Actor item : actors) {
       dnd.addSource(new DragAndDrop.Source(item) {
         DragAndDrop.Payload payload = new DragAndDrop.Payload();
@@ -176,25 +180,62 @@ public class InventoryDisplay extends UIComponent {
       });
     }
 
+    // make each slot a target for items to drag to.
     for (Cell<?> targetItem : table.getCells()) {
-      dnd.addTarget(new DragAndDrop.Target(targetItem.getActor()) {
-        ItemSlot slot = (ItemSlot) targetItem.getActor();
-        @Override
-        public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-          return true;
-        }
+      if (targetItem.getActor() instanceof ItemSlot) {
+        dnd.addTarget(new DragAndDrop.Target(targetItem.getActor()) {
+          ItemSlot slot = (ItemSlot) targetItem.getActor();
 
-        @Override
-        public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-          ItemSlot sourceSlot = map.get(((Image)source.getActor()));
-          playerInventory.swapPosition(indexes.get(sourceSlot), indexes.get(slot));
-          map.put(slot.getItemImage(), sourceSlot);
-          sourceSlot.setItemImage(slot.getItemImage());
-          map.put((Image) payload.getDragActor(),slot);
-          slot.setItemImage((Image)payload.getDragActor());
-        }
-      });
+          @Override
+          public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+            return true;
+          }
+
+          @Override
+          public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+            ItemSlot sourceSlot = map.get(((Image) source.getActor()));
+            playerInventory.swapPosition(indexes.get(sourceSlot), indexes.get(slot));
+            map.put(slot.getItemImage(), sourceSlot);
+            sourceSlot.setItemImage(slot.getItemImage());
+            map.put((Image) payload.getDragActor(), slot);
+            slot.setItemImage((Image) payload.getDragActor());
+            int currentIndex = playerInventory.getHeldIndex();
+            playerInventory.setHeldItem(currentIndex);
+
+          }
+        });
+      } else if (targetItem.getActor() instanceof Image) {
+        dnd.addTarget(new DragAndDrop.Target(targetItem.getActor()) {
+          final Image slot = (Image) targetItem.getActor();
+
+          @Override
+          public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+            return true;
+          }
+
+          @Override
+          public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+            payload.getDragActor().clear();
+            actors.remove(payload.getDragActor());
+            System.out.println(actors);
+            payload.getDragActor().remove();
+            ItemSlot sourceSlot = map.get(((Image) source.getActor()));
+            playerInventory.removeItem(playerInventory.getItemPos(indexes.get(sourceSlot)));
+
+            System.out.println(playerInventory.getItemPos(indexes.get(sourceSlot)));
+            System.out.println(playerInventory.getInventory());
+            //playerInventory.swapPosition(indexes.get(sourceSlot), indexes.get(slot)); need to remove item from inv
+            map.put(null, sourceSlot);
+            sourceSlot.setItemImage(null);
+            //map.put((Image) payload.getDragActor(), slot);
+            //slot.setItemImage((Image) payload.getDragActor());
+
+          }
+        });
+
+      }
     }
+
   }
 
   /**
