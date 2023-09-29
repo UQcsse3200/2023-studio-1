@@ -1,5 +1,8 @@
 package com.csse3200.game.components.questgiver;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -13,9 +16,6 @@ import com.csse3200.game.missions.achievements.Achievement;
 import com.csse3200.game.missions.quests.Quest;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Renders a UI for interacting with Missions.
@@ -35,7 +35,7 @@ public class MissionDisplay extends UIComponent {
 
         addActors();
 
-        entity.getEvents().addListener("toggleMissions", this::toggleOpen);
+        entity.getEvents().addListener("interact", this::toggleOpen);
     }
 
     /**
@@ -353,7 +353,6 @@ public class MissionDisplay extends UIComponent {
 
         List<Quest> selectableQuests = missionManager.getSelectableQuests();
         List<Quest> activeQuests = missionManager.getActiveQuests();
-
         List<Quest> inProgressQuests = activeQuests.stream().filter(quest -> !(quest.isExpired() || quest.isCompleted())).toList();
         List<Quest> expiredQuests = activeQuests.stream().filter(Quest::isExpired).toList();
         List<Quest> completedQuests = activeQuests.stream().filter(Quest::isCompleted).toList();
@@ -516,11 +515,14 @@ public class MissionDisplay extends UIComponent {
      * Toggles the visibility of the main mission ui.
      */
     public void toggleOpen() {
+        ServiceLocator.getPlantInfoService().getEvents().trigger("madeFirstContact");
+        ServiceLocator.getPlantInfoService().getEvents().trigger("clearPlantInfo");
         
         if (isOpen) {
             window.setVisible(false);
             isOpen = false;
         } else {
+            missionManager = ServiceLocator.getMissionManager();
             openMenu();
         }
     }

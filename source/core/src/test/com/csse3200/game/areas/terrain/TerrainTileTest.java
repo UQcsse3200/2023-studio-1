@@ -1,14 +1,16 @@
 package com.csse3200.game.areas.terrain;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.extensions.GameExtension;
-import org.junit.jupiter.api.BeforeAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import static org.junit.jupiter.api.Assertions.*;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.extensions.GameExtension;
 
 @ExtendWith(GameExtension.class)
 class TerrainTileTest {
@@ -145,22 +147,22 @@ class TerrainTileTest {
 
     @Test
     public void testTerrainTileCropEntityNullAfterInitialisation() {
-        assertNull(basicTestTile.getCropTile());
+        assertNull(basicTestTile.getOccupant());
     }
 
     @Test
     public void testSetCropTileSetsCropTile() {
         Entity cropTile = new Entity();
         cropTile.addComponent(new CropTileComponent());
-        basicTestTile.setCropTile(cropTile);
-        assertEquals(cropTile, basicTestTile.getCropTile());
+        basicTestTile.setOccupant(cropTile);
+        assertEquals(cropTile, basicTestTile.getOccupant());
     }
 
     @Test
     public void testSetCropTileSetsTileOccupied() {
         Entity cropTile = new Entity();
         cropTile.addComponent(new CropTileComponent());
-        basicTestTile.setCropTile(cropTile);
+        basicTestTile.setOccupant(cropTile);
         assertTrue(basicTestTile.isOccupied());
     }
 
@@ -168,8 +170,8 @@ class TerrainTileTest {
     public void testRemoveCropTileSetsTileUnoccupied() {
         Entity cropTile = new Entity();
         cropTile.addComponent(new CropTileComponent());
-        basicTestTile.setCropTile(cropTile);
-        basicTestTile.removeCropTile();
+        basicTestTile.setOccupant(cropTile);
+        basicTestTile.removeOccupant();
         assertFalse(basicTestTile.isOccupied());
     }
 
@@ -177,9 +179,9 @@ class TerrainTileTest {
     public void testRemoveCropTileSetsCropTileAsNull() {
         Entity cropTile = new Entity();
         cropTile.addComponent(new CropTileComponent());
-        basicTestTile.setCropTile(cropTile);
-        basicTestTile.removeCropTile();
-        assertNull(basicTestTile.getCropTile());
+        basicTestTile.setOccupant(cropTile);
+        basicTestTile.removeOccupant();
+        assertNull(basicTestTile.getOccupant());
     }
 
     @Test

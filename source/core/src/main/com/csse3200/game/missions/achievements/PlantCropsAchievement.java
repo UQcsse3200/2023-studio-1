@@ -1,5 +1,6 @@
 package com.csse3200.game.missions.achievements;
 
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.MissionManager;
 
@@ -57,6 +58,16 @@ public class PlantCropsAchievement extends Achievement {
         return numberOfCropsPlanted + " out of " + target + " crops planted";
     }
 
+    @Override
+    public void readProgress(JsonValue progress) {
+        numberOfCropsPlanted = progress.asInt();
+    }
+
+    @Override
+    public Object getProgress() {
+        return numberOfCropsPlanted;
+    }
+
     /**
      * Increments the number of plants the player has planted.
      * @param ignored The {@link String} representation of the plant type. Irrelevant for this
@@ -66,6 +77,7 @@ public class PlantCropsAchievement extends Achievement {
         if (++numberOfCropsPlanted >= target) {
             numberOfCropsPlanted = target;
         }
+        notifyUpdate();
     }
 
 }

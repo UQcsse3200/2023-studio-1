@@ -23,8 +23,6 @@ import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.ui.UIComponent;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.Gdx;
-
 
 /**
  * A ui component for displaying player stats, e.g. health.

@@ -1,24 +1,26 @@
 package com.csse3200.game.components.player;
 
+import java.security.SecureRandom;
+import java.util.List;
+
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 
-import java.security.SecureRandom;
-import java.util.List;
-
 /**
- * Action component for interacting with the player. Player events should be initialised in create()
+ * Action component for interacting with the player. Player events should be
+ * initialised in create()
  * and when triggered should call methods within this class.
  */
 public class PlayerActions extends Component {
@@ -56,7 +58,6 @@ public class PlayerActions extends Component {
     if (entity.getComponent(PlayerAnimationController.class).readyToPlay()) {
       if (moving) {
         updateSpeed();
-
       }
       updateAnimation();
     }
@@ -67,7 +68,8 @@ public class PlayerActions extends Component {
    */
   private void updateAnimation() {
 
-    int max=300; int min=1;
+    int max = 300;
+    int min = 1;
 
     int AnimationRandomizer = min + this.random.nextInt(max);
 
@@ -116,10 +118,13 @@ public class PlayerActions extends Component {
       velocityScale.scl(terrainSpeedModifier);
     } catch (Exception e) {
       // This should only occur when either:
-      //    The map is not instantiated (some tests do not instantiate a gameMap instance)
-      //    the getTile method returns null
-      // In this event, the speed will not be modified. This will need to be updated to throw an exception once the
-      // GameMap class is slightly modified to allow for easier instantiation of test maps for testing.
+      // The map is not instantiated (some tests do not instantiate a gameMap
+      // instance)
+      // the getTile method returns null
+      // In this event, the speed will not be modified. This will need to be updated
+      // to throw an exception once the
+      // GameMap class is slightly modified to allow for easier instantiation of test
+      // maps for testing.
     }
 
     Vector2 desiredVelocity = moveDirection.cpy().scl(velocityScale);
@@ -131,6 +136,7 @@ public class PlayerActions extends Component {
   public float getPrevMoveDirection() {
     return prevMoveDirection;
   }
+
   /**
    * Moves the player towards a given direction.
    *
@@ -142,6 +148,7 @@ public class PlayerActions extends Component {
     this.prevMoveDirection = moveDirection.angleDeg();
     moving = true;
   }
+
   /**
    * Stops the player from moving.
    */
@@ -184,14 +191,18 @@ public class PlayerActions extends Component {
       entity.getEvents().trigger("animationInteract", "down");
     }
 
-    // if there is a questgiver entity in range, trigger event toggleMissions
-    List<Entity> entitiesInRange = this.entity.getComponent(InteractionDetector.class).getEntitiesInRange();
+    /*
+     * Find the closest entity we can interact with. To register a new entity:
+     * 1. Go to InteractionDetector.java
+     * 2. Add the entity to the interactableEntities array
+     */
+    // TODO: do we want it so that it searches in direction instead of just anything in range? functionality for this already exists
+    InteractionDetector interactionDetector = entity.getComponent(InteractionDetector.class);
+    List<Entity> entitiesInRange = interactionDetector.getEntitiesInRange();
+    Entity closestEntity = interactionDetector.getNearest(entitiesInRange);
 
-    for (Entity entity : entitiesInRange) {
-      EntityType entityType = entity.getType();
-      if (entityType.equals(EntityType.Questgiver)) {
-        entity.getEvents().trigger("toggleMissions");
-      }
+    if (closestEntity != null) {
+      closestEntity.getEvents().trigger("interact");
     }
   }
 
@@ -204,7 +215,9 @@ public class PlayerActions extends Component {
   }
 
   /**
-   * Sets tractor to the tractor entity, can be used to calculate distances and mute inputs
+   * Sets tractor to the tractor entity, can be used to calculate distances and
+   * mute inputs
+   * 
    * @param tractor
    */
   public void setTractor(Entity tractor) {
@@ -215,15 +228,17 @@ public class PlayerActions extends Component {
    * Makes the player get into tractor.
    */
   void enterTractor() {
-    //check within 4 units of tractor
+    // check within 4 units of tractor
     if (this.entity.getPosition().dst(tractor.getPosition()) > 4) {
       return;
     }
     this.stopMoving();
     muted = true;
+    tractor.getEvents().trigger("toggleAuraLight");
     tractor.getComponent(TractorActions.class).setMuted(false);
-    tractor.getComponent(KeyboardTractorInputComponent.class).setWalkDirection(entity.getComponent(KeyboardPlayerInputComponent.class).getWalkDirection());
-    this.entity.setPosition(new Vector2(-10,-10));
+    tractor.getComponent(KeyboardTractorInputComponent.class)
+        .setWalkDirection(entity.getComponent(KeyboardPlayerInputComponent.class).getWalkDirection());
+    this.entity.setPosition(new Vector2(-10, -10));
     camera.setTrackEntity(tractor);
   }
 
@@ -238,7 +253,7 @@ public class PlayerActions extends Component {
 
   void hotkeySelection(int index) {
     InventoryComponent inventoryComponent = entity.getComponent(InventoryComponent.class);
-    //Make sure its initialised
+    // Make sure its initialised
     if (inventoryComponent != null) {
       inventoryComponent.setHeldItem(index);
     }
@@ -246,6 +261,7 @@ public class PlayerActions extends Component {
 
   /**
    * When in the tractor inputs should be muted, this handles that.
+   * 
    * @return if the players inputs should be muted
    */
   public boolean isMuted() {
@@ -256,11 +272,11 @@ public class PlayerActions extends Component {
     this.muted = muted;
   }
 
-  public void setCameraVar (CameraComponent cam) {
+  public void setCameraVar(CameraComponent cam) {
     this.camera = cam;
   }
 
-  public CameraComponent getCameraVar () {
+  public CameraComponent getCameraVar() {
     return camera;
   }
 

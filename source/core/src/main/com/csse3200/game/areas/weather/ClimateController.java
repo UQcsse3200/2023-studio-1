@@ -1,12 +1,12 @@
 package com.csse3200.game.areas.weather;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.services.ServiceLocator;
-
-import java.util.ArrayList;
 
 public class ClimateController implements Json.Serializable {
 
@@ -249,30 +249,43 @@ public class ClimateController implements Json.Serializable {
 	public void write(Json json) {
 		json.writeValue("Temp", getTemperature());
 		json.writeValue("Humidity", getHumidity());
-		if (currentWeatherEvent != null) {
-			currentWeatherEvent.write(json);
+		json.writeObjectStart("Events");
+		updateWeatherEvent();
+		System.out.println(weatherEvents);
+		for (WeatherEvent event : weatherEvents) {
+			event.write(json);
 		}
+		json.writeObjectEnd();
 	}
 
 	@Override
 	public void read(Json json, JsonValue jsonData) {
+		ServiceLocator.getGameArea().getClimateController().setValues(json, jsonData);
+	}
+
+
+	public void setValues(Json json, JsonValue jsonData) {
 		temperature = jsonData.getFloat("Temp");
 		humidity = jsonData.getFloat("Humidity");
-		// It has a special weather event
-		currentWeatherEvent = null;
-		if (jsonData.has("name")) {
-			switch (jsonData.getString("name")) {
-				case ("AcidShowerEvent") -> {
-					currentWeatherEvent = new AcidShowerEvent(jsonData.getInt("hoursUntil"),
-							jsonData.getInt("duration"), jsonData.getInt("priority"),
-							jsonData.getFloat("severity"));
-				} case ("SolarSurgeEvent") -> {
-					currentWeatherEvent = new SolarSurgeEvent(jsonData.getInt("hoursUntil"),
-							jsonData.getInt("duration"), jsonData.getInt("priority"),
-							jsonData.getFloat("severity"));
-
+		jsonData = jsonData.get("Events");
+		jsonData.forEach(jsonValue -> {
+			if (jsonValue.get("Event") != null) {
+				switch (jsonValue.getString("name")) {
+					case ("AcidShowerEvent") -> {
+						addWeatherEvent(new AcidShowerEvent(jsonValue.getInt("hoursUntil"),
+								jsonValue.getInt("duration"), jsonValue.getInt("priority"),
+								jsonValue.getFloat("severity")));
+					}
+					case ("SolarSurgeEvent") -> {
+						addWeatherEvent(new SolarSurgeEvent(jsonValue.getInt("hoursUntil"),
+								jsonValue.getInt("duration"), jsonValue.getInt("priority"),
+								jsonValue.getFloat("severity")));
+					}
+					default -> {
+					}
 				}
 			}
-		}
+		});
+		updateWeatherEvent();
 	}
 }

@@ -1,28 +1,26 @@
 package com.csse3200.game.components.player;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.PlayerFactory;
-import com.csse3200.game.extensions.GameExtension;
+import java.util.stream.Stream;
 
-import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.rendering.RenderService;
-import com.csse3200.game.services.ResourceService;
-import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.stream.Stream;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.params.provider.Arguments.arguments;
-
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.PlayerFactory;
+import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.rendering.RenderService;
+import com.csse3200.game.services.ResourceService;
+import com.csse3200.game.services.ServiceLocator;
 
 
 @ExtendWith(GameExtension.class)

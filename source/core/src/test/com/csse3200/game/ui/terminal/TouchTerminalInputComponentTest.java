@@ -1,11 +1,17 @@
 package com.csse3200.game.ui.terminal;
 
-import com.csse3200.game.extensions.GameExtension;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import com.csse3200.game.extensions.GameExtension;
 
 @ExtendWith(GameExtension.class)
 class TouchTerminalInputComponentTest {

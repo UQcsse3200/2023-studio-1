@@ -1,9 +1,11 @@
 package com.csse3200.game.input;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
 import com.csse3200.game.ui.terminal.KeyboardTerminalInputComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * KeyboardInputFactory creates input handlers that process keyboard and touch support.

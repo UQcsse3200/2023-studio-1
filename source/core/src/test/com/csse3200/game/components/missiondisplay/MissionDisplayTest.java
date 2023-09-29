@@ -1,5 +1,23 @@
 package com.csse3200.game.components.missiondisplay;
 
+import static org.junit.jupiter.params.provider.Arguments.arguments;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.verify;
+
+import java.util.ArrayList;
+import java.util.stream.Stream;
+
+import com.csse3200.game.missions.quests.QuestFactory;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.ArgumentCaptor;
+
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
@@ -17,20 +35,6 @@ import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.ArgumentCaptor;
-
-import java.util.ArrayList;
-import java.util.stream.Stream;
-
-import static org.junit.jupiter.params.provider.Arguments.arguments;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
 class MissionDisplayTest {
@@ -54,6 +58,8 @@ class MissionDisplayTest {
 
         missionManager = new MissionManager();
         ServiceLocator.registerMissionManager(missionManager);
+        missionManager.addQuest(QuestFactory.createHaberHobbyist());
+        missionManager.addQuest(QuestFactory.createFertiliserFanatic());
 
         Entity questgiver = new Entity();
         missionDisplay = new MissionDisplay();

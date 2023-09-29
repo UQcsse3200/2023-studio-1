@@ -1,13 +1,13 @@
 package com.csse3200.game.files;
 
+import java.io.File;
+
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.files.FileLoader.Location;
-
-import java.io.File;
-
+import com.csse3200.game.missions.MissionManager;
 
 /**
  * Reading, Writing, and applying user settings in the game.
@@ -18,6 +18,7 @@ public class SaveGame {
 
   /**
    * Get the stored save file
+   * 
    * @return Copy of the saved game state
    */
   public static GameState get() {
@@ -28,6 +29,7 @@ public class SaveGame {
 
   /**
    * Set the current game state
+   * 
    * @param gameState The gameState to store
    */
   public static void set(GameState gameState) {
@@ -41,8 +43,11 @@ public class SaveGame {
   public static class GameState {
     private int day;
     private int hour;
+    private int minute;
 
     private ClimateController climate;
+
+    private MissionManager missions;
 
     private Entity player;
     private Entity tractor;
@@ -50,7 +55,8 @@ public class SaveGame {
 
     private Array<Entity> tiles;
 
-    public GameState() {};
+    public GameState() {
+    };
 
     public int getDay() {
       return day;
@@ -79,20 +85,27 @@ public class SaveGame {
     public Array<Entity> getEntities() {
       return entities;
     }
-  
+
     public void setEntities(Array<Entity> entities) {
       this.entities = filterEntities(entities);
     }
 
+    /**
+     * Filter out all entities that are in the NPC Factory, player or tractor. This
+     * function is mainly for SaveLoadService.java. Produces a Array of entities
+     * from the NPC factory that needs to be remade
+     * 
+     * @param entities the entities to filter in Array<Entity>
+     * @return the entities filtered in Array<Entity> for use in SaveLoadService.
+     */
     private Array<Entity> filterEntities(Array<Entity> entities) {
       // If you edit this original array you edit what is in the ResourceService
-      Array<Entity> tmp = new Array<>(entities);
-      for (int i = 0; i < tmp.size; i++) {
-        if (tmp.get(i).getType() == EntityType.Item || tmp.get(i).getType() == EntityType.Player || tmp.get(i).getType() == null
-                || tmp.get(i).getType() == EntityType.Tractor || tmp.get(i).getType() == EntityType.Tile) {
-          tmp.removeIndex(i);
-          // Moves the indexing down when removed so keep index same
-          i--;
+      Array<Entity> tmp = new Array<>();
+      for (Entity e : entities) {
+        if (e.getType() == EntityType.Astrolotl || e.getType() == EntityType.Chicken ||
+                e.getType() == EntityType.Cow || e.getType() == EntityType.OxygenEater ||
+                e.getType() == EntityType.ShipDebris || e.getType() == EntityType.FireFlies) {
+          tmp.add(e);
         }
       }
       return tmp;
@@ -103,11 +116,13 @@ public class SaveGame {
     }
 
     /**
-     * Loop through all entities in the save file and if the tractor is there return the tractor
-     *    if not return null
+     * Loop through all entities in the save file and if the tractor is there return
+     * the tractor
+     * if not return null
+     * 
      * @return
      */
-    public Entity getTractor(){
+    public Entity getTractor() {
       return tractor;
     }
 
@@ -139,6 +154,22 @@ public class SaveGame {
 
     public void setClimate(ClimateController climate) {
       this.climate = climate;
+    }
+
+    public MissionManager getMissions() {
+      return missions;
+    }
+
+    public void setMissions(MissionManager missions) {
+      this.missions = missions;
+    }
+
+    public int getMinute() {
+      return minute;
+    }
+
+    public void setMinute(int minute) {
+      this.minute = minute;
     }
   }
 }
