@@ -1823,6 +1823,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Get a component of type T on the entity.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/inventory/ItemSlot.html#getCount()" class="member-name-link">getCount()</a> - Method in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/ItemSlot.html" title="class in com.csse3200.game.components.inventory">ItemSlot</a></dt>
+<dd>
+<div class="block">Get the item count</div>
+</dd>
 <dt><a href="com/csse3200/game/components/plants/PlantComponent.html#getCropTile()" class="member-name-link">getCropTile()</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
 <dd>
 <div class="block">Return the cropTile where the plant is located.</div>
@@ -2071,7 +2075,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Returns the id of the item</div>
 </dd>
 <dt><a href="com/csse3200/game/components/inventory/ItemSlot.html#getItemImage()" class="member-name-link">getItemImage()</a> - Method in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/ItemSlot.html" title="class in com.csse3200.game.components.inventory">ItemSlot</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Get the item image</div>
+</dd>
 <dt><a href="com/csse3200/game/components/items/ItemComponent.html#getItemName()" class="member-name-link">getItemName()</a> - Method in class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a></dt>
 <dd>
 <div class="block">Returns the name of the item</div>
@@ -2089,6 +2095,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/entities/factories/ItemFactory.html#getItemSupplier(java.lang.String)" class="member-name-link">getItemSupplier(String)</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ItemFactory.html" title="class in com.csse3200.game.entities.factories">ItemFactory</a></dt>
 <dd>
 <div class="block">Returns the supplier function for the item with the given unique name.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/inventory/ItemSlot.html#getItemTexture()" class="member-name-link">getItemTexture()</a> - Method in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/ItemSlot.html" title="class in com.csse3200.game.components.inventory">ItemSlot</a></dt>
+<dd>
+<div class="block">Set the item texture</div>
 </dd>
 <dt><a href="com/csse3200/game/components/items/ItemComponent.html#getItemTexture()" class="member-name-link">getItemTexture()</a> - Method in class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/ItemComponent.html" title="class in com.csse3200.game.components.items">ItemComponent</a></dt>
 <dd>&nbsp;</dd>
@@ -2735,7 +2745,7 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">A ui component for displaying player stats, e.g.</div>
 </dd>
-<dt><a href="com/csse3200/game/components/inventory/InventoryDisplay.html#%3Cinit%3E(com.csse3200.game.components.player.InventoryComponent)" class="member-name-link">InventoryDisplay(InventoryComponent)</a> - Constructor for class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/InventoryDisplay.html" title="class in com.csse3200.game.components.inventory">InventoryDisplay</a></dt>
+<dt><a href="com/csse3200/game/components/inventory/InventoryDisplay.html#%3Cinit%3E(com.csse3200.game.components.player.InventoryComponent,java.lang.Integer,java.lang.Integer)" class="member-name-link">InventoryDisplay(InventoryComponent, Integer, Integer)</a> - Constructor for class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/InventoryDisplay.html" title="class in com.csse3200.game.components.inventory">InventoryDisplay</a></dt>
 <dd>
 <div class="block">Constructor for class</div>
 </dd>
@@ -3892,6 +3902,8 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/missions/quests/QuestFactory.html#reapingYourRewardsQuestName" class="member-name-link">reapingYourRewardsQuestName</a> - Static variable in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/QuestFactory.html" title="class in com.csse3200.game.missions.quests">QuestFactory</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/inventory/InventoryDisplay.html#refreshInventory()" class="member-name-link">refreshInventory()</a> - Method in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/InventoryDisplay.html" title="class in com.csse3200.game.components.inventory">InventoryDisplay</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/files/UserSettings.DisplaySettings.html#refreshRate" class="member-name-link">refreshRate</a> - Variable in class com.csse3200.game.files.<a href="com/csse3200/game/files/UserSettings.DisplaySettings.html" title="class in com.csse3200.game.files">UserSettings.DisplaySettings</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/EntityService.html#register(com.csse3200.game.entities.Entity)" class="member-name-link">register(Entity)</a> - Method in class com.csse3200.game.entities.<a href="com/csse3200/game/entities/EntityService.html" title="class in com.csse3200.game.entities">EntityService</a></dt>
@@ -4376,7 +4388,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Sets the distance/spread of the light</div>
 </dd>
 <dt><a href="com/csse3200/game/components/inventory/InventoryDisplay.html#setDragItems(java.util.ArrayList,java.util.Map)" class="member-name-link">setDragItems(ArrayList&lt;Actor&gt;, Map&lt;Image, ItemSlot&gt;)</a> - Method in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/InventoryDisplay.html" title="class in com.csse3200.game.components.inventory">InventoryDisplay</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Set Drag Items</div>
+</dd>
 <dt><a href="com/csse3200/game/components/plants/PlantAreaOfEffectComponent.html#setEffectType(java.lang.String)" class="member-name-link">setEffectType(String)</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantAreaOfEffectComponent.html" title="class in com.csse3200.game.components.plants">PlantAreaOfEffectComponent</a></dt>
 <dd>
 <div class="block">Update the current effect being executed.</div>
@@ -4620,6 +4634,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Sets the game's screen to a new screen of the provided type.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/inventory/ItemSlot.html#setSelected()" class="member-name-link">setSelected()</a> - Method in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/ItemSlot.html" title="class in com.csse3200.game.components.inventory">ItemSlot</a></dt>
+<dd>
+<div class="block">Make the slot selected</div>
+</dd>
 <dt><a href="com/csse3200/game/physics/components/ColliderComponent.html#setSensor(boolean)" class="member-name-link">setSensor(boolean)</a> - Method in class com.csse3200.game.physics.components.<a href="com/csse3200/game/physics/components/ColliderComponent.html" title="class in com.csse3200.game.physics.components">ColliderComponent</a></dt>
 <dd>
 <div class="block">Set whether this physics component is a sensor.</div>
@@ -4671,10 +4689,6 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/areas/terrain/CropTileComponent.html#setTerrainTile(com.csse3200.game.areas.terrain.TerrainTile)" class="member-name-link">setTerrainTile(TerrainTile)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/CropTileComponent.html" title="class in com.csse3200.game.areas.terrain">CropTileComponent</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/inventory/ItemSlot.html#setTexture(com.badlogic.gdx.graphics.Texture)" class="member-name-link">setTexture(Texture)</a> - Method in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/ItemSlot.html" title="class in com.csse3200.game.components.inventory">ItemSlot</a></dt>
-<dd>
-<div class="block">Set the item texture</div>
-</dd>
 <dt><a href="com/csse3200/game/rendering/DynamicTextureRenderComponent.html#setTexture(java.lang.String)" class="member-name-link">setTexture(String)</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/DynamicTextureRenderComponent.html" title="class in com.csse3200.game.rendering">DynamicTextureRenderComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainTile.html#setTextureRegion(com.badlogic.gdx.graphics.g2d.TextureRegion)" class="member-name-link">setTextureRegion(TextureRegion)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></dt>
@@ -4727,6 +4741,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainTile.html#setUnOccupied()" class="member-name-link">setUnOccupied()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></dt>
 <dd>
 <div class="block">labels the terrain tile as being unoccupied</div>
+</dd>
+<dt><a href="com/csse3200/game/components/inventory/ItemSlot.html#setUnselected()" class="member-name-link">setUnselected()</a> - Method in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/ItemSlot.html" title="class in com.csse3200.game.components.inventory">ItemSlot</a></dt>
+<dd>
+<div class="block">Make the slot unselected</div>
 </dd>
 <dt><a href="com/csse3200/game/entities/factories/PlayerFactory.html#setupPlayerAnimator(com.csse3200.game.rendering.AnimationRenderComponent)" class="member-name-link">setupPlayerAnimator(AnimationRenderComponent)</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/PlayerFactory.html" title="class in com.csse3200.game.entities.factories">PlayerFactory</a></dt>
 <dd>
@@ -5495,10 +5513,6 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/plants/PlantComponent.html#updateGrowthStage()" class="member-name-link">updateGrowthStage()</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
 <dd>
 <div class="block">Update the growth stage of a plant based on its current growth level.</div>
-</dd>
-<dt><a href="com/csse3200/game/components/inventory/InventoryDisplay.html#updateInventory()" class="member-name-link">updateInventory()</a> - Method in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/InventoryDisplay.html" title="class in com.csse3200.game.components.inventory">InventoryDisplay</a></dt>
-<dd>
-<div class="block">Force update of the display after update inventory event is called</div>
 </dd>
 <dt><a href="com/csse3200/game/components/inventory/ToolbarDisplay.html#updateInventory()" class="member-name-link">updateInventory()</a> - Method in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/ToolbarDisplay.html" title="class in com.csse3200.game.components.inventory">ToolbarDisplay</a></dt>
 <dd>
