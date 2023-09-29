@@ -1,5 +1,6 @@
 package com.csse3200.game.components;
 
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 /**
@@ -19,21 +20,25 @@ public class LightController extends Component {
     }
 
 
-    private void turnOn() {
+    public boolean turnOn() {
         AuraLightComponent light = entity.getComponent(AuraLightComponent.class);
         if (light != null) {
             if (!light.getActive()) {
                 light.toggleLight();
+                entity.getComponent(AnimationRenderComponent.class).startAnimation("light_on");
             }
         }
+        return true;
     }
 
-    private void turnOff() {
+    public boolean turnOff() {
         AuraLightComponent light = entity.getComponent(AuraLightComponent.class);
         if (light != null) {
             if (light.getActive()) {
                 light.toggleLight();
+                entity.getComponent(AnimationRenderComponent.class).startAnimation("light_off");
             }
         }
+        return true;
     }
 }
