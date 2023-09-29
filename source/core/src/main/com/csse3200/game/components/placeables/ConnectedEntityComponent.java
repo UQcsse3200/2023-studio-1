@@ -55,7 +55,7 @@ public class ConnectedEntityComponent extends Component { // TODO should it exte
     }
     // Add listeners for update and destroy:
     target.getEvents().addListener("update", this::updateAdjEntity);
-    target.getEvents().addListener("destroy", this::destroy);
+    target.getEvents().addListener("destroyConnections", this::destroy);
   }
 
   /**
@@ -99,7 +99,6 @@ public class ConnectedEntityComponent extends Component { // TODO should it exte
         p.getEvents().trigger("update", this.target.getPosition(), null);
       }
     }
-    //target.dispose();
   }
 
   /**
