@@ -288,8 +288,8 @@ public class SprinklerComponent extends Component {
     if (!isPowered) return;
     for (Vector2 pos : aoe) {
       TerrainTile tt = ServiceLocator.getGameArea().getMap().getTile(pos);
-      if (tt.getCropTile() != null) {
-        tt.getCropTile().getEvents().trigger("water", 0.5f);
+      if (tt.getOccupant() != null) {
+        tt.getOccupant().getEvents().trigger("water", 0.5f);
       }
     }
   }
