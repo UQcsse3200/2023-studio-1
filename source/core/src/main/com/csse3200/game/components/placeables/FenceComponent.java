@@ -1,14 +1,12 @@
 package com.csse3200.game.components.placeables;
 
-import java.util.HashMap;
-
 import com.csse3200.game.components.Component;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 
 public class FenceComponent extends Component {
 
-    private ConnectedEntityComponent connectedEntityComponent;
+    private ConnectedEntityUtility connectedEntityUtility;
     /**
      * Texture paths for different fence orientation.
      * The order of this array is very important, correct order ensures a fence gets the correct texture.
@@ -91,13 +89,13 @@ public class FenceComponent extends Component {
     */
     @Override
     public void create() {
-        this.connectedEntityComponent = new ConnectedEntityComponent(entity);
+        this.connectedEntityUtility = new ConnectedEntityUtility(entity);
     
         if (isGate) {
             configGate();
             entity.getEvents().addListener("interact", this::toggleGate);
             entity.getEvents().addListener("reconfigure", this::configGate);
-            this.connectedEntityComponent.notifyAdjacent();
+            this.connectedEntityUtility.notifyAdjacent();
             return;
         }
 
@@ -105,7 +103,7 @@ public class FenceComponent extends Component {
         entity.getEvents().addListener("reconfigure", this::configFence);
 
         // Notify all adjacent of this placement
-        this.connectedEntityComponent.notifyAdjacent();
+        this.connectedEntityUtility.notifyAdjacent();
     }
 
     /**
@@ -113,7 +111,7 @@ public class FenceComponent extends Component {
      */
     public void configFence() {
         // get index into texture array based on surrounding sprinklers
-        byte orientation = this.connectedEntityComponent.getAdjacentBitmap();
+        byte orientation = this.connectedEntityUtility.getAdjacentBitmap();
         // now set the texture.
         entity.getComponent(DynamicTextureRenderComponent.class).setTexture(textures_fence[orientation]);
     }
@@ -123,7 +121,7 @@ public class FenceComponent extends Component {
      */
     public void configGate() {
         // get index into texture array based on surrounding sprinklers
-        byte orientation = this.connectedEntityComponent.getAdjacentBitmap();
+        byte orientation = this.connectedEntityUtility.getAdjacentBitmap();
         // now set the texture.
         if (isOpen) {
             entity.getComponent(DynamicTextureRenderComponent.class).setTexture(textures_gate_open[orientation]);

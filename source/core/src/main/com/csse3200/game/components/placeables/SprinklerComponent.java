@@ -24,7 +24,7 @@ public class SprinklerComponent extends Component {
   /**
    * Handles updates to the adjacent sprinklers.
    */
-  private ConnectedEntityComponent connectedEntityComponent;
+  private ConnectedEntityUtility connectedEntityUtility;
 
   /**
    * Texture paths for different sprinkler orientation. (and powered and non-powered)
@@ -88,7 +88,7 @@ public class SprinklerComponent extends Component {
    */
   public void create() {
     // Create a list of the adjacent sprinklers:
-    this.connectedEntityComponent = new ConnectedEntityComponent(entity);
+    this.connectedEntityUtility = new ConnectedEntityUtility(entity);
     if (!this.pump) {
       // Configure the sprinklers dynamic components:
       configSprinkler();
@@ -99,7 +99,7 @@ public class SprinklerComponent extends Component {
       ServiceLocator.getTimeService().getEvents().addListener("minuteUpdate", this::sprinkle);
     }
     // Update adjacent sprinklers:
-    this.connectedEntityComponent.notifyAdjacent();
+    this.connectedEntityUtility.notifyAdjacent();
   }
 
   /**
@@ -139,7 +139,7 @@ public class SprinklerComponent extends Component {
    * @return array of adj entities
    */
   protected Entity[] getAdjList() {
-    return this.connectedEntityComponent.getAdjacentEntities();
+    return this.connectedEntityUtility.getAdjacentEntities();
   }
 
   /**
@@ -151,7 +151,7 @@ public class SprinklerComponent extends Component {
   public void configSprinkler() {
     // Find suitable texture and configure power status based off of the adjacent:
     byte orientation = 0b0000;
-    for (Entity s : this.connectedEntityComponent.getAdjacentEntities()) {
+    for (Entity s : this.connectedEntityUtility.getAdjacentEntities()) {
       orientation <<= 1;
       if (s != null) {
         orientation |= 0b0001;
@@ -189,7 +189,7 @@ public class SprinklerComponent extends Component {
     // Then configure every sprinkler in range with that result:
     notifyConnected(findPump(this.entity));
     // Update this sprinklers texture:
-    setTexture(this.isPowered, this.connectedEntityComponent.getAdjacentBitmap());
+    setTexture(this.isPowered, this.connectedEntityUtility.getAdjacentBitmap());
   }
 
   /**
@@ -241,7 +241,7 @@ public class SprinklerComponent extends Component {
           if (!s.getComponent(SprinklerComponent.class).getPump()) {
             s.getComponent(SprinklerComponent.class)
                     .setTexture(powerStatus, s.getComponent(SprinklerComponent.class)
-                            .connectedEntityComponent.getAdjacentBitmap());
+                            .connectedEntityUtility.getAdjacentBitmap());
           }
           queue.offer(s);
           visited.add(s);
@@ -269,10 +269,12 @@ public class SprinklerComponent extends Component {
             new Vector2(x - 1, y),
             new Vector2(x - 2, y),
             // top right, bottom right, top left, bottom left.
+            /*
             new Vector2(x + 1, y + 1),
             new Vector2(x + 1, y - 1),
             new Vector2(x - 1, y + 1),
             new Vector2(x - 1, y - 1)
+             */
     };
   }
 
