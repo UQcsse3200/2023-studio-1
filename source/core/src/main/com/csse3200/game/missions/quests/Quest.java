@@ -3,7 +3,10 @@ package com.csse3200.game.missions.quests;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.missions.Mission;
+import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.rewards.Reward;
+import com.csse3200.game.services.ServiceLocator;
+
 
 public abstract class Quest extends Mission {
 
@@ -23,16 +26,40 @@ public abstract class Quest extends Mission {
 	private int timeToExpiry;
 
 	/**
+	 * Represents whether the {@link Quest} should be able to expire
+	 */
+	private final boolean canExpire;
+
+	/**
 	 * The {@link Reward} to be collected once the {@link Quest} has been completed
 	 */
 	private final Reward reward;
 
 	/**
-	 * Creates a {@link Mission} with the given {@link String} name, specifying the {@link Reward} for completion, the
-	 * integer duration of the {@link Quest} (the number of hours before the {@link Quest} expires), and whether the
-	 * {@link Quest} is mandatory.
+	 * Creates a {@link Quest} with the given {@link String} name, specifying the {@link Reward} for completion.
+	 * {@link Quest}s created using this constructor cannot expire.
 	 *
-	 * @param name The {@link String} name of the {@link Mission}, visible to the player in-game
+	 * @param name The {@link String} name of the {@link Quest}, visible to the player in-game
+	 * @param reward The {@link Reward} which can be collected upon completion of the {@link Quest}
+	 */
+	protected Quest(String name, Reward reward) {
+		super(name);
+		this.reward = reward;
+		this.canExpire = false;
+
+		this.duration = -1;
+		this.timeToExpiry = 0;
+
+		this.isMandatory = false;
+	}
+
+	/**
+	 * Creates a {@link Quest} with the given {@link String} name, specifying the {@link Reward} for completion, the
+	 * integer duration of the {@link Quest} (the number of hours before the {@link Quest} expires), and whether the
+	 * {@link Quest} is mandatory. {@link Quest}s created using this constructor will expire after the specified time
+	 * limit.
+	 *
+	 * @param name The {@link String} name of the {@link Quest}, visible to the player in-game
 	 * @param reward The {@link Reward} which can be collected upon completion of the {@link Quest}
 	 * @param expiryDuration An integer value representing the number of hours before this {@link Quest} should expire
 	 * @param isMandatory A boolean value representing whether the {@link Quest} is mandatory. Mandatory {@link Quest}s
@@ -45,23 +72,25 @@ public abstract class Quest extends Mission {
 		this.isMandatory = isMandatory;
 
 		this.timeToExpiry = this.duration;
+		this.canExpire = true;
 	}
 
 	/**
-	 * Decrements the duration to expiry of the quest by 1.
+	 * Decrements the duration to expiry of the quest by 1, if the {@link Quest} can expire.
 	 */
 	public void updateExpiry() {
-		if (--timeToExpiry <= 0) {
+		if (canExpire && !isCompleted() && --timeToExpiry <= 0) {
 			timeToExpiry = 0;
 		}
 	}
 
 	/**
-	 * Returns a boolean value representing whether the quest has expired.
-	 * @return True if the quest has expired, false otherwise.
+	 * Returns a boolean value representing whether the quest has expired. If the {@link Quest} does not expire, then
+	 * this method will always return false.
+	 * @return True if the {@link Quest} can expire and has expired, false otherwise.
 	 */
 	public boolean isExpired() {
-		return timeToExpiry <= 0;
+		return canExpire && timeToExpiry <= 0;
 	}
 
 	/**
@@ -73,21 +102,36 @@ public abstract class Quest extends Mission {
 	}
 
 	/**
+	 * Returns a boolean value representing if this quest's rewards has been collected yet.
+	 * @return True if the reward has been collected, false otherwise.
+	 */
+	public boolean isRewardCollected() {
+		return reward.isCollected();
+	}
+
+	/**
 	 * Collects the reward associated with this {@link Quest}. If the reward has already been collected, or if the
 	 * {@link Mission} has not been completed, this method will do nothing.
 	 */
 	public void collectReward() {
 		if (isCompleted() && !reward.isCollected()) {
+			ServiceLocator.getMissionManager().getEvents().trigger(
+					MissionManager.MissionEvent.REWARD_COMPLETE.name());
 			reward.collect();
+			ServiceLocator.getMissionManager().getEvents().trigger(
+					MissionManager.MissionEvent.QUEST_REWARD_COLLECTED.name(),
+					getName());
 		}
 	}
 
 	/**
 	 * Resets the {@link Quest}'s time to expiry back to the original expiry duration, and calls the
-	 * {@link Quest}'s {@link #resetState()} method.
+	 * {@link Quest}'s {@link #resetState()} method. This method only calls {@link #resetState()} if it cannot expire.
 	 */
 	public void resetExpiry() {
-		timeToExpiry = duration;
+		if (canExpire) {
+			timeToExpiry = duration;
+		}
 		resetState();
 	}
 

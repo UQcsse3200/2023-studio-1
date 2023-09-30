@@ -41,9 +41,11 @@ public class TractorFactory {
 
     tractor.getComponent(AnimationRenderComponent.class).scaleEntity();
     tractor.getComponent(TractorActions.class).setPlayer(player);
+    tractor.getComponent(TractorActions.class).setCameraVar(ServiceLocator.getCameraComponent());
     tractor.getComponent(KeyboardTractorInputComponent.class).setActions(tractor.getComponent(TractorActions.class));
     tractor.getComponent(ColliderComponent.class).setAsBox(new Vector2(2.25f, 1f), new Vector2(2.5625f, 1.4375f));
     tractor.getComponent(ColliderComponent.class).setDensity(999);    //prevents entities from pushing the tractor so easily
+
     return tractor;
   }
 

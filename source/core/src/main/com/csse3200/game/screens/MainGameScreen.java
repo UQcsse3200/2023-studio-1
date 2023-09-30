@@ -1,5 +1,9 @@
 package com.csse3200.game.screens;
 
+import com.csse3200.game.components.plants.PlantInfoDisplayComponent;
+import com.csse3200.game.services.*;
+import com.csse3200.game.services.plants.PlantCommandService;
+import com.csse3200.game.services.plants.PlantInfoService;
 import com.csse3200.game.entities.FireflySpawner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +21,7 @@ import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.components.maingame.PauseMenuActions;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.tractor.TractorActions;
+import com.csse3200.game.components.EntityIndicator;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
@@ -115,6 +120,8 @@ public class MainGameScreen extends ScreenAdapter {
         ServiceLocator.registerRenderService(new RenderService());
         ServiceLocator.registerTimeService(new TimeService());
         ServiceLocator.registerPlanetOxygenService(new PlanetOxygenService());
+        ServiceLocator.registerPlantCommandService(new PlantCommandService());
+        ServiceLocator.registerPlantInfoService(new PlantInfoService());
 
         ServiceLocator.registerMissionManager(new MissionManager());
 
@@ -266,6 +273,7 @@ public class MainGameScreen extends ScreenAdapter {
                 .addComponent(new TerminalDisplay())
                 .addComponent(new GameTimeDisplay())
                 .addComponent(new OxygenDisplay())
+                .addComponent(new PlantInfoDisplayComponent())
                 .addComponent(new WeatherEventDisplay());
 
         ServiceLocator.getEntityService().register(ui);

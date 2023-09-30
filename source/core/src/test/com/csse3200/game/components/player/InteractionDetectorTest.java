@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.csse3200.game.physics.components.HitboxComponent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -56,8 +57,8 @@ public class InteractionDetectorTest {
 
         Entity entity1 = makeEntity();
         Entity entity2 = makeEntity();
-        Fixture entity1Fixture = entity1.getComponent(ColliderComponent.class).getFixture();
-        Fixture entity2Fixture = entity2.getComponent(ColliderComponent.class).getFixture();
+        Fixture entity1Fixture = entity1.getComponent(HitboxComponent.class).getFixture();
+        Fixture entity2Fixture = entity2.getComponent(HitboxComponent.class).getFixture();
 
         // Test event listeners work as it inherits from HitBoxComponent so collisions are assumed to work as intended.
         // trigger collisionStart
@@ -197,97 +198,25 @@ public class InteractionDetectorTest {
         entities.add(entity1);
         entities.add(entity2);
 
-        assertEquals(1, interactor.getNearest(entities).size());
-        assertTrue(interactor.getNearest(entities).contains(entity2));
+        assertEquals(entity2, interactor.getNearest(entities));
 
         // if two entities with same distance, just return whichever
         entities.add(entity3);
-        assertEquals(1, interactor.getNearest(entities).size());
-        assertTrue(interactor.getNearest(entities).contains(entity2) || interactor.getNearest(entities).contains(entity3));
-    }
-
-    @Test
-    public void testGetSuitableEntitiesForFood() {
-        Entity tamableEntity1ToTheRight = spy(makeEntity(new Vector2(1, 0)));
-        TamableComponent entity1TameComponentMock = mock(TamableComponent.class);
-        when(tamableEntity1ToTheRight.getComponent(TamableComponent.class)).thenReturn(entity1TameComponentMock);
-        when(entity1TameComponentMock.isTamed()).thenReturn(false);
-
-        Entity tamableEntity2ToTheLeft = spy(makeEntity(new Vector2(-1, 0)));
-        TamableComponent entity2TameComponentMock = mock(TamableComponent.class);
-        when(tamableEntity2ToTheLeft.getComponent(TamableComponent.class)).thenReturn(entity2TameComponentMock);
-        when(entity2TameComponentMock.isTamed()).thenReturn(false);
-
-        Entity tamableEntity3AlreadyTamed = spy(makeEntity(new Vector2(0, 1))); // in up direction
-        TamableComponent entity3TameComponentMock = mock(TamableComponent.class);
-        when(tamableEntity3AlreadyTamed.getComponent(TamableComponent.class)).thenReturn(entity3TameComponentMock);
-        when(entity3TameComponentMock.isTamed()).thenReturn(true);
-
-        Entity nonTamableEntity4 = makeEntity(new Vector2(-0.5f, 0));
-
-        List<Entity> entities = new ArrayList<>();
-        entities.add(tamableEntity1ToTheRight);
-        entities.add(tamableEntity2ToTheLeft);
-        entities.add(tamableEntity3AlreadyTamed);
-        entities.add(nonTamableEntity4);
-
-        when(interactor.getEntitiesInRange()).thenAnswer(x -> new ArrayList<>(entities));
-
-        // Check behaviour when only one entity towards position, and tamable entity
-        assertEquals(1, interactor.getSuitableEntities(ItemType.FOOD, new Vector2(1, 0)).size());
-        assertTrue(interactor.getSuitableEntities(ItemType.FOOD, new Vector2(1, 0)).contains(tamableEntity1ToTheRight));
-
-        // Check returns tamable entity even non-tamable entity is nearer in that direction
-        assertEquals(1, interactor.getSuitableEntities(ItemType.FOOD, new Vector2(-1, 0)).size());
-        assertTrue(interactor.getSuitableEntities(ItemType.FOOD, new Vector2(-1, 0)).contains(tamableEntity2ToTheLeft));
-
-        // Check doesn't return already tamed entity
-        assertTrue(interactor.getSuitableEntities(ItemType.FOOD, new Vector2(0, 1)).isEmpty());
-        assertTrue(interactor.getSuitableEntities(ItemType.FOOD, new Vector2(-1, 0)).contains(tamableEntity2ToTheLeft));
-
-        // Set position to nearest tamable entity to right
-        tamableEntity2ToTheLeft.setPosition(0.5f, 0f);
-
-        // Check that nearest tamable entity is returned
-        assertEquals(1, interactor.getSuitableEntities(ItemType.FOOD, new Vector2(1, 0)).size());
-        assertTrue(interactor.getSuitableEntities(ItemType.FOOD, new Vector2(1, 0)).contains(tamableEntity2ToTheLeft));
-    }
-
-    @Test
-    public void testGetSuitableForUnaddedItemType() {
-        Entity entity1 = makeEntity(new Vector2(0f, 1f)); // up direction
-        Entity entity2 = makeEntity(new Vector2(-1f, 0f)); // left direction
-        Entity entity3 = makeEntity(new Vector2(0, -1)); // down direction
-        Entity entity4 = makeEntity(new Vector2(1, 0)); // right direction
-        Entity entity5 = makeEntity(new Vector2(1, 0.5f)); // roughly right direction
-
-        List<Entity> entities = new ArrayList<>();
-
-        // Previous test already checks event listeners, mock getEntitiesInRange
-        entities.add(entity1);
-        entities.add(entity2);
-        entities.add(entity3);
-        entities.add(entity4);
-        entities.add(entity5);
-
-        when(interactor.getEntitiesInRange()).thenAnswer(x -> new ArrayList<>(entities));
-
-        // check empty list for null item type
-        assertTrue(interactor.getSuitableEntities(ItemType.HOE, new Vector2(0, 1)).isEmpty());
+        assertTrue(interactor.getNearest(entities) == entity3 || interactor.getNearest(entities) == entity2);
     }
 
     public Entity makeEntity() {
-        Entity entity = new Entity(EntityType.Gate)
+        Entity entity = new Entity()
                 .addComponent(new PhysicsComponent())
-                .addComponent(new ColliderComponent());
+                .addComponent(new HitboxComponent());
         entity.create();
         return entity;
     }
 
     public Entity makeEntity(Vector2 position) {
-        Entity entity = new Entity(EntityType.Gate)
+        Entity entity = new Entity()
                 .addComponent(new PhysicsComponent())
-                .addComponent(new ColliderComponent());
+                .addComponent(new HitboxComponent());
         entity.setPosition(position);
         entity.setScale(0, 0); // sets scale to 0 so getCenterPosition == setPosition. easier to test
         entity.create();

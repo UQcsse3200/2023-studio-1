@@ -1,5 +1,7 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.services.plants.PlantCommandService;
+import com.csse3200.game.services.plants.PlantInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +39,14 @@ public class ServiceLocator {
   private static SaveLoadService saveLoadService;
   private static MissionManager missions;
   private static PlanetOxygenService planetOxygenService;
+  private static PlantCommandService plantCommandService;
+  private static PlantInfoService plantInfoService;
+  public static PlantCommandService getPlantCommandService() {
+    return plantCommandService;
+  }
+  public static PlantInfoService getPlantInfoService() {
+    return plantInfoService;
+  }
 
   private static MainGameActions mainGameActions;
 
@@ -147,6 +157,20 @@ public class ServiceLocator {
     planetOxygenService = source;
   }
 
+  public static void registerPlantCommandService(PlantCommandService source) {
+    logger.debug("Registering plant command service {}", source);
+    plantCommandService = source;
+  }
+
+  public static void registerPlantInfoService(PlantInfoService source) {
+    logger.debug("Registering plant command service {}",source);
+    plantInfoService = source;
+  }
+
+  public static void registerLightService(LightService source) {
+    logger.debug("Registering light service {}", source);
+    lightService = source;
+  }
 
   /**
    * Registers the save/load service.
