@@ -58,4 +58,14 @@ public class ParticleServiceTest {
         assertEquals(particleEffectType2.getCategory(), ParticleService.WEATHER_EVENT);
         assertEquals(particleEffectType3.getCategory(), ParticleService.WEATHER_EVENT);
     }
+
+    @Test
+    public void testStartEffect() {
+        particleService.startEffect(particleEffectType1);
+        ParticleEffect mockParticleEffect = mock(ParticleEffect.class);
+        ParticleEffectWrapper mockParticleEffectWrapper = mock(ParticleEffectWrapper.class);
+        queuedEffects.add(mockParticleEffectWrapper);
+        assertTrue(queuedEffects.contains(mockParticleEffectWrapper));
+        verify(particleService).startEffect(particleEffectType1);
+    }
 }
