@@ -135,7 +135,7 @@ public class EntitySpawner {
             dayCounter++;
         }
         //Ensures that the number of NPC entities doesn't overcrowd the game.
-        if (this.entityCounter > this.maxEntitiesBeforeSpawn) {
+        if (this.entityCounter >= this.maxEntitiesBeforeSpawn) {
             return;
         }
         //Only progress to randomisation or spawning if enough time
