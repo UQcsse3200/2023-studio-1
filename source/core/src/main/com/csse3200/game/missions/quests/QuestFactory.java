@@ -1,6 +1,7 @@
 package com.csse3200.game.missions.quests;
 
 import com.csse3200.game.entities.factories.ItemFactory;
+import com.csse3200.game.entities.factories.PlaceableFactory;
 import com.csse3200.game.entities.factories.TractorFactory;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.rewards.*;
@@ -115,7 +116,8 @@ public class QuestFactory {
                 """;
 
         MultiReward reward = new MultiReward(List.of(
-                new ItemReward(List.of(ItemFactory.createAtomicAlgaeSeed())),
+                new ItemReward(List.of(ItemFactory.createAtomicAlgaeSeed(),
+                        ItemFactory.createSprinklerItem())),
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
@@ -149,9 +151,10 @@ public class QuestFactory {
                 {WAIT}
                 Be aware - not all of our fauna take so kindly to aliens from outer space.
                 """;
-
         MultiReward reward = new MultiReward(List.of(
-                new ItemReward(List.of(ItemFactory.createAloeVeraSeed())),
+                new ItemReward(List.of(ItemFactory.createAloeVeraSeed(),
+                        ItemFactory.createFenceItem(),
+                        ItemFactory.createGateItem())),
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
@@ -185,7 +188,9 @@ public class QuestFactory {
 
         MultiReward reward = new MultiReward(List.of(
                 new QuestReward(questsToAdd, questsToActivate),
-                new DialogueReward(dialogue)
+                new DialogueReward(dialogue),
+                new ItemReward(List.of(ItemFactory.createLightItem(),
+                        ItemFactory.createChestItem()))
         ));
 
         return new MainQuest(actIMainQuestName, reward, 5, requiredQuests, "gain ALIEN NPC's trust");
