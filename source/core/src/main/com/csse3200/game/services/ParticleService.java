@@ -18,10 +18,26 @@ public class ParticleService {
 
 	public static final String WEATHER_EVENT = "WEATHER_EVENT";
 
+	/**
+	 * All the effects that will be rendered
+	 */
 	private final ArrayList<ParticleEffectWrapper> queuedEffects;
+
+	/**
+	 * Hashmap mapping the particle effect to the ParticleEffectType enum. This particle effect is needed in the
+	 * creation of the particle effect pool and a reference to the effect needs to remain to ensure the pool functions
+	 * properly.
+	 */
 	private final HashMap<ParticleEffectType, ParticleEffect> particleEffects;
+
+	/**
+	 * Hashmap containing particle effect pools for each particle effect type.
+	 */
 	private final HashMap<ParticleEffectType, ParticleEffectPool> particleEffectPools;
 
+	/**
+	 * Enum for each type of particle effect known to the particle system
+	 */
 	public enum ParticleEffectType {
 		ACID_RAIN(WEATHER_EVENT, "particle-effects/acid_rain.p", 1, 10);
 
@@ -42,6 +58,9 @@ public class ParticleService {
 		}
 	}
 
+	/**
+	 * Creates a particle service, loading in all particle effect assets and creating pools for those particle effects.
+	 */
 	public ParticleService() {
 		queuedEffects = new ArrayList<>();
 		particleEffectPools = new HashMap<>();
@@ -49,11 +68,13 @@ public class ParticleService {
 
 		String[] particleNames = new String[ParticleEffectType.values().length];
 		int i = 0;
-		// Loads the particles
+		// Creates store of particle effect paths to give to the resource service
 		for (ParticleEffectType effectType : ParticleEffectType.values()) {
 			particleNames[i] = effectType.effectPath;
 			i++;
 		}
+
+		// Load all of the particle effects
 		ServiceLocator.getResourceService().loadParticleEffects(particleNames);
 
 		// Block until all particle effects are loaded
@@ -67,6 +88,11 @@ public class ParticleService {
 		}
 	}
 
+	/**
+	 * Renders the queued particle effects
+	 * @param batch sprite batch used to render effects
+	 * @param delta delta value used to update each particle effect
+	 */
 	public void render (SpriteBatch batch, float delta) {
 		Vector2 playerPosition = ServiceLocator.getGameArea().getPlayer().getCenterPosition();
 		for (ParticleEffectWrapper wrapper : queuedEffects) {
@@ -78,6 +104,10 @@ public class ParticleService {
 		}
 	}
 
+	/**
+	 * Starts a particle effect, creating an effect wrapper and adding it to the queue
+	 * @param effectType type of effect to start
+	 */
 	public void startEffect(ParticleEffectType effectType) {
 		// Grabs the effect from the effect pool using the enum
 		ParticleEffectWrapper effectWrapper = new ParticleEffectWrapper(particleEffectPools.get(effectType).obtain(), effectType.category, effectType.name());
@@ -88,8 +118,12 @@ public class ParticleService {
 		effectWrapper.getPooledEffect().start();
 	}
 
-	public void stopEffect(String type) {
-		Predicate<ParticleEffectWrapper> predicate = effectWrapper -> effectWrapper.getType().equals(type);
+	/**
+	 * Stops a particle effect, freeing the effect and removing it from the queue
+	 * @param effectType type of effect to stop
+	 */
+	public void stopEffect(ParticleEffectType effectType) {
+		Predicate<ParticleEffectWrapper> predicate = effectWrapper -> effectWrapper.getType().equals(effectType.name());
 		List<ParticleEffectWrapper> wrappers = queuedEffects.stream().filter(predicate).toList();
 		for (ParticleEffectWrapper wrapper : wrappers) {
 			wrapper.getPooledEffect().free();
@@ -97,6 +131,10 @@ public class ParticleService {
 		queuedEffects.removeIf(predicate);
 	}
 
+	/**
+	 * Stops all particle effects by category in the render queue
+	 * @param category category of particle effects
+	 */
 	public void stopEffectCategory(String category) {
 		Predicate<ParticleEffectWrapper> predicate = effectWrapper -> effectWrapper.getCategory().equals(category);
 		List<ParticleEffectWrapper> wrappers = queuedEffects.stream().filter(predicate).toList();
