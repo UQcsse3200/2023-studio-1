@@ -71,8 +71,9 @@ public class MainGameScreen extends ScreenAdapter {
             "images/time_system_ui/indicator_21.png",
             "images/time_system_ui/indicator_22.png",
             "images/time_system_ui/indicator_23.png",
-            "images/oxygen_ui/oxygen_outline.png",
-            "images/oxygen_ui/oxygen_fill.png",
+            "images/bars_ui/bar_outline.png",
+            "images/bars_ui/healthy_fill.png",
+            "images/bars_ui/danger_fill.png",
             "images/weather_event/weather-border.png",
             "images/weather_event/acid-rain.png",
             "images/weather_event/solar-flare.png"
@@ -232,6 +233,7 @@ public class MainGameScreen extends ScreenAdapter {
                 .addComponent(new TerminalDisplay())
                 .addComponent(new GameTimeDisplay())
                 .addComponent(new OxygenDisplay())
+                .addComponent(new HealthDisplay())
                 .addComponent(new PlantInfoDisplayComponent())
                 .addComponent(new WeatherEventDisplay());
 

@@ -23,6 +23,8 @@ public class OxygenDisplay extends UIComponent{
     Group group = new Group();
     private Image oxygenOutline;
     private Image oxygenFill;
+    private Image oxygenHealthy;
+    private Image oxygenDanger;
     private Array<Label> oxygenLabels;
     private Label oxygenLabel;
 
@@ -50,9 +52,11 @@ public class OxygenDisplay extends UIComponent{
         Skin oxygenSkin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
 
         oxygenOutline = new Image(ServiceLocator.getResourceService().getAsset(
-            "images/oxygen_ui/oxygen_outline.png", Texture.class));
-        oxygenFill = new Image(ServiceLocator.getResourceService().getAsset(
-            "images/oxygen_ui/oxygen_fill.png", Texture.class));
+            "images/bars_ui/bar_outline.png", Texture.class));
+        oxygenHealthy = new Image(ServiceLocator.getResourceService().getAsset(
+            "images/bars_ui/healthy_fill.png", Texture.class));
+        oxygenDanger = new Image(ServiceLocator.getResourceService().getAsset(
+            "images/bars_ui/danger_fill.png", Texture.class));
 
         oxygenLabels = new Array<>();
         for (int i = 0; i <= 100; i++) {
@@ -72,8 +76,16 @@ public class OxygenDisplay extends UIComponent{
         float scaling = (float) oxygenPercent / 100;
 
         // Accounts for scaling of the oxygen bar due to the oxygen percent
-        oxygenFill.setX(oxygenFill.getImageX() + 14 * (1 - scaling));
-        oxygenFill.setScaleX(scaling);
+        if (oxygenPercent <= 25) {
+            oxygenFill = oxygenDanger;
+            oxygenFill.setX(oxygenFill.getImageX() + 14 * (1 - scaling));
+            oxygenFill.setScaleX(scaling);
+        } else {
+            oxygenFill = oxygenHealthy;
+            oxygenFill.setX(oxygenFill.getImageX() + 14 * (1 - scaling));
+            oxygenFill.setScaleX(scaling);
+        }
+
 
         // Add a safety check to ensure that the array is always accessed at a possible index
         if (0 <= oxygenPercent && oxygenPercent <= 100) {
@@ -83,7 +95,7 @@ public class OxygenDisplay extends UIComponent{
         }
 
         // Uncomment line below to test that oxygen percent decreases by 1% per hour (till endgame condition reached).
-        //ServiceLocator.getPlanetOxygenService().removeOxygen(10);
+        ServiceLocator.getPlanetOxygenService().addOxygen(160);
     }
 
     /**
@@ -97,7 +109,7 @@ public class OxygenDisplay extends UIComponent{
 
         table.top();
         table.setFillParent(true);
-        table.padTop(-130f).padLeft(-180f);
+        table.padTop(-130f).padLeft(-520f);
 
         group.addActor(oxygenOutline);
         group.addActor(oxygenFill);
