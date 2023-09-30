@@ -1,5 +1,6 @@
 package com.csse3200.game.missions.quests;
 
+import com.csse3200.game.areas.weather.SolarSurgeEvent;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.entities.factories.NPCFactory;
@@ -441,6 +442,12 @@ public class QuestFactory {
                         ItemFactory.createDeadlyNightshadeSeed(),
                         ItemFactory.createHammerPlantSeed(),
                         ItemFactory.createSpaceSnapperSeed()
+                )),
+                new TriggerWeatherReward(List.of(
+                        new SolarSurgeEvent(0, 2, 100, 1.25f),
+                        new SolarSurgeEvent(120, 2, 100, 1.4f),
+                        new SolarSurgeEvent(240, 2, 100, 1.5f),
+                        new SolarSurgeEvent(312, 2, 100, 1.5f)
                 )),
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
