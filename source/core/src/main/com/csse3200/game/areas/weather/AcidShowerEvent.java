@@ -48,7 +48,7 @@ public class AcidShowerEvent extends WeatherEvent {
 
     @Override
     public void stopEffect() {
-        ServiceLocator.getParticleService().stopEffect(ParticleService.ParticleEffectType.ACID_RAIN.name());
+        ServiceLocator.getParticleService().stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);
 
     }
 }
