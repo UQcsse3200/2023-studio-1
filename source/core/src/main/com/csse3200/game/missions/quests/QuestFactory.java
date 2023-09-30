@@ -3,6 +3,8 @@ package com.csse3200.game.missions.quests;
 import com.csse3200.game.areas.weather.SolarSurgeEvent;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.ItemFactory;
+import com.csse3200.game.entities.factories.NPCFactory;
+import com.csse3200.game.entities.factories.TractorFactory;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.rewards.*;
 import com.csse3200.game.services.ServiceLocator;
@@ -127,6 +129,7 @@ public class QuestFactory {
                 new ItemReward(List.of(
                         ItemFactory.createCowFood(),
                         ItemFactory.createSprinklerItem()
+                        // TODO import sprinkler pump
                 )),
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
