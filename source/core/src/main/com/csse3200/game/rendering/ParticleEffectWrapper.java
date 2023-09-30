@@ -3,9 +3,9 @@ package com.csse3200.game.rendering;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 
 public class ParticleEffectWrapper {
-	private ParticleEffectPool.PooledEffect pooledEffect;
-	private String category;
-	private String type;
+	private final ParticleEffectPool.PooledEffect pooledEffect;
+	private final String category;
+	private final String type;
 
 
 	public ParticleEffectWrapper(ParticleEffectPool.PooledEffect effect, String category, String type) {
