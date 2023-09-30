@@ -1,17 +1,30 @@
 package com.csse3200.game.components.cutscenes;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
+import com.csse3200.game.services.ServiceLocator;
 import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.ui.UIComponent;
 
 public class CutsceneDisplay extends UIComponent {
+    /**
+     * The Image that contains the player sprite.
+     */
+    private Image playerSprite;
+    /**
+     * The Image that contains the npc sprite.
+     */
+    private Image npcSprite;
     private static final Logger logger = LoggerFactory.getLogger(com.csse3200.game.missions.cutscenes.Cutscene.class);
 
     /**
@@ -53,12 +66,41 @@ public class CutsceneDisplay extends UIComponent {
         stage.addActor(table);
         this.spawnDialogueBox();
         this.spawnContinueButton();
+        this.spawnSprites();
         //stage.addActor(table);
     }
 
+    private void spawnSprite(String filePath, String position, float sizeIncrease) {
+        TextureAtlas atlas = ServiceLocator.getResourceService()
+                .getAsset(filePath, TextureAtlas.class);
+        TextureAtlas.AtlasRegion region = atlas.findRegion("default");
+        if (region == null) {
+            throw new IllegalArgumentException(filePath + " is an invalid filePath");
+        }
+        Image sprite = new Image(region);
+        int xpos = 0, ypos = 0;
+        if (position == "LEFT") {
+            xpos = 50;
+            ypos = 50;
+
+        } else if (position == "RIGHT") {
+            xpos = 1000;
+            ypos = 150;
+        } else {
+            throw new IllegalArgumentException(position + " is an invalid position");
+        }
+        sprite.setPosition(xpos,ypos);
+        float scaledWidth = (float) (Gdx.graphics.getWidth() * sizeIncrease);
+        float scaledHeight = scaledWidth * (sprite.getHeight() / sprite.getWidth());
+        sprite.setWidth(scaledWidth);
+        sprite.setHeight(scaledHeight);
+        table.add(sprite);
+        stage.addActor(sprite);
+    }
     // Spawns the sprites/entities that will be on the left/right side of the screen
     public void spawnSprites() {
-
+        spawnSprite("images/questgiver.atlas", "RIGHT",  0.15f);
+        spawnSprite("images/player.atlas", "LEFT", 0.45f);
     }
 
     // Spawn the dialogue box and populate it with text
