@@ -57,6 +57,23 @@ public class FactoryService {
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Sprinkler", PlaceableFactory::createSprinkler));
 
     private static final Map<String, Supplier<Quest>> questFactories = Map.ofEntries(
+            new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.firstContactQuestName, QuestFactory::createFirstContactQuest),
+            new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.clearingYourMessQuestName, QuestFactory::createClearingYourMessQuest),
+            new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.sowingYourFirstSeedsQuestName, QuestFactory::createSowingYourFirstSeedsQuest),
+            new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.reapingYourRewardsQuestName, QuestFactory::createReapingYourRewardsQuest),
+            new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.makingFriendsQuestName, QuestFactory::createMakingFriendsQuest),
+            new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.fertilisingFiestaQuestName, QuestFactory::createFertilisingFiestaQuest),
+            new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.aliensAttackQuestName, QuestFactory::createAliensAttackQuest),
+            new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.actIMainQuestName, QuestFactory::createActIMainQuest),
+            new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.connectionQuestName, QuestFactory::createConnectionQuest),
+            new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.homeSickQuestName, QuestFactory::createHomeSickQuest),
+            new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.shipRepairsQuestName, QuestFactory::createShipRepairsQuest),
+            new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.bringingItAllTogether, QuestFactory::createBringingItAllTogetherQuest),
+            new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.actIIMainQuestName, QuestFactory::createActIIMainQuest),
+            new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.anImminentThreatQuestName, QuestFactory::createAnImminentThreatQuest),
+            new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.airAndAlgaeQuestName, QuestFactory::createAirAndAlgaeQuest),
+            new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.stratosphericSentinel, QuestFactory::createStratosphericSentinelQuest),
+            new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.actIIIMainQuestName, QuestFactory::createActIIIMainQuest),
             new AbstractMap.SimpleEntry<String, Supplier<Quest>>("Haber Hobbyist", QuestFactory::createHaberHobbyist),
             new AbstractMap.SimpleEntry<String, Supplier<Quest>>("Fertiliser Fanatic", QuestFactory::createFertiliserFanatic));
 
