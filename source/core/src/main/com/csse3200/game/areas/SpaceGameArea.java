@@ -260,7 +260,7 @@ public class SpaceGameArea extends GameArea {
 
     player = spawnPlayer();
 //    player.getComponent(PlayerActions.class).setGameMap(gameMap);
-    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createLightItem());
+//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createLightItem());
 //    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHoe());
 //    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createScythe());
 //    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createWateringcan());
@@ -282,7 +282,7 @@ public class SpaceGameArea extends GameArea {
 //    spawnTool(ItemType.SCYTHE);
 //    spawnTool(ItemType.HOE);
 //    spawnTool(ItemType.FERTILISER);
-    spawnTool(ItemType.SEED);
+//    spawnTool(ItemType.SEED);
 //    spawnTool(ItemType.FOOD);
 
     //playMusic();
