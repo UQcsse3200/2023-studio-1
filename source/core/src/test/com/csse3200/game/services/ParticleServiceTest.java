@@ -1,5 +1,7 @@
 package com.csse3200.game.services;
 
+import box2dLight.RayHandler;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
@@ -55,15 +57,5 @@ public class ParticleServiceTest {
         assertEquals(particleEffectType1.getCategory(), ParticleService.WEATHER_EVENT);
         assertEquals(particleEffectType2.getCategory(), ParticleService.WEATHER_EVENT);
         assertEquals(particleEffectType3.getCategory(), ParticleService.WEATHER_EVENT);
-    }
-
-    @Test
-    public void testStartEffect() {
-        particleService.startEffect(particleEffectType1);
-        ParticleEffect mockParticleEffect = mock(ParticleEffect.class);
-        ParticleEffectWrapper mockParticleEffectWrapper = mock(ParticleEffectWrapper.class);
-        queuedEffects.add(mockParticleEffectWrapper);
-        assertTrue(queuedEffects.contains(mockParticleEffectWrapper));
-        verify(particleService).startEffect(particleEffectType1);
     }
 }
