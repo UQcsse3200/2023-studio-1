@@ -102,6 +102,14 @@ public abstract class Quest extends Mission {
 	}
 
 	/**
+	 * Returns a boolean value representing if this quest's rewards has been collected yet.
+	 * @return True if the reward has been collected, false otherwise.
+	 */
+	public boolean isRewardCollected() {
+		return reward.isCollected();
+	}
+
+	/**
 	 * Collects the reward associated with this {@link Quest}. If the reward has already been collected, or if the
 	 * {@link Mission} has not been completed, this method will do nothing.
 	 */
