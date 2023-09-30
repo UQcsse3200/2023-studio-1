@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.csse3200.game.missions.MissionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +31,8 @@ public abstract class GameArea implements Disposable {
   protected List<Entity> areaEntities;
   private static final Logger logger = LoggerFactory.getLogger(GameArea.class);
   private Entity player;
+
+  private MissionManager manager;
 
   protected GameArea() {
     areaEntities = new ArrayList<>();
@@ -117,6 +120,9 @@ public abstract class GameArea implements Disposable {
   }
  // public abstract Entity getPlayer();
 
+  public MissionManager getMissionManager() {
+    return manager;
+  }
   public abstract ClimateController getClimateController();
 
   public abstract Entity getTractor();

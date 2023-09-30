@@ -1,6 +1,5 @@
-package com.csse3200.game.components.losescreen;
+package com.csse3200.game.components.results;
 
-import com.csse3200.game.services.ServiceLocator;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,8 +23,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class LoseScreenDisplay extends UIComponent {
-    private static final Logger logger = LoggerFactory.getLogger(LoseScreenDisplay.class);
+public class ResultsDisplay extends UIComponent {
+    private static final Logger logger = LoggerFactory.getLogger(ResultsDisplay.class);
     private static final float Z_INDEX = 2f;
     /**
      * The Image that forms the background of the page
@@ -75,7 +74,7 @@ public class LoseScreenDisplay extends UIComponent {
 
     public static String losingMessage;
 
-    public LoseScreenDisplay(GdxGame game) {
+    public ResultsDisplay(GdxGame game) {
         super();
         this.game = game;
     }

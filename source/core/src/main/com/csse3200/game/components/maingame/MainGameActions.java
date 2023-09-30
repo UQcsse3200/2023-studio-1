@@ -1,5 +1,7 @@
 package com.csse3200.game.components.maingame;
 
+import com.csse3200.game.components.losescreen.LoseScreenDisplay;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

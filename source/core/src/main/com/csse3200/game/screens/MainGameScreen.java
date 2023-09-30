@@ -94,6 +94,8 @@ public class MainGameScreen extends ScreenAdapter {
 
     private static Boolean win;
 
+    private static Boolean result;
+
 
 
     public MainGameScreen(GdxGame game) {
@@ -138,15 +140,13 @@ public class MainGameScreen extends ScreenAdapter {
         spaceGameArea.getTractor().getComponent(TractorActions.class).setCameraVar(renderer.getCamera());
 
         lose = false;
-        spaceGameArea.getPlayer().getEvents().addListener("loseScreen", this::loseScreenStart);
-      
-        playCredits = false;
-        spaceGameArea.getPlayer().getEvents().addListener("endCredits", this::playEndCredits);
+        spaceGameArea.getMissionManager().getEvents().addListener("loseScreen", this::playLoseScreen);
 
         win = false;
-        spaceGameArea.getPlayer().getEvents().addListener("winScreen", this::playWinScreen);
+        spaceGameArea.getMissionManager().getEvents().addListener("winScreen", this::playWinScreen);
 
-
+        playCredits = false;
+        spaceGameArea.getMissionManager().getEvents().addListener("endCredits", this::playEndCredits);
 
         new FireflySpawner();
 
@@ -158,16 +158,20 @@ public class MainGameScreen extends ScreenAdapter {
     }
 
 
-    public void loseScreenStart() {
+    public void playLoseScreen() {
         lose = true;
-    }
-
-    public void playEndCredits() {
-        playCredits = true;
     }
 
     public void playWinScreen() {
         win = true;
+    }
+
+    public void playResultScreen() {
+        result = true;
+    }
+
+    public void playEndCredits() {
+        playCredits = true;
     }
 
     @Override
@@ -178,7 +182,7 @@ public class MainGameScreen extends ScreenAdapter {
         }
         ServiceLocator.getTimeService().update();
         renderer.render();
-      
+
         if (lose) {
             game.setScreen(GdxGame.ScreenType.LOSESCREEN);
         }
@@ -190,7 +194,6 @@ public class MainGameScreen extends ScreenAdapter {
         if (playCredits) {
             game.setScreen(GdxGame.ScreenType.ENDCREDITS);
         }
-
 
         if (PauseMenuActions.getQuitGameStatus()) {
             entity.getEvents().trigger("exit");

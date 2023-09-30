@@ -87,14 +87,14 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           triggerHotKeySelection(keycode);
           return true;
         case Keys.C :
-          ServiceLocator.getGameArea().getPlayer().getEvents().trigger("endCredits");
+          ServiceLocator.getGameArea().getMissionManager().getEvents().trigger("endCredits");
           return true;
         case Keys.L :
           LoseScreenDisplay.setLoseReason("mission1");
-          ServiceLocator.getGameArea().getPlayer().getEvents().trigger("loseScreen");
+          ServiceLocator.getGameArea().getMissionManager().getEvents().trigger("loseScreen");
           return true;
         case Keys.K :
-          ServiceLocator.getGameArea().getPlayer().getEvents().trigger("winScreen");
+          ServiceLocator.getGameArea().getMissionManager().getEvents().trigger("winScreen");
           return true;
         case Keys.T:
           entity.getEvents().trigger("toggleLight");
@@ -110,7 +110,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     keyPressedCounter++;
   }
 
-
   /** @see InputProcessor#touchUp(int, int, int, int) */
   @Override
   public boolean touchUp(int screenX, int screenY, int pointer, int button) {
@@ -120,7 +119,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     }
     return false;
   }
-
 
   /**
    * Triggers player events on specific keycodes.

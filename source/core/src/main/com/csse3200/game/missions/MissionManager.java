@@ -96,17 +96,15 @@ public class MissionManager implements Json.Serializable {
 	 */
 	public void playLoseScreen(String reason) {
 		LoseScreenDisplay.setLoseReason(reason);
-		ServiceLocator.getGameArea().getPlayer().getEvents().trigger("loseScreen");
+		ServiceLocator.getGameArea().getMissionManager().getEvents().trigger("loseScreen");
 	}
 
 	/**
 	 * Plays the win screen once the player has successfully completed the game
 	 */
 	public void playWinScreen() {
-		ServiceLocator.getGameArea().getPlayer().getEvents().trigger("winScreen");
+		ServiceLocator.getGameArea().getMissionManager().getEvents().trigger("winScreen");
 	}
-
-
 
 	/**
 	 * Returns a {@link List} of currently active (tracked) {@link Quest}s. This includes all {@link Quest}s which have not

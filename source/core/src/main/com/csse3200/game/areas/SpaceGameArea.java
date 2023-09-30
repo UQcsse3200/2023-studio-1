@@ -14,6 +14,7 @@ import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.*;
+import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
@@ -40,6 +41,8 @@ public class SpaceGameArea extends GameArea {
   private static final GridPoint2 TOOL_SPAWN = new GridPoint2(15, 10);// temp!!!
   private static final GridPoint2 TOOL_SPAWN2 = new GridPoint2(15, 15);// temp!!!
   private static final float WALL_WIDTH = 0.1f;
+
+  private MissionManager manager;
   private static final String[] forestTextures = {
           "images/tree.png",
           "images/ghost_king.png",
@@ -192,6 +195,7 @@ public class SpaceGameArea extends GameArea {
   private final ClimateController climateController;
   private Entity tractor;
 
+
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
    *
@@ -243,6 +247,8 @@ public class SpaceGameArea extends GameArea {
     spawnOxygenEater();
     spawnShip();
 
+    manager = new MissionManager();
+
 //    spawnTool(ItemType.WATERING_CAN);
 //    spawnTool(ItemType.SHOVEL);
 //    spawnTool(ItemType.SCYTHE);
@@ -256,6 +262,10 @@ public class SpaceGameArea extends GameArea {
 
   public Entity getPlayer() {
     return player;
+  }
+
+  public MissionManager getMissionManager() {
+    return manager;
   }
 
   public ClimateController getClimateController() {

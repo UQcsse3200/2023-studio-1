@@ -3,6 +3,7 @@ package com.csse3200.game.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
@@ -37,8 +38,14 @@ public class ServiceLocator {
   private static MissionManager missions;
   private static PlanetOxygenService planetOxygenService;
 
+  private static MainGameActions mainGameActions;
+
   public static GameArea getGameArea() {
     return gameArea;
+  }
+
+  public static MainGameActions getMainGameActions() {
+    return mainGameActions;
   }
 
   public static CameraComponent getCameraComponent() { return cameraComponent; }
@@ -83,6 +90,11 @@ public class ServiceLocator {
   public static void registerGameArea(GameArea area) {
     logger.debug("Registering game area {}", area);
     gameArea = area;
+  }
+
+  public static void registerMainGameActions(MainGameActions actions) {
+    logger.debug("Registering game actions {}", actions);
+    mainGameActions = actions;
   }
 
   public static void registerCameraComponent(CameraComponent camera) {
