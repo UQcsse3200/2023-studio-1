@@ -104,6 +104,11 @@ public class CameraComponent extends Component {
     return new Vector2(worldPosition.x, worldPosition.y);
   }
 
+  /**
+   * Determines if the given entity is on the screen
+   * @param entity: entity to be checked
+   * @return true if on screen else false
+   */
   public boolean entityOnScreen(Entity entity) {
     Vector2 position = entity.getCenterPosition();
     return camera.frustum.pointInFrustum(position.x, position.y, 0);
