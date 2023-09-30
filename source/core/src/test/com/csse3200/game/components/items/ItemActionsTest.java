@@ -20,12 +20,10 @@ import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
-import org.junit.Rule;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.rules.TemporaryFolder;
 import java.io.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -51,10 +49,6 @@ public class ItemActionsTest {
     private static TerrainTile flowingWaterTerrainTile;
     private Entity player;
     private Vector2 mousePos;
-    private File file1;
-
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
 
     @BeforeAll
     static void config() {
