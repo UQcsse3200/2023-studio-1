@@ -5,11 +5,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
-<<<<<<< HEAD
-=======
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.AuraLightComponent;
->>>>>>> c7aeefc20633fa277ca205564e512221f77b4d8e
+
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.*;
 import com.csse3200.game.components.tasks.*;

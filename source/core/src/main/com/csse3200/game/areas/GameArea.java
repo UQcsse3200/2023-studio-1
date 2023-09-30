@@ -4,11 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-<<<<<<< HEAD
 import com.csse3200.game.missions.MissionManager;
-=======
 import com.csse3200.game.physics.PhysicsLayer;
->>>>>>> c7aeefc20633fa277ca205564e512221f77b4d8e
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

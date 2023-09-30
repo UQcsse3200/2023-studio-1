@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.csse3200.game.components.AuraLightComponent;
+import com.csse3200.game.components.LightController;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
@@ -76,8 +78,7 @@ public class PlaceableFactory {
                 .addComponent(new InventoryComponent(null));
         return chest;
     }
-<<<<<<< HEAD
-=======
+
 
     public static Entity createLight() {
         AnimationRenderComponent animator = new AnimationRenderComponent(
@@ -96,5 +97,5 @@ public class PlaceableFactory {
                 .addComponent(animator);
         return light;
     }
->>>>>>> c7aeefc20633fa277ca205564e512221f77b4d8e
+
 }

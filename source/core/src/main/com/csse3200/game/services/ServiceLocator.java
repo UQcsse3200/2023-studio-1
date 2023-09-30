@@ -167,6 +167,7 @@ public class ServiceLocator {
     plantInfoService = source;
   }
 
+
   public static void registerLightService(LightService source) {
     logger.debug("Registering light service {}", source);
     lightService = source;
