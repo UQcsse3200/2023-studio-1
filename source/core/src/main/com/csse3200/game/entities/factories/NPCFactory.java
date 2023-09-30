@@ -201,7 +201,7 @@ public class NPCFactory {
             .addComponent(aiTaskComponent)
             .addComponent(animator)
             .addComponent(new HostileAnimationController())
-            .addComponent(new DragonflyAttackPattern(1.5f, ProjectileFactory::createDragonflyProjectile))
+            .addComponent(new DragonflyAttackPattern(1.5f, ProjectileFactory::createOxygenEaterProjectile))
             .addComponent(new InteractionDetector(5f, new ArrayList<>(Arrays.asList(EntityType.Player)))); // TODO: Do we want it to attack anything
 
     oxygenEater.scaleHeight(2f);
@@ -263,15 +263,22 @@ public class NPCFactory {
     animator.addAnimation("walk_right", 0.15f, Animation.PlayMode.LOOP);
     animator.addAnimation("idle_left", 0.15f, Animation.PlayMode.LOOP);
     animator.addAnimation("idle_right", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation("run_left", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation("run_right", 0.15f, Animation.PlayMode.LOOP);
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(1.5f, 1.5f), 5f))
-            .addTask(new AttackPlantTask(10, new Vector2(3f, 3f)));
+            .addTask(new MoveToPlantTask(5, new Vector2(2f, 2f)))
+            .addTask(new RunAwayTask(player, 10, 5f, 5f, new Vector2(2f, 2f), false));
+
 
     dragonfly
             .addComponent(aiTaskComponent)
             .addComponent(animator)
-            .addComponent(new AnimalAnimationController())
+            .addComponent(new HostileAnimationController())
+            .addComponent(new DragonflyAttackPattern(1.5f, ProjectileFactory::createDragonflyProjectile))
+            .addComponent(new InteractionDetector(5f,
+                    new ArrayList<>(Arrays.asList((EntityType.Player), (EntityType.Plant)))))
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
 
 
@@ -308,7 +315,7 @@ public class NPCFactory {
             .addComponent(aiTaskComponent)
             .addComponent(animator)
             .addComponent(new HostileAnimationController())
-            .addComponent(new BatAttackPattern())
+            .addComponent(new BatAttackPattern(1.5f))
             .addComponent(new InteractionDetector(1.5f,
                     new ArrayList<>(Arrays.asList(EntityType.Player))))
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack));

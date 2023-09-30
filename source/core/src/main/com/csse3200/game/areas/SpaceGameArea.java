@@ -279,8 +279,8 @@ public class SpaceGameArea extends GameArea {
     //spawnCows();
    // spawnAstrolotl();
     //spawnOxygenEater();
-    //spawnDragonFlies();
-    spawnBats();
+    spawnDragonFlies();
+    //spawnBats();
 
     spawnShip();
 

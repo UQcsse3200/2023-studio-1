@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractionDetector;
+import com.csse3200.game.components.combat.attackpatterns.AttackPatternComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.ScheduledEvent;
 import com.csse3200.game.utils.DirectionUtils;
@@ -13,13 +14,11 @@ import com.csse3200.game.utils.DirectionUtils;
  * The OxygenEaterAttackPattern class defines the attack behavior of an oxygen eater NPC entity in the game.
  * It allows the oxygen eater to detect nearby entities and initiate attacks by shooting projectiles at them.
  */
-public class BatAttackPattern extends Component {
-    /** Frequency of attacks in seconds */
-    private static final float ATTACK_FREQUENCY = 1.5f;
-    /** Entity's interaction detector */
-    private InteractionDetector interactionDetector;
-    /** Scheduled attack event */
-    private ScheduledEvent currentAttackEvent;
+public class BatAttackPattern extends AttackPatternComponent {
+
+    public BatAttackPattern(float attackFrequency) {
+        super(attackFrequency);
+    }
 
     /**
      * Initializes the BatAttackPattern component when it is created.
@@ -27,29 +26,16 @@ public class BatAttackPattern extends Component {
      */
     @Override
     public void create() {
-        interactionDetector = entity.getComponent(InteractionDetector.class);
-        interactionDetector.notifyOnDetection(true);
-
-        entity.getEvents().addListener("entityDetected", this::startAttack);
-        entity.getEvents().addListener("attack", this::attack);
+        super.create();
     }
 
-    /**
-     * Initiates an attack when an entity is detected by the oxygen eater.
-     *
-     * @param target The detected target entity. needed for event listener, unused
-     */
-    public void startAttack(Entity target) {
-        if (currentAttackEvent == null) { // attack loop not started
-            attack();
-        }
-    }
 
     /**
      * Performs the attack action, which involves determining the nearest entity, changing direction,
      * triggering attack events, and scheduling the next attack.
      */
-    private void attack() {
+    @Override
+    protected void attack() {
         Entity nearestEntity = interactionDetector.getNearest(interactionDetector.getEntitiesInRange());
 
         if (nearestEntity == null) { // No entity detected, clear attack loop
@@ -71,8 +57,7 @@ public class BatAttackPattern extends Component {
         // TODO: Remove this degbugging only
         System.out.println(nearestEntity.getComponent(CombatStatsComponent.class).getHealth());
 
-        // Schedule the next attack event
-        currentAttackEvent = entity.getEvents().scheduleEvent(ATTACK_FREQUENCY, "attack");
+        super.attack();
     }
 
 }

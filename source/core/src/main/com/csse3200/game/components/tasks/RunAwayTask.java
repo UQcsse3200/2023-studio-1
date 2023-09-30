@@ -24,6 +24,20 @@ public class RunAwayTask extends ChaseTask {
   }
 
   /**
+   * @param target The entity to run from.
+   * @param priority Task priority when running (0 when not running away).
+   * @param viewDistance Maximum distance from the entity at which running away can start.
+   * @param maxRunDistance Maximum distance from the entity before stopping.
+   * @param checkVisibility Whether to consider visability when running away.
+   */
+  public RunAwayTask(Entity target, int priority, float viewDistance, float maxRunDistance,
+                     Vector2 runSpeed, boolean checkVisibility) {
+    super(target, priority, viewDistance, maxRunDistance, runSpeed, checkVisibility);
+    this.maxRunDistance = maxRunDistance;
+    this.runSpeed = runSpeed;
+  }
+
+  /**
    * Starts the chase task by initializing the movement task and triggering the run events.
    */
   @Override
