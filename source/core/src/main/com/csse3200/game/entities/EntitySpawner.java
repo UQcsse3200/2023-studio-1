@@ -67,10 +67,15 @@ public class EntitySpawner {
      * Number of times spawnHour has occurred this spawn cycle
      */
     private int dayCounter;
-
+    /**
+     * Counts the number of specific entities in the game currently.
+     */
     private int entityCounter;
-
-    private final int maxEntitiesBeforeSpawn;  //Arbitrary number for now.
+    /**
+     * Max threshold or maximum amount of a specific type of entity in the game.
+     * Determines if spawning can occur on not.
+     */
+    private final int maxEntitiesBeforeSpawn;
 
     /**
      * Constructor for EntitySpawner
@@ -187,6 +192,9 @@ public class EntitySpawner {
         }
     }
 
+    /**
+     * Sets the entity counter of a specific type of entity.
+     */
     private void setInGameEntitiesCount(Array<Entity> entities, Entity specificEntity) {
         this.entityCounter = 0; //ensure that its reset everytime this is called.
         for (int i = 0; i < entities.size; i++) {
