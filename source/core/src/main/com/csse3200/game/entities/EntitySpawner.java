@@ -1,6 +1,7 @@
 package com.csse3200.game.entities;
 
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -67,6 +68,10 @@ public class EntitySpawner {
      */
     private int dayCounter;
 
+    private int entityCounter;
+
+    private final int maxEntitiesBeforeSpawn;  //Arbitrary number for now.
+
     /**
      * Constructor for EntitySpawner
      *
@@ -93,6 +98,8 @@ public class EntitySpawner {
         randomCount = 0;
         hourReached = false;
         dayCounter = 0;
+        this.entityCounter = 0;
+        this.maxEntitiesBeforeSpawn = 10; //Arbitrary number for now.
     }
 
     /**
@@ -121,21 +128,27 @@ public class EntitySpawner {
         if (hour == spawnHour) {
             dayCounter++;
         }
-
+        //Ensures that the number of NPC entities doesn't overcrowd the game.
+        if (this.entityCounter > this.maxEntitiesBeforeSpawn) {
+            return;
+        }
         //Only progress to randomisation or spawning if enough time
         //has passed between spawns
-        if (dayCounter < daysBetweenSpawns + 1) {
+        //When day counter is above days between spawns, a new set of spawns can occur.
+        if (dayCounter < daysBetweenSpawns) {
             return;
         }
 
         if (hour == spawnHour && !hourReached) {
             hourReached = true;
+            // help the spawning behaviour of game become more randomised, giving a better experience.
             randomGoal = (int) (Math.random() * randomRange);
         }
 
          if (hourReached) {
              //If randomRange == 0 (not doing randomisation) or have completed
              // randomisation count - begin spawning
+
              if (randomCount == randomGoal) {
                 spawnEntities();
 
@@ -165,11 +178,22 @@ public class EntitySpawner {
             //Create entity and spawn on gameArea
             Entity entity = spawner.apply(player);
             gameArea.spawnEntityAt(entity, position, true, true);
+            setInGameEntitiesCount(ServiceLocator.getEntityService().getEntities(), entity);
         }
 
         //Apply growth rate
         if (maxSpawnCount >= (spawnCount + growthRate)) {
             spawnCount = (spawnCount + growthRate);
+        }
+    }
+
+    private void setInGameEntitiesCount(Array<Entity> entities, Entity specificEntity) {
+        this.entityCounter = 0; //ensure that its reset everytime this is called.
+        for (int i = 0; i < entities.size; i++) {
+            Entity currentEntity = entities.get(i);
+            if (currentEntity.getType().equals(specificEntity.getType())) {
+                this.entityCounter += 1;
+            }
         }
     }
 }
