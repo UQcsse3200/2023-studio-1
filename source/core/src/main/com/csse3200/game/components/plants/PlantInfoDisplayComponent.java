@@ -100,6 +100,10 @@ public class PlantInfoDisplayComponent extends UIComponent {
             int numOfLines = 0; // will be used to configure that max amount of information in the window l8er
             if (!quests.isEmpty()) {
                 for (Quest q : quests) {
+                    if (q.isRewardCollected()) {
+                        continue;
+                    }
+
                     if (numOfLines == 0) {
                         activeQuestsString += q.getName();
                     } else {
