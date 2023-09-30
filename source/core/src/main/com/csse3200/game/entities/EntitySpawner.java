@@ -2,6 +2,7 @@ package com.csse3200.game.entities;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -199,6 +200,9 @@ public class EntitySpawner {
         this.entityCounter = 0; //ensure that its reset everytime this is called.
         for (int i = 0; i < entities.size; i++) {
             Entity currentEntity = entities.get(i);
+            if (currentEntity.getType() != null) {
+                return;
+            }
             if (currentEntity.getType().equals(specificEntity.getType())) {
                 this.entityCounter += 1;
             }
