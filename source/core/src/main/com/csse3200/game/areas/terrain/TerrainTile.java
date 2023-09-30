@@ -4,11 +4,15 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import com.badlogic.gdx.utils.Json;
+import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
 
 /**
- * Custom terrain tile implementation for tiled map terrain that stores additional properties we
- * may want to have in the game, such as audio, walking speed, traversability by AI, etc.
+ * Custom terrain tile implementation for tiled map terrain that stores
+ * additional properties we
+ * may want to have in the game, such as audio, walking speed, traversability by
+ * AI, etc.
  */
 public class TerrainTile implements TiledMapTile {
   private int id;
@@ -16,11 +20,40 @@ public class TerrainTile implements TiledMapTile {
   private TextureRegion textureRegion;
   private float offsetX;
   private float offsetY;
+
+  /**
+   * Represents the type of terrain that the terrain tile is
+   */
   private TerrainCategory terrainCategory;
+
+  /**
+   * Stores whether a terrain tile is traversable or not. Is true if it
+   * traversable and false if not
+   */
   private boolean isTraversable;
+
+  /**
+   * Stores whether the tile is occupied or not by a STATIONARY entity - i.e. a
+   * cropTile. Is true if terrain tile is occupied and false if not
+   */
   private boolean isOccupied;
+
+  /**
+   * Stores whether the tile is tillable or not (can be farmed). Is true if the
+   * terrain tile is tillable and false if not
+   */
   private boolean isTillable;
-  private Entity cropTile = null;
+
+  /**
+   * Stores an Entity which occupies the terrain tile. Is null if no Entity
+   * occupies the terrain tile.
+   */
+  private Entity occupant = null;
+
+  /**
+   * Stores the speed modifier of the tile
+   */
+  private float speedModifier;
 
   public TerrainTile(TextureRegion textureRegion, TerrainCategory terrainCategory) {
     this.textureRegion = textureRegion;
@@ -32,58 +65,72 @@ public class TerrainTile implements TiledMapTile {
       case PATH:
         this.isTraversable = true;
         this.isTillable = true;
+        this.speedModifier = 1.2f;
         break;
       case BEACHSAND:
         this.isTraversable = true;
         this.isTillable = false;
+        this.speedModifier = 0.9f;
         break;
       case GRASS:
         this.isTraversable = true;
         this.isTillable = true;
+        this.speedModifier = 1.1f;
         break;
       case DIRT:
         this.isTraversable = true;
         this.isTillable = true;
+        this.speedModifier = 0.7f;
         break;
       case SHALLOWWATER:
         this.isTraversable = true;
         this.isTillable = false;
+        this.speedModifier = 0.9f;
         break;
       case DESERT:
         this.isTraversable = true;
         this.isTillable = false;
+        this.speedModifier = 0.8f;
         break;
       case SNOW:
         this.isTraversable = true;
         this.isTillable = false;
+        this.speedModifier = 0.8f;
         break;
       case ICE:
         this.isTraversable = true;
         this.isTillable = false;
+        this.speedModifier = 1.5f;
         break;
       case DEEPWATER:
         this.isTraversable = false;
         this.isTillable = false;
+        this.speedModifier = 0.2f; // Not traversable
         break;
       case ROCK:
         this.isTraversable = false;
         this.isTillable = false;
+        this.speedModifier = 0.2f; // Not traversable
         break;
       case LAVA:
         this.isTraversable = false;
         this.isTillable = false;
+        this.speedModifier = 0.2f; // Not traversable
         break;
       case LAVAGROUND:
         this.isTraversable = true;
         this.isTillable = false;
+        this.speedModifier = 0.7f;
         break;
       case GRAVEL:
         this.isTraversable = true;
         this.isTillable = false;
+        this.speedModifier = 1f;
         break;
       case FLOWINGWATER:
         this.isTraversable = true;
         this.isTillable = false;
+        this.speedModifier = 1.3f;
         break;
     }
   }
@@ -140,6 +187,7 @@ public class TerrainTile implements TiledMapTile {
 
   /**
    * Not required for game, unimplemented
+   * 
    * @return null
    */
   @Override
@@ -149,6 +197,7 @@ public class TerrainTile implements TiledMapTile {
 
   /**
    * Not required for game, unimplemented
+   * 
    * @return null
    */
   @Override
@@ -158,6 +207,7 @@ public class TerrainTile implements TiledMapTile {
 
   /**
    * Returns the terrain tile's terrain category i.e. GRASS, DIRT etc
+   * 
    * @return TerrainCategory of the tile
    */
   public TerrainCategory getTerrainCategory() {
@@ -165,7 +215,9 @@ public class TerrainTile implements TiledMapTile {
   }
 
   /**
-   * Sets the terrain category of the terrain tile to the specified terrain category
+   * Sets the terrain category of the terrain tile to the specified terrain
+   * category
+   * 
    * @param terrainCategory new terrain category for terrain tile
    */
   public void setTerrainCategory(TerrainCategory terrainCategory) {
@@ -174,6 +226,7 @@ public class TerrainTile implements TiledMapTile {
 
   /**
    * returns whether a terrainTile is traversable or not
+   * 
    * @return True is traversable and False if not
    */
   public boolean isTraversable() {
@@ -182,6 +235,7 @@ public class TerrainTile implements TiledMapTile {
 
   /**
    * returns if the tile is occupied by another entity (i.e. player or NPC) or not
+   * 
    * @return returns true of the tile is occupied by an entity and false if not
    */
   public boolean isOccupied() {
@@ -189,7 +243,8 @@ public class TerrainTile implements TiledMapTile {
   }
 
   /**
-   * labels the terrain tile as being occupied (terrain tile does not store actually entity occupying it)
+   * labels the terrain tile as being occupied (terrain tile does not store
+   * actually entity occupying it)
    */
   public void setOccupied() {
     this.isOccupied = true;
@@ -204,10 +259,34 @@ public class TerrainTile implements TiledMapTile {
 
   /**
    * returns if the tile is tillable or not
+   * 
    * @return returns true if the tile is tillable and false if not
    */
-  public boolean isTillable(){
+  public boolean isTillable() {
     return this.isTillable;
+  }
+
+  /**
+   * Returns the placeable entity that is on the TerrainTile
+   * 
+   * @return the placeable entity
+   */
+  public Entity getOccupant() {
+    return occupant;
+  }
+
+  /**
+   * Sets the placeable entity and sets the tile to be occupied if not null
+   * 
+   * @param occupant the entity to be placed on the tile
+   */
+  public void setOccupant(Entity occupant) {
+    this.occupant = occupant;
+    if (occupant != null) {
+      setOccupied();
+    } else {
+      setUnOccupied();
+    }
   }
 
   public enum TerrainCategory { // wanted to name TerrainType but already enum with that name in TerrainFactory
@@ -227,11 +306,21 @@ public class TerrainTile implements TiledMapTile {
     FLOWINGWATER
   }
 
-  public Entity getCropTile() {
-    return cropTile;
+  /**
+   * Removes any crop tile which occupies the terrain tile. Does not return the
+   * crop tile.
+   */
+  public void removeOccupant() {
+    this.occupant = null;
+    this.setUnOccupied();
   }
 
-  public void setCropTile(Entity cropTile) {
-    this.cropTile = cropTile;
+  /**
+   * Returns the speed modifier of the terrain tile
+   * 
+   * @return the speed modifier of the terrain tile
+   */
+  public float getSpeedModifier() {
+    return this.speedModifier;
   }
 }

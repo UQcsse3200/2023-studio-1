@@ -1,74 +1,86 @@
 {
   "cosmicCob": {
-    "health": 10,
+    "health": 3,
     "name": "Cosmic Cob",
     "type": "FOOD",
-    "description": "Nutritious space corn!",
-    "idealWaterLevel": 0.7,
-    "adultLifeSpan": 5,
-    "maxHealth": 400
+    "description": "A nutritious snack with everything a human needs to survive, the local fauna won’t touch it though. Suspiciously high in protein and fat…",
+    "idealWaterLevel": 1,
+    "adultLifeSpan": 3,
+    "maxHealth": 200,
+    "soundFolderPath" : "sounds/plants/cosmicCob/",
+    "sproutThreshold": 30,
+    "juvenileThreshold": 70,
+    "adultThreshold": 130,
+    "atlasPath": "images/plants/cosmic_cob.atlas"
   },
   "aloeVera": {
-    "health": 10,
+    "health": 2,
     "name": "Aloe Vera",
     "type": "HEALTH",
-    "description": "Produces gel that can be used for healing",
-    "idealWaterLevel": 0.7,
+    "description": "A unique plant that once ground down to a chunky red paste can be used to heal significant wounds, it’s a miracle!",
+    "idealWaterLevel": 1.2,
     "adultLifeSpan": 5,
-    "maxHealth": 300
+    "maxHealth": 150,
+    "soundFolderPath" : "sounds/plants/aloeVera/",
+    "sproutThreshold": 50,
+    "juvenileThreshold": 90,
+    "adultThreshold": 150,
+    "atlasPath": "images/plants/aloe_vera.atlas"
   },
   "hammerPlant": {
-    "health": 10,
+    "health": 5,
     "name": "Hammer Plant",
     "type": "REPAIR",
-    "description": "Repairs plants within its healing radius",
+    "description": "A useful plant resembling a hand holding a hammer that repairs the other nearby plants, maybe they were friends!",
     "idealWaterLevel": 0.7,
-    "adultLifeSpan": 5,
-    "maxHealth": 200
+    "adultLifeSpan": 7,
+    "maxHealth": 250,
+    "soundFolderPath" : "sounds/plants/hammerPlant/",
+    "sproutThreshold": 50,
+    "juvenileThreshold": 80,
+    "adultThreshold": 150,
+    "atlasPath": "images/plants/hammer_plant.atlas"
   },
-  "venusFlyTrap": {
+  "spaceSnapper": {
     "health": 10,
     "name": "Space Snapper",
     "type": "DEFENCE",
-    "description" : "I eat the fauna!",
-    "idealWaterLevel": 0.7,
-    "adultLifeSpan": 5,
-    "maxHealth": 400
+    "description" : "A hangry plant that will gobble any nasty pests nearby. Keep small pets and children out of snapping distance!",
+    "idealWaterLevel": 0.5,
+    "adultLifeSpan": 15,
+    "maxHealth": 300,
+    "soundFolderPath" : "sounds/plants/venusFlyTrap/",
+    "sproutThreshold": 70,
+    "juvenileThreshold": 150,
+    "adultThreshold": 200,
+    "atlasPath": "images/plants/space_snapper.atlas"
   },
-  "waterWeed": {
-    "health": 10,
+  "atomicAlgae": {
+    "health": 2,
     "name": "Atomic Algae",
     "type": "PRODUCTION",
-    "description": "Test description",
-    "idealWaterLevel": 0.7,
-    "adultLifeSpan": 5,
-    "maxHealth": 100
+    "description": "A highly efficient oxygen-producing plant.",
+    "idealWaterLevel": 1.5,
+    "adultLifeSpan": 4,
+    "maxHealth": 100,
+    "soundFolderPath" : "sounds/plants/waterWeed/",
+    "sproutThreshold": 30,
+    "juvenileThreshold": 60,
+    "adultThreshold": 90,
+    "atlasPath": "images/plants/atomic_algae.atlas"
   },
-  "atropaBelladonna": {
-    "health": 10,
+  "deadlyNightshade": {
+    "health": 2,
     "name": "Deadly Nightshade",
     "type": "DEADLY",
-    "description": "Grows deadly poisonous berries",
-    "idealWaterLevel": 0.7,
-    "adultLifeSpan": 5,
-    "maxHealth": 200
-  },
-  "nicotianaTabacum": {
-    "health": 10,
-    "name": "Tobacco",
-    "type": "DEADLY",
-    "description": "Toxic addicted plant leaves",
-    "idealWaterLevel": 0.7,
-    "adultLifeSpan": 5,
-    "maxHealth": 20
-  },
-  "sunFlower": {
-    "health" : 10,
-    "name": "Horticultural Heater",
-    "type": "PRODUCTION",
-    "description": "Warms up the nearby area",
-    "idealWaterLevel": 0.7,
-    "adultLifeSpan": 5,
-    "maxHealth": 100
+    "description": "Grows deadly poisonous berries.",
+    "idealWaterLevel": 1,
+    "adultLifeSpan": 2,
+    "maxHealth": 130,
+    "soundFolderPath" : "sounds/plants/nightshade/",
+    "sproutThreshold": 60,
+    "juvenileThreshold": 120,
+    "adultThreshold": 180,
+    "atlasPath": "images/plants/deadly_nightshade.atlas"
   }
 }

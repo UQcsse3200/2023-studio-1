@@ -1,12 +1,13 @@
 package com.csse3200.game.components.tasks;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.DefaultTask;
 import com.csse3200.game.ai.tasks.PriorityTask;
 import com.csse3200.game.ai.tasks.Task;
 import com.csse3200.game.utils.math.RandomUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Wander around by moving a random position within a range of the starting position. Wait a little
@@ -27,6 +28,7 @@ public class WanderTask extends DefaultTask implements PriorityTask {
   private WaitTask waitTask;
   /** The currently active task (movement or waiting). */
   private Task currentTask;
+
 
   /**
    * @param wanderRange Distance in X and Y the entity can move from its position when start() is

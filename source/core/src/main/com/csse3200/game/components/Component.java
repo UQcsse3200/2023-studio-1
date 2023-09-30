@@ -1,15 +1,18 @@
 package com.csse3200.game.components;
 
-import com.csse3200.game.entities.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
+import com.csse3200.game.entities.Entity;
 
 /**
  * Core component class from which all components inherit. Contains logic for creating, updating,
  * and disposing. Components can be attached to an entity to give it specific behaviour. It is
  * unlikely that changes will need to be made here.
  */
-public class Component {
+public class Component implements Json.Serializable {
   private static final Logger logger = LoggerFactory.getLogger(Component.class);
   protected Entity entity;
   protected boolean enabled = true;
@@ -99,4 +102,11 @@ public class Component {
     }
     return entity + "." + className;
   }
+
+  public void write(Json json) {
+  }
+
+  public void read(Json json, JsonValue jsonMap) {
+  }
+
 }

@@ -1,16 +1,23 @@
 package com.csse3200.game.areas.terrain;
 
-import com.badlogic.gdx.math.MathUtils;
-import com.csse3200.game.components.Component;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.rendering.DynamicTextureRenderComponent;
-import com.csse3200.game.services.ServiceLocator;
-
 import java.util.function.Function;
 
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
+import com.csse3200.game.components.Component;
+import com.csse3200.game.components.plants.PlantComponent;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.missions.MissionManager;
+import com.csse3200.game.rendering.DynamicTextureRenderComponent;
+import com.csse3200.game.services.FactoryService;
+import com.csse3200.game.services.ServiceLocator;
+
 /**
- * Component which stores information about plots of land on which crops and plants can grow.
- * Listens to a variety of trigger-able events to update state of the tile, including its water
+ * Component which stores information about plots of land on which crops and
+ * plants can grow.
+ * Listens to a variety of trigger-able events to update state of the tile,
+ * including its water
  * content and whether it is fertilised.
  */
 public class CropTileComponent extends Component {
@@ -18,7 +25,7 @@ public class CropTileComponent extends Component {
 	/**
 	 * Default rate that a tile's water level decreases
 	 */
-	private static final float WATER_DECREASE_RATE = 0.05f;
+	private static final float WATER_DECREASE_RATE = 0.005f;
 
 	/**
 	 * Ideal water fall off sharpness to calculate growth rate
@@ -26,7 +33,8 @@ public class CropTileComponent extends Component {
 	private static final float IDEAL_WATER_FALL_OFF_SHARPNESS = 2.0f;
 
 	/**
-	 * How tolerant the growth rate is to the water being different from the ideal value
+	 * How tolerant the growth rate is to the water being different from the ideal
+	 * value
 	 */
 	private static final float IDEAL_WATER_FALL_OFF_TOLERANCE = 1.2f;
 
@@ -36,22 +44,39 @@ public class CropTileComponent extends Component {
 	private static final float WATER_DAMAGE_THRESHOLD = 0.1f;
 
 	private float waterContent;
-	private final float soilQuality;
+	private float soilQuality;
 	private boolean isFertilised;
 	private Entity plant;
 	private DynamicTextureRenderComponent currentTexture;
-
+	private TerrainTile terrainTile;
 
 	/**
-	 * Creates a new crop tile component, with a specified initial water content, and an initial soil
-	 * quality (higher values indicate higher soil quality, meaning better growth rate).
+	 * Creates a new crop tile with default values
+	 */
+	public CropTileComponent() {
+		this.waterContent = 0;
+		this.soilQuality = 1;
+		this.isFertilised = false;
+		this.plant = null;
+	}
+
+	/**
+	 * Creates a new crop tile component, with a specified initial water content,
+	 * and an initial soil
+	 * quality (higher values indicate higher soil quality, meaning better growth
+	 * rate).
 	 *
-	 * @param initialWaterContent The initial amount of water in the crop tile. Value should be
-	 *                            between 0 and 2 inclusive - 0 indicates tile is completely dry, and
-	 *                            2 indicates tile is flooded, water content of 1 leads to ideal
+	 * @param initialWaterContent The initial amount of water in the crop tile.
+	 *                            Value should be
+	 *                            between 0 and 2 inclusive - 0 indicates tile is
+	 *                            completely dry, and
+	 *                            2 indicates tile is flooded, water content of 1
+	 *                            leads to ideal
 	 *                            growth rate for most plants
-	 * @param soilQuality         The initial soil quality of the crop tile. Higher soil quality
-	 *                            increases the calculated growth rate. Should be greater than 0.
+	 * @param soilQuality         The initial soil quality of the crop tile. Higher
+	 *                            soil quality
+	 *                            increases the calculated growth rate. Should be
+	 *                            greater than 0.
 	 */
 	public CropTileComponent(float initialWaterContent, float soilQuality) {
 		this.waterContent = initialWaterContent;
@@ -105,23 +130,26 @@ public class CropTileComponent extends Component {
 	 */
 	private void fertiliseTile() {
 		isFertilised = true;
+		ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.FERTILISE_CROP.name());
 	}
 
 	/**
 	 * Destroys both the tile and any plant that is on it
 	 */
-	private void destroyTile() {
+	private void destroyTile(TerrainTile tile) {
 		if (isOccupied()) {
 			plant.getEvents().trigger("destroyPlant");
 			this.setUnoccupied();
 		} else {
+			if (tile != null) tile.removeOccupant();
 			entity.dispose();
 		}
 	}
 
+
 	/**
 	 * Plants a plant entity on the tile and stores the plant as a member variable in the tile
-	 * component
+	 * component. It is assumed that the {@link Entity} created from the factory contains a {@link PlantComponent}.
 	 *
 	 * @param plantFactoryMethod Factory method that is used to create a new plant
 	 */
@@ -131,28 +159,43 @@ public class CropTileComponent extends Component {
 		}
 		plant = plantFactoryMethod.apply(this);
 		ServiceLocator.getEntityService().register(plant);
+
+		PlantComponent plantComponent = plant.getComponent(PlantComponent.class);
+		if (plantComponent != null) {
+			ServiceLocator.getMissionManager().getEvents().trigger(
+					MissionManager.MissionEvent.PLANT_CROP.name(),
+					plantComponent.getPlantName()
+			);
+		}
 	}
 
 	/**
-	 * Gets the growth rate of the tile, assuming a water content value of 1 yields the maximum growth
-	 * rate. The calculated growth rate is dependent on the water content and soil quality of this
+	 * Gets the growth rate of the tile, assuming a water content value of 1 yields
+	 * the maximum growth
+	 * rate. The calculated growth rate is dependent on the water content and soil
+	 * quality of this
 	 * tile, and whether it is fertilised.
 	 *
-	 * @return The calculated growth rate of the tile with an ideal water content value of 1, which is
-	 * dependent on water content, soil quality, and whether the tile has been fertilised.
+	 * @return The calculated growth rate of the tile with an ideal water content
+	 *         value of 1, which is
+	 *         dependent on water content, soil quality, and whether the tile has
+	 *         been fertilised.
 	 */
 	public double getGrowthRate() {
 		return getGrowthRate(1.0f);
 	}
 
 	/**
-	 * Gets the growth rate of the tile, specifying the water content of the tile which yields the
-	 * maximum growth rate. The calculated growth rate is dependent on the water content and soil
+	 * Gets the growth rate of the tile, specifying the water content of the tile
+	 * which yields the
+	 * maximum growth rate. The calculated growth rate is dependent on the water
+	 * content and soil
 	 * quality of this tile, and whether it is fertilised.
 	 *
 	 * @param idealWaterAmount The amount which yields the maximum growth rate.
-	 * @return The calculated growth rate of the tile, dependent on water content, soil quality, and
-	 * whether the tile has been fertilised.
+	 * @return The calculated growth rate of the tile, dependent on water content,
+	 *         soil quality, and
+	 *         whether the tile has been fertilised.
 	 */
 	public double getGrowthRate(float idealWaterAmount) {
 		double waterMultiplier = 1 / (Math.exp(
@@ -160,10 +203,13 @@ public class CropTileComponent extends Component {
 				- 1 / MathUtils.E;
 		waterMultiplier *= 1 / (1 - 1 / MathUtils.E);
 		waterMultiplier = (waterMultiplier - WATER_DAMAGE_THRESHOLD) / (1 - WATER_DAMAGE_THRESHOLD);
-		waterMultiplier =
-				waterMultiplier > 0 ? Math.pow(waterMultiplier, IDEAL_WATER_FALL_OFF_TOLERANCE) : -1.0;
-		int fertiliserMultiplier = isFertilised ? 2: 1;
+		waterMultiplier = waterMultiplier > 0 ? Math.pow(waterMultiplier, IDEAL_WATER_FALL_OFF_TOLERANCE) : -1.0;
+		int fertiliserMultiplier = isFertilised ? 2 : 1;
 		return waterMultiplier > 0 ? soilQuality * fertiliserMultiplier * waterMultiplier : -1.0;
+	}
+
+	public float getWaterContent() {
+		return waterContent;
 	}
 
 	/**
@@ -184,9 +230,12 @@ public class CropTileComponent extends Component {
 	}
 
 	/**
-	 * Determine the appropriate String for the tile's texture based on fertiliser status and
+	 * Determine the appropriate String for the tile's texture based on fertiliser
+	 * status and
 	 * water content.
-	 * @return the path to the texture for this CropTileComponent based on its status.
+	 * 
+	 * @return the path to the texture for this CropTileComponent based on its
+	 *         status.
 	 */
 	private String getTexturePath() {
 		String path = "images/cropTile_fertilised.png";
@@ -208,5 +257,57 @@ public class CropTileComponent extends Component {
 			}
 		}
 		return path;
+	}
+
+	public Entity getPlant() {
+		return plant;
+	}
+
+	/**
+	 * Only to be used for loading as it can go around the achievement stuff
+	 * @param plant - the plant to set here
+	 */
+	public void setPlant(Entity plant) {
+		this.plant = plant;
+	}
+
+	/**
+	 * Writes in json summary of croptile state. Writes to json
+	 * the waterContent, soilQuality, isFertilised and plant
+	 * to the json
+	 * 
+	 * @param json which is a valid Json
+	 */
+	@Override
+	public void write(Json json) {
+		json.writeObjectStart(this.getClass().getSimpleName());
+		json.writeValue("waterContent", waterContent);
+		json.writeValue("soilQuality", soilQuality);
+		json.writeValue("isFertilised", isFertilised);
+		json.writeValue("plant", plant);
+		json.writeObjectEnd();
+	}
+
+	@Override
+	public void read(Json json, JsonValue jsonMap) {
+		jsonMap = jsonMap.get("components").get("CropTileComponent");
+		waterContent = jsonMap.getFloat("waterContent");
+		soilQuality = jsonMap.getFloat("soilQuality");
+		isFertilised = jsonMap.getBoolean("isFertilised");
+		JsonValue plantData = jsonMap.get("plant");
+		if (plantData.get("Entity") != null) {
+			plantData = plantData.get("components").get("PlantComponent");
+			plant = FactoryService.getPlantFactories().get(plantData.getString("name")).apply(this);
+			plant.getComponent(PlantComponent.class).read(json, plantData);
+		} else {
+			plant = null;
+		}
+	}
+
+	public void setTerrainTile(TerrainTile terrainTile) {
+		this.terrainTile = terrainTile;
+		if (terrainTile.getOccupant() == null) {
+			terrainTile.setOccupant(entity);
+		}
 	}
 }

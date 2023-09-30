@@ -1,21 +1,25 @@
 package com.csse3200.game.components.inventory;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+
+import java.util.ArrayList;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.input.InputService;
+import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.ServiceLocator;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-
-import java.util.ArrayList;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 /**
  * Factory to create a mock player entity for testing.
@@ -28,34 +32,41 @@ import static org.mockito.Mockito.verify;
 public class TestInventoryUI {
     Entity player;
     InventoryDisplay inventoryDisplay;
+    InventoryComponent inventory;
 
     /**
      * Create a player entity.
      */
     @BeforeEach
     void createPlayer() {
+        Stage stage = mock(Stage.class);
+
+        RenderService renderService = new RenderService();
+        renderService.setStage(stage);
+
+        ServiceLocator.registerRenderService(renderService);
+
         ServiceLocator.registerInputService(new InputService());
-        inventoryDisplay = mock(InventoryDisplay.class);
+        inventory = new InventoryComponent(new ArrayList<>());
+        inventoryDisplay = spy(new InventoryDisplay(inventory, 30, 10));
         player =
                 new Entity()
                         .addComponent(new PlayerActions())
                         .addComponent(new KeyboardPlayerInputComponent())
                         .addComponent(inventoryDisplay)
-                        .addComponent(new InventoryComponent(new ArrayList<>()));
+                        .addComponent(inventory);
     }
     @Test
     void testToggleInventory() {
-        //verify(inventoryDisplay);
         player.create();
         verify(inventoryDisplay).create();
-        player.getEvents().addListener("toggleInventory",inventoryDisplay::toggleOpen);
+        assert(inventoryDisplay.getInventory() == player.getComponent(InventoryComponent.class));
         player.getComponent(KeyboardPlayerInputComponent.class).setActions(player.getComponent(PlayerActions.class));
         player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.I);
         verify(inventoryDisplay).toggleOpen();
-
-
-
     }
 
 
+
 }
+

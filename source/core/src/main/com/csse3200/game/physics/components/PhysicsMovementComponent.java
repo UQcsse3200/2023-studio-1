@@ -1,12 +1,13 @@
 package com.csse3200.game.physics.components;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.ai.movement.MovementController;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.utils.math.Vector2Utils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /** Movement controller for a physics-based entity. */
 public class PhysicsMovementComponent extends Component implements MovementController {
@@ -68,6 +69,11 @@ public class PhysicsMovementComponent extends Component implements MovementContr
 
   private void updateDirection(Body body) {
     Vector2 desiredVelocity = getDirection().scl(maxSpeed);
+
+    /* Can continue implementation of terrain movement modifiers once the GameMap class has been updated and a way to
+       access the game map class from this component has been implemented. */
+    //Vector2 entityPosition = this.getEntity().getCenterPosition();
+
     setToVelocity(body, desiredVelocity);
   }
 

@@ -1,8 +1,14 @@
 package com.csse3200.game.components.player;
 
+import com.csse3200.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.components.Component;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.utils.math.Vector2Utils;
 
@@ -13,7 +19,17 @@ import com.csse3200.game.utils.math.Vector2Utils;
 public class KeyboardPlayerInputComponent extends InputComponent {
   private final Vector2 moveDirection = Vector2.Zero.cpy();
   private PlayerActions actions;
+  private static int keyPressedCounter;
+  private static boolean menuOpened = false;
+  private static Enum currentMenu = MenuTypes.NONE;
   private final int hotKeyOffset = 6;
+  private static boolean showPlantInfoUI = true;
+  public enum MenuTypes{
+    PAUSEMENU,
+    NONE
+  }
+
+  private static final Logger logger = LoggerFactory.getLogger(Component.class);
 
   public KeyboardPlayerInputComponent() {
     super(5);
@@ -45,9 +61,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           moveDirection.add(Vector2Utils.RIGHT);
           triggerMoveEvent();
           return true;
-        case Keys.SPACE:
-          entity.getEvents().trigger("attack");
-          return true;
         case Keys.SHIFT_LEFT:
           entity.getEvents().trigger("run");
           return true;
@@ -61,11 +74,24 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.F:
           triggerEnterEvent();
           return true;
+        case Keys.SPACE:
+          touchUp(Gdx.input.getX(), Gdx.input.getY(), 0, 0);
+          return true;
+        case Keys.ESCAPE:
+          entity.getEvents().trigger("escInput");
+          return true;
         case Keys.NUM_0: case Keys.NUM_1: case Keys.NUM_2:
         case Keys.NUM_3: case Keys.NUM_4: case Keys.NUM_5:
         case Keys.NUM_6: case Keys.NUM_7: case Keys.NUM_8:
         case Keys.NUM_9:
           triggerHotKeySelection(keycode);
+          return true;
+        case Keys.T:
+          entity.getEvents().trigger("toggleLight");
+          return true;
+        case Keys.Q:
+          showPlantInfoUI = !showPlantInfoUI;
+          ServiceLocator.getPlantInfoService().getEvents().trigger("toggleOpen", showPlantInfoUI);
           return true;
         default:
           return false;
@@ -74,12 +100,17 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     return false;
   }
 
+  public static void incrementPauseCounter(){
+    keyPressedCounter++;
+  }
+
+
   /** @see InputProcessor#touchUp(int, int, int, int) */
   @Override
   public boolean touchUp(int screenX, int screenY, int pointer, int button) {
     if (!actions.isMuted()) {
       Vector2 mousePos = new Vector2(screenX, screenY);
-      entity.getEvents().trigger("use", entity.getPosition(), mousePos, entity.getComponent(InventoryComponent.class).getHeldItem());
+      entity.getEvents().trigger("use", mousePos, entity.getComponent(InventoryComponent.class).getHeldItem());
     }
     return false;
   }
@@ -119,6 +150,16 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       }
     }
     return false;
+  }
+
+  public static void setCurrentMenu(Boolean opened, MenuTypes menu) {
+    menuOpened = opened;
+    currentMenu = menu;
+  }
+
+  public static void clearMenuOpening() {
+    menuOpened = false;
+    currentMenu = MenuTypes.NONE;
   }
 
   private void triggerMoveEvent() {

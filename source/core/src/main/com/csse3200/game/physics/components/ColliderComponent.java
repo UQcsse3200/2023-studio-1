@@ -1,13 +1,19 @@
 package com.csse3200.game.physics.components;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Filter;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.PhysicsComponent.AlignX;
 import com.csse3200.game.physics.components.PhysicsComponent.AlignY;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Attaches a physics collider to an entity. By default, this is a rectangle the same size as the

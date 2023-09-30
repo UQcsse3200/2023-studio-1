@@ -3,27 +3,39 @@ package com.csse3200.game.areas;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.areas.terrain.GameMap;
-import com.csse3200.game.areas.terrain.TerrainCropTileFactory;
-import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.areas.terrain.*;
+import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.items.ItemType;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
+import com.csse3200.game.components.EntityIndicator;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.*;
+import com.csse3200.game.missions.quests.QuestFactory;
+import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.IntStream;
 
 /** SpaceGameArea is the area used for the initial game version */
 public class SpaceGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(SpaceGameArea.class);
-  private static final int NUM_TREES = 7;
+
   private static final int NUM_GHOSTS = 5;
-  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
+  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(24, 86);
+  private static final GridPoint2 QUESTGIVER_SPAWN = new GridPoint2(42, 87);
+  private static final GridPoint2 SHIP_SPAWN = new GridPoint2(20,85);
+
+  private static final GridPoint2 TRACTOR_SPAWN = new GridPoint2(15, 15);
 
   private static final GridPoint2 TOOL_SPAWN = new GridPoint2(15, 10);// temp!!!
   private static final GridPoint2 TOOL_SPAWN2 = new GridPoint2(15, 15);// temp!!!
@@ -42,6 +54,8 @@ public class SpaceGameArea extends GameArea {
           "images/iso_grass_2.png",
           "images/iso_grass_3.png",
           "images/tool_shovel.png",
+          "images/egg.png",
+          "images/milk.png",
 
           "images/tool_hoe.png",
           "images/tool_scythe.png",
@@ -86,14 +100,124 @@ public class SpaceGameArea extends GameArea {
           "images/snow_3.png",
           "images/stone_1.png",
           "images/stonePath_1.png",
-          "images/tractor.png"
+          "images/tractor.png",
+          "images/fertiliser.png",
+          "images/yellowSquare.png",
+
+          "images/plants/misc/aloe_vera_seed.png",
+          "images/plants/atomic_algae/1_seedling.png",
+          "images/plants/misc/cosmic_cob_seed.png",
+          "images/plants/misc/deadly_nightshade_seed.png",
+          "images/plants/misc/hammer_plant_seed.png",
+          "images/plants/misc/space_snapper_seed.png",
+
+          "images/plants/cosmic_cob/1_seedling.png",
+          "images/plants/cosmic_cob/2_sprout.png",
+          "images/plants/cosmic_cob/3_juvenile.png",
+          "images/plants/cosmic_cob/4_adult.png",
+          "images/plants/cosmic_cob/5_decaying.png",
+          "images/plants/cosmic_cob/6_dead.png",
+          "images/plants/cosmic_cob/item_drop.png",
+
+          "images/plants/aloe_vera/1_seedling.png",
+          "images/plants/aloe_vera/2_sprout.png",
+          "images/plants/aloe_vera/3_juvenile.png",
+          "images/plants/aloe_vera/4_adult.png",
+          "images/plants/aloe_vera/5_decaying.png",
+          "images/plants/aloe_vera/6_dead.png",
+          "images/plants/aloe_vera/item_drop.png",
+          "images/plants/aloe_vera/seedbag.png",
+
+          "images/plants/hammer_plant/1_seedling.png",
+          "images/plants/hammer_plant/2_sprout.png",
+          "images/plants/hammer_plant/3_juvenile.png",
+          "images/plants/hammer_plant/4_adult.png",
+          "images/plants/hammer_plant/5_decaying.png",
+          "images/plants/hammer_plant/6_dead.png",
+          "images/plants/hammer_plant/item_drop.png",
+          "images/plants/hammer_plant/seedbag.png",
+
+          "images/plants/space_snapper/1_seedling.png",
+          "images/plants/space_snapper/2_sprout.png",
+          "images/plants/space_snapper/3_juvenile.png",
+          "images/plants/space_snapper/4_adult.png",
+          "images/plants/space_snapper/5_decaying.png",
+          "images/plants/space_snapper/6_dead.png",
+          "images/plants/space_snapper/item_drop.png",
+          "images/plants/space_snapper/seedbag.png",
+
+          "images/plants/atomic_algae/1_seedling.png",
+          "images/plants/atomic_algae/2_sprout.png",
+          "images/plants/atomic_algae/3_juvenile.png",
+          "images/plants/atomic_algae/4_adult.png",
+          "images/plants/atomic_algae/5_decaying.png",
+          "images/plants/atomic_algae/6_dead.png",
+          "images/plants/atomic_algae/item_drop.png",
+          "images/plants/atomic_algae/seedbag.png",
+
+          "images/plants/deadly_nightshade/1_seedling.png",
+          "images/plants/deadly_nightshade/2_sprout.png",
+          "images/plants/deadly_nightshade/3_juvenile.png",
+          "images/plants/deadly_nightshade/4_adult.png",
+          "images/plants/deadly_nightshade/5_decaying.png",
+          "images/plants/deadly_nightshade/6_dead.png",
+          "images/plants/deadly_nightshade/item_drop.png",
+          //"images/plants/deadly_nightshade/seedbag.png",
+
+          "images/plants/misc/aloe_vera_seed.png",
+          "images/plants/misc/cosmic_cob_seed.png",
+          "images/plants/misc/deadly_nightshade_seed.png",
+          "images/plants/misc/hammer_plant_seed.png",
+          "images/plants/misc/space_snapper_seed.png",
+          "images/plants/misc/atomic_algae_seed.png",
+          "images/invisible_sprite.png",
+
+          "images/projectiles/oxygen_eater_projectile.png",
+
+
+          "images/hostile_indicator.png",
+          
+          "images/ship/ship_debris.png",
+          "images/ship/ship.png",
+          "images/ship/ship_part.png",
+
   };
   private static final String[] forestTextureAtlases = {
-    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
-          "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas",
-          "images/animals/astrolotl.atlas",
+      "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
+      "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas",
+      "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas", "images/questgiver.atlas",
+      "images/missionStatus.atlas", "images/plants/cosmic_cob.atlas", "images/plants/aloe_vera.atlas",
+      "images/plants/hammer_plant.atlas", "images/plants/space_snapper.atlas", "images/plants/atomic_algae.atlas",
+      "images/plants/deadly_nightshade.atlas", "images/projectiles/oxygen_eater_projectile.atlas",
+      "images/fireflies.atlas", "images/ship/ship.atlas", "images/light.atlas"
   };
-  private static final String[] forestSounds = {"sounds/Impact4.ogg", "sounds/car-horn-6408.mp3"};
+  private static final String[] forestSounds = {
+          "sounds/Impact4.ogg", "sounds/car-horn-6408.mp3",
+          "sounds/plants/aloeVera/click.wav", "sounds/plants/aloeVera/clickLore.wav",
+          "sounds/plants/aloeVera/decay.wav", "sounds/plants/aloeVera/decayLore.wav",
+          "sounds/plants/aloeVera/destroy.wav", "sounds/plants/aloeVera/destroyLore.wav",
+          "sounds/plants/aloeVera/nearby.wav", "sounds/plants/aloeVera/nearbyLore.wav",
+          "sounds/plants/cosmicCob/click.wav", "sounds/plants/cosmicCob/clickLore.wav",
+          "sounds/plants/cosmicCob/decay.wav", "sounds/plants/cosmicCob/decayLore.wav",
+          "sounds/plants/cosmicCob/destroy.wav", "sounds/plants/cosmicCob/destroyLore.wav",
+          "sounds/plants/cosmicCob/nearby.wav", "sounds/plants/cosmicCob/nearbyLore.wav",
+          "sounds/plants/hammerPlant/click.wav", "sounds/plants/hammerPlant/clickLore.wav",
+          "sounds/plants/hammerPlant/decay.wav", "sounds/plants/hammerPlant/decayLore.wav",
+          "sounds/plants/hammerPlant/destroy.wav", "sounds/plants/hammerPlant/destroyLore.wav",
+          "sounds/plants/hammerPlant/nearby.wav", "sounds/plants/hammerPlant/nearbyLore.wav",
+          "sounds/plants/nightshade/click.wav", "sounds/plants/nightshade/clickLore.wav",
+          "sounds/plants/nightshade/decay.wav", "sounds/plants/nightshade/decayLore.wav",
+          "sounds/plants/nightshade/destroy.wav", "sounds/plants/nightshade/destroyLore.wav",
+          "sounds/plants/nightshade/nearby.wav", "sounds/plants/nightshade/nearbyLore.wav",
+          "sounds/plants/venusFlyTrap/click.wav", "sounds/plants/venusFlyTrap/clickLore.wav",
+          "sounds/plants/venusFlyTrap/decay.wav", "sounds/plants/venusFlyTrap/decayLore.wav",
+          "sounds/plants/venusFlyTrap/destroy.wav", "sounds/plants/venusFlyTrap/destroyLore.wav",
+          "sounds/plants/venusFlyTrap/nearby.wav", "sounds/plants/venusFlyTrap/nearbyLore.wav",
+          "sounds/plants/waterWeed/click.wav", "sounds/plants/waterWeed/clickLore.wav",
+          "sounds/plants/waterWeed/decay.wav", "sounds/plants/waterWeed/decayLore.wav",
+          "sounds/plants/waterWeed/destroy.wav", "sounds/plants/waterWeed/destroyLore.wav",
+          "sounds/plants/waterWeed/nearby.wav", "sounds/plants/waterWeed/nearbyLore.wav",
+  };
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
   private static final String[] forestMusic = {backgroundMusic};
 
@@ -101,21 +225,28 @@ public class SpaceGameArea extends GameArea {
   private final GameMap gameMap;
 
   private Entity player;
+  private final ClimateController climateController;
   private Entity tractor;
 
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
-   * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
+   *
+   * @param terrainFactory TerrainFactory used to create the terrain for the
+   *                       GameArea.
    * @requires terrainFactory != null
    */
   public SpaceGameArea(TerrainFactory terrainFactory) {
     super();
     this.terrainFactory = terrainFactory;
-    this.gameMap = new GameMap(terrainFactory);
+    gameMap = new GameMap(terrainFactory);
+    climateController = new ClimateController();
     ServiceLocator.registerGameArea(this);
   }
 
-  /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
+  /**
+   * Create the game area, including terrain, static entities (trees), dynamic
+   * entities (player)
+   */
   @Override
   public void create() {
     loadAssets();
@@ -123,30 +254,46 @@ public class SpaceGameArea extends GameArea {
     displayUI();
 
     spawnTerrain();
-    spawnCrop(); // temp
-    spawnTrees();
+    spawnInvisibleObstacle();// spawn invisible obstacle on the non-traversable area of the map
+
+    spawnShipDebris();
 
     player = spawnPlayer();
-    player.getComponent(PlayerActions.class).setGameMap(gameMap);
+//    player.getComponent(PlayerActions.class).setGameMap(gameMap);
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createLightItem());
+//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHoe());
+//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createScythe());
+//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createWateringcan());
+//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createShovel());
 
     tractor = spawnTractor();
+    spawnPlayerHighlight();
+    spawnQuestgiver();
     spawnChickens();
     spawnCows();
     spawnAstrolotl();
+    spawnOxygenEater();
+    spawnShip();
 
-    spawnTool(ItemType.WATERING_CAN);
-    spawnTool(ItemType.SHOVEL);
-    spawnTool(ItemType.SCYTHE);
-    spawnTool(ItemType.HOE);
+    ServiceLocator.getMissionManager().acceptQuest(QuestFactory.createFirstContactQuest());
 
-    //spawnGhosts();
-    //spawnGhostKing();
+//    spawnTool(ItemType.WATERING_CAN);
+//    spawnTool(ItemType.SHOVEL);
+//    spawnTool(ItemType.SCYTHE);
+//    spawnTool(ItemType.HOE);
+//    spawnTool(ItemType.FERTILISER);
+    spawnTool(ItemType.SEED);
+//    spawnTool(ItemType.FOOD);
 
     //playMusic();
   }
 
   public Entity getPlayer() {
     return player;
+  }
+
+  public ClimateController getClimateController() {
+    return climateController;
   }
 
   private void displayUI() {
@@ -158,7 +305,8 @@ public class SpaceGameArea extends GameArea {
   private void spawnTerrain() {
     // Background terrain
     terrain = terrainFactory.createTerrain(this.gameMap.getTiledMap());
-    spawnEntity(new Entity().addComponent(terrain));                  // Will need to monitor this when changing the createTerrain function
+    this.gameMap.setTerrainComponent(terrain);
+    spawnEntity(new Entity().addComponent(terrain));
 
     // Terrain walls
     float tileSize = terrain.getTileSize();
@@ -185,26 +333,71 @@ public class SpaceGameArea extends GameArea {
         ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
   }
 
-  private void spawnTrees() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-    for (int i = 0; i < NUM_TREES; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity tree = ObstacleFactory.createTree();
-      spawnEntityAt(tree, randomPos, true, false);
-    }
-  }
+    /**
+     * Spawn invisible obstacle on the non-traversable area of the map
+     */
+   private void spawnInvisibleObstacle() {
+     ArrayList<GridPoint2> Non_Traversable_Obs = this.gameMap.getNonTraversableTileCoordinates();
+     for (int i = 0; i < Non_Traversable_Obs.size(); i++) {
+       GridPoint2 Pos = Non_Traversable_Obs.get(i);
+       Entity invisible_obs = ObstacleFactory.createInvisibleObstacle();
+       spawnEntityAt(invisible_obs, Pos, true, false);
+     }
+   }
 
   private Entity spawnCrop() {
     GridPoint2 pos = new GridPoint2(10, 11);
     Entity newPlayer = TerrainCropTileFactory.createTerrainEntity(0,0);
     spawnEntityAt(newPlayer, pos, true, true);
-    Entity newPlayer2 = TerrainCropTileFactory.createTerrainEntity(1,0);
-    spawnEntityAt(newPlayer2, pos, true, true);
-    Entity newPlayer3 = TerrainCropTileFactory.createTerrainEntity(0,1);
-    spawnEntityAt(newPlayer3, pos, true, true);
+    Entity plant = FactoryService.getPlantFactories().get("Cosmic Cob").apply(newPlayer.getComponent(CropTileComponent.class));
+    ServiceLocator.getEntityService().register(plant);
+    newPlayer.getComponent(CropTileComponent.class).setPlant(plant);
     return newPlayer;
+  }
+
+  private Entity spawnCrop(int x, int y, String plantType) {
+    GridPoint2 pos = new GridPoint2(x, y);
+    Entity newPlayer = TerrainCropTileFactory.createTerrainEntity(0,0);
+    spawnEntityAt(newPlayer, pos, true, true);
+    Entity plant = FactoryService.getPlantFactories().get(plantType).apply(newPlayer.getComponent(CropTileComponent.class));
+    ServiceLocator.getEntityService().register(plant);
+    newPlayer.getComponent(CropTileComponent.class).setPlant(plant);
+    return newPlayer;
+  }
+
+  /**
+   * Spawns the initial Ship Debris randomly around the Player Ship's location.
+   * Random position generation adapted from Team 1's spawnTool() below.
+   */
+  private void spawnShipDebris() {
+
+    GridPoint2 minPos = new GridPoint2(SHIP_SPAWN.x - 7, SHIP_SPAWN.y - 5);
+    GridPoint2 maxPos = new GridPoint2(SHIP_SPAWN.x + 7, SHIP_SPAWN.y + 7);
+
+    List<GridPoint2> clearedTilesAroundShip = List.of(
+            SHIP_SPAWN,
+            new GridPoint2(SHIP_SPAWN.x - 1, SHIP_SPAWN.y - 1),
+            new GridPoint2(SHIP_SPAWN.x + 1, SHIP_SPAWN.y - 1),
+            new GridPoint2(SHIP_SPAWN.x - 1, SHIP_SPAWN.y + 1),
+            new GridPoint2(SHIP_SPAWN.x + 1, SHIP_SPAWN.y + 1)
+    );
+
+    IntStream.range(0,15).forEach(i -> {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      TerrainTile tile = gameMap.getTile(randomPos);
+
+      while (!tile.isTraversable() || tile.isOccupied() || clearedTilesAroundShip.contains(randomPos)) {
+        randomPos = RandomUtils.random(minPos, maxPos);
+        tile = gameMap.getTile(randomPos);
+      }
+
+      Entity shipDebris = ShipDebrisFactory.createShipDebris(player);
+      ServiceLocator.getEntityService().register(shipDebris);
+      tile.setOccupant(shipDebris);
+      tile.setOccupied();
+
+      shipDebris.setPosition(terrain.tileToWorldPosition(randomPos));
+    });
   }
 
   private Entity spawnPlayer() {
@@ -213,12 +406,26 @@ public class SpaceGameArea extends GameArea {
     return newPlayer;
   }
 
+  private void spawnQuestgiver() {
+    Entity newQuestgiver = QuestgiverFactory.createQuestgiver();
+    spawnEntityAt(newQuestgiver, QUESTGIVER_SPAWN, true, true);
+
+    Entity newQuestgiverIndicator = QuestgiverFactory.createQuestgiverIndicator(newQuestgiver);
+    spawnEntityAt(newQuestgiverIndicator, new GridPoint2(QUESTGIVER_SPAWN.x, QUESTGIVER_SPAWN.y+2), true, true);
+  }
+
+  private void spawnShip() {
+    Entity newShip = ShipFactory.createShip();
+    spawnEntityAt(newShip, SHIP_SPAWN, true, true);
+  }
+
   private void spawnTool(ItemType tool) {
     Entity newTool;
     // create a random places for tool to spawn
     GridPoint2 minPos = new GridPoint2(5, 5);
     GridPoint2 maxPos = new GridPoint2(20, 20);
-    GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+    //GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+    GridPoint2 randomPos = new GridPoint2(8, 8);
 
     switch (tool) {
       case HOE:
@@ -237,6 +444,18 @@ public class SpaceGameArea extends GameArea {
         newTool = ItemFactory.createWateringcan();
         spawnEntityAt(newTool, randomPos, true, true);
         break;
+      case FERTILISER:
+        newTool = ItemFactory.createFertiliser();
+        spawnEntityAt(newTool, randomPos, true, true);
+        break;
+      case SEED:
+        newTool = ItemFactory.createAloeVeraSeed();
+        spawnEntityAt(newTool, randomPos, true, true);
+        break;
+      case FOOD:
+        newTool = ItemFactory.createCowFood();
+        spawnEntityAt(newTool, randomPos, true, true);
+        break;
     }
   }
 
@@ -247,7 +466,7 @@ public class SpaceGameArea extends GameArea {
    */
   private Entity spawnTractor() {
     Entity newTractor = TractorFactory.createTractor(player);
-    spawnEntityAt(newTractor, PLAYER_SPAWN, true, true);
+    spawnEntityAt(newTractor, TRACTOR_SPAWN, true, true);
     return newTractor;
   }
 
@@ -267,9 +486,10 @@ public class SpaceGameArea extends GameArea {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 5; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity cow = NPCFactory.createCow(player);
+      //cow.addComponent(new EntityIndicator(cow));
       spawnEntityAt(cow, randomPos, true, true);
     }
   }
@@ -285,25 +505,17 @@ public class SpaceGameArea extends GameArea {
     }
   }
 
-  private void spawnGhosts() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
+  private void spawnOxygenEater() {
+    GridPoint2 minPos = new GridPoint2(2, 2);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
-    for (int i = 0; i < NUM_GHOSTS; i++) {
+    for (int i = 0; i < 5; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity ghost = NPCFactory.createGhost(player);
-      spawnEntityAt(ghost, randomPos, true, true);
+      Entity oxygenEater = NPCFactory.createOxygenEater(player);
+      spawnEntityAt(oxygenEater, randomPos, true, true);
     }
   }
 
-  private void spawnGhostKing() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-    GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-    Entity ghostKing = NPCFactory.createGhostKing(player);
-    spawnEntityAt(ghostKing, randomPos, true, true);
-  }
 
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
@@ -343,12 +555,26 @@ public class SpaceGameArea extends GameArea {
   }
 
   /**
-   * Does not set the camera to the Entity instead sets a camera variable inside of scripts
-   * to do that later
+   * Returns the tractor entity
    */
   public Entity getTractor() {
     return tractor;
   }
 
 
+  /**
+   * Returns the game map
+   */
+  public GameMap getMap() {
+    return gameMap;
+  }
+
+  /**
+   * Spawns the player highlight entity
+   * Is the yellow square that highlights the tile the player is hovering over
+   */
+  public void spawnPlayerHighlight() {
+    Entity playerHighlight = PlayerHighlightFactory.createPlayerHighlight();
+    spawnEntityAt(playerHighlight, PLAYER_SPAWN, true, true);
+  }
 }

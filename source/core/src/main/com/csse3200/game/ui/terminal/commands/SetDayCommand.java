@@ -1,10 +1,11 @@
 package com.csse3200.game.ui.terminal.commands;
 
-import com.csse3200.game.services.ServiceLocator;
+import java.util.ArrayList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
+import com.csse3200.game.services.ServiceLocator;
 
 public class SetDayCommand implements Command {
 
@@ -26,7 +27,7 @@ public class SetDayCommand implements Command {
     return true;
   }
 
-  Boolean isValid(ArrayList<String> args) {
+  boolean isValid(ArrayList<String> args) {
     if (args.size() != 1) {
       logger.debug("Only 1 argument is needed and {} were given", args.size());
       return false;

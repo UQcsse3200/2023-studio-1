@@ -1,20 +1,21 @@
 package com.csse3200.game.components.intro;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.GdxGame.ScreenType;
-import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
-import com.rafaskoberg.gdx.typinglabel.TypingAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 
 /**
@@ -29,17 +30,17 @@ public class IntroDisplay extends UIComponent {
      * The time in seconds that it takes for the narration animation to reach the trigger point,
      * at which the planet should enter the frame.
      */
-    private static float textAnimationDuration = 18;
+    private static float textAnimationDuration = 12;
 
     /**
      * The speed in pixels/frame that the background and the planet should move at.
      */
-    private float spaceSpeed = 1;
+    private float spaceSpeed = 0.5f;
 
     /**
      * The distance away from the top the text that the planet should stop in pixels.
      */
-    private float planetToTextPadding = 150;
+    private float planetToTextPadding = 100;
 
     /**
      * The Image that forms the background of the page.
@@ -81,7 +82,7 @@ public class IntroDisplay extends UIComponent {
         background =
                 new Image(
                         ServiceLocator.getResourceService()
-                                .getAsset("images/intro_background.png", Texture.class));
+                                .getAsset("images/intro_background_v2.png", Texture.class));
         background.setPosition(0, 0);
         // Scale the height of the background to maintain the original aspect ratio of the image
         // This prevents distortion of the image.
@@ -93,13 +94,16 @@ public class IntroDisplay extends UIComponent {
                 new Image(
                         ServiceLocator.getResourceService()
                                 .getAsset("images/intro_planet.png", Texture.class));
-        planet.setSize(200, 200); // Set to a reasonable fixed size
+        // Scale it to a 10% of screen width with a constant aspect ratio
+        float planetWidth = (float) (Gdx.graphics.getWidth() * 0.1);
+        float planetHeight = planetWidth * (planet.getHeight() / planet.getWidth());
+        planet.setSize(planetWidth, planetHeight); // Set to a reasonable fixed size
 
-        // The planet moves at a constant speed, so to make it appear at the right time,
-        // it is to be placed at the right y coordinate above the screen.
-        // The height is informed by the length of the text animation and the game's target FPS.
-        float planetOffset = textAnimationDuration * UserSettings.get().fps;
+        // The planet's speed is variable, it adjusts itself to make the planet appear above the text at the right time
+        // The planet is placed at some offset above the screen in the center of the screen
+        float planetOffset = 2500;
         planet.setPosition((float)Gdx.graphics.getWidth()/2, planetOffset, Align.center);
+
 
         // The {TOKENS} in the String below are used by TypingLabel to create the requisite animation effects
         String story = """
@@ -128,26 +132,22 @@ public class IntroDisplay extends UIComponent {
         storyLabel.setAlignment(Align.center); // Center align the text
 
         TextButton continueButton = new TextButton("Continue", skin);
+
         continueButton.setVisible(true); // Make the continue button invisible
 
         // The continue button lets the user proceed to the main game
         continueButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
-                logger.debug("Exit button clicked");
+                logger.debug("Continue button clicked");
                 startGame();
-            }
-        });
-
-        // But the continue button should only be revealed when the story is finished playing
-        storyLabel.setTypingListener(new TypingAdapter() {
-            public void end() {
-                continueButton.setVisible(true);
             }
         });
 
         rootTable = new Table();
         rootTable.setFillParent(true); // Make the table fill the screen
+
+        rootTable.row();
 
         rootTable.add(storyLabel).expandX().center().padTop(150f); // The story label is at the top of the screen
         rootTable.row().padTop(30f);
@@ -179,6 +179,31 @@ public class IntroDisplay extends UIComponent {
             planet.setY(planet.getY() - spaceSpeed); // Move the planet
             background.setY(background.getY() - spaceSpeed); // Move the background
         }
+
+        // Resize the planet to the new screen size, maintaining aspect ratio
+        float planetWidth = (float) (Gdx.graphics.getWidth() * 0.1);
+        float planetHeight = planetWidth * (planet.getHeight() / planet.getWidth());
+        planet.setSize(planetWidth, planetHeight);
+
+        // re-center the planet
+        planet.setPosition((float)Gdx.graphics.getWidth()/2, planet.getY(Align.center), Align.center);
+
+        // adjust the speed of movement based on screen size and current fps to ensure planet
+        // hits position at the right time
+        float calculatedSpeed = (planet.getY(Align.center) - storyLabel.getY(Align.top) + planetToTextPadding) /
+                (textAnimationDuration * (float)Gdx.graphics.getFramesPerSecond());
+
+        // The universal speed limit must be enforced
+        if (calculatedSpeed > 1.5f) {
+            spaceSpeed = 1.5f;
+        } else {
+            spaceSpeed = calculatedSpeed;
+        }
+
+
+        logger.debug(String.format("Space Speed: %s", spaceSpeed));
+
+
         stage.act(ServiceLocator.getTimeSource().getDeltaTime());
     }
 

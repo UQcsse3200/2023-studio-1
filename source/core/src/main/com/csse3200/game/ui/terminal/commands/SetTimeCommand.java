@@ -2,9 +2,10 @@ package com.csse3200.game.ui.terminal.commands;
 
 import java.util.ArrayList;
 
-import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.csse3200.game.services.ServiceLocator;
 
 public class SetTimeCommand implements Command {
 
@@ -28,7 +29,7 @@ public class SetTimeCommand implements Command {
     return true;
   }
 
-  Boolean isValid(ArrayList<String> args) {
+  boolean isValid(ArrayList<String> args) {
     if (args.size() != 1) {
       logger.debug("Only 1 argument is needed and {} were given", args.size());
       return false;
@@ -40,7 +41,6 @@ public class SetTimeCommand implements Command {
       logger.debug("Argument provided was not a valid integer");
       return false;
     }
-    // TODO Clarify with time-team on the duration of the days
     if (MIN_TIME > time || time > MAX_TIME) {
       logger.debug("Argument given must be between {} and {} inclusive", MIN_TIME, MAX_TIME);
       return false;
