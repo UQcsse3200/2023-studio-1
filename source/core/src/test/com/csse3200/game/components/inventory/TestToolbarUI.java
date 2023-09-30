@@ -56,7 +56,7 @@ public class TestToolbarUI {
                         .addComponent(new KeyboardPlayerInputComponent())
                         .addComponent(toolbarDisplay)
                         .addComponent(inventory)
-                        .addComponent(new InventoryDisplay(inventory));
+                        .addComponent(new InventoryDisplay(inventory, 30, 10));
     }
     @Test
     void testToggleToolbar() {

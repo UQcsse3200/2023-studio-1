@@ -77,6 +77,24 @@ red_pressed
   orig: 48, 48
   offset: 0, 0
   index: -1
+grey_button
+  rotate: false
+  xy: 559, 847
+  size: 48, 48
+  split: 3, 3, 3, 5
+  pad: 12, 12, 12, 12
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+grey_button_pressed
+  rotate: false
+  xy: 1, 418
+  size: 48, 48
+  split: 2, 2, 2, 2
+  pad: 12, 12, 12, 12
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
 blueOutline
   rotate: false
   xy: 103, 520
