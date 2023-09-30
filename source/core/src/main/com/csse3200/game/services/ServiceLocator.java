@@ -5,7 +5,6 @@ import com.csse3200.game.services.plants.PlantInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
@@ -33,6 +32,7 @@ public class ServiceLocator {
   private static TimeService timeService;
   private static GameTime timeSource;
   private static GameArea gameArea;
+  private static LightService lightService;
   private static GameAreaDisplay pauseMenuArea;
   private static GameAreaDisplay craftArea;
   private static CameraComponent cameraComponent;
@@ -48,14 +48,8 @@ public class ServiceLocator {
     return plantInfoService;
   }
 
-  private static MainGameActions mainGameActions;
-
   public static GameArea getGameArea() {
     return gameArea;
-  }
-
-  public static MainGameActions getMainGameActions() {
-    return mainGameActions;
   }
 
   public static CameraComponent getCameraComponent() { return cameraComponent; }
@@ -85,6 +79,9 @@ public class ServiceLocator {
   public static TimeService getTimeService() {
     return timeService;
   }
+  public static LightService getLightService() {
+    return lightService;
+  }
 
   public static MissionManager getMissionManager() {
     return missions;
@@ -100,11 +97,6 @@ public class ServiceLocator {
   public static void registerGameArea(GameArea area) {
     logger.debug("Registering game area {}", area);
     gameArea = area;
-  }
-
-  public static void registerMainGameActions(MainGameActions actions) {
-    logger.debug("Registering game actions {}", actions);
-    mainGameActions = actions;
   }
 
   public static void registerCameraComponent(CameraComponent camera) {
@@ -166,7 +158,6 @@ public class ServiceLocator {
     logger.debug("Registering plant command service {}",source);
     plantInfoService = source;
   }
-
 
   public static void registerLightService(LightService source) {
     logger.debug("Registering light service {}", source);
