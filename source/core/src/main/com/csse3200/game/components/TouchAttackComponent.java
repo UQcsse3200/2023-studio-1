@@ -97,7 +97,7 @@ public class TouchAttackComponent extends Component {
     }
 
     if(targetStats != null && targetStats.getHealth() < 0 && !target.getType().equals(EntityType.Player)) {
-      ServiceLocator.getGameArea().removeEntity(target);
+      targetStats.handleDeath();
     }
   }
 }

@@ -1,5 +1,7 @@
 package com.csse3200.game.components;
 
+import com.csse3200.game.entities.EntityType;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -87,5 +89,11 @@ public class CombatStatsComponent extends Component {
   public void hit(CombatStatsComponent attacker) {
     int newHealth = getHealth() - attacker.getBaseAttack();
     setHealth(newHealth);
+  }
+
+  public void handleDeath(){
+    if(!entity.getType().equals(EntityType.Player)) {
+      ServiceLocator.getGameArea().removeEntity(entity);
+    }
   }
 }

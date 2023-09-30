@@ -1,6 +1,7 @@
 package com.csse3200.game.components.player;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.audio.Sound;
@@ -222,6 +223,7 @@ public class PlayerActions extends Component {
     attackSound.play();
     mousePos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
     List<Entity> areaEntities = ServiceLocator.getGameArea().getAreaEntities();
+    List<Entity> deadEntities = new ArrayList<>();
     for(Entity animal : areaEntities) {
       CombatStatsComponent combat = animal.getComponent(CombatStatsComponent.class);
       if(combat != null && animal != entity) {
@@ -240,11 +242,15 @@ public class PlayerActions extends Component {
             combat.setHealth(combat.getHealth() - SWORD_DAMAGE);
             animal.getEvents().trigger("panicStart");
           }
-          if(combat.getHealth() <= 0) {
-            animal.dispose();
+          if(combat.isDead()) {
+            deadEntities.add(animal);
           }
         }
       }
+    }
+    for(Entity animal : deadEntities){
+      CombatStatsComponent combat = animal.getComponent(CombatStatsComponent.class);
+      combat.handleDeath();
     }
   }
 
