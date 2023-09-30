@@ -164,6 +164,7 @@ public class NPCFactory {
             .addComponent(aiTaskComponent)
             .addComponent(multiDropComponent)
             .addComponent(animator)
+            .addComponent(new CombatStatsComponent(20, 0))
             .addComponent(new AnimalAnimationController())
             .addComponent(new TamableComponent(
                     player, config.tamingThreshold,
@@ -238,6 +239,7 @@ public class NPCFactory {
     oxygenEater
             .addComponent(aiTaskComponent)
             .addComponent(animator)
+            .addComponent(new CombatStatsComponent(10, 0))
             .addComponent(new HostileAnimationController())
             .addComponent(new OxygenEaterAttackPattern())
             .addComponent(new InteractionDetector(5f, new ArrayList<>(Arrays.asList(EntityType.Player))));
@@ -286,6 +288,7 @@ public class NPCFactory {
             .addComponent(new PhysicsComponent())
             .addComponent(new PhysicsMovementComponent())
             .addComponent(new ColliderComponent())
+            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
             .addComponent(new HitboxComponent());
 
     return animal;

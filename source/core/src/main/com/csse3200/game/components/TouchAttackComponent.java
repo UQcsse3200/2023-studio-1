@@ -6,11 +6,13 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.components.combat.ProjectileComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.BodyUserData;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.services.ServiceLocator;
 
 /**
  * When this entity touches a valid enemy's hitbox, deal damage to them and apply a knockback.
@@ -92,6 +94,10 @@ public class TouchAttackComponent extends Component {
 
     if (entity.getComponent(ProjectileComponent.class) != null) {
       entity.getEvents().trigger("impactStart");
+    }
+
+    if(targetStats != null && targetStats.getHealth() < 0 && !target.getType().equals(EntityType.Player)) {
+      targetStats.handleDeath();
     }
   }
 }
