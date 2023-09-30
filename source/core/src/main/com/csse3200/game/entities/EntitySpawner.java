@@ -200,7 +200,7 @@ public class EntitySpawner {
         this.entityCounter = 0; //ensure that its reset everytime this is called.
         for (int i = 0; i < entities.size; i++) {
             Entity currentEntity = entities.get(i);
-            if (currentEntity.getType() != null) {
+            if (currentEntity.getType() == null) {
                 return;
             }
             if (currentEntity.getType().equals(specificEntity.getType())) {
