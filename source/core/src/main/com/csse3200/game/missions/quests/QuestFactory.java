@@ -514,7 +514,7 @@ public class QuestFactory {
         requiredQuests.add(airAndAlgaeQuestName);
         requiredQuests.add(stratosphericSentinel);
 
-        MultiReward reward = new MultiReward(List.of());
+        WinReward reward = new WinReward();
         return new MainQuest(actIIIMainQuestName, reward, 15, requiredQuests, "weather the incoming storm, provide a haven for humanity");
     }
 
