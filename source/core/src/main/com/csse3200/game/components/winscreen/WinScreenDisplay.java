@@ -17,6 +17,9 @@ import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The display User Interface component for the winning screen
+ */
 public class WinScreenDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(WinScreenDisplay.class);
     private static final float Z_INDEX = 2f;
@@ -142,6 +145,7 @@ public class WinScreenDisplay extends UIComponent {
         spaceSpeed = Math.min(calculatedSpeed, 1.5f);
         logger.debug(String.format("Space Speed: %s", spaceSpeed));
     }
+
     @Override
     public void dispose() {
         background.clear();

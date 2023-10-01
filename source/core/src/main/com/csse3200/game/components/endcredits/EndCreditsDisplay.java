@@ -15,6 +15,9 @@ import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The display User Interface component for the credits screen
+ */
 public class EndCreditsDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(EndCreditsDisplay.class);
     private static final float Z_INDEX = 2f;

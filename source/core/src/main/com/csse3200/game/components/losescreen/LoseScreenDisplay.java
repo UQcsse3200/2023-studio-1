@@ -18,7 +18,9 @@ import com.csse3200.game.GdxGame.ScreenType;
 import com.csse3200.game.ui.UIComponent;
 import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 
-
+/**
+ * The display User Interface component for the losing screen
+ */
 public class LoseScreenDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(LoseScreenDisplay.class);
     private static final float Z_INDEX = 2f;
