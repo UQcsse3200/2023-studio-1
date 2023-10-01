@@ -1,6 +1,8 @@
 package com.csse3200.game.components.ship;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.AuraLightComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,5 +49,20 @@ public class ShipLightComponent extends AuraLightComponent {
         if (unlocked) {
             super.toggleLight();
         }
+    }
+
+    @Override
+    public void write(Json json) {
+        json.writeObjectStart(this.getClass().getSimpleName());
+        json.writeValue("unlocked", unlocked);
+        json.writeValue("active", getActive());
+        json.writeObjectEnd();
+    }
+
+    @Override
+    public void read(Json json, JsonValue jsonMap) {
+        unlocked = jsonMap.getBoolean("unlocked");
+        boolean active = jsonMap.getBoolean("active");
+        if (getActive() != active) super.toggleLight();
     }
 }
