@@ -25,7 +25,7 @@ public class AutoQuest extends Quest {
 
     @Override
     public String getDescription() {
-        return description;
+        return getShortDescription();
     }
 
     @Override
@@ -35,6 +35,7 @@ public class AutoQuest extends Quest {
 
     @Override
     public void readProgress(JsonValue progress) {
+        // AutoQuests do not have saveable progress
     }
 
     @Override
@@ -44,6 +45,7 @@ public class AutoQuest extends Quest {
 
     @Override
     protected void resetState() {
+        // AutoQuests do not have dynamic progress
     }
 
 }

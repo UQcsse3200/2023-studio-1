@@ -57,6 +57,9 @@ public class PlantInteractionQuest extends Quest {
         switch (interactionType) {
             case PLANT_CROP -> descriptionBuilder.append("Plant ");
             case HARVEST_CROP -> descriptionBuilder.append("Harvest ");
+            default -> {
+                // This should not occur - if it does, do nothing
+            }
         }
         descriptionBuilder.append(interactionsTarget);
         descriptionBuilder.append(" crops of type ");
