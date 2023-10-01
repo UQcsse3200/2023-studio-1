@@ -32,7 +32,6 @@ import static org.mockito.Mockito.*;
 public class ParticleServiceTest {
 
 
-
 	ParticleEffect mockEffect;
 	ResourceService resourceService;
 
@@ -54,12 +53,12 @@ public class ParticleServiceTest {
 
 	@Test
 	public void testConstructor() throws IllegalAccessException {
-			ParticleService particleService = new ParticleService();
-			// Tests whether they were all loaded
-			verify(resourceService, times(1)).loadParticleEffects(any());
-			verify(resourceService, times(1)).loadAll();
-			// Tests if assets were retrieved after they were loaded
-			verify(resourceService, times(ParticleService.ParticleEffectType.values().length)).getAsset(anyString(), any());
+		ParticleService particleService = new ParticleService();
+		// Tests whether they were all loaded
+		verify(resourceService, times(1)).loadParticleEffects(any());
+		verify(resourceService, times(1)).loadAll();
+		// Tests if assets were retrieved after they were loaded
+		verify(resourceService, times(ParticleService.ParticleEffectType.values().length)).getAsset(anyString(), any());
 	}
 
 	@Test
@@ -85,7 +84,7 @@ public class ParticleServiceTest {
 
 		GameArea gameArea = mock(GameArea.class);
 		Entity player = mock(Entity.class);
-		when(player.getCenterPosition()).thenReturn(new Vector2(0,0));
+		when(player.getCenterPosition()).thenReturn(new Vector2(0, 0));
 		when(gameArea.getPlayer()).thenReturn(player);
 		ServiceLocator.registerGameArea(gameArea);
 
