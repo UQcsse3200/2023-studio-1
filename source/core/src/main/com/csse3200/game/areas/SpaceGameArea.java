@@ -287,12 +287,13 @@ public class SpaceGameArea extends GameArea {
     List<EntitySpawner> passiveSpawners = new ArrayList<>();
     passiveSpawners.add(new EntitySpawner(1, NPCFactory::createAstrolotl, player,
             0, 1, 0, 0, 10));
-    passiveSpawners.add(new EntitySpawner(10, NPCFactory::createChicken, player,
-            2, 4, 8, 4, 2));
+    passiveSpawners.add(new EntitySpawner(6, NPCFactory::createChicken, player,
+            1, 4, 8, 4, 2));
     passiveSpawners.add(new EntitySpawner(5, NPCFactory::createCow, player,
             1, 3, 12, 4, 1));
     passiveSpawner = new EntitiesSpawner(passiveSpawners);
     passiveSpawner.setGameAreas(this);
+
     //Initial spawns
     passiveSpawner.spawnNow();
     passiveSpawner.startPeriodicSpawning();

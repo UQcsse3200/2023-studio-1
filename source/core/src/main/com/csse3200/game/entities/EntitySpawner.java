@@ -68,16 +68,6 @@ public class EntitySpawner {
      */
     private int dayCounter;
     /**
-     * Counts the number of specific entities in the game currently.
-     */
-    private int entityCounter;
-    /**
-     * Max threshold or maximum amount of a specific type of entity in the game.
-     * Determines if spawning can occur on not.
-     */
-    private final int maxEntitiesBeforeSpawn;
-
-    /**
      * Constructor for EntitySpawner
      *
      * @param maxSpawnCount maximum number of entities that can be spawned in one cycle
@@ -103,8 +93,6 @@ public class EntitySpawner {
         randomCount = 0;
         hourReached = false;
         dayCounter = 0;
-        this.entityCounter = 0;
-        this.maxEntitiesBeforeSpawn = 10; //Arbitrary number for now.
     }
 
     /**
@@ -134,23 +122,20 @@ public class EntitySpawner {
             dayCounter++;
         }
 
-        //Only progress to randomisation or spawning if enough time
-        //has passed between spawns
+        //Only progress to randomisation or spawning if enough time has passed between spawns
         //When day counter is above days between spawns, a new set of spawns can occur.
-        if (dayCounter < daysBetweenSpawns) {
+        if (dayCounter < daysBetweenSpawns + 1) {
             return;
         }
 
         if (hour == spawnHour && !hourReached) {
             hourReached = true;
-            // help the spawning behaviour of game become more randomised, giving a better experience.
             randomGoal = (int) (Math.random() * randomRange);
         }
 
          if (hourReached) {
              //If randomRange == 0 (not doing randomisation) or have completed
              // randomisation count - begin spawning
-
              if (randomCount == randomGoal) {
                 spawnEntities();
 
@@ -187,6 +172,4 @@ public class EntitySpawner {
             spawnCount = (spawnCount + growthRate);
         }
     }
-
-
 }

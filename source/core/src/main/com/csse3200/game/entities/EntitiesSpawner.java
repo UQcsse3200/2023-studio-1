@@ -34,7 +34,7 @@ public class EntitiesSpawner {
     }
 
     /**
-     * Spawns entities from all spawners
+     * Spawns entities from all spawners without considering triggers
      */
     public void spawnNow() {
         for (EntitySpawner entitySpawner : toSpawn) {
