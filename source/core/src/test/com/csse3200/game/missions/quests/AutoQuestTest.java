@@ -1,5 +1,6 @@
 package com.csse3200.game.missions.quests;
 
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.missions.MissionManager;
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(GameExtension.class)
@@ -103,6 +105,32 @@ class AutoQuestTest {
 
     @Test
     void testReadProgress() {
+        JsonValue mockProgress = mock(JsonValue.class);
+        testGetDescription();
+        String autoQuest1Desc = autoQuest1.getDescription();
+        String autoQuest2Desc = autoQuest2.getDescription();
+        String autoQuest3Desc = autoQuest3.getDescription();
+        testGetProgress();
+        testIsCompleted();
+        testGetShortDescription();
+        String autoQuest1ShortDesc = autoQuest1.getShortDescription();
+        String autoQuest2ShortDesc = autoQuest2.getShortDescription();
+        String autoQuest3ShortDesc = autoQuest3.getShortDescription();
+        testRegisterMission();
+        autoQuest1.readProgress(mockProgress);
+        autoQuest2.readProgress(mockProgress);
+        autoQuest3.readProgress(mockProgress);
+        testGetDescription();
+        assertEquals(autoQuest1Desc, autoQuest1.getDescription());
+        assertEquals(autoQuest2Desc, autoQuest2.getDescription());
+        assertEquals(autoQuest3Desc, autoQuest3.getDescription());
+        testGetProgress();
+        testIsCompleted();
+        testGetShortDescription();
+        assertEquals(autoQuest1ShortDesc, autoQuest1.getShortDescription());
+        assertEquals(autoQuest2ShortDesc, autoQuest2.getShortDescription());
+        assertEquals(autoQuest3ShortDesc, autoQuest3.getShortDescription());
+        testResetState();
     }
 
     @Test
