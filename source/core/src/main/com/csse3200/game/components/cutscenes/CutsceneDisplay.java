@@ -63,7 +63,8 @@ public class CutsceneDisplay extends UIComponent {
         table = new Table();
         table.setFillParent(true);
         table.bottom();
-        table.padBottom(40);
+        table.padBottom(80);
+
         /**
          * Following code for making transparent rectangle from
          * https://stackoverflow.com/questions/44260510/is-it-possible-to-draw-a-transparent-layer-without-using-image-libgdx
@@ -79,14 +80,13 @@ public class CutsceneDisplay extends UIComponent {
         stage.addActor(transparentRectangle);
 
         stage.addActor(table);
+        this.spawnSprites();
         this.spawnDialogueBox();
         this.spawnContinueButton();
-        this.spawnSprites();
-        //stage.addActor(table);
     }
 
     private void spawnSprite(String filePath, String position, float sizeIncrease) {
-        //Need to take following code out of function as memory leak occuring
+        //Need to take following code out of function as memory leak occurring
         TextureAtlas atlas = ServiceLocator.getResourceService()
                 .getAsset(filePath, TextureAtlas.class);
         TextureAtlas.AtlasRegion region = atlas.findRegion("default");
@@ -111,13 +111,13 @@ public class CutsceneDisplay extends UIComponent {
         float scaledHeight = scaledWidth * (sprite.getHeight() / sprite.getWidth());
         sprite.setWidth(scaledWidth);
         sprite.setHeight(scaledHeight);
-        table.add(sprite);
+        //table.add(sprite);
         stage.addActor(sprite);
     }
     // Spawns the sprites/entities that will be on the left/right side of the screen
     public void spawnSprites() {
         spawnSprite("images/questgiver.atlas", "RIGHT",  0.15f);
-        spawnSprite("images/player.atlas", "LEFT", 0.45f);
+        //spawnSprite("images/player.atlas", "LEFT", 0.45f);
     }
 
     // Spawn the dialogue box and populate it with text
