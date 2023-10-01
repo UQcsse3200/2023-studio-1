@@ -2,13 +2,12 @@ package com.csse3200.game.services.sound;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.csse3200.game.events.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.csse3200.game.events.EventHandler;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.*;
 
 /**
  * A MusicService that handles playback for long background music files which are streamed from disk.
@@ -17,6 +16,7 @@ import java.util.Map;
 public class BackgroundMusicService implements MusicService {
     
     private static final Logger logger = LoggerFactory.getLogger(BackgroundMusicService.class);
+    private final EventHandler eventHandler;
     private static final int MAX_TRACKS = 10;
     
     /**
@@ -25,6 +25,7 @@ public class BackgroundMusicService implements MusicService {
     private ArrayList<BackgroundSoundFile> tracks;
     
     private Map<BackgroundSoundFile, Music> loadedMusic;
+    private Map<BackgroundMusicType, ArrayList<Music>> categorisedMusic;
     
     /**
      * The number of tracks loaded at a given time.
@@ -36,14 +37,48 @@ public class BackgroundMusicService implements MusicService {
      */
     private boolean muteStatus;
     
+    /**
+     * The most recently played/playing track key.
+     */
     private BackgroundSoundFile currentlyActive;
 
     public BackgroundMusicService() {
         logger.debug("Initialising BackgroundMusicService");
+        eventHandler = new EventHandler();
+        //TODO: Add listener to "musicEnded" event through service locator which calls play()
         this.tracks = new ArrayList<>();
         this.loadedMusic = new HashMap<>();
+        this.categorisedMusic = new HashMap<>();
+        // Add a map key for every music type for later sorting of loaded music, to be stored
+        // in the value array.
+        for (BackgroundMusicType type : BackgroundMusicType.values()) {
+            this.categorisedMusic.put(type, new ArrayList<>());
+        }
         numLoaded = 0;
         this.muteStatus = false;
+        currentlyActive = null;
+    }
+    
+    public void play(BackgroundMusicType type) throws IllegalStateException {
+        this.stopCurrentlyPlaying();
+        Random rand = new Random();
+        if (categorisedMusic.get(type).isEmpty()) {
+            throw new IllegalStateException("No tracks loaded of type " + type);
+        } else {
+            while (true) {
+                Music music = categorisedMusic.get(type)
+                        .get(rand.nextInt(categorisedMusic.get(type).size()));
+                this.setupCompletionListener(music);
+                if (this.isMuted()) {
+                    music.setVolume(0.0f);
+                } else {
+                    music.setVolume(1.0f);
+                }
+                music.play();
+                //TODO set currently active to this music instance's BackgroundSoundFile
+                
+            }
+        }
     }
 
     @Override
@@ -96,6 +131,7 @@ public class BackgroundMusicService implements MusicService {
         loadedMusic.get(currentlyActive).pause();
     }
 
+    //TODO
     @Override
     public void stop(SoundFile sound) throws InvalidSoundFileException {
         if (sound != currentlyActive) {
@@ -104,10 +140,12 @@ public class BackgroundMusicService implements MusicService {
     }
     
     /**
-     * Stops the currently active
+     * Stops the currently active background music.
      */
-    public void stop() {
-        loadedMusic.get(currentlyActive).stop();
+    private void stopCurrentlyPlaying() {
+        if (currentlyActive != null) {
+            loadedMusic.get(currentlyActive).stop();
+        }
     }
 
     @Override
@@ -132,9 +170,11 @@ public class BackgroundMusicService implements MusicService {
     }
     
     /**
-     * Note: Only loads first 10 songs in list.
+     * Note: Only loads first 10 songs in list. Creates a private map of BackgroundSoundTypes
+     * as keys to a list of Music instances of that type.
      * @param sounds - A list of SoundFiles to be loaded into memory
-     * @throws InvalidSoundFileException
+     * @throws InvalidSoundFileException if the provided list contains any non-BackgroundSoundFile
+     * instances.
      */
     @Override
     public void loadSounds(List<SoundFile> sounds) throws InvalidSoundFileException {
@@ -149,11 +189,23 @@ public class BackgroundMusicService implements MusicService {
                 tracks.add((BackgroundSoundFile) sound);
                 Music music = Gdx.audio.newMusic(Gdx.files.internal(sound.getFilePath()));
                 loadedMusic.put((BackgroundSoundFile) sound, music);
+                logger.debug("Categorising Music instance by BackgroundMusicType.");
+                categorisedMusic.get(((BackgroundSoundFile) sound).getType()).add(music);
                 numLoaded++;
             } else {
                 throw new InvalidSoundFileException("Not an instance of BackgroundSoundFile");
             }
         }
+    }
+    
+    private void setupCompletionListener(Music music) {
+        music.setOnCompletionListener(new Music.OnCompletionListener() {
+            @Override
+            public void onCompletion(Music music) {
+                music.stop();
+                //eventHandler.trigger("musicEnded");
+            }
+        });
     }
 
     @Override
@@ -164,12 +216,5 @@ public class BackgroundMusicService implements MusicService {
         }
     }
     
-    /**
-     * Stops the currently playing background music.
-     */
-    private void stopCurrentlyPlaying() {
-        if (currentlyActive != null) {
-            loadedMusic.get(currentlyActive).stop();
-        }
-    }
+    
 }
