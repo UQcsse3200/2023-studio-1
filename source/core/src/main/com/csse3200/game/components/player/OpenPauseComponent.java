@@ -41,6 +41,8 @@ public class OpenPauseComponent extends Component {
         KeyboardPlayerInputComponent.clearMenuOpening();
         ServiceLocator.getPauseMenuArea().disposePauseMenu();
         pauseOpen = false;
-        ServiceLocator.getTimeService().setPaused(false);
+        if (ServiceLocator.getCutSceneStatus() == false) {
+            ServiceLocator.getTimeService().setPaused(false);
+        }
     }
 }
