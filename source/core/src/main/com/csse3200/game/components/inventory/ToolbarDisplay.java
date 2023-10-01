@@ -3,6 +3,8 @@ package com.csse3200.game.components.inventory;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -111,6 +113,15 @@ public class ToolbarDisplay extends UIComponent {
             // Check if slot is selected
             ItemSlot item = new ItemSlot(i == selectedSlot);
             item.add(label);
+            int finalI = i;
+            item.addListener(new InputListener() {
+                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                    inventory.setHeldItem(finalI);
+                    updateItemSlot(finalI);
+                    return true;
+                }
+            });
+
             table.add(item).pad(10, 10, 10, 10).fill();
             slots.add(item);
         }
