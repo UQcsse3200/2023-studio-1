@@ -1,7 +1,6 @@
 package com.csse3200.game.components.player;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.utils.Json;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.entities.Entity;
@@ -145,7 +144,7 @@ public class InventoryComponent extends Component {
    */
   public Boolean hasItem(Entity item) {
     if(item.getType() != EntityType.Item) {
-      logger.info("Entity is not an item");
+      //logger.info("Entity is not an item");
       return false;
     }
     return this.itemCount.containsKey(item.getComponent(ItemComponent.class).getItemName());
@@ -185,7 +184,7 @@ public class InventoryComponent extends Component {
 
   public void setInventory(List<Entity> items) {
     newInventory();
-    logger.debug("Setting inventory");
+    //logger.debug("Setting inventory");
     //this.inventory.addAll(items);
     for (Entity item : items) {
       // Add to Entity against Item Type for setting Held Item
@@ -201,7 +200,7 @@ public class InventoryComponent extends Component {
         this.itemCount.put(item.getComponent(ItemComponent.class).getItemName(), 1); // Setting initial count as 1
         this.setPosition(item); // Setting position of item to next available position
       }
-      logger.debug("Setting inventory Completed");
+      //logger.debug("Setting inventory Completed");
     }
   }
 
@@ -263,7 +262,7 @@ public class InventoryComponent extends Component {
    */
   public boolean swapPosition(int pos1, int pos2) {
     if (pos1 >= this.getInventorySize() || pos1 < 0 || pos2 >= this.getInventorySize() || pos2 < 0) {
-      logger.info("Position is out of bounds");
+      //logger.info("Position is out of bounds");
       return false;
     } else{
         String temp = this.itemPlace.get(pos1);
@@ -285,13 +284,13 @@ public class InventoryComponent extends Component {
 
   public boolean setPosition(Entity entity, int position) {
     if (this.itemPlace.containsValue(entity.getComponent(ItemComponent.class).getItemName())) {
-      logger.info("Item already in inventory, Swap position instead");
+      //logger.info("Item already in inventory, Swap position instead");
       return false;
     } else if (position >= this.getInventorySize() || position < 0) {
-      logger.info("Position is out of bounds");
+      //logger.info("Position is out of bounds");
       return false;
     } else if (this.itemPlace.get(position) != null) {
-      logger.info("Position is already occupied");
+      //logger.info("Position is already occupied");
       return false;
     } else {
       this.itemPlace.put(position, entity.getComponent(ItemComponent.class).getItemName());
@@ -311,10 +310,10 @@ public class InventoryComponent extends Component {
     if (position == -1) {
       return false;
     } else if (this.itemPlace.get(position) != null) {
-        logger.info("Position is already occupied");
+        //logger.info("Position is already occupied");
         return false;
     } else if (this.itemPlace.containsValue(entity.getComponent(ItemComponent.class).getItemName())) {
-        logger.info("Item already in inventory, Swap position instead");
+        //logger.info("Item already in inventory, Swap position instead");
         return false;
     } else {
       this.itemPlace.put(position, entity.getComponent(ItemComponent.class).getItemName());
@@ -348,14 +347,14 @@ public class InventoryComponent extends Component {
    */
   public boolean addItem(Entity item) {
     if(item.getType() != EntityType.Item || item.getComponent(ItemComponent.class) == null) {
-      logger.info("Entity is not an item");
-      logger.info(entity.toString());
+      //logger.info("Entity is not an item");
+      //logger.info(entity.toString());
       return false;
     }
     if (isFull()) {
       return false;
     } else {
-      logger.info("Adding item to inventory - " + item.getComponent(ItemComponent.class).getItemName() + ",old count " + this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(), 0));
+      //logger.info("Adding item to inventory - " + item.getComponent(ItemComponent.class).getItemName() + ",old count " + this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(), 0));
       // Update the count of the Item Type
       this.itemCount.put(item.getComponent(ItemComponent.class).getItemName(), this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(), 0) + 1);
       // Update the Texture against Item Type list
@@ -377,7 +376,7 @@ public class InventoryComponent extends Component {
   public boolean removeItem(Entity item) {
     // check if item is in inventory
     if(item.getType() != EntityType.Item) {
-      logger.info("Entity is not an item");
+      //logger.info("Entity is not an item");
       return false;
     }
     if (!this.itemCount.containsKey(item.getComponent(ItemComponent.class).getItemName())) {
@@ -396,7 +395,7 @@ public class InventoryComponent extends Component {
             }
         }
         entity.getEvents().trigger("updateToolbar");
-        logger.info("Removing item from inventory - " + item.getComponent(ItemComponent.class).getItemName() + ",new count " + this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(), 0));
+        //logger.info("Removing item from inventory - " + item.getComponent(ItemComponent.class).getItemName() + ",new count " + this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(), 0));
         return true;
     }
   }
