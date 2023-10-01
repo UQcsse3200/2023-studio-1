@@ -7,7 +7,7 @@ import com.csse3200.game.events.EventHandler;
 
 public class TimeService {
 	private static final Logger logger = LoggerFactory.getLogger(TimeService.class);
-	private static final int MS_IN_MINUTE = 500;
+	private static final int MS_IN_MINUTE = 1;
 	private static final int MORNING_HOUR = 6;
 	private static final int NIGHT_HOUR = 20;
 	private int minute;
