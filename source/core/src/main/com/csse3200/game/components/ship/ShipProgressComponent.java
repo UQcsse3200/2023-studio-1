@@ -1,5 +1,6 @@
 package com.csse3200.game.components.ship;
 
+import com.badlogic.gdx.utils.Json;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.services.ServiceLocator;
@@ -85,5 +86,17 @@ public class ShipProgressComponent extends Component {
      */
     public Set<Feature> getUnlockedFeatures() {
         return this.unlocked_features;
+    }
+
+    @Override
+    public void write(Json json) {
+        json.writeObjectStart(this.getClass().getSimpleName());
+        json.writeValue("level", this.progress);
+        json.writeArrayStart("features");
+        for (Feature f : this.unlockedFeatures) {
+            json.writeValue(f.name());
+        }
+        json.writeArrayEnd();
+        json.writeObjectEnd();
     }
 }
