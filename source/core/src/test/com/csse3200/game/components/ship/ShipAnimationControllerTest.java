@@ -24,7 +24,7 @@ import com.csse3200.game.services.ServiceLocator;
 @ExtendWith(GameExtension.class)
 public class ShipAnimationControllerTest {
     private Entity ship;
-    private AnimationRenderComponent animationRenderComponent = ShipFactory.setupShipAnimations();
+    private AnimationRenderComponent animationRenderComponent;
 
     // code edited from PlayerAnimationControllerTest by team 2
     @BeforeEach
@@ -35,11 +35,10 @@ public class ShipAnimationControllerTest {
         resourceService.loadAll();
         ServiceLocator.registerResourceService(resourceService);
 
+        AnimationRenderComponent animationRenderComponent = ShipFactory.setupShipAnimations();
         ship = new Entity(EntityType.Ship)
                 .addComponent(animationRenderComponent)
                 .addComponent(new ShipAnimationController());
-
-        animationRenderComponent = ShipFactory.setupShipAnimations();
 
         ship.getComponent(AnimationRenderComponent.class).scaleEntity();
         ship.create();
