@@ -19,6 +19,7 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -174,11 +175,14 @@ public class ItemActionsTest {
         ServiceLocator.registerResourceService(mock(ResourceService.class));
         FileLoader fl = new FileLoader();
 
-        Entity can = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("can", ItemType.WATERING_CAN, null));
+        Entity can = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("can", ItemType.WATERING_CAN, null)).addComponent(new WateringCanLevelComponent(150));
+        WateringCanLevelComponent canLevel = can.getComponent(WateringCanLevelComponent.class);
         Entity hoe = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("hoe", ItemType.HOE, null));
         assertFalse(can.getComponent(ItemActions.class).use(player, mousePos, gameMap));
         assertTrue(hoe.getComponent(ItemActions.class).use(player, mousePos, gameMap));
         assertTrue(can.getComponent(ItemActions.class).use(player, mousePos, gameMap));
+        canLevel.empty();
+        assertFalse(can.getComponent(ItemActions.class).use(player, mousePos, gameMap));
     }
 
     @Test
