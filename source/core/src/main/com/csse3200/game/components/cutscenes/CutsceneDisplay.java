@@ -140,7 +140,7 @@ public class CutsceneDisplay extends UIComponent {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
                         logger.debug("Continue button clicked");
-                        // add a line to trigger event when this btn is clicked
+                        disposeCutscene();
                     }
                 });
 
@@ -154,14 +154,14 @@ public class CutsceneDisplay extends UIComponent {
     }
 
     // Ends the cutscene
-    public void DisposeCutscene() {
+    public void disposeCutscene() {
         table.clear();
         super.dispose();
     }
 
     @Override
     public void dispose() {
-        this.DisposeCutscene();
+        this.disposeCutscene();
     }
 
     @Override
