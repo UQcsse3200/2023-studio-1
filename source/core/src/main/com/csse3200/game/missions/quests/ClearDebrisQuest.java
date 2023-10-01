@@ -13,22 +13,14 @@ public class ClearDebrisQuest extends Quest {
     public ClearDebrisQuest(String name, Reward reward, int numberOfDebrisToClear) {
         super(name, reward);
 
-        if (numberOfDebrisToClear < 0) {
-            this.numberOfDebrisToClear = 0;
-        } else {
-            this.numberOfDebrisToClear = numberOfDebrisToClear;
-        }
+        this.numberOfDebrisToClear = Math.max(numberOfDebrisToClear, 0);
         this.numberOfDebrisCleared = 0;
     }
 
     public ClearDebrisQuest(String name, Reward reward, int expiryDuration, boolean isMandatory, int numberOfDebrisToClear) {
         super(name, reward, expiryDuration, isMandatory);
 
-        if (numberOfDebrisToClear < 0) {
-            this.numberOfDebrisToClear = 0;
-        } else {
-            this.numberOfDebrisToClear = numberOfDebrisToClear;
-        }
+        this.numberOfDebrisToClear = Math.max(numberOfDebrisToClear, 0);
         this.numberOfDebrisCleared = 0;
     }
 

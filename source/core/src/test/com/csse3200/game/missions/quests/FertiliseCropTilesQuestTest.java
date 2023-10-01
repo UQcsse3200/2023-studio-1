@@ -54,7 +54,7 @@ class FertiliseCropTilesQuestTest {
     void testRegisterMission() {
         assertFalse(FCTQuest1.isCompleted());
         assertFalse(FCTQuest2.isCompleted());
-        assertFalse(FCTQuest3.isCompleted());
+        assertTrue(FCTQuest3.isCompleted());
         assertFalse(FCTQuest4.isCompleted());
         assertFalse(FCTQuest5.isCompleted());
         assertTrue(FCTQuest6.isCompleted());
@@ -188,14 +188,12 @@ class FertiliseCropTilesQuestTest {
         String formatted4 = String.format(desc, 3, progressInt, 3);
         String formatted5 = String.format(desc, 50, progressInt, 50);
         String formatted6 = String.format(desc, 0, progressInt, 0);
-        String formatted7 = String.format(desc, 0, progressInt, 0);
         String shortFormatted1 = String.format(shortDesc, progressInt, 10);
         String shortFormatted2 = String.format(shortDesc, progressInt, 10);
         String shortFormatted3 = String.format(shortDesc, progressInt, 10);
         String shortFormatted4 = String.format(shortDesc, progressInt, 3);
         String shortFormatted5 = String.format(shortDesc, progressInt, 50);
         String shortFormatted6 = String.format(shortDesc, progressInt, 0);
-        String shortFormatted7 = String.format(shortDesc, progressInt, 0);
         assertEquals(formatted1, FCTQuest1.getDescription());
         assertEquals(formatted2, FCTQuest2.getDescription());
         assertEquals(formatted3, FCTQuest3.getDescription());

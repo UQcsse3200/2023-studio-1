@@ -13,7 +13,7 @@ public class FertiliseCropTilesQuest extends Quest {
     public FertiliseCropTilesQuest(String name, Reward reward, int numberOfTilesToFertilise) {
         super(name, reward);
 
-        target = numberOfTilesToFertilise;
+        this.target = Math.max(numberOfTilesToFertilise, 0);
         numberOfTilesFertilised = 0;
     }
 
@@ -28,7 +28,7 @@ public class FertiliseCropTilesQuest extends Quest {
     public FertiliseCropTilesQuest(String name, Reward reward, int expiryDuration, int numberOfTilesToFertilise) {
         super(name, reward, expiryDuration, false);
 
-        target = numberOfTilesToFertilise;
+        this.target = Math.max(numberOfTilesToFertilise, 0);
         numberOfTilesFertilised = 0;
     }
 
