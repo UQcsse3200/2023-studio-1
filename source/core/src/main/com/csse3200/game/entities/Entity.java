@@ -25,6 +25,7 @@ import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.components.player.PlayerAnimationController;
 import com.csse3200.game.components.ship.ShipLightComponent;
 import com.csse3200.game.components.ship.ShipProgressComponent;
+import com.csse3200.game.components.ship.ShipTimeSkipComponent;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.factories.ShipFactory;
 import com.csse3200.game.events.EventHandler;
@@ -461,15 +462,21 @@ public class Entity implements Json.Serializable {
                 case Ship:
                     Entity ship = ShipFactory.createShip();
 
-                    ShipLightComponent shipLightComponent = ship.getComponent(ShipLightComponent.class);
-                    JsonValue shipLightComponentJson = jsonMap.get("components")
-                            .get(ShipLightComponent.class.getSimpleName());
-                    shipLightComponent.read(json, shipLightComponentJson);
+	                ServiceLocator.getGameArea().spawnEntity(ship);
 
-                    ShipProgressComponent progressComponent = ship.getComponent(ShipProgressComponent.class);
-                    progressComponent.read(json, jsonMap.get("components").get(ShipProgressComponent.class.getSimpleName()));
 
-                    ServiceLocator.getGameArea().spawnEntity(ship);
+	                ShipProgressComponent progressComponent = ship.getComponent(ShipProgressComponent.class);
+	                progressComponent.read(json, jsonMap.get("components").get(ShipProgressComponent.class.getSimpleName()));
+
+	                ShipTimeSkipComponent shipTimeSkipComponent = ship.getComponent(ShipTimeSkipComponent.class);
+	                JsonValue shipTimeSkipComponentJson = jsonMap.get("components").get(ShipTimeSkipComponent.class.getSimpleName());
+	                shipTimeSkipComponent.read(json, shipTimeSkipComponentJson);
+
+	                ShipLightComponent shipLightComponent = ship.getComponent(ShipLightComponent.class);
+	                JsonValue shipLightComponentJson = jsonMap.get("components")
+			                .get(ShipLightComponent.class.getSimpleName());
+	                shipLightComponent.read(json, shipLightComponentJson);
+
                     ship.setPosition(position);
                     break;
                 case Player:
