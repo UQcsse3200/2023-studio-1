@@ -1,9 +1,5 @@
-package com.csse3200.game.components.losescreen;
+package com.csse3200.game.components.winscreen;
 
-import com.csse3200.game.services.ServiceLocator;
-import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,25 +11,28 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.GdxGame.ScreenType;
+import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.rafaskoberg.gdx.typinglabel.TypingLabel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * The display User Interface component for the losing screen
+ * The display User Interface component for the winning screen
  */
-public class LoseScreenDisplay extends UIComponent {
+public class WinScreenDisplay extends UIComponent {
     /**
-     * The logger instance for logging messages and debugging information in the LoseScreenDisplay class.
+     * The logger instance for logging messages and debugging information in the WinScreenDisplay class.
      */
-    private static final Logger logger = LoggerFactory.getLogger(LoseScreenDisplay.class);
+    private static final Logger logger = LoggerFactory.getLogger(WinScreenDisplay.class);
 
     /**
-     * The Z-index (rendering order) for the LoseScreenDisplay component within the game's UI.
+     * The Z-index (rendering order) for the WinScreenDisplay component within the game's UI.
      */
     private static final float Z_INDEX = 2f;
 
     /**
-     * The background image displayed on the losing screen.
+     * The background image displayed on the winning screen.
      */
     private Image background;
 
@@ -43,41 +42,36 @@ public class LoseScreenDisplay extends UIComponent {
     private final GdxGame game;
 
     /**
-     * The button that allows the player to return to the main menu after losing the game.
+     * The button that allows the player to return to the main menu after winning the game.
      */
     private TextButton returnButton;
 
     /**
-     * A flag indicating whether the losing screen animation has finished.
+     * A flag indicating whether the winning screen animation has finished.
      */
     private boolean animationFinished = false;
 
     /**
-     * The speed at which the losing screen elements move during the animation.
+     * The speed at which the winning screen elements move during the animation.
      */
     private float spaceSpeed = 0.33f;
 
     /**
-     * The image of the planet displayed on the losing screen.
+     * The image of the planet displayed on the winning screen.
      */
     private Image planet;
 
     /**
-     * The TypingLabel used to display the losing message text.
+     * The TypingLabel used to display the winning message text.
      */
     private TypingLabel storyLabel;
 
     /**
-     * The message displayed on the losing screen, explaining the reason for the player's defeat.
-     */
-    public static String losingMessage;
-
-    /**
-     * Creates a new LoseScreenDisplay instance.
+     * Creates a new WinScreenDisplay instance.
      *
      * @param game The GdxGame instance.
      */
-    public LoseScreenDisplay(GdxGame game) {
+    public WinScreenDisplay(GdxGame game) {
         super();
         this.game = game;
     }
@@ -100,10 +94,10 @@ public class LoseScreenDisplay extends UIComponent {
         float scaledHeight = Gdx.graphics.getWidth() * (background.getHeight() / background.getWidth());
         background.setHeight(scaledHeight);
         // Load the animated planet
-        planet = background =
+        planet =
                 new Image(
                         ServiceLocator.getResourceService()
-                                .getAsset("images/dead_planet2.png", Texture.class));
+                                .getAsset("images/good_planet.png", Texture.class));
         // Scale it to a 10% of screen width with a constant aspect ratio
         float planetWidth = (float) (Gdx.graphics.getWidth() * 0.15);
         float planetHeight = planetWidth * (planet.getHeight() / planet.getWidth());
@@ -112,11 +106,27 @@ public class LoseScreenDisplay extends UIComponent {
         // The planet is placed at some offset above the screen in the center of the screen
         float planetOffset = 2500;
         planet.setPosition((float)Gdx.graphics.getWidth()/2, planetOffset, Align.center);
-        storyLabel = new TypingLabel(losingMessage, skin); // Create the TypingLabel with the formatted story
+        String credits = """
+                {SLOW}
+                After 30 long days, you, great farmlord, have succeeded!
+                {WAIT=0.5}
+                
+                The air is rich with oxygen, and the lands filled with greenery.
+                {WAIT}
+                
+                Humanity's hope has been restored.
+                {WAIT}
+                
+                The future is bright, and the human race... {WAIT=1} will live on!
+                {WAIT=1}
+                
+                {COLOR=green}Congrats You Win!!!{WAIT=1}
+            """;
+        storyLabel = new TypingLabel(credits, skin); // Create the TypingLabel with the formatted story
         storyLabel.setAlignment(Align.center); // Center align the text
         this.returnButton = new TextButton("Return To Main Menu", skin);
         this.returnButton.setVisible(false); // Make the continue button invisible
-        // The continue button lets the user proceed to the main game
+        // The return button lets the user proceed to the main menu
         this.returnButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
@@ -134,57 +144,6 @@ public class LoseScreenDisplay extends UIComponent {
         stage.addActor(background);
         stage.addActor(planet);
         stage.addActor(rootTable);
-    }
-
-    /**
-     * Sets the reason for losing the game to display in the losing message.
-     *
-     * @param causeOfDeath The cause of losing the game.
-     */
-    public static void setLoseReason(String causeOfDeath) {
-        String reason = getString(causeOfDeath);
-        losingMessage = """ 
-                {SLOW}
-                Despite your best efforts, Alpha Centauri remains a wasteland.
-                
-                {WAIT}
-                """
-                + reason +
-                """
-                
-                {WAIT}
-                
-                You gave it your all, but in the end... {WAIT=1} it wasn't enough.
-                {WAIT}
-                
-                This is the end of the human race.
-                {WAIT}
-                
-                {COLOR=red}Game Over
-                {WAIT=1}
-            """;
-    }
-
-    /**
-     * Converts the cause of death into a corresponding losing message reason.
-     *
-     * @param causeOfDeath The cause of death.
-     * @return The corresponding losing message reason.
-     */
-    @NotNull
-    private static String getString(String causeOfDeath) {
-        String reason;
-        switch (causeOfDeath) {
-            case "oxygen" -> reason = "As your oxygen supply dwindles, so does humanities hope for survival.";
-            case "mission1" -> reason = "Failed mission 1.";
-            case "mission2" -> reason = "Failed mission 2.";
-            case "mission3" -> reason = "Failed mission 3.";
-            case "mission4" -> reason = "Failed mission 4.";
-            case "mission5" -> reason = "Failed mission 5.";
-            case "mission6" -> reason = "Failed mission 6.";
-            default -> reason = "default reason";
-        }
-        return reason;
     }
 
     /**
@@ -232,6 +191,7 @@ public class LoseScreenDisplay extends UIComponent {
         spaceSpeed = Math.min(calculatedSpeed, 1.5f);
         logger.debug(String.format("Space Speed: %s", spaceSpeed));
     }
+
     @Override
     public void dispose() {
         background.clear();
