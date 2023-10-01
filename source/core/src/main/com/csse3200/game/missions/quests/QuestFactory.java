@@ -35,6 +35,10 @@ public class QuestFactory {
     public static final String actIIIMainQuestName = "Weather the Storm";
     public static final String TRACTOR_GO_BRRRRRR = "Tractor Go BRRRRRR";
 
+    /**
+     * Creates the First Contact {@link AutoQuest}
+     * @return - the First Contact Quest
+     */
     public static AutoQuest createFirstContactQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
         List<Quest> questsToActivate = new ArrayList<>();
@@ -55,6 +59,10 @@ public class QuestFactory {
         return new AutoQuest(firstContactQuestName, reward, "Wake up after your crash landing.");
     }
 
+    /**
+     * Creates the Clearing Your Mess {@link ClearDebrisQuest}.
+     * @return - the Clearing Your Mess Quest
+     */
     public static ClearDebrisQuest createClearingYourMessQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
         List<Quest> questsToActivate = new ArrayList<>();
@@ -76,6 +84,10 @@ public class QuestFactory {
         return new ClearDebrisQuest(clearingYourMessQuestName, reward, 15);
     }
 
+    /**
+     * Creates the Sowing Your First Seeds {@link PlantInteractionQuest}
+     * @return - the Sowing Your First Seeds Quest
+     */
     public static PlantInteractionQuest createSowingYourFirstSeedsQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
         List<Quest> questsToActivate = new ArrayList<>();
@@ -104,6 +116,10 @@ public class QuestFactory {
                 Set.of("Cosmic Cob"), 12);
     }
 
+    /**
+     * Creates the Reaping Your Rewards {@link PlantInteractionQuest}.
+     * @return - the Reaping Your Rewards Quest
+     */
     public static PlantInteractionQuest createReapingYourRewardsQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
         List<Quest> questsToActivate = new ArrayList<>();
@@ -138,6 +154,10 @@ public class QuestFactory {
                 Set.of("Cosmic Cob"), 12);
     }
 
+    /**
+     * Creates the Tractor {@link MissionCompleteQuest}
+     * @return - the Tractor Quest
+     */
     public static MissionCompleteQuest createTractorQuest() {
         String dialogue = """
                 Traktor Go BRRRR!!!
@@ -149,6 +169,10 @@ public class QuestFactory {
         return new MissionCompleteQuest(TRACTOR_GO_BRRRRRR, reward, 1);
     }
 
+    /**
+     * Creates the Making Friends {@link TameAnimalsQuest}.
+     * @return - the Making Friends Quest
+     */
     public static TameAnimalsQuest createMakingFriendsQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
         List<Quest> questsToActivate = new ArrayList<>();
@@ -172,6 +196,10 @@ public class QuestFactory {
         return new TameAnimalsQuest(makingFriendsQuestName, reward, 1);
     }
 
+    /**
+     * Creates the Fertilising Fiesta {@link FertiliseCropTilesQuest}
+     * @return - the Fertilising Fiesta Quest
+     */
     public static FertiliseCropTilesQuest createFertilisingFiestaQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
         List<Quest> questsToActivate = new ArrayList<>();
@@ -212,6 +240,10 @@ public class QuestFactory {
         return new FertiliseCropTilesQuest(fertilisingFiestaQuestName, reward, 12);
     }
 
+    /**
+     * Creates the Aliens Attack! {@link ManageHostilesQuest}
+     * @return - the Aliens Attack! Quest
+     */
     public static ManageHostilesQuest createAliensAttackQuest() {
         String dialogue = """
                 Impressive.
@@ -239,6 +271,10 @@ public class QuestFactory {
         return new ManageHostilesQuest(aliensAttackQuestName, reward, Set.of(EntityType.OxygenEater), 5);
     }
 
+    /**
+     * Creates the Act I {@link MainQuest}
+     * @return - the Act I Main Quest
+     */
     public static MainQuest createActIMainQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
 
@@ -280,6 +316,10 @@ public class QuestFactory {
         return new MainQuest(actIMainQuestName, reward, 5, requiredQuests, "gain ALIEN NPC's trust");
     }
 
+    /**
+     * Creates the Connection {@link AutoQuest}.
+     * @return - the Connection Quest
+     */
     public static AutoQuest createConnectionQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
         List<Quest> questsToActivate = new ArrayList<>();
@@ -310,6 +350,10 @@ public class QuestFactory {
         return new AutoQuest(connectionQuestName, reward, "Make a connection with ALIEN NPC, figure out how you can be reunited with Humanity.");
     }
 
+    /**
+     * Creates the Home Sick {@link PlantInteractionQuest}
+     * @return - the Home Sick Quest
+     */
     public static PlantInteractionQuest createHomeSickQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
         List<Quest> questsToActivate = new ArrayList<>();
@@ -350,6 +394,10 @@ public class QuestFactory {
                 Set.of("Deadly Nightshade"), 5);
     }
 
+    /**
+     * Creates the Ship Repairs {@link ShipRepairQuest}.
+     * @return - the Ship Repairs Quest
+     */
     public static ShipRepairQuest createShipRepairsQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
         List<Quest> questsToActivate = new ArrayList<>();
@@ -371,6 +419,10 @@ public class QuestFactory {
         return new ShipRepairQuest(shipRepairsQuestName, reward, 3);
     }
 
+    /**
+     * Creates the Bringing It All Together {@link ShipRepairQuest}.
+     * @return - the Bringing It All Together Quest
+     */
     public static ShipRepairQuest createBringingItAllTogetherQuest() {
         String dialogue = """
                 Your repairs appear to be successful.
@@ -382,6 +434,10 @@ public class QuestFactory {
         return new ShipRepairQuest(bringingItAllTogether, reward, 17);
     }
 
+    /**
+     * Creates the Act II {@link MainQuest}
+     * @return - the Act II Main Quest
+     */
     public static MainQuest createActIIMainQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
         List<Quest> questsToActivate = new ArrayList<>();
@@ -425,6 +481,10 @@ public class QuestFactory {
         return new MainQuest(actIIMainQuestName, reward, 10, requiredQuests, "make connection with the rest of your people");
     }
 
+    /**
+     * Creates the Imminent Threat {@link AutoQuest}
+     * @return - the Imminent Threat Quest
+     */
     public static AutoQuest createAnImminentThreatQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
         List<Quest> questsToActivate = new ArrayList<>();
@@ -475,6 +535,10 @@ public class QuestFactory {
         return new AutoQuest(anImminentThreatQuestName, reward, "Learn about the imminent threat.");
     }
 
+    /**
+     * Creates the Air and Algae {@link PlantInteractionQuest}
+     * @return - the Air and Alge Quest
+     */
     public static PlantInteractionQuest createAirAndAlgaeQuest() {
         String dialogue = """
                 Keep at it.
@@ -496,6 +560,10 @@ public class QuestFactory {
                 Set.of("Atomic Algae"), 10);
     }
 
+    /**
+     * Creates the Stratospheric Sentinel {@link OxygenLevelQuest}
+     * @return - the Stratospheric Sentinel Quest
+     */
     public static OxygenLevelQuest createStratosphericSentinelQuest() {
         String dialogue = """
                 Well done!
@@ -509,6 +577,10 @@ public class QuestFactory {
                 "the planet's oxygen level", 348, 95);
     }
 
+    /**
+     * Creates the Act III {@link MainQuest}
+     * @return - the Act III Main Quest
+     */
     public static MainQuest createActIIIMainQuest() {
         Set<String> requiredQuests = new HashSet<>();
         requiredQuests.add(airAndAlgaeQuestName);
@@ -518,12 +590,20 @@ public class QuestFactory {
         return new MainQuest(actIIIMainQuestName, reward, 15, requiredQuests, "weather the incoming storm, provide a haven for humanity");
     }
 
+    /**
+     * Creates the Haber Hobbyist {@link FertiliseCropTilesQuest}
+     * @return - the Haber Hobbyist Quest
+     */
     public static FertiliseCropTilesQuest createHaberHobbyist() {
         // To be decided
         ItemReward reward = new ItemReward(new ArrayList<>());
         return new FertiliseCropTilesQuest("Haber Hobbyist", reward, 24, 10);
     }
 
+    /**
+     * Creates the Fertiliser Fanatic {@link FertiliseCropTilesQuest}
+     * @return - the Fertiliser Fanatic Quest
+     */
     public static FertiliseCropTilesQuest createFertiliserFanatic() {
         // To be decided
         ItemReward reward = new ItemReward(new ArrayList<>());
