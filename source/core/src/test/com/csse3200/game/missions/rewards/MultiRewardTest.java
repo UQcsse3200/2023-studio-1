@@ -1,6 +1,6 @@
 package com.csse3200.game.missions.rewards;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -17,7 +17,7 @@ public class MultiRewardTest {
     private MultiReward multiReward1, multiReward2;
     private List<Reward> rewards;
 
-    @BeforeAll
+    @BeforeEach
     public void init() {
         multiReward1 = new MultiReward(new ArrayList<>());
 
