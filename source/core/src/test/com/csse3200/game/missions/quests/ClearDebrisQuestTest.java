@@ -29,41 +29,13 @@ class ClearDebrisQuestTest {
         ServiceLocator.registerTimeService(new TimeService());
         ServiceLocator.registerMissionManager(new MissionManager());
 
-        r1 = new Reward() {
-            @Override
-            public void collect() {
-            }
-        };
-        r2 = new Reward() {
-            @Override
-            public void collect() {
-            }
-        };
-        r3 = new Reward() {
-            @Override
-            public void collect() {
-            }
-        };
-        r4 = new Reward() {
-            @Override
-            public void collect() {
-            }
-        };
-        r5 = new Reward() {
-            @Override
-            public void collect() {
-            }
-        };
-        r6 = new Reward() {
-            @Override
-            public void collect() {
-            }
-        };
-        r7 = new Reward() {
-            @Override
-            public void collect() {
-            }
-        };
+        r1 = mock(Reward.class);
+        r2 = mock(Reward.class);
+        r3 = mock(Reward.class);
+        r4 = mock(Reward.class);
+        r5 = mock(Reward.class);
+        r6 = mock(Reward.class);
+        r7 = mock(Reward.class);
 
         CDQuest1 = new ClearDebrisQuest("Clear Debris Quest 1", r1, 10);
         CDQuest2 = new ClearDebrisQuest("Clear Debris Quest 2", r2, 10, false, 10);
