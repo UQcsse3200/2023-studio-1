@@ -78,7 +78,7 @@ class FertiliseCropTilesQuestTest {
         assertFalse(r6.isCollected());
         assertFalse(FCTQuest1.isCompleted());
         assertFalse(FCTQuest2.isCompleted());
-        assertFalse(FCTQuest3.isCompleted());
+        assertTrue(FCTQuest3.isCompleted());
         assertFalse(FCTQuest4.isCompleted());
         assertFalse(FCTQuest5.isCompleted());
         assertTrue(FCTQuest6.isCompleted());
@@ -94,7 +94,8 @@ class FertiliseCropTilesQuestTest {
         for (int i = 0; i < 10; i++) {
             assertFalse(FCTQuest1.isCompleted());
             assertFalse(FCTQuest2.isCompleted());
-            assertFalse(FCTQuest3.isCompleted());
+            assertTrue(FCTQuest3.isCompleted());
+            assertTrue(FCTQuest6.isCompleted());
             if (i < 3){
                 assertFalse(FCTQuest4.isCompleted());
             } else {
@@ -108,6 +109,7 @@ class FertiliseCropTilesQuestTest {
         assertTrue(FCTQuest3.isCompleted());
         assertTrue(FCTQuest4.isCompleted());
         assertFalse(FCTQuest5.isCompleted());
+        assertTrue(FCTQuest6.isCompleted());
         for (int i = 0; i < 40; i++) {
             ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.FERTILISE_CROP.name());
         }
@@ -116,24 +118,24 @@ class FertiliseCropTilesQuestTest {
         assertTrue(FCTQuest3.isCompleted());
         assertTrue(FCTQuest4.isCompleted());
         assertTrue(FCTQuest5.isCompleted());
+        assertTrue(FCTQuest6.isCompleted());
     }
 
     @Test
     void testGetDescription() {
         testRegisterMission();
-        String desc = "Gather scattered parts of your ship.\n" +
-                "Use your shovel to clear %d Ship Debris in the world!\n" +
-                "%d out of %d debris pieces cleared.";
+        String desc = "Fertilising crop tiles will cause your plants to grow faster.\n" +
+                "Apply fertiliser to %d tiles.\n" +
+                "%d out of %d crop tiles fertilised.";
         for (int i = 0; i < 50; i++) {
             int min123 = Math.min(i, 10);
             int min4 = Math.min(i, 3);
             String formatted1 = String.format(desc, 10, min123, 10);
             String formatted2 = String.format(desc, 10, min123, 10);
-            String formatted3 = String.format(desc, 10, min123, 10);
+            String formatted3 = String.format(desc, 0, 0, 0);
             String formatted4 = String.format(desc, 3, min4, 3);
             String formatted5 = String.format(desc, 50, i, 50);
             String formatted6 = String.format(desc, 0, 0, 0);
-            String formatted7 = String.format(desc, 0, 0, 0);
             assertEquals(formatted1, FCTQuest1.getDescription());
             assertEquals(formatted2, FCTQuest2.getDescription());
             assertEquals(formatted3, FCTQuest3.getDescription());
