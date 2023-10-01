@@ -52,4 +52,9 @@ public class MultiDropComponent extends Component {
             listener.accept(trigger, singleDropHandler::dropItem);
         }
     }
+
+    @Override
+    public void dispose() {
+        singleDropHandlers.forEach(SingleDropHandler::dispose);
+    }
 }

@@ -47,6 +47,7 @@ public class SingleDropHandler {
      * Whether animal needs to be tamed before the item is dropped
      */
     private final boolean requiresTamed;
+    private boolean disposed;
 
     /**
      * Constructor for SingleDropHandler
@@ -66,6 +67,7 @@ public class SingleDropHandler {
         this.requiresTamed = requiresTamed;
         this.gameArea = ServiceLocator.getGameArea();
         triggerCount = 0;
+        disposed = false;
     }
 
     /**
@@ -84,6 +86,10 @@ public class SingleDropHandler {
      * and maintains drop rate.
      */
     public void dropItem() {
+        if (disposed) {
+            return;
+        }
+
         if (requiresTamed) {
             TamableComponent tamableComponent = entity.getComponent(TamableComponent.class);
 
@@ -122,5 +128,9 @@ public class SingleDropHandler {
      */
     public String getTrigger() {
         return trigger;
+    }
+
+    public void dispose() {
+        disposed = true;
     }
 }
