@@ -3,8 +3,6 @@ package com.csse3200.game.components.ship;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
-
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -15,6 +13,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.ShipFactory;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.rendering.AnimationRenderComponent;
@@ -43,7 +42,7 @@ public class ShipAnimationControllerTest {
                 )
         );
 
-        ShipFactory.setupShipAnimations(animationRenderComponent);
+        ShipFactory.setupShipAnimations();
 
         ship = new Entity(EntityType.Ship)
                 .addComponent(animationRenderComponent)
@@ -55,12 +54,12 @@ public class ShipAnimationControllerTest {
 
     @ParameterizedTest(name = "{2} animation played correctly on {0} event trigger")
     @MethodSource({"shouldUpdateAnimationOnProgressUpdate"})
-    void shouldStartMoveAnimationOnEventTrigger(String animationEvent, int progress, String expectedAnimationName) {
+    void shouldUpdateAnimationOnProgressUpdate(String animationEvent, int progress, String expectedAnimationName) {
         ship.getEvents().trigger(animationEvent, progress);
         assertEquals(expectedAnimationName, animationRenderComponent.getCurrentAnimation());
     }
 
-    private static Stream<Arguments> shouldStartMoveAnimationOnEventTriggerParams() {
+    private static Stream<Arguments> shouldUpdateAnimationOnProgressUpdate() {
         return Stream.of(
                 // (animationEvent, movementDirection, expectedAnimationName)
                 arguments("animateShipStage", -10, "default"),
