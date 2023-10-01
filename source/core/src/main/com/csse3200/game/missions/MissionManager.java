@@ -86,6 +86,9 @@ public class MissionManager implements Json.Serializable {
 	 */
 	public MissionManager() {
 		ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateActiveQuestTimes);
+		// This needs to be checked separately from updateActiveQuestTimes due to an issue with triggering the lose
+		// screen, which should change by sprint 4
+		ServiceLocator.getTimeService().getEvents().addListener("minuteUpdate", this::checkMandatoryQuestExpiry);
 		for (Achievement mission : achievements) {
 			mission.registerMission(events);
 		}
@@ -158,10 +161,18 @@ public class MissionManager implements Json.Serializable {
 			quest.updateExpiry();
 			if (quest.isExpired()) {
 				events.trigger(MissionEvent.QUEST_EXPIRED.name());
-				if (quest.isMandatory()) {
-					LoseScreenDisplay.setLoseReason(quest.getName());
-					events.trigger("loseScreen");
-				}
+			}
+		}
+	}
+
+	/**
+	 * Loops over all active {@link Quest}s, and if a {@link Quest} is expired and mandatory, triggers the Lose Screen
+	 */
+	private void checkMandatoryQuestExpiry() {
+		for (Quest quest : activeQuests) {
+			if (quest.isMandatory() && quest.isExpired()) {
+				LoseScreenDisplay.setLoseReason(quest.getName());
+				events.trigger("loseScreen");
 			}
 		}
 	}
