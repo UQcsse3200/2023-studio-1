@@ -32,43 +32,36 @@ class ClearDebrisQuestTest {
         r1 = new Reward() {
             @Override
             public void collect() {
-                setCollected();
             }
         };
         r2 = new Reward() {
             @Override
             public void collect() {
-                setCollected();
             }
         };
         r3 = new Reward() {
             @Override
             public void collect() {
-                setCollected();
             }
         };
         r4 = new Reward() {
             @Override
             public void collect() {
-                setCollected();
             }
         };
         r5 = new Reward() {
             @Override
             public void collect() {
-                setCollected();
             }
         };
         r6 = new Reward() {
             @Override
             public void collect() {
-                setCollected();
             }
         };
         r7 = new Reward() {
             @Override
             public void collect() {
-                setCollected();
             }
         };
 
