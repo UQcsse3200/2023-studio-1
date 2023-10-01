@@ -66,17 +66,17 @@ public class PlayerFactory {
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
             .addComponent(new PlayerActions())
             .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack))
-                .addComponent(playerInventory)
+            .addComponent(playerInventory)
             .addComponent(inputComponent)
             .addComponent(animator)
             .addComponent(new OpenPauseComponent())
             .addComponent(new PlayerAnimationController())
             .addComponent(new ItemPickupComponent())
+            .addComponent(new InventoryDisplay(playerInventory, 30 , 10))
             .addComponent(new InteractionDetector(2f, new ArrayList<EntityType>(Arrays.asList(EntityType.Questgiver, EntityType.Gate, EntityType.Chest, EntityType.Chicken,
                     EntityType.Cow, EntityType.Astrolotl, EntityType.OxygenEater, EntityType.ShipDebris, EntityType.Ship))))
             .addComponent(new ToolbarDisplay())
 	        .addComponent(new AuraLightComponent(6f))
-            .addComponent(new InventoryDisplay(playerInventory))
             .addComponent(new PauseMenuActions());
 
     player.getComponent(ColliderComponent.class).setDensity(1.5f);

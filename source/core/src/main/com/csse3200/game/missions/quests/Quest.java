@@ -79,7 +79,7 @@ public abstract class Quest extends Mission {
 	 * Decrements the duration to expiry of the quest by 1, if the {@link Quest} can expire.
 	 */
 	public void updateExpiry() {
-		if (canExpire && --timeToExpiry <= 0) {
+		if (canExpire && !isCompleted() && --timeToExpiry <= 0) {
 			timeToExpiry = 0;
 		}
 	}
@@ -102,14 +102,24 @@ public abstract class Quest extends Mission {
 	}
 
 	/**
+	 * Returns a boolean value representing if this quest's rewards has been collected yet.
+	 * @return True if the reward has been collected, false otherwise.
+	 */
+	public boolean isRewardCollected() {
+		return reward.isCollected();
+	}
+
+	/**
 	 * Collects the reward associated with this {@link Quest}. If the reward has already been collected, or if the
 	 * {@link Mission} has not been completed, this method will do nothing.
 	 */
 	public void collectReward() {
 		if (isCompleted() && !reward.isCollected()) {
+			ServiceLocator.getMissionManager().getEvents().trigger(
+					MissionManager.MissionEvent.REWARD_COMPLETE.name());
 			reward.collect();
 			ServiceLocator.getMissionManager().getEvents().trigger(
-					MissionManager.MissionEvent.STORY_REWARD_COLLECTED.name(),
+					MissionManager.MissionEvent.QUEST_REWARD_COLLECTED.name(),
 					getName());
 		}
 	}
