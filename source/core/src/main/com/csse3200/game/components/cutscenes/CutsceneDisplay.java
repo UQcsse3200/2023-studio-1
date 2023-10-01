@@ -29,6 +29,7 @@ public class CutsceneDisplay extends UIComponent {
      * The Image that contains the npc sprite.
      */
     private Image npcSprite;
+    private Image sprite;
     private static final Logger logger = LoggerFactory.getLogger(com.csse3200.game.missions.cutscenes.Cutscene.class);
     /**
      * The table that forms the basis for the layout of the cutscene
@@ -101,7 +102,7 @@ public class CutsceneDisplay extends UIComponent {
         if (region == null) {
             throw new IllegalArgumentException(filePath + " is an invalid filePath");
         }
-        Image sprite = new Image(region);
+        sprite = new Image(region);
         //
         int xpos = 0, ypos = 0;
         if (position == "LEFT") {
@@ -153,7 +154,6 @@ public class CutsceneDisplay extends UIComponent {
                     public void changed(ChangeEvent event, Actor actor) {
                         logger.debug("Continue button clicked");
                         transparentRectangle.getColor().a = 0f;
-                        stage.clear();
                         disposeCutscene();
                         cutscene.endCutscene();
                     }
@@ -166,6 +166,7 @@ public class CutsceneDisplay extends UIComponent {
     // Ends the cutscene
     public void disposeCutscene() {
         table.clear();
+        sprite.clear();
         super.dispose();
     }
 
