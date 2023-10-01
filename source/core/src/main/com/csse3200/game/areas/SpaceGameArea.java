@@ -13,6 +13,8 @@ import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.components.player.PlayerActions;
+import com.csse3200.game.components.EntityIndicator;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.missions.quests.QuestFactory;
@@ -177,9 +179,14 @@ public class SpaceGameArea extends GameArea {
 
           "images/projectiles/oxygen_eater_projectile.png",
 
+
+          "images/hostile_indicator.png",
+
+
           "images/ship/ship_debris.png",
           "images/ship/ship.png",
           "images/ship/ship_part.png",
+
   };
   private static final String[] forestTextureAtlases = {
       "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
@@ -259,7 +266,7 @@ public class SpaceGameArea extends GameArea {
 
     player = spawnPlayer();
 //    player.getComponent(PlayerActions.class).setGameMap(gameMap);
-    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createLightItem());
+//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createLightItem());
 //    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHoe());
 //    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createScythe());
 //    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createWateringcan());
@@ -281,7 +288,7 @@ public class SpaceGameArea extends GameArea {
 //    spawnTool(ItemType.SCYTHE);
 //    spawnTool(ItemType.HOE);
 //    spawnTool(ItemType.FERTILISER);
-    spawnTool(ItemType.SEED);
+//    spawnTool(ItemType.SEED);
 //    spawnTool(ItemType.FOOD);
 
     //playMusic();
@@ -303,8 +310,8 @@ public class SpaceGameArea extends GameArea {
 
   private void spawnTerrain() {
     // Background terrain
-    terrain = terrainFactory.createTerrain(this.gameMap.getTiledMap());
-    this.gameMap.setTerrainComponent(terrain);
+    gameMap.createTerrainComponent();
+    terrain = gameMap.getTerrainComponent();
     spawnEntity(new Entity().addComponent(terrain));
 
     // Terrain walls
@@ -488,6 +495,7 @@ public class SpaceGameArea extends GameArea {
     for (int i = 0; i < 5; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity cow = NPCFactory.createCow(player);
+      //cow.addComponent(new EntityIndicator(cow));
       spawnEntityAt(cow, randomPos, true, true);
     }
   }

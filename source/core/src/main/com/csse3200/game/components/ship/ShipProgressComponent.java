@@ -1,6 +1,8 @@
 package com.csse3200.game.components.ship;
 
 import com.csse3200.game.components.Component;
+import com.csse3200.game.missions.MissionManager;
+import com.csse3200.game.services.ServiceLocator;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -55,6 +57,7 @@ public class ShipProgressComponent extends Component {
 
             // Only send progress update if repair actually happened
             entity.getEvents().trigger("progressUpdated", this.progress, this.unlocked_features);
+            ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.SHIP_PART_ADDED.name());
         }
     }
 

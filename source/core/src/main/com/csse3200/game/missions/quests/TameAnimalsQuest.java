@@ -26,10 +26,10 @@ public class TameAnimalsQuest extends Quest {
 
     @Override
     public void registerMission(EventHandler missionManagerEvents) {
-        missionManagerEvents.addListener(MissionManager.MissionEvent.TAME_ANIMAL.name(), this::updateState);
+        missionManagerEvents.addListener(MissionManager.MissionEvent.ANIMAL_TAMED.name(), this::updateState);
     }
 
-    private void updateState(String animalName) {
+    private void updateState() {
         if (++numberOfAnimalsTamed >= numberOfAnimalsToTame) {
             numberOfAnimalsTamed = numberOfAnimalsToTame;
         }
