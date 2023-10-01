@@ -67,8 +67,9 @@ public class CutsceneDisplay extends UIComponent {
         logger.debug("Cutscene table spawned");
         table = new Table();
         table.setFillParent(true);
+        table.setDebug(true);
         table.bottom();
-        table.padBottom(80);
+        table.padBottom(160);
 
         /**
          * Following code for making transparent rectangle from
