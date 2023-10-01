@@ -21,16 +21,56 @@ import org.slf4j.LoggerFactory;
  * The display User Interface component for the winning screen
  */
 public class WinScreenDisplay extends UIComponent {
+    /**
+     * The logger instance for logging messages and debugging information in the WinScreenDisplay class.
+     */
     private static final Logger logger = LoggerFactory.getLogger(WinScreenDisplay.class);
+
+    /**
+     * The Z-index (rendering order) for the WinScreenDisplay component within the game's UI.
+     */
     private static final float Z_INDEX = 2f;
+
+    /**
+     * The background image displayed on the winning screen.
+     */
     private Image background;
+
+    /**
+     * The main game instance used for screen transitions.
+     */
     private final GdxGame game;
+
+    /**
+     * The button that allows the player to return to the main menu after winning the game.
+     */
     private TextButton returnButton;
+
+    /**
+     * A flag indicating whether the winning screen animation has finished.
+     */
     private boolean animationFinished = false;
+
+    /**
+     * The speed at which the winning screen elements move during the animation.
+     */
     private float spaceSpeed = 0.33f;
+
+    /**
+     * The image of the planet displayed on the winning screen.
+     */
     private Image planet;
+
+    /**
+     * The TypingLabel used to display the winning message text.
+     */
     private TypingLabel storyLabel;
 
+    /**
+     * Creates a new WinScreenDisplay instance.
+     *
+     * @param game The GdxGame instance.
+     */
     public WinScreenDisplay(GdxGame game) {
         super();
         this.game = game;
@@ -42,6 +82,9 @@ public class WinScreenDisplay extends UIComponent {
         addActors();
     }
 
+    /**
+     * Adds UI elements and initializes the screen.
+     */
     private void addActors() {
         background =
                 new Image(
@@ -103,6 +146,9 @@ public class WinScreenDisplay extends UIComponent {
         stage.addActor(rootTable);
     }
 
+    /**
+     * Return to the main menu screen
+     */
     private void returnToMenu() {
         game.setScreen(ScreenType.MAIN_MENU);
     }

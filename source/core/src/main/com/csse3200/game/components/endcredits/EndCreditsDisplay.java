@@ -19,13 +19,41 @@ import org.slf4j.LoggerFactory;
  * The display User Interface component for the credits screen
  */
 public class EndCreditsDisplay extends UIComponent {
+    /**
+     * The logger instance for logging messages and debugging information in the EndCreditsDisplay class.
+     */
     private static final Logger logger = LoggerFactory.getLogger(EndCreditsDisplay.class);
+
+    /**
+     * The Z-index (rendering order) for the EndCreditsDisplay component within the game's UI.
+     */
     private static final float Z_INDEX = 2f;
+
+    /**
+     * The background image displayed on the credits screen.
+     */
     private Image background;
+
+    /**
+     * The main game instance used for screen transitions.
+     */
     private final GdxGame game;
+
+    /**
+     * The button that allows the player to return to the main menu after viewing the credits.
+     */
     private TextButton returnButton;
+
+    /**
+     * The TypingLabel used to display the credits text.
+     */
     private TypingLabel creditsLabel;
 
+    /**
+     * Creates a new EndCreditsDisplay instance.
+     *
+     * @param game The GdxGame instance.
+     */
     public EndCreditsDisplay(GdxGame game) {
         super();
         this.game = game;
@@ -37,6 +65,9 @@ public class EndCreditsDisplay extends UIComponent {
         addActors();
     }
 
+    /**
+     * Adds UI elements and initializes the screen.
+     */
     private void addActors() {
         background =
                 new Image(
@@ -70,6 +101,11 @@ public class EndCreditsDisplay extends UIComponent {
         stage.addActor(rootTable);
     }
 
+    /**
+     * Gets the credits text to be displayed on the credits screen.
+     *
+     * @return The credits text.
+     */
     private String getCredits() {
         return """
                     {SLOW}
@@ -146,7 +182,7 @@ public class EndCreditsDisplay extends UIComponent {
     }
 
     /**
-     * Starts the main game
+     * Returns to the main menu screen.
      */
     private void returnToMenu() {
         game.setScreen(ScreenType.MAIN_MENU);

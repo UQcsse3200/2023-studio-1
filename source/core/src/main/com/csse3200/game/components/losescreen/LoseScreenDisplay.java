@@ -22,17 +22,61 @@ import com.rafaskoberg.gdx.typinglabel.TypingLabel;
  * The display User Interface component for the losing screen
  */
 public class LoseScreenDisplay extends UIComponent {
+    /**
+     * The logger instance for logging messages and debugging information in the LoseScreenDisplay class.
+     */
     private static final Logger logger = LoggerFactory.getLogger(LoseScreenDisplay.class);
+
+    /**
+     * The Z-index (rendering order) for the LoseScreenDisplay component within the game's UI.
+     */
     private static final float Z_INDEX = 2f;
+
+    /**
+     * The background image displayed on the losing screen.
+     */
     private Image background;
+
+    /**
+     * The main game instance used for screen transitions.
+     */
     private final GdxGame game;
+
+    /**
+     * The button that allows the player to return to the main menu after losing the game.
+     */
     private TextButton returnButton;
+
+    /**
+     * A flag indicating whether the losing screen animation has finished.
+     */
     private boolean animationFinished = false;
+
+    /**
+     * The speed at which the losing screen elements move during the animation.
+     */
     private float spaceSpeed = 0.33f;
+
+    /**
+     * The image of the planet displayed on the losing screen.
+     */
     private Image planet;
+
+    /**
+     * The TypingLabel used to display the losing message text.
+     */
     private TypingLabel storyLabel;
+
+    /**
+     * The message displayed on the losing screen, explaining the reason for the player's defeat.
+     */
     public static String losingMessage;
 
+    /**
+     * Creates a new LoseScreenDisplay instance.
+     *
+     * @param game The GdxGame instance.
+     */
     public LoseScreenDisplay(GdxGame game) {
         super();
         this.game = game;
@@ -44,6 +88,9 @@ public class LoseScreenDisplay extends UIComponent {
         addActors();
     }
 
+    /**
+     * Adds UI elements and initializes the screen.
+     */
     private void addActors() {
         background =
                 new Image(
@@ -89,6 +136,11 @@ public class LoseScreenDisplay extends UIComponent {
         stage.addActor(rootTable);
     }
 
+    /**
+     * Sets the reason for losing the game to display in the losing message.
+     *
+     * @param causeOfDeath The cause of losing the game.
+     */
     public static void setLoseReason(String causeOfDeath) {
         String reason = getString(causeOfDeath);
         losingMessage = """ 
@@ -113,6 +165,12 @@ public class LoseScreenDisplay extends UIComponent {
             """;
     }
 
+    /**
+     * Converts the cause of death into a corresponding losing message reason.
+     *
+     * @param causeOfDeath The cause of death.
+     * @return The corresponding losing message reason.
+     */
     @NotNull
     private static String getString(String causeOfDeath) {
         String reason;
