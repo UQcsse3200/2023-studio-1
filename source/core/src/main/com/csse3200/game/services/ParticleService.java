@@ -115,7 +115,6 @@ public class ParticleService {
 		ParticleEffectWrapper effectWrapper = new ParticleEffectWrapper(particleEffectPools.get(effectType).obtain(), effectType.category, effectType.name());
 		// Adds the effect to the queued effects so the particle service knows to draw it
 		queuedEffects.add(effectWrapper);
-		// Just for now since effect is too big - TODO Make Smaller
 		effectWrapper.getPooledEffect().scaleEffect(0.1f);
 		effectWrapper.getPooledEffect().start();
 	}
