@@ -20,19 +20,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.ui.UIComponent;
 
-import java.awt.*;
-
 public class CutsceneDisplay extends UIComponent {
     /**
      * The Image that contains the player sprite.
      */
     private Image playerSprite;
-
     /**
      * The Image that contains the npc sprite.
      */
     private Image npcSprite;
-
     private static final Logger logger = LoggerFactory.getLogger(com.csse3200.game.missions.cutscenes.Cutscene.class);
     /**
      * The table that forms the basis for the layout of the cutscene
@@ -42,6 +38,7 @@ public class CutsceneDisplay extends UIComponent {
      * Stores the cutscene object that created the cutscene display
      */
     private Cutscene cutscene;
+    private Image transparentRectangle;
     /**
      * Stores the dialogue text
      */
@@ -85,7 +82,7 @@ public class CutsceneDisplay extends UIComponent {
         pixmap.fillRectangle(0, 0, 1, 1);
         Texture transparentRecTex = new Texture(pixmap);
         pixmap.dispose();
-        Image transparentRectangle = new Image(transparentRecTex);
+        transparentRectangle = new Image(transparentRecTex);
         transparentRectangle.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         transparentRectangle.getColor().a = 0.5f;
         stage.addActor(transparentRectangle);
@@ -154,6 +151,7 @@ public class CutsceneDisplay extends UIComponent {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
                         logger.debug("Continue button clicked");
+                        transparentRectangle.getColor().a = 0f;
                         disposeCutscene();
                         cutscene.endCutscene();
                     }

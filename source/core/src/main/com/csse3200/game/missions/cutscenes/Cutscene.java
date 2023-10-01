@@ -41,7 +41,7 @@ public class Cutscene{
         cutsceneEntity.addComponent(new InputDecorator(stage, 10));
         ServiceLocator.getEntityService().register(cutsceneEntity);
     }
-    
+
     /**
      * Pauses the game
      */
