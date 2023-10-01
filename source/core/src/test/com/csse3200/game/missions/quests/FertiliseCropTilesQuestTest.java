@@ -149,17 +149,16 @@ class FertiliseCropTilesQuestTest {
     @Test
     void testGetShortDescription() {
         testRegisterMission();
-        String desc = "%d out of %d debris pieces cleared";
+        String desc = "%d out of %d crop tiles fertilised";
         for (int i = 0; i < 50; i++) {
             int min123 = Math.min(i, 10);
             int min4 = Math.min(i, 3);
             String formatted1 = String.format(desc, min123, 10);
             String formatted2 = String.format(desc, min123, 10);
-            String formatted3 = String.format(desc, min123, 10);
+            String formatted3 = String.format(desc, 0, 0);
             String formatted4 = String.format(desc, min4, 3);
             String formatted5 = String.format(desc, i, 50);
             String formatted6 = String.format(desc, 0, 0);
-            String formatted7 = String.format(desc, 0, 0);
             assertEquals(formatted1, FCTQuest1.getShortDescription());
             assertEquals(formatted2, FCTQuest2.getShortDescription());
             assertEquals(formatted3, FCTQuest3.getShortDescription());
@@ -174,10 +173,10 @@ class FertiliseCropTilesQuestTest {
     void testReadProgress() {
         int progressInt = 3;
         JsonValue progress = new JsonValue(progressInt);
-        String desc = "Gather scattered parts of your ship.\n" +
-                "Use your shovel to clear %d Ship Debris in the world!\n" +
-                "%d out of %d debris pieces cleared.";
-        String shortDesc = "%d out of %d debris pieces cleared";
+        String desc = "Fertilising crop tiles will cause your plants to grow faster.\n" +
+                "Apply fertiliser to %d tiles.\n" +
+                "%d out of %d crop tiles fertilised.";
+        String shortDesc = "%d out of %d crop tiles fertilised";
         FCTQuest1.readProgress(progress);
         FCTQuest2.readProgress(progress);
         FCTQuest3.readProgress(progress);
@@ -186,13 +185,13 @@ class FertiliseCropTilesQuestTest {
         FCTQuest6.readProgress(progress);
         String formatted1 = String.format(desc, 10, progressInt, 10);
         String formatted2 = String.format(desc, 10, progressInt, 10);
-        String formatted3 = String.format(desc, 10, progressInt, 10);
+        String formatted3 = String.format(desc, 0, progressInt, 0);
         String formatted4 = String.format(desc, 3, progressInt, 3);
         String formatted5 = String.format(desc, 50, progressInt, 50);
         String formatted6 = String.format(desc, 0, progressInt, 0);
         String shortFormatted1 = String.format(shortDesc, progressInt, 10);
         String shortFormatted2 = String.format(shortDesc, progressInt, 10);
-        String shortFormatted3 = String.format(shortDesc, progressInt, 10);
+        String shortFormatted3 = String.format(shortDesc, progressInt, 0);
         String shortFormatted4 = String.format(shortDesc, progressInt, 3);
         String shortFormatted5 = String.format(shortDesc, progressInt, 50);
         String shortFormatted6 = String.format(shortDesc, progressInt, 0);
@@ -215,6 +214,22 @@ class FertiliseCropTilesQuestTest {
         assertEquals(0, FCTQuest1.getProgress());
         assertEquals(0, FCTQuest2.getProgress());
         assertEquals(0, FCTQuest3.getProgress());
+        assertEquals(0, FCTQuest4.getProgress());
+        assertEquals(0, FCTQuest5.getProgress());
+        assertEquals(0, FCTQuest6.getProgress());
+        testIsCompleted();
+        assertNotEquals(0, FCTQuest1.getProgress());
+        assertNotEquals(0, FCTQuest2.getProgress());
+        assertEquals(0, FCTQuest3.getProgress());
+        assertNotEquals(0, FCTQuest4.getProgress());
+        assertNotEquals(0, FCTQuest5.getProgress());
+        assertEquals(0, FCTQuest6.getProgress());
+        assertEquals(10, FCTQuest1.getProgress());
+        assertEquals(10, FCTQuest2.getProgress());
+        assertEquals(0, FCTQuest3.getProgress());
+        assertEquals(3, FCTQuest4.getProgress());
+        assertEquals(50, FCTQuest5.getProgress());
+        assertEquals(0, FCTQuest6.getProgress());
     }
 
     @Test
@@ -228,7 +243,7 @@ class FertiliseCropTilesQuestTest {
         FCTQuest6.resetState();
         assertFalse(FCTQuest1.isCompleted());
         assertFalse(FCTQuest2.isCompleted());
-        assertFalse(FCTQuest3.isCompleted());
+        assertTrue(FCTQuest3.isCompleted());
         assertFalse(FCTQuest4.isCompleted());
         assertFalse(FCTQuest5.isCompleted());
         assertTrue(FCTQuest6.isCompleted());
