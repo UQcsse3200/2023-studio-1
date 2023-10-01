@@ -64,11 +64,20 @@ class AutoQuestTest {
     }
 
     @Test
-    void getDescription() {
+    void testGetDescription() {
+        assertEquals("Auto Quest 1", autoQuest1.getDescription());
+        assertEquals("Auto Quest 2", autoQuest2.getDescription());
+        assertEquals("Auto Quest 3", autoQuest3.getDescription());
     }
 
     @Test
-    void getShortDescription() {
+    void testGetShortDescription() {
+        assertEquals("Auto Quest 1", autoQuest1.getShortDescription());
+        assertEquals("Auto Quest 2", autoQuest2.getShortDescription());
+        assertEquals("Auto Quest 3", autoQuest3.getShortDescription());
+        assertEquals(autoQuest1.getDescription(), autoQuest1.getShortDescription());
+        assertEquals(autoQuest2.getDescription(), autoQuest2.getShortDescription());
+        assertEquals(autoQuest3.getDescription(), autoQuest3.getShortDescription());
     }
 
     @Test
