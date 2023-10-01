@@ -24,7 +24,7 @@ public class CutsceneDisplay extends UIComponent {
      * The Image that contains the player sprite.
      */
     private Image playerSprite;
-    
+
     /**
      * The Image that contains the npc sprite.
      */

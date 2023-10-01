@@ -43,7 +43,7 @@ public class ServiceLocator {
   private static PlantCommandService plantCommandService;
   private static PlantInfoService plantInfoService;
   private static boolean cutSceneRunning; // true for running and false otherwise
-
+  
   public static PlantCommandService getPlantCommandService() {
     return plantCommandService;
   }
@@ -96,6 +96,22 @@ public class ServiceLocator {
     return saveLoadService;
   }
 
+  /**
+   * Sets the cutscene status to either running or not running.
+   * @param isRunning true if cutscene is running, false otherwise
+   */
+  public static void setCutSceneRunning(boolean isRunning) {
+    cutSceneRunning = isRunning;
+  }
+
+  /**
+   * Gets the cutscene status.
+   * @return true if cutscene is running, false otherwise
+   */
+  public static boolean getCutSceneStatus() {
+    return cutSceneRunning;
+  }
+
   public static void registerGameArea(GameArea area) {
     logger.debug("Registering game area {}", area);
     gameArea = area;
@@ -139,14 +155,6 @@ public class ServiceLocator {
   public static void registerTimeSource(GameTime source) {
     logger.debug("Registering time source {}", source);
     timeSource  = source;
-  }
-
-  public static void setCutSceneRunning(boolean isRunning) {
-    cutSceneRunning = isRunning;
-  }
-
-  public static boolean getCutSceneStatus() {
-    return cutSceneRunning;
   }
 
   public static void registerMissionManager(MissionManager source) {
