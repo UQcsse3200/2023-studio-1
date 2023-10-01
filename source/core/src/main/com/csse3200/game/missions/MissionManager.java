@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
+import com.csse3200.game.components.losescreen.LoseScreenDisplay;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.achievements.Achievement;
 import com.csse3200.game.missions.achievements.PlantCropsAchievement;
@@ -157,6 +158,10 @@ public class MissionManager implements Json.Serializable {
 			quest.updateExpiry();
 			if (quest.isExpired()) {
 				events.trigger(MissionEvent.QUEST_EXPIRED.name());
+				if (quest.isMandatory()) {
+					LoseScreenDisplay.setLoseReason(quest.getName());
+					events.trigger("loseScreen");
+				}
 			}
 		}
 	}
