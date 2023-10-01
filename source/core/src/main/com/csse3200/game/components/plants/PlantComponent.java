@@ -734,7 +734,7 @@ public class PlantComponent extends Component {
      * To attack plants and damage their health.
      */
     private void attack() {
-        int attackDamage = 1;
+        int attackDamage = 10;
         increasePlantHealth(-attackDamage);
         if (plantHealth <= 0) {
             destroyPlant();

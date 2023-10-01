@@ -124,6 +124,10 @@ public class MoveToPlantTask extends DefaultTask implements PriorityTask {
      */
     @Override
     public int getPriority() {
+        if (getNearestPlant() == null) {
+            return -1;
+        }
+
         return priority;
     }
 

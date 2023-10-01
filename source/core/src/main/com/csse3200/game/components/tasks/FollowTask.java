@@ -65,6 +65,7 @@ public class FollowTask extends ChaseTask {
     //Stops follow if entity is too close to target
     if(getDistanceToTarget() <= stoppingDistance) {
       owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(false);
+      status = Status.INACTIVE;
       return;
     } else {
       owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(true);
