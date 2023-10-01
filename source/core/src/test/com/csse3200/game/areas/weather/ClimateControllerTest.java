@@ -6,9 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
@@ -98,7 +96,7 @@ class ClimateControllerTest {
 	}
 
 	@Test
-	public void testAddedEvent() {
+	public void testAddedEvent1() {
 		assertNull(controller.getCurrentWeatherEvent());
 		try (MockedStatic<MathUtils> mathUtils = mockStatic(MathUtils.class)) {
 			mathUtils.when(MathUtils::random).thenReturn(1f);
@@ -107,6 +105,27 @@ class ClimateControllerTest {
 			// Therefore event should be created
 			ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
 			assertNotNull(controller.getCurrentWeatherEvent());
+			assertTrue(controller.getCurrentWeatherEvent() instanceof SolarSurgeEvent);
+		}
+	}
+
+	@Test
+	public void testAddDailyEventCase0() {
+		assertNull(controller.getCurrentWeatherEvent());
+
+		try (MockedStatic<MathUtils> mathUtils = mockStatic(MathUtils.class)) {
+			mathUtils.when(MathUtils::random).thenReturn(0.5f);
+			mathUtils.when(() -> MathUtils.random(0, 1)).thenReturn(0); //
+			mathUtils.when(() -> MathUtils.random(1, 6)).thenReturn(1); // numHoursUntil
+			mathUtils.when(() -> MathUtils.random(2, 5)).thenReturn(4); // duration
+			mathUtils.when(() -> MathUtils.random(0, 3)).thenReturn(0); // priority
+			mathUtils.when(MathUtils::random).thenReturn(0.7f);          // severity
+
+			ServiceLocator.getTimeService().getEvents().trigger("dayUpdate");
+			// Therefore event should be created
+			ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+			assertNotNull(controller.getCurrentWeatherEvent());
+			assertTrue(controller.getCurrentWeatherEvent() instanceof AcidShowerEvent);
 		}
 	}
 
