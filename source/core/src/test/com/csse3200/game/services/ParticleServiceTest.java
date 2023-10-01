@@ -34,8 +34,6 @@ public class ParticleServiceTest {
 		resourceService = mock(ResourceService.class);
 		ServiceLocator.registerResourceService(resourceService);
 		mockEffect = mock(ParticleEffect.class);
-		doReturn(mockEffect).when(resourceService).getAsset(anyString(), any());
-
 	}
 
 	@AfterEach
@@ -172,5 +170,11 @@ public class ParticleServiceTest {
 
 		particleService.stopEffectCategory(ParticleService.WEATHER_EVENT);
 		assertEquals(0, mockQueuedEffects.size());
+	}
+
+	@Test
+	public void testGetCategory() {
+		ParticleService.ParticleEffectType particleEffectType = ParticleService.ParticleEffectType.ACID_RAIN;
+		assertEquals(ParticleService.WEATHER_EVENT, particleEffectType.getCategory());
 	}
 }
