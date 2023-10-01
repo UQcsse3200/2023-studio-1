@@ -36,7 +36,8 @@ public class Cutscene{
 
     // pauses the game
     public void pauseGame() {
-
+        logger.debug("Setting paused state to: 0");
+        ServiceLocator.getTimeSource().setTimeScale(0);
     }
 
 

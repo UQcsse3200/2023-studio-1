@@ -161,11 +161,6 @@ public class MainGameScreen extends ScreenAdapter {
             ServiceLocator.getEntityService().update();
 
         }
-        if (scene != CUT_SCENE.CS0) {
-            ServiceLocator.getTimeSource().setTimeScale(0);
-            // this is when the cut scene run!
-            ServiceLocator.getTimeSource().setTimeScale(1);
-        }
         ServiceLocator.getTimeService().update();
         renderer.render();
         if (lose) {
