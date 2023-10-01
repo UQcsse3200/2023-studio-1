@@ -64,7 +64,6 @@ public class GameMap {
     /**
      * Returns the TerrainComponent instance stored in the GameMap class.
      * @return the terrainComponent variable.
-     * @throws Exception when the TerrainComponent has not been set.
      */
     public TerrainComponent getTerrainComponent(){
         if (this.terrainComponent != null) {
