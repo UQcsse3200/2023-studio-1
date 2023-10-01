@@ -66,6 +66,7 @@ public class SaveLoadService {
 
     state.setEntities(ServiceLocator.getEntityService().getEntities());
     state.setTiles(ServiceLocator.getEntityService().getEntities());
+    state.setPlaceables(ServiceLocator.getEntityService().getEntities());
 
     // Write the state to a file
     SaveGame.set(state);
