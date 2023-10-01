@@ -92,10 +92,14 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>protected static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Character.html" title="class or interface in java.lang" class="external-link">Character</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
 <div class="col-second even-row-color"><code><a href="#charToTileImageMap" class="member-name-link">charToTileImageMap</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">HashMap used to map characters in map files to file paths containing their textures</div>
+</div>
 <div class="col-first odd-row-color"><code>protected static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#mapPath" class="member-name-link">mapPath</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">The file path for the SpaceGameArea map file</div>
+</div>
 </div>
 </section>
 </li>
@@ -131,21 +135,29 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createTerrain(com.badlogic.gdx.maps.tiled.TiledMap)" class="member-name-link">createTerrain</a><wbr>(com.badlogic.gdx.maps.tiled.TiledMap&nbsp;tiledMap)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createSpaceGameTerrain(com.badlogic.gdx.maps.tiled.TiledMap)" class="member-name-link">createSpaceGameTerrain</a><wbr>(com.badlogic.gdx.maps.tiled.TiledMap&nbsp;tiledMap)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Create a terrain of the given type, using the orientation of the factory.</div>
+<div class="block">Initiates the create terrain process for the SpaceGameArea.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.math.GridPoint2</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMapSize()" class="member-name-link">getMapSize</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isNumeric(java.lang.String)" class="member-name-link">isNumeric</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;strNum)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createTestTerrain(com.badlogic.gdx.maps.tiled.TiledMap,java.lang.String)" class="member-name-link">createTestTerrain</a><wbr>(com.badlogic.gdx.maps.tiled.TiledMap&nbsp;tiledMap,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;testMapFilePath)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Initiates the create terrain process for JUnit testing.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.math.GridPoint2</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMapSize()" class="member-name-link">getMapSize</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns a copy of the MAP_SIZE variable</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isNumeric(java.lang.String)" class="member-name-link">isNumeric</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;strNum)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">This function will be used to check if a string is numeric</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#loadTextures()" class="member-name-link">loadTextures</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#loadTextures()" class="member-name-link">loadTextures</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Loads textures into the charToTextureMap based upon the images within the charToTileImageMap and resourceService</div>
 </div>
 </div>
@@ -169,6 +181,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="mapPath">
 <h3>mapPath</h3>
 <div class="member-signature"><span class="modifiers">protected static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">mapPath</span></div>
+<div class="block">The file path for the SpaceGameArea map file</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -183,6 +196,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="charToTileImageMap">
 <h3>charToTileImageMap</h3>
 <div class="member-signature"><span class="modifiers">protected static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Character.html" title="class or interface in java.lang" class="external-link">Character</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">charToTileImageMap</span></div>
+<div class="block">HashMap used to map characters in map files to file paths containing their textures</div>
 </section>
 </li>
 </ul>
@@ -200,7 +214,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Create a terrain factory with Orthogonal orientation</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>cameraComponent</code> - Camera to render terrains to. Must be ortographic.</dd>
+<dd><code>cameraComponent</code> - Camera to render terrains to. Must be orthographic.</dd>
 </dl>
 </section>
 </li>
@@ -236,16 +250,35 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getMapSize()">
 <h3>getMapSize</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.math.GridPoint2</span>&nbsp;<span class="element-name">getMapSize</span>()</div>
+<div class="block">Returns a copy of the MAP_SIZE variable</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>GridPoint2 instance representing Map Size</dd>
+</dl>
 </section>
 </li>
 <li>
-<section class="detail" id="createTerrain(com.badlogic.gdx.maps.tiled.TiledMap)">
-<h3>createTerrain</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a></span>&nbsp;<span class="element-name">createTerrain</span><wbr><span class="parameters">(com.badlogic.gdx.maps.tiled.TiledMap&nbsp;tiledMap)</span></div>
-<div class="block">Create a terrain of the given type, using the orientation of the factory.
- This can be extended
- to add additional game terrains.</div>
+<section class="detail" id="createSpaceGameTerrain(com.badlogic.gdx.maps.tiled.TiledMap)">
+<h3>createSpaceGameTerrain</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a></span>&nbsp;<span class="element-name">createSpaceGameTerrain</span><wbr><span class="parameters">(com.badlogic.gdx.maps.tiled.TiledMap&nbsp;tiledMap)</span></div>
+<div class="block">Initiates the create terrain process for the SpaceGameArea.</div>
 <dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>tiledMap</code> - the TiledMap instance of the game map</dd>
+<dt>Returns:</dt>
+<dd>Terrain component which renders the terrain</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createTestTerrain(com.badlogic.gdx.maps.tiled.TiledMap,java.lang.String)">
+<h3>createTestTerrain</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a></span>&nbsp;<span class="element-name">createTestTerrain</span><wbr><span class="parameters">(com.badlogic.gdx.maps.tiled.TiledMap&nbsp;tiledMap,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;testMapFilePath)</span></div>
+<div class="block">Initiates the create terrain process for JUnit testing.                                                HUNTER TO CONTINUE THIS</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>tiledMap</code> - the TiledMap instance of the test game map</dd>
 <dt>Returns:</dt>
 <dd>Terrain component which renders the terrain</dd>
 </dl>

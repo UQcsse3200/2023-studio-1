@@ -406,7 +406,9 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/physics/components/PhysicsComponent.AlignY.html#CENTER" class="member-name-link">CENTER</a> - Enum constant in enum class com.csse3200.game.physics.components.<a href="com/csse3200/game/physics/components/PhysicsComponent.AlignY.html" title="enum class in com.csse3200.game.physics.components">PhysicsComponent.AlignY</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainFactory.html#charToTileImageMap" class="member-name-link">charToTileImageMap</a> - Static variable in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainFactory.html" title="class in com.csse3200.game.areas.terrain">TerrainFactory</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">HashMap used to map characters in map files to file paths containing their textures</div>
+</dd>
 <dt><a href="com/csse3200/game/components/tasks/ChaseTask.html" class="type-name-link" title="class in com.csse3200.game.components.tasks">ChaseTask</a> - Class in <a href="com/csse3200/game/components/tasks/package-summary.html">com.csse3200.game.components.tasks</a></dt>
 <dd>
 <div class="block">Chases a target entity until they get too far away or line of sight is lost</div>
@@ -1134,6 +1136,10 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/missions/quests/QuestFactory.html#createSowingYourFirstSeedsQuest()" class="member-name-link">createSowingYourFirstSeedsQuest()</a> - Static method in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/QuestFactory.html" title="class in com.csse3200.game.missions.quests">QuestFactory</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/areas/terrain/TerrainFactory.html#createSpaceGameTerrain(com.badlogic.gdx.maps.tiled.TiledMap)" class="member-name-link">createSpaceGameTerrain(TiledMap)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainFactory.html" title="class in com.csse3200.game.areas.terrain">TerrainFactory</a></dt>
+<dd>
+<div class="block">Initiates the create terrain process for the SpaceGameArea.</div>
+</dd>
 <dt><a href="com/csse3200/game/entities/factories/PlantFactory.html#createSpaceSnapper(com.csse3200.game.areas.terrain.CropTileComponent)" class="member-name-link">createSpaceSnapper(CropTileComponent)</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/PlantFactory.html" title="class in com.csse3200.game.entities.factories">PlantFactory</a></dt>
 <dd>
 <div class="block">Creates an venusFlyTrap entity that is a defence type plant.</div>
@@ -1152,9 +1158,9 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/missions/quests/QuestFactory.html#createStratosphericSentinelQuest()" class="member-name-link">createStratosphericSentinelQuest()</a> - Static method in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/QuestFactory.html" title="class in com.csse3200.game.missions.quests">QuestFactory</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/areas/terrain/TerrainFactory.html#createTerrain(com.badlogic.gdx.maps.tiled.TiledMap)" class="member-name-link">createTerrain(TiledMap)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainFactory.html" title="class in com.csse3200.game.areas.terrain">TerrainFactory</a></dt>
+<dt><a href="com/csse3200/game/areas/terrain/GameMap.html#createTerrainComponent()" class="member-name-link">createTerrainComponent()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
 <dd>
-<div class="block">Create a terrain of the given type, using the orientation of the factory.</div>
+<div class="block">Creates the TerrainComponent instance used to render the SpaceGameArea map and stores it in the GameMap class</div>
 </dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainCropTileFactory.html#createTerrainEntity(float,float)" class="member-name-link">createTerrainEntity(float, float)</a> - Static method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainCropTileFactory.html" title="class in com.csse3200.game.areas.terrain">TerrainCropTileFactory</a></dt>
 <dd>
@@ -1166,6 +1172,14 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/entities/factories/PlantFactory.html#createTest(com.csse3200.game.areas.terrain.CropTileComponent)" class="member-name-link">createTest(CropTileComponent)</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/PlantFactory.html" title="class in com.csse3200.game.entities.factories">PlantFactory</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/areas/terrain/TerrainFactory.html#createTestTerrain(com.badlogic.gdx.maps.tiled.TiledMap,java.lang.String)" class="member-name-link">createTestTerrain(TiledMap, String)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainFactory.html" title="class in com.csse3200.game.areas.terrain">TerrainFactory</a></dt>
+<dd>
+<div class="block">Initiates the create terrain process for JUnit testing.</div>
+</dd>
+<dt><a href="com/csse3200/game/areas/terrain/GameMap.html#createTestTerrainComponent()" class="member-name-link">createTestTerrainComponent()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></dt>
+<dd>
+<div class="block">FOR HUNTER TO IMPLEMENT                                                                     HUNTER DONT FORGET</div>
+</dd>
 <dt><a href="com/csse3200/game/services/GameTimeDisplay.html#createTexture()" class="member-name-link">createTexture()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/GameTimeDisplay.html" title="class in com.csse3200.game.services">GameTimeDisplay</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/OxygenDisplay.html#createTexture()" class="member-name-link">createTexture()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/OxygenDisplay.html" title="class in com.csse3200.game.services">OxygenDisplay</a></dt>
@@ -2227,7 +2241,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Returns a GridPoint2 instance that contains the size of the map.</div>
 </dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainFactory.html#getMapSize()" class="member-name-link">getMapSize()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainFactory.html" title="class in com.csse3200.game.areas.terrain">TerrainFactory</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns a copy of the MAP_SIZE variable</div>
+</dd>
 <dt><a href="com/csse3200/game/components/plants/PlantComponent.html#getMaxHealth()" class="member-name-link">getMaxHealth()</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
 <dd>
 <div class="block">Returns the max health of the plant</div>
@@ -3351,7 +3367,9 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/missions/quests/ManageHostilesQuest.html#%3Cinit%3E(java.lang.String,com.csse3200.game.missions.rewards.Reward,java.util.Set,int)" class="member-name-link">ManageHostilesQuest(String, Reward, Set&lt;EntityType&gt;, int)</a> - Constructor for class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/ManageHostilesQuest.html" title="class in com.csse3200.game.missions.quests">ManageHostilesQuest</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainFactory.html#mapPath" class="member-name-link">mapPath</a> - Static variable in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainFactory.html" title="class in com.csse3200.game.areas.terrain">TerrainFactory</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">The file path for the SpaceGameArea map file</div>
+</dd>
 <dt><a href="com/csse3200/game/utils/math/Vector2Utils.html#MAX" class="member-name-link">MAX</a> - Static variable in class com.csse3200.game.utils.math.<a href="com/csse3200/game/utils/math/Vector2Utils.html" title="class in com.csse3200.game.utils.math">Vector2Utils</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/weather/AcidShowerEvent.html#MAX_HUMIDITY_MODIFIER" class="member-name-link">MAX_HUMIDITY_MODIFIER</a> - Static variable in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/AcidShowerEvent.html" title="class in com.csse3200.game.areas.weather">AcidShowerEvent</a></dt>
