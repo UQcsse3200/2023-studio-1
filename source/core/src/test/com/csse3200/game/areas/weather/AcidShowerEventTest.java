@@ -1,10 +1,13 @@
 package com.csse3200.game.areas.weather;
 
+import com.csse3200.game.services.ParticleService;
+import com.csse3200.game.services.ServiceLocator;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 public class AcidShowerEventTest {
 
@@ -17,6 +20,13 @@ public class AcidShowerEventTest {
         acidShowerEvent3 = new AcidShowerEvent(2, 4, 5, 1.0f);
         acidShowerEvent4 = new AcidShowerEvent(3, 3, 3, 1.3f);
         acidShowerEvent5 = new AcidShowerEvent(5, 5, 1, 1.1f);
+        ParticleService mockParticleService = mock(ParticleService.class);
+        ServiceLocator.registerParticleService(mockParticleService);
+    }
+
+    @AfterEach
+    public void cleanUp() {
+        ServiceLocator.clear();
     }
 
     @Test
@@ -61,5 +71,27 @@ public class AcidShowerEventTest {
         assertEquals(-10.0f, acidShowerEvent3.getTemperatureModifier(), 0.00001);
         assertEquals(-11.5f, acidShowerEvent4.getTemperatureModifier(), 0.00001);
         assertEquals(-10.5f, acidShowerEvent5.getTemperatureModifier(), 0.00001);
+    }
+
+    @Test
+    public void testStartEffect() {
+        acidShowerEvent1.startEffect();
+        acidShowerEvent2.startEffect();
+        acidShowerEvent3.startEffect();
+        verify(ServiceLocator.getParticleService(), times(3)).startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+        acidShowerEvent4.startEffect();
+        acidShowerEvent5.startEffect();
+        verify(ServiceLocator.getParticleService(), times(5)).startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+    }
+
+    @Test
+    public void testStopEffect() {
+        acidShowerEvent1.stopEffect();
+        acidShowerEvent2.stopEffect();
+        acidShowerEvent3.stopEffect();
+        verify(ServiceLocator.getParticleService(), times(3)).stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+        acidShowerEvent4.stopEffect();
+        acidShowerEvent5.stopEffect();
+        verify(ServiceLocator.getParticleService(), times(5)).stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);
     }
 }
