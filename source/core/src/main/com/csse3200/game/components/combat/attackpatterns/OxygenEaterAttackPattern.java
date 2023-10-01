@@ -11,19 +11,37 @@ import com.csse3200.game.utils.DirectionUtils;
 import java.util.Random;
 import java.util.function.Supplier;
 
+/**
+ * The OxygenEater attack pattern class defines the attack behaviour of an OxygenEater entity. It
+ * allows the OxygenEater to detect the player and attack them when in range.
+ */
 public class OxygenEaterAttackPattern extends AttackPatternComponent {
+    /** Supplies the projectile to be shot by the oxygen eater. */
     private final Supplier<Entity> projectileSupplier;
+
+    /**
+     * @param attackFrequency How often the OxygenEater attacks.
+     * @param projectileSupplier The projectile supplier for the OxygenEater's projectile.
+     */
     public OxygenEaterAttackPattern(float attackFrequency, Supplier<Entity> projectileSupplier) {
         super(attackFrequency);
         this.projectileSupplier = projectileSupplier;
     }
 
+    /**
+     * Initialises the OxygenEaterAttackPattern component when it is created.
+     * This method sets up event listeners and interaction detection for the OxygenEater.
+     */
     @Override
     public void create() {
         super.create();
         entity.getEvents().addListener("shoot", this::shoot);
     }
 
+    /**
+     * Performs the attack action which involves detecting the player entity if one exists and
+     * shooting projectiles at them.
+     */
     @Override
     protected void attack() {
         Entity nearestEntity = interactionDetector.getNearest(interactionDetector.getEntitiesInRange());

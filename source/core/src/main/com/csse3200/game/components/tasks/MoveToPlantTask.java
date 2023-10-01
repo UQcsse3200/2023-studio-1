@@ -41,6 +41,10 @@ public class MoveToPlantTask extends DefaultTask implements PriorityTask {
         this.stoppingDistance = stoppingDistance;
     }
 
+    /**
+     * Starts the move to plant task by initialising the target plant and triggering the movement
+     * task.
+     */
     @Override
     public void start() {
         super.start();
@@ -48,6 +52,7 @@ public class MoveToPlantTask extends DefaultTask implements PriorityTask {
         // Look for the nearest plant entity
         currentTarget = getNearestPlant();
 
+        // Check if there are any plants in the game
         if (currentTarget == null) {
             stop();
         } else {
@@ -59,6 +64,11 @@ public class MoveToPlantTask extends DefaultTask implements PriorityTask {
         }
     }
 
+    /**
+     * Updates the move to plant task by checking if the current target is dead. If the current
+     * target is not dead, it will continue to move to it until it has arrived. If the current
+     * target is dead, it will switch to a new target if one exists.
+     */
     @Override
     public void update() {
         // Check what the entity is currently targeting
@@ -92,9 +102,11 @@ public class MoveToPlantTask extends DefaultTask implements PriorityTask {
             this.owner.getEntity().getEvents().trigger("moveToPlantStart");
             getMovementTask().start();
         }
-
     }
 
+    /**
+     * Stops the move to plant task and the associated movement task.
+     */
     @Override
     public void stop() {
         super.stop();
@@ -105,6 +117,11 @@ public class MoveToPlantTask extends DefaultTask implements PriorityTask {
         this.owner.getEntity().getEvents().trigger("moveToPlantStop");
     }
 
+    /**
+     * Gets the priority level of the move to plant task.
+     *
+     * @return The priority level.
+     */
     @Override
     public int getPriority() {
         return priority;
@@ -118,7 +135,6 @@ public class MoveToPlantTask extends DefaultTask implements PriorityTask {
     private Entity getNearestPlant() {
         Array<Entity> entities = ServiceLocator.getEntityService().getEntityList();
         int size = entities.size;
-
 
         HashMap<Entity, Float> plantDistances = new HashMap<Entity, Float>();
 
@@ -154,9 +170,6 @@ public class MoveToPlantTask extends DefaultTask implements PriorityTask {
             }
         }
 
-        // System.out.println(closestPlant.getComponent(PlantComponent.class).getPlantName());
-        // System.out.println(plantDistances.size());
-
         return closestPlant;
     }
 
@@ -178,7 +191,12 @@ public class MoveToPlantTask extends DefaultTask implements PriorityTask {
         this.movementTask = movementTask;
     }
 
-
+    /**
+     * Calculates a vector towards the target entity for movement.
+     *
+     * @param target the target to return a vector towards.
+     * @return the vector towards the entity.
+     */
     private Vector2 getEntityTargetVector(Entity target) {
         Vector2 targetVec = new Vector2();
         targetVec.x = owner.getEntity().getCenterPosition().x +
@@ -187,6 +205,4 @@ public class MoveToPlantTask extends DefaultTask implements PriorityTask {
                 (target.getPosition().y - owner.getEntity().getCenterPosition().y);
         return targetVec;
     }
-
-
 }

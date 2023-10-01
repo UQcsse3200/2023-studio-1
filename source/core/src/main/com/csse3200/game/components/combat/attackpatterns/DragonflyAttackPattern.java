@@ -1,28 +1,37 @@
 package com.csse3200.game.components.combat.attackpatterns;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.components.combat.ProjectileComponent;
-import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
-import com.csse3200.game.entities.factories.ProjectileFactory;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.DirectionUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
 
+/**
+ * The Dragonfly attack pattern class defines the attack behavior of a Dragonfly entity in the game.
+ * It allows the dragonfly to detect the player and plants and attack them when in range.
+ */
 public class DragonflyAttackPattern extends AttackPatternComponent {
+    /** Supplies the projectile to be shot by the dragonfly. */
     private final Supplier<Entity> projectileSupplier;
 
+    /**
+     * @param attackFrequency How often the dragonfly attacks.
+     * @param projectileSupplier The projectile supplier for the Dragonfly's projectiles.
+     */
     public DragonflyAttackPattern(float attackFrequency, Supplier<Entity> projectileSupplier) {
         super(attackFrequency);
         this.projectileSupplier = projectileSupplier;
     }
 
+    /**
+     * Initialises the DragonFlyAttackPattern component when it is created.
+     * This method sets up event listeners and interaction detection for the Dragonfly.
+     */
     @Override
     public void create() {
         super.create();
@@ -31,7 +40,8 @@ public class DragonflyAttackPattern extends AttackPatternComponent {
 
     /**
      * Performs the attack action, which involves determining the nearest entity, changing direction,
-     * triggering attack events, and scheduling the next attack.
+     * triggering attack events, and scheduling the next attack. This will also change the attack
+     * performed depending on whether there is a plant or player.
      */
     @Override
     protected void attack() {
@@ -63,7 +73,6 @@ public class DragonflyAttackPattern extends AttackPatternComponent {
             }
         }
 
-
         super.attack();
     }
 
@@ -87,6 +96,11 @@ public class DragonflyAttackPattern extends AttackPatternComponent {
         projectileComponent.setTargetDirection(position);
     }
 
+    /**
+     * Attacks the player.
+     *
+     * @param player the player entity to attack.
+     */
     private void attackPlayer(Entity player) {
         Vector2 nearestEntityPosition = player.getCenterPosition();
         String attackDirection =
@@ -102,6 +116,11 @@ public class DragonflyAttackPattern extends AttackPatternComponent {
         entity.getEvents().scheduleEvent(0.4f, "shoot", nearestEntityPosition);
     }
 
+    /**
+     * Attacks a specific plant.
+     *
+     * @param plant the plant to attack.
+     */
     private void attackPlant(Entity plant) {
         Vector2 nearestEntityPosition = plant.getCenterPosition();
         String attackDirection =
@@ -113,11 +132,6 @@ public class DragonflyAttackPattern extends AttackPatternComponent {
 
         // Attack the plant
         plant.getEvents().trigger("attack");
-
-        // Todo: Remove this debugging only
-        System.out.println(plant.getComponent(PlantComponent.class).getPlantHealth());
-        System.out.println(plant.getComponent(PlantComponent.class).getPlantName());
-
 
     }
 }

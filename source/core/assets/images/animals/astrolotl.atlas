@@ -174,170 +174,171 @@ walk_right
   index: 1
 idle_left_tamed
   rotate: false
-  xy: 292, 206
+  xy: 164, 206
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 idle_left_tamed
   rotate: false
-  xy: 292, 172
+  xy: 164, 172
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 7
 walk_left_tamed
   rotate: false
-  xy: 292, 172
+  xy: 164, 172
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
 idle_left_tamed
   rotate: false
-  xy: 292, 138
+  xy: 164, 138
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 4
 idle_left_tamed
   rotate: false
-  xy: 292, 104
+  xy: 164, 104
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 idle_left_tamed
   rotate: false
-  xy: 258, 36
+  xy: 130, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 6
 idle_left_tamed
   rotate: false
-  xy: 326, 104
+  xy: 198, 104
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
 idle_left_tamed
   rotate: false
-  xy: 292, 36
+  xy: 164, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 0
 idle_left_tamed
   rotate: false
-  xy: 292, 2
+  xy: 164, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 5
 idle_right_tamed
   rotate: false
-  xy: 258, 206
+  xy: 130, 206
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 0
 idle_right_tamed
   rotate: false
-  xy: 258, 138
+  xy: 130, 138
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 5
 idle_right_tamed
   rotate: false
-  xy: 326, 206
+  xy: 198, 206
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 idle_right_tamed
   rotate: false
-  xy: 326, 172
+  xy: 198, 172
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 7
 walk_right_tamed
   rotate: false
-  xy: 326, 172
+  xy: 198, 172
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
 idle_right_tamed
   rotate: false
-  xy: 326, 138
+  xy: 198, 138
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 4
 idle_right_tamed
   rotate: false
-  xy: 292, 70
+  xy: 164, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 idle_right_tamed
   rotate: false
-  xy: 258, 2
+  xy: 130, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 6
 idle_right_tamed
   rotate: false
-  xy: 326, 70
+  xy: 198, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
 walk_left_tamed
   rotate: false
-  xy: 258, 104
+  xy: 130, 104
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 0
 walk_left_tamed
   rotate: false
-  xy: 258, 104
+  xy: 130, 104
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 walk_left_tamed
   rotate: false
-  xy: 326, 36
+  xy: 198, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 walk_right_tamed
   rotate: false
-  xy: 258, 172
+  xy: 130, 172
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 walk_right_tamed
   rotate: false
-  xy: 258, 172
+  xy: 130, 172
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 0
 walk_right_tamed
   rotate: false
-  xy: 258, 70
+  xy: 130, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
+
 

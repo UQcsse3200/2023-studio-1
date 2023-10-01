@@ -1,5 +1,4 @@
-package com.csse3200.game.components.npc;
-
+package com.csse3200.game.components.combat.attackpatterns;
 
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.CombatStatsComponent;
@@ -11,8 +10,8 @@ import com.csse3200.game.events.ScheduledEvent;
 import com.csse3200.game.utils.DirectionUtils;
 
 /**
- * The OxygenEaterAttackPattern class defines the attack behavior of an oxygen eater NPC entity in the game.
- * It allows the oxygen eater to detect nearby entities and initiate attacks by shooting projectiles at them.
+ * The BatAttackPattern class defines the attack behavior of a Bat entity in the game.
+ * It allows the bat to detect the player and attack them when in range.
  */
 public class BatAttackPattern extends AttackPatternComponent {
 
@@ -53,9 +52,6 @@ public class BatAttackPattern extends AttackPatternComponent {
 
         // Reduce the player's health by bat's damage
         nearestEntity.getComponent(CombatStatsComponent.class).hit(entity.getComponent(CombatStatsComponent.class));
-
-        // TODO: Remove this degbugging only
-        System.out.println(nearestEntity.getComponent(CombatStatsComponent.class).getHealth());
 
         super.attack();
     }
