@@ -125,6 +125,7 @@ public class CutsceneDisplay extends UIComponent {
         //table.add(sprite);
         stage.addActor(sprite);
     }
+
     // Spawns the sprites/entities that will be on the left/right side of the screen
     public void spawnSprites() {
         spawnSprite("images/questgiver.atlas", "RIGHT",  0.15f);
@@ -154,6 +155,7 @@ public class CutsceneDisplay extends UIComponent {
                     public void changed(ChangeEvent event, Actor actor) {
                         logger.debug("Continue button clicked");
                         transparentRectangle.getColor().a = 0f;
+                        stage.clear();
                         disposeCutscene();
                         cutscene.endCutscene();
                     }
