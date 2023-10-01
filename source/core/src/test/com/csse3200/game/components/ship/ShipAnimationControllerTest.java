@@ -2,7 +2,8 @@ package com.csse3200.game.components.ship;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
-import static org.mockito.Mockito.spy;
+
+import java.util.HashSet;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +12,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.ShipFactory;
@@ -25,7 +25,7 @@ import com.csse3200.game.services.ServiceLocator;
 @ExtendWith(GameExtension.class)
 public class ShipAnimationControllerTest {
     private Entity ship;
-    private AnimationRenderComponent animationRenderComponent;
+    private AnimationRenderComponent animationRenderComponent = ShipFactory.setupShipAnimations();
 
     // code edited from PlayerAnimationControllerTest by team 2
     @BeforeEach
@@ -35,14 +35,6 @@ public class ShipAnimationControllerTest {
         resourceService.loadTextureAtlases(new String[]{"images/ship/ship.atlas"});
         resourceService.loadAll();
         ServiceLocator.registerResourceService(resourceService);
-
-        animationRenderComponent = spy(
-                new AnimationRenderComponent(
-                        ServiceLocator.getResourceService().getAsset("images/ship/ship.atlas", TextureAtlas.class)
-                )
-        );
-
-        ShipFactory.setupShipAnimations();
 
         ship = new Entity(EntityType.Ship)
                 .addComponent(animationRenderComponent)
@@ -55,22 +47,22 @@ public class ShipAnimationControllerTest {
     @ParameterizedTest(name = "{2} animation played correctly on {0} event trigger")
     @MethodSource({"shouldUpdateAnimationOnProgressUpdate"})
     void shouldUpdateAnimationOnProgressUpdate(String animationEvent, int progress, String expectedAnimationName) {
-        ship.getEvents().trigger(animationEvent, progress);
+        ship.getEvents().trigger(animationEvent, progress, new HashSet<>());
         assertEquals(expectedAnimationName, animationRenderComponent.getCurrentAnimation());
     }
 
     private static Stream<Arguments> shouldUpdateAnimationOnProgressUpdate() {
         return Stream.of(
                 // (animationEvent, movementDirection, expectedAnimationName)
-                arguments("animateShipStage", -10, "default"),
-                arguments("animateShipStage", 0, "ship_0"),
-                arguments("animationWalkStart", 4, "ship_1"),
-                arguments("animationWalkStart", 6, "ship_2"),
-                arguments("animationWalkStart", 10, "ship_3"),
-                arguments("animationRunStart", 12, "ship_3"),
-                arguments("animationRunStart", 16, "ship_4"),
-                arguments("animationRunStart", 20, "ship_5"),
-                arguments("animationRunStart", 30, "ship_5")
+                arguments("progressUpdated", -10, "default"),
+                arguments("progressUpdated", 0, "ship_0"),
+                arguments("progressUpdated", 4, "ship_1"),
+                arguments("progressUpdated", 6, "ship_2"),
+                arguments("progressUpdated", 10, "ship_3"),
+                arguments("progressUpdated", 12, "ship_3"),
+                arguments("progressUpdated", 16, "ship_4"),
+                arguments("progressUpdated", 20, "ship_5"),
+                arguments("progressUpdated", 30, "ship_5")
         );
     }
 }
