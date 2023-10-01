@@ -236,8 +236,10 @@ public class SpaceGameArea extends GameArea {
       "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas",
       "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas", "images/questgiver.atlas",
       "images/missionStatus.atlas", "images/plants/cosmic_cob.atlas", "images/plants/aloe_vera.atlas",
-      "images/plants/deadly_nightshade.atlas", "images/projectiles/oxygen_eater_projectile.atlas",
-      "images/fireflies.atlas", "images/ship/ship.atlas", "images/light.atlas"
+      "images/plants/deadly_nightshade.atlas", "images/plants/atomic_algae.atlas",
+      "images/plants/hammer_plant.atlas", "images/plants/space_snapper.atlas",
+      "images/projectiles/oxygen_eater_projectile.atlas", "images/fireflies.atlas",
+      "images/ship/ship.atlas", "images/light.atlas"
   };
   private static final String[] forestSounds = {
           "sounds/Impact4.ogg", "sounds/car-horn-6408.mp3",
