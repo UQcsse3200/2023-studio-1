@@ -1,5 +1,7 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.services.plants.PlantCommandService;
+import com.csse3200.game.services.plants.PlantInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +39,15 @@ public class ServiceLocator {
   private static SaveLoadService saveLoadService;
   private static MissionManager missions;
   private static PlanetOxygenService planetOxygenService;
+  private static PlantCommandService plantCommandService;
+  private static PlantInfoService plantInfoService;
+  private static ParticleService particleService;
+  public static PlantCommandService getPlantCommandService() {
+    return plantCommandService;
+  }
+  public static PlantInfoService getPlantInfoService() {
+    return plantInfoService;
+  }
 
   public static GameArea getGameArea() {
     return gameArea;
@@ -82,6 +93,10 @@ public class ServiceLocator {
 
   public static SaveLoadService getSaveLoadService() {
     return saveLoadService;
+  }
+
+  public static ParticleService getParticleService() {
+    return particleService;
   }
 
   public static void registerGameArea(GameArea area) {
@@ -139,9 +154,23 @@ public class ServiceLocator {
     planetOxygenService = source;
   }
 
+  public static void registerPlantCommandService(PlantCommandService source) {
+    logger.debug("Registering plant command service {}", source);
+    plantCommandService = source;
+  }
+
+  public static void registerPlantInfoService(PlantInfoService source) {
+    logger.debug("Registering plant command service {}",source);
+    plantInfoService = source;
+  }
+
   public static void registerLightService(LightService source) {
     logger.debug("Registering light service {}", source);
     lightService = source;
+  }
+
+  public static void registerParticleService(ParticleService source) {
+    particleService = source;
   }
 
   /**
@@ -180,6 +209,5 @@ public class ServiceLocator {
   public static void registerCraftArea(GameAreaDisplay area){
     craftArea = area;
   }
-
 
 }

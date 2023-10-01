@@ -234,7 +234,7 @@ public class PlayerActions extends Component {
     }
     this.stopMoving();
     muted = true;
-    tractor.getComponent(AuraLightComponent.class).toggleLight();
+    tractor.getEvents().trigger("toggleAuraLight");
     tractor.getComponent(TractorActions.class).setMuted(false);
     tractor.getComponent(KeyboardTractorInputComponent.class)
         .setWalkDirection(entity.getComponent(KeyboardPlayerInputComponent.class).getWalkDirection());

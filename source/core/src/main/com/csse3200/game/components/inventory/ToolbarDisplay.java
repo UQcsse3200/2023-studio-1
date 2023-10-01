@@ -13,18 +13,22 @@ import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.ArrayList;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 /**
  * Display the UI for the toolbar
  */
 public class ToolbarDisplay extends UIComponent {
-
     private static final Logger logger = LoggerFactory.getLogger(ToolbarDisplay.class);
-    private Table table;
-    private Window window;
+    private final Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
+    private final Table table = new Table(skin);
+    private final Window window = new Window("", skin);
     private boolean isOpen;
     private InventoryComponent inventory;
     private int selectedSlot = -1;
+    private final ArrayList<ItemSlot> slots = new ArrayList<>();
 
     /**
      * Creates the event listeners, ui, and gets the UI.
@@ -32,9 +36,9 @@ public class ToolbarDisplay extends UIComponent {
     @Override
     public void create() {
         super.create();
-        addActors();
+        initialiseToolbar();
         isOpen = true;
-        entity.getEvents().addListener("updateToolbar", this::updateToolbar);
+        entity.getEvents().addListener("updateToolbar", this::updateInventory);
         entity.getEvents().addListener("toggleInventory",this::toggleOpen);
         entity.getEvents().addListener("hotkeySelection",this::updateItemSlot);
         inventory = entity.getComponent(InventoryComponent.class);
@@ -45,81 +49,78 @@ public class ToolbarDisplay extends UIComponent {
      * @see Table for positioning options
      */
 
-    private void createToolbar(){
-        if(!isOpen){
-            return;
-        }
-        table.reset();
-        Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
-        table = new Table(skin);
-        table.defaults().size(64, 64);
-        table.pad(40, 5 , 5, 5);
-        table.pad(10);
+    private void updateToolbar(){
         for (int i = 0; i < 10; i++){
             int idx = i + 1;
             if (idx == 10) {
                 idx = 0;
             }
-            Label label = new Label(" " + String.valueOf(idx), skin); //please please please work
+            Label label = new Label(" " + idx, skin);
             label.setColor(Color.BLUE);
             label.setAlignment(Align.topLeft);
-            ItemSlot item;
-            if (inventory.getItem(i) == null){
-                item = new ItemSlot(i == selectedSlot);
-            } else {
-                item = new ItemSlot(
-                        inventory.getItemTexture(i), inventory.getItemCount(i),
-                        i == selectedSlot);
 
+            ItemComponent item;
+            int itemCount;
+            Texture itemTexture;
+
+            if (inventory != null && inventory.getItem(i) != null) {
+                // Since the item isn't null, we want to make sure that the itemSlot at that position is modified
+                item = inventory.getItem(i).getComponent(ItemComponent.class);
+                itemCount = inventory.getItemCount(item.getEntity());
+                itemTexture = item.getItemTexture();
+                ItemSlot curSlot = slots.get(i);
+                curSlot.setItemImage(new Image(itemTexture));
+
+                if (itemCount > 0) {
+                    curSlot.setCount(itemCount);
+                }
+
+                curSlot.add(label);
+
+                // Update slots array
+                slots.set(i, curSlot);
             }
-            item.add(label);
-            table.add(item).pad(10, 10, 10, 10).fill();
+            else {
+                ItemSlot curSlot = slots.get(i);
+                curSlot.setItemImage(null);
+                curSlot.setCount(null);
+                slots.set(i, curSlot);
+            }
         }
-        window.pad(40, 5 , 5, 5); // Add padding to with so that the text doesn't go offscreen
-        window.add(table); //Add the table to the window
-        window.pack(); // Pack the window to the size
-        window.setMovable(false);
-        window.setPosition(stage.getWidth() / 2 - window.getWidth() / 2, 0); // Clip to the bottom of the window on the stage
-        window.setVisible(isOpen);
-        // Add the window to the stage
-//        stage.addActor(window);
     }
 
     /**
      *  Creates actors and positions them on the stage using a table.
      *  @see Table for positioning options
      */
-    private void addActors() {
-        Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
-        table = new Table(skin);
+    private void initialiseToolbar() {
         table.defaults().size(64, 64);
+
         for (int i = 0; i < 10; i++) {
             //Set the indexes for the toolbar
             int idx = i + 1;
             if (idx == 10) {
                 idx = 0;
             }
-            //Create the label for the item slot
-            Label label = new Label(" " + String.valueOf(idx), skin); //please please please work
+            // Create the label for the item slot
+            Label label = new Label(" " + idx, skin); //please please please work
             label.setColor(Color.BLUE);
             label.setAlignment(Align.topLeft);
 
-            //Create the itemslot, check if it is the active slot
+            // Check if slot is selected
             ItemSlot item = new ItemSlot(i == selectedSlot);
             item.add(label);
             table.add(item).pad(10, 10, 10, 10).fill();
+            slots.add(item);
         }
-//        table.bottom().center();
-//        stage.addActor(table);
-        // Create a window for the inventory using the skin
-        window = new Window("", skin);
-        window.pad(40, 5, 5, 5); // Add padding to with so that the text doesn't go offscreen
-        window.add(table); //Add the table to the window
-        window.pack(); // Pack the window to the size
+
+        // Customise window to ensure it meets functionality
+        window.pad(40, 5, 5, 5);
+        window.add(table);
+        window.pack();
         window.setMovable(false);
-        window.setPosition(stage.getWidth() / 2 - window.getWidth() / 2, 0); // Clip to the bottom of the window on the stage
+        window.setPosition(stage.getWidth() / 2 - window.getWidth() / 2, 0);
         window.setVisible(true);
-        // Add the window to the stage
         stage.addActor(window);
     }
 
@@ -147,10 +148,9 @@ public class ToolbarDisplay extends UIComponent {
     /**
      * Updates the player's inventory toolbar on the ui.
      */
-    private void updateToolbar() {
+    public void updateInventory() {
         this.inventory = entity.getComponent(InventoryComponent.class);
-        // refresh the ui as per the new inventory.
-        createToolbar();
+        updateToolbar();
     }
 
     /**
@@ -160,7 +160,17 @@ public class ToolbarDisplay extends UIComponent {
     private void updateItemSlot(int slotNum) {
         this.selectedSlot = inventory.getHeldIndex();
         // refresh ui to reflect new selected slot
-        createToolbar();
+
+        for (int i = 0; i < 10; i++) {
+            ItemSlot curSlot = slots.get(i);
+            if (i != slotNum) {
+                curSlot.setUnselected();
+            }
+            else {
+                curSlot.setSelected();
+            }
+            slots.set(i, curSlot);
+        }
     }
 
     /**

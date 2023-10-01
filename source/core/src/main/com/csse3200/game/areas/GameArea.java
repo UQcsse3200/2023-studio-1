@@ -1,12 +1,5 @@
 package com.csse3200.game.areas;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
@@ -18,6 +11,12 @@ import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Represents an area in the game, such as a level, indoor area, etc. An area has a terrain and
@@ -30,6 +29,9 @@ public abstract class GameArea implements Disposable {
   protected List<Entity> areaEntities;
   private static final Logger logger = LoggerFactory.getLogger(GameArea.class);
   private Entity player;
+  private final ArrayList<EntityType> loadableTypes = new ArrayList<>(Arrays.asList(EntityType.Tile, EntityType.Cow,
+          EntityType.Cow, EntityType.Chicken, EntityType.Astrolotl, EntityType.Plant, EntityType.Tile,
+          EntityType.OxygenEater, EntityType.ShipDebris, EntityType.Ship));
 
   protected GameArea() {
     areaEntities = new ArrayList<>();
@@ -102,9 +104,6 @@ public abstract class GameArea implements Disposable {
    * @param entities Array of entities currently in game.
    */
   public void removeLoadableEntities(Array<Entity> entities) {
-    ArrayList<EntityType> loadableTypes = new ArrayList<>(Arrays.asList(EntityType.Tile, EntityType.Cow,
-            EntityType.Cow, EntityType.Chicken, EntityType.Astrolotl, EntityType.Plant, EntityType.Tile,
-            EntityType.OxygenEater, EntityType.ShipDebris, EntityType.FireFlies));
     for (Entity e : entities) {
       if (loadableTypes.contains(e.getType())) {
         removeEntity(e);
@@ -124,4 +123,8 @@ public abstract class GameArea implements Disposable {
   public abstract GameMap getMap();
 
   public void setPlayer(Entity customPlayer) { player = customPlayer; }
+
+  public ArrayList<EntityType> getLoadableTypes() {
+    return loadableTypes;
+  }
 }

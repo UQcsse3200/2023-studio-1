@@ -229,6 +229,9 @@ public class ClimateController implements Json.Serializable {
 	 */
 	private void updateWeatherEvent() {
 		// Sets initial priority to current weather event or 0 if nothing is happening
+		if (currentWeatherEvent != null) {
+			currentWeatherEvent.stopEffect();
+		}
 		currentWeatherEvent = null;
 		int priority = -1;
 		// Updates every weather event
@@ -242,6 +245,9 @@ public class ClimateController implements Json.Serializable {
 			}
 		}
 		weatherEvents.removeIf(WeatherEvent::isExpired);
+		if (currentWeatherEvent != null) {
+			currentWeatherEvent.startEffect();
+		}
 	}
 
 
@@ -249,31 +255,43 @@ public class ClimateController implements Json.Serializable {
 	public void write(Json json) {
 		json.writeValue("Temp", getTemperature());
 		json.writeValue("Humidity", getHumidity());
-		if (currentWeatherEvent != null) {
-			currentWeatherEvent.write(json);
+		json.writeObjectStart("Events");
+		updateWeatherEvent();
+		System.out.println(weatherEvents);
+		for (WeatherEvent event : weatherEvents) {
+			event.write(json);
 		}
+		json.writeObjectEnd();
 	}
 
 	@Override
 	public void read(Json json, JsonValue jsonData) {
+		ServiceLocator.getGameArea().getClimateController().setValues(json, jsonData);
+	}
+
+
+	public void setValues(Json json, JsonValue jsonData) {
 		temperature = jsonData.getFloat("Temp");
 		humidity = jsonData.getFloat("Humidity");
-		if (jsonData.has("name")) {
-			switch (jsonData.getString("name")) {
-				case ("AcidShowerEvent") -> {
-					currentWeatherEvent = new AcidShowerEvent(jsonData.getInt("hoursUntil"),
-							jsonData.getInt("duration"), jsonData.getInt("priority"),
-							jsonData.getFloat("severity"));
-					break;
-				} case ("SolarSurgeEvent") -> {
-					currentWeatherEvent = new SolarSurgeEvent(jsonData.getInt("hoursUntil"),
-							jsonData.getInt("duration"), jsonData.getInt("priority"),
-							jsonData.getFloat("severity"));
-					break;
-				} default -> {
-					currentWeatherEvent = null;
+		jsonData = jsonData.get("Events");
+		jsonData.forEach(jsonValue -> {
+			if (jsonValue.get("Event") != null) {
+				switch (jsonValue.getString("name")) {
+					case ("AcidShowerEvent") -> {
+						addWeatherEvent(new AcidShowerEvent(jsonValue.getInt("hoursUntil"),
+								jsonValue.getInt("duration"), jsonValue.getInt("priority"),
+								jsonValue.getFloat("severity")));
+					}
+					case ("SolarSurgeEvent") -> {
+						addWeatherEvent(new SolarSurgeEvent(jsonValue.getInt("hoursUntil"),
+								jsonValue.getInt("duration"), jsonValue.getInt("priority"),
+								jsonValue.getFloat("severity")));
+					}
+					default -> {
+					}
 				}
 			}
-		}
+		});
+		updateWeatherEvent();
 	}
 }

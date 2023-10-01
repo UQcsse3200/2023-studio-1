@@ -9,7 +9,6 @@ import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.achievements.Achievement;
 import com.csse3200.game.missions.achievements.PlantCropsAchievement;
 import com.csse3200.game.missions.quests.Quest;
-import com.csse3200.game.missions.quests.QuestFactory;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -21,18 +20,37 @@ public class MissionManager implements Json.Serializable {
 	 * a listener for the {@link #name()} of the enum value.
 	 */
 	public enum MissionEvent {
-		// Triggers when a mission is completed
+		// Triggers when a mission is completed, a single String representing name of completed mission is provided as
+		// an argument
 		MISSION_COMPLETE,
 		// Triggers when a new quest has been added to the mission manager
 		NEW_QUEST,
 		// Triggers when a quest expires
 		QUEST_EXPIRED,
-		// Triggers when a crop is planted, single String representing plant type is provided as argument
+		// Triggers when a story quest's reward is collected (to ensure that the player has read the required dialogue),
+		// a single String representing the name of the quest whose reward has been collected is provided as an argument
+		QUEST_REWARD_COLLECTED,
+		// Triggers when a crop is planted, a single String representing plant name is provided as an argument
 		PLANT_CROP,
 		// Triggers when a crop is fertilised
 		FERTILISE_CROP,
 		// Triggers when ship debris is cleared
-		DEBRIS_CLEARED
+		DEBRIS_CLEARED,
+		// Triggers when a crop is harvested, a single String representing the plant name is provided as an argument
+		HARVEST_CROP,
+		// Triggers when an animal is tamed
+		TAME_ANIMAL,
+		// Triggers when a reward is collected used for MissionCompleteQuests
+		REWARD_COMPLETE,
+		ANIMAL_TAMED,
+		// Triggers when an animal is defeated in combat, a EntityType enum value is provided representing the type of
+		// entity defeated is provided as an argument
+		ANIMAL_DEFEATED,
+		// Triggers when an animal is eaten by a Space Snapper, a EntityType enum value is provided representing the
+		// type of entity eaten is provided as an argument
+		ANIMAL_EATEN,
+		// Triggers when a ship part is added to the Ship
+		SHIP_PART_ADDED,
 	}
 
 	/**
@@ -66,15 +84,10 @@ public class MissionManager implements Json.Serializable {
 	 * Creates the mission manager, registered all game achievements and adds a listener for hourly updates
 	 */
 	public MissionManager() {
-		ServiceLocator.getTimeService().getEvents().addListener("updateHour", this::updateActiveQuestTimes);
+		ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateActiveQuestTimes);
 		for (Achievement mission : achievements) {
 			mission.registerMission(events);
 		}
-
-		// Add initial quests - regardless of GameArea
-		// This will be removed from the constructor at a later date
-		selectableQuests.add(QuestFactory.createHaberHobbyist());
-		selectableQuests.add(QuestFactory.createFertiliserFanatic());
 	}
 
 	/**

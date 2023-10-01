@@ -47,7 +47,7 @@ public class TestInventoryUI {
         ServiceLocator.registerRenderService(renderService);
 
         ServiceLocator.registerInputService(new InputService());
-        inventoryDisplay = spy(new InventoryDisplay());
+        inventoryDisplay = spy(new InventoryDisplay(30, 10));
         player =
                 new Entity()
                         .addComponent(new PlayerActions())

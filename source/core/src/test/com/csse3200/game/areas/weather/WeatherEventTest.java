@@ -4,36 +4,73 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
+import com.badlogic.gdx.utils.Json;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class WeatherEventTest {
 
     private WeatherEvent weatherEvent1, weatherEvent2, weatherEvent3, weatherEvent4, weatherEvent5;
-    private AcidShowerEvent acidShowerEvent1, acidShowerEvent2, acidShowerEvent3, acidShowerEvent4, acidShowerEvent5;
-    private SolarSurgeEvent solarSurgeEvent1, solarSurgeEvent2, solarSurgeEvent3, solarSurgeEvent4, solarSurgeEvent5;
 
     @BeforeEach
     public void setUp() {
-        weatherEvent1 = new WeatherEvent(0, 10, 1, 1.2f) { };
-        weatherEvent2 = new WeatherEvent(1, 2, 2, 1.4f) { };
-        weatherEvent3 = new WeatherEvent(2, 4, 5, 1.0f) { };
-        weatherEvent4 = new WeatherEvent(3, 3, 3, 1.3f) { };
-        weatherEvent5 = new WeatherEvent(5, 5, 1, 1.1f) { };
-        acidShowerEvent1 = new AcidShowerEvent(0, 9, 1, 1.2f);
-        acidShowerEvent2 = new AcidShowerEvent(1, 2, 2, 1.4f);
-        acidShowerEvent3 = new AcidShowerEvent(2, 4, 5, 1.0f);
-        acidShowerEvent4 = new AcidShowerEvent(3, 3, 3, 1.3f);
-        acidShowerEvent5 = new AcidShowerEvent(5, 5, 1, 1.1f);
-        solarSurgeEvent1 = new SolarSurgeEvent(0, 9, 1, 1.2f);
-        solarSurgeEvent2= new SolarSurgeEvent(1, 2, 2, 1.4f);
-        solarSurgeEvent3 = new SolarSurgeEvent(2, 4, 5, 1.0f);
-        solarSurgeEvent4= new SolarSurgeEvent(3, 3, 3, 1.3f);
-        solarSurgeEvent5 = new SolarSurgeEvent(5, 5, 1, 1.1f);
+        weatherEvent1 = new WeatherEvent(0, 10, 1, 1.2f) {
+            @Override
+            public void startEffect() {
+
+            }
+
+            @Override
+            public void stopEffect() {
+
+            }
+        };
+        weatherEvent2 = new WeatherEvent(1, 2, 2, 1.4f) {
+            @Override
+            public void startEffect() {
+
+            }
+
+            @Override
+            public void stopEffect() {
+
+            }
+        };
+        weatherEvent3 = new WeatherEvent(2, 4, 5, 1.0f) {
+            @Override
+            public void startEffect() {
+
+            }
+
+            @Override
+            public void stopEffect() {
+
+            }
+        };
+        weatherEvent4 = new WeatherEvent(3, 3, 3, 1.3f) {
+            @Override
+            public void startEffect() {
+
+            }
+
+            @Override
+            public void stopEffect() {
+
+            }
+        };
+        weatherEvent5 = new WeatherEvent(5, 5, 1, 1.1f) {
+            @Override
+            public void startEffect() {
+
+            }
+
+            @Override
+            public void stopEffect() {
+
+            }
+        };
     }
 
     @Test
@@ -62,6 +99,24 @@ public class WeatherEventTest {
     }
 
     @Test
+    public void testGetDuration() {
+        assertEquals(weatherEvent1.getDuration(), 10);
+        assertEquals(weatherEvent2.getDuration(), 2);
+        assertEquals(weatherEvent3.getDuration(), 4);
+        assertEquals(weatherEvent4.getDuration(), 3);
+        assertEquals(weatherEvent5.getDuration(), 5);
+    }
+
+    @Test
+    public void testGetNumHoursUntil() {
+        assertEquals(weatherEvent1.getNumHoursUntil(), 0);
+        assertEquals(weatherEvent2.getNumHoursUntil(), 1);
+        assertEquals(weatherEvent3.getNumHoursUntil(), 2);
+        assertEquals(weatherEvent4.getNumHoursUntil(), 3);
+        assertEquals(weatherEvent5.getNumHoursUntil(), 5);
+    }
+
+    @Test
     public void testGetPriority() {
         assertEquals(weatherEvent1.getPriority(), 1);
         assertEquals(weatherEvent2.getPriority(), 2);
@@ -74,29 +129,17 @@ public class WeatherEventTest {
     public void testIsExpired() {
         // case: numHoursUntil == 0 and duration > 0
         assertFalse(weatherEvent1.isExpired());
-        assertFalse(acidShowerEvent1.isExpired());
-        assertFalse(solarSurgeEvent1.isExpired());
         // case: numHoursUntil > 0 and duration > 0
         assertFalse(weatherEvent2.isExpired());
         assertFalse(weatherEvent3.isExpired());
         assertFalse(weatherEvent4.isExpired());
         assertFalse(weatherEvent5.isExpired());
-        assertFalse(acidShowerEvent2.isExpired());
-        assertFalse(acidShowerEvent3.isExpired());
-        assertFalse(solarSurgeEvent2.isExpired());
-        assertFalse(solarSurgeEvent3.isExpired());
         for (int i = 0; i < 10; i++) {
             weatherEvent1.updateTime();
             weatherEvent2.updateTime();
             weatherEvent3.updateTime();
             weatherEvent4.updateTime();
             weatherEvent5.updateTime();
-            acidShowerEvent1.updateTime();
-            acidShowerEvent2.updateTime();
-            acidShowerEvent3.updateTime();
-            solarSurgeEvent1.updateTime();
-            solarSurgeEvent2.updateTime();
-            solarSurgeEvent3.updateTime();
         }
         // case: numHoursUntil == 0 and duration == 0
         assertTrue(weatherEvent1.isExpired());
@@ -104,22 +147,12 @@ public class WeatherEventTest {
         assertTrue(weatherEvent3.isExpired());
         assertTrue(weatherEvent4.isExpired());
         assertTrue(weatherEvent5.isExpired());
-        assertTrue(acidShowerEvent1.isExpired());
-        assertTrue(acidShowerEvent2.isExpired());
-        assertTrue(acidShowerEvent3.isExpired());
-        assertTrue(solarSurgeEvent1.isExpired());
-        assertTrue(solarSurgeEvent2.isExpired());
-        assertTrue(solarSurgeEvent3.isExpired());
     }
 
     @Test
     public void testIsActiveButNotIsExpired() {
         assertFalse(weatherEvent1.isExpired());
         assertTrue(weatherEvent1.isActive());
-        assertFalse(acidShowerEvent1.isExpired());
-        assertTrue(acidShowerEvent1.isActive());
-        assertFalse(solarSurgeEvent1.isExpired());
-        assertTrue(solarSurgeEvent1.isActive());
     }
 
     @Test
@@ -150,65 +183,108 @@ public class WeatherEventTest {
     }
 
     @Test
-    public void testAcidShowerEventGetHumidityModifier() {
-        assertEquals(0.23f, acidShowerEvent1.getHumidityModifier(), 0.00001);
-        assertEquals(0.26f, acidShowerEvent2.getHumidityModifier(), 0.00001);
-        assertEquals(0.2f, acidShowerEvent3.getHumidityModifier(), 0.00001);
-        assertEquals(0.245f, acidShowerEvent4.getHumidityModifier(), 0.00001);
-        assertEquals(0.215f, acidShowerEvent5.getHumidityModifier(), 0.00001);
-    }
-
-    @Test
-    public void testAcidShowerEventGetTemperatureModifier() {
-        assertEquals(-11.0f, acidShowerEvent1.getTemperatureModifier(), 0.00001);
-        assertEquals(-12.0f, acidShowerEvent2.getTemperatureModifier(), 0.00001);
-        assertEquals(-10.0f, acidShowerEvent3.getTemperatureModifier(), 0.00001);
-        assertEquals(-11.5f, acidShowerEvent4.getTemperatureModifier(), 0.00001);
-        assertEquals(-10.5f, acidShowerEvent5.getTemperatureModifier(), 0.00001);
-    }
-
-    @Test
-    public void testSolarSurgeEventGetHumidityModifier() {
-        assertEquals(-0.44f, solarSurgeEvent1.getHumidityModifier(), 0.00001);
-        assertEquals(-0.48f, solarSurgeEvent2.getHumidityModifier(), 0.00001);
-        assertEquals(-0.4f, solarSurgeEvent3.getHumidityModifier(), 0.00001);
-        assertEquals(-0.46f, solarSurgeEvent4.getHumidityModifier(), 0.00001);
-        assertEquals(-0.42f, solarSurgeEvent5.getHumidityModifier(), 0.00001);
-    }
-
-    @Test
-    public void testSolarSurgeEventGetTemperatureModifier() {
-        assertEquals(33.0f, solarSurgeEvent1.getTemperatureModifier(), 0.00001);
-        assertEquals(36.0f, solarSurgeEvent2.getTemperatureModifier(), 0.00001);
-        assertEquals(30.0f, solarSurgeEvent3.getTemperatureModifier(), 0.00001);
-        assertEquals(34.5f, solarSurgeEvent4.getTemperatureModifier(), 0.00001);
-        assertEquals(31.5f, solarSurgeEvent5.getTemperatureModifier(), 0.00001);
-    }
-
-    @Test
     public void testConstructorWithNegativePriority() {
         assertThrows(IllegalArgumentException.class, () -> new WeatherEvent(4, 5, -1, 1.1f) {
+            @Override
+            public void startEffect() {
+
+            }
+
+            @Override
+            public void stopEffect() {
+
+            }
         }, "Priority cannot be less than 0");
     }
 
     @Test
     public void testConstructorWithZeroDuration() {
         assertThrows(IllegalArgumentException.class, () -> new WeatherEvent(0, 0, 1, 1.2f) {
+            @Override
+            public void startEffect() {
+
+            }
+
+            @Override
+            public void stopEffect() {
+
+            }
         }, "Duration cannot be 0");
     }
 
     @Test
     public void testConstructorWithNegativeDuration() {
-        assertThrows(IllegalArgumentException.class, () -> new WeatherEvent(5, -1, 3, 1.3f) { }, "Duration cannot be less than 0");
+        assertThrows(IllegalArgumentException.class, () -> new WeatherEvent(5, -1, 3, 1.3f) {
+            @Override
+            public void startEffect() {
+
+            }
+
+            @Override
+            public void stopEffect() {
+
+            }
+        }, "Duration cannot be less than 0");
     }
 
     @Test
     public void testConstructorWithNegativeNumHoursUntil() {
-        assertThrows(IllegalArgumentException.class, () -> new WeatherEvent(-1, 5, 1, 1.2f) { }, "Number of hours until the event occurs cannot be less than 0");
+        assertThrows(IllegalArgumentException.class, () -> new WeatherEvent(-1, 5, 1, 1.2f) {
+            @Override
+            public void startEffect() {
+
+            }
+
+            @Override
+            public void stopEffect() {
+
+            }
+        }, "Number of hours until the event occurs cannot be less than 0");
     }
 
     @Test
     public void testConstructorWithInvalidSeverity() {
-        assertThrows(IllegalArgumentException.class, () -> new WeatherEvent(2, 3, 1, -1f) { }, "Severity must be greater than 0.");
+        assertThrows(IllegalArgumentException.class, () -> new WeatherEvent(2, 3, 1, -1f) {
+            @Override
+            public void startEffect() {
+
+            }
+
+            @Override
+            public void stopEffect() {
+
+            }
+        }, "Severity must be greater than 0.");
+    }
+
+    @Test
+    public void testWrite() {
+        Json mockJson1 = mock(Json.class);
+        weatherEvent1.write(mockJson1);
+        verify(mockJson1).writeObjectStart("Event");
+        verify(mockJson1).writeValue("name", weatherEvent1.getClass().getSimpleName());
+        verify(mockJson1).writeValue("hoursUntil", 0);
+        verify(mockJson1).writeValue("duration", 10);
+        verify(mockJson1).writeValue("priority", 1);
+        verify(mockJson1).writeValue("severity", 1.2f);
+        verify(mockJson1).writeObjectEnd();
+        Json mockJson2 = mock(Json.class);
+        weatherEvent2.write(mockJson2);
+        verify(mockJson2).writeObjectStart("Event");
+        verify(mockJson2).writeValue("name", weatherEvent1.getClass().getSimpleName());
+        verify(mockJson2).writeValue("hoursUntil", 1);
+        verify(mockJson2).writeValue("duration", 2);
+        verify(mockJson2).writeValue("priority", 2);
+        verify(mockJson2).writeValue("severity", 1.4f);
+        verify(mockJson2).writeObjectEnd();
+        Json mockJson3 = mock(Json.class);
+        weatherEvent3.write(mockJson3);
+        verify(mockJson3).writeObjectStart("Event");
+        verify(mockJson3).writeValue("name", weatherEvent1.getClass().getSimpleName());
+        verify(mockJson3).writeValue("hoursUntil", 2);
+        verify(mockJson3).writeValue("duration", 4);
+        verify(mockJson3).writeValue("priority", 5);
+        verify(mockJson3).writeValue("severity", 1.0f);
+        verify(mockJson3).writeObjectEnd();
     }
 }
