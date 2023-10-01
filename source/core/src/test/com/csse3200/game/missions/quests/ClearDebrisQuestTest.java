@@ -166,12 +166,12 @@ class ClearDebrisQuestTest {
                 "Use your shovel to clear %d Ship Debris in the world!\n" +
                 "%d out of %d debris pieces cleared.";
         for (int i = 0; i < 50; i++) {
-            int max123 = Math.min(i, 10);
-            int max4 = Math.min(i, 3);
-            String formatted1 = String.format(desc, 10, max123, 10);
-            String formatted2 = String.format(desc, 10, max123, 10);
-            String formatted3 = String.format(desc, 10, max123, 10);
-            String formatted4 = String.format(desc, 3, max4, 3);
+            int min123 = Math.min(i, 10);
+            int min4 = Math.min(i, 3);
+            String formatted1 = String.format(desc, 10, min123, 10);
+            String formatted2 = String.format(desc, 10, min123, 10);
+            String formatted3 = String.format(desc, 10, min123, 10);
+            String formatted4 = String.format(desc, 3, min4, 3);
             String formatted5 = String.format(desc, 50, i, 50);
             String formatted6 = String.format(desc, 0, 0, 0);
             String formatted7 = String.format(desc, 0, 0, 0);
@@ -188,12 +188,27 @@ class ClearDebrisQuestTest {
 
     @Test
     void testGetShortDescription() {
-        assertEquals("Clear Debris Quest 1", CDQuest1.getShortDescription());
-        assertEquals("Clear Debris Quest 2", CDQuest2.getShortDescription());
-        assertEquals("Clear Debris Quest 3", CDQuest3.getShortDescription());
-        assertEquals(CDQuest1.getDescription(), CDQuest1.getShortDescription());
-        assertEquals(CDQuest2.getDescription(), CDQuest2.getShortDescription());
-        assertEquals(CDQuest3.getDescription(), CDQuest3.getShortDescription());
+        testRegisterMission();
+        String desc = "%d out of %d debris pieces cleared";
+        for (int i = 0; i < 50; i++) {
+            int min123 = Math.min(i, 10);
+            int min4 = Math.min(i, 3);
+            String formatted1 = String.format(desc, min123, 10);
+            String formatted2 = String.format(desc, min123, 10);
+            String formatted3 = String.format(desc, min123, 10);
+            String formatted4 = String.format(desc, min4, 3);
+            String formatted5 = String.format(desc, i, 50);
+            String formatted6 = String.format(desc, 0, 0);
+            String formatted7 = String.format(desc, 0, 0);
+            assertEquals(formatted1, CDQuest1.getShortDescription());
+            assertEquals(formatted2, CDQuest2.getShortDescription());
+            assertEquals(formatted3, CDQuest3.getShortDescription());
+            assertEquals(formatted4, CDQuest4.getShortDescription());
+            assertEquals(formatted5, CDQuest5.getShortDescription());
+            assertEquals(formatted6, CDQuest6.getShortDescription());
+            assertEquals(formatted7, CDQuest7.getShortDescription());
+            ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.DEBRIS_CLEARED.name());
+        }
     }
 
     @Test
@@ -239,6 +254,16 @@ class ClearDebrisQuestTest {
         CDQuest1.resetState();
         CDQuest2.resetState();
         CDQuest3.resetState();
-        testIsCompleted();
+        CDQuest4.resetState();
+        CDQuest5.resetState();
+        CDQuest6.resetState();
+        CDQuest7.resetState();
+        assertFalse(CDQuest1.isCompleted());
+        assertFalse(CDQuest2.isCompleted());
+        assertFalse(CDQuest3.isCompleted());
+        assertFalse(CDQuest4.isCompleted());
+        assertFalse(CDQuest5.isCompleted());
+        assertTrue(CDQuest6.isCompleted());
+        assertTrue(CDQuest7.isCompleted());
     }
 }
