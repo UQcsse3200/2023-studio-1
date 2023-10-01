@@ -1,41 +1,41 @@
   package com.csse3200.game.entities;
 
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Vector;
+  import com.badlogic.gdx.math.Vector2;
+  import com.badlogic.gdx.utils.Array;
+  import com.badlogic.gdx.utils.IntMap;
+  import com.badlogic.gdx.utils.Json;
+  import com.badlogic.gdx.utils.JsonValue;
 
-import com.csse3200.game.areas.terrain.TerrainCropTileFactory;
-import com.csse3200.game.areas.terrain.TerrainTile;
-import com.csse3200.game.components.AuraLightComponent;
-import com.csse3200.game.components.ConeLightComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+  import com.csse3200.game.areas.terrain.CropTileComponent;
+  import com.csse3200.game.areas.terrain.TerrainCropTileFactory;
+  import com.csse3200.game.areas.terrain.TerrainTile;
+  import com.csse3200.game.components.Component;
+  import com.csse3200.game.components.ComponentType;
+  import com.csse3200.game.components.ConeLightComponent;
+  import com.csse3200.game.components.items.ItemComponent;
+  import com.csse3200.game.components.items.ItemType;
+  import com.csse3200.game.components.items.WateringCanLevelComponent;
+  import com.csse3200.game.components.npc.AnimalAnimationController;
+  import com.csse3200.game.components.npc.GhostAnimationController;
+  import com.csse3200.game.components.npc.TamableComponent;
+  import com.csse3200.game.components.player.InventoryComponent;
+  import com.csse3200.game.components.player.ItemPickupComponent;
+  import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
+  import com.csse3200.game.components.player.PlayerAnimationController;
+  import com.csse3200.game.components.ship.ShipLightComponent;
+  import com.csse3200.game.components.tractor.TractorActions;
+  import com.csse3200.game.entities.factories.ShipFactory;
+  import com.csse3200.game.events.EventHandler;
+  import com.csse3200.game.rendering.AnimationRenderComponent;
+  import com.csse3200.game.services.FactoryService;
+  import com.csse3200.game.services.ServiceLocator;
 
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.IntMap;
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonValue;
-import com.csse3200.game.areas.terrain.CropTileComponent;
-import com.csse3200.game.components.Component;
-import com.csse3200.game.components.ComponentType;
-import com.csse3200.game.components.items.ItemComponent;
-import com.csse3200.game.components.items.ItemType;
-import com.csse3200.game.components.items.WateringCanLevelComponent;
-import com.csse3200.game.components.npc.AnimalAnimationController;
-import com.csse3200.game.components.npc.GhostAnimationController;
-import com.csse3200.game.components.npc.TamableComponent;
-import com.csse3200.game.components.plants.PlantComponent;
-import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.components.player.ItemPickupComponent;
-import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
-import com.csse3200.game.components.player.PlayerAnimationController;
-import com.csse3200.game.components.tractor.TractorActions;
-import com.csse3200.game.events.EventHandler;
-import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.services.FactoryService;
-import com.csse3200.game.services.ServiceLocator;
+  import org.slf4j.Logger;
+  import org.slf4j.LoggerFactory;
+
+  import java.awt.*;
+  import java.util.ArrayList;
+  import java.util.HashMap;
 
 /**
  * Core entity class. Entities exist in the game and are updated each frame. All
@@ -375,7 +375,7 @@ public class Entity implements Json.Serializable {
    * to the json about
    * the component.
    * note each component should have a override write function
-   * 
+   *
    * @param json which is a valid Json that is written to
    */
   public void write(Json json) {
@@ -412,7 +412,7 @@ public class Entity implements Json.Serializable {
   /**
    * Reads the json file and creates the entities based on the information in the
    * json file
-   * 
+   *
    * @param json    which is a valid Json that is read from
    * @param jsonMap which is a valid JsonValue that is read from
    */
@@ -457,6 +457,16 @@ public class Entity implements Json.Serializable {
           TerrainTile terrainTile = ServiceLocator.getGameArea().getMap().getTile(tile.getPosition());
           terrainTile.setOccupant(tile);
           break;
+        case Ship:
+          Entity ship = ShipFactory.createShip();
+
+          ShipLightComponent shipLightComponent = ship.getComponent(ShipLightComponent.class);
+          JsonValue shipLightComponentJson = jsonMap.get("components").get(ShipLightComponent.class.getSimpleName());
+          shipLightComponent.read(json, shipLightComponentJson);
+
+          ServiceLocator.getGameArea().spawnEntity(ship);
+          ship.setPosition(position);
+          break;
         case Player:
           // Does not make a new player, instead just updates the current one
           InventoryComponent inventoryComponent = new InventoryComponent(null);
@@ -495,7 +505,7 @@ public class Entity implements Json.Serializable {
 
   /**
    * Gets the type of entity
-   * 
+   *
    * @return the type of entity from EntityType enum
    */
   public EntityType getType() {
