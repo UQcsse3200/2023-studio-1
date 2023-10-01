@@ -27,17 +27,20 @@ import com.csse3200.game.services.ServiceLocator;
 
 /** Factory for creating game terrains. */
 public class TerrainFactory {
-
-  private static GridPoint2 MAP_SIZE = new GridPoint2(1000, 1000); // this will be updated later in the code
-  //protected for testing
-  protected static final String mapPath = "configs/Map.txt";
+  /** GridPoint2 instance representing the size of the map */
+  private GridPoint2 MAP_SIZE;
+  /** The file path for the SpaceGameArea map file */
+  protected static final String mapPath = "configs/Map.txt"; //protected for testing
+  /** The camera of the map */
   private final OrthographicCamera camera;
+  /** The orientation of the camera */
   private final TerrainOrientation orientation;
-
+  /** The tile size constant used for each tile in the TiledMap class */
   private static final float worldTileSize = 1f;
+  /** HashMap used to map characters in map files to texture regions for the individual tiles */
   private Map<Character, TextureRegion> charToTextureMap = new HashMap<>();
-  //protected for testing
-  protected static final Map<Character, String> charToTileImageMap;
+  /** HashMap used to map characters in map files to file paths containing their textures */
+  protected static final Map<Character, String> charToTileImageMap; //protected for testing
   static {
     Map<Character, String> tempMapA = new HashMap<>();
     tempMapA.put('g', "images/grass_1.png");
@@ -76,6 +79,7 @@ public class TerrainFactory {
     tempMapA.put('+', "images/stonePath_1.png");
     charToTileImageMap = Collections.unmodifiableMap(tempMapA);
   }
+  /** Hashmap used to map characters in map files to TerrainCategory types */
   private static final Map<Character, TerrainTile.TerrainCategory> charToTileTypeMap;
   static {
     Map<Character, TerrainTile.TerrainCategory> tempMapB = new HashMap<>();
@@ -119,7 +123,7 @@ public class TerrainFactory {
   /**
    * Create a terrain factory with Orthogonal orientation
    *
-   * @param cameraComponent Camera to render terrains to. Must be ortographic.
+   * @param cameraComponent Camera to render terrains to. Must be orthographic.
    */
   public TerrainFactory(CameraComponent cameraComponent) {
     this(cameraComponent, TerrainOrientation.ORTHOGONAL);
@@ -145,29 +149,58 @@ public class TerrainFactory {
       charToTextureMap.put(entry.getKey(), new TextureRegion(resourceService.getAsset(entry.getValue(),Texture.class)));
       }
   }
+
+  /**
+   * Returns a copy of the MAP_SIZE variable
+   *
+   * @return GridPoint2 instance representing Map Size
+   */
   public GridPoint2 getMapSize() {
     return MAP_SIZE.cpy();
   }
 
   /**
-   * Create a terrain of the given type, using the orientation of the factory.
-   * This can be extended
-   * to add additional game terrains.
+   * Initiates the create terrain process for the SpaceGameArea.
    *
+   * @param tiledMap the TiledMap instance of the game map
    * @return Terrain component which renders the terrain
    */
-  public TerrainComponent createTerrain(TiledMap tiledMap) {
+  public TerrainComponent createSpaceGameTerrain(TiledMap tiledMap) {
+    return createGameTerrain(tiledMap);
+  }
+
+  /**
+   * Initiates the create terrain process for JUnit testing.                                                HUNTER TO CONTINUE THIS
+   *
+   * @param tiledMap the TiledMap instance of the test game map
+   * @return Terrain component which renders the terrain
+   */
+  public TerrainComponent createTestTerrain(TiledMap tiledMap, String testMapFilePath) {                      // MUST IMPLEMENT THIS
+    return null;
+  }
+
+  /**
+   * Finishes the create terrain process, initiating the map loading and returning the instantiated TerrainComponent.
+   *
+   * @param tiledMap the TiledMap instance of the game map
+   * @return Terrain component which renders the terrain
+   */
+  private TerrainComponent createGameTerrain(TiledMap tiledMap) {
     loadTextures();
-    return createGameTerrain(worldTileSize, tiledMap);
-  }
-
-  private TerrainComponent createGameTerrain(float tileWorldSize, TiledMap tiledMap) {
-    GridPoint2 tilePixelSize = new GridPoint2(charToTextureMap.get('g').getRegionWidth(), charToTextureMap.get('g').getRegionHeight());
+    GridPoint2 tilePixelSize = new GridPoint2(charToTextureMap.get('g').getRegionWidth(),
+            charToTextureMap.get('g').getRegionHeight());
     createGameTiles(tilePixelSize, tiledMap);
-    TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
-    return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
+    TiledMapRenderer renderer = createRenderer(tiledMap, worldTileSize / tilePixelSize.x);
+    return new TerrainComponent(camera, tiledMap, renderer, orientation, worldTileSize);
   }
 
+  /**
+   * Creates the TiledMapRenderer instance used in the TerrainComponent class.
+   *
+   * @param tiledMap the TiledMap instance of the game map
+   * @param tileScale the calculated tileScale value
+   * @return a TiledMapRenderer instance
+   */
   private TiledMapRenderer createRenderer(TiledMap tiledMap, float tileScale) {
     switch (orientation) {
       case ORTHOGONAL:
@@ -182,30 +215,6 @@ public class TerrainFactory {
   }
 
   /**
-   * This function will be used to update the MAP_SIZE
-   * 
-   * @param line1 the first line in the file (x parameter)
-   * @param line2 the second line in the file (y parameter)
-   */
-  private void updateMapSize(String line1, String line2) {
-    int x_MapSize = 0, y_MapSize = 0;
-    // read 2 first lines
-    if (isNumeric(line1)) {
-      x_MapSize = Integer.parseInt(line1);
-    } else {
-      System.out.println("Can't read x -> Incorrect input file!");
-    }
-    if (isNumeric(line2)) {
-      y_MapSize = Integer.parseInt(line2);
-    } else {
-      System.out.println("Can't read y -> Incorrect input file!");
-    }
-    // update MAP_SIZE using existing function
-    MAP_SIZE.add(- MAP_SIZE.x, - MAP_SIZE.y);
-    MAP_SIZE.add(x_MapSize, y_MapSize);
-  }
-
-  /**
    * This function will be used to create a TiledMap using the file
    * 
    * @param tileSize the size of the tile
@@ -217,8 +226,11 @@ public class TerrainFactory {
           String line1, line2, line;
           line1 = bf.readLine();
           line2 = bf.readLine();
-          updateMapSize(line1,line2);
+
+          setMapSize(line1,line2);
+
           TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
+
           // y_pos = 100 and x_pos = 100 lets map generate correctly
           int x_pos = 0, y_pos = 99;
           // checking for end of file
@@ -244,6 +256,29 @@ public class TerrainFactory {
       } catch (Exception e) {
           System.out.println("fillTilesWithFile -> Testcase error!: " + e);
       }
+  }
+
+  /**
+   * This function will be used to set the MAP_SIZE
+   *
+   * @param line1 the first line in the file (x parameter)
+   * @param line2 the second line in the file (y parameter)
+   */
+  private void setMapSize(String line1, String line2) {
+    int x_MapSize = 0, y_MapSize = 0;
+    // read 2 first lines
+    if (isNumeric(line1)) {
+      x_MapSize = Integer.parseInt(line1);
+    } else {
+      System.out.println("Can't read x -> Incorrect input file!");
+    }
+    if (isNumeric(line2)) {
+      y_MapSize = Integer.parseInt(line2);
+    } else {
+      System.out.println("Can't read y -> Incorrect input file!");
+    }
+
+    MAP_SIZE = new GridPoint2(x_MapSize, y_MapSize);
   }
 
   /**

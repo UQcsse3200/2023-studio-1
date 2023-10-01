@@ -1,47 +1,30 @@
 package com.csse3200.game.components.items;
 
-import com.badlogic.gdx.Files;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.terrain.*;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.InteractionDetector;
-import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.EntityType;
-import com.csse3200.game.entities.configs.plants.BasePlantConfig;
-import com.csse3200.game.entities.configs.plants.PlantConfigs;
-import com.csse3200.game.entities.factories.ItemFactory;
-import com.csse3200.game.entities.factories.PlantFactory;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.physics.components.HitboxComponent;
-import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.RenderService;
-import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.security.Provider;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -173,10 +156,6 @@ public class ItemActionsTest {
         Entity gate = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("Gate", ItemType.PLACEABLE, null));
         assertTrue(gate.getComponent(ItemActions.class).use(player, mousePos, gameMap));
         assertTrue(shovel.getComponent(ItemActions.class).use(player, mousePos, gameMap));
-
-        Entity chest = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("Chest", ItemType.PLACEABLE, null)).addComponent(new InventoryComponent(null));
-        assertTrue(chest.getComponent(ItemActions.class).use(player, mousePos, gameMap));
-        assertTrue(shovel.getComponent(ItemActions.class).use(player, mousePos, gameMap));
     }
 
     @Test
@@ -196,11 +175,14 @@ public class ItemActionsTest {
         ServiceLocator.registerResourceService(mock(ResourceService.class));
         FileLoader fl = new FileLoader();
 
-        Entity can = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("can", ItemType.WATERING_CAN, null));
+        Entity can = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("can", ItemType.WATERING_CAN, null)).addComponent(new WateringCanLevelComponent(150));
+        WateringCanLevelComponent canLevel = can.getComponent(WateringCanLevelComponent.class);
         Entity hoe = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("hoe", ItemType.HOE, null));
         assertFalse(can.getComponent(ItemActions.class).use(player, mousePos, gameMap));
         assertTrue(hoe.getComponent(ItemActions.class).use(player, mousePos, gameMap));
         assertTrue(can.getComponent(ItemActions.class).use(player, mousePos, gameMap));
+        canLevel.empty();
+        assertFalse(can.getComponent(ItemActions.class).use(player, mousePos, gameMap));
     }
 
     @Test

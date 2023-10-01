@@ -245,10 +245,10 @@ public class ItemFactory {
    */
   public static Entity createFenceItem() {
     Entity fence = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/misc/aloe_vera_seed.png"))
+            .addComponent(new TextureRenderComponent("images/placeable/fences/f.png"))
             .addComponent(new ItemComponent("Fence", ItemType.PLACEABLE,
                     "A fence to keep animals in or out",
-                    new Texture("images/plants/misc/aloe_vera_seed.png")));
+                    new Texture("images/placeable/fences/f.png")));
     return fence;
   }
 
@@ -258,10 +258,10 @@ public class ItemFactory {
    */
   public static Entity createGateItem() {
     Entity gate = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/misc/aloe_vera_seed.png"))
+            .addComponent(new TextureRenderComponent("images/placeable/fences/g_r_l.png"))
             .addComponent(new ItemComponent("Gate", ItemType.PLACEABLE,
                     "Allows the player to walk in and out of enclosed areas",
-                    new Texture("images/plants/misc/aloe_vera_seed.png")));
+                    new Texture("images/placeable/fences/g_r_l.png")));
     return gate;
   }
 
@@ -271,11 +271,24 @@ public class ItemFactory {
    */
   public static Entity createSprinklerItem() {
     Entity sprinkler = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/misc/aloe_vera_seed.png"))
+            .addComponent(new TextureRenderComponent("images/placeable/sprinkler/pipe_null.png"))
             .addComponent(new ItemComponent("Sprinkler", ItemType.PLACEABLE,
                     "Waters crops in the surrounding area",
-                    new Texture("images/plants/misc/aloe_vera_seed.png")));
+                    new Texture("images/placeable/sprinkler/pipe_null.png")));
     return sprinkler;
+  }
+
+  /**
+   * Creates a Pump item that allows the player to power sprinklers
+   * @return the sprinkler item
+   */
+  public static Entity createPumpItem() {
+    Entity pump = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/placeable/sprinkler/pump.png"))
+            .addComponent(new ItemComponent("Pump", ItemType.PLACEABLE,
+                    "Powers connected sprinklers",
+                    new Texture("images/placeable/sprinkler/pump.png")));
+    return pump;
   }
 
   /**
@@ -284,10 +297,10 @@ public class ItemFactory {
    */
   public static Entity createChestItem() {
     Entity chest = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/misc/aloe_vera_seed.png"))
+            .addComponent(new TextureRenderComponent("images/Temp-Chest.png"))
             .addComponent(new ItemComponent("Chest", ItemType.PLACEABLE,
                     "A storage container to keep your seeds and goodies",
-                    new Texture("images/plants/misc/aloe_vera_seed.png")));
+                    new Texture("images/Temp-Chest.png")));
     return chest;
   }
 

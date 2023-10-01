@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
+import com.csse3200.game.components.losescreen.LoseScreenDisplay;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.achievements.Achievement;
 import com.csse3200.game.missions.achievements.PlantCropsAchievement;
@@ -39,6 +40,9 @@ public class MissionManager implements Json.Serializable {
 		// Triggers when a crop is harvested, a single String representing the plant name is provided as an argument
 		HARVEST_CROP,
 		// Triggers when an animal is tamed
+		TAME_ANIMAL,
+		// Triggers when a reward is collected used for MissionCompleteQuests
+		REWARD_COMPLETE,
 		ANIMAL_TAMED,
 		// Triggers when an animal is defeated in combat, a EntityType enum value is provided representing the type of
 		// entity defeated is provided as an argument
@@ -154,6 +158,10 @@ public class MissionManager implements Json.Serializable {
 			quest.updateExpiry();
 			if (quest.isExpired()) {
 				events.trigger(MissionEvent.QUEST_EXPIRED.name());
+				if (quest.isMandatory()) {
+					LoseScreenDisplay.setLoseReason(quest.getName());
+					events.trigger("loseScreen");
+				}
 			}
 		}
 	}
