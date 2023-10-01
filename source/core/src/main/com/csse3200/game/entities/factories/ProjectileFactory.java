@@ -71,7 +71,7 @@ public class ProjectileFactory {
         projectile
                 .addComponent(new ProjectileComponent(2f))
                 .addComponent(new TouchAttackComponent(PhysicsLayer.NPC, 10f))
-                .addComponent(new CombatStatsComponent(0, 10))
+                .addComponent(new CombatStatsComponent(1, 10))
                 .addComponent(animator);
 
         projectile.getComponent(HitboxComponent.class).setAsBoxAligned(

@@ -225,7 +225,6 @@ public class PlayerActions extends Component {
     attackSound.play();
     mousePos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
     List<Entity> areaEntities = ServiceLocator.getGameArea().getAreaEntities();
-    List<Entity> deadEntities = new ArrayList<>();
     for(Entity animal : areaEntities) {
       CombatStatsComponent combat = animal.getComponent(CombatStatsComponent.class);
       if(combat != null && animal != entity) {
@@ -244,23 +243,7 @@ public class PlayerActions extends Component {
             combat.setHealth(combat.getHealth() - SWORD_DAMAGE);
             animal.getEvents().trigger("panicStart");
           }
-          if(combat.isDead()) {
-            deadEntities.add(animal);
-          }
         }
-      }
-    }
-
-    for(Entity animal : deadEntities){
-      CombatStatsComponent combat = animal.getComponent(CombatStatsComponent.class);
-      MultiDropComponent dropComponent = animal.getComponent(MultiDropComponent.class);
-
-      //If the entity needs to drop an item before death, do not delete it immediately, send death
-      //trigger and let drop component drop item first, then it will delete entity
-      if (dropComponent != null && dropComponent.getHandlesDeath()) {
-        animal.getEvents().trigger("death");
-      } else {
-        combat.handleDeath();
       }
     }
   }

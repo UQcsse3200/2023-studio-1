@@ -96,18 +96,5 @@ public class TouchAttackComponent extends Component {
     if (entity.getComponent(ProjectileComponent.class) != null) {
       entity.getEvents().trigger("impactStart");
     }
-
-    if(targetStats != null && targetStats.getHealth() < 0 && !target.getType().equals(EntityType.Player)) {
-      MultiDropComponent dropComponent = target.getComponent(MultiDropComponent.class);
-      targetStats.handleDeath();
-
-      //If the entity needs to drop an item before death, do not delete it immediately, send death
-      //trigger and let drop component drop item first, then it will delete entity
-//      if (dropComponent != null && dropComponent.getHandlesDeath()) {//TODO fix!
-//        target.getEvents().trigger("death");
-//      } else {
-//            targetStats.handleDeath();
-//      }
-    }
   }
 }

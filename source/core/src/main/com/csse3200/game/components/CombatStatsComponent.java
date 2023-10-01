@@ -1,5 +1,6 @@
 package com.csse3200.game.components;
 
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -19,13 +20,6 @@ public class CombatStatsComponent extends Component {
   public CombatStatsComponent(int health, int baseAttack) {
     setHealth(health);
     setBaseAttack(baseAttack);
-  }
-
-  @Override
-  public void create() {
-    if (!(entity.getType() == EntityType.Player)) {
-      entity.getEvents().addListener("despawn", this::handleDeath);
-    }
   }
 
   /**
@@ -101,6 +95,14 @@ public class CombatStatsComponent extends Component {
   public void handleDeath() {
     if(!entity.getType().equals(EntityType.Player)) {
       ServiceLocator.getGameArea().removeEntity(entity);
+    }
+  }
+
+  @Override
+  public void earlyUpdate() {
+    if (isDead()) {
+      entity.getEvents().trigger("death");
+      handleDeath();
     }
   }
 }

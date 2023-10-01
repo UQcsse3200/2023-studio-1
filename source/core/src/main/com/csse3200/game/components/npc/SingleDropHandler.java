@@ -104,11 +104,6 @@ public class SingleDropHandler {
             item.setPosition(position);
             gameArea.spawnEntity(item);
         }
-
-        //On death, need to remove entity after dropping item so trigger despawn
-        if (trigger.equals("death")) {
-            entity.getEvents().trigger("despawn");
-        }
     }
 
     /**
