@@ -226,7 +226,7 @@ public class ItemActionsTest {
         ServiceLocator.registerResourceService(mock(ResourceService.class));
         FileLoader fl = new FileLoader();
 
-        Entity seed = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("Test seed", ItemType.SEED, null));
+        Entity seed = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("Test Seeds", ItemType.SEED, null));
         Entity hoe = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("hoe", ItemType.HOE, null));
         assertFalse(seed.getComponent(ItemActions.class).use(player, mousePos, gameMap));
         assertTrue(hoe.getComponent(ItemActions.class).use(player, mousePos, gameMap));

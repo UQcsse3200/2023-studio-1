@@ -107,6 +107,7 @@ public class SpaceGameArea extends GameArea {
           "images/plants/cosmic_cob/5_decaying.png",
           "images/plants/cosmic_cob/6_dead.png",
           "images/plants/cosmic_cob/item_drop.png",
+          "images/plants/cosmic_cob/seedbag.png",
 
           "images/plants/aloe_vera/1_seedling.png",
           "images/plants/aloe_vera/2_sprout.png",
@@ -151,6 +152,7 @@ public class SpaceGameArea extends GameArea {
           "images/plants/deadly_nightshade/5_decaying.png",
           "images/plants/deadly_nightshade/6_dead.png",
           "images/plants/deadly_nightshade/item_drop.png",
+          "images/plants/deadly_nightshade/seedbag.png",
 
           "images/plants/misc/aloe_vera_seed.png",
           "images/plants/misc/cosmic_cob_seed.png",
