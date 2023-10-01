@@ -1,6 +1,8 @@
 package com.csse3200.game.components.cutscenes;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -62,6 +64,19 @@ public class CutsceneDisplay extends UIComponent {
         table.setFillParent(true);
         table.bottom();
         table.padBottom(40);
+        /**
+         * Following code for making transparent rectangle from
+         * https://stackoverflow.com/questions/44260510/is-it-possible-to-draw-a-transparent-layer-without-using-image-libgdx
+         */
+        Pixmap pixmap = new Pixmap(1,1, Pixmap.Format.RGBA8888);
+        pixmap.setColor(Color.BLACK);
+        pixmap.fillRectangle(0, 0, 1, 1);
+        Texture transparentRecTex = new Texture(pixmap);
+        pixmap.dispose();
+        Image transparentRectangle = new Image(transparentRecTex);
+        transparentRectangle.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        transparentRectangle.getColor().a = 0.5f;
+        stage.addActor(transparentRectangle);
 
         stage.addActor(table);
         this.spawnDialogueBox();
@@ -71,6 +86,7 @@ public class CutsceneDisplay extends UIComponent {
     }
 
     private void spawnSprite(String filePath, String position, float sizeIncrease) {
+        //Need to take following code out of function as memory leak occuring
         TextureAtlas atlas = ServiceLocator.getResourceService()
                 .getAsset(filePath, TextureAtlas.class);
         TextureAtlas.AtlasRegion region = atlas.findRegion("default");
@@ -78,6 +94,7 @@ public class CutsceneDisplay extends UIComponent {
             throw new IllegalArgumentException(filePath + " is an invalid filePath");
         }
         Image sprite = new Image(region);
+        //
         int xpos = 0, ypos = 0;
         if (position == "LEFT") {
             xpos = 50;
