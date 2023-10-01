@@ -4,6 +4,7 @@ import com.csse3200.game.areas.weather.SolarSurgeEvent;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.entities.factories.NPCFactory;
+import com.csse3200.game.entities.factories.TractorFactory;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.rewards.*;
 import com.csse3200.game.services.ServiceLocator;
@@ -32,6 +33,7 @@ public class QuestFactory {
     public static final String airAndAlgaeQuestName = "Air and Algae";
     public static final String stratosphericSentinel = "Stratospheric Sentinel";
     public static final String actIIIMainQuestName = "Weather the Storm";
+    public static final String TRACTOR_GO_BRRRRRR = "Tractor Go BRRRRRR";
 
     public static AutoQuest createFirstContactQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
@@ -125,13 +127,26 @@ public class QuestFactory {
 
         MultiReward reward = new MultiReward(List.of(
                 new ItemReward(List.of(
-                        ItemFactory.createCowFood()
+                        ItemFactory.createCowFood(),
+                        ItemFactory.createSprinklerItem()
+                        // TODO import sprinkler pump
                 )),
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
         return new PlantInteractionQuest(reapingYourRewardsQuestName, reward, MissionManager.MissionEvent.HARVEST_CROP,
                 Set.of("Cosmic Cob"), 12);
+    }
+
+    public static MissionCompleteQuest createTractorQuest() {
+        String dialogue = """
+                Traktor Go BRRRR!!!
+                """;
+        MultiReward reward = new MultiReward(List.of(
+                new EntityReward(List.of(TractorFactory.createTractor(ServiceLocator.getGameArea().getPlayer()))),
+                new DialogueReward(dialogue)
+        ));
+        return new MissionCompleteQuest(TRACTOR_GO_BRRRRRR, reward, 1);
     }
 
     public static TameAnimalsQuest createMakingFriendsQuest() {
@@ -181,7 +196,9 @@ public class QuestFactory {
         MultiReward reward = new MultiReward(List.of(
                 new ItemReward(List.of(
                         // TODO - Add weapon to defeat incoming enemies
-                        ItemFactory.createSpaceSnapperSeed()
+                        ItemFactory.createSpaceSnapperSeed(),
+                        ItemFactory.createFenceItem(),
+                        ItemFactory.createGateItem()
                 )),
                 new QuestReward(questsToAdd, questsToActivate),
                 new TriggerHostilesReward(List.of(
@@ -224,6 +241,7 @@ public class QuestFactory {
 
     public static MainQuest createActIMainQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
+
         List<Quest> questsToActivate = new ArrayList<>();
         questsToActivate.add(createConnectionQuest());
 
@@ -254,7 +272,9 @@ public class QuestFactory {
 
         MultiReward reward = new MultiReward(List.of(
                 new QuestReward(questsToAdd, questsToActivate),
-                new DialogueReward(dialogue)
+                new DialogueReward(dialogue),
+                new ItemReward(List.of(ItemFactory.createLightItem(),
+                        ItemFactory.createChestItem()))
         ));
 
         return new MainQuest(actIMainQuestName, reward, 5, requiredQuests, "gain ALIEN NPC's trust");

@@ -39,6 +39,9 @@ public class MissionManager implements Json.Serializable {
 		// Triggers when a crop is harvested, a single String representing the plant name is provided as an argument
 		HARVEST_CROP,
 		// Triggers when an animal is tamed
+		TAME_ANIMAL,
+		// Triggers when a reward is collected used for MissionCompleteQuests
+		REWARD_COMPLETE,
 		ANIMAL_TAMED,
 		// Triggers when an animal is defeated in combat, a EntityType enum value is provided representing the type of
 		// entity defeated is provided as an argument
