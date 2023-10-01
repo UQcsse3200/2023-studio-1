@@ -3,11 +3,13 @@ package com.csse3200.game.missions.quests;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.JsonWriter;
+import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.rewards.Reward;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
+import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,6 +20,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 class MainQuestTest {
     private MainQuest mainQuest1, mainQuest2, mainQuest3;
@@ -168,19 +171,30 @@ class MainQuestTest {
 
     @Test
     void testGetProgress() {
+        testRegisterMission();
         String[] progressArray1 = {requirement1};
         String[] progressArray2 = {requirement1, requirement2};
         String[] progressArray3 = {requirement1, requirement2, requirement3};
-        assertEquals(progressArray1, mainQuest1.getProgress());
-        assertEquals(0, mainQuest2.getProgress());
-        assertEquals(0, mainQuest3.getProgress());
-        testIsCompleted();
-        assertNotEquals(0, mainQuest1.getProgress());
-        assertNotEquals(0, mainQuest2.getProgress());
-        assertEquals(0, mainQuest3.getProgress());
-        assertEquals(10, mainQuest1.getProgress());
-        assertEquals(10, mainQuest2.getProgress());
-        assertEquals(0, mainQuest3.getProgress());
+        String[] progressArray0 = {};
+        assertArrayEquals(progressArray0, (Object[]) mainQuest1.getProgress());
+        ServiceLocator.getMissionManager().getEvents().trigger(
+                MissionManager.MissionEvent.QUEST_REWARD_COLLECTED.name(), requirement1);
+        assertArrayEquals(progressArray1, (Object[]) mainQuest1.getProgress());
+        assertArrayEquals(progressArray1, (Object[]) mainQuest2.getProgress());
+        assertArrayEquals(progressArray1, (Object[]) mainQuest3.getProgress());
+        ServiceLocator.getMissionManager().getEvents().trigger(
+                MissionManager.MissionEvent.QUEST_REWARD_COLLECTED.name(), requirement2);
+        assertArrayEquals(progressArray1, (Object[]) mainQuest1.getProgress());
+        assertArrayEquals(progressArray2, (Object[]) mainQuest2.getProgress());
+        assertArrayEquals(progressArray2, (Object[]) mainQuest3.getProgress());
+        ServiceLocator.getMissionManager().getEvents().trigger(
+                MissionManager.MissionEvent.QUEST_REWARD_COLLECTED.name(), requirement3);
+        assertArrayEquals(progressArray1, (Object[]) mainQuest1.getProgress());
+        assertArrayEquals(progressArray2, (Object[]) mainQuest2.getProgress());
+        assertArrayEquals(progressArray3, (Object[]) mainQuest3.getProgress());
+        assertTrue(mainQuest1.isCompleted());
+        assertTrue(mainQuest2.isCompleted());
+        assertTrue(mainQuest3.isCompleted());
     }
 
     @Test
