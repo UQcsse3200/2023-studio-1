@@ -21,7 +21,6 @@ import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
-
 @ExtendWith(GameExtension.class)
 public class ShipAnimationControllerTest {
     private Entity ship;
@@ -32,7 +31,7 @@ public class ShipAnimationControllerTest {
     void initialiseTest() {
         ServiceLocator.registerRenderService(new RenderService());
         ResourceService resourceService = new ResourceService();
-        resourceService.loadTextureAtlases(new String[]{"images/ship/ship.atlas"});
+        resourceService.loadTextureAtlases(new String[] { "images/ship/ship.atlas" });
         resourceService.loadAll();
         ServiceLocator.registerResourceService(resourceService);
 
@@ -40,12 +39,14 @@ public class ShipAnimationControllerTest {
                 .addComponent(animationRenderComponent)
                 .addComponent(new ShipAnimationController());
 
+        animationRenderComponent = ShipFactory.setupShipAnimations();
+
         ship.getComponent(AnimationRenderComponent.class).scaleEntity();
         ship.create();
     }
 
-    @ParameterizedTest(name = "{2} animation played correctly on {0} event trigger")
-    @MethodSource({"shouldUpdateAnimationOnProgressUpdate"})
+    @ParameterizedTest(name = "{2} animation played correctly on {0} event trigger with  {1} repairs made")
+    @MethodSource({ "shouldUpdateAnimationOnProgressUpdate" })
     void shouldUpdateAnimationOnProgressUpdate(String animationEvent, int progress, String expectedAnimationName) {
         ship.getEvents().trigger(animationEvent, progress, new HashSet<>());
         assertEquals(expectedAnimationName, animationRenderComponent.getCurrentAnimation());
@@ -62,7 +63,6 @@ public class ShipAnimationControllerTest {
                 arguments("progressUpdated", 12, "ship_3"),
                 arguments("progressUpdated", 16, "ship_4"),
                 arguments("progressUpdated", 20, "ship_5"),
-                arguments("progressUpdated", 30, "ship_5")
-        );
+                arguments("progressUpdated", 30, "ship_5"));
     }
 }
