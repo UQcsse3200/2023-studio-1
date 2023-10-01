@@ -92,6 +92,7 @@ public class CombatStatsComponent extends Component {
   }
 
   public void handleDeath(){
+    entity.getEvents().trigger("death");
     if(!entity.getType().equals(EntityType.Player)) {
       ServiceLocator.getGameArea().removeEntity(entity);
     }

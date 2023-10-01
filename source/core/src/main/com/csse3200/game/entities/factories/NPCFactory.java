@@ -36,7 +36,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 import java.security.SecureRandom;
-import java.util.Random;
 
 /**
  * Factory to create non-playable character (NPC) entities with predefined components.
