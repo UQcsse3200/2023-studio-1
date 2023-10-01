@@ -180,6 +180,8 @@ public class SpaceGameArea extends GameArea {
           "images/ship/ship_debris.png",
           "images/ship/ship.png",
           "images/ship/ship_part.png",
+          "images/PauseMenu/Pause_Overlay.jpg",
+          "images/PauseMenu/Pausenew.jpg"
 
   };
   private static final String[] forestTextureAtlases = {
