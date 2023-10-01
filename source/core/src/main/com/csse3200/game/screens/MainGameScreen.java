@@ -34,7 +34,6 @@ import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
-import com.csse3200.game.missions.cutscenes.Cutscene;
 
 
 /**
@@ -90,11 +89,9 @@ public class MainGameScreen extends ScreenAdapter {
 
     private static Boolean lose;
 
-    private CUT_SCENE scene;
 
     public MainGameScreen(GdxGame game) {
         this.game = game;
-        this.scene = CUT_SCENE.CS0;
         logger.debug("Initialising main game screen services");
         ServiceLocator.registerTimeSource(new GameTime());
 
@@ -147,11 +144,6 @@ public class MainGameScreen extends ScreenAdapter {
 
     public void loseScreenStart() {
         lose = true;
-    }
-
-
-    public void runCutScene(CUT_SCENE scene) {
-        this.scene = scene;
     }
 
     @Override
@@ -240,13 +232,6 @@ public class MainGameScreen extends ScreenAdapter {
                 .addComponent(new WeatherEventDisplay());
 
         ServiceLocator.getEntityService().register(ui);
-    }
-
-    enum CUT_SCENE {
-        CS0, // no cut scene case
-        CS1, //start from 1
-        CS2,
-        CS3
     }
 }
 

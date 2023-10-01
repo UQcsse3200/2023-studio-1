@@ -42,15 +42,14 @@ public class ServiceLocator {
   private static PlanetOxygenService planetOxygenService;
   private static PlantCommandService plantCommandService;
   private static PlantInfoService plantInfoService;
+  private static boolean cutSceneRunning; // true for running and false otherwise
+
   public static PlantCommandService getPlantCommandService() {
     return plantCommandService;
   }
   public static PlantInfoService getPlantInfoService() {
     return plantInfoService;
   }
-
-  private static Cutscene cutScene;
-
   public static GameArea getGameArea() {
     return gameArea;
   }
@@ -142,14 +141,12 @@ public class ServiceLocator {
     timeSource  = source;
   }
 
-  /**
-   * Registers a cutscene to be played.
-   * 
-   * @param scene the cutscene to play
-   */
-  public static void registerCutscene(Cutscene scene) {
-    logger.debug("Register cutscene {}", scene);
-    cutScene = scene;
+  public static void setCutSceneRunning(boolean isRunning) {
+    cutSceneRunning = isRunning;
+  }
+
+  public static boolean getCutSceneStatus() {
+    return cutSceneRunning;
   }
 
   public static void registerMissionManager(MissionManager source) {
