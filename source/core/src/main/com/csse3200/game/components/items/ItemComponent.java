@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.services.ServiceLocator;
 
 
 public class ItemComponent extends Component {
@@ -32,8 +33,8 @@ public class ItemComponent extends Component {
      * @param itemName user facing name for item
      * @param itemType the enum for type of item
      */
-    public ItemComponent(String itemName, ItemType itemType, Texture invSprite) {
-        this.itemTexture = invSprite;
+    public ItemComponent(String itemName, ItemType itemType, String texturePath) {
+        this.itemTexture = ServiceLocator.getResourceService().getAsset(texturePath, Texture.class);
         this.itemType = itemType;
         this.itemName = itemName;
         this.itemId = generateUniqueID(); // Generate a unique ID for the item
@@ -48,8 +49,8 @@ public class ItemComponent extends Component {
      * @param itemType the enum for type of item
      * @param price sellable price of the item
      */
-    public ItemComponent(String itemName, ItemType itemType, int price, Texture invSprite) {
-        this.itemTexture = invSprite;
+    public ItemComponent(String itemName, ItemType itemType, int price, String texturePath) {
+        this.itemTexture = ServiceLocator.getResourceService().getAsset(texturePath, Texture.class);
         this.itemType = itemType;
         this.itemName = itemName;
         this.itemId = generateUniqueID(); // Generate a unique ID for the item
@@ -64,8 +65,8 @@ public class ItemComponent extends Component {
      * @param itemType the enum for type of item
      * @param itemDescription user facing description for item
      */
-    public ItemComponent(String itemName, ItemType itemType, String itemDescription, Texture itemTexture) {
-        this.itemTexture = itemTexture;
+    public ItemComponent(String itemName, ItemType itemType, String itemDescription, String texturePath) {
+        this.itemTexture = ServiceLocator.getResourceService().getAsset(texturePath, Texture.class);
         this.itemType = itemType;
         this.itemName = itemName;
         this.itemId = generateUniqueID(); // Generate a unique ID for the item
@@ -80,8 +81,8 @@ public class ItemComponent extends Component {
      * @param itemDescription user facing description for item
      * @param price price of item
      */
-    public ItemComponent(String itemName, ItemType itemType, String itemDescription, int price, Texture invSprite) {
-        this.itemTexture = invSprite;
+    public ItemComponent(String itemName, ItemType itemType, String itemDescription, int price, String texturePath) {
+        this.itemTexture = ServiceLocator.getResourceService().getAsset(texturePath, Texture.class);
         this.itemType = itemType;
         this.itemName = itemName;
         this.itemId = generateUniqueID(); // Generate a unique ID for the item
