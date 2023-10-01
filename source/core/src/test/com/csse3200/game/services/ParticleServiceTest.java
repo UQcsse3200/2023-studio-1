@@ -1,13 +1,10 @@
 package com.csse3200.game.services;
 
-import box2dLight.PointLight;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.GameArea;
-import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.rendering.ParticleEffectWrapper;
 import org.junit.jupiter.api.AfterEach;
@@ -15,15 +12,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.platform.commons.util.ReflectionUtils;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockedConstruction;
-import org.mockito.internal.util.MockUtil;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.lang.reflect.Field;
 import java.util.*;
-import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
