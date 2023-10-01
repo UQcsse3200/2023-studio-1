@@ -77,7 +77,7 @@ class ClearDebrisQuestTest {
         CDQuest3 = new ClearDebrisQuest("Clear Debris Quest 3", r3, 10, true, 10);
         CDQuest4 = new ClearDebrisQuest("Clear Debris Quest 4", r4, 3);
         CDQuest5 = new ClearDebrisQuest("Clear Debris Quest 5", r5, 50);
-        CDQuest6 = new ClearDebrisQuest("Clear Debris Quest 6", r6, 0);
+        CDQuest6 = new ClearDebrisQuest("Clear Debris Quest 6", r6, 10, false, -1);
         CDQuest7 = new ClearDebrisQuest("Clear Debris Quest 7", r7, -1);
     }
 
@@ -213,32 +213,47 @@ class ClearDebrisQuestTest {
 
     @Test
     void testReadProgress() {
-        JsonValue mockProgress = mock(JsonValue.class);
-        testGetDescription();
-        String CDQuest1Desc = CDQuest1.getDescription();
-        String CDQuest2Desc = CDQuest2.getDescription();
-        String CDQuest3Desc = CDQuest3.getDescription();
-        testGetProgress();
-        testIsCompleted();
-        testGetShortDescription();
-        String CDQuest1ShortDesc = CDQuest1.getShortDescription();
-        String CDQuest2ShortDesc = CDQuest2.getShortDescription();
-        String CDQuest3ShortDesc = CDQuest3.getShortDescription();
-        testRegisterMission();
-        CDQuest1.readProgress(mockProgress);
-        CDQuest2.readProgress(mockProgress);
-        CDQuest3.readProgress(mockProgress);
-        testGetDescription();
-        assertEquals(CDQuest1Desc, CDQuest1.getDescription());
-        assertEquals(CDQuest2Desc, CDQuest2.getDescription());
-        assertEquals(CDQuest3Desc, CDQuest3.getDescription());
-        testGetProgress();
-        testIsCompleted();
-        testGetShortDescription();
-        assertEquals(CDQuest1ShortDesc, CDQuest1.getShortDescription());
-        assertEquals(CDQuest2ShortDesc, CDQuest2.getShortDescription());
-        assertEquals(CDQuest3ShortDesc, CDQuest3.getShortDescription());
-        testResetState();
+        int progressInt = 3;
+        JsonValue progress = new JsonValue(progressInt);
+        String desc = "Gather scattered parts of your ship.\n" +
+                "Use your shovel to clear %d Ship Debris in the world!\n" +
+                "%d out of %d debris pieces cleared.";
+        String shortDesc = "%d out of %d debris pieces cleared";
+        CDQuest1.readProgress(progress);
+        CDQuest2.readProgress(progress);
+        CDQuest3.readProgress(progress);
+        CDQuest4.readProgress(progress);
+        CDQuest5.readProgress(progress);
+        CDQuest6.readProgress(progress);
+        CDQuest7.readProgress(progress);
+        String formatted1 = String.format(desc, 10, progressInt, 10);
+        String formatted2 = String.format(desc, 10, progressInt, 10);
+        String formatted3 = String.format(desc, 10, progressInt, 10);
+        String formatted4 = String.format(desc, 3, progressInt, 3);
+        String formatted5 = String.format(desc, 50, progressInt, 50);
+        String formatted6 = String.format(desc, 0, progressInt, 0);
+        String formatted7 = String.format(desc, 0, progressInt, 0);
+        String shortFormatted1 = String.format(shortDesc, progressInt, 10);
+        String shortFormatted2 = String.format(shortDesc, progressInt, 10);
+        String shortFormatted3 = String.format(shortDesc, progressInt, 10);
+        String shortFormatted4 = String.format(shortDesc, progressInt, 3);
+        String shortFormatted5 = String.format(shortDesc, progressInt, 50);
+        String shortFormatted6 = String.format(shortDesc, progressInt, 0);
+        String shortFormatted7 = String.format(shortDesc, progressInt, 0);
+        assertEquals(formatted1, CDQuest1.getDescription());
+        assertEquals(formatted2, CDQuest2.getDescription());
+        assertEquals(formatted3, CDQuest3.getDescription());
+        assertEquals(formatted4, CDQuest4.getDescription());
+        assertEquals(formatted5, CDQuest5.getDescription());
+        assertEquals(formatted6, CDQuest6.getDescription());
+        assertEquals(formatted7, CDQuest7.getDescription());
+        assertEquals(shortFormatted1, CDQuest1.getShortDescription());
+        assertEquals(shortFormatted2, CDQuest2.getShortDescription());
+        assertEquals(shortFormatted3, CDQuest3.getShortDescription());
+        assertEquals(shortFormatted4, CDQuest4.getShortDescription());
+        assertEquals(shortFormatted5, CDQuest5.getShortDescription());
+        assertEquals(shortFormatted6, CDQuest6.getShortDescription());
+        assertEquals(shortFormatted7, CDQuest7.getShortDescription());
     }
 
     @Test
