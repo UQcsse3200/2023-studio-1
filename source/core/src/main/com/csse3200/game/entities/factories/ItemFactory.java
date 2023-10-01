@@ -65,7 +65,7 @@ public class ItemFactory {
     Entity shovel = createBaseItem()
         .addComponent(new TextureRenderComponent("images/tool_shovel.png"))
         .addComponent(new ItemComponent("shovel", ItemType.SHOVEL, "Shovel for removing items",
-            new Texture("images/tool_shovel.png")));
+            new Texture("images/tool_shovel.png"),false));
     return shovel;
   }
 
@@ -77,7 +77,7 @@ public class ItemFactory {
   public static Entity createHoe() {
     Entity hoe = createBaseItem()
         .addComponent(new TextureRenderComponent("images/tool_hoe.png"))
-        .addComponent(new ItemComponent("hoe", ItemType.HOE, new Texture("images/tool_hoe.png")));
+        .addComponent(new ItemComponent("hoe", ItemType.HOE, new Texture("images/tool_hoe.png"),false));
     return hoe;
   }
 
@@ -90,7 +90,7 @@ public class ItemFactory {
     Entity watering_can = createBaseItem()
         .addComponent(new TextureRenderComponent("images/tool_watering_can.png"))
         .addComponent(
-            new ItemComponent("watering_can", ItemType.WATERING_CAN, new Texture("images/tool_watering_can.png")))
+            new ItemComponent("watering_can", ItemType.WATERING_CAN, new Texture("images/tool_watering_can.png"),false))
         .addComponent(new WateringCanLevelComponent(150));
     return watering_can;
   }
@@ -103,7 +103,7 @@ public class ItemFactory {
   public static Entity createScythe() {
     Entity scythe = createBaseItem()
         .addComponent(new TextureRenderComponent("images/tool_scythe.png"))
-        .addComponent(new ItemComponent("scythe", ItemType.SCYTHE, new Texture("images/tool_scythe.png")));
+        .addComponent(new ItemComponent("scythe", ItemType.SCYTHE, new Texture("images/tool_scythe.png"),false));
     return scythe;
   }
 
@@ -116,7 +116,7 @@ public class ItemFactory {
     Entity milk = createBaseItem()
             .addComponent(new TextureRenderComponent("images/milk.png"))
             .addComponent(new ItemComponent("milk",
-                    ItemType.MILK, new Texture("images/milk.png")));
+                    ItemType.MILK, new Texture("images/milk.png"),true));
     milk.scaleHeight(0.75f);
     return milk;
   }
@@ -130,7 +130,7 @@ public class ItemFactory {
     Entity egg = createBaseItem()
             .addComponent(new TextureRenderComponent("images/egg.png"))
             .addComponent(new ItemComponent("egg", ItemType.EGG,
-                    new Texture("images/egg.png")));
+                    new Texture("images/egg.png"),true));
     egg.scaleHeight(0.75f);
     return egg;
   }
@@ -144,7 +144,7 @@ public class ItemFactory {
     Entity fertiliser = createBaseItem()
             .addComponent(new TextureRenderComponent("images/fertiliser.png"))
             .addComponent(new ItemComponent("fertiliser", ItemType.FERTILISER,
-                    new Texture("images/fertiliser.png")));
+                    new Texture("images/fertiliser.png"),true));
     return fertiliser;
   }
 
@@ -157,7 +157,7 @@ public class ItemFactory {
     Entity seed = createBaseItem()
             .addComponent(new TextureRenderComponent("images/plants/misc/aloe_vera_seed.png"))
             .addComponent(new ItemComponent("Aloe Vera seed", ItemType.SEED,
-                    "Seed of Aloe Vera", new Texture("images/plants/misc/aloe_vera_seed.png")));
+                    "Seed of Aloe Vera", new Texture("images/plants/misc/aloe_vera_seed.png"), true));
     return seed;
   }
 
@@ -170,7 +170,7 @@ public class ItemFactory {
     Entity seed = createBaseItem()
             .addComponent(new TextureRenderComponent("images/plants/atomic_algae/1_seedling.png"))
             .addComponent(new ItemComponent("Atomic Algae seed", ItemType.SEED,
-                    "Seed of Atomic Algae", new Texture("images/plants/atomic_algae/1_seedling.png")));
+                    "Seed of Atomic Algae", new Texture("images/plants/atomic_algae/1_seedling.png"), true));
     return seed;
   }
 
@@ -183,7 +183,7 @@ public class ItemFactory {
     Entity seed = createBaseItem()
             .addComponent(new TextureRenderComponent("images/plants/misc/cosmic_cob_seed.png"))
             .addComponent(new ItemComponent("Cosmic Cob seed", ItemType.SEED,
-                    "Seed of Cosmic Cob", new Texture("images/plants/misc/cosmic_cob_seed.png")));
+                    "Seed of Cosmic Cob", new Texture("images/plants/misc/cosmic_cob_seed.png"),true));
     return seed;
   }
 
@@ -196,7 +196,7 @@ public class ItemFactory {
     Entity seed = createBaseItem()
             .addComponent(new TextureRenderComponent("images/plants/misc/deadly_nightshade_seed.png"))
             .addComponent(new ItemComponent("Deadly Nightshade seed", ItemType.SEED,
-                    "Seed of Deadly Nightshade", new Texture("images/plants/misc/deadly_nightshade_seed.png")));
+                    "Seed of Deadly Nightshade", new Texture("images/plants/misc/deadly_nightshade_seed.png"),true));
     return seed;
   }
 
@@ -209,7 +209,7 @@ public class ItemFactory {
     Entity seed = createBaseItem()
             .addComponent(new TextureRenderComponent("images/plants/misc/hammer_plant_seed.png"))
             .addComponent(new ItemComponent("Hammer Plant seed", ItemType.SEED,
-                    "Seed of Hammer Plant", new Texture("images/plants/misc/hammer_plant_seed.png")));
+                    "Seed of Hammer Plant", new Texture("images/plants/misc/hammer_plant_seed.png"),true));
     return seed;
   }
 
@@ -222,7 +222,7 @@ public class ItemFactory {
     Entity seed = createBaseItem()
             .addComponent(new TextureRenderComponent("images/plants/misc/space_snapper_seed.png"))
             .addComponent(new ItemComponent("Space Snapper seed", ItemType.SEED,
-                    "Seed of Space Snapper", new Texture("images/plants/misc/space_snapper_seed.png")));
+                    "Seed of Space Snapper", new Texture("images/plants/misc/space_snapper_seed.png"),true));
     return seed;
   }
 
@@ -235,7 +235,7 @@ public class ItemFactory {
     Entity animalFood = createBaseItem()
             .addComponent(new TextureRenderComponent("images/plants/cosmic_cob/1_seedling.png"))
             .addComponent(new ItemComponent("COW FOOD", ItemType.FOOD,
-                    "Cow food", new Texture("images/plants/cosmic_cob/1_seedling.png")));
+                    "Cow food", new Texture("images/plants/cosmic_cob/1_seedling.png"),true));
     return animalFood;
   }
 
@@ -248,7 +248,7 @@ public class ItemFactory {
             .addComponent(new TextureRenderComponent("images/placeable/fences/f.png"))
             .addComponent(new ItemComponent("Fence", ItemType.PLACEABLE,
                     "A fence to keep animals in or out",
-                    new Texture("images/placeable/fences/f.png")));
+                    new Texture("images/placeable/fences/f.png"),true));
     return fence;
   }
 
@@ -261,7 +261,7 @@ public class ItemFactory {
             .addComponent(new TextureRenderComponent("images/placeable/fences/g_r_l.png"))
             .addComponent(new ItemComponent("Gate", ItemType.PLACEABLE,
                     "Allows the player to walk in and out of enclosed areas",
-                    new Texture("images/placeable/fences/g_r_l.png")));
+                    new Texture("images/placeable/fences/g_r_l.png"),true));
     return gate;
   }
 
@@ -274,7 +274,7 @@ public class ItemFactory {
             .addComponent(new TextureRenderComponent("images/placeable/sprinkler/pipe_null.png"))
             .addComponent(new ItemComponent("Sprinkler", ItemType.PLACEABLE,
                     "Waters crops in the surrounding area",
-                    new Texture("images/placeable/sprinkler/pipe_null.png")));
+                    new Texture("images/placeable/sprinkler/pipe_null.png"),true));
     return sprinkler;
   }
 
@@ -287,7 +287,7 @@ public class ItemFactory {
             .addComponent(new TextureRenderComponent("images/placeable/sprinkler/pump.png"))
             .addComponent(new ItemComponent("Pump", ItemType.PLACEABLE,
                     "Powers connected sprinklers",
-                    new Texture("images/placeable/sprinkler/pump.png")));
+                    new Texture("images/placeable/sprinkler/pump.png"),true));
     return pump;
   }
 
@@ -300,7 +300,7 @@ public class ItemFactory {
             .addComponent(new TextureRenderComponent("images/Temp-Chest.png"))
             .addComponent(new ItemComponent("Chest", ItemType.PLACEABLE,
                     "A storage container to keep your seeds and goodies",
-                    new Texture("images/Temp-Chest.png")));
+                    new Texture("images/Temp-Chest.png"),true));
     return chest;
   }
 
@@ -309,7 +309,7 @@ public class ItemFactory {
             .addComponent(new TextureRenderComponent("images/plants/misc/aloe_vera_seed.png"))
             .addComponent(new ItemComponent("Light", ItemType.PLACEABLE,
                     "A quick and easy fix to being scared of the dark!",
-                    new Texture("images/plants/misc/aloe_vera_seed.png")));
+                    new Texture("images/plants/misc/aloe_vera_seed.png"),true));
     return light;
   }
 
@@ -323,7 +323,7 @@ public class ItemFactory {
             .addComponent(new ItemComponent("Ship Part", ItemType.SHIP_PART,
                     "Pieces of scrap metal in surprisingly good condition. Seems like it could be used" +
                             " for ship repairs...",
-                    new Texture("images/ship/ship_part.png")));
+                    new Texture("images/ship/ship_part.png"),true));
     return ShipPart;
   }
 }

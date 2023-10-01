@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.components.items.ItemComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,20 +21,6 @@ import com.csse3200.game.entities.Entity;
  */
 public class InventoryComponent extends Component {
 
-  public int findFirstIndex() {
-    for (int i = 0; i < itemPlace.size();i++) {
-      if (itemPlace.getOrDefault(i,null) == null) {
-        return i;
-      }
-      else {
-        if (i == 30) {
-          return -1;
-        }
-      }
-
-    }
-    return itemPlace.size();
-  }
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
   private final List<Entity> inventory = new ArrayList<>();
   private final HashMap<Entity, Integer> itemCount = new HashMap<>();
@@ -44,12 +32,34 @@ public class InventoryComponent extends Component {
 
   private int heldIndex = 0;
 
+  @Override
+  public void create() {
+    super.create();
+    entity.getEvents().addListener("use", this::useItem);
+  }
+
   public InventoryComponent(List<Entity> items) {
     if (items == null) {
       return;
     }
     setInventory(items);
   }
+  /**
+   * Called when an item in the inventory is used.
+   *
+   * @return boolean if the item is consumable, whether or not the item was successfully removed otherwise true;
+   */
+  public boolean useItem(Vector2 mousePos, Entity itemInHand) {
+    if (heldItem == null) {
+      return false;
+    }
+
+    if (heldItem.getComponent(ItemComponent.class).getPerishable()) {
+      return removeItem(this.heldItem);
+    }
+    return true;
+  }
+
 
   /**
    * Returns the player's inventory.
@@ -89,6 +99,10 @@ public class InventoryComponent extends Component {
     //int pos = 0;
     logger.debug("Setting inventory to {}", this.inventory.toString());
     for (Entity item : items) {
+      if (item.getComponent(ItemComponent.class) == null) {
+        System.err.println("Not an Item");
+        continue;
+      }
       itemPlace.put(pos,item);
       pos++;
       if (itemCount.containsKey(item)) {
@@ -151,6 +165,25 @@ public class InventoryComponent extends Component {
   }
 
   /**
+   * find the first slot in inventory display that is empty
+   * @return int first index of inventory in inventory display that is empty
+   */
+  public int findFirstIndex() {
+    for (int i = 0; i < itemPlace.size();i++) {
+      if (itemPlace.getOrDefault(i,null) == null) {
+        return i;
+      }
+      else {
+        if (i == 30) {
+          return -1;
+        }
+      }
+
+    }
+    return itemPlace.size();
+  }
+
+  /**
    * add position of an entity into the HashList
    * Only enity is passed into function. Position is next available one.
    * @param entity
@@ -171,6 +204,10 @@ public class InventoryComponent extends Component {
    * @return boolean representing if the item was added successfully
    */
   public boolean addItem(Entity item) {
+    if (item.getComponent(ItemComponent.class) == null) {
+      System.err.println("Not an Item");
+      return false;
+    }
     itemCount.put(item, itemCount.getOrDefault(item, 0) + 1);
     setPosition(item);
     if (!itemPosition.containsKey(item)) {
@@ -179,6 +216,7 @@ public class InventoryComponent extends Component {
     updateInventory();
     return this.inventory.add(item);
   }
+
 
   /**
    * Removes an item from the Player's Inventory
@@ -190,6 +228,16 @@ public class InventoryComponent extends Component {
     if (itemCount.get(item) == 0) {
       itemCount.remove(item);
       itemPosition.remove(item);
+      itemPlace.remove(item);
+      for (var entry: itemPlace.entrySet()) {
+        if (entry.getValue() == item) {
+          itemPlace.remove(entry.getKey());
+          break;
+        }
+      }
+      if (item == heldItem) {
+        setHeldItem(getHeldIndex());
+      }
     }
     updateInventory();
     return this.inventory.remove(item);

@@ -51,7 +51,7 @@ public class ToolbarDisplay extends UIComponent {
 
     private void updateToolbar(){
         for (int i = 0; i < 10; i++){
-            logger.info(String.valueOf(selectedSlot));
+
             int idx = i + 1;
             if (idx == 10) {
                 idx = 0;
