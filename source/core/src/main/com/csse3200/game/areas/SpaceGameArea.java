@@ -241,6 +241,7 @@ public class SpaceGameArea extends GameArea {
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
     player.getComponent(InventoryComponent.class).addItem(ItemFactory.createLightItem());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createDeadlyNightshadeDrop());
     //player.getComponent(InventoryComponent.class).addItem(ItemFactory.createFertiliser());
 
     tractor = spawnTractor();
@@ -471,7 +472,7 @@ public class SpaceGameArea extends GameArea {
     for (int i = 0; i < 1; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity astrolotl = NPCFactory.createAstrolotl(player);
-      spawnEntityAt(astrolotl, randomPos, true, true);
+      spawnEntityAt(astrolotl, PLAYER_SPAWN, true, true);
     }
   }
 
