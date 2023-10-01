@@ -8,6 +8,7 @@ import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.PhysicsEngine;
+import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -27,20 +28,21 @@ public class MoveToPlantTask extends DefaultTask implements PriorityTask {
     private Vector2 speed;
     /** Current target to move towards */
     private Entity currentTarget;
+    /** Distance to target before stopping */
+    private final float stoppingDistance;
 
     /**
      * @param priority Task priority when moving (-1 when not moving)
      * @param speed The speed at which to move to plant.
      */
-    public MoveToPlantTask(int priority, Vector2 speed) {
-        System.out.println("here!");
+    public MoveToPlantTask(int priority, Vector2 speed, float stoppingDistance) {
         this.priority = priority;
         this.speed = speed;
+        this.stoppingDistance = stoppingDistance;
     }
 
     @Override
     public void start() {
-        System.out.println("2");
         super.start();
 
         // Look for the nearest plant entity
@@ -64,6 +66,15 @@ public class MoveToPlantTask extends DefaultTask implements PriorityTask {
 
         // If the current target is still the same, do nothing
         if (currentTarget == plant) {
+            // Stop the movement if already at the plant
+            float distanceToTarget =
+                    owner.getEntity().getCenterPosition().dst(currentTarget.getCenterPosition());
+
+            if (distanceToTarget <= stoppingDistance) {
+                owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(false);
+            } else {
+                owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(true);
+            }
             return;
         }
 
@@ -90,6 +101,7 @@ public class MoveToPlantTask extends DefaultTask implements PriorityTask {
         if (movementTask != null) {
             movementTask.stop();
         }
+        owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(true);
         this.owner.getEntity().getEvents().trigger("moveToPlantStop");
     }
 
@@ -119,8 +131,6 @@ public class MoveToPlantTask extends DefaultTask implements PriorityTask {
             }
         }
 
-        System.out.println(plantDistances.size());
-
         // Check if there are any plants
         if (plantDistances.isEmpty()) {
             return null; // No plants found
@@ -144,7 +154,8 @@ public class MoveToPlantTask extends DefaultTask implements PriorityTask {
             }
         }
 
-        System.out.println(closestPlant.getComponent(PlantComponent.class).getPlantName());
+        // System.out.println(closestPlant.getComponent(PlantComponent.class).getPlantName());
+        // System.out.println(plantDistances.size());
 
         return closestPlant;
     }

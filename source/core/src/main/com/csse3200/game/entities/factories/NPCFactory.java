@@ -268,7 +268,7 @@ public class NPCFactory {
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(1.5f, 1.5f), 5f))
-            .addTask(new MoveToPlantTask(5, new Vector2(2f, 2f)))
+            .addTask(new MoveToPlantTask(5, new Vector2(2f, 2f), 0.5f))
             .addTask(new RunAwayTask(player, 10, 5f, 5f, new Vector2(2f, 2f), false));
 
 

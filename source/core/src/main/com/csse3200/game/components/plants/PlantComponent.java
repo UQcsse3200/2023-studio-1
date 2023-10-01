@@ -724,6 +724,8 @@ public class PlantComponent extends Component {
 
         plantDestroyed = true;
 
+        ServiceLocator.getGameArea().removeEntity(entity);
+
 
     }
 
