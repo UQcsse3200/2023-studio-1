@@ -1,36 +1,236 @@
 package com.csse3200.game.missions.quests;
 
+import com.badlogic.gdx.utils.JsonValue;
+import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.missions.MissionManager;
+import com.csse3200.game.missions.rewards.Reward;
+import com.csse3200.game.services.GameTime;
+import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.TimeService;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
+@ExtendWith(MockitoExtension.class)
+@ExtendWith(GameExtension.class)
 class FertiliseCropTilesQuestTest {
 
-    @Test
-    void registerMission() {
+    private FertiliseCropTilesQuest FCTQuest1, FCTQuest2, FCTQuest3, FCTQuest4, FCTQuest5, FCTQuest6;
+    private Reward r1, r2, r3, r4, r5, r6;
+
+    @BeforeEach
+    public void init() {
+        ServiceLocator.registerTimeSource(new GameTime());
+        ServiceLocator.registerTimeService(new TimeService());
+        ServiceLocator.registerMissionManager(new MissionManager());
+
+        r1 = mock(Reward.class);
+        r2 = mock(Reward.class);
+        r3 = mock(Reward.class);
+        r4 = mock(Reward.class);
+        r5 = mock(Reward.class);
+        r6 = mock(Reward.class);
+
+        FCTQuest1 = new FertiliseCropTilesQuest("Fertilise Crop Tiles Quest 1", r1, 10);
+        FCTQuest2 = new FertiliseCropTilesQuest("Fertilise Crop Tiles Quest 2", r2, 10, 10);
+        FCTQuest3 = new FertiliseCropTilesQuest("Fertilise Crop Tiles Quest 3", r3, -1);
+        FCTQuest4 = new FertiliseCropTilesQuest("Fertilise Crop Tiles Quest 4", r4, 3);
+        FCTQuest5 = new FertiliseCropTilesQuest("Fertilise Crop Tiles Quest 5", r5, 50);
+        FCTQuest6 = new FertiliseCropTilesQuest("Fertilise Crop Tiles Quest 6", r6, 10, -1);
+
+    }
+
+    @AfterEach
+    public void reset() {
+        ServiceLocator.clear();
     }
 
     @Test
-    void isCompleted() {
+    void testRegisterMission() {
+        assertFalse(FCTQuest1.isCompleted());
+        assertFalse(FCTQuest2.isCompleted());
+        assertFalse(FCTQuest3.isCompleted());
+        assertFalse(FCTQuest4.isCompleted());
+        assertFalse(FCTQuest5.isCompleted());
+        assertTrue(FCTQuest6.isCompleted());
+        assertFalse(r1.isCollected());
+        assertFalse(r2.isCollected());
+        assertFalse(r3.isCollected());
+        assertFalse(r4.isCollected());
+        assertFalse(r5.isCollected());
+        assertFalse(r6.isCollected());
+        FCTQuest1.registerMission(ServiceLocator.getMissionManager().getEvents());
+        FCTQuest2.registerMission(ServiceLocator.getMissionManager().getEvents());
+        FCTQuest3.registerMission(ServiceLocator.getMissionManager().getEvents());
+        FCTQuest4.registerMission(ServiceLocator.getMissionManager().getEvents());
+        FCTQuest5.registerMission(ServiceLocator.getMissionManager().getEvents());
+        FCTQuest6.registerMission(ServiceLocator.getMissionManager().getEvents());
+        assertFalse(r1.isCollected());
+        assertFalse(r2.isCollected());
+        assertFalse(r3.isCollected());
+        assertFalse(r4.isCollected());
+        assertFalse(r5.isCollected());
+        assertFalse(r6.isCollected());
+        assertFalse(FCTQuest1.isCompleted());
+        assertFalse(FCTQuest2.isCompleted());
+        assertFalse(FCTQuest3.isCompleted());
+        assertFalse(FCTQuest4.isCompleted());
+        assertFalse(FCTQuest5.isCompleted());
+        assertTrue(FCTQuest6.isCompleted());
     }
 
     @Test
-    void getDescription() {
+    void testUpdateState() {
     }
 
     @Test
-    void getShortDescription() {
+    void testIsCompleted() {
+        testRegisterMission();
+        for (int i = 0; i < 10; i++) {
+            assertFalse(FCTQuest1.isCompleted());
+            assertFalse(FCTQuest2.isCompleted());
+            assertFalse(FCTQuest3.isCompleted());
+            if (i < 3){
+                assertFalse(FCTQuest4.isCompleted());
+            } else {
+                assertTrue(FCTQuest4.isCompleted());
+            }
+            assertFalse(FCTQuest5.isCompleted());
+            ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.FERTILISE_CROP.name());
+        }
+        assertTrue(FCTQuest1.isCompleted());
+        assertTrue(FCTQuest2.isCompleted());
+        assertTrue(FCTQuest3.isCompleted());
+        assertTrue(FCTQuest4.isCompleted());
+        assertFalse(FCTQuest5.isCompleted());
+        for (int i = 0; i < 40; i++) {
+            ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.FERTILISE_CROP.name());
+        }
+        assertTrue(FCTQuest1.isCompleted());
+        assertTrue(FCTQuest2.isCompleted());
+        assertTrue(FCTQuest3.isCompleted());
+        assertTrue(FCTQuest4.isCompleted());
+        assertTrue(FCTQuest5.isCompleted());
     }
 
     @Test
-    void readProgress() {
+    void testGetDescription() {
+        testRegisterMission();
+        String desc = "Gather scattered parts of your ship.\n" +
+                "Use your shovel to clear %d Ship Debris in the world!\n" +
+                "%d out of %d debris pieces cleared.";
+        for (int i = 0; i < 50; i++) {
+            int min123 = Math.min(i, 10);
+            int min4 = Math.min(i, 3);
+            String formatted1 = String.format(desc, 10, min123, 10);
+            String formatted2 = String.format(desc, 10, min123, 10);
+            String formatted3 = String.format(desc, 10, min123, 10);
+            String formatted4 = String.format(desc, 3, min4, 3);
+            String formatted5 = String.format(desc, 50, i, 50);
+            String formatted6 = String.format(desc, 0, 0, 0);
+            String formatted7 = String.format(desc, 0, 0, 0);
+            assertEquals(formatted1, FCTQuest1.getDescription());
+            assertEquals(formatted2, FCTQuest2.getDescription());
+            assertEquals(formatted3, FCTQuest3.getDescription());
+            assertEquals(formatted4, FCTQuest4.getDescription());
+            assertEquals(formatted5, FCTQuest5.getDescription());
+            assertEquals(formatted6, FCTQuest6.getDescription());
+            ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.FERTILISE_CROP.name());
+        }
     }
 
     @Test
-    void getProgress() {
+    void testGetShortDescription() {
+        testRegisterMission();
+        String desc = "%d out of %d debris pieces cleared";
+        for (int i = 0; i < 50; i++) {
+            int min123 = Math.min(i, 10);
+            int min4 = Math.min(i, 3);
+            String formatted1 = String.format(desc, min123, 10);
+            String formatted2 = String.format(desc, min123, 10);
+            String formatted3 = String.format(desc, min123, 10);
+            String formatted4 = String.format(desc, min4, 3);
+            String formatted5 = String.format(desc, i, 50);
+            String formatted6 = String.format(desc, 0, 0);
+            String formatted7 = String.format(desc, 0, 0);
+            assertEquals(formatted1, FCTQuest1.getShortDescription());
+            assertEquals(formatted2, FCTQuest2.getShortDescription());
+            assertEquals(formatted3, FCTQuest3.getShortDescription());
+            assertEquals(formatted4, FCTQuest4.getShortDescription());
+            assertEquals(formatted5, FCTQuest5.getShortDescription());
+            assertEquals(formatted6, FCTQuest6.getShortDescription());
+            ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.FERTILISE_CROP.name());
+        }
     }
 
     @Test
-    void resetState() {
+    void testReadProgress() {
+        int progressInt = 3;
+        JsonValue progress = new JsonValue(progressInt);
+        String desc = "Gather scattered parts of your ship.\n" +
+                "Use your shovel to clear %d Ship Debris in the world!\n" +
+                "%d out of %d debris pieces cleared.";
+        String shortDesc = "%d out of %d debris pieces cleared";
+        FCTQuest1.readProgress(progress);
+        FCTQuest2.readProgress(progress);
+        FCTQuest3.readProgress(progress);
+        FCTQuest4.readProgress(progress);
+        FCTQuest5.readProgress(progress);
+        FCTQuest6.readProgress(progress);
+        String formatted1 = String.format(desc, 10, progressInt, 10);
+        String formatted2 = String.format(desc, 10, progressInt, 10);
+        String formatted3 = String.format(desc, 10, progressInt, 10);
+        String formatted4 = String.format(desc, 3, progressInt, 3);
+        String formatted5 = String.format(desc, 50, progressInt, 50);
+        String formatted6 = String.format(desc, 0, progressInt, 0);
+        String formatted7 = String.format(desc, 0, progressInt, 0);
+        String shortFormatted1 = String.format(shortDesc, progressInt, 10);
+        String shortFormatted2 = String.format(shortDesc, progressInt, 10);
+        String shortFormatted3 = String.format(shortDesc, progressInt, 10);
+        String shortFormatted4 = String.format(shortDesc, progressInt, 3);
+        String shortFormatted5 = String.format(shortDesc, progressInt, 50);
+        String shortFormatted6 = String.format(shortDesc, progressInt, 0);
+        String shortFormatted7 = String.format(shortDesc, progressInt, 0);
+        assertEquals(formatted1, FCTQuest1.getDescription());
+        assertEquals(formatted2, FCTQuest2.getDescription());
+        assertEquals(formatted3, FCTQuest3.getDescription());
+        assertEquals(formatted4, FCTQuest4.getDescription());
+        assertEquals(formatted5, FCTQuest5.getDescription());
+        assertEquals(formatted6, FCTQuest6.getDescription());
+        assertEquals(shortFormatted1, FCTQuest1.getShortDescription());
+        assertEquals(shortFormatted2, FCTQuest2.getShortDescription());
+        assertEquals(shortFormatted3, FCTQuest3.getShortDescription());
+        assertEquals(shortFormatted4, FCTQuest4.getShortDescription());
+        assertEquals(shortFormatted5, FCTQuest5.getShortDescription());
+        assertEquals(shortFormatted6, FCTQuest6.getShortDescription());
+    }
+
+    @Test
+    void testGetProgress() {
+        assertEquals(0, FCTQuest1.getProgress());
+        assertEquals(0, FCTQuest2.getProgress());
+        assertEquals(0, FCTQuest3.getProgress());
+    }
+
+    @Test
+    void testResetState() {
+        testIsCompleted();
+        FCTQuest1.resetState();
+        FCTQuest2.resetState();
+        FCTQuest3.resetState();
+        FCTQuest4.resetState();
+        FCTQuest5.resetState();
+        FCTQuest6.resetState();
+        assertFalse(FCTQuest1.isCompleted());
+        assertFalse(FCTQuest2.isCompleted());
+        assertFalse(FCTQuest3.isCompleted());
+        assertFalse(FCTQuest4.isCompleted());
+        assertFalse(FCTQuest5.isCompleted());
+        assertTrue(FCTQuest6.isCompleted());
     }
 }
