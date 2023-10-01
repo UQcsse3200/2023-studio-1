@@ -232,6 +232,12 @@ class ClearDebrisQuestTest {
         assertEquals(0, CDQuest7.getProgress());
         testIsCompleted();
         assertNotEquals(0, CDQuest1.getProgress());
+        assertNotEquals(0, CDQuest2.getProgress());
+        assertNotEquals(0, CDQuest3.getProgress());
+        assertNotEquals(0, CDQuest4.getProgress());
+        assertNotEquals(0, CDQuest5.getProgress());
+        assertEquals(0, CDQuest6.getProgress());
+        assertEquals(0, CDQuest7.getProgress());
     }
 
     @Test
