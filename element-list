@@ -7,6 +7,7 @@ com.csse3200.game.areas.weather
 com.csse3200.game.components
 com.csse3200.game.components.combat
 com.csse3200.game.components.controlsmenu
+com.csse3200.game.components.endcredits
 com.csse3200.game.components.gamearea
 com.csse3200.game.components.intro
 com.csse3200.game.components.inventory
@@ -23,6 +24,7 @@ com.csse3200.game.components.settingsmenu
 com.csse3200.game.components.ship
 com.csse3200.game.components.tasks
 com.csse3200.game.components.tractor
+com.csse3200.game.components.winscreen
 com.csse3200.game.concurrency
 com.csse3200.game.entities
 com.csse3200.game.entities.configs
