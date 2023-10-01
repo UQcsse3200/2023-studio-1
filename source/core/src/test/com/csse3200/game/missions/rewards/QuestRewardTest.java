@@ -2,16 +2,20 @@ package com.csse3200.game.missions.rewards;
 
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.quests.Quest;
+import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
-import org.junit.Test;
+import com.csse3200.game.services.TimeService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -21,13 +25,8 @@ public class QuestRewardTest {
 
     private List<Quest> selectableQuests, activeQuests, emptySelectableQuests, emptyActiveQuests;
 
-    private MissionManager missionManager;
-
     @BeforeEach
     public void init() {
-        missionManager = mock(MissionManager.class);
-        when(ServiceLocator.getMissionManager()).thenReturn(missionManager);
-
         emptyActiveQuests = new ArrayList<>();
         emptySelectableQuests = new ArrayList<>();
         activeQuests = List.of(
@@ -45,47 +44,77 @@ public class QuestRewardTest {
         questReward2 = new QuestReward(selectableQuests, emptyActiveQuests);
         questReward3 = new QuestReward(emptySelectableQuests, activeQuests);
         questReward4 = new QuestReward(selectableQuests, activeQuests);
+
+        ServiceLocator.registerTimeSource(new GameTime());
+        ServiceLocator.registerTimeService(new TimeService());
+        ServiceLocator.registerMissionManager(new MissionManager());
+    }
+
+    @AfterEach
+    public void afterTest() {
+        ServiceLocator.clear();
     }
 
     @Test
     public void collectEmptyQuests() {
+        MissionManager missionManager = ServiceLocator.getMissionManager();
+        List<Quest> oldActive = missionManager.getActiveQuests();
+        List<Quest> oldSelectable = missionManager.getSelectableQuests();
         questReward1.collect();
         assertTrue(questReward1.isCollected());
-
-        verifyNoInteractions(missionManager);
+        assertEquals(oldActive, missionManager.getActiveQuests());
+        assertEquals(oldSelectable, missionManager.getSelectableQuests());
     }
 
     @Test
     public void collectEmptyActiveQuests() {
+        MissionManager missionManager = ServiceLocator.getMissionManager();
+        List<Quest> oldActive = missionManager.getActiveQuests();
+        List<Quest> oldSelectable = missionManager.getSelectableQuests();
         questReward2.collect();
         assertTrue(questReward2.isCollected());
 
         for (Quest quest : selectableQuests) {
-            verify(missionManager).addQuest(quest);
+            oldSelectable.add(quest);
         }
+
+        assertEquals(oldActive, missionManager.getActiveQuests());
+        assertEquals(oldSelectable, missionManager.getSelectableQuests());
     }
 
     @Test
     public void collectEmptySelectableQuests() {
+        MissionManager missionManager = ServiceLocator.getMissionManager();
+        List<Quest> oldActive = missionManager.getActiveQuests();
+        List<Quest> oldSelectable = missionManager.getSelectableQuests();
         questReward3.collect();
         assertTrue(questReward3.isCollected());
 
         for (Quest quest : activeQuests) {
-            verify(missionManager).addQuest(quest);
+            oldActive.add(quest);
         }
+
+        assertEquals(oldActive, missionManager.getActiveQuests());
+        assertEquals(oldSelectable, missionManager.getSelectableQuests());
     }
 
     @Test
     public void collectQuestReward() {
+        MissionManager missionManager = ServiceLocator.getMissionManager();
+        List<Quest> oldActive = missionManager.getActiveQuests();
+        List<Quest> oldSelectable = missionManager.getSelectableQuests();
         questReward4.collect();
         assertTrue(questReward4.isCollected());
 
         for (Quest quest : selectableQuests) {
-            verify(missionManager).addQuest(quest);
+            oldSelectable.add(quest);
         }
 
         for (Quest quest : activeQuests) {
-            verify(missionManager).addQuest(quest);
+            oldActive.add(quest);
         }
+
+        assertEquals(oldActive, missionManager.getActiveQuests());
+        assertEquals(oldSelectable, missionManager.getSelectableQuests());
     }
 }
