@@ -1,6 +1,7 @@
 package com.csse3200.game.components.cutscenes;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -18,6 +19,8 @@ import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.ui.UIComponent;
+
+import java.awt.*;
 
 public class CutsceneDisplay extends UIComponent {
     /**
@@ -69,8 +72,9 @@ public class CutsceneDisplay extends UIComponent {
         logger.debug("Cutscene table spawned");
         table = new Table();
         table.setFillParent(true);
+        table.setDebug(true);
         table.bottom();
-        table.padBottom(80);
+        table.padBottom(160);
 
         /**
          * Following code for making transparent rectangle from
@@ -133,8 +137,10 @@ public class CutsceneDisplay extends UIComponent {
         logger.debug("Cutscene dialogue spawned");
 
         dialogueLabel = new TypingLabel(this.dialogue, skin);
-        dialogueLabel.setAlignment(Align.left);
-        table.add(dialogueLabel).expandX();
+        dialogueLabel.setAlignment(Align.center);
+        dialogueLabel.setWrap(true);
+        Graphics.DisplayMode active = Gdx.graphics.getDisplayMode();
+        table.add(dialogueLabel).width(active.width - 700).expandX();
     }
 
     public void spawnContinueButton() {
