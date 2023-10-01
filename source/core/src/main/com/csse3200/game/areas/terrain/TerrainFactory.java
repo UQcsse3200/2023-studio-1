@@ -24,17 +24,21 @@ import com.csse3200.game.areas.terrain.TerrainComponent.TerrainOrientation;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
 
 /** Factory for creating game terrains. */
 public class TerrainFactory {
 
-  private static GridPoint2 MAP_SIZE = new GridPoint2(1000, 1000); // this will be updated later in the code
+  private static Logger logger = LoggerFactory.getLogger(TerrainFactory.class);
+  private static GridPoint2 mapSize = new GridPoint2(1000, 1000); // this will be updated later in the code
   //protected for testing
   protected static final String mapPath = "configs/Map.txt";
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;
 
-  private static final float worldTileSize = 1f;
+  private static final float WorldTileSize = 1f;
   private Map<Character, TextureRegion> charToTextureMap = new HashMap<>();
   //protected for testing
   protected static final Map<Character, String> charToTileImageMap;
@@ -146,7 +150,7 @@ public class TerrainFactory {
       }
   }
   public GridPoint2 getMapSize() {
-    return MAP_SIZE.cpy();
+    return mapSize.cpy();
   }
 
   /**
@@ -158,7 +162,7 @@ public class TerrainFactory {
    */
   public TerrainComponent createTerrain(TiledMap tiledMap) {
     loadTextures();
-    return createGameTerrain(worldTileSize, tiledMap);
+    return createGameTerrain(WorldTileSize, tiledMap);
   }
 
   private TerrainComponent createGameTerrain(float tileWorldSize, TiledMap tiledMap) {
@@ -193,16 +197,16 @@ public class TerrainFactory {
     if (isNumeric(line1)) {
       x_MapSize = Integer.parseInt(line1);
     } else {
-      System.out.println("Can't read x -> Incorrect input file!");
+      logger.error("Can't read x -> Incorrect input file!");
     }
     if (isNumeric(line2)) {
       y_MapSize = Integer.parseInt(line2);
     } else {
-      System.out.println("Can't read y -> Incorrect input file!");
+      logger.error("Can't read y -> Incorrect input file!");
     }
     // update MAP_SIZE using existing function
-    MAP_SIZE.add(- MAP_SIZE.x, - MAP_SIZE.y);
-    MAP_SIZE.add(x_MapSize, y_MapSize);
+    mapSize.add(- mapSize.x, - mapSize.y);
+    mapSize.add(x_MapSize, y_MapSize);
   }
 
   /**
@@ -218,12 +222,12 @@ public class TerrainFactory {
           line1 = bf.readLine();
           line2 = bf.readLine();
           updateMapSize(line1,line2);
-          TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
+          TiledMapTileLayer layer = new TiledMapTileLayer(mapSize.x, mapSize.y, tileSize.x, tileSize.y);
           // y_pos = 100 and x_pos = 100 lets map generate correctly
-          int x_pos = 0, y_pos = 99;
+          int y_pos = Integer.parseInt(line2) -1;
           // checking for end of file
-          for (line = bf.readLine(); line != null; x_pos++, line = bf.readLine(), y_pos--) {
-              for (x_pos = line.length() -1; x_pos >= 0; x_pos--) {
+          for (line = bf.readLine(); line != null; line = bf.readLine(), y_pos--) {
+              for (int x_pos = line.length() -1; x_pos >= 0; x_pos--) {
                   // Cell cell = layer.getCell(x_pos, y_pos); // uncomment this if u want to
                   // update instead of replace
                   GridPoint2 point = new GridPoint2(x_pos, y_pos);
@@ -238,11 +242,11 @@ public class TerrainFactory {
 
           tiledMap.getLayers().add(layer);
       } catch (FileNotFoundException e) {
-          System.out.println("fillTilesWithFile -> File Not Found error!");
+          logger.error("fillTilesWithFile -> File Not Found error!");
       } catch (IOException e) {
-          System.out.println("fillTilesWithFile -> Readfile error!");
+          logger.error("fillTilesWithFile -> Readfile error!");
       } catch (Exception e) {
-          System.out.println("fillTilesWithFile -> Testcase error!: " + e);
+          logger.error("fillTilesWithFile -> Testcase error!: " + e);
       }
   }
 
@@ -257,7 +261,7 @@ public class TerrainFactory {
       return false;
     }
     try {
-      int value = Integer.parseInt(strNum);
+      Integer.parseInt(strNum);
       return true;
     } catch (NumberFormatException nfe) {
       return false;
