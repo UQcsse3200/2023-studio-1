@@ -88,7 +88,7 @@ public class NPCFactory {
             .addTask(new TamedFollowTask(player, 11, 8, 10, 2f, config.favouriteFood));
 
     List<SingleDropHandler> singleDropHandlers = new ArrayList<>();
-    MultiDropComponent multiDropComponent = new MultiDropComponent(singleDropHandlers);
+    MultiDropComponent multiDropComponent = new MultiDropComponent(singleDropHandlers, true);
     //Chickens untamed drop eggs
     singleDropHandlers.add(new SingleDropHandler(ItemFactory::createEgg, 1,
             ServiceLocator.getTimeService().getEvents()::addListener, "hourUpdate", false));
@@ -101,6 +101,7 @@ public class NPCFactory {
     //Drop chicken on death
     singleDropHandlers.add(new SingleDropHandler(ItemFactory::createChickenMeat, 1,
             chicken.getEvents()::addListener, "death", false));
+
     chicken
             .addComponent(aiTaskComponent)
             .addComponent(multiDropComponent)
@@ -145,7 +146,7 @@ public class NPCFactory {
             .addTask(new TamedFollowTask(player, 10, 8, 10, 2f, config.favouriteFood));
 
     List<SingleDropHandler> singleDropHandlers = new ArrayList<>();
-    MultiDropComponent multiDropComponent = new MultiDropComponent(singleDropHandlers);
+    MultiDropComponent multiDropComponent = new MultiDropComponent(singleDropHandlers, true);
     //Cows untamed drop fertiliser
     singleDropHandlers.add(new SingleDropHandler(ItemFactory::createFertiliser, 1,
             ServiceLocator.getTimeService().getEvents()::addListener, "hourUpdate", false));
@@ -191,6 +192,10 @@ public class NPCFactory {
     animator.addAnimation("idle_right", 0.15f, Animation.PlayMode.LOOP);
     animator.addAnimation("walk_left", 0.15f, Animation.PlayMode.LOOP);
     animator.addAnimation("walk_right", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle_left_tamed", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle_right_tamed", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation("walk_left_tamed", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation("walk_right_tamed", 0.15f, Animation.PlayMode.LOOP);
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(1.5f, 1.5f), 5f))
@@ -199,6 +204,7 @@ public class NPCFactory {
     astrolotl
             .addComponent(aiTaskComponent)
             .addComponent(animator)
+            .addComponent(new CombatStatsComponent(80, 0))
             .addComponent(new AnimalAnimationController())
             .addComponent(new TamableComponent(
                     player, config.tamingThreshold,
@@ -287,8 +293,7 @@ public class NPCFactory {
             .addComponent(new PhysicsComponent())
             .addComponent(new PhysicsMovementComponent())
             .addComponent(new ColliderComponent())
-            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-            .addComponent(new HitboxComponent());
+            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC));
 
     return animal;
   }

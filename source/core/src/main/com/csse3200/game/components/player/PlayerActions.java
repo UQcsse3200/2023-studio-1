@@ -14,6 +14,7 @@ import com.csse3200.game.components.combat.ProjectileComponent;
 import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
+import com.csse3200.game.components.npc.MultiDropComponent;
 import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
@@ -58,6 +59,7 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("enterTractor", this::enterTractor);
     entity.getEvents().addListener("use", this::use);
     entity.getEvents().addListener("hotkeySelection", this::hotkeySelection);
+
   }
 
   @Override
@@ -248,9 +250,18 @@ public class PlayerActions extends Component {
         }
       }
     }
+
     for(Entity animal : deadEntities){
       CombatStatsComponent combat = animal.getComponent(CombatStatsComponent.class);
-      combat.handleDeath();
+      MultiDropComponent dropComponent = animal.getComponent(MultiDropComponent.class);
+
+      //If the entity needs to drop an item before death, do not delete it immediately, send death
+      //trigger and let drop component drop item first, then it will delete entity
+      if (dropComponent != null && dropComponent.getHandlesDeath()) {
+        animal.getEvents().trigger("death");
+      } else {
+        combat.handleDeath();
+      }
     }
   }
 

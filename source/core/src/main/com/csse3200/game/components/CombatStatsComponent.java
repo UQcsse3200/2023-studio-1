@@ -21,6 +21,13 @@ public class CombatStatsComponent extends Component {
     setBaseAttack(baseAttack);
   }
 
+  @Override
+  public void create() {
+    if (!(entity.getType() == EntityType.Player)) {
+      entity.getEvents().addListener("despawn", this::handleDeath);
+    }
+  }
+
   /**
    * Returns true if the entity's has 0 health, otherwise false.
    *
@@ -91,8 +98,7 @@ public class CombatStatsComponent extends Component {
     setHealth(newHealth);
   }
 
-  public void handleDeath(){
-    entity.getEvents().trigger("death");
+  public void handleDeath() {
     if(!entity.getType().equals(EntityType.Player)) {
       ServiceLocator.getGameArea().removeEntity(entity);
     }

@@ -65,13 +65,13 @@ class MultiDropComponentTest {
         //Drop handler for untamed, 2 triggers to next drop, listen on entity
         singleDropHandlers.add(new SingleDropHandler(this::createDummyItem, 2,
                 entity.getEvents()::addListener, "untamed-entity-2-trigger", false));
-        entity.addComponent(new MultiDropComponent(singleDropHandlers));
+        entity.addComponent(new MultiDropComponent(singleDropHandlers, false));
 
         //Drop handler for tamed, 1 trigger to next drop, listen on time service
         singleDropHandlers.add(new SingleDropHandler(this::createDummyItem, 1,
                 timeService.getEvents()::addListener, "hourUpdate", true));
 
-        entity.addComponent(new MultiDropComponent(singleDropHandlers));
+        entity.addComponent(new MultiDropComponent(singleDropHandlers, false));
 
         entity.create();
         return entity;

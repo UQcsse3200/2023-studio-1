@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.components.combat.ProjectileComponent;
+import com.csse3200.game.components.npc.MultiDropComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
@@ -97,7 +98,16 @@ public class TouchAttackComponent extends Component {
     }
 
     if(targetStats != null && targetStats.getHealth() < 0 && !target.getType().equals(EntityType.Player)) {
+      MultiDropComponent dropComponent = target.getComponent(MultiDropComponent.class);
       targetStats.handleDeath();
+
+      //If the entity needs to drop an item before death, do not delete it immediately, send death
+      //trigger and let drop component drop item first, then it will delete entity
+//      if (dropComponent != null && dropComponent.getHandlesDeath()) {//TODO fix!
+//        target.getEvents().trigger("death");
+//      } else {
+//            targetStats.handleDeath();
+//      }
     }
   }
 }
