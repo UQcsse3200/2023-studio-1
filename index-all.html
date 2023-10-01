@@ -879,6 +879,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/ship/ShipDebrisComponent.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.ship.<a href="com/csse3200/game/components/ship/ShipDebrisComponent.html" title="class in com.csse3200.game.components.ship">ShipDebrisComponent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/ship/ShipLightComponent.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.ship.<a href="com/csse3200/game/components/ship/ShipLightComponent.html" title="class in com.csse3200.game.components.ship">ShipLightComponent</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/ship/ShipProgressComponent.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.ship.<a href="com/csse3200/game/components/ship/ShipProgressComponent.html" title="class in com.csse3200.game.components.ship">ShipProgressComponent</a></dt>
 <dd>
 <div class="block">This component will handle the Ship's internal state of repair.</div>
@@ -4241,6 +4243,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/plants/PlantComponent.html#read(com.badlogic.gdx.utils.Json,com.badlogic.gdx.utils.JsonValue)" class="member-name-link">read(Json, JsonValue)</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/ship/ShipLightComponent.html#read(com.badlogic.gdx.utils.Json,com.badlogic.gdx.utils.JsonValue)" class="member-name-link">read(Json, JsonValue)</a> - Method in class com.csse3200.game.components.ship.<a href="com/csse3200/game/components/ship/ShipLightComponent.html" title="class in com.csse3200.game.components.ship">ShipLightComponent</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/Entity.html#read(com.badlogic.gdx.utils.Json,com.badlogic.gdx.utils.JsonValue)" class="member-name-link">read(Json, JsonValue)</a> - Method in class com.csse3200.game.entities.<a href="com/csse3200/game/entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></dt>
 <dd>
 <div class="block">Reads the json file and creates the entities based on the information in the
@@ -5251,6 +5255,12 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/factories/ShipFactory.html#%3Cinit%3E()" class="member-name-link">ShipFactory()</a> - Constructor for class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ShipFactory.html" title="class in com.csse3200.game.entities.factories">ShipFactory</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/ship/ShipLightComponent.html" class="type-name-link" title="class in com.csse3200.game.components.ship">ShipLightComponent</a> - Class in <a href="com/csse3200/game/components/ship/package-summary.html">com.csse3200.game.components.ship</a></dt>
+<dd>
+<div class="block">Adds a controllable light source to the player ship.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/ship/ShipLightComponent.html#%3Cinit%3E()" class="member-name-link">ShipLightComponent()</a> - Constructor for class com.csse3200.game.components.ship.<a href="com/csse3200/game/components/ship/ShipLightComponent.html" title="class in com.csse3200.game.components.ship">ShipLightComponent</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/terrain/ShipPartTileComponent.html" class="type-name-link" title="class in com.csse3200.game.areas.terrain">ShipPartTileComponent</a> - Class in <a href="com/csse3200/game/areas/terrain/package-summary.html">com.csse3200.game.areas.terrain</a></dt>
 <dd>
 <div class="block">A tile that drops a ship part on destroy.</div>
@@ -5652,6 +5662,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/ConeLightComponent.html#toggleLight()" class="member-name-link">toggleLight()</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/ConeLightComponent.html" title="class in com.csse3200.game.components">ConeLightComponent</a></dt>
 <dd>
 <div class="block">Toggles the light between an on and off state</div>
+</dd>
+<dt><a href="com/csse3200/game/components/ship/ShipLightComponent.html#toggleLight()" class="member-name-link">toggleLight()</a> - Method in class com.csse3200.game.components.ship.<a href="com/csse3200/game/components/ship/ShipLightComponent.html" title="class in com.csse3200.game.components.ship">ShipLightComponent</a></dt>
+<dd>
+<div class="block">Toggles the light between an on and off state, if the feature is unlocked.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/inventory/InventoryDisplay.html#toggleOpen()" class="member-name-link">toggleOpen()</a> - Method in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/InventoryDisplay.html" title="class in com.csse3200.game.components.inventory">InventoryDisplay</a></dt>
 <dd>
@@ -6365,6 +6379,8 @@ the order they are declared.</div>
 <dt><a href="com/csse3200/game/components/plants/PlantComponent.html#write(com.badlogic.gdx.utils.Json)" class="member-name-link">write(Json)</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/player/InventoryComponent.html#write(com.badlogic.gdx.utils.Json)" class="member-name-link">write(Json)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/ship/ShipLightComponent.html#write(com.badlogic.gdx.utils.Json)" class="member-name-link">write(Json)</a> - Method in class com.csse3200.game.components.ship.<a href="com/csse3200/game/components/ship/ShipLightComponent.html" title="class in com.csse3200.game.components.ship">ShipLightComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/tractor/TractorActions.html#write(com.badlogic.gdx.utils.Json)" class="member-name-link">write(Json)</a> - Method in class com.csse3200.game.components.tractor.<a href="com/csse3200/game/components/tractor/TractorActions.html" title="class in com.csse3200.game.components.tractor">TractorActions</a></dt>
 <dd>
