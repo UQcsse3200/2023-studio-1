@@ -1,6 +1,7 @@
 package com.csse3200.game.components.tasks;
 
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.components.plants.PlantAreaOfEffectComponent;
@@ -64,7 +65,8 @@ public class MoveToPlantTaskTest {
 
         MoveToPlantTask moveToPlantTask = new MoveToPlantTask(10, Vector2Utils.ONE, 1f);
 
-        AITaskComponent ai = new AITaskComponent().addTask(moveToPlantTask);
+        AITaskComponent ai =
+                new AITaskComponent().addTask(moveToPlantTask).addTask(new WanderTask(Vector2Utils.ONE, 5f));
         Entity entity = makePhysicsEntity().addComponent(ai);
         entity.create();
         entity.setPosition(0f, 10f);

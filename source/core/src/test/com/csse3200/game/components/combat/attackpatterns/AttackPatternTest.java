@@ -2,9 +2,13 @@ package com.csse3200.game.components.combat.attackpatterns;
 
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.areas.terrain.CropTileComponent;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.combat.ProjectileComponent;
 import com.csse3200.game.components.combat.attackpatterns.AttackPatternComponent;
+import com.csse3200.game.components.plants.PlantAreaOfEffectComponent;
+import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.ProjectileFactory;
@@ -17,9 +21,14 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.TimeService;
+import com.csse3200.game.services.plants.PlantCommandService;
+import com.csse3200.game.services.plants.PlantInfoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,6 +56,12 @@ public class AttackPatternTest {
         ServiceLocator.registerPhysicsService(new PhysicsService());
         ServiceLocator.registerGameArea(mock(GameArea.class));
         ServiceLocator.registerResourceService(mock(ResourceService.class));
+
+        // Plant stuff
+        ServiceLocator.registerTimeService(new TimeService());
+        ServiceLocator.registerPlantCommandService(new PlantCommandService());
+        ServiceLocator.registerPlantInfoService(mock(PlantInfoService.class));
+
 
 
         interactionDetector = spy(new InteractionDetector(1.0f));
@@ -117,11 +132,20 @@ public class AttackPatternTest {
     }
 
     @Test
-    void testDragonflyAttack() {
+    void testDragonflyAttackPlayer() {
         attackPatternComponent = spy(getAttackPatternComponent(EntityType.Dragonfly));
 
         entity.addComponent(attackPatternComponent);
         entity.create();
+
+        Entity playerTarget = new Entity(EntityType.Player);
+        Entity plantTarget = new Entity(EntityType.Plant);
+
+        // Place it close enough to the plant
+        entity.setPosition(1f, 1f);
+        plantTarget.setPosition(1f, 1f);
+
+        when(interactionDetector.getEntitiesInRange()).thenReturn(List.of(plantTarget, playerTarget));
 
         // start attack loop when entity is detected
         entity.getEvents().trigger("entityDetected", mock(Entity.class));
@@ -151,6 +175,77 @@ public class AttackPatternTest {
 
         // check only 9 more projectiles spawn
         verify(ServiceLocator.getGameArea(), times(12)).spawnEntity(any());
+
+    }
+
+    @Test
+    void testDragonflyAttackPlant() {
+        attackPatternComponent = spy(getAttackPatternComponent(EntityType.Dragonfly));
+
+        entity.addComponent(attackPatternComponent);
+        entity.create();
+
+        Entity plantTarget = new Entity(EntityType.Plant);
+
+        int[] growthStageThresholds = new int[]{1,2,3};
+        String[] soundArray = new String[]{"1", "2", "3", "4", "5", "6", "7", "8"};
+        CropTileComponent mockCropTile = mock(CropTileComponent.class);
+
+        PlantComponent plantComponent = new PlantComponent(500, "testPlant", "DEFENCE", "test " +
+                "plant", 1, 2, 1000, mockCropTile, growthStageThresholds, soundArray);
+
+        plantTarget.addComponent(plantComponent);
+        plantTarget.create();
+
+        int plantStartingHealth = plantComponent.getPlantHealth();
+
+        // Place it close enough to the plant
+        entity.setPosition(1f, 1f);
+        plantTarget.setPosition(1f, 1f);
+
+        when(interactionDetector.getEntitiesInRange()).thenReturn(List.of(plantTarget));
+
+        // start attack loop when entity is detected
+        entity.getEvents().trigger("entityDetected", plantTarget);
+        entity.update();
+
+        assertTrue(plantStartingHealth > plantComponent.getPlantHealth());
+
+    }
+
+    @Test
+    void testBatAttack() {
+
+        attackPatternComponent = spy(getAttackPatternComponent(EntityType.Bat));
+
+        entity.addComponent(attackPatternComponent);
+        entity.addComponent(new CombatStatsComponent(10, 10));
+        entity.create();
+
+        Entity target = new Entity(EntityType.Player);
+
+        CombatStatsComponent combatStatsComponent = new CombatStatsComponent(100, 0);
+        target.addComponent(combatStatsComponent);
+        target.create();
+
+        when(interactionDetector.getEntitiesInRange()).thenReturn(List.of(target));
+
+        // start attack loop when entity is detected
+        entity.getEvents().trigger("entityDetected", target);
+        entity.update();
+
+        // check attack starts before shoot
+        verify(attackPatternComponent, times(1)).attack();
+
+        assertEquals(target.getComponent(CombatStatsComponent.class).getHealth(), 90);
+
+        when(interactionDetector.getEntitiesInRange()).thenReturn(new ArrayList<>());
+
+        // wait for delay
+        when(gameTime.getTime()).thenReturn(1000L);
+
+        entity.update();
+
     }
 
 
@@ -159,7 +254,9 @@ public class AttackPatternTest {
             return new DragonflyAttackPattern(1f, this::createMockProjectile);
         } else if (type == EntityType.OxygenEater) {
             return new OxygenEaterAttackPattern(1f, this::createMockProjectile);
-        }
+        }  else if (type == EntityType.Bat) {
+        return new BatAttackPattern(1f);
+    }
 
         return new AttackPatternComponent(1f);
     }
