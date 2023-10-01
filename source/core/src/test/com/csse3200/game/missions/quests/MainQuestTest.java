@@ -7,13 +7,17 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 class MainQuestTest {
-    private MainQuest mainQuest1, mainQuest2, mainQuest3, mainQuest4, mainQuest5, mainQuest6, mainQuest7;
-    private Reward r1, r2, r3, r4, r5, r6, r7;
+    private MainQuest mainQuest1, mainQuest2, mainQuest3;
+    private Reward r1, r2, r3;
 
     @BeforeEach
     public void init() {
@@ -21,25 +25,35 @@ class MainQuestTest {
         ServiceLocator.registerTimeService(new TimeService());
         ServiceLocator.registerMissionManager(new MissionManager());
 
+        Set<String> requiredQuests1 = new HashSet<>();
+        Set<String> requiredQuests2 = new HashSet<>();
+        Set<String> requiredQuests3 = new HashSet<>();
+
+        requiredQuests1.add("Requirement Quest 1");
+
+        requiredQuests2.add("Requirement Quest 1");
+        requiredQuests2.add("Requirement Quest 2");
+
+        requiredQuests3.add("Requirement Quest 1");
+        requiredQuests3.add("Requirement Quest 2");
+        requiredQuests3.add("Requirement Quest 3");
+
         r1 = mock(Reward.class);
         r2 = mock(Reward.class);
         r3 = mock(Reward.class);
-        r4 = mock(Reward.class);
-        r5 = mock(Reward.class);
-        r6 = mock(Reward.class);
-        r7 = mock(Reward.class);
 
-        mainQuest1 = new MainQuest("Main Quest 1", r1, 10);
-        mainQuest2 = new MainQuest("Main Quest 2", r2, 10, false, 10);
-        mainQuest3 = new MainQuest("Main Quest 3", r3, 10, true, 10);
-        mainQuest4 = new MainQuest("Main Quest 4", r4, 10);
-        mainQuest5 = new MainQuest("Main Quest 5", r5, 10);
-        mainQuest6 = new MainQuest("Main Quest 6", r6, 10, false, -1);
-        mainQuest7 = new MainQuest("Main Quest 7", r7, 10);
+        mainQuest1 = new MainQuest("Main Quest 1", r1, 10, requiredQuests1, "Test 1");
+        mainQuest2 = new MainQuest("Main Quest 2", r2, 10, requiredQuests2, "Test 2");
+        mainQuest3 = new MainQuest("Main Quest 3", r3, 10, requiredQuests3, "Test 3");
     }
 
     @AfterEach
     public void reset() {
         ServiceLocator.clear();
+    }
+
+    @Test
+    void testRegisterMission(){
+
     }
 }
