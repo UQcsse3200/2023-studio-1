@@ -682,20 +682,21 @@ public class PlantComponent extends Component {
             return;
         }
 
-        harvestYields.forEach((itemName, quantity) -> {
-            Supplier<Entity> itemSupplier = ItemFactory.getItemSupplier(itemName);
-            for (int i = 0; i < quantity; i++) {
-                Entity item = itemSupplier.get();
-                item.setPosition(entity.getPosition());
-                ServiceLocator.getEntityService().register(item);
-            }
-        });
+        if (harvestYields != null) {
+            harvestYields.forEach((itemName, quantity) -> {
+                Supplier<Entity> itemSupplier = ItemFactory.getItemSupplier(itemName);
+                for (int i = 0; i < quantity; i++) {
+                    Entity item = itemSupplier.get();
+                    item.setPosition(entity.getPosition());
+                    ServiceLocator.getEntityService().register(item);
+                }
+            });
+        }
         ServiceLocator.getMissionManager().getEvents().trigger(
                 MissionManager.MissionEvent.HARVEST_CROP.name(),
                 getPlantName());
         ServiceLocator.getPlantInfoService().increasePlantsHarvested(1, plantName);
         destroyPlant();
-
     }
 
     /**
