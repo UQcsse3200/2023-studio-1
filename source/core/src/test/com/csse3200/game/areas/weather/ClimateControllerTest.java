@@ -95,6 +95,9 @@ class ClimateControllerTest {
 		}
 	}
 
+	/**
+	 * Testing the case of SolarSurgeEvent.
+	 */
 	@Test
 	public void testAddedEvent1() {
 		assertNull(controller.getCurrentWeatherEvent());
@@ -109,13 +112,16 @@ class ClimateControllerTest {
 		}
 	}
 
+	/**
+	 * Testing the case of AcidShowerEvent.
+	 */
 	@Test
 	public void testAddDailyEventCase0() {
 		assertNull(controller.getCurrentWeatherEvent());
 
 		try (MockedStatic<MathUtils> mathUtils = mockStatic(MathUtils.class)) {
 			mathUtils.when(MathUtils::random).thenReturn(0.5f);
-			mathUtils.when(() -> MathUtils.random(0, 1)).thenReturn(0); //
+			mathUtils.when(() -> MathUtils.random(0, 1)).thenReturn(0); // weatherEvent - AcidShowerEvent
 			mathUtils.when(() -> MathUtils.random(1, 6)).thenReturn(1); // numHoursUntil
 			mathUtils.when(() -> MathUtils.random(2, 5)).thenReturn(4); // duration
 			mathUtils.when(() -> MathUtils.random(0, 3)).thenReturn(0); // priority
