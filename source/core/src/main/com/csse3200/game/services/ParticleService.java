@@ -82,6 +82,8 @@ public class ParticleService {
 			particleEffects.put(effectType, ServiceLocator.getResourceService().getAsset(effectType.effectPath, ParticleEffect.class));
 			particleEffectPools.put(effectType, new ParticleEffectPool(particleEffects.get(effectType), effectType.minCapacity, effectType.maxCapacity));
 		}
+
+		startEffect(ParticleEffectType.ACID_RAIN);
 	}
 
 	/**
@@ -90,9 +92,6 @@ public class ParticleService {
 	 * @param delta delta value used to update each particle effect
 	 */
 	public void render (SpriteBatch batch, float delta) {
-		if (ServiceLocator.getGameArea() == null) {
-			return;
-		}
 		Vector2 playerPosition = ServiceLocator.getGameArea().getPlayer().getCenterPosition();
 		for (ParticleEffectWrapper wrapper : queuedEffects) {
 			wrapper.getPooledEffect().setPosition(playerPosition.x,playerPosition.y);
