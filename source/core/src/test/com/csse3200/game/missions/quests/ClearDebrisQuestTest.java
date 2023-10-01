@@ -250,6 +250,13 @@ class ClearDebrisQuestTest {
     @Test
     void testResetState() {
         testIsCompleted();
+        assertTrue(CDQuest1.isCompleted());
+        assertTrue(CDQuest2.isCompleted());
+        assertTrue(CDQuest3.isCompleted());
+        assertTrue(CDQuest4.isCompleted());
+        assertTrue(CDQuest5.isCompleted());
+        assertTrue(CDQuest6.isCompleted());
+        assertTrue(CDQuest7.isCompleted());
         CDQuest1.resetState();
         CDQuest2.resetState();
         CDQuest3.resetState();

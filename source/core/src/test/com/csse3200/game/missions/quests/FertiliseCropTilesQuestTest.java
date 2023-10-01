@@ -235,6 +235,12 @@ class FertiliseCropTilesQuestTest {
     @Test
     void testResetState() {
         testIsCompleted();
+        assertTrue(FCTQuest1.isCompleted());
+        assertTrue(FCTQuest2.isCompleted());
+        assertTrue(FCTQuest3.isCompleted());
+        assertTrue(FCTQuest4.isCompleted());
+        assertTrue(FCTQuest5.isCompleted());
+        assertTrue(FCTQuest6.isCompleted());
         FCTQuest1.resetState();
         FCTQuest2.resetState();
         FCTQuest3.resetState();
