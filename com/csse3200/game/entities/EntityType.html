@@ -129,20 +129,22 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="#Player" class="member-name-link">Player</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="#Questgiver" class="member-name-link">Questgiver</a></code></div>
+<div class="col-first even-row-color"><code><a href="#Pump" class="member-name-link">Pump</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="#QuestgiverIndicator" class="member-name-link">QuestgiverIndicator</a></code></div>
+<div class="col-first odd-row-color"><code><a href="#Questgiver" class="member-name-link">Questgiver</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="#Ship" class="member-name-link">Ship</a></code></div>
+<div class="col-first even-row-color"><code><a href="#QuestgiverIndicator" class="member-name-link">QuestgiverIndicator</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="#ShipDebris" class="member-name-link">ShipDebris</a></code></div>
+<div class="col-first odd-row-color"><code><a href="#Ship" class="member-name-link">Ship</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="#Sprinkler" class="member-name-link">Sprinkler</a></code></div>
+<div class="col-first even-row-color"><code><a href="#ShipDebris" class="member-name-link">ShipDebris</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="#Tile" class="member-name-link">Tile</a></code></div>
+<div class="col-first odd-row-color"><code><a href="#Sprinkler" class="member-name-link">Sprinkler</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="#Tractor" class="member-name-link">Tractor</a></code></div>
+<div class="col-first even-row-color"><code><a href="#Tile" class="member-name-link">Tile</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="#Tractor" class="member-name-link">Tractor</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -162,6 +164,16 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Getter method for the oxygen consumption/production rate
  of a given entity type.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../components/placeables/PlaceableCategory.html" title="enum class in com.csse3200.game.components.placeables">PlaceableCategory</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPlaceableCategory()" class="member-name-link">getPlaceableCategory</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Getter for the placeableCategory</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPlaceableCategory(com.csse3200.game.components.placeables.PlaceableCategory)" class="member-name-link">setPlaceableCategory</a><wbr>(<a href="../components/placeables/PlaceableCategory.html" title="enum class in com.csse3200.game.components.placeables">PlaceableCategory</a>&nbsp;placeableCategory)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Setter for the placeableCategory</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="EntityType.html" title="enum class in com.csse3200.game.entities">EntityType</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#valueOf(java.lang.String)" class="member-name-link">valueOf</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
@@ -285,6 +297,12 @@ the order they are declared.</div>
 </section>
 </li>
 <li>
+<section class="detail" id="Pump">
+<h3>Pump</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="EntityType.html" title="enum class in com.csse3200.game.entities">EntityType</a></span>&nbsp;<span class="element-name">Pump</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="Light">
 <h3>Light</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="EntityType.html" title="enum class in com.csse3200.game.entities">EntityType</a></span>&nbsp;<span class="element-name">Light</span></div>
@@ -356,6 +374,28 @@ not permitted.)</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the hourly oxygen rate of the entity type.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getPlaceableCategory()">
+<h3>getPlaceableCategory</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../components/placeables/PlaceableCategory.html" title="enum class in com.csse3200.game.components.placeables">PlaceableCategory</a></span>&nbsp;<span class="element-name">getPlaceableCategory</span>()</div>
+<div class="block">Getter for the placeableCategory</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>this placeableCategory</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setPlaceableCategory(com.csse3200.game.components.placeables.PlaceableCategory)">
+<h3>setPlaceableCategory</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setPlaceableCategory</span><wbr><span class="parameters">(<a href="../components/placeables/PlaceableCategory.html" title="enum class in com.csse3200.game.components.placeables">PlaceableCategory</a>&nbsp;placeableCategory)</span></div>
+<div class="block">Setter for the placeableCategory</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>placeableCategory</code> - A category that encompasses the Placeable type.</dd>
 </dl>
 </section>
 </li>
