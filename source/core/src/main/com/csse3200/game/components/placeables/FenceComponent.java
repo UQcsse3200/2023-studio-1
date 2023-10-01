@@ -1,5 +1,7 @@
 package com.csse3200.game.components.placeables;
 
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
@@ -134,13 +136,11 @@ public class FenceComponent extends Component {
         isOpen = !isOpen;
 
         if (isOpen) {
-            //this.currentTexture.setTexture(openGatePath);
             this.entity.getComponent(ColliderComponent.class).setSensor(true);
             configGate();
             return;
         }
         this.entity.getComponent(ColliderComponent.class).setSensor(false);
-
         // Update our texture accordingly
         configGate();
     }
