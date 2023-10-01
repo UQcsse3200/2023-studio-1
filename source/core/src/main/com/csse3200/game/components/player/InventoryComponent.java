@@ -30,7 +30,7 @@ public class InventoryComponent extends Component {
 
   private Entity heldItem = null;
 
-  private int heldIndex = 0;
+  private int heldIndex = -1;
 
   @Override
   public void create() {
@@ -213,6 +213,7 @@ public class InventoryComponent extends Component {
     if (!itemPosition.containsKey(item)) {
       itemPosition.put(item, new Point(0, 0)); // Default position. You can change this as needed.
     }
+    setHeldItem(getHeldIndex());
     updateInventory();
     return this.inventory.add(item);
   }
