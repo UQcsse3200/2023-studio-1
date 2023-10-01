@@ -54,6 +54,20 @@ class MainQuestTest {
 
     @Test
     void testRegisterMission(){
-
+        assertFalse(mainQuest1.isCompleted());
+        assertFalse(mainQuest2.isCompleted());
+        assertFalse(mainQuest3.isCompleted());
+        assertFalse(r1.isCollected());
+        assertFalse(r2.isCollected());
+        assertFalse(r3.isCollected());
+        mainQuest1.registerMission(ServiceLocator.getMissionManager().getEvents());
+        mainQuest2.registerMission(ServiceLocator.getMissionManager().getEvents());
+        mainQuest3.registerMission(ServiceLocator.getMissionManager().getEvents());
+        assertFalse(mainQuest1.isCompleted());
+        assertFalse(mainQuest2.isCompleted());
+        assertFalse(mainQuest3.isCompleted());
+        assertFalse(r1.isCollected());
+        assertFalse(r2.isCollected());
+        assertFalse(r3.isCollected());
     }
 }
