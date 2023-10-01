@@ -14,7 +14,6 @@ public class OpenPauseComponent extends Component {
     public void create() {
         entity.getEvents().addListener("escInput", this::togglePauseMenu);
         pauseOpen = false;
-
     }
 
     public Boolean getPauseOpen() { return pauseOpen; }
@@ -42,6 +41,7 @@ public class OpenPauseComponent extends Component {
         ServiceLocator.getPauseMenuArea().disposePauseMenu();
         pauseOpen = false;
         if (ServiceLocator.getCutSceneStatus() == false) {
+            // temporary neutralise setPause to false while cut screen is running
             ServiceLocator.getTimeService().setPaused(false);
         }
     }

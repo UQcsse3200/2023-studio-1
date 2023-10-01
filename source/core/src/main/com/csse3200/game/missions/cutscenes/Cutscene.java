@@ -15,13 +15,19 @@ public class Cutscene{
      */
     private final String dialogue;
 
-    // creates an instance of the cutscene class and assigns all variables as they need to be assigned - DOES NOT SPAWN THE ACTUAL CUTSCENE
+    /**
+     * Creates an instance of the cutscene class and assigns all variables as they need to be assigned - DOES NOT SPAWN THE ACTUAL CUTSCENE
+     * @param dialogue - the dialogue to be displayed in the cutscene
+     */
     public Cutscene(String dialogue) {
         super();
         this.dialogue = dialogue;
     }
 
-    // Creates the whole cutscene - to call other methods below this method
+    // 
+    /**
+     * Creates the whole cutscene - to call other methods below this method
+     */
     public void spawnCutscene() {
         System.out.println("CUTSCENE SPAWNED");
         logger.debug("Cutscene spawned");
@@ -34,7 +40,9 @@ public class Cutscene{
         ServiceLocator.getEntityService().register(cutsceneEntity);
     }
 
-    // pauses the game
+    /**
+     * Pauses the game
+     */
     public void pauseGame() {
         logger.debug("Setting paused state to: 0");
         ServiceLocator.setCutSceneRunning(true);
@@ -42,12 +50,16 @@ public class Cutscene{
     }
 
 
-    // Ends the cutscene
+    /**
+     * Ends the cutscene
+     */
     public void endCutscene() {
         this.unPauseGame();
     }
 
-    // unpauses the game
+    /**
+     * Unpauses the game
+     */
     public void unPauseGame() {
         logger.debug("Setting paused state to: 1");
         // 1 is for delta time to run in normal speed
