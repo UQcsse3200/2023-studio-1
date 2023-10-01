@@ -38,7 +38,9 @@ public class CutsceneDisplay extends UIComponent {
 
     private TypingLabel dialogueLabel;
 
-    private Cutscene cutscene;
+    private final Cutscene cutscene;
+
+    private Image transparentRectangle;
 
     /**
      * Stores the dialogue text
@@ -79,7 +81,7 @@ public class CutsceneDisplay extends UIComponent {
         pixmap.fillRectangle(0, 0, 1, 1);
         Texture transparentRecTex = new Texture(pixmap);
         pixmap.dispose();
-        Image transparentRectangle = new Image(transparentRecTex);
+        transparentRectangle = new Image(transparentRecTex);
         transparentRectangle.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         transparentRectangle.getColor().a = 0.5f;
         stage.addActor(transparentRectangle);
@@ -145,6 +147,7 @@ public class CutsceneDisplay extends UIComponent {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
                         logger.debug("Continue button clicked");
+                        transparentRectangle.getColor().a = 0f;
                         disposeCutscene();
                         cutscene.endCutscene();
                     }
