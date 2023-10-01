@@ -10,6 +10,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.when;
 
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.services.ParticleService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -143,6 +145,31 @@ class ClimateControllerTest {
 		assertEquals(controller.getCurrentWeatherEvent(), event2);
 		ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
 		assertNull(controller.getCurrentWeatherEvent());
+	}
+
+	@Test
+	public void testSetValues() {
+		Json json = new Json();
+		JsonValue jsonData = new JsonValue(JsonValue.ValueType.object);
+		jsonData.addChild("Temp", new JsonValue(26.0f));
+		assertEquals(26.0f, jsonData.getFloat("Temp"));
+		jsonData.addChild("Humidity", new JsonValue(1.2f));
+		assertEquals(1.2f, jsonData.getFloat("Humidity"));
+		JsonValue events = new JsonValue(JsonValue.ValueType.object);
+		JsonValue event = new JsonValue(JsonValue.ValueType.object);
+		event.addChild("name", new JsonValue("AcidShowerEvent"));
+		event.addChild("hoursUntil", new JsonValue(1));
+		event.addChild("duration", new JsonValue(2));
+		event.addChild("priority", new JsonValue(1));
+		event.addChild("severity", new JsonValue(1.5f));
+		events.addChild("Event", event);
+		jsonData.addChild("Events", events);
+		assertEquals(events, jsonData.get("Events"));
+
+		controller.setValues(json, jsonData);
+
+		assertEquals(26.0f, controller.getTemperature());
+		assertEquals(1.2f, controller.getHumidity());
 	}
 
 }
