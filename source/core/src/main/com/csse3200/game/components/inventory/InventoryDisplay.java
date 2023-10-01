@@ -41,13 +41,13 @@ public class InventoryDisplay extends UIComponent {
    * Constructor for class
    * @param inventory inventory of player
    */
-  public InventoryDisplay(InventoryComponent inventory) {
-    this.inventory = inventory;
-  }
-
-  public InventoryDisplay() {
-    this.inventory = entity.getComponent(InventoryComponent.class);
-  }
+//  public InventoryDisplay(InventoryComponent inventory) {
+//    this.inventory = inventory;
+//  }
+//
+//  public InventoryDisplay() {
+//    this.inventory = entity.getComponent(InventoryComponent.class);
+//  }
 
   /**
    * Creates reusable ui styles and adds actors to the stage.
@@ -108,7 +108,7 @@ public class InventoryDisplay extends UIComponent {
     window.pack();
     window.setMovable(false);
     window.setPosition(stage.getWidth() / 2 - window.getWidth() / 2, 0);
-//    window.setVisible(isOpen);
+    window.setVisible(isOpen);
     // Add the window to the stage
 //    stage.addActor(window);
     setDragItems(actors, map);
@@ -119,39 +119,39 @@ public class InventoryDisplay extends UIComponent {
    * @see Table for positioning options
    */
   private void addActors() {
-//    table = new Table(skin);
-//    table.defaults().size(64, 64);
-//    table.pad(10);
-//    ArrayList<Actor> actors = new ArrayList<>();
-//    final Map<Image,ItemSlot> map = new HashMap<>();
-//      // Add some items to the table, to be changed once inventory item is improved
-//    indexes = new HashMap<>(); // map of items to their index
-//    for (int i = 0; i < 30; i++) {
-//      //Add the items to the table
-//      ItemSlot item = new ItemSlot(false);
-//      //item.setDebug(true);
-//      map.put(item.getItemImage(), item);
-//
-//      table.add(item).width(70).height(70).pad(10, 10, 10, 10);
-//      indexes.put(item, i);
-//      if ((i + 1) % 10 == 0) {
-//        //Add a new row every 10 items
-//        table.row();
-//      }
-//    }
+    table = new Table(skin);
+    table.defaults().size(64, 64);
+    table.pad(10);
+    ArrayList<Actor> actors = new ArrayList<>();
+    final Map<Image,ItemSlot> map = new HashMap<>();
+      // Add some items to the table, to be changed once inventory item is improved
+    indexes = new HashMap<>(); // map of items to their index
+    for (int i = 0; i < 30; i++) {
+      //Add the items to the table
+      ItemSlot item = new ItemSlot(false);
+      //item.setDebug(true);
+      map.put(item.getItemImage(), item);
+
+      table.add(item).width(70).height(70).pad(10, 10, 10, 10);
+      indexes.put(item, i);
+      if ((i + 1) % 10 == 0) {
+        //Add a new row every 10 items
+        table.row();
+      }
+    }
 
     // Create a window for the inventory using the skin
     window = new Window("Inventory", skin);
-//    window.pad(40, 20, 20, 20); // Add padding to with so that the text doesn't go offscreen
-//    window.add(table); //Add the table to the window
-//    window.pack(); // Pack the window to the size
-//    window.setMovable(false);
-//    window.setPosition(stage.getWidth() / 2 - window.getWidth() / 2, stage.getHeight() / 2 - window.getHeight() / 2); // Center the window on the stage
-//    window.setVisible(false);
+    window.pad(40, 20, 20, 20); // Add padding to with so that the text doesn't go offscreen
+    window.add(table); //Add the table to the window
+    window.pack(); // Pack the window to the size
+    window.setMovable(false);
+    window.setPosition(stage.getWidth() / 2 - window.getWidth() / 2, stage.getHeight() / 2 - window.getHeight() / 2); // Center the window on the stage
+    window.setVisible(false);
     // Add the window to the stage
     stage.addActor(window);
     dnd = new DragAndDrop();
-//    setDragItems(actors, map);
+    setDragItems(actors, map);
 
   }
   public void setDragItems(@NotNull ArrayList<Actor> actors, Map<Image,ItemSlot> map) {

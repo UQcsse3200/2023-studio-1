@@ -74,7 +74,7 @@ public class PlayerFactory {
                     EntityType.Cow, EntityType.Astrolotl, EntityType.OxygenEater, EntityType.ShipDebris))))
             .addComponent(new ToolbarDisplay())
 	        .addComponent(new AuraLightComponent(6f))
-//            .addComponent(new InventoryDisplay())
+            .addComponent(new InventoryDisplay())
             .addComponent(new PauseMenuActions());
 
     player.getComponent(ColliderComponent.class).setDensity(1.5f);

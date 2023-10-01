@@ -174,7 +174,7 @@ public class ItemActionsTest {
         assertTrue(gate.getComponent(ItemActions.class).use(player, mousePos, gameMap));
         assertTrue(shovel.getComponent(ItemActions.class).use(player, mousePos, gameMap));
 
-        Entity chest = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("Chest", ItemType.PLACEABLE, null)).addComponent(new InventoryComponent(null));
+        Entity chest = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("Chest", ItemType.PLACEABLE, null)).addComponent(new InventoryComponent());
         assertTrue(chest.getComponent(ItemActions.class).use(player, mousePos, gameMap));
         assertTrue(shovel.getComponent(ItemActions.class).use(player, mousePos, gameMap));
     }
