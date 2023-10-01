@@ -225,12 +225,23 @@ public class InventoryComponent extends Component {
 
   /**
    * Function to get the item of a specific position in Inventory.
-   * Starts an 0
+   * Starts at 0
    *
    * @param position position of the item in inventory
    * @return entity for that position in inventory
    */
-  public String getItem(int position) {
+  public Entity getItem(int position) {
+    return this.heldItemsEntity.get(this.getItemName(position));
+  }
+
+  /**
+   * Function to get the item of a specific position in Inventory.
+   * Starts at 0
+   *
+   * @param position position of the item in inventory
+   * @return entity for that position in inventory
+   */
+  public String getItemName(int position) {
     return this.itemPlace.get(position);
   }
 
@@ -346,6 +357,7 @@ public class InventoryComponent extends Component {
    * @return boolean representing if the item was added successfully
    */
   public boolean addItem(Entity item) {
+    logger.info(String.valueOf(item));
     if(item.getType() != EntityType.Item || item.getComponent(ItemComponent.class) == null) {
       //logger.info("Entity is not an item");
       //logger.info(entity.toString());
@@ -363,7 +375,7 @@ public class InventoryComponent extends Component {
       this.heldItemsEntity.put(item.getComponent(ItemComponent.class).getItemName(), item);
       // Add item to next available position
       setPosition(item);
-      entity.getEvents().trigger("updateToolbar");
+      entity.getEvents().trigger("updateInventory");
       return true;
     }
   }
@@ -394,7 +406,7 @@ public class InventoryComponent extends Component {
                 }
             }
         }
-        entity.getEvents().trigger("updateToolbar");
+        entity.getEvents().trigger("updateInventory");
         //logger.info("Removing item from inventory - " + item.getComponent(ItemComponent.class).getItemName() + ",new count " + this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(), 0));
         return true;
     }
