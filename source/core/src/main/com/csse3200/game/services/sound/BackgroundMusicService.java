@@ -155,11 +155,22 @@ public class BackgroundMusicService implements MusicService {
         pauseStatus = true;
     }
     
+    /**
+     * Unpauses current music if it is paused.
+     */
     public void unPause() {
-        loadedMusic.get(currentlyActive).play();
-        pauseStatus = false;
+        if (pauseStatus) {
+            loadedMusic.get(currentlyActive).play();
+            pauseStatus = false;
+        }
+        // Do nothing if not paused.
     }
     
+    /**
+     * Attempts to stop playback for a given sound file.
+     * @param sound - An enum value that implements the SoundFile interface.
+     * @throws InvalidSoundFileException if the given sound file is not playing.
+     */
     @Override
     public void stop(SoundFile sound) throws InvalidSoundFileException {
         if (sound != currentlyActive) {
@@ -179,17 +190,33 @@ public class BackgroundMusicService implements MusicService {
             currentMusic = null;
         }
     }
-
+    
+    /**
+     * Sets the mute status of the background music to the given boolean value.
+     * True being muted.
+     * @param muted - The boolean state to set
+     */
     @Override
     public void setMuted(boolean muted) {
         this.muteStatus = muted;
     }
-
+    
+    /**
+     * Returns the current mute status.
+     * @return the current mute status.
+     */
     @Override
     public boolean isMuted() {
         return this.muteStatus;
     }
-
+    
+    /**
+     * Checks if the given sound file is playing.
+     * @param sound - An enum value that implements the SoundFile interface
+     * @return True if playing, false if not.
+     * @throws InvalidSoundFileException if the sound file provided either isn't a
+     * BackgroundSoundFile or hasn't been loaded.
+     */
     @Override
     public boolean isPlaying(SoundFile sound) throws InvalidSoundFileException {
         if (sound instanceof BackgroundSoundFile
@@ -261,6 +288,4 @@ public class BackgroundMusicService implements MusicService {
         this.loadedMusic = new HashMap<>();
         this.categorisedMusic = new HashMap<>();
     }
-    
-    
 }
