@@ -1,6 +1,5 @@
 package com.csse3200.game.services;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -8,11 +7,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.rendering.ParticleEffectWrapper;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class ParticleService {
 
@@ -28,12 +26,12 @@ public class ParticleService {
 	 * creation of the particle effect pool and a reference to the effect needs to remain to ensure the pool functions
 	 * properly.
 	 */
-	private final HashMap<ParticleEffectType, ParticleEffect> particleEffects;
+	private final EnumMap<ParticleEffectType, ParticleEffect> particleEffects;
 
 	/**
 	 * Hashmap containing particle effect pools for each particle effect type.
 	 */
-	private final HashMap<ParticleEffectType, ParticleEffectPool> particleEffectPools;
+	private final EnumMap<ParticleEffectType, ParticleEffectPool> particleEffectPools;
 
 	/**
 	 * Enum for each type of particle effect known to the particle system
@@ -63,8 +61,8 @@ public class ParticleService {
 	 */
 	public ParticleService() {
 		queuedEffects = new ArrayList<>();
-		particleEffectPools = new HashMap<>();
-		particleEffects = new HashMap<>();
+		particleEffectPools = new EnumMap<>(ParticleEffectType.class);
+		particleEffects = new EnumMap<>(ParticleEffectType.class);
 
 		String[] particleNames = new String[ParticleEffectType.values().length];
 		int i = 0;
@@ -116,7 +114,6 @@ public class ParticleService {
 		ParticleEffectWrapper effectWrapper = new ParticleEffectWrapper(particleEffectPools.get(effectType).obtain(), effectType.category, effectType.name());
 		// Adds the effect to the queued effects so the particle service knows to draw it
 		queuedEffects.add(effectWrapper);
-		// Just for now since effect is too big - TODO Make Smaller
 		effectWrapper.getPooledEffect().scaleEffect(0.1f);
 		effectWrapper.getPooledEffect().start();
 	}

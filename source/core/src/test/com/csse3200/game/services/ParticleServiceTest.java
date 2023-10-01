@@ -87,7 +87,7 @@ public class ParticleServiceTest {
 	@Test
 	public void testStartEffect() throws IllegalAccessException {
 		@SuppressWarnings("unchecked")
-		HashMap<ParticleService.ParticleEffectType, ParticleEffectPool> mockPools = mock(HashMap.class);
+		EnumMap<ParticleService.ParticleEffectType, ParticleEffectPool> mockPools = mock(EnumMap.class);
 
 		@SuppressWarnings("unchecked")
 		ArrayList<ParticleEffectWrapper> mockQueuedEffects = mock(ArrayList.class);
@@ -116,7 +116,7 @@ public class ParticleServiceTest {
 	public void testStopEffect() throws IllegalAccessException {
 		// Injecting mock into private field
 		@SuppressWarnings("unchecked")
-		HashMap<ParticleService.ParticleEffectType, ParticleEffectPool> mockPools = mock(HashMap.class);
+		EnumMap<ParticleService.ParticleEffectType, ParticleEffectPool> mockPools = mock(EnumMap.class);
 		@SuppressWarnings("unchecked")
 		ArrayList<ParticleEffectWrapper> mockQueuedEffects = mock(ArrayList.class);
 		ParticleService particleService = new ParticleService();
@@ -146,7 +146,7 @@ public class ParticleServiceTest {
 	public void testStopEffectCategory() throws IllegalAccessException {
 		// Injecting mock into private field
 		@SuppressWarnings("unchecked")
-		HashMap<ParticleService.ParticleEffectType, ParticleEffectPool> mockPools = mock(HashMap.class);
+		EnumMap<ParticleService.ParticleEffectType, ParticleEffectPool> mockPools = mock(EnumMap.class);
 		@SuppressWarnings("unchecked")
 		ArrayList<ParticleEffectWrapper> mockQueuedEffects = mock(ArrayList.class);
 		ParticleService particleService = new ParticleService();
