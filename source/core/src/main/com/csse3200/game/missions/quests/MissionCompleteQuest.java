@@ -21,7 +21,7 @@ public class MissionCompleteQuest extends Quest {
     public MissionCompleteQuest(String name, Reward reward, int numberOfQuestsToComplete) {
         super(name, reward);
 
-        this.numberOfQuestsToComplete = numberOfQuestsToComplete;
+        this.numberOfQuestsToComplete = Math.max(0, numberOfQuestsToComplete);
         this.numberOfQuestsComplete = 0;
     }
 
@@ -35,7 +35,7 @@ public class MissionCompleteQuest extends Quest {
      */
     public MissionCompleteQuest(String name, Reward reward, int expiryDuration, boolean isMandatory, int numberOfQuestsToComplete) {
         super(name, reward, expiryDuration, isMandatory);
-        this.numberOfQuestsToComplete = numberOfQuestsToComplete;
+        this.numberOfQuestsToComplete = Math.max(0, numberOfQuestsToComplete);
         this.numberOfQuestsComplete = 0;
     }
 
