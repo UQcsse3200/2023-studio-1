@@ -1,6 +1,8 @@
 package com.csse3200.game.missions.quests;
 
+import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.JsonWriter;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.rewards.Reward;
 import com.csse3200.game.services.GameTime;
@@ -10,6 +12,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -134,50 +137,51 @@ class MainQuestTest {
         assertEquals(String.format(desc, 0), mainQuest3.getShortDescription());
     }
 
-//    @Test
-//    void testReadProgress() {
-//        int progressInt = 3;
-//        JsonValue progress = new JsonValue(progressInt);
-//        String desc = "Fertilising crop tiles will cause your plants to grow faster.\n" +
-//                "Apply fertiliser to %d tiles.\n" +
-//                "%d out of %d crop tiles fertilised.";
-//        String shortDesc = "%d out of %d crop tiles fertilised";
-//        mainQuest1.readProgress(progress);
-//        mainQuest2.readProgress(progress);
-//        mainQuest3.readProgress(progress);
-//        String formatted1 = String.format(desc, 10, progressInt, 10);
-//        String formatted2 = String.format(desc, 10, progressInt, 10);
-//        String formatted3 = String.format(desc, 0, progressInt, 0);
-//        String formatted4 = String.format(desc, 3, progressInt, 3);
-//        String formatted5 = String.format(desc, 50, progressInt, 50);
-//        String formatted6 = String.format(desc, 0, progressInt, 0);
-//        String shortFormatted1 = String.format(shortDesc, progressInt, 10);
-//        String shortFormatted2 = String.format(shortDesc, progressInt, 10);
-//        String shortFormatted3 = String.format(shortDesc, progressInt, 0);
-//        String shortFormatted4 = String.format(shortDesc, progressInt, 3);
-//        String shortFormatted5 = String.format(shortDesc, progressInt, 50);
-//        String shortFormatted6 = String.format(shortDesc, progressInt, 0);
-//        assertEquals(formatted1, mainQuest1.getDescription());
-//        assertEquals(formatted2, mainQuest2.getDescription());
-//        assertEquals(formatted3, mainQuest3.getDescription());
-//        assertEquals(shortFormatted1, mainQuest1.getShortDescription());
-//        assertEquals(shortFormatted2, mainQuest2.getShortDescription());
-//        assertEquals(shortFormatted3, mainQuest3.getShortDescription());
-//    }
-//
-//    @Test
-//    void testGetProgress() {
-//        assertEquals(0, mainQuest1.getProgress());
-//        assertEquals(0, mainQuest2.getProgress());
-//        assertEquals(0, mainQuest3.getProgress());
-//        testIsCompleted();
-//        assertNotEquals(0, mainQuest1.getProgress());
-//        assertNotEquals(0, mainQuest2.getProgress());
-//        assertEquals(0, mainQuest3.getProgress());
-//        assertEquals(10, mainQuest1.getProgress());
-//        assertEquals(10, mainQuest2.getProgress());
-//        assertEquals(0, mainQuest3.getProgress());
-//    }
+    @Test
+    void testReadProgress() {
+        JsonReader reader = new JsonReader();
+        String[] progressArray1 = {requirement1};
+        String[] progressArray2 = {requirement1, requirement2};
+        String[] progressArray3 = {requirement1, requirement2, requirement3};
+        JsonValue progress1 = reader.parse(Arrays.toString(progressArray1));
+        JsonValue progress2 = reader.parse(Arrays.toString(progressArray2));
+        JsonValue progress3 = reader.parse(Arrays.toString(progressArray3));
+        mainQuest1.readProgress(progress1);
+        mainQuest2.readProgress(progress1);
+        mainQuest3.readProgress(progress1);
+        assertTrue(mainQuest1.isCompleted());
+        assertFalse(mainQuest2.isCompleted());
+        assertFalse(mainQuest3.isCompleted());
+        mainQuest1.readProgress(progress2);
+        mainQuest2.readProgress(progress2);
+        mainQuest3.readProgress(progress2);
+        assertTrue(mainQuest1.isCompleted());
+        assertTrue(mainQuest2.isCompleted());
+        assertFalse(mainQuest3.isCompleted());
+        mainQuest1.readProgress(progress3);
+        mainQuest2.readProgress(progress3);
+        mainQuest3.readProgress(progress3);
+        assertTrue(mainQuest1.isCompleted());
+        assertTrue(mainQuest2.isCompleted());
+        assertTrue(mainQuest3.isCompleted());
+    }
+
+    @Test
+    void testGetProgress() {
+        String[] progressArray1 = {requirement1};
+        String[] progressArray2 = {requirement1, requirement2};
+        String[] progressArray3 = {requirement1, requirement2, requirement3};
+        assertEquals(progressArray1, mainQuest1.getProgress());
+        assertEquals(0, mainQuest2.getProgress());
+        assertEquals(0, mainQuest3.getProgress());
+        testIsCompleted();
+        assertNotEquals(0, mainQuest1.getProgress());
+        assertNotEquals(0, mainQuest2.getProgress());
+        assertEquals(0, mainQuest3.getProgress());
+        assertEquals(10, mainQuest1.getProgress());
+        assertEquals(10, mainQuest2.getProgress());
+        assertEquals(0, mainQuest3.getProgress());
+    }
 
     @Test
     void testResetState() {
