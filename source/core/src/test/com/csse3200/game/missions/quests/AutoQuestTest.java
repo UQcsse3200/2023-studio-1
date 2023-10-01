@@ -1,5 +1,7 @@
 package com.csse3200.game.missions.quests;
 
+import com.csse3200.game.events.EventHandler;
+import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.rewards.Reward;
 import com.csse3200.game.services.GameTime;
@@ -8,13 +10,17 @@ import com.csse3200.game.services.TimeService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(MockitoExtension.class)
+@ExtendWith(GameExtension.class)
 class AutoQuestTest {
 
     private AutoQuest autoQuest1, autoQuest2, autoQuest3;
-    private Reward r1, r2, r3, r4, r5;
+    private Reward r1, r2, r3;
 
     @BeforeEach
     public void init() {
@@ -53,7 +59,22 @@ class AutoQuestTest {
     }
 
     @Test
-    void registerMission() {
+    void testRegisterMission() {
+        assertFalse(r1.isCollected());
+        assertFalse(r2.isCollected());
+        assertFalse(r3.isCollected());
+        autoQuest1.registerMission(ServiceLocator.getMissionManager().getEvents());
+        assertTrue(r1.isCollected());
+        assertFalse(r2.isCollected());
+        assertFalse(r3.isCollected());
+        autoQuest2.registerMission(ServiceLocator.getMissionManager().getEvents());
+        assertTrue(r1.isCollected());
+        assertTrue(r2.isCollected());
+        assertFalse(r3.isCollected());
+        autoQuest3.registerMission(ServiceLocator.getMissionManager().getEvents());
+        assertTrue(r1.isCollected());
+        assertTrue(r2.isCollected());
+        assertTrue(r3.isCollected());
     }
 
     @Test
@@ -81,14 +102,22 @@ class AutoQuestTest {
     }
 
     @Test
-    void readProgress() {
+    void testReadProgress() {
     }
 
     @Test
-    void getProgress() {
+    void testGetProgress() {
+        assertEquals(0, autoQuest1.getProgress());
+        assertEquals(0, autoQuest2.getProgress());
+        assertEquals(0, autoQuest3.getProgress());
     }
 
     @Test
-    void resetState() {
+    void testResetState() {
+        testIsCompleted();
+        autoQuest1.resetState();
+        autoQuest2.resetState();
+        autoQuest3.resetState();
+        testIsCompleted();
     }
 }
