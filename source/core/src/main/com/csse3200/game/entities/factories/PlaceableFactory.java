@@ -92,7 +92,6 @@ public class PlaceableFactory {
         Entity pump = createBasePlaceable(type);
         // set temp texture to differentiate from other entities
         pump.addComponent(new DynamicTextureRenderComponent("images/placeable/sprinkler/pump.png"));
-        //pump.getComponent(DynamicTextureRenderComponent.class).setTexture("images/placeable/sprinkler/pump.png");
         // add sprinkler component
         pump.addComponent(new SprinklerComponent());
         // set as a pump
