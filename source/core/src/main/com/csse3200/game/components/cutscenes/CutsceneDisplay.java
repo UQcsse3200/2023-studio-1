@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
+import com.csse3200.game.missions.cutscenes.Cutscene;
 import com.csse3200.game.services.ServiceLocator;
 import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 import org.slf4j.Logger;
