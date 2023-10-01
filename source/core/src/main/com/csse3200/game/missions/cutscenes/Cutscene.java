@@ -1,4 +1,5 @@
 package com.csse3200.game.missions.cutscenes;
+
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.components.cutscenes.CutsceneDisplay;
 import com.csse3200.game.entities.Entity;
@@ -9,6 +10,8 @@ import org.slf4j.LoggerFactory;
 
 public class Cutscene{
     private static final Logger logger = LoggerFactory.getLogger(Cutscene.class);
+
+    private Entity cutsceneEntity;
 
     /**
      * Stores the dialogue text
@@ -24,7 +27,6 @@ public class Cutscene{
         this.dialogue = dialogue;
     }
 
-    // 
     /**
      * Creates the whole cutscene - to call other methods below this method
      */
@@ -34,12 +36,12 @@ public class Cutscene{
 
         this.pauseGame();
         Stage stage = ServiceLocator.getRenderService().getStage();
-        Entity cutsceneEntity = new Entity();
-        cutsceneEntity.addComponent(new CutsceneDisplay(dialogue));
+        cutsceneEntity = new Entity();
+        cutsceneEntity.addComponent(new CutsceneDisplay(dialogue, this));
         cutsceneEntity.addComponent(new InputDecorator(stage, 10));
         ServiceLocator.getEntityService().register(cutsceneEntity);
     }
-
+    
     /**
      * Pauses the game
      */
@@ -47,14 +49,6 @@ public class Cutscene{
         logger.debug("Setting paused state to: 0");
         ServiceLocator.setCutSceneRunning(true);
         ServiceLocator.getTimeSource().setTimeScale(0);
-    }
-
-
-    /**
-     * Ends the cutscene
-     */
-    public void endCutscene() {
-        this.unPauseGame();
     }
 
     /**
@@ -67,4 +61,12 @@ public class Cutscene{
         ServiceLocator.getTimeSource().setTimeScale(1);
     }
 
+    /**
+     * Tears down the cutscene
+     */
+    public void endCutscene() {
+        this.unPauseGame();
+        cutsceneEntity.dispose();
+        ServiceLocator.getEntityService().unregister(cutsceneEntity);
+    }
 }
