@@ -305,6 +305,7 @@ public class SpaceGameArea extends GameArea {
   private void spawnTerrain() {
     // Background terrain
     gameMap.createTerrainComponent();
+    //gameMap.createTestTerrainComponent("configs/testMap.txt"); // Can be removed
     terrain = gameMap.getTerrainComponent();
     spawnEntity(new Entity().addComponent(terrain));
 
