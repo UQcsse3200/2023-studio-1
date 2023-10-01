@@ -8,9 +8,9 @@ import java.util.Set;
 import static java.lang.Math.min;
 
 public class ShipProgressComponent extends Component {
-    static int maximum_repair = 20;
+    static int maximumRepair = 20;
     private int progress;
-    private Set<Feature> unlocked_features;
+    private Set<Feature> unlockedFeatures;
 
     public enum Feature {
         LIGHT(8),
@@ -32,7 +32,7 @@ public class ShipProgressComponent extends Component {
     @Override
     public void create() {
         this.progress = 0;
-        unlocked_features = new HashSet<Feature>();
+        unlockedFeatures = new HashSet<Feature>();
         // listen to add artefact call
         entity.getEvents().addListener("addPart", this::incrementProgress);
         entity.getEvents().addListener("removePart", this::decrementProgress);
@@ -43,18 +43,18 @@ public class ShipProgressComponent extends Component {
      * ship. This will also call a progressUpdate event on the Ship entity it is attached to.
      */
     private void incrementProgress(int amount) {
-        if (this.progress < maximum_repair) {
+        if (this.progress < maximumRepair) {
             // Bound maximum repair state
-            this.progress = min(this.progress + amount, maximum_repair);
+            this.progress = min(this.progress + amount, maximumRepair);
 
             for (Feature feature : Feature.values()) {
                 if (feature.unlockLevel <= this.progress) {
-                    unlocked_features.add(feature);
+                    unlockedFeatures.add(feature);
                 }
             }
 
             // Only send progress update if repair actually happened
-            entity.getEvents().trigger("progressUpdated", this.progress, this.unlocked_features);
+            entity.getEvents().trigger("progressUpdated", this.progress, this.unlockedFeatures);
         }
     }
 
@@ -81,6 +81,6 @@ public class ShipProgressComponent extends Component {
      * @return A set of unlocked features
      */
     public Set<Feature> getUnlockedFeatures() {
-        return this.unlocked_features;
+        return this.unlockedFeatures;
     }
 }
