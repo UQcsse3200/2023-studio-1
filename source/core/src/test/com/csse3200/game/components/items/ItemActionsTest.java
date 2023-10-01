@@ -1,50 +1,39 @@
 package com.csse3200.game.components.items;
 
-import com.badlogic.gdx.Files;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
-import com.csse3200.game.areas.GameArea;
-import com.csse3200.game.areas.terrain.*;
-import com.csse3200.game.components.CameraComponent;
-import com.csse3200.game.components.InteractionDetector;
-import com.csse3200.game.components.npc.TamableComponent;
-import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.entities.EntityType;
-import com.csse3200.game.entities.configs.plants.BasePlantConfig;
-import com.csse3200.game.entities.configs.plants.PlantConfigs;
-import com.csse3200.game.entities.factories.ItemFactory;
-import com.csse3200.game.entities.factories.PlantFactory;
-import com.csse3200.game.extensions.GameExtension;
-import com.csse3200.game.files.FileLoader;
-import com.csse3200.game.physics.PhysicsService;
-import com.csse3200.game.physics.components.HitboxComponent;
-import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.rendering.RenderService;
-import com.csse3200.game.rendering.TextureRenderComponent;
-import com.csse3200.game.services.ResourceService;
-import com.csse3200.game.services.ServiceLocator;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+
+import java.io.IOException;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.security.Provider;
-import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.areas.terrain.TerrainComponent;
+import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.areas.terrain.TerrainTile;
+import com.csse3200.game.components.CameraComponent;
+import com.csse3200.game.components.InteractionDetector;
+import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.EntityType;
+import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.files.FileLoader;
+import com.csse3200.game.physics.PhysicsService;
+import com.csse3200.game.physics.components.HitboxComponent;
+import com.csse3200.game.rendering.RenderService;
+import com.csse3200.game.services.ResourceService;
+import com.csse3200.game.services.ServiceLocator;
 
 // Setup fields and config were taken from GameAreaTest and the authors were co-authored to share credit for the work
 @ExtendWith(GameExtension.class)
