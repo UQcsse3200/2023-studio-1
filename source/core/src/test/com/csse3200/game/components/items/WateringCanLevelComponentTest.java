@@ -38,6 +38,8 @@ public class WateringCanLevelComponentTest {
         assertEquals(5, wateringCan.getCurrentLevel());
         wateringCan.setCurrentLevel(85);
         assertEquals(wateringCan.getCapacity(), wateringCan.getCurrentLevel());
+        wateringCan.setCurrentLevel(-40);
+        assertEquals(0, wateringCan.getCurrentLevel());
     }
 
     @Test
@@ -50,5 +52,8 @@ public class WateringCanLevelComponentTest {
         assertEquals(10, wateringCan.getCurrentLevel());
         wateringCan.incrementLevel(100);
         assertEquals(wateringCan.getCapacity(), wateringCan.getCurrentLevel());
+        wateringCan.setCurrentLevel(5);
+        wateringCan.incrementLevel(-10);
+        assertEquals(0, wateringCan.getCurrentLevel());
     }
 }

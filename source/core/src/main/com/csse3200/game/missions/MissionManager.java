@@ -9,7 +9,6 @@ import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.achievements.Achievement;
 import com.csse3200.game.missions.achievements.PlantCropsAchievement;
 import com.csse3200.game.missions.quests.Quest;
-import com.csse3200.game.missions.quests.QuestFactory;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -30,7 +29,7 @@ public class MissionManager implements Json.Serializable {
 		QUEST_EXPIRED,
 		// Triggers when a story quest's reward is collected (to ensure that the player has read the required dialogue),
 		// a single String representing the name of the quest whose reward has been collected is provided as an argument
-		STORY_REWARD_COLLECTED,
+		QUEST_REWARD_COLLECTED,
 		// Triggers when a crop is planted, a single String representing plant name is provided as an argument
 		PLANT_CROP,
 		// Triggers when a crop is fertilised
@@ -41,6 +40,17 @@ public class MissionManager implements Json.Serializable {
 		HARVEST_CROP,
 		// Triggers when an animal is tamed
 		TAME_ANIMAL,
+		// Triggers when a reward is collected used for MissionCompleteQuests
+		REWARD_COMPLETE,
+		ANIMAL_TAMED,
+		// Triggers when an animal is defeated in combat, a EntityType enum value is provided representing the type of
+		// entity defeated is provided as an argument
+		ANIMAL_DEFEATED,
+		// Triggers when an animal is eaten by a Space Snapper, a EntityType enum value is provided representing the
+		// type of entity eaten is provided as an argument
+		ANIMAL_EATEN,
+		// Triggers when a ship part is added to the Ship
+		SHIP_PART_ADDED,
 	}
 
 	/**

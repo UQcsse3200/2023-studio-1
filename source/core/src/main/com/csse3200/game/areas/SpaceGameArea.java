@@ -18,7 +18,6 @@ import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,9 +30,9 @@ public class SpaceGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(SpaceGameArea.class);
 
   private static final int NUM_GHOSTS = 5;
-  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
-  private static final GridPoint2 QUESTGIVER_SPAWN = new GridPoint2(20, 20);
-  private static final GridPoint2 SHIP_SPAWN = new GridPoint2(50,50);
+  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(24, 86);
+  private static final GridPoint2 QUESTGIVER_SPAWN = new GridPoint2(42, 87);
+  private static final GridPoint2 SHIP_SPAWN = new GridPoint2(20,85);
 
   private static final GridPoint2 TRACTOR_SPAWN = new GridPoint2(15, 15);
 
@@ -71,6 +70,7 @@ public class SpaceGameArea extends GameArea {
           "images/watered_cropTile_fertilised.png",
           "images/overwatered_cropTile.png",
           "images/overwatered_cropTile_fertilised.png",
+          "images/Temp-Chest.png",
 
           "images/beach_1.png",
           "images/beach_2.png",
@@ -105,14 +105,6 @@ public class SpaceGameArea extends GameArea {
           "images/stonePath_1.png",
           "images/tractor.png",
           "images/fertiliser.png",
-          "images/yellowSquare.png",
-
-          "images/plants/misc/aloe_vera_seed.png",
-          "images/plants/atomic_algae/1_seedling.png",
-          "images/plants/misc/cosmic_cob_seed.png",
-          "images/plants/misc/deadly_nightshade_seed.png",
-          "images/plants/misc/hammer_plant_seed.png",
-          "images/plants/misc/space_snapper_seed.png",
 
           "images/plants/cosmic_cob/1_seedling.png",
           "images/plants/cosmic_cob/2_sprout.png",
@@ -165,7 +157,6 @@ public class SpaceGameArea extends GameArea {
           "images/plants/deadly_nightshade/5_decaying.png",
           "images/plants/deadly_nightshade/6_dead.png",
           "images/plants/deadly_nightshade/item_drop.png",
-          //"images/plants/deadly_nightshade/seedbag.png",
 
           "images/plants/misc/aloe_vera_seed.png",
           "images/plants/misc/cosmic_cob_seed.png",
@@ -176,20 +167,81 @@ public class SpaceGameArea extends GameArea {
           "images/invisible_sprite.png",
 
           "images/projectiles/oxygen_eater_projectile.png",
-          
+
+          "images/yellowSquare.png",
+          "images/yellowCircle.png",
+
+          /* placeable */
+          "images/placeable/sprinkler/pipe_null.png",
+          "images/placeable/sprinkler/pump.png",
+          // sprinklers - on
+          "images/placeable/sprinkler/on/pipe_left.png",
+          "images/placeable/sprinkler/on/pipe_right.png",
+          "images/placeable/sprinkler/on/pipe_horizontal.png",
+          "images/placeable/sprinkler/on/pipe_down.png",
+          "images/placeable/sprinkler/on/pipe_down_left.png",
+          "images/placeable/sprinkler/on/pipe_down_right.png",
+          "images/placeable/sprinkler/on/pipe_down_triple.png",
+          "images/placeable/sprinkler/on/pipe_up.png",
+          "images/placeable/sprinkler/on/pipe_up_left.png",
+          "images/placeable/sprinkler/on/pipe_up_right.png",
+          "images/placeable/sprinkler/on/pipe_up_triple.png",
+          "images/placeable/sprinkler/on/pipe_vertical.png",
+          "images/placeable/sprinkler/on/pipe_left_triple.png",
+          "images/placeable/sprinkler/on/pipe_right_triple.png",
+          "images/placeable/sprinkler/on/pipe_quad.png",
+          // sprinklers - off
+          "images/placeable/sprinkler/off/pipe_left.png",
+          "images/placeable/sprinkler/off/pipe_right.png",
+          "images/placeable/sprinkler/off/pipe_horizontal.png",
+          "images/placeable/sprinkler/off/pipe_down.png",
+          "images/placeable/sprinkler/off/pipe_down_left.png",
+          "images/placeable/sprinkler/off/pipe_down_right.png",
+          "images/placeable/sprinkler/off/pipe_down_triple.png",
+          "images/placeable/sprinkler/off/pipe_up.png",
+          "images/placeable/sprinkler/off/pipe_up_left.png",
+          "images/placeable/sprinkler/off/pipe_up_right.png",
+          "images/placeable/sprinkler/off/pipe_up_triple.png",
+          "images/placeable/sprinkler/off/pipe_vertical.png",
+          "images/placeable/sprinkler/off/pipe_left_triple.png",
+          "images/placeable/sprinkler/off/pipe_right_triple.png",
+          "images/placeable/sprinkler/off/pipe_quad.png",
+
+          "images/placeable/fences/g_d_u.png",
+          "images/placeable/fences/g_d_u_o.png",
+          "images/placeable/fences/g_r_l.png",
+          "images/placeable/fences/g_r_l_o.png",
+          "images/placeable/fences/f.png",
+          "images/placeable/fences/f_d.png",
+          "images/placeable/fences/f_d_u.png",
+          "images/placeable/fences/f_d_l.png",
+          "images/placeable/fences/f_r_d.png",
+          "images/placeable/fences/f_r_l_u.png",
+          "images/placeable/fences/f_u.png",
+          "images/placeable/fences/f_d_l_u.png",
+          "images/placeable/fences/f_l.png",
+          "images/placeable/fences/f_r_d_l.png",
+          "images/placeable/fences/f_r_d_u.png",
+          "images/placeable/fences/f_r.png",
+          "images/placeable/fences/f_l_u.png",
+          "images/placeable/fences/f_r_d_l_u.png",
+          "images/placeable/fences/f_r_l.png",
+          "images/placeable/fences/f_r_u.png",
+
+          "images/hostile_indicator.png",
+
           "images/ship/ship_debris.png",
           "images/ship/ship.png",
-
-          "images/light.png"
+          "images/ship/ship_part.png",
   };
+
   private static final String[] forestTextureAtlases = {
       "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
       "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas",
       "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas", "images/questgiver.atlas",
       "images/missionStatus.atlas", "images/plants/cosmic_cob.atlas", "images/plants/aloe_vera.atlas",
-      "images/plants/hammer_plant.atlas", "images/plants/space_snapper.atlas", "images/plants/atomic_algae.atlas",
       "images/plants/deadly_nightshade.atlas", "images/projectiles/oxygen_eater_projectile.atlas",
-      "images/fireflies.atlas", "images/ship/ship.atlas"
+      "images/fireflies.atlas", "images/ship/ship.atlas", "images/light.atlas"
   };
   private static final String[] forestSounds = {
           "sounds/Impact4.ogg", "sounds/car-horn-6408.mp3",
@@ -260,7 +312,7 @@ public class SpaceGameArea extends GameArea {
 
     player = spawnPlayer();
 //    player.getComponent(PlayerActions.class).setGameMap(gameMap);
-    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createLightItem());
+//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createLightItem());
 //    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHoe());
 //    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createScythe());
 //    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createWateringcan());
@@ -278,7 +330,7 @@ public class SpaceGameArea extends GameArea {
 //    spawnTool(ItemType.SCYTHE);
 //    spawnTool(ItemType.HOE);
 //    spawnTool(ItemType.FERTILISER);
-    spawnTool(ItemType.SEED);
+//    spawnTool(ItemType.SEED);
 //    spawnTool(ItemType.FOOD);
 
     //playMusic();
@@ -320,8 +372,8 @@ public class SpaceGameArea extends GameArea {
 
   private void spawnTerrain() {
     // Background terrain
-    terrain = terrainFactory.createTerrain(this.gameMap.getTiledMap());
-    this.gameMap.setTerrainComponent(terrain);
+    gameMap.createTerrainComponent();
+    terrain = gameMap.getTerrainComponent();
     spawnEntity(new Entity().addComponent(terrain));
 
     // Terrain walls
@@ -387,14 +439,22 @@ public class SpaceGameArea extends GameArea {
    */
   private void spawnShipDebris() {
 
-    GridPoint2 minPos = new GridPoint2(SHIP_SPAWN.x - 5, SHIP_SPAWN.y - 5);
-    GridPoint2 maxPos = new GridPoint2(SHIP_SPAWN.x + 5, SHIP_SPAWN.y + 5);
+    GridPoint2 minPos = new GridPoint2(SHIP_SPAWN.x - 7, SHIP_SPAWN.y - 5);
+    GridPoint2 maxPos = new GridPoint2(SHIP_SPAWN.x + 7, SHIP_SPAWN.y + 7);
+
+    List<GridPoint2> clearedTilesAroundShip = List.of(
+            SHIP_SPAWN,
+            new GridPoint2(SHIP_SPAWN.x - 1, SHIP_SPAWN.y - 1),
+            new GridPoint2(SHIP_SPAWN.x + 1, SHIP_SPAWN.y - 1),
+            new GridPoint2(SHIP_SPAWN.x - 1, SHIP_SPAWN.y + 1),
+            new GridPoint2(SHIP_SPAWN.x + 1, SHIP_SPAWN.y + 1)
+    );
 
     IntStream.range(0,15).forEach(i -> {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       TerrainTile tile = gameMap.getTile(randomPos);
 
-      while (!tile.isTraversable() || tile.isOccupied()) {
+      while (!tile.isTraversable() || tile.isOccupied() || clearedTilesAroundShip.contains(randomPos)) {
         randomPos = RandomUtils.random(minPos, maxPos);
         tile = gameMap.getTile(randomPos);
       }
@@ -464,6 +524,9 @@ public class SpaceGameArea extends GameArea {
         newTool = ItemFactory.createCowFood();
         spawnEntityAt(newTool, randomPos, true, true);
         break;
+      case PLACEABLE:
+        newTool = ItemFactory.createChestItem();
+        spawnEntityAt(newTool, randomPos, true, true);
     }
   }
 
@@ -497,6 +560,7 @@ public class SpaceGameArea extends GameArea {
     for (int i = 0; i < 5; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity cow = NPCFactory.createCow(player);
+      //cow.addComponent(new EntityIndicator(cow));
       spawnEntityAt(cow, randomPos, true, true);
     }
   }

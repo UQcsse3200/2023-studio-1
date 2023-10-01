@@ -21,6 +21,7 @@ import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.components.maingame.PauseMenuActions;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.tractor.TractorActions;
+import com.csse3200.game.components.EntityIndicator;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
@@ -79,14 +80,10 @@ public class MainGameScreen extends ScreenAdapter {
 
     };
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
-
     private final GdxGame game;
     private Entity entity;
     private final Renderer renderer;
     private final PhysicsEngine physicsEngine;
-
-    private static Boolean lose;
-
 
 
     public MainGameScreen(GdxGame game) {
@@ -117,6 +114,7 @@ public class MainGameScreen extends ScreenAdapter {
         ServiceLocator.registerCameraComponent(renderer.getCamera());
 
         ServiceLocator.registerLightService(new LightService());
+        ServiceLocator.registerParticleService(new ParticleService());
 
         loadAssets();
 
@@ -134,8 +132,9 @@ public class MainGameScreen extends ScreenAdapter {
         spaceGameArea.getPlayer().getComponent(PlayerActions.class).setCameraVar(renderer.getCamera());
         spaceGameArea.getTractor().getComponent(TractorActions.class).setCameraVar(renderer.getCamera());
 
-        lose = false;
-        spaceGameArea.getPlayer().getEvents().addListener("loseScreen", this::loseScreenStart);
+        ServiceLocator.getMissionManager().getEvents().addListener("loseScreen", this::playLoseScreen);
+
+        ServiceLocator.getMissionManager().getEvents().addListener("winScreen", this::playWinScreen);
 
         new FireflySpawner();
 
@@ -145,9 +144,18 @@ public class MainGameScreen extends ScreenAdapter {
         }
     }
 
+    /**
+     * Switch to the losing screen in case of player loss
+     */
+    public void playLoseScreen() {
+        game.setScreen(GdxGame.ScreenType.LOSESCREEN);
+    }
 
-    public void loseScreenStart() {
-        lose = true;
+    /**
+     * Switch to winning screen in case of player win
+     */
+    public void playWinScreen() {
+        game.setScreen(GdxGame.ScreenType.WINSCREEN);
     }
 
     @Override
@@ -158,9 +166,7 @@ public class MainGameScreen extends ScreenAdapter {
         }
         ServiceLocator.getTimeService().update();
         renderer.render();
-        if (lose) {
-            game.setScreen(GdxGame.ScreenType.LOSESCREEN);
-        }
+
         if (PauseMenuActions.getQuitGameStatus()) {
             entity.getEvents().trigger("exit");
             PauseMenuActions.setQuitGameStatus();
