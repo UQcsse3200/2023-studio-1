@@ -1,5 +1,6 @@
 package com.csse3200.game.areas.weather;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -50,10 +51,8 @@ public class WeatherEventDisplay extends UIComponent {
 
 		if (currentEvent instanceof AcidShowerEvent) {
 			weatherImage = weatherImages.get(0);
-		} else if (currentEvent instanceof SolarSurgeEvent) {
-			weatherImage = weatherImages.get(1);
 		} else {
-			weatherImage = weatherImages.get(2);
+			weatherImage = (currentEvent instanceof SolarSurgeEvent) ? weatherImages.get(1) : weatherImages.get(2);
 		}
 	}
 

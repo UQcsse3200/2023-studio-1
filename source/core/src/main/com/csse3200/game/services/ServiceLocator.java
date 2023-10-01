@@ -41,6 +41,7 @@ public class ServiceLocator {
   private static PlanetOxygenService planetOxygenService;
   private static PlantCommandService plantCommandService;
   private static PlantInfoService plantInfoService;
+  private static ParticleService particleService;
   public static PlantCommandService getPlantCommandService() {
     return plantCommandService;
   }
@@ -92,6 +93,10 @@ public class ServiceLocator {
 
   public static SaveLoadService getSaveLoadService() {
     return saveLoadService;
+  }
+
+  public static ParticleService getParticleService() {
+    return particleService;
   }
 
   public static void registerGameArea(GameArea area) {
@@ -164,6 +169,10 @@ public class ServiceLocator {
     lightService = source;
   }
 
+  public static void registerParticleService(ParticleService source) {
+    particleService = source;
+  }
+
   /**
    * Registers the save/load service.
    * @param source the service to register
@@ -200,6 +209,5 @@ public class ServiceLocator {
   public static void registerCraftArea(GameAreaDisplay area){
     craftArea = area;
   }
-
 
 }

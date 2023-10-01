@@ -118,6 +118,7 @@ public class MainGameScreen extends ScreenAdapter {
         ServiceLocator.registerCameraComponent(renderer.getCamera());
 
         ServiceLocator.registerLightService(new LightService());
+        ServiceLocator.registerParticleService(new ParticleService());
 
         loadAssets();
 
