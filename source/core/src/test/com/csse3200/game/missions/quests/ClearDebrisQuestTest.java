@@ -52,7 +52,7 @@ class ClearDebrisQuestTest {
     }
 
     @Test
-    void testRegisterMission() {
+    public void testRegisterMission() {
         assertFalse(CDQuest1.isCompleted());
         assertFalse(CDQuest2.isCompleted());
         assertFalse(CDQuest3.isCompleted());
@@ -91,11 +91,11 @@ class ClearDebrisQuestTest {
     }
 
     @Test
-    void testUpdateState() {
+    public void testUpdateState() {
     }
 
     @Test
-    void testIsCompleted() {
+    public void testIsCompleted() {
         testRegisterMission();
         for (int i = 0; i < 10; i++) {
             assertFalse(CDQuest1.isCompleted());
@@ -125,7 +125,7 @@ class ClearDebrisQuestTest {
     }
 
     @Test
-    void testGetDescription() {
+    public void testGetDescription() {
         testRegisterMission();
         String desc = "Gather scattered parts of your ship.\n" +
                 "Use your shovel to clear %d Ship Debris in the world!\n" +
@@ -152,7 +152,7 @@ class ClearDebrisQuestTest {
     }
 
     @Test
-    void testGetShortDescription() {
+    public void testGetShortDescription() {
         testRegisterMission();
         String desc = "%d out of %d debris pieces cleared";
         for (int i = 0; i < 50; i++) {
@@ -177,7 +177,7 @@ class ClearDebrisQuestTest {
     }
 
     @Test
-    void testReadProgress() {
+    public void testReadProgress() {
         int progressInt = 3;
         JsonValue progress = new JsonValue(progressInt);
         String desc = "Gather scattered parts of your ship.\n" +
@@ -222,7 +222,7 @@ class ClearDebrisQuestTest {
     }
 
     @Test
-    void testGetProgress() {
+    public void testGetProgress() {
         assertEquals(0, CDQuest1.getProgress());
         assertEquals(0, CDQuest2.getProgress());
         assertEquals(0, CDQuest3.getProgress());
@@ -248,7 +248,7 @@ class ClearDebrisQuestTest {
     }
 
     @Test
-    void testResetState() {
+    public void testResetState() {
         testIsCompleted();
         assertTrue(CDQuest1.isCompleted());
         assertTrue(CDQuest2.isCompleted());

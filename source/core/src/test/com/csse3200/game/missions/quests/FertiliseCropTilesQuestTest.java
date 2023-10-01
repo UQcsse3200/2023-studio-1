@@ -51,7 +51,7 @@ class FertiliseCropTilesQuestTest {
     }
 
     @Test
-    void testRegisterMission() {
+    public void testRegisterMission() {
         assertFalse(FCTQuest1.isCompleted());
         assertFalse(FCTQuest2.isCompleted());
         assertTrue(FCTQuest3.isCompleted());
@@ -85,11 +85,11 @@ class FertiliseCropTilesQuestTest {
     }
 
     @Test
-    void testUpdateState() {
+    public void testUpdateState() {
     }
 
     @Test
-    void testIsCompleted() {
+    public void testIsCompleted() {
         testRegisterMission();
         for (int i = 0; i < 10; i++) {
             assertFalse(FCTQuest1.isCompleted());
@@ -122,7 +122,7 @@ class FertiliseCropTilesQuestTest {
     }
 
     @Test
-    void testGetDescription() {
+    public void testGetDescription() {
         testRegisterMission();
         String desc = "Fertilising crop tiles will cause your plants to grow faster.\n" +
                 "Apply fertiliser to %d tiles.\n" +
@@ -147,7 +147,7 @@ class FertiliseCropTilesQuestTest {
     }
 
     @Test
-    void testGetShortDescription() {
+    public void testGetShortDescription() {
         testRegisterMission();
         String desc = "%d out of %d crop tiles fertilised";
         for (int i = 0; i < 50; i++) {
@@ -170,7 +170,7 @@ class FertiliseCropTilesQuestTest {
     }
 
     @Test
-    void testReadProgress() {
+    public void testReadProgress() {
         int progressInt = 3;
         JsonValue progress = new JsonValue(progressInt);
         String desc = "Fertilising crop tiles will cause your plants to grow faster.\n" +
@@ -210,7 +210,7 @@ class FertiliseCropTilesQuestTest {
     }
 
     @Test
-    void testGetProgress() {
+    public void testGetProgress() {
         assertEquals(0, FCTQuest1.getProgress());
         assertEquals(0, FCTQuest2.getProgress());
         assertEquals(0, FCTQuest3.getProgress());
@@ -233,7 +233,7 @@ class FertiliseCropTilesQuestTest {
     }
 
     @Test
-    void testResetState() {
+    public void testResetState() {
         testIsCompleted();
         assertTrue(FCTQuest1.isCompleted());
         assertTrue(FCTQuest2.isCompleted());

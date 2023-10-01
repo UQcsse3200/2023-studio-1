@@ -63,7 +63,7 @@ class MainQuestTest {
     }
 
     @Test
-    void testRegisterMission() {
+    public void testRegisterMission() {
         assertFalse(mainQuest1.isCompleted());
         assertFalse(mainQuest2.isCompleted());
         assertFalse(mainQuest3.isCompleted());
@@ -82,7 +82,7 @@ class MainQuestTest {
     }
 
     @Test
-    void testIsCompleted() {
+    public void testIsCompleted() {
         testRegisterMission();
         assertFalse(mainQuest1.isCompleted());
         assertFalse(mainQuest2.isCompleted());
@@ -105,7 +105,7 @@ class MainQuestTest {
     }
 
     @Test
-    void testGetDescription() {
+    public void testGetDescription() {
         testRegisterMission();
         String desc1 = "You must Test 1!\nComplete the quests: " + requirement1 + ".";
         String desc2 = "You must Test 2!\nComplete the quests: " + requirement1 + ", " + requirement2 + ".";
@@ -117,7 +117,7 @@ class MainQuestTest {
     }
 
     @Test
-    void testGetShortDescription() {
+    public void testGetShortDescription() {
         testRegisterMission();
         String desc = "%d required quests to be completed";
         assertEquals(String.format(desc, 1), mainQuest1.getShortDescription());
@@ -141,7 +141,7 @@ class MainQuestTest {
     }
 
     @Test
-    void testReadProgress() {
+    public void testReadProgress() {
         JsonReader reader = new JsonReader();
         String[] progressArray1 = {requirement1};
         String[] progressArray2 = {requirement1, requirement2};
@@ -170,7 +170,7 @@ class MainQuestTest {
     }
 
     @Test
-    void testGetProgress() {
+    public void testGetProgress() {
         testRegisterMission();
         String[] progressArray1 = {requirement1};
         String[] progressArray2 = {requirement1, requirement2};
@@ -198,7 +198,7 @@ class MainQuestTest {
     }
 
     @Test
-    void testResetState() {
+    public void testResetState() {
         testIsCompleted();
         assertTrue(mainQuest1.isCompleted());
         assertTrue(mainQuest2.isCompleted());
