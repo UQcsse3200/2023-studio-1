@@ -1,11 +1,8 @@
 package com.csse3200.game.screens;
 
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.components.losescreen.LoseScreenDisplay;
 import com.csse3200.game.components.winscreen.WinScreenDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
@@ -20,39 +17,29 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The game screen for the lose scenario
+ * The game screen for the winning scenario
  */
 public class WinScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(WinScreen.class);
     private final GdxGame game;
     private final Renderer renderer;
-    private static final String[] loseScreenTextures = {"images/lose_temp.png"};
-    private Texture backgroundTexture;
-    private SpriteBatch batch;
-
+    private static final String[] winScreenTextures = {"images/intro_background_v2.png", "images/good_planet.png"};
 
     public WinScreen(GdxGame game) {
         this.game = game;
-        logger.debug("Initialising lose screen services");
-        //ServiceLocator.registerTimeSource(new GameTime());
+        logger.debug("Initialising win screen services");
         ServiceLocator.registerInputService(new InputService());
         ServiceLocator.registerResourceService(new ResourceService());
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerRenderService(new RenderService());
-        //ServiceLocator.registerTimeService(new TimeService());
-
         renderer = RenderFactory.createRenderer();
-
         loadAssets();
         createUI();
     }
 
-
-
     @Override
     public void render(float delta) {
         ServiceLocator.getEntityService().update();
-        //ServiceLocator.getTimeService().update();
         renderer.render();
     }
 
@@ -74,27 +61,25 @@ public class WinScreen extends ScreenAdapter {
 
     @Override
     public void dispose() {
-        logger.debug("Disposing lose screen");
-
+        logger.debug("Disposing win screen");
         renderer.dispose();
         unloadAssets();
         ServiceLocator.getRenderService().dispose();
         ServiceLocator.getEntityService().dispose();
-
         ServiceLocator.clear();
     }
 
     private void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.loadTextures(loseScreenTextures);
+        resourceService.loadTextures(winScreenTextures);
         ServiceLocator.getResourceService().loadAll();
     }
 
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.unloadAssets(loseScreenTextures);
+        resourceService.unloadAssets(winScreenTextures);
     }
 
     private void createUI() {
