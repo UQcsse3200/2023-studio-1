@@ -24,6 +24,7 @@ public class CutsceneDisplay extends UIComponent {
      * The Image that contains the player sprite.
      */
     private Image playerSprite;
+    
     /**
      * The Image that contains the npc sprite.
      */
@@ -37,15 +38,18 @@ public class CutsceneDisplay extends UIComponent {
 
     private TypingLabel dialogueLabel;
 
+    private Cutscene cutscene;
+
     /**
      * Stores the dialogue text
      */
     private final String dialogue;
 
     // creates an instance of the cutscene class and assigns all variables as they need to be assigned - DOES NOT SPAWN THE ACTUAL CUTSCENE
-    public CutsceneDisplay(String dialogue) {
+    public CutsceneDisplay(String dialogue, Cutscene cutscene) {
         super();
         this.dialogue = dialogue;
+        this.cutscene = cutscene;
     }
 
     @Override
@@ -142,6 +146,7 @@ public class CutsceneDisplay extends UIComponent {
                     public void changed(ChangeEvent event, Actor actor) {
                         logger.debug("Continue button clicked");
                         disposeCutscene();
+                        cutscene.endCutscene();
                     }
                 });
 
