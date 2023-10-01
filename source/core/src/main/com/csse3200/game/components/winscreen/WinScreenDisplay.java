@@ -1,15 +1,9 @@
-package com.csse3200.game.components.losescreen;
-
-import com.csse3200.game.services.ServiceLocator;
-import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+package com.csse3200.game.components.winscreen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -18,28 +12,24 @@ import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.GdxGame.ScreenType;
 import com.csse3200.game.ui.UIComponent;
-import com.rafaskoberg.gdx.typinglabel.TypingAdapter;
 import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-public class LoseScreenDisplay extends UIComponent {
-    private static final Logger logger = LoggerFactory.getLogger(LoseScreenDisplay.class);
+public class WinScreenDisplay extends UIComponent {
+    private static final Logger logger = LoggerFactory.getLogger(WinScreenDisplay.class);
     private static final float Z_INDEX = 2f;
     /**
-     * The Image that forms the background of the page
+     * The Image that forms the background of the page.
      */
     private Image background;
     private Table table;
     private final GdxGame game;
 
-    private boolean typingAnimationComplete;
-    private boolean hasWon;
-
     private TextButton returnButton;
 
     private boolean animationFinished = false;
+
 
     /**
      * The time in seconds that it takes for the narration animation to reach the trigger point,
@@ -73,9 +63,7 @@ public class LoseScreenDisplay extends UIComponent {
      */
     private TypingLabel storyLabel;
 
-    public static String losingMessage;
-
-    public LoseScreenDisplay(GdxGame game) {
+    public WinScreenDisplay(GdxGame game) {
         super();
         this.game = game;
     }
@@ -87,14 +75,13 @@ public class LoseScreenDisplay extends UIComponent {
     }
 
     private void addActors() {
-        this.hasWon = true;
         background = new Image(new Texture(Gdx.files.internal("images/intro_background_v2.png")));
         background.setPosition(0, 0);
         float scaledHeight = Gdx.graphics.getWidth() * (background.getHeight() / background.getWidth());
         background.setHeight(scaledHeight);
 
         // Load the animated planet
-        planet = new Image(new Texture(Gdx.files.internal("images/dead_planet2.png")));
+        planet = new Image(new Texture(Gdx.files.internal("images/good_planet.png")));
 
         // Scale it to a 10% of screen width with a constant aspect ratio
         float planetWidth = (float) (Gdx.graphics.getWidth() * 0.15);
@@ -106,7 +93,24 @@ public class LoseScreenDisplay extends UIComponent {
         float planetOffset = 2500;
         planet.setPosition((float)Gdx.graphics.getWidth()/2, planetOffset, Align.center);
 
-        storyLabel = new TypingLabel(losingMessage, skin); // Create the TypingLabel with the formatted story
+        String credits = """
+                {SLOW}
+                After 30 long days, you, great farmlord, have succeeded!
+                {WAIT=0.5}
+                
+                The air is rich with oxygen, and the lands filled with greenery.
+                {WAIT}
+                
+                Humanity's hope has been restored.
+                {WAIT}
+                
+                The future is bright, and the human race... {WAIT=1} will live on!
+                {WAIT=1}
+                
+                {COLOR=green}Congrats You Win!!!{WAIT=1}
+            """;
+
+        storyLabel = new TypingLabel(credits, skin); // Create the TypingLabel with the formatted story
         storyLabel.setAlignment(Align.center); // Center align the text
 
         this.returnButton = new TextButton("Return To Main Menu", skin);
@@ -137,50 +141,6 @@ public class LoseScreenDisplay extends UIComponent {
         stage.addActor(rootTable);
     }
 
-    public static void setLoseReason(String causeOfDeath) {
-        String reason = getString(causeOfDeath);
-
-        losingMessage = """ 
-                {SLOW}
-                Despite your best efforts, Alpha Centauri remains a wasteland.
-                
-                {WAIT}
-                """
-                + reason +
-                """
-                
-                {WAIT}
-                
-                You gave it your all, but in the end... {WAIT=1} it wasn't enough.
-                {WAIT}
-                
-                This is the end of the human race.
-                {WAIT}
-                
-                {COLOR=red}Game Over
-                {WAIT=1}
-            """;
-    }
-
-    @NotNull
-    private static String getString(String causeOfDeath) {
-        String reason = null;
-        switch (causeOfDeath) {
-            case "oxygen" -> reason = "As your oxygen supply dwindles, so does humanities hope for survival.";
-            case "mission1" -> reason = "Failed mission 1.";
-            case "mission2" -> reason = "Failed mission 2.";
-            case "mission3" -> reason = "Failed mission 3.";
-            case "mission4" -> reason = "Failed mission 4.";
-            case "mission5" -> reason = "Failed mission 5.";
-            case "mission6" -> reason = "Failed mission 6.";
-            default -> reason = "default reason";
-        }
-        return reason;
-    }
-
-    /**
-     * Starts the main game
-     */
     private void returnToMenu() {
         game.setScreen(ScreenType.MAIN_MENU);
     }
@@ -238,4 +198,5 @@ public class LoseScreenDisplay extends UIComponent {
         table.clear();
         super.dispose();
     }
+
 }
