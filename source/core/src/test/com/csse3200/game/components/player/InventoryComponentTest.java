@@ -3,10 +3,14 @@ package com.csse3200.game.components.player;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.items.ItemType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,11 +30,12 @@ class InventoryComponentTest {
   public void setUp() {
     // Set up the inventory with two initial items
     List<Entity> items = new ArrayList<>();
-    item1 = new Entity();
-    item2 = new Entity();
+    item1 = new Entity().addComponent(new ItemComponent("testItem1", ItemType.SCYTHE,null));
+    item2 = new Entity().addComponent(new ItemComponent("testItem2", ItemType.WATERING_CAN, null));
     items.add(item1);
     items.add(item2);
-    inventoryComponent = new InventoryComponent(items);
+    inventoryComponent = spy(new InventoryComponent(items));
+    doNothing().when(inventoryComponent).updateInventory();
   }
 
   /**
@@ -60,21 +65,25 @@ class InventoryComponentTest {
   /**
    * Test case for the addItem() method.
    */
-  /*
+
   @Test
   public void testAddItem() {
-    // Create a new item
+    // Create a new item without item component
     Entity newItem = new Entity();
     // Add the new item to the inventory
-    assertTrue(inventoryComponent.addItem(newItem));
+    assertFalse(inventoryComponent.addItem(newItem));
     // Check if the new item is now in the inventory
-    assertTrue(inventoryComponent.hasItem(newItem));
+    assertFalse(inventoryComponent.hasItem(newItem));
+    Entity validItem = new Entity().addComponent(new ItemComponent("valid", ItemType.HOE, null));
+    assertTrue(inventoryComponent.addItem(validItem));
+    // Check if the new item is now in the inventory
+    assertTrue(inventoryComponent.hasItem(validItem));
   }
-  */
+
   /**
    * Test case for the removeItem() method.
    */
-  /*
+
   @Test
   public void testRemoveItem() {
     // Remove an item from the inventory
@@ -84,8 +93,8 @@ class InventoryComponentTest {
     // Check that removing a non-existent item does not affect the inventory
     assertFalse(inventoryComponent.removeItem(new Entity()));
   }
-   */
-  /*
+
+
   @Test
   void testGetItemCount() {
     assertEquals(inventoryComponent.getItemCount(item1), 1);
@@ -96,6 +105,7 @@ class InventoryComponentTest {
     assertEquals(inventoryComponent.getItemCount(item1), 0);
 
   }
+  /*
   @Test
   void testGetItemPosition() {
     assertEquals(inventoryComponent.getItemPosition(item1), new Point(0, 0));
@@ -107,8 +117,8 @@ class InventoryComponentTest {
     inventoryComponent.setItemPosition(item1,new Point(2,2));
     assertEquals(inventoryComponent.getItemPosition(item1), new Point(2,2));
   }
+*/
 
-   */
 
 }
 
