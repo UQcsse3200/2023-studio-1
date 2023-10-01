@@ -20,37 +20,35 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.ui.UIComponent;
 
-import java.awt.*;
-
 public class CutsceneDisplay extends UIComponent {
     /**
      * The Image that contains the player sprite.
      */
     private Image playerSprite;
-
     /**
      * The Image that contains the npc sprite.
      */
     private Image npcSprite;
     private static final Logger logger = LoggerFactory.getLogger(com.csse3200.game.missions.cutscenes.Cutscene.class);
-
     /**
      * The table that forms the basis for the layout of the cutscene
      */
     private Table table;
-
-    private TypingLabel dialogueLabel;
-
-    private final Cutscene cutscene;
-
+    /**
+     * Stores the cutscene object that created the cutscene display
+     */
+    private Cutscene cutscene;
     private Image transparentRectangle;
-
     /**
      * Stores the dialogue text
      */
     private final String dialogue;
 
-    // creates an instance of the cutscene class and assigns all variables as they need to be assigned - DOES NOT SPAWN THE ACTUAL CUTSCENE
+    /**
+     * Creates a cutscene display using the given parameters
+     * @param dialogue the dialogue that will be displayed
+     * @param cutscene the cutscene object that created the cutscene display
+     */
     public CutsceneDisplay(String dialogue, Cutscene cutscene) {
         super();
         this.dialogue = dialogue;
@@ -63,12 +61,12 @@ public class CutsceneDisplay extends UIComponent {
         this.spawnCutsceneDisplay();
     }
 
-    // Creates the whole cutscene - to call other methods below this method
+    /**
+     * Spawns all the UI elements for the cutscene display
+     */
     public void spawnCutsceneDisplay() {
-        System.out.println("CUTSCENE DISPLAY SPAWNED");
         logger.debug("Cutscene Display spawned");
 
-        System.out.println("CUTSCENE TABLE SPAWNED");
         logger.debug("Cutscene table spawned");
         table = new Table();
         table.setFillParent(true);
@@ -76,10 +74,9 @@ public class CutsceneDisplay extends UIComponent {
         table.bottom();
         table.padBottom(160);
 
-        /**
-         * Following code for making transparent rectangle from
-         * https://stackoverflow.com/questions/44260510/is-it-possible-to-draw-a-transparent-layer-without-using-image-libgdx
-         */
+        logger.debug("Screen dimmed");
+        //Following code for making transparent rectangle from
+        //https://stackoverflow.com/questions/44260510/is-it-possible-to-draw-a-transparent-layer-without-using-image-libgdx
         Pixmap pixmap = new Pixmap(1,1, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.BLACK);
         pixmap.fillRectangle(0, 0, 1, 1);
@@ -132,12 +129,13 @@ public class CutsceneDisplay extends UIComponent {
         //spawnSprite("images/player.atlas", "LEFT", 0.45f);
     }
 
-    // Spawn the dialogue box and populate it with text
+    /**
+     * Spawns the dialogue text label and populates it
+     */
     public void spawnDialogueBox () {
-        System.out.println("CUTSCENE DIALOGUE SPAWNED");
         logger.debug("Cutscene dialogue spawned");
 
-        dialogueLabel = new TypingLabel(this.dialogue, skin);
+        TypingLabel dialogueLabel = new TypingLabel(this.dialogue, skin);
         dialogueLabel.setAlignment(Align.center);
         dialogueLabel.setWrap(true);
         Graphics.DisplayMode active = Gdx.graphics.getDisplayMode();
@@ -163,11 +161,6 @@ public class CutsceneDisplay extends UIComponent {
 
         table.row();
         table.add(continueBtn);//.padTop(40f); // change 40f to whatever is needed
-    }
-
-    // animate the sprites/entities on the left/right sides of the screen
-    public void animateSprites() {
-
     }
 
     // Ends the cutscene
