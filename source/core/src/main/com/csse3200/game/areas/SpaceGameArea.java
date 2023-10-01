@@ -356,6 +356,15 @@ public class SpaceGameArea extends GameArea {
     hostileSpawner.setGameAreas(this);
   }
 
+  /**
+   * Getter for hostileSpawner in this game area
+   *
+   * @return EntitiesSpawner for hostiles
+   */
+  public EntitiesSpawner getHostileSpawner() {
+    return hostileSpawner;
+  }
+
   public Entity getPlayer() {
     return player;
   }
