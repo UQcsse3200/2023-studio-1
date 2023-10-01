@@ -2,7 +2,6 @@ package com.csse3200.game.entities;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -134,10 +133,7 @@ public class EntitySpawner {
         if (hour == spawnHour) {
             dayCounter++;
         }
-        //Ensures that the number of NPC entities doesn't overcrowd the game.
-        if (this.entityCounter >= this.maxEntitiesBeforeSpawn) {
-            return;
-        }
+
         //Only progress to randomisation or spawning if enough time
         //has passed between spawns
         //When day counter is above days between spawns, a new set of spawns can occur.
@@ -184,7 +180,6 @@ public class EntitySpawner {
             //Create entity and spawn on gameArea
             Entity entity = spawner.apply(player);
             gameArea.spawnEntityAt(entity, position, true, true);
-            setInGameEntitiesCount(ServiceLocator.getEntityService().getEntities(), entity);
         }
 
         //Apply growth rate
@@ -193,19 +188,5 @@ public class EntitySpawner {
         }
     }
 
-    /**
-     * Sets the entity counter of a specific type of entity.
-     */
-    private void setInGameEntitiesCount(Array<Entity> entities, Entity specificEntity) {
-        this.entityCounter = 0; //ensure that its reset everytime this is called.
-        for (int i = 0; i < entities.size; i++) {
-            Entity currentEntity = entities.get(i);
-            if (currentEntity.getType() == null) {
-                continue;
-            }
-            if (currentEntity.getType().equals(specificEntity.getType())) {
-                this.entityCounter += 1;
-            }
-        }
-    }
+
 }
