@@ -24,11 +24,25 @@ public class GameMap {
 
     /**
      * Creates a new GameMap instance, setting the terrainFactory and instantiating a new TiledMap instance.
-     * @param terrainFactory the terrainFactory instantiated in the SpaceGameArea.
+     * @param terrainFactory the terrainFactory passed to the SpaceGameArea from the MainGameScreen class.
      */
     public GameMap(TerrainFactory terrainFactory) {
         this.terrainFactory = terrainFactory;
         this.tiledMap = new TiledMap();
+    }
+
+    /**
+     * Creates the TerrainComponent instance used to render the SpaceGameArea map and stores it in the GameMap class
+     */
+    public void createTerrainComponent() {
+        terrainComponent = terrainFactory.createSpaceGameTerrain(tiledMap);
+    }
+
+    /**
+     *                              FOR HUNTER TO IMPLEMENT                                                                     HUNTER DONT FORGET
+     */
+    public void createTestTerrainComponent() {
+        terrainComponent = terrainFactory.createTestTerrain(tiledMap, null);
     }
 
     /**
@@ -52,11 +66,12 @@ public class GameMap {
      * @return the terrainComponent variable.
      * @throws Exception when the TerrainComponent has not been set.
      */
-    public TerrainComponent getTerrainComponent() throws Exception {
+    public TerrainComponent getTerrainComponent(){
         if (this.terrainComponent != null) {
             return this.terrainComponent;
         } else {
-            throw new Exception("TerrainComponent has not been set in the GameMap class yet");
+            logger.info("getTerrainComponent called before terrainComponent was set");
+            return null;
         }
     }
 
