@@ -65,7 +65,7 @@ public class ItemFactory {
     Entity shovel = createBaseItem()
         .addComponent(new TextureRenderComponent("images/tool_shovel.png"))
         .addComponent(new ItemComponent("shovel", ItemType.SHOVEL, "Shovel for removing items",
-            new Texture("images/tool_shovel.png"),false));
+            new Texture("images/tool_shovel.png")));
     return shovel;
   }
 
@@ -103,7 +103,7 @@ public class ItemFactory {
   public static Entity createScythe() {
     Entity scythe = createBaseItem()
         .addComponent(new TextureRenderComponent("images/tool_scythe.png"))
-        .addComponent(new ItemComponent("scythe", ItemType.SCYTHE, new Texture("images/tool_scythe.png"),false));
+        .addComponent(new ItemComponent("scythe", ItemType.SCYTHE, new Texture("images/tool_scythe.png")));
     return scythe;
   }
 
