@@ -469,7 +469,7 @@ public class Entity implements Json.Serializable {
                     shipLightComponent.read(json, shipLightComponentJson);
 
                     ShipProgressComponent progressComponent = ship.getComponent(ShipProgressComponent.class);
-                    progressComponent.read(json, jsonMap.get("components").get(ShipProgressComponent.class.getName()));
+                    progressComponent.read(json, jsonMap.get("components").get(ShipProgressComponent.class.getSimpleName()));
 
                     ServiceLocator.getGameArea().spawnEntity(ship);
                     ship.setPosition(position);
