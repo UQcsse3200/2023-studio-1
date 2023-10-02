@@ -1,41 +1,55 @@
 package com.csse3200.game.components.inventory;
 
-
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
-import com.csse3200.game.components.items.ItemComponent;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.ui.UIComponent;
-import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.ui.UIComponent;
+import com.badlogic.gdx.graphics.Texture;
 
 /**
  * A ui component for displaying player stats, e.g. health.
  */
 public class InventoryDisplay extends UIComponent {
   private static final Logger logger = LoggerFactory.getLogger(InventoryDisplay.class);
-  private Table table;
   private InventoryComponent playerInventory;
-  private Window window;
+  private final Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
+  private Table table = new Table(skin);
+  private Window window = new Window("Inventory", skin);
+  private ArrayList<ItemSlot> slots = new ArrayList<>();
   private boolean isOpen = false;
   private DragAndDrop dnd;
+  private ArrayList<Actor> actors;
+  private Map<Image,ItemSlot> map;
   private Map<ItemSlot,Integer> indexes;
+  private Integer size;
+  private Integer rowSize;
 
   /**
    * Constructor for class
    * @param playerInventory inventory of player
    */
-  public InventoryDisplay(InventoryComponent playerInventory) {
+  public InventoryDisplay(InventoryComponent playerInventory, Integer size, Integer rowSize) {
     this.playerInventory = playerInventory;
+    this.size = size;
+    this.rowSize = rowSize;
   }
 
   /**
@@ -44,102 +58,99 @@ public class InventoryDisplay extends UIComponent {
   @Override
   public void create() {
     super.create();
-    addActors();
+    initialiseInventory();
     entity.getEvents().addListener("toggleInventory",this::toggleOpen);
-    entity.getEvents().addListener("updateInventory",this::updateInventory);
+    entity.getEvents().addListener("updateInventory",this::refreshInventory);
   }
 
   /**
-   * Re-renders the Inventory UI, when a change is made to the inventory
-   */
-  private void resetInventory(){
-    window.reset();
-    dnd.clear();
-    Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
-    table = new Table(skin);
-    table.defaults().size(64, 64);
-    table.pad(10);
-    ArrayList<Actor> actors = new ArrayList<>();
-    final Map<Image,ItemSlot> map = new HashMap<>();
-
-    for (int i = 0; i < 30; i++){
-      Label label = new Label(String.valueOf(i), skin.get("default", Label.LabelStyle.class));
-      //set the bounds of the label
-      label.setBounds(label.getX() + 15, label.getY(), label.getWidth(), label.getHeight());
-      ItemSlot item;
-      if (playerInventory.getItemPos(i) == null) {
-        //logger.info("Null Item at "+i );
-        item = new ItemSlot(false);
-
-      } else {
-        item = new ItemSlot(
-                playerInventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture(),
-                false);
-        actors.add(item.getItemImage());
-        //stack.add(new Image(playerInventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture()));
-      }
-      map.put(item.getItemImage(), item);
-      if (item.getItemImage() != null) {
-        item.getItemImage().setDebug(false);
-      }
-      indexes.put(item, i);
-      table.add(item).pad(10, 10, 10, 10).fill();
-      if ((i + 1) % 10 == 0) {
-        //Add a new row every 10 items
-        table.row();
-      }
-    }
-    window.pad(40, 5, 5, 5);
-    window.add(table);
-    window.pack();
-    window.setMovable(false);
-    window.setPosition(stage.getWidth() / 2 - window.getWidth() / 2, 0);
-    window.setVisible(isOpen);
-    // Add the window to the stage
-    stage.addActor(window);
-    setDragItems(actors, map);
-  }
-
-  /**
-   * Creates actors and positions them on the stage using a table.
+   * Initialises the inventoryDisplay and adds it to the stage.
    * @see Table for positioning options
    */
-  private void addActors() {
-    table = new Table(skin);
+  private void initialiseInventory() {
+    // create variables needed for drag and drop
+    dnd = new DragAndDrop();
+    actors = new ArrayList<>();
+    map = new HashMap<>();
+    indexes  = new HashMap<>();
+
+    // set the table cell size and add necessary padding
     table.defaults().size(64, 64);
     table.pad(10);
-    ArrayList<Actor> actors = new ArrayList<>();
-    final Map<Image,ItemSlot> map = new HashMap<>();
-      // Add some items to the table, to be changed once inventory item is improved
-    indexes = new HashMap<>(); // map of items to their index
-    for (int i = 0; i < 30; i++) {
-      //Add the items to the table
-      ItemSlot item = new ItemSlot(false);
-      //item.setDebug(true);
-      map.put(item.getItemImage(), item);
 
-      table.add(item).width(70).height(70).pad(10, 10, 10, 10);
-      indexes.put(item, i);
-      if ((i + 1) % 10 == 0) {
-        //Add a new row every 10 items
+    // loop through entire table and create itemSlots and add the slots to the stored array
+    for (int i = 0; i < size; i++) {
+      ItemSlot slot;
+      if (this.playerInventory.getItemPos(i) != null) {
+        slot = new ItemSlot(this.playerInventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture(), false);
+        actors.add(slot.getItemImage());
+      } else {
+        slot = new ItemSlot(false);
+      }
+
+      table.add(slot).width(70).height(70).pad(10, 10, 10, 10);
+
+      if ((i + 1) % rowSize == 0) {
         table.row();
+      }
+      slots.add(slot);
+      map.put(slot.getItemImage(), slot);
+      indexes.put(slot, i);
+      if (slot.getItemImage() != null) {
+        slot.getItemImage().setDebug(false);
       }
     }
 
     // Create a window for the inventory using the skin
-    window = new Window("Inventory", skin);
-    window.pad(40, 20, 20, 20); // Add padding to with so that the text doesn't go offscreen
-    window.add(table); //Add the table to the window
-    window.pack(); // Pack the window to the size
+    window.pad(40, 20, 20, 20);
+    window.add(table);
+    window.pack();
     window.setMovable(false);
     window.setPosition(stage.getWidth() / 2 - window.getWidth() / 2, stage.getHeight() / 2 - window.getHeight() / 2); // Center the window on the stage
     window.setVisible(false);
-    // Add the window to the stage
     stage.addActor(window);
+    setDragItems(actors, map);
+  }
+
+  /**
+   * Update Inventory user interface
+   */
+  private void updateInventory() {
+    dnd.clear();
+
+    for (int i = 0; i < size; i++) {
+      ItemComponent item;
+      Texture itemTexture;
+      int itemCount;
+
+      // if the item isn't null we will update the position, this will be in future replaced by an event
+      if (playerInventory.getItemPos(i) != null) {
+        item = playerInventory.getItemPos(i).getComponent(ItemComponent.class);
+        itemCount = playerInventory.getItemCount(item.getEntity());
+        itemTexture = item.getItemTexture();
+        ItemSlot curSlot = slots.get(i);
+        curSlot.setItemImage(new Image(itemTexture));
+        actors.add(curSlot.getItemImage());
+
+        if (curSlot.getCount() != null && !curSlot.getCount().equals(itemCount)) {
+          curSlot.setCount(itemCount);
+        }
+
+        map.put(curSlot.getItemImage(), curSlot);
+        indexes.put(curSlot, i);
+
+        slots.set(i, curSlot);
+      }
+    }
     dnd = new DragAndDrop();
     setDragItems(actors, map);
-
   }
+
+  /**
+   * Set Drag Items
+   * @param actors list of actors
+   * @param map images and their respective item slot
+   */
   public void setDragItems(@NotNull ArrayList<Actor> actors, Map<Image,ItemSlot> map) {
     for (Actor item : actors) {
       dnd.addSource(new DragAndDrop.Source(item) {
@@ -181,21 +192,10 @@ public class InventoryDisplay extends UIComponent {
           sourceSlot.setItemImage(slot.getItemImage());
           map.put((Image) payload.getDragActor(),slot);
           slot.setItemImage((Image)payload.getDragActor());
-          int currentIndex = playerInventory.getHeldIndex();
-          if (indexes.get(slot) > 9) {
-            playerInventory.setHeldItem(currentIndex);
-          }
-          else {
-            playerInventory.setHeldItem(indexes.get(slot));
-            entity.getEvents().trigger("hotkeySelection", indexes.get(slot));
-          }
-
         }
       });
-
     }
   }
-
 
   /**
    * The draw stage of the UIComponent, it is handled by the stage
@@ -203,7 +203,6 @@ public class InventoryDisplay extends UIComponent {
    */
   @Override
   public void draw(SpriteBatch batch) {
-
   }
 
   /**
@@ -212,7 +211,7 @@ public class InventoryDisplay extends UIComponent {
   public void toggleOpen(){
       entity.getEvents().trigger("updateInventory");
       isOpen = !isOpen;
-    window.setVisible(isOpen);
+      window.setVisible(isOpen);
   }
 
   /**
@@ -223,13 +222,9 @@ public class InventoryDisplay extends UIComponent {
     return this.playerInventory;
   }
 
-  /**
-   * Force update of the display after update inventory event is called
-   */
-  public void updateInventory(){
+  public void refreshInventory(){
     playerInventory = entity.getComponent(InventoryComponent.class);
-    resetInventory();
-
+    updateInventory();
   }
 
   /**

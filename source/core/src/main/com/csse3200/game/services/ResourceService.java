@@ -1,13 +1,15 @@
 package com.csse3200.game.services;
 
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Disposable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Service for loading resources, e.g. textures, texture atlases, sounds, music, etc. Add new load
@@ -170,6 +172,18 @@ public class ResourceService implements Disposable {
     loadAssets(musicNames, Music.class);
   }
 
+  /**
+   * Loads a list of particle effect assets into the asset manager
+   * @param particleNames particle effect filenames
+   */
+  public void loadParticleEffects(String[] particleNames) {
+    loadAssets(particleNames, ParticleEffect.class);
+  }
+
+  /**
+   * Disposes of assets and all of their dependencies from the resource manager
+   * @param assetNames list of asset names to dispose of
+   */
   public void unloadAssets(String[] assetNames) {
     for (String assetName : assetNames) {
       logger.debug("Unloading {}", assetName);
@@ -181,6 +195,10 @@ public class ResourceService implements Disposable {
     }
   }
 
+  /**
+   * Disposes of the resource service, clearing the asset manager which clears and disposes of all assets and clears
+   * the preloading queue
+   */
   @Override
   public void dispose() {
     assetManager.clear();

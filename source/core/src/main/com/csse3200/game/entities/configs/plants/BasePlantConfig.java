@@ -18,5 +18,5 @@ public class BasePlantConfig {
     public int juvenileThreshold = 0;
     public int adultThreshold = 0;
 
-    public String imageFolderPath = "";
+    public String atlasPath = "";
 }

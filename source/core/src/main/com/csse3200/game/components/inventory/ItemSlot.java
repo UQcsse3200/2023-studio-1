@@ -3,7 +3,10 @@ package com.csse3200.game.components.inventory;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.utils.Align;
 
 /**
@@ -14,7 +17,7 @@ public class ItemSlot extends Stack {
     private Integer count;
     private final Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
 
-    private final Image background;
+    private Image background;
     private Image frame;
 
     private boolean selected;
@@ -71,13 +74,20 @@ public class ItemSlot extends Stack {
         this.count = count;
     }
 
+    /**
+     * Get the item count
+     * @return count integer of number of item
+     */
+    public Integer getCount() {
+        return count;
+    }
 
     /**
      * Set the item texture
-     * @param itemTexture texture of item's image
+     * @return  itemTexture texture of item's image
      */
-    public void setTexture(Texture itemTexture) {
-        this.itemTexture = itemTexture;
+    public Texture getItemTexture() {
+        return this.itemTexture;
     }
 
     @Override
@@ -113,6 +123,10 @@ public class ItemSlot extends Stack {
         }
     }
 
+    /**
+     * Get the item image
+     * @return the item image
+     */
     public Image getItemImage() {
         return itemImage;
     }
@@ -123,5 +137,21 @@ public class ItemSlot extends Stack {
             this.add(image);
             this.itemImage = image;
         }
+    }
+
+    /**
+     * Make the slot selected
+     */
+    public void setSelected() {
+        selected = true;
+        this.addActorAt(0, this.background);
+    }
+
+    /**
+     * Make the slot unselected
+     */
+    public void setUnselected() {
+        selected = false;
+        this.removeActor(this.background);
     }
 }

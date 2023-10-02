@@ -1,5 +1,6 @@
 package com.csse3200.game.missions;
 
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -73,8 +74,38 @@ public abstract class Mission {
      */
     protected void notifyUpdate() {
         if (isCompleted()) {
-            ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.MISSION_COMPLETE.name());
+            ServiceLocator.getMissionManager().getEvents().trigger(
+                    MissionManager.MissionEvent.MISSION_COMPLETE.name(),
+                    getName());
         }
     }
+
+    /**
+     * Sets the internal progress of the {@link Mission} based on the {@link JsonValue} provided. The {@link JsonValue}
+     * provided should match the same {@link JsonValue.ValueType} returned by {@link #getProgress()}. An
+     * {@link Exception} might be raised otherwise (depending on the methods you use to get the state of the
+     * {@link JsonValue}).
+     *
+     * @param progress The {@link JsonValue} representing the progress of the {@link Mission} as determined by the value
+     *                 returned in {@link #getProgress()}.
+     */
+    public abstract void readProgress(JsonValue progress);
+
+    /**
+     * Gets the progress of the {@link Mission} as an {@link Object}, which contains all relevant information about the
+     * internal progress of the {@link Mission}. All stats which dynamically change should be stored in this
+     * {@link Object} in some way (i.e., all non-final values). Since this value will need to be read later using
+     * {@link #readProgress(JsonValue)} as a {@link JsonValue}, you should make sure the returned {@link Object}'s
+     * serialisation is known to you. This is easy for primitive types, lists, and maps, so try to make the data that
+     * you actively track of primitive type (or a list/map of primitive types). Note that for
+     * {@link com.csse3200.game.missions.quests.Quest}s, you do not need to store the time to expiry or whether the
+     * reward has been collected - you only need to store the changing state specific to the
+     * {@link com.csse3200.game.missions.quests.Quest}.
+     *
+     * @return An {@link Object}, which stores the internal progress of the {@link Mission}. This {@link Object} should
+     *         be serialisable, and the data should be able to be read as a {@link JsonValue} in
+     *         {@link #readProgress(JsonValue)}.
+     */
+    public abstract Object getProgress();
 
 }

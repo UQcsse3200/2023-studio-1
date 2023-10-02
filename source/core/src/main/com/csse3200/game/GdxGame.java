@@ -1,15 +1,16 @@
 package com.csse3200.game;
 
+import static com.badlogic.gdx.Gdx.app;
+
+import com.csse3200.game.screens.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.csse3200.game.files.UserSettings;
-import com.csse3200.game.screens.*;
 import com.csse3200.game.services.ResourceService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import static com.badlogic.gdx.Gdx.app;
 
 /**
  * Entry point of the non-platform-specific game logic. Controls which screen is currently running.
@@ -101,13 +102,17 @@ public class GdxGame extends Game {
         return new IntroScreen(this);
       case LOSESCREEN:
         return new LoseScreen(this);
+      case ENDCREDITS:
+        return new EndCreditsScreen(this);
+      case WINSCREEN:
+        return new WinScreen(this);
       default:
         return null;
     }
   }
 
   public enum ScreenType {
-    MAIN_MENU, LOAD_GAME, MAIN_GAME, SETTINGS, CONTROLS, INTRO, LOSESCREEN
+    MAIN_MENU, LOAD_GAME, MAIN_GAME, SETTINGS, CONTROLS, INTRO, LOSESCREEN, WINSCREEN, ENDCREDITS
   }
 
 

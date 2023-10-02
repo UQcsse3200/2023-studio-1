@@ -1,14 +1,21 @@
 package com.csse3200.game.missions.quests;
 
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.rewards.Reward;
-import com.csse3200.game.services.ServiceLocator;
 
 public class FertiliseCropTilesQuest extends Quest {
 
     private final int target;
     private int numberOfTilesFertilised;
+
+    public FertiliseCropTilesQuest(String name, Reward reward, int numberOfTilesToFertilise) {
+        super(name, reward);
+
+        target = numberOfTilesToFertilise;
+        numberOfTilesFertilised = 0;
+    }
 
     /**
      * Creates a {@link FertiliseCropTilesQuest}.
@@ -46,12 +53,22 @@ public class FertiliseCropTilesQuest extends Quest {
     public String getDescription() {
         return "Fertilising crop tiles will cause your plants to grow faster.\nApply fertiliser to "
                 + target + " tiles and become a " + getName() + "!\n"
-                + numberOfTilesFertilised + " out of " + target + " crop tiles fertilised.";
+                + getShortDescription() + ".";
     }
 
     @Override
     public String getShortDescription() {
         return numberOfTilesFertilised + " out of " + target + " crop tiles fertilised";
+    }
+
+    @Override
+    public void readProgress(JsonValue progress) {
+        numberOfTilesFertilised = progress.asInt();
+    }
+
+    @Override
+    public Object getProgress() {
+        return numberOfTilesFertilised;
     }
 
     /**
@@ -68,4 +85,5 @@ public class FertiliseCropTilesQuest extends Quest {
     protected void resetState() {
         numberOfTilesFertilised = 0;
     }
+
 }

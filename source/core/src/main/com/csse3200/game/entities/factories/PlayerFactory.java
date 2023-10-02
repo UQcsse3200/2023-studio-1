@@ -1,14 +1,24 @@
 package com.csse3200.game.entities.factories;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.inventory.InventoryDisplay;
 import com.csse3200.game.components.inventory.ToolbarDisplay;
 import com.csse3200.game.components.maingame.PauseMenuActions;
-import com.csse3200.game.components.player.*;
+import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.components.player.ItemPickupComponent;
+import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
+import com.csse3200.game.components.player.OpenPauseComponent;
+import com.csse3200.game.components.player.PlayerActions;
+import com.csse3200.game.components.player.PlayerAnimationController;
+import com.csse3200.game.components.player.PlayerHighlightComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.configs.PlayerConfig;
@@ -20,8 +30,7 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
-
-import java.util.ArrayList;
+import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 
 /**
  * Factory to create a player entity.
@@ -57,21 +66,22 @@ public class PlayerFactory {
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
             .addComponent(new PlayerActions())
             .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack))
-                .addComponent(playerInventory)
+            .addComponent(playerInventory)
             .addComponent(inputComponent)
             .addComponent(animator)
             .addComponent(new OpenPauseComponent())
             .addComponent(new PlayerAnimationController())
             .addComponent(new ItemPickupComponent())
-            .addComponent(new InteractionDetector(2f))
+            .addComponent(new InventoryDisplay(playerInventory, 30 , 10))
+            .addComponent(new InteractionDetector(2f, new ArrayList<EntityType>(Arrays.asList(EntityType.Questgiver, EntityType.Gate, EntityType.Chest, EntityType.Chicken,
+                    EntityType.Cow, EntityType.Astrolotl, EntityType.OxygenEater, EntityType.ShipDebris, EntityType.Ship))))
             .addComponent(new ToolbarDisplay())
-	        .addComponent(new AuraLightComponent())
-            .addComponent(new InventoryDisplay(playerInventory))
-            .addComponent(new ToolbarDisplay())
+	        .addComponent(new AuraLightComponent(6f))
             .addComponent(new PauseMenuActions());
 
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
-    player.getComponent(ColliderComponent.class).setAsBox(new Vector2(1f, 1f), new Vector2(1.5f, 1f));
+    player.getComponent(ColliderComponent.class).setAsBox(new Vector2(0.9f, 0.9f), new Vector2(1.5f, 1f));
+    player.getComponent(HitboxComponent.class).setAsBox(new Vector2(1f, 2f), new Vector2(1.5f, 1.5f));
     player.getComponent(AnimationRenderComponent.class).scaleEntity();
     player.getComponent(KeyboardPlayerInputComponent.class).setActions(player.getComponent(PlayerActions.class));
     return player;
@@ -128,4 +138,5 @@ public class PlayerFactory {
   private PlayerFactory() {
     throw new IllegalStateException("Instantiating static util class");
   }
+
 }

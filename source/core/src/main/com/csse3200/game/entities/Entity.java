@@ -1,35 +1,41 @@
-package com.csse3200.game.entities;
+  package com.csse3200.game.entities;
 
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.IntMap;
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonValue;
-import com.csse3200.game.areas.terrain.CropTileComponent;
-import com.csse3200.game.components.Component;
-import com.csse3200.game.components.ComponentType;
-import com.csse3200.game.components.items.ItemComponent;
-import com.csse3200.game.components.items.ItemType;
-import com.csse3200.game.components.items.WateringCanLevelComponent;
-import com.csse3200.game.components.npc.AnimalAnimationController;
-import com.csse3200.game.components.npc.GhostAnimationController;
-import com.csse3200.game.components.npc.TamableComponent;
-import com.csse3200.game.components.plants.PlantComponent;
-import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.components.player.ItemPickupComponent;
-import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
-import com.csse3200.game.components.player.PlayerAnimationController;
-import com.csse3200.game.components.tractor.TractorActions;
-import com.csse3200.game.events.EventHandler;
-import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.services.FactoryService;
-import com.csse3200.game.services.ServiceLocator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+  import com.badlogic.gdx.math.Vector2;
+  import com.badlogic.gdx.utils.Array;
+  import com.badlogic.gdx.utils.IntMap;
+  import com.badlogic.gdx.utils.Json;
+  import com.badlogic.gdx.utils.JsonValue;
 
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+  import com.csse3200.game.areas.terrain.CropTileComponent;
+  import com.csse3200.game.areas.terrain.TerrainCropTileFactory;
+  import com.csse3200.game.areas.terrain.TerrainTile;
+  import com.csse3200.game.components.Component;
+  import com.csse3200.game.components.ComponentType;
+  import com.csse3200.game.components.ConeLightComponent;
+  import com.csse3200.game.components.items.ItemComponent;
+  import com.csse3200.game.components.items.ItemType;
+  import com.csse3200.game.components.items.WateringCanLevelComponent;
+  import com.csse3200.game.components.npc.AnimalAnimationController;
+  import com.csse3200.game.components.npc.GhostAnimationController;
+  import com.csse3200.game.components.npc.TamableComponent;
+  import com.csse3200.game.components.player.InventoryComponent;
+  import com.csse3200.game.components.player.ItemPickupComponent;
+  import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
+  import com.csse3200.game.components.player.PlayerAnimationController;
+  import com.csse3200.game.components.ship.ShipLightComponent;
+  import com.csse3200.game.components.tractor.TractorActions;
+  import com.csse3200.game.entities.factories.ShipFactory;
+  import com.csse3200.game.events.EventHandler;
+  import com.csse3200.game.rendering.AnimationRenderComponent;
+  import com.csse3200.game.services.FactoryService;
+  import com.csse3200.game.services.ServiceLocator;
+
+  import org.slf4j.Logger;
+  import org.slf4j.LoggerFactory;
+
+  import java.awt.*;
+  import java.util.ArrayList;
+  import java.util.HashMap;
 
 /**
  * Core entity class. Entities exist in the game and are updated each frame. All
@@ -111,6 +117,10 @@ public class Entity implements Json.Serializable {
   public void setPosition(Vector2 position) {
     this.position = position.cpy();
     getEvents().trigger(EVT_NAME_POS, position.cpy());
+  }
+
+  public void setCenterPosition(Vector2 position) {
+    this.position = position.cpy().mulAdd(getScale(), -0.5f);
   }
 
   /**
@@ -291,6 +301,7 @@ public class Entity implements Json.Serializable {
     if (!enabled) {
       return;
     }
+    getEvents().update();
     for (Component component : createdComponents) {
       component.triggerUpdate();
     }
@@ -354,7 +365,7 @@ public class Entity implements Json.Serializable {
 
   @Override
   public String toString() {
-    return String.format("Entity{id=%d}", id);
+    return String.format("Entity{id=%d} {type=%s}", id, type == null ? "none" : type.toString());
   }
 
   /**
@@ -364,7 +375,7 @@ public class Entity implements Json.Serializable {
    * to the json about
    * the component.
    * note each component should have a override write function
-   * 
+   *
    * @param json which is a valid Json that is written to
    */
   public void write(Json json) {
@@ -401,13 +412,17 @@ public class Entity implements Json.Serializable {
   /**
    * Reads the json file and creates the entities based on the information in the
    * json file
-   * 
+   *
    * @param json    which is a valid Json that is read from
    * @param jsonMap which is a valid JsonValue that is read from
    */
   public void read(Json json, JsonValue jsonMap) {
+    // This method creates an Entity but will not use that Entity for anything that is being remade as
+    // it makes the code duplication extremely high as it is a whole factory here
+
     // Saves the position
     position = new Vector2(jsonMap.getFloat("x"), jsonMap.getFloat("y"));
+
     // Gets the type of Entity
     String value = jsonMap.getString("Entity");
     try {
@@ -415,43 +430,45 @@ public class Entity implements Json.Serializable {
     } catch (IllegalArgumentException e) {
       type = null;
     }
-    if (type != null) { // The try catch above may cause a NullPointerException otherwise
+
+    if (type != null) {
       switch (type) {
         case Tractor:
+          // Does not need a new one (may change depending on how tractor is obtained)
+          JsonValue lightJsonMap = jsonMap.get("components").get("ConeLightComponent");
           jsonMap = jsonMap.get("components").get("TractorActions");
           TractorActions tractorActions = new TractorActions();
           // Update the tractor 'muted' variable based on the info in the json file
           tractorActions.setMuted(jsonMap.getBoolean("isMuted"));
           this.addComponent(tractorActions);
+
+          ConeLightComponent coneLightComponent = new ConeLightComponent(lightJsonMap.getFloat("distance"));
+          if (lightJsonMap.getBoolean("isActive")) {
+            coneLightComponent.toggleLight();
+          }
+          this.addComponent(coneLightComponent);
           break;
         case Tile:
-          jsonMap = jsonMap.get("components").get("CropTileComponent");
-          CropTileComponent c = new CropTileComponent(jsonMap.getFloat("waterContent"), jsonMap.getFloat("soilQuality"));
-          c.setFertilised(jsonMap.getBoolean("isFertilised"));
-          JsonValue plantData = jsonMap.get("plant");
-          if (plantData.get("Entity") != null) {
-            // Has a plant
-            plantData = plantData.get("components").get("PlantComponent");
-            c.setPlant(
-                new Entity().addComponent(new PlantComponent(plantData.getInt("health"), plantData.getString("name"),
-                    "bleh", "bleh", 1f, 999, 999, this.getComponent(CropTileComponent.class))));
-            c.getPlant().getComponent(PlantComponent.class).setCurrentAge(plantData.getFloat("age"));
-            c.getPlant().getComponent(PlantComponent.class).setGrowthStage(plantData.getInt("growth"));
-          }
-          this.addComponent(c);
+          // Makes a new tile
+          Entity tile = TerrainCropTileFactory.createTerrainEntity(position);
+          tile.getComponent(CropTileComponent.class).read(json, jsonMap);
+          ServiceLocator.getGameArea().spawnEntity(tile);
+          tile.setPosition(position);
+          TerrainTile terrainTile = ServiceLocator.getGameArea().getMap().getTile(tile.getPosition());
+          terrainTile.setOccupant(tile);
           break;
-        case Cow:
-        case Astrolotl:
-        case Chicken:
-          jsonMap = jsonMap.get("components").get("TamableComponent");
-          // Does not need actual values here as it is just used to store the tamed value;
-          Entity emptyPlayer = new Entity(); // empty player, as the real player is not needed for reading in the
-                                             // component
-          TamableComponent tamableComponent = new TamableComponent(emptyPlayer, 1, 1, null);
-          tamableComponent.setTame(jsonMap.getBoolean("Tamed"));
-          this.addComponent(tamableComponent);
+        case Ship:
+          Entity ship = ShipFactory.createShip();
+
+          ShipLightComponent shipLightComponent = ship.getComponent(ShipLightComponent.class);
+          JsonValue shipLightComponentJson = jsonMap.get("components").get(ShipLightComponent.class.getSimpleName());
+          shipLightComponent.read(json, shipLightComponentJson);
+
+          ServiceLocator.getGameArea().spawnEntity(ship);
+          ship.setPosition(position);
           break;
         case Player:
+          // Does not make a new player, instead just updates the current one
           InventoryComponent inventoryComponent = new InventoryComponent(null);
           HashMap<Entity, Integer> items = new HashMap<>();
           HashMap<Entity, Point> itemPositions = new HashMap<>();
@@ -472,14 +489,23 @@ public class Entity implements Json.Serializable {
           this.addComponent(inventoryComponent);
           break;
         default:
-          // Nothing
+          if (FactoryService.getNpcFactories().containsKey(type) && ServiceLocator.getGameArea().getLoadableTypes().contains(type)) {
+            // Makes a new NPC
+            Entity npc = FactoryService.getNpcFactories().get(type).apply(ServiceLocator.getGameArea().getPlayer());
+            if (npc.getComponent(TamableComponent.class) != null) {
+              npc.getComponent(TamableComponent.class).read(json, jsonMap.get("components"));
+            }
+            ServiceLocator.getGameArea().spawnEntity(npc);
+            npc.setPosition(position);
+          }
+          break;
       }
     }
   }
 
   /**
    * Gets the type of entity
-   * 
+   *
    * @return the type of entity from EntityType enum
    */
   public EntityType getType() {

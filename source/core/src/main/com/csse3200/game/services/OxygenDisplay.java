@@ -11,12 +11,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.ui.UIComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A ui component for displaying the current oxygen level on the Main Game Screen.
  */
 public class OxygenDisplay extends UIComponent{
-
+    
+    private static final Logger logger = LoggerFactory.getLogger(OxygenDisplay.class);
     Table table = new Table();
     Group group = new Group();
     private Image oxygenOutline;
@@ -30,7 +33,8 @@ public class OxygenDisplay extends UIComponent{
     @Override
     public void create() {
         super.create();
-
+    
+        logger.debug("Adding listener to oxygenUpdate event");
         // Adds a listener to check for oxygen updates
         ServiceLocator.getPlanetOxygenService().getEvents()
                 .addListener("oxygenUpdate", this::updateDisplay);
@@ -43,6 +47,7 @@ public class OxygenDisplay extends UIComponent{
      * the class, and stores them in an array to be called when needed.
      */
     public void createTexture() {
+        logger.debug("Oxygen display texture being created");
         Skin oxygenSkin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
 
         oxygenOutline = new Image(ServiceLocator.getResourceService().getAsset(
@@ -78,6 +83,7 @@ public class OxygenDisplay extends UIComponent{
 
         // Add a safety check to ensure that the array is always accessed at a possible index
         if (0 <= oxygenPercent && oxygenPercent <= 100) {
+            logger.debug("Oxygen display updated");
             oxygenLabel = oxygenLabels.get(oxygenPercent);
             oxygenLabel.setPosition(oxygenOutline.getImageX() + 125f, oxygenOutline.getImageY() + 8.5f);
         }

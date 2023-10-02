@@ -1,5 +1,15 @@
 package com.csse3200.game.components.inventory;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+
+import java.util.ArrayList;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.components.player.InventoryComponent;
@@ -10,13 +20,6 @@ import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.ServiceLocator;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-
-import java.util.ArrayList;
-
-import static org.mockito.Mockito.*;
 
 /**
  * Factory to create a mock player entity for testing.
@@ -45,7 +48,7 @@ public class TestInventoryUI {
 
         ServiceLocator.registerInputService(new InputService());
         inventory = new InventoryComponent(new ArrayList<>());
-        inventoryDisplay = spy(new InventoryDisplay(inventory));
+        inventoryDisplay = spy(new InventoryDisplay(inventory, 30, 10));
         player =
                 new Entity()
                         .addComponent(new PlayerActions())

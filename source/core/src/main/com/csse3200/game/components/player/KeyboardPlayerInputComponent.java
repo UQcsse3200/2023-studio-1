@@ -1,5 +1,10 @@
 package com.csse3200.game.components.player;
 
+import com.csse3200.game.components.losescreen.LoseScreenDisplay;
+import com.csse3200.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
@@ -7,8 +12,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.utils.math.Vector2Utils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Input handler for the player for keyboard and touch (mouse) input.
@@ -21,6 +24,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private static boolean menuOpened = false;
   private static Enum currentMenu = MenuTypes.NONE;
   private final int hotKeyOffset = 6;
+  private static boolean showPlantInfoUI = true;
   public enum MenuTypes{
     PAUSEMENU,
     NONE
@@ -85,6 +89,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           return true;
         case Keys.T:
           entity.getEvents().trigger("toggleLight");
+          return true;
+        case Keys.Q:
+          showPlantInfoUI = !showPlantInfoUI;
+          ServiceLocator.getPlantInfoService().getEvents().trigger("toggleOpen", showPlantInfoUI);
           return true;
         default:
           return false;

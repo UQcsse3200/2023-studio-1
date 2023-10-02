@@ -1,5 +1,14 @@
 package com.csse3200.game.rendering;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
+import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
+import com.csse3200.game.services.ResourceService;
+import net.dermetfan.gdx.physics.box2d.PositionController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,14 +18,12 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.services.ServiceLocator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Core rendering system for the game. Controls the game's camera and runs rendering on all
  * renderables each frame.
  */
-public class Renderer implements Disposable {
+public class Renderer implements Disposable{
   private static final float GAME_SCREEN_WIDTH = 20f;
   private static final Logger logger = LoggerFactory.getLogger(Renderer.class);
 
@@ -26,6 +33,10 @@ public class Renderer implements Disposable {
   private Stage stage;
   private RenderService renderService;
   private DebugRenderer debugRenderer;
+
+  // Testing
+  private ParticleEffect particleEffect;
+  private ParticleEffectPool particleEffectPool;
 
   /**
    * Create a new renderer with default settings
@@ -84,6 +95,7 @@ public class Renderer implements Disposable {
     renderService.setStage(stage);
     renderService.setDebug(debugRenderer);
     resizeCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
   }
 
   public CameraComponent getCamera() {
@@ -98,7 +110,12 @@ public class Renderer implements Disposable {
 
     batch.begin();
     renderService.render(batch);
+
+    if (ServiceLocator.getParticleService() != null) {
+      ServiceLocator.getParticleService().render(batch, Gdx.graphics.getDeltaTime());
+    }
     batch.end();
+
     if (ServiceLocator.getLightService() != null) {
       ServiceLocator.getLightService().renderLight();
     }

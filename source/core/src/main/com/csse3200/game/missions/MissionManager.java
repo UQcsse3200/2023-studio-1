@@ -1,17 +1,18 @@
 package com.csse3200.game.missions;
 
-import com.csse3200.game.events.EventHandler;
-import com.csse3200.game.missions.achievements.Achievement;
-import com.csse3200.game.missions.achievements.PlantCropsAchievement;
-import com.csse3200.game.missions.quests.FertiliseCropTilesQuest;
-import com.csse3200.game.missions.quests.Quest;
-import com.csse3200.game.missions.rewards.ItemReward;
-import com.csse3200.game.services.ServiceLocator;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class MissionManager {
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
+import com.csse3200.game.events.EventHandler;
+import com.csse3200.game.missions.achievements.Achievement;
+import com.csse3200.game.missions.achievements.PlantCropsAchievement;
+import com.csse3200.game.missions.quests.Quest;
+import com.csse3200.game.services.FactoryService;
+import com.csse3200.game.services.ServiceLocator;
+
+public class MissionManager implements Json.Serializable {
 
 	/**
 	 * An enum storing all possible events that the {@link MissionManager}'s {@link EventHandler} should listen to and
@@ -19,16 +20,37 @@ public class MissionManager {
 	 * a listener for the {@link #name()} of the enum value.
 	 */
 	public enum MissionEvent {
-		// Triggers when a mission is completed
+		// Triggers when a mission is completed, a single String representing name of completed mission is provided as
+		// an argument
 		MISSION_COMPLETE,
 		// Triggers when a new quest has been added to the mission manager
 		NEW_QUEST,
 		// Triggers when a quest expires
 		QUEST_EXPIRED,
-		// Triggers when a crop is planted, single String representing plant type is provided as argument
+		// Triggers when a story quest's reward is collected (to ensure that the player has read the required dialogue),
+		// a single String representing the name of the quest whose reward has been collected is provided as an argument
+		QUEST_REWARD_COLLECTED,
+		// Triggers when a crop is planted, a single String representing plant name is provided as an argument
 		PLANT_CROP,
 		// Triggers when a crop is fertilised
-		FERTILISE_CROP
+		FERTILISE_CROP,
+		// Triggers when ship debris is cleared
+		DEBRIS_CLEARED,
+		// Triggers when a crop is harvested, a single String representing the plant name is provided as an argument
+		HARVEST_CROP,
+		// Triggers when an animal is tamed
+		TAME_ANIMAL,
+		// Triggers when a reward is collected used for MissionCompleteQuests
+		REWARD_COMPLETE,
+		ANIMAL_TAMED,
+		// Triggers when an animal is defeated in combat, a EntityType enum value is provided representing the type of
+		// entity defeated is provided as an argument
+		ANIMAL_DEFEATED,
+		// Triggers when an animal is eaten by a Space Snapper, a EntityType enum value is provided representing the
+		// type of entity eaten is provided as an argument
+		ANIMAL_EATEN,
+		// Triggers when a ship part is added to the Ship
+		SHIP_PART_ADDED,
 	}
 
 	/**
@@ -52,7 +74,7 @@ public class MissionManager {
 	/**
 	 * An array of all in-game {@link Achievement}s
 	 */
-	private final Achievement[] achievements = new Achievement[]{
+	private static final Achievement[] achievements = new Achievement[]{
 			new PlantCropsAchievement("Plant President", 50),
 			new PlantCropsAchievement("Crop Enjoyer", 200),
 			new PlantCropsAchievement("Gardener of the Galaxy", 800)
@@ -62,20 +84,10 @@ public class MissionManager {
 	 * Creates the mission manager, registered all game achievements and adds a listener for hourly updates
 	 */
 	public MissionManager() {
-		ServiceLocator.getTimeService().getEvents().addListener("updateHour", this::updateActiveQuestTimes);
+		ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateActiveQuestTimes);
 		for (Achievement mission : achievements) {
 			mission.registerMission(events);
 		}
-
-		// Add initial quests - regardless of GameArea
-		selectableQuests.add(
-				// Item reward to be determined at later date
-				new FertiliseCropTilesQuest("Haber Hobbyist", new ItemReward(new ArrayList<>()), 24, 10)
-		);
-		selectableQuests.add(
-				// Item reward to be determined at later date
-				new FertiliseCropTilesQuest("Fertiliser Fanatic", new ItemReward(new ArrayList<>()), 48, 40)
-		);
 	}
 
 	/**
@@ -149,4 +161,52 @@ public class MissionManager {
 		}
 	}
 
+	@Override
+	public void write(Json json) {
+		json.writeObjectStart("ActiveQuests");
+		for (Quest q : activeQuests) {
+			q.write(json);
+		}
+		json.writeObjectEnd();
+		json.writeObjectStart("SelectableQuests");
+		for (Quest q : selectableQuests) {
+			q.write(json);
+		}
+		json.writeObjectEnd();
+		json.writeObjectStart("Achievements");
+		int i = 0;
+		for (Achievement achievement : achievements) {
+			achievement.write(json, i);
+			i++;
+		}
+		json.writeObjectEnd();
+	}
+
+	@Override
+	public void read(Json json, JsonValue jsonMap) {
+		JsonValue active = jsonMap.get("ActiveQuests");
+		activeQuests.clear();
+		if (active.has("Quest")) {
+			active.forEach(jsonValue -> {
+				Quest q = FactoryService.getQuests().get(jsonValue.getString("name")).get();
+				q.read(jsonValue);
+				activeQuests.add(q);
+			});
+		}
+		JsonValue selectable = jsonMap.get("SelectableQuests");
+		selectableQuests.clear();
+		if (selectable.has("Quest")) {
+			selectable.forEach(jsonValue -> {
+				Quest q = FactoryService.getQuests().get(jsonValue.getString("name")).get();
+				q.read(jsonValue);
+				selectableQuests.add(q);
+			});
+		}
+		if (selectable.has("Achievement")) {
+			selectable.forEach(jsonValue -> {
+				Achievement a = achievements[jsonValue.getInt("index")];
+				a.readProgress(jsonValue.get("progress"));
+			});
+		}
+	}
 }

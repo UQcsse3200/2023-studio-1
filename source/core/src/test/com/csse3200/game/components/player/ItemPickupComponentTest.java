@@ -1,10 +1,15 @@
 package com.csse3200.game.components.player;
 
+import java.util.ArrayList;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.areas.GameArea;
-import com.csse3200.game.areas.weather.ClimateController;
-import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.entities.Entity;
@@ -18,11 +23,6 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -88,11 +88,25 @@ public class ItemPickupComponentTest {
     void shouldCreateComponent() {
         assertNotEquals(null, picker.getComponent(ItemPickupComponent.class));
     }
+
     @Test
     void shouldPickupItem() {
         // Try add the item to inventory
         picker.getEvents().trigger("collisionStart", picker.getComponent(HitboxComponent.class).getFixture(),
                 pickupItem.getComponent(HitboxComponent.class).getFixture());
         assertTrue(picker.getComponent(InventoryComponent.class).hasItem(pickupItem));
+    }
+
+    @Test
+    void shouldNotPickupItem() {
+        // Try add the item to inventory
+        picker.getEvents().trigger("collisionStart", pickupItem.getComponent(HitboxComponent.class).getFixture(),
+                picker.getComponent(HitboxComponent.class).getFixture());
+        assertFalse(picker.getComponent(InventoryComponent.class).hasItem(pickupItem));
+
+        pickupItem.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.OBSTACLE);
+        picker.getEvents().trigger("collisionStart", picker.getComponent(HitboxComponent.class).getFixture(),
+                picker.getComponent(HitboxComponent.class).getFixture());
+        assertFalse(picker.getComponent(InventoryComponent.class).hasItem(pickupItem));
     }
 }

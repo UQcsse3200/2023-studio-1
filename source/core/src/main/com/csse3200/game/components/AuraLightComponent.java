@@ -1,24 +1,38 @@
 package com.csse3200.game.components;
 
-import box2dLight.PointLight;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.utils.Json;
 import com.csse3200.game.services.ServiceLocator;
+
+import box2dLight.PointLight;
 
 public class AuraLightComponent extends Component{
 
+	/**
+	 * Point light from box2dlights that gets rendered by the ray handler
+	 */
 	private final PointLight light;
+
+	/**
+	 * State of the light (on/off)
+	 */
 	private boolean active;
+
+	/**
+	 * Default light distance used if nothing is provided in the constructor
+	 */
+	private static final float DEFAULT_DISTANCE = 8f;
+
+	/**
+	 * Default light colour if nothing is provided in the constructor
+	 */
+	private static final Color DEFAULT_COLOR = Color.LIGHT_GRAY;
 
 	/**
 	 * Creates a AuraLightComponent which can be attached to an entity to enable it to produce light.
 	 */
 	public AuraLightComponent() {
-		light = new PointLight(ServiceLocator.getLightService().getRayHandler(), 25);
-		light.setDistance(4);
-		light.setColor(Color.LIGHT_GRAY);
-		light.setStaticLight(true);
-		light.setXray(true); // Stops most of the shadows and reduces CPU burden
-		light.setSoft(true);
+		this(DEFAULT_DISTANCE, DEFAULT_COLOR);
 	}
 
 	/**
@@ -26,8 +40,7 @@ public class AuraLightComponent extends Component{
 	 * @param distance distance/spread of the light
 	 */
 	public AuraLightComponent(float distance) {
-		this();
-		setDistance(distance);
+		this(distance, DEFAULT_COLOR);
 	}
 
 
@@ -37,8 +50,7 @@ public class AuraLightComponent extends Component{
 	 * @param color color of the light being created
 	 */
 	public AuraLightComponent(Color color) {
-		this();
-		setColor(color);
+		this(DEFAULT_DISTANCE, color);
 	}
 
 	/**
@@ -48,9 +60,12 @@ public class AuraLightComponent extends Component{
 	 * @param color color of the light being created
 	 */
 	public AuraLightComponent(float distance, Color color) {
-		this();
-		setDistance(distance);
-		setColor(color);
+		light = new PointLight(ServiceLocator.getLightService().getRayHandler(), 25, color, distance, 0, 0);
+		light.setStaticLight(true);
+		light.setXray(true); // Stops most of the shadows and reduces CPU burden
+		light.setSoft(true);
+		active = false;
+		light.setActive(active);
 	}
 
 	/**
@@ -59,9 +74,9 @@ public class AuraLightComponent extends Component{
 	@Override
 	public void create() {
 		super.create();
-		active = false;
-		light.setActive(active);
+		light.setPosition(entity.getCenterPosition());
 		entity.getEvents().addListener("toggleLight", this::toggleLight);
+		entity.getEvents().addListener("toggleAuraLight", this::toggleLight);
 	}
 
 	/**
@@ -89,7 +104,7 @@ public class AuraLightComponent extends Component{
 	}
 
 	/**
-	 * Determines whether or not the light is currently on
+	 * Determines whether the light is currently on
 	 * @return state of the light (on/off)
 	 */
 	public boolean getActive() {
@@ -109,6 +124,6 @@ public class AuraLightComponent extends Component{
 	 */
 	@Override
 	public void dispose() {
-		light.dispose();
+		light.remove();
 	}
 }
