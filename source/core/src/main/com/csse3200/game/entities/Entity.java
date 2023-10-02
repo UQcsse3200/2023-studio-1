@@ -25,6 +25,7 @@ import com.csse3200.game.components.ship.ShipLightComponent;
 import com.csse3200.game.components.ship.ShipProgressComponent;
 import com.csse3200.game.components.ship.ShipTimeSkipComponent;
 import com.csse3200.game.components.tractor.TractorActions;
+import com.csse3200.game.entities.factories.ShipDebrisFactory;
 import com.csse3200.game.entities.factories.ShipFactory;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.rendering.AnimationRenderComponent;
@@ -467,11 +468,19 @@ public class Entity implements Json.Serializable {
 		            partTerrainTile.setOccupant(partTile);
 		            partTerrainTile.setOccupied();
 		            break;
+                case ShipDebris:
+                    Entity shipDebris = ShipDebrisFactory.createShipDebris(null);
+                    ServiceLocator.getGameArea().spawnEntity(shipDebris);
+                    shipDebris.setPosition(position);
+
+                    TerrainTile debrisTerrainTile = ServiceLocator.getGameArea().getMap().getTile(position);
+                    debrisTerrainTile.setOccupant(shipDebris);
+                    debrisTerrainTile.setOccupied();
+                    break;
                 case Ship:
                     Entity ship = ShipFactory.createShip();
 
 	                ServiceLocator.getGameArea().spawnEntity(ship);
-
 
 	                ShipProgressComponent progressComponent = ship.getComponent(ShipProgressComponent.class);
 	                progressComponent.read(json, jsonMap.get("components").get(ShipProgressComponent.class.getSimpleName()));
