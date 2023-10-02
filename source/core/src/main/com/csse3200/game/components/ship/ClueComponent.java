@@ -11,12 +11,14 @@ import java.util.Collections;
 import java.util.List;
 
 public class ClueComponent extends Component {
-
-    // TODO: update to a proper list of desired locations
     private static final List<Vector2> possibleLocations = new ArrayList<>(Arrays.asList(
-            new Vector2(7, 7),
-            new Vector2(12, 12),
-            new Vector2(32, 32)
+            new Vector2(30, 85),
+            new Vector2(20, 60),
+            new Vector2(30, 75),
+            new Vector2(20, 40),
+            new Vector2(20, 75),
+            new Vector2(30, 40),
+            new Vector2(30, 60)
     ));
 
     private final Vector2 currentLocation;
