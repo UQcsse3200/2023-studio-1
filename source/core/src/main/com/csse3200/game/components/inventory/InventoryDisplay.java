@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.csse3200.game.components.gamearea.GameAreaDisplay;
+import com.csse3200.game.services.ServiceLocator;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +25,7 @@ import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.ui.UIComponent;
 import com.badlogic.gdx.graphics.Texture;
+import com.csse3200.game.services.ServiceLocator;
 
 /**
  * An ui component for displaying player stats, e.g. health.
@@ -32,7 +35,7 @@ public class InventoryDisplay extends UIComponent {
     private InventoryComponent inventory;
     private final Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
     private final Table table = new Table(skin);
-    private final Window window = new Window("Inventory", skin);
+    private Window window;
     private final ArrayList<ItemSlot> slots = new ArrayList<>();
     private boolean isOpen = false;
     private DragAndDrop dnd;
@@ -44,6 +47,7 @@ public class InventoryDisplay extends UIComponent {
     private final Boolean toolbar;
     private final String refreshEvent;
     private final String openEvent;
+    private final InventoryDisplayManager inventoryDisplayManager;
 
     /**
      * Constructor for class
@@ -56,6 +60,7 @@ public class InventoryDisplay extends UIComponent {
         this.toolbar = toolbar;
         this.refreshEvent = refreshEvent;
         this.openEvent = openEvent;
+        inventoryDisplayManager = ServiceLocator.getInventoryDisplayManager();
     }
 
     /**
@@ -65,8 +70,9 @@ public class InventoryDisplay extends UIComponent {
     public void create() {
         super.create();
         initialiseInventory();
-        entity.getEvents().addListener("toggleInventory",this::toggleOpen);
-        entity.getEvents().addListener("updateInventory",this::refreshInventory);
+        entity.getEvents().addListener(openEvent,this::toggleOpen);
+        entity.getEvents().addListener(refreshEvent,this::refreshInventory);
+        inventoryDisplayManager.addInventoryDisplay(this);
     }
 
     /**
@@ -74,6 +80,8 @@ public class InventoryDisplay extends UIComponent {
      * @see Table for positioning options
      */
     private void initialiseInventory() {
+        window = new Window(entity.getType() + " Inventory", skin);
+
         // create variables needed for drag and drop
         dnd = new DragAndDrop();
         actors = new ArrayList<>();
@@ -110,7 +118,6 @@ public class InventoryDisplay extends UIComponent {
         window.add(table);
         window.pack();
         window.setMovable(false);
-        window.setPosition(stage.getWidth() / 2 - window.getWidth() / 2, stage.getHeight() / 2 - window.getHeight() / 2); // Center the window on the stage
         window.setVisible(false);
         stage.addActor(window);
         setDragItems(actors, map);
@@ -210,6 +217,14 @@ public class InventoryDisplay extends UIComponent {
     }
 
     /**
+     * Get the current window
+     * @return current window
+     */
+    public Actor getWindow() {
+        return this.window;
+    }
+
+    /**
      * The draw stage of the UIComponent, it is handled by the stage
      * @param batch Batch to render to.
      */
@@ -223,6 +238,7 @@ public class InventoryDisplay extends UIComponent {
     public void toggleOpen(){
         isOpen = !isOpen;
         window.setVisible(isOpen);
+        inventoryDisplayManager.updateDisplays();
     }
 
     /**
@@ -249,6 +265,11 @@ public class InventoryDisplay extends UIComponent {
      */
     @Override
     public void dispose() {
+        inventoryDisplayManager.removeInventoryDisplay(this);
         super.dispose();
+    }
+
+    public boolean isOpen() {
+        return isOpen;
     }
 }

@@ -1,5 +1,6 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.components.inventory.InventoryDisplayManager;
 import com.csse3200.game.services.plants.PlantCommandService;
 import com.csse3200.game.services.plants.PlantInfoService;
 import org.slf4j.Logger;
@@ -35,6 +36,7 @@ public class ServiceLocator {
   private static LightService lightService;
   private static GameAreaDisplay pauseMenuArea;
   private static GameAreaDisplay craftArea;
+  private static InventoryDisplayManager inventoryDisplayManager;
   private static CameraComponent cameraComponent;
   private static SaveLoadService saveLoadService;
   private static MissionManager missions;
@@ -169,6 +171,11 @@ public class ServiceLocator {
     lightService = source;
   }
 
+  public static void registerInventoryDisplayManager(InventoryDisplayManager source){
+    logger.debug("Registering inventory display manager {}", source);
+    inventoryDisplayManager = source;
+  }
+
   public static void registerParticleService(ParticleService source) {
     particleService = source;
   }
@@ -207,6 +214,10 @@ public class ServiceLocator {
 
   public static GameAreaDisplay getPauseMenuArea() {
     return pauseMenuArea;
+  }
+
+  public static InventoryDisplayManager getInventoryDisplayManager() {
+    return inventoryDisplayManager;
   }
 
   public static void registerCraftArea(GameAreaDisplay area){

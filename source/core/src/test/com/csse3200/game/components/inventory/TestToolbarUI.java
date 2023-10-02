@@ -6,6 +6,7 @@ import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 
+import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -47,6 +48,7 @@ public class TestToolbarUI {
         ServiceLocator.registerRenderService(renderService);
 
         ServiceLocator.registerInputService(new InputService());
+        ServiceLocator.registerInventoryDisplayManager(new InventoryDisplayManager(stage));
         inventory = new InventoryComponent(new ArrayList<>());
         toolbarDisplay = spy(new ToolbarDisplay());
 

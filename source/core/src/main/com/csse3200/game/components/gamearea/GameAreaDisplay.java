@@ -1,6 +1,7 @@
 package com.csse3200.game.components.gamearea;
 
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.components.inventory.InventoryDisplayManager;
 import com.csse3200.game.components.maingame.MainGameActions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,9 +34,7 @@ public class GameAreaDisplay extends UIComponent {
   private GdxGame game;
   private boolean isPaused = false;
   private Image backgroundOverlay;
-
-
-
+  private InventoryDisplayManager inventoryDisplayManager;
 
   @Override
   public void create() {
@@ -47,6 +46,8 @@ public class GameAreaDisplay extends UIComponent {
     backgroundOverlay.setColor(0, 0, 0, 0.8f);
     backgroundOverlay.setVisible(false);
     stage.addActor(backgroundOverlay);
+    inventoryDisplayManager = new InventoryDisplayManager(stage);
+    ServiceLocator.registerInventoryDisplayManager(inventoryDisplayManager);
 
   }
   public GameAreaDisplay(String gameAreaName) {
@@ -147,6 +148,14 @@ public class GameAreaDisplay extends UIComponent {
     pausingGroup.addActor(resumeBtn);
 
     stage.draw();
+  }
+
+  /**
+   * Gets the current Display Manager
+   * @return the current Display Manager
+   */
+  public InventoryDisplayManager getInventoryManager() {
+    return inventoryDisplayManager;
   }
 
 

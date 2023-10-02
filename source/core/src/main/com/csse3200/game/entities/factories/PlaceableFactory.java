@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.areas.terrain.TerrainTile;
+import com.csse3200.game.components.inventory.InventoryDisplay;
 import com.csse3200.game.components.placeables.*;
 import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.player.InventoryComponent;
@@ -109,7 +110,8 @@ public class PlaceableFactory {
         // Add components here
         chest.addComponent(new InventoryComponent())
             .addComponent(new DynamicTextureRenderComponent("images/Temp-Chest.png"))
-            .addComponent(new ChestComponent());
+            .addComponent(new ChestComponent())
+            .addComponent(new InventoryDisplay("refreshChest", "openChest", 30, 10, false));
         return chest;
     }
 
