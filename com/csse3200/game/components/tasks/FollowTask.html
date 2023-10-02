@@ -119,12 +119,21 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.csse3200.game.entities.Entity,int,float,float,float)" class="member-name-link">FollowTask</a><wbr>(<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;target,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.csse3200.game.entities.Entity,int,float,float,float,com.badlogic.gdx.math.Vector2)" class="member-name-link">FollowTask</a><wbr>(<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;target,
  int&nbsp;priority,
  float&nbsp;viewDistance,
  float&nbsp;maxFollowDistance,
- float&nbsp;stoppingDistance)</code></div>
+ float&nbsp;stoppingDistance,
+ com.badlogic.gdx.math.Vector2&nbsp;speed)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(com.csse3200.game.entities.Entity,int,float,float,float,com.badlogic.gdx.math.Vector2,boolean)" class="member-name-link">FollowTask</a><wbr>(<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;target,
+ int&nbsp;priority,
+ float&nbsp;viewDistance,
+ float&nbsp;maxFollowDistance,
+ float&nbsp;stoppingDistance,
+ com.badlogic.gdx.math.Vector2&nbsp;speed,
+ boolean&nbsp;checkVisibility)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -187,20 +196,44 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(com.csse3200.game.entities.Entity,int,float,float,float)">
+<section class="detail" id="&lt;init&gt;(com.csse3200.game.entities.Entity,int,float,float,float,com.badlogic.gdx.math.Vector2)">
 <h3>FollowTask</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">FollowTask</span><wbr><span class="parameters">(<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;target,
  int&nbsp;priority,
  float&nbsp;viewDistance,
  float&nbsp;maxFollowDistance,
- float&nbsp;stoppingDistance)</span></div>
+ float&nbsp;stoppingDistance,
+ com.badlogic.gdx.math.Vector2&nbsp;speed)</span></div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>target</code> - The entity to follow.</dd>
 <dd><code>priority</code> - Task priority when following (0 when not following).</dd>
 <dd><code>viewDistance</code> - Maximum distance from the entity at which following can start.</dd>
 <dd><code>maxFollowDistance</code> - Maximum distance from the entity while following before giving up.</dd>
-<dd><code>stoppingDistance</code> - The distance at which the entity stops following target</dd>
+<dd><code>stoppingDistance</code> - The distance at which the entity stops following target.</dd>
+<dd><code>speed</code> - The speed at which the entity follows the player.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(com.csse3200.game.entities.Entity,int,float,float,float,com.badlogic.gdx.math.Vector2,boolean)">
+<h3>FollowTask</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">FollowTask</span><wbr><span class="parameters">(<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;target,
+ int&nbsp;priority,
+ float&nbsp;viewDistance,
+ float&nbsp;maxFollowDistance,
+ float&nbsp;stoppingDistance,
+ com.badlogic.gdx.math.Vector2&nbsp;speed,
+ boolean&nbsp;checkVisibility)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>target</code> - The entity to follow.</dd>
+<dd><code>priority</code> - Task priority when following (0 when not following).</dd>
+<dd><code>viewDistance</code> - Maximum distance from the entity at which following can start.</dd>
+<dd><code>maxFollowDistance</code> - Maximum distance from the entity while following before giving up.</dd>
+<dd><code>stoppingDistance</code> - The distance at which the entity stops following target.</dd>
+<dd><code>speed</code> - The speed at which the entity follows the player.</dd>
+<dd><code>checkVisibility</code> - Checks to see if the entity will consider obstacles in its path.</dd>
 </dl>
 </section>
 </li>

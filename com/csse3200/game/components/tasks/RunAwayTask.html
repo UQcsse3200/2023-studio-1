@@ -121,6 +121,13 @@ loadScripts(document, 'script');</script>
  float&nbsp;maxRunDistance,
  com.badlogic.gdx.math.Vector2&nbsp;runSpeed)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(com.csse3200.game.entities.Entity,int,float,float,com.badlogic.gdx.math.Vector2,boolean)" class="member-name-link">RunAwayTask</a><wbr>(<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;target,
+ int&nbsp;priority,
+ float&nbsp;viewDistance,
+ float&nbsp;maxRunDistance,
+ com.badlogic.gdx.math.Vector2&nbsp;runSpeed,
+ boolean&nbsp;checkVisibility)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -139,21 +146,27 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getActivePriority()" class="member-name-link">getActivePriority</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Determines the priority when the RunAwayTask is active based on the distance to the target
+ and the visibility of the target entity and whether the animal is tamed.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getInactivePriority()" class="member-name-link">getInactivePriority</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Determines the priority when the chase task is inactive based on the distance to the target
  and the visibility of the target entity.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#start()" class="member-name-link">start</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#start()" class="member-name-link">start</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Starts the chase task by initializing the movement task and triggering the run events.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stop()" class="member-name-link">stop</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stop()" class="member-name-link">stop</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Stops the RunAwayTask and the associated movement task, and triggers the "runAwayStop" event.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Updates the RunAwayTask by updating the movement task and restarting it if necessary.</div>
 </div>
 </div>
@@ -161,7 +174,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.csse3200.game.components.tasks.ChaseTask">Methods inherited from class&nbsp;com.csse3200.game.components.tasks.<a href="ChaseTask.html" title="class in com.csse3200.game.components.tasks">ChaseTask</a></h3>
-<code><a href="ChaseTask.html#getDistanceToTarget()">getDistanceToTarget</a>, <a href="ChaseTask.html#getInactivePriority()">getInactivePriority</a>, <a href="ChaseTask.html#getMovementTask()">getMovementTask</a>, <a href="ChaseTask.html#getPriority()">getPriority</a>, <a href="ChaseTask.html#getRawPriority()">getRawPriority</a>, <a href="ChaseTask.html#getTarget()">getTarget</a>, <a href="ChaseTask.html#getViewDistance()">getViewDistance</a>, <a href="ChaseTask.html#isTargetVisible()">isTargetVisible</a>, <a href="ChaseTask.html#setMovementTask(com.csse3200.game.components.tasks.MovementTask)">setMovementTask</a></code></div>
+<code><a href="ChaseTask.html#getDistanceToTarget()">getDistanceToTarget</a>, <a href="ChaseTask.html#getMovementTask()">getMovementTask</a>, <a href="ChaseTask.html#getPriority()">getPriority</a>, <a href="ChaseTask.html#getRawPriority()">getRawPriority</a>, <a href="ChaseTask.html#getTarget()">getTarget</a>, <a href="ChaseTask.html#getViewDistance()">getViewDistance</a>, <a href="ChaseTask.html#isTargetVisible()">isTargetVisible</a>, <a href="ChaseTask.html#setMovementTask(com.csse3200.game.components.tasks.MovementTask)">setMovementTask</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.csse3200.game.ai.tasks.DefaultTask">Methods inherited from class&nbsp;com.csse3200.game.ai.tasks.<a href="../../ai/tasks/DefaultTask.html" title="class in com.csse3200.game.ai.tasks">DefaultTask</a></h3>
 <code><a href="../../ai/tasks/DefaultTask.html#create(com.csse3200.game.ai.tasks.TaskRunner)">create</a>, <a href="../../ai/tasks/DefaultTask.html#getStatus()">getStatus</a></code></div>
@@ -196,6 +209,25 @@ loadScripts(document, 'script');</script>
 <dd><code>priority</code> - Task priority when running (0 when not running away).</dd>
 <dd><code>viewDistance</code> - Maximum distance from the entity at which running away can start.</dd>
 <dd><code>maxRunDistance</code> - Maximum distance from the entity before stopping.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(com.csse3200.game.entities.Entity,int,float,float,com.badlogic.gdx.math.Vector2,boolean)">
+<h3>RunAwayTask</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">RunAwayTask</span><wbr><span class="parameters">(<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;target,
+ int&nbsp;priority,
+ float&nbsp;viewDistance,
+ float&nbsp;maxRunDistance,
+ com.badlogic.gdx.math.Vector2&nbsp;runSpeed,
+ boolean&nbsp;checkVisibility)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>target</code> - The entity to run from.</dd>
+<dd><code>priority</code> - Task priority when running (0 when not running away).</dd>
+<dd><code>viewDistance</code> - Maximum distance from the entity at which running away can start.</dd>
+<dd><code>maxRunDistance</code> - Maximum distance from the entity before stopping.</dd>
+<dd><code>checkVisibility</code> - Whether to consider visability when running away.</dd>
 </dl>
 </section>
 </li>
@@ -251,12 +283,27 @@ loadScripts(document, 'script');</script>
 <h3>getActivePriority</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getActivePriority</span>()</div>
 <div class="block">Determines the priority when the RunAwayTask is active based on the distance to the target
- and the visibility of the target entity.</div>
+ and the visibility of the target entity and whether the animal is tamed.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="ChaseTask.html#getActivePriority()">getActivePriority</a></code>&nbsp;in class&nbsp;<code><a href="ChaseTask.html" title="class in com.csse3200.game.components.tasks">ChaseTask</a></code></dd>
 <dt>Returns:</dt>
 <dd>The active priority level or -1 if conditions are not met.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getInactivePriority()">
+<h3>getInactivePriority</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getInactivePriority</span>()</div>
+<div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="ChaseTask.html#getInactivePriority()">ChaseTask</a></code></span></div>
+<div class="block">Determines the priority when the chase task is inactive based on the distance to the target
+ and the visibility of the target entity.</div>
+<dl class="notes">
+<dt>Overrides:</dt>
+<dd><code><a href="ChaseTask.html#getInactivePriority()">getInactivePriority</a></code>&nbsp;in class&nbsp;<code><a href="ChaseTask.html" title="class in com.csse3200.game.components.tasks">ChaseTask</a></code></dd>
+<dt>Returns:</dt>
+<dd>The inactive priority level or -1 if conditions are not met.</dd>
 </dl>
 </section>
 </li>

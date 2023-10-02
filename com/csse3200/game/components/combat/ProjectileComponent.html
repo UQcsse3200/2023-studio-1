@@ -134,6 +134,12 @@ loadScripts(document, 'script');</script>
 <div class="block">Gets the velocity vector of the projectile.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setConstantVelocity(boolean)" class="member-name-link">setConstantVelocity</a><wbr>(boolean&nbsp;constantVelocity)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDestroyOnImpact(boolean)" class="member-name-link">setDestroyOnImpact</a><wbr>(boolean&nbsp;destroyOnImpact)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setSpeed(com.badlogic.gdx.math.Vector2)" class="member-name-link">setSpeed</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;speed)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the speed of the projectile.</div>
@@ -144,8 +150,13 @@ loadScripts(document, 'script');</script>
 <div class="block">Sets the target direction for the projectile and applies velocity to its physics body.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setVelocity(com.badlogic.gdx.math.Vector2)" class="member-name-link">setVelocity</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;velocity)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Set velocity without triggering movement, used for setting knockback velocity</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Updates the projectile's behavior, destroying it once its impact animation is finished.</div>
 </div>
 </div>
@@ -211,6 +222,12 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="setConstantVelocity(boolean)">
+<h3>setConstantVelocity</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setConstantVelocity</span><wbr><span class="parameters">(boolean&nbsp;constantVelocity)</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="setSpeed(com.badlogic.gdx.math.Vector2)">
 <h3>setSpeed</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setSpeed</span><wbr><span class="parameters">(com.badlogic.gdx.math.Vector2&nbsp;speed)</span></div>
@@ -233,6 +250,12 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="setDestroyOnImpact(boolean)">
+<h3>setDestroyOnImpact</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setDestroyOnImpact</span><wbr><span class="parameters">(boolean&nbsp;destroyOnImpact)</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="getVelocity()">
 <h3>getVelocity</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.math.Vector2</span>&nbsp;<span class="element-name">getVelocity</span>()</div>
@@ -240,6 +263,17 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>The velocity vector of the projectile.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setVelocity(com.badlogic.gdx.math.Vector2)">
+<h3>setVelocity</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setVelocity</span><wbr><span class="parameters">(com.badlogic.gdx.math.Vector2&nbsp;velocity)</span></div>
+<div class="block">Set velocity without triggering movement, used for setting knockback velocity</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>velocity</code> - velocity to set</dd>
 </dl>
 </section>
 </li>
