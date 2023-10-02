@@ -404,8 +404,6 @@ public class Entity implements Json.Serializable {
      */
     public void writeItem(Json json) {
         json.writeValue("name", this.getComponent(ItemComponent.class).getItemName());
-        // update the tractor 'muted' variable based on the info in the json file on
-        // ItemType or something?
         if (this.getComponent(WateringCanLevelComponent.class) != null) {
             this.getComponent(WateringCanLevelComponent.class).write(json);
         }
@@ -476,22 +474,31 @@ public class Entity implements Json.Serializable {
                     break;
                 case Player:
                     // Does not make a new player, instead just updates the current one
-                    InventoryComponent inventoryComponent = new InventoryComponent(null);
+                    InventoryComponent inventoryComponent = new InventoryComponent();
                     JsonValue inv = jsonMap.get("components");
                     inventoryComponent.read(json, inv);
                     this.addComponent(inventoryComponent);
                     break;
                 default:
-                    if (FactoryService.getNpcFactories().containsKey(type)
-                            && ServiceLocator.getGameArea().getLoadableTypes().contains(type)) {
+                    if (FactoryService.getNpcFactories().containsKey(type) && ServiceLocator.getGameArea().getLoadableTypes().contains(type)) {
                         // Makes a new NPC
-                        Entity npc = FactoryService.getNpcFactories().get(type)
-                                .apply(ServiceLocator.getGameArea().getPlayer());
+                        Entity npc = FactoryService.getNpcFactories().get(type).apply(ServiceLocator.getGameArea().getPlayer());
                         if (npc.getComponent(TamableComponent.class) != null) {
                             npc.getComponent(TamableComponent.class).read(json, jsonMap.get("components"));
+                        } else if (npc.getType() == EntityType.ShipDebris) {
+                            ServiceLocator.getGameArea().getMap().getTile(position).setOccupant(npc);
                         }
                         ServiceLocator.getGameArea().spawnEntity(npc);
                         npc.setPosition(position);
+                    } else if (FactoryService.getPlaceableFactories().containsKey(type.toString()) && ServiceLocator.getGameArea().getLoadableTypes().contains(type)) {
+                        // Makes a new Placeable
+                        Entity placeable = FactoryService.getPlaceableFactories().get(type.toString()).get();
+                        placeable.setPosition(position);
+                        if (placeable.getType() == EntityType.Chest) {
+                            placeable.getComponent(InventoryComponent.class).read(json, jsonMap.get("components"));
+                        }
+                        ServiceLocator.getGameArea().getMap().getTile(position).setOccupant(placeable);
+                        ServiceLocator.getGameArea().spawnEntity(placeable);
                     }
                     break;
             }

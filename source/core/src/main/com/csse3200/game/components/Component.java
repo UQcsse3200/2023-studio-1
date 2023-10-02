@@ -108,5 +108,4 @@ public class Component implements Json.Serializable {
 
   public void read(Json json, JsonValue jsonMap) {
   }
-
 }
