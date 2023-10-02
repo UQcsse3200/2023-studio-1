@@ -17,6 +17,9 @@ import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.sound.BackgroundMusicType;
+import com.csse3200.game.services.sound.BackgroundSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
 
@@ -24,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.stream.IntStream;
 
 /** SpaceGameArea is the area used for the initial game version */
@@ -186,8 +190,8 @@ public class SpaceGameArea extends GameArea {
       "images/fireflies.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg", "sounds/car-horn-6408.mp3"};
-  private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
-  private static final String[] forestMusic = {backgroundMusic};
+  //private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
+  //private static final String[] forestMusic = {backgroundMusic};
 
   private final TerrainFactory terrainFactory;
   private final GameMap gameMap;
@@ -247,7 +251,7 @@ public class SpaceGameArea extends GameArea {
 //    spawnTool(ItemType.SEED);
 //    spawnTool(ItemType.FOOD);
 
-    //playMusic();
+    playMusic();
   }
 
   public Entity getPlayer() {
@@ -465,10 +469,14 @@ public class SpaceGameArea extends GameArea {
 
 
   private void playMusic() {
+    /*
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
     music.setLooping(true);
     music.setVolume(0.3f);
     music.play();
+    */
+    logger.debug("Loading and starting playback of background music.");
+    ServiceLocator.getBackgroundMusicService().play(BackgroundMusicType.NORMAL);
   }
 
   private void loadAssets() {
@@ -476,8 +484,15 @@ public class SpaceGameArea extends GameArea {
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(forestTextures);
     resourceService.loadTextureAtlases(forestTextureAtlases);
-    resourceService.loadSounds(forestSounds);
-    resourceService.loadMusic(forestMusic);
+    try {
+      ServiceLocator.getBackgroundMusicService()
+              .loadSounds(Arrays.asList(BackgroundSoundFile.values()));
+    } catch (InvalidSoundFileException e) {
+      throw new RuntimeException(e);
+    }
+    //resourceService.loadSounds(forestSounds);
+    //resourceService.loadMusic(forestMusic);
+    
 
     while (!resourceService.loadForMillis(10)) {
       // This could be upgraded to a loading screen
@@ -491,13 +506,13 @@ public class SpaceGameArea extends GameArea {
     resourceService.unloadAssets(forestTextures);
     resourceService.unloadAssets(forestTextureAtlases);
     resourceService.unloadAssets(forestSounds);
-    resourceService.unloadAssets(forestMusic);
+    //resourceService.unloadAssets(forestMusic);
+    ServiceLocator.getBackgroundMusicService().dispose();
   }
 
   @Override
   public void dispose() {
     super.dispose();
-    ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
     this.unloadAssets();
   }
 

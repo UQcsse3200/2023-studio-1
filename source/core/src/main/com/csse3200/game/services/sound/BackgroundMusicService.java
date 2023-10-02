@@ -2,7 +2,6 @@ package com.csse3200.game.services.sound;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.files.FileHandle;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,14 +36,14 @@ public class BackgroundMusicService implements MusicService {
     /** A flag to determine whether background music is paused. */
     private boolean pauseStatus;
     
-    /** Flag to determine whether/when the next song is to be played. */
-    private boolean keepPlaying;
-    
     /** The most recently played/playing SoundFile key. */
     private BackgroundSoundFile currentlyActive;
     
     /** The currently active Music instance. */
     private Music currentMusic;
+    
+    /** The current type of background music playing. */
+    private BackgroundMusicType currentType;
     
     public BackgroundMusicService() {
         logger.debug("Initialising BackgroundMusicService");
@@ -59,7 +58,6 @@ public class BackgroundMusicService implements MusicService {
         numLoaded = 0;
         this.muteStatus = false;
         this.pauseStatus = false;
-        this.keepPlaying = true;
         this.currentlyActive = null;
         this.currentMusic = null;
     }
@@ -74,31 +72,23 @@ public class BackgroundMusicService implements MusicService {
     public void play(BackgroundMusicType type) throws IllegalStateException {
         logger.debug("Attempting to play background music of a given type.");
         this.stopCurrentlyPlaying();
-        this.keepPlaying = true;
+        currentType = type;
         Random rand = new Random();
         if (categorisedMusic.get(type).isEmpty()) {
             throw new IllegalStateException("No tracks loaded of type " + type);
         } else {
-            while (keepPlaying) { // While not stopped.
-                // If the current music instance in not set, or, is not playing and also
-                // is not paused.
-                if (currentMusic == null || (!currentMusic.isPlaying() && !pauseStatus)) {
-                    // Select a random loaded song of the given type.
-                    logger.debug("Selecting random background track of the given type {}.",
-                            type);
-                    currentMusic = categorisedMusic.get(type)
-                            .get(rand.nextInt(categorisedMusic.get(type).size()));
-                    // Set the completion listener to clean up after end of playback.
-                    setupCompletionListener(currentMusic);
-                    if (this.isMuted()) { // Apply mute status
-                        logger.debug("Muting current background music instance.");
-                        currentMusic.setVolume(0.0f);
-                    } else {
-                        logger.debug("Setting volume scaling to 1.0 for background music.");
-                        currentMusic.setVolume(1.0f);
-                    }
-                    currentMusic.play(); // Play the music.
-                }
+            // If the current music instance in not set, or, is not playing and also
+            // is not paused.
+            if (currentMusic == null || (!currentMusic.isPlaying() && !pauseStatus)) {
+                // Select a random loaded song of the given type.
+                logger.debug("Selecting random background track of the given type {}.",
+                        type);
+                currentMusic = categorisedMusic.get(type)
+                        .get(rand.nextInt(categorisedMusic.get(type).size()));
+                // Set the completion listener to clean up after end of playback.
+                setupCompletionListener(currentMusic);
+                adjustVolume();
+                currentMusic.play(); // Play the music.
             }
         }
     }
@@ -203,7 +193,6 @@ public class BackgroundMusicService implements MusicService {
     private void stopCurrentlyPlaying() {
         if (currentlyActive != null) {
             loadedMusic.get(currentlyActive).stop();
-            keepPlaying = false;
             currentMusic = null;
         }
     }
@@ -216,6 +205,17 @@ public class BackgroundMusicService implements MusicService {
     @Override
     public void setMuted(boolean muted) {
         this.muteStatus = muted;
+        adjustVolume();
+    }
+    
+    public void adjustVolume() {
+        if (this.isMuted()) { // Apply mute status
+            logger.debug("Muting current background music instance.");
+            currentMusic.setVolume(0.0f);
+        } else {
+            logger.debug("Setting volume scaling to 1.0 for background music.");
+            currentMusic.setVolume(0.1f);
+        }
     }
     
     /**
@@ -263,9 +263,9 @@ public class BackgroundMusicService implements MusicService {
             if (sound instanceof BackgroundSoundFile) {
                 logger.debug("Loading a background track.");
                 tracks.add((BackgroundSoundFile) sound);
-                //Music music = Gdx.audio.newMusic(new FileHandle(sound.getFilePath()));
-                Music music = ServiceLocator.getResourceService()
-                        .getAsset(sound.getFilePath(), Music.class);
+                Music music = Gdx.audio.newMusic(Gdx.files.internal(sound.getFilePath()));
+                //Music music = ServiceLocator.getResourceService()
+                //        .getAsset(sound.getFilePath(), Music.class);
                 loadedMusic.put((BackgroundSoundFile) sound, music);
                 logger.debug("Categorising Music instance by BackgroundMusicType.");
                 categorisedMusic.get(((BackgroundSoundFile) sound).getType()).add(music);
@@ -285,7 +285,7 @@ public class BackgroundMusicService implements MusicService {
         music.setOnCompletionListener(new Music.OnCompletionListener() {
             @Override
             public void onCompletion(Music music) {
-                music.stop();
+                play(currentType);
             }
         });
     }
@@ -298,9 +298,11 @@ public class BackgroundMusicService implements MusicService {
     @Override
     public void dispose() {
         logger.debug("Disposing loaded Music instances");
+        stopCurrentlyPlaying();
         this.currentMusic = null;
         this.currentlyActive = null;
         for (BackgroundSoundFile track : tracks) {
+            loadedMusic.get(track).stop();
             loadedMusic.get(track).dispose();
         }
         this.tracks = new ArrayList<>();

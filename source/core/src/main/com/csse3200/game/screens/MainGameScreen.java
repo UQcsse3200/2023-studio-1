@@ -153,14 +153,6 @@ public class MainGameScreen extends ScreenAdapter {
         if (game.isLoadOnStart()){
             ServiceLocator.getSaveLoadService().load();
         }
-    
-        try {
-            ServiceLocator.getBackgroundMusicService()
-                    .loadSounds(Arrays.asList(BackgroundSoundFile.values()));
-            ServiceLocator.getBackgroundMusicService().play(BackgroundMusicType.NORMAL);
-        } catch (InvalidSoundFileException e) {
-            //do nothing?
-        }
     }
 
 
@@ -221,7 +213,6 @@ public class MainGameScreen extends ScreenAdapter {
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(mainGameTextures);
         ServiceLocator.getResourceService().loadAll();
-        logger.debug("Loading and starting playback of background music.");
     }
 
     private void unloadAssets() {
