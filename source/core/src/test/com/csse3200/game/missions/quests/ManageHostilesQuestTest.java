@@ -316,42 +316,54 @@ class ManageHostilesQuestTest {
     public void testReadProgress() {
         int progressInt = 3;
         JsonValue progress = new JsonValue(progressInt);
-        String desc = "Gather scattered parts of your ship.\n" +
-                "Use your shovel to clear %d Ship Debris in the world!\n" +
-                "%d out of %d debris pieces cleared.";
-        String shortDesc = "%d out of %d debris pieces cleared";
+        String desc1 = "Manage the presence of hostile creatures on your farm.\n" +
+                "Deal with hostile creatures by defeating them with weapons, or let your Space Snappers eat them.\n" +
+                "Deal with %d creatures of type Oxygen Eater.\n" +
+                "%d out of %d hostiles dealt with.";
+        String desc2 = "Manage the presence of hostile creatures on your farm.\n" +
+                "Deal with hostile creatures by defeating them with weapons, or let your Space Snappers eat them.\n" +
+                "Deal with %d creatures of type Cow, Oxygen Eater.\n" +
+                "%d out of %d hostiles dealt with.";
+        String desc3 = "Manage the presence of hostile creatures on your farm.\n" +
+                "Deal with hostile creatures by defeating them with weapons, or let your Space Snappers eat them.\n" +
+                "Deal with %d creatures of type Cow, Astrolotl, Oxygen Eater.\n" +
+                "%d out of %d hostiles dealt with.";
+        String shortDesc = "%d out of %d hostiles dealt with";
         MHQuest1.readProgress(progress);
         MHQuest2.readProgress(progress);
         MHQuest3.readProgress(progress);
         MHQuest4.readProgress(progress);
         MHQuest5.readProgress(progress);
         MHQuest6.readProgress(progress);
-        String formatted1 = String.format(desc, 10, progressInt, 10);
-        String formatted2 = String.format(desc, 10, progressInt, 10);
-        String formatted3 = String.format(desc, 10, progressInt, 10);
-        String formatted4 = String.format(desc, 3, progressInt, 3);
-        String formatted5 = String.format(desc, 50, progressInt, 50);
-        String formatted6 = String.format(desc, 0, progressInt, 0);
-        String formatted7 = String.format(desc, 0, progressInt, 0);
+        MHQuest7.readProgress(progress);
+        String formatted1 = String.format(desc1, 10, progressInt, 10);
+        String formatted2 = String.format(desc2, 0, progressInt, 0);
+        String formatted3 = String.format(desc2, 10, progressInt, 10);
+        String formatted4 = String.format(desc3, 10, progressInt, 10);
+        String formatted5 = String.format(desc3, 0, progressInt, 0);
+        String formatted6 = String.format(desc3, 10, progressInt, 10);
+        String formatted7 = String.format(desc3, 3, progressInt, 3);
         String shortFormatted1 = String.format(shortDesc, progressInt, 10);
-        String shortFormatted2 = String.format(shortDesc, progressInt, 10);
+        String shortFormatted2 = String.format(shortDesc, progressInt, 0);
         String shortFormatted3 = String.format(shortDesc, progressInt, 10);
-        String shortFormatted4 = String.format(shortDesc, progressInt, 3);
-        String shortFormatted5 = String.format(shortDesc, progressInt, 50);
-        String shortFormatted6 = String.format(shortDesc, progressInt, 0);
-        String shortFormatted7 = String.format(shortDesc, progressInt, 0);
+        String shortFormatted4 = String.format(shortDesc, progressInt, 10);
+        String shortFormatted5 = String.format(shortDesc, progressInt, 0);
+        String shortFormatted6 = String.format(shortDesc, progressInt, 10);
+        String shortFormatted7 = String.format(shortDesc, progressInt, 3);
         assertEquals(formatted1, MHQuest1.getDescription());
         assertEquals(formatted2, MHQuest2.getDescription());
         assertEquals(formatted3, MHQuest3.getDescription());
         assertEquals(formatted4, MHQuest4.getDescription());
         assertEquals(formatted5, MHQuest5.getDescription());
         assertEquals(formatted6, MHQuest6.getDescription());
+        assertEquals(formatted7, MHQuest7.getDescription());
         assertEquals(shortFormatted1, MHQuest1.getShortDescription());
         assertEquals(shortFormatted2, MHQuest2.getShortDescription());
         assertEquals(shortFormatted3, MHQuest3.getShortDescription());
         assertEquals(shortFormatted4, MHQuest4.getShortDescription());
         assertEquals(shortFormatted5, MHQuest5.getShortDescription());
         assertEquals(shortFormatted6, MHQuest6.getShortDescription());
+        assertEquals(shortFormatted7, MHQuest7.getShortDescription());
     }
 
     @Test
