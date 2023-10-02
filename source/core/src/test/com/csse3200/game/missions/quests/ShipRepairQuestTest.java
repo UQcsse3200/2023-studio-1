@@ -19,13 +19,14 @@ import static org.mockito.Mockito.mock;
 
 class ShipRepairQuestTest {
     private ShipRepairQuest SRQuest1, SRQuest2, SRQuest3, SRQuest4, SRQuest5;
-    private Reward r1;
+    private Reward r1 = mock(Reward.class);
 
     @BeforeEach
     public void init() {
         ServiceLocator.registerTimeSource(new GameTime());
         ServiceLocator.registerTimeService(new TimeService());
         ServiceLocator.registerMissionManager(new MissionManager());
+
 
         SRQuest1 = new ShipRepairQuest("Ship Repair Quest 1", r1, 10);
         SRQuest2 = new ShipRepairQuest("Ship Repair Quest 2", r1, -1);

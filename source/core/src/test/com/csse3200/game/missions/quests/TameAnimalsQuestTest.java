@@ -11,10 +11,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 class TameAnimalsQuestTest {
     private TameAnimalsQuest TAQuest1, TAQuest2, TAQuest3, TAQuest4, TAQuest5;
-    private Reward r1;
+    private Reward r1 = mock(Reward.class);
 
     @BeforeEach
     public void init() {
