@@ -110,6 +110,9 @@ public class ProjectileFactory {
                 PhysicsComponent.AlignX.CENTER,
                 PhysicsComponent.AlignY.CENTER);
 
+        projectile.getComponent(ProjectileComponent.class).setDestroyOnImpact(true);
+        projectile.getComponent(ProjectileComponent.class).setConstantVelocity(true);
+
         return projectile;
     }
 
