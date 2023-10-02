@@ -114,7 +114,7 @@ public class ItemActions extends Component {
     }
     // Make the Entity to place
     Entity placeable = FactoryService.getPlaceableFactories()
-        .get(entity.getComponent(ItemComponent.class).getItemName()).get();
+            .get(entity.getComponent(ItemComponent.class).getItemName()).get();
     /* It is crucial that we set the position of the placeable BEFORE we spawn it in,
     this is a side effect of connectedEntityComponent needing to query the position of the placeable entity. */
     placeable.setPosition(adjustedPos);
@@ -170,7 +170,6 @@ public class ItemActions extends Component {
   }
 
 
-
   /**
    * Waters the tile at the given position. Or fill the watering-can if the empty tile is a water tile
    *
@@ -181,19 +180,19 @@ public class ItemActions extends Component {
     WateringCanLevelComponent wateringCan = entity.getComponent(WateringCanLevelComponent.class);
     List<String> waterTiles = Arrays.asList("SHALLOWWATER", "FLOWINGWATER", "DEEPWATER");
     //if the tile is an unoccupied water tile then fill the watering can instead of emptying
-    if (!tile.isOccupied() && waterTiles.contains(tile.getTerrainCategory().toString())){
+    if (!tile.isOccupied() && waterTiles.contains(tile.getTerrainCategory().toString())) {
       wateringCan.fillToMax();
       return true;
     }
 
     //check if there even is any water in the can
-    if (wateringCan.isEmpty()){
+    if (wateringCan.isEmpty()) {
       return false;
     }
 
     boolean tileWaterable = isCropTile(tile.getOccupant());
     entity.getComponent(WateringCanLevelComponent.class).incrementLevel(-5);  //decrease the water level by 5 units
-    
+
     if (!tileWaterable) {
       return false;
     }
@@ -296,7 +295,8 @@ public class ItemActions extends Component {
 
   /**
    * Feeds held item to suitable entity.
-   * @param player player that will feed item
+   *
+   * @param player        player that will feed item
    * @param mouseWorldPos position to check for feedable entity
    * @return true if feed is successful
    */
@@ -323,7 +323,7 @@ public class ItemActions extends Component {
   /**
    * Repairs the ship if the player has a ship part item
    *
-   * @param player the player attempting to repair the ship
+   * @param player        the player attempting to repair the ship
    * @param mouseWorldPos position of player mouse to check for ship entity
    * @return
    */

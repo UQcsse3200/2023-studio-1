@@ -63,8 +63,11 @@ public class ShipProgressComponent extends Component {
             }
 
             // Only send progress update if repair actually happened
-            entity.getEvents().trigger("progressUpdated", this.progress, this.unlockedFeatures);
-            ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.SHIP_PART_ADDED.name());
+            //if (entity.getComponent(ItemComponent.class).getItemType() == ItemType.SHIP_PART) {
+                entity.getEvents().trigger("progressUpdated", this.progress, this.unlockedFeatures);
+                ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.SHIP_PART_ADDED.name());
+            //}
+
         }
     }
 
