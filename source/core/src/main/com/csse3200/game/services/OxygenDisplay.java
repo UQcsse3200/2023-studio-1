@@ -107,12 +107,6 @@ public class OxygenDisplay extends UIComponent{
         } else {
             oxygenFill.setScaleX(scaling);
         }
-
-        // Uncomment line below to test that oxygen percent decreases by 1% per hour (till endgame condition reached).
-        // ServiceLocator.getPlanetOxygenService().removeOxygen(10);
-
-        // Uncomment line below to check that oxygen increases by 10% per hour
-        // ServiceLocator.getPlanetOxygenService().addOxygen(100);
     }
 
     /**

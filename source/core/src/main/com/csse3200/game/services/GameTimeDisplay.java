@@ -39,6 +39,7 @@ public class GameTimeDisplay extends UIComponent {
 
         // Listen for the "hourUpdate" event to update the display
         ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateDisplay);
+
         // Initial update
         updateDisplay();
     }
@@ -93,22 +94,22 @@ public class GameTimeDisplay extends UIComponent {
         int time = ServiceLocator.getTimeService().getHour();
 
         if (!firstRun) {
-            // Creates a sequence of actions for the transition out of the current planet image
-            SequenceAction sequence = Actions.sequence();
+            // Create a sequence action for fading and changing the planet image
+            SequenceAction sequenceAction = Actions.sequence();
 
-            // Fade out the current planet image
-            sequence.addAction(Actions.fadeOut(0.5f));
+            // Fade out the current planet image (adjust the duration)
+            sequenceAction.addAction(Actions.fadeOut(0.5f));
 
             // Change the planet image to the new one
-            sequence.addAction(Actions.run(() -> {
+            sequenceAction.addAction(Actions.run(() -> {
                 planetImage.setDrawable(planetImages.get(time).getDrawable());
             }));
 
-            // Fade in the new planet image
-            sequence.addAction(Actions.fadeIn(0.5f));
+            // Fade in the new planet image (adjust the duration)
+            sequenceAction.addAction(Actions.fadeIn(0.5f));
 
-            // Add the sequence of actions to the planetImage actor
-            planetImage.addAction(sequence);
+            // Add the sequence action to the planetImage actor
+            planetImage.addAction(sequenceAction);
         }
 
         // Set the correct text for the time label & planet image, dependent on time.
