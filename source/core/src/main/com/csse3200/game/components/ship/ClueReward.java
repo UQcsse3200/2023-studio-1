@@ -1,5 +1,6 @@
 package com.csse3200.game.components.ship;
 
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.ShipPartTileComponent;
@@ -9,6 +10,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ShipDebrisFactory;
 import com.csse3200.game.missions.rewards.ItemReward;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.utils.math.RandomUtils;
 
 import java.util.List;
 
@@ -34,12 +36,24 @@ public class ClueReward extends ItemReward {
     }
 
     private void generateTileAndDebris(Vector2 location) {
+        GridPoint2 minPos = new GridPoint2((int) (location.x - 5), (int) (location.y - 5));
+        GridPoint2 maxPos = new GridPoint2((int) (location.x + 5), (int) (location.y + 5));
+
         GameMap gameMap = ServiceLocator.getGameArea().getMap();
 
-        TerrainTile tile = gameMap.getTile(location);
+        GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+        TerrainTile tile = gameMap.getTile(randomPos);
 
-        Entity partTile = ShipPartTileFactory.createShipPartTile(location);
+        while (!tile.isTraversable() || tile.isOccupied()) {
+            randomPos = RandomUtils.random(minPos, maxPos);
+            tile = gameMap.getTile(randomPos);
+        }
+
+	    Entity partTile = ShipPartTileFactory.createShipPartTile(
+			    gameMap.getTerrainComponent().tileToWorldPosition(randomPos)
+	    );
         ServiceLocator.getEntityService().register(partTile);
+
         tile.setOccupant(partTile);
         tile.setOccupied();
 
