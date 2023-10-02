@@ -263,7 +263,7 @@ public class ItemFactory {
   public static Entity createHammerFlower() {
     Entity itemDrop = createBaseItem()
             .addComponent(new TextureRenderComponent("images/plants/hammer_plant/item_drop.png"))
-            .addComponent(new ItemComponent("Nightshade Berry", ItemType.FOOD,
+            .addComponent(new ItemComponent("Hammer Flower", ItemType.FOOD,
                     "Unusually shaped flower that looks like the tool it is named after",
                     new Texture("images/plants/hammer_plant/item_drop.png")));
     return itemDrop;
