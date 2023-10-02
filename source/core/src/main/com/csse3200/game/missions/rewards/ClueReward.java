@@ -15,7 +15,7 @@ import com.csse3200.game.utils.math.RandomUtils;
 import java.util.List;
 
 /**
- * A reward that spawns a ShipPartTile & ShipDebris on collection.
+ * A reward that spawns a ShipPartTile and ShipDebris on collection.
  */
 public class ClueReward extends ItemReward {
 
@@ -28,7 +28,7 @@ public class ClueReward extends ItemReward {
 
 	/**
 	 * When called, changes the isCollected variable to true and adds the reward items to the player's inventory.
-	 * Also spawns a ShipPartTile & ShipDebris around the base location contained in the Map Item.
+	 * Also spawns a ShipPartTile and ShipDebris around the base location contained in the Map Item.
 	 */
 	@Override
 	public void collect() {
