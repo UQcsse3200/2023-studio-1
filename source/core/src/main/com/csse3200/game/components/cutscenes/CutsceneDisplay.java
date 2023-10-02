@@ -122,7 +122,7 @@ public class CutsceneDisplay extends UIComponent {
         float scaledHeight = scaledWidth * (sprite.getHeight() / sprite.getWidth());
         sprite.setWidth(scaledWidth);
         sprite.setHeight(scaledHeight);
-        dialogueTable.add(sprite);
+        dialogueTable.add(sprite).expandX().width(scaledWidth).expandY().height(scaledHeight);
         //stage.addActor(sprite);
     }
 
@@ -170,12 +170,12 @@ public class CutsceneDisplay extends UIComponent {
                 });
 
         dialogueTable.row();
-        dialogueTable.add(continueBtn);//.padTop(40f); // change 40f to whatever is needed
+        dialogueTable.add();
+        dialogueTable.add(continueBtn);
     }
 
     @Override
     public void dispose() {
-        //dialogueTable.setVisible(false);
         dialogueTable.clear();
         transparentRectangle.clear();
         npcSprite.clear();
