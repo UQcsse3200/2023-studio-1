@@ -3,19 +3,19 @@
     "health": 50,
     "tamingThreshold": 3,
     "tamingProbability": 0.75,
-    "favouriteFood": "Cosmic Cob drop"
+    "favouriteFood": "Ear of Cosmic Cob"
   },
   "chicken": {
     "health": 10,
     "tamingThreshold": 3,
     "tamingProbability": 0.5,
-    "favouriteFood": "Hammer Plant drop"
+    "favouriteFood": "Hammer Flower"
   },
   "astrolotl": {
     "health": 5,
     "tamingThreshold": 1,
     "tamingProbability": 0.5,
-    "favouriteFood": "Deadly Nightshade drop"
+    "favouriteFood": "Nightshade Berry"
   },
   "oxygenEater": {
     "health": 100

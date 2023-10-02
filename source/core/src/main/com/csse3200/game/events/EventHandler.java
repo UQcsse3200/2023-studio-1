@@ -1,16 +1,23 @@
 package com.csse3200.game.events;
 
-import com.badlogic.gdx.utils.Array;
-import com.csse3200.game.events.listeners.*;
-import com.csse3200.game.events.listeners.EventListener;
-import com.csse3200.game.services.GameTime;
-import com.csse3200.game.services.ServiceLocator;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
+import com.badlogic.gdx.utils.Array;
+import com.csse3200.game.events.listeners.EventListener;
+import com.csse3200.game.events.listeners.EventListener0;
+import com.csse3200.game.events.listeners.EventListener1;
+import com.csse3200.game.events.listeners.EventListener2;
+import com.csse3200.game.events.listeners.EventListener3;
+import com.csse3200.game.services.GameTime;
+import com.csse3200.game.services.ServiceLocator;
 
 /**
  * Send and receive events between objects. EventHandler provides an implementation of the Observer

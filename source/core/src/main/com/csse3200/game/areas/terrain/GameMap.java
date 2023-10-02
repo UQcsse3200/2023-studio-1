@@ -24,11 +24,46 @@ public class GameMap {
 
     /**
      * Creates a new GameMap instance, setting the terrainFactory and instantiating a new TiledMap instance.
-     * @param terrainFactory the terrainFactory instantiated in the SpaceGameArea.
+     * @param terrainFactory the terrainFactory passed to the SpaceGameArea from the MainGameScreen class.
      */
     public GameMap(TerrainFactory terrainFactory) {
         this.terrainFactory = terrainFactory;
         this.tiledMap = new TiledMap();
+    }
+
+    /**
+     * Creates the TerrainComponent instance used to render the SpaceGameArea map and stores it in the GameMap class.
+     * Additionally, updates the TiledMap instance so that getter and setter methods for accessing TerrainTile instances
+     * can function correctly.
+     */
+    public void createTerrainComponent() {
+        terrainComponent = terrainFactory.createSpaceGameTerrain(tiledMap);
+    }
+
+    /**
+     * Creates the TerrainComponent instance used to render a test game map. Additionally, updates the TiledMap instance
+     * so that the getter and setter methods for accessing TerrainTile instances can function correctly. This method is
+     * intended to allow for play testing of different game maps. Trying to generate a TerrainComponent through JUnit
+     * tests can be difficult, so an alternate loadTestTerrain() method has been provided to only set the TiledMap
+     * instance needed for interacting with terrain.
+     *
+     * @param testMapFilePath the file path of the test map file to load.
+     */
+    public void createTestTerrainComponent(String testMapFilePath) {
+        terrainComponent = terrainFactory.createTestTerrain(tiledMap, testMapFilePath);
+        //terrainFactory.createTestTerrain(tiledMap, testMapFilePath);
+    }
+
+    /**
+     * Instantiates the GameMap with a test file map to be used in JUnit testing. This updates the TiledMap instance so
+     * that the getter and setter methods for accessing TerrainTile instances can function correctly in JUnit tests that
+     * require them. This method does not create a TerrainComponent, which means it cannot be used to render an actual
+     * game map.
+     *
+     * @param testMapFilePath the file path of the test map file to load.
+     */
+    public void loadTestTerrain(String testMapFilePath) {
+        terrainFactory.loadTiledMap(tiledMap, testMapFilePath);
     }
 
     /**
@@ -50,13 +85,13 @@ public class GameMap {
     /**
      * Returns the TerrainComponent instance stored in the GameMap class.
      * @return the terrainComponent variable.
-     * @throws Exception when the TerrainComponent has not been set.
      */
-    public TerrainComponent getTerrainComponent() throws Exception {
+    public TerrainComponent getTerrainComponent(){
         if (this.terrainComponent != null) {
             return this.terrainComponent;
         } else {
-            throw new Exception("TerrainComponent has not been set in the GameMap class yet");
+            logger.info("getTerrainComponent called before terrainComponent was set");
+            return null;
         }
     }
 
@@ -78,7 +113,7 @@ public class GameMap {
 
     /**
      * Gets the TerrainTile at the specified GridPoint2 position. The x and y values in the GridPoint2 class directly
-     * correspond to the tile's position in the map layer.
+     * correspond to the tile's position in the map layer. (0, 0) is the bottom left of the map.
      *
      * @param gridPoint The GridPoint2 instance representing the target TerrainTile's position.
      * @return TerrainTile instance at the specified position IF the gridpoint is within the bounds of the map, null
@@ -96,13 +131,13 @@ public class GameMap {
 
     /**
      * Gets the TerrainTile at the specified Vector2 position. The x and y float values in the Vector2 class are
-     * transformed so that they correspond to the integer positions of the TerrainTile in the map layer.
+     * transformed so that they correspond to the integer positions of the TerrainTile in the map layer. (0, 0) is the
+     * bottom left of the map.
      *
      * If using the Vector2 position variable from the Entity class, it is important to remember that the vector points
      * to the bottom left of the entity , not the centre of the entity (This is important to know if the entity uses
      * animations since the entity size may be larger than the actual sprite). The Entity class provides the
      * getPosition() and getCentredPosition() methods to help retrieve an appropriate Vector2 instance to use.
-     *
      *
      * @param vector The Vector2 instance representing the target TerrainTile's position.
      * @return TerrainTile instance at the specified position IF the vector is within the bounds of the map, null
@@ -121,8 +156,8 @@ public class GameMap {
      */
     public Vector2 tileCoordinatesToVector(GridPoint2 gridPoint2) {
         float tileSize = this.terrainComponent.getTileSize();
-        float x = (float) (gridPoint2.x * tileSize);
-        float y = (float) (gridPoint2.y * tileSize);
+        float x = (gridPoint2.x * tileSize);
+        float y = (gridPoint2.y * tileSize);
         return new Vector2(x, y);
     }
 
@@ -145,7 +180,6 @@ public class GameMap {
      * reduce the complexity of other methods involved with coordinates and vectors.
      * @param x x coordinate (0 -> MAP_SIZE.x -1)
      * @param y y coordinate (0 -> MAP_SIZE.y -1)
-     * @throws ArrayIndexOutOfBoundsException exception if the coordinates are not in the bound of the map
      * @return the Cell at the specified position IF the coordinates are within the bounds of the map, null otherwise
      *         (an error message will be logged when coordinates outside the map are passed to the function).
      */

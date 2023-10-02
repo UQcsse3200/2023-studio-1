@@ -4,7 +4,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.components.ConeLightComponent;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
@@ -62,7 +61,7 @@ public class KeyboardTractorInputComponent extends InputComponent {
           honkSound.play();
           return true;
         case Input.Keys.T:
-          entity.getComponent(ConeLightComponent.class).toggleLight();
+          entity.getEvents().trigger("toggleConeLight");
           return true;
         case Input.Keys.NUM_1:
           actions.setMode(TractorMode.normal);

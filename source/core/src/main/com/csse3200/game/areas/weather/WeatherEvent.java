@@ -143,11 +143,23 @@ public abstract class WeatherEvent {
 		return severity;
 	}
 
+	/**
+	 * Starts the visual effect for the weather event
+	 */
+	public abstract void startEffect();
+
+	/**
+	 * Stops the visual effect for the weather event
+	 */
+	public abstract void stopEffect();
+
 	public void write(Json json) {
+		json.writeObjectStart("Event");
 		json.writeValue("name", getClass().getSimpleName());
-		json.writeValue("severity", getSeverity());
-		json.writeValue("duration", getDuration());
-		json.writeValue("hoursUntil", getNumHoursUntil());
-		json.writeValue("priority", getPriority());
+		json.writeValue("severity", severity);
+		json.writeValue("duration", duration);
+		json.writeValue("hoursUntil", numHoursUntil);
+		json.writeValue("priority", priority);
+		json.writeObjectEnd();
 	}
 }

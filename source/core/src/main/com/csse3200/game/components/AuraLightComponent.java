@@ -1,7 +1,6 @@
 package com.csse3200.game.components;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.utils.Json;
 import com.csse3200.game.services.ServiceLocator;
 
 import box2dLight.PointLight;
@@ -76,6 +75,7 @@ public class AuraLightComponent extends Component{
 		super.create();
 		light.setPosition(entity.getCenterPosition());
 		entity.getEvents().addListener("toggleLight", this::toggleLight);
+		entity.getEvents().addListener("toggleAuraLight", this::toggleLight);
 	}
 
 	/**

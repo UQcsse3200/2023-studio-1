@@ -1,11 +1,14 @@
 package com.csse3200.game.entities.factories;
 
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
-import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.TouchAttackComponent;
@@ -18,6 +21,18 @@ import com.csse3200.game.components.npc.AnimalAnimationController;
 import com.csse3200.game.components.npc.FireflyScareComponent;
 import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.components.tasks.*;
+import com.csse3200.game.components.InteractionDetector;
+import com.csse3200.game.components.TouchAttackComponent;
+import com.csse3200.game.components.npc.AnimalAnimationController;
+import com.csse3200.game.components.npc.FireflyScareComponent;
+import com.csse3200.game.components.npc.HostileAnimationController;
+import com.csse3200.game.components.npc.OxygenEaterAttackPattern;
+import com.csse3200.game.components.npc.TamableComponent;
+import com.csse3200.game.components.tasks.ChaseTask;
+import com.csse3200.game.components.tasks.FollowTask;
+import com.csse3200.game.components.tasks.RunAwayTask;
+import com.csse3200.game.components.tasks.TamedFollowTask;
+import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.configs.BaseAnimalConfig;
@@ -268,8 +283,8 @@ public class NPCFactory {
             16f
     );
     String animation = "default";
-    if (random.nextInt(999) == 0) {
-      animation = "default";
+    if (random.nextInt(10000) == 0) {
+      animation = "DancinInTheMoonlight";
     }
     animator.addAnimation(animation, 0.5f, Animation.PlayMode.LOOP);
     animator.startAnimation(animation);

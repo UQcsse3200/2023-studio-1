@@ -17,11 +17,13 @@ public class ItemSlot extends Stack {
     private Integer count;
     private final Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
 
-    private final Image background;
+    private Image background;
     private Image frame;
 
     private boolean selected;
     private Image itemImage;
+
+    private Label label;
 
     /**
      * Construct an itemSlot with a texture, count and selected state
@@ -72,15 +74,23 @@ public class ItemSlot extends Stack {
      */
     public void setCount(Integer count) {
         this.count = count;
+        createItemSlot();
     }
 
+    /**
+     * Get the item count
+     * @return count integer of number of item
+     */
+    public Integer getCount() {
+        return count;
+    }
 
     /**
      * Set the item texture
-     * @param itemTexture texture of item's image
+     * @return  itemTexture texture of item's image
      */
-    public void setTexture(Texture itemTexture) {
-        this.itemTexture = itemTexture;
+    public Texture getItemTexture() {
+        return this.itemTexture;
     }
 
     @Override
@@ -92,9 +102,6 @@ public class ItemSlot extends Stack {
      * Creates the itemSlot
      */
     private void createItemSlot() {
-        Label label = new Label(String.valueOf(this.count) + " ", this.skin);
-        label.setColor(Color.BLACK);
-        label.setAlignment(Align.bottomRight);
 
         //Add the selection background if necessary
         if (this.selected) {
@@ -110,12 +117,23 @@ public class ItemSlot extends Stack {
             this.add(itemImage);
         }
 
-        //Add the count label if the number is not 0
+        // Add or update the count label if the number is not 0
         if (this.count != null && this.count > 0) {
-            this.add(label);
+            if (label == null) {
+                label = new Label(this.count + " ", this.skin);
+                label.setColor(Color.BLACK);
+                label.setAlignment(Align.bottomRight);
+                this.add(label);
+            } else {
+                label.setText(this.count + " ");
+            }
         }
     }
 
+    /**
+     * Get the item image
+     * @return the item image
+     */
     public Image getItemImage() {
         return itemImage;
     }
@@ -126,5 +144,21 @@ public class ItemSlot extends Stack {
             this.add(image);
             this.itemImage = image;
         }
+    }
+
+    /**
+     * Make the slot selected
+     */
+    public void setSelected() {
+        selected = true;
+        this.addActorAt(0, this.background);
+    }
+
+    /**
+     * Make the slot unselected
+     */
+    public void setUnselected() {
+        selected = false;
+        this.removeActor(this.background);
     }
 }

@@ -11,6 +11,9 @@ import com.csse3200.game.areas.SpaceGameArea;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.components.*;
 import com.csse3200.game.components.combat.ProjectileComponent;
+import com.csse3200.game.components.CameraComponent;
+import com.csse3200.game.components.Component;
+import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
@@ -285,7 +288,7 @@ public class PlayerActions extends Component {
     }
     this.stopMoving();
     muted = true;
-    tractor.getComponent(AuraLightComponent.class).toggleLight();
+    tractor.getEvents().trigger("toggleAuraLight");
     tractor.getComponent(TractorActions.class).setMuted(false);
     tractor.getComponent(KeyboardTractorInputComponent.class)
         .setWalkDirection(entity.getComponent(KeyboardPlayerInputComponent.class).getWalkDirection());

@@ -1,6 +1,5 @@
 package com.csse3200.game.screens;
 
-import com.csse3200.game.entities.FireflySpawner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,10 +14,13 @@ import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.components.maingame.PauseMenuActions;
+import com.csse3200.game.components.plants.PlantInfoDisplayComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.tractor.TractorActions;
+import com.csse3200.game.entities.EntityIndicator;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.FireflySpawner;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.input.InputDecorator;
@@ -32,10 +34,13 @@ import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.GameTimeDisplay;
 import com.csse3200.game.services.LightService;
 import com.csse3200.game.services.OxygenDisplay;
+import com.csse3200.game.services.ParticleService;
 import com.csse3200.game.services.PlanetOxygenService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
+import com.csse3200.game.services.plants.PlantCommandService;
+import com.csse3200.game.services.plants.PlantInfoService;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
 
@@ -83,15 +88,16 @@ public class MainGameScreen extends ScreenAdapter {
 
     };
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
-
     private final GdxGame game;
     private Entity entity;
     private final Renderer renderer;
     private final PhysicsEngine physicsEngine;
-
-    private static Boolean lose;
-
-
+    public enum ScreenType {
+        MAIN_GAME,
+        WIN,
+        LOSE
+    }
+    private ScreenType currentScreenType = ScreenType.MAIN_GAME;
 
     public MainGameScreen(GdxGame game) {
         this.game = game;
@@ -110,6 +116,8 @@ public class MainGameScreen extends ScreenAdapter {
         ServiceLocator.registerRenderService(new RenderService());
         ServiceLocator.registerTimeService(new TimeService());
         ServiceLocator.registerPlanetOxygenService(new PlanetOxygenService());
+        ServiceLocator.registerPlantCommandService(new PlantCommandService());
+        ServiceLocator.registerPlantInfoService(new PlantInfoService());
 
         ServiceLocator.registerMissionManager(new MissionManager());
 
@@ -119,6 +127,7 @@ public class MainGameScreen extends ScreenAdapter {
         ServiceLocator.registerCameraComponent(renderer.getCamera());
 
         ServiceLocator.registerLightService(new LightService());
+        ServiceLocator.registerParticleService(new ParticleService());
 
         loadAssets();
 
@@ -136,8 +145,9 @@ public class MainGameScreen extends ScreenAdapter {
         spaceGameArea.getPlayer().getComponent(PlayerActions.class).setCameraVar(renderer.getCamera());
         spaceGameArea.getTractor().getComponent(TractorActions.class).setCameraVar(renderer.getCamera());
 
-        lose = false;
-        spaceGameArea.getPlayer().getEvents().addListener("loseScreen", this::loseScreenStart);
+        ServiceLocator.getMissionManager().getEvents().addListener("loseScreen", this::playLoseScreen);
+
+        ServiceLocator.getMissionManager().getEvents().addListener("winScreen", this::playWinScreen);
 
         new FireflySpawner();
 
@@ -147,25 +157,37 @@ public class MainGameScreen extends ScreenAdapter {
         }
     }
 
+    /**
+     * Switch to the losing screen in case of player loss
+     */
+    public void playLoseScreen() {
+        currentScreenType = ScreenType.LOSE;
+    }
 
-    public void loseScreenStart() {
-        lose = true;
+    /**
+     * Switch to winning screen in case of player win
+     */
+    public void playWinScreen() {
+        currentScreenType = ScreenType.WIN;
     }
 
     @Override
     public void render(float delta) {
-        if (!ServiceLocator.getTimeService().isPaused()) {
-            physicsEngine.update();
-            ServiceLocator.getEntityService().update();
-        }
-        ServiceLocator.getTimeService().update();
-        renderer.render();
-        if (lose) {
-            game.setScreen(GdxGame.ScreenType.LOSESCREEN);
-        }
-        if (PauseMenuActions.getQuitGameStatus()) {
-            entity.getEvents().trigger("exit");
-            PauseMenuActions.setQuitGameStatus();
+        switch (currentScreenType) {
+            case MAIN_GAME -> {
+                if (!ServiceLocator.getTimeService().isPaused()) {
+                    physicsEngine.update();
+                    ServiceLocator.getEntityService().update();
+                }
+                ServiceLocator.getTimeService().update();
+                renderer.render();
+                if (PauseMenuActions.getQuitGameStatus()) {
+                    entity.getEvents().trigger("exit");
+                    PauseMenuActions.setQuitGameStatus();
+                }
+            }
+            case LOSE -> game.setScreen(GdxGame.ScreenType.LOSESCREEN);
+            case WIN -> game.setScreen(GdxGame.ScreenType.WINSCREEN);
         }
     }
 
@@ -234,6 +256,7 @@ public class MainGameScreen extends ScreenAdapter {
                 .addComponent(new TerminalDisplay())
                 .addComponent(new GameTimeDisplay())
                 .addComponent(new OxygenDisplay())
+                .addComponent(new PlantInfoDisplayComponent())
                 .addComponent(new WeatherEventDisplay());
 
         ServiceLocator.getEntityService().register(ui);
