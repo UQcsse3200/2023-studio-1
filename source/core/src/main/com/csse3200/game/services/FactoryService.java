@@ -15,7 +15,7 @@ import com.csse3200.game.missions.quests.QuestFactory;
 public class FactoryService {
     private static final Map<EntityType, Function<Entity, Entity>> npcFactories = Map.of(EntityType.Chicken, NPCFactory::createChicken,
             EntityType.Cow, NPCFactory::createCow, EntityType.Astrolotl, NPCFactory::createAstrolotl,
-            EntityType.OxygenEater, NPCFactory::createOxygenEater, EntityType.ShipDebris, ShipDebrisFactory::createShipDebris,
+            EntityType.OxygenEater, NPCFactory::createOxygenEater,
             EntityType.FireFlies, NPCFactory::createFireFlies);
 
     private static final Map<String, Function<CropTileComponent, Entity>> plantFactories = Map.of(

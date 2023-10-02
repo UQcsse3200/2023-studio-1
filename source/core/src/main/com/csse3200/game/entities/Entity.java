@@ -6,9 +6,7 @@ import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 
-import com.csse3200.game.areas.terrain.CropTileComponent;
-import com.csse3200.game.areas.terrain.TerrainCropTileFactory;
-import com.csse3200.game.areas.terrain.TerrainTile;
+import com.csse3200.game.areas.terrain.*;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ComponentType;
 import com.csse3200.game.components.ConeLightComponent;
@@ -25,7 +23,9 @@ import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.components.player.PlayerAnimationController;
 import com.csse3200.game.components.ship.ShipLightComponent;
 import com.csse3200.game.components.ship.ShipProgressComponent;
+import com.csse3200.game.components.ship.ShipTimeSkipComponent;
 import com.csse3200.game.components.tractor.TractorActions;
+import com.csse3200.game.entities.factories.ShipDebrisFactory;
 import com.csse3200.game.entities.factories.ShipFactory;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.rendering.AnimationRenderComponent;
@@ -458,18 +458,51 @@ public class Entity implements Json.Serializable {
                     TerrainTile terrainTile = ServiceLocator.getGameArea().getMap().getTile(tile.getPosition());
                     terrainTile.setOccupant(tile);
                     break;
+                case ShipPartTile:
+                    Entity partTile = ShipPartTileFactory.createShipPartTile(position);
+                    ServiceLocator.getGameArea().spawnEntity(partTile);
+                    partTile.setPosition(position);
+
+                    TerrainTile partTerrainTile = ServiceLocator.getGameArea().getMap().getTile(position);
+                    if (partTerrainTile.isOccupied() && partTerrainTile.getOccupant().getType() == EntityType.ShipDebris) {
+                        // remove the ship debris that is occupying the terrain tile, since it will
+                        // be recreated by the ShipPartTileComponent
+                        Entity unneededShipDebris = partTerrainTile.getOccupant();
+                        unneededShipDebris.dispose();
+                        partTerrainTile.removeOccupant();
+
+                        partTile.getComponent(ShipPartTileComponent.class).read(json, jsonMap);
+
+                        partTerrainTile.setOccupant(partTile);
+                        partTerrainTile.setOccupied();
+                    }
+                    break;
+                case ShipDebris:
+                    Entity shipDebris = ShipDebrisFactory.createShipDebris(null);
+                    ServiceLocator.getGameArea().spawnEntity(shipDebris);
+                    shipDebris.setPosition(position);
+
+                    TerrainTile debrisTerrainTile = ServiceLocator.getGameArea().getMap().getTile(position);
+                    debrisTerrainTile.setOccupant(shipDebris);
+                    debrisTerrainTile.setOccupied();
+                    break;
                 case Ship:
                     Entity ship = ShipFactory.createShip();
 
-                    ShipLightComponent shipLightComponent = ship.getComponent(ShipLightComponent.class);
-                    JsonValue shipLightComponentJson = jsonMap.get("components")
-                            .get(ShipLightComponent.class.getSimpleName());
-                    shipLightComponent.read(json, shipLightComponentJson);
+	                ServiceLocator.getGameArea().spawnEntity(ship);
 
-                    ShipProgressComponent progressComponent = ship.getComponent(ShipProgressComponent.class);
-                    progressComponent.read(json, jsonMap.get("components").get(ShipProgressComponent.class.getSimpleName()));
+	                ShipProgressComponent progressComponent = ship.getComponent(ShipProgressComponent.class);
+	                progressComponent.read(json, jsonMap.get("components").get(ShipProgressComponent.class.getSimpleName()));
 
-                    ServiceLocator.getGameArea().spawnEntity(ship);
+	                ShipTimeSkipComponent shipTimeSkipComponent = ship.getComponent(ShipTimeSkipComponent.class);
+	                JsonValue shipTimeSkipComponentJson = jsonMap.get("components").get(ShipTimeSkipComponent.class.getSimpleName());
+	                shipTimeSkipComponent.read(json, shipTimeSkipComponentJson);
+
+	                ShipLightComponent shipLightComponent = ship.getComponent(ShipLightComponent.class);
+	                JsonValue shipLightComponentJson = jsonMap.get("components")
+			                .get(ShipLightComponent.class.getSimpleName());
+	                shipLightComponent.read(json, shipLightComponentJson);
+
                     ship.setPosition(position);
                     break;
                 case Player:
@@ -485,8 +518,6 @@ public class Entity implements Json.Serializable {
                         Entity npc = FactoryService.getNpcFactories().get(type).apply(ServiceLocator.getGameArea().getPlayer());
                         if (npc.getComponent(TamableComponent.class) != null) {
                             npc.getComponent(TamableComponent.class).read(json, jsonMap.get("components"));
-                        } else if (npc.getType() == EntityType.ShipDebris) {
-                            ServiceLocator.getGameArea().getMap().getTile(position).setOccupant(npc);
                         }
                         ServiceLocator.getGameArea().spawnEntity(npc);
                         npc.setPosition(position);
