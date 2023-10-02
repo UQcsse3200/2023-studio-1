@@ -31,7 +31,7 @@ public class ShipAnimationControllerTest {
     void initialiseTest() {
         ServiceLocator.registerRenderService(new RenderService());
         ResourceService resourceService = new ResourceService();
-        resourceService.loadTextureAtlases(new String[] { "images/ship/ship.atlas" });
+        resourceService.loadTextureAtlases(new String[]{ "images/ship/ship.atlas" });
         resourceService.loadAll();
         ServiceLocator.registerResourceService(resourceService);
 
@@ -54,7 +54,7 @@ public class ShipAnimationControllerTest {
 
     private static Stream<Arguments> shouldUpdateAnimationOnProgressUpdate() {
         return Stream.of(
-                // (animationEvent, movementDirection, expectedAnimationName)
+                // (animationEvent, progress, expectedAnimationName)
                 arguments("progressUpdated", -10, "default"),
                 arguments("progressUpdated", 0, "ship_0"),
                 arguments("progressUpdated", 4, "ship_1"),
