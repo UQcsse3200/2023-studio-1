@@ -323,16 +323,17 @@ class PlantInteractionQuestTest {
     @Test
     public void testGetShortDescription() {
         testRegisterMission();
-        String desc = "%d out of %d hostiles dealt with";
+        String desc1 = "%d out of %d crops planted";
+        String desc2 = "%d out of %d crops harvested";
         for (int i = 0; i < 10; i++) {
             int min7 = Math.min(i, 3);
-            String formatted1 = String.format(desc, i, 10);
-            String formatted2 = String.format(desc, 0, 0);
-            String formatted3 = String.format(desc, i, 10);
-            String formatted4 = String.format(desc, i, 10);
-            String formatted5 = String.format(desc, 0, 0);
-            String formatted6 = String.format(desc, i, 10);
-            String formatted7 = String.format(desc, min7, 3);
+            String formatted1 = String.format(desc1, 0, 10);
+            String formatted2 = String.format(desc1 ,0, 0);
+            String formatted3 = String.format(desc2, 0, 10);
+            String formatted4 = String.format(desc1, i, 10);
+            String formatted5 = String.format(desc2, 0, 0);
+            String formatted6 = String.format(desc2, 0, 3);
+            String formatted7 = String.format(desc1, min7, 3);
             assertEquals(formatted1, PIQuest1.getShortDescription());
             assertEquals(formatted2, PIQuest2.getShortDescription());
             assertEquals(formatted3, PIQuest3.getShortDescription());
@@ -341,7 +342,7 @@ class PlantInteractionQuestTest {
             assertEquals(formatted6, PIQuest6.getShortDescription());
             assertEquals(formatted7, PIQuest7.getShortDescription());
             ServiceLocator.getMissionManager().getEvents().trigger(
-                    MissionManager.MissionEvent.ANIMAL_DEFEATED.name(), EntityType.OxygenEater);
+                    MissionManager.MissionEvent.PLANT_CROP.name(), "Aloe Vera");
         }
         PIQuest1.resetState();
         PIQuest2.resetState();
@@ -352,13 +353,13 @@ class PlantInteractionQuestTest {
         PIQuest7.resetState();
         for (int i = 0; i < 10; i++) {
             int min7 = Math.min(i, 3);
-            String formatted1 = String.format(desc, 0, 10);
-            String formatted2 = String.format(desc, 0, 0);
-            String formatted3 = String.format(desc, i, 10);
-            String formatted4 = String.format(desc, i, 10);
-            String formatted5 = String.format(desc, 0, 0);
-            String formatted6 = String.format(desc, i, 10);
-            String formatted7 = String.format(desc, min7, 3);
+            String formatted1 = String.format(desc1, i, 10);
+            String formatted2 = String.format(desc1, 0, 0);
+            String formatted3 = String.format(desc2, 0, 10);
+            String formatted4 = String.format(desc1, i, 10);
+            String formatted5 = String.format(desc2, 0, 0);
+            String formatted6 = String.format(desc2, 0, 3);
+            String formatted7 = String.format(desc1, min7, 3);
             assertEquals(formatted1, PIQuest1.getShortDescription());
             assertEquals(formatted2, PIQuest2.getShortDescription());
             assertEquals(formatted3, PIQuest3.getShortDescription());
@@ -367,8 +368,9 @@ class PlantInteractionQuestTest {
             assertEquals(formatted6, PIQuest6.getShortDescription());
             assertEquals(formatted7, PIQuest7.getShortDescription());
             ServiceLocator.getMissionManager().getEvents().trigger(
-                    MissionManager.MissionEvent.ANIMAL_DEFEATED.name(), EntityType.Cow);
-        }PIQuest1.resetState();
+                    MissionManager.MissionEvent.PLANT_CROP.name(), "Cosmic Cob");
+        }
+        PIQuest1.resetState();
         PIQuest2.resetState();
         PIQuest3.resetState();
         PIQuest4.resetState();
@@ -377,13 +379,13 @@ class PlantInteractionQuestTest {
         PIQuest7.resetState();
         for (int i = 0; i < 10; i++) {
             int min7 = Math.min(i, 3);
-            String formatted1 = String.format(desc, 0, 10);
-            String formatted2 = String.format(desc, 0, 0);
-            String formatted3 = String.format(desc, 0, 10);
-            String formatted4 = String.format(desc, i, 10);
-            String formatted5 = String.format(desc, 0, 0);
-            String formatted6 = String.format(desc, i, 10);
-            String formatted7 = String.format(desc, min7, 3);
+            String formatted1 = String.format(desc1, 0, 10);
+            String formatted2 = String.format(desc1, 0, 0);
+            String formatted3 = String.format(desc2, 0, 10);
+            String formatted4 = String.format(desc1, 0, 10);
+            String formatted5 = String.format(desc2, 0, 0);
+            String formatted6 = String.format(desc2,min7, 3);
+            String formatted7 = String.format(desc1, 0, 3);
             assertEquals(formatted1, PIQuest1.getShortDescription());
             assertEquals(formatted2, PIQuest2.getShortDescription());
             assertEquals(formatted3, PIQuest3.getShortDescription());
@@ -392,7 +394,33 @@ class PlantInteractionQuestTest {
             assertEquals(formatted6, PIQuest6.getShortDescription());
             assertEquals(formatted7, PIQuest7.getShortDescription());
             ServiceLocator.getMissionManager().getEvents().trigger(
-                    MissionManager.MissionEvent.ANIMAL_DEFEATED.name(), EntityType.Astrolotl);
+                    MissionManager.MissionEvent.HARVEST_CROP.name(), "Aloe Vera");
+        }
+        PIQuest1.resetState();
+        PIQuest2.resetState();
+        PIQuest3.resetState();
+        PIQuest4.resetState();
+        PIQuest5.resetState();
+        PIQuest6.resetState();
+        PIQuest7.resetState();
+        for (int i = 0; i < 10; i++) {
+            int min7 = Math.min(i, 3);
+            String formatted1 = String.format(desc1, 0, 10);
+            String formatted2 = String.format(desc1, 0, 0);
+            String formatted3 = String.format(desc2, i, 10);
+            String formatted4 = String.format(desc1, 0, 10);
+            String formatted5 = String.format(desc2, 0, 0);
+            String formatted6 = String.format(desc2,min7, 3);
+            String formatted7 = String.format(desc1, 0, 3);
+            assertEquals(formatted1, PIQuest1.getShortDescription());
+            assertEquals(formatted2, PIQuest2.getShortDescription());
+            assertEquals(formatted3, PIQuest3.getShortDescription());
+            assertEquals(formatted4, PIQuest4.getShortDescription());
+            assertEquals(formatted5, PIQuest5.getShortDescription());
+            assertEquals(formatted6, PIQuest6.getShortDescription());
+            assertEquals(formatted7, PIQuest7.getShortDescription());
+            ServiceLocator.getMissionManager().getEvents().trigger(
+                    MissionManager.MissionEvent.HARVEST_CROP.name(), "Cosmic Cob");
         }
     }
 
