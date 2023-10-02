@@ -2,9 +2,6 @@ package com.csse3200.game.services.plants;
 
 import com.csse3200.game.events.EventHandler;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Keeps track of all info and stats relating to plants.
  */

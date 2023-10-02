@@ -257,7 +257,6 @@ public class ClimateController implements Json.Serializable {
 		json.writeValue("Humidity", getHumidity());
 		json.writeObjectStart("Events");
 		updateWeatherEvent();
-		System.out.println(weatherEvents);
 		for (WeatherEvent event : weatherEvents) {
 			event.write(json);
 		}

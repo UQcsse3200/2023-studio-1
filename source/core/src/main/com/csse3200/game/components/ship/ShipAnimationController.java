@@ -2,6 +2,8 @@ package com.csse3200.game.components.ship;
 
 import java.util.Set;
 
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ship.ShipProgressComponent.Feature;
 import com.csse3200.game.rendering.AnimationRenderComponent;
@@ -53,13 +55,37 @@ public class ShipAnimationController extends Component {
             animation = "ship_4";
         }
 
-        if (progress >= 25) {
+        if (progress >= 20) {
             animation = "ship_5";
         }
 
         if (!animator.getCurrentAnimation().equals(animation)) {
             animator.startAnimation(animation);
         }
+    }
+
+
+    /**
+     * Store the current animation of the ship in the passed-in json object.
+     * @param json Json object to write to
+     * Code edited from ShipProgressComponent by Team 2
+     */
+    @Override
+    public void write(Json json) {
+        json.writeObjectStart(this.getClass().getSimpleName());
+        json.writeValue("animation", animator.getCurrentAnimation());
+        json.writeObjectEnd();
+    }
+
+    /**
+     * Update the entity based on the read data.
+     * @param json    which is a valid Json that is read from
+     * @param jsonMap which is a valid JsonValue that is read from
+     * Code edited from ShipProgressComponent by Team 2
+     */
+    @Override
+    public void read(Json json, JsonValue jsonMap) {
+        animator.startAnimation(jsonMap.getString("animation"));
     }
 
 }

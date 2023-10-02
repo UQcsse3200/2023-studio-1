@@ -23,7 +23,7 @@ public class EntityTypeTest {
     expectedEnumNames = new HashSet<>(Arrays.asList(
         "Player", "Tractor", "Plant", "Tile", "Cow",
         "Chicken", "Astrolotl", "OxygenEater", "Item",
-        "Questgiver", "QuestgiverIndicator", "Sprinkler","Ship", "ShipDebris",
+        "Questgiver", "QuestgiverIndicator", "Sprinkler","Ship", "ShipDebris", "ShipPartTile",
             "Gate", "Fence", "Chest", "Pump", "Light", "FireFlies"));
 
   }

@@ -8,14 +8,18 @@ import java.util.function.Supplier;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
-import com.csse3200.game.entities.factories.*;
+import com.csse3200.game.entities.factories.ItemFactory;
+import com.csse3200.game.entities.factories.NPCFactory;
+import com.csse3200.game.entities.factories.PlaceableFactory;
+import com.csse3200.game.entities.factories.PlantFactory;
+import com.csse3200.game.entities.factories.ShipDebrisFactory;
 import com.csse3200.game.missions.quests.Quest;
 import com.csse3200.game.missions.quests.QuestFactory;
 
 public class FactoryService {
     private static final Map<EntityType, Function<Entity, Entity>> npcFactories = Map.of(EntityType.Chicken, NPCFactory::createChicken,
             EntityType.Cow, NPCFactory::createCow, EntityType.Astrolotl, NPCFactory::createAstrolotl,
-            EntityType.OxygenEater, NPCFactory::createOxygenEater, EntityType.ShipDebris, ShipDebrisFactory::createShipDebris,
+            EntityType.OxygenEater, NPCFactory::createOxygenEater,
             EntityType.FireFlies, NPCFactory::createFireFlies);
 
     private static final Map<String, Function<CropTileComponent, Entity>> plantFactories = Map.of(
@@ -34,12 +38,16 @@ public class FactoryService {
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("scythe", ItemFactory::createScythe),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("watering_can", ItemFactory::createWateringcan),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("fertiliser", ItemFactory::createFertiliser),
-            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Aloe Vera seed", ItemFactory::createAloeVeraSeed),
-            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Atomic Algae seed", ItemFactory::createAtomicAlgaeSeed),
-            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Cosmic Cob seed", ItemFactory::createCosmicCobSeed),
-            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Deadly Nightshade seed", ItemFactory::createDeadlyNightshadeSeed),
-            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Hammer Plant seed", ItemFactory::createHammerPlantSeed),
-            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Space Snapper seed", ItemFactory::createSpaceSnapperSeed),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Aloe Vera Seeds", ItemFactory::createAloeVeraSeed),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Aloe Vera Leaf", ItemFactory::createAloeVeraLeaf),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Atomic Algae Seeds", ItemFactory::createAtomicAlgaeSeed),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Cosmic Cob Seeds", ItemFactory::createCosmicCobSeed),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Ear of Cosmic Cob", ItemFactory::createCosmicCobEar),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Deadly Nightshade Seeds", ItemFactory::createDeadlyNightshadeSeed),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Nightshade Berry", ItemFactory::createDeadlyNightshadeBerry),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Hammer Plant Seeds", ItemFactory::createHammerPlantSeed),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Hammer Flower", ItemFactory::createHammerFlower),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Space Snapper Seeds", ItemFactory::createSpaceSnapperSeed),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("COW FOOD", ItemFactory::createCowFood),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("egg", ItemFactory::createEgg),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("milk", ItemFactory::createMilk),

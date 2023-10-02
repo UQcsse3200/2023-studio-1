@@ -4,7 +4,6 @@ import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.PlaceableFactory;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -20,7 +19,7 @@ public class PlaceableEvents extends Component {
         // Check if the placeable is a chest and if there is items in that chest
         InventoryComponent chestInventory = placedItem.getComponent(InventoryComponent.class);
         if (chestInventory != null){
-            if (chestInventory.getInventory().size() >= 1) {
+            if (chestInventory.getInventorySize() >= 1) {
                 return;
             }
         }

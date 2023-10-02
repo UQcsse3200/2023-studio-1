@@ -134,13 +134,11 @@ public class FenceComponent extends Component {
         isOpen = !isOpen;
 
         if (isOpen) {
-            //this.currentTexture.setTexture(openGatePath);
             this.entity.getComponent(ColliderComponent.class).setSensor(true);
             configGate();
             return;
         }
         this.entity.getComponent(ColliderComponent.class).setSensor(false);
-
         // Update our texture accordingly
         configGate();
     }

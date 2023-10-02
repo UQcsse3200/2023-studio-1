@@ -7,7 +7,7 @@ import com.csse3200.game.areas.terrain.*;
 import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.items.ItemType;
-import com.csse3200.game.components.player.InventoryComponent;
+
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntitySpawner;
 import com.csse3200.game.entities.EntitiesSpawner;
@@ -46,9 +46,6 @@ public class SpaceGameArea extends GameArea {
           "images/tree.png",
           "images/ghost_king.png",
           "images/ghost_1.png",
-          "images/grass_1.png",
-          "images/grass_2.png",
-          "images/grass_3.png",
           "images/hex_grass_1.png",
           "images/hex_grass_2.png",
           "images/hex_grass_3.png",
@@ -72,37 +69,6 @@ public class SpaceGameArea extends GameArea {
           "images/overwatered_cropTile_fertilised.png",
           "images/Temp-Chest.png",
 
-          "images/beach_1.png",
-          "images/beach_2.png",
-          "images/beach_3.png",
-          "images/deepWater_1.png",
-          "images/deepWater_2.png",
-          "images/desert_1.png",
-          "images/desert_2.png",
-          "images/desert_3.png",
-          "images/dirt_1.png",
-          "images/dirt_2.png",
-          "images/dirt_3.png",
-          "images/dirtPathTop.png",
-          "images/dirtPathRight.png",
-          "images/dirtPathBottom.png",
-          "images/dirtPathLeft.png",
-          "images/gravel_1.png",
-          "images/ice_1.png",
-          "images/ice_2.png",
-          "images/lava_1.png",
-          "images/lavaGround_1.png",
-          "images/lavaGround_2.png",
-          "images/lavaGround_3.png",
-          "images/water_1.png",
-          "images/water_2.png",
-          "images/water_3.png",
-          "images/flowingWater_1.png",
-          "images/snow_1.png",
-          "images/snow_2.png",
-          "images/snow_3.png",
-          "images/stone_1.png",
-          "images/stonePath_1.png",
           "images/tractor.png",
           "images/fertiliser.png",
 
@@ -113,6 +79,7 @@ public class SpaceGameArea extends GameArea {
           "images/plants/cosmic_cob/5_decaying.png",
           "images/plants/cosmic_cob/6_dead.png",
           "images/plants/cosmic_cob/item_drop.png",
+          "images/plants/cosmic_cob/seedbag.png",
 
           "images/plants/aloe_vera/1_seedling.png",
           "images/plants/aloe_vera/2_sprout.png",
@@ -157,6 +124,7 @@ public class SpaceGameArea extends GameArea {
           "images/plants/deadly_nightshade/5_decaying.png",
           "images/plants/deadly_nightshade/6_dead.png",
           "images/plants/deadly_nightshade/item_drop.png",
+          "images/plants/deadly_nightshade/seedbag.png",
 
           "images/plants/misc/aloe_vera_seed.png",
           "images/plants/misc/cosmic_cob_seed.png",
@@ -240,8 +208,10 @@ public class SpaceGameArea extends GameArea {
       "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas",
       "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas", "images/questgiver.atlas",
       "images/missionStatus.atlas", "images/plants/cosmic_cob.atlas", "images/plants/aloe_vera.atlas",
-      "images/plants/deadly_nightshade.atlas", "images/projectiles/oxygen_eater_projectile.atlas",
-      "images/fireflies.atlas", "images/ship/ship.atlas", "images/light.atlas"
+      "images/plants/deadly_nightshade.atlas", "images/plants/atomic_algae.atlas",
+      "images/plants/hammer_plant.atlas", "images/plants/space_snapper.atlas",
+      "images/projectiles/oxygen_eater_projectile.atlas", "images/fireflies.atlas",
+      "images/ship/ship.atlas", "images/light.atlas"
   };
   private static final String[] forestSounds = {
           "sounds/Impact4.ogg", "sounds/car-horn-6408.mp3",
@@ -465,9 +435,13 @@ public class SpaceGameArea extends GameArea {
 
     List<GridPoint2> clearedTilesAroundShip = List.of(
             SHIP_SPAWN,
+            new GridPoint2(SHIP_SPAWN.x, SHIP_SPAWN.y - 1),
+            new GridPoint2(SHIP_SPAWN.x, SHIP_SPAWN.y + 1),
             new GridPoint2(SHIP_SPAWN.x - 1, SHIP_SPAWN.y - 1),
-            new GridPoint2(SHIP_SPAWN.x + 1, SHIP_SPAWN.y - 1),
+            new GridPoint2(SHIP_SPAWN.x - 1, SHIP_SPAWN.y),
             new GridPoint2(SHIP_SPAWN.x - 1, SHIP_SPAWN.y + 1),
+            new GridPoint2(SHIP_SPAWN.x + 1, SHIP_SPAWN.y - 1),
+            new GridPoint2(SHIP_SPAWN.x + 1, SHIP_SPAWN.y),
             new GridPoint2(SHIP_SPAWN.x + 1, SHIP_SPAWN.y + 1)
     );
 
@@ -481,11 +455,11 @@ public class SpaceGameArea extends GameArea {
       }
 
       Entity shipDebris = ShipDebrisFactory.createShipDebris(player);
-      ServiceLocator.getEntityService().register(shipDebris);
+      spawnEntity(shipDebris);
+      shipDebris.setPosition(terrain.tileToWorldPosition(randomPos));
+
       tile.setOccupant(shipDebris);
       tile.setOccupied();
-
-      shipDebris.setPosition(terrain.tileToWorldPosition(randomPos));
     });
   }
 
@@ -620,6 +594,7 @@ public class SpaceGameArea extends GameArea {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(forestTextures);
+    resourceService.loadTextures(TerrainFactory.mapTextures);
     resourceService.loadTextureAtlases(forestTextureAtlases);
     resourceService.loadSounds(forestSounds);
     resourceService.loadMusic(forestMusic);
