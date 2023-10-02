@@ -79,7 +79,7 @@ public class CutsceneDisplay extends UIComponent {
 
         this.dimScreen();
 
-        this.spawnSprites();
+        this.spawnSprite();
         this.spawnDialogueBox();
         this.spawnContinueButton();
 
@@ -104,30 +104,23 @@ public class CutsceneDisplay extends UIComponent {
         stage.addActor(transparentRectangle);
     }
 
-    private void placeSprite(Image sprite, String position, float sizeIncrease) {
-
-        int xpos = 0, ypos = 0;
-        if (position == "LEFT") {
-            xpos = 50;
-            ypos = 50;
-
-        } else if (position == "RIGHT") {
-            xpos = 1000;
-            ypos = 150;
-        } else {
-            throw new IllegalArgumentException(position + " is an invalid position");
-        }
-        sprite.setPosition(xpos,ypos);
+    /**
+     * Places the sprite in the table
+     * @param sprite the sprite to be added to the table
+     * @param sizeIncrease the scalar to be used to scale the sprite's size
+     */
+    private void placeSprite(Image sprite, float sizeIncrease) {
         float scaledWidth = (float) (Gdx.graphics.getWidth() * sizeIncrease);
         float scaledHeight = scaledWidth * (sprite.getHeight() / sprite.getWidth());
         sprite.setWidth(scaledWidth);
         sprite.setHeight(scaledHeight);
         dialogueTable.add(sprite).expandX().width(scaledWidth).expandY().height(scaledHeight);
-        //stage.addActor(sprite);
     }
 
-    // Spawns the sprites/entities that will be on the left/right side of the screen
-    public void spawnSprites() {
+    /**
+     * Spawns the Alien sprite
+     */
+    private void spawnSprite() {
         TextureAtlas.AtlasRegion region;
         //Spawn npc
         npcAtlas = ServiceLocator.getResourceService()
@@ -137,14 +130,13 @@ public class CutsceneDisplay extends UIComponent {
             throw new IllegalArgumentException("images/questgiver.atlas is an invalid filePath");
         }
         npcSprite = new Image(region);
-        placeSprite(npcSprite, "RIGHT",  0.15f);
-        //spawnSprite("images/player.atlas", "LEFT", 0.45f);
+        placeSprite(npcSprite,  0.15f);
     }
 
     /**
      * Spawns the dialogue text label and populates it
      */
-    public void spawnDialogueBox () {
+    private void spawnDialogueBox () {
         logger.debug("Cutscene dialogue spawned");
 
         TypingLabel dialogueLabel = new TypingLabel(this.dialogue, skin);
@@ -155,7 +147,10 @@ public class CutsceneDisplay extends UIComponent {
         dialogueTable.add(dialogueLabel).width(active.width - 700).expandX(); // need to make it so text always contains the same proportion of the screen
     }
 
-    public void spawnContinueButton() {
+    /**
+     * Spawns the continue button
+     */
+    private void spawnContinueButton() {
         System.out.println("CUTSCENE CONTINUE SPAWNED");
         logger.debug("Cutscene continue spawned");
 
