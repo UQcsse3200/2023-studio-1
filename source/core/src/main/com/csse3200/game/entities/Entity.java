@@ -1,9 +1,5 @@
 package com.csse3200.game.entities;
 
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,15 +15,14 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ComponentType;
 import com.csse3200.game.components.ConeLightComponent;
 import com.csse3200.game.components.items.ItemComponent;
-import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.items.WateringCanLevelComponent;
 import com.csse3200.game.components.npc.AnimalAnimationController;
 import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.npc.TamableComponent;
-import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.ItemPickupComponent;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.components.player.PlayerAnimationController;
+import com.csse3200.game.components.ship.ShipAnimationController;
 import com.csse3200.game.components.ship.ShipLightComponent;
 import com.csse3200.game.components.ship.ShipProgressComponent;
 import com.csse3200.game.components.tractor.TractorActions;
@@ -461,6 +456,11 @@ public class Entity implements Json.Serializable {
                 case Ship:
                     Entity ship = ShipFactory.createShip();
 
+                    ServiceLocator.getGameArea().spawnEntity(ship);
+
+                    ShipAnimationController shipAnimationController = ship.getComponent(ShipAnimationController.class);
+                    shipAnimationController.read(json, jsonMap.get("components").get(ShipAnimationController.class.getSimpleName()));
+
                     ShipLightComponent shipLightComponent = ship.getComponent(ShipLightComponent.class);
                     JsonValue shipLightComponentJson = jsonMap.get("components")
                             .get(ShipLightComponent.class.getSimpleName());
@@ -469,9 +469,9 @@ public class Entity implements Json.Serializable {
                     ShipProgressComponent progressComponent = ship.getComponent(ShipProgressComponent.class);
                     progressComponent.read(json, jsonMap.get("components").get(ShipProgressComponent.class.getSimpleName()));
 
-                    ServiceLocator.getGameArea().spawnEntity(ship);
                     ship.setPosition(position);
                     break;
+                    /*
                 case Player:
                     // Does not make a new player, instead just updates the current one
                     InventoryComponent inventoryComponent = new InventoryComponent();
@@ -495,6 +495,7 @@ public class Entity implements Json.Serializable {
                     // inventoryComponent.setInventory(items, itemPositions, inventory);
                     // this.addComponent(inventoryComponent);
                     break;
+                    */
                 default:
                     if (FactoryService.getNpcFactories().containsKey(type)
                             && ServiceLocator.getGameArea().getLoadableTypes().contains(type)) {
