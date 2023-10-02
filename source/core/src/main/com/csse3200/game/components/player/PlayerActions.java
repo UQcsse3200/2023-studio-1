@@ -1,20 +1,28 @@
 package com.csse3200.game.components.player;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.csse3200.game.areas.SpaceGameArea;
 import com.csse3200.game.areas.terrain.GameMap;
-import com.csse3200.game.components.AuraLightComponent;
+import com.csse3200.game.components.*;
+import com.csse3200.game.components.combat.ProjectileComponent;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.items.ItemActions;
+import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.items.ItemType;
+import com.csse3200.game.components.npc.MultiDropComponent;
 import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
+import com.csse3200.game.entities.factories.ProjectileFactory;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -39,6 +47,8 @@ public class PlayerActions extends Component {
 
   private SecureRandom random = new SecureRandom();
 
+  int SWORD_DAMAGE = 5;
+
   @Override
   public void create() {
     physicsComponent = entity.getComponent(PhysicsComponent.class);
@@ -48,9 +58,11 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("runStop", this::stopRunning);
     entity.getEvents().addListener("interact", this::interact);
     entity.getEvents().addListener("attack", this::attack);
+    entity.getEvents().addListener("shoot", this::shoot);
     entity.getEvents().addListener("enterTractor", this::enterTractor);
     entity.getEvents().addListener("use", this::use);
     entity.getEvents().addListener("hotkeySelection", this::hotkeySelection);
+
   }
 
   @Override
@@ -207,11 +219,53 @@ public class PlayerActions extends Component {
   }
 
   /**
-   * Makes the player attack.
+   * Makes the player attack any animal within given arc and distance
+   *
+   * @param mousePos Determine direction of mouse
    */
-  void attack() {
+  void attack(Vector2 mousePos) {
     Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
     attackSound.play();
+    mousePos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
+    List<Entity> areaEntities = ServiceLocator.getGameArea().getAreaEntities();
+    for(Entity animal : areaEntities) {
+      CombatStatsComponent combat = animal.getComponent(CombatStatsComponent.class);
+      if(combat != null && animal != entity) {
+        if (entity.getPosition().dst(animal.getPosition()) < 3) {
+          Vector2 result = new Vector2(0, 0);
+          result.x = animal.getCenterPosition().x - entity.getCenterPosition().x;
+          result.y = animal.getCenterPosition().y - entity.getCenterPosition().y;
+          Vector2 mouseResult = new Vector2(0, 0);
+          mouseResult.x = mousePos.x - entity.getCenterPosition().x;
+          mouseResult.y = mousePos.y - entity.getCenterPosition().y;
+          float resAngle = result.angleDeg();
+          float mouseResAngle = mouseResult.angleDeg();
+          float difference = Math.abs(resAngle - mouseResAngle);
+          difference = difference > 180 ? 360 - difference : difference;
+          if(difference <= 45) {
+            combat.setHealth(combat.getHealth() - SWORD_DAMAGE);
+            animal.getEvents().trigger("panicStart");
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Makes the player shoot a bullet entity at given mouse position
+   *
+   * @param mousePos Determine direction of mouse
+   */
+  void shoot(Vector2 mousePos) {
+    Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
+    attackSound.play();
+    mousePos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
+    Entity projectile = ProjectileFactory.createPlayerProjectile();
+    projectile.setCenterPosition(entity.getCenterPosition());
+    ServiceLocator.getGameArea().spawnEntity(projectile);
+    ProjectileComponent projectileComponent = projectile.getComponent(ProjectileComponent.class);
+    projectileComponent.setSpeed(new Vector2(3f, 3f));
+    projectileComponent.setTargetDirection(mousePos);
   }
 
   /**

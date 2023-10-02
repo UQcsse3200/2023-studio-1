@@ -6,6 +6,7 @@ import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
+import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.physics.BodyUserData;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
@@ -214,6 +215,10 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
                     // just dispose of the entity being eaten. might want to implement a count of
                     // eaten entities in plant component.
                     entityInRange.dispose();
+
+                    ServiceLocator.getMissionManager().getEvents().trigger(
+                            MissionManager.MissionEvent.ANIMAL_EATEN.name(),
+                            entityInRange.getType());
 
                     // break once a valid entity has been eaten because space snapper can only eat one entity at a time.
                     break;

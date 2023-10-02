@@ -79,7 +79,7 @@ public abstract class Quest extends Mission {
 	 * Decrements the duration to expiry of the quest by 1, if the {@link Quest} can expire.
 	 */
 	public void updateExpiry() {
-		if (canExpire && --timeToExpiry <= 0) {
+		if (canExpire && !isCompleted() && --timeToExpiry <= 0) {
 			timeToExpiry = 0;
 		}
 	}
@@ -115,9 +115,11 @@ public abstract class Quest extends Mission {
 	 */
 	public void collectReward() {
 		if (isCompleted() && !reward.isCollected()) {
+			ServiceLocator.getMissionManager().getEvents().trigger(
+					MissionManager.MissionEvent.REWARD_COMPLETE.name());
 			reward.collect();
 			ServiceLocator.getMissionManager().getEvents().trigger(
-					MissionManager.MissionEvent.STORY_REWARD_COLLECTED.name(),
+					MissionManager.MissionEvent.QUEST_REWARD_COLLECTED.name(),
 					getName());
 		}
 	}

@@ -320,6 +320,7 @@ public class MissionDisplay extends UIComponent {
                 }
             });
         } else if (quest.isCompleted()) {
+
             actionButton = new TextButton(
                     "Collect Reward",
                     skin,

@@ -131,9 +131,9 @@ class TerrainTileTest {
     public void testGetSpeedModifier() {
         assertEquals(1.2f, pathTerrainTile.getSpeedModifier());
         assertEquals(0.9f, beachSandTerrainTile.getSpeedModifier());
-        assertEquals(1.1f, grassTerrainTile.getSpeedModifier());
-        assertEquals(0.7f, dirtTerrainTile.getSpeedModifier());
-        assertEquals(0.9f, shallowWaterTerrainTile.getSpeedModifier());
+        assertEquals(1.0f, grassTerrainTile.getSpeedModifier());
+        assertEquals(1.0f, dirtTerrainTile.getSpeedModifier());
+        assertEquals(0.4f, shallowWaterTerrainTile.getSpeedModifier());
         assertEquals(0.8f, desertTerrainTile.getSpeedModifier());
         assertEquals(0.8f, snowTerrainTile.getSpeedModifier());
         assertEquals(1.5f, iceTerrainTile.getSpeedModifier());
@@ -141,8 +141,8 @@ class TerrainTileTest {
         assertEquals(0.2f, rockTerrainTile.getSpeedModifier());
         assertEquals(0.2f, lavaTerrainTile.getSpeedModifier());
         assertEquals(0.7f, lavaGroundTerrainTile.getSpeedModifier());
-        assertEquals(1, gravelTerrainTile.getSpeedModifier());
-        assertEquals(1.3f, flowingWaterTerrainTile.getSpeedModifier());
+        assertEquals(1.0f, gravelTerrainTile.getSpeedModifier());
+        assertEquals(0.4f, flowingWaterTerrainTile.getSpeedModifier());
     }
 
     @Test
@@ -205,7 +205,7 @@ class TerrainTileTest {
         assertEquals(TerrainTile.TerrainCategory.GRASS, grassTerrainTile.getTerrainCategory());
         assertTrue(grassTerrainTile.isTraversable());
         assertTrue(grassTerrainTile.isTillable());
-        assertEquals(1.1f, grassTerrainTile.getSpeedModifier());
+        assertEquals(1.0f, grassTerrainTile.getSpeedModifier());
     }
 
     @Test
@@ -213,7 +213,7 @@ class TerrainTileTest {
         assertEquals(TerrainTile.TerrainCategory.DIRT, dirtTerrainTile.getTerrainCategory());
         assertTrue(dirtTerrainTile.isTraversable());
         assertTrue(dirtTerrainTile.isTillable());
-        assertEquals(0.7f, dirtTerrainTile.getSpeedModifier());
+        assertEquals(1.0f, dirtTerrainTile.getSpeedModifier());
     }
 
     @Test
@@ -221,7 +221,7 @@ class TerrainTileTest {
         assertEquals(TerrainTile.TerrainCategory.SHALLOWWATER, shallowWaterTerrainTile.getTerrainCategory());
         assertTrue(shallowWaterTerrainTile.isTraversable());
         assertFalse(shallowWaterTerrainTile.isTillable());
-        assertEquals(0.9f, shallowWaterTerrainTile.getSpeedModifier());
+        assertEquals(0.4f, shallowWaterTerrainTile.getSpeedModifier());
     }
 
     @Test
@@ -293,7 +293,7 @@ class TerrainTileTest {
         assertEquals(TerrainTile.TerrainCategory.FLOWINGWATER, flowingWaterTerrainTile.getTerrainCategory());
         assertTrue(flowingWaterTerrainTile.isTraversable());
         assertFalse(flowingWaterTerrainTile.isTillable());
-        assertEquals(1.3f, flowingWaterTerrainTile.getSpeedModifier());
+        assertEquals(0.4f, flowingWaterTerrainTile.getSpeedModifier());
     }
 }
 

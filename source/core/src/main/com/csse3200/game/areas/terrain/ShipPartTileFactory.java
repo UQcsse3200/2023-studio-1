@@ -9,24 +9,24 @@ import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 
 public class ShipPartTileFactory {
 
-    /**
-     * Creates an Entity that contains a ShipPartTileComponent.
-     *
-     * @param position where the entity will be placed.
-     * @return Entity shipPartTile
-     */
-    public static Entity createShipPartTile(Vector2 position) {
-        // TODO: change texture later
-        DynamicTextureRenderComponent renderComponent = new DynamicTextureRenderComponent("images/cropTile.png");
-        renderComponent.setLayer(1);
+	/**
+	 * Creates an Entity that contains a ShipPartTileComponent.
+	 *
+	 * @param position where the entity will be placed.
+	 * @return Entity shipPartTile
+	 */
+	public static Entity createShipPartTile(Vector2 position) {
+		// TODO: change texture later
+		DynamicTextureRenderComponent renderComponent = new DynamicTextureRenderComponent("images/cropTile.png");
+		renderComponent.setLayer(1);
 
-        Entity shipPartTile = new Entity(EntityType.Tile)
-                .addComponent(new ColliderComponent().setSensor(true))
-                .addComponent(new PhysicsComponent())
-                .addComponent(new ShipPartTileComponent())
-                .addComponent(renderComponent);
+		Entity shipPartTile = new Entity(EntityType.ShipPartTile)
+				.addComponent(new ColliderComponent().setSensor(true))
+				.addComponent(new PhysicsComponent())
+				.addComponent(new ShipPartTileComponent())
+				.addComponent(renderComponent);
 
-        shipPartTile.setPosition(position);
-        return shipPartTile;
-    }
+		shipPartTile.setPosition(position);
+		return shipPartTile;
+	}
 }

@@ -1,20 +1,16 @@
 package com.csse3200.game.components.plants;
 
 
+import java.util.List;
+
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.badlogic.gdx.utils.Align;
-import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.quests.Quest;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
-
-import java.util.List;
 
 public class PlantInfoDisplayComponent extends UIComponent {
 
@@ -100,6 +96,10 @@ public class PlantInfoDisplayComponent extends UIComponent {
             int numOfLines = 0; // will be used to configure that max amount of information in the window l8er
             if (!quests.isEmpty()) {
                 for (Quest q : quests) {
+                    if (q.isRewardCollected()) {
+                        continue;
+                    }
+
                     if (numOfLines == 0) {
                         activeQuestsString += q.getName();
                     } else {
