@@ -107,7 +107,7 @@ public class PlaceableFactory {
     public static Entity createChest() {
         Entity chest = createBasePlaceable(EntityType.Chest);
         // Add components here
-        chest.addComponent(new InventoryComponent(null))
+        chest.addComponent(new InventoryComponent())
             .addComponent(new DynamicTextureRenderComponent("images/Temp-Chest.png"))
             .addComponent(new ChestComponent());
         return chest;
