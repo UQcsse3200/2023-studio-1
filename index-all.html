@@ -133,6 +133,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Register an animation from the texture atlas.</div>
 </dd>
+<dt><a href="com/csse3200/game/areas/terrain/ShipPartTileComponent.html#addClueItem(com.csse3200.game.entities.Entity)" class="member-name-link">addClueItem(Entity)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/ShipPartTileComponent.html" title="class in com.csse3200.game.areas.terrain">ShipPartTileComponent</a></dt>
+<dd>
+<div class="block">Set the ship clue item associated with this tile.</div>
+</dd>
 <dt><a href="com/csse3200/game/ui/terminal/Terminal.html#addCommand(java.lang.String,com.csse3200.game.ui.terminal.commands.Command)" class="member-name-link">addCommand(String, Command)</a> - Method in class com.csse3200.game.ui.terminal.<a href="com/csse3200/game/ui/terminal/Terminal.html" title="class in com.csse3200.game.ui.terminal">Terminal</a></dt>
 <dd>
 <div class="block">Adds a command to the list of valid terminal commands.</div>
@@ -467,6 +471,24 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/components/player/OpenPauseComponent.html#closePauseMenu()" class="member-name-link">closePauseMenu()</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/OpenPauseComponent.html" title="class in com.csse3200.game.components.player">OpenPauseComponent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/items/ItemType.html#CLUE_ITEM" class="member-name-link">CLUE_ITEM</a> - Enum constant in enum class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/ItemType.html" title="enum class in com.csse3200.game.components.items">ItemType</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/items/ClueComponent.html" class="type-name-link" title="class in com.csse3200.game.components.items">ClueComponent</a> - Class in <a href="com/csse3200/game/components/items/package-summary.html">com.csse3200.game.components.items</a></dt>
+<dd>
+<div class="block">Holds a base location to generate a ShipPartTile at.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/items/ClueComponent.html#%3Cinit%3E()" class="member-name-link">ClueComponent()</a> - Constructor for class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/ClueComponent.html" title="class in com.csse3200.game.components.items">ClueComponent</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/missions/rewards/ClueReward.html" class="type-name-link" title="class in com.csse3200.game.missions.rewards">ClueReward</a> - Class in <a href="com/csse3200/game/missions/rewards/package-summary.html">com.csse3200.game.missions.rewards</a></dt>
+<dd>
+<div class="block">A reward that spawns a ShipPartTile and ShipDebris on collection.</div>
+</dd>
+<dt><a href="com/csse3200/game/missions/rewards/ClueReward.html#%3Cinit%3E(com.csse3200.game.entities.Entity)" class="member-name-link">ClueReward(Entity)</a> - Constructor for class com.csse3200.game.missions.rewards.<a href="com/csse3200/game/missions/rewards/ClueReward.html" title="class in com.csse3200.game.missions.rewards">ClueReward</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/missions/rewards/ClueReward.html#collect()" class="member-name-link">collect()</a> - Method in class com.csse3200.game.missions.rewards.<a href="com/csse3200/game/missions/rewards/ClueReward.html" title="class in com.csse3200.game.missions.rewards">ClueReward</a></dt>
+<dd>
+<div class="block">When called, changes the isCollected variable to true and adds the reward items to the player's inventory.</div>
+</dd>
 <dt><a href="com/csse3200/game/missions/rewards/DialogueReward.html#collect()" class="member-name-link">collect()</a> - Method in class com.csse3200.game.missions.rewards.<a href="com/csse3200/game/missions/rewards/DialogueReward.html" title="class in com.csse3200.game.missions.rewards">DialogueReward</a></dt>
 <dd>
 <div class="block">This method will display the dialogue on the correct dialogue screen</div>
@@ -709,6 +731,12 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/screens/ControlsScreen.html#%3Cinit%3E(com.csse3200.game.GdxGame)" class="member-name-link">ControlsScreen(GdxGame)</a> - Constructor for class com.csse3200.game.screens.<a href="com/csse3200/game/screens/ControlsScreen.html" title="class in com.csse3200.game.screens">ControlsScreen</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/items/CoordinatesDisplay.html" class="type-name-link" title="class in com.csse3200.game.components.items">CoordinatesDisplay</a> - Class in <a href="com/csse3200/game/components/items/package-summary.html">com.csse3200.game.components.items</a></dt>
+<dd>
+<div class="block">Shows a UI containing the coordinates of this entity's ClueComponent.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/items/CoordinatesDisplay.html#%3Cinit%3E(com.csse3200.game.components.items.ClueComponent)" class="member-name-link">CoordinatesDisplay(ClueComponent)</a> - Constructor for class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/CoordinatesDisplay.html" title="class in com.csse3200.game.components.items">CoordinatesDisplay</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/plants/PlantConfigs.html#cosmicCob" class="member-name-link">cosmicCob</a> - Variable in class com.csse3200.game.entities.configs.plants.<a href="com/csse3200/game/entities/configs/plants/PlantConfigs.html" title="class in com.csse3200.game.entities.configs.plants">PlantConfigs</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/NPCConfigs.html#cow" class="member-name-link">cow</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/NPCConfigs.html" title="class in com.csse3200.game.entities.configs">NPCConfigs</a></dt>
@@ -779,6 +807,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Creates the event listeners, ui, and gets the UI.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/items/ClueComponent.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/ClueComponent.html" title="class in com.csse3200.game.components.items">ClueComponent</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/items/CoordinatesDisplay.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/CoordinatesDisplay.html" title="class in com.csse3200.game.components.items">CoordinatesDisplay</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/items/ItemActions.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/ItemActions.html" title="class in com.csse3200.game.components.items">ItemActions</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/losescreen/LoseScreenDisplay.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.losescreen.<a href="com/csse3200/game/components/losescreen/LoseScreenDisplay.html" title="class in com.csse3200.game.components.losescreen">LoseScreenDisplay</a></dt>
@@ -1145,6 +1177,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/missions/quests/QuestFactory.html#createMakingFriendsQuest()" class="member-name-link">createMakingFriendsQuest()</a> - Static method in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/QuestFactory.html" title="class in com.csse3200.game.missions.quests">QuestFactory</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/entities/factories/ItemFactory.html#createMapItem()" class="member-name-link">createMapItem()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ItemFactory.html" title="class in com.csse3200.game.entities.factories">ItemFactory</a></dt>
+<dd>
+<div class="block">Creates a Map Clue item</div>
+</dd>
 <dt><a href="com/csse3200/game/entities/factories/ItemFactory.html#createMilk()" class="member-name-link">createMilk()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ItemFactory.html" title="class in com.csse3200.game.entities.factories">ItemFactory</a></dt>
 <dd>
 <div class="block">Creates a milk item</div>
@@ -1448,6 +1484,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Dispose of Toolbar</div>
 </dd>
+<dt><a href="com/csse3200/game/components/items/CoordinatesDisplay.html#dispose()" class="member-name-link">dispose()</a> - Method in class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/CoordinatesDisplay.html" title="class in com.csse3200.game.components.items">CoordinatesDisplay</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/losescreen/LoseScreenDisplay.html#dispose()" class="member-name-link">dispose()</a> - Method in class com.csse3200.game.components.losescreen.<a href="com/csse3200/game/components/losescreen/LoseScreenDisplay.html" title="class in com.csse3200.game.components.losescreen">LoseScreenDisplay</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/maingame/MainGameExitDisplay.html#dispose()" class="member-name-link">dispose()</a> - Method in class com.csse3200.game.components.maingame.<a href="com/csse3200/game/components/maingame/MainGameExitDisplay.html" title="class in com.csse3200.game.components.maingame">MainGameExitDisplay</a></dt>
@@ -1553,6 +1591,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Draw stage for render</div>
 </dd>
+<dt><a href="com/csse3200/game/components/items/CoordinatesDisplay.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/CoordinatesDisplay.html" title="class in com.csse3200.game.components.items">CoordinatesDisplay</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/losescreen/LoseScreenDisplay.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.csse3200.game.components.losescreen.<a href="com/csse3200/game/components/losescreen/LoseScreenDisplay.html" title="class in com.csse3200.game.components.losescreen">LoseScreenDisplay</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/maingame/MainGameExitDisplay.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.csse3200.game.components.maingame.<a href="com/csse3200/game/components/maingame/MainGameExitDisplay.html" title="class in com.csse3200.game.components.maingame">MainGameExitDisplay</a></dt>
@@ -2070,6 +2110,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/rendering/AnimationRenderComponent.html#getCurrentAnimation()" class="member-name-link">getCurrentAnimation()</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/AnimationRenderComponent.html" title="class in com.csse3200.game.rendering">AnimationRenderComponent</a></dt>
 <dd>
 <div class="block">Get the name of the animation currently being played.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/items/ClueComponent.html#getCurrentBaseLocation()" class="member-name-link">getCurrentBaseLocation()</a> - Method in class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/ClueComponent.html" title="class in com.csse3200.game.components.items">ClueComponent</a></dt>
+<dd>
+<div class="block">Gets the base location of this item.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/plants/PlantComponent.html#getCurrentGrowthLevel()" class="member-name-link">getCurrentGrowthLevel()</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
 <dd>
@@ -5761,6 +5805,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/inventory/InventoryDisplay.html#toggleOpen()" class="member-name-link">toggleOpen()</a> - Method in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/InventoryDisplay.html" title="class in com.csse3200.game.components.inventory">InventoryDisplay</a></dt>
 <dd>
 <div class="block">Toggle the inventory open, and changes the window visibility</div>
+</dd>
+<dt><a href="com/csse3200/game/components/items/CoordinatesDisplay.html#toggleOpen()" class="member-name-link">toggleOpen()</a> - Method in class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/CoordinatesDisplay.html" title="class in com.csse3200.game.components.items">CoordinatesDisplay</a></dt>
+<dd>
+<div class="block">Opens and closes the UI.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/questgiver/MissionDisplay.html#toggleOpen()" class="member-name-link">toggleOpen()</a> - Method in class com.csse3200.game.components.questgiver.<a href="com/csse3200/game/components/questgiver/MissionDisplay.html" title="class in com.csse3200.game.components.questgiver">MissionDisplay</a></dt>
 <dd>
