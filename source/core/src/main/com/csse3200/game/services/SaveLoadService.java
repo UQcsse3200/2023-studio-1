@@ -29,22 +29,6 @@ import com.csse3200.game.missions.MissionManager;
  *  for the moment I am unsure if this is sufficient.
  *  Some other services are registered in multiple places such as MainGameScreen.
  */
-
-/* Current functionality:
- * - prints save/load to system out depending on method call.
- * - Saves:
- *    - player pos.
- *    - player inventory
- *    - time/day.
- *    - entity (cows and stuff) location & tamed status.
- *    - tiles (cropTileComponent and plants)
- * - Loads:
- *    - player pos.
- *    - time/day.
- *    - entity (cows and stuff) location & tamed status
- *    - tiles (cropTileComponent and plants)
- * After that we need wiki and sprint achievement form.
- */
 public class SaveLoadService {
   private static final Logger logger = LoggerFactory.getLogger(SaveLoadService.class);
   /**

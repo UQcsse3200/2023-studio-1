@@ -471,22 +471,8 @@ public class Entity implements Json.Serializable {
                 case Player:
                     // Does not make a new player, instead just updates the current one
                     InventoryComponent inventoryComponent = new InventoryComponent(null);
-                    HashMap<Entity, Integer> items = new HashMap<>();
-                    HashMap<Entity, Point> itemPositions = new HashMap<>();
-                    ArrayList inventory = new ArrayList();
-                    JsonValue inv = jsonMap.get("components").get("InventoryComponent").get("inventory");
-                    inv.forEach(jsonValue -> {
-                        Entity item = FactoryService.getItemFactories().get(jsonValue.getString("name")).get();
-                        ItemType itemType = item.getComponent(ItemComponent.class).getItemType();
-                        switch (itemType) {
-                            case WATERING_CAN ->
-                                    item.getComponent(WateringCanLevelComponent.class).setCurrentLevel(jsonValue.getFloat("level"));
-                        }
-                        items.put(item, jsonValue.getInt("count"));
-                        itemPositions.put(item, new Point(jsonValue.getInt("X"), jsonValue.getInt("Y")));
-                        inventory.add(item);
-                    });
-                    inventoryComponent.setInventory(items, itemPositions, inventory);
+                    JsonValue inv = jsonMap.get("components");
+                    inventoryComponent.read(json, inv);
                     this.addComponent(inventoryComponent);
                     break;
                 default:
