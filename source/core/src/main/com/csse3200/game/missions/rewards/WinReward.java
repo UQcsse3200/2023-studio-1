@@ -13,6 +13,7 @@ public class WinReward extends Reward {
      */
     @Override
     public void collect() {
+        setCollected();
         ServiceLocator.getMissionManager().getEvents().trigger("winScreen");
     }
 
