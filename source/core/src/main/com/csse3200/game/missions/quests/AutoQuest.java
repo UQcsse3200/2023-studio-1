@@ -77,7 +77,7 @@ public class AutoQuest extends Quest {
     }
 
     /**
-     * Get's the {@AutoQuest}'s progress.
+     * Get's the {@link AutoQuest}'s progress.
      * @return - always 0 as there is no progress in an {@link AutoQuest}
      */
     @Override
