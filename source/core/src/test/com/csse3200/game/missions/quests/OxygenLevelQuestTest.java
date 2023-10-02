@@ -246,4 +246,33 @@ class OxygenLevelQuestTest {
         assertEquals(100, OLQuest8.getProgress());
     }
 
+    @Test
+    public void testResetState() {
+        testIsCompleted();
+        assertTrue(OLQuest1.isCompleted());
+        assertTrue(OLQuest2.isCompleted());
+        assertTrue(OLQuest3.isCompleted());
+        assertTrue(OLQuest4.isCompleted());
+        assertTrue(OLQuest5.isCompleted());
+        assertTrue(OLQuest6.isCompleted());
+        assertTrue(OLQuest7.isCompleted());
+        assertTrue(OLQuest8.isCompleted());
+        OLQuest1.resetState();
+        OLQuest2.resetState();
+        OLQuest3.resetState();
+        OLQuest4.resetState();
+        OLQuest5.resetState();
+        OLQuest6.resetState();
+        OLQuest7.resetState();
+        OLQuest8.resetState();
+        assertTrue(OLQuest1.isCompleted());
+        assertTrue(OLQuest2.isCompleted());
+        assertFalse(OLQuest3.isCompleted());
+        assertFalse(OLQuest4.isCompleted());
+        assertTrue(OLQuest5.isCompleted());
+        assertTrue(OLQuest6.isCompleted());
+        assertFalse(OLQuest7.isCompleted());
+        assertFalse(OLQuest8.isCompleted());
+    }
+
 }
