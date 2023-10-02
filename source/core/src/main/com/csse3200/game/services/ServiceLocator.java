@@ -1,5 +1,6 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.services.sound.SoundService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +38,8 @@ public class ServiceLocator {
   private static SaveLoadService saveLoadService;
   private static MissionManager missions;
   private static PlanetOxygenService planetOxygenService;
+
+  private static SoundService soundService;
 
   public static GameArea getGameArea() {
     return gameArea;
@@ -82,6 +85,10 @@ public class ServiceLocator {
 
   public static SaveLoadService getSaveLoadService() {
     return saveLoadService;
+  }
+
+  public static SoundService getSoundService() {
+    return soundService;
   }
 
   public static void registerGameArea(GameArea area) {
@@ -153,6 +160,11 @@ public class ServiceLocator {
     saveLoadService = source;
   }
 
+  public static void registerSoundService(SoundService source) {
+    logger.debug("Registering sound service {}", source);
+    soundService = source;
+  }
+
   /**
    * Clears all registered services.
    * Do not clear saveLoadService
@@ -165,6 +177,7 @@ public class ServiceLocator {
     inputService = null;
     resourceService = null;
     gameArea = null;
+    soundService = null;
   }
 
   private ServiceLocator() {
