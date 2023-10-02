@@ -6,6 +6,8 @@ import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 
+import com.csse3200.game.services.ResourceService;
+import net.bytebuddy.asm.Advice;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,12 +35,18 @@ public class TestToolbarUI {
     Entity player;
     ToolbarDisplay toolbarDisplay;
     InventoryComponent inventory;
+    private final String[] texturePaths = {"images/selected.png", "images/itemFrame.png"};
+
 
     /**
      * Create a player entity.
      */
     @BeforeEach
     void createPlayer() {
+        ServiceLocator.registerResourceService(new ResourceService());
+        ServiceLocator.getResourceService().loadTextures(texturePaths);
+        ServiceLocator.getResourceService().loadAll();
+
         Stage stage = mock(Stage.class);
 
         RenderService renderService = new RenderService();

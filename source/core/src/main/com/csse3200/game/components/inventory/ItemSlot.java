@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.utils.Align;
+import com.csse3200.game.services.ServiceLocator;
 
 /**
  * A class used to combine all the data necessary to the individual inventory slots
@@ -34,8 +35,8 @@ public class ItemSlot extends Stack {
     public ItemSlot(Texture itemTexture, Integer count, boolean selected) {
         this.itemTexture = itemTexture;
         this.count = count;
-        this.background = new Image(new Texture(Gdx.files.internal("images/selected.png")));
-        this.frame = new Image(new Texture(Gdx.files.internal("images/itemFrame.png")));
+        this.background = new Image(ServiceLocator.getResourceService().getAsset("images/selected.png", Texture.class));
+        this.frame = new Image(ServiceLocator.getResourceService().getAsset("images/itemFrame.png", Texture.class));
         this.selected = selected;
         this.createItemSlot();
     }
@@ -48,8 +49,8 @@ public class ItemSlot extends Stack {
     public ItemSlot(Texture itemTexture, boolean selected) {
         this.itemTexture = itemTexture;
         this.count = null;
-        this.background = new Image(new Texture(Gdx.files.internal("images/selected.png")));
-        this.frame = new Image(new Texture(Gdx.files.internal("images/itemFrame.png")));
+        this.background = new Image(ServiceLocator.getResourceService().getAsset("images/selected.png", Texture.class));
+        this.frame = new Image(ServiceLocator.getResourceService().getAsset("images/itemFrame.png", Texture.class));
         this.selected = selected;
         this.createItemSlot();
     }
@@ -61,8 +62,8 @@ public class ItemSlot extends Stack {
     public ItemSlot(boolean selected) {
         this.itemTexture = null;
         this.count = null;
-        this.background = new Image(new Texture(Gdx.files.internal("images/selected.png")));
-        this.frame = new Image(new Texture(Gdx.files.internal("images/itemFrame.png")));
+        this.background = new Image(ServiceLocator.getResourceService().getAsset("images/selected.png", Texture.class));
+        this.frame = new Image(ServiceLocator.getResourceService().getAsset("images/itemFrame.png", Texture.class));
         this.selected = selected;
         this.createItemSlot();
 
