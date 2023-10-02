@@ -119,7 +119,5 @@ public class ShipProgressComponent extends Component {
         for (JsonValue val : jsonMap.get("features")) {
             this.unlockedFeatures.add(Feature.valueOf(val.asString()));
         }
-        // Notify other listening components
-        entity.getEvents().trigger("progressUpdated", this.progress, this.unlockedFeatures);
     }
 }
