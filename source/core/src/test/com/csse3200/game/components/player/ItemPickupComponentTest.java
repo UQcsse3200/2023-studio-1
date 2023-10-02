@@ -2,6 +2,7 @@ package com.csse3200.game.components.player;
 
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,6 +32,7 @@ public class ItemPickupComponentTest {
 
     private Entity picker;
     private Entity pickupItem;
+    private final String[] texturePaths = {"images/tool_shovel.png"};
 
     public class TestGameArea extends GameArea {
         @Override
@@ -65,10 +67,14 @@ public class ItemPickupComponentTest {
     void beforeEach() {
         ServiceLocator.registerPhysicsService(new PhysicsService());
         ServiceLocator.registerInputService(new InputService());
-        ServiceLocator.registerResourceService(new ResourceService());
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerRenderService(new RenderService());
         ServiceLocator.registerGameArea(new TestGameArea());
+
+        ServiceLocator.registerResourceService(new ResourceService());
+        ServiceLocator.getResourceService().loadTextures(texturePaths);
+        ServiceLocator.getResourceService().loadAll();
+
         /* Create two test entities (one that picks up the other) */
         picker = new Entity()
                 .addComponent(new PhysicsComponent())
@@ -78,10 +84,15 @@ public class ItemPickupComponentTest {
         pickupItem = new Entity()
                 .addComponent(new PhysicsComponent())
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ITEM))
-                .addComponent(new ItemComponent("Shovel", ItemType.SHOVEL, new Texture("images/tool_shovel.png")));
+                .addComponent(new ItemComponent("Shovel", ItemType.SHOVEL, "images/tool_shovel.png"));
 
         picker.create();
         pickupItem.create();
+    }
+
+    @AfterEach
+    void clear() {
+        ServiceLocator.clear();
     }
 
     @Test
