@@ -1,11 +1,10 @@
 package com.csse3200.game.entities;
 
+import java.security.SecureRandom;
+
 import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.entities.factories.NPCFactory;
-import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.services.ServiceLocator;
-
-import java.security.SecureRandom;
 
 public class FireflySpawner {
 
