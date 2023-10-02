@@ -29,6 +29,11 @@ public class TriggerHostilesReward extends Reward {
             GridPoint2 upper = new GridPoint2(playerPos.x + 10, playerPos.y + 10);
 
             GridPoint2 spawnPos = RandomUtils.random(lower, upper);
+
+            while (!gameArea.getMap().getTile(spawnPos).isTraversable()) {
+                spawnPos = RandomUtils.random(lower, upper);
+            }
+
             gameArea.spawnEntityAt(enemy, spawnPos, true, true);
         }
 
