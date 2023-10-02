@@ -26,6 +26,7 @@ public enum EntityType {
     Light(0),
     Ship(0),
     ShipDebris(0),
+    ShipPartTile(0),
     FireFlies(0);
 
 
