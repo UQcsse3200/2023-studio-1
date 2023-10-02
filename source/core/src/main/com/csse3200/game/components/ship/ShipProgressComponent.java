@@ -3,6 +3,8 @@ package com.csse3200.game.components.ship;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -40,19 +42,19 @@ public class ShipProgressComponent extends Component {
     public void create() {
         this.progress = 0;
         unlockedFeatures = new HashSet<Feature>();
-        // listen to add artefact call
+        // listen to add part call
         entity.getEvents().addListener("addPart", this::incrementProgress);
         entity.getEvents().addListener("removePart", this::decrementProgress);
     }
 
     /**
-     * Update the progress of the ship repair by incrementing it by however many artefacts the player 'used' on the
-     * ship. This will also call a progressUpdate event on the Ship entity it is attached to.
+     * Update the progress of the ship repair by incrementing it each time the player 'uses' a ship part
+     * on the ship. This will also call a progressUpdate event on the Ship entity it is attached to.
      */
-    private void incrementProgress(int amount) {
+    private void incrementProgress() {
         if (this.progress < maximum_repair) {
             // Bound maximum repair state
-            this.progress = min(this.progress + amount, maximum_repair);
+            this.progress = min(this.progress + 1, maximum_repair);
 
             for (Feature feature : Feature.values()) {
                 if (feature.unlockLevel <= this.progress) {
@@ -61,8 +63,11 @@ public class ShipProgressComponent extends Component {
             }
 
             // Only send progress update if repair actually happened
-            entity.getEvents().trigger("progressUpdated", this.progress, this.unlockedFeatures);
-            ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.SHIP_PART_ADDED.name());
+            //if (entity.getComponent(ItemComponent.class).getItemType() == ItemType.SHIP_PART) {
+                entity.getEvents().trigger("progressUpdated", this.progress, this.unlockedFeatures);
+                ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.SHIP_PART_ADDED.name());
+            //}
+
         }
     }
 

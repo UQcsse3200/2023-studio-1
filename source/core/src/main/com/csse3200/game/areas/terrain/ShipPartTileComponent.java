@@ -65,7 +65,7 @@ public class ShipPartTileComponent extends Component {
             destroyShipDebris();
         } else {
             // drop a ship part
-            Entity item = ItemFactory.createEgg(); // the ship is made of eggs apparently
+            Entity item = ItemFactory.createShipPart(); // the ship is made of ship stuff now
             item.setCenterPosition(entity.getCenterPosition());
             ServiceLocator.getEntityService().register(item);
 

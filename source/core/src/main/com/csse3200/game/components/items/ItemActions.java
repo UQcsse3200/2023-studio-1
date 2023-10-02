@@ -13,6 +13,7 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -82,6 +83,10 @@ public class ItemActions extends Component {
       }
       case PLACEABLE -> {
         resultStatus = place(tile, getAdjustedPos(playerPos, mousePos));
+        return resultStatus;
+      }
+      case SHIP_PART -> {
+        resultStatus = repair(player, mouseWorldPos);
         return resultStatus;
       }
       default -> {
@@ -312,5 +317,22 @@ public class ItemActions extends Component {
 
     entityToFeed.getEvents().trigger("feed");
     return true;
+  }
+
+  /**
+   * Repairs the ship if the player has a ship part item
+   *
+   * @param player the player attempting to repair the ship
+   * @param mouseWorldPos
+   * @return
+   */
+  private boolean repair(Entity player, Vector2 mouseWorldPos) {
+    InteractionDetector detector = player.getComponent(InteractionDetector.class);
+    Entity ship = detector.getEntity();
+    if (ship.getType() == EntityType.Ship) {
+      ship.getEvents().trigger("addPart");
+      return true;
+    }
+    return false;
   }
 }
