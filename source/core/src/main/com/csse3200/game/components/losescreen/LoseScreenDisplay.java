@@ -146,9 +146,11 @@ public class LoseScreenDisplay extends UIComponent {
         String reason = getString(causeOfDeath);
         losingMessage = """ 
                 {SLOW}Despite your best efforts,
+                
                 """
                 + reason +
                 """
+                
                 
                 {WAIT}Humanity has been lost to the ages.
                 

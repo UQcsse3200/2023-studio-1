@@ -165,6 +165,9 @@ public class MainGameScreen extends ScreenAdapter {
             ServiceLocator.getEntityService().update();
         }
         ServiceLocator.getTimeService().update();
+        // This needs to be checked separately from updateActiveQuestTimes due to an issue with triggering the lose
+        // screen, which should be changed before the end of sprint 4
+        ServiceLocator.getMissionManager().checkMandatoryQuestExpiry();
         renderer.render();
 
         if (PauseMenuActions.getQuitGameStatus()) {
