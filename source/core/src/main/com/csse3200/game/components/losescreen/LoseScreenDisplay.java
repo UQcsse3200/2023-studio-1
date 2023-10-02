@@ -152,7 +152,7 @@ public class LoseScreenDisplay extends UIComponent {
                 
                 {WAIT}Humanity has been lost to the ages.
                 
-                {COLOR=RED}Game Over{WAIT=1}
+                {COLOR=RED}Game Over
             """;
     }
 
