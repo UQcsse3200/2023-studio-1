@@ -345,10 +345,10 @@ public class SpaceGameArea extends GameArea {
     List<EntitySpawner> hostileSpawners = new ArrayList<>();
     hostileSpawners.add(new EntitySpawner(3, NPCFactory::createOxygenEater, player,
             0, 1, 5, 5, 2));
-//    hostileSpawners.add(new EntitySpawner(5, NPCFactory::createDragonFly, player,
-//            0, 2, 5, 5, 3));
-//    hostileSpawners.add(new EntitySpawner(7, NPCFactory::createBat, player,
-//            0, 1, 5, 5, 2));
+    hostileSpawners.add(new EntitySpawner(5, NPCFactory::createDragonfly, player,
+            0, 2, 5, 5, 3));
+    hostileSpawners.add(new EntitySpawner(7, NPCFactory::createBat, player,
+            0, 1, 5, 5, 2));
 
 
     hostileSpawner = new EntitiesSpawner(hostileSpawners);
