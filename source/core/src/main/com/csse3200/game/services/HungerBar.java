@@ -31,7 +31,7 @@ public class HungerBar extends UIComponent{
         ServiceLocator.getPlayerHungerService().getEvents()
                 .addListener("hungerUpdate", this::updateDisplay);
 
-        updateDisplay();
+        updateDisplay(30);
     }
 
     /**
@@ -59,13 +59,12 @@ public class HungerBar extends UIComponent{
     /**
      * Updates the display, showing the hunger bar in the top of the main game screen.
      */
-    public void updateDisplay() {
+    public void updateDisplay(int hungerLevel) {
         if (hungerLabels == null) {
             createTexture();
         }
 
-        int hungerPercent = ServiceLocator.getPlayerHungerService().getHungerPercentage();
-        float scaling = (float) hungerPercent / 100;
+        float scaling = (float) hungerLevel / 100;
 
         // Accounts for scaling of the hunger bar due to the hunger percent
         hungerBarFill.setX(hungerBarFill.getImageX() + 14 * (1 - scaling));
@@ -74,8 +73,8 @@ public class HungerBar extends UIComponent{
 //        hungerBarOutline.setPosition(-550f, -5f);
 
         // Add a safety check to ensure that the array is always accessed at a possible index
-        if (0 <= hungerPercent && hungerPercent <= 100) {
-            hungerLabel = hungerLabels.get(hungerPercent);
+        if (0 <= hungerLevel && hungerLevel <= 100) {
+            hungerLabel = hungerLabels.get(hungerLevel);
             hungerLabel.setPosition(hungerBarOutline.getImageX() + 125f, hungerBarOutline.getImageY() + 8.5f);
         }
 

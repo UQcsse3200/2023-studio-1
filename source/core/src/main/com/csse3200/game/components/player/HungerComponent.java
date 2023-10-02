@@ -20,14 +20,14 @@ public class HungerComponent extends Component {
 
     private void minuteUpdate() {
         int min = ServiceLocator.getTimeService().getMinute();
-        if (min % 10 == 0) {
+        if (min % 20 == 0) {
             increaseHungerLevel(1);
         }
         checkIfStarving();
     }
 
     private void checkIfStarving() {
-        if (hungerLevel <= 0) {
+        if (hungerLevel >= 100) {
             entity.getComponent(CombatStatsComponent.class).addHealth(-5);
         }
     }
@@ -48,6 +48,7 @@ public class HungerComponent extends Component {
         } else if (hungerLevel >= 100) {
             hungerLevel = 100;
         }
-        entity.getEvents().trigger("hungerUpdate", hungerLevel);
+        // Inform the PlayerHungerService that the hunger has been updated
+        ServiceLocator.getPlayerHungerService().getEvents().trigger("hungerUpdate", hungerLevel);
     }
 }
