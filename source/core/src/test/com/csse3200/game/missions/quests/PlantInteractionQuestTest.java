@@ -428,19 +428,12 @@ class PlantInteractionQuestTest {
     public void testReadProgress() {
         int progressInt = 3;
         JsonValue progress = new JsonValue(progressInt);
-        String desc1 = "Manage the presence of hostile creatures on your farm.\n" +
-                "Deal with hostile creatures by defeating them with weapons, or let your Space Snappers eat them.\n" +
-                "Deal with %d creatures of type Oxygen Eater.\n" +
-                "%d out of %d hostiles dealt with.";
-        String desc2 = "Manage the presence of hostile creatures on your farm.\n" +
-                "Deal with hostile creatures by defeating them with weapons, or let your Space Snappers eat them.\n" +
-                "Deal with %d creatures of type Cow, Oxygen Eater.\n" +
-                "%d out of %d hostiles dealt with.";
-        String desc3 = "Manage the presence of hostile creatures on your farm.\n" +
-                "Deal with hostile creatures by defeating them with weapons, or let your Space Snappers eat them.\n" +
-                "Deal with %d creatures of type Cow, Astrolotl, Oxygen Eater.\n" +
-                "%d out of %d hostiles dealt with.";
-        String shortDesc = "%d out of %d hostiles dealt with";
+        String desc1 = "Plant %d crops of type Cosmic Cob.\n%d out of %d crops planted.";
+        String desc2 = "Plant %d crops of type Aloe Vera, Cosmic Cob.\n%d out of %d crops planted.";
+        String desc3 = "Harvest %d crops of type Cosmic Cob.\n%d out of %d crops harvested.";
+        String desc4 = "Harvest %d crops of type Aloe Vera, Cosmic Cob.\n%d out of %d crops harvested.";
+        String shortDesc1 = "%d out of %d crops planted";
+        String shortDesc2 = "%d out of %d crops harvested";
         PIQuest1.readProgress(progress);
         PIQuest2.readProgress(progress);
         PIQuest3.readProgress(progress);
@@ -449,19 +442,19 @@ class PlantInteractionQuestTest {
         PIQuest6.readProgress(progress);
         PIQuest7.readProgress(progress);
         String formatted1 = String.format(desc1, 10, progressInt, 10);
-        String formatted2 = String.format(desc2, 0, progressInt, 0);
-        String formatted3 = String.format(desc2, 10, progressInt, 10);
-        String formatted4 = String.format(desc3, 10, progressInt, 10);
-        String formatted5 = String.format(desc3, 0, progressInt, 0);
-        String formatted6 = String.format(desc3, 10, progressInt, 10);
-        String formatted7 = String.format(desc3, 3, progressInt, 3);
-        String shortFormatted1 = String.format(shortDesc, progressInt, 10);
-        String shortFormatted2 = String.format(shortDesc, progressInt, 0);
-        String shortFormatted3 = String.format(shortDesc, progressInt, 10);
-        String shortFormatted4 = String.format(shortDesc, progressInt, 10);
-        String shortFormatted5 = String.format(shortDesc, progressInt, 0);
-        String shortFormatted6 = String.format(shortDesc, progressInt, 10);
-        String shortFormatted7 = String.format(shortDesc, progressInt, 3);
+        String formatted2 = String.format(desc1, 0, progressInt, 0);
+        String formatted3 = String.format(desc3, 10, progressInt, 10);
+        String formatted4 = String.format(desc2, 10, progressInt, 10);
+        String formatted5 = String.format(desc4, 0, progressInt, 0);
+        String formatted6 = String.format(desc4, 3, progressInt, 3);
+        String formatted7 = String.format(desc2, 3, progressInt, 3);
+        String shortFormatted1 = String.format(shortDesc1, progressInt, 10);
+        String shortFormatted2 = String.format(shortDesc1, progressInt, 0);
+        String shortFormatted3 = String.format(shortDesc2, progressInt, 10);
+        String shortFormatted4 = String.format(shortDesc1, progressInt, 10);
+        String shortFormatted5 = String.format(shortDesc2, progressInt, 0);
+        String shortFormatted6 = String.format(shortDesc2, progressInt, 3);
+        String shortFormatted7 = String.format(shortDesc1, progressInt, 3);
         assertEquals(formatted1, PIQuest1.getDescription());
         assertEquals(formatted2, PIQuest2.getDescription());
         assertEquals(formatted3, PIQuest3.getDescription());
