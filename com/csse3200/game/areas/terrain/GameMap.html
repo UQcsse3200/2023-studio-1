@@ -110,12 +110,12 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createTerrainComponent()" class="member-name-link">createTerrainComponent</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Creates the TerrainComponent instance used to render the SpaceGameArea map and stores it in the GameMap class</div>
+<div class="block">Creates the TerrainComponent instance used to render the SpaceGameArea map and stores it in the GameMap class.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createTestTerrainComponent(java.lang.String)" class="member-name-link">createTestTerrainComponent</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;testMapFilePath)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">FOR HUNTER TO IMPLEMENT                                                                     HUNTER DONT FORGET</div>
+<div class="block">Creates the TerrainComponent instance used to render a test game map.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.math.GridPoint2</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMapSize()" class="member-name-link">getMapSize</a>()</code></div>
@@ -158,19 +158,24 @@ loadScripts(document, 'script');</script>
 <div class="block">Retrieves a list of grid coordinates representing traversable tiles on the map.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTerrainComponent(com.csse3200.game.areas.terrain.TerrainComponent)" class="member-name-link">setTerrainComponent</a><wbr>(<a href="TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a>&nbsp;terrainComponent)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#loadTestTerrain(java.lang.String)" class="member-name-link">loadTestTerrain</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;testMapFilePath)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Instantiates the GameMap with a test file map to be used in JUnit testing.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTerrainComponent(com.csse3200.game.areas.terrain.TerrainComponent)" class="member-name-link">setTerrainComponent</a><wbr>(<a href="TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a>&nbsp;terrainComponent)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the TerrainComponent.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.math.Vector2</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#tileCoordinatesToVector(com.badlogic.gdx.math.GridPoint2)" class="member-name-link">tileCoordinatesToVector</a><wbr>(com.badlogic.gdx.math.GridPoint2&nbsp;gridPoint2)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.math.Vector2</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#tileCoordinatesToVector(com.badlogic.gdx.math.GridPoint2)" class="member-name-link">tileCoordinatesToVector</a><wbr>(com.badlogic.gdx.math.GridPoint2&nbsp;gridPoint2)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Converts a GridPoint2 instance into a Vector2 instance representing the same TerrainTile position on the map
  layer.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.math.GridPoint2</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#vectorToTileCoordinates(com.badlogic.gdx.math.Vector2)" class="member-name-link">vectorToTileCoordinates</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;vector)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.math.GridPoint2</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#vectorToTileCoordinates(com.badlogic.gdx.math.Vector2)" class="member-name-link">vectorToTileCoordinates</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;vector)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Converts a Vector2 instance into a GridPoint2 instance representing the same TerrainTile position on the map
  layer.</div>
 </div>
@@ -214,14 +219,38 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="createTerrainComponent()">
 <h3>createTerrainComponent</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">createTerrainComponent</span>()</div>
-<div class="block">Creates the TerrainComponent instance used to render the SpaceGameArea map and stores it in the GameMap class</div>
+<div class="block">Creates the TerrainComponent instance used to render the SpaceGameArea map and stores it in the GameMap class.
+ Additionally, updates the TiledMap instance so that getter and setter methods for accessing TerrainTile instances
+ can function correctly.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="createTestTerrainComponent(java.lang.String)">
 <h3>createTestTerrainComponent</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">createTestTerrainComponent</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;testMapFilePath)</span></div>
-<div class="block">FOR HUNTER TO IMPLEMENT                                                                     HUNTER DONT FORGET</div>
+<div class="block">Creates the TerrainComponent instance used to render a test game map. Additionally, updates the TiledMap instance
+ so that the getter and setter methods for accessing TerrainTile instances can function correctly. This method is
+ intended to allow for play testing of different game maps. Trying to generate a TerrainComponent through JUnit
+ tests can be difficult, so an alternate loadTestTerrain() method has been provided to only set the TiledMap
+ instance needed for interacting with terrain.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>testMapFilePath</code> - the file path of the test map file to load.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="loadTestTerrain(java.lang.String)">
+<h3>loadTestTerrain</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">loadTestTerrain</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;testMapFilePath)</span></div>
+<div class="block">Instantiates the GameMap with a test file map to be used in JUnit testing. This updates the TiledMap instance so
+ that the getter and setter methods for accessing TerrainTile instances can function correctly in JUnit tests that
+ require them. This method does not create a TerrainComponent, which means it cannot be used to render an actual
+ game map.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>testMapFilePath</code> - the file path of the test map file to load.</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -284,7 +313,7 @@ loadScripts(document, 'script');</script>
 <h3>getTile</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></span>&nbsp;<span class="element-name">getTile</span><wbr><span class="parameters">(com.badlogic.gdx.math.GridPoint2&nbsp;gridPoint)</span></div>
 <div class="block">Gets the TerrainTile at the specified GridPoint2 position. The x and y values in the GridPoint2 class directly
- correspond to the tile's position in the map layer.</div>
+ correspond to the tile's position in the map layer. (0, 0) is the bottom left of the map.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>gridPoint</code> - The GridPoint2 instance representing the target TerrainTile's position.</dd>
@@ -299,7 +328,8 @@ loadScripts(document, 'script');</script>
 <h3>getTile</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></span>&nbsp;<span class="element-name">getTile</span><wbr><span class="parameters">(com.badlogic.gdx.math.Vector2&nbsp;vector)</span></div>
 <div class="block">Gets the TerrainTile at the specified Vector2 position. The x and y float values in the Vector2 class are
- transformed so that they correspond to the integer positions of the TerrainTile in the map layer.
+ transformed so that they correspond to the integer positions of the TerrainTile in the map layer. (0, 0) is the
+ bottom left of the map.
 
  If using the Vector2 position variable from the Entity class, it is important to remember that the vector points
  to the bottom left of the entity , not the centre of the entity (This is important to know if the entity uses
