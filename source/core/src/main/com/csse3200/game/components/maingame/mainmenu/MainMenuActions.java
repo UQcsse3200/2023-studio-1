@@ -25,6 +25,7 @@ public class MainMenuActions extends Component {
     entity.getEvents().addListener("control", this::onControls);
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("settings", this::onSettings);
+    entity.getEvents().addListener("credits", this::onCredits);
   }
 
   /**
@@ -67,5 +68,13 @@ public class MainMenuActions extends Component {
   private void onSettings() {
     logger.info("Launching settings screen");
     game.setScreen(GdxGame.ScreenType.SETTINGS);
+  }
+
+  /**
+   * Swaps to the Credits screen.
+   */
+  private void onCredits() {
+    logger.info("Play Credits");
+    game.setScreen(GdxGame.ScreenType.ENDCREDITS);
   }
 }

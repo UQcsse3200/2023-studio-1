@@ -1,6 +1,6 @@
 package com.csse3200.game.services;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -173,14 +173,17 @@ public class ResourceService implements Disposable {
   }
 
   /**
-   * Loads a list of skin assets into the asset manager.
-   *
-   * @param skinNames skin names
+   * Loads a list of particle effect assets into the asset manager
+   * @param particleNames particle effect filenames
    */
-  public void loadSkins(String[] skinNames) {
-    loadAssets(skinNames, Skin.class);
+  public void loadParticleEffects(String[] particleNames) {
+    loadAssets(particleNames, ParticleEffect.class);
   }
 
+  /**
+   * Disposes of assets and all of their dependencies from the resource manager
+   * @param assetNames list of asset names to dispose of
+   */
   public void unloadAssets(String[] assetNames) {
     for (String assetName : assetNames) {
       logger.debug("Unloading {}", assetName);
@@ -192,6 +195,10 @@ public class ResourceService implements Disposable {
     }
   }
 
+  /**
+   * Disposes of the resource service, clearing the asset manager which clears and disposes of all assets and clears
+   * the preloading queue
+   */
   @Override
   public void dispose() {
     assetManager.clear();

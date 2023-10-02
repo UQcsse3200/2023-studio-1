@@ -2,6 +2,7 @@ package com.csse3200.game.components.player;
 
 import java.util.ArrayList;
 
+import com.csse3200.game.entities.EntityType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

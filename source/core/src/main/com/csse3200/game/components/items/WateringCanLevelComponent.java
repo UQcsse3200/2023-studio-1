@@ -78,6 +78,13 @@ public class WateringCanLevelComponent extends Component {
             return;
         }
 
+        //check the new value isn't less then zero
+        // if it is then set the current level to 0
+        if (newAmount < 0){
+            currentLevel = 0;
+            return;
+        }
+
         currentLevel = newAmount;
     }
 
@@ -94,8 +101,47 @@ public class WateringCanLevelComponent extends Component {
             currentLevel = capacity;
             return;
         }
-
+        
         currentLevel += increment;
+
+        //check to is the increment has set the water below 0
+        //e.g. currentLevel = 5   and   increment = -10   ->   newLevel = -5
+        //if this is the case set the value to 0
+        if (currentLevel < 0){
+            currentLevel = 0;
+        }
+    }
+
+    /**
+     * Fill the current level of water to the max that can be stored
+     */
+    public void fillToMax(){
+        currentLevel = capacity;
+    }
+
+    /**
+     * Remove all water from the watering can
+     */
+    public void empty(){
+        currentLevel = 0;
+    }
+    
+    /**
+     * Check and return whether the the wateringCan is full
+     * @return
+     */
+    public boolean isFull() {
+        if (currentLevel >= capacity){ return true; }
+        return false;
+    }
+    
+    /**
+     * check and return whether the the wateringCan is empty
+     * @return 
+     */
+    public boolean isEmpty() {
+        if (currentLevel <= 0){ return true; }
+        return false;
     }
 
     @Override
