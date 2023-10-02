@@ -24,7 +24,7 @@ public class OxygenLevelQuest extends Quest {
         this.oxygenLevel = oxygenLevel;
         this.oxygenLevelDescription = oxygenLevelDescription;
 
-        this.hourTarget = hourTarget;
+        this.hourTarget = Math.max(hourTarget, 0);
         this.currentHour = 0;
         this.targetOxygenLevel = targetOxygenLevel;
     }
@@ -36,7 +36,7 @@ public class OxygenLevelQuest extends Quest {
         this.oxygenLevel = oxygenLevel;
         this.oxygenLevelDescription = oxygenLevelDescription;
 
-        this.hourTarget = hourTarget;
+        this.hourTarget = Math.max(hourTarget, 0);
         this.currentHour = 0;
         this.targetOxygenLevel = targetOxygenLevel;
     }
