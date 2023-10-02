@@ -63,7 +63,7 @@ public class ShipPartTileComponentTest {
         Entity mockItem = new Entity(EntityType.Item);
 
         try (MockedStatic<ItemFactory> itemFactory = mockStatic(ItemFactory.class)) {
-            itemFactory.when(ItemFactory::createEgg).thenReturn(mockItem);
+            itemFactory.when(ItemFactory::createShipPart).thenReturn(mockItem);
 
             shipPartTile.getEvents().trigger("destroy", mockTerrainTile);
 
