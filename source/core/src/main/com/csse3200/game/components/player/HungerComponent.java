@@ -48,5 +48,6 @@ public class HungerComponent extends Component {
         } else if (hungerLevel >= 100) {
             hungerLevel = 100;
         }
+        entity.getEvents().trigger("hungerUpdate", hungerLevel);
     }
 }
