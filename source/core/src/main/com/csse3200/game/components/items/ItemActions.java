@@ -92,6 +92,10 @@ public class ItemActions extends Component {
         resultStatus = place(tile, getAdjustedPos(playerPos, mousePos));
         return resultStatus;
       }
+      case CLUE_ITEM -> {
+        entity.getEvents().trigger("mapDisplay");
+        return true;
+      }
       default -> {
         return false;
       }

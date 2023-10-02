@@ -207,6 +207,7 @@ public class SpaceGameArea extends GameArea {
           "images/ship/ship_debris.png",
           "images/ship/ship.png",
           "images/ship/ship_part.png",
+          "images/ship/ship_clue.png"
   };
 
   private static final String[] forestTextureAtlases = {

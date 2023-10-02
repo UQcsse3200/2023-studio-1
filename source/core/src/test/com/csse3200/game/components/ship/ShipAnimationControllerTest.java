@@ -23,46 +23,46 @@ import com.csse3200.game.services.ServiceLocator;
 
 @ExtendWith(GameExtension.class)
 public class ShipAnimationControllerTest {
-    private Entity ship;
-    private AnimationRenderComponent animationRenderComponent;
+	private Entity ship;
+	private AnimationRenderComponent animationRenderComponent;
 
-    // code edited from PlayerAnimationControllerTest by team 2
-    @BeforeEach
-    void initialiseTest() {
-        ServiceLocator.registerRenderService(new RenderService());
-        ResourceService resourceService = new ResourceService();
-        resourceService.loadTextureAtlases(new String[]{ "images/ship/ship.atlas" });
-        resourceService.loadAll();
-        ServiceLocator.registerResourceService(resourceService);
+	// code edited from PlayerAnimationControllerTest by team 2
+	@BeforeEach
+	void initialiseTest() {
+		ServiceLocator.registerRenderService(new RenderService());
+		ResourceService resourceService = new ResourceService();
+		resourceService.loadTextureAtlases(new String[]{"images/ship/ship.atlas"});
+		resourceService.loadAll();
+		ServiceLocator.registerResourceService(resourceService);
 
-        animationRenderComponent = ShipFactory.setupShipAnimations();
-        
-        ship = new Entity(EntityType.Ship)
-                .addComponent(animationRenderComponent)
-                .addComponent(new ShipAnimationController());
+		animationRenderComponent = ShipFactory.setupShipAnimations();
 
-        ship.getComponent(AnimationRenderComponent.class).scaleEntity();
-        ship.create();
-    }
+		ship = new Entity(EntityType.Ship)
+				.addComponent(animationRenderComponent)
+				.addComponent(new ShipAnimationController());
 
-    @ParameterizedTest(name = "{2} animation played correctly on {0} event trigger with  {1} repairs made")
-    @MethodSource({ "shouldUpdateAnimationOnProgressUpdate" })
-    void shouldUpdateAnimationOnProgressUpdate(String animationEvent, int progress, String expectedAnimationName) {
-        ship.getEvents().trigger(animationEvent, progress, new HashSet<>());
-        assertEquals(expectedAnimationName, animationRenderComponent.getCurrentAnimation());
-    }
+		ship.getComponent(AnimationRenderComponent.class).scaleEntity();
+		ship.create();
+	}
 
-    private static Stream<Arguments> shouldUpdateAnimationOnProgressUpdate() {
-        return Stream.of(
-                // (animationEvent, progress, expectedAnimationName)
-                arguments("progressUpdated", -10, "default"),
-                arguments("progressUpdated", 0, "ship_0"),
-                arguments("progressUpdated", 4, "ship_1"),
-                arguments("progressUpdated", 6, "ship_2"),
-                arguments("progressUpdated", 10, "ship_3"),
-                arguments("progressUpdated", 12, "ship_3"),
-                arguments("progressUpdated", 16, "ship_4"),
-                arguments("progressUpdated", 20, "ship_5"),
-                arguments("progressUpdated", 30, "ship_5"));
-    }
+	@ParameterizedTest(name = "{2} animation played correctly on {0} event trigger with  {1} repairs made")
+	@MethodSource({"shouldUpdateAnimationOnProgressUpdate"})
+	void shouldUpdateAnimationOnProgressUpdate(String animationEvent, int progress, String expectedAnimationName) {
+		ship.getEvents().trigger(animationEvent, progress, new HashSet<>());
+		assertEquals(expectedAnimationName, animationRenderComponent.getCurrentAnimation());
+	}
+
+	private static Stream<Arguments> shouldUpdateAnimationOnProgressUpdate() {
+		return Stream.of(
+				// (animationEvent, progress, expectedAnimationName)
+				arguments("progressUpdated", -10, "default"),
+				arguments("progressUpdated", 0, "ship_0"),
+				arguments("progressUpdated", 4, "ship_1"),
+				arguments("progressUpdated", 6, "ship_2"),
+				arguments("progressUpdated", 10, "ship_3"),
+				arguments("progressUpdated", 12, "ship_3"),
+				arguments("progressUpdated", 16, "ship_4"),
+				arguments("progressUpdated", 20, "ship_5"),
+				arguments("progressUpdated", 30, "ship_5"));
+	}
 }
