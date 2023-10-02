@@ -110,6 +110,7 @@ public class CutsceneDisplay extends UIComponent {
      * @param sizeIncrease the scalar to be used to scale the sprite's size
      */
     private void placeSprite(Image sprite, float sizeIncrease) {
+        logger.debug("Image spawning");
         float scaledWidth = (float) (Gdx.graphics.getWidth() * sizeIncrease);
         float scaledHeight = scaledWidth * (sprite.getHeight() / sprite.getWidth());
         sprite.setWidth(scaledWidth);
