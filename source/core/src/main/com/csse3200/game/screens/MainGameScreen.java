@@ -1,5 +1,7 @@
 package com.csse3200.game.screens;
 
+import com.csse3200.game.components.plants.PlantInfoDisplayComponent;
+import com.csse3200.game.entities.FireflySpawner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

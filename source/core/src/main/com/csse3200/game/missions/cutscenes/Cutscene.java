@@ -10,7 +10,9 @@ import org.slf4j.LoggerFactory;
 
 public class Cutscene{
     private static final Logger logger = LoggerFactory.getLogger(Cutscene.class);
+
     private Entity cutsceneEntity;
+
     /**
      * Stores the dialogue text
      */
@@ -31,7 +33,7 @@ public class Cutscene{
      */
     public void spawnCutscene() {
         System.out.println("CUTSCENE SPAWNED");
-        logger.debug("Cutscene spawned");
+        logger.info("Cutscene spawned");
 
         this.pauseGame();
         Stage stage = ServiceLocator.getRenderService().getStage();
@@ -45,7 +47,7 @@ public class Cutscene{
      * Pauses the game
      */
     public void pauseGame() {
-        logger.debug("Setting paused state to: 0");
+        logger.info("Setting paused state to: 0");
         ServiceLocator.setCutSceneRunning(true);
         ServiceLocator.getTimeSource().setTimeScale(0);
     }
@@ -54,7 +56,7 @@ public class Cutscene{
      * Unpauses the game
      */
     public void unPauseGame() {
-        logger.debug("Setting paused state to: 1");
+        logger.info("Setting paused state to: 1");
         // 1 is for delta time to run in normal speed
         ServiceLocator.setCutSceneRunning(false);
         ServiceLocator.getTimeSource().setTimeScale(1);
