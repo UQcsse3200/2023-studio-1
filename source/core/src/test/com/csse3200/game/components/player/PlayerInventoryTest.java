@@ -8,10 +8,12 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.entities.EntityType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,27 +41,27 @@ public class PlayerInventoryTest {
         player = new Entity()
                 .addComponent(inventoryComponent);
         player.create();
-        item1 = new Entity().addComponent(new ItemComponent("Hoe", ItemType.HOE, "images/tool_shovel.png"));
-        item2 = new Entity().addComponent(new ItemComponent("Scythe",ItemType.SCYTHE, "images/tool_shovel.png"));
+        item1 = new Entity(EntityType.Item).addComponent(new ItemComponent("Hoe", ItemType.HOE, "images/tool_shovel.png"));
+        item2 = new Entity(EntityType.Item).addComponent(new ItemComponent("Scythe",ItemType.SCYTHE, "images/tool_shovel.png"));
     }
 
     @Test
     void checkAddInventory() {
-        assertTrue(player.getComponent(InventoryComponent.class).getInventory().isEmpty());
+        assertTrue(player.getComponent(InventoryComponent.class).getItemPlace().isEmpty());
         player.getComponent(InventoryComponent.class).addItem(item1);
         verify(inventoryComponent).addItem(item1);
         player.getComponent(InventoryComponent.class).addItem(item2);
         verify(inventoryComponent).addItem(item2);
-        assertArrayEquals(new List[]{player.getComponent(InventoryComponent.class).getInventory()},
-                new List[]{inventoryComponent.getInventory()});
+        assertArrayEquals(new HashMap[]{player.getComponent(InventoryComponent.class).getItemPlace()},
+                new HashMap[]{inventoryComponent.getItemPlace()});
     }
     @Test
     void checkRemoveItem() {
-        assertTrue(inventoryComponent.getInventory().isEmpty());
+        assertTrue(inventoryComponent.getItemPlace().isEmpty());
         player.getComponent(InventoryComponent.class).addItem(item1);
         verify(inventoryComponent).addItem(any(Entity.class));
         player.getComponent(InventoryComponent.class).removeItem(item1);
-        assertTrue(inventoryComponent.getInventory().isEmpty());
+        assertTrue(inventoryComponent.getItemPlace().isEmpty());
         verify(inventoryComponent).removeItem(any(Entity.class));
     }
     @Test

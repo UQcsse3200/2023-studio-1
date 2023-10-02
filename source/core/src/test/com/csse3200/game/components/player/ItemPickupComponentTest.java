@@ -2,6 +2,7 @@ package com.csse3200.game.components.player;
 
 import java.util.ArrayList;
 
+import com.csse3200.game.entities.EntityType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -79,9 +80,9 @@ public class ItemPickupComponentTest {
         picker = new Entity()
                 .addComponent(new PhysicsComponent())
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
-                .addComponent(new InventoryComponent(new ArrayList<Entity>()))
+                .addComponent(new InventoryComponent(new ArrayList<>()))
                 .addComponent(new ItemPickupComponent());
-        pickupItem = new Entity()
+        pickupItem = new Entity(EntityType.Item)
                 .addComponent(new PhysicsComponent())
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ITEM))
                 .addComponent(new ItemComponent("Shovel", ItemType.SHOVEL, "images/tool_shovel.png"));
