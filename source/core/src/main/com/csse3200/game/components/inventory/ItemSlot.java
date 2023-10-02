@@ -161,7 +161,6 @@ public class ItemSlot extends Stack {
                 this.label = null;
             }
         }
-        this.setDebug(true);
 
         this.add(draggable);
 
