@@ -24,6 +24,7 @@ import com.csse3200.game.components.player.ItemPickupComponent;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.components.player.PlayerAnimationController;
 import com.csse3200.game.components.ship.ShipLightComponent;
+import com.csse3200.game.components.ship.ShipProgressComponent;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.factories.ShipFactory;
 import com.csse3200.game.events.EventHandler;
@@ -466,6 +467,9 @@ public class Entity implements Json.Serializable {
                     JsonValue shipLightComponentJson = jsonMap.get("components")
                             .get(ShipLightComponent.class.getSimpleName());
                     shipLightComponent.read(json, shipLightComponentJson);
+
+                    ShipProgressComponent progressComponent = ship.getComponent(ShipProgressComponent.class);
+                    progressComponent.read(json, jsonMap.get("components").get(ShipProgressComponent.class.getSimpleName()));
 
                     ServiceLocator.getGameArea().spawnEntity(ship);
                     ship.setPosition(position);
