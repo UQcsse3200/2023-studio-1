@@ -146,7 +146,7 @@ public class ItemFactory {
     ClueComponent clueComponent = new ClueComponent();
     Entity mapItem = createBaseItem()
             .addComponent(new TextureRenderComponent("images/ship/ship_clue.png"))
-            .addComponent(new ItemComponent("map", ItemType.CLUE_ITEM, new Texture("images/ship/ship_clue.png")))
+            .addComponent(new ItemComponent("map", ItemType.CLUE_ITEM, "images/ship/ship_clue.png"))
             .addComponent(clueComponent)
             .addComponent(new CoordinatesDisplay(clueComponent));
 
