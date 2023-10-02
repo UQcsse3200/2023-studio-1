@@ -46,6 +46,8 @@ public class CutsceneDisplay extends UIComponent {
      */
     private final String dialogue;
 
+    private Table dialogueTable;
+
     /**
      * Creates a cutscene display using the given parameters
      * @param dialogue the dialogue that will be displayed
@@ -70,16 +72,16 @@ public class CutsceneDisplay extends UIComponent {
         logger.debug("Cutscene Display spawned");
 
         logger.debug("Cutscene table spawned");
-        table = new Table();
-        table.setFillParent(true);
-        table.setDebug(true);
-        table.bottom();
-        table.padBottom(160);
+        dialogueTable = new Table();
+        dialogueTable.setFillParent(true);
+        dialogueTable.setDebug(true);
+        dialogueTable.bottom();
+        dialogueTable.padBottom(160);
 
         this.dimScreen();
 
-        stage.addActor(table);
-        //this.spawnSprites();
+        stage.addActor(dialogueTable);
+        this.spawnSprites();
         this.spawnDialogueBox();
         this.spawnContinueButton();
     }
@@ -128,7 +130,7 @@ public class CutsceneDisplay extends UIComponent {
         float scaledHeight = scaledWidth * (sprite.getHeight() / sprite.getWidth());
         sprite.setWidth(scaledWidth);
         sprite.setHeight(scaledHeight);
-        //table.add(sprite);
+        dialogueTable.add(sprite);
         //stage.addActor(sprite);
     }
 
@@ -149,7 +151,7 @@ public class CutsceneDisplay extends UIComponent {
         dialogueLabel.setWrap(true);
         //Window dialogueWindow = new Window("Alien", skin);
         Graphics.DisplayMode active = Gdx.graphics.getDisplayMode();
-        table.add(dialogueLabel).width(active.width - 700).expandX();
+        dialogueTable.add(dialogueLabel).width(active.width - 700).expandX();
     }
 
     public void spawnContinueButton() {
@@ -168,14 +170,14 @@ public class CutsceneDisplay extends UIComponent {
                     }
                 });
 
-        table.row();
-        table.add(continueBtn);//.padTop(40f); // change 40f to whatever is needed
+        dialogueTable.row();
+        dialogueTable.add(continueBtn);//.padTop(40f); // change 40f to whatever is needed
     }
 
     // Ends the cutscene
     public void disposeCutscene() {
-        table.clear();
-        //sprite.clear();
+        dialogueTable.clear();
+        sprite.clear();
         super.dispose();
     }
 
