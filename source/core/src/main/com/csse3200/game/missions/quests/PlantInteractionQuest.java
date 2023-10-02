@@ -21,7 +21,7 @@ public class PlantInteractionQuest extends Quest {
 
         this.interactionType = interactionType;
         this.plantTypes = plantTypes;
-        this.interactionsTarget = interactionsTarget;
+        this.interactionsTarget = Math.max(interactionsTarget, 0);
         this.numberOfInteractions = 0;
     }
 
@@ -32,7 +32,7 @@ public class PlantInteractionQuest extends Quest {
 
         this.interactionType = interactionType;
         this.plantTypes = plantTypes;
-        this.interactionsTarget = interactionsTarget;
+        this.interactionsTarget = Math.max(interactionsTarget, 0);
         this.numberOfInteractions = 0;
     }
 
