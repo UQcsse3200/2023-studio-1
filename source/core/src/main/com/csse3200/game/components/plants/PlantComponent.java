@@ -1,6 +1,7 @@
 package com.csse3200.game.components.plants;
 import static com.badlogic.gdx.math.MathUtils.random;
 
+import com.csse3200.game.services.FactoryService;
 import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -682,20 +683,21 @@ public class PlantComponent extends Component {
             return;
         }
 
-        harvestYields.forEach((itemName, quantity) -> {
-            Supplier<Entity> itemSupplier = ItemFactory.getItemSupplier(itemName);
-            for (int i = 0; i < quantity; i++) {
-                Entity item = itemSupplier.get();
-                item.setPosition(entity.getPosition());
-                ServiceLocator.getEntityService().register(item);
-            }
-        });
+        if (harvestYields != null) {
+            harvestYields.forEach((itemName, quantity) -> {
+                Supplier<Entity> itemSupplier = FactoryService.getItemFactories().get(itemName);
+                for (int i = 0; i < quantity; i++) {
+                    Entity item = itemSupplier.get();
+                    item.setPosition(entity.getPosition());
+                    ServiceLocator.getEntityService().register(item);
+                }
+            });
+        }
         ServiceLocator.getMissionManager().getEvents().trigger(
                 MissionManager.MissionEvent.HARVEST_CROP.name(),
                 getPlantName());
         ServiceLocator.getPlantInfoService().increasePlantsHarvested(1, plantName);
         destroyPlant();
-
     }
 
     /**
