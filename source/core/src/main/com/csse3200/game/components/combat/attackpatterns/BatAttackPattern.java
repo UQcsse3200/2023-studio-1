@@ -2,11 +2,7 @@ package com.csse3200.game.components.combat.attackpatterns;
 
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.Component;
-import com.csse3200.game.components.InteractionDetector;
-import com.csse3200.game.components.combat.attackpatterns.AttackPatternComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.events.ScheduledEvent;
 import com.csse3200.game.utils.DirectionUtils;
 
 /**

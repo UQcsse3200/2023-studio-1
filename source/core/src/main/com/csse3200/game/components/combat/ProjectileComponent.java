@@ -114,10 +114,8 @@ public class ProjectileComponent extends Component {
      */
     @Override
     public void update() {
-        if (hasImpact && destroyOnImpact) {
-            if (entity.getComponent(AnimationRenderComponent.class).isFinished()) {
+        if (hasImpact && destroyOnImpact && entity.getComponent(AnimationRenderComponent.class).isFinished()) {
                 destroyProjectile();
-            }
         }
     }
 

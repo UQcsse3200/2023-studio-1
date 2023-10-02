@@ -37,10 +37,6 @@ public class AnimalAnimationController extends Component {
      * Tamed suffix to add tamed indicator
      */
     private static final String TAMED_SUFFIX = "_tamed";
-    /**
-     * Attack prefix to play attack animation
-     */
-    private static final String ATTACK_PREFIX = "attack";
 
     /**
      * Returns a suffix if the entity is tamed.

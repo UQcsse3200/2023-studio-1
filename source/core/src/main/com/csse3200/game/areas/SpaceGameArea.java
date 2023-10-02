@@ -30,7 +30,6 @@ import java.util.stream.IntStream;
 public class SpaceGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(SpaceGameArea.class);
 
-  private static final int NUM_GHOSTS = 5;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(24, 86);
   private static final GridPoint2 QUESTGIVER_SPAWN = new GridPoint2(42, 87);
   private static final GridPoint2 SHIP_SPAWN = new GridPoint2(20,85);
