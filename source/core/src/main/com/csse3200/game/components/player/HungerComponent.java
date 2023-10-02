@@ -23,13 +23,14 @@ public class HungerComponent extends Component {
         if (min % 20 == 0) {
             increaseHungerLevel(1);
         }
+        if (checkIfStarving()) {
+            entity.getComponent(CombatStatsComponent.class).addHealth(-5);
+        }
         checkIfStarving();
     }
 
-    private void checkIfStarving() {
-        if (hungerLevel >= 100) {
-            entity.getComponent(CombatStatsComponent.class).addHealth(-5);
-        }
+    public boolean checkIfStarving() {
+        return hungerLevel >= 100;
     }
 
     public int getHungerLevel() {
