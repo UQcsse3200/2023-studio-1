@@ -374,19 +374,23 @@ class ManageHostilesQuestTest {
         assertEquals(0, MHQuest4.getProgress());
         assertEquals(0, MHQuest5.getProgress());
         assertEquals(0, MHQuest6.getProgress());
+        assertEquals(0, MHQuest7.getProgress());
         testIsCompleted();
         assertNotEquals(0, MHQuest1.getProgress());
-        assertNotEquals(0, MHQuest2.getProgress());
+        assertEquals(0, MHQuest2.getProgress());
         assertNotEquals(0, MHQuest3.getProgress());
         assertNotEquals(0, MHQuest4.getProgress());
-        assertNotEquals(0, MHQuest5.getProgress());
-        assertEquals(0, MHQuest6.getProgress());
+        assertEquals(0, MHQuest5.getProgress());
+        assertNotEquals(0, MHQuest6.getProgress());
+        assertNotEquals(0, MHQuest7.getProgress());
+
         assertEquals(10, MHQuest1.getProgress());
-        assertEquals(10, MHQuest2.getProgress());
+        assertEquals(0, MHQuest2.getProgress());
         assertEquals(10, MHQuest3.getProgress());
-        assertEquals(3, MHQuest4.getProgress());
-        assertEquals(50, MHQuest5.getProgress());
-        assertEquals(0, MHQuest6.getProgress());
+        assertEquals(10, MHQuest4.getProgress());
+        assertEquals(0, MHQuest5.getProgress());
+        assertEquals(10, MHQuest6.getProgress());
+        assertEquals(3, MHQuest7.getProgress());
     }
     
     @Test
