@@ -7,6 +7,7 @@ import com.csse3200.game.areas.terrain.*;
 import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.items.ItemType;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.missions.quests.QuestFactory;
@@ -311,7 +312,8 @@ public class SpaceGameArea extends GameArea {
     player = spawnPlayer();
 //    player.getComponent(PlayerActions.class).setGameMap(gameMap);
 //    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createLightItem());
-//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHoe());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHoe());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createCosmicCobSeed());
 //    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createScythe());
 //    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createWateringcan());
 //    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createShovel());
