@@ -100,7 +100,13 @@ public class RunAwayTask extends ChaseTask {
     return getRawPriority();
   }
 
-
+  /**
+   * Determines the priority when the RunAwayTask is inactive based on the distance to the target
+   * and the visibility of the target entity and whether the animal is tamed.
+   *
+   * @return The inactive priority level or -1 if conditions are not met.
+   */
+  @Override
   protected int getInactivePriority() {
     float dst = getDistanceToTarget();
     TamableComponent tamableComponent = owner.getEntity().getComponent(TamableComponent.class);

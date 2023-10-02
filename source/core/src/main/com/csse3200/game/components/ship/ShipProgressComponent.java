@@ -20,9 +20,9 @@ public class ShipProgressComponent extends Component {
 	 * Ship features that can be unlocked along by repairing the ship.
 	 */
 	public enum Feature {
+		BED(3),
 		LIGHT(8),
-		STORAGE(15),
-		BED(3);
+		STORAGE(15);
 
 		public final int unlockLevel;
 
@@ -30,8 +30,6 @@ public class ShipProgressComponent extends Component {
 			this.unlockLevel = unlockLevel;
 		}
 	}
-
-	;
 
 	/**
 	 * This component will handle the Ship's internal state of repair. It will listen for addPart events on the Ship
@@ -43,14 +41,15 @@ public class ShipProgressComponent extends Component {
 	public void create() {
 		this.progress = 0;
 		unlockedFeatures = new HashSet<Feature>();
-		// listen to add artefact call
+		// listen to add part call
 		entity.getEvents().addListener("addPart", this::incrementProgress);
 		entity.getEvents().addListener("removePart", this::decrementProgress);
 	}
 
 	/**
-	 * Update the progress of the ship repair by incrementing it by however many artefacts the player 'used' on the
-	 * ship. This will also call a progressUpdate event on the Ship entity it is attached to.
+	 * Update the progress of the ship repair by incrementing it each time the player 'uses' a ship part
+	 * on the ship. This will also call a progressUpdate event on the Ship entity it is attached to.
+	 * [NOTE: Currently adds one part at a time, amount changeable in repair in ItemActions.java]
 	 */
 	private void incrementProgress(int amount) {
 		if (this.progress < maximum_repair) {

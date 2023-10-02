@@ -20,6 +20,12 @@ import com.csse3200.game.services.ServiceLocator;
  * used in the game.
  */
 public class ProjectileFactory {
+    /**
+     * Constant for the flight event.
+     */
+    private static final String FLIGHTEVENT = "flight";
+
+    private static final String IMPACTEVENT = "impact";
 
     /**
      * Creates an oxygen eater projectile entity.
@@ -35,10 +41,11 @@ public class ProjectileFactory {
                 16f
         );
 
-        animator.addAnimation("flight", 0.5f, Animation.PlayMode.LOOP);
-        animator.addAnimation("impact", 0.1f);
+        animator.addAnimation(FLIGHTEVENT, 0.5f, Animation.PlayMode.LOOP);
+        animator.addAnimation(IMPACTEVENT, 0.1f);
 
         projectile
+                .addComponent(new CombatStatsComponent(1, 1))
                 .addComponent(new ProjectileComponent(2f))
                 .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 10f))
                 .addComponent(animator);
@@ -64,10 +71,11 @@ public class ProjectileFactory {
                 16f
         );
 
-        animator.addAnimation("flight", 0.5f, Animation.PlayMode.LOOP);
-        animator.addAnimation("impact", 0.1f);
+        animator.addAnimation(FLIGHTEVENT, 0.5f, Animation.PlayMode.LOOP);
+        animator.addAnimation(IMPACTEVENT, 0.1f);
 
         projectile
+                .addComponent(new CombatStatsComponent(1, 1))
                 .addComponent(new ProjectileComponent(3f))
                 .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 5f))
                 .addComponent(animator);
@@ -96,8 +104,8 @@ public class ProjectileFactory {
                 16f
         );
 
-        animator.addAnimation("flight", 0.5f, Animation.PlayMode.LOOP);
-        animator.addAnimation("impact", 0.1f);
+        animator.addAnimation(FLIGHTEVENT, 0.5f, Animation.PlayMode.LOOP);
+        animator.addAnimation(IMPACTEVENT, 0.1f);
 
         projectile
                 .addComponent(new ProjectileComponent(2f))

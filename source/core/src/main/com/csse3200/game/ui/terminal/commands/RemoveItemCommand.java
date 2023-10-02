@@ -1,21 +1,20 @@
 package com.csse3200.game.ui.terminal.commands;
 
-import java.util.ArrayList;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class AddItemCommand implements Command {
+import java.util.ArrayList;
+
+public class RemoveItemCommand implements Command {
 
 	/**
 	 * Logger for this command
 	 */
-	private static final Logger logger = LoggerFactory.getLogger(AddItemCommand.class);
+	private static final Logger logger = LoggerFactory.getLogger(RemoveItemCommand.class);
 
 	/**
 	 * Action a command to add an item to a player's inventory
@@ -42,13 +41,12 @@ public class AddItemCommand implements Command {
 			case "fence" -> item = ItemFactory.createFenceItem();
 			case "gate" -> item = ItemFactory.createGateItem();
 			case "chest" -> item = ItemFactory.createChestItem();
-			case "shipPart" -> item = ItemFactory.createShipPart();
 			default -> {
 				logger.debug("The provided item name does not exist");
 				return false;
 			}
 		}
-		player.getComponent(InventoryComponent.class).addItem(item);
+		player.getComponent(InventoryComponent.class).removeItem(item);
 		return true;
 	}
 

@@ -26,7 +26,7 @@ public class InteractionDetector extends HitboxComponent {
     /** The interaction range within which entities are detected. */
     private final float range;
 
-    private ArrayList<EntityType> interactableEntities = null;
+    private List<EntityType> interactableEntities = null;
     private boolean notifyOnDetection = false;
 
     /**
@@ -43,7 +43,7 @@ public class InteractionDetector extends HitboxComponent {
      *
      * @param range The interaction range within which entities are detected.
      */
-    public InteractionDetector(float range, ArrayList interactableEntities) {
+    public InteractionDetector(float range, List<EntityType> interactableEntities) {
         this.range = range;
         this.interactableEntities = interactableEntities;
     }
@@ -83,10 +83,8 @@ public class InteractionDetector extends HitboxComponent {
             return;
         }
 
-        if (interactableEntities != null) {
-            if (!interactableEntities.contains(target.getType())) {
+        if (interactableEntities != null && !interactableEntities.contains(target.getType())) {
                 return;
-            }
         }
 
         entitiesInRange.add(target);

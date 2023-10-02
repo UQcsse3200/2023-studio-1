@@ -5,6 +5,11 @@ import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.ScheduledEvent;
 
+/**
+ * The AttackPatternComponent is responsible for managing the attack patterns
+ * of entities within the game. It allows entities to initiate attacks with a specified
+ * frequency and provides methods for starting and scheduling attacks.
+ */
 public class AttackPatternComponent extends Component {
     /** Frequency of attacks in seconds */
     protected final float attackFrequency;

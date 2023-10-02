@@ -1,13 +1,11 @@
 package com.csse3200.game.components.player;
 
 import java.security.SecureRandom;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.csse3200.game.areas.SpaceGameArea;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.components.*;
 import com.csse3200.game.components.combat.ProjectileComponent;
@@ -15,13 +13,9 @@ import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.items.ItemActions;
-import com.csse3200.game.components.items.ItemComponent;
-import com.csse3200.game.components.items.ItemType;
-import com.csse3200.game.components.npc.MultiDropComponent;
 import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.ProjectileFactory;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -47,7 +41,7 @@ public class PlayerActions extends Component {
 
   private SecureRandom random = new SecureRandom();
 
-  int SWORD_DAMAGE = 5;
+  int SWORDDAMAGE = 5;
 
   @Override
   public void create() {
@@ -83,7 +77,7 @@ public class PlayerActions extends Component {
     int max = 300;
     int min = 1;
 
-    int AnimationRandomizer = min + this.random.nextInt(max);
+    int animationRandomizer = min + this.random.nextInt(max);
 
     if (moveDirection.epsilonEquals(Vector2.Zero)) {
       // player is not moving
@@ -91,13 +85,13 @@ public class PlayerActions extends Component {
       String animationName = "animationWalkStop";
       float direction = getPrevMoveDirection();
       if (direction < 45) {
-        entity.getEvents().trigger(animationName, "right", AnimationRandomizer, false);
+        entity.getEvents().trigger(animationName, "right", animationRandomizer, false);
       } else if (direction < 135) {
-        entity.getEvents().trigger(animationName, "up", AnimationRandomizer, false);
+        entity.getEvents().trigger(animationName, "up", animationRandomizer, false);
       } else if (direction < 225) {
-        entity.getEvents().trigger(animationName, "left", AnimationRandomizer, false);
+        entity.getEvents().trigger(animationName, "left", animationRandomizer, false);
       } else if (direction < 315) {
-        entity.getEvents().trigger(animationName, "down", AnimationRandomizer, false);
+        entity.getEvents().trigger(animationName, "down", animationRandomizer, false);
       }
       return;
     }
@@ -243,7 +237,7 @@ public class PlayerActions extends Component {
           float difference = Math.abs(resAngle - mouseResAngle);
           difference = difference > 180 ? 360 - difference : difference;
           if(difference <= 45) {
-            combat.setHealth(combat.getHealth() - SWORD_DAMAGE);
+            combat.setHealth(combat.getHealth() - SWORDDAMAGE);
             animal.getEvents().trigger("panicStart");
           }
         }
