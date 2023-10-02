@@ -74,7 +74,7 @@ public class CutsceneDisplay extends UIComponent {
         logger.debug("Cutscene table spawned");
         dialogueTable = new Table();
         dialogueTable.setFillParent(true);
-        dialogueTable.setDebug(true);
+        //dialogueTable.setDebug(true);
         dialogueTable.bottom();
         dialogueTable.padBottom(160);
 
