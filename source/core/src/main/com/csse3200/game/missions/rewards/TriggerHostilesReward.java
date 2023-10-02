@@ -8,15 +8,28 @@ import com.csse3200.game.utils.math.RandomUtils;
 
 import java.util.List;
 
+/**
+ * A {@link Reward} for triggering hostiles into the game
+ */
 public class TriggerHostilesReward extends Reward {
 
+    /**
+     * List of hostiles to be spawned in on collect()
+     */
     private final List<Entity> hostiles;
 
+    /**
+     * Creates a {@link TriggerHostilesReward}
+     * @param hostiles
+     */
     public TriggerHostilesReward(List<Entity> hostiles) {
         super();
         this.hostiles = hostiles;
     }
 
+    /**
+     * When called triggers to appear in the game.
+     */
     @Override
     public void collect() {
         setCollected();
