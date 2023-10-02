@@ -81,6 +81,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">ManageHostilesQuest</span>
 <span class="extends-implements">extends <a href="Quest.html" title="class in com.csse3200.game.missions.quests">Quest</a></span></div>
+<div class="block">A <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a> that requires the player to kill hostiles in order to be completed.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -92,18 +93,21 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,com.csse3200.game.missions.rewards.Reward,int,boolean,java.util.Set,int)" class="member-name-link">ManageHostilesQuest</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,com.csse3200.game.missions.rewards.Reward,int,java.util.Set,int)" class="member-name-link">ManageHostilesQuest</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="../rewards/Reward.html" title="class in com.csse3200.game.missions.rewards">Reward</a>&nbsp;reward,
  int&nbsp;expiryDuration,
- boolean&nbsp;isMandatory,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../entities/EntityType.html" title="enum class in com.csse3200.game.entities">EntityType</a>&gt;&nbsp;hostileTypes,
  int&nbsp;numberOfHostilesToBeKilled)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Creates a <a href="ManageHostilesQuest.html" title="class in com.csse3200.game.missions.quests"><code>ManageHostilesQuest</code></a> with a specific expiry</div>
+</div>
 <div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.String,com.csse3200.game.missions.rewards.Reward,java.util.Set,int)" class="member-name-link">ManageHostilesQuest</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="../rewards/Reward.html" title="class in com.csse3200.game.missions.rewards">Reward</a>&nbsp;reward,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../entities/EntityType.html" title="enum class in com.csse3200.game.entities">EntityType</a>&gt;&nbsp;hostileTypes,
  int&nbsp;numberOfHostilesToBeKilled)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a <a href="ManageHostilesQuest.html" title="class in com.csse3200.game.missions.quests"><code>ManageHostilesQuest</code></a></div>
+</div>
 </div>
 </section>
 </li>
@@ -121,50 +125,48 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDescription()" class="member-name-link">getDescription</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link"><code>String</code></a> description of the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>.</div>
+<div class="block">Gets a description of the <a href="ManageHostilesQuest.html" title="class in com.csse3200.game.missions.quests"><code>ManageHostilesQuest</code></a></div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getProgress()" class="member-name-link">getProgress</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Gets the progress of the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> as an <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link"><code>Object</code></a>, which contains all relevant information about the
- internal progress of the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>.</div>
+<div class="block">Gets the <a href="ManageHostilesQuest.html" title="class in com.csse3200.game.missions.quests"><code>ManageHostilesQuest</code></a> progress</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getShortDescription()" class="member-name-link">getShortDescription</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns a short <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link"><code>String</code></a> description of the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>.</div>
+<div class="block">Gets a short description of the <a href="ManageHostilesQuest.html" title="class in com.csse3200.game.missions.quests"><code>ManageHostilesQuest</code></a> containing the player's quest progress.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isCompleted()" class="member-name-link">isCompleted</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns a boolean value representing whether the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> has been completed.</div>
+<div class="block">Checks whether the <a href="ManageHostilesQuest.html" title="class in com.csse3200.game.missions.quests"><code>ManageHostilesQuest</code></a> is complete.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readProgress(com.badlogic.gdx.utils.JsonValue)" class="member-name-link">readProgress</a><wbr>(com.badlogic.gdx.utils.JsonValue&nbsp;progress)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the internal progress of the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> based on the <code>JsonValue</code> provided.</div>
+<div class="block">Reads in the progress of the <a href="ManageHostilesQuest.html" title="class in com.csse3200.game.missions.quests"><code>ManageHostilesQuest</code></a> from a <code>JsonValue</code></div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#registerMission(com.csse3200.game.events.EventHandler)" class="member-name-link">registerMission</a><wbr>(<a href="../../events/EventHandler.html" title="class in com.csse3200.game.events">EventHandler</a>&nbsp;missionManagerEvents)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Registers the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> to the <a href="../MissionManager.html" title="class in com.csse3200.game.missions"><code>MissionManager</code></a>, by adding all event
- listeners to the service which the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> needs to listen to in order to update its
- state.</div>
+<div class="block">Registers the <a href="ManageHostilesQuest.html" title="class in com.csse3200.game.missions.quests"><code>ManageHostilesQuest</code></a> with the <a href="../MissionManager.html" title="class in com.csse3200.game.missions"><code>MissionManager</code></a> by adding a listener
+ to the ANIMAL_DEFEATED and ANIMAL_EATEN <a href="../MissionManager.MissionEvent.html" title="enum class in com.csse3200.game.missions"><code>MissionManager.MissionEvent</code></a>s</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#resetState()" class="member-name-link">resetState</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Resets the internal state of the <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a>, to what it was before being accepted/modified.</div>
+<div class="block">Resets the state of the <a href="ManageHostilesQuest.html" title="class in com.csse3200.game.missions.quests"><code>ManageHostilesQuest</code></a> by setting the number of hostiles killed back to 0</div>
 </div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.csse3200.game.missions.quests.Quest">Methods inherited from class&nbsp;com.csse3200.game.missions.quests.<a href="Quest.html" title="class in com.csse3200.game.missions.quests">Quest</a></h3>
-<code><a href="Quest.html#collectReward()">collectReward</a>, <a href="Quest.html#isExpired()">isExpired</a>, <a href="Quest.html#isMandatory()">isMandatory</a>, <a href="Quest.html#isRewardCollected()">isRewardCollected</a>, <a href="Quest.html#read(com.badlogic.gdx.utils.JsonValue)">read</a>, <a href="Quest.html#resetExpiry()">resetExpiry</a>, <a href="Quest.html#updateExpiry()">updateExpiry</a>, <a href="Quest.html#write(com.badlogic.gdx.utils.Json)">write</a></code></div>
+<code><a href="Quest.html#collectReward()">collectReward</a>, <a href="Quest.html#isExpired()">isExpired</a>, <a href="Quest.html#isMandatory()">isMandatory</a>, <a href="Quest.html#isRewardCollected()">isRewardCollected</a>, <a href="Quest.html#notifyUpdate()">notifyUpdate</a>, <a href="Quest.html#read(com.badlogic.gdx.utils.JsonValue)">read</a>, <a href="Quest.html#resetExpiry()">resetExpiry</a>, <a href="Quest.html#updateExpiry()">updateExpiry</a>, <a href="Quest.html#write(com.badlogic.gdx.utils.Json)">write</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.csse3200.game.missions.Mission">Methods inherited from class&nbsp;com.csse3200.game.missions.<a href="../Mission.html" title="class in com.csse3200.game.missions">Mission</a></h3>
-<code><a href="../Mission.html#getName()">getName</a>, <a href="../Mission.html#notifyUpdate()">notifyUpdate</a></code></div>
+<code><a href="../Mission.html#getName()">getName</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -186,17 +188,33 @@ loadScripts(document, 'script');</script>
  <a href="../rewards/Reward.html" title="class in com.csse3200.game.missions.rewards">Reward</a>&nbsp;reward,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../entities/EntityType.html" title="enum class in com.csse3200.game.entities">EntityType</a>&gt;&nbsp;hostileTypes,
  int&nbsp;numberOfHostilesToBeKilled)</span></div>
+<div class="block">Creates a <a href="ManageHostilesQuest.html" title="class in com.csse3200.game.missions.quests"><code>ManageHostilesQuest</code></a></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - - the name of the quest</dd>
+<dd><code>reward</code> - - the <a href="../rewards/Reward.html" title="class in com.csse3200.game.missions.rewards"><code>Reward</code></a> the player can collect on completion</dd>
+<dd><code>hostileTypes</code> - - the type of hostiles the player should kill</dd>
+<dd><code>numberOfHostilesToBeKilled</code> - - the number of hostiles the player is required to kill</dd>
+</dl>
 </section>
 </li>
 <li>
-<section class="detail" id="&lt;init&gt;(java.lang.String,com.csse3200.game.missions.rewards.Reward,int,boolean,java.util.Set,int)">
+<section class="detail" id="&lt;init&gt;(java.lang.String,com.csse3200.game.missions.rewards.Reward,int,java.util.Set,int)">
 <h3>ManageHostilesQuest</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ManageHostilesQuest</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="../rewards/Reward.html" title="class in com.csse3200.game.missions.rewards">Reward</a>&nbsp;reward,
  int&nbsp;expiryDuration,
- boolean&nbsp;isMandatory,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../entities/EntityType.html" title="enum class in com.csse3200.game.entities">EntityType</a>&gt;&nbsp;hostileTypes,
  int&nbsp;numberOfHostilesToBeKilled)</span></div>
+<div class="block">Creates a <a href="ManageHostilesQuest.html" title="class in com.csse3200.game.missions.quests"><code>ManageHostilesQuest</code></a> with a specific expiry</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - - the name of the quest</dd>
+<dd><code>reward</code> - - the <a href="../rewards/Reward.html" title="class in com.csse3200.game.missions.rewards"><code>Reward</code></a> the player can collect on completion</dd>
+<dd><code>expiryDuration</code> - - how many in-game hours until <a href="ManageHostilesQuest.html" title="class in com.csse3200.game.missions.quests"><code>ManageHostilesQuest</code></a> expires</dd>
+<dd><code>hostileTypes</code> - - the type of hostiles the player should kill</dd>
+<dd><code>numberOfHostilesToBeKilled</code> - - the number of hostiles the player is required to kill</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -211,10 +229,8 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="registerMission(com.csse3200.game.events.EventHandler)">
 <h3>registerMission</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">registerMission</span><wbr><span class="parameters">(<a href="../../events/EventHandler.html" title="class in com.csse3200.game.events">EventHandler</a>&nbsp;missionManagerEvents)</span></div>
-<div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="../Mission.html#registerMission(com.csse3200.game.events.EventHandler)">Mission</a></code></span></div>
-<div class="block">Registers the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> to the <a href="../MissionManager.html" title="class in com.csse3200.game.missions"><code>MissionManager</code></a>, by adding all event
- listeners to the service which the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> needs to listen to in order to update its
- state.</div>
+<div class="block">Registers the <a href="ManageHostilesQuest.html" title="class in com.csse3200.game.missions.quests"><code>ManageHostilesQuest</code></a> with the <a href="../MissionManager.html" title="class in com.csse3200.game.missions"><code>MissionManager</code></a> by adding a listener
+ to the ANIMAL_DEFEATED and ANIMAL_EATEN <a href="../MissionManager.MissionEvent.html" title="enum class in com.csse3200.game.missions"><code>MissionManager.MissionEvent</code></a>s</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../Mission.html#registerMission(com.csse3200.game.events.EventHandler)">registerMission</a></code>&nbsp;in class&nbsp;<code><a href="../Mission.html" title="class in com.csse3200.game.missions">Mission</a></code></dd>
@@ -229,13 +245,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="isCompleted()">
 <h3>isCompleted</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isCompleted</span>()</div>
-<div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="../Mission.html#isCompleted()">Mission</a></code></span></div>
-<div class="block">Returns a boolean value representing whether the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> has been completed.</div>
+<div class="block">Checks whether the <a href="ManageHostilesQuest.html" title="class in com.csse3200.game.missions.quests"><code>ManageHostilesQuest</code></a> is complete.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../Mission.html#isCompleted()">isCompleted</a></code>&nbsp;in class&nbsp;<code><a href="../Mission.html" title="class in com.csse3200.game.missions">Mission</a></code></dd>
 <dt>Returns:</dt>
-<dd>A boolean value representing whether the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> has been completed.</dd>
+<dd>- returns true iff the player has killed the required amount of hostiles</dd>
 </dl>
 </section>
 </li>
@@ -243,17 +258,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getDescription()">
 <h3>getDescription</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getDescription</span>()</div>
-<div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="../Mission.html#getDescription()">Mission</a></code></span></div>
-<div class="block">Returns a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link"><code>String</code></a> description of the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>. This can involve an explanation
- of what the player needs to do to complete the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>, and may dynamically change
- depending on the progress the player has made. For instance, you might choose to include in
- your description: "You have currently harvested X out of N plants".</div>
+<div class="block">Gets a description of the <a href="ManageHostilesQuest.html" title="class in com.csse3200.game.missions.quests"><code>ManageHostilesQuest</code></a></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../Mission.html#getDescription()">getDescription</a></code>&nbsp;in class&nbsp;<code><a href="../Mission.html" title="class in com.csse3200.game.missions">Mission</a></code></dd>
 <dt>Returns:</dt>
-<dd>A <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link"><code>String</code></a> description of the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>, including any relevant details
-         you would like the player to know about.</dd>
+<dd>- a description of the <a href="ManageHostilesQuest.html" title="class in com.csse3200.game.missions.quests"><code>ManageHostilesQuest</code></a></dd>
 </dl>
 </section>
 </li>
@@ -261,15 +271,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getShortDescription()">
 <h3>getShortDescription</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getShortDescription</span>()</div>
-<div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="../Mission.html#getShortDescription()">Mission</a></code></span></div>
-<div class="block">Returns a short <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link"><code>String</code></a> description of the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>. This description should be
- at most around 50 characters. This might simply contain progress information on the
- <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>, or a shortened form of <a href="../Mission.html#getDescription()"><code>Mission.getDescription()</code></a>.</div>
+<div class="block">Gets a short description of the <a href="ManageHostilesQuest.html" title="class in com.csse3200.game.missions.quests"><code>ManageHostilesQuest</code></a> containing the player's quest progress.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../Mission.html#getShortDescription()">getShortDescription</a></code>&nbsp;in class&nbsp;<code><a href="../Mission.html" title="class in com.csse3200.game.missions">Mission</a></code></dd>
 <dt>Returns:</dt>
-<dd>A short <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link"><code>String</code></a> description of the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a></dd>
+<dd>- the short description of the players kill progress.</dd>
 </dl>
 </section>
 </li>
@@ -277,17 +284,13 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="readProgress(com.badlogic.gdx.utils.JsonValue)">
 <h3>readProgress</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">readProgress</span><wbr><span class="parameters">(com.badlogic.gdx.utils.JsonValue&nbsp;progress)</span></div>
-<div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="../Mission.html#readProgress(com.badlogic.gdx.utils.JsonValue)">Mission</a></code></span></div>
-<div class="block">Sets the internal progress of the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> based on the <code>JsonValue</code> provided. The <code>JsonValue</code>
- provided should match the same <code>JsonValue.ValueType</code> returned by <a href="../Mission.html#getProgress()"><code>Mission.getProgress()</code></a>. An
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link"><code>Exception</code></a> might be raised otherwise (depending on the methods you use to get the state of the
- <code>JsonValue</code>).</div>
+<div class="block">Reads in the progress of the <a href="ManageHostilesQuest.html" title="class in com.csse3200.game.missions.quests"><code>ManageHostilesQuest</code></a> from a <code>JsonValue</code></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../Mission.html#readProgress(com.badlogic.gdx.utils.JsonValue)">readProgress</a></code>&nbsp;in class&nbsp;<code><a href="../Mission.html" title="class in com.csse3200.game.missions">Mission</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>progress</code> - The <code>JsonValue</code> representing the progress of the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> as determined by the value
-                 returned in <a href="../Mission.html#getProgress()"><code>Mission.getProgress()</code></a>.</dd>
+                 returned in <a href="#getProgress()"><code>getProgress()</code></a>.</dd>
 </dl>
 </section>
 </li>
@@ -295,23 +298,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getProgress()">
 <h3>getProgress</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">getProgress</span>()</div>
-<div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="../Mission.html#getProgress()">Mission</a></code></span></div>
-<div class="block">Gets the progress of the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> as an <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link"><code>Object</code></a>, which contains all relevant information about the
- internal progress of the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>. All stats which dynamically change should be stored in this
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link"><code>Object</code></a> in some way (i.e., all non-final values). Since this value will need to be read later using
- <a href="../Mission.html#readProgress(com.badlogic.gdx.utils.JsonValue)"><code>Mission.readProgress(JsonValue)</code></a> as a <code>JsonValue</code>, you should make sure the returned <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link"><code>Object</code></a>'s
- serialisation is known to you. This is easy for primitive types, lists, and maps, so try to make the data that
- you actively track of primitive type (or a list/map of primitive types). Note that for
- <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a>s, you do not need to store the time to expiry or whether the
- reward has been collected - you only need to store the changing state specific to the
- <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a>.</div>
+<div class="block">Gets the <a href="ManageHostilesQuest.html" title="class in com.csse3200.game.missions.quests"><code>ManageHostilesQuest</code></a> progress</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../Mission.html#getProgress()">getProgress</a></code>&nbsp;in class&nbsp;<code><a href="../Mission.html" title="class in com.csse3200.game.missions">Mission</a></code></dd>
 <dt>Returns:</dt>
-<dd>An <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link"><code>Object</code></a>, which stores the internal progress of the <a href="../Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>. This <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link"><code>Object</code></a> should
-         be serialisable, and the data should be able to be read as a <code>JsonValue</code> in
-         <a href="../Mission.html#readProgress(com.badlogic.gdx.utils.JsonValue)"><code>Mission.readProgress(JsonValue)</code></a>.</dd>
+<dd>- the number of hostiles the player has killed since the quest creation</dd>
 </dl>
 </section>
 </li>
@@ -319,8 +311,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="resetState()">
 <h3>resetState</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">resetState</span>()</div>
-<div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="Quest.html#resetState()">Quest</a></code></span></div>
-<div class="block">Resets the internal state of the <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a>, to what it was before being accepted/modified.</div>
+<div class="block">Resets the state of the <a href="ManageHostilesQuest.html" title="class in com.csse3200.game.missions.quests"><code>ManageHostilesQuest</code></a> by setting the number of hostiles killed back to 0</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Quest.html#resetState()">resetState</a></code>&nbsp;in class&nbsp;<code><a href="Quest.html" title="class in com.csse3200.game.missions.quests">Quest</a></code></dd>
