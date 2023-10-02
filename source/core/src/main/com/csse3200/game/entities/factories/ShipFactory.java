@@ -45,7 +45,7 @@ public class ShipFactory {
    *
    * @return an AnimationRenderComponent for ship animations.
    */
-  private static AnimationRenderComponent setupShipAnimations() {
+  public static AnimationRenderComponent setupShipAnimations() {
     AnimationRenderComponent animator = new AnimationRenderComponent(
         ServiceLocator.getResourceService().getAsset("images/ship/ship.atlas", TextureAtlas.class),
         16f);
