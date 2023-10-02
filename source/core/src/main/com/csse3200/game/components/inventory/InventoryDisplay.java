@@ -14,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
@@ -25,29 +24,29 @@ import com.csse3200.game.ui.UIComponent;
 import com.badlogic.gdx.graphics.Texture;
 
 /**
- * A ui component for displaying player stats, e.g. health.
+ * An ui component for displaying player stats, e.g. health.
  */
 public class InventoryDisplay extends UIComponent {
   private static final Logger logger = LoggerFactory.getLogger(InventoryDisplay.class);
-  private InventoryComponent playerInventory;
+  private InventoryComponent inventory;
   private final Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
-  private Table table = new Table(skin);
-  private Window window = new Window("Inventory", skin);
-  private ArrayList<ItemSlot> slots = new ArrayList<>();
+  private final Table table = new Table(skin);
+  private final Window window = new Window("Inventory", skin);
+  private final ArrayList<ItemSlot> slots = new ArrayList<>();
   private boolean isOpen = false;
   private DragAndDrop dnd;
   private ArrayList<Actor> actors;
   private Map<Image,ItemSlot> map;
   private Map<ItemSlot,Integer> indexes;
-  private Integer size;
-  private Integer rowSize;
+  private final Integer size;
+  private final Integer rowSize;
 
   /**
    * Constructor for class
-   * @param playerInventory inventory of player
+   * @param size size of inventory
+   * @param rowSize amount of items per row
    */
-  public InventoryDisplay(InventoryComponent playerInventory, Integer size, Integer rowSize) {
-    this.playerInventory = playerInventory;
+  public InventoryDisplay(Integer size, Integer rowSize) {
     this.size = size;
     this.rowSize = rowSize;
   }
@@ -81,8 +80,8 @@ public class InventoryDisplay extends UIComponent {
     // loop through entire table and create itemSlots and add the slots to the stored array
     for (int i = 0; i < size; i++) {
       ItemSlot slot;
-      if (this.playerInventory.getItemPos(i) != null) {
-        slot = new ItemSlot(this.playerInventory.getItemPos(i).getComponent(ItemComponent.class).getItemTexture(), false);
+      if (inventory != null && this.inventory.getItem(i) != null) {
+        slot = new ItemSlot(this.inventory.getItem(i).getComponent(ItemComponent.class).getItemTexture(), false);
         actors.add(slot.getItemImage());
       } else {
         slot = new ItemSlot(false);
@@ -125,15 +124,15 @@ public class InventoryDisplay extends UIComponent {
       int itemCount;
 
       // if the item isn't null we will update the position, this will be in future replaced by an event
-      if (playerInventory.getItemPos(i) != null) {
-        item = playerInventory.getItemPos(i).getComponent(ItemComponent.class);
-        itemCount = playerInventory.getItemCount(item.getEntity());
+      if (inventory != null && inventory.getItem(i) != null) {
+        item = inventory.getItem(i).getComponent(ItemComponent.class);
+        itemCount = inventory.getItemCount(item.getEntity());
         itemTexture = item.getItemTexture();
         ItemSlot curSlot = slots.get(i);
         curSlot.setItemImage(new Image(itemTexture));
         actors.add(curSlot.getItemImage());
 
-        if (curSlot.getCount() != null && !curSlot.getCount().equals(itemCount)) {
+        if (itemCount > 1) {
           curSlot.setCount(itemCount);
         }
 
@@ -162,7 +161,7 @@ public class InventoryDisplay extends UIComponent {
   public void setDragItems(@NotNull ArrayList<Actor> actors, Map<Image,ItemSlot> map) {
     for (Actor item : actors) {
       dnd.addSource(new DragAndDrop.Source(item) {
-        DragAndDrop.Payload payload = new DragAndDrop.Payload();
+        final DragAndDrop.Payload payload = new DragAndDrop.Payload();
         @Override
         public DragAndDrop.Payload dragStart(InputEvent event, float x, float y, int pointer) {
           payload.setObject(getActor());
@@ -186,7 +185,7 @@ public class InventoryDisplay extends UIComponent {
 
     for (Cell<?> targetItem : table.getCells()) {
       dnd.addTarget(new DragAndDrop.Target(targetItem.getActor()) {
-        ItemSlot slot = (ItemSlot) targetItem.getActor();
+        final ItemSlot slot = (ItemSlot) targetItem.getActor();
         @Override
         public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
           return true;
@@ -195,12 +194,13 @@ public class InventoryDisplay extends UIComponent {
         @Override
         public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
           ItemSlot sourceSlot = map.get(((Image)source.getActor()));
-          playerInventory.swapPosition(indexes.get(sourceSlot), indexes.get(slot));
+          inventory.swapPosition(indexes.get(sourceSlot), indexes.get(slot));
           map.put(slot.getItemImage(), sourceSlot);
           sourceSlot.setItemImage(slot.getItemImage());
           map.put((Image) payload.getDragActor(),slot);
           slot.setItemImage((Image)payload.getDragActor());
-          playerInventory.setHeldItem(playerInventory.getHeldIndex());
+          entity.getEvents().trigger("updateToolbar");
+          inventory.setHeldItem(inventory.getHeldIndex());
         }
       });
     }
@@ -218,22 +218,26 @@ public class InventoryDisplay extends UIComponent {
    * Toggle the inventory open, and changes the window visibility
    */
   public void toggleOpen(){
-      entity.getEvents().trigger("updateInventory");
+      //      entity.getEvents().trigger("updateInventory");
       isOpen = !isOpen;
       window.setVisible(isOpen);
   }
 
   /**
    * Fetches the player inventory and returns it
-   * @return playerInventory inventory attached to player
+   * @return inventory attached to display
    */
   public InventoryComponent getInventory(){
-    return this.playerInventory;
+    return inventory;
   }
 
+  /**
+   * Fetch the updatedInventory and update display
+   */
   public void refreshInventory(){
-    playerInventory = entity.getComponent(InventoryComponent.class);
+    this.inventory = entity.getComponent(InventoryComponent.class);
     updateInventory();
+    entity.getEvents().trigger("updateToolbar");
   }
 
   /**

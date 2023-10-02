@@ -40,6 +40,8 @@ public class TamingTest {
             ItemComponent fooditem = new ItemComponent("AFood", ItemType.ANIMAL_FOOD,
                     new Texture("images/tool_shovel.png")); //texture is just used as a placeholder.
             foodEntity.addComponent(fooditem);
+            foodEntity.addComponent(fooditem);
+            foodEntity.addComponent(fooditem);
             playerInvSpy.addItem(foodEntity);
         }
     }
@@ -72,7 +74,7 @@ public class TamingTest {
         animalToTest.create();
 
         for (int loop = 0; loop < 3; loop++) {
-            playerInvSpy.setHeldItem(loop);
+            playerInvSpy.setHeldItem(0);
             animalToTest.getEvents().trigger("feed");
         }
         assertTrue(animalToTest.getComponent(TamableComponent.class).isTamed());
@@ -99,7 +101,7 @@ public class TamingTest {
         animalToTest.create();
         nonFood = new Entity();
         playerInvSpy.addItem(nonFood);
-        int index = playerInvSpy.getInventory().size();
+        int index = playerInvSpy.getItemPlace().size();
         playerInvSpy.setHeldItem(index - 1);
 
         animalToTest.getEvents().trigger("feed");

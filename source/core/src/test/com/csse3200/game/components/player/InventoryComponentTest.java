@@ -3,14 +3,16 @@ package com.csse3200.game.components.player;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.spy;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
+import com.csse3200.game.entities.EntityType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,22 +27,33 @@ class InventoryComponentTest {
   private InventoryComponent inventoryComponent;
   private Entity item1;
   private Entity item2;
+  private Entity player;
 
   @BeforeEach
   public void setUp() {
     // Set up the inventory with two initial items
     List<Entity> items = new ArrayList<>();
-    item1 = new Entity().addComponent(new ItemComponent("testItem1", ItemType.SCYTHE,null));
-    item2 = new Entity().addComponent(new ItemComponent("testItem2", ItemType.WATERING_CAN, null));
-    items.add(item1);
-    items.add(item2);
-    inventoryComponent = spy(new InventoryComponent(items));
-    doNothing().when(inventoryComponent).updateInventory();
+    inventoryComponent = spy(new InventoryComponent(new ArrayList<>()));
+    player = new Entity().addComponent(inventoryComponent);
+    player.create();
+    item1 = new Entity(EntityType.Item);
+    item2 = new Entity(EntityType.Item);
+//    items.put(item1.getComponent(ItemComponent.class).getItemName(),item1);
+//    items.put(item2.getComponent(ItemComponent.class).getItemName(),item2);
+    ItemComponent itemComponent1 = new ItemComponent("itemTest1", ItemType.HOE,
+            new Texture("images/tool_shovel.png")); // Texture is not used...
+    ItemComponent itemComponent2 = new ItemComponent("itemTest2", ItemType.SCYTHE,
+            new Texture("images/tool_shovel.png")); // Texture is not used...
+    item1.addComponent(itemComponent1);
+    item2.addComponent(itemComponent2);
+    inventoryComponent.addItem(item1);
+    inventoryComponent.addItem(item2);
   }
 
   /**
    * Test case for the getInventory() method.
    */
+  /*
   @Test
   public void testGetInventory() {
     // Retrieve the inventory from the component
@@ -50,16 +63,17 @@ class InventoryComponentTest {
     assertTrue(inventory.contains(item1));
     assertTrue(inventory.contains(item2));
   }
-
+  */
   /**
    * Test case for the hasItem() method.
    */
   @Test
   public void testHasItem() {
     // Check if an item is present in the inventory
-    assertTrue(inventoryComponent.hasItem(item1));
+
+    assertTrue(player.getComponent(InventoryComponent.class).hasItem(item1));
     // Check if a non-existent item is not in the inventory
-    assertFalse(inventoryComponent.hasItem(new Entity()));
+    assertFalse(player.getComponent(InventoryComponent.class).hasItem(new Entity()));
   }
 
   /**
@@ -68,32 +82,37 @@ class InventoryComponentTest {
 
   @Test
   public void testAddItem() {
-    // Create a new item without item component
-    Entity newItem = new Entity();
+    // Create a new item
+    Entity newItem = new Entity(EntityType.Item);
+    ItemComponent itemComponent3 = new ItemComponent("itemTest3", ItemType.SCYTHE,
+            new Texture("images/tool_shovel.png")); // Texture is not used...
     // Add the new item to the inventory
-    assertFalse(inventoryComponent.addItem(newItem));
+    newItem.addComponent(itemComponent3);
+    assertTrue(inventoryComponent.addItem(newItem));
     // Check if the new item is now in the inventory
-    assertFalse(inventoryComponent.hasItem(newItem));
-    Entity validItem = new Entity().addComponent(new ItemComponent("valid", ItemType.HOE, null));
-    assertTrue(inventoryComponent.addItem(validItem));
-    // Check if the new item is now in the inventory
-    assertTrue(inventoryComponent.hasItem(validItem));
+    assertTrue(inventoryComponent.hasItem(newItem));
   }
 
   /**
    * Test case for the removeItem() method.
    */
-
   @Test
   public void testRemoveItem() {
     // Remove an item from the inventory
+    Entity newItem = new Entity(EntityType.Item);
+    ItemComponent itemComponent3 = new ItemComponent("itemTest3", ItemType.SCYTHE,
+            new Texture("images/tool_shovel.png")); // Texture is not used...
+    // Add the new item to the inventory
+    newItem.addComponent(itemComponent3);
+    if(inventoryComponent.getItemCount(item1) == 0){
+        inventoryComponent.addItem(item1);
+    }
     assertTrue(inventoryComponent.removeItem(item1));
     // Check that the removed item is no longer in the inventory
     assertFalse(inventoryComponent.hasItem(item1));
     // Check that removing a non-existent item does not affect the inventory
     assertFalse(inventoryComponent.removeItem(new Entity()));
   }
-
 
   @Test
   void testGetItemCount() {
@@ -117,8 +136,8 @@ class InventoryComponentTest {
     inventoryComponent.setItemPosition(item1,new Point(2,2));
     assertEquals(inventoryComponent.getItemPosition(item1), new Point(2,2));
   }
-*/
 
+   */
 
 }
 

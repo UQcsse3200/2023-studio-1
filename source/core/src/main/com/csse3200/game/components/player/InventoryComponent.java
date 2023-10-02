@@ -1,7 +1,10 @@
 package com.csse3200.game.components.player;
-
-import java.awt.Point; // for positional data
-import java.util.ArrayList;
+import com.csse3200.game.components.Component;
+import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,11 +25,11 @@ import com.csse3200.game.entities.Entity;
 public class InventoryComponent extends Component {
 
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
-  private final List<Entity> inventory = new ArrayList<>();
-  private final HashMap<Entity, Integer> itemCount = new HashMap<>();
-  private final HashMap<Entity, Point> itemPosition = new HashMap<>();
+  private HashMap<String, Integer> itemCount = new HashMap<>();
 
-  private final HashMap<Integer,Entity> itemPlace = new HashMap<>();
+  private HashMap<String,Entity> heldItemsEntity = new HashMap<>();
+
+  private HashMap<Integer,String> itemPlace = new HashMap<>();
 
   private Entity heldItem = null;
 
@@ -38,10 +41,9 @@ public class InventoryComponent extends Component {
     entity.getEvents().addListener("use", this::useItem);
   }
 
+  private int maxInventorySize = 30; // default size 30
+
   public InventoryComponent(List<Entity> items) {
-    if (items == null) {
-      return;
-    }
     setInventory(items);
   }
   /**
@@ -61,58 +63,159 @@ public class InventoryComponent extends Component {
   }
 
 
+  public InventoryComponent(){
+    newInventory();
+  }
+
   /**
-   * Returns the player's inventory.
+   * Sets the maximum size of the inventory.
    *
-   * @return player's inventory
+   * @param size The new maximum size of the inventory.
+   * @return true if the size was set successfully, false otherwise.
    */
-  public List<Entity> getInventory() {
-    return this.inventory;
-  }
-
-  public HashMap<Entity, Integer> getItemCount() {
-    return itemCount;
-  }
-
-  public HashMap<Entity, Point> getItemPosition() {
-    return itemPosition;
+  public boolean setInventorySize(int size) {
+    if (size > 0) {
+      this.maxInventorySize = size;
+      return true;
+    } else {
+      return false;
+    }
   }
 
   /**
-   * Returns if the player has a certain amount of gold.
-   * @param item item to be checked
+   * Returns the maximum size of the inventory.
+   * @return The maximum size of the inventory.
+   */
+
+    public int getInventorySize() {
+        return this.maxInventorySize;
+    }
+
+  /**
+   * Checks if the inventory is full.
+   * Currently holding 30 types of Items
+   *
+   * @return true if the inventory is full, false otherwise.
+   */
+  public boolean isFull() {
+    return this.itemCount.size() >= this.maxInventorySize;
+  }
+
+  /**
+   * Returns the HashMap of the String and the count of the item in the inventory
+   *
+   * @return HashMap<String, Integer>
+   */
+
+  public HashMap<String, Integer> getItemCount() {
+    return this.itemCount;
+  }
+
+  /**
+   * Returns the HashMap of the Position and the String of the item in the inventory
+   * @return HashMap<Integer,String>
+   */
+
+  public HashMap<Integer, String> getItemPlace() {
+    return this.itemPlace;
+  }
+
+  /**
+   * Returns the HashMap of the String and Entity of the item in the inventory
+   * Created only for use in ItemSlot at the moment
+   * @return HashMap<String,Entity>
+   */
+
+  public HashMap<String,Entity> getHeldItemsEntity() {
+    return this.heldItemsEntity;
+  }
+
+  public void setItemPlace(HashMap<Integer, String> itemPlace) {
+    this.itemPlace = itemPlace;
+  }
+
+  public void setItemCount(HashMap<String, Integer> allCount) {
+    this.itemCount = allCount;
+  }
+
+  public void setHeldItemsEntity(HashMap<String,Entity> heldItemsEntity) {
+    this.heldItemsEntity = heldItemsEntity;
+  }
+
+  /**
+   * Returns the count of an item in the inventory
+   *
+   * @param item Passing the Entity type of the item
+   * @return integer representation of count
+   */
+  public int getItemCount(String item) {
+    return this.itemCount.getOrDefault(item, 0);
+  }
+
+  /**
+   * Returns if the player has a certain item or not.
+   * @param item Entity to be checked
    * @return boolean representing if the item is on the character
    */
   public Boolean hasItem(Entity item) {
-    return this.inventory.contains(item);
+    if(item.getType() != EntityType.Item) {
+      logger.info("Passed Entity is not an item");
+      return false;
+    }
+    return this.itemCount.containsKey(item.getComponent(ItemComponent.class).getItemName());
   }
 
   /**
-   * Sets the player's inventory to a given List.
-   *
-   * @param items items to be added to inventory
+   *  Returns if the player has a certain item or not
+   * @param item String to be checked
+   * @return boolean representing if the item is on the character
    */
+  public Boolean hasItem(String item) {
+    return this.itemCount.containsKey(item);
+  }
+
+  private void newInventory() {
+    this.itemPlace = new HashMap<>();
+    this.itemCount = new HashMap<>();
+    this.heldItemsEntity = new HashMap<>();
+  }
+
+  /**
+   * Get the total number of Different Items in the inventory
+   * @return integer representing the total number of different items in the inventory
+   */
+  public int lastItemIndex() {
+    return this.itemPlace.size();
+  }
+
+  /**
+   * Sets the player's inventory to a given list of items.
+   * Old inventory is cleared.
+   *
+   * @param items List of Entities to be added to inventory
+   */
+
   public void setInventory(List<Entity> items) {
-    this.inventory.clear();
-    this.inventory.addAll(items);
-    int pos = itemPlace.size();
-    //int pos = 0;
-    logger.debug("Setting inventory to {}", this.inventory.toString());
+    newInventory();
+    logger.debug("Setting inventory started");
     for (Entity item : items) {
-      if (item.getComponent(ItemComponent.class) == null) {
-        System.err.println("Not an Item");
-        continue;
-      }
-      itemPlace.put(pos,item);
-      pos++;
-      if (itemCount.containsKey(item)) {
-        itemCount.put(item, itemCount.get(item) + 1);
+        if (item.getComponent(ItemComponent.class) == null) {
+            System.err.println("Not an Item");
+            continue;
+        }
+      // Add to Entity against Item Type for setting Held Item
+      this.heldItemsEntity.put(item.getComponent(ItemComponent.class).getItemName(),item);
+      // Update the count against Item Type
+      if (itemCount.containsKey(item.getComponent(ItemComponent.class).getItemName())) {
+        // Item exists in inventory, increase count
+        this.itemCount.put(item.getComponent(ItemComponent.class).getItemName(), itemCount.get(item.getComponent(ItemComponent.class).getItemName()) + 1);
       } else {
-        itemCount.put(item, 1); // Setting initial count as 1
+        // Item does not exist in inventory, add to inventory
+        this.itemCount.put(item.getComponent(ItemComponent.class).getItemName(), 1); // Setting initial count as 1
+        this.setPosition(item); // Setting position of item to next available position
       }
-      itemPosition.put(item, new Point(0, 0)); // Setting a default position (0,0) for now.
+      logger.debug("Setting inventory Completed");
     }
-    logger.debug("Setting inventory to {}", this.inventory.toString());
   }
 
   /**
@@ -120,102 +223,147 @@ public class InventoryComponent extends Component {
    *
    * @param items items to be added to inventory
    */
-  public void setInventory(HashMap<Entity, Integer> items, HashMap<Entity, Point> itemPosition, List inventory) {
-    this.inventory.clear();
-    this.inventory.addAll(inventory);
-    this.itemPosition.clear();
-    this.itemPosition.putAll(itemPosition);
-    this.itemCount.clear();
-    this.itemCount.putAll(items);
+  public void setInventory(
+          HashMap<String, Integer> items,
+          HashMap<Integer, String> itemPosition,
+          HashMap<String,Entity> heldItemsEntity) {
+    // Clear the old inventory
+    newInventory();
+    // Add the Hashmaps to the inventory
+    setItemCount(items);
+    setItemPlace(itemPosition);
+    setHeldItemsEntity(heldItemsEntity);
   }
 
   /**
    * Function to get the item of a specific position in Inventory.
-   * Starts an 0
+   * Starts at 0
+   *
    * @param position position of the item in inventory
    * @return entity for that position in inventory
    */
-  public Entity getItemPos(int position) {
-    return itemPlace.get(position);
+  public Entity getItem(int position) {
+    return this.heldItemsEntity.get(this.getItemName(position));
   }
 
   /**
-   * swaps potion of two entity in HashList used to display
-   * @param position1
-   * @param position2
+   * Function to get the item of a specific position in Inventory.
+   * Starts at 0
+   *
+   * @param position position of the item in inventory
+   * @return entity for that position in inventory
    */
-  public void swapPosition(int position1, int position2) {
-    Entity temp = itemPlace.get(position1);
-    itemPlace.put(position1,itemPlace.get(position2));
-    itemPlace.put(position2,temp);
+  public String getItemName(int position) {
+    return this.itemPlace.get(position);
   }
-
   /**
-   * add position of an entity into the HashList
-   * Both position and Entity are provided into the function
-   * @param entity
-   * @param pos
-   * @return
+   * Function to get the exchange the position of two specific item in Inventory.
+   *
+   * @param pos1 position of first Inventory Item
+   * @param pos2 position of second Inventory Item
    */
-
-  public boolean setPosition(Entity entity, int pos) {
-    itemPlace.put(pos, entity);
-    entity.getEvents().trigger("updateInventory");
-    return true;
-  }
-
-  /**
-   * find the first slot in inventory display that is empty
-   * @return int first index of inventory in inventory display that is empty
-   */
-  public int findFirstIndex() {
-    for (int i = 0; i < itemPlace.size();i++) {
-      if (itemPlace.getOrDefault(i,null) == null) {
-        return i;
-      }
-      else {
-        if (i == 30) {
-          return -1;
-        }
-      }
-
+  public boolean swapPosition(int pos1, int pos2) {
+    if (pos1 >= this.getInventorySize() || pos1 < 0 || pos2 >= this.getInventorySize() || pos2 < 0) {
+        logger.info("Swap Position is out of bounds");
+        return false;
+    } else{
+        String temp = this.itemPlace.get(pos1);
+        this.itemPlace.put(pos1,this.itemPlace.get(pos2));
+        this.itemPlace.put(pos2,temp);
+        return true;
     }
-    return itemPlace.size();
   }
 
   /**
-   * add position of an entity into the HashList
-   * Only enity is passed into function. Position is next available one.
-   * @param entity
-   * @return
+   * add position of an entity into the HashList, with a specific position
+   *
+   * @param entity entity to be added
+   * @param position position of the entity
+   * @return boolean representing if the item was added successfully
+   */
+
+  public boolean setPosition(Entity entity, int position) {
+    if (this.itemPlace.containsValue(entity.getComponent(ItemComponent.class).getItemName())) {
+      logger.info("Item already in inventory, Swap position instead");
+      return false;
+    } else if (position >= this.getInventorySize() || position < 0) {
+      logger.info("Set Position is out of bounds");
+      return false;
+    } else if (this.itemPlace.get(position) != null) {
+      logger.info("Set Position is already occupied");
+      return false;
+    } else {
+      this.itemPlace.put(position, entity.getComponent(ItemComponent.class).getItemName());
+      return true;
+    }
+  }
+
+  /**
+   * Add Item to the first available position in the inventory
+   *
+   * @param entity entity to be added
+   * @return boolean representing if the item was added successfully
    */
   public boolean setPosition(Entity entity){
-    int lastPlace = findFirstIndex();
-    if (lastPlace == -1) {
+    int position = nextAvailablePosition();
+    if (position == -1) {
       return false;
+    } else if (this.itemPlace.get(position) != null) {
+        logger.info("Set Position is already occupied");
+        return false;
+    } else if (this.itemPlace.containsValue(entity.getComponent(ItemComponent.class).getItemName())) {
+        logger.info("Item already in inventory, Swap position instead");
+        return false;
+    } else {
+      this.itemPlace.put(position, entity.getComponent(ItemComponent.class).getItemName());
+      return true;
     }
-    itemPlace.put(lastPlace,entity);
-      entity.getEvents().trigger("updateInventory");
-    return true;
+  }
+
+  /**
+   * Get the next available position in the inventory
+   * @return integer representing the next available position
+   */
+
+  private int nextAvailablePosition() {
+    for (int i = 0; i < this.getInventorySize(); i++) {
+      if (this.itemPlace.get(i) == null) {
+        return i;
+      }
+    }
+    return -1;
+  }
+  public boolean addItem(ItemComponent itemComponent){
+    Entity item = new Entity(EntityType.Item);
+    item.addComponent(itemComponent);
+    return addItem(item);
   }
   /**
    * Adds an item to the Player's inventory
-   * @param item item to add
+   * @param item Entity to add
    * @return boolean representing if the item was added successfully
    */
   public boolean addItem(Entity item) {
-    if (item.getComponent(ItemComponent.class) == null) {
-      System.err.println("Not an Item");
+    if(item.getType() != EntityType.Item || item.getComponent(ItemComponent.class) == null) {
+      logger.info("Adding Entity is not an item");
       return false;
     }
-    itemCount.put(item, itemCount.getOrDefault(item, 0) + 1);
-    setPosition(item);
-    if (!itemPosition.containsKey(item)) {
-      itemPosition.put(item, new Point(0, 0)); // Default position. You can change this as needed.
+    if (isFull()) {
+      logger.info("Inventory is full");
+      return false;
+    } else {
+      logger.info("Adding item to inventory - " + item.getComponent(ItemComponent.class).getItemName() + ", old count " + this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(), 0));
+      // Update the count of the Item Type
+      this.itemCount.put(item.getComponent(ItemComponent.class).getItemName(), this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(), 0) + 1);
+      // Add to Entity against Item Type for setting Held Item
+      this.heldItemsEntity.put(item.getComponent(ItemComponent.class).getItemName(), item);
+      // Add item to next available position
+      setPosition(item);
+      setHeldItem(getHeldIndex());
+      entity.getEvents().trigger("updateInventory");
+      return true;
     }
-    setHeldItem(getHeldIndex());
-    updateInventory();
-    return this.inventory.add(item);
+
   }
 
 
@@ -225,23 +373,32 @@ public class InventoryComponent extends Component {
    * @return boolean representing if the item was removed successfully
    */
   public boolean removeItem(Entity item) {
-    itemCount.put(item, this.getItemCount(item) - 1);
-    if (itemCount.get(item) == 0) {
-      itemCount.remove(item);
-      itemPosition.remove(item);
-      itemPlace.remove(item);
-      for (var entry: itemPlace.entrySet()) {
-        if (entry.getValue() == item) {
-          itemPlace.remove(entry.getKey());
-          break;
-        }
-      }
-      if (item == heldItem) {
-        setHeldItem(getHeldIndex());
-      }
+    if(item.getType() != EntityType.Item) {
+      logger.info("To be removed Entity is not an item");
+      return false;
     }
-    updateInventory();
-    return this.inventory.remove(item);
+    // check if item is in inventory
+    if (!this.itemCount.containsKey(item.getComponent(ItemComponent.class).getItemName())) {
+      return false;
+    } else {
+      this.itemCount.put(item.getComponent(ItemComponent.class).getItemName(), this.itemCount.get(item.getComponent(ItemComponent.class).getItemName()) - 1);
+        if (this.itemCount.get(item.getComponent(ItemComponent.class).getItemName()) == 0) {
+          this.itemCount.remove(item.getComponent(ItemComponent.class).getItemName());
+            // find the position of the item and remove the item from the position
+            for (int i = 0; i < this.itemPlace.size(); i++) {
+                if (this.itemPlace.get(i) == item.getComponent(ItemComponent.class).getItemName()) {
+                  this.itemPlace.remove(i);
+                    break;
+                }
+            }
+        }
+        if (item == heldItem) {
+            setHeldItem(getHeldIndex());
+        }
+        entity.getEvents().trigger("updateInventory");
+        logger.info("Removing item from inventory - " + item.getComponent(ItemComponent.class).getItemName() + ", new count " + this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(), 0));
+        return true;
+    }
   }
 
   /**
@@ -251,7 +408,7 @@ public class InventoryComponent extends Component {
    */
   public void setHeldItem(int index) {
     if (index >= 0 && index < 10) {
-      this.heldItem = itemPlace.get(index);
+      this.heldItem = this.heldItemsEntity.get(this.itemPlace.get(index));
       this.heldIndex = index;
     }
   }
@@ -280,76 +437,27 @@ public class InventoryComponent extends Component {
    * @return integer representation of count
    */
   public int getItemCount(Entity item) {
-    return itemCount.getOrDefault(item, 0);
+    return this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(), 0);
   }
 
-  /**
-   * Returns the position of an item
-   * @param item entity that is the item we want to find
-   * @return Point of the positional representation of the inventory
-   */
-  public Point getItemPosition(Entity item) {
-    return itemPosition.get(item);
+//  @Override
+//  public void write(Json json) {
+//    json.writeObjectStart(this.getClass().getSimpleName());
+//    json.writeObjectStart("inventory");
+//    for (Entity e : inventory) {
+//      json.writeObjectStart("item");
+//      e.writeItem(json);
+//      json.writeValue("count", getItemCount(e));
+//      json.writeValue("X", getItemPosition(e).x);
+//      json.writeValue("Y", getItemPosition(e).y);
+//      json.writeObjectEnd();
+//    }
+//    json.writeObjectEnd();
+//    json.writeObjectEnd();
+//  }
+
+  public Integer getItemCount(int i) {
+    return this.itemCount.getOrDefault(this.itemPlace.get(i), 0);
   }
 
-  /**
-   * Returns a boolean value representing whether or not an item is at a point representation of the inventory
-   * @param point Point to check whether an item is at that position
-   * @return Boolean representing whether or not item is at point
-   */
-  public Boolean getItemAtPoint( Point point) {
-    for (Map.Entry<Entity, Point> entry : itemPosition.entrySet()) {
-      if (entry.getValue().equals(point)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  /**
-   * Get item at a point
-   * @param point Point representation of inventory position
-   * @return Item at that position or null
-   */
-  public Entity getItem(Point point) {
-    for (Map.Entry<Entity, Point> entry : itemPosition.entrySet()) {
-      if (entry.getValue().equals(point)) {
-        return entry.getKey();
-      }
-    }
-    return null;
-  }
-
-
-  /**
-   * Set point position for item
-   * @param item item to set position of
-   * @param point position to set
-   */
-  public void setItemPosition(Entity item, Point point) {
-    itemPosition.put(item, point);
-  }
-
-
-
-  @Override
-  public void write(Json json) {
-    json.writeObjectStart(this.getClass().getSimpleName());
-    json.writeObjectStart("inventory");
-    for (Entity e : inventory) {
-      json.writeObjectStart("item");
-      e.writeItem(json);
-      json.writeValue("count", getItemCount(e));
-      json.writeValue("X", getItemPosition(e).x);
-      json.writeValue("Y", getItemPosition(e).y);
-      json.writeObjectEnd();
-    }
-    json.writeObjectEnd();
-    json.writeObjectEnd();
-  }
-
-  public void updateInventory(){
-    entity.getEvents().trigger("updateInventory");
-
-  }
 }

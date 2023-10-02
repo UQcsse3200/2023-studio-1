@@ -23,10 +23,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
  * Display the UI for the toolbar
  */
 public class ToolbarDisplay extends UIComponent {
-    private static final Logger logger = LoggerFactory.getLogger(InventoryDisplay.class);
+    private static final Logger logger = LoggerFactory.getLogger(ToolbarDisplay.class);
     private final Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
-    private Table table = new Table(skin);
-    private Window window = new Window("", skin);
+    private final Table table = new Table(skin);
+    private final Window window = new Window("", skin);
     private boolean isOpen;
     private InventoryComponent inventory;
     private int selectedSlot = -1;
@@ -40,10 +40,10 @@ public class ToolbarDisplay extends UIComponent {
         super.create();
         initialiseToolbar();
         isOpen = true;
-        entity.getEvents().addListener("updateInventory", this::updateInventory);
+        entity.getEvents().addListener("updateToolbar", this::updateInventory);
         entity.getEvents().addListener("toggleInventory",this::toggleOpen);
         entity.getEvents().addListener("hotkeySelection",this::updateItemSlot);
-        inventory = entity.getComponent(InventoryDisplay.class).getInventory();
+        inventory = entity.getComponent(InventoryComponent.class);
     }
 
     /**
@@ -53,12 +53,11 @@ public class ToolbarDisplay extends UIComponent {
 
     private void updateToolbar(){
         for (int i = 0; i < 10; i++){
-
             int idx = i + 1;
             if (idx == 10) {
                 idx = 0;
             }
-            Label label = new Label(" " + String.valueOf(idx), skin);
+            Label label = new Label(" " + idx, skin);
             label.setColor(Color.BLUE);
             label.setAlignment(Align.topLeft);
 
@@ -66,15 +65,15 @@ public class ToolbarDisplay extends UIComponent {
             int itemCount;
             Texture itemTexture;
 
-            if (inventory.getItemPos(i) != null) {
+            if (inventory != null && inventory.getItem(i) != null) {
                 // Since the item isn't null, we want to make sure that the itemSlot at that position is modified
-                item = inventory.getItemPos(i).getComponent(ItemComponent.class);
+                item = inventory.getItem(i).getComponent(ItemComponent.class);
                 itemCount = inventory.getItemCount(item.getEntity());
                 itemTexture = item.getItemTexture();
                 ItemSlot curSlot = slots.get(i);
                 curSlot.setItemImage(new Image(itemTexture));
 
-                if (curSlot.getCount() != null && !curSlot.getCount().equals(itemCount)) {
+                if (itemCount > 0) {
                     curSlot.setCount(itemCount);
                 }
 
@@ -106,7 +105,7 @@ public class ToolbarDisplay extends UIComponent {
                 idx = 0;
             }
             // Create the label for the item slot
-            Label label = new Label(" " + String.valueOf(idx), skin); //please please please work
+            Label label = new Label(" " + idx, skin); //please please please work
             label.setColor(Color.BLUE);
             label.setAlignment(Align.topLeft);
 
@@ -147,13 +146,13 @@ public class ToolbarDisplay extends UIComponent {
     /**
      * Toggle Toolbar to open state
      */
-    public void toggleOpen(){
-        if (isOpen) {
-            window.setVisible(false);
-            isOpen = false;
+    private void toggleOpen(){
+        if (this.isOpen) {
+            this.window.setVisible(false);
+            this.isOpen = false;
         } else {
-            window.setVisible(true);
-            isOpen = true;
+            this.window.setVisible(true);
+            this.isOpen = true;
         }
     }
 
@@ -161,7 +160,7 @@ public class ToolbarDisplay extends UIComponent {
      * Updates the player's inventory toolbar on the ui.
      */
     public void updateInventory() {
-        inventory = entity.getComponent(InventoryDisplay.class).getInventory();
+        this.inventory = entity.getComponent(InventoryComponent.class);
         updateToolbar();
     }
 
@@ -169,7 +168,7 @@ public class ToolbarDisplay extends UIComponent {
      * Updates the player's inventory toolbar selected itemSlot.
      * @param slotNum updated slot number
      */
-    public void updateItemSlot(int slotNum) {
+    private void updateItemSlot(int slotNum) {
         this.selectedSlot = inventory.getHeldIndex();
         // refresh ui to reflect new selected slot
 
