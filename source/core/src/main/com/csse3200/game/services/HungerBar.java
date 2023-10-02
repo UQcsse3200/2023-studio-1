@@ -1,6 +1,7 @@
 package com.csse3200.game.services;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -47,7 +48,11 @@ public class HungerBar extends UIComponent{
 
         hungerLabels = new Array<>();
         for (int i = 0; i <= 100; i++) {
-            hungerLabels.add(new Label(String.format("Hunger: %d%%", i), hungerSkin));
+                Label label = new Label(String.format("Hunger: %d%%", i), hungerSkin);
+                Label.LabelStyle labelStyle = label.getStyle();
+                labelStyle.fontColor = Color.WHITE; // Set the text color to red (you can choose any color)
+                label.setStyle(labelStyle);
+                hungerLabels.add(label);
         }
     }
 
