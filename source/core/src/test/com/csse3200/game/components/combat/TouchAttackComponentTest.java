@@ -1,8 +1,13 @@
 package com.csse3200.game.components.combat;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.services.GameTime;
+import com.csse3200.game.utils.math.Vector2Utils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -69,11 +74,14 @@ class TouchAttackComponentTest {
   }
 
   Entity createAttacker(short targetLayer) {
+    ProjectileComponent projectileComponent = mock(ProjectileComponent.class);
+    when(projectileComponent.getVelocity()).thenReturn(new Vector2(1f, 1f));
     Entity entity =
         new Entity()
-            .addComponent(new TouchAttackComponent(targetLayer))
+            .addComponent(new TouchAttackComponent(targetLayer, 1f))
             .addComponent(new CombatStatsComponent(0, 10))
             .addComponent(new PhysicsComponent())
+            .addComponent(projectileComponent)
             .addComponent(new HitboxComponent());
     entity.create();
     return entity;
