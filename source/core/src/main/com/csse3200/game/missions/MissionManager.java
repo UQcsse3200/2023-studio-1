@@ -167,8 +167,7 @@ public class MissionManager implements Json.Serializable {
 	public void checkMandatoryQuestExpiry() {
 		for (Quest quest : activeQuests) {
 			if (quest.isMandatory() && quest.isExpired()) {
-				LoseScreenDisplay.setLoseReason(quest.getName());
-				events.trigger("loseScreen");
+				events.trigger("loseScreen", quest.getName());
 			}
 		}
 	}

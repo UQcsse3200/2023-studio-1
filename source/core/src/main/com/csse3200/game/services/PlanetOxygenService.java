@@ -107,8 +107,7 @@ public class PlanetOxygenService implements OxygenLevel{
             logger.debug("No oxygen left, triggering final oxygenUpdate and loseScreen event");
             oxygenPresent = 0;
             eventHandler.trigger("oxygenUpdate");
-            LoseScreenDisplay.setLoseReason("oxygen");
-            ServiceLocator.getMissionManager().getEvents().trigger("loseScreen");
+            ServiceLocator.getMissionManager().getEvents().trigger("loseScreen", "oxygen");
         } else if (oxygenPresent + delta > oxygenGoal) {
             // Limit the present oxygen to not surpass the oxygen goal.
             logger.debug("Setting oxygen present to oxygen goal");
