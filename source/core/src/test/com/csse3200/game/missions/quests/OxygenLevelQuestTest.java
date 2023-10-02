@@ -1,5 +1,6 @@
 package com.csse3200.game.missions.quests;
 
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
@@ -151,4 +152,98 @@ class OxygenLevelQuestTest {
             assertEquals(String.format(descHour, 50, "%", 24 - i), OLQuest8.getDescription());
         }
     }
+    @Test
+    public void testGetShortDescription() {
+        testRegisterMission();
+        String descHour = "Get oxygenlevel to be greater than %d%s in %d hours";
+        String descDay = "Get oxygenlevel to be greater than %d%s in %d days";
+        assertEquals(String.format(descHour, 0, "%", 0), OLQuest1.getShortDescription());
+        assertEquals(String.format(descHour, 50, "%", 0), OLQuest2.getShortDescription());
+        assertEquals(String.format(descDay, 0, "%", 1), OLQuest3.getShortDescription());
+        assertEquals(String.format(descDay, 50, "%", 1), OLQuest4.getShortDescription());
+        assertEquals(String.format(descHour, 0, "%", 0), OLQuest5.getShortDescription());
+        assertEquals(String.format(descHour, 50, "%", 0), OLQuest6.getShortDescription());
+        assertEquals(String.format(descDay, 0, "%", 1), OLQuest7.getShortDescription());
+        assertEquals(String.format(descDay, 50, "%", 1), OLQuest8.getShortDescription());
+        for (int i = 1; i <= 24; i++) {
+            ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+            assertEquals(String.format(descHour, 0, "%", 0), OLQuest1.getShortDescription());
+            assertEquals(String.format(descHour, 50, "%", 0), OLQuest2.getShortDescription());
+            assertEquals(String.format(descHour, 0, "%", 24 - i), OLQuest3.getShortDescription());
+            assertEquals(String.format(descHour, 50, "%", 24 - i), OLQuest4.getShortDescription());
+            assertEquals(String.format(descHour, 0, "%", 0), OLQuest5.getShortDescription());
+            assertEquals(String.format(descHour, 50, "%", 0), OLQuest6.getShortDescription());
+            assertEquals(String.format(descHour, 0, "%", 24 - i), OLQuest7.getShortDescription());
+            assertEquals(String.format(descHour, 50, "%", 24 - i), OLQuest8.getShortDescription());
+        }
+    }
+
+    @Test
+    public void testReadProgress() {
+        int progressInt = 3;
+        JsonValue progress = new JsonValue(progressInt);
+        testRegisterMission();
+        String descHour = "Get oxygenlevel to be greater than %d%s in %d hours";
+        String descDay = "Get oxygenlevel to be greater than %d%s in %d days";
+        assertEquals(String.format(descHour, 0, "%", 0), OLQuest1.getShortDescription());
+        assertEquals(String.format(descHour, 50, "%", 0), OLQuest2.getShortDescription());
+        assertEquals(String.format(descDay, 0, "%", 1), OLQuest3.getShortDescription());
+        assertEquals(String.format(descDay, 50, "%", 1), OLQuest4.getShortDescription());
+        assertEquals(String.format(descHour, 0, "%", 0), OLQuest5.getShortDescription());
+        assertEquals(String.format(descHour, 50, "%", 0), OLQuest6.getShortDescription());
+        assertEquals(String.format(descDay, 0, "%", 1), OLQuest7.getShortDescription());
+        assertEquals(String.format(descDay, 50, "%", 1), OLQuest8.getShortDescription());
+        OLQuest1.readProgress(progress);
+        OLQuest2.readProgress(progress);
+        OLQuest3.readProgress(progress);
+        OLQuest4.readProgress(progress);
+        OLQuest5.readProgress(progress);
+        OLQuest6.readProgress(progress);
+        OLQuest7.readProgress(progress);
+        OLQuest8.readProgress(progress);
+        for (int i = 4; i <= 24; i++) {
+            ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+            assertEquals(String.format(descHour, 0, "%", 0), OLQuest1.getShortDescription());
+            assertEquals(String.format(descHour, 50, "%", 0), OLQuest2.getShortDescription());
+            assertEquals(String.format(descHour, 0, "%", 24 - i), OLQuest3.getShortDescription());
+            assertEquals(String.format(descHour, 50, "%", 24 - i), OLQuest4.getShortDescription());
+            assertEquals(String.format(descHour, 0, "%", 0), OLQuest5.getShortDescription());
+            assertEquals(String.format(descHour, 50, "%", 0), OLQuest6.getShortDescription());
+            assertEquals(String.format(descHour, 0, "%", 24 - i), OLQuest7.getShortDescription());
+            assertEquals(String.format(descHour, 50, "%", 24 - i), OLQuest8.getShortDescription());
+        }
+    }
+
+    @Test
+    public void testGetProgress() {
+        testRegisterMission();
+        assertEquals(0, OLQuest1.getProgress());
+        assertEquals(0, OLQuest2.getProgress());
+        assertEquals(0, OLQuest3.getProgress());
+        assertEquals(0, OLQuest4.getProgress());
+        assertEquals(0, OLQuest5.getProgress());
+        assertEquals(0, OLQuest6.getProgress());
+        assertEquals(0, OLQuest7.getProgress());
+        assertEquals(0, OLQuest8.getProgress());
+        for (int i = 0; i < 100; i++) {
+            assertEquals(i, OLQuest1.getProgress());
+            assertEquals(i, OLQuest2.getProgress());
+            assertEquals(i, OLQuest3.getProgress());
+            assertEquals(i, OLQuest4.getProgress());
+            assertEquals(i, OLQuest5.getProgress());
+            assertEquals(i, OLQuest6.getProgress());
+            assertEquals(i, OLQuest7.getProgress());
+            assertEquals(i, OLQuest8.getProgress());
+            ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+        }
+        assertEquals(100, OLQuest1.getProgress());
+        assertEquals(100, OLQuest2.getProgress());
+        assertEquals(100, OLQuest3.getProgress());
+        assertEquals(100, OLQuest4.getProgress());
+        assertEquals(100, OLQuest5.getProgress());
+        assertEquals(100, OLQuest6.getProgress());
+        assertEquals(100, OLQuest7.getProgress());
+        assertEquals(100, OLQuest8.getProgress());
+    }
+
 }
