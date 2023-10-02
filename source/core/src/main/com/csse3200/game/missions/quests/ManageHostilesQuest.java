@@ -19,7 +19,7 @@ public class ManageHostilesQuest extends Quest {
         super(name, reward);
 
         this.hostileTypes = hostileTypes;
-        this.numberOfHostilesToBeKilled = numberOfHostilesToBeKilled;
+        this.numberOfHostilesToBeKilled = Math.max(0, numberOfHostilesToBeKilled);
         this.numberOfHostilesKilled = 0;
 
         // Possibly do some sort of check to make sure the provided hostileTypes set contains only hostile entityTypes
@@ -29,7 +29,7 @@ public class ManageHostilesQuest extends Quest {
         super(name, reward, expiryDuration, isMandatory);
 
         this.hostileTypes = hostileTypes;
-        this.numberOfHostilesToBeKilled = numberOfHostilesToBeKilled;
+        this.numberOfHostilesToBeKilled = Math.max(0, numberOfHostilesToBeKilled);
         this.numberOfHostilesKilled = 0;
 
         // Possibly do some sort of check to make sure the provided hostileTypes set contains only hostile entityTypes
