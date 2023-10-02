@@ -29,8 +29,8 @@ public abstract class GameArea implements Disposable {
   protected List<Entity> areaEntities;
   private static final Logger logger = LoggerFactory.getLogger(GameArea.class);
   private Entity player;
-  private final ArrayList<EntityType> loadableTypes = new ArrayList<>(Arrays.asList(EntityType.Tile, EntityType.Cow,
-          EntityType.Cow, EntityType.Chicken, EntityType.Astrolotl, EntityType.Plant, EntityType.Tile,
+  private final ArrayList<EntityType> loadableTypes = new ArrayList<>(Arrays.asList(EntityType.Tile,
+          EntityType.Cow, EntityType.Chicken, EntityType.Astrolotl, EntityType.Plant,
           EntityType.OxygenEater, EntityType.ShipDebris, EntityType.Ship, EntityType.Sprinkler, EntityType.Pump,
           EntityType.Fence, EntityType.Light, EntityType.Gate, EntityType.Chest));
 
