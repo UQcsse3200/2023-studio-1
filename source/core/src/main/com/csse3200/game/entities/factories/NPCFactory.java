@@ -398,7 +398,7 @@ public class NPCFactory {
     Entity animal = new Entity(type)
             .addComponent(new PhysicsComponent())
             .addComponent(new PhysicsMovementComponent())
-            .addComponent(new HitboxComponent());
+            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC));
 
     if (type != EntityType.Dragonfly && type != EntityType.Bat) {
       animal.addComponent(new ColliderComponent());
