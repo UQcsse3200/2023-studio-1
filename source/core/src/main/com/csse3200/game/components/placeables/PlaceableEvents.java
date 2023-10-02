@@ -20,7 +20,7 @@ public class PlaceableEvents extends Component {
         // Check if the placeable is a chest and if there is items in that chest
         InventoryComponent chestInventory = placedItem.getComponent(InventoryComponent.class);
         if (chestInventory != null){
-            if (chestInventory.getInventory().size() >= 1) {
+            if (chestInventory.getInventorySize() >= 1) {
                 return;
             }
         }
