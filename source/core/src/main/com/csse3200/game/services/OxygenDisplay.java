@@ -86,7 +86,6 @@ public class OxygenDisplay extends UIComponent{
             oxygenFill.setScaleX(scaling);
         }
 
-
         // Add a safety check to ensure that the array is always accessed at a possible index
         if (0 <= oxygenPercent && oxygenPercent <= 100) {
             logger.debug("Oxygen display updated");
@@ -95,7 +94,7 @@ public class OxygenDisplay extends UIComponent{
         }
 
         // Uncomment line below to test that oxygen percent decreases by 1% per hour (till endgame condition reached).
-        ServiceLocator.getPlanetOxygenService().addOxygen(160);
+        // ServiceLocator.getPlanetOxygenService().removeOxygen(400);
     }
 
     /**
@@ -127,6 +126,8 @@ public class OxygenDisplay extends UIComponent{
         super.dispose();
         oxygenOutline.remove();
         oxygenFill.remove();
+        oxygenHealthy.remove();
         oxygenLabel.remove();
+        oxygenLabels.clear();
     }
 }

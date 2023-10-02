@@ -9,15 +9,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A ui component for displaying the current oxygen level on the Main Game Screen.
+ * A ui component for displaying the current health level on the Main Game Screen.
  */
 public class HealthDisplay extends UIComponent{
 
+    private static final Logger logger = LoggerFactory.getLogger(HealthDisplay.class);
     Table table = new Table();
     Group group = new Group();
     private Image healthOutline;
@@ -34,6 +36,7 @@ public class HealthDisplay extends UIComponent{
     public void create() {
         super.create();
 
+        logger.debug("Adding listener to healthUpdate event");
         // Adds a listener to check for health updates
         entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
         updatePlayerHealthUI(100);
@@ -44,6 +47,7 @@ public class HealthDisplay extends UIComponent{
      * the class, and stores them in an array to be called when needed.
      */
     public void createTexture() {
+        logger.debug("Health display texture being created");
         Skin healthSkin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
 
         healthOutline = new Image(ServiceLocator.getResourceService().getAsset(
@@ -69,7 +73,7 @@ public class HealthDisplay extends UIComponent{
 
         float scaling = (float) health / 100;
 
-        // Accounts for scaling of the oxygen bar due to the oxygen percent
+        // Accounts for scaling of the health bar due to the health percent
         if (health <= 25) {
             healthFill = healthDanger;
             healthFill.setX(healthFill.getImageX() + 14 * (1 - scaling));
@@ -82,6 +86,7 @@ public class HealthDisplay extends UIComponent{
 
         // Add a safety check to ensure that the array is always accessed at a possible index
         if (0 <= health && health <= 100) {
+            logger.debug("Health display updated");
             healthLabel = healthLabels.get(health);
             healthLabel.setPosition(healthOutline.getImageX() + 125f, healthOutline.getImageY() + 8.5f);
         }
