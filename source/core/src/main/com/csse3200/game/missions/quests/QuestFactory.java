@@ -35,6 +35,10 @@ public class QuestFactory {
     public static final String ACT_III_MAIN_QUEST_NAME = "Weather the Storm";
     public static final String TRACTOR_GO_BRRRRRR = "Tractor Go BRRRRRR";
 
+    private QuestFactory() {
+        // This class should not be instantiated - if it is, do nothing
+    }
+
     /**
      * Creates the First Contact {@link AutoQuest}
      * @return - the First Contact Quest
