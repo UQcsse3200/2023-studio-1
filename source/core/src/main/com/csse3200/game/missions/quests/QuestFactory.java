@@ -119,24 +119,11 @@ public class QuestFactory {
         questsToActivate.add(createMakingFriendsQuest());
 
         String dialogue = """
-                Ahhh, well done. The Cosmic Cob is a favourite of my people.
-                {WAIT}
-                I thank you, truly.
-                {WAIT}
-                But there are more plants that were in my original collection before it was destroyed.
-                {WAIT}
-                Atomic Algae <TO BE ADDED>
-                {WAIT}
-                Also...
-                {WAIT}
-                You might find your harvested crops desirable by our local wildlife.
-                {WAIT}
-                Who knows, maybe you will be able to get something from them if you treat them nicely.
+                "Good job. {WAIT}You have proven capable of tending to crops. {WAIT}But in isolation, that means nothing. {WAIT}Now prove to me that you can use the fruits of your labour for the benefit of this planet. {WAIT}You may have noticed some {COLOR=#76428A}COW LIKE CREATURES{COLOR=WHITE} roaming about - show me you can gain their trust." {WAIT}You are suspicious that this {COLOR=#76428A}ANGRY ALIEN CREATURE{COLOR=WHITE} knows of cows...
                 """;
 
         MultiReward reward = new MultiReward(List.of(
                 new ItemReward(List.of(
-                        ItemFactory.createCowFood(),
                         ItemFactory.createSprinklerItem()
                         // TODO import sprinkler pump
                 )),
@@ -144,7 +131,7 @@ public class QuestFactory {
                 new DialogueReward(dialogue)
         ));
         return new PlantInteractionQuest(REAPING_YOUR_REWARDS_QUEST_NAME, reward, MissionManager.MissionEvent.HARVEST_CROP,
-                Set.of("Cosmic Cob"), 12);
+                Set.of("Cosmic Cob"), 6);
     }
 
     /**
@@ -172,17 +159,10 @@ public class QuestFactory {
         questsToActivate.add(createFertilisingFiestaQuest());
 
         String dialogue = """
-                So you've met our kind fauna.
-                {WAIT}
-                Good. You're starting to learn.
-                {WAIT}
-                You might have noticed that once you treat our wildlife kindly, they drop rewards for you.
-                {WAIT}
-                Why don't you try using them?
+                "You are beginning to understand... {WAIT}Treat this planet well, and it will treat you well in return." {WAIT}Memories of a shattered Earth and a sky alight cloud your vision. {WAIT}You snap back to now. {WAIT}"You may have noticed the {COLOR=#76428A}KIND OFFERINGS{COLOR=WHITE} our fauna provide. {WAIT}Maybe you could try to use them?"
                 """;
 
         MultiReward reward = new MultiReward(List.of(
-                new ItemReward(List.of(ItemFactory.createFertiliser())),
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
@@ -199,19 +179,7 @@ public class QuestFactory {
         questsToActivate.add(createAliensAttackQuest());
 
         String dialogue = """
-                Well done! You seem to really be getting the hang of this.
-                {WAIT}
-                There is one more thing you must do, however, before I can truly trust you.
-                {WAIT}
-                Some of our wildlife does not take too kindly to aliens from outer space invading our plant.
-                {WAIT}
-                And to be honest, a lot are even pests for us locals.
-                {WAIT}
-                A few of these hostile creatures will be attacking soon.
-                {WAIT}
-                Take this WEAPON, and defend our crops.
-                {WAIT}
-                I've also given you a seed for a special type of plant, the Space Snapper, which will eat up these types of hostiles once grown to maturity.
+                "It seems like you're getting the hang of this. There's only one more thing you must do, before I know to trust you. Some of our wildlife are {COLOR=RED}not so kind{COLOR=WHITE}. In particular, there are 3 {COLOR=#76428A}HOSTILE CREATURES{COLOR=WHITE} we consider pests. Take this {COLOR=#76428A}WEAPON{COLOR=WHITE}, and defend our work. I will also give you this {COLOR=#76428A}SPACE SNAPPER SEED{COLOR=WHITE}. When grown, the {COLOR=#76428A}SPACE SNAPPER{COLOR=WHITE} will happily munch on any creatures nearby, even non-hostile creatures."
                 """;
 
         MultiReward reward = new MultiReward(List.of(
@@ -230,7 +198,7 @@ public class QuestFactory {
                 )),
                 new DialogueReward(dialogue)
         ));
-        return new FertiliseCropTilesQuest(FERTILISING_FIESTA_QUEST_NAME, reward, 12);
+        return new FertiliseCropTilesQuest(FERTILISING_FIESTA_QUEST_NAME, reward, 1);
     }
 
     /**
@@ -239,19 +207,7 @@ public class QuestFactory {
      */
     public static ManageHostilesQuest createAliensAttackQuest() {
         String dialogue = """
-                Impressive.
-                {WAIT}
-                Well, I suppose you have shown me that you can be trusted.
-                {WAIT}
-                I give you these seeds as boons for your good work.
-                {WAIT}
-                The trusty Hammer Plant shall heal all creatures and plants around it.
-                {WAIT}
-                Aloe Vera yields a gel which can heal even the gravest of injuries.
-                {WAIT}
-                Seeing as though you have been obedi- generous in offering your help to reconstruct what was lost, I am ready to help you.
-                {WAIT}
-                Come speak with me when you are ready, and we can talk about repairing that ship of yours.
+                "Impressive. {WAIT}I see you've inherited your species' aggressive tendencies. {WAIT}Now that you've shown you can be trusted, there is more I must reveal to you. {WAIT}Come back and speak to me when you are ready. In the mean time, take these seeds - the {COLOR=#76428A}ALOE VERA{COLOR=WHITE} plant produces a nectar which can heal you, and the {COLOR=#76428A}HAMMER PLANT{COLOR=WHITE} heals nearby creatures and plants when fully grown."
                 """;
 
         MultiReward reward = new MultiReward(List.of(
@@ -271,25 +227,11 @@ public class QuestFactory {
      */
     public static MainQuest createActIMainQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
-
         List<Quest> questsToActivate = new ArrayList<>();
         questsToActivate.add(createConnectionQuest());
 
         String dialogue = """
-                Well done, human. You have shown me that you can be trusted, and that our cooperation may be mutually beneficial.
-                {WAIT}
-                Now, {WAIT=0.5} let's see if we can do something about that Ship of yours.
-                I understand you likely did not intend to crash here - my guess is the recent {COLOUR=red}Solar Surge{COLOUR=white} is to blame?
-                {WAIT}
-                You begin to explain what happened, how you lost contact with the Mothership, how your controls failed and how you fell into an uncontrolled descent onto the planet's surface.
-                {WAIT}
-                I see... {WAIT=1} Our sun, though it gives us life, is also an unforgiving force of nature.
-                {WAIT}
-                As you continue to go over the details, an anxiety begins to claw at your chest, as the possibility of you being forever separated from your people becomes a terrifying possibility.
-                {WAIT}
-                ALIEN NPC looks down into your eyes.
-                {WAIT=2}
-                It's okay. {WAIT=1} I have an idea...
+                For the first time since your landing, the {COLOR=#76428A}ALIEN CREATURE{COLOR=WHITE}'s vicious grimace fades. {WAIT}"I apologise for my initial hostility. {WAIT}My name is Jarrael. {WAIT}I am- {WAIT}was a member of the Karreshiq people. {WAIT}I was sent here for a special purpose, after {COLOR=RED}The Night of the Black Sun{COLOR=WHITE}. {WAIT}Our people had interacted with your civilisation many millennia ago, but we found a home here after we were {COLOR=RED}driven out{COLOR=WHITE}. {WAIT}So imagine my shock when you came crashing down from the sky. {WAIT}What happened?" {WAIT}You begin to explain your predicament to Jarrael...
                 """;
 
         Set<String> requiredQuests = new HashSet<>();
@@ -301,10 +243,12 @@ public class QuestFactory {
         requiredQuests.add(ALIENS_ATTACK_QUEST_NAME);
 
         MultiReward reward = new MultiReward(List.of(
+                new ItemReward(List.of(
+                        ItemFactory.createLightItem(),
+                        ItemFactory.createChestItem()
+                )),
                 new QuestReward(questsToAdd, questsToActivate),
-                new DialogueReward(dialogue),
-                new ItemReward(List.of(ItemFactory.createLightItem(),
-                        ItemFactory.createChestItem()))
+                new DialogueReward(dialogue)
         ));
 
         return new MainQuest(ACT_I_MAIN_QUEST_NAME, reward, 5, requiredQuests, "gain ALIEN NPC's trust");

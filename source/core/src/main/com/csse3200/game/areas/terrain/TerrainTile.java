@@ -75,17 +75,17 @@ public class TerrainTile implements TiledMapTile {
       case GRASS:
         this.isTraversable = true;
         this.isTillable = true;
-        this.speedModifier = 1.1f;
+        this.speedModifier = 1.0f;
         break;
       case DIRT:
         this.isTraversable = true;
         this.isTillable = true;
-        this.speedModifier = 0.7f;
+        this.speedModifier = 1.0f;
         break;
       case SHALLOWWATER:
         this.isTraversable = true;
         this.isTillable = false;
-        this.speedModifier = 0.9f;
+        this.speedModifier = 0.4f;
         break;
       case DESERT:
         this.isTraversable = true;
@@ -125,12 +125,12 @@ public class TerrainTile implements TiledMapTile {
       case GRAVEL:
         this.isTraversable = true;
         this.isTillable = false;
-        this.speedModifier = 1f;
+        this.speedModifier = 1.0f;
         break;
       case FLOWINGWATER:
         this.isTraversable = true;
         this.isTillable = false;
-        this.speedModifier = 1.3f;
+        this.speedModifier = 0.4f;
         break;
     }
   }
