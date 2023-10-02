@@ -3,7 +3,6 @@ package com.csse3200.game.components.combat;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.events.ScheduledEvent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
@@ -26,7 +25,9 @@ public class ProjectileComponent extends Component {
     private ScheduledEvent bulletExpiredEvent;
     /** Velocity vector of projectile */
     private Vector2 velocity;
-
+    private boolean constantVelocity = false;
+    private boolean destroyOnImpact = false;
+    private boolean destroyed = false;
     /**
      * Constructs a ProjectileComponent with a specified duration.
      *
@@ -62,9 +63,16 @@ public class ProjectileComponent extends Component {
         velocity = directionVector.scl(speed);
 
         Body body = physicsComponent.getBody();
-        body.setAngularDamping(0f);
-        body.setLinearDamping(0f);
+        if (constantVelocity) {
+            body.setAngularDamping(0f);
+            body.setLinearDamping(0f);
+        }
+        body.setLinearVelocity(0, 0);
         body.applyLinearImpulse(velocity, body.getWorldCenter(), true);
+    }
+
+    public void setConstantVelocity(boolean constantVelocity) {
+        this.constantVelocity = constantVelocity;
     }
 
     /**
@@ -80,6 +88,11 @@ public class ProjectileComponent extends Component {
      * Destroys the projectile entity by removing it from the game area.
      */
     private void destroyProjectile() {
+        if (destroyed) {
+            return;
+        }
+
+        destroyed = true;
         ServiceLocator.getGameArea().removeEntity(entity);
     }
 
@@ -87,9 +100,12 @@ public class ProjectileComponent extends Component {
      * Handles the impact event, cancelling the bullet expiration event and disabling touch attack functionality.
      */
     private void impact() {
-        entity.getEvents().cancelEvent(bulletExpiredEvent);
-        physicsComponent.getBody().setLinearVelocity(0,  0);
-        entity.getComponent(TouchAttackComponent.class).setEnabled(false);
+        if (destroyOnImpact) {
+            entity.getEvents().cancelEvent(bulletExpiredEvent);
+            physicsComponent.getBody().setLinearVelocity(0,  0);
+            entity.getComponent(TouchAttackComponent.class).setEnabled(false);
+        }
+
         hasImpact = true;
     }
 
@@ -98,11 +114,15 @@ public class ProjectileComponent extends Component {
      */
     @Override
     public void update() {
-        if (hasImpact) {
+        if (hasImpact && destroyOnImpact) {
             if (entity.getComponent(AnimationRenderComponent.class).isFinished()) {
                 destroyProjectile();
             }
         }
+    }
+
+    public void setDestroyOnImpact(boolean destroyOnImpact) {
+        this.destroyOnImpact = destroyOnImpact;
     }
 
     /**
@@ -111,6 +131,15 @@ public class ProjectileComponent extends Component {
      * @return The velocity vector of the projectile.
      */
     public Vector2 getVelocity() {
-        return velocity;
+        return velocity.cpy();
+    }
+
+
+    /**
+     * Set velocity without triggering movement, used for setting knockback velocity
+     * @param velocity velocity to set
+     */
+    public void setVelocity(Vector2 velocity) {
+        this.velocity = velocity;
     }
 }

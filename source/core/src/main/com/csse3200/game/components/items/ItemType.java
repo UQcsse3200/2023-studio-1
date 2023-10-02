@@ -5,6 +5,8 @@ public enum ItemType {
   HOE,
   WATERING_CAN,
   SCYTHE,
+  SWORD,
+  GUN,
   MILK,
   EGG,
   FOOD,

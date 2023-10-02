@@ -19,8 +19,9 @@ import com.csse3200.game.missions.quests.QuestFactory;
 public class FactoryService {
     private static final Map<EntityType, Function<Entity, Entity>> npcFactories = Map.of(EntityType.Chicken, NPCFactory::createChicken,
             EntityType.Cow, NPCFactory::createCow, EntityType.Astrolotl, NPCFactory::createAstrolotl,
-            EntityType.OxygenEater, NPCFactory::createOxygenEater,
-            EntityType.FireFlies, NPCFactory::createFireFlies);
+            EntityType.OxygenEater, NPCFactory::createOxygenEater, EntityType.ShipDebris, ShipDebrisFactory::createShipDebris,
+            EntityType.FireFlies, NPCFactory::createFireFlies, EntityType.Bat, NPCFactory::createBat,
+            EntityType.Dragonfly, NPCFactory::createDragonfly);
 
     private static final Map<String, Function<CropTileComponent, Entity>> plantFactories = Map.of(
             "Cosmic Cob", PlantFactory::createCosmicCob,
@@ -48,7 +49,6 @@ public class FactoryService {
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Hammer Plant Seeds", ItemFactory::createHammerPlantSeed),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Hammer Flower", ItemFactory::createHammerFlower),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Space Snapper Seeds", ItemFactory::createSpaceSnapperSeed),
-            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("COW FOOD", ItemFactory::createCowFood),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("egg", ItemFactory::createEgg),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("milk", ItemFactory::createMilk),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Chest", ItemFactory::createChestItem),
