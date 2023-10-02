@@ -6,9 +6,7 @@ import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 
-import com.csse3200.game.areas.terrain.CropTileComponent;
-import com.csse3200.game.areas.terrain.TerrainCropTileFactory;
-import com.csse3200.game.areas.terrain.TerrainTile;
+import com.csse3200.game.areas.terrain.*;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ComponentType;
 import com.csse3200.game.components.ConeLightComponent;
@@ -459,6 +457,16 @@ public class Entity implements Json.Serializable {
                     TerrainTile terrainTile = ServiceLocator.getGameArea().getMap().getTile(tile.getPosition());
                     terrainTile.setOccupant(tile);
                     break;
+	            case ShipPartTile:
+		            Entity partTile = ShipPartTileFactory.createShipPartTile(position);
+		            ServiceLocator.getGameArea().spawnEntity(partTile);
+		            partTile.setPosition(position);
+		            partTile.getComponent(ShipPartTileComponent.class).read(json, jsonMap);
+
+		            TerrainTile partTerrainTile = ServiceLocator.getGameArea().getMap().getTile(position);
+		            partTerrainTile.setOccupant(partTile);
+		            partTerrainTile.setOccupied();
+		            break;
                 case Ship:
                     Entity ship = ShipFactory.createShip();
 

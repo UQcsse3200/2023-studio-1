@@ -138,7 +138,7 @@ public class SaveGame {
       // If you edit this original array you edit what is in the ResourceService
       Array<Entity> tiles = new Array<>(entities);
       for (int i = 0; i < tiles.size; i++) {
-        if (tiles.get(i).getType() != EntityType.Tile) {
+        if (tiles.get(i).getType() != EntityType.Tile && tiles.get(i).getType() != EntityType.ShipPartTile) {
           tiles.removeIndex(i);
           // Moves the indexing down when removed so keep index same
           i--;

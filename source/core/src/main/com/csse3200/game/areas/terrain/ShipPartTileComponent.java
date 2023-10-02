@@ -1,8 +1,11 @@
 package com.csse3200.game.areas.terrain;
 
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ItemFactory;
+import com.csse3200.game.entities.factories.ShipDebrisFactory;
 import com.csse3200.game.services.ServiceLocator;
 
 /**
@@ -29,7 +32,7 @@ public class ShipPartTileComponent extends Component {
     public void addShipDebris(Entity shipDebris) {
         this.shipDebris = shipDebris;
         this.shipDebris.setPosition(entity.getPosition());
-        ServiceLocator.getEntityService().register(this.shipDebris);
+        ServiceLocator.getGameArea().spawnEntity(this.shipDebris);
     }
 
     /**
@@ -69,6 +72,25 @@ public class ShipPartTileComponent extends Component {
             // remove self from the terrain tile & self-destruct
             if (tile != null) tile.removeOccupant();
             entity.dispose();
+        }
+    }
+
+    @Override
+    public void write(Json json) {
+        json.writeObjectStart(this.getClass().getSimpleName());
+        json.writeValue("shipDebris", shipDebris);
+        json.writeObjectEnd();
+    }
+
+    @Override
+    public void read(Json json, JsonValue jsonMap) {
+        jsonMap = jsonMap.get("components").get(this.getClass().getSimpleName());
+        JsonValue debrisData = jsonMap.get("shipDebris");
+        if (debrisData.get("Entity") != null) {
+            Entity newShipDebris = ShipDebrisFactory.createShipDebris(null);
+            addShipDebris(newShipDebris);
+        } else {
+            shipDebris = null;
         }
     }
 }
