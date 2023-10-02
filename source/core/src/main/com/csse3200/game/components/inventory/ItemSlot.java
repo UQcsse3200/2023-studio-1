@@ -74,7 +74,6 @@ public class ItemSlot extends Stack {
      */
     public void setCount(Integer count) {
         this.count = count;
-        createItemSlot();
     }
 
     /**
