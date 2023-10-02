@@ -36,4 +36,20 @@ public class SolarSurgeEvent extends WeatherEvent {
         temperatureModifier = MIN_TEMPERATURE_MODIFIER +
                 (MAX_TEMPERATURE_MODIFIER - MIN_TEMPERATURE_MODIFIER) * severity;
     }
+
+    /**
+     *
+     */
+    @Override
+    public void startEffect() {
+        return;
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void stopEffect() {
+        return;
+    }
 }

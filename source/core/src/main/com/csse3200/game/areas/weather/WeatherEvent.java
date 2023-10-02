@@ -143,6 +143,16 @@ public abstract class WeatherEvent {
 		return severity;
 	}
 
+	/**
+	 * Starts the visual effect for the weather event
+	 */
+	public abstract void startEffect();
+
+	/**
+	 * Stops the visual effect for the weather event
+	 */
+	public abstract void stopEffect();
+
 	public void write(Json json) {
 		json.writeObjectStart("Event");
 		json.writeValue("name", getClass().getSimpleName());

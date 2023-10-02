@@ -18,6 +18,7 @@ import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.components.player.OpenPauseComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.player.PlayerAnimationController;
+import com.csse3200.game.components.player.PlayerHighlightComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.configs.PlayerConfig;
@@ -29,6 +30,7 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 
 /**
  * Factory to create a player entity.
@@ -55,7 +57,7 @@ public class PlayerFactory {
             );
 
     setupPlayerAnimator(animator);
-    InventoryComponent playerInventory = new InventoryComponent(new ArrayList<>());
+    //InventoryComponent playerInventory = new InventoryComponent(new ArrayList<>());
 
     Entity player =
         new Entity(EntityType.Player)
@@ -64,7 +66,7 @@ public class PlayerFactory {
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
             .addComponent(new PlayerActions())
             .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack))
-                .addComponent(playerInventory)
+            .addComponent(new InventoryComponent())
             .addComponent(inputComponent)
             .addComponent(animator)
             .addComponent(new OpenPauseComponent())
@@ -74,7 +76,7 @@ public class PlayerFactory {
                     EntityType.Cow, EntityType.Astrolotl, EntityType.OxygenEater, EntityType.ShipDebris, EntityType.Ship))))
             .addComponent(new ToolbarDisplay())
 	        .addComponent(new AuraLightComponent(6f))
-            .addComponent(new InventoryDisplay(playerInventory))
+            .addComponent(new InventoryDisplay(30, 10))
             .addComponent(new PauseMenuActions());
 
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
@@ -136,4 +138,5 @@ public class PlayerFactory {
   private PlayerFactory() {
     throw new IllegalStateException("Instantiating static util class");
   }
+
 }

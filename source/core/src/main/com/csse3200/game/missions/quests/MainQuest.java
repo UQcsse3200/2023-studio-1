@@ -25,7 +25,7 @@ public class MainQuest extends Quest {
 
     @Override
     public void registerMission(EventHandler missionManagerEvents) {
-        missionManagerEvents.addListener(MissionManager.MissionEvent.STORY_REWARD_COLLECTED.name(), this::addQuest);
+        missionManagerEvents.addListener(MissionManager.MissionEvent.QUEST_REWARD_COLLECTED.name(), this::addQuest);
     }
 
     private void addQuest(String questName) {

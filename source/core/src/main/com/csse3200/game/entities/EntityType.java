@@ -1,5 +1,7 @@
 package com.csse3200.game.entities;
 
+import com.csse3200.game.components.placeables.PlaceableCategory;
+
 /**
  * An enum of all the entity types in the game.
  * Feel free to add yours here. Read Documentation for SaveLoad and follow procedure there
@@ -22,6 +24,7 @@ public enum EntityType {
     Fence(0),
     Gate(0),
     Sprinkler(0),
+    Pump(0),
     Light(0),
     Ship(0),
     ShipDebris(0),
@@ -30,6 +33,12 @@ public enum EntityType {
 
     // Negative rate for consumption, positive for production of oxygen
     private final float hourlyOxygenRate;
+
+    /**
+     *  A parent like category for Placeable types.
+     *  Allows other Placeable entities to query if this is of the same placeable category.
+     */
+    private PlaceableCategory placeableCategory;
 
     EntityType(float hourlyOxygenRate) {
         this.hourlyOxygenRate = hourlyOxygenRate;
@@ -43,6 +52,22 @@ public enum EntityType {
      */
     public float getOxygenRate() {
         return hourlyOxygenRate;
+    }
+
+    /**
+     * Getter for the placeableCategory
+     * @return this placeableCategory
+     */
+    public PlaceableCategory getPlaceableCategory() {
+        return placeableCategory;
+    }
+
+    /**
+     * Setter for the placeableCategory
+     * @param placeableCategory A category that encompasses the Placeable type.
+     */
+    public void setPlaceableCategory(PlaceableCategory placeableCategory) {
+        this.placeableCategory = placeableCategory;
     }
 }
 
