@@ -6,6 +6,11 @@ import static org.mockito.Mockito.spy;
 
 import java.util.ArrayList;
 
+import com.csse3200.game.missions.MissionManager;
+import com.csse3200.game.services.GameTime;
+import com.csse3200.game.services.ResourceService;
+import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.TimeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,9 +32,17 @@ public class TamingTest {
     private InventoryComponent playerInvSpy;
     private Entity foodEntity;
     private Entity nonFood;
+    private static final String[] texturePaths = {"images/tool_shovel.png"};
 
     @BeforeEach
     void beforeEach() {
+        ServiceLocator.registerResourceService(new ResourceService());
+        ServiceLocator.getResourceService().loadTextures(texturePaths);
+        ServiceLocator.getResourceService().loadAll();
+        ServiceLocator.registerTimeSource(new GameTime());
+        ServiceLocator.registerTimeService(new TimeService());
+        ServiceLocator.registerMissionManager(new MissionManager());
+
         playerInventory = new InventoryComponent(new ArrayList<>());
         playerInvSpy = spy(playerInventory);
         player = new Entity().addComponent(playerInvSpy);
@@ -38,7 +51,7 @@ public class TamingTest {
         for (int index = 0; index < 4; index++) {
             foodEntity = new Entity(EntityType.Item);
             ItemComponent fooditem = new ItemComponent("AFood", ItemType.ANIMAL_FOOD,
-                    new Texture("images/tool_shovel.png")); //texture is just used as a placeholder.
+                    "images/tool_shovel.png"); //texture is just used as a placeholder.
             foodEntity.addComponent(fooditem);
             playerInvSpy.addItem(foodEntity);
         }

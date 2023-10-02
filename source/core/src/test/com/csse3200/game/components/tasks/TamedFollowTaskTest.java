@@ -37,7 +37,7 @@ public class TamedFollowTaskTest {
     private InventoryComponent targetInventory;
     private InventoryComponent targetInvSpy;
 
-    private static final String[] texturePaths = {"images/egg.png", "images/tool_hoe.png"};
+    private static final String[] texturePaths = {"images/egg.png"};
 
     @BeforeEach
     void beforeEach() {
