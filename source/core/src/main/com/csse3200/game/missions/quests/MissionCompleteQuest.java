@@ -72,7 +72,7 @@ public class MissionCompleteQuest extends Quest {
      */
     @Override
     public String getDescription() {
-        return "Complete"
+        return "Complete "
                 + numberOfQuestsToComplete + " missions to get a tractor.\n"
                 + getShortDescription() + ".";
     }

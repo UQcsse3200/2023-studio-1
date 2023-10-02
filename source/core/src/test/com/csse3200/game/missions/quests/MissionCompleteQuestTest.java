@@ -126,91 +126,77 @@ class MissionCompleteQuestTest {
     @Test
     public void testGetDescription() {
         testRegisterMission();
-        String desc = "Complete %d missions to get a tractor.\n";
-        assertEquals(desc, MCQuest1.getDescription());
-        assertEquals(desc, MCQuest2.getDescription());
-        assertEquals(desc, MCQuest3.getDescription());
+        String desc = "Complete %d missions to get a tractor.\n%d out of %d required quests completed.";
+        for (int i = 0; i < 10; i++) {
+            int minNum23 = Math.min(i, 0);
+            int minNum45 = Math.min(i, 1);
+            assertEquals(String.format(desc, 10, i, 10), MCQuest1.getDescription());
+            assertEquals(String.format(desc, 0, minNum23, 0), MCQuest2.getDescription());
+            assertEquals(String.format(desc, 0, minNum23, 0), MCQuest3.getDescription());
+            assertEquals(String.format(desc, 1, minNum45, 1), MCQuest4.getDescription());
+            assertEquals(String.format(desc, 1, minNum45, 1), MCQuest5.getDescription());
+            ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.REWARD_COMPLETE.name());
+        }
     }
 
     @Test
     public void testGetShortDescription() {
         testRegisterMission();
-        String desc = "%d required quests to be completed";
-        assertEquals(String.format(desc, 1), MCQuest1.getShortDescription());
-        assertEquals(String.format(desc, 2), MCQuest2.getShortDescription());
-        assertEquals(String.format(desc, 3), MCQuest3.getShortDescription());
-        ServiceLocator.getMissionManager().getEvents().trigger(
-                MissionManager.MissionEvent.QUEST_REWARD_COLLECTED.name(), requirement1);
-        assertEquals(String.format(desc, 0), MCQuest1.getShortDescription());
-        assertEquals(String.format(desc, 1), MCQuest2.getShortDescription());
-        assertEquals(String.format(desc, 2), MCQuest3.getShortDescription());
-        ServiceLocator.getMissionManager().getEvents().trigger(
-                MissionManager.MissionEvent.QUEST_REWARD_COLLECTED.name(), requirement2);
-        assertEquals(String.format(desc, 0), MCQuest1.getShortDescription());
-        assertEquals(String.format(desc, 0), MCQuest2.getShortDescription());
-        assertEquals(String.format(desc, 1), MCQuest3.getShortDescription());
-        ServiceLocator.getMissionManager().getEvents().trigger(
-                MissionManager.MissionEvent.QUEST_REWARD_COLLECTED.name(), requirement3);
-        assertEquals(String.format(desc, 0), MCQuest1.getShortDescription());
-        assertEquals(String.format(desc, 0), MCQuest2.getShortDescription());
-        assertEquals(String.format(desc, 0), MCQuest3.getShortDescription());
+        String desc = "%d out of %d required quests completed";
+        for (int i = 0; i < 10; i++) {
+            int minNum23 = Math.min(i, 0);
+            int minNum45 = Math.min(i, 1);
+            assertEquals(String.format(desc, i, 10), MCQuest1.getShortDescription());
+            assertEquals(String.format(desc, minNum23, 0), MCQuest2.getShortDescription());
+            assertEquals(String.format(desc, minNum23, 0), MCQuest3.getShortDescription());
+            assertEquals(String.format(desc, minNum45, 1), MCQuest4.getShortDescription());
+            assertEquals(String.format(desc, minNum45, 1), MCQuest5.getShortDescription());
+            ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.REWARD_COMPLETE.name());
+        }
     }
 
     @Test
     public void testReadProgress() {
-        JsonReader reader = new JsonReader();
-        String[] progressArray1 = {requirement1};
-        String[] progressArray2 = {requirement1, requirement2};
-        String[] progressArray3 = {requirement1, requirement2, requirement3};
-        JsonValue progress1 = reader.parse(Arrays.toString(progressArray1));
-        JsonValue progress2 = reader.parse(Arrays.toString(progressArray2));
-        JsonValue progress3 = reader.parse(Arrays.toString(progressArray3));
-        MCQuest1.readProgress(progress1);
-        MCQuest2.readProgress(progress1);
-        MCQuest3.readProgress(progress1);
-        assertTrue(MCQuest1.isCompleted());
-        assertFalse(MCQuest2.isCompleted());
-        assertFalse(MCQuest3.isCompleted());
-        MCQuest1.readProgress(progress2);
-        MCQuest2.readProgress(progress2);
-        MCQuest3.readProgress(progress2);
-        assertTrue(MCQuest1.isCompleted());
-        assertTrue(MCQuest2.isCompleted());
-        assertFalse(MCQuest3.isCompleted());
-        MCQuest1.readProgress(progress3);
-        MCQuest2.readProgress(progress3);
-        MCQuest3.readProgress(progress3);
-        assertTrue(MCQuest1.isCompleted());
-        assertTrue(MCQuest2.isCompleted());
-        assertTrue(MCQuest3.isCompleted());
+        int progressInt = 3;
+        JsonValue progress = new JsonValue(progressInt);
+        assertEquals(0, MCQuest1.getProgress());
+        assertEquals(0, MCQuest2.getProgress());
+        assertEquals(0, MCQuest3.getProgress());
+        assertEquals(0, MCQuest4.getProgress());
+        assertEquals(0, MCQuest5.getProgress());
+        MCQuest1.readProgress(progress);
+        MCQuest2.readProgress(progress);
+        MCQuest3.readProgress(progress);
+        MCQuest4.readProgress(progress);
+        MCQuest5.readProgress(progress);
+        assertEquals(3, MCQuest1.getProgress());
+        assertEquals(3, MCQuest2.getProgress());
+        assertEquals(3, MCQuest3.getProgress());
+        assertEquals(3, MCQuest4.getProgress());
+        assertEquals(3, MCQuest5.getProgress());
+        progress = new JsonValue(10);
+        MCQuest1.readProgress(progress);
+        assertEquals(10, MCQuest1.getProgress());
     }
 
     @Test
     public void testGetProgress() {
-        testRegisterMission();
-        String[] progressArray1 = {requirement1};
-        String[] progressArray2 = {requirement1, requirement2};
-        String[] progressArray3 = {requirement1, requirement2, requirement3};
-        String[] progressArray0 = {};
-        assertArrayEquals(progressArray0, (Object[]) MCQuest1.getProgress());
-        ServiceLocator.getMissionManager().getEvents().trigger(
-                MissionManager.MissionEvent.QUEST_REWARD_COLLECTED.name(), requirement1);
-        assertArrayEquals(progressArray1, (Object[]) MCQuest1.getProgress());
-        assertArrayEquals(progressArray1, (Object[]) MCQuest2.getProgress());
-        assertArrayEquals(progressArray1, (Object[]) MCQuest3.getProgress());
-        ServiceLocator.getMissionManager().getEvents().trigger(
-                MissionManager.MissionEvent.QUEST_REWARD_COLLECTED.name(), requirement2);
-        assertArrayEquals(progressArray1, (Object[]) MCQuest1.getProgress());
-        assertArrayEquals(progressArray2, (Object[]) MCQuest2.getProgress());
-        assertArrayEquals(progressArray2, (Object[]) MCQuest3.getProgress());
-        ServiceLocator.getMissionManager().getEvents().trigger(
-                MissionManager.MissionEvent.QUEST_REWARD_COLLECTED.name(), requirement3);
-        assertArrayEquals(progressArray1, (Object[]) MCQuest1.getProgress());
-        assertArrayEquals(progressArray2, (Object[]) MCQuest2.getProgress());
-        assertArrayEquals(progressArray3, (Object[]) MCQuest3.getProgress());
-        assertTrue(MCQuest1.isCompleted());
-        assertTrue(MCQuest2.isCompleted());
-        assertTrue(MCQuest3.isCompleted());
+        assertEquals(0, MCQuest1.getProgress());
+        assertEquals(0, MCQuest2.getProgress());
+        assertEquals(0, MCQuest3.getProgress());
+        assertEquals(0, MCQuest4.getProgress());
+        assertEquals(0, MCQuest5.getProgress());
+        testIsCompleted();
+        assertNotEquals(0, MCQuest1.getProgress());
+        assertEquals(0, MCQuest2.getProgress());
+        assertEquals(0, MCQuest3.getProgress());
+        assertNotEquals(0, MCQuest4.getProgress());
+        assertNotEquals(0, MCQuest5.getProgress());
+        assertEquals(10, MCQuest1.getProgress());
+        assertEquals(0, MCQuest2.getProgress());
+        assertEquals(0, MCQuest3.getProgress());
+        assertEquals(1, MCQuest4.getProgress());
+        assertEquals(1, MCQuest5.getProgress());
     }
 
     @Test
@@ -219,11 +205,17 @@ class MissionCompleteQuestTest {
         assertTrue(MCQuest1.isCompleted());
         assertTrue(MCQuest2.isCompleted());
         assertTrue(MCQuest3.isCompleted());
+        assertTrue(MCQuest4.isCompleted());
+        assertTrue(MCQuest5.isCompleted());
         MCQuest1.resetState();
         MCQuest2.resetState();
         MCQuest3.resetState();
+        MCQuest4.resetState();
+        MCQuest5.resetState();
         assertFalse(MCQuest1.isCompleted());
-        assertFalse(MCQuest2.isCompleted());
-        assertFalse(MCQuest3.isCompleted());
+        assertTrue(MCQuest2.isCompleted());
+        assertTrue(MCQuest3.isCompleted());
+        assertFalse(MCQuest4.isCompleted());
+        assertFalse(MCQuest5.isCompleted());
     }
 }
