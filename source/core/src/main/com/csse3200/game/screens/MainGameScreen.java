@@ -1,5 +1,6 @@
 package com.csse3200.game.screens;
 
+import com.csse3200.game.components.losescreen.LoseScreenDisplay;
 import com.csse3200.game.components.plants.PlantInfoDisplayComponent;
 import com.csse3200.game.services.*;
 import com.csse3200.game.services.plants.PlantCommandService;
@@ -147,7 +148,8 @@ public class MainGameScreen extends ScreenAdapter {
     /**
      * Switch to the losing screen in case of player loss
      */
-    public void playLoseScreen() {
+    public void playLoseScreen(String causeOfDeath) {
+        LoseScreenDisplay.setLoseReason(causeOfDeath);
         game.setScreen(GdxGame.ScreenType.LOSESCREEN);
     }
 
