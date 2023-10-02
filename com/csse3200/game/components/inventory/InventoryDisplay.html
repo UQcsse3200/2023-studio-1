@@ -87,7 +87,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">InventoryDisplay</span>
 <span class="extends-implements">extends <a href="../../ui/UIComponent.html" title="class in com.csse3200.game.ui">UIComponent</a></span></div>
-<div class="block">A ui component for displaying player stats, e.g. health.</div>
+<div class="block">An ui component for displaying player stats, e.g. health.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -111,8 +111,7 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.csse3200.game.components.player.InventoryComponent,java.lang.Integer,java.lang.Integer)" class="member-name-link">InventoryDisplay</a><wbr>(<a href="../player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a>&nbsp;playerInventory,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;size,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.Integer,java.lang.Integer)" class="member-name-link">InventoryDisplay</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;size,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;rowSize)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Constructor for class</div>
@@ -153,7 +152,9 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#refreshInventory()" class="member-name-link">refreshInventory</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Fetch the updatedInventory and update display</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDragItems(java.util.ArrayList,java.util.Map)" class="member-name-link">setDragItems</a><wbr>(@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;com.badlogic.gdx.scenes.scene2d.Actor&gt;&nbsp;actors,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;com.badlogic.gdx.scenes.scene2d.ui.Image,<wbr><a href="ItemSlot.html" title="class in com.csse3200.game.components.inventory">ItemSlot</a>&gt;&nbsp;map)</code></div>
@@ -198,15 +199,15 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(com.csse3200.game.components.player.InventoryComponent,java.lang.Integer,java.lang.Integer)">
+<section class="detail" id="&lt;init&gt;(java.lang.Integer,java.lang.Integer)">
 <h3>InventoryDisplay</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">InventoryDisplay</span><wbr><span class="parameters">(<a href="../player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a>&nbsp;playerInventory,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;size,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">InventoryDisplay</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;size,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;rowSize)</span></div>
 <div class="block">Constructor for class</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>playerInventory</code> - inventory of player</dd>
+<dd><code>size</code> - size of inventory</dd>
+<dd><code>rowSize</code> - amount of items per row</dd>
 </dl>
 </section>
 </li>
@@ -270,7 +271,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Fetches the player inventory and returns it</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>playerInventory inventory attached to player</dd>
+<dd>inventory attached to display</dd>
 </dl>
 </section>
 </li>
@@ -278,6 +279,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="refreshInventory()">
 <h3>refreshInventory</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">refreshInventory</span>()</div>
+<div class="block">Fetch the updatedInventory and update display</div>
 </section>
 </li>
 <li>
