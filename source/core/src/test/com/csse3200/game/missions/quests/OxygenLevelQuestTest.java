@@ -45,15 +45,15 @@ class OxygenLevelQuestTest {
         r7 = mock(Reward.class);
         r8 = mock(Reward.class);
 
-        OLQuest1 = new OxygenLevelQuest("Oxygen Level Quest 1", r1, ServiceLocator.getPlanetOxygenService(), "Quest 1", 0, 0);
-        OLQuest2 = new OxygenLevelQuest("Oxygen Level Quest 2", r2, ServiceLocator.getPlanetOxygenService(), "Quest 2", 0, 50);
-        OLQuest3 = new OxygenLevelQuest("Oxygen Level Quest 3", r3, ServiceLocator.getPlanetOxygenService(), "Quest 3", 24, 0);
-        OLQuest4 = new OxygenLevelQuest("Oxygen Level Quest 4", r4, ServiceLocator.getPlanetOxygenService(), "Quest 4", 24, 50);
+        OLQuest1 = new OxygenLevelQuest("Oxygen Level Quest 1", r1, ServiceLocator.getPlanetOxygenService(), "oxygenlevel", 0, 0);
+        OLQuest2 = new OxygenLevelQuest("Oxygen Level Quest 2", r2, ServiceLocator.getPlanetOxygenService(), "oxygenlevel", 0, 50);
+        OLQuest3 = new OxygenLevelQuest("Oxygen Level Quest 3", r3, ServiceLocator.getPlanetOxygenService(), "oxygenlevel", 24, 0);
+        OLQuest4 = new OxygenLevelQuest("Oxygen Level Quest 4", r4, ServiceLocator.getPlanetOxygenService(), "oxygenlevel", 24, 50);
 
-        OLQuest5 = new OxygenLevelQuest("Oxygen Level Quest 5", r5, 10, ServiceLocator.getPlanetOxygenService(), "Quest 5", 0, 0);
-        OLQuest6 = new OxygenLevelQuest("Oxygen Level Quest 6", r6, 10, ServiceLocator.getPlanetOxygenService(), "Quest 6", 0, 50);
-        OLQuest7 = new OxygenLevelQuest("Oxygen Level Quest 7", r7, 10, ServiceLocator.getPlanetOxygenService(), "Quest 7", 24, 0);
-        OLQuest8 = new OxygenLevelQuest("Oxygen Level Quest 8", r8, 10, ServiceLocator.getPlanetOxygenService(), "Quest 8", 24, 50);
+        OLQuest5 = new OxygenLevelQuest("Oxygen Level Quest 5", r5, 10, ServiceLocator.getPlanetOxygenService(), "oxygenlevel", 0, 0);
+        OLQuest6 = new OxygenLevelQuest("Oxygen Level Quest 6", r6, 10, ServiceLocator.getPlanetOxygenService(), "oxygenlevel", 0, 50);
+        OLQuest7 = new OxygenLevelQuest("Oxygen Level Quest 7", r7, 10, ServiceLocator.getPlanetOxygenService(), "oxygenlevel", 24, 0);
+        OLQuest8 = new OxygenLevelQuest("Oxygen Level Quest 8", r8, 10, ServiceLocator.getPlanetOxygenService(), "oxygenlevel", 24, 50);
     }
 
     @AfterEach
@@ -122,5 +122,33 @@ class OxygenLevelQuestTest {
         assertTrue(OLQuest6.isCompleted());
         assertTrue(OLQuest7.isCompleted());
         assertTrue(OLQuest8.isCompleted());
+    }
+
+    @Test
+    public void testGetDescription() {
+        testRegisterMission();
+        String descHour = "Oxygen is key for human survival.\n" +
+                "Get oxygenlevel to be greater than %d%s in %d hours.";
+        String descDay = "Oxygen is key for human survival.\n" +
+                "Get oxygenlevel to be greater than %d%s in %d days.";
+        assertEquals(String.format(descHour, 0, "%", 0), OLQuest1.getDescription());
+        assertEquals(String.format(descHour, 50, "%", 0), OLQuest2.getDescription());
+        assertEquals(String.format(descDay, 0, "%", 1), OLQuest3.getDescription());
+        assertEquals(String.format(descDay, 50, "%", 1), OLQuest4.getDescription());
+        assertEquals(String.format(descHour, 0, "%", 0), OLQuest5.getDescription());
+        assertEquals(String.format(descHour, 50, "%", 0), OLQuest6.getDescription());
+        assertEquals(String.format(descDay, 0, "%", 1), OLQuest7.getDescription());
+        assertEquals(String.format(descDay, 50, "%", 1), OLQuest8.getDescription());
+        for (int i = 1; i <= 24; i++) {
+            ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+            assertEquals(String.format(descHour, 0, "%", 0), OLQuest1.getDescription());
+            assertEquals(String.format(descHour, 50, "%", 0), OLQuest2.getDescription());
+            assertEquals(String.format(descHour, 0, "%", 24 - i), OLQuest3.getDescription());
+            assertEquals(String.format(descHour, 50, "%", 24 - i), OLQuest4.getDescription());
+            assertEquals(String.format(descHour, 0, "%", 0), OLQuest5.getDescription());
+            assertEquals(String.format(descHour, 50, "%", 0), OLQuest6.getDescription());
+            assertEquals(String.format(descHour, 0, "%", 24 - i), OLQuest7.getDescription());
+            assertEquals(String.format(descHour, 50, "%", 24 - i), OLQuest8.getDescription());
+        }
     }
 }

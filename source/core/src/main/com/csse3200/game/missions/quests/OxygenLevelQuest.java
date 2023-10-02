@@ -58,7 +58,7 @@ public class OxygenLevelQuest extends Quest {
 
     @Override
     public String getDescription() {
-        return "Oxygen is key for human survival.\n" + getShortDescription() + ". " + oxygenLevel.getOxygenPercentage();
+        return "Oxygen is key for human survival.\n" + getShortDescription() + ".";
     }
 
     @Override
