@@ -36,6 +36,7 @@ public class TestToolbarUI {
     ToolbarDisplay toolbarDisplay;
     InventoryComponent inventory;
     private final String[] texturePaths = {"images/selected.png", "images/itemFrame.png"};
+    private final String[] skinPaths = {"gardens-of-the-galaxy/gardens-of-the-galaxy.json"};
 
 
     /**
@@ -45,6 +46,7 @@ public class TestToolbarUI {
     void createPlayer() {
         ServiceLocator.registerResourceService(new ResourceService());
         ServiceLocator.getResourceService().loadTextures(texturePaths);
+        ServiceLocator.getResourceService().loadSkins(skinPaths);
         ServiceLocator.getResourceService().loadAll();
 
         Stage stage = mock(Stage.class);

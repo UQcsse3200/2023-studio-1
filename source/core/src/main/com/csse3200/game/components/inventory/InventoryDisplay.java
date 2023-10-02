@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.csse3200.game.services.ServiceLocator;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +30,7 @@ import com.badlogic.gdx.graphics.Texture;
 public class InventoryDisplay extends UIComponent {
   private static final Logger logger = LoggerFactory.getLogger(InventoryDisplay.class);
   private InventoryComponent inventory;
-  private final Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
+  private final Skin skin = ServiceLocator.getResourceService().getAsset("gardens-of-the-galaxy/gardens-of-the-galaxy.json", Skin.class);
   private final Table table = new Table(skin);
   private final Window window = new Window("Inventory", skin);
   private final ArrayList<ItemSlot> slots = new ArrayList<>();

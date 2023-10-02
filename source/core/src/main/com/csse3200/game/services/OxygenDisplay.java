@@ -1,6 +1,5 @@
 package com.csse3200.game.services;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -47,7 +46,7 @@ public class OxygenDisplay extends UIComponent{
      */
     public void createTexture() {
         logger.debug("Oxygen display texture being created");
-        Skin oxygenSkin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
+        Skin oxygenSkin = ServiceLocator.getResourceService().getAsset("flat-earth/skin/flat-earth-ui.json", Skin.class);
 
         oxygenOutline = new Image(ServiceLocator.getResourceService().getAsset(
             "images/oxygen_ui/oxygen_outline.png", Texture.class));

@@ -16,7 +16,7 @@ import com.csse3200.game.services.ServiceLocator;
 public class ItemSlot extends Stack {
     private Texture itemTexture;
     private Integer count;
-    private final Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
+    private final Skin skin = ServiceLocator.getResourceService().getAsset("gardens-of-the-galaxy/gardens-of-the-galaxy.json", Skin.class);
 
     private Image background;
     private Image frame;
