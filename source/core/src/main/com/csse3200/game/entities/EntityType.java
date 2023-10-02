@@ -5,6 +5,9 @@ import com.csse3200.game.components.placeables.PlaceableCategory;
 /**
  * An enum of all the entity types in the game.
  * Feel free to add yours here. Read Documentation for SaveLoad and follow procedure there
+ *
+ * Changing order of EntityTypes will cause a failure in ManageHostilesQuestTest as the type
+ * order is reliant on the enum class.
  */
 public enum EntityType {
     Player(0),

@@ -9,10 +9,7 @@ import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.rewards.*;
 import com.csse3200.game.services.ServiceLocator;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class QuestFactory {
 
@@ -272,6 +269,7 @@ public class QuestFactory {
                 )),
                 new DialogueReward(dialogue)
         ));
+
         return new ManageHostilesQuest(ALIENS_ATTACK_QUEST_NAME, reward, Set.of(EntityType.OxygenEater), 5);
     }
 
