@@ -1,5 +1,7 @@
 package com.csse3200.game.components.ship;
 
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.services.ServiceLocator;
@@ -12,8 +14,11 @@ import static java.lang.Math.min;
 public class ShipProgressComponent extends Component {
     static int maximum_repair = 20;
     private int progress;
-    private Set<Feature> unlocked_features;
+    private Set<Feature> unlockedFeatures;
 
+    /**
+     * Ship features that can be unlocked along by repairing the ship.
+     */
     public enum Feature {
         LIGHT(8),
         STORAGE(15),
@@ -34,7 +39,7 @@ public class ShipProgressComponent extends Component {
     @Override
     public void create() {
         this.progress = 0;
-        unlocked_features = new HashSet<Feature>();
+        unlockedFeatures = new HashSet<Feature>();
         // listen to add artefact call
         entity.getEvents().addListener("addPart", this::incrementProgress);
         entity.getEvents().addListener("removePart", this::decrementProgress);
@@ -51,12 +56,12 @@ public class ShipProgressComponent extends Component {
 
             for (Feature feature : Feature.values()) {
                 if (feature.unlockLevel <= this.progress) {
-                    unlocked_features.add(feature);
+                    unlockedFeatures.add(feature);
                 }
             }
 
             // Only send progress update if repair actually happened
-            entity.getEvents().trigger("progressUpdated", this.progress, this.unlocked_features);
+            entity.getEvents().trigger("progressUpdated", this.progress, this.unlockedFeatures);
             ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.SHIP_PART_ADDED.name());
         }
     }
@@ -84,6 +89,35 @@ public class ShipProgressComponent extends Component {
      * @return A set of unlocked features
      */
     public Set<Feature> getUnlockedFeatures() {
-        return this.unlocked_features;
+        return this.unlockedFeatures;
+    }
+
+    /**
+     * Store the progress data on the ship in the passed-in json object.
+     * @param json Json object to write to
+     */
+    @Override
+    public void write(Json json) {
+        json.writeObjectStart(this.getClass().getSimpleName());
+        json.writeValue("level", this.progress);
+        json.writeArrayStart("features");
+        for (Feature f : this.unlockedFeatures) {
+            json.writeValue(f.name());
+        }
+        json.writeArrayEnd();
+        json.writeObjectEnd();
+    }
+
+    /**
+     * Update the entity based on the read data.
+     * @param json    which is a valid Json that is read from
+     * @param jsonMap which is a valid JsonValue that is read from
+     */
+    @Override
+    public void read(Json json, JsonValue jsonMap) {
+        this.progress = jsonMap.getInt("level");
+        for (JsonValue val : jsonMap.get("features")) {
+            this.unlockedFeatures.add(Feature.valueOf(val.asString()));
+        }
     }
 }

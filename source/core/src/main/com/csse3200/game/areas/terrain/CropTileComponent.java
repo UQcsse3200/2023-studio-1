@@ -94,6 +94,7 @@ public class CropTileComponent extends Component {
 		entity.getEvents().addListener("fertilise", this::fertiliseTile);
 		entity.getEvents().addListener("plant", this::plantCrop);
 		entity.getEvents().addListener("destroy", this::destroyTile);
+		entity.getEvents().addListener("harvest", this::harvestCrop);
 		currentTexture = entity.getComponent(DynamicTextureRenderComponent.class);
 	}
 
@@ -167,6 +168,13 @@ public class CropTileComponent extends Component {
 					plantComponent.getPlantName()
 			);
 		}
+	}
+
+	private void harvestCrop() {
+		if (!isOccupied()) {
+			return;
+		}
+		plant.getEvents().trigger("harvest");
 	}
 
 	/**
