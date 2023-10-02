@@ -29,10 +29,10 @@ public abstract class  GameArea implements Disposable {
   protected List<Entity> areaEntities;
   private static final Logger logger = LoggerFactory.getLogger(GameArea.class);
   private Entity player;
-  private final ArrayList<EntityType> loadableTypes = new ArrayList<>(Arrays.asList(EntityType.Tile, EntityType.Cow,
-          EntityType.Cow, EntityType.Chicken, EntityType.Astrolotl, EntityType.Plant, EntityType.Tile,
-          EntityType.OxygenEater, EntityType.ShipDebris, EntityType.Ship, EntityType.Sprinkler, EntityType.Pump,
-          EntityType.Fence, EntityType.Light, EntityType.Gate, EntityType.Chest));
+  private final ArrayList<EntityType> loadableTypes = new ArrayList<>(Arrays.asList(EntityType.Tile,
+          EntityType.Cow, EntityType.Chicken, EntityType.Astrolotl, EntityType.Plant,
+          EntityType.OxygenEater, EntityType.ShipDebris, EntityType.Ship, EntityType.ShipPartTile,
+		  EntityType.Sprinkler, EntityType.Pump, EntityType.Fence, EntityType.Light, EntityType.Gate, EntityType.Chest));
 
   protected GameArea() {
     areaEntities = new ArrayList<>();
@@ -75,8 +75,7 @@ public abstract class  GameArea implements Disposable {
    * @param centerX true to center entity X on the tile, false to align the bottom left corner
    * @param centerY true to center entity Y on the tile, false to align the bottom left corner
    */
-  public void spawnEntityAt(
-      Entity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
+  public void spawnEntityAt(Entity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
     Vector2 worldPos = terrain.tileToWorldPosition(tilePos);
     float tileSize = terrain.getTileSize();
 
@@ -105,6 +104,11 @@ public abstract class  GameArea implements Disposable {
    * @param entities Array of entities currently in game.
    */
   public void removeLoadableEntities(Array<Entity> entities) {
+
+    ArrayList<EntityType> loadableTypes = new ArrayList<>(Arrays.asList(EntityType.Tile, EntityType.Cow,
+            EntityType.Cow, EntityType.Chicken, EntityType.Astrolotl, EntityType.Plant, EntityType.Tile,
+            EntityType.OxygenEater, EntityType.ShipDebris, EntityType.FireFlies, EntityType.Dragonfly, EntityType.Bat));
+
     for (Entity e : entities) {
       if (loadableTypes.contains(e.getType())) {
         removeEntity(e);
@@ -124,6 +128,10 @@ public abstract class  GameArea implements Disposable {
   public abstract GameMap getMap();
 
   public void setPlayer(Entity customPlayer) { player = customPlayer; }
+
+  public List<Entity> getAreaEntities() {
+    return areaEntities;
+  }
 
   public ArrayList<EntityType> getLoadableTypes() {
     return loadableTypes;

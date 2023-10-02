@@ -18,7 +18,6 @@ import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.components.player.OpenPauseComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.player.PlayerAnimationController;
-import com.csse3200.game.components.player.PlayerHighlightComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.configs.PlayerConfig;
@@ -30,7 +29,6 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 
 /**
  * Factory to create a player entity.
@@ -133,6 +131,10 @@ public class PlayerFactory {
     animator.addAnimation("scythe_left",0.1f,Animation.PlayMode.NORMAL);
     animator.addAnimation("scythe_right",0.1f,Animation.PlayMode.NORMAL);
     animator.addAnimation("scythe_down",0.1f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("sword_up",0.1f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("sword_left",0.1f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("sword_right",0.1f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("sword_down",0.1f,Animation.PlayMode.NORMAL);
   }
 
   private PlayerFactory() {
