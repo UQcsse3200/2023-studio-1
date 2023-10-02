@@ -2,10 +2,7 @@ package com.csse3200.game.screens;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.losescreen.LoseScreenDisplay;
@@ -20,29 +17,22 @@ import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
 /**
- * The game screen for the lose scenario
+ * The game screen for the losing scenario
  */
 public class LoseScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(LoseScreen.class);
     private final GdxGame game;
     private final Renderer renderer;
-    private static final String[] loseScreenTextures = {"images/lose_temp.png"};
-    private Texture backgroundTexture;
-    private SpriteBatch batch;
-
+    private static final String[] loseScreenTextures = {"images/intro_background_v2.png", "images/dead_planet2.png"};
 
     public LoseScreen(GdxGame game) {
         this.game = game;
         logger.debug("Initialising lose screen services");
-        //ServiceLocator.registerTimeSource(new GameTime());
         ServiceLocator.registerInputService(new InputService());
         ServiceLocator.registerResourceService(new ResourceService());
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerRenderService(new RenderService());
-        //ServiceLocator.registerTimeService(new TimeService());
-
         renderer = RenderFactory.createRenderer();
-
         loadAssets();
         createUI();
     }
@@ -50,7 +40,6 @@ public class LoseScreen extends ScreenAdapter {
     @Override
     public void render(float delta) {
         ServiceLocator.getEntityService().update();
-        //ServiceLocator.getTimeService().update();
         renderer.render();
     }
 
@@ -72,13 +61,11 @@ public class LoseScreen extends ScreenAdapter {
 
     @Override
     public void dispose() {
-        logger.debug("Disposing lose screen");
-
+        logger.debug("Disposing win screen");
         renderer.dispose();
         unloadAssets();
         ServiceLocator.getRenderService().dispose();
         ServiceLocator.getEntityService().dispose();
-
         ServiceLocator.clear();
     }
 
