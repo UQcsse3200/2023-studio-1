@@ -41,8 +41,8 @@ public class GameMap {
     /**
      *                              FOR HUNTER TO IMPLEMENT                                                                     HUNTER DONT FORGET
      */
-    public void createTestTerrainComponent() {
-        terrainComponent = terrainFactory.createTestTerrain(tiledMap, null);
+    public void createTestTerrainComponent(String testMapFilePath) {
+        terrainComponent = terrainFactory.createTestTerrain(tiledMap, testMapFilePath);
     }
 
     /**
