@@ -1,4 +1,4 @@
-package com.csse3200.game.components;
+package com.csse3200.game.entities;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
