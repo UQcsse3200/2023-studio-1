@@ -17,6 +17,7 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+import java.util.Map;
 
 /**
  * Factory to create plant entities.
@@ -108,7 +109,12 @@ public class PlantFactory {
      * @return entity
      */
     public static Entity createCosmicCob(CropTileComponent cropTile) {
-        return createBasePlant(stats.cosmicCob, cropTile);
+        Entity cosmicCob = createBasePlant(stats.cosmicCob, cropTile);
+        cosmicCob.getComponent(PlantComponent.class).setHarvestYields(Map.of(
+                "Cosmic Cob Seeds", 2,
+                "Ear of Cosmic Cob", 1
+        ));
+        return cosmicCob;
     }
 
     /**
@@ -118,7 +124,12 @@ public class PlantFactory {
      * @return entity
      */
     public static Entity createAloeVera(CropTileComponent cropTile) {
-        return createBasePlant(stats.aloeVera, cropTile);
+        Entity aloeVera = createBasePlant(stats.aloeVera, cropTile);
+        aloeVera.getComponent(PlantComponent.class).setHarvestYields(Map.of(
+                "Aloe Vera Seeds", 2,
+                "Aloe Vera Leaf", 1
+        ));
+        return aloeVera;
     }
 
     /**
@@ -128,8 +139,12 @@ public class PlantFactory {
      * @return entity
      */
     public static Entity createHammerPlant(CropTileComponent cropTile) {
-        return createBasePlant(stats.hammerPlant, cropTile);
-
+        Entity hammerPlant = createBasePlant(stats.hammerPlant, cropTile);
+        hammerPlant.getComponent(PlantComponent.class).setHarvestYields(Map.of(
+                "Hammer Plant Seeds", 2,
+                "Hammer Flower", 1
+        ));
+        return hammerPlant;
     }
 
     /**
@@ -140,11 +155,11 @@ public class PlantFactory {
      */
     public static Entity createSpaceSnapper(CropTileComponent cropTile) {
         Entity spaceSnapper = createBasePlant(stats.spaceSnapper, cropTile);
-
         spaceSnapper.getComponent(AnimationRenderComponent.class).addAnimation("digesting", 0.1f,
                 Animation.PlayMode.LOOP);
-
-
+        spaceSnapper.getComponent(PlantComponent.class).setHarvestYields(Map.of(
+                "Space Snapper Seeds", 2
+        ));
         return spaceSnapper;
     }
 
@@ -155,7 +170,11 @@ public class PlantFactory {
      * @return entity
      */
     public static Entity createAtomicAlgae(CropTileComponent cropTile) {
-        return createBasePlant(stats.atomicAlgae, cropTile);
+        Entity atomicAlgae = createBasePlant(stats.atomicAlgae, cropTile);
+        atomicAlgae.getComponent(PlantComponent.class).setHarvestYields(Map.of(
+                "Atomic Algae Seeds", 2
+        ));
+        return atomicAlgae;
     }
 
     /**
@@ -165,8 +184,12 @@ public class PlantFactory {
      * @return entity
      */
     public static Entity createDeadlyNightshade(CropTileComponent cropTile) {
-        return createBasePlant(stats.deadlyNightshade, cropTile);
-
+        Entity deadlyNightshade = createBasePlant(stats.deadlyNightshade, cropTile);
+        deadlyNightshade.getComponent(PlantComponent.class).setHarvestYields(Map.of(
+                "Deadly Nightshade Seeds", 2,
+                "Nightshade Berry", 3
+        ));
+        return deadlyNightshade;
     }
 
 
