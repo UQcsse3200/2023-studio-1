@@ -5,9 +5,11 @@ import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.function.Supplier;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Json;
-import com.csse3200.game.areas.SpaceGameArea;
 import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.components.Component;
@@ -16,11 +18,8 @@ import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
-import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Class for all plants in the game.
