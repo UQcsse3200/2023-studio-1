@@ -164,7 +164,6 @@ public class CutsceneDisplay extends UIComponent {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
                         logger.debug("Continue button clicked");
-                        transparentRectangle.getColor().a = 0f;
                         disposeCutscene();
                         cutscene.endCutscene();
                     }
@@ -177,7 +176,10 @@ public class CutsceneDisplay extends UIComponent {
     // Ends the cutscene
     public void disposeCutscene() {
         dialogueTable.clear();
+        transparentRectangle.clear();
         npcSprite.clear();
+        stage.getRoot().removeActor(transparentRectangle);
+        stage.getRoot().removeActor(dialogueTable);
         super.dispose();
     }
 
