@@ -51,10 +51,10 @@ public class ShipProgressComponent extends Component {
      * Update the progress of the ship repair by incrementing it each time the player 'uses' a ship part
      * on the ship. This will also call a progressUpdate event on the Ship entity it is attached to.
      */
-    private void incrementProgress() {
+    private void incrementProgress(int amount) {
         if (this.progress < maximum_repair) {
             // Bound maximum repair state
-            this.progress = min(this.progress + 1, maximum_repair);
+            this.progress = min(this.progress + amount, maximum_repair);
 
             for (Feature feature : Feature.values()) {
                 if (feature.unlockLevel <= this.progress) {

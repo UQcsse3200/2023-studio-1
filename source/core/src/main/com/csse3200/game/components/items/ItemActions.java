@@ -342,7 +342,7 @@ public class ItemActions extends Component {
       return false;
     }
     if (ship.getType() == EntityType.Ship) {
-      ship.getEvents().trigger("addPart");
+      ship.getEvents().trigger("addPart", 1);
       player.getComponent(InventoryComponent.class).removeItem(entity);
       return true;
     }
