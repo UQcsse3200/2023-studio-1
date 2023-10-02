@@ -2,11 +2,11 @@ package com.csse3200.game.components.tractor;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.components.ConeLightComponent;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.sound.EffectSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
 import com.csse3200.game.utils.math.Vector2Utils;
 
 public class KeyboardTractorInputComponent extends InputComponent {
@@ -58,8 +58,11 @@ public class KeyboardTractorInputComponent extends InputComponent {
           triggerExitEvent();
           return true;
         case Input.Keys.SPACE:
-          Sound honkSound = ServiceLocator.getResourceService().getAsset("sounds/car-horn-6408.mp3", Sound.class);
-          honkSound.play();
+          try {
+            ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.TractorHonk);
+          } catch (InvalidSoundFileException e) {
+            throw new RuntimeException(e);
+          }
           return true;
         case Input.Keys.T:
           entity.getEvents().trigger("toggleConeLight");

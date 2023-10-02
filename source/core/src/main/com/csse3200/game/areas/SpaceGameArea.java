@@ -17,13 +17,16 @@ import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.sound.EffectSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
+import com.csse3200.game.services.sound.SoundFile;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.IntStream;
 
 /** SpaceGameArea is the area used for the initial game version */
@@ -479,6 +482,16 @@ public class SpaceGameArea extends GameArea {
     resourceService.loadSounds(forestSounds);
     resourceService.loadMusic(forestMusic);
 
+    // Add effects that are needed
+    List<SoundFile> effects = new ArrayList();
+    effects.add(EffectSoundFile.TractorHonk);
+    effects.add(EffectSoundFile.Impact);
+    try {
+      ServiceLocator.getSoundService().getEffectsMusicService().loadSounds(effects);
+    } catch (InvalidSoundFileException e) {
+      throw new RuntimeException(e);
+    }
+
     while (!resourceService.loadForMillis(10)) {
       // This could be upgraded to a loading screen
       logger.info("Loading... {}%", resourceService.getProgress());
@@ -492,6 +505,7 @@ public class SpaceGameArea extends GameArea {
     resourceService.unloadAssets(forestTextureAtlases);
     resourceService.unloadAssets(forestSounds);
     resourceService.unloadAssets(forestMusic);
+    ServiceLocator.getSoundService().getEffectsMusicService().dispose();
   }
 
   @Override
