@@ -19,6 +19,8 @@ public class DragonflyAttackPattern extends AttackPatternComponent {
     /** Supplies the projectile to be shot by the dragonfly. */
     private final Supplier<Entity> projectileSupplier;
 
+    private static final String SHOOTER = "shoot";
+
     /**
      * @param attackFrequency How often the dragonfly attacks.
      * @param projectileSupplier The projectile supplier for the Dragonfly's projectiles.
@@ -35,7 +37,7 @@ public class DragonflyAttackPattern extends AttackPatternComponent {
     @Override
     public void create() {
         super.create();
-        entity.getEvents().addListener("shoot", this::shoot);
+        entity.getEvents().addListener(SHOOTER, this::shoot);
     }
 
     /**
@@ -48,7 +50,7 @@ public class DragonflyAttackPattern extends AttackPatternComponent {
 
        List<Entity> entitiesInRange = interactionDetector.getEntitiesInRange();
 
-       if (entitiesInRange.size() == 0) { // No entity detected, clear attack loop
+       if (entitiesInRange.isEmpty()) { // No entity detected, clear attack loop
            currentAttackEvent = null;
            return;
        }
@@ -63,14 +65,12 @@ public class DragonflyAttackPattern extends AttackPatternComponent {
 
         Entity nearestEntity = interactionDetector.getNearest(interactionDetector.getEntitiesInRange());
 
-        if (nearestEntity.getType() == EntityType.Plant) {
+        if (nearestEntity.getType() == EntityType.Plant && entity.getPosition().dst(nearestEntity.getPosition().x,
+                nearestEntity.getPosition().y) < 1f) {
             // Plant detected, check if close enough to attack
-            if (entity.getPosition().dst(nearestEntity.getPosition().x,
-                    nearestEntity.getPosition().y) < 1f) {
-                    attackPlant(nearestEntity);
-                    super.attack();
-                    return;
-            }
+            attackPlant(nearestEntity);
+            super.attack();
+            return;
         }
         super.attack();
     }
@@ -110,9 +110,9 @@ public class DragonflyAttackPattern extends AttackPatternComponent {
         entity.getEvents().trigger("attackStart");
 
         // Shoot projectiles with delay after entity's attack animation
-        entity.getEvents().scheduleEvent(0.2f, "shoot", nearestEntityPosition);
-        entity.getEvents().scheduleEvent(0.3f, "shoot", nearestEntityPosition);
-        entity.getEvents().scheduleEvent(0.4f, "shoot", nearestEntityPosition);
+        entity.getEvents().scheduleEvent(0.2f, SHOOTER, nearestEntityPosition);
+        entity.getEvents().scheduleEvent(0.3f, SHOOTER, nearestEntityPosition);
+        entity.getEvents().scheduleEvent(0.4f, SHOOTER, nearestEntityPosition);
     }
 
     /**

@@ -16,25 +16,15 @@ import com.csse3200.game.components.combat.attackpatterns.BatAttackPattern;
 import com.csse3200.game.components.combat.attackpatterns.DragonflyAttackPattern;
 import com.csse3200.game.components.combat.attackpatterns.OxygenEaterAttackPattern;
 import com.csse3200.game.components.npc.*;
-import com.csse3200.game.components.tasks.ChaseTask;
-import com.csse3200.game.components.tasks.FollowTask;
-import com.csse3200.game.components.tasks.RunAwayTask;
-import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.components.npc.AnimalAnimationController;
 import com.csse3200.game.components.npc.FireflyScareComponent;
 import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.components.tasks.*;
 import com.csse3200.game.components.InteractionDetector;
-import com.csse3200.game.components.npc.AnimalAnimationController;
-import com.csse3200.game.components.npc.FireflyScareComponent;
 import com.csse3200.game.components.npc.HostileAnimationController;
-import com.csse3200.game.components.npc.TamableComponent;
-import com.csse3200.game.components.tasks.ChaseTask;
-import com.csse3200.game.components.tasks.FollowTask;
-import com.csse3200.game.components.tasks.RunAwayTask;
 import com.csse3200.game.components.tasks.TamedFollowTask;
-import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityIndicator;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.configs.BaseAnimalConfig;
 import com.csse3200.game.entities.configs.NPCConfigs;
@@ -49,10 +39,7 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Arrays;
-import java.security.SecureRandom;
 
 /**
  * Factory to create non-playable character (NPC) entities with predefined components.
@@ -101,7 +88,7 @@ public class NPCFactory {
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
             .addTask(new RunAwayTask(player, 10, 2.25f, 4.25f, new Vector2(3f, 3f)))
-            .addTask(new PanicTask("panicStart", 10f, 20, new Vector2(10f, 10f), new Vector2(10f, 10f)))
+            .addTask(new PanicTask("panicStart", 10f, 20, new Vector2(3f, 3f), new Vector2(3f, 3f)))
             .addTask(new TamedFollowTask(player, 11, 8, 10, 2f, config.favouriteFood, Vector2Utils.ONE));
 
     List<SingleDropHandler> singleDropHandlers = new ArrayList<>();
@@ -261,6 +248,7 @@ public class NPCFactory {
     oxygenEater
             .addComponent(aiTaskComponent)
             .addComponent(animator)
+            .addComponent(new EntityIndicator(oxygenEater))
             .addComponent(new CombatStatsComponent(10, 0))
             .addComponent(new HostileAnimationController())
             .addComponent(new OxygenEaterAttackPattern(1.5f, ProjectileFactory::createOxygenEaterProjectile))
@@ -338,6 +326,7 @@ public class NPCFactory {
             .addComponent(aiTaskComponent)
             .addComponent(animator)
             .addComponent(new HostileAnimationController())
+            .addComponent(new EntityIndicator(dragonfly))
             .addComponent(new DragonflyAttackPattern(1.5f, ProjectileFactory::createDragonflyProjectile))
             .addComponent(new InteractionDetector(5f,
                     new ArrayList<>(Arrays.asList((EntityType.Player), (EntityType.Plant)))))
@@ -378,6 +367,7 @@ public class NPCFactory {
             .addComponent(animator)
             .addComponent(new HostileAnimationController())
             .addComponent(new BatAttackPattern(1.5f))
+            .addComponent(new EntityIndicator(bat))
             .addComponent(new InteractionDetector(1.5f,
                     new ArrayList<>(Arrays.asList(EntityType.Player))))
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack));

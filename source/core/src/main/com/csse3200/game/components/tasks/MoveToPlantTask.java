@@ -74,6 +74,11 @@ public class MoveToPlantTask extends DefaultTask implements PriorityTask {
         // Check what the entity is currently targeting
         Entity plant = getNearestPlant();
 
+        if (plant == null) {
+            // There are no plants left
+            stop();
+            return;
+        }
         // If the current target is still the same, do nothing
         if (currentTarget == plant) {
             // Stop the movement if already at the plant
@@ -85,12 +90,6 @@ public class MoveToPlantTask extends DefaultTask implements PriorityTask {
             } else {
                 owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(true);
             }
-            return;
-        }
-
-        if (plant == null) {
-            // There are no plants left
-            stop();
             return;
         }
 
@@ -139,7 +138,7 @@ public class MoveToPlantTask extends DefaultTask implements PriorityTask {
         Array<Entity> entities = ServiceLocator.getEntityService().getEntityList();
         int size = entities.size;
 
-        HashMap<Entity, Float> plantDistances = new HashMap<Entity, Float>();
+        HashMap<Entity, Float> plantDistances = new HashMap<>();
 
         // Find a target
         for (int i = 0; i < size; i++) {

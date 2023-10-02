@@ -3,12 +3,9 @@ package com.csse3200.game.components.combat.attackpatterns;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.combat.ProjectileComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.EntityType;
-import com.csse3200.game.entities.factories.ProjectileFactory;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.DirectionUtils;
 
-import java.util.Random;
 import java.util.function.Supplier;
 
 /**
