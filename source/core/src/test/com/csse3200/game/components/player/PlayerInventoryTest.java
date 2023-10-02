@@ -10,6 +10,8 @@ import static org.mockito.Mockito.verify;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.csse3200.game.services.ResourceService;
+import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,14 +28,19 @@ public class PlayerInventoryTest {
     private InventoryComponent inventoryComponent;
     private Entity item1;
     private Entity item2;
+    private final String[] texturePaths = {"images/tool_shovel.png"};
     @BeforeEach
     void initialiseTest() {
+        ServiceLocator.registerResourceService(new ResourceService());
+        ServiceLocator.getResourceService().loadTextures(texturePaths);
+        ServiceLocator.getResourceService().loadAll();
+
         inventoryComponent = spy(new InventoryComponent(new ArrayList<>()));
         player = new Entity()
                 .addComponent(inventoryComponent);
         player.create();
-        item1 = new Entity().addComponent(new ItemComponent("Hoe", ItemType.HOE, new Texture("images/tool_shovel.png")));
-        item2 = new Entity().addComponent(new ItemComponent("Scythe",ItemType.SCYTHE, new Texture("images/tool_shovel.png")));
+        item1 = new Entity().addComponent(new ItemComponent("Hoe", ItemType.HOE, "images/tool_shovel.png"));
+        item2 = new Entity().addComponent(new ItemComponent("Scythe",ItemType.SCYTHE, "images/tool_shovel.png"));
     }
 
     @Test
