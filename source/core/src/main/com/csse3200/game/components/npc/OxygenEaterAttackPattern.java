@@ -1,8 +1,6 @@
 package com.csse3200.game.components.npc;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.combat.ProjectileComponent;
@@ -11,11 +9,6 @@ import com.csse3200.game.entities.factories.ProjectileFactory;
 import com.csse3200.game.events.ScheduledEvent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.DirectionUtils;
-import net.dermetfan.gdx.physics.box2d.PositionController;
-
-import java.awt.*;
-import java.util.List;
-import java.util.Vector;
 
 /**
  * The OxygenEaterAttackPattern class defines the attack behavior of an oxygen eater NPC entity in the game.
