@@ -336,7 +336,7 @@ public class ItemActions extends Component {
    *
    * @param player        the player attempting to repair the ship
    * @param mouseWorldPos position of player mouse to check for ship entity
-   * @return
+   * @return true if the repair is successful, false otherwise
    */
   private boolean repair(Entity player, Vector2 mouseWorldPos) {
     InteractionDetector detector = player.getComponent(InteractionDetector.class);
