@@ -1,6 +1,13 @@
 package com.csse3200.game.missions.rewards;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.areas.SpaceGameArea;
+import com.csse3200.game.extensions.GameExtension;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,70 +16,40 @@ import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.mockito.Mockito.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@ExtendWith(GameExtension.class)
 class EntityRewardTest {
 
-    private Entity e1, e2, e3;
-    private List<Entity> entities1, entities2, entities3;
-    private EntityReward r1, r2, r3;
+    private List<Entity> entities1, empty;
+    private EntityReward r1, r2;
 
-    public class TestGameArea extends GameArea {
-        Entity player = new Entity();
-
-        @Override
-        public void create() {
-            // do nothing
-        }
-
-        @Override
-        public Entity getPlayer() {
-            return player;
-        }
-
-        @Override
-        public ClimateController getClimateController() {
-            return null;
-        }
-
-        @Override
-        public Entity getTractor() {
-            return null;
-        }
-
-        @Override
-        public GameMap getMap() {
-            return null;
-        }
-    }
 
     @BeforeEach
     void beforeTest() {
-        ServiceLocator.registerGameArea(new TestGameArea());
+        GameArea gameArea = mock(SpaceGameArea.class);
+        ServiceLocator.registerGameArea(gameArea);
 
-        // Create some test entities
-        e1 = new Entity();
-        e2 = new Entity();
-        e3 = new Entity();
+        Entity player = mock(Entity.class);
+        when(ServiceLocator.getGameArea().getPlayer()).thenReturn(player);
+        Vector2 playerPosition = mock(Vector2.class);
+        when(ServiceLocator.getGameArea().getPlayer().getPosition()).thenReturn(playerPosition);
 
-        // Create lists of entities for rewards
-        entities1 = new ArrayList<Entity>();
-        entities1.add(e1);
+        entities1 = List.of(
+                mock(Entity.class),
+                mock(Entity.class),
+                mock(Entity.class)
+        );
 
-        entities2 = new ArrayList<Entity>();
-        entities2.add(e1);
-        entities2.add(e2);
-
-        entities3 = new ArrayList<Entity>();
-        entities3.add(e1);
-        entities3.add(e2);
-        entities3.add(e3);
+        empty = new ArrayList<>();
 
         // Create EntityReward objects
         r1 = new EntityReward(entities1);
-        r2 = new EntityReward(entities2);
-        r3 = new EntityReward(entities3);
+        r2 = new EntityReward(empty);
     }
 
     @AfterEach
@@ -85,6 +62,17 @@ class EntityRewardTest {
         // Ensure EntityReward is not collected initially
         assertFalse(r1.isCollected());
         assertFalse(r2.isCollected());
-        assertFalse(r3.isCollected());
+
+        r1.collect();
+        r2.collect();
+
+        assertTrue(r1.isCollected());
+        assertTrue(r2.isCollected());
+
+        Vector2 playerPosition = ServiceLocator.getGameArea().getPlayer().getPosition();
+        GridPoint2 playerPositionGrid = new GridPoint2((int) playerPosition.x, (int) playerPosition.y);
+        for (Entity e : entities1) {
+            verify(ServiceLocator.getGameArea()).spawnEntityAt(e, playerPositionGrid, true, true);
+        }
     }
 }
