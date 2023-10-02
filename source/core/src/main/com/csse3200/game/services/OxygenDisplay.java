@@ -3,7 +3,9 @@ package com.csse3200.game.services;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -14,7 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A ui component for displaying the current oxygen level on the Main Game Screen.
+ * A UI component for displaying the current oxygen level on the Main Game Screen.
  */
 public class OxygenDisplay extends UIComponent{
     
@@ -40,12 +42,13 @@ public class OxygenDisplay extends UIComponent{
         ServiceLocator.getPlanetOxygenService().getEvents()
                 .addListener("oxygenUpdate", this::updateDisplay);
 
+        // Initial update
         updateDisplay();
     }
 
     /**
      * Initialises all the possible images and labels that will be used by
-     * the class, and stores them in an array to be called when needed.
+     * the class, and stores them in an array.
      */
     public void createTexture() {
         logger.debug("Oxygen display texture being created");
@@ -58,6 +61,11 @@ public class OxygenDisplay extends UIComponent{
         oxygenDanger = new Image(ServiceLocator.getResourceService().getAsset(
             "images/bars_ui/danger_fill.png", Texture.class));
 
+        // Set oxygenFill to the initial starting one (VERY IMPORTANT)
+        oxygenFill = oxygenDanger;
+        oxygenFill.setScaleX(0.1f);
+
+        // Create labels for each percent
         oxygenLabels = new Array<>();
         for (int i = 0; i <= 100; i++) {
             oxygenLabels.add(new Label(String.format("Oxygen: %d%%", i), oxygenSkin));
@@ -68,33 +76,43 @@ public class OxygenDisplay extends UIComponent{
      * Updates the display, showing the oxygen bar in the top of the main game screen.
      */
     public void updateDisplay() {
+        boolean switched;
         if (oxygenLabels == null) {
             createTexture();
         }
 
-        int oxygenPercent = ServiceLocator.getPlanetOxygenService().getOxygenPercentage();
-        float scaling = (float) oxygenPercent / 100;
+        int newOxygenPercent = ServiceLocator.getPlanetOxygenService().getOxygenPercentage();
+        float scaling = (float) newOxygenPercent / 100;
 
-        // Accounts for scaling of the oxygen bar due to the oxygen percent
-        if (oxygenPercent <= 25) {
+        // Adjusts the oxygen bar based on the oxygen percent
+        if (newOxygenPercent <= 25) {
+            switched = (oxygenFill != oxygenDanger);
             oxygenFill = oxygenDanger;
-            oxygenFill.setX(oxygenFill.getImageX() + 14 * (1 - scaling));
-            oxygenFill.setScaleX(scaling);
         } else {
+            switched = (oxygenFill != oxygenHealthy);
             oxygenFill = oxygenHealthy;
-            oxygenFill.setX(oxygenFill.getImageX() + 14 * (1 - scaling));
-            oxygenFill.setScaleX(scaling);
         }
 
-        // Add a safety check to ensure that the array is always accessed at a possible index
-        if (0 <= oxygenPercent && oxygenPercent <= 100) {
+        oxygenFill.setX(oxygenFill.getImageX() + 14 * (1 - scaling));
+
+        // Ensure that the array is always accessed within bounds
+        if (0 <= newOxygenPercent && newOxygenPercent <= 100) {
             logger.debug("Oxygen display updated");
-            oxygenLabel = oxygenLabels.get(oxygenPercent);
+            oxygenLabel = oxygenLabels.get(newOxygenPercent);
             oxygenLabel.setPosition(oxygenOutline.getImageX() + 125f, oxygenOutline.getImageY() + 8.5f);
         }
 
+        if (!switched) {
+            oxygenFill.addAction(Actions.scaleTo(scaling, 1.0f, 1.0f, Interpolation.pow2InInverse));
+        } else {
+            oxygenFill.setScaleX(scaling);
+        }
+
         // Uncomment line below to test that oxygen percent decreases by 1% per hour (till endgame condition reached).
-        // ServiceLocator.getPlanetOxygenService().removeOxygen(400);
+        // ServiceLocator.getPlanetOxygenService().removeOxygen(10);
+
+        // Uncomment line below to check that oxygen increases by 10% per hour
+        // ServiceLocator.getPlanetOxygenService().addOxygen(100);
     }
 
     /**
@@ -119,7 +137,7 @@ public class OxygenDisplay extends UIComponent{
     }
 
     /**
-     * Removes all entities from the screen. Releases all resources from this class.
+     * Removes all entities from the screen and releases all resources from this class.
      */
     @Override
     public void dispose() {
@@ -128,6 +146,5 @@ public class OxygenDisplay extends UIComponent{
         oxygenFill.remove();
         oxygenHealthy.remove();
         oxygenLabel.remove();
-        oxygenLabels.clear();
     }
 }

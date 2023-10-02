@@ -123,7 +123,6 @@ public class GameTimeDisplay extends UIComponent {
         }
 
         logger.debug("Game time display updated");
-
     }
 
     /**
