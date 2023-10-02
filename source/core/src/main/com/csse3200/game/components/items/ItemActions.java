@@ -68,6 +68,14 @@ public class ItemActions extends Component {
         resultStatus = water(tile);
         return resultStatus;
       }
+      case SWORD -> {
+        player.getEvents().trigger("attack", mousePos);
+        return true;
+      }
+      case GUN -> {
+        player.getEvents().trigger("shoot", mousePos);
+        return true;
+      }
       case FOOD -> {
         resultStatus = feed(player, mouseWorldPos);
         return resultStatus;
@@ -306,7 +314,6 @@ public class ItemActions extends Component {
 
     List<Entity> entities = interactionDetector.getEntitiesTowardsPosition(mouseWorldPos);
     entities.removeIf(entity -> entity.getComponent(TamableComponent.class) == null);
-    entities.removeIf(entity -> entity.getComponent(TamableComponent.class).isTamed()); //TODO: axolotl? handle that
 
     Entity entityToFeed = interactionDetector.getNearest(entities);
 

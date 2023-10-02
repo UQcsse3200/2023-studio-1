@@ -110,15 +110,39 @@ public class ItemFactory {
   }
 
   /**
+   * Creates a sword item
+   *
+   * @return sword
+   */
+  public static Entity createSword() {
+    Entity sword = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/tool_sword.png"))
+            .addComponent(new ItemComponent("sword", ItemType.SWORD, new Texture("images/tool_sword.png")));
+    return sword;
+  }
+
+  /**
+   * Creates a gun item
+   *
+   * @return gun
+   */
+  public static Entity createGun() {
+    Entity gun = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/tool_gun.png"))
+            .addComponent(new ItemComponent("gun", ItemType.GUN, new Texture("images/tool_gun.png")));
+    return gun;
+  }
+
+  /**
    * Creates a milk item
    *
    * @return milk item
    */
   public static Entity createMilk() {
     Entity milk = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/milk.png"))
+            .addComponent(new TextureRenderComponent("images/animals/milk.png"))
             .addComponent(new ItemComponent("milk",
-                    ItemType.MILK, new Texture("images/milk.png")));
+                    ItemType.MILK, new Texture("images/animals/milk.png")));
     milk.scaleHeight(0.75f);
     return milk;
   }
@@ -130,9 +154,23 @@ public class ItemFactory {
    */
   public static Entity createEgg() {
     Entity egg = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/egg.png"))
+            .addComponent(new TextureRenderComponent("images/animals/egg.png"))
             .addComponent(new ItemComponent("egg", ItemType.EGG,
-                    new Texture("images/egg.png")));
+                    new Texture("images/animals/egg.png")));
+    egg.scaleHeight(0.75f);
+    return egg;
+  }
+
+  /**
+   * Creates a golden egg item
+   *
+   * @return golden egg item
+   */
+  public static Entity createGoldenEgg() {
+    Entity egg = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/animals/golden_egg.png"))
+            .addComponent(new ItemComponent("golden egg", ItemType.EGG,
+                    new Texture("images/animals/golden_egg.png")));
     egg.scaleHeight(0.75f);
     return egg;
   }
@@ -300,16 +338,30 @@ public class ItemFactory {
   }
 
   /**
-   * Creates a 'Cow food' item
+   * Creates a beef item
    *
-   * @return tobacco seed
+   * @return beef item
    */
-  public static Entity createCowFood() {
+  public static Entity createBeef() {
     Entity animalFood = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/cosmic_cob/1_seedling.png"))
-            .addComponent(new ItemComponent("COW FOOD", ItemType.FOOD,
-                    "Cow food", new Texture("images/plants/cosmic_cob/1_seedling.png")));
+            .addComponent(new TextureRenderComponent("images/animals/beef.png"))
+            .addComponent(new ItemComponent("Beef", ItemType.FOOD,
+                    "Beef", new Texture("images/animals/beef.png")));
     return animalFood;
+  }
+
+  /**
+   * Creates a chicken item
+   *
+   * @return chicken item
+   */
+  public static Entity createChickenMeat() {
+    Entity chickenMeat = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/animals/chicken_meat.png"))
+            .addComponent(new ItemComponent("Chicken", ItemType.FOOD,
+                    "Chicken", new Texture("images/animals/chicken_meat.png")));
+    chickenMeat.scaleHeight(0.6f);
+    return chickenMeat;
   }
 
   /**
