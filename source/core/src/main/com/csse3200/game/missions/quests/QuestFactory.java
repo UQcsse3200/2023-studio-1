@@ -1,6 +1,7 @@
 package com.csse3200.game.missions.quests;
 
 import com.csse3200.game.areas.weather.SolarSurgeEvent;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.entities.factories.NPCFactory;
@@ -186,6 +187,7 @@ public class QuestFactory {
                 new ItemReward(List.of(
                         // TODO - Add weapon to defeat incoming enemies
                         ItemFactory.createSpaceSnapperSeed(),
+                        ItemFactory.createSpaceSnapperSeed(),
                         ItemFactory.createFenceItem(),
                         ItemFactory.createGateItem()
                 )),
@@ -231,7 +233,7 @@ public class QuestFactory {
         questsToActivate.add(createConnectionQuest());
 
         String dialogue = """
-                For the first time since your landing, the {COLOR=#76428A}ALIEN CREATURE{COLOR=WHITE}'s vicious grimace fades. {WAIT}"I apologise for my initial hostility. {WAIT}My name is Jarrael. {WAIT}I am- {WAIT}was a member of the Karreshiq people. {WAIT}I was sent here for a special purpose, after {COLOR=RED}The Night of the Black Sun{COLOR=WHITE}. {WAIT}Our people had interacted with your civilisation many millennia ago, but we found a home here after we were {COLOR=RED}driven out{COLOR=WHITE}. {WAIT}So imagine my shock when you came crashing down from the sky. {WAIT}What happened?" {WAIT}You begin to explain your predicament to Jarrael...
+                For the first time since your landing, the {COLOR=#76428A}ALIEN CREATURE{COLOR=WHITE}'s vicious scowl fades. {WAIT}"I apologise for my initial hostility. {WAIT}My name is Jarrael. {WAIT}I am- {WAIT}was a member of the Karreshiq people. {WAIT}I was sent here for a special purpose, after {COLOR=RED}The Night of the Black Sun{COLOR=WHITE}. {WAIT}Our people had interacted with your civilisation many millennia ago, but we found a home here after we were {COLOR=RED}driven out{COLOR=WHITE}. {WAIT}So imagine my shock when you came crashing down from the sky. {WAIT}What happened?" {WAIT}You begin to explain your predicament to Jarrael...
                 """;
 
         Set<String> requiredQuests = new HashSet<>();
@@ -261,27 +263,19 @@ public class QuestFactory {
     public static AutoQuest createConnectionQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
         List<Quest> questsToActivate = new ArrayList<>();
-        questsToActivate.add(createActIIMainQuest());
         questsToActivate.add(createHomeSickQuest());
+        questsToActivate.add(createActIIMainQuest());
 
         String dialogue = """
-                I will need some time to think of a solution to your issue.
-                {WAIT}
-                In the mean time, I have a small favour to ask - maybe it will help keep your mind off things.
-                {WAIT}
-                There is a plant that is- was sacred to our people.
-                {WAIT}
-                It is known as the Nightshade, although for you, a more apt description might be Deadly Nightshade.
-                {WAIT}
-                It's berries are poisonous to fleshy life-forms such as yourself.
-                {WAIT}
-                But to us, it is a delicacy.
-                {WAIT}
-                If you harvest a batch of them, I'm sure I will have thought of a solution to your problem.
+                As you finish explaining your crash landing, you warn Jarrael that if you aren't able to make contact with your people within {COLOR=#3ABE88}5 DAYS{COLOR=WHITE}, they will leave this planet's orbit, making reaching them again nearly impossible. {WAIT}"Hmm... {WAIT}This is indeed a grave issue. {WAIT}I will need some time to think of a possible solution. {WAIT}In the mean time, I have a favour to ask. {WAIT}The {COLOR=#76428A}NIGHTSHADE{COLOR=WHITE} produces {COLOR=#76428A}BERRIES{COLOR=WHITE} which are damaging to fleshy creatures such as you, but they are a delicacy to our people. {WAIT}A more appropriate name for you might be "{COLOR=#76428A}DEADLY NIGHTSHADE{COLOR=WHITE}". Here are some seeds. {WAIT}Come back to me when you have harvested them, and I should have thought of a solution by then."
                 """;
 
         MultiReward reward = new MultiReward(List.of(
-                new ItemReward(List.of(ItemFactory.createDeadlyNightshadeSeed())),
+                new ItemReward(List.of(
+                        ItemFactory.createDeadlyNightshadeSeed(),
+                        ItemFactory.createDeadlyNightshadeSeed(),
+                        ItemFactory.createDeadlyNightshadeSeed()
+                )),
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
@@ -298,29 +292,11 @@ public class QuestFactory {
         questsToActivate.add(createShipRepairsQuest());
 
         String dialogue = """
-                ALIEN NPC takes the berries you offer, and consumes them.
-                {WAIT}
-                A spark lights up in ALIEN NPC's eye.
-                {WAIT}
-                Ah... a taste of home. It reminds me of what life was like before- before the {COLOUR=red}Night of the Burning Sky{COLOUR=white}.
-                {WAIT}
-                *sigh*
-                {WAIT}
-                Nevermind...
-                {WAIT}
-                I've though of a solution to your predicament.
-                {WAIT}
-                Your ship is in need of repair. I don't greatly understand your technology, but I know physics, and how radio communication works.
-                {WAIT}
-                If you continue to repair your ship, I will be able to work on repairing your radio device.
-                {WAIT}
-                Here, take a few ship parts I found lying around and talk to me once you've done that.
+                Jarrael takes the {COLOR=#76428A}BERRIES{COLOR=WHITE} you harvested, and consumes them. {WAIT}"Ah... It reminds me of our life here before {COLOR=RED}The Night of the Black Sun{COLOR=WHITE}". {WAIT}Jarrael's eyes seem to trail off for a moment, before focussing again. {WAIT}"I've thought of a solution to your issue. {WAIT}Your {COLOR=#76428A}SHIP{COLOR=WHITE} is in need of repair, that much is clear. {WAIT}I don't think we will be able to get it space-worthy in time, but maybe I could work on repairing your {COLOR=#76428A}SHIP{COLOR=WHITE}'s radio communications device. {WAIT}Take a few {COLOR=#76428A}SHIP PARTS{COLOR=WHITE} that you cleaned up when we first met, and see if you can make a start."
                 """;
 
         MultiReward reward = new MultiReward(List.of(
                 new ItemReward(List.of(
-                        ItemFactory.createShipPart(),
-                        ItemFactory.createShipPart(),
                         ItemFactory.createShipPart(),
                         ItemFactory.createShipPart(),
                         ItemFactory.createShipPart()
@@ -329,7 +305,7 @@ public class QuestFactory {
                 new DialogueReward(dialogue)
         ));
         return new PlantInteractionQuest(HOME_SICK_QUEST_NAME, reward, MissionManager.MissionEvent.HARVEST_CROP,
-                Set.of("Deadly Nightshade"), 5);
+                Set.of("Deadly Nightshade"), 3);
     }
 
     /**
@@ -342,15 +318,13 @@ public class QuestFactory {
         questsToActivate.add(createBringingItAllTogetherQuest());
 
         String dialogue = """
-                Good job. I believe you will need to make a lot more progress in order to successfully repair the ship.
-                {WAIT}
-                Continue repairing your ship, and I will work on the radio device.
-                {WAIT}
-                I might even have some additional tasks for you, for which I could provide some help in finding other parts of your ship.
+                "Well done. {WAIT}Now I can get started on repairing your radio. {WAIT}Keep repairing the ship, and come to me when you have added enough {COLOR=#76428A}SHIP PARTS{COLOR=WHITE}."
                 """;
 
         MultiReward reward = new MultiReward(List.of(
-                new ItemReward(List.of(ItemFactory.createShipPart())),
+                new ItemReward(List.of(
+                        ItemFactory.createShipPart()
+                )),
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
@@ -363,9 +337,7 @@ public class QuestFactory {
      */
     public static ShipRepairQuest createBringingItAllTogetherQuest() {
         String dialogue = """
-                Your repairs appear to be successful.
-                {WAIT}
-                Come and talk to me when you want to try and reach out.
+                "Nice work. {WAIT}The {COLOR=#76428A}SHIP{COLOR=WHITE} is fully repaired - the radio should be working now. {WAIT}Come speak to me when you are ready to attempt to make contact with your people."
                 """;
 
         DialogueReward reward = new DialogueReward(dialogue);
@@ -382,31 +354,10 @@ public class QuestFactory {
         questsToActivate.add(createAnImminentThreatQuest());
 
         String dialogue = """
-                With the final pieces of the ship in place, a faint static buzzes from the radio.
-                {WAIT}
-                You tune the radio into the Mothership's frequency, and send your SOS message, in hopes it will be heard...
-                {WAIT=2}
-                "Hello, is that you PLAYER NAME?"
-                {WAIT}
-                You eagerly reply...
-                {WAIT=0.5}
-                "Hello? {WAIT} We're struggling to hear what you are saying."
-                {WAIT}
-                "Listen, if you can hear us, we're in major trouble. Our sensors have been picking up a major increase in solar activity."
-                {WAIT}
-                "We predict in 15 days there will be a Solar Storm so intense that it could wipe out our entire fleet."
-                {WAIT}
-                "Our only chance is to land on your planet, but even then our life-support systems will likely fail."
-                {WAIT}
-                "We need you to do all you can to ensure the atmosphere is at least survivable for us when we land."
-                {WAIT}
-                Taken aback by all this information, you attempt to speak to them again, but just as you go to speak, the sky lights up with the power of the sun as another powerful Solar Surge strikes.
-                {WAIT}
-                The radio cuts out...
+                Jarrael ushers you into your {COLOR=#76428A}SHIP{COLOR=WHITE}, where your radio device currently sits. {WAIT}A faint crackle emanates from the radio as it turns on. {WAIT}You tune it to the {COLOR=#3ABE88}MOTHERSHIP{COLOR=WHITE}'s frequency. {WAIT}A distant voice is transmitted from the radio, {WAIT}"Hello? {WAIT}Hello? {WAIT}Is this {SHAKE}STATIC{ENDSHAKE}? The {COLOR=#3ABE88}SOLAR SURGE{COLOR=WHITE} which caused your crash wiped out some of our life support systems. {WAIT}We predict an increase in {COLOR=#3ABE88}SOLAR SURGE{COLOR=WHITE} activity over the next 15 days. {WAIT}We need to be able to land on your planet and survive without life support, or {COLOR=RED}humanity may be lost{COLOR=WHITE}!" {SHAKE}STATIC{ENDSHAKE} begins to take over the radio, as a powerful {COLOR=#3ABE88}SOLAR SURGE{COLOR=WHITE} hits you...
                 """;
 
         Set<String> requiredQuests = new HashSet<>();
-        requiredQuests.add(CONNECTION_QUEST_NAME);
         requiredQuests.add(HOME_SICK_QUEST_NAME);
         requiredQuests.add(SHIP_REPAIRS_QUEST_NAME);
         requiredQuests.add(BRINGING_IT_ALL_TOGETHER_QUEST_NAME);
@@ -431,35 +382,14 @@ public class QuestFactory {
         questsToActivate.add(createActIIIMainQuest());
 
         String dialogue = """
-                You let out a cry of anger.
-                {WAIT}
-                ALIEN NPC walks up to.
-                {WAIT}
-                If this storm, the one they are talking about, is as bad as they say, you could lose the technology allowing you to survive on this planet.
-                {WAIT}
-                I have an idea.
-                {WAIT}
-                I only have a few seeds left, but in the remaining seeds, there is one type of plant that I haven't given to you before.
-                {WAIT}
-                It's known as the Atomic Algae - it is supposed to be a powerful photosynthesiser.
-                {WAIT}
-                It is so strong it is said a few of these, if cared for correctly, can produce enough oxygen to change the atmosphere itself.
-                {WAIT}
-                However, I suspect Solar Surges are only going to get stronger in the coming days.
-                {WAIT}
-                And my guess is that our hostile wildlife won't like such melding with the atmosphere.
-                {WAIT}
-                Good luck, my friend.
+                You let out a cry of desperation, as the fate of humanity now rests in your hands. {WAIT}Jarrael puts a hand on your shoulder. {WAIT}"I have an idea. {WAIT}I was sent here to cultivate a very special type of plant, the {COLOR=#76428A}ATOMIC ALGAE{COLOR=WHITE}. {WAIT}It is a very strong photosynthesiser, and we were going to use it to reverse the negative affects of {COLOR=RED}The Night of the Black Sun{COLOR=WHITE}. {WAIT}If you plant and cultivate enough of them, you should be able to manifestly increase the oxygen content of our atmosphere, and make the planet survivable for your kind. {WAIT}I believe I only have a few {COLOR=#76428A}SEEDS{COLOR=WHITE} to spare, so make sure you treat them well."
                 """;
 
         MultiReward reward = new MultiReward(List.of(
                 new ItemReward(List.of(
-                        ItemFactory.createAloeVeraSeed(),
                         ItemFactory.createAtomicAlgaeSeed(),
-                        ItemFactory.createCosmicCobSeed(),
-                        ItemFactory.createDeadlyNightshadeSeed(),
-                        ItemFactory.createHammerPlantSeed(),
-                        ItemFactory.createSpaceSnapperSeed()
+                        ItemFactory.createAtomicAlgaeSeed(),
+                        ItemFactory.createAtomicAlgaeSeed()
                 )),
                 new TriggerWeatherReward(List.of(
                         new SolarSurgeEvent(0, 2, 100, 1.25f),
@@ -479,16 +409,10 @@ public class QuestFactory {
      */
     public static PlantInteractionQuest createAirAndAlgaeQuest() {
         String dialogue = """
-                Keep at it.
-                {WAIT}
-                If your people are to be able to survive on this planet, you need to ensure the oxygen content in the atmosphere is at least 80%.
-                {WAIT}
-                I've found 4 more seeds of Atomic Algae to spare - the rest you will have to get from harvesting your current crops.
+                "Keep at it. {WAIT}If your people are to survive the coming {COLOR=#3ABE88}SOLAR SURGES{COLOR=WHITE}, you will need to ensure the relative oxygen content of atmosphere is above 95% on the day they land. {WAIT}I have found a few more seeds to spare. {WAIT}Come to me on the day of your people's arrival when the oxygen is high enough, and I can help you signal them for landing. {WAIT}Good luck!"
                 """;
         MultiReward reward = new MultiReward(List.of(
                 new ItemReward(List.of(
-                        ItemFactory.createAtomicAlgaeSeed(),
-                        ItemFactory.createAtomicAlgaeSeed(),
                         ItemFactory.createAtomicAlgaeSeed(),
                         ItemFactory.createAtomicAlgaeSeed()
                 )),
@@ -504,11 +428,7 @@ public class QuestFactory {
      */
     public static OxygenLevelQuest createStratosphericSentinelQuest() {
         String dialogue = """
-                Well done!
-                {WAIT}
-                With the work you've done, your people should be able to live here without life support systems.
-                {WAIT}
-                «Something sentimental to be added...»
+                "Well done! {WAIT}You have your people one more chance at survival. {WAIT}Come with me, let us use your ship to signal the others for landing. {WAIT}I hope our people can help each other rebuild what we each have lost."
                 """;
         DialogueReward reward = new DialogueReward(dialogue);
         return new OxygenLevelQuest(STRATOSPHERIC_SENTINEL_QUEST_NAME, reward, ServiceLocator.getPlanetOxygenService(),
