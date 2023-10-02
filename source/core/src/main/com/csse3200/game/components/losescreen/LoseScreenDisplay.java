@@ -152,7 +152,7 @@ public class LoseScreenDisplay extends UIComponent {
                 
                 {WAIT}Humanity has been lost to the ages.
                 
-                {COLOR=RED}Game Over{WAIT=1}
+                {COLOR=RED}Game Over
             """;
     }
 
@@ -167,9 +167,9 @@ public class LoseScreenDisplay extends UIComponent {
         String reason;
         switch (causeOfDeath) {
             case "oxygen" -> reason = "your oxygen supply dwindles,\nand so does humanity's hope for survival.";
-            case QuestFactory.actIMainQuestName -> reason = "you failed to gain the Alien's trust in time,\nand so you were removed from the crash landing site.";
-            case QuestFactory.actIIMainQuestName -> reason = "you failed to contact the rest of humanity in time,\nleaving you stranded and alone on an Alien world.";
-            case QuestFactory.actIIIMainQuestName -> reason = "you failed to make the planet liveable for humanity,\nleading what remains of the human race to their doom.";
+            case QuestFactory.ACT_I_MAIN_QUEST_NAME -> reason = "you failed to gain the Alien's trust in time,\nand so you were removed from the crash landing site.";
+            case QuestFactory.ACT_II_MAIN_QUEST_NAME -> reason = "you failed to contact the rest of humanity in time,\nleaving you stranded and alone on an Alien world.";
+            case QuestFactory.ACT_III_MAIN_QUEST_NAME -> reason = "you failed to make the planet liveable for humanity,\nleading what remains of the human race to their doom.";
             default -> reason = "Error Unknown Reason for Defeat";
         }
         return reason;

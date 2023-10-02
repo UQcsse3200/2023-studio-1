@@ -16,23 +16,23 @@ import java.util.Set;
 
 public class QuestFactory {
 
-    public static final String firstContactQuestName = "First Contact";
-    public static final String clearingYourMessQuestName = "Clearing Your Mess";
-    public static final String sowingYourFirstSeedsQuestName = "Sowing Your First Seeds";
-    public static final String reapingYourRewardsQuestName = "Reaping Your Rewards";
-    public static final String makingFriendsQuestName = "Making Friends";
-    public static final String fertilisingFiestaQuestName = "Fertilising Fiesta";
-    public static final String aliensAttackQuestName = "Aliens Attack";
-    public static final String actIMainQuestName = "An Agreement";
-    public static final String connectionQuestName = "Connection";
-    public static final String homeSickQuestName = "Home Sick";
-    public static final String shipRepairsQuestName = "Ship Repairs";
-    public static final String bringingItAllTogether = "Bringing It All Together";
-    public static final String actIIMainQuestName = "Making Contact";
-    public static final String anImminentThreatQuestName = "An Imminent Threat";
-    public static final String airAndAlgaeQuestName = "Air and Algae";
-    public static final String stratosphericSentinel = "Stratospheric Sentinel";
-    public static final String actIIIMainQuestName = "Weather the Storm";
+    public static final String FIRST_CONTACT_QUEST_NAME = "First Contact";
+    public static final String CLEARING_YOUR_MESS_QUEST_NAME = "Clearing Your Mess";
+    public static final String SOWING_YOUR_FIRST_SEEDS_QUEST_NAME = "Sowing Your First Seeds";
+    public static final String REAPING_YOUR_REWARDS_QUEST_NAME = "Reaping Your Rewards";
+    public static final String MAKING_FRIENDS_QUEST_NAME = "Making Friends";
+    public static final String FERTILISING_FIESTA_QUEST_NAME = "Fertilising Fiesta";
+    public static final String ALIENS_ATTACK_QUEST_NAME = "Aliens Attack";
+    public static final String ACT_I_MAIN_QUEST_NAME = "An Agreement";
+    public static final String CONNECTION_QUEST_NAME = "Connection";
+    public static final String HOME_SICK_QUEST_NAME = "Home Sick";
+    public static final String SHIP_REPAIRS_QUEST_NAME = "Ship Repairs";
+    public static final String BRINGING_IT_ALL_TOGETHER_QUEST_NAME = "Bringing It All Together";
+    public static final String ACT_II_MAIN_QUEST_NAME = "Making Contact";
+    public static final String AN_IMMINENT_THREAT_QUEST_NAME = "An Imminent Threat";
+    public static final String AIR_AND_ALGAE_QUEST_NAME = "Air and Algae";
+    public static final String STRATOSPHERIC_SENTINEL_QUEST_NAME = "Stratospheric Sentinel";
+    public static final String ACT_III_MAIN_QUEST_NAME = "Weather the Storm";
     public static final String TRACTOR_GO_BRRRRRR = "Tractor Go BRRRRRR";
 
     /**
@@ -56,7 +56,7 @@ public class QuestFactory {
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
-        return new AutoQuest(firstContactQuestName, reward, "Wake up after your crash landing.");
+        return new AutoQuest(FIRST_CONTACT_QUEST_NAME, reward, "Wake up after your crash landing.");
     }
 
     /**
@@ -81,7 +81,7 @@ public class QuestFactory {
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
-        return new ClearDebrisQuest(clearingYourMessQuestName, reward, 15);
+        return new ClearDebrisQuest(CLEARING_YOUR_MESS_QUEST_NAME, reward, 15);
     }
 
     /**
@@ -112,7 +112,7 @@ public class QuestFactory {
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
-        return new PlantInteractionQuest(sowingYourFirstSeedsQuestName, reward, MissionManager.MissionEvent.PLANT_CROP,
+        return new PlantInteractionQuest(SOWING_YOUR_FIRST_SEEDS_QUEST_NAME, reward, MissionManager.MissionEvent.PLANT_CROP,
                 Set.of("Cosmic Cob"), 12);
     }
 
@@ -150,7 +150,7 @@ public class QuestFactory {
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
-        return new PlantInteractionQuest(reapingYourRewardsQuestName, reward, MissionManager.MissionEvent.HARVEST_CROP,
+        return new PlantInteractionQuest(REAPING_YOUR_REWARDS_QUEST_NAME, reward, MissionManager.MissionEvent.HARVEST_CROP,
                 Set.of("Cosmic Cob"), 12);
     }
 
@@ -193,7 +193,7 @@ public class QuestFactory {
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
-        return new TameAnimalsQuest(makingFriendsQuestName, reward, 1);
+        return new TameAnimalsQuest(MAKING_FRIENDS_QUEST_NAME, reward, 1);
     }
 
     /**
@@ -237,7 +237,7 @@ public class QuestFactory {
                 )),
                 new DialogueReward(dialogue)
         ));
-        return new FertiliseCropTilesQuest(fertilisingFiestaQuestName, reward, 12);
+        return new FertiliseCropTilesQuest(FERTILISING_FIESTA_QUEST_NAME, reward, 12);
     }
 
     /**
@@ -268,7 +268,7 @@ public class QuestFactory {
                 )),
                 new DialogueReward(dialogue)
         ));
-        return new ManageHostilesQuest(aliensAttackQuestName, reward, Set.of(EntityType.OxygenEater), 5);
+        return new ManageHostilesQuest(ALIENS_ATTACK_QUEST_NAME, reward, Set.of(EntityType.OxygenEater), 5);
     }
 
     /**
@@ -299,12 +299,12 @@ public class QuestFactory {
                 """;
 
         Set<String> requiredQuests = new HashSet<>();
-        requiredQuests.add(clearingYourMessQuestName);
-        requiredQuests.add(sowingYourFirstSeedsQuestName);
-        requiredQuests.add(reapingYourRewardsQuestName);
-        requiredQuests.add(makingFriendsQuestName);
-        requiredQuests.add(fertilisingFiestaQuestName);
-        requiredQuests.add(aliensAttackQuestName);
+        requiredQuests.add(CLEARING_YOUR_MESS_QUEST_NAME);
+        requiredQuests.add(SOWING_YOUR_FIRST_SEEDS_QUEST_NAME);
+        requiredQuests.add(REAPING_YOUR_REWARDS_QUEST_NAME);
+        requiredQuests.add(MAKING_FRIENDS_QUEST_NAME);
+        requiredQuests.add(FERTILISING_FIESTA_QUEST_NAME);
+        requiredQuests.add(ALIENS_ATTACK_QUEST_NAME);
 
         MultiReward reward = new MultiReward(List.of(
                 new QuestReward(questsToAdd, questsToActivate),
@@ -313,7 +313,7 @@ public class QuestFactory {
                         ItemFactory.createChestItem()))
         ));
 
-        return new MainQuest(actIMainQuestName, reward, 5, requiredQuests, "gain ALIEN NPC's trust");
+        return new MainQuest(ACT_I_MAIN_QUEST_NAME, reward, 5, requiredQuests, "gain ALIEN NPC's trust");
     }
 
     /**
@@ -347,7 +347,7 @@ public class QuestFactory {
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
-        return new AutoQuest(connectionQuestName, reward, "Make a connection with ALIEN NPC, figure out how you can be reunited with Humanity.");
+        return new AutoQuest(CONNECTION_QUEST_NAME, reward, "Make a connection with ALIEN NPC, figure out how you can be reunited with Humanity.");
     }
 
     /**
@@ -390,7 +390,7 @@ public class QuestFactory {
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
-        return new PlantInteractionQuest(homeSickQuestName, reward, MissionManager.MissionEvent.HARVEST_CROP,
+        return new PlantInteractionQuest(HOME_SICK_QUEST_NAME, reward, MissionManager.MissionEvent.HARVEST_CROP,
                 Set.of("Deadly Nightshade"), 5);
     }
 
@@ -416,7 +416,7 @@ public class QuestFactory {
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
-        return new ShipRepairQuest(shipRepairsQuestName, reward, 3);
+        return new ShipRepairQuest(SHIP_REPAIRS_QUEST_NAME, reward, 3);
     }
 
     /**
@@ -431,7 +431,7 @@ public class QuestFactory {
                 """;
 
         DialogueReward reward = new DialogueReward(dialogue);
-        return new ShipRepairQuest(bringingItAllTogether, reward, 17);
+        return new ShipRepairQuest(BRINGING_IT_ALL_TOGETHER_QUEST_NAME, reward, 17);
     }
 
     /**
@@ -468,17 +468,17 @@ public class QuestFactory {
                 """;
 
         Set<String> requiredQuests = new HashSet<>();
-        requiredQuests.add(connectionQuestName);
-        requiredQuests.add(homeSickQuestName);
-        requiredQuests.add(shipRepairsQuestName);
-        requiredQuests.add(bringingItAllTogether);
+        requiredQuests.add(CONNECTION_QUEST_NAME);
+        requiredQuests.add(HOME_SICK_QUEST_NAME);
+        requiredQuests.add(SHIP_REPAIRS_QUEST_NAME);
+        requiredQuests.add(BRINGING_IT_ALL_TOGETHER_QUEST_NAME);
 
         MultiReward reward = new MultiReward(List.of(
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
 
-        return new MainQuest(actIIMainQuestName, reward, 10, requiredQuests, "make connection with the rest of your people");
+        return new MainQuest(ACT_II_MAIN_QUEST_NAME, reward, 10, requiredQuests, "make connection with the rest of your people");
     }
 
     /**
@@ -532,7 +532,7 @@ public class QuestFactory {
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
-        return new AutoQuest(anImminentThreatQuestName, reward, "Learn about the imminent threat.");
+        return new AutoQuest(AN_IMMINENT_THREAT_QUEST_NAME, reward, "Learn about the imminent threat.");
     }
 
     /**
@@ -556,7 +556,7 @@ public class QuestFactory {
                 )),
                 new DialogueReward(dialogue)
         ));
-        return new PlantInteractionQuest(airAndAlgaeQuestName, reward, MissionManager.MissionEvent.PLANT_CROP,
+        return new PlantInteractionQuest(AIR_AND_ALGAE_QUEST_NAME, reward, MissionManager.MissionEvent.PLANT_CROP,
                 Set.of("Atomic Algae"), 10);
     }
 
@@ -573,7 +573,7 @@ public class QuestFactory {
                 «Something sentimental to be added...»
                 """;
         DialogueReward reward = new DialogueReward(dialogue);
-        return new OxygenLevelQuest(stratosphericSentinel, reward, ServiceLocator.getPlanetOxygenService(),
+        return new OxygenLevelQuest(STRATOSPHERIC_SENTINEL_QUEST_NAME, reward, ServiceLocator.getPlanetOxygenService(),
                 "the planet's oxygen level", 348, 95);
     }
 
@@ -583,11 +583,11 @@ public class QuestFactory {
      */
     public static MainQuest createActIIIMainQuest() {
         Set<String> requiredQuests = new HashSet<>();
-        requiredQuests.add(airAndAlgaeQuestName);
-        requiredQuests.add(stratosphericSentinel);
+        requiredQuests.add(AIR_AND_ALGAE_QUEST_NAME);
+        requiredQuests.add(STRATOSPHERIC_SENTINEL_QUEST_NAME);
 
         WinReward reward = new WinReward();
-        return new MainQuest(actIIIMainQuestName, reward, 15, requiredQuests, "weather the incoming storm, provide a haven for humanity");
+        return new MainQuest(ACT_III_MAIN_QUEST_NAME, reward, 15, requiredQuests, "weather the incoming storm, provide a haven for humanity");
     }
 
     /**
