@@ -1,5 +1,6 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.components.losescreen.LoseScreenDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -106,7 +107,7 @@ public class PlanetOxygenService implements OxygenLevel{
             logger.debug("No oxygen left, triggering final oxygenUpdate and loseScreen event");
             oxygenPresent = 0;
             eventHandler.trigger("oxygenUpdate");
-            ServiceLocator.getGameArea().getPlayer().getEvents().trigger("loseScreen");
+            ServiceLocator.getMissionManager().getEvents().trigger("loseScreen", "oxygen");
         } else if (oxygenPresent + delta > oxygenGoal) {
             // Limit the present oxygen to not surpass the oxygen goal.
             logger.debug("Setting oxygen present to oxygen goal");

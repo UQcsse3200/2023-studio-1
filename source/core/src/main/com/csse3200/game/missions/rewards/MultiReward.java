@@ -12,6 +12,10 @@ public class MultiReward extends Reward {
      */
     private List<Reward> rewards;
 
+    /**
+     * A MultiReward which allows multiple types of Rewards to be added to a Quest.
+     * @param rewards - the rewards to be collected on collect() of the MultiReward
+     */
     public MultiReward(List<Reward> rewards) {
         super();
         this.rewards = rewards;
