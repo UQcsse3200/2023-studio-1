@@ -18,6 +18,7 @@ import com.csse3200.game.components.maingame.PauseMenuActions;
 import com.csse3200.game.components.plants.PlantInfoDisplayComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.tractor.TractorActions;
+import com.csse3200.game.entities.EntityIndicator;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.FireflySpawner;
