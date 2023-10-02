@@ -31,7 +31,8 @@ public abstract class GameArea implements Disposable {
   private Entity player;
   private final ArrayList<EntityType> loadableTypes = new ArrayList<>(Arrays.asList(EntityType.Tile, EntityType.Cow,
           EntityType.Cow, EntityType.Chicken, EntityType.Astrolotl, EntityType.Plant, EntityType.Tile,
-          EntityType.OxygenEater, EntityType.ShipDebris, EntityType.Ship));
+          EntityType.OxygenEater, EntityType.ShipDebris, EntityType.Ship, EntityType.Sprinkler, EntityType.Pump,
+          EntityType.Fence, EntityType.Light, EntityType.Gate, EntityType.Chest));
 
   protected GameArea() {
     areaEntities = new ArrayList<>();
