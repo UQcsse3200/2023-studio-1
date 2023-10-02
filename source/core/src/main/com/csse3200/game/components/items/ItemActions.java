@@ -12,6 +12,7 @@ import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.npc.TamableComponent;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.FactoryService;
@@ -323,14 +324,26 @@ public class ItemActions extends Component {
    * Repairs the ship if the player has a ship part item
    *
    * @param player the player attempting to repair the ship
-   * @param mouseWorldPos
+   * @param mouseWorldPos position of player mouse to check for ship entity
    * @return
    */
   private boolean repair(Entity player, Vector2 mouseWorldPos) {
     InteractionDetector detector = player.getComponent(InteractionDetector.class);
-    Entity ship = detector.getEntity();
+    if (detector == null) {
+      return false;
+    }
+
+    List<Entity> entities = detector.getEntitiesTowardsPosition(mouseWorldPos);
+    entities.removeIf(entity -> entity.getType() == null);
+    entities.removeIf(entity -> entity.getType() != EntityType.Ship);
+
+    Entity ship = detector.getNearest(entities);
+    if (ship == null) {
+      return false;
+    }
     if (ship.getType() == EntityType.Ship) {
       ship.getEvents().trigger("addPart");
+      player.getComponent(InventoryComponent.class).removeItem(entity);
       return true;
     }
     return false;
