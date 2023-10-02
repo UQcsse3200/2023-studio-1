@@ -72,14 +72,14 @@ public class InventoryComponent extends Component {
   /**
    * Returns the HashMap of the String and the count of the item in the inventory
    *
-   * @return HashMap <String, Integer>
+   * @return HashMap of items and their count
    */
   public HashMap <String, Integer> getItemCount() {
     return this.itemCount;
   }
   /**
    * Returns the HashMap of the Position and the String of the item in the inventory
-   * @return HashMap <Integer,String>
+   * @return HashMap of itemPlace
    */
 
   public HashMap <Integer, String> getItemPlace() {
@@ -89,7 +89,7 @@ public class InventoryComponent extends Component {
   /**
    * Returns the HashMap of the String and Entity of the item in the inventory
    * Created only for use in ItemSlot at the moment
-   * @return HashMap <String,Entity>
+   * @return HashMap of held items
    */
 
   public HashMap <String,Entity> getHeldItemsEntity() {
