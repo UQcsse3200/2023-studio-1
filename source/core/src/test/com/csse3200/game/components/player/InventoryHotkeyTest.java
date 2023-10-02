@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import com.csse3200.game.services.ResourceService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -29,9 +30,14 @@ public class InventoryHotkeyTest {
     private InventoryComponent inventoryComponent;
     private PlayerActions playerActions;
     private KeyboardPlayerInputComponent keyboardPlayerInputComponent;
+    private final String[] texturePaths = {"images/tool_shovel.png"};
 
     @BeforeEach
         void initialiseTest() {
+            ServiceLocator.registerResourceService(new ResourceService());
+            ServiceLocator.getResourceService().loadTextures(texturePaths);
+            ServiceLocator.getResourceService().loadAll();
+
             inventoryComponent = spy(new InventoryComponent(new ArrayList<>()));
             keyboardPlayerInputComponent = spy(new KeyboardPlayerInputComponent());
             ServiceLocator.registerInputService(new InputService());
@@ -45,7 +51,7 @@ public class InventoryHotkeyTest {
             String[] itemNames = {"Hoe","Hoe1","Hoe2","Hoe3","Hoe4","Hoe5","Hoe6","Hoe7","Hoe8","Hoe9","Hoe10"};
             List<Entity> items = new ArrayList<>();
             for (int i = 0; i < itemNames.length;) {
-                items.add(new Entity().addComponent(new ItemComponent(itemNames[i++], ItemType.HOE, new Texture("images/tool_shovel.png"))));
+                items.add(new Entity().addComponent(new ItemComponent(itemNames[i++], ItemType.HOE, "images/tool_shovel.png")));
             }
             inventoryComponent.setInventory(items);
         }
