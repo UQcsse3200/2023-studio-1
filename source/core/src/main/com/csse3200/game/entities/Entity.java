@@ -19,6 +19,7 @@ import com.csse3200.game.components.items.WateringCanLevelComponent;
 import com.csse3200.game.components.npc.AnimalAnimationController;
 import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.npc.TamableComponent;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.ItemPickupComponent;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.components.player.PlayerAnimationController;
@@ -442,6 +443,7 @@ public class Entity implements Json.Serializable {
                     }
                     this.addComponent(coneLightComponent);
                     break;
+                    
                 case Tile:
                     // Makes a new tile
                     Entity tile = TerrainCropTileFactory.createTerrainEntity(position);
@@ -451,6 +453,7 @@ public class Entity implements Json.Serializable {
                     TerrainTile terrainTile = ServiceLocator.getGameArea().getMap().getTile(tile.getPosition());
                     terrainTile.setOccupant(tile);
                     break;
+
                 case Ship:
                     Entity ship = ShipFactory.createShip();
 
@@ -469,7 +472,7 @@ public class Entity implements Json.Serializable {
 
                     ship.setPosition(position);
                     break;
-                    /*
+                    
                 case Player:
                     // Does not make a new player, instead just updates the current one
                     InventoryComponent inventoryComponent = new InventoryComponent();
@@ -477,7 +480,7 @@ public class Entity implements Json.Serializable {
                     inventoryComponent.read(json, inv);
                     this.addComponent(inventoryComponent);
                     break;
-                    */
+                    
                 default:
                     if (FactoryService.getNpcFactories().containsKey(type) && ServiceLocator.getGameArea().getLoadableTypes().contains(type)) {
                         // Makes a new NPC
