@@ -53,7 +53,7 @@ public class PlayerActionsTest {
         ServiceLocator.registerInputService(new InputService());
         ServiceLocator.registerResourceService(mock(ResourceService.class));
 
-        ServiceLocator.registerEntityService(new EntityService());
+        ServiceLocator.registerEntityService(mock(EntityService.class));
         ServiceLocator.registerRenderService(new RenderService());
         ServiceLocator.registerTimeService(new TimeService());
         ServiceLocator.registerPlanetOxygenService(new PlanetOxygenService());
@@ -84,14 +84,17 @@ public class PlayerActionsTest {
 
     @Test
     void playerShouldShootNPC() {
-        //doNothing().when(ProjectileFactory.createPlayerProjectile());
-        //when(ProjectileFactory.createPlayerProjectile()).thenReturn(mock(Entity.class));
-        //mockStatic(ProjectileFactory.class);
-        //doReturn(new Entity()).when(ProjectileFactory.createPlayerProjectile());
-        //when((any(Entity.class).getComponent(ProjectileComponent.class))).thenReturn(mock(ProjectileComponent.class));
+        Entity bullet = new Entity();
+        bullet.addComponent(mock(ProjectileComponent.class));
+        mockStatic(ProjectileFactory.class);
+        when(ProjectileFactory.createPlayerProjectile()).thenReturn(bullet);
+        doAnswer((i) -> {
+            areaEntities.add(bullet);
+            return null;
+        }).when(mock(GameArea.class)).spawnEntity(any());
         PlayerActions playerActions = player.getComponent(PlayerActions.class);
-        //playerActions.shoot(new Vector2(2,2));
-        //assertEquals(3, areaEntities.size());
+        playerActions.shoot(new Vector2(2,2));
+        assertEquals(2, areaEntities.size());
     }
 
 }
