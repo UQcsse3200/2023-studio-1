@@ -1,14 +1,12 @@
 package com.csse3200.game.entities.factories;
 
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.function.Supplier;
-
 import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.items.WateringCanLevelComponent;
+import com.csse3200.game.components.items.ClueComponent;
+import com.csse3200.game.components.items.CoordinatesDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -17,6 +15,10 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
+
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.function.Supplier;
 
 /**
  * Factory to create an item
@@ -135,6 +137,21 @@ public class ItemFactory {
     return egg;
   }
 
+  /**
+   * Creates a Map Clue item
+   *
+   * @return Map Item
+   */
+  public static Entity createMapItem() {
+    ClueComponent clueComponent = new ClueComponent();
+    Entity mapItem = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/ship/ship_clue.png"))
+            .addComponent(new ItemComponent("map", ItemType.CLUE_ITEM, new Texture("images/ship/ship_clue.png")))
+            .addComponent(clueComponent)
+            .addComponent(new CoordinatesDisplay(clueComponent));
+
+    return mapItem;
+  }
    /**
    * Creates a fertiliser item
    *
