@@ -13,14 +13,14 @@ public class TameAnimalsQuest extends Quest {
     public TameAnimalsQuest(String name, Reward reward, int numberOfAnimalsToTame) {
         super(name, reward);
 
-        this.numberOfAnimalsToTame = numberOfAnimalsToTame;
+        this.numberOfAnimalsToTame = Math.max(0, numberOfAnimalsToTame);
         this.numberOfAnimalsTamed = 0;
     }
 
     public TameAnimalsQuest(String name, Reward reward, int expiryDuration, int numberOfAnimalsToTame) {
         super(name, reward, expiryDuration, false);
 
-        this.numberOfAnimalsToTame = numberOfAnimalsToTame;
+        this.numberOfAnimalsToTame = Math.max(0, numberOfAnimalsToTame);
         this.numberOfAnimalsTamed = 0;
     }
 

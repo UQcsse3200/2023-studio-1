@@ -1,5 +1,6 @@
 package com.csse3200.game.missions.quests;
 
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.rewards.Reward;
 import com.csse3200.game.services.GameTime;
@@ -17,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 class ShipRepairQuestTest {
-    private ShipRepairQuest SRQuest1, SRQuest2, SRQuest3, SRQuest4, SRQuest5, SRQuest6, SRQuest7, SRQuest8;
+    private ShipRepairQuest SRQuest1, SRQuest2, SRQuest3, SRQuest4, SRQuest5;
     private Reward r1;
 
     @BeforeEach
@@ -93,6 +94,28 @@ class ShipRepairQuestTest {
         }
     }
 
+    @Test
+    public void testReadAndGetProgress() {
+        assertEquals(0, SRQuest1.getProgress());
+        assertEquals(0, SRQuest2.getProgress());
+        assertEquals(0, SRQuest3.getProgress());
+        assertEquals(0, SRQuest4.getProgress());
+        assertEquals(0, SRQuest5.getProgress());
+        int progressInt = 3;
+        JsonValue jsonValue = new JsonValue(progressInt);
+        SRQuest1.readProgress(jsonValue);
+        SRQuest2.readProgress(jsonValue);
+        SRQuest3.readProgress(jsonValue);
+        SRQuest4.readProgress(jsonValue);
+        SRQuest5.readProgress(jsonValue);
+        String desc = "Repair your ship and unlock useful features.\nAdd %d scavenged " +
+                "parts from your ship's hull to your ship.\n%d out of %d additional ship parts added.";
+        assertEquals(String.format(desc, 10, progressInt, 10), SRQuest1.getDescription());
+        assertEquals(String.format(desc, 0, progressInt, 0), SRQuest2.getDescription());
+        assertEquals(String.format(desc, 5, progressInt, 5), SRQuest3.getDescription());
+        assertEquals(String.format(desc, 10, progressInt, 10), SRQuest4.getDescription());
+        assertEquals(String.format(desc, 0, progressInt, 0), SRQuest5.getDescription());
 
+    }
 
 }
