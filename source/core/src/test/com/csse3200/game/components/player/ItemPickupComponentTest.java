@@ -80,9 +80,9 @@ public class ItemPickupComponentTest {
         picker = new Entity()
                 .addComponent(new PhysicsComponent())
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
-                .addComponent(new InventoryComponent(new ArrayList<>()))
+                .addComponent(new InventoryComponent(new ArrayList<Entity>()))
                 .addComponent(new ItemPickupComponent());
-        pickupItem = new Entity(EntityType.Item)
+        pickupItem = new Entity()
                 .addComponent(new PhysicsComponent())
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ITEM))
                 .addComponent(new ItemComponent("Shovel", ItemType.SHOVEL, "images/tool_shovel.png"));

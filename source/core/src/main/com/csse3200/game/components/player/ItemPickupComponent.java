@@ -29,6 +29,7 @@ public class ItemPickupComponent extends Component {
             return;
         }
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
+
         // Add item to inventory
         boolean added = this.entity.getComponent(InventoryComponent.class).addItem(target);
         // if item was successfully added to player inventory, remove it from game area (map):
