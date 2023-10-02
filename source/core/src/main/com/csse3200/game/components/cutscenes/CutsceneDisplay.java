@@ -105,7 +105,7 @@ public class CutsceneDisplay extends UIComponent {
     }
 
     private void placeSprite(Image sprite, String position, float sizeIncrease) {
-
+        logger.debug("Image spawning");
         int xpos = 0, ypos = 0;
         if (position == "LEFT") {
             xpos = 50;
