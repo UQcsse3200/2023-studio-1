@@ -39,7 +39,7 @@ public class SpaceGameArea extends GameArea {
   private static final GridPoint2 TOOL_SPAWN = new GridPoint2(15, 10);// temp!!!
   private static final GridPoint2 TOOL_SPAWN2 = new GridPoint2(15, 15);// temp!!!
   private static final float WALL_WIDTH = 0.1f;
-  private static final String[] forestTextures = {
+  private static final String[] texturePaths = {
           "images/tree.png",
           "images/ghost_king.png",
           "images/ghost_1.png",
@@ -205,7 +205,7 @@ public class SpaceGameArea extends GameArea {
 
 	};
 
-  private static final String[] forestTextureAtlases = {
+  private static final String[] textureAtlasPaths = {
       "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
       "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas",
       "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas", "images/questgiver.atlas",
@@ -215,7 +215,7 @@ public class SpaceGameArea extends GameArea {
       "images/projectiles/oxygen_eater_projectile.atlas", "images/fireflies.atlas",
       "images/ship/ship.atlas", "images/light.atlas"
   };
-  private static final String[] forestSounds = {
+  private static final String[] soundPaths = {
           "sounds/Impact4.ogg", "sounds/car-horn-6408.mp3",
           "sounds/plants/aloeVera/click.wav", "sounds/plants/aloeVera/clickLore.wav",
           "sounds/plants/aloeVera/decay.wav", "sounds/plants/aloeVera/decayLore.wav",
@@ -243,8 +243,8 @@ public class SpaceGameArea extends GameArea {
           "sounds/plants/waterWeed/nearby.wav", "sounds/plants/waterWeed/nearbyLore.wav",
   };
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
-  private static final String[] forestMusic = {backgroundMusic};
-	private static final String[] skins = {
+  private static final String[] musicPaths = {backgroundMusic};
+	private static final String[] skinPaths = {
 			"gardens-of-the-galaxy/gardens-of-the-galaxy.json",
 			"flat-earth/skin/flat-earth-ui.json",
 			"gardens-of-the-galaxy-v2-orange/gardens-of-the-galaxy-v2-orange.json"
@@ -563,12 +563,12 @@ public class SpaceGameArea extends GameArea {
   private void loadAssets() {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
-    resourceService.loadTextures(forestTextures);
+    resourceService.loadTextures(texturePaths);
     resourceService.loadTextures(TerrainFactory.mapTextures);
-    resourceService.loadTextureAtlases(forestTextureAtlases);
-    resourceService.loadSounds(forestSounds);
-    resourceService.loadMusic(forestMusic);
-	resourceService.loadSkins(skins);
+    resourceService.loadTextureAtlases(textureAtlasPaths);
+    resourceService.loadSounds(soundPaths);
+    resourceService.loadMusic(musicPaths);
+	resourceService.loadSkins(skinPaths);
 
     while (!resourceService.loadForMillis(10)) {
       // This could be upgraded to a loading screen
@@ -579,12 +579,12 @@ public class SpaceGameArea extends GameArea {
   private void unloadAssets() {
     logger.debug("Unloading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
-    resourceService.unloadAssets(forestTextures);
+    resourceService.unloadAssets(texturePaths);
 	resourceService.unloadAssets(TerrainFactory.mapTextures);
-    resourceService.unloadAssets(forestTextureAtlases);
-    resourceService.unloadAssets(forestSounds);
-    resourceService.unloadAssets(forestMusic);
-	resourceService.unloadAssets(skins);
+    resourceService.unloadAssets(textureAtlasPaths);
+    resourceService.unloadAssets(soundPaths);
+    resourceService.unloadAssets(musicPaths);
+	resourceService.unloadAssets(skinPaths);
   }
 
   @Override
