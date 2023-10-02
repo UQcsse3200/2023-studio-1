@@ -40,11 +40,10 @@ public class ClearDebrisQuest extends Quest {
      * @param name - Human-readable name of the Quest.
      * @param reward - Reward player will receive after completing the Quest.
      * @param expiryDuration - Number of in-game hours before the Quest is considered expired.
-     * @param isMandatory- True if Quest is mandatory, else false.
      * @param numberOfDebrisToClear - Amount of debris the player is required to clear.
      */
-    public ClearDebrisQuest(String name, Reward reward, int expiryDuration, boolean isMandatory, int numberOfDebrisToClear) {
-        super(name, reward, expiryDuration, isMandatory);
+    public ClearDebrisQuest(String name, Reward reward, int expiryDuration, int numberOfDebrisToClear) {
+        super(name, reward, expiryDuration, false);
 
         this.numberOfDebrisToClear = Math.max(numberOfDebrisToClear, 0);
         this.numberOfDebrisCleared = 0;

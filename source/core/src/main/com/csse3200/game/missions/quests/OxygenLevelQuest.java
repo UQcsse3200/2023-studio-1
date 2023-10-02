@@ -29,10 +29,9 @@ public class OxygenLevelQuest extends Quest {
         this.targetOxygenLevel = targetOxygenLevel;
     }
 
-    public OxygenLevelQuest(String name, Reward reward, int expiryDuration, boolean isMandatory,
-                            OxygenLevel oxygenLevel, String oxygenLevelDescription,
-                            int hourTarget, int targetOxygenLevel) {
-        super(name, reward, expiryDuration, isMandatory);
+    public OxygenLevelQuest(String name, Reward reward, int expiryDuration, OxygenLevel oxygenLevel,
+                            String oxygenLevelDescription, int hourTarget, int targetOxygenLevel) {
+        super(name, reward, expiryDuration, false);
 
         this.oxygenLevel = oxygenLevel;
         this.oxygenLevelDescription = oxygenLevelDescription;
