@@ -4,9 +4,13 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.csse3200.game.areas.terrain.TerrainTile;
-import com.csse3200.game.components.placeables.*;
 import com.csse3200.game.components.AuraLightComponent;
+import com.csse3200.game.components.placeables.ChestComponent;
+import com.csse3200.game.components.placeables.FenceComponent;
+import com.csse3200.game.components.placeables.LightController;
+import com.csse3200.game.components.placeables.PlaceableCategory;
+import com.csse3200.game.components.placeables.PlaceableEvents;
+import com.csse3200.game.components.placeables.SprinklerComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
@@ -15,9 +19,8 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
-import com.csse3200.game.services.FactoryService;
+import com.csse3200.game.services.ServiceLocator;
 
 public class PlaceableFactory {
 

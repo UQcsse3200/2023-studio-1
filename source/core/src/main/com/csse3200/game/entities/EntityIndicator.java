@@ -1,19 +1,16 @@
 package com.csse3200.game.entities;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.MathUtils;
-import com.csse3200.game.components.CameraComponent;
-import com.csse3200.game.ui.UIComponent;
-import com.csse3200.game.entities.*;
-import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.rendering.RenderService;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.ui.UIComponent;
+import com.csse3200.game.components.CameraComponent;
 
 
 /**
