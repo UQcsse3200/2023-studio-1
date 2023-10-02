@@ -9,8 +9,9 @@ import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
-import com.csse3200.game.entities.EntityIndicator;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntitySpawner;
+import com.csse3200.game.entities.EntitiesSpawner;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.missions.quests.QuestFactory;
 import com.csse3200.game.services.FactoryService;
@@ -39,6 +40,9 @@ public class SpaceGameArea extends GameArea {
   private static final GridPoint2 TOOL_SPAWN = new GridPoint2(15, 10);// temp!!!
   private static final GridPoint2 TOOL_SPAWN2 = new GridPoint2(15, 15);// temp!!!
   private static final float WALL_WIDTH = 0.1f;
+  private EntitiesSpawner passiveSpawner;
+  private EntitiesSpawner hostileSpawner;
+
   private static final String[] forestTextures = {
           "images/tree.png",
           "images/ghost_king.png",
@@ -297,10 +301,6 @@ public class SpaceGameArea extends GameArea {
     tractor = spawnTractor();
     spawnPlayerHighlight();
     spawnQuestgiver();
-    spawnChickens();
-    spawnCows();
-    spawnAstrolotl();
-    spawnOxygenEater();
     spawnShip();
 
     ServiceLocator.getMissionManager().acceptQuest(QuestFactory.createFirstContactQuest());
@@ -316,6 +316,35 @@ public class SpaceGameArea extends GameArea {
 //    spawnTool(ItemType.FOOD);
 
     //playMusic();
+
+    //Spawning behaviour for passive animals
+    List<EntitySpawner> passiveSpawners = new ArrayList<>();
+    passiveSpawners.add(new EntitySpawner(1, NPCFactory::createAstrolotl, player,
+            0, 1, 0, 0, 10));
+    passiveSpawners.add(new EntitySpawner(6, NPCFactory::createChicken, player,
+            1, 4, 8, 4, 2));
+    passiveSpawners.add(new EntitySpawner(5, NPCFactory::createCow, player,
+            1, 3, 12, 4, 1));
+    passiveSpawner = new EntitiesSpawner(passiveSpawners);
+    passiveSpawner.setGameAreas(this);
+
+    //Initial spawns
+    passiveSpawner.spawnNow();
+    passiveSpawner.startPeriodicSpawning();
+
+    //Spawning behaviour for hostiles
+    List<EntitySpawner> hostileSpawners = new ArrayList<>();
+    hostileSpawner = new EntitiesSpawner(hostileSpawners);
+    hostileSpawner.setGameAreas(this);
+  }
+
+  /**
+   * Getter for hostileSpawner in this game area
+   *
+   * @return EntitiesSpawner for hostiles
+   */
+  public EntitiesSpawner getHostileSpawner() {
+    return hostileSpawner;
   }
 
   public Entity getPlayer() {
