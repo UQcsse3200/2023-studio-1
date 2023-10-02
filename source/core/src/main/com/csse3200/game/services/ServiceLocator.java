@@ -1,5 +1,6 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.components.inventory.InventoryDisplayManager;
 import com.csse3200.game.services.plants.PlantCommandService;
 import com.csse3200.game.services.plants.PlantInfoService;
 import org.slf4j.Logger;
@@ -11,7 +12,6 @@ import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.missions.MissionManager;
-import com.csse3200.game.missions.cutscenes.Cutscene;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
 
@@ -36,6 +36,7 @@ public class ServiceLocator {
   private static LightService lightService;
   private static GameAreaDisplay pauseMenuArea;
   private static GameAreaDisplay craftArea;
+  private static InventoryDisplayManager inventoryDisplayManager;
   private static CameraComponent cameraComponent;
   private static SaveLoadService saveLoadService;
   private static MissionManager missions;
@@ -43,13 +44,15 @@ public class ServiceLocator {
   private static PlantCommandService plantCommandService;
   private static PlantInfoService plantInfoService;
   private static boolean cutSceneRunning; // true for running and false otherwise
-  
+
+  private static ParticleService particleService;
   public static PlantCommandService getPlantCommandService() {
     return plantCommandService;
   }
   public static PlantInfoService getPlantInfoService() {
     return plantInfoService;
   }
+
   public static GameArea getGameArea() {
     return gameArea;
   }
@@ -94,6 +97,10 @@ public class ServiceLocator {
 
   public static SaveLoadService getSaveLoadService() {
     return saveLoadService;
+  }
+
+  public static ParticleService getParticleService() {
+    return particleService;
   }
 
   /**
@@ -182,6 +189,15 @@ public class ServiceLocator {
     lightService = source;
   }
 
+  public static void registerInventoryDisplayManager(InventoryDisplayManager source){
+    logger.debug("Registering inventory display manager {}", source);
+    inventoryDisplayManager = source;
+  }
+
+  public static void registerParticleService(ParticleService source) {
+    particleService = source;
+  }
+
   /**
    * Registers the save/load service.
    * @param source the service to register
@@ -203,6 +219,9 @@ public class ServiceLocator {
     inputService = null;
     resourceService = null;
     gameArea = null;
+    lightService = null;
+    particleService = null;
+    timeService = null;
   }
 
   private ServiceLocator() {
@@ -215,9 +234,12 @@ public class ServiceLocator {
     return pauseMenuArea;
   }
 
+  public static InventoryDisplayManager getInventoryDisplayManager() {
+    return inventoryDisplayManager;
+  }
+
   public static void registerCraftArea(GameAreaDisplay area){
     craftArea = area;
   }
-
 
 }

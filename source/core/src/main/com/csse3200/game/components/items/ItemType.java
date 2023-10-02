@@ -5,12 +5,16 @@ public enum ItemType {
   HOE,
   WATERING_CAN,
   SCYTHE,
+  SWORD,
+  GUN,
   MILK,
   EGG,
   FOOD,
   FERTILISER,
   SEED,
   ANIMAL_FOOD,
+  SHIP_PART,
+  CLUE_ITEM,
   PLACEABLE // This does not include seeds, only stuff the can be placed on non-tilled
             // ground
 }

@@ -47,8 +47,9 @@ public class PlantMouseHoverComponent extends Component {
             if ((x == tilePos.x) && (y == tilePos.y)) {
 
                 String plantInfo = entity.getComponent(PlantComponent.class).currentInfo();
+                String plantName = entity.getComponent(PlantComponent.class).getPlantName();
 
-                ServiceLocator.getPlantInfoService().getEvents().trigger("showPlantInfo", plantInfo);
+                ServiceLocator.getPlantInfoService().getEvents().trigger("showPlantInfo", plantName, plantInfo);
                 showInfo = true;
             } else {
                 if (showInfo) {

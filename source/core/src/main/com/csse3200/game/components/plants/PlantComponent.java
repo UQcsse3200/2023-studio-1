@@ -5,22 +5,21 @@ import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.function.Supplier;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Json;
-import com.csse3200.game.areas.SpaceGameArea;
 import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
-import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Class for all plants in the game.
@@ -682,20 +681,21 @@ public class PlantComponent extends Component {
             return;
         }
 
-        harvestYields.forEach((itemName, quantity) -> {
-            Supplier<Entity> itemSupplier = ItemFactory.getItemSupplier(itemName);
-            for (int i = 0; i < quantity; i++) {
-                Entity item = itemSupplier.get();
-                item.setPosition(entity.getPosition());
-                ServiceLocator.getEntityService().register(item);
-            }
-        });
+        if (harvestYields != null) {
+            harvestYields.forEach((itemName, quantity) -> {
+                Supplier<Entity> itemSupplier = FactoryService.getItemFactories().get(itemName);
+                for (int i = 0; i < quantity; i++) {
+                    Entity item = itemSupplier.get();
+                    item.setPosition(entity.getPosition());
+                    ServiceLocator.getEntityService().register(item);
+                }
+            });
+        }
         ServiceLocator.getMissionManager().getEvents().trigger(
                 MissionManager.MissionEvent.HARVEST_CROP.name(),
                 getPlantName());
         ServiceLocator.getPlantInfoService().increasePlantsHarvested(1, plantName);
         destroyPlant();
-
     }
 
     /**
@@ -724,6 +724,8 @@ public class PlantComponent extends Component {
 
         plantDestroyed = true;
 
+        ServiceLocator.getGameArea().removeEntity(entity);
+
 
     }
 
@@ -732,8 +734,11 @@ public class PlantComponent extends Component {
      * To attack plants and damage their health.
      */
     private void attack() {
-        int attackDamage = 10;
+        int attackDamage = 1;
         increasePlantHealth(-attackDamage);
+        if (plantHealth <= 0) {
+            destroyPlant();
+        }
     }
 
     /**
@@ -1032,8 +1037,8 @@ public class PlantComponent extends Component {
         }
 
 
-        String returnString =   plantName +
-                "\nGrowth Stage: " + getGrowthStage().name() +
+        String returnString =
+                "Growth Stage: " + getGrowthStage().name() +
                 "\nWater level: " + waterLevel + "/" + idealWaterLevel +
                 "\nWater Status: " + waterLevelStatus +
                 "\nHealth: " + plantHealth + "/" + currentMaxHealth;

@@ -1,5 +1,6 @@
 package com.csse3200.game.areas.terrain;
 
+import com.csse3200.game.areas.SpaceGameArea;
 import com.csse3200.game.components.ship.ShipDebrisComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
@@ -21,6 +22,8 @@ public class ShipPartTileComponentTest {
     void destroysShipDebrisFirst() {
         ServiceLocator.registerTimeService(new TimeService());
         ServiceLocator.registerMissionManager(new MissionManager());
+
+        ServiceLocator.registerGameArea(new SpaceGameArea(null));
 
         EntityService mockEntityService = spy(EntityService.class);
         ServiceLocator.registerEntityService(mockEntityService);
@@ -60,7 +63,7 @@ public class ShipPartTileComponentTest {
         Entity mockItem = new Entity(EntityType.Item);
 
         try (MockedStatic<ItemFactory> itemFactory = mockStatic(ItemFactory.class)) {
-            itemFactory.when(ItemFactory::createEgg).thenReturn(mockItem);
+            itemFactory.when(ItemFactory::createShipPart).thenReturn(mockItem);
 
             shipPartTile.getEvents().trigger("destroy", mockTerrainTile);
 

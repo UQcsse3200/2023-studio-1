@@ -2,6 +2,7 @@ package com.csse3200.game;
 
 import static com.badlogic.gdx.Gdx.app;
 
+import com.csse3200.game.screens.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,12 +10,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.csse3200.game.files.UserSettings;
-import com.csse3200.game.screens.ControlsScreen;
-import com.csse3200.game.screens.IntroScreen;
-import com.csse3200.game.screens.LoseScreen;
-import com.csse3200.game.screens.MainGameScreen;
-import com.csse3200.game.screens.MainMenuScreen;
-import com.csse3200.game.screens.SettingsScreen;
 import com.csse3200.game.services.ResourceService;
 
 /**
@@ -107,13 +102,17 @@ public class GdxGame extends Game {
         return new IntroScreen(this);
       case LOSESCREEN:
         return new LoseScreen(this);
+      case ENDCREDITS:
+        return new EndCreditsScreen(this);
+      case WINSCREEN:
+        return new WinScreen(this);
       default:
         return null;
     }
   }
 
   public enum ScreenType {
-    MAIN_MENU, LOAD_GAME, MAIN_GAME, SETTINGS, CONTROLS, INTRO, LOSESCREEN
+    MAIN_MENU, LOAD_GAME, MAIN_GAME, SETTINGS, CONTROLS, INTRO, LOSESCREEN, WINSCREEN, ENDCREDITS
   }
 
 

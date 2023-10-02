@@ -9,14 +9,11 @@ import java.util.Objects;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.csse3200.game.components.items.ItemType;
-import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.BodyUserData;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.utils.DirectionUtils;
-import net.dermetfan.gdx.physics.box2d.PositionController;
 
 /**
  * Represents a component that handles interaction detection with entities
@@ -29,7 +26,7 @@ public class InteractionDetector extends HitboxComponent {
     /** The interaction range within which entities are detected. */
     private final float range;
 
-    private ArrayList<EntityType> interactableEntities = null;
+    private List<EntityType> interactableEntities = null;
     private boolean notifyOnDetection = false;
 
     /**
@@ -46,7 +43,7 @@ public class InteractionDetector extends HitboxComponent {
      *
      * @param range The interaction range within which entities are detected.
      */
-    public InteractionDetector(float range, ArrayList interactableEntities) {
+    public InteractionDetector(float range, List<EntityType> interactableEntities) {
         this.range = range;
         this.interactableEntities = interactableEntities;
     }
@@ -86,10 +83,8 @@ public class InteractionDetector extends HitboxComponent {
             return;
         }
 
-        if (interactableEntities != null) {
-            if (!interactableEntities.contains(target.getType())) {
+        if (interactableEntities != null && !interactableEntities.contains(target.getType())) {
                 return;
-            }
         }
 
         entitiesInRange.add(target);

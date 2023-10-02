@@ -9,8 +9,8 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.input.InputComponent;
+import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
-
 /**
  * Input handler for the player for keyboard and touch (mouse) input.
  * This input handler only uses keyboard input.
@@ -22,6 +22,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private static boolean menuOpened = false;
   private static Enum currentMenu = MenuTypes.NONE;
   private final int hotKeyOffset = 6;
+  private static boolean showPlantInfoUI = true;
   public enum MenuTypes{
     PAUSEMENU,
     NONE
@@ -86,6 +87,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           return true;
         case Keys.T:
           entity.getEvents().trigger("toggleLight");
+          return true;
+        case Keys.Q:
+          showPlantInfoUI = !showPlantInfoUI;
+          ServiceLocator.getPlantInfoService().getEvents().trigger("toggleOpen", showPlantInfoUI);
           return true;
         default:
           return false;

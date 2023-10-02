@@ -1,10 +1,9 @@
 package com.csse3200.game.services;
 
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonValue;
-import com.csse3200.game.events.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.csse3200.game.events.EventHandler;
 
 public class TimeService {
 	private static final Logger logger = LoggerFactory.getLogger(TimeService.class);
@@ -19,6 +18,8 @@ public class TimeService {
 	private long timeBuffer;
 	private boolean paused;
 	private final EventHandler events;
+
+
 
 	/**
 	 * Constructs a basic TimeService instance to track the in-game time
@@ -79,18 +80,6 @@ public class TimeService {
 	}
 
 	/**
-	 * Sets the in-game hour to a certain value. Also updates the time buffer and triggers any necessary events
-	 *
-	 * @param hour in-game hour
-	 */
-	public void setHour(int hour) {
-		this.hour = hour % 23;
-		logger.debug("Hour is being set to: {}", this.hour);
-		this.timeBuffer = 0;
-		events.trigger("hourUpdate");
-	}
-
-	/**
 	 * Determines whether it is day or not
 	 *
 	 * @return whether it is day or not
@@ -114,10 +103,30 @@ public class TimeService {
 	 * @param day in-game day
 	 */
 	public void setDay(int day) {
-		this.day = day;
+		if (day < 0) {
+			logger.warn("Incorrect day value given: {}", day);
+			return;
+		}
 		logger.debug("Day is being set to: {}", this.day);
+		this.day = day;
 		this.timeBuffer = 0;
 		events.trigger("dayUpdate");
+	}
+
+	/**
+	 * Sets the in-game hour to a certain value. Also updates the time buffer and triggers any necessary events
+	 *
+	 * @param hour in-game hour
+	 */
+	public void setHour(int hour) {
+		if (hour < 0 || hour > 23) {
+			logger.warn("Incorrect hour value given: {}", hour);
+			return;
+		}
+		logger.debug("Hour is being set to: {}", this.hour);
+		this.hour = hour;
+		this.timeBuffer = 0;
+		events.trigger("hourUpdate");
 	}
 
 	/**
@@ -126,8 +135,12 @@ public class TimeService {
 	 * @param minute in-game minute
 	 */
 	public void setMinute(int minute) {
-		this.minute = minute;
+		if (minute < 0 || minute > 59) {
+			logger.warn("Incorrect minute value given: {}", minute);
+			return;
+		}
 		logger.debug("Minute is being set to: {}", this.minute);
+		this.minute = minute;
 		this.timeBuffer = 0;
 		events.trigger("minuteUpdate");
 	}

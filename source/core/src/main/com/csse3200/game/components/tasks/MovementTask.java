@@ -71,6 +71,19 @@ public class MovementTask extends DefaultTask {
   }
 
   /**
+   * Creates a movement task with a target position and a specified speed.
+   *
+   * @param target The target position to move towards.
+   * @param speed The movement speed of the entity.
+   * @param stopDistance The distance at which the task is considered finished.
+   */
+  public MovementTask(Vector2 target, Vector2 speed, float stopDistance) {
+    this(target);
+    this.speed = speed;
+    this.stopDistance = stopDistance;
+  }
+
+  /**
    * Retrieves the necessary components and initializes the movement task.
    *
    * @param taskRunner The task runner associated with this task.
@@ -144,7 +157,7 @@ public class MovementTask extends DefaultTask {
    *
    * @return True if the entity is within the stop distance from the target, otherwise false.
    */
-  private boolean isAtTarget() {
+  public boolean isAtTarget() {
     return owner.getEntity().getPosition().dst(target) <= stopDistance;
   }
 
@@ -177,7 +190,7 @@ public class MovementTask extends DefaultTask {
    *
    * @return The direction of movement ("right" or "left").
    */
-  private String getDirection() {
+  public String getDirection() {
     Vector2 currentPosition = owner.getEntity().getPosition();
     return currentPosition.sub(target).x < 0 ? DirectionUtils.RIGHT : DirectionUtils.LEFT;
   }

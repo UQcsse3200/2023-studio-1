@@ -1,5 +1,5 @@
 player_sprites.png
-size: 960, 768
+size: 960, 816
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
@@ -1613,3 +1613,143 @@ scythe_right
   orig: 48, 48
   offset: 0, 0
   rotate: false
+sword_up
+  rotate: false
+  xy: 0, 768
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+sword_up
+  rotate: false
+  xy: 48, 768
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+sword_up
+  rotate: false
+  xy: 96, 768
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+sword_up
+  rotate: false
+  xy: 144, 768
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+sword_up
+  rotate: false
+  xy: 192, 768
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+sword_down
+  rotate: false
+  xy: 240, 768
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+sword_down
+  rotate: false
+  xy: 288, 768
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+sword_down
+  rotate: false
+  xy: 336, 768
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+sword_down
+  rotate: false
+  xy: 384, 768
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+sword_down
+  rotate: false
+  xy: 432, 768
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+sword_left
+  rotate: false
+  xy: 480, 768
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+sword_left
+  rotate: false
+  xy: 528, 768
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+sword_left
+  rotate: false
+  xy: 576, 768
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+sword_left
+  rotate: false
+  xy: 624, 768
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+sword_left
+  rotate: false
+  xy: 672, 768
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+sword_right
+  rotate: false
+  xy: 720, 768
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+sword_right
+  rotate: false
+  xy: 768, 768
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+sword_right
+  rotate: false
+  xy: 816, 768
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+sword_right
+  rotate: false
+  xy: 864, 768
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+sword_right
+  rotate: false
+  xy: 912, 768
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
