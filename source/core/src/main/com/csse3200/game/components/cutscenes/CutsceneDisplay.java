@@ -79,7 +79,7 @@ public class CutsceneDisplay extends UIComponent {
         this.dimScreen();
 
         stage.addActor(table);
-        this.spawnSprites();
+        //this.spawnSprites();
         this.spawnDialogueBox();
         this.spawnContinueButton();
     }
@@ -129,7 +129,7 @@ public class CutsceneDisplay extends UIComponent {
         sprite.setWidth(scaledWidth);
         sprite.setHeight(scaledHeight);
         //table.add(sprite);
-        stage.addActor(sprite);
+        //stage.addActor(sprite);
     }
 
     // Spawns the sprites/entities that will be on the left/right side of the screen
@@ -175,7 +175,7 @@ public class CutsceneDisplay extends UIComponent {
     // Ends the cutscene
     public void disposeCutscene() {
         table.clear();
-        sprite.clear();
+        //sprite.clear();
         super.dispose();
     }
 
