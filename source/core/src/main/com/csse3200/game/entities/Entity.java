@@ -458,16 +458,25 @@ public class Entity implements Json.Serializable {
                     TerrainTile terrainTile = ServiceLocator.getGameArea().getMap().getTile(tile.getPosition());
                     terrainTile.setOccupant(tile);
                     break;
-	            case ShipPartTile:
-		            Entity partTile = ShipPartTileFactory.createShipPartTile(position);
-		            ServiceLocator.getGameArea().spawnEntity(partTile);
-		            partTile.setPosition(position);
-		            partTile.getComponent(ShipPartTileComponent.class).read(json, jsonMap);
+                case ShipPartTile:
+                    Entity partTile = ShipPartTileFactory.createShipPartTile(position);
+                    ServiceLocator.getGameArea().spawnEntity(partTile);
+                    partTile.setPosition(position);
 
-		            TerrainTile partTerrainTile = ServiceLocator.getGameArea().getMap().getTile(position);
-		            partTerrainTile.setOccupant(partTile);
-		            partTerrainTile.setOccupied();
-		            break;
+                    TerrainTile partTerrainTile = ServiceLocator.getGameArea().getMap().getTile(position);
+                    if (partTerrainTile.isOccupied() && partTerrainTile.getOccupant().getType() == EntityType.ShipDebris) {
+                        // remove the ship debris that is occupying the terrain tile, since it will
+                        // be recreated by the ShipPartTileComponent
+                        Entity unneededShipDebris = partTerrainTile.getOccupant();
+                        unneededShipDebris.dispose();
+                        partTerrainTile.removeOccupant();
+
+                        partTile.getComponent(ShipPartTileComponent.class).read(json, jsonMap);
+
+                        partTerrainTile.setOccupant(partTile);
+                        partTerrainTile.setOccupied();
+                    }
+                    break;
                 case ShipDebris:
                     Entity shipDebris = ShipDebrisFactory.createShipDebris(null);
                     ServiceLocator.getGameArea().spawnEntity(shipDebris);
@@ -509,8 +518,6 @@ public class Entity implements Json.Serializable {
                         Entity npc = FactoryService.getNpcFactories().get(type).apply(ServiceLocator.getGameArea().getPlayer());
                         if (npc.getComponent(TamableComponent.class) != null) {
                             npc.getComponent(TamableComponent.class).read(json, jsonMap.get("components"));
-                        } else if (npc.getType() == EntityType.ShipDebris) {
-                            ServiceLocator.getGameArea().getMap().getTile(position).setOccupant(npc);
                         }
                         ServiceLocator.getGameArea().spawnEntity(npc);
                         npc.setPosition(position);
