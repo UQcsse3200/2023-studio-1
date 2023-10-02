@@ -50,9 +50,7 @@ public class QuestFactory {
         questsToActivate.add(createActIMainQuest());
 
         String dialogue = """
-                WHAT HAVE YOU DONE!!!
-                {WAIT}
-                CLEAR UP THIS MESS AT ONCE, OR {COLOUR=red}THERE WILL BE CONSEQUENCES{COLOUR=white}!!!
+                As you come to consciousness, you notice a towering {COLOR=#76428A}ALIEN CREATURE{COLOR=WHITE} with what you can only describe as a vicious scowl standing over you. {SHAKE}"WHAT HAVE YOU DONE!!! {WAIT}CLEAR THIS MESS UP AT ONCE, OR {COLOR=RED}THERE WILL BE CONSEQUENCES{COLOR=WHITE}!!!"{ENDSHAKE}
                 """;
 
         MultiReward reward = new MultiReward(List.of(
@@ -73,15 +71,19 @@ public class QuestFactory {
         questsToActivate.add(createSowingYourFirstSeedsQuest());
 
         String dialogue = """
-                Good. But your {WAIT} "landing" {WAIT} has completely destroyed my crops!
-                {WAIT}
-                Take this hoe and these seeds and start replanting the crops you destroyed.
-                {WAIT}
-                You have 6 hours to plant 12 Cosmic Corn.
+                "Good. But your {WAIT}"landing"{WAIT} has {SHAKE}completely{ENDSHAKE} destroyed my crops! {WAIT}Take this {COLOR=#76428A}HOE{COLOR=WHITE} and these {COLOR=#76428A}SEEDS{COLOR=WHITE} and start replanting the crops you so viciously destroyed!"
                 """;
 
         MultiReward reward = new MultiReward(List.of(
-                new ItemReward(List.of(ItemFactory.createHoe(), ItemFactory.createCosmicCobSeed())),
+                new ItemReward(List.of(
+                        ItemFactory.createHoe(),
+                        ItemFactory.createCosmicCobSeed(),
+                        ItemFactory.createCosmicCobSeed(),
+                        ItemFactory.createCosmicCobSeed(),
+                        ItemFactory.createCosmicCobSeed(),
+                        ItemFactory.createCosmicCobSeed(),
+                        ItemFactory.createCosmicCobSeed()
+                )),
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
@@ -98,17 +100,7 @@ public class QuestFactory {
         questsToActivate.add(createReapingYourRewardsQuest());
 
         String dialogue = """
-                Impressive. I see that you can follow basic instructions.
-                {WAIT}
-                *sigh*
-                {WAIT}
-                I apologise for my hostility.
-                {WAIT}
-                My name is ALIEN NPC. I am an engineer of the ALIEN SPECIES people.
-                {WAIT}
-                I think I might be able to help you out, and get you back to wherever you came from. However, your crash still destroyed all that I was working on. So I'm not going to help you until you show that you are willing to help me.
-                {WAIT}
-                I have a few more tasks for you to do, and then I might consider helping you out.
+                "Impressive. {WAIT}I see that you can follow basic instructions. {WAIT}I understand that you probably didn't {WAIT}intend{WAIT} to crash here. {WAIT}I will let you stay, as long as you can prove yourself worthy of staying. {WAIT}I have a few more tasks for you to repair my work area, and only then might I consider helping you."
                 """;
 
         MultiReward reward = new MultiReward(List.of(
@@ -117,7 +109,7 @@ public class QuestFactory {
                 new DialogueReward(dialogue)
         ));
         return new PlantInteractionQuest(SOWING_YOUR_FIRST_SEEDS_QUEST_NAME, reward, MissionManager.MissionEvent.PLANT_CROP,
-                Set.of("Cosmic Cob"), 12);
+                Set.of("Cosmic Cob"), 6);
     }
 
     /**
