@@ -164,6 +164,10 @@ public class MissionManager implements Json.Serializable {
 		}
 	}
 
+	/**
+	 * Writes the {@link MissionManager} to a Json object for saving
+	 * @param json Json object written to
+	 */
 	@Override
 	public void write(Json json) {
 		json.writeObjectStart("ActiveQuests");
@@ -185,6 +189,11 @@ public class MissionManager implements Json.Serializable {
 		json.writeObjectEnd();
 	}
 
+	/**
+	 * Method for loading the {@link MissionManager} for the game
+	 * @param json
+	 * @param jsonMap
+	 */
 	@Override
 	public void read(Json json, JsonValue jsonMap) {
 		JsonValue active = jsonMap.get("ActiveQuests");

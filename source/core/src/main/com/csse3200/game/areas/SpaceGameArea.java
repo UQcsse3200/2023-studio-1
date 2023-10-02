@@ -427,9 +427,13 @@ public class SpaceGameArea extends GameArea {
 
     List<GridPoint2> clearedTilesAroundShip = List.of(
             SHIP_SPAWN,
+            new GridPoint2(SHIP_SPAWN.x, SHIP_SPAWN.y - 1),
+            new GridPoint2(SHIP_SPAWN.x, SHIP_SPAWN.y + 1),
             new GridPoint2(SHIP_SPAWN.x - 1, SHIP_SPAWN.y - 1),
-            new GridPoint2(SHIP_SPAWN.x + 1, SHIP_SPAWN.y - 1),
+            new GridPoint2(SHIP_SPAWN.x - 1, SHIP_SPAWN.y),
             new GridPoint2(SHIP_SPAWN.x - 1, SHIP_SPAWN.y + 1),
+            new GridPoint2(SHIP_SPAWN.x + 1, SHIP_SPAWN.y - 1),
+            new GridPoint2(SHIP_SPAWN.x + 1, SHIP_SPAWN.y),
             new GridPoint2(SHIP_SPAWN.x + 1, SHIP_SPAWN.y + 1)
     );
 
@@ -443,11 +447,11 @@ public class SpaceGameArea extends GameArea {
       }
 
       Entity shipDebris = ShipDebrisFactory.createShipDebris(player);
-      ServiceLocator.getEntityService().register(shipDebris);
+      spawnEntity(shipDebris);
+      shipDebris.setPosition(terrain.tileToWorldPosition(randomPos));
+
       tile.setOccupant(shipDebris);
       tile.setOccupied();
-
-      shipDebris.setPosition(terrain.tileToWorldPosition(randomPos));
     });
   }
 

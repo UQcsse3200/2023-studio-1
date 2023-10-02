@@ -20,7 +20,7 @@ public class ShipPartTileFactory {
         DynamicTextureRenderComponent renderComponent = new DynamicTextureRenderComponent("images/cropTile.png");
         renderComponent.setLayer(1);
 
-        Entity shipPartTile = new Entity(EntityType.Tile)
+        Entity shipPartTile = new Entity(EntityType.ShipPartTile)
                 .addComponent(new ColliderComponent().setSensor(true))
                 .addComponent(new PhysicsComponent())
                 .addComponent(new ShipPartTileComponent())
