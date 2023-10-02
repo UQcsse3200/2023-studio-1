@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class PlayerActionsTest {
+class PlayerActionsTest {
 
     private List<Entity> areaEntities;
 
