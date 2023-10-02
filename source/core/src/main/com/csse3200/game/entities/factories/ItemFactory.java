@@ -1,17 +1,12 @@
 package com.csse3200.game.entities.factories;
 
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.function.Supplier;
-
 import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.items.WateringCanLevelComponent;
-import com.csse3200.game.components.ship.ClueComponent;
-import com.csse3200.game.components.ship.CoordinatesDisplay;
+import com.csse3200.game.components.items.ClueComponent;
+import com.csse3200.game.components.items.CoordinatesDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -19,6 +14,10 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.FactoryService;
+
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.function.Supplier;
 
 /**
  * Factory to create an item
@@ -137,6 +136,12 @@ public class ItemFactory {
     egg.scaleHeight(0.75f);
     return egg;
   }
+
+  /**
+   * Creates a Map Clue item
+   *
+   * @return Map Item
+   */
   public static Entity createMapItem() {
     ClueComponent clueComponent = new ClueComponent();
     Entity mapItem = createBaseItem()

@@ -1,4 +1,4 @@
-package com.csse3200.game.components.ship;
+package com.csse3200.game.components.items;
 
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.Entity;
@@ -22,7 +22,7 @@ class ClueComponentTest {
 
         Vector2 expectedLocation = new Vector2(30, 85);
 
-        Vector2 actualLocation = clueComponent.getCurrentLocation();
+        Vector2 actualLocation = clueComponent.getCurrentBaseLocation();
 
         assertEquals(expectedLocation.x, actualLocation.x);
         assertEquals(expectedLocation.y, actualLocation.y);
