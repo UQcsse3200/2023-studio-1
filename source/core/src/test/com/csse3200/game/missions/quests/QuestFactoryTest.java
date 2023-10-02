@@ -92,7 +92,6 @@ class QuestFactoryTest {
             itemFactoryMockedStatic.when(ItemFactory::createGateItem).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createScythe).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createAloeVeraSeed).thenReturn(mockEntity);
-            itemFactoryMockedStatic.when(ItemFactory::createCowFood).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createEgg).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createDeadlyNightshadeBerry).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createHammerFlower).thenReturn(mockEntity);
@@ -130,7 +129,6 @@ class QuestFactoryTest {
             itemFactoryMockedStatic.when(ItemFactory::createGateItem).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createScythe).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createAloeVeraSeed).thenReturn(mockEntity);
-            itemFactoryMockedStatic.when(ItemFactory::createCowFood).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createEgg).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createDeadlyNightshadeBerry).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createHammerFlower).thenReturn(mockEntity);
@@ -168,7 +166,6 @@ class QuestFactoryTest {
             itemFactoryMockedStatic.when(ItemFactory::createGateItem).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createScythe).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createAloeVeraSeed).thenReturn(mockEntity);
-            itemFactoryMockedStatic.when(ItemFactory::createCowFood).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createEgg).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createDeadlyNightshadeBerry).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createHammerFlower).thenReturn(mockEntity);
@@ -206,7 +203,6 @@ class QuestFactoryTest {
             itemFactoryMockedStatic.when(ItemFactory::createGateItem).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createScythe).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createAloeVeraSeed).thenReturn(mockEntity);
-            itemFactoryMockedStatic.when(ItemFactory::createCowFood).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createEgg).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createDeadlyNightshadeBerry).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createHammerFlower).thenReturn(mockEntity);
@@ -254,7 +250,6 @@ class QuestFactoryTest {
             itemFactoryMockedStatic.when(ItemFactory::createGateItem).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createScythe).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createAloeVeraSeed).thenReturn(mockEntity);
-            itemFactoryMockedStatic.when(ItemFactory::createCowFood).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createEgg).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createDeadlyNightshadeBerry).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createHammerFlower).thenReturn(mockEntity);
@@ -292,7 +287,6 @@ class QuestFactoryTest {
             itemFactoryMockedStatic.when(ItemFactory::createGateItem).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createScythe).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createAloeVeraSeed).thenReturn(mockEntity);
-            itemFactoryMockedStatic.when(ItemFactory::createCowFood).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createEgg).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createDeadlyNightshadeBerry).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createHammerFlower).thenReturn(mockEntity);
@@ -330,7 +324,6 @@ class QuestFactoryTest {
             itemFactoryMockedStatic.when(ItemFactory::createGateItem).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createScythe).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createAloeVeraSeed).thenReturn(mockEntity);
-            itemFactoryMockedStatic.when(ItemFactory::createCowFood).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createEgg).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createDeadlyNightshadeBerry).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createHammerFlower).thenReturn(mockEntity);
@@ -368,7 +361,6 @@ class QuestFactoryTest {
             itemFactoryMockedStatic.when(ItemFactory::createGateItem).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createScythe).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createAloeVeraSeed).thenReturn(mockEntity);
-            itemFactoryMockedStatic.when(ItemFactory::createCowFood).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createEgg).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createDeadlyNightshadeBerry).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createHammerFlower).thenReturn(mockEntity);
@@ -406,7 +398,6 @@ class QuestFactoryTest {
             itemFactoryMockedStatic.when(ItemFactory::createGateItem).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createScythe).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createAloeVeraSeed).thenReturn(mockEntity);
-            itemFactoryMockedStatic.when(ItemFactory::createCowFood).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createEgg).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createDeadlyNightshadeBerry).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createHammerFlower).thenReturn(mockEntity);
@@ -444,7 +435,6 @@ class QuestFactoryTest {
             itemFactoryMockedStatic.when(ItemFactory::createGateItem).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createScythe).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createAloeVeraSeed).thenReturn(mockEntity);
-            itemFactoryMockedStatic.when(ItemFactory::createCowFood).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createEgg).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createDeadlyNightshadeBerry).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createHammerFlower).thenReturn(mockEntity);
@@ -482,7 +472,6 @@ class QuestFactoryTest {
             itemFactoryMockedStatic.when(ItemFactory::createGateItem).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createScythe).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createAloeVeraSeed).thenReturn(mockEntity);
-            itemFactoryMockedStatic.when(ItemFactory::createCowFood).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createEgg).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createDeadlyNightshadeBerry).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createHammerFlower).thenReturn(mockEntity);
@@ -520,7 +509,6 @@ class QuestFactoryTest {
             itemFactoryMockedStatic.when(ItemFactory::createGateItem).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createScythe).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createAloeVeraSeed).thenReturn(mockEntity);
-            itemFactoryMockedStatic.when(ItemFactory::createCowFood).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createEgg).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createDeadlyNightshadeBerry).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createHammerFlower).thenReturn(mockEntity);
@@ -558,7 +546,6 @@ class QuestFactoryTest {
             itemFactoryMockedStatic.when(ItemFactory::createGateItem).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createScythe).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createAloeVeraSeed).thenReturn(mockEntity);
-            itemFactoryMockedStatic.when(ItemFactory::createCowFood).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createEgg).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createDeadlyNightshadeBerry).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createHammerFlower).thenReturn(mockEntity);
@@ -596,7 +583,6 @@ class QuestFactoryTest {
             itemFactoryMockedStatic.when(ItemFactory::createGateItem).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createScythe).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createAloeVeraSeed).thenReturn(mockEntity);
-            itemFactoryMockedStatic.when(ItemFactory::createCowFood).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createEgg).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createDeadlyNightshadeBerry).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createHammerFlower).thenReturn(mockEntity);
@@ -634,7 +620,6 @@ class QuestFactoryTest {
             itemFactoryMockedStatic.when(ItemFactory::createGateItem).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createScythe).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createAloeVeraSeed).thenReturn(mockEntity);
-            itemFactoryMockedStatic.when(ItemFactory::createCowFood).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createEgg).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createDeadlyNightshadeBerry).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createHammerFlower).thenReturn(mockEntity);
@@ -672,7 +657,6 @@ class QuestFactoryTest {
             itemFactoryMockedStatic.when(ItemFactory::createGateItem).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createScythe).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createAloeVeraSeed).thenReturn(mockEntity);
-            itemFactoryMockedStatic.when(ItemFactory::createCowFood).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createEgg).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createDeadlyNightshadeBerry).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createHammerFlower).thenReturn(mockEntity);
@@ -710,7 +694,6 @@ class QuestFactoryTest {
             itemFactoryMockedStatic.when(ItemFactory::createGateItem).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createScythe).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createAloeVeraSeed).thenReturn(mockEntity);
-            itemFactoryMockedStatic.when(ItemFactory::createCowFood).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createEgg).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createDeadlyNightshadeBerry).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createHammerFlower).thenReturn(mockEntity);
@@ -748,7 +731,6 @@ class QuestFactoryTest {
             itemFactoryMockedStatic.when(ItemFactory::createGateItem).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createScythe).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createAloeVeraSeed).thenReturn(mockEntity);
-            itemFactoryMockedStatic.when(ItemFactory::createCowFood).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createEgg).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createDeadlyNightshadeBerry).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createHammerFlower).thenReturn(mockEntity);
@@ -786,7 +768,6 @@ class QuestFactoryTest {
             itemFactoryMockedStatic.when(ItemFactory::createGateItem).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createScythe).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createAloeVeraSeed).thenReturn(mockEntity);
-            itemFactoryMockedStatic.when(ItemFactory::createCowFood).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createEgg).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createDeadlyNightshadeBerry).thenReturn(mockEntity);
             itemFactoryMockedStatic.when(ItemFactory::createHammerFlower).thenReturn(mockEntity);
