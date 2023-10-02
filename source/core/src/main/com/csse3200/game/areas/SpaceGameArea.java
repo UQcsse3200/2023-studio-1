@@ -40,9 +40,6 @@ public class SpaceGameArea extends GameArea {
           "images/tree.png",
           "images/ghost_king.png",
           "images/ghost_1.png",
-          "images/grass_1.png",
-          "images/grass_2.png",
-          "images/grass_3.png",
           "images/hex_grass_1.png",
           "images/hex_grass_2.png",
           "images/hex_grass_3.png",
@@ -66,37 +63,6 @@ public class SpaceGameArea extends GameArea {
           "images/overwatered_cropTile_fertilised.png",
           "images/Temp-Chest.png",
 
-          "images/beach_1.png",
-          "images/beach_2.png",
-          "images/beach_3.png",
-          "images/deepWater_1.png",
-          "images/deepWater_2.png",
-          "images/desert_1.png",
-          "images/desert_2.png",
-          "images/desert_3.png",
-          "images/dirt_1.png",
-          "images/dirt_2.png",
-          "images/dirt_3.png",
-          "images/dirtPathTop.png",
-          "images/dirtPathRight.png",
-          "images/dirtPathBottom.png",
-          "images/dirtPathLeft.png",
-          "images/gravel_1.png",
-          "images/ice_1.png",
-          "images/ice_2.png",
-          "images/lava_1.png",
-          "images/lavaGround_1.png",
-          "images/lavaGround_2.png",
-          "images/lavaGround_3.png",
-          "images/water_1.png",
-          "images/water_2.png",
-          "images/water_3.png",
-          "images/flowingWater_1.png",
-          "images/snow_1.png",
-          "images/snow_2.png",
-          "images/snow_3.png",
-          "images/stone_1.png",
-          "images/stonePath_1.png",
           "images/tractor.png",
           "images/fertiliser.png",
 
@@ -351,7 +317,6 @@ public class SpaceGameArea extends GameArea {
   private void spawnTerrain() {
     // Background terrain
     gameMap.createTerrainComponent();
-    //gameMap.createTestTerrainComponent("configs/testMap.txt"); // Can be removed
     terrain = gameMap.getTerrainComponent();
     spawnEntity(new Entity().addComponent(terrain));
 
@@ -578,6 +543,7 @@ public class SpaceGameArea extends GameArea {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(forestTextures);
+    resourceService.loadTextures(TerrainFactory.mapTextures);
     resourceService.loadTextureAtlases(forestTextureAtlases);
     resourceService.loadSounds(forestSounds);
     resourceService.loadMusic(forestMusic);
