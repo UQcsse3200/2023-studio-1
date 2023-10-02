@@ -94,6 +94,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           showPlantInfoUI = !showPlantInfoUI;
           ServiceLocator.getPlantInfoService().getEvents().trigger("toggleOpen", showPlantInfoUI);
           return true;
+        case Keys.R:
+          entity.getEvents().trigger("eat", entity.getComponent(InventoryComponent.class).getHeldItem());
         default:
           return false;
       }

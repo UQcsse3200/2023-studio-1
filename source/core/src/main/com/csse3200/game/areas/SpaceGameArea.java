@@ -164,7 +164,7 @@ public class SpaceGameArea extends GameArea {
           "images/invisible_sprite.png",
 
           "images/Player_Hunger/hunger_bar_outline.png",
-          "images/Player_Hunger/hunger_bar_fill.png"
+          "images/Player_Hunger/hunger_bar_fill.png",
 
           "images/plants/misc/atomic_algae_seed.png",
           "images/invisible_sprite.png",
@@ -342,6 +342,7 @@ public class SpaceGameArea extends GameArea {
 //    spawnTool(ItemType.FERTILISER);
 //    spawnTool(ItemType.SEED);
 //    spawnTool(ItemType.FOOD);
+      spawnItem();
 
     //playMusic();
   }
@@ -476,6 +477,11 @@ public class SpaceGameArea extends GameArea {
   private void spawnShip() {
     Entity newShip = ShipFactory.createShip();
     spawnEntityAt(newShip, SHIP_SPAWN, true, true);
+  }
+
+  private void spawnItem() {
+    Entity item = ItemFactory.createCosmicCobEar();
+    spawnEntityAt(item, PLAYER_SPAWN, true, true);
   }
 
   private void spawnTool(ItemType tool) {

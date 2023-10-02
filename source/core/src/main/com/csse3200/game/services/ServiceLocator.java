@@ -166,6 +166,7 @@ public class ServiceLocator {
   public static void registerPlayerHungerService(PlayerHungerService source) {
     logger.debug("Registering player hunger service {}", source);
     playerHungerService = source;
+  }
 
   public static void registerPlantCommandService(PlantCommandService source) {
     logger.debug("Registering plant command service {}", source);

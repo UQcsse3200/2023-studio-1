@@ -51,6 +51,7 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("enterTractor", this::enterTractor);
     entity.getEvents().addListener("use", this::use);
     entity.getEvents().addListener("hotkeySelection", this::hotkeySelection);
+    entity.getEvents().addListener("eat", this::eat);
   }
 
   @Override
@@ -248,6 +249,16 @@ public class PlayerActions extends Component {
         pauseMoving();
         itemInHand.getComponent(ItemActions.class).use(entity, mousePos, map);
       }
+    }
+  }
+
+  void eat(Entity itemInHand) {
+    if (itemInHand != null) {
+      pauseMoving();
+      entity.getComponent(InventoryComponent.class).removeItem(itemInHand);
+      itemInHand.getComponent(ItemActions.class).eat(entity);
+
+      itemInHand.dispose();
     }
   }
 
