@@ -269,7 +269,7 @@ public class QuestFactory {
         questsToActivate.add(createActIIMainQuest());
 
         String dialogue = """
-                As you finish explaining your crash landing, you warn Jarrael that if you aren't able to make contact with your people within {COLOR=#3ABE88}5 DAYS{COLOR=WHITE}, they will leave this planet's orbit, making reaching them again nearly impossible. {WAIT}"Hmm... {WAIT}This is indeed a grave issue. {WAIT}I will need some time to think of a possible solution. {WAIT}In the mean time, I have a favour to ask. {WAIT}The {COLOR=#76428A}NIGHTSHADE{COLOR=WHITE} produces {COLOR=#76428A}BERRIES{COLOR=WHITE} which are damaging to fleshy creatures such as you, but they are a delicacy to our people. {WAIT}A more appropriate name for you might be "{COLOR=#76428A}DEADLY NIGHTSHADE{COLOR=WHITE}". Here are some seeds. {WAIT}Come back to me when you have harvested them, and I should have thought of a solution by then."
+                As you finish explaining your crash landing, you warn Jarrael that if you aren't able to make contact with your people within {COLOR=#3ABE88}5 DAYS{COLOR=WHITE}, they will leave this planet's orbit, making reaching them again nearly impossible. {WAIT}"Hmm... {WAIT}This is indeed a grave issue. {WAIT}I will need some time to think of a possible solution. {WAIT}In the mean time, I have a favour to ask. {WAIT}The {COLOR=#76428A}NIGHTSHADE{COLOR=WHITE} produces {COLOR=#76428A}BERRIES{COLOR=WHITE} which are damaging to fleshy creatures such as you, but they are a delicacy to our people. {WAIT}A more appropriate name for you might be "{COLOR=#76428A}DEADLY NIGHTSHADE{COLOR=WHITE}". Here are some {COLOR=#76428A}SEEDS{COLOR=WHITE}. {WAIT}Come back to me when you have harvested them, and I should have thought of a solution by then."
                 """;
 
         MultiReward reward = new MultiReward(List.of(
@@ -320,7 +320,7 @@ public class QuestFactory {
         questsToActivate.add(createBringingItAllTogetherQuest());
 
         String dialogue = """
-                "Well done. {WAIT}Now I can get started on repairing your radio. {WAIT}Keep repairing the ship, and come to me when you have added enough {COLOR=#76428A}SHIP PARTS{COLOR=WHITE}."
+                "Well done. {WAIT}Now I can get started on repairing your radio. {WAIT}Keep repairing the {COLOR=#76428A}SHIP{COLOR=WHITE}, and come to me when you have added enough {COLOR=#76428A}SHIP PARTS{COLOR=WHITE}."
                 """;
 
         MultiReward reward = new MultiReward(List.of(
