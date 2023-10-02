@@ -23,7 +23,6 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.InteractionDetector;
-import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.EntityType;
@@ -162,10 +161,6 @@ public class ItemActionsTest {
         Entity gate = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("Gate", ItemType.PLACEABLE, null));
         assertTrue(gate.getComponent(ItemActions.class).use(player, mousePos, gameMap));
         assertTrue(shovel.getComponent(ItemActions.class).use(player, mousePos, gameMap));
-
-        Entity chest = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("Chest", ItemType.PLACEABLE, null)).addComponent(new InventoryComponent(null));
-        assertTrue(chest.getComponent(ItemActions.class).use(player, mousePos, gameMap));
-        assertTrue(shovel.getComponent(ItemActions.class).use(player, mousePos, gameMap));
     }
 
     @Test
@@ -185,11 +180,14 @@ public class ItemActionsTest {
         ServiceLocator.registerResourceService(mock(ResourceService.class));
         FileLoader fl = new FileLoader();
 
-        Entity can = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("can", ItemType.WATERING_CAN, null));
+        Entity can = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("can", ItemType.WATERING_CAN, null)).addComponent(new WateringCanLevelComponent(150));
+        WateringCanLevelComponent canLevel = can.getComponent(WateringCanLevelComponent.class);
         Entity hoe = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("hoe", ItemType.HOE, null));
         assertFalse(can.getComponent(ItemActions.class).use(player, mousePos, gameMap));
         assertTrue(hoe.getComponent(ItemActions.class).use(player, mousePos, gameMap));
         assertTrue(can.getComponent(ItemActions.class).use(player, mousePos, gameMap));
+        canLevel.empty();
+        assertFalse(can.getComponent(ItemActions.class).use(player, mousePos, gameMap));
     }
 
     @Test

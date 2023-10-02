@@ -64,6 +64,7 @@ public class SpaceGameArea extends GameArea {
           "images/watered_cropTile_fertilised.png",
           "images/overwatered_cropTile.png",
           "images/overwatered_cropTile_fertilised.png",
+          "images/Temp-Chest.png",
 
           "images/beach_1.png",
           "images/beach_2.png",
@@ -98,14 +99,6 @@ public class SpaceGameArea extends GameArea {
           "images/stonePath_1.png",
           "images/tractor.png",
           "images/fertiliser.png",
-          "images/yellowSquare.png",
-
-          "images/plants/misc/aloe_vera_seed.png",
-          "images/plants/atomic_algae/1_seedling.png",
-          "images/plants/misc/cosmic_cob_seed.png",
-          "images/plants/misc/deadly_nightshade_seed.png",
-          "images/plants/misc/hammer_plant_seed.png",
-          "images/plants/misc/space_snapper_seed.png",
 
           "images/plants/cosmic_cob/1_seedling.png",
           "images/plants/cosmic_cob/2_sprout.png",
@@ -158,7 +151,6 @@ public class SpaceGameArea extends GameArea {
           "images/plants/deadly_nightshade/5_decaying.png",
           "images/plants/deadly_nightshade/6_dead.png",
           "images/plants/deadly_nightshade/item_drop.png",
-          //"images/plants/deadly_nightshade/seedbag.png",
 
           "images/plants/misc/aloe_vera_seed.png",
           "images/plants/misc/cosmic_cob_seed.png",
@@ -170,21 +162,78 @@ public class SpaceGameArea extends GameArea {
 
           "images/projectiles/oxygen_eater_projectile.png",
 
+          "images/yellowSquare.png",
+          "images/yellowCircle.png",
+
+          /* placeable */
+          "images/placeable/sprinkler/pipe_null.png",
+          "images/placeable/sprinkler/pump.png",
+          // sprinklers - on
+          "images/placeable/sprinkler/on/pipe_left.png",
+          "images/placeable/sprinkler/on/pipe_right.png",
+          "images/placeable/sprinkler/on/pipe_horizontal.png",
+          "images/placeable/sprinkler/on/pipe_down.png",
+          "images/placeable/sprinkler/on/pipe_down_left.png",
+          "images/placeable/sprinkler/on/pipe_down_right.png",
+          "images/placeable/sprinkler/on/pipe_down_triple.png",
+          "images/placeable/sprinkler/on/pipe_up.png",
+          "images/placeable/sprinkler/on/pipe_up_left.png",
+          "images/placeable/sprinkler/on/pipe_up_right.png",
+          "images/placeable/sprinkler/on/pipe_up_triple.png",
+          "images/placeable/sprinkler/on/pipe_vertical.png",
+          "images/placeable/sprinkler/on/pipe_left_triple.png",
+          "images/placeable/sprinkler/on/pipe_right_triple.png",
+          "images/placeable/sprinkler/on/pipe_quad.png",
+          // sprinklers - off
+          "images/placeable/sprinkler/off/pipe_left.png",
+          "images/placeable/sprinkler/off/pipe_right.png",
+          "images/placeable/sprinkler/off/pipe_horizontal.png",
+          "images/placeable/sprinkler/off/pipe_down.png",
+          "images/placeable/sprinkler/off/pipe_down_left.png",
+          "images/placeable/sprinkler/off/pipe_down_right.png",
+          "images/placeable/sprinkler/off/pipe_down_triple.png",
+          "images/placeable/sprinkler/off/pipe_up.png",
+          "images/placeable/sprinkler/off/pipe_up_left.png",
+          "images/placeable/sprinkler/off/pipe_up_right.png",
+          "images/placeable/sprinkler/off/pipe_up_triple.png",
+          "images/placeable/sprinkler/off/pipe_vertical.png",
+          "images/placeable/sprinkler/off/pipe_left_triple.png",
+          "images/placeable/sprinkler/off/pipe_right_triple.png",
+          "images/placeable/sprinkler/off/pipe_quad.png",
+
+          "images/placeable/fences/g_d_u.png",
+          "images/placeable/fences/g_d_u_o.png",
+          "images/placeable/fences/g_r_l.png",
+          "images/placeable/fences/g_r_l_o.png",
+          "images/placeable/fences/f.png",
+          "images/placeable/fences/f_d.png",
+          "images/placeable/fences/f_d_u.png",
+          "images/placeable/fences/f_d_l.png",
+          "images/placeable/fences/f_r_d.png",
+          "images/placeable/fences/f_r_l_u.png",
+          "images/placeable/fences/f_u.png",
+          "images/placeable/fences/f_d_l_u.png",
+          "images/placeable/fences/f_l.png",
+          "images/placeable/fences/f_r_d_l.png",
+          "images/placeable/fences/f_r_d_u.png",
+          "images/placeable/fences/f_r.png",
+          "images/placeable/fences/f_l_u.png",
+          "images/placeable/fences/f_r_d_l_u.png",
+          "images/placeable/fences/f_r_l.png",
+          "images/placeable/fences/f_r_u.png",
 
           "images/hostile_indicator.png",
-
 
           "images/ship/ship_debris.png",
           "images/ship/ship.png",
           "images/ship/ship_part.png",
-
   };
+
   private static final String[] forestTextureAtlases = {
       "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
       "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas",
       "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas", "images/questgiver.atlas",
       "images/missionStatus.atlas", "images/plants/cosmic_cob.atlas", "images/plants/aloe_vera.atlas",
-      "images/plants/hammer_plant.atlas", "images/plants/space_snapper.atlas", "images/plants/atomic_algae.atlas",
       "images/plants/deadly_nightshade.atlas", "images/projectiles/oxygen_eater_projectile.atlas",
       "images/fireflies.atlas", "images/ship/ship.atlas", "images/light.atlas"
   };
@@ -302,6 +351,7 @@ public class SpaceGameArea extends GameArea {
   private void spawnTerrain() {
     // Background terrain
     gameMap.createTerrainComponent();
+    //gameMap.createTestTerrainComponent("configs/testMap.txt"); // Can be removed
     terrain = gameMap.getTerrainComponent();
     spawnEntity(new Entity().addComponent(terrain));
 
@@ -453,6 +503,9 @@ public class SpaceGameArea extends GameArea {
         newTool = ItemFactory.createCowFood();
         spawnEntityAt(newTool, randomPos, true, true);
         break;
+      case PLACEABLE:
+        newTool = ItemFactory.createChestItem();
+        spawnEntityAt(newTool, randomPos, true, true);
     }
   }
 

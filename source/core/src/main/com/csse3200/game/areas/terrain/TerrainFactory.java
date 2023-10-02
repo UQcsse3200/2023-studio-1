@@ -166,7 +166,7 @@ public class TerrainFactory {
    * @return Terrain component which renders the terrain
    */
   public TerrainComponent createSpaceGameTerrain(TiledMap tiledMap) {
-    return createGameTerrain(tiledMap);
+    return createGameTerrain(tiledMap, mapPath);
   }
 
   /**
@@ -175,8 +175,8 @@ public class TerrainFactory {
    * @param tiledMap the TiledMap instance of the test game map
    * @return Terrain component which renders the terrain
    */
-  public TerrainComponent createTestTerrain(TiledMap tiledMap, String testMapFilePath) {                      // MUST IMPLEMENT THIS
-    return null;
+  public TerrainComponent createTestTerrain(TiledMap tiledMap, String testMapFilePath) {
+    return createGameTerrain(tiledMap, testMapFilePath);
   }
 
   /**
@@ -185,11 +185,11 @@ public class TerrainFactory {
    * @param tiledMap the TiledMap instance of the game map
    * @return Terrain component which renders the terrain
    */
-  private TerrainComponent createGameTerrain(TiledMap tiledMap) {
+  private TerrainComponent createGameTerrain(TiledMap tiledMap, String mapFilePath) {
     loadTextures();
     GridPoint2 tilePixelSize = new GridPoint2(charToTextureMap.get('g').getRegionWidth(),
             charToTextureMap.get('g').getRegionHeight());
-    createGameTiles(tilePixelSize, tiledMap);
+    createGameTiles(tilePixelSize, tiledMap, mapFilePath);
     TiledMapRenderer renderer = createRenderer(tiledMap, worldTileSize / tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, worldTileSize);
   }
@@ -220,9 +220,9 @@ public class TerrainFactory {
    * @param tileSize the size of the tile
    * @param tiledMap the TiledMap
    */
-  private void createGameTiles(GridPoint2 tileSize, TiledMap tiledMap) {
+  private void createGameTiles(GridPoint2 tileSize, TiledMap tiledMap, String mapFilePath) {
       try {
-          BufferedReader bf = new BufferedReader(new InputStreamReader(Gdx.files.internal(mapPath).read()));
+          BufferedReader bf = new BufferedReader(new InputStreamReader(Gdx.files.internal(mapFilePath).read()));
           String line1, line2, line;
           line1 = bf.readLine();
           line2 = bf.readLine();
@@ -232,14 +232,12 @@ public class TerrainFactory {
           TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
 
           // y_pos = 100 and x_pos = 100 lets map generate correctly
-          int x_pos = 0, y_pos = 99;
+          //int x_pos = 0, y_pos = 99;
+          int x_pos = 0, y_pos = MAP_SIZE.y - 1;
           // checking for end of file
           for (line = bf.readLine(); line != null; x_pos++, line = bf.readLine(), y_pos--) {
               for (x_pos = line.length() -1; x_pos >= 0; x_pos--) {
-                  // Cell cell = layer.getCell(x_pos, y_pos); // uncomment this if u want to
-                  // update instead of replace
                   GridPoint2 point = new GridPoint2(x_pos, y_pos);
-                  //this line replaces the entire old cell creator function
                   layer.setCell(point.x, point.y, new Cell().setTile(
                           new TerrainTile(charToTextureMap.get(line.charAt(point.x)),
                                   charToTileTypeMap.get(line.charAt(point.x)))));
