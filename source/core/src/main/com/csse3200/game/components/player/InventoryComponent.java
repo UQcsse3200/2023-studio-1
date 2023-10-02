@@ -69,28 +69,13 @@ public class InventoryComponent extends Component {
     return this.itemCount.size() >= this.maxInventorySize;
   }
 
-  /**
-   * Returns the HashMap of the String and the count of the item in the inventory
-   *
-   * @return HashMap <String, Integer>
-   */
   public HashMap <String, Integer> getItemCount() {
     return this.itemCount;
   }
-  /**
-   * Returns the HashMap of the Position and the String of the item in the inventory
-   * @return HashMap <Integer,String>
-   */
 
   public HashMap <Integer, String> getItemPlace() {
     return this.itemPlace;
   }
-
-  /**
-   * Returns the HashMap of the String and Entity of the item in the inventory
-   * Created only for use in ItemSlot at the moment
-   * @return HashMap <String,Entity>
-   */
 
   public HashMap <String,Entity> getHeldItemsEntity() {
     return this.heldItemsEntity;
