@@ -18,7 +18,16 @@
     "favouriteFood": "Nightshade Berry"
   },
   "oxygenEater": {
-    "health": 100
+    "health": 100,
+    "baseAttack": 10
+  },
+  "dragonfly": {
+    "health": 100,
+    "baseAttack": 10
+  },
+  "bat": {
+    "health": 100,
+    "baseAttack": 10
   }
 }
 

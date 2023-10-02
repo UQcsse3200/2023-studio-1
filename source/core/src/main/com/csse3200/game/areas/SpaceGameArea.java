@@ -214,10 +214,10 @@ public class SpaceGameArea extends GameArea {
       "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas",
       "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas", "images/questgiver.atlas",
       "images/missionStatus.atlas", "images/plants/cosmic_cob.atlas", "images/plants/aloe_vera.atlas",
-      "images/plants/deadly_nightshade.atlas", "images/plants/atomic_algae.atlas",
-      "images/plants/hammer_plant.atlas", "images/plants/space_snapper.atlas",
-      "images/projectiles/oxygen_eater_projectile.atlas", "images/fireflies.atlas",
-      "images/ship/ship.atlas", "images/light.atlas"
+      "images/plants/hammer_plant.atlas", "images/plants/space_snapper.atlas", "images/plants/atomic_algae.atlas",
+      "images/plants/deadly_nightshade.atlas", "images/fireflies.atlas", "images/animals/dragonfly.atlas",
+          "images/animals/bat.atlas", "images/projectiles/oxygen_eater_projectile.atlas",
+          "images/ship/ship.atlas", "images/light.atlas", "images/projectiles/dragon_fly_projectile.atlas"
   };
   private static final String[] forestSounds = {
           "sounds/Impact4.ogg", "sounds/car-horn-6408.mp3",
@@ -284,6 +284,14 @@ public class SpaceGameArea extends GameArea {
     spawnTerrain();
     spawnInvisibleObstacle();// spawn invisible obstacle on the non-traversable area of the map
 
+    // Todo: Remove this code that automatically spawns plants
+    spawnCrop(20, 80, "Cosmic Cob");
+    spawnCrop(22, 80, "Aloe Vera");
+    spawnCrop(24, 80, "Hammer Plant");
+    spawnCrop(26, 80, "Space Snapper");
+    spawnCrop(28, 80, "Deadly Nightshade");
+    spawnCrop(30, 80, "Atomic Algae");
+
     spawnShipDebris();
 
     player = spawnPlayer();
@@ -301,6 +309,7 @@ public class SpaceGameArea extends GameArea {
     tractor = spawnTractor();
     spawnPlayerHighlight();
     spawnQuestgiver();
+
     spawnShip();
 
     ServiceLocator.getMissionManager().acceptQuest(QuestFactory.createFirstContactQuest());
@@ -309,8 +318,8 @@ public class SpaceGameArea extends GameArea {
 //    spawnTool(ItemType.SHOVEL);
 //    spawnTool(ItemType.SCYTHE);
 //    spawnTool(ItemType.HOE);
-    spawnTool(ItemType.GUN);
-    spawnTool(ItemType.SWORD);
+//    spawnTool(ItemType.GUN);
+//    spawnTool(ItemType.SWORD);
 //    spawnTool(ItemType.FERTILISER);
 //    spawnTool(ItemType.SEED);
 //    spawnTool(ItemType.FOOD);
@@ -594,6 +603,28 @@ public class SpaceGameArea extends GameArea {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity oxygenEater = NPCFactory.createOxygenEater(player);
       spawnEntityAt(oxygenEater, randomPos, true, true);
+    }
+  }
+
+  private void spawnDragonFlies() {
+    GridPoint2 minPos = new GridPoint2(2, 2);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < 1; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity dragonFly = NPCFactory.createDragonfly(player);
+      spawnEntityAt(dragonFly, PLAYER_SPAWN, true, true);
+    }
+  }
+
+  private void spawnBats() {
+    GridPoint2 minPos = new GridPoint2(2, 2);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < 1; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity bat = NPCFactory.createBat(player);
+      spawnEntityAt(bat, PLAYER_SPAWN, true, true);
     }
   }
 

@@ -11,7 +11,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.TouchAttackComponent;
+import com.csse3200.game.components.combat.TouchAttackComponent;
+import com.csse3200.game.components.combat.attackpatterns.BatAttackPattern;
+import com.csse3200.game.components.combat.attackpatterns.DragonflyAttackPattern;
 import com.csse3200.game.components.npc.*;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.FollowTask;
@@ -22,11 +24,9 @@ import com.csse3200.game.components.npc.FireflyScareComponent;
 import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.components.tasks.*;
 import com.csse3200.game.components.InteractionDetector;
-import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.AnimalAnimationController;
 import com.csse3200.game.components.npc.FireflyScareComponent;
 import com.csse3200.game.components.npc.HostileAnimationController;
-import com.csse3200.game.components.npc.OxygenEaterAttackPattern;
 import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.FollowTask;
@@ -46,6 +46,7 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.utils.math.Vector2Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,7 +101,7 @@ public class NPCFactory {
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
             .addTask(new RunAwayTask(player, 10, 2.25f, 4.25f, new Vector2(3f, 3f)))
             .addTask(new PanicTask("panicStart", 10f, 20, new Vector2(10f, 10f), new Vector2(10f, 10f)))
-            .addTask(new TamedFollowTask(player, 11, 8, 10, 2f, config.favouriteFood));
+            .addTask(new TamedFollowTask(player, 11, 8, 10, 2f, config.favouriteFood, Vector2Utils.ONE));
 
     List<SingleDropHandler> singleDropHandlers = new ArrayList<>();
     MultiDropComponent multiDropComponent = new MultiDropComponent(singleDropHandlers, true);
@@ -158,7 +159,7 @@ public class NPCFactory {
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-            .addTask(new TamedFollowTask(player, 10, 8, 10, 2f, config.favouriteFood));
+            .addTask(new TamedFollowTask(player, 10, 8, 10, 2f, config.favouriteFood, Vector2Utils.ONE));
 
     List<SingleDropHandler> singleDropHandlers = new ArrayList<>();
     MultiDropComponent multiDropComponent = new MultiDropComponent(singleDropHandlers, true);
@@ -214,7 +215,7 @@ public class NPCFactory {
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(1.5f, 1.5f), 5f))
-            .addTask(new FollowTask(player, 10, 8, 10, 3f));
+            .addTask(new FollowTask(player, 10, 8, 10, 3f, new Vector2(3f, 3f)));
 
     astrolotl
             .addComponent(aiTaskComponent)
@@ -261,8 +262,8 @@ public class NPCFactory {
             .addComponent(animator)
             .addComponent(new CombatStatsComponent(10, 0))
             .addComponent(new HostileAnimationController())
-            .addComponent(new OxygenEaterAttackPattern())
-            .addComponent(new InteractionDetector(5f, new ArrayList<>(Arrays.asList(EntityType.Player))));
+            .addComponent(new DragonflyAttackPattern(1.5f, ProjectileFactory::createOxygenEaterProjectile))
+            .addComponent(new InteractionDetector(5f, new ArrayList<>(Arrays.asList(EntityType.Player)))); // TODO: Do we want it to attack anything
 
     oxygenEater.scaleHeight(2f);
     oxygenEater.getComponent(ColliderComponent.class).setAsBoxAligned(new Vector2(1f, 1f),
@@ -273,6 +274,12 @@ public class NPCFactory {
     return oxygenEater;
   }
 
+
+  /**
+   * Creates a Fire Fly entity.
+   * @param player player entity
+   * @return Fire Fly entity
+   */
   public static Entity createFireFlies(Entity player) {
     SecureRandom random = new SecureRandom();
     AuraLightComponent light = new AuraLightComponent(3f, Color.ORANGE);
@@ -299,6 +306,89 @@ public class NPCFactory {
   }
 
   /**
+   * Creates a Dragonfly entity
+   * @param player player entity
+   * @return Dragonfly entity
+   */
+  public static Entity createDragonfly(Entity player) {
+    Entity dragonfly = createBaseAnimal(EntityType.Dragonfly);
+    BaseAnimalConfig config = configs.dragonfly;
+
+    AnimationRenderComponent animator = new AnimationRenderComponent(
+            ServiceLocator.getResourceService().getAsset("images/animals/dragonfly.atlas",
+                    TextureAtlas.class)
+            , 20f);
+    animator.addAnimation("attack_left", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation("attack_right", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation("walk_left", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation("walk_right", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle_left", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle_right", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation("run_left", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation("run_right", 0.15f, Animation.PlayMode.LOOP);
+
+    AITaskComponent aiTaskComponent = new AITaskComponent()
+            .addTask(new WanderTask(new Vector2(1.5f, 1.5f), 5f))
+            .addTask(new MoveToPlantTask(5, new Vector2(2f, 2f), 0.5f))
+            .addTask(new RunAwayTask(player, 10, 5f, 5f, new Vector2(2f, 2f), false));
+
+
+    dragonfly
+            .addComponent(aiTaskComponent)
+            .addComponent(animator)
+            .addComponent(new HostileAnimationController())
+            .addComponent(new DragonflyAttackPattern(1.5f, ProjectileFactory::createDragonflyProjectile))
+            .addComponent(new InteractionDetector(5f,
+                    new ArrayList<>(Arrays.asList((EntityType.Player), (EntityType.Plant)))))
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
+
+
+    dragonfly.scaleHeight(1.2f);
+    return dragonfly;
+  }
+
+  /**
+   * Creates a Bat entity
+   * @param player player entity
+   * @return Bat entity
+   */
+  public static Entity createBat(Entity player) {
+    Entity bat = createBaseAnimal(EntityType.Bat);
+    BaseAnimalConfig config = configs.bat;
+
+    AnimationRenderComponent animator = new AnimationRenderComponent(
+            ServiceLocator.getResourceService().getAsset("images/animals/bat.atlas",
+                    TextureAtlas.class)
+            , 20f);
+    animator.addAnimation("attack_left", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("attack_right", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("walk_left", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation("walk_right", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle_left", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle_right", 0.15f, Animation.PlayMode.LOOP);
+
+
+    AITaskComponent aiTaskComponent = new AITaskComponent()
+            .addTask(new WanderTask(new Vector2(1.5f, 1.5f), 5f))
+            .addTask(new FollowTask(player, 10, 8, 10, 1.5f, new Vector2(3f, 3f), false));
+
+    bat
+            .addComponent(aiTaskComponent)
+            .addComponent(animator)
+            .addComponent(new HostileAnimationController())
+            .addComponent(new BatAttackPattern(1.5f))
+            .addComponent(new InteractionDetector(1.5f,
+                    new ArrayList<>(Arrays.asList(EntityType.Player))))
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
+
+
+
+    bat.scaleHeight(1.2f);
+    return bat;
+  }
+
+
+  /**
    * Creates a generic animal to be used as a base entity by more specific animal creation methods.
    *
    * @return entity
@@ -307,8 +397,11 @@ public class NPCFactory {
     Entity animal = new Entity(type)
             .addComponent(new PhysicsComponent())
             .addComponent(new PhysicsMovementComponent())
-            .addComponent(new ColliderComponent())
-            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC));
+            .addComponent(new HitboxComponent());
+
+    if (type != EntityType.Dragonfly && type != EntityType.Bat) {
+      animal.addComponent(new ColliderComponent());
+    }
 
     return animal;
   }
@@ -322,7 +415,7 @@ public class NPCFactory {
     AITaskComponent aiComponent =
         new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-            .addTask(new ChaseTask(target, 10, 3f, 4f));
+            .addTask(new ChaseTask(target, 10, 3f, 4f, Vector2Utils.ONE));
     Entity npc =
         new Entity()
             .addComponent(new PhysicsComponent())
