@@ -439,13 +439,17 @@ public class SpaceGameArea extends GameArea {
 		GridPoint2 minPos = new GridPoint2(SHIP_SPAWN.x - 7, SHIP_SPAWN.y - 5);
 		GridPoint2 maxPos = new GridPoint2(SHIP_SPAWN.x + 7, SHIP_SPAWN.y + 7);
 
-		List<GridPoint2> clearedTilesAroundShip = List.of(
-				SHIP_SPAWN,
-				new GridPoint2(SHIP_SPAWN.x - 1, SHIP_SPAWN.y - 1),
-				new GridPoint2(SHIP_SPAWN.x + 1, SHIP_SPAWN.y - 1),
-				new GridPoint2(SHIP_SPAWN.x - 1, SHIP_SPAWN.y + 1),
-				new GridPoint2(SHIP_SPAWN.x + 1, SHIP_SPAWN.y + 1)
-		);
+    List<GridPoint2> clearedTilesAroundShip = List.of(
+            SHIP_SPAWN,
+            new GridPoint2(SHIP_SPAWN.x, SHIP_SPAWN.y - 1),
+            new GridPoint2(SHIP_SPAWN.x, SHIP_SPAWN.y + 1),
+            new GridPoint2(SHIP_SPAWN.x - 1, SHIP_SPAWN.y - 1),
+            new GridPoint2(SHIP_SPAWN.x - 1, SHIP_SPAWN.y),
+            new GridPoint2(SHIP_SPAWN.x - 1, SHIP_SPAWN.y + 1),
+            new GridPoint2(SHIP_SPAWN.x + 1, SHIP_SPAWN.y - 1),
+            new GridPoint2(SHIP_SPAWN.x + 1, SHIP_SPAWN.y),
+            new GridPoint2(SHIP_SPAWN.x + 1, SHIP_SPAWN.y + 1)
+    );
 
 		IntStream.range(0, 15).forEach(i -> {
 			GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
@@ -456,14 +460,14 @@ public class SpaceGameArea extends GameArea {
 				tile = gameMap.getTile(randomPos);
 			}
 
-			Entity shipDebris = ShipDebrisFactory.createShipDebris(player);
-			ServiceLocator.getEntityService().register(shipDebris);
-			tile.setOccupant(shipDebris);
-			tile.setOccupied();
+      Entity shipDebris = ShipDebrisFactory.createShipDebris(player);
+      spawnEntity(shipDebris);
+      shipDebris.setPosition(terrain.tileToWorldPosition(randomPos));
 
-			shipDebris.setPosition(terrain.tileToWorldPosition(randomPos));
-		});
-	}
+      tile.setOccupant(shipDebris);
+      tile.setOccupied();
+    });
+  }
 
 	private Entity spawnPlayer() {
 		Entity newPlayer = PlayerFactory.createPlayer();

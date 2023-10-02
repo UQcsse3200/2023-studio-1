@@ -1,5 +1,7 @@
 package com.csse3200.game.components.ship;
 
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ship.ShipProgressComponent.Feature;
 import com.csse3200.game.services.ServiceLocator;
@@ -59,5 +61,19 @@ public class ShipTimeSkipComponent extends Component {
             ServiceLocator.getTimeSource().setTimeScale(1f);
             timeSkipInProgress = false;
         }
+    }
+
+    @Override
+    public void write(Json json) {
+        json.writeObjectStart(this.getClass().getSimpleName());
+        json.writeValue("unlocked", unlocked);
+        json.writeValue("timeSkipInProgress", timeSkipInProgress);
+        json.writeObjectEnd();
+    }
+
+    @Override
+    public void read(Json json, JsonValue jsonMap) {
+        unlocked = jsonMap.getBoolean("unlocked");
+        timeSkipInProgress = jsonMap.getBoolean("timeSkipInProgress");
     }
 }
