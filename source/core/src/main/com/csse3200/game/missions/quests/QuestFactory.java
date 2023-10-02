@@ -125,6 +125,7 @@ public class QuestFactory {
 
         MultiReward reward = new MultiReward(List.of(
                 new ItemReward(List.of(
+                        ItemFactory.createSprinklerItem(),
                         ItemFactory.createSprinklerItem()
                         // TODO import sprinkler pump
                 )),
@@ -183,17 +184,24 @@ public class QuestFactory {
                 "It seems like you're getting the hang of this. There's only one more thing you must do, before I know to trust you. Some of our wildlife are {COLOR=RED}not so kind{COLOR=WHITE}. In particular, there are 3 {COLOR=#76428A}HOSTILE CREATURES{COLOR=WHITE} we consider pests. Take this {COLOR=#76428A}WEAPON{COLOR=WHITE}, and defend our work. I will also give you this {COLOR=#76428A}SPACE SNAPPER SEED{COLOR=WHITE}. When grown, the {COLOR=#76428A}SPACE SNAPPER{COLOR=WHITE} will happily munch on any creatures nearby, even non-hostile creatures."
                 """;
 
+        List<Entity> itemRewards = new ArrayList<>();
+        // TODO - Add weapon to defeat incoming enemies
+        itemRewards.add(ItemFactory.createSpaceSnapperSeed());
+        itemRewards.add(ItemFactory.createSpaceSnapperSeed());
+        for (int i = 0; i < 20; i++) {
+            itemRewards.add(ItemFactory.createFenceItem());
+        }
+        for (int i = 0; i < 3; i++) {
+            itemRewards.add(ItemFactory.createGateItem());
+        }
+
         MultiReward reward = new MultiReward(List.of(
-                new ItemReward(List.of(
-                        // TODO - Add weapon to defeat incoming enemies
-                        ItemFactory.createSpaceSnapperSeed(),
-                        ItemFactory.createSpaceSnapperSeed(),
-                        ItemFactory.createFenceItem(),
-                        ItemFactory.createGateItem()
-                )),
+                new ItemReward(itemRewards),
                 new QuestReward(questsToAdd, questsToActivate),
                 new TriggerHostilesReward(List.of(
-                        // TODO - Add extra hostiles
+                        // TODO - Add extra hostile types
+                        NPCFactory.createOxygenEater(ServiceLocator.getGameArea().getPlayer()),
+                        NPCFactory.createOxygenEater(ServiceLocator.getGameArea().getPlayer()),
                         NPCFactory.createOxygenEater(ServiceLocator.getGameArea().getPlayer()),
                         NPCFactory.createOxygenEater(ServiceLocator.getGameArea().getPlayer()),
                         NPCFactory.createOxygenEater(ServiceLocator.getGameArea().getPlayer())
@@ -244,11 +252,14 @@ public class QuestFactory {
         requiredQuests.add(FERTILISING_FIESTA_QUEST_NAME);
         requiredQuests.add(ALIENS_ATTACK_QUEST_NAME);
 
+        List<Entity> itemRewards = new ArrayList<>();
+        itemRewards.add(ItemFactory.createChestItem());
+        for (int i = 0; i < 8; i++) {
+            itemRewards.add(ItemFactory.createLightItem());
+        }
+
         MultiReward reward = new MultiReward(List.of(
-                new ItemReward(List.of(
-                        ItemFactory.createLightItem(),
-                        ItemFactory.createChestItem()
-                )),
+                new ItemReward(itemRewards),
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
         ));
