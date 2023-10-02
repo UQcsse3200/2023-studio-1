@@ -91,10 +91,6 @@ class ClearDebrisQuestTest {
     }
 
     @Test
-    public void testUpdateState() {
-    }
-
-    @Test
     public void testIsCompleted() {
         testRegisterMission();
         for (int i = 0; i < 10; i++) {
