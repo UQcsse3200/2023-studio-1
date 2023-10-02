@@ -90,6 +90,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.T:
           entity.getEvents().trigger("toggleLight");
           return true;
+        case Keys.L:
+          LoseScreenDisplay.setLoseReason("oxygen");
+          ServiceLocator.getMissionManager().getEvents().trigger("loseScreen");
+          return true;
         case Keys.Q:
           showPlantInfoUI = !showPlantInfoUI;
           ServiceLocator.getPlantInfoService().getEvents().trigger("toggleOpen", showPlantInfoUI);

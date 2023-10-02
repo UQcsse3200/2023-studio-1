@@ -164,6 +164,7 @@ public class MainGameScreen extends ScreenAdapter {
             physicsEngine.update();
             ServiceLocator.getEntityService().update();
         }
+        // Add switch statement for when to switch screens
         ServiceLocator.getTimeService().update();
         renderer.render();
 
