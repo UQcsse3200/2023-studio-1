@@ -79,10 +79,11 @@ public class CutsceneDisplay extends UIComponent {
 
         this.dimScreen();
 
-        stage.addActor(dialogueTable);
         this.spawnSprites();
         this.spawnDialogueBox();
         this.spawnContinueButton();
+
+        stage.addActor(dialogueTable);
     }
 
     /**
@@ -151,7 +152,7 @@ public class CutsceneDisplay extends UIComponent {
         dialogueLabel.setWrap(true);
         //Window dialogueWindow = new Window("Alien", skin);
         Graphics.DisplayMode active = Gdx.graphics.getDisplayMode();
-        dialogueTable.add(dialogueLabel).width(active.width - 700).expandX();
+        dialogueTable.add(dialogueLabel).width(active.width - 700).expandX(); // need to make it so text always contains the same proportion of the screen
     }
 
     public void spawnContinueButton() {
@@ -164,7 +165,6 @@ public class CutsceneDisplay extends UIComponent {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
                         logger.debug("Continue button clicked");
-                        disposeCutscene();
                         cutscene.endCutscene();
                     }
                 });
@@ -173,19 +173,15 @@ public class CutsceneDisplay extends UIComponent {
         dialogueTable.add(continueBtn);//.padTop(40f); // change 40f to whatever is needed
     }
 
-    // Ends the cutscene
-    public void disposeCutscene() {
+    @Override
+    public void dispose() {
+        //dialogueTable.setVisible(false);
         dialogueTable.clear();
         transparentRectangle.clear();
         npcSprite.clear();
         stage.getRoot().removeActor(transparentRectangle);
         stage.getRoot().removeActor(dialogueTable);
         super.dispose();
-    }
-
-    @Override
-    public void dispose() {
-        this.disposeCutscene();
     }
 
     @Override
