@@ -166,20 +166,12 @@ public class CutsceneDisplay extends UIComponent {
                     public void changed(ChangeEvent event, Actor actor) {
                         logger.debug("Continue button clicked");
                         //transparentRectangle.getColor().a = 0f;
-                        //dialogueTable.setVisible(false);
-                        //disposeCutscene();
                         cutscene.endCutscene();
                     }
                 });
 
         dialogueTable.row();
         dialogueTable.add(continueBtn);//.padTop(40f); // change 40f to whatever is needed
-    }
-
-    // Ends the cutscene
-    public void disposeCutscene() {
-        this.dispose();
-        //dialogueTable.setVisible(false);
     }
 
     @Override
