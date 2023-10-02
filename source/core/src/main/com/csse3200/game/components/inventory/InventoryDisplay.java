@@ -196,6 +196,10 @@ public class InventoryDisplay extends UIComponent {
                     sourceSlot.setItemImage(slot.getItemImage());
                     map.put((Image) payload.getDragActor(),slot);
                     slot.setItemImage((Image)payload.getDragActor());
+                    int tempCount = slot.getCount();
+
+                    slot.setCount(sourceSlot.getCount());
+                    sourceSlot.setCount(tempCount);
 
                     if (toolbar) {
                         entity.getEvents().trigger("updateToolbar");
