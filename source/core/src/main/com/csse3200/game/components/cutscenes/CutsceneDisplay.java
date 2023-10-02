@@ -23,14 +23,13 @@ import com.csse3200.game.ui.UIComponent;
 
 public class CutsceneDisplay extends UIComponent {
     /**
-     * The Image that contains the player sprite.
+     * The atlas for the npc sprite.
      */
-    private Image playerSprite;
+    private TextureAtlas npcAtlas;
     /**
      * The Image that contains the npc sprite.
      */
     private Image npcSprite;
-    private Image sprite;
     private static final Logger logger = LoggerFactory.getLogger(com.csse3200.game.missions.cutscenes.Cutscene.class);
     /**
      * The table that forms the basis for the layout of the cutscene
@@ -104,16 +103,8 @@ public class CutsceneDisplay extends UIComponent {
         stage.addActor(transparentRectangle);
     }
 
-    private void spawnSprite(String filePath, String position, float sizeIncrease) {
-        //Need to take following code out of function as memory leak occurring
-        TextureAtlas atlas = ServiceLocator.getResourceService()
-                .getAsset(filePath, TextureAtlas.class);
-        TextureAtlas.AtlasRegion region = atlas.findRegion("default");
-        if (region == null) {
-            throw new IllegalArgumentException(filePath + " is an invalid filePath");
-        }
-        sprite = new Image(region);
-        //
+    private void placeSprite(Image sprite, String position, float sizeIncrease) {
+
         int xpos = 0, ypos = 0;
         if (position == "LEFT") {
             xpos = 50;
@@ -136,7 +127,16 @@ public class CutsceneDisplay extends UIComponent {
 
     // Spawns the sprites/entities that will be on the left/right side of the screen
     public void spawnSprites() {
-        spawnSprite("images/questgiver.atlas", "RIGHT",  0.15f);
+        TextureAtlas.AtlasRegion region;
+        //Spawn npc
+        npcAtlas = ServiceLocator.getResourceService()
+                .getAsset("images/questgiver.atlas", TextureAtlas.class);
+        region = npcAtlas.findRegion("default");
+        if (region == null) {
+            throw new IllegalArgumentException("images/questgiver.atlas is an invalid filePath");
+        }
+        npcSprite = new Image(region);
+        placeSprite(npcSprite, "RIGHT",  0.15f);
         //spawnSprite("images/player.atlas", "LEFT", 0.45f);
     }
 
@@ -177,7 +177,7 @@ public class CutsceneDisplay extends UIComponent {
     // Ends the cutscene
     public void disposeCutscene() {
         dialogueTable.clear();
-        sprite.clear();
+        npcSprite.clear();
         super.dispose();
     }
 
