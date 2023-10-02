@@ -101,7 +101,7 @@ public class TamingTest {
         animalToTest.create();
         nonFood = new Entity();
         playerInvSpy.addItem(nonFood);
-        int index = playerInvSpy.itemPlace.size();
+        int index = playerInvSpy.getItemPlace().size();
         playerInvSpy.setHeldItem(index - 1);
 
         animalToTest.getEvents().trigger("feed");

@@ -40,21 +40,21 @@ public class PlayerInventoryTest {
 
     @Test
     void checkAddInventory() {
-        assertTrue(player.getComponent(InventoryComponent.class).itemPlace.isEmpty());
+        assertTrue(player.getComponent(InventoryComponent.class).getItemPlace().isEmpty());
         player.getComponent(InventoryComponent.class).addItem(item1);
         verify(inventoryComponent).addItem(item1);
         player.getComponent(InventoryComponent.class).addItem(item2);
         verify(inventoryComponent).addItem(item2);
-        assertArrayEquals(new HashMap[]{player.getComponent(InventoryComponent.class).itemPlace},
-                new HashMap[]{inventoryComponent.itemPlace});
+        assertArrayEquals(new HashMap[]{player.getComponent(InventoryComponent.class).getItemPlace()},
+                new HashMap[]{inventoryComponent.getItemPlace()});
     }
     @Test
     void checkRemoveItem() {
-        assertTrue(inventoryComponent.itemPlace.isEmpty());
+        assertTrue(inventoryComponent.getItemPlace().isEmpty());
         player.getComponent(InventoryComponent.class).addItem(item1);
         verify(inventoryComponent).addItem(any(Entity.class));
         player.getComponent(InventoryComponent.class).removeItem(item1);
-        assertTrue(inventoryComponent.itemPlace.isEmpty());
+        assertTrue(inventoryComponent.getItemPlace().isEmpty());
         verify(inventoryComponent).removeItem(any(Entity.class));
     }
     @Test
