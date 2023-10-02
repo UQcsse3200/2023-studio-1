@@ -1,5 +1,9 @@
 package com.csse3200.game.missions.quests;
 
+import com.csse3200.game.components.plants.PlantComponent;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.factories.PlantFactory;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.events.listeners.EventListener0;
 import com.csse3200.game.missions.MissionManager;
@@ -15,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import java.util.EventListener;
 import java.util.function.Function;
 
+import static com.csse3200.game.entities.EntityType.Plant;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -28,6 +33,8 @@ class OxygenLevelQuestTest {
         ServiceLocator.registerTimeService(new TimeService());
         ServiceLocator.registerMissionManager(new MissionManager());
         ServiceLocator.registerPlanetOxygenService(new PlanetOxygenService());
+        ServiceLocator.registerEntityService(new EntityService());
+        ServiceLocator.getPlanetOxygenService().removeOxygen(100);
 
         r1 = mock(Reward.class);
         r2 = mock(Reward.class);
@@ -82,5 +89,38 @@ class OxygenLevelQuestTest {
         assertFalse(OLQuest6.isCompleted());
         assertFalse(OLQuest7.isCompleted());
         assertFalse(OLQuest8.isCompleted());
+    }
+
+    @Test
+    public void testIsCompleted() {
+        testRegisterMission();
+        for (int i = 0; i < 50; i++) {
+            assertTrue(OLQuest1.isCompleted());
+            assertFalse(OLQuest2.isCompleted());
+            if (i >= 24) {
+                assertTrue(OLQuest3.isCompleted());
+            } else {
+                assertFalse(OLQuest3.isCompleted());
+            }
+            assertFalse(OLQuest4.isCompleted());
+            assertTrue(OLQuest5.isCompleted());
+            assertFalse(OLQuest6.isCompleted());
+            if (i >= 24) {
+                assertTrue(OLQuest7.isCompleted());
+            } else {
+                assertFalse(OLQuest7.isCompleted());
+            }
+            assertFalse(OLQuest8.isCompleted());
+            ServiceLocator.getPlanetOxygenService().addOxygen(10);
+            ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+        }
+        assertTrue(OLQuest1.isCompleted());
+        assertTrue(OLQuest2.isCompleted());
+        assertTrue(OLQuest3.isCompleted());
+        assertTrue(OLQuest4.isCompleted());
+        assertTrue(OLQuest5.isCompleted());
+        assertTrue(OLQuest6.isCompleted());
+        assertTrue(OLQuest7.isCompleted());
+        assertTrue(OLQuest8.isCompleted());
     }
 }
