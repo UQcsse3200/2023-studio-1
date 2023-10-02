@@ -78,12 +78,13 @@ public class CutsceneDisplay extends UIComponent {
         dialogueTable.bottom();
         dialogueTable.padBottom(160);
 
-        this.dimScreen();
+        //this.dimScreen();
 
-        stage.addActor(dialogueTable);
         this.spawnSprites();
         this.spawnDialogueBox();
         this.spawnContinueButton();
+
+        stage.addActor(dialogueTable);
     }
 
     /**
@@ -151,7 +152,7 @@ public class CutsceneDisplay extends UIComponent {
         dialogueLabel.setWrap(true);
         //Window dialogueWindow = new Window("Alien", skin);
         Graphics.DisplayMode active = Gdx.graphics.getDisplayMode();
-        dialogueTable.add(dialogueLabel).width(active.width - 700).expandX();
+        dialogueTable.add(dialogueLabel).width(active.width - 700).expandX(); // need to make it so text always contains the same proportion of the screen
     }
 
     public void spawnContinueButton() {
@@ -164,8 +165,9 @@ public class CutsceneDisplay extends UIComponent {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
                         logger.debug("Continue button clicked");
-                        transparentRectangle.getColor().a = 0f;
-                        disposeCutscene();
+                        //transparentRectangle.getColor().a = 0f;
+                        //dialogueTable.setVisible(false);
+                        //disposeCutscene();
                         cutscene.endCutscene();
                     }
                 });
@@ -176,14 +178,16 @@ public class CutsceneDisplay extends UIComponent {
 
     // Ends the cutscene
     public void disposeCutscene() {
-        dialogueTable.clear();
-        sprite.clear();
-        super.dispose();
+        this.dispose();
+        //dialogueTable.setVisible(false);
     }
 
     @Override
     public void dispose() {
-        this.disposeCutscene();
+        //dialogueTable.setVisible(false);
+        dialogueTable.clear();
+        sprite.clear();
+        super.dispose();
     }
 
     @Override
