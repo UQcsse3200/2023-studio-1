@@ -1,5 +1,6 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.services.sound.BackgroundMusicService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +38,7 @@ public class ServiceLocator {
   private static SaveLoadService saveLoadService;
   private static MissionManager missions;
   private static PlanetOxygenService planetOxygenService;
+  private static BackgroundMusicService backgroundMusicService;
 
   public static GameArea getGameArea() {
     return gameArea;
@@ -83,7 +85,11 @@ public class ServiceLocator {
   public static SaveLoadService getSaveLoadService() {
     return saveLoadService;
   }
-
+  
+  public static BackgroundMusicService getBackgroundMusicService() {
+    return backgroundMusicService;
+  }
+  
   public static void registerGameArea(GameArea area) {
     logger.debug("Registering game area {}", area);
     gameArea = area;
@@ -143,7 +149,12 @@ public class ServiceLocator {
     logger.debug("Registering light service {}", source);
     lightService = source;
   }
-
+  
+  public static void registerBackgroundMusicService(BackgroundMusicService source) {
+    logger.debug("Registering background music service {}", source);
+    backgroundMusicService = source;
+  }
+  
   /**
    * Registers the save/load service.
    * @param source the service to register

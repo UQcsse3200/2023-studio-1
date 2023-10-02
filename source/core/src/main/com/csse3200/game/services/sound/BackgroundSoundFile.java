@@ -2,7 +2,7 @@ package com.csse3200.game.services.sound;
 
 public enum BackgroundSoundFile implements SoundFile {
     // TODO: Add enum declarations for all background sound tracks
-    ExampleTrack("source/core/assets/sounds/music/FakeTrack.wav", BackgroundMusicType.NORMAL)
+    ExampleTrack("sounds/BGM_03_mp3.mp3", BackgroundMusicType.NORMAL)
     ;
 
     private final String filePath;

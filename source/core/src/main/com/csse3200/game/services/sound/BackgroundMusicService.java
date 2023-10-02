@@ -2,6 +2,8 @@ package com.csse3200.game.services.sound;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.files.FileHandle;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,6 +72,7 @@ public class BackgroundMusicService implements MusicService {
      * @throws IllegalStateException If there are no available Music instances of the type given.
      */
     public void play(BackgroundMusicType type) throws IllegalStateException {
+        logger.debug("Attempting to play background music of a given type.");
         this.stopCurrentlyPlaying();
         this.keepPlaying = true;
         Random rand = new Random();
@@ -77,15 +80,21 @@ public class BackgroundMusicService implements MusicService {
             throw new IllegalStateException("No tracks loaded of type " + type);
         } else {
             while (keepPlaying) { // While not stopped.
+                // If the current music instance in not set, or, is not playing and also
+                // is not paused.
                 if (currentMusic == null || (!currentMusic.isPlaying() && !pauseStatus)) {
                     // Select a random loaded song of the given type.
+                    logger.debug("Selecting random background track of the given type {}.",
+                            type);
                     currentMusic = categorisedMusic.get(type)
                             .get(rand.nextInt(categorisedMusic.get(type).size()));
                     // Set the completion listener to clean up after end of playback.
                     setupCompletionListener(currentMusic);
                     if (this.isMuted()) { // Apply mute status
+                        logger.debug("Muting current background music instance.");
                         currentMusic.setVolume(0.0f);
                     } else {
+                        logger.debug("Setting volume scaling to 1.0 for background music.");
                         currentMusic.setVolume(1.0f);
                     }
                     currentMusic.play(); // Play the music.
@@ -93,13 +102,15 @@ public class BackgroundMusicService implements MusicService {
             }
         }
     }
-    // TODO - UNNECESSARY FUNCTION
+    
     /**
-     *
+     * Plays a given sound file, checking whether it is valid to play as well as looping
+     * the playback if specified.
      * @param sound - An enum value that implements the SoundFile interface
      * @param looping - A flag to control if the sound loops
-     * @return
-     * @throws InvalidSoundFileException
+     * @return 0 - no play ID is returned for background music instances.
+     * @throws InvalidSoundFileException if the given sound file is not an instance of
+     * BackgroundMusicFile or is unplayable.
      */
     @Override
     public long play(SoundFile sound, boolean looping) throws InvalidSoundFileException {
@@ -124,13 +135,19 @@ public class BackgroundMusicService implements MusicService {
         return 0; // Play ID not needed for background music
     }
     
-    // TODO - UNNECESSARY FUNCTION
+    /**
+     * Plays a given sound file without the specification of a looping boolean, defaults this
+     * value to false.
+     * @param sound An enum value that implements the SoundFile interface
+     * @return 0 - no play ID is returned for background music instances.
+     * @throws InvalidSoundFileException if the given sound file is not an instance of
+     *      * BackgroundMusicFile or is unplayable.
+     */
     @Override
     public long play(SoundFile sound) throws InvalidSoundFileException {
         return this.play(sound, false);
     }
     
-    // TODO - UNNECESSARY FUNCTION
     /**
      * Attempts to pause a specific track. This is more important for Effects. Use pause()
      * to pause whichever track is currently active.
@@ -246,7 +263,9 @@ public class BackgroundMusicService implements MusicService {
             if (sound instanceof BackgroundSoundFile) {
                 logger.debug("Loading a background track.");
                 tracks.add((BackgroundSoundFile) sound);
-                Music music = Gdx.audio.newMusic(Gdx.files.internal(sound.getFilePath()));
+                //Music music = Gdx.audio.newMusic(new FileHandle(sound.getFilePath()));
+                Music music = ServiceLocator.getResourceService()
+                        .getAsset(sound.getFilePath(), Music.class);
                 loadedMusic.put((BackgroundSoundFile) sound, music);
                 logger.debug("Categorising Music instance by BackgroundMusicType.");
                 categorisedMusic.get(((BackgroundSoundFile) sound).getType()).add(music);

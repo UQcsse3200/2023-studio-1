@@ -1,6 +1,10 @@
 package com.csse3200.game.screens;
 
 import com.csse3200.game.entities.FireflySpawner;
+import com.csse3200.game.services.sound.BackgroundMusicService;
+import com.csse3200.game.services.sound.BackgroundMusicType;
+import com.csse3200.game.services.sound.BackgroundSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +42,8 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
+
+import java.util.Arrays;
 
 
 /**
@@ -112,6 +118,8 @@ public class MainGameScreen extends ScreenAdapter {
         ServiceLocator.registerPlanetOxygenService(new PlanetOxygenService());
 
         ServiceLocator.registerMissionManager(new MissionManager());
+        
+        ServiceLocator.registerBackgroundMusicService(new BackgroundMusicService());
 
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
@@ -144,6 +152,14 @@ public class MainGameScreen extends ScreenAdapter {
         // if the LoadSaveOnStart value is set true then load entities saved from file
         if (game.isLoadOnStart()){
             ServiceLocator.getSaveLoadService().load();
+        }
+    
+        try {
+            ServiceLocator.getBackgroundMusicService()
+                    .loadSounds(Arrays.asList(BackgroundSoundFile.values()));
+            ServiceLocator.getBackgroundMusicService().play(BackgroundMusicType.NORMAL);
+        } catch (InvalidSoundFileException e) {
+            //do nothing?
         }
     }
 
@@ -195,6 +211,7 @@ public class MainGameScreen extends ScreenAdapter {
         ServiceLocator.getEntityService().dispose();
         ServiceLocator.getRenderService().dispose();
         ServiceLocator.getResourceService().dispose();
+        ServiceLocator.getBackgroundMusicService().dispose();
 
         ServiceLocator.clear();
     }
@@ -204,6 +221,7 @@ public class MainGameScreen extends ScreenAdapter {
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(mainGameTextures);
         ServiceLocator.getResourceService().loadAll();
+        logger.debug("Loading and starting playback of background music.");
     }
 
     private void unloadAssets() {
