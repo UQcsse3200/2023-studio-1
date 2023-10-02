@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.missions.cutscenes.Cutscene;
@@ -75,6 +76,8 @@ public class CutsceneDisplay extends UIComponent {
         table.bottom();
         table.padBottom(160);
 
+        this.dimScreen();
+        /*
         logger.debug("Screen dimmed");
         //Following code for making transparent rectangle from
         //https://stackoverflow.com/questions/44260510/is-it-possible-to-draw-a-transparent-layer-without-using-image-libgdx
@@ -87,11 +90,27 @@ public class CutsceneDisplay extends UIComponent {
         transparentRectangle.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         transparentRectangle.getColor().a = 0.5f;
         stage.addActor(transparentRectangle);
+         */
 
         stage.addActor(table);
         this.spawnSprites();
         this.spawnDialogueBox();
         this.spawnContinueButton();
+    }
+
+    public void dimScreen() {
+        logger.debug("Screen dimmed");
+        //Following code for making transparent rectangle from
+        //https://stackoverflow.com/questions/44260510/is-it-possible-to-draw-a-transparent-layer-without-using-image-libgdx
+        Pixmap pixmap = new Pixmap(1,1, Pixmap.Format.RGBA8888);
+        pixmap.setColor(Color.BLACK);
+        pixmap.fillRectangle(0, 0, 1, 1);
+        Texture transparentRecTex = new Texture(pixmap);
+        pixmap.dispose();
+        transparentRectangle = new Image(transparentRecTex);
+        transparentRectangle.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        transparentRectangle.getColor().a = 0.5f;
+        stage.addActor(transparentRectangle);
     }
 
     private void spawnSprite(String filePath, String position, float sizeIncrease) {
@@ -139,6 +158,7 @@ public class CutsceneDisplay extends UIComponent {
         TypingLabel dialogueLabel = new TypingLabel(this.dialogue, skin);
         dialogueLabel.setAlignment(Align.center);
         dialogueLabel.setWrap(true);
+        //Window dialogueWindow = new Window("Alien", skin);
         Graphics.DisplayMode active = Gdx.graphics.getDisplayMode();
         table.add(dialogueLabel).width(active.width - 700).expandX();
     }
