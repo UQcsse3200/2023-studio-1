@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.ui.UIComponent;
 
 public class CoordinatesDisplay extends UIComponent {
@@ -34,8 +35,9 @@ public class CoordinatesDisplay extends UIComponent {
         window = new Window("Ship Part Clue", skin);
 
         Vector2 clueLocation = clueComponent.getCurrentLocation();
-        Label coordinatesLabel = new Label("X: " + clueLocation.x + "\nY: " + clueLocation.y, skin);
+        Label coordinatesLabel = new Label("Search around here...\nX: " + clueLocation.x + "\nY: " + clueLocation.y, skin);
         coordinatesLabel.setColor(Color.BROWN);
+        coordinatesLabel.setAlignment(Align.center);
 
         window.add(coordinatesLabel);
 
@@ -52,6 +54,13 @@ public class CoordinatesDisplay extends UIComponent {
             window.setVisible(true);
             isOpen = true;
         }
+    }
+
+    public void dispose() {
+        window.clear();
+        window.remove();
+
+        super.dispose();
     }
 
 }
