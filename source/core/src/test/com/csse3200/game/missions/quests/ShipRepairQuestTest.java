@@ -62,13 +62,35 @@ class ShipRepairQuestTest {
         assertTrue(SRQuest3.isCompleted());
         assertTrue(SRQuest4.isCompleted());
         assertTrue(SRQuest5.isCompleted());
+        SRQuest1.resetState();
+        SRQuest2.resetState();
+        SRQuest3.resetState();
+        SRQuest4.resetState();
+        SRQuest5.resetState();
+        assertFalse(SRQuest1.isCompleted());
+        assertTrue(SRQuest2.isCompleted());
+        assertFalse(SRQuest3.isCompleted());
+        assertFalse(SRQuest4.isCompleted());
+        assertTrue(SRQuest5.isCompleted());
     }
 
     @Test
     public void testGetDescription() {
+        SRQuest1.registerMission(ServiceLocator.getMissionManager().getEvents());
+        SRQuest2.registerMission(ServiceLocator.getMissionManager().getEvents());
+        SRQuest3.registerMission(ServiceLocator.getMissionManager().getEvents());
+        SRQuest4.registerMission(ServiceLocator.getMissionManager().getEvents());
+        SRQuest5.registerMission(ServiceLocator.getMissionManager().getEvents());
         String desc = "Repair your ship and unlock useful features.\nAdd %d scavenged " +
                 "parts from your ship's hull to your ship.\n%d out of %d additional ship parts added.";
-        assertEquals(String.format(desc, 10, 0, 10), SRQuest1.getDescription());
+        for (int i = 0; i < 10; i++) {
+            assertEquals(String.format(desc, 10, i, 10), SRQuest1.getDescription());
+            assertEquals(String.format(desc, 0, 0, 0), SRQuest2.getDescription());
+            assertEquals(String.format(desc, 5, Math.min(i, 5), 5), SRQuest3.getDescription());
+            assertEquals(String.format(desc, 10, i, 10), SRQuest4.getDescription());
+            assertEquals(String.format(desc, 0, 0, 0), SRQuest5.getDescription());
+            ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.SHIP_PART_ADDED.name());
+        }
     }
 
 
