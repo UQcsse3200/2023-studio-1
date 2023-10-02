@@ -72,10 +72,8 @@ public class ToolbarDisplay extends UIComponent {
                 itemTexture = item.getItemTexture();
                 ItemSlot curSlot = slots.get(i);
                 curSlot.setItemImage(new Image(itemTexture));
+                curSlot.setCount(itemCount);
 
-                if (itemCount > 0) {
-                    curSlot.setCount(itemCount);
-                }
 
                 curSlot.add(label);
 
@@ -85,7 +83,7 @@ public class ToolbarDisplay extends UIComponent {
             else {
                 ItemSlot curSlot = slots.get(i);
                 curSlot.setItemImage(null);
-                curSlot.setCount(null);
+                curSlot.setCount(0);
                 slots.set(i, curSlot);
             }
         }

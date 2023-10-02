@@ -73,7 +73,7 @@ public class PlayerInventoryTest {
     // checks if using an item decreases the count of perishable items by 1, else removes the item.
     @Test
     void useItemShouldRemovePerishableItem() {
-        Entity perishable = new Entity().addComponent(new ItemComponent("TestItem",ItemType.FERTILISER, new Texture("images/tool_shovel.png"),true));
+        Entity perishable = new Entity(EntityType.Item).addComponent(new ItemComponent("TestItem",ItemType.FERTILISER, new Texture("images/tool_shovel.png"),true));
 
         inventoryComponent.addItem(perishable);
         inventoryComponent.setHeldItem(0);
@@ -86,7 +86,7 @@ public class PlayerInventoryTest {
     // checks if using an item does not remove a nonperishable item.
     @Test
     void useItemShouldNotRemoveNonperishableItem() {
-        Entity item = new Entity().addComponent(new ItemComponent("TestItem",ItemType.HOE, new Texture("images/tool_shovel.png"),false));
+        Entity item = new Entity(EntityType.Item).addComponent(new ItemComponent("TestItem",ItemType.HOE, new Texture("images/tool_shovel.png"),false));
 
         inventoryComponent.addItem(item);
         inventoryComponent.setHeldItem(0);

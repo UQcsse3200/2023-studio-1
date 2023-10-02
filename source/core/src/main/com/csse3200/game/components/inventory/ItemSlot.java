@@ -128,6 +128,15 @@ public class ItemSlot extends Stack {
                 label.setText(this.count + " ");
             }
         }
+        if (this.count != null && this.count <= 1) {
+            if (label != null) {
+                System.out.println("removing label");
+                this.removeActor(label);
+                this.label = null;
+            }
+        }
+
+
     }
 
     /**
