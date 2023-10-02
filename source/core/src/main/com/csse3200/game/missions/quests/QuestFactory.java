@@ -127,7 +127,7 @@ public class QuestFactory {
 
         MultiReward reward = new MultiReward(List.of(
                 new ItemReward(List.of(
-                        ItemFactory.createCowFood(),
+                        ItemFactory.createCosmicCobEar(),
                         ItemFactory.createSprinklerItem()
                         // TODO import sprinkler pump
                 )),
