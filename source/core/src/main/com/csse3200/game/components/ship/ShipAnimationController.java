@@ -53,7 +53,7 @@ public class ShipAnimationController extends Component {
             animation = "ship_4";
         }
 
-        if (progress >= 25) {
+        if (progress >= 20) {
             animation = "ship_5";
         }
 
