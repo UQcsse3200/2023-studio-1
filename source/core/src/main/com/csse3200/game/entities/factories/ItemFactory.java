@@ -374,12 +374,12 @@ public class ItemFactory {
    * @return ship part
    */
   public static Entity createShipPart() {
-    Entity ShipPart = createBaseItem()
+    Entity shipPart = createBaseItem()
             .addComponent(new TextureRenderComponent("images/ship/ship_part.png"))
             .addComponent(new ItemComponent("Ship Part", ItemType.SHIP_PART,
                     "Pieces of scrap metal in surprisingly good condition. Seems like it could be used" +
                             " for ship repairs...",
                     new Texture("images/ship/ship_part.png")));
-    return ShipPart;
+    return shipPart;
   }
 }

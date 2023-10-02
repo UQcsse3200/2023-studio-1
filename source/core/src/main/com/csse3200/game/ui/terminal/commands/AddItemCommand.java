@@ -42,6 +42,7 @@ public class AddItemCommand implements Command {
 			case "fence" -> item = ItemFactory.createFenceItem();
 			case "gate" -> item = ItemFactory.createGateItem();
 			case "chest" -> item = ItemFactory.createChestItem();
+			case "shipPart" -> item = ItemFactory.createShipPart();
 			default -> {
 				logger.debug("The provided item name does not exist");
 				return false;
