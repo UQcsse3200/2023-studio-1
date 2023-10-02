@@ -14,6 +14,7 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.combat.TouchAttackComponent;
 import com.csse3200.game.components.combat.attackpatterns.BatAttackPattern;
 import com.csse3200.game.components.combat.attackpatterns.DragonflyAttackPattern;
+import com.csse3200.game.components.combat.attackpatterns.OxygenEaterAttackPattern;
 import com.csse3200.game.components.npc.*;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.FollowTask;
@@ -262,7 +263,7 @@ public class NPCFactory {
             .addComponent(animator)
             .addComponent(new CombatStatsComponent(10, 0))
             .addComponent(new HostileAnimationController())
-            .addComponent(new DragonflyAttackPattern(1.5f, ProjectileFactory::createOxygenEaterProjectile))
+            .addComponent(new OxygenEaterAttackPattern(1.5f, ProjectileFactory::createOxygenEaterProjectile))
             .addComponent(new InteractionDetector(5f, new ArrayList<>(Arrays.asList(EntityType.Player)))); // TODO: Do we want it to attack anything
 
     oxygenEater.scaleHeight(2f);
