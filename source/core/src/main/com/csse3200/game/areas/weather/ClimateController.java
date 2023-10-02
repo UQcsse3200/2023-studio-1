@@ -229,6 +229,9 @@ public class ClimateController implements Json.Serializable {
 	 */
 	private void updateWeatherEvent() {
 		// Sets initial priority to current weather event or 0 if nothing is happening
+		if (currentWeatherEvent != null) {
+			currentWeatherEvent.stopEffect();
+		}
 		currentWeatherEvent = null;
 		int priority = -1;
 		// Updates every weather event
@@ -242,6 +245,9 @@ public class ClimateController implements Json.Serializable {
 			}
 		}
 		weatherEvents.removeIf(WeatherEvent::isExpired);
+		if (currentWeatherEvent != null) {
+			currentWeatherEvent.startEffect();
+		}
 	}
 
 

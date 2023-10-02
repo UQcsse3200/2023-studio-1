@@ -23,6 +23,8 @@ public class ItemSlot extends Stack {
     private boolean selected;
     private Image itemImage;
 
+    private Label label;
+
     /**
      * Construct an itemSlot with a texture, count and selected state
      * @param itemTexture texture of item's image
@@ -72,6 +74,7 @@ public class ItemSlot extends Stack {
      */
     public void setCount(Integer count) {
         this.count = count;
+        createItemSlot();
     }
 
     /**
@@ -99,9 +102,6 @@ public class ItemSlot extends Stack {
      * Creates the itemSlot
      */
     private void createItemSlot() {
-        Label label = new Label(String.valueOf(this.count) + " ", this.skin);
-        label.setColor(Color.BLACK);
-        label.setAlignment(Align.bottomRight);
 
         //Add the selection background if necessary
         if (this.selected) {
@@ -117,9 +117,16 @@ public class ItemSlot extends Stack {
             this.add(itemImage);
         }
 
-        //Add the count label if the number is not 0
+        // Add or update the count label if the number is not 0
         if (this.count != null && this.count > 0) {
-            this.add(label);
+            if (label == null) {
+                label = new Label(this.count + " ", this.skin);
+                label.setColor(Color.BLACK);
+                label.setAlignment(Align.bottomRight);
+                this.add(label);
+            } else {
+                label.setText(this.count + " ");
+            }
         }
     }
 

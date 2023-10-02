@@ -1,5 +1,6 @@
 package com.csse3200.game.components;
 
+import com.csse3200.game.components.placeables.LightController;
 import com.csse3200.game.entities.Entity;
 import org.junit.jupiter.api.Test;
 
