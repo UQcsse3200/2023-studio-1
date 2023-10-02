@@ -115,7 +115,6 @@ class ShipRepairQuestTest {
         assertEquals(String.format(desc, 5, progressInt, 5), SRQuest3.getDescription());
         assertEquals(String.format(desc, 10, progressInt, 10), SRQuest4.getDescription());
         assertEquals(String.format(desc, 0, progressInt, 0), SRQuest5.getDescription());
-
     }
 
 }
