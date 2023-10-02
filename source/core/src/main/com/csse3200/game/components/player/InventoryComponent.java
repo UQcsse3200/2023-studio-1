@@ -7,16 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.components.items.ItemComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import com.badlogic.gdx.utils.Json;
-import com.csse3200.game.components.Component;
-import com.csse3200.game.entities.Entity;
 
 /**
  * A component intended to be used by the player to track their inventory.
@@ -55,7 +48,6 @@ public class InventoryComponent extends Component {
     if (heldItem == null) {
       return false;
     }
-
     if (heldItem.getComponent(ItemComponent.class).isPerishable()) {
       return removeItem(this.heldItem);
     }
@@ -364,6 +356,13 @@ public class InventoryComponent extends Component {
 
   }
 
+  public boolean addMultipleItem(int count, Entity item) {
+    for (int i = 0; i < count; i++) {
+      addItem(item);
+    }
+    return true;
+  }
+
 
   /**
    * Removes an item from the Player's Inventory
@@ -383,7 +382,8 @@ public class InventoryComponent extends Component {
         if (this.itemCount.get(item.getComponent(ItemComponent.class).getItemName()) == 0) {
           this.itemCount.remove(item.getComponent(ItemComponent.class).getItemName());
             // find the position of the item and remove the item from the position
-            for (int i = 0; i < this.itemPlace.size(); i++) {
+          for (int i = 0; i < maxInventorySize; i++) {
+
                 if (this.itemPlace.get(i) == item.getComponent(ItemComponent.class).getItemName()) {
                   this.itemPlace.remove(i);
                     break;
