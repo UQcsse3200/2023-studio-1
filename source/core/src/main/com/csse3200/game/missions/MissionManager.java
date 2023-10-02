@@ -157,17 +157,9 @@ public class MissionManager implements Json.Serializable {
 			quest.updateExpiry();
 			if (quest.isExpired()) {
 				events.trigger(MissionEvent.QUEST_EXPIRED.name());
-			}
-		}
-	}
-
-	/**
-	 * Loops over all active {@link Quest}s, and if a {@link Quest} is expired and mandatory, triggers the Lose Screen
-	 */
-	public void checkMandatoryQuestExpiry() {
-		for (Quest quest : activeQuests) {
-			if (quest.isMandatory() && quest.isExpired()) {
-				events.trigger("loseScreen", quest.getName());
+				if (quest.isMandatory()) {
+					events.trigger("loseScreen", quest.getName());
+				}
 			}
 		}
 	}

@@ -109,9 +109,9 @@ public class WinScreenDisplay extends UIComponent {
         String credits = """
                 {SLOW}{WAIT}After all of your valiant efforts, humanity has landed on the planet, a place they may yet get to call home.
                 
-                {WAIT}“Impressive, Human!” Jarrael exclaims.
+                {WAIT}"Impressive, Human!" Jarrael exclaims.
                 
-                {WAIT}You have aided in humanity’s escape from earth and have ensured their survival in {COLOR=#3ABE88}ALPHA CENTAURI{COLOR=WHITE}, {WAIT}for the time being…
+                {WAIT}You have aided in humanity's escape from earth and have ensured their survival in {COLOR=#3ABE88}ALPHA CENTAURI{COLOR=WHITE}, {WAIT}for the time being...
                 """;
         storyLabel = new TypingLabel(credits, skin); // Create the TypingLabel with the formatted story
         storyLabel.setAlignment(Align.center); // Center align the text

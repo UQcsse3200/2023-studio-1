@@ -419,7 +419,7 @@ public class QuestFactory {
                 new DialogueReward(dialogue)
         ));
         return new PlantInteractionQuest(AIR_AND_ALGAE_QUEST_NAME, reward, MissionManager.MissionEvent.PLANT_CROP,
-                Set.of("Atomic Algae"), 10);
+                Set.of("Atomic Algae"), 3);
     }
 
     /**

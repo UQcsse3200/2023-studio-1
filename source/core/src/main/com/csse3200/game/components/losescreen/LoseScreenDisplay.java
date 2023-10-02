@@ -101,7 +101,7 @@ public class LoseScreenDisplay extends UIComponent {
         float scaledHeight = Gdx.graphics.getWidth() * (background.getHeight() / background.getWidth());
         background.setHeight(scaledHeight);
         // Load the animated planet
-        planet = background =
+        planet =
                 new Image(
                         ServiceLocator.getResourceService()
                                 .getAsset("images/dead_planet2.png", Texture.class));
@@ -113,11 +113,14 @@ public class LoseScreenDisplay extends UIComponent {
         // The planet is placed at some offset above the screen in the center of the screen
         float planetOffset = 2500;
         planet.setPosition((float)Gdx.graphics.getWidth()/2, planetOffset, Align.center);
+        if (losingMessage == null) {
+            setLoseReason("oxygen");
+        }
         storyLabel = new TypingLabel(losingMessage, skin); // Create the TypingLabel with the formatted story
         storyLabel.setAlignment(Align.center); // Center align the text
         this.returnButton = new TextButton("Return To Main Menu", skin);
         this.returnButton.setVisible(false); // Make the continue button invisible
-        // The continue button lets the user proceed to the main game
+        // The return button lets the user proceed to the main menu
         this.returnButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
@@ -155,7 +158,7 @@ public class LoseScreenDisplay extends UIComponent {
                 {WAIT}Humanity has been lost to the ages.
                 
                 {COLOR=RED}Game Over
-            """;
+                """;
     }
 
     /**

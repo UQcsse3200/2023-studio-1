@@ -81,7 +81,7 @@ public class EndCreditsDisplay extends UIComponent {
         creditsLabel = new TypingLabel(credits, skin);
         creditsLabel.setAlignment(Align.center);
         this.returnButton = new TextButton("Return To Main Menu", skin);
-        this.returnButton.setVisible(false); // Make the continue button invisible
+        this.returnButton.setVisible(true); // Make the continue button invisible
         // The continue button lets the user proceed to the main game
         this.returnButton.addListener(new ChangeListener() {
             @Override
@@ -96,6 +96,25 @@ public class EndCreditsDisplay extends UIComponent {
         rootTable.add(creditsLabel).top().padTop((float) (Gdx.graphics.getHeight() * 2.5));
         rootTable.row().padTop(30f);
         rootTable.add(returnButton).bottom().padBottom(30f);
+        // Create a button for skipping
+        TextButton skipButton = new TextButton("Skip", skin);
+
+        // Add a listener to the skip button
+        skipButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                // Add logic here for what should happen when the skip button is clicked
+                // For example, you can skip the credits or perform any desired action
+                logger.debug("Skip button clicked");
+            }
+        });
+
+        // Create a table to hold the skip button and align it to the top-right corner
+        Table skipButtonTable = new Table();
+        skipButtonTable.add(skipButton).top().right().padTop(10).padRight(10);
+
+        // Add the skip button table to the root table
+        rootTable.add(skipButtonTable);
         // The background and planet are added directly to the stage so that they can be moved and animated freely.
         stage.addActor(background);
         stage.addActor(rootTable);
