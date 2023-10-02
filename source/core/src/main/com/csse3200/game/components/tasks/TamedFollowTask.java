@@ -1,5 +1,6 @@
 package com.csse3200.game.components.tasks;
 
+import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.components.player.InventoryComponent;
@@ -14,8 +15,8 @@ public class TamedFollowTask extends FollowTask {
     private String favouriteFood;
 
     public TamedFollowTask(Entity target, int priority, float viewDistance, float maxFollowDistance, float
-            stoppingDistance, String favouriteFood) {
-        super(target, priority, viewDistance, maxFollowDistance,stoppingDistance);
+            stoppingDistance, String favouriteFood, Vector2 speed) {
+        super(target, priority, viewDistance, maxFollowDistance,stoppingDistance, speed);
         this.favouriteFood = favouriteFood;
     }
 

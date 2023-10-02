@@ -8,6 +8,7 @@ import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.utils.math.Vector2Utils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -44,7 +45,7 @@ public class TamedFollowTaskTest {
         target.create();
 
         foodEntity = new Entity(EntityType.Item);
-        fooditem = new ItemComponent("AFood", ItemType.ANIMAL_FOOD, new Texture("images/egg.png"));
+        fooditem = new ItemComponent("AFood", ItemType.ANIMAL_FOOD, new Texture("images/animals/egg.png"));
         //texture is just used as a placeholder.
         //add Animal's favourite food to player/target's spy inventory. (Will be the only item in inventory).
         foodEntity.addComponent(fooditem);
@@ -70,7 +71,7 @@ public class TamedFollowTaskTest {
 
         entity.setPosition(0f, 0f);
         TamedFollowTask tamedTask = new TamedFollowTask(target, 10, 5, 10, 2f,
-                "AFood");
+                "AFood", Vector2Utils.ONE);
 
         //Task is not currently active as animal has not been tamed.
         assertTrue(tamedTask.getPriority() < 0);
@@ -88,7 +89,7 @@ public class TamedFollowTaskTest {
         assertTrue(entity.getComponent(TamableComponent.class).isTamed());
         entity.setPosition(0f, 0f);
         TamedFollowTask tamedTask = new TamedFollowTask(target, 10, 5, 10, 2f,
-                "AFood");
+                "AFood", Vector2Utils.ONE);
 
         entity.setPosition(0f, 0f);
         //Task is not currently active as player is not holding animal's favourite food.
@@ -104,7 +105,7 @@ public class TamedFollowTaskTest {
         tame = new TamableComponent(target, 1, 0, "AFood");
 
         AITaskComponent ai = new AITaskComponent().addTask(new TamedFollowTask(target, 10, 10,
-                10, 2f, "AFood"));
+                10, 2f, "AFood", Vector2Utils.ONE));
         Entity entity = makePhysicsEntity().addComponent(ai);
         entity.addComponent(tame);
         entity.getComponent(TamableComponent.class).setTame(true);
@@ -133,7 +134,7 @@ public class TamedFollowTaskTest {
         tame = new TamableComponent(target, 1, 0, "AFood");
         float stoppingDistance = 0.5f;
         TamedFollowTask tameTask =  new TamedFollowTask(target, 10, 10,
-                10, stoppingDistance, "AFood");
+                10, stoppingDistance, "AFood", Vector2Utils.ONE);
         AITaskComponent ai = new AITaskComponent().addTask(tameTask);
         Entity entity = makePhysicsEntity().addComponent(ai);
         entity.addComponent(tame);
@@ -167,7 +168,7 @@ public class TamedFollowTaskTest {
         int priorityVal = 10;
 
         TamedFollowTask tamedTask = new TamedFollowTask(target, priorityVal, 10, 10, 2f,
-                "AFood");
+                "AFood", Vector2Utils.ONE);
         tamedTask.create(() -> entity);
 
         //target is out of distance

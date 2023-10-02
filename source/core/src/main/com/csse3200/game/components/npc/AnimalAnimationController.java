@@ -9,19 +9,33 @@ import com.csse3200.game.utils.DirectionUtils;
  * of the events is triggered.
  */
 public class AnimalAnimationController extends Component {
-    /** Render component used to render animals. **/
+    /**
+     * Render component used to render animals.
+     **/
     protected AnimationRenderComponent animator;
-    /** Current direction of animal. */
+    /**
+     * Current direction of animal.
+     */
     protected String direction;
-    /** Current animation playing (excluding direction suffix) */
+    /**
+     * Current animation playing (excluding direction suffix)
+     */
     protected String currentAnimation;
-    /** Walk prefix to play walk animation */
+    /**
+     * Walk prefix to play walk animation
+     */
     protected static final String WALK_PREFIX = "walk";
-    /** Run prefix to play run animation */
+    /**
+     * Run prefix to play run animation
+     */
     protected static final String RUN_PREFIX = "run";
-    /** Idle prefix to play idle animation */
+    /**
+     * Idle prefix to play idle animation
+     */
     protected static final String IDLE_PREFIX = "idle";
-    /** Tamed suffix to add tamed indicator */
+    /**
+     * Tamed suffix to add tamed indicator
+     */
     private static final String TAMED_SUFFIX = "_tamed";
 
     /**
@@ -53,7 +67,6 @@ public class AnimalAnimationController extends Component {
         entity.getEvents().addListener("idleStart", this::animateIdle);
         entity.getEvents().addListener("followStart", this::animateWalk);
         entity.getEvents().addListener("followStop", this::animateIdle);
-
         animateIdle();
     }
 
@@ -83,10 +96,14 @@ public class AnimalAnimationController extends Component {
 
     /**
      * Set new direction of animal and retrigger current animation with new direction
+     *
      * @param direction new direction
      */
-    private void changeDirection(String direction){
+    void changeDirection(String direction) {
         this.direction = direction;
         entity.getEvents().trigger(currentAnimation + "Start");
     }
+
 }
+
+

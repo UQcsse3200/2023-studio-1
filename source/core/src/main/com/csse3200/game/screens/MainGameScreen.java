@@ -1,10 +1,5 @@
 package com.csse3200.game.screens;
 
-import com.csse3200.game.components.plants.PlantInfoDisplayComponent;
-import com.csse3200.game.services.*;
-import com.csse3200.game.services.plants.PlantCommandService;
-import com.csse3200.game.services.plants.PlantInfoService;
-import com.csse3200.game.entities.FireflySpawner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,11 +14,13 @@ import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.components.maingame.PauseMenuActions;
+import com.csse3200.game.components.plants.PlantInfoDisplayComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.tractor.TractorActions;
-import com.csse3200.game.components.EntityIndicator;
+import com.csse3200.game.entities.EntityIndicator;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.FireflySpawner;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.input.InputDecorator;
@@ -33,6 +30,17 @@ import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
+import com.csse3200.game.services.GameTime;
+import com.csse3200.game.services.GameTimeDisplay;
+import com.csse3200.game.services.LightService;
+import com.csse3200.game.services.OxygenDisplay;
+import com.csse3200.game.services.ParticleService;
+import com.csse3200.game.services.PlanetOxygenService;
+import com.csse3200.game.services.ResourceService;
+import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.TimeService;
+import com.csse3200.game.services.plants.PlantCommandService;
+import com.csse3200.game.services.plants.PlantInfoService;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
 
@@ -84,7 +92,12 @@ public class MainGameScreen extends ScreenAdapter {
     private Entity entity;
     private final Renderer renderer;
     private final PhysicsEngine physicsEngine;
-
+    public enum ScreenType {
+        MAIN_GAME,
+        WIN,
+        LOSE
+    }
+    private ScreenType currentScreenType = ScreenType.MAIN_GAME;
 
     public MainGameScreen(GdxGame game) {
         this.game = game;
@@ -148,28 +161,33 @@ public class MainGameScreen extends ScreenAdapter {
      * Switch to the losing screen in case of player loss
      */
     public void playLoseScreen() {
-        game.setScreen(GdxGame.ScreenType.LOSESCREEN);
+        currentScreenType = ScreenType.LOSE;
     }
 
     /**
      * Switch to winning screen in case of player win
      */
     public void playWinScreen() {
-        game.setScreen(GdxGame.ScreenType.WINSCREEN);
+        currentScreenType = ScreenType.WIN;
     }
 
     @Override
     public void render(float delta) {
-        if (!ServiceLocator.getTimeService().isPaused()) {
-            physicsEngine.update();
-            ServiceLocator.getEntityService().update();
-        }
-        ServiceLocator.getTimeService().update();
-        renderer.render();
-
-        if (PauseMenuActions.getQuitGameStatus()) {
-            entity.getEvents().trigger("exit");
-            PauseMenuActions.setQuitGameStatus();
+        switch (currentScreenType) {
+            case MAIN_GAME -> {
+                if (!ServiceLocator.getTimeService().isPaused()) {
+                    physicsEngine.update();
+                    ServiceLocator.getEntityService().update();
+                }
+                ServiceLocator.getTimeService().update();
+                renderer.render();
+                if (PauseMenuActions.getQuitGameStatus()) {
+                    entity.getEvents().trigger("exit");
+                    PauseMenuActions.setQuitGameStatus();
+                }
+            }
+            case LOSE -> game.setScreen(GdxGame.ScreenType.LOSESCREEN);
+            case WIN -> game.setScreen(GdxGame.ScreenType.WINSCREEN);
         }
     }
 

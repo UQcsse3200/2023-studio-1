@@ -2,15 +2,10 @@ package com.csse3200.game.components.inventory;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
-
-import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
@@ -47,7 +42,7 @@ public class TestInventoryUI {
         ServiceLocator.registerRenderService(renderService);
 
         ServiceLocator.registerInputService(new InputService());
-        inventoryDisplay = spy(new InventoryDisplay(30, 10));
+        inventoryDisplay = spy(new InventoryDisplay("updateInventory", "toggleInventory", 30, 10, true));
         player =
                 new Entity()
                         .addComponent(new PlayerActions())

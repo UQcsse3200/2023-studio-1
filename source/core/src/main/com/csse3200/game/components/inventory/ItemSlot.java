@@ -3,7 +3,6 @@ package com.csse3200.game.components.inventory;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -16,19 +15,18 @@ import java.util.Objects;
  * A class used to combine all the data necessary to the individual inventory slots
  */
 public class ItemSlot extends Stack {
-
     private Texture itemTexture;
     private Integer count;
     private final Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
-
     private Image background;
     private Image frame;
-
     private boolean selected;
     private Image itemImage;
 
     private Label label;
     private Stack draggable;
+    private Label countLabel;
+    private Label toolbarLabel;
 
     /**
      * Construct an itemSlot with a texture, count and selected state
@@ -102,13 +100,15 @@ public class ItemSlot extends Stack {
             }
         }
     }
-
     /**
      * Get the item count
      * @return count integer of number of item
      */
     public Integer getCount() {
-        return Objects.requireNonNullElse(count, 0);
+        if (count != null) {
+            return count;
+        }
+        return -1;
     }
 
     /**
@@ -151,7 +151,6 @@ public class ItemSlot extends Stack {
                 label.setColor(Color.BLACK);
                 label.setAlignment(Align.bottomRight);
                 draggable.add(label);
-                label.setTouchable(Touchable.enabled);
             } else {
                 label.setText(this.count + " ");
             }
@@ -191,7 +190,6 @@ public class ItemSlot extends Stack {
         return ans;
     }
     public void setItemImage(Image image) {
-        //this.removeActor(itemImage);
         draggable.removeActor(itemImage);
         if (image != null) {
             draggable.addActorAt(0, image);

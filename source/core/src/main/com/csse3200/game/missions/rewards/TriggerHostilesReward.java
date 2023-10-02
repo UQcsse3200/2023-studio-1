@@ -2,6 +2,7 @@ package com.csse3200.game.missions.rewards;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.areas.SpaceGameArea;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.RandomUtils;
@@ -32,7 +33,7 @@ public class TriggerHostilesReward extends Reward {
             gameArea.spawnEntityAt(enemy, spawnPos, true, true);
         }
 
-        // TODO - Trigger hostiles to spawn in the world (to be implemented by team 4)
+        //Begin passive spawning for hostiles
+        ((SpaceGameArea) gameArea).getHostileSpawner().startPeriodicSpawning();
     }
-
 }
