@@ -77,20 +77,6 @@ public class CutsceneDisplay extends UIComponent {
         table.padBottom(160);
 
         this.dimScreen();
-        /*
-        logger.debug("Screen dimmed");
-        //Following code for making transparent rectangle from
-        //https://stackoverflow.com/questions/44260510/is-it-possible-to-draw-a-transparent-layer-without-using-image-libgdx
-        Pixmap pixmap = new Pixmap(1,1, Pixmap.Format.RGBA8888);
-        pixmap.setColor(Color.BLACK);
-        pixmap.fillRectangle(0, 0, 1, 1);
-        Texture transparentRecTex = new Texture(pixmap);
-        pixmap.dispose();
-        transparentRectangle = new Image(transparentRecTex);
-        transparentRectangle.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        transparentRectangle.getColor().a = 0.5f;
-        stage.addActor(transparentRectangle);
-         */
 
         stage.addActor(table);
         this.spawnSprites();
@@ -98,6 +84,9 @@ public class CutsceneDisplay extends UIComponent {
         this.spawnContinueButton();
     }
 
+    /**
+     * Dims the screen
+     */
     public void dimScreen() {
         logger.debug("Screen dimmed");
         //Following code for making transparent rectangle from
