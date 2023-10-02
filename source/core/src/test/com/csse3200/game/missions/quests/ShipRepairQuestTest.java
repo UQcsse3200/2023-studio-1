@@ -64,6 +64,13 @@ class ShipRepairQuestTest {
         assertTrue(SRQuest5.isCompleted());
     }
 
+    @Test
+    public void testGetDescription() {
+        String desc = "Repair your ship and unlock useful features.\nAdd %d scavenged " +
+                "parts from your ship's hull to your ship.\n%d out of %d additional ship parts added.";
+        assertEquals(String.format(desc, 10, 0, 10), SRQuest1.getDescription());
+    }
+
 
 
 }

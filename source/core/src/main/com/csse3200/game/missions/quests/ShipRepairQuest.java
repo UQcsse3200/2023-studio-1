@@ -43,13 +43,13 @@ public class ShipRepairQuest extends Quest {
 
     @Override
     public String getDescription() {
-        return "Repair your ship and unlock useful features.\nAdd scavenged " + targetShipRepairProgress
-                + " parts from your ship's hull to your ship.\n" + getShortDescription() + ".";
+        return "Repair your ship and unlock useful features.\nAdd " + targetShipRepairProgress
+                + " scavenged parts from your ship's hull to your ship.\n" + getShortDescription() + ".";
     }
 
     @Override
     public String getShortDescription() {
-        return currentShipRepairProgress + " out of " + targetShipRepairProgress + " additional ship parts to be added";
+        return currentShipRepairProgress + " out of " + targetShipRepairProgress + " additional ship parts added";
     }
 
     @Override
