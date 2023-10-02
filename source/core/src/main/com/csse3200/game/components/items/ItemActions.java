@@ -12,6 +12,7 @@ import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.npc.TamableComponent;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
