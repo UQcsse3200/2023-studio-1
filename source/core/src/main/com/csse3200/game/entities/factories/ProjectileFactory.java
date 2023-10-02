@@ -39,6 +39,7 @@ public class ProjectileFactory {
         animator.addAnimation("impact", 0.1f);
 
         projectile
+                .addComponent(new CombatStatsComponent(1, 1))
                 .addComponent(new ProjectileComponent(2f))
                 .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 10f))
                 .addComponent(animator);
@@ -68,6 +69,7 @@ public class ProjectileFactory {
         animator.addAnimation("impact", 0.1f);
 
         projectile
+                .addComponent(new CombatStatsComponent(1, 1))
                 .addComponent(new ProjectileComponent(3f))
                 .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 5f))
                 .addComponent(animator);
