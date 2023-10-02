@@ -44,18 +44,19 @@ public class CutsceneDisplay extends UIComponent {
      * Stores the dialogue text
      */
     private final String dialogue;
-
     private Table dialogueTable;
+    private final Cutscene.CutsceneType cutsceneType;
 
     /**
      * Creates a cutscene display using the given parameters
      * @param dialogue the dialogue that will be displayed
      * @param cutscene the cutscene object that created the cutscene display
      */
-    public CutsceneDisplay(String dialogue, Cutscene cutscene) {
+    public CutsceneDisplay(String dialogue, Cutscene cutscene, Cutscene.CutsceneType cutsceneType) {
         super();
         this.dialogue = dialogue;
         this.cutscene = cutscene;
+        this.cutsceneType = cutsceneType;
     }
 
     @Override

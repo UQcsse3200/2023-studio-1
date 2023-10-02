@@ -10,21 +10,20 @@ import org.slf4j.LoggerFactory;
 
 public class Cutscene{
     private static final Logger logger = LoggerFactory.getLogger(Cutscene.class);
-
     private Entity cutsceneEntity;
-
     /**
      * Stores the dialogue text
      */
     private final String dialogue;
-
+    private final CutsceneType cutsceneType;
     /**
      * Creates an instance of the cutscene class and assigns all variables as they need to be assigned - DOES NOT SPAWN THE ACTUAL CUTSCENE
      * @param dialogue - the dialogue to be displayed in the cutscene
      */
-    public Cutscene(String dialogue) {
+    public Cutscene(String dialogue, CutsceneType cutsceneType) {
         super();
         this.dialogue = dialogue;
+        this.cutsceneType = cutsceneType;
     }
 
     /**
@@ -37,7 +36,7 @@ public class Cutscene{
         this.pauseGame();
         Stage stage = ServiceLocator.getRenderService().getStage();
         cutsceneEntity = new Entity();
-        cutsceneEntity.addComponent(new CutsceneDisplay(dialogue, this))
+        cutsceneEntity.addComponent(new CutsceneDisplay(dialogue, this, this.cutsceneType))
                 .addComponent(new InputDecorator(stage, 10));
         ServiceLocator.getEntityService().register(cutsceneEntity);
     }
@@ -68,5 +67,13 @@ public class Cutscene{
         cutsceneEntity.dispose();
         ServiceLocator.getEntityService().unregister(cutsceneEntity);
         this.unPauseGame();
+    }
+
+    /**
+     * Represents what type if cutscene the cutscene will be
+     */
+    public enum CutsceneType {
+        ALIEN, // Alien quest giver talks to player
+        RADIO // Radio talks to player
     }
 }
