@@ -208,6 +208,9 @@ public class ServiceLocator {
     inputService = null;
     resourceService = null;
     gameArea = null;
+    lightService = null;
+    particleService = null;
+    timeService = null;
   }
 
   private ServiceLocator() {

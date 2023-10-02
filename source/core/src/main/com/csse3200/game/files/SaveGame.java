@@ -1,6 +1,8 @@
 package com.csse3200.game.files;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.areas.weather.ClimateController;
@@ -54,6 +56,7 @@ public class SaveGame {
     private Array<Entity> entities;
 
     private Array<Entity> tiles;
+    private Array<Entity> placeables;
 
     public GameState() {
     };
@@ -171,6 +174,28 @@ public class SaveGame {
 
     public void setMinute(int minute) {
       this.minute = minute;
+    }
+
+    public Array<Entity> getPlaceables() {
+      return placeables;
+    }
+
+    public void setPlaceables(Array<Entity> placeables) {
+      this.placeables = filterPlaceables(placeables);
+    }
+
+    private Array<Entity> filterPlaceables(Array<Entity> entities) {
+      Array<Entity> returnValue = new Array<>(entities);
+      ArrayList<EntityType> placeableTypes = new ArrayList<EntityType>(Arrays.asList(EntityType.Chest, EntityType.Light,
+              EntityType.Fence, EntityType.Gate, EntityType.Sprinkler, EntityType.Pump));
+      for (int i = 0; i < returnValue.size; i++) {
+        if (!placeableTypes.contains(returnValue.get(i).getType())) {
+          returnValue.removeIndex(i);
+          // Moves the indexing down when removed so keep index same
+          i--;
+        }
+      }
+      return returnValue;
     }
   }
 }
