@@ -354,15 +354,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Frequency of attacks in seconds</div>
 </dd>
 <dt><a href="com/csse3200/game/components/combat/attackpatterns/AttackPatternComponent.html" class="type-name-link" title="class in com.csse3200.game.components.combat.attackpatterns">AttackPatternComponent</a> - Class in <a href="com/csse3200/game/components/combat/attackpatterns/package-summary.html">com.csse3200.game.components.combat.attackpatterns</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/combat/attackpatterns/AttackPatternComponent.html#%3Cinit%3E(float)" class="member-name-link">AttackPatternComponent(float)</a> - Constructor for class com.csse3200.game.components.combat.attackpatterns.<a href="com/csse3200/game/components/combat/attackpatterns/AttackPatternComponent.html" title="class in com.csse3200.game.components.combat.attackpatterns">AttackPatternComponent</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/tasks/AttackPlayerTask.html" class="type-name-link" title="class in com.csse3200.game.components.tasks">AttackPlayerTask</a> - Class in <a href="com/csse3200/game/components/tasks/package-summary.html">com.csse3200.game.components.tasks</a></dt>
 <dd>
-<div class="block">Notes from UniversalTze
- Main idea for this hostile was that it would just wander until the player popped into frame.</div>
+<div class="block">The AttackPatternComponent is responsible for managing the attack patterns
+ of entities within the game.</div>
 </dd>
-<dt><a href="com/csse3200/game/components/tasks/AttackPlayerTask.html#%3Cinit%3E(com.csse3200.game.entities.Entity,int,float,float)" class="member-name-link">AttackPlayerTask(Entity, int, float, float)</a> - Constructor for class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/AttackPlayerTask.html" title="class in com.csse3200.game.components.tasks">AttackPlayerTask</a></dt>
+<dt><a href="com/csse3200/game/components/combat/attackpatterns/AttackPatternComponent.html#%3Cinit%3E(float)" class="member-name-link">AttackPatternComponent(float)</a> - Constructor for class com.csse3200.game.components.combat.attackpatterns.<a href="com/csse3200/game/components/combat/attackpatterns/AttackPatternComponent.html" title="class in com.csse3200.game.components.combat.attackpatterns">AttackPatternComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/AuraLightComponent.html" class="type-name-link" title="class in com.csse3200.game.components">AuraLightComponent</a> - Class in <a href="com/csse3200/game/components/package-summary.html">com.csse3200.game.components</a></dt>
 <dd>&nbsp;</dd>
@@ -2323,8 +2319,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Determines the direction of movement based on the current and target positions.</div>
 </dd>
-<dt><a href="com/csse3200/game/components/tasks/AttackPlayerTask.html#getDistanceToTarget()" class="member-name-link">getDistanceToTarget()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/AttackPlayerTask.html" title="class in com.csse3200.game.components.tasks">AttackPlayerTask</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/tasks/ChaseTask.html#getDistanceToTarget()" class="member-name-link">getDistanceToTarget()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/ChaseTask.html" title="class in com.csse3200.game.components.tasks">ChaseTask</a></dt>
 <dd>
 <div class="block">Calculates the distance between the owner's entity and the target entity.</div>
@@ -2482,7 +2476,10 @@ loadScripts(document, 'script');</script>
  the visibility of the target entity, and the stopping distance.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/tasks/RunAwayTask.html#getInactivePriority()" class="member-name-link">getInactivePriority()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/RunAwayTask.html" title="class in com.csse3200.game.components.tasks">RunAwayTask</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Determines the priority when the RunAwayTask is inactive based on the distance to the target
+ and the visibility of the target entity and whether the animal is tamed.</div>
+</dd>
 <dt><a href="com/csse3200/game/components/tasks/TamedFollowTask.html#getInactivePriority()" class="member-name-link">getInactivePriority()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/TamedFollowTask.html" title="class in com.csse3200.game.components.tasks">TamedFollowTask</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/input/InputService.html#getInputFactory()" class="member-name-link">getInputFactory()</a> - Method in class com.csse3200.game.input.<a href="com/csse3200/game/input/InputService.html" title="class in com.csse3200.game.input">InputService</a></dt>
@@ -2631,10 +2628,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns tractor mode the tractor is currently using</div>
 </dd>
-<dt><a href="com/csse3200/game/components/tasks/AttackPlayerTask.html#getMovementTask()" class="member-name-link">getMovementTask()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/AttackPlayerTask.html" title="class in com.csse3200.game.components.tasks">AttackPlayerTask</a></dt>
-<dd>
-<div class="block">Gets the movement task associated with this attack player task.</div>
-</dd>
 <dt><a href="com/csse3200/game/components/tasks/ChaseTask.html#getMovementTask()" class="member-name-link">getMovementTask()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/ChaseTask.html" title="class in com.csse3200.game.components.tasks">ChaseTask</a></dt>
 <dd>
 <div class="block">Gets the movement task associated with this run away task.</div>
@@ -2773,10 +2766,6 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/areas/weather/WeatherEvent.html#getPriority()" class="member-name-link">getPriority()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/WeatherEvent.html" title="class in com.csse3200.game.areas.weather">WeatherEvent</a></dt>
 <dd>
 <div class="block">Returns the priority of the weather event</div>
-</dd>
-<dt><a href="com/csse3200/game/components/tasks/AttackPlayerTask.html#getPriority()" class="member-name-link">getPriority()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/AttackPlayerTask.html" title="class in com.csse3200.game.components.tasks">AttackPlayerTask</a></dt>
-<dd>
-<div class="block">Gets the priority level of the chase task based on the current status and conditions.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/tasks/ChaseTask.html#getPriority()" class="member-name-link">getPriority()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/ChaseTask.html" title="class in com.csse3200.game.components.tasks">ChaseTask</a></dt>
 <dd>
@@ -3278,7 +3267,7 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Constructs an InteractionDetector with the specified interaction range.</div>
 </dd>
-<dt><a href="com/csse3200/game/components/InteractionDetector.html#%3Cinit%3E(float,java.util.ArrayList)" class="member-name-link">InteractionDetector(float, ArrayList)</a> - Constructor for class com.csse3200.game.components.<a href="com/csse3200/game/components/InteractionDetector.html" title="class in com.csse3200.game.components">InteractionDetector</a></dt>
+<dt><a href="com/csse3200/game/components/InteractionDetector.html#%3Cinit%3E(float,java.util.List)" class="member-name-link">InteractionDetector(float, List&lt;EntityType&gt;)</a> - Constructor for class com.csse3200.game.components.<a href="com/csse3200/game/components/InteractionDetector.html" title="class in com.csse3200.game.components">InteractionDetector</a></dt>
 <dd>
 <div class="block">Constructs an InteractionDetector with the specified interaction range.</div>
 </dd>
@@ -3460,10 +3449,6 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/npc/TamableComponent.html#isTamed()" class="member-name-link">isTamed()</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/TamableComponent.html" title="class in com.csse3200.game.components.npc">TamableComponent</a></dt>
 <dd>
 <div class="block">Function is used to check to see if the animal has been tamed.</div>
-</dd>
-<dt><a href="com/csse3200/game/components/tasks/AttackPlayerTask.html#isTargetVisible()" class="member-name-link">isTargetVisible()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/AttackPlayerTask.html" title="class in com.csse3200.game.components.tasks">AttackPlayerTask</a></dt>
-<dd>
-<div class="block">Checks if the target entity is visible from the owner's entity position by performing a raycast.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/tasks/ChaseTask.html#isTargetVisible()" class="member-name-link">isTargetVisible()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/ChaseTask.html" title="class in com.csse3200.game.components.tasks">ChaseTask</a></dt>
 <dd>
@@ -5335,10 +5320,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Sets the mode of the tractor entity to a given mode</div>
 </dd>
-<dt><a href="com/csse3200/game/components/tasks/AttackPlayerTask.html#setMovementTask(com.csse3200.game.components.tasks.MovementTask)" class="member-name-link">setMovementTask(MovementTask)</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/AttackPlayerTask.html" title="class in com.csse3200.game.components.tasks">AttackPlayerTask</a></dt>
-<dd>
-<div class="block">Setter for movementTask</div>
-</dd>
 <dt><a href="com/csse3200/game/components/tasks/ChaseTask.html#setMovementTask(com.csse3200.game.components.tasks.MovementTask)" class="member-name-link">setMovementTask(MovementTask)</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/ChaseTask.html" title="class in com.csse3200.game.components.tasks">ChaseTask</a></dt>
 <dd>
 <div class="block">Setter for movementTask</div>
@@ -5805,8 +5786,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Start task, setting current run time to 0.</div>
 </dd>
-<dt><a href="com/csse3200/game/components/tasks/AttackPlayerTask.html#start()" class="member-name-link">start()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/AttackPlayerTask.html" title="class in com.csse3200.game.components.tasks">AttackPlayerTask</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/tasks/ChaseTask.html#start()" class="member-name-link">start()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/ChaseTask.html" title="class in com.csse3200.game.components.tasks">ChaseTask</a></dt>
 <dd>
 <div class="block">Starts the chase task by initializing the movement task and triggering the "chaseStart" event.</div>
@@ -5888,8 +5867,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Stops task and sets back to inactive priority.</div>
 </dd>
-<dt><a href="com/csse3200/game/components/tasks/AttackPlayerTask.html#stop()" class="member-name-link">stop()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/AttackPlayerTask.html" title="class in com.csse3200.game.components.tasks">AttackPlayerTask</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/tasks/ChaseTask.html#stop()" class="member-name-link">stop()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/ChaseTask.html" title="class in com.csse3200.game.components.tasks">ChaseTask</a></dt>
 <dd>
 <div class="block">Stops the chase task and the associated movement task.</div>
@@ -6416,8 +6393,6 @@ loadScripts(document, 'script');</script>
 <div class="block">Updates player highlight</div>
 </dd>
 <dt><a href="com/csse3200/game/components/settingsmenu/SettingsMenuDisplay.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.settingsmenu.<a href="com/csse3200/game/components/settingsmenu/SettingsMenuDisplay.html" title="class in com.csse3200.game.components.settingsmenu">SettingsMenuDisplay</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/tasks/AttackPlayerTask.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/AttackPlayerTask.html" title="class in com.csse3200.game.components.tasks">AttackPlayerTask</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/tasks/ChaseTask.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/ChaseTask.html" title="class in com.csse3200.game.components.tasks">ChaseTask</a></dt>
 <dd>
