@@ -73,31 +73,31 @@ public class EndCreditsDisplay extends UIComponent {
                 new Image(
                         ServiceLocator.getResourceService()
                                 .getAsset("images/intro_background_v2.png", Texture.class));
-        //background = new Image(new Texture(Gdx.files.internal("images/intro_background_v2.png")));
         background.setPosition(0, 0);
         float scaledHeight = Gdx.graphics.getWidth() * (background.getHeight() / background.getWidth());
         background.setHeight(scaledHeight);
         String credits = getCredits();
         creditsLabel = new TypingLabel(credits, skin);
         creditsLabel.setAlignment(Align.center);
-        this.returnButton = new TextButton("Return To Main Menu", skin);
-        this.returnButton.setVisible(false); // Make the continue button invisible
-        // The continue button lets the user proceed to the main game
+        // Create a "Return" button
+        this.returnButton =  new TextButton("Return to Main Menu", skin);
+        // Add a listener to the "Skip" button
         this.returnButton.addListener(new ChangeListener() {
             @Override
-            public void changed(ChangeEvent changeEvent, Actor actor) {
+            public void changed(ChangeEvent event, Actor actor) {
                 logger.debug("Player Returned to Main Menu");
                 returnToMenu();
             }
         });
+        // Set the position of the "Skip" button in the top-right corner
+        this.returnButton.setPosition(Gdx.graphics.getWidth() - this.returnButton.getWidth() - 10, Gdx.graphics.getHeight() - this.returnButton.getHeight() - 10);
         Table rootTable = new Table();
         rootTable.setFillParent(true); // Make the table fill the screen
         rootTable.row();
         rootTable.add(creditsLabel).top().padTop((float) (Gdx.graphics.getHeight() * 2.5));
-        rootTable.row().padTop(30f);
-        rootTable.add(returnButton).bottom().padBottom(30f);
-        // The background and planet are added directly to the stage so that they can be moved and animated freely.
+        // Add the "Skip" button to the stage
         stage.addActor(background);
+        stage.addActor(returnButton);
         stage.addActor(rootTable);
     }
 
