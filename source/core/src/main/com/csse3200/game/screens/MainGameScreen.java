@@ -85,7 +85,12 @@ public class MainGameScreen extends ScreenAdapter {
     private Entity entity;
     private final Renderer renderer;
     private final PhysicsEngine physicsEngine;
-
+    public enum ScreenType {
+        MAIN_GAME,
+        WIN,
+        LOSE
+    }
+    private ScreenType currentScreenType = ScreenType.MAIN_GAME;
 
     public MainGameScreen(GdxGame game) {
         this.game = game;
@@ -150,31 +155,33 @@ public class MainGameScreen extends ScreenAdapter {
      */
     public void playLoseScreen(String causeOfDeath) {
         LoseScreenDisplay.setLoseReason(causeOfDeath);
-        game.setScreen(GdxGame.ScreenType.LOSESCREEN);
+        currentScreenType = ScreenType.LOSE;
     }
 
     /**
      * Switch to winning screen in case of player win
      */
     public void playWinScreen() {
-        game.setScreen(GdxGame.ScreenType.WINSCREEN);
+        currentScreenType = ScreenType.WIN;
     }
 
     @Override
     public void render(float delta) {
-        if (!ServiceLocator.getTimeService().isPaused()) {
-            physicsEngine.update();
-            ServiceLocator.getEntityService().update();
-        }
-        ServiceLocator.getTimeService().update();
-        // This needs to be checked separately from updateActiveQuestTimes due to an issue with triggering the lose
-        // screen, which should be changed before the end of sprint 4
-        ServiceLocator.getMissionManager().checkMandatoryQuestExpiry();
-        renderer.render();
-
-        if (PauseMenuActions.getQuitGameStatus()) {
-            entity.getEvents().trigger("exit");
-            PauseMenuActions.setQuitGameStatus();
+        switch (currentScreenType) {
+            case MAIN_GAME -> {
+                if (!ServiceLocator.getTimeService().isPaused()) {
+                    physicsEngine.update();
+                    ServiceLocator.getEntityService().update();
+                }
+                ServiceLocator.getTimeService().update();
+                renderer.render();
+                if (PauseMenuActions.getQuitGameStatus()) {
+                    entity.getEvents().trigger("exit");
+                    PauseMenuActions.setQuitGameStatus();
+                }
+            }
+            case LOSE -> game.setScreen(GdxGame.ScreenType.LOSESCREEN);
+            case WIN -> game.setScreen(GdxGame.ScreenType.WINSCREEN);
         }
     }
 
