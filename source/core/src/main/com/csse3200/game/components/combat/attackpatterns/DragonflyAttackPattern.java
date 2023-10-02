@@ -72,7 +72,6 @@ public class DragonflyAttackPattern extends AttackPatternComponent {
                     return;
             }
         }
-
         super.attack();
     }
 
