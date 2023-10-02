@@ -25,23 +25,11 @@ class ShipRepairQuestTest {
 
         r1 = mock(Reward.class);
         r2 = mock(Reward.class);
-        r3 = mock(Reward.class);
+        r3 = mock(Reward.class);W
         r4 = mock(Reward.class);
         r5 = mock(Reward.class);
         r6 = mock(Reward.class);
         r7 = mock(Reward.class);
-
-
-        Set<String> plantTypes1 = new HashSet<>();
-        Set<String> plantTypes2 = new HashSet<>();
-        plantTypes1.add("Cosmic Cob");
-
-        plantTypes2.add("Aloe Vera");
-        plantTypes2.add("Cosmic Cob");
-
-        MissionManager.MissionEvent plant = MissionManager.MissionEvent.PLANT_CROP;
-        MissionManager.MissionEvent harvest = MissionManager.MissionEvent.HARVEST_CROP;
-        MissionManager.MissionEvent bug = MissionManager.MissionEvent.ANIMAL_DEFEATED;
 
         SRQuest1 = new ShipRepairQuest("Ship Repair Quest 1", r1, 10);
         SRQuest1 = new ShipRepairQuest("Ship Repair Quest 1", r1, 0);

@@ -13,14 +13,14 @@ public class ShipRepairQuest extends Quest {
     public ShipRepairQuest(String name, Reward reward, int targetShipRepairProgress) {
         super(name, reward);
 
-        this.targetShipRepairProgress = targetShipRepairProgress;
+        this.targetShipRepairProgress = Math.max(0, targetShipRepairProgress);
         this.currentShipRepairProgress = 0;
     }
 
     public ShipRepairQuest(String name, Reward reward, int expiryDuration, int targetShipRepairProgress) {
         super(name, reward, expiryDuration, false);
 
-        this.targetShipRepairProgress = targetShipRepairProgress;
+        this.targetShipRepairProgress = Math.max(0, targetShipRepairProgress);
         this.currentShipRepairProgress = 0;
     }
 
