@@ -35,7 +35,8 @@ public class ShipAnimationControllerTest {
         resourceService.loadAll();
         ServiceLocator.registerResourceService(resourceService);
 
-        AnimationRenderComponent animationRenderComponent = ShipFactory.setupShipAnimations();
+        animationRenderComponent = ShipFactory.setupShipAnimations();
+        
         ship = new Entity(EntityType.Ship)
                 .addComponent(animationRenderComponent)
                 .addComponent(new ShipAnimationController());
