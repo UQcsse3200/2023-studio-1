@@ -91,7 +91,12 @@ public class MainGameScreen extends ScreenAdapter {
     private Entity entity;
     private final Renderer renderer;
     private final PhysicsEngine physicsEngine;
-
+    public enum ScreenType {
+        MAIN_GAME,
+        WIN,
+        LOSE
+    }
+    private ScreenType currentScreenType = ScreenType.MAIN_GAME;
 
     public MainGameScreen(GdxGame game) {
         this.game = game;
@@ -155,28 +160,33 @@ public class MainGameScreen extends ScreenAdapter {
      * Switch to the losing screen in case of player loss
      */
     public void playLoseScreen() {
-        game.setScreen(GdxGame.ScreenType.LOSESCREEN);
+        currentScreenType = ScreenType.LOSE;
     }
 
     /**
      * Switch to winning screen in case of player win
      */
     public void playWinScreen() {
-        game.setScreen(GdxGame.ScreenType.WINSCREEN);
+        currentScreenType = ScreenType.WIN;
     }
 
     @Override
     public void render(float delta) {
-        if (!ServiceLocator.getTimeService().isPaused()) {
-            physicsEngine.update();
-            ServiceLocator.getEntityService().update();
-        }
-        ServiceLocator.getTimeService().update();
-        renderer.render();
-
-        if (PauseMenuActions.getQuitGameStatus()) {
-            entity.getEvents().trigger("exit");
-            PauseMenuActions.setQuitGameStatus();
+        switch (currentScreenType) {
+            case MAIN_GAME -> {
+                if (!ServiceLocator.getTimeService().isPaused()) {
+                    physicsEngine.update();
+                    ServiceLocator.getEntityService().update();
+                }
+                ServiceLocator.getTimeService().update();
+                renderer.render();
+                if (PauseMenuActions.getQuitGameStatus()) {
+                    entity.getEvents().trigger("exit");
+                    PauseMenuActions.setQuitGameStatus();
+                }
+            }
+            case LOSE -> game.setScreen(GdxGame.ScreenType.LOSESCREEN);
+            case WIN -> game.setScreen(GdxGame.ScreenType.WINSCREEN);
         }
     }
 

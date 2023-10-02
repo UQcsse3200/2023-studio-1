@@ -392,13 +392,11 @@ public class Entity implements Json.Serializable {
 
     /**
      * Writes the item to the json file
-     * 
+     *
      * @param json which is a valid Json that is written to
      */
     public void writeItem(Json json) {
         json.writeValue("name", this.getComponent(ItemComponent.class).getItemName());
-        // update the tractor 'muted' variable based on the info in the json file on
-        // ItemType or something?
         if (this.getComponent(WateringCanLevelComponent.class) != null) {
             this.getComponent(WateringCanLevelComponent.class).write(json);
         }
@@ -475,38 +473,31 @@ public class Entity implements Json.Serializable {
                 case Player:
                     // Does not make a new player, instead just updates the current one
                     InventoryComponent inventoryComponent = new InventoryComponent();
-                    HashMap<Entity, Integer> items = new HashMap<>();
-                    HashMap<Entity, Point> itemPositions = new HashMap<>();
-                    ArrayList inventory = new ArrayList();
-                    JsonValue inv = jsonMap.get("components").get("InventoryComponent").get("inventory");
-                    inv.forEach(jsonValue -> {
-                        Entity item = FactoryService.getItemFactories().get(jsonValue.getString("name")).get();
-                        ItemType itemType = item.getComponent(ItemComponent.class).getItemType();
-                        switch (itemType) {
-                            case WATERING_CAN ->
-                                item.getComponent(WateringCanLevelComponent.class)
-                                        .setCurrentLevel(jsonValue.getFloat("level"));
-                        }
-                        items.put(item, jsonValue.getInt("count"));
-                        itemPositions.put(item, new Point(jsonValue.getInt("X"), jsonValue.getInt("Y")));
-                        inventory.add(item);
-                    });
-                    // rewrite the json logic to work with reworked inventory
-                    // inventoryComponent.setInventory(items, itemPositions, inventory);
-                    // this.addComponent(inventoryComponent);
+                    JsonValue inv = jsonMap.get("components");
+                    inventoryComponent.read(json, inv);
+                    this.addComponent(inventoryComponent);
                     break;
                     */
                 default:
-                    if (FactoryService.getNpcFactories().containsKey(type)
-                            && ServiceLocator.getGameArea().getLoadableTypes().contains(type)) {
+                    if (FactoryService.getNpcFactories().containsKey(type) && ServiceLocator.getGameArea().getLoadableTypes().contains(type)) {
                         // Makes a new NPC
-                        Entity npc = FactoryService.getNpcFactories().get(type)
-                                .apply(ServiceLocator.getGameArea().getPlayer());
+                        Entity npc = FactoryService.getNpcFactories().get(type).apply(ServiceLocator.getGameArea().getPlayer());
                         if (npc.getComponent(TamableComponent.class) != null) {
                             npc.getComponent(TamableComponent.class).read(json, jsonMap.get("components"));
+                        } else if (npc.getType() == EntityType.ShipDebris) {
+                            ServiceLocator.getGameArea().getMap().getTile(position).setOccupant(npc);
                         }
                         ServiceLocator.getGameArea().spawnEntity(npc);
                         npc.setPosition(position);
+                    } else if (FactoryService.getPlaceableFactories().containsKey(type.toString()) && ServiceLocator.getGameArea().getLoadableTypes().contains(type)) {
+                        // Makes a new Placeable
+                        Entity placeable = FactoryService.getPlaceableFactories().get(type.toString()).get();
+                        placeable.setPosition(position);
+                        if (placeable.getType() == EntityType.Chest) {
+                            placeable.getComponent(InventoryComponent.class).read(json, jsonMap.get("components"));
+                        }
+                        ServiceLocator.getGameArea().getMap().getTile(position).setOccupant(placeable);
+                        ServiceLocator.getGameArea().spawnEntity(placeable);
                     }
                     break;
             }
