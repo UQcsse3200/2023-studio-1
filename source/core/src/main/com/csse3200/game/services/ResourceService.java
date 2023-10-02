@@ -1,5 +1,6 @@
 package com.csse3200.game.services;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -170,6 +171,15 @@ public class ResourceService implements Disposable {
    */
   public void loadMusic(String[] musicNames) {
     loadAssets(musicNames, Music.class);
+  }
+
+  /**
+   * Loads a list of skin assets into the asset manager.
+   *
+   * @param skinNames skin names
+   */
+  public void loadSkins(String[] skinNames) {
+    loadAssets(skinNames, Skin.class);
   }
 
   /**

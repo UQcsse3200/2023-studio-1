@@ -1,6 +1,7 @@
 package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
@@ -43,6 +44,18 @@ public class NPCFactory {
   private static final NPCConfigs configs =
       FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 
+  private static final String[] textureAtlasPaths = new String[]{
+          "images/animals/chicken.atlas",
+          "images/animals/cow.atlas",
+          "images/animals/astrolotl.atlas",
+          "images/animals/oxygen_eater.atlas",
+          "images/fireflies.atlas"
+  };
+
+  static {
+    ServiceLocator.getResourceService().loadTextureAtlases(textureAtlasPaths);
+    ServiceLocator.getResourceService().loadAll();
+  }
 
   /**
    * Creates a chicken entity
@@ -54,7 +67,7 @@ public class NPCFactory {
     BaseAnimalConfig config = configs.chicken;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
-            ServiceLocator.getResourceService().getAsset("images/animals/chicken.atlas", TextureAtlas.class),
+            ServiceLocator.getResourceService().getAsset(textureAtlasPaths[0], TextureAtlas.class),
             16f
     );
     animator.addAnimation("idle_left", Float.MAX_VALUE);
@@ -100,7 +113,7 @@ public class NPCFactory {
     BaseAnimalConfig config = configs.cow;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
-            ServiceLocator.getResourceService().getAsset("images/animals/cow.atlas", TextureAtlas.class),
+            ServiceLocator.getResourceService().getAsset(textureAtlasPaths[1], TextureAtlas.class),
             16f
     );
     animator.addAnimation("idle_left", 0.25f, Animation.PlayMode.LOOP);
@@ -144,7 +157,7 @@ public class NPCFactory {
     BaseAnimalConfig config = configs.astrolotl;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
-            ServiceLocator.getResourceService().getAsset("images/animals/astrolotl.atlas", TextureAtlas.class)
+            ServiceLocator.getResourceService().getAsset(textureAtlasPaths[2], TextureAtlas.class)
             , 20f);
     animator.addAnimation("idle_left", 0.15f, Animation.PlayMode.LOOP);
     animator.addAnimation("idle_right", 0.15f, Animation.PlayMode.LOOP);
@@ -179,8 +192,7 @@ public class NPCFactory {
     BaseAnimalConfig config = configs.oxygenEater;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
-            ServiceLocator.getResourceService().getAsset("images/animals/oxygen_eater.atlas",
-                    TextureAtlas.class),
+            ServiceLocator.getResourceService().getAsset(textureAtlasPaths[3], TextureAtlas.class),
             16f
     );
 
@@ -216,7 +228,7 @@ public class NPCFactory {
     light.toggleLight();
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
-            ServiceLocator.getResourceService().getAsset("images/fireflies.atlas", TextureAtlas.class),
+            ServiceLocator.getResourceService().getAsset(textureAtlasPaths[4], TextureAtlas.class),
             16f
     );
     String animation = "default";

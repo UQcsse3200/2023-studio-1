@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 import com.csse3200.game.components.items.ItemActions;
+import com.csse3200.game.services.ResourceService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,6 +36,7 @@ class PassiveDropComponentTest {
     private PassiveDropComponent dropComponent;
     private TimeService timeService;
     private int initialEntityCount;
+    private final String[] texturePaths = {"images/dont_delete_test_image.png"};
 
     private Entity createDummyItem() {
         return new Entity(EntityType.Item)
@@ -42,7 +44,7 @@ class PassiveDropComponentTest {
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ITEM))
                 .addComponent(new ItemActions())
                 .addComponent(new ItemComponent("dummy", ItemType.FERTILISER,
-                        new Texture("images/dont_delete_test_image.png")));
+                        "images/dont_delete_test_image.png"));
     }
 
     private Entity createDummyEntity(int dropRate, boolean isTamed) {
@@ -61,9 +63,13 @@ class PassiveDropComponentTest {
 
     @BeforeEach
     void beforeEach() {
+        ServiceLocator.registerResourceService(new ResourceService());
+        ServiceLocator.getResourceService().loadTextures(texturePaths);
         ServiceLocator.registerPhysicsService(new PhysicsService());
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerRenderService(new RenderService());
+
+        ServiceLocator.getResourceService().loadAll();
         ServiceLocator.registerGameArea(new GameArea() {
             @Override
             public void create() {

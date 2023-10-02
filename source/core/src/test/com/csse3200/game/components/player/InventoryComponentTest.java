@@ -13,6 +13,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.entities.EntityType;
+import com.csse3200.game.services.ResourceService;
+import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,9 +30,14 @@ class InventoryComponentTest {
   private Entity item1;
   private Entity item2;
   private Entity player;
+  private final String[] texturePaths = {"images/tool_shovel.png"};
 
   @BeforeEach
   public void setUp() {
+    ServiceLocator.registerResourceService(new ResourceService());
+    ServiceLocator.getResourceService().loadTextures(texturePaths);
+    ServiceLocator.getResourceService().loadAll();
+
     // Set up the inventory with two initial items
     List<Entity> items = new ArrayList<>();
     inventoryComponent = spy(new InventoryComponent(new ArrayList<>()));
@@ -41,9 +48,9 @@ class InventoryComponentTest {
 //    items.put(item1.getComponent(ItemComponent.class).getItemName(),item1);
 //    items.put(item2.getComponent(ItemComponent.class).getItemName(),item2);
     ItemComponent itemComponent1 = new ItemComponent("itemTest1", ItemType.HOE,
-            new Texture("images/tool_shovel.png")); // Texture is not used...
+            "images/tool_shovel.png"); // Texture is not used...
     ItemComponent itemComponent2 = new ItemComponent("itemTest2", ItemType.SCYTHE,
-            new Texture("images/tool_shovel.png")); // Texture is not used...
+            "images/tool_shovel.png"); // Texture is not used...
     item1.addComponent(itemComponent1);
     item2.addComponent(itemComponent2);
     inventoryComponent.addItem(item1);
@@ -85,7 +92,7 @@ class InventoryComponentTest {
     // Create a new item
     Entity newItem = new Entity(EntityType.Item);
     ItemComponent itemComponent3 = new ItemComponent("itemTest3", ItemType.SCYTHE,
-            new Texture("images/tool_shovel.png")); // Texture is not used...
+            "images/tool_shovel.png"); // Texture is not used...
     // Add the new item to the inventory
     newItem.addComponent(itemComponent3);
     assertTrue(inventoryComponent.addItem(newItem));
@@ -101,7 +108,7 @@ class InventoryComponentTest {
     // Remove an item from the inventory
     Entity newItem = new Entity(EntityType.Item);
     ItemComponent itemComponent3 = new ItemComponent("itemTest3", ItemType.SCYTHE,
-            new Texture("images/tool_shovel.png")); // Texture is not used...
+            "images/tool_shovel.png"); // Texture is not used...
     // Add the new item to the inventory
     newItem.addComponent(itemComponent3);
     if(inventoryComponent.getItemCount(item1) == 0){

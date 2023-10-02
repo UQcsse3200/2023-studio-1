@@ -118,6 +118,7 @@ public class SpaceGameArea extends GameArea {
           "images/plants/cosmic_cob/5_decaying.png",
           "images/plants/cosmic_cob/6_dead.png",
           "images/plants/cosmic_cob/item_drop.png",
+          "images/plants/cosmic_cob/seedbag.png",
 
           "images/plants/aloe_vera/1_seedling.png",
           "images/plants/aloe_vera/2_sprout.png",
@@ -162,7 +163,7 @@ public class SpaceGameArea extends GameArea {
           "images/plants/deadly_nightshade/5_decaying.png",
           "images/plants/deadly_nightshade/6_dead.png",
           "images/plants/deadly_nightshade/item_drop.png",
-          //"images/plants/deadly_nightshade/seedbag.png",
+          "images/plants/deadly_nightshade/seedbag.png",
 
           "images/plants/misc/aloe_vera_seed.png",
           "images/plants/misc/cosmic_cob_seed.png",
@@ -176,7 +177,7 @@ public class SpaceGameArea extends GameArea {
 
 
           "images/hostile_indicator.png",
-          
+
           "images/ship/ship_debris.png",
           "images/ship/ship.png",
           "images/ship/ship_part.png",
@@ -189,9 +190,10 @@ public class SpaceGameArea extends GameArea {
       "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas",
       "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas", "images/questgiver.atlas",
       "images/missionStatus.atlas", "images/plants/cosmic_cob.atlas", "images/plants/aloe_vera.atlas",
-      "images/plants/hammer_plant.atlas", "images/plants/space_snapper.atlas", "images/plants/atomic_algae.atlas",
-      "images/plants/deadly_nightshade.atlas", "images/projectiles/oxygen_eater_projectile.atlas",
-      "images/fireflies.atlas", "images/ship/ship.atlas", "images/light.atlas"
+      "images/plants/deadly_nightshade.atlas", "images/plants/atomic_algae.atlas",
+      "images/plants/hammer_plant.atlas", "images/plants/space_snapper.atlas",
+      "images/projectiles/oxygen_eater_projectile.atlas", "images/fireflies.atlas",
+      "images/ship/ship.atlas", "images/light.atlas"
   };
   private static final String[] forestSounds = {
           "sounds/Impact4.ogg", "sounds/car-horn-6408.mp3",

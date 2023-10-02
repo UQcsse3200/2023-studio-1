@@ -8,6 +8,7 @@ import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.services.ResourceService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -36,15 +37,21 @@ public class TamedFollowTaskTest {
     private InventoryComponent targetInventory;
     private InventoryComponent targetInvSpy;
 
+    private static final String[] texturePaths = {"images/egg.png"};
+
     @BeforeEach
     void beforeEach() {
+        ServiceLocator.registerResourceService(new ResourceService());
+        ServiceLocator.getResourceService().loadTextures(texturePaths);
+        ServiceLocator.getResourceService().loadAll();
+
         targetInventory = new InventoryComponent(new ArrayList<>());
         targetInvSpy = spy(targetInventory);
         target = new Entity().addComponent(targetInvSpy);
         target.create();
 
         foodEntity = new Entity(EntityType.Item);
-        fooditem = new ItemComponent("AFood", ItemType.ANIMAL_FOOD, new Texture("images/egg.png"));
+        fooditem = new ItemComponent("AFood", ItemType.ANIMAL_FOOD, "images/egg.png");
         //texture is just used as a placeholder.
         //add Animal's favourite food to player/target's spy inventory. (Will be the only item in inventory).
         foodEntity.addComponent(fooditem);

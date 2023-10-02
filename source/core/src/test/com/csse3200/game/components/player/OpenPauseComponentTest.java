@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.GameTime;
@@ -12,6 +13,7 @@ import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
 import com.csse3200.game.services.TimeService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,12 +28,17 @@ class OpenPauseComponentTest {
 
     Entity player;
     OpenPauseComponent openPauseComponent;
+    private final String[] texturePaths = {"images/PauseMenu/Pause_Overlay.jpg", "images/PauseMenu/Pausenew.jpg"};
+
 
     @BeforeEach
     void init() {
         AssetManager assetManager = spy(AssetManager.class);
         ResourceService resourceService = new ResourceService(assetManager);
         ServiceLocator.registerResourceService(resourceService);
+        ServiceLocator.getResourceService().loadTextures(texturePaths);
+        ServiceLocator.getResourceService().loadAll();
+
         TimeService timeService = new TimeService();
         ServiceLocator.registerTimeService(timeService);
         GameTime gameTime = new GameTime();
@@ -42,12 +49,18 @@ class OpenPauseComponentTest {
         GameAreaDisplay playerGuidArea = new GameAreaDisplay("");
         ServiceLocator.registerGameArea(gameArea);
         ServiceLocator.registerRenderService(renderService);
+        ServiceLocator.registerEntityService(new EntityService());
         playerGuidArea.create();
         player = new Entity();
         openPauseComponent = new OpenPauseComponent();
         player.addComponent(openPauseComponent);
         player.create();
         gameArea.setPlayer(player);
+    }
+
+    @AfterEach
+    void clear() {
+        ServiceLocator.clear();
     }
 
     @Test
