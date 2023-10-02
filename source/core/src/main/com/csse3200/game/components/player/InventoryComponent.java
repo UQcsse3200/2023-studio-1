@@ -350,6 +350,7 @@ public class InventoryComponent extends Component {
             this.heldItemsEntity.put(item.getComponent(ItemComponent.class).getItemName(), item);
             // Add item to next available position
             setPosition(item);
+            setHeldItem(getHeldIndex());
             entity.getEvents().trigger("updateInventory");
             return true;
         }
@@ -377,6 +378,7 @@ public class InventoryComponent extends Component {
                 for (int i = 0; i < this.itemPlace.size(); i++) {
                     if (this.itemPlace.get(i) == item.getComponent(ItemComponent.class).getItemName()) {
                         this.itemPlace.remove(i);
+                        setHeldItem(heldIndex);
                         break;
                     }
                 }

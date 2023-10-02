@@ -37,7 +37,7 @@ public class InventoryDisplay extends UIComponent {
     private boolean isOpen = false;
     private DragAndDrop dnd;
     private ArrayList<Actor> actors;
-    private Map<Image,ItemSlot> map;
+    private Map<Stack,ItemSlot> map;
     private Map<ItemSlot,Integer> indexes;
     private final Integer size;
     private final Integer rowSize;
@@ -175,55 +175,58 @@ public class InventoryDisplay extends UIComponent {
    * @param map images and their respective item slot
    */
   public void setDragItems(@NotNull ArrayList<Actor> actors, Map<Stack,ItemSlot> map) {
-    for (Actor item : actors) {
-      dnd.addSource(new DragAndDrop.Source(item) {
-        final DragAndDrop.Payload payload = new DragAndDrop.Payload();
-        @Override
-        public DragAndDrop.Payload dragStart(InputEvent event, float x, float y, int pointer) {
-          payload.setObject(getActor());
-          payload.setDragActor(getActor());
-          stage.addActor(getActor());
-          dnd.setDragActorPosition(50,-getActor().getHeight()/2);
+      for (Actor item : actors) {
+          dnd.addSource(new DragAndDrop.Source(item) {
+              final DragAndDrop.Payload payload = new DragAndDrop.Payload();
 
-          return payload;
-        }
+              @Override
+              public DragAndDrop.Payload dragStart(InputEvent event, float x, float y, int pointer) {
+                  payload.setObject(getActor());
+                  payload.setDragActor(getActor());
+                  stage.addActor(getActor());
+                  dnd.setDragActorPosition(50, -getActor().getHeight() / 2);
 
-        @Override
-        public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
-          if (target == null) {
-            ItemSlot itemSlot = map.get((Stack)getActor());
-            itemSlot.removeActor(getActor());
-            itemSlot.add(getActor());
-          }
-        }
-      });
-    }
+                  return payload;
+              }
 
-    for (Cell<?> targetItem : table.getCells()) {
-      dnd.addTarget(new DragAndDrop.Target(targetItem.getActor()) {
-        final ItemSlot slot = (ItemSlot) targetItem.getActor();
-        @Override
-        public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-          return true;
-        }
+              @Override
+              public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
+                  if (target == null) {
+                      ItemSlot itemSlot = map.get((Stack) getActor());
+                      itemSlot.removeActor(getActor());
+                      itemSlot.add(getActor());
+                  }
+              }
+          });
+      }
 
-        @Override
-        public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-          ItemSlot sourceSlot = map.get(((Stack)source.getActor()));
+      for (Cell<?> targetItem : table.getCells()) {
+          dnd.addTarget(new DragAndDrop.Target(targetItem.getActor()) {
+              final ItemSlot slot = (ItemSlot) targetItem.getActor();
 
-          inventory.swapPosition(indexes.get(sourceSlot), indexes.get(slot));
-          map.put(slot.getDraggable(), sourceSlot);
+              @Override
+              public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+                  return true;
+              }
 
-          map.put((Stack) payload.getDragActor(),slot);
+              @Override
+              public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+                  ItemSlot sourceSlot = map.get(((Stack) source.getActor()));
 
-          sourceSlot.setDraggable(slot.getDraggable());
-          slot.setDraggable((Stack)source.getActor());
+                  inventory.swapPosition(indexes.get(sourceSlot), indexes.get(slot));
+                  map.put(slot.getDraggable(), sourceSlot);
 
-          entity.getEvents().trigger("updateToolbar");
-          inventory.setHeldItem(inventory.getHeldIndex());
-        }
-      });
-    }
+                  map.put((Stack) payload.getDragActor(), slot);
+
+                  sourceSlot.setDraggable(slot.getDraggable());
+                  slot.setDraggable((Stack) source.getActor());
+
+                  entity.getEvents().trigger("updateToolbar");
+                  inventory.setHeldItem(inventory.getHeldIndex());
+              }
+          });
+      }
+  }
 
     /**
      * Get the current window
