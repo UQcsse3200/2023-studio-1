@@ -1,6 +1,7 @@
 package com.csse3200.game.missions.quests;
 
 import com.csse3200.game.areas.weather.SolarSurgeEvent;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.entities.factories.NPCFactory;
@@ -383,35 +384,14 @@ public class QuestFactory {
         questsToActivate.add(createActIIIMainQuest());
 
         String dialogue = """
-                You let out a cry of anger.
-                {WAIT}
-                ALIEN NPC walks up to.
-                {WAIT}
-                If this storm, the one they are talking about, is as bad as they say, you could lose the technology allowing you to survive on this planet.
-                {WAIT}
-                I have an idea.
-                {WAIT}
-                I only have a few seeds left, but in the remaining seeds, there is one type of plant that I haven't given to you before.
-                {WAIT}
-                It's known as the Atomic Algae - it is supposed to be a powerful photosynthesiser.
-                {WAIT}
-                It is so strong it is said a few of these, if cared for correctly, can produce enough oxygen to change the atmosphere itself.
-                {WAIT}
-                However, I suspect Solar Surges are only going to get stronger in the coming days.
-                {WAIT}
-                And my guess is that our hostile wildlife won't like such melding with the atmosphere.
-                {WAIT}
-                Good luck, my friend.
+                You let out a cry of desperation, as the fate of humanity now rests in your hands. {WAIT}Jarrael puts a hand on your shoulder. {WAIT}"I have an idea. {WAIT}I was sent here to cultivate a very special type of plant, the {COLOR=#76428A}ATOMIC ALGAE{COLOR=WHITE}. {WAIT}It is a very strong photosynthesiser, and we were going to use it to reverse the negative affects of {COLOR=RED}The Night of the Black Sun{COLOR=WHITE}. {WAIT}If you plant and cultivate enough of them, you should be able to manifestly increase the oxygen content of our atmosphere, and make the planet survivable for your kind. {WAIT}I believe I only have a few {COLOR=#76428A}SEEDS{COLOR=WHITE} to spare, so make sure you treat them well."
                 """;
 
         MultiReward reward = new MultiReward(List.of(
                 new ItemReward(List.of(
-                        ItemFactory.createAloeVeraSeed(),
                         ItemFactory.createAtomicAlgaeSeed(),
-                        ItemFactory.createCosmicCobSeed(),
-                        ItemFactory.createDeadlyNightshadeSeed(),
-                        ItemFactory.createHammerPlantSeed(),
-                        ItemFactory.createSpaceSnapperSeed()
+                        ItemFactory.createAtomicAlgaeSeed(),
+                        ItemFactory.createAtomicAlgaeSeed()
                 )),
                 new TriggerWeatherReward(List.of(
                         new SolarSurgeEvent(0, 2, 100, 1.25f),
@@ -431,16 +411,10 @@ public class QuestFactory {
      */
     public static PlantInteractionQuest createAirAndAlgaeQuest() {
         String dialogue = """
-                Keep at it.
-                {WAIT}
-                If your people are to be able to survive on this planet, you need to ensure the oxygen content in the atmosphere is at least 80%.
-                {WAIT}
-                I've found 4 more seeds of Atomic Algae to spare - the rest you will have to get from harvesting your current crops.
+                "Keep at it. {WAIT}If your people are to survive the coming {COLOR=#3ABE88}SOLAR SURGES{COLOR=WHITE}, you will need to ensure the relative oxygen content of atmosphere is above 95% on the day they land. {WAIT}I have found a few more seeds to spare. {WAIT}Come to me on the day of your people's arrival when the oxygen is high enough, and I can help you signal them for landing. {WAIT}Good luck!"
                 """;
         MultiReward reward = new MultiReward(List.of(
                 new ItemReward(List.of(
-                        ItemFactory.createAtomicAlgaeSeed(),
-                        ItemFactory.createAtomicAlgaeSeed(),
                         ItemFactory.createAtomicAlgaeSeed(),
                         ItemFactory.createAtomicAlgaeSeed()
                 )),
@@ -456,11 +430,7 @@ public class QuestFactory {
      */
     public static OxygenLevelQuest createStratosphericSentinelQuest() {
         String dialogue = """
-                Well done!
-                {WAIT}
-                With the work you've done, your people should be able to live here without life support systems.
-                {WAIT}
-                «Something sentimental to be added...»
+                "Well done! {WAIT}You have your people one more chance at survival. {WAIT}Come with me, let us use your ship to signal the others for landing. {WAIT}I hope our people can help each other rebuild what we each have lost."
                 """;
         DialogueReward reward = new DialogueReward(dialogue);
         return new OxygenLevelQuest(STRATOSPHERIC_SENTINEL_QUEST_NAME, reward, ServiceLocator.getPlanetOxygenService(),
