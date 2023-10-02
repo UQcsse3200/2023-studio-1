@@ -8,7 +8,11 @@ import java.util.function.Supplier;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
-import com.csse3200.game.entities.factories.*;
+import com.csse3200.game.entities.factories.ItemFactory;
+import com.csse3200.game.entities.factories.NPCFactory;
+import com.csse3200.game.entities.factories.PlaceableFactory;
+import com.csse3200.game.entities.factories.PlantFactory;
+import com.csse3200.game.entities.factories.ShipDebrisFactory;
 import com.csse3200.game.missions.quests.Quest;
 import com.csse3200.game.missions.quests.QuestFactory;
 
