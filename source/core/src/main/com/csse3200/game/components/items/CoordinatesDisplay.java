@@ -1,4 +1,4 @@
-package com.csse3200.game.components.ship;
+package com.csse3200.game.components.items;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -8,6 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.ui.UIComponent;
 
+/**
+ * Shows a UI containing the coordinates of this entity's ClueComponent.
+ */
 public class CoordinatesDisplay extends UIComponent {
 	private Window window;
 	private boolean isOpen;

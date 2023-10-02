@@ -1,4 +1,4 @@
-package com.csse3200.game.components.ship;
+package com.csse3200.game.missions.rewards;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
@@ -6,14 +6,17 @@ import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.ShipPartTileComponent;
 import com.csse3200.game.areas.terrain.ShipPartTileFactory;
 import com.csse3200.game.areas.terrain.TerrainTile;
+import com.csse3200.game.components.items.ClueComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ShipDebrisFactory;
-import com.csse3200.game.missions.rewards.ItemReward;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.RandomUtils;
 
 import java.util.List;
 
+/**
+ * A reward that spawns a ShipPartTile & ShipDebris on collection.
+ */
 public class ClueReward extends ItemReward {
 
 	private final Entity mapItem;

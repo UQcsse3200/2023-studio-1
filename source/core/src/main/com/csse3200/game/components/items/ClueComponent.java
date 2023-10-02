@@ -1,4 +1,4 @@
-package com.csse3200.game.components.ship;
+package com.csse3200.game.components.items;
 
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
@@ -10,6 +10,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Holds a base location to generate a ShipPartTile at. Once that tile is destroyed,
+ * so is the parent entity (item) of this component.
+ */
 public class ClueComponent extends Component {
 	/**
 	 * A list of all possible base locations. Static so that consequent Map Items don't always

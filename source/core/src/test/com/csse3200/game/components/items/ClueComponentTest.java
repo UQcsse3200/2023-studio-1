@@ -10,21 +10,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(GameExtension.class)
 class ClueComponentTest {
-    private ClueComponent clueComponent;
-    private Entity entity;
-    @Test
-    void testGetCurrentLocation() {
-        entity = new Entity();
-        clueComponent = new ClueComponent();
+	private ClueComponent clueComponent;
+	private Entity entity;
 
-        entity.addComponent(this.clueComponent);
-        entity.create();
+	@Test
+	void testGetCurrentLocation() {
+		entity = new Entity();
+		clueComponent = new ClueComponent();
 
-        Vector2 expectedLocation = new Vector2(30, 85);
+		entity.addComponent(this.clueComponent);
+		entity.create();
 
-        Vector2 actualLocation = clueComponent.getCurrentBaseLocation();
+		Vector2 expectedLocation = new Vector2(30, 85);
 
-        assertEquals(expectedLocation.x, actualLocation.x);
-        assertEquals(expectedLocation.y, actualLocation.y);
-    }
+		Vector2 actualLocation = clueComponent.getCurrentBaseLocation();
+
+		assertEquals(expectedLocation.x, actualLocation.x);
+		assertEquals(expectedLocation.y, actualLocation.y);
+	}
 }
