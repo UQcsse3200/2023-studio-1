@@ -22,8 +22,65 @@ class ClueComponentTest {
 		entity.create();
 
 		Vector2 expectedLocation = new Vector2(30, 85);
-
 		Vector2 actualLocation = clueComponent.getCurrentBaseLocation();
+
+		assertEquals(expectedLocation.x, actualLocation.x);
+		assertEquals(expectedLocation.y, actualLocation.y);
+		clueComponent = new ClueComponent();
+
+
+		expectedLocation = new Vector2(30, 60);
+		actualLocation = clueComponent.getCurrentBaseLocation();
+
+		assertEquals(expectedLocation.x, actualLocation.x);
+		assertEquals(expectedLocation.y, actualLocation.y);
+		clueComponent = new ClueComponent();
+
+
+
+		expectedLocation = new Vector2(30, 40);
+		actualLocation = clueComponent.getCurrentBaseLocation();
+
+		assertEquals(expectedLocation.x, actualLocation.x);
+		assertEquals(expectedLocation.y, actualLocation.y);
+		clueComponent = new ClueComponent();
+
+
+		expectedLocation = new Vector2(20, 75);
+		actualLocation = clueComponent.getCurrentBaseLocation();
+
+		assertEquals(expectedLocation.x, actualLocation.x);
+		assertEquals(expectedLocation.y, actualLocation.y);
+		clueComponent = new ClueComponent();
+
+		expectedLocation = new Vector2(20, 40);
+		actualLocation = clueComponent.getCurrentBaseLocation();
+
+		assertEquals(expectedLocation.x, actualLocation.x);
+		assertEquals(expectedLocation.y, actualLocation.y);
+		clueComponent = new ClueComponent();
+
+
+
+		expectedLocation = new Vector2(30, 75);
+		actualLocation = clueComponent.getCurrentBaseLocation();
+
+		assertEquals(expectedLocation.x, actualLocation.x);
+		assertEquals(expectedLocation.y, actualLocation.y);
+		clueComponent = new ClueComponent();
+
+
+
+		expectedLocation = new Vector2(20, 60);
+		actualLocation = clueComponent.getCurrentBaseLocation();
+
+		assertEquals(expectedLocation.x, actualLocation.x);
+		assertEquals(expectedLocation.y, actualLocation.y);
+		clueComponent = new ClueComponent();
+
+
+		expectedLocation = new Vector2(30, 85);
+		actualLocation = clueComponent.getCurrentBaseLocation();
 
 		assertEquals(expectedLocation.x, actualLocation.x);
 		assertEquals(expectedLocation.y, actualLocation.y);
