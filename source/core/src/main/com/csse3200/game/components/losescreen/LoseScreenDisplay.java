@@ -1,9 +1,5 @@
 package com.csse3200.game.components.losescreen;
 
-import com.csse3200.game.services.ServiceLocator;
-import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,8 +11,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.GdxGame.ScreenType;
+import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.rafaskoberg.gdx.typinglabel.TypingLabel;
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The display User Interface component for the losing screen
@@ -73,6 +73,11 @@ public class LoseScreenDisplay extends UIComponent {
     public static String losingMessage;
 
     /**
+     * Array to store the paths of the textures.
+     */
+    private final String[] texturePaths;
+
+    /**
      * Creates a new LoseScreenDisplay instance.
      *
      * @param game The GdxGame instance.
@@ -80,6 +85,9 @@ public class LoseScreenDisplay extends UIComponent {
     public LoseScreenDisplay(GdxGame game) {
         super();
         this.game = game;
+        texturePaths = new String[]{"images/intro_background_v2.png", "images/dead_planet2.png"};
+        ServiceLocator.getResourceService().loadTextures(texturePaths);
+        ServiceLocator.getResourceService().loadAll();
     }
 
     @Override
@@ -92,18 +100,13 @@ public class LoseScreenDisplay extends UIComponent {
      * Adds UI elements and initializes the screen.
      */
     private void addActors() {
-        background =
-                new Image(
-                        ServiceLocator.getResourceService()
-                                .getAsset("images/intro_background_v2.png", Texture.class));
+        background = new Image(ServiceLocator.getResourceService().getAsset(texturePaths[0], Texture.class));
         background.setPosition(0, 0);
         float scaledHeight = Gdx.graphics.getWidth() * (background.getHeight() / background.getWidth());
         background.setHeight(scaledHeight);
         // Load the animated planet
-        planet = background =
-                new Image(
-                        ServiceLocator.getResourceService()
-                                .getAsset("images/dead_planet2.png", Texture.class));
+            planet = background =
+                    new Image(ServiceLocator.getResourceService().getAsset(texturePaths[1], Texture.class));
         // Scale it to a 10% of screen width with a constant aspect ratio
         float planetWidth = (float) (Gdx.graphics.getWidth() * 0.15);
         float planetHeight = planetWidth * (planet.getHeight() / planet.getWidth());
