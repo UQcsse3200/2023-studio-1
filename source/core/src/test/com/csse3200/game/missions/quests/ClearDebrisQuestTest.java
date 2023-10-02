@@ -38,11 +38,11 @@ class ClearDebrisQuestTest {
         r7 = mock(Reward.class);
 
         CDQuest1 = new ClearDebrisQuest("Clear Debris Quest 1", r1, 10);
-        CDQuest2 = new ClearDebrisQuest("Clear Debris Quest 2", r2, 10, false, 10);
-        CDQuest3 = new ClearDebrisQuest("Clear Debris Quest 3", r3, 10, true, 10);
+        CDQuest2 = new ClearDebrisQuest("Clear Debris Quest 2", r2, 10, 10);
+        CDQuest3 = new ClearDebrisQuest("Clear Debris Quest 3", r3, 10, 10);
         CDQuest4 = new ClearDebrisQuest("Clear Debris Quest 4", r4, 3);
         CDQuest5 = new ClearDebrisQuest("Clear Debris Quest 5", r5, 50);
-        CDQuest6 = new ClearDebrisQuest("Clear Debris Quest 6", r6, 10, false, -1);
+        CDQuest6 = new ClearDebrisQuest("Clear Debris Quest 6", r6, 10, -1);
         CDQuest7 = new ClearDebrisQuest("Clear Debris Quest 7", r7, -1);
     }
 

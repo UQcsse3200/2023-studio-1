@@ -25,8 +25,9 @@ public class ManageHostilesQuest extends Quest {
         // Possibly do some sort of check to make sure the provided hostileTypes set contains only hostile entityTypes
     }
 
-    public ManageHostilesQuest(String name, Reward reward, int expiryDuration, boolean isMandatory, Set<EntityType> hostileTypes, int numberOfHostilesToBeKilled) {
-        super(name, reward, expiryDuration, isMandatory);
+    public ManageHostilesQuest(String name, Reward reward, int expiryDuration, Set<EntityType> hostileTypes,
+                               int numberOfHostilesToBeKilled) {
+        super(name, reward, expiryDuration, false);
 
         this.hostileTypes = hostileTypes;
         this.numberOfHostilesToBeKilled = numberOfHostilesToBeKilled;

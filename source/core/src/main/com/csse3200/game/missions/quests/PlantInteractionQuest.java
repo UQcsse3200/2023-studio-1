@@ -15,7 +15,8 @@ public class PlantInteractionQuest extends Quest {
     private final int interactionsTarget;
     private int numberOfInteractions;
 
-    public PlantInteractionQuest(String name, Reward reward, MissionManager.MissionEvent interactionType, Set<String> plantTypes, int interactionsTarget) {
+    public PlantInteractionQuest(String name, Reward reward, MissionManager.MissionEvent interactionType,
+                                 Set<String> plantTypes, int interactionsTarget) {
         super(name, reward);
 
         this.interactionType = interactionType;
@@ -24,8 +25,10 @@ public class PlantInteractionQuest extends Quest {
         this.numberOfInteractions = 0;
     }
 
-    public PlantInteractionQuest(String name, Reward reward, int expiryDuration, boolean isMandatory, MissionManager.MissionEvent interactionType, Set<String> plantTypes, int interactionsTarget) {
-        super(name, reward, expiryDuration, isMandatory);
+    public PlantInteractionQuest(String name, Reward reward, int expiryDuration,
+                                 MissionManager.MissionEvent interactionType, Set<String> plantTypes,
+                                 int interactionsTarget) {
+        super(name, reward, expiryDuration, false);
 
         this.interactionType = interactionType;
         this.plantTypes = plantTypes;

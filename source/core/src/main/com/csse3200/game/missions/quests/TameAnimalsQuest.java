@@ -17,8 +17,8 @@ public class TameAnimalsQuest extends Quest {
         this.numberOfAnimalsTamed = 0;
     }
 
-    public TameAnimalsQuest(String name, Reward reward, int expiryDuration, boolean isMandatory, int numberOfAnimalsToTame) {
-        super(name, reward, expiryDuration, isMandatory);
+    public TameAnimalsQuest(String name, Reward reward, int expiryDuration, int numberOfAnimalsToTame) {
+        super(name, reward, expiryDuration, false);
 
         this.numberOfAnimalsToTame = numberOfAnimalsToTame;
         this.numberOfAnimalsTamed = 0;

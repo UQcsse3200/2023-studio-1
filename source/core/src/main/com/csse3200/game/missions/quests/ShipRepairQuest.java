@@ -17,9 +17,8 @@ public class ShipRepairQuest extends Quest {
         this.currentShipRepairProgress = 0;
     }
 
-    public ShipRepairQuest(String name, Reward reward, int expiryDuration, boolean isMandatory,
-                           int targetShipRepairProgress) {
-        super(name, reward, expiryDuration, isMandatory);
+    public ShipRepairQuest(String name, Reward reward, int expiryDuration, int targetShipRepairProgress) {
+        super(name, reward, expiryDuration, false);
 
         this.targetShipRepairProgress = targetShipRepairProgress;
         this.currentShipRepairProgress = 0;
