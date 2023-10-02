@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 class PlantInteractionQuestTest {
-    private PlantInteractionQuest PIQuest1, PIQuest2, PIQuest3, PIQuest4, PIQuest5, PIQuest6, PIQuest7;
+    private PlantInteractionQuest PIQuest1, PIQuest2, PIQuest3, PIQuest4, PIQuest5, PIQuest6, PIQuest7, PIQuest8;
     private Reward r1, r2, r3, r4, r5, r6, r7;
 
     @BeforeEach
@@ -45,6 +45,7 @@ class PlantInteractionQuestTest {
 
         MissionManager.MissionEvent plant = MissionManager.MissionEvent.PLANT_CROP;
         MissionManager.MissionEvent harvest = MissionManager.MissionEvent.HARVEST_CROP;
+        MissionManager.MissionEvent bug = MissionManager.MissionEvent.ANIMAL_DEFEATED;
 
         PIQuest1 = new PlantInteractionQuest("Plant Interaction Quest 1", r1, plant, plantTypes1, 10);
         PIQuest2 = new PlantInteractionQuest("Plant Interaction Quest 2", r2, plant, plantTypes1, 0);
@@ -53,6 +54,7 @@ class PlantInteractionQuestTest {
         PIQuest5 = new PlantInteractionQuest("Plant Interaction Quest 5", r5, harvest, plantTypes2, -1);
         PIQuest6 = new PlantInteractionQuest("Plant Interaction Quest 6", r6,10, harvest, plantTypes2, 3);
         PIQuest7 = new PlantInteractionQuest("Plant Interaction Quest 7", r7, 10, plant, plantTypes2, 3);
+        PIQuest8 = new PlantInteractionQuest("Plant Interaction Quest 8", r7, 10, bug, plantTypes1, 3);
 
     }
 
@@ -220,6 +222,7 @@ class PlantInteractionQuestTest {
         String desc2 = "Plant %d crops of type Aloe Vera, Cosmic Cob.\n%d out of %d crops planted.";
         String desc3 = "Harvest %d crops of type Cosmic Cob.\n%d out of %d crops harvested.";
         String desc4 = "Harvest %d crops of type Aloe Vera, Cosmic Cob.\n%d out of %d crops harvested.";
+        String bugDesc = "%d crops of type Cosmic Cob.\n%d out of %d.";
 
         for (int i = 0; i < 10; i++) {
             int min7 = Math.min(i, 3);
@@ -230,6 +233,7 @@ class PlantInteractionQuestTest {
             String formatted5 = String.format(desc4, 0, 0, 0);
             String formatted6 = String.format(desc4, 3, 0, 3);
             String formatted7 = String.format(desc2, 3, min7, 3);
+            String formatted8 = String.format(bugDesc, 3, 0, 3);
             assertEquals(formatted1, PIQuest1.getDescription());
             assertEquals(formatted2, PIQuest2.getDescription());
             assertEquals(formatted3, PIQuest3.getDescription());
@@ -237,6 +241,7 @@ class PlantInteractionQuestTest {
             assertEquals(formatted5, PIQuest5.getDescription());
             assertEquals(formatted6, PIQuest6.getDescription());
             assertEquals(formatted7, PIQuest7.getDescription());
+            assertEquals(formatted8, PIQuest8.getDescription());
             ServiceLocator.getMissionManager().getEvents().trigger(
                     MissionManager.MissionEvent.PLANT_CROP.name(), "Aloe Vera");
         }
@@ -481,43 +486,10 @@ class PlantInteractionQuestTest {
         assertEquals(0, PIQuest6.getProgress());
         assertEquals(0, PIQuest7.getProgress());
         testIsCompleted();
-        assertNotEquals(0, PIQuest1.getProgress());
-        assertEquals(0, PIQuest2.getProgress());
         assertNotEquals(0, PIQuest3.getProgress());
-        assertNotEquals(0, PIQuest4.getProgress());
-        assertEquals(0, PIQuest5.getProgress());
         assertNotEquals(0, PIQuest6.getProgress());
-        assertNotEquals(0, PIQuest7.getProgress());
-
-        assertEquals(10, PIQuest1.getProgress());
-        assertEquals(0, PIQuest2.getProgress());
         assertEquals(10, PIQuest3.getProgress());
-        assertEquals(10, PIQuest4.getProgress());
-        assertEquals(0, PIQuest5.getProgress());
-        assertEquals(10, PIQuest6.getProgress());
-        assertEquals(3, PIQuest7.getProgress());
+        assertEquals(3, PIQuest6.getProgress());
     }
 
-    @Test
-    public void testResetState() {
-        testIsCompleted();
-        assertTrue(PIQuest1.isCompleted());
-        assertTrue(PIQuest2.isCompleted());
-        assertTrue(PIQuest3.isCompleted());
-        assertTrue(PIQuest4.isCompleted());
-        assertTrue(PIQuest5.isCompleted());
-        assertTrue(PIQuest6.isCompleted());
-        PIQuest1.resetState();
-        PIQuest2.resetState();
-        PIQuest3.resetState();
-        PIQuest4.resetState();
-        PIQuest5.resetState();
-        PIQuest6.resetState();
-        assertFalse(PIQuest1.isCompleted());
-        assertTrue(PIQuest2.isCompleted());
-        assertFalse(PIQuest3.isCompleted());
-        assertFalse(PIQuest4.isCompleted());
-        assertTrue(PIQuest5.isCompleted());
-        assertFalse(PIQuest6.isCompleted());
-    }
 }

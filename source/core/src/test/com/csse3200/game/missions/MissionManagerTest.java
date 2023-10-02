@@ -478,33 +478,33 @@ class MissionManagerTest {
 
     @Test
     public void testMandatoryQuestExpiryEndsGame() {
+        ServiceLocator.getMissionManager().addQuest(q1);
+        ServiceLocator.getMissionManager().addQuest(q2);
         ServiceLocator.getMissionManager().addQuest(q3);
+        ServiceLocator.getMissionManager().acceptQuest(q1);
+        ServiceLocator.getMissionManager().acceptQuest(q2);
         ServiceLocator.getMissionManager().acceptQuest(q3);
         final int[] count = {0};
+        final int[] exCount = {0};
+        ServiceLocator.getMissionManager().getEvents().addListener(
+                MissionManager.MissionEvent.QUEST_EXPIRED.name(), () -> {exCount[0]++;}
+        );
         ServiceLocator.getMissionManager().getEvents().addListener(
                 "loseScreen", (String name) -> { if (name.equals(q3.getName())) {count[0]++;} }
         );
 
         while (!q3.isExpired()) {
             ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
-            assertEquals(0, count[0]);
-            ServiceLocator.getMissionManager().checkMandatoryQuestExpiry();
         }
 
+        assertEquals(11, exCount[0]);
         assertEquals(1, count[0]);
-        ServiceLocator.getMissionManager().checkMandatoryQuestExpiry();
-        assertEquals(2, count[0]);
         q3.resetExpiry();
-        ServiceLocator.getMissionManager().checkMandatoryQuestExpiry();
-        assertEquals(2, count[0]);
         while (!q3.isExpired()) {
+            assertEquals(1, count[0]);
             ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
-            assertEquals(2, count[0]);
-            ServiceLocator.getMissionManager().checkMandatoryQuestExpiry();
         }
-        assertEquals(3, count[0]);
-        ServiceLocator.getMissionManager().checkMandatoryQuestExpiry();
-        assertEquals(4, count[0]);
+        assertEquals(2, count[0]);
     }
 
 }
