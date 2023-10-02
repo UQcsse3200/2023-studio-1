@@ -111,8 +111,11 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.Integer,java.lang.Integer)" class="member-name-link">InventoryDisplay</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;size,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;rowSize)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.Integer,java.lang.Integer,java.lang.Boolean)" class="member-name-link">InventoryDisplay</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;refreshEvent,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;openEvent,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;size,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;rowSize,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;toolbar)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Constructor for class</div>
 </div>
@@ -150,6 +153,14 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Fetches the player inventory and returns it</div>
 </div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.scenes.scene2d.Actor</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWindow()" class="member-name-link">getWindow</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Get the current window</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isOpen()" class="member-name-link">isOpen</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#refreshInventory()" class="member-name-link">refreshInventory</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -199,10 +210,13 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(java.lang.Integer,java.lang.Integer)">
+<section class="detail" id="&lt;init&gt;(java.lang.String,java.lang.String,java.lang.Integer,java.lang.Integer,java.lang.Boolean)">
 <h3>InventoryDisplay</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">InventoryDisplay</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;size,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;rowSize)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">InventoryDisplay</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;refreshEvent,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;openEvent,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;size,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;rowSize,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;toolbar)</span></div>
 <div class="block">Constructor for class</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -240,7 +254,17 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>actors</code> - list of actors</dd>
-<dd><code>map</code> - images and their respective item slot</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getWindow()">
+<h3>getWindow</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.scenes.scene2d.Actor</span>&nbsp;<span class="element-name">getWindow</span>()</div>
+<div class="block">Get the current window</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>current window</dd>
 </dl>
 </section>
 </li>
@@ -293,6 +317,12 @@ loadScripts(document, 'script');</script>
 <dt>Overrides:</dt>
 <dd><code><a href="../../rendering/RenderComponent.html#dispose()">dispose</a></code>&nbsp;in class&nbsp;<code><a href="../../rendering/RenderComponent.html" title="class in com.csse3200.game.rendering">RenderComponent</a></code></dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isOpen()">
+<h3>isOpen</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isOpen</span>()</div>
 </section>
 </li>
 </ul>

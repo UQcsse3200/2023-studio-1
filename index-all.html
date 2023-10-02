@@ -103,6 +103,10 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/ui/terminal/commands/PlantCommand.html#action(java.util.ArrayList)" class="member-name-link">action(ArrayList&lt;String&gt;)</a> - Method in class com.csse3200.game.ui.terminal.commands.<a href="com/csse3200/game/ui/terminal/commands/PlantCommand.html" title="class in com.csse3200.game.ui.terminal.commands">PlantCommand</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/ui/terminal/commands/RemoveItemCommand.html#action(java.util.ArrayList)" class="member-name-link">action(ArrayList&lt;String&gt;)</a> - Method in class com.csse3200.game.ui.terminal.commands.<a href="com/csse3200/game/ui/terminal/commands/RemoveItemCommand.html" title="class in com.csse3200.game.ui.terminal.commands">RemoveItemCommand</a></dt>
+<dd>
+<div class="block">Action a command to add an item to a player's inventory</div>
+</dd>
 <dt><a href="com/csse3200/game/ui/terminal/commands/SaveCommand.html#action(java.util.ArrayList)" class="member-name-link">action(ArrayList&lt;String&gt;)</a> - Method in class com.csse3200.game.ui.terminal.commands.<a href="com/csse3200/game/ui/terminal/commands/SaveCommand.html" title="class in com.csse3200.game.ui.terminal.commands">SaveCommand</a></dt>
 <dd>
 <div class="block">saves game through the SaveLoad service</div>
@@ -148,6 +152,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/CombatStatsComponent.html#addHealth(int)" class="member-name-link">addHealth(int)</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/CombatStatsComponent.html" title="class in com.csse3200.game.components">CombatStatsComponent</a></dt>
 <dd>
 <div class="block">Adds to the player's health.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/inventory/InventoryDisplayManager.html#addInventoryDisplay(com.csse3200.game.components.inventory.InventoryDisplay)" class="member-name-link">addInventoryDisplay(InventoryDisplay)</a> - Method in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/InventoryDisplayManager.html" title="class in com.csse3200.game.components.inventory">InventoryDisplayManager</a></dt>
+<dd>
+<div class="block">Add an inventoryDisplay to the manager</div>
 </dd>
 <dt><a href="com/csse3200/game/components/player/InventoryComponent.html#addItem(com.csse3200.game.components.items.ItemComponent)" class="member-name-link">addItem(ItemComponent)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a></dt>
 <dd>&nbsp;</dd>
@@ -2487,6 +2495,16 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Fetches the player inventory and returns it</div>
 </dd>
+<dt><a href="com/csse3200/game/services/ServiceLocator.html#getInventoryDisplayManager()" class="member-name-link">getInventoryDisplayManager()</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/inventory/InventoryDisplayManager.html#getInventoryDisplays()" class="member-name-link">getInventoryDisplays()</a> - Method in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/InventoryDisplayManager.html" title="class in com.csse3200.game.components.inventory">InventoryDisplayManager</a></dt>
+<dd>
+<div class="block">Remove an inventoryDisplay to the manager</div>
+</dd>
+<dt><a href="com/csse3200/game/components/gamearea/GameAreaDisplay.html#getInventoryManager()" class="member-name-link">getInventoryManager()</a> - Method in class com.csse3200.game.components.gamearea.<a href="com/csse3200/game/components/gamearea/GameAreaDisplay.html" title="class in com.csse3200.game.components.gamearea">GameAreaDisplay</a></dt>
+<dd>
+<div class="block">Gets the current Display Manager</div>
+</dd>
 <dt><a href="com/csse3200/game/components/player/InventoryComponent.html#getInventorySize()" class="member-name-link">getInventorySize()</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a></dt>
 <dd>
 <div class="block">Returns the maximum size of the inventory.</div>
@@ -3015,6 +3033,10 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/areas/terrain/CropTileComponent.html#getWaterContent()" class="member-name-link">getWaterContent()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/CropTileComponent.html" title="class in com.csse3200.game.areas.terrain">CropTileComponent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/inventory/InventoryDisplay.html#getWindow()" class="member-name-link">getWindow()</a> - Method in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/InventoryDisplay.html" title="class in com.csse3200.game.components.inventory">InventoryDisplay</a></dt>
+<dd>
+<div class="block">Get the current window</div>
+</dd>
 <dt><a href="com/csse3200/game/physics/PhysicsEngine.html#getWorld()" class="member-name-link">getWorld()</a> - Method in class com.csse3200.game.physics.<a href="com/csse3200/game/physics/PhysicsEngine.html" title="class in com.csse3200.game.physics">PhysicsEngine</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainComponent.html#getZIndex()" class="member-name-link">getZIndex()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a></dt>
@@ -3286,9 +3308,15 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">An ui component for displaying player stats, e.g.</div>
 </dd>
-<dt><a href="com/csse3200/game/components/inventory/InventoryDisplay.html#%3Cinit%3E(java.lang.Integer,java.lang.Integer)" class="member-name-link">InventoryDisplay(Integer, Integer)</a> - Constructor for class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/InventoryDisplay.html" title="class in com.csse3200.game.components.inventory">InventoryDisplay</a></dt>
+<dt><a href="com/csse3200/game/components/inventory/InventoryDisplay.html#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.Integer,java.lang.Integer,java.lang.Boolean)" class="member-name-link">InventoryDisplay(String, String, Integer, Integer, Boolean)</a> - Constructor for class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/InventoryDisplay.html" title="class in com.csse3200.game.components.inventory">InventoryDisplay</a></dt>
 <dd>
 <div class="block">Constructor for class</div>
+</dd>
+<dt><a href="com/csse3200/game/components/inventory/InventoryDisplayManager.html" class="type-name-link" title="class in com.csse3200.game.components.inventory">InventoryDisplayManager</a> - Class in <a href="com/csse3200/game/components/inventory/package-summary.html">com.csse3200.game.components.inventory</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/inventory/InventoryDisplayManager.html#%3Cinit%3E(com.badlogic.gdx.scenes.scene2d.Stage)" class="member-name-link">InventoryDisplayManager(Stage)</a> - Constructor for class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/InventoryDisplayManager.html" title="class in com.csse3200.game.components.inventory">InventoryDisplayManager</a></dt>
+<dd>
+<div class="block">Initialise the Inventory Display Manager</div>
 </dd>
 <dt><a href="com/csse3200/game/areas/weather/WeatherEvent.html#isActive()" class="member-name-link">isActive()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/WeatherEvent.html" title="class in com.csse3200.game.areas.weather">WeatherEvent</a></dt>
 <dd>
@@ -3412,6 +3440,8 @@ loadScripts(document, 'script');</script>
 <div class="block">returns if the tile is occupied by another entity (i.e.</div>
 </dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainComponent.TerrainOrientation.html#ISOMETRIC" class="member-name-link">ISOMETRIC</a> - Enum constant in enum class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainComponent.TerrainOrientation.html" title="enum class in com.csse3200.game.areas.terrain">TerrainComponent.TerrainOrientation</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/inventory/InventoryDisplay.html#isOpen()" class="member-name-link">isOpen()</a> - Method in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/InventoryDisplay.html" title="class in com.csse3200.game.components.inventory">InventoryDisplay</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/ui/terminal/Terminal.html#isOpen()" class="member-name-link">isOpen()</a> - Method in class com.csse3200.game.ui.terminal.<a href="com/csse3200/game/ui/terminal/Terminal.html" title="class in com.csse3200.game.ui.terminal">Terminal</a></dt>
 <dd>&nbsp;</dd>
@@ -4658,6 +4688,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/ServiceLocator.html#registerInputService(com.csse3200.game.input.InputService)" class="member-name-link">registerInputService(InputService)</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/services/ServiceLocator.html#registerInventoryDisplayManager(com.csse3200.game.components.inventory.InventoryDisplayManager)" class="member-name-link">registerInventoryDisplayManager(InventoryDisplayManager)</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/ServiceLocator.html#registerLightService(com.csse3200.game.services.LightService)" class="member-name-link">registerLightService(LightService)</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/missions/achievements/PlantCropsAchievement.html#registerMission(com.csse3200.game.events.EventHandler)" class="member-name-link">registerMission(EventHandler)</a> - Method in class com.csse3200.game.missions.achievements.<a href="com/csse3200/game/missions/achievements/PlantCropsAchievement.html" title="class in com.csse3200.game.missions.achievements">PlantCropsAchievement</a></dt>
@@ -4726,10 +4758,18 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/areas/GameArea.html#removeEntity(com.csse3200.game.entities.Entity)" class="member-name-link">removeEntity(Entity)</a> - Method in class com.csse3200.game.areas.<a href="com/csse3200/game/areas/GameArea.html" title="class in com.csse3200.game.areas">GameArea</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/inventory/InventoryDisplayManager.html#removeInventoryDisplay(com.csse3200.game.components.inventory.InventoryDisplay)" class="member-name-link">removeInventoryDisplay(InventoryDisplay)</a> - Method in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/InventoryDisplayManager.html" title="class in com.csse3200.game.components.inventory">InventoryDisplayManager</a></dt>
+<dd>
+<div class="block">Remove an inventoryDisplay to the manager</div>
+</dd>
 <dt><a href="com/csse3200/game/components/player/InventoryComponent.html#removeItem(com.csse3200.game.entities.Entity)" class="member-name-link">removeItem(Entity)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a></dt>
 <dd>
 <div class="block">Removes an item from the Player's Inventory</div>
 </dd>
+<dt><a href="com/csse3200/game/ui/terminal/commands/RemoveItemCommand.html" class="type-name-link" title="class in com.csse3200.game.ui.terminal.commands">RemoveItemCommand</a> - Class in <a href="com/csse3200/game/ui/terminal/commands/package-summary.html">com.csse3200.game.ui.terminal.commands</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/ui/terminal/commands/RemoveItemCommand.html#%3Cinit%3E()" class="member-name-link">RemoveItemCommand()</a> - Constructor for class com.csse3200.game.ui.terminal.commands.<a href="com/csse3200/game/ui/terminal/commands/RemoveItemCommand.html" title="class in com.csse3200.game.ui.terminal.commands">RemoveItemCommand</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/GameArea.html#removeLoadableEntities(com.badlogic.gdx.utils.Array)" class="member-name-link">removeLoadableEntities(Array&lt;Entity&gt;)</a> - Method in class com.csse3200.game.areas.<a href="com/csse3200/game/areas/GameArea.html" title="class in com.csse3200.game.areas">GameArea</a></dt>
 <dd>
 <div class="block">Loops through the games npcs and removes them.</div>
@@ -6454,6 +6494,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/services/OxygenDisplay.html#updateDisplay()" class="member-name-link">updateDisplay()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/OxygenDisplay.html" title="class in com.csse3200.game.services">OxygenDisplay</a></dt>
 <dd>
 <div class="block">Updates the display, showing the oxygen bar in the top of the main game screen.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/inventory/InventoryDisplayManager.html#updateDisplays()" class="member-name-link">updateDisplays()</a> - Method in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/InventoryDisplayManager.html" title="class in com.csse3200.game.components.inventory">InventoryDisplayManager</a></dt>
+<dd>
+<div class="block">Update the position of the displays</div>
 </dd>
 <dt><a href="com/csse3200/game/missions/quests/Quest.html#updateExpiry()" class="member-name-link">updateExpiry()</a> - Method in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/Quest.html" title="class in com.csse3200.game.missions.quests">Quest</a></dt>
 <dd>
