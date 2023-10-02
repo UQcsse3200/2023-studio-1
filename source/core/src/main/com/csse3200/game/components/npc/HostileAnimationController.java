@@ -1,8 +1,5 @@
 package com.csse3200.game.components.npc;
 
-import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.utils.DirectionUtils;
-
 /**
  * The HostileAnimationController class is responsible for controlling the animations of a hostile NPC entity.
  * It extends the behavior of the AnimalAnimationController and includes functionality for playing attack animations.
