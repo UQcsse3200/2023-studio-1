@@ -15,11 +15,11 @@ import java.util.List;
  */
 public class InventoryComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
-  private HashMap<String, Integer> itemCount = new HashMap<>();
+  public HashMap<String, Integer> itemCount = new HashMap<>();
 
-  private HashMap<String,Entity> heldItemsEntity = new HashMap<>();
+  public HashMap<String,Entity> heldItemsEntity = new HashMap<>();
 
-  private HashMap<Integer,String> itemPlace = new HashMap<>();
+  public HashMap<Integer,String> itemPlace = new HashMap<>();
 
   private Entity heldItem = null;
 
@@ -74,30 +74,30 @@ public class InventoryComponent extends Component {
    *
    * @return HashMap<String, Integer>
    */
-
-  public HashMap<String, Integer> getItemCount() {
+/*
+  public HashMap <String, Integer> getItemCount() {
     return this.itemCount;
   }
-
+*/
   /**
    * Returns the HashMap of the Position and the String of the item in the inventory
    * @return HashMap<Integer,String>
    */
-
-  public HashMap<Integer, String> getItemPlace() {
+/*
+  public HashMap <Integer, String> getItemPlace() {
     return this.itemPlace;
   }
-
+*/
   /**
    * Returns the HashMap of the String and Entity of the item in the inventory
    * Created only for use in ItemSlot at the moment
    * @return HashMap<String,Entity>
    */
-
-  public HashMap<String,Entity> getHeldItemsEntity() {
+/*
+  public HashMap <String,Entity> getHeldItemsEntity() {
     return this.heldItemsEntity;
   }
-
+*/
   public void setItemPlace(HashMap<Integer, String> itemPlace) {
     this.itemPlace = itemPlace;
   }
