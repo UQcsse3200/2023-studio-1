@@ -353,9 +353,6 @@ public class SpaceGameArea extends GameArea {
 
     hostileSpawner = new EntitiesSpawner(hostileSpawners);
     hostileSpawner.setGameAreas(this);
-
-    hostileSpawner.spawnNow(); //initial spawns
-    hostileSpawner.startPeriodicSpawning();
   }
 
   /**
