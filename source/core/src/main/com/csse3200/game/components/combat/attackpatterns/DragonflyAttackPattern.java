@@ -21,6 +21,8 @@ public class DragonflyAttackPattern extends AttackPatternComponent {
 
     private static final String SHOOTER = "shoot";
 
+    private Random random = new Random();
+
     /**
      * @param attackFrequency How often the dragonfly attacks.
      * @param projectileSupplier The projectile supplier for the Dragonfly's projectiles.
@@ -82,7 +84,6 @@ public class DragonflyAttackPattern extends AttackPatternComponent {
      */
     private void shoot(Vector2 position) {
         Entity projectile = projectileSupplier.get();
-        Random random = new Random();
         position.add(random.nextFloat() - 1f, random.nextFloat() -1f);
 
         float randomSpeed = 6f + 4f * random.nextFloat();

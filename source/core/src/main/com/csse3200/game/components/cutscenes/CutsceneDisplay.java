@@ -136,7 +136,7 @@ public class CutsceneDisplay extends UIComponent {
         dialogueLabel.setAlignment(Align.center);
         dialogueLabel.setWrap(true);
         Graphics.DisplayMode active = Gdx.graphics.getDisplayMode();
-        dialogueTable.add(dialogueLabel).width(active.width - 700).expandX(); // need to make it so text always contains the same proportion of the screen
+        dialogueTable.add(dialogueLabel).width((float) active.width - 700).expandX(); // need to make it so text always contains the same proportion of the screen
     }
 
     /**
