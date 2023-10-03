@@ -65,7 +65,7 @@ public class PlantFactory {
                 .addComponent(new PlantProximityComponent())
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
-                        config.maxHealth, cropTile, growthThresholds, soundsArray));
+                        config.maxHealth, cropTile, growthThresholds, soundsArray, config.oxygen));
 
         // Set plant position over crop tile.
         var cropTilePosition = cropTile.getEntity().getPosition();
@@ -83,7 +83,7 @@ public class PlantFactory {
      * @param atlasPath - The path of the relevant animation atlas.
      * @return animation component
      */
-    private static AnimationRenderComponent setupPlantAnimations(String atlasPath) {
+    public static AnimationRenderComponent setupPlantAnimations(String atlasPath) {
         AnimationRenderComponent animator = new AnimationRenderComponent(
                 ServiceLocator.getResourceService().getAsset(atlasPath, TextureAtlas.class),
                 16f);
@@ -193,6 +193,11 @@ public class PlantFactory {
     }
 
 
+    /**
+     *
+     * @param cropTile
+     * @return
+     */
     public static Entity createTest(CropTileComponent cropTile) {
         return new Entity(EntityType.Plant);
     }

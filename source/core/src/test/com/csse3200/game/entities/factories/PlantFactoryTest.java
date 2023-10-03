@@ -1,13 +1,9 @@
 package com.csse3200.game.entities.factories;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -16,6 +12,9 @@ import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.util.stream.Stream;
 
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.csse3200.game.components.player.PlayerAnimationController;
+import com.csse3200.game.rendering.RenderService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -50,22 +49,15 @@ import com.csse3200.game.services.ServiceLocator;
 class PlantFactoryTest {
     PlantConfigs stats;
 
-    // Mocked dependencies
     @Mock
     static CropTileComponent mockCropTile;
-    @Mock
-    ResourceService mockResourceService;
-    @Mock
-    Texture mockTexture;
-    @Mock
-    Entity mockEntity;
-    @Mock
-    TextureRenderComponent mockRenderComponent;
+
 
     @Mock
-    AnimationRenderComponent mockAnimationRenderComponent;
-    @Mock
-    BasePlantConfig mockConfig;
+    Entity mockEntity;
+
+
+    AnimationRenderComponent animationRenderComponent;
 
     /**
      * Set up required objects and mocked dependencies before each test.
@@ -82,11 +74,12 @@ class PlantFactoryTest {
      */
     void setupMocks() {
         ServiceLocator.registerPhysicsService(new PhysicsService());
-        ServiceLocator.registerResourceService(mockResourceService);
-        when(mockEntity.getComponent(AnimationRenderComponent.class)).thenReturn(mockAnimationRenderComponent);
         when(mockCropTile.getEntity()).thenReturn(mockEntity);
-        when(mockEntity.getPosition()).thenReturn(new Vector2(5, 5));
+
     }
+
+
+
 
     /**
      * Mocks the file operations for the GDX framework.
@@ -107,23 +100,52 @@ class PlantFactoryTest {
         PlantFactory.setStats(stats);
     }
 
+    /**@Test
+    void testCreate() {
+        ServiceLocator.registerRenderService(new RenderService());
+        ResourceService resourceService = new ResourceService();
+        resourceService.loadTextureAtlases(new String[]{"images/plants/aloe_vera.atlas"});
+        //resourceService.loadTextures(new String[]{"images/heart.png"});
+        resourceService.loadAll();
+        ServiceLocator.registerResourceService(resourceService);
+
+        animationRenderComponent = spy(
+                new AnimationRenderComponent(
+                        ServiceLocator.getResourceService().getAsset("images/plants/aloe_vera.atlas", TextureAtlas.class)
+                )
+        );
+
+        PlantFactory.setupPlantAnimations(stats.aloeVera.atlasPath);
+
+        mockEntity = new Entity()
+                .addComponent(animationRenderComponent)
+                .addComponent(new PlayerAnimationController());
+
+        mockEntity.getComponent(AnimationRenderComponent.class).scaleEntity();
+        mockEntity.create();
+
+        Entity plant = PlantFactory.createBasePlant(stats.aloeVera, mockCropTile);
+        assertNotNull(plant, "plant is null! :o");
+
+    }*/
+
     /**
      * Test to ensure plant configurations are loaded correctly.
      *
-     * @param id           The unique identifier for the plant.
-     * @param health       The health value of the plant.
-     * @param name         The name of the plant.
-     * @param type         The type category of the plant.
-     * @param description  A brief description of the plant's characteristics or purpose.
-     * @param water        The ideal water level for the plant.
-     * @param life         The expected adult lifespan of the plant.
-     * @param maxHealth    The maximum possible health value of the plant.
+     * @param id - The unique identifier for the plant.
+     * @param health - The health value of the plant.
+     * @param name - The name of the plant.
+     * @param type - The type category of the plant.
+     * @param description - A brief description of the plant's characteristics or purpose.
+     * @param water - The ideal water level for the plant.
+     * @param life - The expected adult lifespan of the plant.
+     * @param maxHealth - The maximum possible health value of the plant.
+     * @param oxygen - The oxygen production of a plant.
      */
     @ParameterizedTest
     @MethodSource("plantConfigProvider")
     void shouldLoadPlantConfigs(String id, int health, String name, String type,
-                                                String description, float water, int life,
-                                                int maxHealth) {
+                                String description, float water, int life, int maxHealth, int oxygen) {
         BasePlantConfig actualValues = getActualValue(id);
         String errMsg = "Mismatched value for plant " + id + ": %s";
 
@@ -134,6 +156,7 @@ class PlantFactoryTest {
         assertEquals(water, actualValues.idealWaterLevel, String.format(errMsg, "water level"));
         assertEquals(life, actualValues.adultLifeSpan, String.format(errMsg, "life span"));
         assertTrue(maxHealth >= actualValues.maxHealth, String.format(errMsg, "max health"));
+        assertEquals(oxygen, actualValues.oxygen, String.format(errMsg, "oxygen"));
     }
 
     /**
@@ -146,28 +169,28 @@ class PlantFactoryTest {
                 Arguments.of("cosmicCob", 3, "Cosmic Cob", "FOOD",
                         "A nutritious snack with everything a human needs to survive, the local " +
                                 "fauna won’t touch it though. Suspiciously high in protein and fat…",
-                        (float) 1, 3, 200),
+                        (float) 1, 3, 200, 10),
                 Arguments.of("aloeVera", 2, "Aloe Vera", "HEALTH",
                         "A unique plant that once ground down to a chunky red paste can be used " +
-                                "to heal significant wounds, it’s a miracle!", (float) 1.2, 5, 150),
+                                "to heal significant wounds, it’s a miracle!", (float) 1.2, 5, 150, 10),
                 Arguments.of("hammerPlant", 5, "Hammer Plant", "REPAIR",
                         "A useful plant resembling a hand holding a hammer that repairs the " +
-                                "other nearby plants, maybe they were friends!", (float) 0.7, 7, 250),
+                                "other nearby plants, maybe they were friends!", (float) 0.7, 7, 250, 10),
                 Arguments.of("venusFlyTrap", 10, "Space Snapper", "DEFENCE",
                         "A hangry plant that will gobble any nasty pests nearby. Keep small pets " +
-                                "and children out of snapping distance!", (float) 0.5, 15, 300),
+                                "and children out of snapping distance!", (float) 0.5, 15, 300, 10),
                 Arguments.of("waterWeed", 2, "Atomic Algae", "PRODUCTION",
-                        "A highly efficient oxygen-producing plant.", (float) 1.5, 4, 100),
+                        "A highly efficient oxygen-producing plant.", (float) 1.5, 4, 100, 100),
                 Arguments.of("nightshade", 2, "Deadly Nightshade",
-                        "DEADLY", "Grows deadly poisonous berries.", (float) 1, 2, 130)
+                        "DEADLY", "Grows deadly poisonous berries.", (float) 1, 2, 130, 10)
         );
     }
 
     /**
      * Utility method to fetch the actual plant configuration based on the plant name.
      *
-     * @param id    The unique identifier of the plant.
-     * @return      The actual plant configuration.
+     * @param id - The unique identifier of the plant.
+     * @return The actual plant configuration.
      */
     BasePlantConfig getActualValue(String id) {
         return switch (id) {
@@ -180,6 +203,8 @@ class PlantFactoryTest {
             default -> throw new IllegalArgumentException("Unknown plant name: " + id);
         };
     }
+
+
 
     /**
      * Test for the creation of a base plant. Ensures that all necessary components

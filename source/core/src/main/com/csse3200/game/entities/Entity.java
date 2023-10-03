@@ -511,4 +511,8 @@ public class Entity implements Json.Serializable {
   public EntityType getType() {
     return type;
   }
+
+  public void setType(EntityType entityType) {
+    this.type = entityType;
+  }
 }

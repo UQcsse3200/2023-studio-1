@@ -1,6 +1,7 @@
 package com.csse3200.game.components.plants;
 import static com.badlogic.gdx.math.MathUtils.random;
 
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.FactoryService;
 import java.text.DecimalFormat;
 import java.util.Map;
@@ -59,7 +60,7 @@ public class PlantComponent extends Component {
     private final float idealWaterLevel;
 
     /**
-     * The growth stage of the plant
+     * Defines the growth stage of the plant and its associated value
      */
     public enum GrowthStage {
         SEEDLING(1),
@@ -80,6 +81,9 @@ public class PlantComponent extends Component {
         }
     }
 
+    /**
+     * The growth stage of the plant
+     */
     private GrowthStage growthStages;
 
     /**
@@ -116,6 +120,11 @@ public class PlantComponent extends Component {
      * The maximum health a plant can have at different growth stages (stages 1, 2, 3).
      */
     private int[] maxHealthAtStages = {0, 0, 0};
+
+    /**
+     * The amount of oxygen a plant produces
+     */
+    private int oxygen;
 
     /**
      * Used to track how long a plant has been an adult.
@@ -159,6 +168,9 @@ public class PlantComponent extends Component {
      */
     private int countMinutesOfDigestion;
 
+    /**
+     * The logger to log errors
+     */
     private static final Logger logger = LoggerFactory.getLogger(PlantComponent.class);
 
     /**
@@ -166,9 +178,19 @@ public class PlantComponent extends Component {
      */
     private boolean playerInProximity;
 
+    /**
+     * Checks if plant is destroyed
+     */
     private boolean plantDestroyed = false;
+
+    /**
+     * Checks if plant dies before becoming an adult
+     */
     private boolean deadBeforeMaturity = false;
 
+    /**
+     * Checks if plant dies by force for debugging
+     */
     private boolean forced = false;
 
     /**
@@ -230,11 +252,12 @@ public class PlantComponent extends Component {
      * @param cropTile - The cropTileComponent where the plant will be located.
      * @param growthStageThresholds - A list of three integers that represent the growth thresholds.
      * @param soundsArray - A list of all sound files file paths as strings
+     * @param oxygen - The amount of oxygen that the plant will increase the planet by
      */
     public PlantComponent(int health, String name, String plantType, String plantDescription,
                           float idealWaterLevel, int adultLifeSpan, int maxHealth,
                           CropTileComponent cropTile, int[] growthStageThresholds,
-                          String[] soundsArray) {
+                          String[] soundsArray, int oxygen) {
         this.plantHealth = health;
         this.plantName = name;
         this.plantType = plantType;
@@ -248,6 +271,7 @@ public class PlantComponent extends Component {
         this.growthStages = GrowthStage.SEEDLING;
         this.numOfDaysAsAdult = 0;
         this.currentMaxHealth = maxHealth;
+        this.oxygen = oxygen;
 
         // Initialise growth stage thresholds for specific plants.
         this.growthStageThresholds[0] = growthStageThresholds[0];
@@ -327,6 +351,161 @@ public class PlantComponent extends Component {
     }
 
     /**
+     * Returns the current plant health
+     * @return current plant health
+     */
+    public int getPlantHealth() {
+        return this.plantHealth;
+    }
+
+    /**
+     * Set the current plant health
+     * @param health - current plant health
+     */
+    public void setPlantHealth(int health) {
+        this.plantHealth = health;
+    }
+
+    /**
+     * Returns the max health of the plant
+     * @return current max health
+     */
+    public int getMaxHealth() {
+        return this.maxHealth;
+    }
+
+    /**
+     * Set the current oxygen production of a plant
+     * @param oxygen - current oxygen production
+     */
+    public void setOxygen(int oxygen) {
+        this.oxygen = oxygen;
+    }
+
+    /**
+     * Returns the current oxygen production of a plant
+     * @return current amount of oxygen the plant produces
+     */
+    public int getOxygen() {
+        return this.oxygen;
+    }
+
+    /**
+     * Returns the name of the plant
+     * @return name of the plant
+     */
+    public String getPlantName() {
+        return this.plantName;
+    }
+
+    /**
+     * Returns the type of the plant
+     * @return type of the plant
+     */
+    public String getPlantType() {
+        return this.plantType;
+    }
+
+    /**
+     * Returns the plant description
+     * @return plant description
+     */
+    public String getPlantDescription() {
+        return this.plantDescription;
+    }
+
+    /**
+     * Set the plant to decaying stage.
+     */
+    public void setDecay() {
+        this.growthStages = GrowthStage.DECAYING;
+    }
+
+    /**
+     * Find out if the plant is decaying or not.
+     * @return If the plant is in a state of decay or not
+     */
+    public boolean isDecay() {
+        return this.growthStages == GrowthStage.DECAYING;
+    }
+
+    /**
+     * Get the ideal water level of a plant
+     * @return ideal water level
+     */
+    public float getIdealWaterLevel() {
+        return this.idealWaterLevel;
+    }
+
+    /**
+     * Get the current growth stage of a plant
+     * @return current growth stage
+     */
+    public GrowthStage getGrowthStage() {
+        return this.growthStages;
+    }
+
+    /**
+     * Get the adult life span of a plant
+     * @return adult life span
+     */
+    public int getAdultLifeSpan() {
+        return this.adultLifeSpan;
+    }
+
+    /**
+     * Set the adult life span of a plant.
+     * @param adultLifeSpan The number of days the plant will exist as an adult plant
+     */
+    public void setAdultLifeSpan(int adultLifeSpan) {
+        this.adultLifeSpan = adultLifeSpan;
+    }
+
+    /**
+     * Return the current growth level of the plant.
+     * @return The current growth level
+     */
+    public int getCurrentGrowthLevel() {
+        return this.currentGrowthLevel;
+    }
+
+    /**
+     * Retrieves the current maximum health value of the plant.
+     * @return The current maximum health of the plant.
+     */
+    public int getCurrentMaxHealth() {
+        return this.currentMaxHealth;
+    }
+
+    /**
+     * Retrieves the number of days the plant has been an adult.
+     * @return The number of days the plant has been in its adult stage.
+     */
+    public int getNumOfDaysAsAdult() {
+        return numOfDaysAsAdult;
+    }
+
+    /**
+     * Sets the number of days the plant has been an adult.
+     * @param numOfDaysAsAdult The number of days to set the plant's adult stage duration to.
+     */
+    public void setNumOfDaysAsAdult(int numOfDaysAsAdult) {
+        this.numOfDaysAsAdult = numOfDaysAsAdult;
+    }
+
+    /**
+     * Sets the harvest yield of this plant.
+     *
+     * <p>This will store an unmodifiable copy of the given map. Modifications made to the given
+     * map after being set will not be reflected in the plant.
+     *
+     * @param harvestYields Map of item names to drop quantities.
+     */
+    public void setHarvestYields(Map<String, Integer> harvestYields) {
+        this.harvestYields = Map.copyOf(harvestYields);
+    }
+
+    /**
      * Check if the plant has exceeded its adult lifespan.
      */
     public void adultLifeSpanCheck() {
@@ -389,7 +568,6 @@ public class PlantComponent extends Component {
             case "Deadly Nightshade" -> entity.getComponent(PlantAreaOfEffectComponent.class).setRadius(2.5f);
             default -> entity.getComponent(PlantAreaOfEffectComponent.class).setRadius(2f);
         }
-
     }
 
     /**
@@ -432,33 +610,6 @@ public class PlantComponent extends Component {
     }
 
     /**
-     * Returns the current plant health
-     *
-     * @return current plant health
-     */
-    public int getPlantHealth() {
-        return this.plantHealth;
-    }
-
-    /**
-     * Set the current plant health
-     * @param health - current plant health
-     */
-    public void setPlantHealth(int health) {
-        this.plantHealth = health;
-    }
-
-    /**
-     * Returns the max health of the plant
-     *
-     * @return current max health
-     */
-
-    public int getMaxHealth() {
-        return this.maxHealth;
-    }
-
-    /**
      * Increase (or decrease) the plant health by some value
      * @param plantHealthIncrement - plant health affected value
      */
@@ -485,64 +636,6 @@ public class PlantComponent extends Component {
     }
 
     /**
-     * Returns the name of the plant
-     *
-     * @return name of the plant
-     */
-    public String getPlantName() {
-        return this.plantName;
-    }
-
-    /**
-     * Returns the type of the plant
-     *
-     * @return type of the plant
-     */
-    public String getPlantType() {
-        return this.plantType;
-    }
-
-    /**
-     * Returns the plant description
-     *
-     * @return plant description
-     */
-    public String getPlantDescription() {
-        return this.plantDescription;
-    }
-
-    /**
-     * Set the plant to decaying stage.
-     */
-    public void setDecay() {
-        this.growthStages = GrowthStage.DECAYING;
-    }
-
-    /**
-     * Find out if the plant is decaying or not.
-     * @return If the plant is in a state of decay or not
-     */
-    public boolean isDecay() {
-        return this.growthStages == GrowthStage.DECAYING;
-    }
-
-    /**
-     * Get the ideal water level of a plant
-     * @return ideal water level
-     */
-    public float getIdealWaterLevel() {
-        return this.idealWaterLevel;
-    }
-
-    /**
-     * Get the current growth stage of a plant
-     * @return current growth stage
-     */
-    public GrowthStage getGrowthStage() {
-        return this.growthStages;
-    }
-
-    /**
      * Set the growth stage of a plant.
      *
      * @param newGrowthStage - The updated growth stage of the plant, between 1 and 6.
@@ -551,6 +644,7 @@ public class PlantComponent extends Component {
 
         if (newGrowthStage == GrowthStage.DEAD.getValue()) {
             ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(-1, "alive");
+            entity.setType(EntityType.Plant);
             if (!deadBeforeMaturity && !forced) {
                 ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(-1, "decay");
             } else if (forced) {
@@ -558,30 +652,15 @@ public class PlantComponent extends Component {
             }
         } else if (newGrowthStage == GrowthStage.DECAYING.getValue()) {
             ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(1, "decay");
+            entity.setType(EntityType.DecayingPlant);
         }
 
         if (newGrowthStage >= 1 && newGrowthStage <= GrowthStage.values().length) {
             this.growthStages = GrowthStage.values()[newGrowthStage - 1];
+            entity.setType(EntityType.Plant);
         } else {
             throw new IllegalArgumentException("Invalid growth stage value.");
         }
-    }
-
-    /**
-     * get the adult life span of a plant
-     *
-     * @return adult life span
-     */
-    public int getAdultLifeSpan() {
-        return this.adultLifeSpan;
-    }
-
-    /**
-     * Set the adult life span of a plant.
-     * @param adultLifeSpan The number of days the plant will exist as an adult plant
-     */
-    public void setAdultLifeSpan(int adultLifeSpan) {
-        this.adultLifeSpan = adultLifeSpan;
     }
 
     /**
@@ -593,49 +672,7 @@ public class PlantComponent extends Component {
         this.growthStages.value += growthIncrement;
     }
 
-    /**
-     * Return the current growth level of the plant.
-     * @return The current growth level
-     */
-    public int getCurrentGrowthLevel() {
-        return this.currentGrowthLevel;
-    }
 
-    /**
-     * Retrieves the current maximum health value of the plant.
-     * @return The current maximum health of the plant.
-     */
-    public int getCurrentMaxHealth() {
-        return this.currentMaxHealth;
-    }
-
-    /**
-     * Retrieves the number of days the plant has been an adult.
-     * @return The number of days the plant has been in its adult stage.
-     */
-    public int getNumOfDaysAsAdult() {
-        return numOfDaysAsAdult;
-    }
-
-    /**
-     * Sets the number of days the plant has been an adult.
-     * @param numOfDaysAsAdult The number of days to set the plant's adult stage duration to.
-     */
-    public void setNumOfDaysAsAdult(int numOfDaysAsAdult) {
-        this.numOfDaysAsAdult = numOfDaysAsAdult;
-    }
-
-    /**
-     * Sets the harvest yield of this plant.
-     *
-     * <p>This will store an unmodifiable copy of the given map. Modifications made to the given
-     * map after being set will not be reflected in the plant.
-     *
-     * @param harvestYields Map of item names to drop quantities.
-     */
-    public void setHarvestYields(Map<String, Integer> harvestYields) {
-        this.harvestYields = Map.copyOf(harvestYields);
-    }
 
     /**
      * Increase the currentGrowthLevel based on the growth rate provided by the CropTileComponent where the
@@ -725,10 +762,7 @@ public class PlantComponent extends Component {
         cropTile.setUnoccupied();
 
         plantDestroyed = true;
-
-
     }
-
 
     /**
      * To attack plants and damage their health.
@@ -811,13 +845,6 @@ public class PlantComponent extends Component {
             soundEffect = ServiceLocator.getResourceService().getAsset(notLore, Sound.class);
         }
         soundEffect.play();
-    }
-
-    public void setCurrentAge(float age) {
-    }
-
-    public float getCurrentAge() {
-        return 0;
     }
 
     /**
@@ -997,6 +1024,10 @@ public class PlantComponent extends Component {
         updateMaxHealth();
     }
 
+    /**
+     * Forces growth stage to change based on specified growth stage
+     * @param growthStage - The specified growth stage
+     */
     public void forceGrowthStage(String growthStage) {
         if (!plantDestroyed) {
             switch (growthStage) {
