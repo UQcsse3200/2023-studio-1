@@ -53,12 +53,9 @@ public class TestInventoryUI {
     @BeforeAll
     static void Create() {
         inventory = new InventoryComponent(new ArrayList<>());
-        System.out.println(inventory);
-
-
     }
     /**
-     * Create a player entity.
+     * Create a player with an inventory.
      */
     @BeforeEach
     void createPlayer() {
@@ -102,7 +99,7 @@ public class TestInventoryUI {
 
     }
 
-    @ParameterizedTest(name = "adding {0} ShouldAddInventoryImagesParams")
+    @ParameterizedTest()
     @MethodSource({"addingItemsShouldAddInventoryImagesParams"})
     void addingItemsShouldAddInventoryImages(ItemComponent component, int expected) {
         player.create();

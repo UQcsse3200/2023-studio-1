@@ -144,7 +144,7 @@ public class ToolbarDisplay extends UIComponent {
     /**
      * Toggle Toolbar to open state
      */
-    private void toggleOpen(){
+    public void toggleOpen(){
         if (this.isOpen) {
             this.window.setVisible(false);
             this.isOpen = false;
