@@ -537,7 +537,7 @@ public class SpaceGameArea extends GameArea {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(forestTextures);
-    resourceService.loadTextures(TerrainFactory.mapTextures);
+    resourceService.loadTextures(TerrainFactory.getMapTextures());
     resourceService.loadTextureAtlases(forestTextureAtlases);
     try {
       ServiceLocator.getSoundService().getBackgroundMusicService()
