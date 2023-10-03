@@ -1,6 +1,5 @@
 package com.csse3200.game.missions.quests;
 
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.events.EventHandler;
