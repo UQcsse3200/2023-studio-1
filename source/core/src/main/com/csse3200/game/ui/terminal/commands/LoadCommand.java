@@ -22,6 +22,11 @@ public class LoadCommand implements Command {
       logger.debug("Invalid arguments received for 'load' command: {}", args);
       return false;
     }
+    if (args.size() == 1) {
+      if (ServiceLocator.getSaveLoadService().validSaveFile(args.get(0))) {
+        ServiceLocator.getSaveLoadService().load(args.get(0));
+      }
+    }
     ServiceLocator.getSaveLoadService().load();
     return true;
     }

@@ -86,7 +86,11 @@ public class SaveLoadService {
      * @return true if there exists a valid save file, false otherwise
      */
     public boolean validSaveFile(){
-        SaveGame.GameState state = SaveGame.get(ROOT_DIR + File.separator + SAVE_FILE);
+        return validSaveFile(ROOT_DIR + File.separator + SAVE_FILE);
+    }
+
+    public boolean validSaveFile(String path) {
+        SaveGame.GameState state = SaveGame.get(path);
         return state != null;
     }
 
