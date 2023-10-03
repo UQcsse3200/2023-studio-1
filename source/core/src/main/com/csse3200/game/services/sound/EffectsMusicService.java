@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A MusicService that handles playback for short (<=5s) sound effects that are played from memory.
+ * A MusicService that handles playback for short (less than or equal to 5s) sound effects that are played from memory.
  * All files must be in the WAV format to ensure consistent playback.
  * There is no limit on the number of sound effects that can be loaded,
  * but loading too many will cause performance issues, so please be judicious.
