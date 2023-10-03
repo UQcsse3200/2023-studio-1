@@ -1,6 +1,8 @@
 package com.csse3200.game.components.items;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -29,7 +31,7 @@ public class ClueComponent extends Component {
 			new Vector2(30, 60)
 	));
 
-	private final Vector2 currentBaseLocation;
+	private Vector2 currentBaseLocation;
 
 	public ClueComponent() {
 		currentBaseLocation = possibleBaseLocations.get(0);
@@ -57,5 +59,22 @@ public class ClueComponent extends Component {
 	void destroy() {
 		ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class).removeItem(entity);
 		entity.dispose();
+	}
+
+	@Override
+	public void write(Json json) {
+		json.writeObjectStart(this.getClass().getSimpleName());
+		json.writeValue("currentBaseLocationX", currentBaseLocation.x);
+		json.writeValue("currentBaseLocationY", currentBaseLocation.y);
+		json.writeObjectEnd();
+	}
+
+	@Override
+	public void read(Json json, JsonValue jsonMap) {
+		jsonMap = jsonMap.get(this.getClass().getSimpleName());
+		currentBaseLocation = new Vector2(
+				jsonMap.getFloat("currentBaseLocationX"),
+				jsonMap.getFloat("currentBaseLocationY")
+		);
 	}
 }

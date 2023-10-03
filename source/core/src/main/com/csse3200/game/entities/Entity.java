@@ -399,8 +399,26 @@ public class Entity implements Json.Serializable {
      */
     public void writeItem(Json json) {
         json.writeValue("name", this.getComponent(ItemComponent.class).getItemName());
-        if (this.getComponent(WateringCanLevelComponent.class) != null) {
-            this.getComponent(WateringCanLevelComponent.class).write(json);
+        if (createdComponents != null) {
+            json.writeObjectStart("components");
+            for (Component c : createdComponents) {
+                c.write(json);
+            }
+            json.writeObjectEnd();
+        }
+    }
+
+    /**
+     * Reads the item entity from the json file
+     *
+     * @param json    which is a valid Json that is read from
+     * @param jsonMap which is a valid JsonValue that is read from
+     */
+    public void readItem(Json json, JsonValue jsonMap) {
+        if (createdComponents != null) {
+            for (Component c : createdComponents) {
+                c.read(json, jsonMap);
+            }
         }
     }
 
