@@ -103,6 +103,7 @@ public class MainGameScreen extends ScreenAdapter {
         ServiceLocator.registerTimeService(new TimeService());
         ServiceLocator.registerPlanetOxygenService(new PlanetOxygenService());
         ServiceLocator.registerPlantCommandService(new PlantCommandService());
+        ServiceLocator.registerPlayerHungerService(new PlayerHungerService());
 
         ServiceLocator.registerMissionManager(new MissionManager());
 
@@ -226,6 +227,7 @@ public class MainGameScreen extends ScreenAdapter {
                 .addComponent(new GameTimeDisplay())
                 .addComponent(new ProgressBar())
                 .addComponent(new OxygenDisplay())
+                .addComponent(new HungerBar())
                 .addComponent(new WeatherEventDisplay());
 
         ServiceLocator.getEntityService().register(ui);

@@ -174,10 +174,14 @@ public class SpaceGameArea extends GameArea {
           "images/plants/misc/hammer_plant_seed.png",
           "images/plants/misc/space_snapper_seed.png",
           "images/plants/misc/atomic_algae_seed.png",
+          "images/plants/misc/tobacco_seed.png",
           "images/invisible_sprite.png",
 
           "images/progress-bar/day1.png",
-          "images/progress-bar/day2.png"
+          "images/progress-bar/day2.png",
+
+          "images/Player_Hunger/hunger_bar_outline.png",
+          "images/Player_Hunger/hunger_bar_fill.png"
   };
   private static final String[] forestTextureAtlases = {
       "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
