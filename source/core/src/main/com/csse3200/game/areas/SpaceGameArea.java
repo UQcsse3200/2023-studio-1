@@ -137,9 +137,51 @@ public class SpaceGameArea extends GameArea {
           "images/plants/misc/deadly_nightshade_seed.png",
           "images/plants/misc/hammer_plant_seed.png",
           "images/plants/misc/space_snapper_seed.png",
+
+
+          "images/invisible_sprite.png",
+
+          "images/Player_Hunger/hunger_bar_outline.png",
+          "images/Player_Hunger/hunger_bar_fill.png",
+
+
+
           "images/plants/misc/atomic_algae_seed.png",
           "images/invisible_sprite.png",
 
+          "images/progress-bar/part1day1.png",
+          "images/progress-bar/part1day2.png",
+          "images/progress-bar/part1day3.png",
+          "images/progress-bar/part1day4.png",
+          "images/progress-bar/part1day5.png",
+          "images/progress-bar/part2day1.png",
+          "images/progress-bar/part2day2.png",
+          "images/progress-bar/part2day3.png",
+          "images/progress-bar/part2day4.png",
+          "images/progress-bar/part2day5.png",
+          "images/progress-bar/part2day6.png",
+          "images/progress-bar/part2day7.png",
+          "images/progress-bar/part2day8.png",
+          "images/progress-bar/part2day9.png",
+          "images/progress-bar/part2day10.png",
+          "images/progress-bar/part3day1.png",
+          "images/progress-bar/part3day2.png",
+          "images/progress-bar/part3day3.png",
+          "images/progress-bar/part3day4.png",
+          "images/progress-bar/part3day5.png",
+          "images/progress-bar/part3day6.png",
+          "images/progress-bar/part3day7.png",
+          "images/progress-bar/part3day8.png",
+          "images/progress-bar/part3day9.png",
+          "images/progress-bar/part3day10.png",
+          "images/progress-bar/part3day11.png",
+          "images/progress-bar/part3day12.png",
+          "images/progress-bar/part3day13.png",
+          "images/progress-bar/part3day14.png",
+          "images/progress-bar/part3day15.png",
+
+          "images/Player_Hunger/hunger_bar_outline.png",
+          "images/Player_Hunger/hunger_bar_fill.png",
           "images/projectiles/oxygen_eater_projectile.png",
 
           "images/yellowSquare.png",
@@ -287,12 +329,16 @@ public class SpaceGameArea extends GameArea {
     spawnInvisibleObstacle();// spawn invisible obstacle on the non-traversable area of the map
 
     // Todo: Remove this code that automatically spawns plants
+    // Leaving commented for testing, will delete next sprint.
+    /*
     spawnCrop(20, 80, "Cosmic Cob");
     spawnCrop(22, 80, "Aloe Vera");
     spawnCrop(24, 80, "Hammer Plant");
     spawnCrop(26, 80, "Space Snapper");
     spawnCrop(28, 80, "Deadly Nightshade");
     spawnCrop(30, 80, "Atomic Algae");
+
+     */
 
     spawnShipDebris();
 
@@ -328,6 +374,7 @@ public class SpaceGameArea extends GameArea {
 //    spawnTool(ItemType.FERTILISER);
 //    spawnTool(ItemType.SEED);
 //    spawnTool(ItemType.FOOD);
+//    spawnItem();
 
 
     playMusic();
@@ -503,6 +550,11 @@ public class SpaceGameArea extends GameArea {
   private void spawnShip() {
     Entity newShip = ShipFactory.createShip();
     spawnEntityAt(newShip, SHIP_SPAWN, true, true);
+  }
+
+  private void spawnItem() {
+    Entity item = ItemFactory.createCosmicCobEar();
+    spawnEntityAt(item, PLAYER_SPAWN, true, true);
   }
 
   private void spawnTool(ItemType tool) {

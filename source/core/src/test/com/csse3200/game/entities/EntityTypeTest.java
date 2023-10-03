@@ -21,7 +21,7 @@ public class EntityTypeTest {
     // Expected enum names.
     // https://github.com/UQcsse3200/2023-studio-1/wiki/Save---Load-game
     expectedEnumNames = new HashSet<>(Arrays.asList(
-        "Player", "Tractor", "Plant", "Tile", "Cow",
+        "Player", "Tractor", "Plant", "DecayingPlant", "Tile", "Cow",
         "Chicken", "Astrolotl", "OxygenEater", "Item",
         "Questgiver", "QuestgiverIndicator", "Sprinkler","Ship", "ShipDebris", "ShipPartTile",
             "Gate", "Fence", "Chest", "Pump", "Light", "FireFlies", "Dragonfly", "Bat", "Dummy"));
