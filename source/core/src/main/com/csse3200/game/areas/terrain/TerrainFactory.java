@@ -125,7 +125,7 @@ public class TerrainFactory {
     }
 
     /** List of strings storing map texture file paths */
-    private final static String[] mapTextures = {
+    private static final String[] mapTextures = {
             "images/grass_1.png",
             "images/grass_2.png",
             "images/grass_3.png",
@@ -310,7 +310,7 @@ public class TerrainFactory {
         } catch (IOException e) {
             logger.error("fillTilesWithFile -> Readfile error!");
         } catch (Exception e) {
-            String log = String.format("fillTilesWithFile -> Testcase error!: %b", e);
+            String log = String.format("fillTilesWithFile -> Testcase error!: %s", e);
             logger.error(log);
         }
     }

@@ -15,6 +15,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 
 @ExtendWith(GameExtension.class)
@@ -49,21 +51,10 @@ class SetTimeScaleCommandTest {
 		assertFalse(command.action(args));
 	}
 
-	@Test
+	@ParameterizedTest
+	@ValueSource(strings = {"invalid", "0", "-1.1"})
 	public void invalidTimeScaleNumber() {
 		args.add("invalid");
-		assertFalse(command.isValid(args));
-	}
-
-	@Test
-	public void invalidTimeScaleValue1() {
-		args.add("0");
-		assertFalse(command.isValid(args));
-	}
-
-	@Test
-	public void invalidTimeScaleValue2() {
-		args.add("-1.1");
 		assertFalse(command.isValid(args));
 	}
 }

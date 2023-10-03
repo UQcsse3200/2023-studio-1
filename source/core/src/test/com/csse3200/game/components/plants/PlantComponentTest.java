@@ -21,6 +21,8 @@ import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 @ExtendWith(GameExtension.class)
 public class PlantComponentTest {
@@ -204,32 +206,17 @@ public class PlantComponentTest {
         assertFalse(testPlant.isDead());
     }
 
-    @Test
-    void testUpdateMaxHealth_GrowthStage1() {
-        testPlant.setGrowthStage(1);
+    @ParameterizedTest
+    @CsvSource({
+            "1, 0.05",
+            "2, 0.1",
+            "3, 0.3",
+            "4, 1",
+    })
+    void testUpdateMaxHealth_GrowthStage(int stage, float multiplier) {
+        testPlant.setGrowthStage(stage);
         testPlant.updateMaxHealth();
-        assertEquals(maxHealth * 0.05, testPlant.getCurrentMaxHealth(), 0.01);
-    }
-
-    @Test
-    void testUpdateMaxHealth_GrowthStage2() {
-        testPlant.setGrowthStage(2);
-        testPlant.updateMaxHealth();
-        assertEquals(maxHealth * 0.1, testPlant.getCurrentMaxHealth(), 0.01);
-    }
-
-    @Test
-    void testUpdateMaxHealth_GrowthStage3() {
-        testPlant.setGrowthStage(3);
-        testPlant.updateMaxHealth();
-        assertEquals(maxHealth * 0.3, testPlant.getCurrentMaxHealth(), 0.01);
-    }
-
-    @Test
-    public void testUpdateMaxHealth_GrowthStage4() {
-        testPlant.setGrowthStage(4);
-        testPlant.updateMaxHealth();
-        assertEquals(maxHealth, testPlant.getCurrentMaxHealth(), 0.01);
+        assertEquals(maxHealth * multiplier, testPlant.getCurrentMaxHealth(), 0.01);
     }
 
     @Test

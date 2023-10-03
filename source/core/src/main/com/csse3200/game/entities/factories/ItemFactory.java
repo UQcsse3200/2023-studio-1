@@ -89,12 +89,12 @@ public class ItemFactory {
    * @return watering can
    */
   public static Entity createWateringcan() {
-    Entity watering_can = createBaseItem()
+    Entity wateringCan = createBaseItem()
         .addComponent(new TextureRenderComponent("images/tool_watering_can.png"))
         .addComponent(
             new ItemComponent("watering_can", ItemType.WATERING_CAN, new Texture("images/tool_watering_can.png")))
         .addComponent(new WateringCanLevelComponent(150));
-    return watering_can;
+    return wateringCan;
   }
 
   /**
