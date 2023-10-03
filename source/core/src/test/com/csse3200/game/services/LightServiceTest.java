@@ -28,7 +28,7 @@ class LightServiceTest {
 	RayHandler rayHandler;
 
 	@BeforeEach
-	public void setUp() {
+	void setUp() {
 		PhysicsService physicsService = mock(PhysicsService.class);
 		PhysicsEngine physicsEngine = mock(PhysicsEngine.class);
 		when(physicsService.getPhysics()).thenReturn(physicsEngine);
@@ -49,12 +49,12 @@ class LightServiceTest {
 	}
 
 	@AfterEach
-	public void clear() {
+	void clear() {
 		ServiceLocator.clear();
 	}
 
 	@Test
-	public void testRenderLight() {
+	void testRenderLight() {
 		try (MockedConstruction<RayHandler> mock = mockConstruction(RayHandler.class)) {
 			LightService lightService = new LightService();
 			rayHandler = mock.constructed().get(0);
@@ -67,7 +67,7 @@ class LightServiceTest {
 	}
 
 	@Test
-	public void testGetRayHandler() {
+	void testGetRayHandler() {
 		try (MockedConstruction<RayHandler> mock = mockConstruction(RayHandler.class)) {
 			LightService lightService = new LightService();
 			rayHandler = mock.constructed().get(0);

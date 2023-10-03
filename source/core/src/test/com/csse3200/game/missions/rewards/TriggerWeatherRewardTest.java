@@ -30,7 +30,7 @@ public class TriggerWeatherRewardTest {
     private ClimateController climateController;
 
     @BeforeEach
-    public void init() {
+    void init() {
         emptyWeatherEventList = new ArrayList<>();
         weatherEventList = List.of(
                 mock(WeatherEvent.class),
@@ -54,12 +54,12 @@ public class TriggerWeatherRewardTest {
     }
 
     @AfterEach
-    public void clearServiceLocator() {
+    void clearServiceLocator() {
         ServiceLocator.clear();
     }
 
     @Test
-    public void collectEmptyWeatherReward() {
+    void collectEmptyWeatherReward() {
         reward1.collect();
         assertTrue(reward1.isCollected());
 
@@ -67,7 +67,7 @@ public class TriggerWeatherRewardTest {
     }
 
     @Test
-    public void collectWeatherReward() {
+    void collectWeatherReward() {
         reward2.collect();
         assertTrue((reward2.isCollected()));
 

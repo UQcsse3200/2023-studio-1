@@ -18,7 +18,7 @@ public class WinRewardTest {
     EventHandler eventHandler;
 
     @BeforeEach
-    public void init() {
+    void init() {
         reward = new WinReward();
 
         MissionManager missionManager = mock(MissionManager.class);
@@ -28,12 +28,12 @@ public class WinRewardTest {
     }
 
    @AfterEach
-    public void clearServiceLocator() {
+    void clearServiceLocator() {
         ServiceLocator.clear();
    }
 
    @Test
-    public void collectWinReward() {
+    void collectWinReward() {
         assertFalse(reward.isCollected());
 
         reward.collect();

@@ -22,7 +22,7 @@ class ShipRepairQuestTest {
     private Reward r1 = mock(Reward.class);
 
     @BeforeEach
-    public void init() {
+     void init() {
         ServiceLocator.registerTimeSource(new GameTime());
         ServiceLocator.registerTimeService(new TimeService());
         ServiceLocator.registerMissionManager(new MissionManager());
@@ -36,12 +36,12 @@ class ShipRepairQuestTest {
 
     }
     @AfterEach
-    public void reset() {
+    void reset() {
         ServiceLocator.clear();
     }
 
     @Test
-    public void testIsCompleted() {
+    void testIsCompleted() {
         SRQuest1.registerMission(ServiceLocator.getMissionManager().getEvents());
         SRQuest2.registerMission(ServiceLocator.getMissionManager().getEvents());
         SRQuest3.registerMission(ServiceLocator.getMissionManager().getEvents());
@@ -77,7 +77,7 @@ class ShipRepairQuestTest {
     }
 
     @Test
-    public void testGetDescription() {
+    void testGetDescription() {
         SRQuest1.registerMission(ServiceLocator.getMissionManager().getEvents());
         SRQuest2.registerMission(ServiceLocator.getMissionManager().getEvents());
         SRQuest3.registerMission(ServiceLocator.getMissionManager().getEvents());
@@ -96,7 +96,7 @@ class ShipRepairQuestTest {
     }
 
     @Test
-    public void testReadAndGetProgress() {
+    void testReadAndGetProgress() {
         assertEquals(0, SRQuest1.getProgress());
         assertEquals(0, SRQuest2.getProgress());
         assertEquals(0, SRQuest3.getProgress());

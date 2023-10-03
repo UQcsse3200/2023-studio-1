@@ -6,6 +6,7 @@ import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -51,12 +52,12 @@ public class QuestRewardTest {
     }
 
     @AfterEach
-    public void afterTest() {
+    void afterTest() {
         ServiceLocator.clear();
     }
 
     @Test
-    public void collectEmptyQuests() {
+    void collectEmptyQuests() {
         MissionManager missionManager = ServiceLocator.getMissionManager();
         List<Quest> oldActive = missionManager.getActiveQuests();
         List<Quest> oldSelectable = missionManager.getSelectableQuests();
@@ -67,7 +68,7 @@ public class QuestRewardTest {
     }
 
     @Test
-    public void collectEmptyActiveQuests() {
+    void collectEmptyActiveQuests() {
         MissionManager missionManager = ServiceLocator.getMissionManager();
         List<Quest> oldActive = missionManager.getActiveQuests();
         List<Quest> oldSelectable = missionManager.getSelectableQuests();
@@ -78,12 +79,12 @@ public class QuestRewardTest {
             oldSelectable.add(quest);
         }
 
-        assertEquals(oldActive, missionManager.getActiveQuests());
-        assertEquals(oldSelectable, missionManager.getSelectableQuests());
+        Assertions.assertEquals(oldActive, missionManager.getActiveQuests());
+        Assertions.assertEquals(oldSelectable, missionManager.getSelectableQuests());
     }
 
     @Test
-    public void collectEmptySelectableQuests() {
+    void collectEmptySelectableQuests() {
         MissionManager missionManager = ServiceLocator.getMissionManager();
         List<Quest> oldActive = missionManager.getActiveQuests();
         List<Quest> oldSelectable = missionManager.getSelectableQuests();
@@ -94,12 +95,12 @@ public class QuestRewardTest {
             oldActive.add(quest);
         }
 
-        assertEquals(oldActive, missionManager.getActiveQuests());
-        assertEquals(oldSelectable, missionManager.getSelectableQuests());
+        Assertions.assertEquals(oldActive, missionManager.getActiveQuests());
+        Assertions.assertEquals(oldSelectable, missionManager.getSelectableQuests());
     }
 
     @Test
-    public void collectQuestReward() {
+    void collectQuestReward() {
         MissionManager missionManager = ServiceLocator.getMissionManager();
         List<Quest> oldActive = missionManager.getActiveQuests();
         List<Quest> oldSelectable = missionManager.getSelectableQuests();
@@ -114,7 +115,7 @@ public class QuestRewardTest {
             oldActive.add(quest);
         }
 
-        assertEquals(oldActive, missionManager.getActiveQuests());
-        assertEquals(oldSelectable, missionManager.getSelectableQuests());
+        Assertions.assertEquals(oldActive, missionManager.getActiveQuests());
+        Assertions.assertEquals(oldSelectable, missionManager.getSelectableQuests());
     }
 }
