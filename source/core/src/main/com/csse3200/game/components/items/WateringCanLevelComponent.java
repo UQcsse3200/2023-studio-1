@@ -1,6 +1,7 @@
 package com.csse3200.game.components.items;
 
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
 
 public class WateringCanLevelComponent extends Component {
@@ -127,7 +128,7 @@ public class WateringCanLevelComponent extends Component {
     }
     
     /**
-     * Check and return whether the the wateringCan is full
+     * Check and return whether the wateringCan is full
      * @return
      */
     public boolean isFull() {
@@ -138,7 +139,7 @@ public class WateringCanLevelComponent extends Component {
     }
     
     /**
-     * check and return whether the the wateringCan is empty
+     * check and return whether the wateringCan is empty
      * @return 
      */
     public boolean isEmpty() {
@@ -150,6 +151,13 @@ public class WateringCanLevelComponent extends Component {
 
     @Override
     public void write(Json json) {
+		json.writeObjectStart(this.getClass().getSimpleName());
         json.writeValue("level", getCurrentLevel());
+    }
+
+    @Override
+    public void read(Json json, JsonValue jsonMap) {
+		jsonMap = jsonMap.get(this.getClass().getSimpleName());
+        currentLevel = jsonMap.getFloat("level");
     }
 }
