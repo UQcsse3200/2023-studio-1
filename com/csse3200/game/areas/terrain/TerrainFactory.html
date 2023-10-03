@@ -96,18 +96,13 @@ loadScripts(document, 'script');</script>
 <div class="block">HashMap used to map characters in map files to file paths containing their textures</div>
 </div>
 <div class="col-first odd-row-color"><code>protected static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#mapPath" class="member-name-link">mapPath</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#MAP_PATH" class="member-name-link">MAP_PATH</a></code></div>
 <div class="col-last odd-row-color">
 <div class="block">The file path for the SpaceGameArea map file</div>
 </div>
-<div class="col-first even-row-color"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
-<div class="col-second even-row-color"><code><a href="#mapTextures" class="member-name-link">mapTextures</a></code></div>
+<div class="col-first even-row-color"><code>protected static final float</code></div>
+<div class="col-second even-row-color"><code><a href="#WORLD_TILE_SIZE" class="member-name-link">WORLD_TILE_SIZE</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">List of strings storing map texture file paths</div>
-</div>
-<div class="col-first odd-row-color"><code>protected static final float</code></div>
-<div class="col-second odd-row-color"><code><a href="#worldTileSize" class="member-name-link">worldTileSize</a></code></div>
-<div class="col-last odd-row-color">
 <div class="block">The tile size constant used for each tile in the TiledMap class</div>
 </div>
 </div>
@@ -160,20 +155,23 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns a copy of the MAP_SIZE variable.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isNumeric(java.lang.String)" class="member-name-link">isNumeric</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;strNum)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getMapTextures()" class="member-name-link">getMapTextures</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isNumeric(java.lang.String)" class="member-name-link">isNumeric</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;strNum)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">This function will be used to check if a string is numeric.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#loadTextures()" class="member-name-link">loadTextures</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#loadTextures()" class="member-name-link">loadTextures</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Loads textures into the charToTextureMap based upon the images within the charToTileImageMap and resourceService.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#loadTiledMap(com.badlogic.gdx.maps.tiled.TiledMap,java.lang.String)" class="member-name-link">loadTiledMap</a><wbr>(com.badlogic.gdx.maps.tiled.TiledMap&nbsp;tiledMap,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#loadTiledMap(com.badlogic.gdx.maps.tiled.TiledMap,java.lang.String)" class="member-name-link">loadTiledMap</a><wbr>(com.badlogic.gdx.maps.tiled.TiledMap&nbsp;tiledMap,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;mapFilePath)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Finishes the create terrain process, loading the map into the TiledMap instance.</div>
 </div>
 </div>
@@ -194,30 +192,30 @@ loadScripts(document, 'script');</script>
 <h2>Field Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="mapPath">
-<h3>mapPath</h3>
-<div class="member-signature"><span class="modifiers">protected static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">mapPath</span></div>
+<section class="detail" id="MAP_PATH">
+<h3>MAP_PATH</h3>
+<div class="member-signature"><span class="modifiers">protected static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">MAP_PATH</span></div>
 <div class="block">The file path for the SpaceGameArea map file</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
 <ul class="see-list">
-<li><a href="../../../../../constant-values.html#com.csse3200.game.areas.terrain.TerrainFactory.mapPath">Constant Field Values</a></li>
+<li><a href="../../../../../constant-values.html#com.csse3200.game.areas.terrain.TerrainFactory.MAP_PATH">Constant Field Values</a></li>
 </ul>
 </dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="worldTileSize">
-<h3>worldTileSize</h3>
-<div class="member-signature"><span class="modifiers">protected static final</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">worldTileSize</span></div>
+<section class="detail" id="WORLD_TILE_SIZE">
+<h3>WORLD_TILE_SIZE</h3>
+<div class="member-signature"><span class="modifiers">protected static final</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">WORLD_TILE_SIZE</span></div>
 <div class="block">The tile size constant used for each tile in the TiledMap class</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
 <ul class="see-list">
-<li><a href="../../../../../constant-values.html#com.csse3200.game.areas.terrain.TerrainFactory.worldTileSize">Constant Field Values</a></li>
+<li><a href="../../../../../constant-values.html#com.csse3200.game.areas.terrain.TerrainFactory.WORLD_TILE_SIZE">Constant Field Values</a></li>
 </ul>
 </dd>
 </dl>
@@ -228,13 +226,6 @@ loadScripts(document, 'script');</script>
 <h3>charToTileImageMap</h3>
 <div class="member-signature"><span class="modifiers">protected static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Character.html" title="class or interface in java.lang" class="external-link">Character</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">charToTileImageMap</span></div>
 <div class="block">HashMap used to map characters in map files to file paths containing their textures</div>
-</section>
-</li>
-<li>
-<section class="detail" id="mapTextures">
-<h3>mapTextures</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</span>&nbsp;<span class="element-name">mapTextures</span></div>
-<div class="block">List of strings storing map texture file paths</div>
 </section>
 </li>
 </ul>
@@ -277,6 +268,12 @@ loadScripts(document, 'script');</script>
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="getMapTextures()">
+<h3>getMapTextures</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</span>&nbsp;<span class="element-name">getMapTextures</span>()</div>
+</section>
+</li>
 <li>
 <section class="detail" id="loadTextures()">
 <h3>loadTextures</h3>
