@@ -122,7 +122,7 @@ public class ControlsMenuDisplay extends UIComponent {
    * Update the frame of the background animation
    */
   private void updateAnimation() {
-    if (frame < ControlsScreen.frameCount) {
+    if (frame < ControlsScreen.FRAME_COUNT) {
       // set the next frame of the animation
       transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
               .getAsset(ControlsScreen.transitionTextures[frame], Texture.class))));

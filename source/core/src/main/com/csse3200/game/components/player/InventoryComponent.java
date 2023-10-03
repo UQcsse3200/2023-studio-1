@@ -465,7 +465,6 @@ public class InventoryComponent extends Component {
         inv.forEach(jsonValue -> {
             Entity itemEntity = FactoryService.getItemFactories().get(jsonValue.getString("name")).get();
             ServiceLocator.getGameArea().spawnEntity(itemEntity);
-//            ServiceLocator.getEntityService().unregister(itemEntity);
             itemCount.put(jsonValue.getString("name"),  jsonValue.getInt("count"));
             heldItemsEntity.put(jsonValue.getString("name"), itemEntity);
             itemPlace.put(jsonValue.getInt("place"), jsonValue.getString("name"));

@@ -135,7 +135,7 @@ public class MainMenuDisplay extends UIComponent {
     }
 
     private void updateAnimation() {
-        if (frame < MainMenuScreen.frameCount) {
+        if (frame < MainMenuScreen.FRAME_COUNT) {
             transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
                     .getAsset(MainMenuScreen.transitionTextures[frame], Texture.class))));
             transitionFrames.setWidth(Gdx.graphics.getWidth());

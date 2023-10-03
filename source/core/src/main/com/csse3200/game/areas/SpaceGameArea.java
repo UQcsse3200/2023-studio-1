@@ -285,9 +285,6 @@ public class SpaceGameArea extends GameArea {
           "sounds/plants/waterWeed/nearby.wav", "sounds/plants/waterWeed/nearbyLore.wav",
   };
 
-  //private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
-  //private static final String[] forestMusic = {backgroundMusic};
-
   private final GameMap gameMap;
 
   private Entity player;

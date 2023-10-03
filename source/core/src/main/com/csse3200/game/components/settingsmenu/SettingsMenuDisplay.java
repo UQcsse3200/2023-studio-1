@@ -132,7 +132,7 @@ public class SettingsMenuDisplay extends UIComponent {
   }
 
   private void updateAnimation() {
-    if (frame < SettingsScreen.frameCount) {
+    if (frame < SettingsScreen.FRAME_COUNT) {
       transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
               .getAsset(SettingsScreen.transitionTextures[frame], Texture.class))));
       transitionFrames.setWidth(Gdx.graphics.getWidth());
