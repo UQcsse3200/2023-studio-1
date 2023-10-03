@@ -59,10 +59,10 @@ public class ProgressBar extends UIComponent {
     public void draw(SpriteBatch batch) {
         table.clear();
         group.clear();
-        table.top();
+        table.top().left();
         table.setFillParent(true);
         //table.padTop(-1000f);
-        table.padTop(-70f).padLeft(-100f);
+        table.padTop(-30f).padLeft(190f);
 
 
         group.addActor(progressBar);

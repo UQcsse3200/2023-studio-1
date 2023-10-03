@@ -83,9 +83,9 @@ public class HungerBar extends UIComponent{
         table1.clear();
         group1.clear();
 
-        table1.top();
+        table1.bottom().right();
         table1.setFillParent(true);
-        table1.padTop(-130f).padLeft(-180f);
+        table1.padBottom(10f).padRight(300f);
 
         group1.addActor(hungerBarOutline);
         group1.addActor(hungerBarFill);

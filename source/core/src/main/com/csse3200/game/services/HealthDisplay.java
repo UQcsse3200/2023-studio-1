@@ -117,9 +117,9 @@ public class HealthDisplay extends UIComponent{
         table.clear();
         group.clear();
 
-        table.top();
+        table.bottom().right();
         table.setFillParent(true);
-        table.padTop(-130f).padLeft(320f);
+        table.padBottom(50f).padRight(320f);
 
         group.addActor(healthOutline);
         group.addActor(healthFill);
