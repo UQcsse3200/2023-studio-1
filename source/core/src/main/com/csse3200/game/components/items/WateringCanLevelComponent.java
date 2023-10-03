@@ -129,24 +129,18 @@ public class WateringCanLevelComponent extends Component {
     
     /**
      * Check and return whether the wateringCan is full
-     * @return
+     * @return true if full, false otherwise
      */
     public boolean isFull() {
-        if (currentLevel >= capacity) {
-            return true;
-        }
-        return false;
+        return currentLevel >= capacity;
     }
     
     /**
      * check and return whether the wateringCan is empty
-     * @return 
+     * @return true if empty, false otherwise
      */
     public boolean isEmpty() {
-        if (currentLevel <= 0) {
-            return true;
-        }
-        return false;
+        return currentLevel <= 0;
     }
 
     @Override

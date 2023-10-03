@@ -43,7 +43,7 @@ public class ItemActions extends Component {
 
     // Add your item here!!!
     boolean resultStatus;
-    TerrainTile tile = getTileAtPosition(playerPos, mousePos);
+    TerrainTile tile = getTileAtPosition(mousePos);
     if (tile == null) {
       return false;
     }
@@ -165,12 +165,10 @@ public class ItemActions extends Component {
 
   /**
    * Gets the tile at the given position. else returns null
-   *
-   * @param playerPos the position of the player
    * @param mousePos  the position of the mouse
    * @return Entity of tile at location else returns null
    */
-  private TerrainTile getTileAtPosition(Vector2 playerPos, Vector2 mousePos) {
+  private TerrainTile getTileAtPosition(Vector2 mousePos) {
     Vector2 pos = getAdjustedPos(mousePos);
     return ServiceLocator.getGameArea().getMap().getTile(pos);
   }
@@ -280,7 +278,7 @@ public class ItemActions extends Component {
    * @return if hoeing was successful return true else return false
    */
   private boolean hoe(Vector2 playerPos, Vector2 mousePos) {
-    TerrainTile tile = getTileAtPosition(playerPos, mousePos);
+    TerrainTile tile = getTileAtPosition(mousePos);
     if (tile.isOccupied() || !tile.isTillable()) {
       return false;
     }

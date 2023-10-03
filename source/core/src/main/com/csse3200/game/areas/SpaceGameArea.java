@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.*;
 import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntitySpawner;
@@ -318,17 +319,6 @@ public class SpaceGameArea extends GameArea {
     spawnTerrain();
     spawnInvisibleObstacle();// spawn invisible obstacle on the non-traversable area of the map
 
-    // Todo: Remove this code that automatically spawns plants
-    // Leaving commented for testing, will delete next sprint.
-    /*
-    spawnCrop(20, 80, "Cosmic Cob");
-    spawnCrop(22, 80, "Aloe Vera");
-    spawnCrop(24, 80, "Hammer Plant");
-    spawnCrop(26, 80, "Space Snapper");
-    spawnCrop(28, 80, "Deadly Nightshade");
-    spawnCrop(30, 80, "Atomic Algae");
-     */
-
     spawnShipDebris();
 
     player = spawnPlayer();
@@ -342,7 +332,6 @@ public class SpaceGameArea extends GameArea {
 
     ServiceLocator.getMissionManager().acceptQuest(QuestFactory.createFirstContactQuest());
 
-    //playMusic();
 
     //Spawning behaviour for passive animals
     List<EntitySpawner> passiveSpawners = new ArrayList<>();
@@ -542,12 +531,8 @@ public class SpaceGameArea extends GameArea {
     } catch (InvalidSoundFileException e) {
       throw new RuntimeException(e);
     }
-    //resourceService.loadSounds(forestSounds);
-    //resourceService.loadMusic(forestMusic);
-
-
     // Add effects that are needed
-    List<SoundFile> effects = new ArrayList();
+    List<SoundFile> effects = new ArrayList<SoundFile>();
     effects.add(EffectSoundFile.TRACTOR_HONK);
     effects.add(EffectSoundFile.IMPACT);
     try {
@@ -568,7 +553,6 @@ public class SpaceGameArea extends GameArea {
     resourceService.unloadAssets(forestTextures);
     resourceService.unloadAssets(forestTextureAtlases);
     resourceService.unloadAssets(forestSounds);
-    //resourceService.unloadAssets(forestMusic);
   }
 
   @Override

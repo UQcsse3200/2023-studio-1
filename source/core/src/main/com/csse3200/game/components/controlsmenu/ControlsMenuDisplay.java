@@ -59,7 +59,7 @@ public class ControlsMenuDisplay extends UIComponent {
   /**
    * The duration for which each frame should be displayed
    */
-  private final static long FRAME_DURATION = 800 / fps;
+  private static final long FRAME_DURATION = 800 / fps;
 
   public ControlsMenuDisplay(GdxGame game) {
     super();
