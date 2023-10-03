@@ -29,9 +29,13 @@ public class ProgressBar extends UIComponent {
      * Creates each image as an image object then adds to an array of images for later use
      */
     public void createTexture() {
-        for (int i = 1; i <= 2; i++) {
-            progressBarImages.add(new Image(ServiceLocator.getResourceService().getAsset(
-                    String.format("images/progress-bar/day%d.png", i), Texture.class)));
+        for (int i = 1; i <= 31; i++) {
+            if (i>2) {
+                progressBarImages.add(new Image(ServiceLocator.getResourceService().getAsset("images/progress-bar/day1.png", Texture.class)));
+            } else {
+                progressBarImages.add(new Image(ServiceLocator.getResourceService().getAsset(
+                        String.format("images/progress-bar/day%d.png", i), Texture.class)));
+            }
         }
     }
 
@@ -55,9 +59,10 @@ public class ProgressBar extends UIComponent {
     public void draw(SpriteBatch batch) {
         table.clear();
         group.clear();
-        table.top().center();
+        table.top();
         table.setFillParent(true);
-        table.padTop(150f);
+        //table.padTop(-1000f);
+        table.padTop(-70f).padLeft(-100f);
 
 
         group.addActor(progressBar);
