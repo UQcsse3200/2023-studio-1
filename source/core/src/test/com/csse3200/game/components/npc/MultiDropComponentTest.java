@@ -46,7 +46,7 @@ class MultiDropComponentTest {
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ITEM))
                 .addComponent(new ItemActions())
                 .addComponent(new ItemComponent("dummy", ItemType.FERTILISER,
-                        new Texture("images/dont_delete_test_image.png")));
+                        "images/dont_delete_test_image.png"));
     }
 
     private Entity createDummyEntity() {

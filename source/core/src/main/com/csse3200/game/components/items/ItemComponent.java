@@ -150,10 +150,10 @@ public class ItemComponent extends Component {
 	/**
 	 * Sets an Item's texture component to a given Texture
 	 *
-	 * @param itemTexture - The texture to set the item to.
+	 * @param texturePath - path of the new item texture
 	 */
-	public void setItemTexture(Texture itemTexture) {
-		this.itemTexture = itemTexture;
+	public void setItemTexture(String texturePath) {
+		this.itemTexture = ServiceLocator.getResourceService().getAsset(texturePath, Texture.class);
 	}
 
 	/**

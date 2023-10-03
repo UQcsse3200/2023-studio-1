@@ -126,11 +126,10 @@ public class TestInventoryUI {
 
     private static Stream<Arguments> addingItemsShouldAddInventoryImagesParams() {
         return Stream.of(
-                arguments(new ItemComponent("Hoe", ItemType.HOE, new Texture(Gdx.files.internal("images/tool_hoe.png"))),0),
-                arguments(new ItemComponent("Scythe", ItemType.SCYTHE, new Texture(Gdx.files.internal("images/tool_scythe.png"))),1),
-                arguments(new ItemComponent("Shovel", ItemType.SHOVEL, new Texture(Gdx.files.internal("images/tool_shovel.png"))),2),
-                arguments(new ItemComponent("Item", ItemType.FERTILISER, new Texture(Gdx.files.internal("images/tool_shovel.png"))),3)
-
+                arguments(new ItemComponent("Hoe", ItemType.HOE, "images/tool_hoe.png"),0),
+                arguments(new ItemComponent("Scythe", ItemType.SCYTHE, "images/tool_scythe.png"),1),
+                arguments(new ItemComponent("Shovel", ItemType.SHOVEL, "images/tool_shovel.png"),2),
+                arguments(new ItemComponent("Item", ItemType.FERTILISER, "images/tool_shovel.png"),3)
         );
     }
 

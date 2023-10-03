@@ -45,7 +45,7 @@ public class InventoryHotkeyTest {
             String[] itemNames = {"Hoe","Hoe1","Hoe2","Hoe3","Hoe4","Hoe5","Hoe6","Hoe7","Hoe8","Hoe9","Hoe10"};
             List<Entity> items = new ArrayList<>();
             for (int i = 0; i < itemNames.length;) {
-                items.add(new Entity().addComponent(new ItemComponent(itemNames[i++], ItemType.HOE, new Texture("images/tool_shovel.png"))));
+                items.add(new Entity().addComponent(new ItemComponent(itemNames[i++], ItemType.HOE, "images/tool_shovel.png")));
             }
             inventoryComponent.setInventory(items);
         }
