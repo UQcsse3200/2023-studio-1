@@ -1,6 +1,7 @@
 package com.csse3200.game.missions.quests;
 
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.Mission;
@@ -123,7 +124,11 @@ public class MainQuest extends Quest {
     @Override
     public void readProgress(JsonValue progress) {
         resetState();
-        questsCompleted.addAll(Set.of(progress.asStringArray()));
+
+        Json json = new Json();
+        for (JsonValue element: progress.iterator()) {
+            questsCompleted.add(json.readValue(String.class, element));
+        }
     }
 
     /**
