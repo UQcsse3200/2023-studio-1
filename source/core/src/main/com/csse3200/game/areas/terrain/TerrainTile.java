@@ -4,8 +4,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
-import com.badlogic.gdx.utils.Json;
-import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
 
 /**
@@ -45,15 +43,10 @@ public class TerrainTile implements TiledMapTile {
   private boolean isTillable;
 
   /**
-   * Stores a crop tile which occupies the terrain tile. Is null if no crop tile
+   * Stores an Entity which occupies the terrain tile. Is null if no Entity
    * occupies the terrain tile.
    */
-  private Entity cropTile = null;
-
-  /**
-   * Stores a placebale entity which occupies the terrain tile.
-   */
-  private Entity placeable = null;
+  private Entity occupant = null;
 
   /**
    * Stores the speed modifier of the tile
@@ -80,17 +73,17 @@ public class TerrainTile implements TiledMapTile {
       case GRASS:
         this.isTraversable = true;
         this.isTillable = true;
-        this.speedModifier = 1.1f;
+        this.speedModifier = 1.0f;
         break;
       case DIRT:
         this.isTraversable = true;
         this.isTillable = true;
-        this.speedModifier = 0.7f;
+        this.speedModifier = 1.0f;
         break;
       case SHALLOWWATER:
         this.isTraversable = true;
         this.isTillable = false;
-        this.speedModifier = 0.9f;
+        this.speedModifier = 0.4f;
         break;
       case DESERT:
         this.isTraversable = true;
@@ -130,12 +123,12 @@ public class TerrainTile implements TiledMapTile {
       case GRAVEL:
         this.isTraversable = true;
         this.isTillable = false;
-        this.speedModifier = 1f;
+        this.speedModifier = 1.0f;
         break;
       case FLOWINGWATER:
         this.isTraversable = true;
         this.isTillable = false;
-        this.speedModifier = 1.3f;
+        this.speedModifier = 0.4f;
         break;
     }
   }
@@ -271,30 +264,23 @@ public class TerrainTile implements TiledMapTile {
     return this.isTillable;
   }
 
-  public void write(Json json) {
-    getCropTile().getComponent(CropTileComponent.class).write(json);
-    if (getCropTile().getComponent(CropTileComponent.class).getPlant() != null) {
-      getCropTile().getComponent(CropTileComponent.class).getPlant().getComponent(PlantComponent.class).write(json);
-    }
-  }
-
   /**
    * Returns the placeable entity that is on the TerrainTile
    * 
    * @return the placeable entity
    */
-  public Entity getPlaceable() {
-    return placeable;
+  public Entity getOccupant() {
+    return occupant;
   }
 
   /**
    * Sets the placeable entity and sets the tile to be occupied if not null
    * 
-   * @param placeable the entity to be placed on the tile
+   * @param occupant the entity to be placed on the tile
    */
-  public void setPlaceable(Entity placeable) {
-    this.placeable = placeable;
-    if (placeable != null) {
+  public void setOccupant(Entity occupant) {
+    this.occupant = occupant;
+    if (occupant != null) {
       setOccupied();
     } else {
       setUnOccupied();
@@ -319,33 +305,11 @@ public class TerrainTile implements TiledMapTile {
   }
 
   /**
-   * Returns a crop tile entity which occupies the terrain tile
-   * 
-   * @return cropTile entity or null if there is no cropTile entity
-   */
-  public Entity getCropTile() {
-    return this.cropTile;
-  }
-
-  /**
-   * Sets the crop tile which occupies the terrain tile. Replaces any existing
-   * crop tile that was already occupying the
-   * terrain tile. Do not use to set cropTile as null, use removeCropTile instead.
-   * 
-   * @param cropTile new cropTile entity to occupy the terrainTile
-   */
-  public void setCropTile(Entity cropTile) {
-    this.cropTile = cropTile;
-    cropTile.getComponent(CropTileComponent.class).setTerrainTile(this);
-    this.setOccupied();
-  }
-
-  /**
    * Removes any crop tile which occupies the terrain tile. Does not return the
    * crop tile.
    */
-  public void removeCropTile() {
-    this.cropTile = null;
+  public void removeOccupant() {
+    this.occupant = null;
     this.setUnOccupied();
   }
 

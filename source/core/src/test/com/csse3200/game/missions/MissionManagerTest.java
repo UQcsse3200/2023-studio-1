@@ -3,7 +3,6 @@ package com.csse3200.game.missions;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import com.badlogic.gdx.utils.JsonValue;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -340,16 +339,16 @@ class MissionManagerTest {
         assertFalse(q2.isExpired());
         assertFalse(q3.isExpired());
 
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
 
         assertTrue(q1.isExpired());
         assertFalse(q2.isExpired());
         assertFalse(q3.isExpired());
 
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
 
         assertTrue(q1.isExpired());
         assertFalse(q2.isExpired());
@@ -366,16 +365,16 @@ class MissionManagerTest {
         assertFalse(q2.isExpired());
         assertFalse(q3.isExpired());
 
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
 
         assertTrue(q1.isExpired());
         assertTrue(q2.isExpired());
         assertFalse(q3.isExpired());
 
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
 
         assertTrue(q1.isExpired());
         assertTrue(q2.isExpired());
@@ -392,16 +391,16 @@ class MissionManagerTest {
         assertFalse(q2.isExpired());
         assertFalse(q3.isExpired());
 
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
 
         assertTrue(q1.isExpired());
         assertFalse(q2.isExpired());
         assertFalse(q3.isExpired());
 
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
 
         assertTrue(q1.isExpired());
         assertFalse(q2.isExpired());
@@ -415,16 +414,16 @@ class MissionManagerTest {
         assertFalse(q2.isExpired());
         assertFalse(q3.isExpired());
 
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
 
         assertTrue(q1.isExpired());
         assertTrue(q2.isExpired());
         assertFalse(q3.isExpired());
 
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
 
         assertTrue(q1.isExpired());
         assertTrue(q2.isExpired());
@@ -444,15 +443,15 @@ class MissionManagerTest {
         ServiceLocator.getMissionManager().acceptQuest(q3);
 
         assertEquals(0, counts[0]);
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
         assertEquals(2, counts[0]);
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
         assertEquals(4, counts[0]);
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
         assertEquals(6, counts[0]);
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
         assertEquals(8, counts[0]);
-        ServiceLocator.getTimeService().getEvents().trigger("updateHour");
+        ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
         assertEquals(11, counts[0]);
     }
 
@@ -475,6 +474,37 @@ class MissionManagerTest {
         ServiceLocator.getMissionManager().addQuest(q2);
         ServiceLocator.getMissionManager().addQuest(q3);
         assertEquals(6, counts[0]);
+    }
+
+    @Test
+    public void testMandatoryQuestExpiryEndsGame() {
+        ServiceLocator.getMissionManager().addQuest(q1);
+        ServiceLocator.getMissionManager().addQuest(q2);
+        ServiceLocator.getMissionManager().addQuest(q3);
+        ServiceLocator.getMissionManager().acceptQuest(q1);
+        ServiceLocator.getMissionManager().acceptQuest(q2);
+        ServiceLocator.getMissionManager().acceptQuest(q3);
+        final int[] count = {0};
+        final int[] exCount = {0};
+        ServiceLocator.getMissionManager().getEvents().addListener(
+                MissionManager.MissionEvent.QUEST_EXPIRED.name(), () -> {exCount[0]++;}
+        );
+        ServiceLocator.getMissionManager().getEvents().addListener(
+                "loseScreen", (String name) -> { if (name.equals(q3.getName())) {count[0]++;} }
+        );
+
+        while (!q3.isExpired()) {
+            ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+        }
+
+        assertEquals(11, exCount[0]);
+        assertEquals(1, count[0]);
+        q3.resetExpiry();
+        while (!q3.isExpired()) {
+            assertEquals(1, count[0]);
+            ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+        }
+        assertEquals(2, count[0]);
     }
 
 }

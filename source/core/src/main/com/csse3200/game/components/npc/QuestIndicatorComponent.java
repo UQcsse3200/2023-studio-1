@@ -50,7 +50,7 @@ public class QuestIndicatorComponent extends Component {
     /**
      * Display the reward available animation.
      */
-    private void displayFinishedQuest() {
+    private void displayFinishedQuest(String ignored) {
         updateState(State.REWARD_AVAILABLE);
     }
 

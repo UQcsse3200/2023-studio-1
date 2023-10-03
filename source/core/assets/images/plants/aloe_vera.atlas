@@ -341,5 +341,7 @@ index:38
 bounds:2018,2,16,32
 6_dead
 bounds:2,36,16,32
-default
+6_sprout_dead
 bounds:20,36,16,32
+default
+bounds:38,36,16,32

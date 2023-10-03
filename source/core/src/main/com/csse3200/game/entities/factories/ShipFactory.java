@@ -3,21 +3,21 @@ package com.csse3200.game.entities.factories;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.csse3200.game.components.ship.ShipProgressComponent;
+import com.csse3200.game.components.ship.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.components.ColliderComponent;
+import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
-//TODO change assets to ship assets once they are created, rn the ship looks like a questgiver clone
 public class ShipFactory {
 
   /**
    * Creates a ship entity
-   * 
+   *
    * @return ship entity
    */
   public static Entity createShip() {
@@ -28,7 +28,11 @@ public class ShipFactory {
         .addComponent(new PhysicsComponent())
         .addComponent(new PhysicsMovementComponent())
         .addComponent(new ColliderComponent())
+        .addComponent(new HitboxComponent())
         .addComponent(new ShipProgressComponent())
+        .addComponent(new ShipAnimationController())
+        .addComponent(new ShipTimeSkipComponent())
+        .addComponent(new ShipLightComponent())
         .addComponent(animator);
 
     ship.getComponent(AnimationRenderComponent.class).scaleEntity();
@@ -41,11 +45,18 @@ public class ShipFactory {
    *
    * @return an AnimationRenderComponent for ship animations.
    */
-  private static AnimationRenderComponent setupShipAnimations() {
+  public static AnimationRenderComponent setupShipAnimations() {
     AnimationRenderComponent animator = new AnimationRenderComponent(
-        ServiceLocator.getResourceService().getAsset("images/questgiver.atlas", TextureAtlas.class),
+        ServiceLocator.getResourceService().getAsset("images/ship/ship.atlas", TextureAtlas.class),
         16f);
-    animator.addAnimation("default", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("default", 0.1f, Animation.PlayMode.NORMAL);
+
+    animator.addAnimation("ship_0", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("ship_1", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("ship_2", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("ship_3", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("ship_4", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("ship_5", 0.1f, Animation.PlayMode.NORMAL);
     animator.startAnimation("default");
     // this will get updated in a future sprint to include proper animations
     return animator;

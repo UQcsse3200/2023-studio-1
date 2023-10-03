@@ -25,7 +25,7 @@ public class CropTileComponent extends Component {
 	/**
 	 * Default rate that a tile's water level decreases
 	 */
-	private static final float WATER_DECREASE_RATE = 0.05f;
+	private static final float WATER_DECREASE_RATE = 0.005f;
 
 	/**
 	 * Ideal water fall off sharpness to calculate growth rate
@@ -94,6 +94,7 @@ public class CropTileComponent extends Component {
 		entity.getEvents().addListener("fertilise", this::fertiliseTile);
 		entity.getEvents().addListener("plant", this::plantCrop);
 		entity.getEvents().addListener("destroy", this::destroyTile);
+		entity.getEvents().addListener("harvest", this::harvestCrop);
 		currentTexture = entity.getComponent(DynamicTextureRenderComponent.class);
 	}
 
@@ -136,14 +137,16 @@ public class CropTileComponent extends Component {
 	/**
 	 * Destroys both the tile and any plant that is on it
 	 */
-	private void destroyTile() {
+	private void destroyTile(TerrainTile tile) {
 		if (isOccupied()) {
 			plant.getEvents().trigger("destroyPlant");
 			this.setUnoccupied();
 		} else {
+			if (tile != null) tile.removeOccupant();
 			entity.dispose();
 		}
 	}
+
 
 	/**
 	 * Plants a plant entity on the tile and stores the plant as a member variable in the tile
@@ -158,13 +161,20 @@ public class CropTileComponent extends Component {
 		plant = plantFactoryMethod.apply(this);
 		ServiceLocator.getEntityService().register(plant);
 
-//		PlantComponent plantComponent = plant.getComponent(PlantComponent.class);
-//		if (plantComponent != null) {
-//			ServiceLocator.getMissionManager().getEvents().trigger(
-//					MissionManager.MissionEvent.PLANT_CROP.name(),
-//					plantComponent.getPlantType()
-//			);
-//		}
+		PlantComponent plantComponent = plant.getComponent(PlantComponent.class);
+		if (plantComponent != null) {
+			ServiceLocator.getMissionManager().getEvents().trigger(
+					MissionManager.MissionEvent.PLANT_CROP.name(),
+					plantComponent.getPlantName()
+			);
+		}
+	}
+
+	private void harvestCrop() {
+		if (!isOccupied()) {
+			return;
+		}
+		plant.getEvents().trigger("harvest");
 	}
 
 	/**
@@ -204,6 +214,10 @@ public class CropTileComponent extends Component {
 		waterMultiplier = waterMultiplier > 0 ? Math.pow(waterMultiplier, IDEAL_WATER_FALL_OFF_TOLERANCE) : -1.0;
 		int fertiliserMultiplier = isFertilised ? 2 : 1;
 		return waterMultiplier > 0 ? soilQuality * fertiliserMultiplier * waterMultiplier : -1.0;
+	}
+
+	public float getWaterContent() {
+		return waterContent;
 	}
 
 	/**
@@ -300,8 +314,8 @@ public class CropTileComponent extends Component {
 
 	public void setTerrainTile(TerrainTile terrainTile) {
 		this.terrainTile = terrainTile;
-		if (terrainTile.getCropTile() == null) {
-			terrainTile.setCropTile(entity);
+		if (terrainTile.getOccupant() == null) {
+			terrainTile.setOccupant(entity);
 		}
 	}
 }
