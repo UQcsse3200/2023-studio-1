@@ -1,22 +1,47 @@
 package com.csse3200.game.components.tasks;
 
+import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.physics.components.PhysicsMovementComponent;
+
 
 /** Follows a target entity until they get too far away or line of sight is lost */
 public class FollowTask extends ChaseTask {
   /** Distance to target before stopping. */
   private final float stoppingDistance;
+  /** Speed to follow the player. */
+  private final Vector2 speed;
 
   /**
    * @param target The entity to follow.
    * @param priority Task priority when following (0 when not following).
    * @param viewDistance Maximum distance from the entity at which following can start.
    * @param maxFollowDistance Maximum distance from the entity while following before giving up.
-   * @param stoppingDistance The distance at which the entity stops following target
+   * @param stoppingDistance The distance at which the entity stops following target.
+   * @param speed The speed at which the entity follows the player.
    */
-  public FollowTask(Entity target, int priority, float viewDistance, float maxFollowDistance, float stoppingDistance) {
-    super(target, priority, viewDistance, maxFollowDistance);
+  public FollowTask(Entity target, int priority, float viewDistance, float maxFollowDistance,
+                    float stoppingDistance, Vector2 speed) {
+    super(target, priority, viewDistance, maxFollowDistance, speed);
     this.stoppingDistance = stoppingDistance;
+    this.speed = speed;
+  }
+
+
+  /**
+   * @param target The entity to follow.
+   * @param priority Task priority when following (0 when not following).
+   * @param viewDistance Maximum distance from the entity at which following can start.
+   * @param maxFollowDistance Maximum distance from the entity while following before giving up.
+   * @param stoppingDistance The distance at which the entity stops following target.
+   * @param speed The speed at which the entity follows the player.
+   * @param checkVisibility  Checks to see if the entity will consider obstacles in its path.
+   */
+  public FollowTask(Entity target, int priority, float viewDistance, float maxFollowDistance,
+                    float stoppingDistance, Vector2 speed, boolean checkVisibility) {
+    super(target, priority, viewDistance, maxFollowDistance, speed, checkVisibility);
+    this.stoppingDistance = stoppingDistance;
+    this.speed = speed;
   }
 
   /**
@@ -25,7 +50,7 @@ public class FollowTask extends ChaseTask {
   @Override
   public void start() {
     status = Status.ACTIVE;
-    setMovementTask(new MovementTask(getTarget().getCenterPosition(), (float) 1.5));
+    setMovementTask(new MovementTask(getTarget().getCenterPosition(), speed, 1.5f));
     getMovementTask().create(owner);
     getMovementTask().start();
 
@@ -38,9 +63,12 @@ public class FollowTask extends ChaseTask {
   @Override
   public void update() {
     //Stops follow if entity is too close to target
-    if(getDistanceToTarget() <= stoppingDistance){
-      stop();
+    if(getDistanceToTarget() <= stoppingDistance) {
+      owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(false);
+      status = Status.INACTIVE;
+      return;
     } else {
+      owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(true);
       getMovementTask().setTarget(getTarget().getCenterPosition());
       getMovementTask().update();
       if (getMovementTask().getStatus() != Status.ACTIVE) {
@@ -55,6 +83,7 @@ public class FollowTask extends ChaseTask {
    */
   @Override
   public void stop() {
+    owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(true);
     super.stop();
     this.owner.getEntity().getEvents().trigger("followStop");
   }

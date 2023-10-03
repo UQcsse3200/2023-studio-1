@@ -20,17 +20,7 @@ public class PlantCommand implements Command {
             return false;
         }
         events = ServiceLocator.getPlantCommandService().getEvents();
-        switch (args.get(0)) {
-            case "seedling" ->events.trigger("forceSeedling");
-            case "sprout" -> events.trigger("forceSprout");
-            case "juvenile" -> events.trigger("forceJuvenile");
-            case "adult" -> events.trigger("forceAdult");
-            case "decay" -> events.trigger("forceDecay");
-            case "dead" -> events.trigger("forceDead");
-            default -> {
-                return false;
-            }
-        }
+        events.trigger("forceGrowthStage", (String)args.get(0));
         return true;
     }
 

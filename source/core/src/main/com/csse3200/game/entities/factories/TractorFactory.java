@@ -1,8 +1,11 @@
 package com.csse3200.game.entities.factories;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.components.AuraLightComponent;
+import com.csse3200.game.components.ConeLightComponent;
 import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.components.tractor.TractorAnimationController;
@@ -36,13 +39,17 @@ public class TractorFactory {
         .addComponent(new ColliderComponent())
         .addComponent(animator)
         .addComponent(inputComponent)
+        .addComponent(new AuraLightComponent(3f))
+        .addComponent(new ConeLightComponent(10f, Color.TAN))
         .addComponent(new TractorActions());
 
     tractor.getComponent(AnimationRenderComponent.class).scaleEntity();
     tractor.getComponent(TractorActions.class).setPlayer(player);
+    tractor.getComponent(TractorActions.class).setCameraVar(ServiceLocator.getCameraComponent());
     tractor.getComponent(KeyboardTractorInputComponent.class).setActions(tractor.getComponent(TractorActions.class));
     tractor.getComponent(ColliderComponent.class).setAsBox(new Vector2(2.25f, 1f), new Vector2(2.5625f, 1.4375f));
     tractor.getComponent(ColliderComponent.class).setDensity(999);    //prevents entities from pushing the tractor so easily
+
     return tractor;
   }
 

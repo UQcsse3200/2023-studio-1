@@ -41,8 +41,11 @@ public class Terminal extends Component {
     addCommand("spawn", new SpawnCommand());
     addCommand("setDay", new SetDayCommand());
     addCommand("addItem", new AddItemCommand());
+    addCommand("removeItem", new RemoveItemCommand());
     addCommand("addWeather", new AddWeatherCommand());
     addCommand("plant", new PlantCommand());
+    addCommand("setTimeScale", new SetTimeScaleCommand());
+    addCommand("dialogueScreen", new DialogueScreenCommand());
   }
 
   /** @return message entered by user */

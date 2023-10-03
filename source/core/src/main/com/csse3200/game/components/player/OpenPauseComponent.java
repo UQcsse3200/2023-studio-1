@@ -7,14 +7,13 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.services.ServiceLocator;
 
 public class OpenPauseComponent extends Component {
-    private static Logger logger = LoggerFactory.getLogger(OpenPauseComponent.class);
+    private final static Logger logger = LoggerFactory.getLogger(OpenPauseComponent.class);
     private Boolean pauseOpen;
 
     @Override
     public void create() {
         entity.getEvents().addListener("escInput", this::togglePauseMenu);
         pauseOpen = false;
-
     }
 
     public Boolean getPauseOpen() { return pauseOpen; }
@@ -33,8 +32,11 @@ public class OpenPauseComponent extends Component {
         logger.info("Opening pause window");
         ServiceLocator.getPauseMenuArea().setPauseMenu();
         pauseOpen = true;
-        ServiceLocator.getTimeService().setPaused(true);
-      //  EntityService.pauseGame();
+        logger.info("Pause status:" + ServiceLocator.getCutSceneStatus() + " line 35");
+        if (!ServiceLocator.getCutSceneStatus()) {
+            // temporary neutralise setPause to false while cut screen is running
+            ServiceLocator.getTimeService().setPaused(true);
+        }
     }
 
     public void closePauseMenu() {
@@ -42,6 +44,10 @@ public class OpenPauseComponent extends Component {
         KeyboardPlayerInputComponent.clearMenuOpening();
         ServiceLocator.getPauseMenuArea().disposePauseMenu();
         pauseOpen = false;
-        ServiceLocator.getTimeService().setPaused(false);
+        logger.info("Pause status:" + ServiceLocator.getCutSceneStatus() + " line 46");
+        if (!ServiceLocator.getCutSceneStatus()) {
+            // temporary neutralise setPause to false while cut screen is running
+            ServiceLocator.getTimeService().setPaused(false);
+        }
     }
 }

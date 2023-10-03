@@ -6,6 +6,7 @@ import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
+import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.physics.BodyUserData;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
@@ -66,21 +67,32 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
     }
 
     /**
-     * Effect that takes place every hour.
+     * Function is triggered every hour of in game time and checks which effects should be executed.
      */
     private void hourlyEffect() {
-        switch (this.effectType) {
-            case "Decay" -> decayAndDeadEffect();
-            case "Health" -> healthEffect();
-            case "Poison" -> poisonEffect();
-            case "Sound" -> soundEffect();
+        if (this.effectType.equals("Sound")) {
+            soundEffect();
         }
     }
 
+    /**
+     * Function is triggered every minute of in game time and checks which effects should be executed.
+     */
     private void minuteUpdate() {
+        int min = ServiceLocator.getTimeService().getMinute();
+
+        if (min % 5 == 0) {
+            switch (this.effectType) {
+                case "Decay" -> decayAndDeadEffect();
+                case "Health" -> healthEffect();
+                case "Poison" -> poisonEffect();
+            }
+        }
+
         if (this.effectType.equals("Eat")) {
             eatEffect();
         }
+
     }
 
     /**
@@ -138,7 +150,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
                     if (entity.getId() != plant.getId()) {
 
                         // Decrease the health of all plants in the effect area.
-                        plant.getComponent(PlantComponent.class).increasePlantHealth(-10);
+                        plant.getComponent(PlantComponent.class).increasePlantHealth(-1);
                     }
                 }
             }
@@ -157,7 +169,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
                 Entity plant = entityInRange.getComponent(CropTileComponent.class).getPlant();
                 if (plant != null) {
                     if (entity.getId() != plant.getId()) {
-                        plant.getComponent(PlantComponent.class).increasePlantHealth(10);
+                        plant.getComponent(PlantComponent.class).increasePlantHealth(1);
                     }
                 }
 
@@ -176,7 +188,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
         for (Entity entityInRange : getEntitiesInRange()) {
 
             if (entityInRange.getType() == EntityType.Player) {
-                entityInRange.getComponent(CombatStatsComponent.class).addHealth(-10);
+                entityInRange.getComponent(CombatStatsComponent.class).addHealth(-20);
             }
             // add animals to this.
         }
@@ -203,6 +215,10 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
                     // just dispose of the entity being eaten. might want to implement a count of
                     // eaten entities in plant component.
                     entityInRange.dispose();
+
+                    ServiceLocator.getMissionManager().getEvents().trigger(
+                            MissionManager.MissionEvent.ANIMAL_EATEN.name(),
+                            entityInRange.getType());
 
                     // break once a valid entity has been eaten because space snapper can only eat one entity at a time.
                     break;
@@ -232,15 +248,10 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
     }
 
     /**
-     * Set the radius of the area. This will dispose of the old hitbox component
-     * and create a new one with the desired radius.
+     * Set the radius of the area.
      * @param radius - the new radius of the area.
      */
     public void setRadius(float radius) {
-        this.radius = radius;
-        shape.setRadius(radius);
-        // Dispose the old HitboxComponent and create a new one with the new radius.
-        super.dispose();
-        super.create();
+        // Currently not in use because changing the radius is causing issues.
     }
 }

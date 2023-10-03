@@ -1,9 +1,11 @@
 package com.csse3200.game.screens;
 
 import com.csse3200.game.services.*;
+import com.csse3200.game.components.plants.PlantInfoDisplayComponent;
+import com.csse3200.game.entities.FireflySpawner;
+import com.csse3200.game.components.losescreen.LoseScreenDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -28,8 +30,22 @@ import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
+import com.csse3200.game.services.sound.SoundService;
+import com.csse3200.game.services.GameTime;
+import com.csse3200.game.services.GameTimeDisplay;
+import com.csse3200.game.services.LightService;
+import com.csse3200.game.services.OxygenDisplay;
+import com.csse3200.game.services.ParticleService;
+import com.csse3200.game.services.PlanetOxygenService;
+import com.csse3200.game.services.ResourceService;
+import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.TimeService;
+import com.csse3200.game.services.plants.PlantCommandService;
+import com.csse3200.game.services.plants.PlantInfoService;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -67,8 +83,9 @@ public class MainGameScreen extends ScreenAdapter {
             "images/time_system_ui/indicator_21.png",
             "images/time_system_ui/indicator_22.png",
             "images/time_system_ui/indicator_23.png",
-            "images/oxygen_ui/oxygen_outline.png",
-            "images/oxygen_ui/oxygen_fill.png",
+            "images/bars_ui/bar_outline.png",
+            "images/bars_ui/healthy_fill.png",
+            "images/bars_ui/danger_fill.png",
             "images/weather_event/weather-border.png",
             "images/weather_event/acid-rain.png",
             "images/weather_event/solar-flare.png"
@@ -80,10 +97,12 @@ public class MainGameScreen extends ScreenAdapter {
     private Entity entity;
     private final Renderer renderer;
     private final PhysicsEngine physicsEngine;
-
-    private static Boolean lose;
-
-
+    public enum ScreenType {
+        MAIN_GAME,
+        WIN,
+        LOSE
+    }
+    private ScreenType currentScreenType = ScreenType.MAIN_GAME;
 
     public MainGameScreen(GdxGame game) {
         this.game = game;
@@ -104,15 +123,18 @@ public class MainGameScreen extends ScreenAdapter {
         ServiceLocator.registerPlanetOxygenService(new PlanetOxygenService());
         ServiceLocator.registerPlantCommandService(new PlantCommandService());
         ServiceLocator.registerPlayerHungerService(new PlayerHungerService());
+        ServiceLocator.registerPlantInfoService(new PlantInfoService());
+
+        ServiceLocator.registerSoundService(new SoundService());
 
         ServiceLocator.registerMissionManager(new MissionManager());
-
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
         renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
         ServiceLocator.registerCameraComponent(renderer.getCamera());
 
         ServiceLocator.registerLightService(new LightService());
+        ServiceLocator.registerParticleService(new ParticleService());
 
         loadAssets();
 
@@ -123,15 +145,14 @@ public class MainGameScreen extends ScreenAdapter {
         renderer.getCamera().setTrackEntity(spaceGameArea.getPlayer());
 
         createUI();
-        // Switched to spaceGameArea TODO DELETE
-        //ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
-        //forestGameArea.create();
-        //renderer.getCamera().setTrackEntity(forestGameArea.getPlayer());
         spaceGameArea.getPlayer().getComponent(PlayerActions.class).setCameraVar(renderer.getCamera());
         spaceGameArea.getTractor().getComponent(TractorActions.class).setCameraVar(renderer.getCamera());
 
-        lose = false;
-        spaceGameArea.getPlayer().getEvents().addListener("loseScreen", this::loseScreenStart);
+        ServiceLocator.getMissionManager().getEvents().addListener("loseScreen", this::playLoseScreen);
+
+        ServiceLocator.getMissionManager().getEvents().addListener("winScreen", this::playWinScreen);
+
+        new FireflySpawner();
 
         // if the LoadSaveOnStart value is set true then load entities saved from file
         if (game.isLoadOnStart()){
@@ -139,25 +160,38 @@ public class MainGameScreen extends ScreenAdapter {
         }
     }
 
+    /**
+     * Switch to the losing screen in case of player loss
+     */
+    public void playLoseScreen(String causeOfDeath) {
+        LoseScreenDisplay.setLoseReason(causeOfDeath);
+        currentScreenType = ScreenType.LOSE;
+    }
 
-    public void loseScreenStart() {
-        lose = true;
+    /**
+     * Switch to winning screen in case of player win
+     */
+    public void playWinScreen() {
+        currentScreenType = ScreenType.WIN;
     }
 
     @Override
     public void render(float delta) {
-        if (!ServiceLocator.getTimeService().isPaused()) {
-            physicsEngine.update();
-            ServiceLocator.getEntityService().update();
-        }
-        ServiceLocator.getTimeService().update();
-        renderer.render();
-        if (lose) {
-            game.setScreen(GdxGame.ScreenType.LOSESCREEN);
-        }
-        if (PauseMenuActions.getQuitGameStatus()) {
-            entity.getEvents().trigger("exit");
-            PauseMenuActions.setQuitGameStatus();
+        switch (currentScreenType) {
+            case MAIN_GAME -> {
+                if (!ServiceLocator.getTimeService().isPaused()) {
+                    physicsEngine.update();
+                    ServiceLocator.getEntityService().update();
+                }
+                ServiceLocator.getTimeService().update();
+                renderer.render();
+                if (PauseMenuActions.getQuitGameStatus()) {
+                    entity.getEvents().trigger("exit");
+                    PauseMenuActions.setQuitGameStatus();
+                }
+            }
+            case LOSE -> game.setScreen(GdxGame.ScreenType.LOSESCREEN);
+            case WIN -> game.setScreen(GdxGame.ScreenType.WINSCREEN);
         }
     }
 
@@ -187,6 +221,8 @@ public class MainGameScreen extends ScreenAdapter {
         ServiceLocator.getEntityService().dispose();
         ServiceLocator.getRenderService().dispose();
         ServiceLocator.getResourceService().dispose();
+        ServiceLocator.getSoundService().getEffectsMusicService().dispose();
+        ServiceLocator.getSoundService().getBackgroundMusicService().dispose();
 
         ServiceLocator.clear();
     }
@@ -203,7 +239,6 @@ public class MainGameScreen extends ScreenAdapter {
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(mainGameTextures);
     }
-
 
 
     /**
@@ -224,11 +259,18 @@ public class MainGameScreen extends ScreenAdapter {
                 .addComponent(new Terminal())
                 .addComponent(inputComponent)
                 .addComponent(new TerminalDisplay())
+                .addComponent(new PlantInfoDisplayComponent())
+                .addComponent(new WeatherEventDisplay())
+            // NOTE: VERY IMPORTANT
+            // UI components that require transitions must be added AFTER those that don't, otherwise screen
+            // entities added after them will transition even if you don't want them to. Add components with
+            // transitions underneath this comment. Hopefully it should work, it fixed my bug at least.
                 .addComponent(new GameTimeDisplay())
                 .addComponent(new ProgressBar())
                 .addComponent(new OxygenDisplay())
                 .addComponent(new HungerBar())
-                .addComponent(new WeatherEventDisplay());
+                .addComponent(new WeatherEventDisplay())
+                .addComponent(new HealthDisplay());
 
         ServiceLocator.getEntityService().register(ui);
     }

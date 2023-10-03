@@ -1,22 +1,25 @@
 package com.csse3200.game.components.tractor;
 
-import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
-
-import java.util.Objects;
-
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
+import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
+import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.ConeLightComponent;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
+
+import java.util.Objects;
+
+import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
 
 public class TractorActions extends Component {
   /**
@@ -94,6 +97,8 @@ public class TractorActions extends Component {
       }
       updateAnimation();
     }
+    float lightDirection = getDirectionAdjusted(prevDirection);
+    entity.getComponent(ConeLightComponent.class).setDirection(lightDirection);
   }
 
   /**
@@ -131,6 +136,27 @@ public class TractorActions extends Component {
   }
 
   /**
+   * This method of getting direction was adjusted to fit tractor (changed return values)
+   * from the code written by Team 2, in PlayerActions and PlayerAnimationController.
+   * @param direction The direction the tractor is facing
+   * @return a String that matches with where the tractor is looking, values can be "right", "left", "up" or "down"
+   *          defaults to "right" in an error situation to avoid crashes.
+   */
+  private float getDirectionAdjusted(float direction) {
+    if (direction < 45) {
+      return 0;
+    } else if (direction < 135) {
+      return 90;
+    } else if (direction < 225) {
+      return 180;
+    } else if (direction < 315) {
+      return 270;
+    }
+    // TODO add logger to provide error here?
+    return 0;
+  }
+
+  /**
    * Interacts with the TerrainTiles based on a given TractorMode
    * Note: should not be used outside of update() as this was not intended to be how it works
    * and may provide unexpected results.
@@ -139,11 +165,23 @@ public class TractorActions extends Component {
     switch (getMode()) {
       case tilling -> {
         Array<Object> tiles = getTiles(TractorMode.tilling, getDirection(walkDirection.angleDeg()));
+        if (tiles == null) {
+          return;
+        }
+        if (tiles.size != 4) {
+          return;
+        }
         hoe((TerrainTile) tiles.get(0), (Vector2) tiles.get(2));
         hoe((TerrainTile) tiles.get(1), (Vector2) tiles.get(3));
       }
       case harvesting -> {
         Array<Object> tiles = getTiles(TractorMode.tilling, getDirection(walkDirection.angleDeg()));
+        if (tiles == null) {
+          return;
+        }
+        if (tiles.size != 4) {
+          return;
+        }
         harvest((TerrainTile) tiles.get(0));
         harvest((TerrainTile) tiles.get(1));
       }
@@ -160,7 +198,7 @@ public class TractorActions extends Component {
    *          in the same order as the tiles in slots 2 and 3.
    */
   private Array<Object> getTiles(TractorMode mode, String dir) {
-    Array<Object> tiles = new Array<>(2);
+    Array<Object> tiles = new Array<>(4);
     Vector2 pos1 = new Vector2();
     Vector2 pos2 = new Vector2();
     if ((Objects.equals(dir, "right") && mode == TractorMode.tilling) || (Objects.equals(dir, "left") && mode == TractorMode.harvesting)) {
@@ -195,10 +233,15 @@ public class TractorActions extends Component {
   private void harvest(TerrainTile tile) {
     if (tile == null) {
       return;
-    } else if (tile.getCropTile() == null) {
+    } else if (tile.getOccupant() == null) {
       return;
+    } else if (isCropTile(tile.getOccupant())) {
+      tile.getOccupant().getEvents().trigger("harvest");
     }
-    tile.getCropTile().getEvents().trigger("harvest");
+  }
+
+  private boolean isCropTile(Entity tile) {
+    return (tile != null) && (tile.getComponent(CropTileComponent.class) != null);
   }
 
   /**
@@ -217,7 +260,7 @@ public class TractorActions extends Component {
     }
     // Make a new tile
     Entity cropTile = createTerrainEntity(map.tileCoordinatesToVector(map.vectorToTileCoordinates(pos)));
-    tile.setCropTile(cropTile);
+    tile.setOccupant(cropTile);
     tile.setOccupied();
     ServiceLocator.getEntityService().register(cropTile);
   }
@@ -282,6 +325,7 @@ public class TractorActions extends Component {
     this.mode = TractorMode.normal;
     player.getComponent(PlayerActions.class).setMuted(false);
     muted = true;
+    entity.getComponent(AuraLightComponent.class).toggleLight();
     entity.getEvents().trigger("idle", getDirection(prevDirection));
     player.getComponent(KeyboardPlayerInputComponent.class)
         .setWalkDirection(entity.getComponent(KeyboardTractorInputComponent.class).getWalkDirection());

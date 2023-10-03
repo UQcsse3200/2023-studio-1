@@ -3,10 +3,13 @@ package com.csse3200.game.components.npc;
 import java.security.SecureRandom;
 
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.missions.MissionManager;
+import com.csse3200.game.services.ServiceLocator;
 
 /**
  * This the class for Tameable Component. These components should
@@ -91,13 +94,12 @@ public class TamableComponent extends Component {
           // Try and tame the animal
           // Check how many times the player has tried to tame the animal
           // If player has already tried enough times, tame the animal (prevents frustration).
-          if (numTimesFed == tamingThreshold) {
-              isTamed = true;
-          }
           // Use RNG to try and tame the animal
-          else if (randomDecimal > tamingProbability) {
+          if (numTimesFed == tamingThreshold || randomDecimal > tamingProbability) {
               isTamed = true;
-          } else {
+              ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.ANIMAL_TAMED.name());
+          }
+          else {
               numTimesFed++;
           }
 //            this.playerInventory.removeItem(this.playerInventory.getHeldItem()); TODO: once inventory works comment it in
@@ -146,4 +148,10 @@ public class TamableComponent extends Component {
     json.writeValue("tamed", isTamed());
     json.writeObjectEnd();
   }
+
+    @Override
+    public void read(Json json, JsonValue jsonMap) {
+      jsonMap = jsonMap.get("TamableComponent");
+      isTamed = jsonMap.getBoolean("Tamed");
+    }
 }

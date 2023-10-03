@@ -9,8 +9,6 @@ import java.util.Objects;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.csse3200.game.components.items.ItemType;
-import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.BodyUserData;
@@ -28,7 +26,8 @@ public class InteractionDetector extends HitboxComponent {
     /** The interaction range within which entities are detected. */
     private final float range;
 
-    private static ArrayList<EntityType> interactableEntities = null;
+    private List<EntityType> interactableEntities = null;
+    private boolean notifyOnDetection = false;
 
     /**
      * Constructs an InteractionDetector with the specified interaction range.
@@ -44,7 +43,7 @@ public class InteractionDetector extends HitboxComponent {
      *
      * @param range The interaction range within which entities are detected.
      */
-    public InteractionDetector(float range, ArrayList interactableEntities) {
+    public InteractionDetector(float range, List<EntityType> interactableEntities) {
         this.range = range;
         this.interactableEntities = interactableEntities;
     }
@@ -79,13 +78,20 @@ public class InteractionDetector extends HitboxComponent {
 
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
 
-        if (interactableEntities != null) {
-            if (!interactableEntities.contains(target.getType())) {
+        HitboxComponent hitBox = target.getComponent(HitboxComponent.class);
+        if (hitBox == null || hitBox.getFixture() != other) {
+            return;
+        }
+
+        if (interactableEntities != null && !interactableEntities.contains(target.getType())) {
                 return;
-            }
         }
 
         entitiesInRange.add(target);
+
+        if (notifyOnDetection) {
+            entity.getEvents().trigger("entityDetected", target);
+        }
     }
 
     /**
@@ -100,7 +106,25 @@ public class InteractionDetector extends HitboxComponent {
         }
 
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
+
+        HitboxComponent hitBox = target.getComponent(HitboxComponent.class);
+        if (hitBox == null || hitBox.getFixture() != other) {
+            return;
+        }
+
+        if (!entitiesInRange.contains(target)) {
+            return;
+        }
+
         entitiesInRange.remove(target);
+
+        if (notifyOnDetection) {
+            entity.getEvents().trigger("entityExitDetected", target);
+        }
+    }
+
+    public void notifyOnDetection(boolean notify) {
+        notifyOnDetection = notify;
     }
 
     /**
@@ -151,47 +175,17 @@ public class InteractionDetector extends HitboxComponent {
      *
      * @param entities The list of entities to search for the nearest entity.
      *         
-     * @return A list containing the nearest entity in the list, or an empty list if the input list is empty.
+     * @return nearest Entity or null if list is empty
      */
-    public List<Entity> getNearest(List<Entity> entities) {
+    public Entity getNearest(List<Entity> entities) {
         if (entities.isEmpty()) {
-            return Collections.emptyList(); // Return an empty list if there are no entities.
+            return null;
         }
 
         Vector2 position = this.entity.getCenterPosition();
         Comparator<Entity> distanceComparator = (entity1, entity2) ->
                 Float.compare(position.dst(entity1.getCenterPosition()), position.dst(entity2.getCenterPosition()));
 
-        Entity nearestEntity = Collections.min(entities, distanceComparator);
-        return Collections.singletonList(nearestEntity);
-    }
-
-    /**
-     * 
-     * Retrieves a list of suitable entities of the specified item type based on their proximity to a given position.
-     *
-     *                 
-     * @param itemType The type of item to determine suitability criteria (e.g., FOOD).
-     * @param position The position to evaluate proximity to.
-     *         
-     * @return A list of suitable entities based on the provided criteria, or an empty list if no suitable entities are found.
-     */
-    public List<Entity> getSuitableEntities(ItemType itemType, Vector2 position) {
-        List<Entity> entities = getEntitiesTowardsPosition(position);
-
-        if (itemType == null) {
-            // Add behaviour when not holding an item / interact button?
-            return Collections.emptyList();
-        }
- 
-        switch (itemType){
-            case FOOD -> {
-                entities.removeIf(entity -> entity.getComponent(TamableComponent.class) == null); 
-                                                                                                    // 
-                entities.removeIf(entity -> entity.getComponent(TamableComponent.class).isTamed()); //TODO: axolotl? handle that
-                return getNearest(entities);
-            }
-        }
-        return Collections.emptyList();
+        return Collections.min(entities, distanceComparator);
     }
 }

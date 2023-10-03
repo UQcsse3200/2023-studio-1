@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.utils.Align;
 
+import java.util.Objects;
+
 /**
  * A class used to combine all the data necessary to the individual inventory slots
  */
@@ -16,12 +18,15 @@ public class ItemSlot extends Stack {
     private Texture itemTexture;
     private Integer count;
     private final Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
-
-    private final Image background;
+    private Image background;
     private Image frame;
-
     private boolean selected;
     private Image itemImage;
+
+    private Label label;
+    private Stack draggable;
+    private Label countLabel;
+    private Label toolbarLabel;
 
     /**
      * Construct an itemSlot with a texture, count and selected state
@@ -71,16 +76,47 @@ public class ItemSlot extends Stack {
      * @param count integer of number of item
      */
     public void setCount(Integer count) {
+        if (Objects.equals(count, this.count)) {
+            return;
+        }
         this.count = count;
-    }
+        if (this.count > 1) {
+            if (label == null) {
+                label = new Label(this.count + " ", this.skin);
+                label.setColor(Color.BLACK);
+                label.setAlignment(Align.bottomRight);
+                draggable.add(label);
+            } else {
+                label.setText(this.count + " ");
+                draggable.add(label);
 
+            }
+        }
+        else {
+            draggable.removeActor(label);
+            if (label != null) {
+                this.label = null;
+
+            }
+        }
+    }
+    /**
+     * Get the item count
+     * @return count integer of number of item
+     */
+    public Integer getCount() {
+        if (count != null) {
+            return count;
+        }
+        return -1;
+    }
 
     /**
      * Set the item texture
-     * @param itemTexture texture of item's image
+     * @return  itemTexture texture of item's image
      */
-    public void setTexture(Texture itemTexture) {
-        this.itemTexture = itemTexture;
+    public Texture getItemTexture() {
+        return this.itemTexture;
     }
 
     @Override
@@ -92,9 +128,7 @@ public class ItemSlot extends Stack {
      * Creates the itemSlot
      */
     private void createItemSlot() {
-        Label label = new Label(String.valueOf(this.count) + " ", this.skin);
-        label.setColor(Color.BLACK);
-        label.setAlignment(Align.bottomRight);
+        draggable = new Stack();
 
         //Add the selection background if necessary
         if (this.selected) {
@@ -107,24 +141,74 @@ public class ItemSlot extends Stack {
         //Add the item image to the itemSlot
         if (this.itemTexture != null) {
             itemImage = new Image(this.itemTexture);
-            this.add(itemImage);
+            draggable.add(itemImage);
         }
 
-        //Add the count label if the number is not 0
-        if (this.count != null && this.count > 0) {
-            this.add(label);
+        // Add or update the count label if the number is not 0
+        if (this.count != null && this.count > 1) {
+            if (label == null) {
+                label = new Label(this.count + " ", this.skin);
+                label.setColor(Color.BLACK);
+                label.setAlignment(Align.bottomRight);
+                draggable.add(label);
+            } else {
+                label.setText(this.count + " ");
+            }
         }
+        if (this.count != null && this.count <= 1) {
+            if (label != null) {
+                draggable.removeActor(label);
+                this.label = null;
+            }
+        }
+
+        this.add(draggable);
+
     }
 
+    /**
+     * Get the item image
+     * @return the item image
+     */
     public Image getItemImage() {
         return itemImage;
     }
+    public Stack getDraggable() {
+        return draggable;
+    }
+    public boolean setDraggable(Stack stack) {
+        boolean ans = false;
+        if (!this.removeActor(this.draggable)) {
+            ans = true;
+        }
+
+        if (stack != null) {
+            this.draggable = stack;
+            this.add(stack);
+        }
+        return ans;
+    }
     public void setItemImage(Image image) {
-        this.removeActor(itemImage);
-        itemImage = null;
+        draggable.removeActor(itemImage);
         if (image != null) {
-            this.add(image);
+            draggable.addActorAt(0, image);
             this.itemImage = image;
         }
+    }
+
+    /**
+     * Make the slot selected
+     */
+    public void setSelected() {
+        selected = true;
+        this.addActorAt(0, this.background);
+    }
+
+    /**
+     * Make the slot unselected
+     */
+    public void setUnselected() {
+        selected = false;
+        this.removeActor(this.background);
     }
 }

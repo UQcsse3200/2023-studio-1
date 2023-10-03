@@ -9,19 +9,33 @@ import com.csse3200.game.utils.DirectionUtils;
  * of the events is triggered.
  */
 public class AnimalAnimationController extends Component {
-    /** Render component used to render animals. **/
-    AnimationRenderComponent animator;
-    /** Current direction of animal. */
-    private String direction;
-    /** Current animation playing (excluding direction suffix) */
-    private String currentAnimation;
-    /** Walk prefix to play walk animation */
-    private static final String WALK_PREFIX = "walk";
-    /** Run prefix to play run animation */
-    private static final String RUN_PREFIX = "run";
-    /** Idle prefix to play idle animation */
-    private static final String IDLE_PREFIX = "idle";
-    /** Tamed suffix to add tamed indicator */
+    /**
+     * Render component used to render animals.
+     **/
+    protected AnimationRenderComponent animator;
+    /**
+     * Current direction of animal.
+     */
+    protected String direction;
+    /**
+     * Current animation playing (excluding direction suffix)
+     */
+    protected String currentAnimation;
+    /**
+     * Walk prefix to play walk animation
+     */
+    protected static final String WALK_PREFIX = "walk";
+    /**
+     * Run prefix to play run animation
+     */
+    protected static final String RUN_PREFIX = "run";
+    /**
+     * Idle prefix to play idle animation
+     */
+    protected static final String IDLE_PREFIX = "idle";
+    /**
+     * Tamed suffix to add tamed indicator
+     */
     private static final String TAMED_SUFFIX = "_tamed";
 
     /**
@@ -53,14 +67,13 @@ public class AnimalAnimationController extends Component {
         entity.getEvents().addListener("idleStart", this::animateIdle);
         entity.getEvents().addListener("followStart", this::animateWalk);
         entity.getEvents().addListener("followStop", this::animateIdle);
-
         animateIdle();
     }
 
     /**
      * Play walk animation with current direction
      */
-    void animateWalk() {
+    protected void animateWalk() {
         animator.startAnimation(WALK_PREFIX + "_" + direction + isTamed());
         currentAnimation = WALK_PREFIX;
     }
@@ -68,7 +81,7 @@ public class AnimalAnimationController extends Component {
     /**
      * Play run animation with current direction
      */
-    void animateRun() {
+    protected void animateRun() {
         animator.startAnimation(RUN_PREFIX + "_" + direction + isTamed());
         currentAnimation = RUN_PREFIX;
     }
@@ -76,20 +89,21 @@ public class AnimalAnimationController extends Component {
     /**
      * Play idle animation with current direction
      */
-    void animateIdle() {
+    protected void animateIdle() {
         animator.startAnimation(IDLE_PREFIX + "_" + direction + isTamed());
         currentAnimation = IDLE_PREFIX;
     }
 
     /**
      * Set new direction of animal and retrigger current animation with new direction
+     *
      * @param direction new direction
      */
-    void changeDirection(String direction){
+    void changeDirection(String direction) {
         this.direction = direction;
         entity.getEvents().trigger(currentAnimation + "Start");
     }
 
-
-
 }
+
+

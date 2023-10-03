@@ -1,15 +1,23 @@
 package com.csse3200.game.events;
 
-import com.badlogic.gdx.utils.Array;
-import com.csse3200.game.events.listeners.*;
-import com.csse3200.game.events.listeners.EventListener;
-import com.csse3200.game.services.GameTime;
-import com.csse3200.game.services.ServiceLocator;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
-import java.util.function.Consumer;
+import com.badlogic.gdx.utils.Array;
+import com.csse3200.game.events.listeners.EventListener;
+import com.csse3200.game.events.listeners.EventListener0;
+import com.csse3200.game.events.listeners.EventListener1;
+import com.csse3200.game.events.listeners.EventListener2;
+import com.csse3200.game.events.listeners.EventListener3;
+import com.csse3200.game.services.GameTime;
+import com.csse3200.game.services.ServiceLocator;
 
 /**
  * Send and receive events between objects. EventHandler provides an implementation of the Observer
@@ -148,7 +156,7 @@ public class EventHandler {
   /**
    * Schedule an event with no arguments
    *
-   * @param delay delay before triggering event
+   * @param delay delay before triggering event in seconds
    * @param eventName name of the event
    * @return the scheduled event
    */
@@ -169,7 +177,7 @@ public class EventHandler {
   /**
    * Schedule an event with one argument
    *
-   * @param delay delay before triggering event
+   * @param delay delay before triggering event in seconds
    * @param eventName name of the event
    * @param arg0 arg to pass to event
    * @param <T> argument type
@@ -196,7 +204,7 @@ public class EventHandler {
    * Schedule an event with two arguments
    *
    *
-   * @param delay delay before triggering event
+   * @param delay delay before triggering event in seconds
    * @param eventName name of the event
    * @param arg0 arg 0 to pass to event
    * @param arg1 arg 1 to pass to event
@@ -225,7 +233,7 @@ public class EventHandler {
   /**
    * Schedule an event with three arguments
    *
-   * @param delay delay before triggering event
+   * @param delay delay before triggering event in seconds
    * @param eventName name of the event
    * @param arg0 arg 0 to pass to event
    * @param arg1 arg 1 to pass to event
@@ -281,16 +289,14 @@ public class EventHandler {
       return;
     }
 
-    for (ScheduledEvent scheduledEvent : scheduledEvents) {
-      if (timeSource.getTime() >= scheduledEvent.endTime()) {
-        triggerScheduledEvent(scheduledEvent);
-      }
-    }
+    List<ScheduledEvent> eventsToTrigger = new ArrayList<>(scheduledEvents);
+    eventsToTrigger.removeIf(event -> !(timeSource.getTime() >= event.endTime()));
+
+    eventsToTrigger.forEach(this::triggerScheduledEvent);
 
     // remove in separate loop to avoid concurrent modification error
-    scheduledEvents.removeIf(scheduledEvent -> timeSource.getTime() >= scheduledEvent.endTime());
+    scheduledEvents.removeIf(eventsToTrigger::contains);
   }
-
 
   /**
    * Cancels the given scheduled event
@@ -298,7 +304,13 @@ public class EventHandler {
    */
   public void cancelEvent(ScheduledEvent event) {
     scheduledEvents.remove(event);
-    logger.debug("{} event cancelled", event.eventName());
+  }
+
+  /**
+   * Cancels all scheduled events for an entity.
+   */
+  public void cancelAllEvents() {
+    scheduledEvents.clear();
   }
 
   private void registerListener(String eventName, EventListener listener) {

@@ -4,9 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.areas.terrain.CropTileComponent;
-import com.csse3200.game.components.plants.PlantAreaOfEffectComponent;
+import com.csse3200.game.components.plants.*;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.configs.plants.BasePlantConfig;
 import com.csse3200.game.entities.configs.plants.PlantConfigs;
@@ -18,6 +17,7 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+import java.util.Map;
 
 /**
  * Factory to create plant entities.
@@ -57,10 +57,12 @@ public class PlantFactory {
 
         Entity plant = new Entity(EntityType.Plant)
                 .addComponent(animator)
-                .addComponent(new PlantAreaOfEffectComponent(1f, "None"))
+                .addComponent(new PlantAreaOfEffectComponent(2f, "None"))
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setSensor(true))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
+                .addComponent(new PlantMouseHoverComponent())
+                .addComponent(new PlantProximityComponent())
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
                         config.maxHealth, cropTile, growthThresholds, soundsArray));
@@ -93,8 +95,9 @@ public class PlantFactory {
         animator.addAnimation("4_adult", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("5_decaying", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("6_dead", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("6_sprout_dead", 0.1f, Animation.PlayMode.LOOP);
 
-        animator.startAnimation("4_adult");
+        animator.startAnimation("1_seedling");
 
         return animator;
     }
@@ -106,7 +109,12 @@ public class PlantFactory {
      * @return entity
      */
     public static Entity createCosmicCob(CropTileComponent cropTile) {
-        return createBasePlant(stats.cosmicCob, cropTile);
+        Entity cosmicCob = createBasePlant(stats.cosmicCob, cropTile);
+        cosmicCob.getComponent(PlantComponent.class).setHarvestYields(Map.of(
+                "Cosmic Cob Seeds", 2,
+                "Ear of Cosmic Cob", 1
+        ));
+        return cosmicCob;
     }
 
     /**
@@ -116,7 +124,12 @@ public class PlantFactory {
      * @return entity
      */
     public static Entity createAloeVera(CropTileComponent cropTile) {
-        return createBasePlant(stats.aloeVera, cropTile);
+        Entity aloeVera = createBasePlant(stats.aloeVera, cropTile);
+        aloeVera.getComponent(PlantComponent.class).setHarvestYields(Map.of(
+                "Aloe Vera Seeds", 2,
+                "Aloe Vera Leaf", 1
+        ));
+        return aloeVera;
     }
 
     /**
@@ -126,8 +139,12 @@ public class PlantFactory {
      * @return entity
      */
     public static Entity createHammerPlant(CropTileComponent cropTile) {
-        return createBasePlant(stats.hammerPlant, cropTile);
-
+        Entity hammerPlant = createBasePlant(stats.hammerPlant, cropTile);
+        hammerPlant.getComponent(PlantComponent.class).setHarvestYields(Map.of(
+                "Hammer Plant Seeds", 2,
+                "Hammer Flower", 1
+        ));
+        return hammerPlant;
     }
 
     /**
@@ -138,11 +155,11 @@ public class PlantFactory {
      */
     public static Entity createSpaceSnapper(CropTileComponent cropTile) {
         Entity spaceSnapper = createBasePlant(stats.spaceSnapper, cropTile);
-
         spaceSnapper.getComponent(AnimationRenderComponent.class).addAnimation("digesting", 0.1f,
                 Animation.PlayMode.LOOP);
-
-
+        spaceSnapper.getComponent(PlantComponent.class).setHarvestYields(Map.of(
+                "Space Snapper Seeds", 2
+        ));
         return spaceSnapper;
     }
 
@@ -153,7 +170,11 @@ public class PlantFactory {
      * @return entity
      */
     public static Entity createAtomicAlgae(CropTileComponent cropTile) {
-        return createBasePlant(stats.atomicAlgae, cropTile);
+        Entity atomicAlgae = createBasePlant(stats.atomicAlgae, cropTile);
+        atomicAlgae.getComponent(PlantComponent.class).setHarvestYields(Map.of(
+                "Atomic Algae Seeds", 2
+        ));
+        return atomicAlgae;
     }
 
     /**
@@ -163,8 +184,16 @@ public class PlantFactory {
      * @return entity
      */
     public static Entity createDeadlyNightshade(CropTileComponent cropTile) {
-        return createBasePlant(stats.deadlyNightshade, cropTile);
-
+        Entity deadlyNightshade = createBasePlant(stats.deadlyNightshade, cropTile);
+        deadlyNightshade.getComponent(PlantComponent.class).setHarvestYields(Map.of(
+                "Deadly Nightshade Seeds", 2,
+                "Nightshade Berry", 3
+        ));
+        return deadlyNightshade;
     }
 
+
+    public static Entity createTest(CropTileComponent cropTile) {
+        return new Entity(EntityType.Plant);
+    }
 }

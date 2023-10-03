@@ -4,8 +4,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
-import com.badlogic.gdx.utils.Json;
-import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
 
 /**
@@ -45,15 +43,10 @@ public class TerrainTile implements TiledMapTile {
   private boolean isTillable;
 
   /**
-   * Stores a crop tile which occupies the terrain tile. Is null if no crop tile
+   * Stores an Entity which occupies the terrain tile. Is null if no Entity
    * occupies the terrain tile.
    */
-  private Entity cropTile = null;
-
-  /**
-   * Stores a placebale entity which occupies the terrain tile.
-   */
-  private Entity placeable = null;
+  private Entity occupant = null;
 
   /**
    * Stores the speed modifier of the tile
@@ -67,124 +60,154 @@ public class TerrainTile implements TiledMapTile {
 
     // define properties of the TerrainTile based on its terrain category
     switch (terrainCategory) {
-      case PATH:
+      case PATH -> {
         this.isTraversable = true;
         this.isTillable = true;
         this.speedModifier = 1.2f;
-        break;
-      case BEACHSAND:
+      }
+      case BEACHSAND -> {
         this.isTraversable = true;
         this.isTillable = false;
         this.speedModifier = 0.9f;
-        break;
-      case GRASS:
+      }
+      case GRASS -> {
         this.isTraversable = true;
         this.isTillable = true;
-        this.speedModifier = 1.1f;
-        break;
-      case DIRT:
+        this.speedModifier = 1.0f;
+      }
+      case DIRT -> {
         this.isTraversable = true;
         this.isTillable = true;
-        this.speedModifier = 0.7f;
-        break;
-      case SHALLOWWATER:
+        this.speedModifier = 1.0f;
+      }
+      case SHALLOWWATER -> {
         this.isTraversable = true;
         this.isTillable = false;
-        this.speedModifier = 0.9f;
-        break;
-      case DESERT:
+        this.speedModifier = 0.4f;
+      }
+      case DESERT -> {
         this.isTraversable = true;
         this.isTillable = false;
         this.speedModifier = 0.8f;
-        break;
-      case SNOW:
+      }
+      case SNOW -> {
         this.isTraversable = true;
         this.isTillable = false;
         this.speedModifier = 0.8f;
-        break;
-      case ICE:
+      }
+      case ICE -> {
         this.isTraversable = true;
         this.isTillable = false;
         this.speedModifier = 1.5f;
-        break;
-      case DEEPWATER:
+      }
+      case DEEPWATER -> {
         this.isTraversable = false;
         this.isTillable = false;
-        this.speedModifier = 0.2f; // Not traversable
-        break;
-      case ROCK:
+        this.speedModifier = 0.2f; // nontraversable
+      }
+      case ROCK -> {
         this.isTraversable = false;
         this.isTillable = false;
-        this.speedModifier = 0.2f; // Not traversable
-        break;
-      case LAVA:
+        this.speedModifier = 0.2f; // nontraversable
+      }
+      case LAVA -> {
         this.isTraversable = false;
         this.isTillable = false;
-        this.speedModifier = 0.2f; // Not traversable
-        break;
-      case LAVAGROUND:
+        this.speedModifier = 0.2f; // nontraversable
+      }
+      case LAVAGROUND -> {
         this.isTraversable = true;
         this.isTillable = false;
         this.speedModifier = 0.7f;
-        break;
-      case GRAVEL:
+      }
+      case GRAVEL -> {
         this.isTraversable = true;
         this.isTillable = false;
-        this.speedModifier = 1f;
-        break;
-      case FLOWINGWATER:
+        this.speedModifier = 1.0f;
+      }
+      case FLOWINGWATER -> {
         this.isTraversable = true;
         this.isTillable = false;
-        this.speedModifier = 1.3f;
-        break;
+        this.speedModifier = 0.4f;
+      }
     }
   }
 
+  /**
+   * Returns the id of the terrain tile
+   */
   @Override
   public int getId() {
     return id;
   }
 
+  /**
+   * Sets the id of the terrain tile
+   */
   @Override
   public void setId(int id) {
     this.id = id;
   }
 
+  /**
+   * Returns the blend mode of the terrain tile
+   */
   @Override
   public BlendMode getBlendMode() {
     return blendMode;
   }
 
+  /**
+   * Sets the blend mode of the terrain tile
+   */
   @Override
   public void setBlendMode(BlendMode blendMode) {
     this.blendMode = blendMode;
   }
 
+  /**
+   * Returns the texture region of the terrain tile
+   */
   @Override
   public TextureRegion getTextureRegion() {
     return textureRegion;
   }
 
+  /**
+   * Sets the texture region of the terrain tile
+   */
   @Override
   public void setTextureRegion(TextureRegion textureRegion) {
     this.textureRegion = textureRegion;
   }
 
+  /**
+   * Returns the x offset of the terrain tile
+   */
   @Override
   public float getOffsetX() {
     return offsetX;
   }
 
+  /**
+   * Sets the x offset of the terrain tile
+   */
   @Override
   public void setOffsetX(float offsetX) {
     this.offsetX = offsetX;
   }
 
+  /**
+   * Returns the y offset of the terrain tile
+   */
   @Override
   public float getOffsetY() {
     return offsetY;
   }
 
+  /**
+   * Sets the y offset of the terrain tile
+   */
   @Override
   public void setOffsetY(float offsetY) {
     this.offsetY = offsetY;
@@ -271,31 +294,26 @@ public class TerrainTile implements TiledMapTile {
     return this.isTillable;
   }
 
-  public void write(Json json) {
-    getCropTile().getComponent(CropTileComponent.class).write(json);
-    if (getCropTile().getComponent(CropTileComponent.class).getPlant() != null) {
-      getCropTile().getComponent(CropTileComponent.class).getPlant().getComponent(PlantComponent.class).write(json);
-    }
-  }
-
   /**
    * Returns the placeable entity that is on the TerrainTile
    * 
    * @return the placeable entity
    */
-  public Entity getPlaceable() {
-    return placeable;
+  public Entity getOccupant() {
+    return occupant;
   }
 
   /**
    * Sets the placeable entity and sets the tile to be occupied if not null
    * 
-   * @param placeable the entity to be placed on the tile
+   * @param occupant the entity to be placed on the tile
    */
-  public void setPlaceable(Entity placeable) {
-    this.placeable = placeable;
-    if (placeable != null) {
+  public void setOccupant(Entity occupant) {
+    this.occupant = occupant;
+    if (occupant != null) {
       setOccupied();
+    } else {
+      setUnOccupied();
     }
   }
 
@@ -317,39 +335,17 @@ public class TerrainTile implements TiledMapTile {
   }
 
   /**
-   * Returns a crop tile entity which occupies the terrain tile
-   * 
-   * @return cropTile entity or null if there is no cropTile entity
-   */
-  public Entity getCropTile() {
-    return this.cropTile;
-  }
-
-  /**
-   * Sets the crop tile which occupies the terrain tile. Replaces any existing
-   * crop tile that was already occupying the
-   * terrain tile. Do not use to set cropTile as null, use removeCropTile instead.
-   * 
-   * @param cropTile new cropTile entity to occupy the terrainTile
-   */
-  public void setCropTile(Entity cropTile) {
-    this.cropTile = cropTile;
-    cropTile.getComponent(CropTileComponent.class).setTerrainTile(this);
-    this.setOccupied();
-  }
-
-  /**
    * Removes any crop tile which occupies the terrain tile. Does not return the
    * crop tile.
    */
-  public void removeCropTile() {
-    this.cropTile = null;
+  public void removeOccupant() {
+    this.occupant = null;
     this.setUnOccupied();
   }
 
   /**
    * Returns the speed modifier of the terrain tile
-   * 
+   *
    * @return the speed modifier of the terrain tile
    */
   public float getSpeedModifier() {

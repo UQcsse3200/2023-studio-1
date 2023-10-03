@@ -9,6 +9,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.csse3200.game.services.plants.PlantInfoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,6 +33,7 @@ public class PlantComponentTest {
     Sound mockSound;
 
     PlantAreaOfEffectComponent mockPlantAreaOfEffect;
+    PlantInfoService mockPlantInfoService;
 
     int health = 100;
     String name = "testPlant";
@@ -52,6 +54,8 @@ public class PlantComponentTest {
         mockSound = mock(Sound.class);
         mockPlantAreaOfEffect = mock(PlantAreaOfEffectComponent.class);
         ServiceLocator.registerResourceService(mockResourceService);
+        mockPlantInfoService = mock(PlantInfoService.class);
+        ServiceLocator.registerPlantInfoService(mockPlantInfoService);
 
         when(mockResourceService.getAsset(anyString(), eq(Sound.class))).thenReturn(mockSound);
 
@@ -79,6 +83,7 @@ public class PlantComponentTest {
     @Test
     void testIncreasePlantHealth() {
         int plantHealthIncrement = 2;
+        testPlant.setGrowthStage(PlantComponent.GrowthStage.ADULT.getValue());
         testPlant.increasePlantHealth(plantHealthIncrement);
         assertEquals(health + plantHealthIncrement, testPlant.getPlantHealth());
     }
@@ -86,6 +91,7 @@ public class PlantComponentTest {
     @Test
     void testDecreasePlantHealth() {
         int plantHealthIncrement = -2;
+        testPlant.setGrowthStage(PlantComponent.GrowthStage.ADULT.getValue());
         testPlant.increasePlantHealth(plantHealthIncrement);
         assertEquals(health + plantHealthIncrement, testPlant.getPlantHealth());
     }
@@ -173,15 +179,17 @@ public class PlantComponentTest {
     @Test
     void testIncreaseCurrentGrowthLevelPositive(){
         when(mockCropTile.getGrowthRate(1.0f)).thenReturn(0.5);
+        testPlant.setGrowthStage(PlantComponent.GrowthStage.JUVENILE.getValue());
         testPlant.increaseCurrentGrowthLevel();
-        assertEquals(6, testPlant.getCurrentGrowthLevel());
+        assertEquals(1, testPlant.getCurrentGrowthLevel());
     }
 
     @Test
     void testIncreaseCurrentGrowthLevelNegative() {
         when(mockCropTile.getGrowthRate(1.0f)).thenReturn(-0.5);
+        testPlant.setGrowthStage(PlantComponent.GrowthStage.ADULT.getValue());
         testPlant.increaseCurrentGrowthLevel();
-        assertEquals(health - 10, testPlant.getPlantHealth());
+        assertEquals(health - 1, testPlant.getPlantHealth());
     }
 
     @Test
@@ -225,21 +233,13 @@ public class PlantComponentTest {
     }
 
     @Test
-    void testUpdateMaxHealth_UnexpectedGrowthStage() {
-        testPlant.setGrowthStage(5);
-        assertThrows(IllegalStateException.class, () -> testPlant.updateMaxHealth());
-    }
-
-    @Test
-    void testForceDecay_Decay() {
-        testPlant.setGrowthStage(4);
-        testPlant.setNumOfDaysAsAdult(adultLifeSpan);
-        testPlant.forceDecay();
-        assertTrue(testPlant.isDecay());
+    void testSetGrowthStage_UnexpectedGrowthStage() {
+        assertThrows(IllegalArgumentException.class, () -> testPlant.setGrowthStage(7));
     }
 
     @Test
     public void testInvalidFunctionForPlaySound() {
+        testPlant.setPlayerInProximity(true);
         assertThrows(IllegalStateException.class, () -> testPlant.playSound("invalidFunctionName"));
     }
 }

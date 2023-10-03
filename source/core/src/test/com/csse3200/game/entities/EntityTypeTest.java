@@ -1,5 +1,6 @@
 package com.csse3200.game.entities;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Arrays;
@@ -22,9 +23,8 @@ public class EntityTypeTest {
     expectedEnumNames = new HashSet<>(Arrays.asList(
         "Player", "Tractor", "Plant", "Tile", "Cow",
         "Chicken", "Astrolotl", "OxygenEater", "Item",
-        "Questgiver", "QuestgiverIndicator", "Sprinkler","Ship",
-            "Gate", "Fence", "Chest"));
-
+        "Questgiver", "QuestgiverIndicator", "Sprinkler","Ship", "ShipDebris", "ShipPartTile",
+            "Gate", "Fence", "Chest", "Pump", "Light", "FireFlies", "Dragonfly", "Bat", "Dummy"));
   }
 
   /*
@@ -82,5 +82,13 @@ public class EntityTypeTest {
         fail("Expected enum value '" + expectedEnumName + "' is missing.");
       }
     }
+  }
+
+  @Test
+  void testOxygenReturn() {
+    assertEquals(EntityType.Cow.getOxygenRate(), 0);
+    assertEquals(EntityType.Chicken.getOxygenRate(), 0);
+    assertEquals(EntityType.Gate.getOxygenRate(), 0);
+    assertEquals(EntityType.Fence.getOxygenRate(), 0);
   }
 }

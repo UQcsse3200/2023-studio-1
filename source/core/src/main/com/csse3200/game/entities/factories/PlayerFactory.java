@@ -55,7 +55,7 @@ public class PlayerFactory {
             );
 
     setupPlayerAnimator(animator);
-    InventoryComponent playerInventory = new InventoryComponent(new ArrayList<>());
+    //InventoryComponent playerInventory = new InventoryComponent(new ArrayList<>());
 
     Entity player =
         new Entity(EntityType.Player)
@@ -64,21 +64,22 @@ public class PlayerFactory {
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
             .addComponent(new PlayerActions())
             .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack))
-                .addComponent(playerInventory)
+            .addComponent(new InventoryComponent())
             .addComponent(inputComponent)
             .addComponent(animator)
             .addComponent(new OpenPauseComponent())
             .addComponent(new PlayerAnimationController())
             .addComponent(new ItemPickupComponent())
             .addComponent(new InteractionDetector(2f, new ArrayList<EntityType>(Arrays.asList(EntityType.Questgiver, EntityType.Gate, EntityType.Chest, EntityType.Chicken,
-                    EntityType.Cow, EntityType.Astrolotl, EntityType.OxygenEater))))
+                    EntityType.Cow, EntityType.Astrolotl, EntityType.OxygenEater, EntityType.ShipDebris, EntityType.Ship))))
             .addComponent(new ToolbarDisplay())
-	        .addComponent(new AuraLightComponent())
-            .addComponent(new InventoryDisplay(playerInventory))
+	        .addComponent(new AuraLightComponent(6f))
+            .addComponent(new InventoryDisplay("updateInventory", "toggleInventory", 30, 10, true))
             .addComponent(new PauseMenuActions());
 
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
     player.getComponent(ColliderComponent.class).setAsBox(new Vector2(0.9f, 0.9f), new Vector2(1.5f, 1f));
+    player.getComponent(HitboxComponent.class).setAsBox(new Vector2(1f, 2f), new Vector2(1.5f, 1.5f));
     player.getComponent(AnimationRenderComponent.class).scaleEntity();
     player.getComponent(KeyboardPlayerInputComponent.class).setActions(player.getComponent(PlayerActions.class));
     return player;
@@ -130,9 +131,14 @@ public class PlayerFactory {
     animator.addAnimation("scythe_left",0.1f,Animation.PlayMode.NORMAL);
     animator.addAnimation("scythe_right",0.1f,Animation.PlayMode.NORMAL);
     animator.addAnimation("scythe_down",0.1f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("sword_up",0.1f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("sword_left",0.1f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("sword_right",0.1f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("sword_down",0.1f,Animation.PlayMode.NORMAL);
   }
 
   private PlayerFactory() {
     throw new IllegalStateException("Instantiating static util class");
   }
+
 }

@@ -1,0 +1,75 @@
+fireflies.png
+size: 160, 32
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+default
+  xy: 0, 0
+  index: 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  rotate: false
+default
+  xy: 32, 0
+  index: 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  rotate: false
+default
+  xy: 64, 0
+  index: 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  rotate: false
+default
+  xy: 96, 0
+  index: 3
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  rotate: false
+default
+  xy: 128, 0
+  index: 4
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  rotate: false
+DancinInTheMoonlight
+  xy: 0, 32
+  index: 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  rotate: false
+DancinInTheMoonlight
+  xy: 32, 32
+  index: 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  rotate: false
+DancinInTheMoonlight
+xy: 64, 32
+index: 2
+size: 32, 32
+orig: 32, 32
+offset: 0, 0
+rotate: false
+DancinInTheMoonlight
+xy: 96, 32
+index: 3
+size: 32, 32
+orig: 32, 32
+offset: 0, 0
+rotate: false
+DancinInTheMoonlight
+xy: 128, 32
+index: 4
+size: 32, 32
+orig: 32, 32
+offset: 0, 0
+rotate: false
