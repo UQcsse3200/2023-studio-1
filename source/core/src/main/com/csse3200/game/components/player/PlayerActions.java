@@ -41,7 +41,7 @@ public class PlayerActions extends Component {
 
   private SecureRandom random = new SecureRandom();
 
-  int SWORDDAMAGE = 5;
+  int swordDamage = 5;
 
   @Override
   public void create() {
@@ -237,7 +237,7 @@ public class PlayerActions extends Component {
           float difference = Math.abs(resAngle - mouseResAngle);
           difference = difference > 180 ? 360 - difference : difference;
           if(difference <= 45) {
-            combat.setHealth(combat.getHealth() - SWORDDAMAGE);
+            combat.setHealth(combat.getHealth() - swordDamage);
             animal.getEvents().trigger("panicStart");
           }
         }

@@ -66,7 +66,7 @@ public class TractorActions extends Component {
   /**
    * The mode the tractor is in, used to interact with tiles
    */
-  private TractorMode mode = TractorMode.normal;
+  private TractorMode mode = TractorMode.NORMAL;
 
   /**
    * The map of the tiles, used to aid in getting / setting tiles
@@ -163,8 +163,8 @@ public class TractorActions extends Component {
    */
   private void use() {
     switch (getMode()) {
-      case tilling -> {
-        Array<Object> tiles = getTiles(TractorMode.tilling, getDirection(walkDirection.angleDeg()));
+      case TILLING -> {
+        Array<Object> tiles = getTiles(TractorMode.TILLING, getDirection(walkDirection.angleDeg()));
         if (tiles == null) {
           return;
         }
@@ -174,8 +174,8 @@ public class TractorActions extends Component {
         hoe((TerrainTile) tiles.get(0), (Vector2) tiles.get(2));
         hoe((TerrainTile) tiles.get(1), (Vector2) tiles.get(3));
       }
-      case harvesting -> {
-        Array<Object> tiles = getTiles(TractorMode.tilling, getDirection(walkDirection.angleDeg()));
+      case HARVESTING -> {
+        Array<Object> tiles = getTiles(TractorMode.TILLING, getDirection(walkDirection.angleDeg()));
         if (tiles == null) {
           return;
         }
@@ -201,22 +201,22 @@ public class TractorActions extends Component {
     Array<Object> tiles = new Array<>(4);
     Vector2 pos1 = new Vector2();
     Vector2 pos2 = new Vector2();
-    if ((Objects.equals(dir, "right") && mode == TractorMode.tilling) || (Objects.equals(dir, "left") && mode == TractorMode.harvesting)) {
+    if ((Objects.equals(dir, "right") && mode == TractorMode.TILLING) || (Objects.equals(dir, "left") && mode == TractorMode.HARVESTING)) {
       pos1.set(entity.getPosition().x, entity.getPosition().y + 1);
       pos2.set(entity.getPosition().x, entity.getPosition().y + 2);
       tiles.add(map.getTile(pos1), map.getTile(pos2), pos1, pos2);
       return tiles;
-    } else if ((Objects.equals(dir, "left") && mode == TractorMode.tilling) || (Objects.equals(dir, "right") && mode == TractorMode.harvesting)) {
+    } else if ((Objects.equals(dir, "left") && mode == TractorMode.TILLING) || (Objects.equals(dir, "right") && mode == TractorMode.HARVESTING)) {
       pos1.set(entity.getPosition().x + 5, entity.getPosition().y + 1);
       pos2.set(entity.getPosition().x + 5, entity.getPosition().y + 2);
       tiles.add(map.getTile(pos1), map.getTile(pos2), pos1, pos2);
       return tiles;
-    } else if ((Objects.equals(dir, "up") && mode == TractorMode.tilling) || (Objects.equals(dir, "down") && mode == TractorMode.harvesting)) {
+    } else if ((Objects.equals(dir, "up") && mode == TractorMode.TILLING) || (Objects.equals(dir, "down") && mode == TractorMode.HARVESTING)) {
       pos1.set(entity.getPosition().x + 2, entity.getPosition().y + 1);
       pos2.set(entity.getPosition().x + 3, entity.getPosition().y + 1);
       tiles.add(map.getTile(pos1), map.getTile(pos2), pos1, pos2);
       return tiles;
-    } else if ((Objects.equals(dir, "down") && mode == TractorMode.tilling) || (Objects.equals(dir, "up") && mode == TractorMode.harvesting)) {
+    } else if ((Objects.equals(dir, "down") && mode == TractorMode.TILLING) || (Objects.equals(dir, "up") && mode == TractorMode.HARVESTING)) {
       pos1.set(entity.getPosition().x + 2, entity.getPosition().y + 3);
       pos2.set(entity.getPosition().x + 3, entity.getPosition().y + 3);
       tiles.add(map.getTile(pos1), map.getTile(pos2), pos1, pos2);
@@ -322,7 +322,7 @@ public class TractorActions extends Component {
    */
   void exitTractor() {
     this.stopMoving();
-    this.mode = TractorMode.normal;
+    this.mode = TractorMode.NORMAL;
     player.getComponent(PlayerActions.class).setMuted(false);
     muted = true;
     entity.getComponent(AuraLightComponent.class).toggleLight();

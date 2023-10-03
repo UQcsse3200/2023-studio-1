@@ -70,7 +70,7 @@ public class SaveGameTest {
   public void setPlayer() {
     GameState gameState = new SaveGame.GameState();
 
-    Entity playerTest = new Entity(EntityType.Player);
+    Entity playerTest = new Entity(EntityType.PLAYER);
 
     gameState.setPlayer(playerTest);
     assertEquals(playerTest, gameState.getPlayer());
@@ -80,9 +80,9 @@ public class SaveGameTest {
   public void setEntities() {
     GameState gameState = new SaveGame.GameState();
 
-    Entity[] entities = { new Entity(EntityType.Astrolotl),
-        new Entity(EntityType.Chicken),
-        new Entity(EntityType.Cow)};
+    Entity[] entities = { new Entity(EntityType.ASTROLOTL),
+        new Entity(EntityType.CHICKEN),
+        new Entity(EntityType.COW)};
 
     Array<Entity> entityTest = new Array<Entity>(entities);
 
@@ -94,10 +94,10 @@ public class SaveGameTest {
   public void setTiles() {
     GameState gameState = new SaveGame.GameState();
 
-    Entity[] tiles = { new Entity(EntityType.Tile),
-        new Entity(EntityType.Tile),
-        new Entity(EntityType.Tile),
-        new Entity(EntityType.Tile), };
+    Entity[] tiles = { new Entity(EntityType.TILE),
+        new Entity(EntityType.TILE),
+        new Entity(EntityType.TILE),
+        new Entity(EntityType.TILE), };
 
     Array<Entity> tileTest = new Array<Entity>(tiles);
 
@@ -108,8 +108,8 @@ public class SaveGameTest {
   @Test
   public void testFilterTiles() {
     Array<Entity> entities = new Array<Entity>();
-    Entity tile = new Entity(EntityType.Tile);
-    entities.add(new Entity(EntityType.Plant), new Entity(), tile, new Entity(EntityType.Chicken));
+    Entity tile = new Entity(EntityType.TILE);
+    entities.add(new Entity(EntityType.PLANT), new Entity(), tile, new Entity(EntityType.CHICKEN));
     GameState state = new GameState();
     state.setTiles(entities);
     assertEquals(1,state.getTiles().size);
@@ -119,8 +119,8 @@ public class SaveGameTest {
   @Test
   public void testFilterEntities() {
     Array<Entity> entities = new Array<Entity>();
-    Entity tile = new Entity(EntityType.Tile);
-    Entity chicken = new Entity(EntityType.Chicken);
+    Entity tile = new Entity(EntityType.TILE);
+    Entity chicken = new Entity(EntityType.CHICKEN);
     entities.add(new Entity(), tile, chicken);
     GameState state = new GameState();
     state.setEntities(entities);
@@ -131,16 +131,16 @@ public class SaveGameTest {
   @Test
   public void getTractor() {
     GameState gameState = new SaveGame.GameState();
-    Entity tractor = new Entity(EntityType.Tractor);
+    Entity tractor = new Entity(EntityType.TRACTOR);
     gameState.setTractor(tractor);
     assertEquals(tractor, gameState.getTractor());
-    assertEquals(EntityType.Tractor, gameState.getTractor().getType());
+    assertEquals(EntityType.TRACTOR, gameState.getTractor().getType());
   }
 
   @Test
   public void setTractor() {
     GameState gameState = new SaveGame.GameState();
-    Entity tractor = new Entity(EntityType.Tractor);
+    Entity tractor = new Entity(EntityType.TRACTOR);
     Vector2 position = new Vector2(1, 1);
     tractor.setPosition(position);
     gameState.setTractor(tractor);

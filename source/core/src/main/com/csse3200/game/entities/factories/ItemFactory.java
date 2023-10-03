@@ -51,7 +51,7 @@ public class ItemFactory {
 
 
   public static Entity createBaseItem() {
-    Entity item = new Entity(EntityType.Item)
+    Entity item = new Entity(EntityType.ITEM)
         .addComponent(new PhysicsComponent())
         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ITEM))
         .addComponent(new ItemActions());
@@ -190,6 +190,7 @@ public class ItemFactory {
 
     return mapItem;
   }
+
    /**
    * Creates a fertiliser item
    *

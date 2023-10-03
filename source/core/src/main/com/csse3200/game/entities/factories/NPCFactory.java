@@ -62,7 +62,7 @@ public class NPCFactory {
    * @return chicken entity
    */
   public static Entity createChicken(Entity player) {
-    Entity chicken = createBaseAnimal(EntityType.Chicken);
+    Entity chicken = createBaseAnimal(EntityType.CHICKEN);
     BaseAnimalConfig config = configs.chicken;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
@@ -126,7 +126,7 @@ public class NPCFactory {
    * @return cow entity
    */
   public static Entity createCow(Entity player) {
-    Entity cow = createBaseAnimal(EntityType.Cow);
+    Entity cow = createBaseAnimal(EntityType.COW);
     BaseAnimalConfig config = configs.cow;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
@@ -186,7 +186,7 @@ public class NPCFactory {
    * @return Astrolotl entity
    */
   public static Entity createAstrolotl(Entity player) {
-    Entity astrolotl = createBaseAnimal(EntityType.Astrolotl);
+    Entity astrolotl = createBaseAnimal(EntityType.ASTROLOTL);
     BaseAnimalConfig config = configs.astrolotl;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
@@ -226,7 +226,7 @@ public class NPCFactory {
    * @return Oxygen Eater entity
    */
   public static Entity createOxygenEater(Entity player) {
-    Entity oxygenEater = createBaseAnimal(EntityType.OxygenEater);
+    Entity oxygenEater = createBaseAnimal(EntityType.OXYGEN_EATER);
     BaseAnimalConfig config = configs.oxygenEater;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
@@ -252,7 +252,7 @@ public class NPCFactory {
             .addComponent(new CombatStatsComponent(10, 0))
             .addComponent(new HostileAnimationController())
             .addComponent(new OxygenEaterAttackPattern(1.5f, ProjectileFactory::createOxygenEaterProjectile))
-            .addComponent(new InteractionDetector(5f, new ArrayList<>(Arrays.asList(EntityType.Player)))); // TODO: Do we want it to attack anything
+            .addComponent(new InteractionDetector(5f, new ArrayList<>(Arrays.asList(EntityType.PLAYER)))); // TODO: Do we want it to attack anything
 
     oxygenEater.scaleHeight(2f);
     oxygenEater.getComponent(ColliderComponent.class).setAsBoxAligned(new Vector2(1f, 1f),
@@ -285,7 +285,7 @@ public class NPCFactory {
     animator.addAnimation(animation, 0.5f, Animation.PlayMode.LOOP);
     animator.startAnimation(animation);
 
-    Entity fireflies = new Entity(EntityType.FireFlies)
+    Entity fireflies = new Entity(EntityType.FIRE_FLIES)
             .addComponent(animator)
             .addComponent(light)
             // Not actually scaring just dying from daylight (named from previous idea for feature)
@@ -300,7 +300,7 @@ public class NPCFactory {
    * @return Dragonfly entity
    */
   public static Entity createDragonfly(Entity player) {
-    Entity dragonfly = createBaseAnimal(EntityType.Dragonfly);
+    Entity dragonfly = createBaseAnimal(EntityType.DRAGONFLY);
     BaseAnimalConfig config = configs.dragonfly;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
@@ -329,7 +329,7 @@ public class NPCFactory {
             .addComponent(new EntityIndicator(dragonfly))
             .addComponent(new DragonflyAttackPattern(1.5f, ProjectileFactory::createDragonflyProjectile))
             .addComponent(new InteractionDetector(5f,
-                    new ArrayList<>(Arrays.asList((EntityType.Player), (EntityType.Plant)))))
+                    new ArrayList<>(Arrays.asList((EntityType.PLAYER), (EntityType.PLANT)))))
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
 
 
@@ -343,7 +343,7 @@ public class NPCFactory {
    * @return Bat entity
    */
   public static Entity createBat(Entity player) {
-    Entity bat = createBaseAnimal(EntityType.Bat);
+    Entity bat = createBaseAnimal(EntityType.BAT);
     BaseAnimalConfig config = configs.bat;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
@@ -369,7 +369,7 @@ public class NPCFactory {
             .addComponent(new BatAttackPattern(1.5f))
             .addComponent(new EntityIndicator(bat))
             .addComponent(new InteractionDetector(1.5f,
-                    new ArrayList<>(Arrays.asList(EntityType.Player))))
+                    new ArrayList<>(Arrays.asList(EntityType.PLAYER))))
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
 
 
@@ -390,7 +390,7 @@ public class NPCFactory {
             .addComponent(new PhysicsMovementComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC));
 
-    if (type != EntityType.Dragonfly && type != EntityType.Bat) {
+    if (type != EntityType.DRAGONFLY && type != EntityType.BAT) {
       animal.addComponent(new ColliderComponent());
     }
 

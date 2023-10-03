@@ -121,7 +121,7 @@ public class ManageHostilesQuest extends Quest {
                 descriptionBuilder.append(", ");
             }
             descriptionBuilder.append(switch (hostileType) {
-                case OxygenEater -> "Oxygen Eater";
+                case OXYGEN_EATER -> "Oxygen Eater";
                 default -> hostileType.toString();
             });
             isFirst = false;

@@ -384,13 +384,13 @@ public class ItemActions extends Component {
 
     List<Entity> entities = detector.getEntitiesTowardsPosition(mouseWorldPos);
     entities.removeIf(entity -> entity.getType() == null);
-    entities.removeIf(entity -> entity.getType() != EntityType.Ship);
+    entities.removeIf(entity -> entity.getType() != EntityType.SHIP);
 
     Entity ship = detector.getNearest(entities);
     if (ship == null) {
       return false;
     }
-    if (ship.getType() == EntityType.Ship) {
+    if (ship.getType() == EntityType.SHIP) {
       ship.getEvents().trigger("addPart", 1);
       player.getComponent(InventoryComponent.class).removeItem(entity);
       return true;

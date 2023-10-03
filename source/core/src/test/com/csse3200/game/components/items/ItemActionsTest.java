@@ -119,7 +119,7 @@ public class ItemActionsTest {
 
         tiledMap.getLayers().add(layer);
 
-        player = new Entity(EntityType.Player)
+        player = new Entity(EntityType.PLAYER)
                 .addComponent(new InteractionDetector(100))
                 .addComponent(new HitboxComponent())
                 .addComponent(new InventoryComponent());
@@ -142,7 +142,7 @@ public class ItemActionsTest {
         ServiceLocator.registerResourceService(mock(ResourceService.class));
         FileLoader fl = new FileLoader();
 
-        Entity hoe = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("hoe", ItemType.HOE, null));
+        Entity hoe = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("hoe", ItemType.HOE, null));
         assertTrue(hoe.getComponent(ItemActions.class).use(player, mousePos));
         assertFalse(hoe.getComponent(ItemActions.class).use(player, mousePos));
     }
@@ -164,8 +164,8 @@ public class ItemActionsTest {
         ServiceLocator.registerResourceService(mock(ResourceService.class));
         FileLoader fl = new FileLoader();
 
-        Entity shovel = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("shovel", ItemType.SHOVEL, null));
-        Entity hoe = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("hoe", ItemType.HOE, null));
+        Entity shovel = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("shovel", ItemType.SHOVEL, null));
+        Entity hoe = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("hoe", ItemType.HOE, null));
         assertTrue(hoe.getComponent(ItemActions.class).use(player, mousePos));
         assertTrue(shovel.getComponent(ItemActions.class).use(player, mousePos));
         Entity player2 = new Entity();
@@ -173,7 +173,7 @@ public class ItemActionsTest {
         assertFalse(shovel.getComponent(ItemActions.class).use(player2, mousePos));
         assertFalse(shovel.getComponent(ItemActions.class).use(player, mousePos));
 
-        Entity gate = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("Gate", ItemType.PLACEABLE, null));
+        Entity gate = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("Gate", ItemType.PLACEABLE, null));
         assertTrue(gate.getComponent(ItemActions.class).use(player, mousePos));
         assertTrue(shovel.getComponent(ItemActions.class).use(player, mousePos));
     }
@@ -195,9 +195,9 @@ public class ItemActionsTest {
         ServiceLocator.registerResourceService(mock(ResourceService.class));
         FileLoader fl = new FileLoader();
 
-        Entity can = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("can", ItemType.WATERING_CAN, null)).addComponent(new WateringCanLevelComponent(150));
+        Entity can = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("can", ItemType.WATERING_CAN, null)).addComponent(new WateringCanLevelComponent(150));
         WateringCanLevelComponent canLevel = can.getComponent(WateringCanLevelComponent.class);
-        Entity hoe = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("hoe", ItemType.HOE, null));
+        Entity hoe = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("hoe", ItemType.HOE, null));
         assertFalse(can.getComponent(ItemActions.class).use(player, mousePos));
         assertTrue(hoe.getComponent(ItemActions.class).use(player, mousePos));
         assertTrue(can.getComponent(ItemActions.class).use(player, mousePos));
@@ -222,8 +222,8 @@ public class ItemActionsTest {
         ServiceLocator.registerResourceService(mock(ResourceService.class));
         FileLoader fl = new FileLoader();
 
-        Entity scythe = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("scythe", ItemType.SCYTHE, null));
-        Entity hoe = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("hoe", ItemType.HOE, null));
+        Entity scythe = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("scythe", ItemType.SCYTHE, null));
+        Entity hoe = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("hoe", ItemType.HOE, null));
         assertFalse(scythe.getComponent(ItemActions.class).use(player, mousePos));
         assertTrue(hoe.getComponent(ItemActions.class).use(player, mousePos));
         assertTrue(scythe.getComponent(ItemActions.class).use(player, mousePos));
@@ -246,9 +246,9 @@ public class ItemActionsTest {
         ServiceLocator.registerResourceService(mock(ResourceService.class));
         FileLoader fl = new FileLoader();
 
-        Entity seed = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("Test Seeds", ItemType.SEED, null));
-        Entity hoe = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("hoe", ItemType.HOE, null));
-        Entity poop = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("poop", ItemType.FERTILISER, null));
+        Entity seed = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("Test Seeds", ItemType.SEED, null));
+        Entity hoe = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("hoe", ItemType.HOE, null));
+        Entity poop = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("poop", ItemType.FERTILISER, null));
         assertFalse(seed.getComponent(ItemActions.class).use(player, mousePos));
         assertFalse(poop.getComponent(ItemActions.class).use(player, mousePos));
         assertTrue(hoe.getComponent(ItemActions.class).use(player, mousePos));
@@ -273,7 +273,7 @@ public class ItemActionsTest {
         ServiceLocator.registerResourceService(mock(ResourceService.class));
         FileLoader fl = new FileLoader();
 
-        Entity food = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("food", ItemType.FOOD, null));
+        Entity food = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("food", ItemType.FOOD, null));
         assertFalse(food.getComponent(ItemActions.class).use(new Entity(), mousePos));
         assertFalse(food.getComponent(ItemActions.class).use(player, mousePos));
     }
@@ -295,7 +295,7 @@ public class ItemActionsTest {
         ServiceLocator.registerResourceService(mock(ResourceService.class));
         FileLoader fl = new FileLoader();
 
-        Entity gate = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("Gate", ItemType.PLACEABLE, null));
+        Entity gate = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("Gate", ItemType.PLACEABLE, null));
         assertTrue(gate.getComponent(ItemActions.class).use(player, mousePos));
         assertFalse(gate.getComponent(ItemActions.class).use(player, mousePos));
     }
@@ -317,9 +317,9 @@ public class ItemActionsTest {
         ServiceLocator.registerResourceService(mock(ResourceService.class));
         FileLoader fl = new FileLoader();
 
-        Entity sword = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("sword", ItemType.SWORD, null));
+        Entity sword = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("sword", ItemType.SWORD, null));
         assertTrue(sword.getComponent(ItemActions.class).use(player, mousePos));
-        Entity gun = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("sword", ItemType.GUN, null));
+        Entity gun = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("sword", ItemType.GUN, null));
         assertTrue(gun.getComponent(ItemActions.class).use(player, mousePos));
     }
 
@@ -340,10 +340,10 @@ public class ItemActionsTest {
         ServiceLocator.registerResourceService(mock(ResourceService.class));
         FileLoader fl = new FileLoader();
 
-        Entity clue = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("clue", ItemType.CLUE_ITEM, null));
+        Entity clue = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("clue", ItemType.CLUE_ITEM, null));
         assertTrue(clue.getComponent(ItemActions.class).use(player, mousePos));
-        Entity ship = new Entity(EntityType.Ship).addComponent(new HitboxComponent()).addComponent(new ColliderComponent());
-        Entity repair = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("part", ItemType.SHIP_PART, null));
+        Entity ship = new Entity(EntityType.SHIP).addComponent(new HitboxComponent()).addComponent(new ColliderComponent());
+        Entity repair = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("part", ItemType.SHIP_PART, null));
         assertFalse(repair.getComponent(ItemActions.class).use(player, mousePos));
         ship.setPosition(player.getPosition());
         assertFalse(repair.getComponent(ItemActions.class).use(new Entity(), mousePos));
@@ -366,10 +366,10 @@ public class ItemActionsTest {
         ServiceLocator.registerResourceService(mock(ResourceService.class));
         FileLoader fl = new FileLoader();
 
-        Entity notItem = new Entity(EntityType.Item).addComponent(new ItemActions());
+        Entity notItem = new Entity(EntityType.ITEM).addComponent(new ItemActions());
         assertFalse(notItem.getComponent(ItemActions.class).use(player, mousePos));
 
-        Entity itemWithNoUse = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("milk", ItemType.EGG, null));
+        Entity itemWithNoUse = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("milk", ItemType.EGG, null));
         assertFalse(itemWithNoUse.getComponent(ItemActions.class).use(player, mousePos));
     }
 
@@ -413,7 +413,7 @@ public class ItemActionsTest {
         ServiceLocator.registerResourceService(mock(ResourceService.class));
         FileLoader fl = new FileLoader();
 
-        Entity gate = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("Gate", ItemType.PLACEABLE, null));
+        Entity gate = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("Gate", ItemType.PLACEABLE, null));
         assertFalse(gate.getComponent(ItemActions.class).use(player, mousePos));
     }
 }

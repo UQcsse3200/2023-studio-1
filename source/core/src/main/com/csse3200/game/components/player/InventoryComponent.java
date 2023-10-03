@@ -155,7 +155,7 @@ public class InventoryComponent extends Component {
      * @return boolean representing if the item is on the character
      */
     public Boolean hasItem(Entity item) {
-        if(item.getType() != EntityType.Item) {
+        if(item.getType() != EntityType.ITEM) {
             logger.info("Passed Entity is not an item");
             return false;
         }
@@ -316,7 +316,7 @@ public class InventoryComponent extends Component {
     return -1;
   }
   public boolean addItem(ItemComponent itemComponent){
-    Entity item = new Entity(EntityType.Item);
+    Entity item = new Entity(EntityType.ITEM);
     item.addComponent(itemComponent);
     return addItem(item);
   }
@@ -335,7 +335,7 @@ public class InventoryComponent extends Component {
      * @return boolean representing if the item was added successfully
      */
     public boolean addItem(Entity item) {
-        if(item.getType() != EntityType.Item || item.getComponent(ItemComponent.class) == null) {
+        if(item.getType() != EntityType.ITEM || item.getComponent(ItemComponent.class) == null) {
             logger.info("Adding Entity is not an item");
             return false;
         }
@@ -363,7 +363,7 @@ public class InventoryComponent extends Component {
      * @return boolean representing if the item was removed successfully
      */
     public boolean removeItem(Entity item) {
-        if(item.getType() != EntityType.Item) {
+        if(item.getType() != EntityType.ITEM) {
             logger.info("To be removed Entity is not an item");
             return false;
         }

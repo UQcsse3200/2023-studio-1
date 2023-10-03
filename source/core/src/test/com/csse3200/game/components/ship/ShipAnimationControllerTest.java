@@ -37,7 +37,7 @@ public class ShipAnimationControllerTest {
 
 		animationRenderComponent = ShipFactory.setupShipAnimations();
 
-		ship = new Entity(EntityType.Ship)
+		ship = new Entity(EntityType.SHIP)
 				.addComponent(animationRenderComponent)
 				.addComponent(new ShipAnimationController());
 

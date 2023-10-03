@@ -25,7 +25,7 @@ public class CropTileComponent extends Component {
 	/**
 	 * Sonarcloud said to do it like this instead?
 	 */
-	private static final String plantString = "plant";
+	private static final String PLANT_STRING = "plant";
 
 	/**
 	 * Default rate that a tile's water level decreases
@@ -96,7 +96,7 @@ public class CropTileComponent extends Component {
 	public void create() {
 		entity.getEvents().addListener("water", this::waterTile);
 		entity.getEvents().addListener("fertilise", this::fertiliseTile);
-		entity.getEvents().addListener(plantString, this::plantCrop);
+		entity.getEvents().addListener(PLANT_STRING, this::plantCrop);
 		entity.getEvents().addListener("destroy", this::destroyTile);
 		entity.getEvents().addListener("harvest", this::harvestCrop);
 		currentTexture = entity.getComponent(DynamicTextureRenderComponent.class);
@@ -303,7 +303,7 @@ public class CropTileComponent extends Component {
 		json.writeValue("waterContent", waterContent);
 		json.writeValue("soilQuality", soilQuality);
 		json.writeValue("isFertilised", isFertilised);
-		json.writeValue(plantString, plant);
+		json.writeValue(PLANT_STRING, plant);
 		json.writeObjectEnd();
 	}
 
@@ -313,7 +313,7 @@ public class CropTileComponent extends Component {
 		waterContent = jsonMap.getFloat("waterContent");
 		soilQuality = jsonMap.getFloat("soilQuality");
 		isFertilised = jsonMap.getBoolean("isFertilised");
-		JsonValue plantData = jsonMap.get(plantString);
+		JsonValue plantData = jsonMap.get(PLANT_STRING);
 		if (plantData.get("Entity") != null) {
 			plantData = plantData.get("components").get("PlantComponent");
 			plant = FactoryService.getPlantFactories().get(plantData.getString("name")).apply(this);

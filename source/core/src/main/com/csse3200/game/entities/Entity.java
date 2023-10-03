@@ -376,7 +376,7 @@ public class Entity implements Json.Serializable {
      */
     public void write(Json json) {
         // Should be gone but incase double check
-        if (getType() == EntityType.Item || getType() == null) {
+        if (getType() == EntityType.ITEM || getType() == null) {
             return;
         }
 
@@ -429,7 +429,7 @@ public class Entity implements Json.Serializable {
 
         if (type != null) {
             switch (type) {
-                case Tractor:
+                case TRACTOR:
                     // Does not need a new one (may change depending on how tractor is obtained)
                     JsonValue lightJsonMap = jsonMap.get("components").get("ConeLightComponent");
                     jsonMap = jsonMap.get("components").get("TractorActions");
@@ -445,7 +445,7 @@ public class Entity implements Json.Serializable {
                     this.addComponent(coneLightComponent);
                     break;
                     
-                case Tile:
+                case TILE:
                     // Makes a new tile
                     Entity tile = TerrainCropTileFactory.createTerrainEntity(position);
                     tile.getComponent(CropTileComponent.class).read(json, jsonMap);
@@ -454,13 +454,13 @@ public class Entity implements Json.Serializable {
                     TerrainTile terrainTile = ServiceLocator.getGameArea().getMap().getTile(tile.getPosition());
                     terrainTile.setOccupant(tile);
                     break;
-                case ShipPartTile:
+                case SHIP_PART_TILE:
                     Entity partTile = ShipPartTileFactory.createShipPartTile(position);
                     ServiceLocator.getGameArea().spawnEntity(partTile);
                     partTile.setPosition(position);
 
                     TerrainTile partTerrainTile = ServiceLocator.getGameArea().getMap().getTile(position);
-                    if (partTerrainTile.isOccupied() && partTerrainTile.getOccupant().getType() == EntityType.ShipDebris) {
+                    if (partTerrainTile.isOccupied() && partTerrainTile.getOccupant().getType() == EntityType.SHIP_DEBRIS) {
                         // remove the ship debris that is occupying the terrain tile, since it will
                         // be recreated by the ShipPartTileComponent
                         Entity unneededShipDebris = partTerrainTile.getOccupant();
@@ -473,7 +473,7 @@ public class Entity implements Json.Serializable {
                         partTerrainTile.setOccupied();
                     }
                     break;
-                case ShipDebris:
+                case SHIP_DEBRIS:
                     Entity shipDebris = ShipDebrisFactory.createShipDebris(null);
                     ServiceLocator.getGameArea().spawnEntity(shipDebris);
                     shipDebris.setPosition(position);
@@ -483,7 +483,7 @@ public class Entity implements Json.Serializable {
                     debrisTerrainTile.setOccupied();
                     break;
 
-                case Ship:
+                case SHIP:
                     Entity ship = ShipFactory.createShip();
 
                     ServiceLocator.getGameArea().spawnEntity(ship);
@@ -506,7 +506,7 @@ public class Entity implements Json.Serializable {
                     ship.setPosition(position);
                     break;
                     
-                case Player:
+                case PLAYER:
                     // Does not make a new player, instead just updates the current one
                     InventoryComponent inventoryComponent = new InventoryComponent();
                     JsonValue inv = jsonMap.get("components");
@@ -527,7 +527,7 @@ public class Entity implements Json.Serializable {
                         // Makes a new Placeable
                         Entity placeable = FactoryService.getPlaceableFactories().get(type.toString()).get();
                         placeable.setPosition(position);
-                        if (placeable.getType() == EntityType.Chest) {
+                        if (placeable.getType() == EntityType.CHEST) {
                             placeable.getComponent(InventoryComponent.class).read(json, jsonMap.get("components"));
                         }
                         ServiceLocator.getGameArea().getMap().getTile(position).setOccupant(placeable);

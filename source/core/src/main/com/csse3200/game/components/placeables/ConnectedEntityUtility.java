@@ -15,7 +15,7 @@ import java.util.*;
  */
 public class ConnectedEntityUtility {
 
-  private static final String update = "update";
+  private static final String UPDATE = "update";
 
   /**
    * The Placeable entity that this instance belongs to.
@@ -55,7 +55,7 @@ public class ConnectedEntityUtility {
       adjacentEntities[index] = p;
     }
     // Add listeners for update and destroy:
-    target.getEvents().addListener(update, this::updateAdjEntity);
+    target.getEvents().addListener(UPDATE, this::updateAdjEntity);
     target.getEvents().addListener("destroyConnections", this::destroy);
   }
 
@@ -74,7 +74,7 @@ public class ConnectedEntityUtility {
   public void notifyAdjacent() {
     for (Entity p : this.adjacentEntities) {
       if (p != null) {
-        p.getEvents().trigger(update, target.getPosition(), this.target);
+        p.getEvents().trigger(UPDATE, target.getPosition(), this.target);
       }
     }
   }
@@ -97,7 +97,7 @@ public class ConnectedEntityUtility {
   private void destroy() {
     for (Entity p : this.adjacentEntities) {
       if (p != null) {
-        p.getEvents().trigger(update, this.target.getPosition(), null);
+        p.getEvents().trigger(UPDATE, this.target.getPosition(), null);
       }
     }
   }

@@ -11,7 +11,6 @@ import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.EntityType;
-import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsService;
@@ -42,7 +41,7 @@ class MultiDropComponentTest {
     private MultiDropComponent multiDropComponent;
 
     private Entity createDummyItem() {
-        return new Entity(EntityType.Dummy)
+        return new Entity(EntityType.DUMMY)
                 .addComponent(new PhysicsComponent())
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ITEM))
                 .addComponent(new ItemActions())
@@ -86,7 +85,7 @@ class MultiDropComponentTest {
         Array<Entity> entities = ServiceLocator.getEntityService().getEntities();
         int count = 0;
         for (int i = 0; i < entities.size; i++) {
-            if (entities.get(i).getType().equals(EntityType.Dummy)) {
+            if (entities.get(i).getType().equals(EntityType.DUMMY)) {
                 count++;
             }
         }

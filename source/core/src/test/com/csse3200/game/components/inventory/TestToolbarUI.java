@@ -1,7 +1,6 @@
 package com.csse3200.game.components.inventory;
 
 import static org.junit.jupiter.params.provider.Arguments.arguments;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
@@ -12,7 +11,6 @@ import java.util.stream.Stream;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.entities.EntityType;
@@ -103,7 +101,7 @@ public class TestToolbarUI {
         ArgumentCaptor<Window> win = ArgumentCaptor.forClass(Window.class);
         verify(stage).addActor(windowArgument.capture());
         verify(stage).addActor(win.capture());
-        Entity i1 = new Entity(EntityType.Item).addComponent(component);
+        Entity i1 = new Entity(EntityType.ITEM).addComponent(component);
         inventory.addItem(i1);
         toolbarDisplay.updateInventory();
         toolbarDisplay.toggleOpen();

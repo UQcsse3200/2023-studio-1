@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.components.player.InventoryHotkeyTest;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
@@ -27,8 +26,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.params.provider.Arguments.arguments;
@@ -106,7 +103,7 @@ public class TestInventoryUI {
         ArgumentCaptor<Window> win = ArgumentCaptor.forClass(Window.class);
         verify(stage).addActor(windowArgument.capture());
         verify(stage).addActor(win.capture());
-        Entity i1 = new Entity(EntityType.Item).addComponent(component);
+        Entity i1 = new Entity(EntityType.ITEM).addComponent(component);
         inventory.addItem(i1);
         inventoryDisplay.toggleOpen();
         Window window = win.getValue();

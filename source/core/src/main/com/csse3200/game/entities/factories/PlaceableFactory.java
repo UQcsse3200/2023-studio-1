@@ -46,7 +46,7 @@ public class PlaceableFactory {
      * @return the fence entity that was made
      */
     public static Entity createFence() {
-        EntityType type = EntityType.Fence;
+        EntityType type = EntityType.FENCE;
         type.setPlaceableCategory(PlaceableCategory.FENCES);
         Entity fence = createBasePlaceable(type)
                 .addComponent(new DynamicTextureRenderComponent("images/placeable/fences/f.png"))
@@ -61,7 +61,7 @@ public class PlaceableFactory {
      * @return the gate entity that was made
      */
     public static Entity createGate() {
-        EntityType type = EntityType.Gate;
+        EntityType type = EntityType.GATE;
         type.setPlaceableCategory(PlaceableCategory.FENCES);
         Entity gate = createBasePlaceable(type)  //used to be .Gate.
                 .addComponent(new DynamicTextureRenderComponent("images/placeable/fences/g_r_l.png"))
@@ -75,7 +75,7 @@ public class PlaceableFactory {
      * @return the sprinkler that was made
      */
     public static Entity createSprinkler() {
-        EntityType type = EntityType.Sprinkler;
+        EntityType type = EntityType.SPRINKLER;
         type.setPlaceableCategory(PlaceableCategory.SPRINKLERS);
         Entity sprinkler = createBasePlaceable(type)
                 .addComponent(new DynamicTextureRenderComponent("images/placeable/sprinkler/pipe_null.png"));
@@ -91,7 +91,7 @@ public class PlaceableFactory {
      * @return the pump that was made
      */
     public static Entity createPump() {
-        EntityType type = EntityType.Pump;
+        EntityType type = EntityType.PUMP;
         type.setPlaceableCategory(PlaceableCategory.SPRINKLERS);
         Entity pump = createBasePlaceable(type);
         // set temp texture to differentiate from other entities
@@ -109,7 +109,7 @@ public class PlaceableFactory {
      * @return the chest that was made
      */
     public static Entity createChest() {
-        Entity chest = createBasePlaceable(EntityType.Chest);
+        Entity chest = createBasePlaceable(EntityType.CHEST);
         // Add components here
         chest.addComponent(new InventoryComponent())
             .addComponent(new DynamicTextureRenderComponent("images/Temp-Chest.png"))
@@ -129,7 +129,7 @@ public class PlaceableFactory {
 
         animator.startAnimation("light_off");
 
-        Entity light = createBasePlaceable(EntityType.Light)
+        Entity light = createBasePlaceable(EntityType.LIGHT)
                 .addComponent(new AuraLightComponent(4f, Color.TAN))
                 .addComponent(new LightController())
                 .addComponent(animator);
