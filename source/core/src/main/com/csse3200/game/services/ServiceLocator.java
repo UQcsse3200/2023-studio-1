@@ -1,6 +1,5 @@
 package com.csse3200.game.services;
 
-import com.csse3200.game.services.sound.SoundService;
 import com.csse3200.game.components.inventory.InventoryDisplayManager;
 import com.csse3200.game.services.plants.PlantCommandService;
 import com.csse3200.game.services.plants.PlantInfoService;
@@ -43,10 +42,9 @@ public class ServiceLocator {
   private static MissionManager missions;
   private static PlanetOxygenService planetOxygenService;
 
+  private static PlantCommandService plantCommandService;
   private static PlayerHungerService playerHungerService;
 
-  private static SoundService soundService;
-  private static PlantCommandService plantCommandService;
   private static PlantInfoService plantInfoService;
   private static boolean cutSceneRunning; // true for running and false otherwise
 
@@ -107,10 +105,6 @@ public class ServiceLocator {
 
   public static SaveLoadService getSaveLoadService() {
     return saveLoadService;
-  }
-
-  public static SoundService getSoundService() {
-    return soundService;
   }
 
   public static ParticleService getParticleService() {
@@ -202,7 +196,6 @@ public class ServiceLocator {
   public static void registerPlantInfoService(PlantInfoService source) {
     logger.debug("Registering plant command service {}",source);
     plantInfoService = source;
-
   }
 
   public static void registerLightService(LightService source) {
@@ -228,11 +221,6 @@ public class ServiceLocator {
     saveLoadService = source;
   }
 
-  public static void registerSoundService(SoundService source) {
-    logger.debug("Registering sound service {}", source);
-    soundService = source;
-  }
-
   /**
    * Clears all registered services.
    * Do not clear saveLoadService
@@ -245,7 +233,6 @@ public class ServiceLocator {
     inputService = null;
     resourceService = null;
     gameArea = null;
-    soundService = null;
     lightService = null;
     particleService = null;
     timeService = null;

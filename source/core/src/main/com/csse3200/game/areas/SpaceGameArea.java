@@ -1,5 +1,6 @@
 package com.csse3200.game.areas;
 
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.*;
@@ -16,14 +17,12 @@ import com.csse3200.game.missions.quests.QuestFactory;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.services.sound.*;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -138,15 +137,50 @@ public class SpaceGameArea extends GameArea {
           "images/plants/misc/hammer_plant_seed.png",
           "images/plants/misc/space_snapper_seed.png",
 
-          "images/plants/misc/tobacco_seed.png",
+
           "images/invisible_sprite.png",
 
           "images/Player_Hunger/hunger_bar_outline.png",
           "images/Player_Hunger/hunger_bar_fill.png",
 
+
+
           "images/plants/misc/atomic_algae_seed.png",
           "images/invisible_sprite.png",
 
+          "images/progress-bar/part1day1.png",
+          "images/progress-bar/part1day2.png",
+          "images/progress-bar/part1day3.png",
+          "images/progress-bar/part1day4.png",
+          "images/progress-bar/part1day5.png",
+          "images/progress-bar/part2day1.png",
+          "images/progress-bar/part2day2.png",
+          "images/progress-bar/part2day3.png",
+          "images/progress-bar/part2day4.png",
+          "images/progress-bar/part2day5.png",
+          "images/progress-bar/part2day6.png",
+          "images/progress-bar/part2day7.png",
+          "images/progress-bar/part2day8.png",
+          "images/progress-bar/part2day9.png",
+          "images/progress-bar/part2day10.png",
+          "images/progress-bar/part3day1.png",
+          "images/progress-bar/part3day2.png",
+          "images/progress-bar/part3day3.png",
+          "images/progress-bar/part3day4.png",
+          "images/progress-bar/part3day5.png",
+          "images/progress-bar/part3day6.png",
+          "images/progress-bar/part3day7.png",
+          "images/progress-bar/part3day8.png",
+          "images/progress-bar/part3day9.png",
+          "images/progress-bar/part3day10.png",
+          "images/progress-bar/part3day11.png",
+          "images/progress-bar/part3day12.png",
+          "images/progress-bar/part3day13.png",
+          "images/progress-bar/part3day14.png",
+          "images/progress-bar/part3day15.png",
+
+          "images/Player_Hunger/hunger_bar_outline.png",
+          "images/Player_Hunger/hunger_bar_fill.png",
           "images/projectiles/oxygen_eater_projectile.png",
 
           "images/yellowSquare.png",
@@ -215,7 +249,6 @@ public class SpaceGameArea extends GameArea {
           "images/ship/ship.png",
           "images/ship/ship_part.png",
           "images/ship/ship_clue.png"
-
   };
 
   private static final String[] forestTextureAtlases = {
@@ -255,9 +288,8 @@ public class SpaceGameArea extends GameArea {
           "sounds/plants/waterWeed/destroy.wav", "sounds/plants/waterWeed/destroyLore.wav",
           "sounds/plants/waterWeed/nearby.wav", "sounds/plants/waterWeed/nearbyLore.wav",
   };
-
-  //private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
-  //private static final String[] forestMusic = {backgroundMusic};
+  private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
+  private static final String[] forestMusic = {backgroundMusic};
 
   private final TerrainFactory terrainFactory;
   private final GameMap gameMap;
@@ -342,8 +374,7 @@ public class SpaceGameArea extends GameArea {
 //    spawnTool(ItemType.FOOD);
 //    spawnItem();
 
-
-    playMusic();
+    //playMusic();
 
     //Spawning behaviour for passive animals
     List<EntitySpawner> passiveSpawners = new ArrayList<>();
@@ -651,14 +682,10 @@ public class SpaceGameArea extends GameArea {
 
 
   private void playMusic() {
-    /*
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
     music.setLooping(true);
     music.setVolume(0.3f);
     music.play();
-    */
-    logger.debug("Loading and starting playback of background music.");
-    ServiceLocator.getSoundService().getBackgroundMusicService().play(BackgroundMusicType.NORMAL);
   }
 
   private void loadAssets() {
@@ -667,25 +694,8 @@ public class SpaceGameArea extends GameArea {
     resourceService.loadTextures(forestTextures);
     resourceService.loadTextures(TerrainFactory.mapTextures);
     resourceService.loadTextureAtlases(forestTextureAtlases);
-    try {
-      ServiceLocator.getSoundService().getBackgroundMusicService()
-              .loadSounds(Arrays.asList(BackgroundSoundFile.values()));
-    } catch (InvalidSoundFileException e) {
-      throw new RuntimeException(e);
-    }
-    //resourceService.loadSounds(forestSounds);
-    //resourceService.loadMusic(forestMusic);
-    
-
-    // Add effects that are needed
-    List<SoundFile> effects = new ArrayList();
-    effects.add(EffectSoundFile.TractorHonk);
-    effects.add(EffectSoundFile.Impact);
-    try {
-      ServiceLocator.getSoundService().getEffectsMusicService().loadSounds(effects);
-    } catch (InvalidSoundFileException e) {
-      throw new RuntimeException(e);
-    }
+    resourceService.loadSounds(forestSounds);
+    resourceService.loadMusic(forestMusic);
 
     while (!resourceService.loadForMillis(10)) {
       // This could be upgraded to a loading screen
@@ -699,12 +709,13 @@ public class SpaceGameArea extends GameArea {
     resourceService.unloadAssets(forestTextures);
     resourceService.unloadAssets(forestTextureAtlases);
     resourceService.unloadAssets(forestSounds);
-    //resourceService.unloadAssets(forestMusic);
+    resourceService.unloadAssets(forestMusic);
   }
 
   @Override
   public void dispose() {
     super.dispose();
+    ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
     this.unloadAssets();
   }
 

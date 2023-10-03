@@ -124,9 +124,11 @@ public class OxygenDisplay extends UIComponent{
         table.clear();
         group.clear();
 
-        table.top();
+        table.top().left();
         table.setFillParent(true);
+
         table.padTop(-130f).padLeft(-180f);
+
 
         group.addActor(oxygenOutline);
         group.addActor(oxygenFill);
