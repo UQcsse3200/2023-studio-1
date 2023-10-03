@@ -1,6 +1,7 @@
 package com.csse3200.game.components.npc;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.weather.ClimateController;
@@ -27,6 +28,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -37,9 +39,10 @@ class MultiDropComponentTest {
     private Entity entity;
     private TimeService timeService;
     private int initialEntityCount;
+    private MultiDropComponent multiDropComponent;
 
     private Entity createDummyItem() {
-        return new Entity(EntityType.Item)
+        return new Entity(EntityType.Dummy)
                 .addComponent(new PhysicsComponent())
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ITEM))
                 .addComponent(new ItemActions())
@@ -71,10 +74,23 @@ class MultiDropComponentTest {
         singleDropHandlers.add(new SingleDropHandler(this::createDummyItem, 1,
                 timeService.getEvents()::addListener, "hourUpdate", true));
 
-        entity.addComponent(new MultiDropComponent(singleDropHandlers, false));
+        multiDropComponent = new MultiDropComponent(singleDropHandlers, true);
+
+        entity.addComponent(multiDropComponent);
 
         entity.create();
         return entity;
+    }
+
+    private int getDummyEntityCount() {
+        Array<Entity> entities = ServiceLocator.getEntityService().getEntities();
+        int count = 0;
+        for (int i = 0; i < entities.size; i++) {
+            if (entities.get(i).getType().equals(EntityType.Dummy)) {
+                count++;
+            }
+        }
+        return count;
     }
 
     @BeforeEach
@@ -112,46 +128,46 @@ class MultiDropComponentTest {
         ServiceLocator.registerTimeSource(gameTime);
         timeService = new TimeService();
         ServiceLocator.registerTimeService(timeService);
-        initialEntityCount = ServiceLocator.getEntityService().getSize();
+        initialEntityCount = getDummyEntityCount();
     }
 
     @Test
     void checkItemDropsUntamed() {
         Entity entity = createDummyEntity();
-        assertEquals(initialEntityCount, ServiceLocator.getEntityService().getSize());
+        assertEquals(initialEntityCount, getDummyEntityCount());
 
         //Drop should not occur as requires two triggers
         entity.getEvents().trigger("untamed-entity-2-trigger");
-        assertEquals(initialEntityCount, ServiceLocator.getEntityService().getSize());
+        assertEquals(initialEntityCount, getDummyEntityCount());
 
         //Drop should not occur as entity not tamed
         timeService.setHour(1);
-        assertEquals(initialEntityCount, ServiceLocator.getEntityService().getSize());
+        assertEquals(initialEntityCount, getDummyEntityCount());
 
         //Drop should occur
         entity.getEvents().trigger("untamed-entity-1-trigger");
-        assertEquals(initialEntityCount + 1, ServiceLocator.getEntityService().getSize());
+        assertEquals(initialEntityCount + 1, getDummyEntityCount());
 
     }
 
     @Test
     void checkItemDropsTamed() {
         Entity entity = createDummyEntity();
-        assertEquals(initialEntityCount, ServiceLocator.getEntityService().getSize());
+        assertEquals(initialEntityCount, getDummyEntityCount());
 
         entity.getComponent(TamableComponent.class).setTame(true);
 
         //Drop should not occur as requires two triggers
         entity.getEvents().trigger("untamed-entity-2-trigger");
-        assertEquals(initialEntityCount, ServiceLocator.getEntityService().getSize());
+        assertEquals(initialEntityCount, getDummyEntityCount());
 
         //Drop should occur as entity tamed
         timeService.setHour(1);
-        assertEquals(initialEntityCount + 1, ServiceLocator.getEntityService().getSize());
+        assertEquals(initialEntityCount + 1, getDummyEntityCount());
 
         //Drop should occur
         entity.getEvents().trigger("untamed-entity-1-trigger");
-        assertEquals(initialEntityCount + 2, ServiceLocator.getEntityService().getSize());
+        assertEquals(initialEntityCount + 2, getDummyEntityCount());
     }
 
     @Test
@@ -160,10 +176,21 @@ class MultiDropComponentTest {
 
         //Drop should not occur as requires two triggers
         entity.getEvents().trigger("untamed-entity-2-trigger");
-        assertEquals(initialEntityCount, ServiceLocator.getEntityService().getSize());
+        assertEquals(initialEntityCount, getDummyEntityCount());
 
         //Drop should occur as second trigger
         entity.getEvents().trigger("untamed-entity-2-trigger");
-        assertEquals(initialEntityCount + 1, ServiceLocator.getEntityService().getSize());
+        assertEquals(initialEntityCount + 1, getDummyEntityCount());
+    }
+
+    @Test
+    void handlesDeath() {
+        Entity entity = createDummyEntity();
+        assertTrue(multiDropComponent.getHandlesDeath());
+        multiDropComponent.dispose();
+
+        //Drop should not occur
+        entity.getEvents().trigger("untamed-entity-1-trigger");
+        assertEquals(initialEntityCount, getDummyEntityCount());
     }
 }
