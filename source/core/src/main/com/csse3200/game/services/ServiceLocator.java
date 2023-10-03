@@ -38,7 +38,6 @@ public class ServiceLocator {
   private static SaveLoadService saveLoadService;
   private static MissionManager missions;
   private static PlanetOxygenService planetOxygenService;
-
   private static SoundService soundService;
 
   public static GameArea getGameArea() {

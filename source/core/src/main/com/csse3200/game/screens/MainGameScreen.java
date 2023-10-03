@@ -107,7 +107,6 @@ public class MainGameScreen extends ScreenAdapter {
         ServiceLocator.registerSoundService(new SoundService());
 
         ServiceLocator.registerMissionManager(new MissionManager());
-
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
         renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
@@ -190,6 +189,8 @@ public class MainGameScreen extends ScreenAdapter {
         ServiceLocator.getEntityService().dispose();
         ServiceLocator.getRenderService().dispose();
         ServiceLocator.getResourceService().dispose();
+        ServiceLocator.getSoundService().getEffectsMusicService().dispose();
+        ServiceLocator.getSoundService().getBackgroundMusicService().dispose();
 
         ServiceLocator.clear();
     }
