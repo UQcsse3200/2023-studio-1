@@ -24,7 +24,7 @@ public class EntityTypeTest {
         "Player", "Tractor", "Plant", "Tile", "Cow",
         "Chicken", "Astrolotl", "OxygenEater", "Item",
         "Questgiver", "QuestgiverIndicator", "Sprinkler","Ship", "ShipDebris", "ShipPartTile",
-            "Gate", "Fence", "Chest", "Pump", "Light", "FireFlies", "Dragonfly", "Bat"));
+            "Gate", "Fence", "Chest", "Pump", "Light", "FireFlies", "Dragonfly", "Bat", "Dummy"));
   }
 
   /*
