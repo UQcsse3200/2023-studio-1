@@ -4,6 +4,7 @@ import static com.badlogic.gdx.math.MathUtils.random;
 import com.csse3200.game.services.FactoryService;
 import java.text.DecimalFormat;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 import com.badlogic.gdx.audio.Sound;
@@ -19,6 +20,7 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.services.PlanetOxygenService;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -303,6 +305,7 @@ public class PlantComponent extends Component {
             increaseCurrentGrowthLevel();
             updateGrowthStage();
             updateMaxHealth();
+            incrementOxygen();
         }
 
         // Handle digestion functionality.
@@ -310,6 +313,19 @@ public class PlantComponent extends Component {
 
         // Check if the plant should be decaying or dead.
         decayCheck();
+    }
+
+    /**
+     * Changes the oxygen level of the planet based on the plant and growth stage
+     */
+    public void incrementOxygen() {
+        if (currentGrowthLevel == GrowthStage.DECAYING.getValue() || currentGrowthLevel == GrowthStage.DEAD.getValue()) {
+            ServiceLocator.getPlanetOxygenService().removeOxygen(10);
+        } else {
+            if (currentGrowthLevel == GrowthStage.ADULT.getValue() && Objects.equals(getPlantName(), "Atomic Algae")) {
+                ServiceLocator.getPlanetOxygenService().addOxygen(10);
+            }
+        }
     }
 
     /**
