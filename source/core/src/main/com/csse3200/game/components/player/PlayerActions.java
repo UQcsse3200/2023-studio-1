@@ -43,6 +43,8 @@ public class PlayerActions extends Component {
 
   int swordDamage = 5;
 
+  private static final String RIGHT_STRING = "right";
+
   @Override
   public void create() {
     physicsComponent = entity.getComponent(PhysicsComponent.class);
@@ -85,7 +87,7 @@ public class PlayerActions extends Component {
       String animationName = "animationWalkStop";
       float direction = getPrevMoveDirection();
       if (direction < 45) {
-        entity.getEvents().trigger(animationName, "right", animationRandomizer, false);
+        entity.getEvents().trigger(animationName, RIGHT_STRING, animationRandomizer, false);
       } else if (direction < 135) {
         entity.getEvents().trigger(animationName, "up", animationRandomizer, false);
       } else if (direction < 225) {
@@ -100,7 +102,7 @@ public class PlayerActions extends Component {
     String animationName = String.format("animation%sStart", running ? "Run" : "Walk");
     float direction = moveDirection.angleDeg();
     if (direction < 45) {
-      entity.getEvents().trigger(animationName, "right");
+      entity.getEvents().trigger(animationName, RIGHT_STRING);
     } else if (direction < 135) {
       entity.getEvents().trigger(animationName, "up");
     } else if (direction < 225) {
@@ -186,15 +188,16 @@ public class PlayerActions extends Component {
   }
 
   void interact() {
+    String animationInteract = "animationInteract";
     float direction = getPrevMoveDirection();
     if (direction < 45) {
-      entity.getEvents().trigger("animationInteract", "right");
+      entity.getEvents().trigger(animationInteract, RIGHT_STRING);
     } else if (direction < 135) {
-      entity.getEvents().trigger("animationInteract", "up");
+      entity.getEvents().trigger(animationInteract, "up");
     } else if (direction < 225) {
-      entity.getEvents().trigger("animationInteract", "left");
+      entity.getEvents().trigger(animationInteract, "left");
     } else if (direction < 315) {
-      entity.getEvents().trigger("animationInteract", "down");
+      entity.getEvents().trigger(animationInteract, "down");
     }
 
     /*

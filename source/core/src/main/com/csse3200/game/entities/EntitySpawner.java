@@ -4,8 +4,10 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.services.ServiceLocator;
 
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.function.Function;
+import java.util.Random;
 
 /**
  * Handles periodic spawning of one entity
@@ -66,6 +68,9 @@ public class EntitySpawner {
      * Number of times spawnHour has occurred this spawn cycle
      */
     private int dayCounter;
+
+    private final Random random = new SecureRandom();
+
     /**
      * Constructor for EntitySpawner
      *
@@ -129,7 +134,7 @@ public class EntitySpawner {
 
         if (hour == spawnHour && !hourReached) {
             hourReached = true;
-            randomGoal = (int) (Math.random() * randomRange);
+            randomGoal = (int) (random.nextFloat() * randomRange);
         }
 
          if (hourReached) {
@@ -158,7 +163,7 @@ public class EntitySpawner {
         for (int i = 0; i < spawnCount; i++) {
             //Get random traverseable tile to spawn the entity
             List<GridPoint2> traverseables = gameArea.getMap().getTraversableTileCoordinates();
-            int randomTileIndex = (int) Math.floor(Math.random() * (traverseables.size() - 1));
+            int randomTileIndex = (int) Math.floor(random.nextFloat() * (traverseables.size() - 1));
             GridPoint2 position = traverseables.get(randomTileIndex);
 
             //Create entity and spawn on gameArea

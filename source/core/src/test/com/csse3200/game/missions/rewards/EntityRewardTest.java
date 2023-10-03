@@ -56,7 +56,7 @@ class EntityRewardTest {
     }
 
     @Test
-    public void testCollect() {
+    void testCollect() {
         // Ensure EntityReward is not collected initially
         assertFalse(r1.isCollected());
         assertFalse(r2.isCollected());

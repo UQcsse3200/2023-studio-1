@@ -23,29 +23,58 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class InventoryComponent extends Component {
 
-  private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
-  public HashMap<String, Integer> itemCount = new HashMap<>();
+    /**
+     * Logger for InventoryComponent
+     */
+    private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
+    /**
+     * HashMap of the String and the count of the item in the inventory
+     */
+    public HashMap<String, Integer> itemCount = new HashMap<>();
 
-  public HashMap<String,Entity> heldItemsEntity = new HashMap<>();
+    /**
+     * HashMap of the String and Entity of the item in the inventory
+     */
+    public HashMap<String,Entity> heldItemsEntity = new HashMap<>();
 
-  public HashMap<Integer,String> itemPlace = new HashMap<>();
+    /**
+     * HashMap of the Position and the String of the item in the inventory
+     */
+    public HashMap<Integer,String> itemPlace = new HashMap<>();
 
-  private Entity heldItem = null;
+    /**
+     * Entity representing the item currently held by the player.
+     */
+    private Entity heldItem = null;
 
-  public final String updateInventory = "updateInventory";
+    /**
+     * String representing the event that the inventory has been updated
+     */
+    public final String updateInventory = "updateInventory";
 
-  private int heldIndex = -1;
+    /**
+     * Integer representing the index of the item currently held by the player.
+     */
+    private int heldIndex = -1;
 
+    /**
+     * The maximum size of the inventory.
+     */
+    private int maxInventorySize = 30; // default size 30
 
-
+    /**
+     * Creates a new InventoryComponent.
+     */
   @Override
   public void create() {
     super.create();
     //entity.getEvents().addListener("use", this::useItem);
   }
 
-    private int maxInventorySize = 30; // default size 30
-
+    /**
+     * Creates a new InventoryComponent with a given list of items.
+     * @param items List of Entities to be added to inventory
+     */
   public InventoryComponent(List<Entity> items) {
     setInventory(items);
   }
@@ -64,7 +93,9 @@ public class InventoryComponent extends Component {
     return true;
   }
 
-
+    /**
+     * Creates a new InventoryComponent with a given maximum size.
+     */
     public InventoryComponent(){
         newInventory();
     }
@@ -131,14 +162,26 @@ public class InventoryComponent extends Component {
         return this.heldItemsEntity;
     }
 
+    /**
+     * Sets the HashMap of the Position and the String of the item in the inventory
+     * @param itemPlace HashMap of itemPlace
+     */
     public void setItemPlace(HashMap<Integer, String> itemPlace) {
         this.itemPlace = itemPlace;
     }
 
+    /**
+     * Sets the HashMap of the String and the count of the item in the inventory
+     * @param allCount
+     */
     public void setItemCount(HashMap<String, Integer> allCount) {
         this.itemCount = allCount;
     }
 
+    /**
+     * Sets the HashMap of the String and Entity of the item in the inventory
+     * @param heldItemsEntity
+     */
     public void setHeldItemsEntity(HashMap<String,Entity> heldItemsEntity) {
         this.heldItemsEntity = heldItemsEntity;
     }
@@ -320,12 +363,24 @@ public class InventoryComponent extends Component {
     }
     return -1;
   }
+
+    /**
+     * Adds an item to the Player's inventory
+     * @param itemComponent ItemComponent to be added
+     * @return boolean representing if the item was added successfully
+     */
   public boolean addItem(ItemComponent itemComponent){
     Entity item = new Entity(EntityType.ITEM);
     item.addComponent(itemComponent);
     return addItem(item);
   }
 
+    /**
+     * Adds an item to the Player's inventory
+     * @param count number of items to be added
+     * @param item ItemComponent to be added
+     * @return boolean representing if the item was added successfully
+     */
   public boolean addMultipleItem(int count, Entity item) {
     for (int i = 0; i < count; i++) {
       addItem(item);
@@ -381,7 +436,7 @@ public class InventoryComponent extends Component {
                 this.itemCount.remove(item.getComponent(ItemComponent.class).getItemName());
                 // find the position of the item and remove the item from the position
                 for (int i = 0; i < this.itemPlace.size(); i++) {
-                    if (this.itemPlace.get(i) == item.getComponent(ItemComponent.class).getItemName()) {
+                    if (this.itemPlace.get(i).equals(item.getComponent(ItemComponent.class).getItemName())) {
                         this.itemPlace.remove(i);
                         setHeldItem(heldIndex);
                         break;
@@ -433,10 +488,22 @@ public class InventoryComponent extends Component {
         return this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(), 0);
     }
 
+    /**
+     * Returns the count of an item in the inventory
+     * @param i position of the item in inventory
+     * @return integer representation of count
+     */
     public Integer getItemCount(int i) {
         return this.itemCount.getOrDefault(this.itemPlace.get(i), 0);
     }
 
+    /**
+     * Returns the count of an item in the inventory
+     * @param itemCount HashMap of the String and the count of the item in the inventory
+     * @param heldItemsEntity HashMap of the String and Entity of the item in the inventory
+     * @param itemPlace HashMap of the Position and the String of the item in the inventory
+     *
+     */
     public void loadInventory(HashMap<String, Integer> itemCount, HashMap<String, Entity> heldItemsEntity, HashMap<Integer, String> itemPlace) {
         logger.debug("Loading inventory started");
         newInventory();
@@ -447,6 +514,10 @@ public class InventoryComponent extends Component {
         logger.debug("Loading inventory completed");
     }
 
+    /**
+     * Writes the InventoryComponent to a Json object.
+     * @param json The Json object to write to.
+     */
     @Override
     public void write(Json json) {
         json.writeObjectStart(this.getClass().getSimpleName());
@@ -466,6 +537,11 @@ public class InventoryComponent extends Component {
         json.writeObjectEnd();
     }
 
+    /**
+     * Reads the InventoryComponent from a Json object.
+     * @param json The Json object to read from.
+     * @param inv The JsonValue to read from.
+     */
     @Override
     public void read(Json json, JsonValue inv) {
         newInventory();

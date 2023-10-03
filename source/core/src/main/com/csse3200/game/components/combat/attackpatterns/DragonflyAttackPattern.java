@@ -7,6 +7,7 @@ import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.DirectionUtils;
 
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
@@ -21,7 +22,7 @@ public class DragonflyAttackPattern extends AttackPatternComponent {
 
     private static final String SHOOTER = "shoot";
 
-    private Random random = new Random();
+    private Random random = new SecureRandom();
 
     /**
      * @param attackFrequency How often the dragonfly attacks.

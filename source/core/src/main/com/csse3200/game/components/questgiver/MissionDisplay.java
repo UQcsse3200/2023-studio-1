@@ -28,6 +28,11 @@ public class MissionDisplay extends UIComponent {
     private boolean isOpen;
     private boolean showCompletedMissions = false;
 
+    private static final String TEXT_COLOUR = "black";
+    private static final String PIXEL_BODY = "pixel-body";
+    private static final String BACKGROUND_COLOUR = "small-grey";
+    private static final String SIZE = "small";
+
     @Override
     public void create() {
         super.create();
@@ -71,8 +76,8 @@ public class MissionDisplay extends UIComponent {
     private void createAchievementsTable(Table achievementsTable, List<Achievement> achievements) {
         achievementsTable.clearChildren();
         for (Achievement achievement : achievements) {
-            Label titleLabel = new Label(achievement.getName(), skin, "pixel-mid", "black");
-            Label descriptionLabel = new Label(achievement.getDescription(), skin, "pixel-body", "black");
+            Label titleLabel = new Label(achievement.getName(), skin, "pixel-mid", TEXT_COLOUR);
+            Label descriptionLabel = new Label(achievement.getDescription(), skin, PIXEL_BODY, TEXT_COLOUR);
 
             achievementsTable.add(titleLabel).left().expand().fill().row();
             achievementsTable.add(descriptionLabel).left().expand().fill().padBottom(10f).row();
@@ -104,12 +109,12 @@ public class MissionDisplay extends UIComponent {
         TextButton completeButton = new TextButton(
                 "Complete",
                 skin,
-                "small-grey"
+                BACKGROUND_COLOUR
         );
         TextButton incompleteButton = new TextButton(
                 "Incomplete",
                 skin,
-                "small-grey"
+                BACKGROUND_COLOUR
         );
 
         completeButton.addListener(new ChangeListener() {
@@ -208,8 +213,8 @@ public class MissionDisplay extends UIComponent {
         Label missionDescription = new Label(
                 "Looks like your skills could be useful for us here on Alpha Centauri. Why don't you take a look at how you can help?",
                 skin,
-                "pixel-body",
-                "black"
+                PIXEL_BODY,
+                TEXT_COLOUR
         );
         missionDescription.setWrap(true);
         missionDescription.setAlignment(Align.center);
@@ -237,7 +242,7 @@ public class MissionDisplay extends UIComponent {
                 quest.getName(),
                 skin,
                 "pixel-mid",
-                "black"
+                TEXT_COLOUR
         );
     }
 
@@ -251,8 +256,8 @@ public class MissionDisplay extends UIComponent {
         return new Label(
                 quest.getShortDescription(),
                 skin,
-                "pixel-body",
-                "black"
+                PIXEL_BODY,
+                TEXT_COLOUR
         );
     }
 
@@ -266,8 +271,8 @@ public class MissionDisplay extends UIComponent {
         Label descriptionLabel = new Label(
                 quest.getDescription(),
                 skin,
-                "pixel-body",
-                "black"
+                PIXEL_BODY,
+                TEXT_COLOUR
         );
         descriptionLabel.setWrap(true);
         return descriptionLabel;
@@ -297,7 +302,7 @@ public class MissionDisplay extends UIComponent {
             actionButton = new TextButton(
                     "Accept",
                     skin,
-                    "small"
+                    SIZE
             );
             actionButton.addListener(new ChangeListener() {
                 @Override
@@ -310,7 +315,7 @@ public class MissionDisplay extends UIComponent {
             actionButton = new TextButton(
                     "Reactivate",
                     skin,
-                    "small"
+                    SIZE
             );
             actionButton.addListener(new ChangeListener() {
                 @Override
@@ -324,7 +329,7 @@ public class MissionDisplay extends UIComponent {
             actionButton = new TextButton(
                     "Collect Reward",
                     skin,
-                    "small"
+                    SIZE
             );
             actionButton.addListener(new ChangeListener() {
                 @Override
@@ -359,7 +364,7 @@ public class MissionDisplay extends UIComponent {
         TextButton viewButton = new TextButton(
                 "View",
                 skin,
-                "small"
+                SIZE
         );
         viewButton.addListener(new ChangeListener() {
             @Override
@@ -375,7 +380,7 @@ public class MissionDisplay extends UIComponent {
         return new TextButton(
                 "< Back",
                 skin,
-                "small"
+                SIZE
         );
     }
 
@@ -441,22 +446,22 @@ public class MissionDisplay extends UIComponent {
         TextButton newButton = new TextButton(
                 "New",
                 skin,
-                "small-grey"
+                BACKGROUND_COLOUR
         );
         TextButton activeButton = new TextButton(
                 "Active",
                 skin,
-                "small-grey"
+                BACKGROUND_COLOUR
         );
         TextButton expiredButton = new TextButton(
                 "Expired",
                 skin,
-                "small-grey"
+                BACKGROUND_COLOUR
         );
         TextButton completedButton = new TextButton(
                 "Completed",
                 skin,
-                "small-grey"
+                BACKGROUND_COLOUR
         );
 
 

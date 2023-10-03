@@ -33,7 +33,7 @@ public class TractorAnimationController extends Component {
    * @param tool The tool the tractor is currently using
    */
   void animateStopMoving(String direction, String tool) {
-    String animation = String.format("stop_%s_%s", direction, tool);
+    String animation = String.format("stop_%s_%s", direction, tool.toLowerCase());
     if (!animator.getCurrentAnimation().equals(animation)) {
       animator.startAnimation(animation);
     }
@@ -46,7 +46,7 @@ public class TractorAnimationController extends Component {
    * @param tool The tool the tractor is currently using
    */
   void animateMoving(String direction, String tool) {
-    String animation = String.format("move_%s_%s", direction, tool);
+    String animation = String.format("move_%s_%s", direction, tool.toLowerCase());
     if (!animator.getCurrentAnimation().equals(animation)) {
       animator.startAnimation(animation);
     }
