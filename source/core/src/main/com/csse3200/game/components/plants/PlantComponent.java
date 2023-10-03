@@ -3,6 +3,7 @@ import static com.badlogic.gdx.math.MathUtils.random;
 
 import java.text.DecimalFormat;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 import org.slf4j.Logger;
@@ -18,6 +19,7 @@ import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.services.PlanetOxygenService;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -301,6 +303,7 @@ public class PlantComponent extends Component {
             increaseCurrentGrowthLevel();
             updateGrowthStage();
             updateMaxHealth();
+            incrementOxygen();
         }
 
         // Handle digestion functionality.
@@ -308,6 +311,19 @@ public class PlantComponent extends Component {
 
         // Check if the plant should be decaying or dead.
         decayCheck();
+    }
+
+    /**
+     * Changes the oxygen level of the planet based on the plant and growth stage
+     */
+    public void incrementOxygen() {
+        if (currentGrowthLevel == GrowthStage.DECAYING.getValue() || currentGrowthLevel == GrowthStage.DEAD.getValue()) {
+            ServiceLocator.getPlanetOxygenService().removeOxygen(10);
+        } else {
+            if (currentGrowthLevel == GrowthStage.ADULT.getValue() && Objects.equals(getPlantName(), "Atomic Algae")) {
+                ServiceLocator.getPlanetOxygenService().addOxygen(10);
+            }
+        }
     }
 
     /**
@@ -362,8 +378,8 @@ public class PlantComponent extends Component {
                     updateTexture();
                 }
 
-            // If the plants health drops to zero before it becomes an adult its dead.
-            // Only destroyed immediately if the plant is a seedling.
+                // If the plants health drops to zero before it becomes an adult its dead.
+                // Only destroyed immediately if the plant is a seedling.
             } else if (getGrowthStage().getValue() < GrowthStage.ADULT.getValue())
                 if (getPlantHealth() <= 0) {
                     if (getGrowthStage().getValue() != GrowthStage.SEEDLING.getValue()) {
@@ -652,8 +668,8 @@ public class PlantComponent extends Component {
         if ((growthRate < 0) && !isDecay() && (getGrowthStage().getValue() <= GrowthStage.ADULT.getValue())) {
             increasePlantHealth(-1);
         } else if ( getGrowthStage().getValue() < GrowthStage.ADULT.getValue()
-                    && !isDecay()
-                    && waterLevel > 0) {
+                && !isDecay()
+                && waterLevel > 0) {
             this.currentGrowthLevel += growthRate;
             increasePlantHealth(1);
         } else if (waterLevel == 0) {
@@ -1039,9 +1055,9 @@ public class PlantComponent extends Component {
 
         String returnString =
                 "Growth Stage: " + getGrowthStage().name() +
-                "\nWater level: " + waterLevel + "/" + idealWaterLevel +
-                "\nWater Status: " + waterLevelStatus +
-                "\nHealth: " + plantHealth + "/" + currentMaxHealth;
+                        "\nWater level: " + waterLevel + "/" + idealWaterLevel +
+                        "\nWater Status: " + waterLevelStatus +
+                        "\nHealth: " + plantHealth + "/" + currentMaxHealth;
 
 
         if (getGrowthStage().getValue() < GrowthStage.ADULT.getValue()) {

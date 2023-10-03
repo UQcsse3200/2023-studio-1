@@ -110,8 +110,15 @@ public class MainGameScreen extends ScreenAdapter {
         ServiceLocator.registerRenderService(new RenderService());
         ServiceLocator.registerTimeService(new TimeService());
         ServiceLocator.registerPlanetOxygenService(new PlanetOxygenService());
+
         ServiceLocator.registerPlantCommandService(new PlantCommandService());
+        ServiceLocator.registerPlayerHungerService(new PlayerHungerService());
         ServiceLocator.registerPlantInfoService(new PlantInfoService());
+
+
+        ServiceLocator.registerMissionManager(new MissionManager());
+        // Why does this not exist??
+        //ServiceLocator.registerSoundService(new SoundService());
 
         ServiceLocator.registerMissionManager(new MissionManager());
 
@@ -251,10 +258,13 @@ public class MainGameScreen extends ScreenAdapter {
             // entities added after them will transition even if you don't want them to. Add components with
             // transitions underneath this comment. Hopefully it should work, it fixed my bug at least.
                 .addComponent(new GameTimeDisplay())
+                .addComponent(new ProgressBar())
                 .addComponent(new OxygenDisplay())
+                .addComponent(new HungerBar())
+                .addComponent(new PlantInfoDisplayComponent())
+
+                .addComponent(new WeatherEventDisplay())
                 .addComponent(new HealthDisplay());
-
-
 
         ServiceLocator.getEntityService().register(ui);
     }

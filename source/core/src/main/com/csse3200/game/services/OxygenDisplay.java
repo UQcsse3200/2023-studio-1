@@ -1,6 +1,7 @@
 package com.csse3200.game.services;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
@@ -68,7 +69,12 @@ public class OxygenDisplay extends UIComponent{
         // Create labels for each percent
         oxygenLabels = new Array<>();
         for (int i = 0; i <= 100; i++) {
-            oxygenLabels.add(new Label(String.format("Oxygen: %d%%", i), oxygenSkin));
+//            oxygenLabels.add(new Label(String.format("Oxygen: %d%%", i), oxygenSkin));
+            Label label = new Label(String.format("Oxygen: %d%%", i), oxygenSkin);
+            Label.LabelStyle labelStyle = label.getStyle();
+            labelStyle.fontColor = Color.WHITE; // Set the text color to red (you can choose any color)
+            label.setStyle(labelStyle);
+            oxygenLabels.add(label);
         }
     }
 
@@ -117,10 +123,11 @@ public class OxygenDisplay extends UIComponent{
     public void draw(SpriteBatch batch) {
         table.clear();
         group.clear();
-
         table.top();
         table.setFillParent(true);
-        table.padTop(-130f).padLeft(-520f);
+
+        table.padTop(-130f).padLeft(-180f);
+
 
         group.addActor(oxygenOutline);
         group.addActor(oxygenFill);
