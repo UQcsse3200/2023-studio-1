@@ -39,14 +39,14 @@ class RemoveItemCommandTest {
 	}
 
 	@Test
-	public void tooManyArgs() {
+	void tooManyArgs() {
 		args.add("wrong");
 		args.add("item");
 		assertFalse(command.isValid(args));
 	}
 
 	@Test
-	public void removeHoe() {
+	void removeHoe() {
 		try (MockedStatic<ItemFactory> factory = mockStatic(ItemFactory.class)) {
 			args.add("hoe");
 			Entity hoe = new Entity();
@@ -58,7 +58,7 @@ class RemoveItemCommandTest {
 	}
 
 	@Test
-	public void removeCan() {
+	void removeCan() {
 		try (MockedStatic<ItemFactory> factory = mockStatic(ItemFactory.class)) {
 			args.add("can");
 			Entity can = new Entity();
@@ -70,7 +70,7 @@ class RemoveItemCommandTest {
 	}
 
 	@Test
-	public void removeShovel() {
+	void removeShovel() {
 		try (MockedStatic<ItemFactory> factory = mockStatic(ItemFactory.class)) {
 			args.add("shovel");
 			Entity shovel = new Entity();
@@ -82,7 +82,7 @@ class RemoveItemCommandTest {
 	}
 
 	@Test
-	public void removeScythe() {
+	void removeScythe() {
 		try (MockedStatic<ItemFactory> factory = mockStatic(ItemFactory.class)) {
 			args.add("scythe");
 			Entity scythe = new Entity();
@@ -94,7 +94,7 @@ class RemoveItemCommandTest {
 	}
 
 	@Test
-	public void invalidToolName() {
+	void invalidToolName() {
 		args.add("wrongName");
 		assertFalse(command.action(args));
 	}

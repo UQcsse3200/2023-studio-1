@@ -33,7 +33,7 @@ class SetTimeScaleCommandTest {
 	}
 
 	@Test
-	public void validTimeInput() {
+	void validTimeInput() {
 		String timeArg = "10";
 		args.add(timeArg);
 		GameTime gameTime = mock(GameTime.class);
@@ -44,7 +44,7 @@ class SetTimeScaleCommandTest {
 	}
 
 	@Test
-	public void tooManyArgs() {
+	void tooManyArgs() {
 		args.add("1.2");
 		args.add("1.2");
 		assertFalse(command.isValid(args));
@@ -53,7 +53,7 @@ class SetTimeScaleCommandTest {
 
 	@ParameterizedTest
 	@ValueSource(strings = {"invalid", "0", "-1.1"})
-	public void invalidTimeScaleNumber() {
+	void invalidTimeScaleNumber() {
 		args.add("invalid");
 		assertFalse(command.isValid(args));
 	}

@@ -28,7 +28,7 @@ public class ParticleServiceTest {
 	ResourceService resourceService;
 
 	@BeforeEach
-	public void setUp() {
+	void setUp() {
 		ServiceLocator.clear();
 
 		resourceService = mock(ResourceService.class);
@@ -37,12 +37,12 @@ public class ParticleServiceTest {
 	}
 
 	@AfterEach
-	public void cleanUp() {
+	void cleanUp() {
 		ServiceLocator.clear();
 	}
 
 	@Test
-	public void testConstructor() throws IllegalAccessException {
+	void testConstructor() throws IllegalAccessException {
 		ParticleService particleService = new ParticleService();
 		// Tests whether they were all loaded
 		verify(resourceService, times(1)).loadParticleEffects(any());
@@ -52,7 +52,7 @@ public class ParticleServiceTest {
 	}
 
 	@Test
-	public void testRender() throws IllegalAccessException {
+	void testRender() throws IllegalAccessException {
 		@SuppressWarnings("unchecked")
 		ArrayList<ParticleEffectWrapper> mockQueuedEffects = mock(ArrayList.class);
 
@@ -85,7 +85,7 @@ public class ParticleServiceTest {
 	}
 
 	@Test
-	public void testStartEffect() throws IllegalAccessException {
+	void testStartEffect() throws IllegalAccessException {
 		@SuppressWarnings("unchecked")
 		EnumMap<ParticleService.ParticleEffectType, ParticleEffectPool> mockPools = mock(EnumMap.class);
 
@@ -113,7 +113,7 @@ public class ParticleServiceTest {
 	}
 
 	@Test
-	public void testStopEffect() throws IllegalAccessException {
+	void testStopEffect() throws IllegalAccessException {
 		// Injecting mock into private field
 		@SuppressWarnings("unchecked")
 		EnumMap<ParticleService.ParticleEffectType, ParticleEffectPool> mockPools = mock(EnumMap.class);
@@ -143,7 +143,7 @@ public class ParticleServiceTest {
 	}
 
 	@Test
-	public void testStopEffectCategory() throws IllegalAccessException {
+	void testStopEffectCategory() throws IllegalAccessException {
 		// Injecting mock into private field
 		@SuppressWarnings("unchecked")
 		EnumMap<ParticleService.ParticleEffectType, ParticleEffectPool> mockPools = mock(EnumMap.class);
@@ -173,7 +173,7 @@ public class ParticleServiceTest {
 	}
 
 	@Test
-	public void testGetCategory() {
+	void testGetCategory() {
 		ParticleService.ParticleEffectType particleEffectType = ParticleService.ParticleEffectType.ACID_RAIN;
 		assertEquals(ParticleService.WEATHER_EVENT, particleEffectType.getCategory());
 	}
