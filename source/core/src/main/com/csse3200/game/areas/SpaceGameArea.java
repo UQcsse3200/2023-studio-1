@@ -285,9 +285,6 @@ public class SpaceGameArea extends GameArea {
           "sounds/plants/waterWeed/nearby.wav", "sounds/plants/waterWeed/nearbyLore.wav",
   };
 
-  //private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
-  //private static final String[] forestMusic = {backgroundMusic};
-
   private final GameMap gameMap;
 
   private Entity player;
@@ -551,8 +548,8 @@ public class SpaceGameArea extends GameArea {
 
     // Add effects that are needed
     List<SoundFile> effects = new ArrayList();
-    effects.add(EffectSoundFile.TractorHonk);
-    effects.add(EffectSoundFile.Impact);
+    effects.add(EffectSoundFile.TRACTOR_HONK);
+    effects.add(EffectSoundFile.IMPACT);
     try {
       ServiceLocator.getSoundService().getEffectsMusicService().loadSounds(effects);
     } catch (InvalidSoundFileException e) {

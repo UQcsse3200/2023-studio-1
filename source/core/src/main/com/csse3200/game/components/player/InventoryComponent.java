@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.FactoryService;
@@ -31,7 +32,11 @@ public class InventoryComponent extends Component {
 
   private Entity heldItem = null;
 
+  public final String updateInventory = "updateInventory";
+
   private int heldIndex = -1;
+
+
 
   @Override
   public void create() {
@@ -199,7 +204,7 @@ public class InventoryComponent extends Component {
     logger.debug("Setting inventory started");
     for (Entity item : items) {
         if (item.getComponent(ItemComponent.class) == null) {
-            System.err.println("Not an Item");
+            logger.info("Not an Item");
             continue;
         }
       // Add to Entity against Item Type for setting Held Item
@@ -351,7 +356,7 @@ public class InventoryComponent extends Component {
             // Add item to next available position
             setPosition(item);
             setHeldItem(getHeldIndex());
-            entity.getEvents().trigger("updateInventory");
+            entity.getEvents().trigger(updateInventory);
             return true;
         }
     }
@@ -383,7 +388,7 @@ public class InventoryComponent extends Component {
                     }
                 }
             }
-            entity.getEvents().trigger("updateInventory");
+            entity.getEvents().trigger(updateInventory);
             logger.info("Removing item from inventory - " + item.getComponent(ItemComponent.class).getItemName() + ", new count " + this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(), 0));
             return true;
         }
@@ -438,7 +443,7 @@ public class InventoryComponent extends Component {
         this.itemCount = itemCount;
         this.heldItemsEntity = heldItemsEntity;
         this.itemPlace = itemPlace;
-        entity.getEvents().trigger("updateInventory");
+        entity.getEvents().trigger(updateInventory);
         logger.debug("Loading inventory completed");
     }
 
@@ -466,7 +471,6 @@ public class InventoryComponent extends Component {
             Entity itemEntity = FactoryService.getItemFactories().get(jsonValue.getString("name")).get();
             ServiceLocator.getGameArea().spawnEntity(itemEntity);
             itemEntity.readItem(json, jsonValue.get("components"));
-//            ServiceLocator.getEntityService().unregister(itemEntity);
             itemCount.put(jsonValue.getString("name"),  jsonValue.getInt("count"));
             heldItemsEntity.put(jsonValue.getString("name"), itemEntity);
             itemPlace.put(jsonValue.getInt("place"), jsonValue.getString("name"));

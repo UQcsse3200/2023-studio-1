@@ -11,11 +11,14 @@ import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ConeLightComponent;
+import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 
@@ -72,6 +75,9 @@ public class TractorActions extends Component {
    * The map of the tiles, used to aid in getting / setting tiles
    */
   private GameMap map;
+
+  private static final Logger logger = LoggerFactory.getLogger(TractorActions.class);
+
 
   @Override
   /**
@@ -131,7 +137,8 @@ public class TractorActions extends Component {
     } else if (direction < 315) {
       return "down";
     }
-    // TODO add logger to provide error here?
+    logger.error("Direction was not in range of 0-360, was {}", direction);
+
     return "right";
   }
 
@@ -152,7 +159,7 @@ public class TractorActions extends Component {
     } else if (direction < 315) {
       return 270;
     }
-    // TODO add logger to provide error here?
+    logger.error("Direction was not in range of 0-360, was {}", direction);
     return 0;
   }
 

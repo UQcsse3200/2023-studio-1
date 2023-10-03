@@ -31,10 +31,10 @@ public class MainMenuScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuScreen.class);
   private final GdxGame game;
   private final Renderer renderer;
-  public static final int frameCount = 71;
+  public static final int FRAME_COUNT = 71;
   private static final String[] mainMenuTextures = {"images/galaxy_home_still.png"};
-  public static String[] transitionTextures = new String[frameCount];
-  private static final String animationPrefix = "images/menu_animations/menu_animations";
+  public static String[] transitionTextures = new String[FRAME_COUNT];
+  private static final String ANIMATION_PREFIX = "images/menu_animations/menu_animations";
   private Texture backgroundTexture;
   private SpriteBatch batch;
 
@@ -102,8 +102,8 @@ public class MainMenuScreen extends ScreenAdapter {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
 
-    for (int i = 0; i < frameCount; i++) {
-      transitionTextures[i] = animationPrefix + i + ".png";
+    for (int i = 0; i < FRAME_COUNT; i++) {
+      transitionTextures[i] = ANIMATION_PREFIX + i + ".png";
     }
     resourceService.loadTextures(transitionTextures);
     ServiceLocator.getResourceService().loadAll();
