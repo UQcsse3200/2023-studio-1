@@ -10,6 +10,7 @@ public enum EntityType {
     Player(0),
     Tractor(0),
     Plant(10),
+    DecayingPlant(-10),
     Tile(0),  // This is team 7 stuff
     Cow(0),
     Chicken(0),

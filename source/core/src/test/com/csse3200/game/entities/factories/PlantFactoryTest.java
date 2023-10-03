@@ -139,8 +139,8 @@ class PlantFactoryTest {
     @ParameterizedTest
     @MethodSource("plantConfigProvider")
     void shouldLoadPlantConfigs(String id, int health, String name, String type,
-                                                String description, float water, int life,
-                                                int maxHealth) {
+                                String description, float water, int life,
+                                int maxHealth) {
         BasePlantConfig actualValues = getActualValue(id);
         String errMsg = "Mismatched value for plant " + id + ": %s";
 

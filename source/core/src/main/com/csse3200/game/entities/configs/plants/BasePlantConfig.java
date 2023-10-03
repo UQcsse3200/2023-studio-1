@@ -19,4 +19,5 @@ public class BasePlantConfig {
     public int adultThreshold = 0;
 
     public String atlasPath = "";
+    public int oxygen = 0;
 }

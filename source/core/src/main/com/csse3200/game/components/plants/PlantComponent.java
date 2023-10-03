@@ -380,8 +380,8 @@ public class PlantComponent extends Component {
                     updateTexture();
                 }
 
-            // If the plants health drops to zero before it becomes an adult its dead.
-            // Only destroyed immediately if the plant is a seedling.
+                // If the plants health drops to zero before it becomes an adult its dead.
+                // Only destroyed immediately if the plant is a seedling.
             } else if (getGrowthStage().getValue() < GrowthStage.ADULT.getValue())
                 if (getPlantHealth() <= 0) {
                     if (getGrowthStage().getValue() != GrowthStage.SEEDLING.getValue()) {
@@ -670,8 +670,8 @@ public class PlantComponent extends Component {
         if ((growthRate < 0) && !isDecay() && (getGrowthStage().getValue() <= GrowthStage.ADULT.getValue())) {
             increasePlantHealth(-1);
         } else if ( getGrowthStage().getValue() < GrowthStage.ADULT.getValue()
-                    && !isDecay()
-                    && waterLevel > 0) {
+                && !isDecay()
+                && waterLevel > 0) {
             this.currentGrowthLevel += growthRate;
             increasePlantHealth(1);
         } else if (waterLevel == 0) {
@@ -1052,9 +1052,9 @@ public class PlantComponent extends Component {
 
         String returnString =
                 "Growth Stage: " + getGrowthStage().name() +
-                "\nWater level: " + waterLevel + "/" + idealWaterLevel +
-                "\nWater Status: " + waterLevelStatus +
-                "\nHealth: " + plantHealth + "/" + currentMaxHealth;
+                        "\nWater level: " + waterLevel + "/" + idealWaterLevel +
+                        "\nWater Status: " + waterLevelStatus +
+                        "\nHealth: " + plantHealth + "/" + currentMaxHealth;
 
 
         if (getGrowthStage().getValue() < GrowthStage.ADULT.getValue()) {
