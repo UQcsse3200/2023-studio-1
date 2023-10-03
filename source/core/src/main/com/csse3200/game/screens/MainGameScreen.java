@@ -1,6 +1,8 @@
 package com.csse3200.game.screens;
 
 import com.csse3200.game.services.*;
+import com.csse3200.game.components.plants.PlantInfoDisplayComponent;
+import com.csse3200.game.entities.FireflySpawner;
 import com.csse3200.game.components.losescreen.LoseScreenDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,13 +18,10 @@ import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.components.maingame.PauseMenuActions;
-import com.csse3200.game.components.plants.PlantInfoDisplayComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.tractor.TractorActions;
-import com.csse3200.game.entities.EntityIndicator;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.entities.FireflySpawner;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.input.InputDecorator;
@@ -82,6 +81,7 @@ public class MainGameScreen extends ScreenAdapter {
 
     };
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
+
     private final GdxGame game;
     private Entity entity;
     private final Renderer renderer;
@@ -132,10 +132,6 @@ public class MainGameScreen extends ScreenAdapter {
         renderer.getCamera().setTrackEntity(spaceGameArea.getPlayer());
 
         createUI();
-        // Switched to spaceGameArea TODO DELETE
-        //ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
-        //forestGameArea.create();
-        //renderer.getCamera().setTrackEntity(forestGameArea.getPlayer());
         spaceGameArea.getPlayer().getComponent(PlayerActions.class).setCameraVar(renderer.getCamera());
         spaceGameArea.getTractor().getComponent(TractorActions.class).setCameraVar(renderer.getCamera());
 
@@ -228,7 +224,6 @@ public class MainGameScreen extends ScreenAdapter {
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(mainGameTextures);
     }
-
 
 
     /**
