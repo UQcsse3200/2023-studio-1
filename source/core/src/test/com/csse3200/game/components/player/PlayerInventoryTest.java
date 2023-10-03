@@ -33,12 +33,14 @@ public class PlayerInventoryTest {
         player = new Entity()
                 .addComponent(inventoryComponent);
         player.create();
+        player.getEvents().addListener("use", inventoryComponent::useItem);
         item1 = new Entity(EntityType.Item).addComponent(new ItemComponent("Hoe", ItemType.HOE, new Texture("images/tool_shovel.png")));
         item2 = new Entity(EntityType.Item).addComponent(new ItemComponent("Scythe",ItemType.SCYTHE, new Texture("images/tool_shovel.png")));
     }
 
     @Test
     void checkAddInventory() {
+
         assertTrue(player.getComponent(InventoryComponent.class).getItemPlace().isEmpty());
         player.getComponent(InventoryComponent.class).addItem(item1);
         verify(inventoryComponent).addItem(item1);
@@ -83,6 +85,8 @@ public class PlayerInventoryTest {
         assertFalse(inventoryComponent.hasItem(perishable));
 
     }
+
+
     // checks if using an item does not remove a nonperishable item.
     @Test
     void useItemShouldNotRemoveNonperishableItem() {

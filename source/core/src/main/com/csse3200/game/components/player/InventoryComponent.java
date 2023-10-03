@@ -36,7 +36,7 @@ public class InventoryComponent extends Component {
   @Override
   public void create() {
     super.create();
-    entity.getEvents().addListener("use", this::useItem);
+    //entity.getEvents().addListener("use", this::useItem);
   }
 
     private int maxInventorySize = 30; // default size 30
