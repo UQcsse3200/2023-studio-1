@@ -53,9 +53,9 @@ public class InventoryComponent extends Component {
     if (heldItem == null) {
       return false;
     }
-    if (heldItem.getComponent(ItemComponent.class).isPerishable()) {
+    /*if (heldItem.getComponent(ItemComponent.class).isPerishable()) {
       return removeItem(this.heldItem);
-    }
+    }*/
     return true;
   }
 
