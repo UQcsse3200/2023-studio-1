@@ -43,6 +43,8 @@ public class ServiceLocator {
   private static PlanetOxygenService planetOxygenService;
   private static PlantCommandService plantCommandService;
   private static PlantInfoService plantInfoService;
+  private static boolean cutSceneRunning; // true for running and false otherwise
+
   private static ParticleService particleService;
   public static PlantCommandService getPlantCommandService() {
     return plantCommandService;
@@ -99,6 +101,22 @@ public class ServiceLocator {
 
   public static ParticleService getParticleService() {
     return particleService;
+  }
+
+  /**
+   * Sets the cutscene status to either running or not running.
+   * @param isRunning true if cutscene is running, false otherwise
+   */
+  public static void setCutSceneRunning(boolean isRunning) {
+    cutSceneRunning = isRunning;
+  }
+
+  /**
+   * Gets the cutscene status.
+   * @return true if cutscene is running, false otherwise
+   */
+  public static boolean getCutSceneStatus() {
+    return cutSceneRunning;
   }
 
   public static void registerGameArea(GameArea area) {
