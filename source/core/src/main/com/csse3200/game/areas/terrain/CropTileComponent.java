@@ -135,6 +135,14 @@ public class CropTileComponent extends Component {
 	}
 
 	/**
+	 * Returns whether the tile is fertilised.
+	 * @return True if the tile is fertilised, false otherwise.
+	 */
+	public boolean isFertilised() {
+		return isFertilised;
+	}
+
+	/**
 	 * Destroys both the tile and any plant that is on it
 	 */
 	private void destroyTile(TerrainTile tile) {
@@ -146,7 +154,6 @@ public class CropTileComponent extends Component {
 			entity.dispose();
 		}
 	}
-
 
 	/**
 	 * Plants a plant entity on the tile and stores the plant as a member variable in the tile
