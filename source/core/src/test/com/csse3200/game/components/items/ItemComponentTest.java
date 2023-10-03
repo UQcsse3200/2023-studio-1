@@ -5,7 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -18,12 +21,18 @@ import java.io.Serial;
 class ItemComponentTest {
 
   static String[] texturePaths = {"images/tool_shovel.png", "images/tool_hoe.png"};
-  @BeforeAll
-  static void setup() {
+  @BeforeEach
+  void setup() {
     ServiceLocator.registerResourceService(new ResourceService());
     ServiceLocator.getResourceService().loadTextures(texturePaths);
-
+    ServiceLocator.getResourceService().loadAll();
   }
+
+  @AfterEach
+  void clear() {
+    ServiceLocator.clear();
+  }
+
 
   @Test
   void createItemComponentConstructorBase() {
