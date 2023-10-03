@@ -292,7 +292,7 @@ public class TerrainFactory {
 
             TiledMapTileLayer layer = new TiledMapTileLayer(mapSize.x, mapSize.y, tileSize.x, tileSize.y);
 
-            int xPos = 0;
+            int xPos;
             int yPos = mapSize.y - 1;
             // checking for end of file
             for (line = bf.readLine(); line != null; line = bf.readLine(), yPos--) {
