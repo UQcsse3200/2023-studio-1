@@ -201,9 +201,6 @@ public class QuestFactory {
                 new TriggerHostilesReward(List.of(
                         NPCFactory.createOxygenEater(ServiceLocator.getGameArea().getPlayer()),
                         NPCFactory.createOxygenEater(ServiceLocator.getGameArea().getPlayer()),
-                        NPCFactory.createOxygenEater(ServiceLocator.getGameArea().getPlayer()),
-                        NPCFactory.createOxygenEater(ServiceLocator.getGameArea().getPlayer()),
-                        NPCFactory.createOxygenEater(ServiceLocator.getGameArea().getPlayer()),
                         NPCFactory.createDragonfly(ServiceLocator.getGameArea().getPlayer()),
                         NPCFactory.createDragonfly(ServiceLocator.getGameArea().getPlayer()),
                         NPCFactory.createBat(ServiceLocator.getGameArea().getPlayer())

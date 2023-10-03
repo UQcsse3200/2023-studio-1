@@ -114,7 +114,7 @@ public class ManageHostilesQuest extends Quest {
         descriptionBuilder.append(numberOfHostilesToBeKilled);
         descriptionBuilder.append(" creatures of type ");
         boolean isFirst = true;
-        List<EntityType> hostilesList = new ArrayList<EntityType>(hostileTypes);
+        List<EntityType> hostilesList = new ArrayList<>(hostileTypes);
         hostilesList.sort(null);
         for (EntityType hostileType : hostilesList) {
             if (!isFirst) {
