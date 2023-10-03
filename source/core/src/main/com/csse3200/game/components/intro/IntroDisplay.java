@@ -107,23 +107,19 @@ public class IntroDisplay extends UIComponent {
 
         // The {TOKENS} in the String below are used by TypingLabel to create the requisite animation effects
         String story = """
-                {WAIT=0.5}
-                Earth as we know it has been ravaged by war and plague.
-                
-                {WAIT}
-                A tapestry of battlefields and massacres are all that remain.
-                {WAIT=0.5}
-                
-                Humanity though... {WAIT=1} perseveres.
-                {WAIT}
-                
-                We now look to the stars for hope, {WAIT=1} a new place to call home.
-                {WAIT}
-                
-                We will find our salvation in Alpha Centauri.
-                {WAIT=1}
-                
-                {COLOR=green}Your objective, great farmlord, is to tame this wild planet we now call home.{WAIT=1}
+                {SLOWER}{WAIT=0.5}15 years ago, humanity fled earth due to a world-ending calamity.
+                                
+                {WAIT}The {COLOR=#3ABE88}MOTHERSHIP{COLOR=WHITE} was the largest vessel of human life which fled Earth, leading the last survivors of your people to {COLOR=#3ABE88}ALPHA CENTAURI{COLOR=WHITE}.
+                                
+                                
+                {WAIT}Upon arrival, the {COLOR=#3ABE88}MOTHERSHIP{COLOR=WHITE} had been sending explorers to search the solar system for habitable planets.
+                                
+                {WAIT}You were meant to be one such individual.
+                                
+                                
+                {WAIT=1}As you descend into the upper atmosphere, a powerful {COLOR=#3ABE88}SOLAR SURGE{COLOR=WHITE} fries your ship's electronics.
+                                
+                {WAIT=1}You plummet onto the planet's surface...
                 """;
         storyLabel = new TypingLabel(story, skin); // Create the TypingLabel with the formatted story
         // Reduce the animation speed of all text in the story.
