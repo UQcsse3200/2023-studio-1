@@ -1048,6 +1048,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Creates reusable ui styles and adds actors to the stage.</div>
 </dd>
+<dt><a href="com/csse3200/game/services/HealthDisplay.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/HealthDisplay.html" title="class in com.csse3200.game.services">HealthDisplay</a></dt>
+<dd>
+<div class="block">Creates reusable ui styles and adds actors to the stage.</div>
+</dd>
 <dt><a href="com/csse3200/game/services/OxygenDisplay.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/OxygenDisplay.html" title="class in com.csse3200.game.services">OxygenDisplay</a></dt>
 <dd>
 <div class="block">Creates reusable ui styles and adds actors to the stage.</div>
@@ -1461,11 +1465,18 @@ loadScripts(document, 'script');</script>
 <div class="block">Creates the TerrainComponent instance used to render a test game map.</div>
 </dd>
 <dt><a href="com/csse3200/game/services/GameTimeDisplay.html#createTexture()" class="member-name-link">createTexture()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/GameTimeDisplay.html" title="class in com.csse3200.game.services">GameTimeDisplay</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/services/OxygenDisplay.html#createTexture()" class="member-name-link">createTexture()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/OxygenDisplay.html" title="class in com.csse3200.game.services">OxygenDisplay</a></dt>
+<dd>
+<div class="block">Loads textures and initialises the UI components.</div>
+</dd>
+<dt><a href="com/csse3200/game/services/HealthDisplay.html#createTexture()" class="member-name-link">createTexture()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/HealthDisplay.html" title="class in com.csse3200.game.services">HealthDisplay</a></dt>
 <dd>
 <div class="block">Initialises all the possible images and labels that will be used by
  the class, and stores them in an array to be called when needed.</div>
+</dd>
+<dt><a href="com/csse3200/game/services/OxygenDisplay.html#createTexture()" class="member-name-link">createTexture()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/OxygenDisplay.html" title="class in com.csse3200.game.services">OxygenDisplay</a></dt>
+<dd>
+<div class="block">Initialises all the possible images and labels that will be used by
+ the class, and stores them in an array.</div>
 </dd>
 <dt><a href="com/csse3200/game/areas/weather/WeatherEventDisplay.html#createTextures()" class="member-name-link">createTextures()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/WeatherEventDisplay.html" title="class in com.csse3200.game.areas.weather">WeatherEventDisplay</a></dt>
 <dd>&nbsp;</dd>
@@ -1752,10 +1763,16 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/screens/WinScreen.html#dispose()" class="member-name-link">dispose()</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/WinScreen.html" title="class in com.csse3200.game.screens">WinScreen</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/GameTimeDisplay.html#dispose()" class="member-name-link">dispose()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/GameTimeDisplay.html" title="class in com.csse3200.game.services">GameTimeDisplay</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/services/OxygenDisplay.html#dispose()" class="member-name-link">dispose()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/OxygenDisplay.html" title="class in com.csse3200.game.services">OxygenDisplay</a></dt>
+<dd>
+<div class="block">Disposes of resources when no longer needed.</div>
+</dd>
+<dt><a href="com/csse3200/game/services/HealthDisplay.html#dispose()" class="member-name-link">dispose()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/HealthDisplay.html" title="class in com.csse3200.game.services">HealthDisplay</a></dt>
 <dd>
 <div class="block">Removes all entities from the screen.</div>
+</dd>
+<dt><a href="com/csse3200/game/services/OxygenDisplay.html#dispose()" class="member-name-link">dispose()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/OxygenDisplay.html" title="class in com.csse3200.game.services">OxygenDisplay</a></dt>
+<dd>
+<div class="block">Removes all entities from the screen and releases all resources from this class.</div>
 </dd>
 <dt><a href="com/csse3200/game/services/ResourceService.html#dispose()" class="member-name-link">dispose()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ResourceService.html" title="class in com.csse3200.game.services">ResourceService</a></dt>
 <dd>
@@ -1841,7 +1858,13 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/rendering/TextureRenderComponent.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/TextureRenderComponent.html" title="class in com.csse3200.game.rendering">TextureRenderComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/GameTimeDisplay.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/GameTimeDisplay.html" title="class in com.csse3200.game.services">GameTimeDisplay</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Draws the UI components.</div>
+</dd>
+<dt><a href="com/csse3200/game/services/HealthDisplay.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/HealthDisplay.html" title="class in com.csse3200.game.services">HealthDisplay</a></dt>
+<dd>
+<div class="block">Draws the table and group onto the main game screen.</div>
+</dd>
 <dt><a href="com/csse3200/game/services/OxygenDisplay.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/OxygenDisplay.html" title="class in com.csse3200.game.services">OxygenDisplay</a></dt>
 <dd>
 <div class="block">Draws the table and group onto the main game screen.</div>
@@ -2219,7 +2242,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/GameTimeDisplay.html" class="type-name-link" title="class in com.csse3200.game.services">GameTimeDisplay</a> - Class in <a href="com/csse3200/game/services/package-summary.html">com.csse3200.game.services</a></dt>
 <dd>
-<div class="block">A ui component for displaying the current game time on the Main Game Screen.</div>
+<div class="block">A UI component for displaying the current game time on the Main Game Screen.</div>
 </dd>
 <dt><a href="com/csse3200/game/services/GameTimeDisplay.html#%3Cinit%3E()" class="member-name-link">GameTimeDisplay()</a> - Constructor for class com.csse3200.game.services.<a href="com/csse3200/game/services/GameTimeDisplay.html" title="class in com.csse3200.game.services">GameTimeDisplay</a></dt>
 <dd>&nbsp;</dd>
@@ -3309,6 +3332,12 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/PlayerConfig.html#health" class="member-name-link">health</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/PlayerConfig.html" title="class in com.csse3200.game.entities.configs">PlayerConfig</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/services/HealthDisplay.html" class="type-name-link" title="class in com.csse3200.game.services">HealthDisplay</a> - Class in <a href="com/csse3200/game/services/package-summary.html">com.csse3200.game.services</a></dt>
+<dd>
+<div class="block">A UI component for displaying the current health level on the Main Game Screen.</div>
+</dd>
+<dt><a href="com/csse3200/game/services/HealthDisplay.html#%3Cinit%3E()" class="member-name-link">HealthDisplay()</a> - Constructor for class com.csse3200.game.services.<a href="com/csse3200/game/services/HealthDisplay.html" title="class in com.csse3200.game.services">HealthDisplay</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/files/UserSettings.DisplaySettings.html#height" class="member-name-link">height</a> - Variable in class com.csse3200.game.files.<a href="com/csse3200/game/files/UserSettings.DisplaySettings.html" title="class in com.csse3200.game.files">UserSettings.DisplaySettings</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/player/InventoryComponent.html#heldItemsEntity" class="member-name-link">heldItemsEntity</a> - Variable in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a></dt>
@@ -4294,7 +4323,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/OxygenDisplay.html" class="type-name-link" title="class in com.csse3200.game.services">OxygenDisplay</a> - Class in <a href="com/csse3200/game/services/package-summary.html">com.csse3200.game.services</a></dt>
 <dd>
-<div class="block">A ui component for displaying the current oxygen level on the Main Game Screen.</div>
+<div class="block">A UI component for displaying the current oxygen level on the Main Game Screen.</div>
 </dd>
 <dt><a href="com/csse3200/game/services/OxygenDisplay.html#%3Cinit%3E()" class="member-name-link">OxygenDisplay()</a> - Constructor for class com.csse3200.game.services.<a href="com/csse3200/game/services/OxygenDisplay.html" title="class in com.csse3200.game.services">OxygenDisplay</a></dt>
 <dd>&nbsp;</dd>
@@ -6806,7 +6835,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Updates the displayed image based on the current weather event.</div>
 </dd>
 <dt><a href="com/csse3200/game/services/GameTimeDisplay.html#updateDisplay()" class="member-name-link">updateDisplay()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/GameTimeDisplay.html" title="class in com.csse3200.game.services">GameTimeDisplay</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Updates the display to show the current game time and transition effects.</div>
+</dd>
 <dt><a href="com/csse3200/game/services/OxygenDisplay.html#updateDisplay()" class="member-name-link">updateDisplay()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/OxygenDisplay.html" title="class in com.csse3200.game.services">OxygenDisplay</a></dt>
 <dd>
 <div class="block">Updates the display, showing the oxygen bar in the top of the main game screen.</div>
@@ -6838,6 +6869,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/player/PlayerStatsDisplay.html#updatePlayerHealthUI(int)" class="member-name-link">updatePlayerHealthUI(int)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/PlayerStatsDisplay.html" title="class in com.csse3200.game.components.player">PlayerStatsDisplay</a></dt>
 <dd>
 <div class="block">Updates the player's health on the ui.</div>
+</dd>
+<dt><a href="com/csse3200/game/services/HealthDisplay.html#updatePlayerHealthUI(int)" class="member-name-link">updatePlayerHealthUI(int)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/HealthDisplay.html" title="class in com.csse3200.game.services">HealthDisplay</a></dt>
+<dd>
+<div class="block">Updates the display, showing the health bar in the top of the main game screen.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/player/PlayerHighlightComponent.html#updatePosition()" class="member-name-link">updatePosition()</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/PlayerHighlightComponent.html" title="class in com.csse3200.game.components.player">PlayerHighlightComponent</a></dt>
 <dd>
