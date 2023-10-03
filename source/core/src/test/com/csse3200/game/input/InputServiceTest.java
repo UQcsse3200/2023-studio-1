@@ -13,6 +13,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.extensions.GameExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 @ExtendWith(GameExtension.class)
 class InputServiceTest {
@@ -76,13 +79,27 @@ class InputServiceTest {
     shouldCallInputHandlersInPriorityOrder(method, serviceMethod, 5, 6);
   }
 
-  @Test
-  void shouldHandleScrolled()
+  @ParameterizedTest
+  @ValueSource(strings = {"scrolled", "longPress", "zoom"})
+  void shouldHandleInput(String input)
       throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-    Method method = InputComponent.class.getDeclaredMethod("scrolled", float.class, float.class);
+    Method method = InputComponent.class.getDeclaredMethod(input, float.class, float.class);
     Method serviceMethod =
-        InputService.class.getDeclaredMethod("scrolled", float.class, float.class);
+        InputService.class.getDeclaredMethod(input, float.class, float.class);
     shouldCallInputHandlersInPriorityOrder(method, serviceMethod, 5f, 6f);
+  }
+
+  @ParameterizedTest
+  @ValueSource(strings = {"panStop", "tap", "touchDown"})
+  void shouldHandleInput2(String input)
+          throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    Method method =
+            InputComponent.class.getDeclaredMethod(
+                    input, float.class, float.class, int.class, int.class);
+    Method serviceMethod =
+            InputService.class.getDeclaredMethod(
+                    input, float.class, float.class, int.class, int.class);
+    shouldCallInputHandlersInPriorityOrder(method, serviceMethod, 5f, 6f, 7, 8);
   }
 
   @Test
@@ -129,15 +146,6 @@ class InputServiceTest {
   }
 
   @Test
-  void shouldHandleLongPress()
-      throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-    Method method = InputComponent.class.getDeclaredMethod("longPress", float.class, float.class);
-    Method serviceMethod =
-        InputService.class.getDeclaredMethod("longPress", float.class, float.class);
-    shouldCallInputHandlersInPriorityOrder(method, serviceMethod, 5f, 6f);
-  }
-
-  @Test
   void shouldHandlePan()
       throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
     Method method =
@@ -147,18 +155,6 @@ class InputServiceTest {
         InputService.class.getDeclaredMethod(
             "pan", float.class, float.class, float.class, float.class);
     shouldCallInputHandlersInPriorityOrder(method, serviceMethod, 5f, 6f, 7f, 8f);
-  }
-
-  @Test
-  void shouldHandlePanStop()
-      throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-    Method method =
-        InputComponent.class.getDeclaredMethod(
-            "panStop", float.class, float.class, int.class, int.class);
-    Method serviceMethod =
-        InputService.class.getDeclaredMethod(
-            "panStop", float.class, float.class, int.class, int.class);
-    shouldCallInputHandlersInPriorityOrder(method, serviceMethod, 5f, 6f, 7, 8);
   }
 
   @Test
@@ -172,37 +168,6 @@ class InputServiceTest {
             "pinch", Vector2.class, Vector2.class, Vector2.class, Vector2.class);
     shouldCallInputHandlersInPriorityOrder(
         method, serviceMethod, Vector2.Zero, Vector2.Zero, Vector2.Zero, Vector2.Zero);
-  }
-
-  @Test
-  void shouldHandleTap()
-      throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-    Method method =
-        InputComponent.class.getDeclaredMethod(
-            "tap", float.class, float.class, int.class, int.class);
-    Method serviceMethod =
-        InputService.class.getDeclaredMethod("tap", float.class, float.class, int.class, int.class);
-    shouldCallInputHandlersInPriorityOrder(method, serviceMethod, 5f, 6f, 7, 8);
-  }
-
-  @Test
-  void shouldHandleTouchDownGesture()
-      throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-    Method method =
-        InputComponent.class.getDeclaredMethod(
-            "touchDown", float.class, float.class, int.class, int.class);
-    Method serviceMethod =
-        InputService.class.getDeclaredMethod(
-            "touchDown", float.class, float.class, int.class, int.class);
-    shouldCallInputHandlersInPriorityOrder(method, serviceMethod, 5f, 6f, 7, 8);
-  }
-
-  @Test
-  void shouldHandleZoom()
-      throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-    Method method = InputComponent.class.getDeclaredMethod("zoom", float.class, float.class);
-    Method serviceMethod = InputService.class.getDeclaredMethod("zoom", float.class, float.class);
-    shouldCallInputHandlersInPriorityOrder(method, serviceMethod, 5f, 6f);
   }
 
   /**

@@ -471,7 +471,6 @@ public class InventoryComponent extends Component {
             Entity itemEntity = FactoryService.getItemFactories().get(jsonValue.getString("name")).get();
             ServiceLocator.getGameArea().spawnEntity(itemEntity);
             itemEntity.readItem(json, jsonValue.get("components"));
-//            ServiceLocator.getEntityService().unregister(itemEntity);
             itemCount.put(jsonValue.getString("name"),  jsonValue.getInt("count"));
             heldItemsEntity.put(jsonValue.getString("name"), itemEntity);
             itemPlace.put(jsonValue.getInt("place"), jsonValue.getString("name"));

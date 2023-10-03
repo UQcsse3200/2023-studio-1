@@ -20,17 +20,17 @@ public class ObstacleFactory {
    * @return Invisible obstacle entity
    */
   public static Entity createInvisibleObstacle() {
-    Entity Obstacle =
+    Entity obstacle =
             new Entity()
                     .addComponent(new TextureRenderComponent("images/invisible_sprite.png"))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
-    Obstacle.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    Obstacle.getComponent(TextureRenderComponent.class).scaleEntity();
-    Obstacle.scaleHeight(1f);
-    PhysicsUtils.setScaledCollider(Obstacle, 1f, 1f);
-    return Obstacle;
+    obstacle.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    obstacle.getComponent(TextureRenderComponent.class).scaleEntity();
+    obstacle.scaleHeight(1f);
+    PhysicsUtils.setScaledCollider(obstacle, 1f, 1f);
+    return obstacle;
   }
 
   /**

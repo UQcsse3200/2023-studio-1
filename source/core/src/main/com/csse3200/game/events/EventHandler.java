@@ -290,7 +290,7 @@ public class EventHandler {
     }
 
     List<ScheduledEvent> eventsToTrigger = new ArrayList<>(scheduledEvents);
-    eventsToTrigger.removeIf(event -> !(timeSource.getTime() >= event.endTime()));
+    eventsToTrigger.removeIf(event -> (timeSource.getTime() < event.endTime()));
 
     eventsToTrigger.forEach(this::triggerScheduledEvent);
 
