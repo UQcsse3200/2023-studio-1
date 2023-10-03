@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 public class GameTime {
   private static Logger logger = LoggerFactory.getLogger(GameTime.class);
   private final long startTime;
-  private float timeScale = 1f;
+  private float timeScale = 100f;
 
   public GameTime() {
     startTime = TimeUtils.millis();

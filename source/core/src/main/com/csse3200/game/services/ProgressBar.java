@@ -12,7 +12,11 @@ public class ProgressBar extends UIComponent {
     Table table = new Table();
     Group group = new Group();
     private Image progressBar;
-    private Array<Image> progressBarImages;
+    private Array<Image> progressBarImagesAct1;
+    private Array<Image> progressBarImagesAct2;
+    private Array<Image> progressBarImagesAct3;
+    private int act;
+    private int dayOffset;
 
     /**
      * Creates reusable ui styles and adds actors to the stage.
@@ -20,8 +24,14 @@ public class ProgressBar extends UIComponent {
     @Override
     public void create() {
         super.create();
+        this.act = 1;
+        this.dayOffset = 0;
         ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::updateDisplay);
-        progressBarImages = new Array<Image>();
+        ServiceLocator.getMissionManager().getEvents().addListener("An Agreement", this::updateProgressBarAct2);
+        ServiceLocator.getMissionManager().getEvents().addListener("Making Contact", this::updateProgressBarAct3);
+        progressBarImagesAct1 = new Array<Image>();
+        progressBarImagesAct2 = new Array<Image>();
+        progressBarImagesAct3 = new Array<Image>();
         updateDisplay();
     }
 
@@ -29,14 +39,28 @@ public class ProgressBar extends UIComponent {
      * Creates each image as an image object then adds to an array of images for later use
      */
     public void createTexture() {
-        for (int i = 1; i <= 31; i++) {
-            if (i>2) {
-                progressBarImages.add(new Image(ServiceLocator.getResourceService().getAsset("images/progress-bar/day1.png", Texture.class)));
+        for (int i = 1; i <= 30; i++) {
+            if (i <=5 ) {
+                progressBarImagesAct1.add(new Image(ServiceLocator.getResourceService().getAsset(
+                        String.format("images/progress-bar/part1day%d.png", i), Texture.class)));
+            } else if (i <= 15) {
+                progressBarImagesAct2.add(new Image(ServiceLocator.getResourceService().getAsset(
+                        String.format("images/progress-bar/part2day%d.png", i-5), Texture.class)));
             } else {
-                progressBarImages.add(new Image(ServiceLocator.getResourceService().getAsset(
-                        String.format("images/progress-bar/day%d.png", i), Texture.class)));
+                progressBarImagesAct3.add(new Image(ServiceLocator.getResourceService().getAsset(
+                        String.format("images/progress-bar/part3day%d.png", i-15), Texture.class)));
             }
         }
+    }
+
+    public void updateProgressBarAct2() {
+        this.act = 2;
+        this.dayOffset = ServiceLocator.getTimeService().getDay();
+    }
+
+    public void updateProgressBarAct3() {
+        this.act = 3;
+        this.dayOffset = ServiceLocator.getTimeService().getDay();
     }
 
     /**
@@ -44,11 +68,16 @@ public class ProgressBar extends UIComponent {
      * Will also call createTexture(), if the array is empty.
      */
     public void updateDisplay() {
-        if (progressBarImages.isEmpty()) {
+        if (progressBarImagesAct1.isEmpty()) {
             createTexture();
         }
-        int day = ServiceLocator.getTimeService().getDay();
-        progressBar = progressBarImages.get(day);
+        int day = ServiceLocator.getTimeService().getDay() - dayOffset;
+
+        switch (this.act) {
+            case 1 -> progressBar = progressBarImagesAct1.get(day);
+            case 2 -> progressBar = progressBarImagesAct2.get(day);
+            case 3 -> progressBar = progressBarImagesAct3.get(day);
+        }
     }
 
     /**
