@@ -7,9 +7,11 @@ import static org.mockito.Mockito.mock;
 
 import java.io.IOException;
 
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.services.TimeService;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -117,7 +119,10 @@ public class ItemActionsTest {
 
         tiledMap.getLayers().add(layer);
 
-        player = new Entity(EntityType.Player).addComponent(new InteractionDetector(100)).addComponent(new HitboxComponent());
+        player = new Entity(EntityType.Player)
+                .addComponent(new InteractionDetector(100))
+                .addComponent(new HitboxComponent())
+                .addComponent(new InventoryComponent());
     }
 
     @Test

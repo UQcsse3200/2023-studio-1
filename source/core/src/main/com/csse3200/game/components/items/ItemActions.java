@@ -132,6 +132,8 @@ public class ItemActions extends Component {
     placeable.setPosition(adjustedPos);
     ServiceLocator.getGameArea().spawnEntity(placeable);
     tile.setOccupant(placeable);
+    // Placing a placeable item should remove it from inventory
+    ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class).removeItem(entity);
     return true;
   }
 
@@ -276,6 +278,8 @@ public class ItemActions extends Component {
   private boolean fertilise(TerrainTile tile) {
     if (isCropTile(tile.getOccupant())) {
       tile.getOccupant().getEvents().trigger("fertilise");
+      // Fertilising a crop tile should remove the item from the player inventory
+      ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class).removeItem(entity);
       return true;
     }
     return false;
@@ -291,6 +295,8 @@ public class ItemActions extends Component {
     if (isCropTile(tile.getOccupant())) {
       tile.getOccupant().getEvents().trigger("plant", FactoryService.getPlantFactories()
               .get(entity.getComponent(ItemComponent.class).getItemName().replace(" Seeds", "")));
+      // Planting using seeds should remove the item from player inventory
+      ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class).removeItem(entity);
       return true;
     }
     return false;
@@ -328,6 +334,8 @@ public class ItemActions extends Component {
     }
 
     entityToFeed.getEvents().trigger("feed");
+    // Feeding animals should remove the food from player inventory
+    player.getComponent(InventoryComponent.class).removeItem(entity);
     return true;
   }
 
