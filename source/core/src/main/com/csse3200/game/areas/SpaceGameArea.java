@@ -531,12 +531,8 @@ public class SpaceGameArea extends GameArea {
     } catch (InvalidSoundFileException e) {
       throw new RuntimeException(e);
     }
-    //resourceService.loadSounds(forestSounds);
-    //resourceService.loadMusic(forestMusic);
-
-
     // Add effects that are needed
-    List<SoundFile> effects = new ArrayList();
+    List<SoundFile> effects = new ArrayList<SoundFile>();
     effects.add(EffectSoundFile.TRACTOR_HONK);
     effects.add(EffectSoundFile.IMPACT);
     try {
@@ -557,7 +553,6 @@ public class SpaceGameArea extends GameArea {
     resourceService.unloadAssets(forestTextures);
     resourceService.unloadAssets(forestTextureAtlases);
     resourceService.unloadAssets(forestSounds);
-    //resourceService.unloadAssets(forestMusic);
   }
 
   @Override
