@@ -53,23 +53,26 @@ public class FenceComponent extends Component {
             IMAGE_GATE_OPEN,
     };
 
-    private static final String[] textures_gate_closed= {
-            "images/placeable/fences/g_r_l.png",
-            "images/placeable/fences/g_r_l.png",
-            "images/placeable/fences/g_r_l.png",
-            "images/placeable/fences/g_r_l.png",
-            "images/placeable/fences/g_d_u.png",
-            "images/placeable/fences/g_r_l.png",
-            "images/placeable/fences/g_r_l.png",
-            "images/placeable/fences/g_r_l.png",
-            "images/placeable/fences/g_d_u.png",
-            "images/placeable/fences/g_r_l.png",
-            "images/placeable/fences/g_r_l.png",
-            "images/placeable/fences/g_r_l.png",
-            "images/placeable/fences/g_d_u.png",
-            "images/placeable/fences/g_r_l.png",
-            "images/placeable/fences/g_r_l.png",
-            "images/placeable/fences/g_r_l.png",
+    private static final String GATE_RIGHT_LEFT_CLOSED = "images/placeable/fences/g_r_l.png";
+    private static final String GATE_DOWN_UP_CLOSED = "images/placeable/fences/g_d_u.png";
+
+    private static final String[] textures_gate_closed = {
+            GATE_RIGHT_LEFT_CLOSED,
+            GATE_RIGHT_LEFT_CLOSED,
+            GATE_RIGHT_LEFT_CLOSED,
+            GATE_RIGHT_LEFT_CLOSED,
+            GATE_DOWN_UP_CLOSED,
+            GATE_RIGHT_LEFT_CLOSED,
+            GATE_RIGHT_LEFT_CLOSED,
+            GATE_RIGHT_LEFT_CLOSED,
+            GATE_DOWN_UP_CLOSED,
+            GATE_RIGHT_LEFT_CLOSED,
+            GATE_RIGHT_LEFT_CLOSED,
+            GATE_RIGHT_LEFT_CLOSED,
+            GATE_DOWN_UP_CLOSED,
+            GATE_RIGHT_LEFT_CLOSED,
+            GATE_RIGHT_LEFT_CLOSED,
+            GATE_RIGHT_LEFT_CLOSED,
     };
 
 

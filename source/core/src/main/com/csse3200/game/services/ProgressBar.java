@@ -11,7 +11,7 @@ import com.csse3200.game.ui.UIComponent;
 public class ProgressBar extends UIComponent {
     Table table = new Table();
     Group group = new Group();
-    private Image progressBar;
+    private Image progressionbar;
     private Array<Image> progressBarImagesAct1;
     private Array<Image> progressBarImagesAct2;
     private Array<Image> progressBarImagesAct3;
@@ -74,9 +74,9 @@ public class ProgressBar extends UIComponent {
         int day = ServiceLocator.getTimeService().getDay() - dayOffset;
 
         switch (this.act) {
-            case 1 -> progressBar = (day > 5) ? progressBarImagesAct1.get(0) : progressBarImagesAct1.get(day);
-            case 2 -> progressBar = (day > 10) ? progressBarImagesAct2.get(0) : progressBarImagesAct2.get(day);
-            case 3 -> progressBar = (day > 15) ? progressBarImagesAct3.get(0) : progressBarImagesAct3.get(day);
+            case 1 -> progressionbar = (day > 5) ? progressBarImagesAct1.get(0) : progressBarImagesAct1.get(day);
+            case 2 -> progressionbar = (day > 10) ? progressBarImagesAct2.get(0) : progressBarImagesAct2.get(day);
+            case 3 -> progressionbar = (day > 15) ? progressBarImagesAct3.get(0) : progressBarImagesAct3.get(day);
         }
     }
 
@@ -93,7 +93,7 @@ public class ProgressBar extends UIComponent {
         table.padTop(-30f).padLeft(190f);
 
 
-        group.addActor(progressBar);
+        group.addActor(progressionbar);
 
         table.add(group).size(200);
         stage.addActor(table);
@@ -106,6 +106,6 @@ public class ProgressBar extends UIComponent {
     @Override
     public void dispose() {
         super.dispose();
-        progressBar.remove();
+        progressionbar.remove();
     }
 }

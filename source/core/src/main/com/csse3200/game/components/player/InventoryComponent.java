@@ -453,6 +453,9 @@ public class InventoryComponent extends Component {
         json.writeArrayStart("inventory");
         for (Integer i : itemPlace.keySet()) {
             String e = itemPlace.get(i);
+            if (e == null) {
+                continue;
+            }
             json.writeObjectStart();
             heldItemsEntity.get(e).writeItem(json);
             json.writeValue("count", getItemCount(e));
