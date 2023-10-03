@@ -126,8 +126,8 @@ public class QuestFactory {
         MultiReward reward = new MultiReward(List.of(
                 new ItemReward(List.of(
                         ItemFactory.createSprinklerItem(),
-                        ItemFactory.createSprinklerItem(),
-                        ItemFactory.createPumpItem()
+                        ItemFactory.createSprinklerItem()
+                        // TODO import sprinkler pump
                 )),
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue)
@@ -199,11 +199,12 @@ public class QuestFactory {
                 new ItemReward(itemRewards),
                 new QuestReward(questsToAdd, questsToActivate),
                 new TriggerHostilesReward(List.of(
+                        // TODO - Add extra hostile types
                         NPCFactory.createOxygenEater(ServiceLocator.getGameArea().getPlayer()),
                         NPCFactory.createOxygenEater(ServiceLocator.getGameArea().getPlayer()),
-                        NPCFactory.createDragonfly(ServiceLocator.getGameArea().getPlayer()),
-                        NPCFactory.createDragonfly(ServiceLocator.getGameArea().getPlayer()),
-                        NPCFactory.createBat(ServiceLocator.getGameArea().getPlayer())
+                        NPCFactory.createOxygenEater(ServiceLocator.getGameArea().getPlayer()),
+                        NPCFactory.createOxygenEater(ServiceLocator.getGameArea().getPlayer()),
+                        NPCFactory.createOxygenEater(ServiceLocator.getGameArea().getPlayer())
                 )),
                 new DialogueReward(dialogue)
         ));

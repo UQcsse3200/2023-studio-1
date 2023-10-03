@@ -1,6 +1,7 @@
 package com.csse3200.game.missions.quests;
 
 import com.badlogic.gdx.utils.JsonValue;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.Mission;
 import com.csse3200.game.missions.MissionManager;
@@ -125,7 +126,7 @@ public class PlantInteractionQuest extends Quest {
         descriptionBuilder.append(interactionsTarget);
         descriptionBuilder.append(" crops of type ");
         boolean isFirst = true;
-        List<String> plantList = new ArrayList<>(plantTypes);
+        List<String> plantList = new ArrayList<String>(plantTypes);
         plantList.sort(null);
         for (String plantType : plantList) {
             if (!isFirst) {
