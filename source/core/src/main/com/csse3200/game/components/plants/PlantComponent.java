@@ -47,13 +47,11 @@ public class PlantComponent extends Component {
      */
     private final String plantType;
 
-
-    private final String alive = "alive";
-    private final String decay = "decay";
-    private final String decays = "decays";
-    private final String Decay = "Decay";
-
-    private final String destroy = "destroy";
+    private static final String alive = "alive";
+    private static final String decay = "decay";
+    private static final String decays = "decays";
+    private static final String Decay = "Decay";
+    private static final String destroy = "destroy";
 
 
     /**
