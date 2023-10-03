@@ -42,7 +42,7 @@ public class SolarSurgeEvent extends WeatherEvent {
      */
     @Override
     public void startEffect() {
-        // This method is empty because ngl i have no clue why but sonarcloud told me to put something here so TADA!!!
+        //  Handled elsewhere
     }
 
     /**
@@ -50,6 +50,6 @@ public class SolarSurgeEvent extends WeatherEvent {
      */
     @Override
     public void stopEffect() {
-        // This method is empty because ngl i have no clue why but sonarcloud told me to put something here so TADA!!!
+        // Handled elsewhere
     }
 }
