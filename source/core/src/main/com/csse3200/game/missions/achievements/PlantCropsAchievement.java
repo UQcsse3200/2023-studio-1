@@ -2,6 +2,7 @@ package com.csse3200.game.missions.achievements;
 
 import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.events.EventHandler;
+import com.csse3200.game.missions.Mission;
 import com.csse3200.game.missions.MissionManager;
 
 /**
@@ -30,6 +31,13 @@ public class PlantCropsAchievement extends Achievement {
         numberOfCropsPlanted = 0;
     }
 
+    /**
+     * Registers the {@link PlantCropsAchievement} with the {@link MissionManager} by adding a listener to
+     * the PLANT_CROP {@link com.csse3200.game.missions.MissionManager.MissionEvent}
+     * @param missionManagerEvents A reference to the {@link EventHandler} on the
+     *                             {@link MissionManager}, with which relevant events should be
+     *                             listened to.
+     */
     @Override
     public void registerMission(EventHandler missionManagerEvents) {
         missionManagerEvents.addListener(
@@ -47,22 +55,41 @@ public class PlantCropsAchievement extends Achievement {
         return numberOfCropsPlanted >= target;
     }
 
+    /**
+     * Returns a description of the {@link PlantCropsAchievement} with the name of the achievement and the
+     * player's progress.
+     * @return - the {@link PlantCropsAchievement}'s description
+     */
     @Override
     public String getDescription() {
         return "Become a " + getName() + ", plant " + target + " crops on crop tiles!\n"
                 + numberOfCropsPlanted + " out of " + target + " crops planted!";
     }
 
+    /**
+     * Gives a short description of the {@link PlantCropsAchievement} showing the player's progress in the
+     * achievement.
+     * @return - short description of the {@link PlantCropsAchievement}
+     */
     @Override
     public String getShortDescription() {
         return numberOfCropsPlanted + " out of " + target + " crops planted";
     }
 
+    /**
+     * Reads in the progress of the {@link PlantCropsAchievement} from a JsonValue.
+     * @param progress The {@link JsonValue} representing the progress of the {@link Mission} as determined by the value
+     *                 returned in {@link #getProgress()}.
+     */
     @Override
     public void readProgress(JsonValue progress) {
         numberOfCropsPlanted = progress.asInt();
     }
 
+    /**
+     * Gives the progress of the {@link PlantCropsAchievement}
+     * @return - the number of crops the player has planted since creation of the {@link PlantCropsAchievement}.
+     */
     @Override
     public Object getProgress() {
         return numberOfCropsPlanted;

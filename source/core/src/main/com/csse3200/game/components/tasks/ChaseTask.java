@@ -10,6 +10,7 @@ import com.csse3200.game.physics.raycast.RaycastHit;
 import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.services.ServiceLocator;
 
+
 /** Chases a target entity until they get too far away or line of sight is lost */
 public class ChaseTask extends DefaultTask implements PriorityTask {
   /** The entity to chase. */
@@ -28,20 +29,40 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
   private final RaycastHit hit = new RaycastHit();
   /** The movement task for chasing. */
   private MovementTask movementTask;
+  /** The speed at which to chase. */
+  private Vector2 speed;
+  /** The speed at which to chase. */
+  private boolean checkVisibility;
+  /**
+   * @param target The entity to chase.
+   * @param priority Task priority when chasing (0 when not chasing).
+   * @param viewDistance Maximum distance from the entity at which chasing can start.
+   * @param maxChaseDistance Maximum distance from the entity while chasing before giving up.
+   * @param speed Speed at which to chase the player.
+   */
+  public ChaseTask(Entity target, int priority, float viewDistance, float maxChaseDistance, Vector2 speed) {
+    this.target = target;
+    this.priority = priority;
+    this.viewDistance = viewDistance;
+    this.maxChaseDistance = maxChaseDistance;
+    this.speed = speed;
+    physics = ServiceLocator.getPhysicsService().getPhysics();
+    debugRenderer = ServiceLocator.getRenderService().getDebug();
+    this.checkVisibility = true;
+  }
 
   /**
    * @param target The entity to chase.
    * @param priority Task priority when chasing (0 when not chasing).
    * @param viewDistance Maximum distance from the entity at which chasing can start.
    * @param maxChaseDistance Maximum distance from the entity while chasing before giving up.
+   * @param speed Speed at which to chase the player.
+   * @param checkVisibility Whether to consider visibility when chasing.
    */
-  public ChaseTask(Entity target, int priority, float viewDistance, float maxChaseDistance) {
-    this.target = target;
-    this.priority = priority;
-    this.viewDistance = viewDistance;
-    this.maxChaseDistance = maxChaseDistance;
-    physics = ServiceLocator.getPhysicsService().getPhysics();
-    debugRenderer = ServiceLocator.getRenderService().getDebug();
+  public ChaseTask(Entity target, int priority, float viewDistance, float maxChaseDistance,
+                   Vector2 speed, boolean checkVisibility) {
+    this(target, priority, viewDistance, maxChaseDistance, speed);
+    this.checkVisibility = checkVisibility;
   }
 
   /**
@@ -50,7 +71,7 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
   @Override
   public void start() {
     super.start();
-    movementTask = new MovementTask(target.getCenterPosition());
+    movementTask = new MovementTask(target.getCenterPosition(), speed);
     movementTask.create(owner);
     movementTask.start();
     
@@ -88,7 +109,6 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     if (status == Status.ACTIVE) {
       return getActivePriority();
     }
-
     return getInactivePriority();
   }
 
@@ -135,6 +155,9 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
    * @return True if the target entity is visible, false otherwise.
    */
   protected boolean isTargetVisible() {
+    if (!this.checkVisibility) {
+      return true;
+    }
     Vector2 from = owner.getEntity().getCenterPosition();
     Vector2 to = target.getCenterPosition();
 

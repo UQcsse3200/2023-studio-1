@@ -12,7 +12,9 @@ import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.npc.TamableComponent;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -68,6 +70,14 @@ public class ItemActions extends Component {
         resultStatus = water(tile);
         return resultStatus;
       }
+      case SWORD -> {
+        player.getEvents().trigger("attack", mousePos);
+        return true;
+      }
+      case GUN -> {
+        player.getEvents().trigger("shoot", mousePos);
+        return true;
+      }
       case FOOD -> {
         resultStatus = feed(player, mouseWorldPos);
         return resultStatus;
@@ -82,6 +92,14 @@ public class ItemActions extends Component {
       }
       case PLACEABLE -> {
         resultStatus = place(tile, getAdjustedPos(playerPos, mousePos));
+        return resultStatus;
+      }
+      case CLUE_ITEM -> {
+        entity.getEvents().trigger("mapDisplay");
+        return true;
+      }
+      case SHIP_PART -> {
+        resultStatus = repair(player, mouseWorldPos);
         return resultStatus;
       }
       default -> {
@@ -114,6 +132,8 @@ public class ItemActions extends Component {
     placeable.setPosition(adjustedPos);
     ServiceLocator.getGameArea().spawnEntity(placeable);
     tile.setOccupant(placeable);
+    // Placing a placeable item should remove it from inventory
+    ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class).removeItem(entity);
     return true;
   }
 
@@ -258,6 +278,8 @@ public class ItemActions extends Component {
   private boolean fertilise(TerrainTile tile) {
     if (isCropTile(tile.getOccupant())) {
       tile.getOccupant().getEvents().trigger("fertilise");
+      // Fertilising a crop tile should remove the item from the player inventory
+      ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class).removeItem(entity);
       return true;
     }
     return false;
@@ -273,6 +295,8 @@ public class ItemActions extends Component {
     if (isCropTile(tile.getOccupant())) {
       tile.getOccupant().getEvents().trigger("plant", FactoryService.getPlantFactories()
               .get(entity.getComponent(ItemComponent.class).getItemName().replace(" Seeds", "")));
+      // Planting using seeds should remove the item from player inventory
+      ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class).removeItem(entity);
       return true;
     }
     return false;
@@ -302,7 +326,6 @@ public class ItemActions extends Component {
 
     List<Entity> entities = interactionDetector.getEntitiesTowardsPosition(mouseWorldPos);
     entities.removeIf(entity -> entity.getComponent(TamableComponent.class) == null);
-    entities.removeIf(entity -> entity.getComponent(TamableComponent.class).isTamed()); //TODO: axolotl? handle that
 
     Entity entityToFeed = interactionDetector.getNearest(entities);
 
@@ -311,6 +334,37 @@ public class ItemActions extends Component {
     }
 
     entityToFeed.getEvents().trigger("feed");
+    // Feeding animals should remove the food from player inventory
+    player.getComponent(InventoryComponent.class).removeItem(entity);
     return true;
+  }
+
+  /**
+   * Repairs the ship if the player has a ship part item
+   *
+   * @param player        the player attempting to repair the ship
+   * @param mouseWorldPos position of player mouse to check for ship entity
+   * @return true if the repair is successful, false otherwise
+   */
+  private boolean repair(Entity player, Vector2 mouseWorldPos) {
+    InteractionDetector detector = player.getComponent(InteractionDetector.class);
+    if (detector == null) {
+      return false;
+    }
+
+    List<Entity> entities = detector.getEntitiesTowardsPosition(mouseWorldPos);
+    entities.removeIf(entity -> entity.getType() == null);
+    entities.removeIf(entity -> entity.getType() != EntityType.Ship);
+
+    Entity ship = detector.getNearest(entities);
+    if (ship == null) {
+      return false;
+    }
+    if (ship.getType() == EntityType.Ship) {
+      ship.getEvents().trigger("addPart", 1);
+      player.getComponent(InventoryComponent.class).removeItem(entity);
+      return true;
+    }
+    return false;
   }
 }

@@ -635,4 +635,9 @@ class QuestTest {
         assertEquals(6, counts[0]);
     }
 
+    @Test
+    public void testWrite() {
+
+    }
+
 }

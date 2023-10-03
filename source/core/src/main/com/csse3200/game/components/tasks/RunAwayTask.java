@@ -1,6 +1,7 @@
 package com.csse3200.game.components.tasks;
 
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.entities.Entity;
 
 /** Runs from a target entity until they get too far away or line of sight is lost */
@@ -18,7 +19,21 @@ public class RunAwayTask extends ChaseTask {
    * @param maxRunDistance Maximum distance from the entity before stopping.
    */
   public RunAwayTask(Entity target, int priority, float viewDistance, float maxRunDistance, Vector2 runSpeed) {
-    super(target, priority, viewDistance, maxRunDistance);
+    super(target, priority, viewDistance, maxRunDistance, runSpeed);
+    this.maxRunDistance = maxRunDistance;
+    this.runSpeed = runSpeed;
+  }
+
+  /**
+   * @param target The entity to run from.
+   * @param priority Task priority when running (0 when not running away).
+   * @param viewDistance Maximum distance from the entity at which running away can start.
+   * @param maxRunDistance Maximum distance from the entity before stopping.
+   * @param checkVisibility Whether to consider visability when running away.
+   */
+  public RunAwayTask(Entity target, int priority, float viewDistance, float maxRunDistance,
+                     Vector2 runSpeed, boolean checkVisibility) {
+    super(target, priority, viewDistance, maxRunDistance, runSpeed, checkVisibility);
     this.maxRunDistance = maxRunDistance;
     this.runSpeed = runSpeed;
   }
@@ -70,16 +85,35 @@ public class RunAwayTask extends ChaseTask {
 
   /**
    * Determines the priority when the RunAwayTask is active based on the distance to the target
-   * and the visibility of the target entity.
+   * and the visibility of the target entity and whether the animal is tamed.
    *
    * @return The active priority level or -1 if conditions are not met.
    */
   @Override
   protected int getActivePriority() {
     float dst = getDistanceToTarget();
-    if (dst > maxRunDistance || !isTargetVisible()) {
+    TamableComponent tamableComponent = owner.getEntity().getComponent(TamableComponent.class);
+
+    if (dst > maxRunDistance || !isTargetVisible() || (tamableComponent != null && tamableComponent.isTamed())) {
       return -1; // Too far, stop running away
     }
     return getRawPriority();
+  }
+
+  /**
+   * Determines the priority when the RunAwayTask is inactive based on the distance to the target
+   * and the visibility of the target entity and whether the animal is tamed.
+   *
+   * @return The inactive priority level or -1 if conditions are not met.
+   */
+  @Override
+  protected int getInactivePriority() {
+    float dst = getDistanceToTarget();
+    TamableComponent tamableComponent = owner.getEntity().getComponent(TamableComponent.class);
+
+    if (dst < getViewDistance() && isTargetVisible() && (tamableComponent == null || !tamableComponent.isTamed())) {
+      return getRawPriority();
+    }
+    return -1;
   }
 }

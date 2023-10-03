@@ -15,6 +15,11 @@ public abstract class Achievement extends Mission {
 		super(name);
 	}
 
+	/**
+	 * Used to write the {@link Achievement} for saving.
+	 * @param json - Json object to write to
+	 * @param i - the index
+	 */
 	public void write(Json json, Integer i) {
 		json.writeObjectStart("Achievement");
 		json.writeValue("index", i);
