@@ -42,9 +42,10 @@ public class HungerBar extends UIComponent{
         Skin hungerSkin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
 
         hungerBarOutline = new Image(ServiceLocator.getResourceService().getAsset(
-                "images/Player_Hunger/hunger_bar_outline.png", Texture.class));
+                "images/bars_ui/bar_outline.png", Texture.class));
         hungerBarFill = new Image(ServiceLocator.getResourceService().getAsset(
-                "images/Player_Hunger/hunger_bar_fill.png", Texture.class));
+                "images/bars_ui/healthy_fill.png", Texture.class));
+
 
         hungerLabels = new Array<>();
         for (int i = 0; i <= 100; i++) {

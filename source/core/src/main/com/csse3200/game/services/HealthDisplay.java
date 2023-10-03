@@ -119,7 +119,7 @@ public class HealthDisplay extends UIComponent{
 
         table.top();
         table.setFillParent(true);
-        table.padTop(-130f).padLeft(320f);
+        table.padTop(-130f).padLeft(820f);
 
         group.addActor(healthOutline);
         group.addActor(healthFill);
