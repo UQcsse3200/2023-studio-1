@@ -312,8 +312,8 @@ public class ItemActions extends Component {
       if (cropTileComponent != null && !cropTileComponent.isFertilised()) {
         // Fertilising a crop tile should remove the item from the player inventory
         ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class).removeItem(entity);
+        tile.getOccupant().getEvents().trigger("fertilise");
       }
-      tile.getOccupant().getEvents().trigger("fertilise");
       return true;
     }
     return false;
@@ -331,9 +331,9 @@ public class ItemActions extends Component {
       if (cropTileComponent != null && cropTileComponent.getPlant() == null) {
         // Planting using seeds should remove the item from player inventory
         ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class).removeItem(entity);
+        tile.getOccupant().getEvents().trigger("plant", FactoryService.getPlantFactories()
+                .get(entity.getComponent(ItemComponent.class).getItemName().replace(" Seeds", "")));
       }
-      tile.getOccupant().getEvents().trigger("plant", FactoryService.getPlantFactories()
-              .get(entity.getComponent(ItemComponent.class).getItemName().replace(" Seeds", "")));
       return true;
     }
     return false;
