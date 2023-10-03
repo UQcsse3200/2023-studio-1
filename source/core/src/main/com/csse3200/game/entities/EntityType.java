@@ -32,6 +32,7 @@ public enum EntityType {
     Ship(0),
     ShipDebris(0),
     ShipPartTile(0),
+    Dummy(0), // Used for testing
     FireFlies(0);
 
 
