@@ -41,8 +41,13 @@ public class ServiceLocator {
   private static SaveLoadService saveLoadService;
   private static MissionManager missions;
   private static PlanetOxygenService planetOxygenService;
+
   private static PlantCommandService plantCommandService;
+  private static PlayerHungerService playerHungerService;
+
   private static PlantInfoService plantInfoService;
+  private static boolean cutSceneRunning; // true for running and false otherwise
+
   private static ParticleService particleService;
   public static PlantCommandService getPlantCommandService() {
     return plantCommandService;
@@ -50,6 +55,7 @@ public class ServiceLocator {
   public static PlantInfoService getPlantInfoService() {
     return plantInfoService;
   }
+
 
   public static GameArea getGameArea() {
     return gameArea;
@@ -93,12 +99,32 @@ public class ServiceLocator {
     return planetOxygenService;
   }
 
+  public static PlayerHungerService getPlayerHungerService() {
+    return playerHungerService;
+  }
+
   public static SaveLoadService getSaveLoadService() {
     return saveLoadService;
   }
 
   public static ParticleService getParticleService() {
     return particleService;
+  }
+
+  /**
+   * Sets the cutscene status to either running or not running.
+   * @param isRunning true if cutscene is running, false otherwise
+   */
+  public static void setCutSceneRunning(boolean isRunning) {
+    cutSceneRunning = isRunning;
+  }
+
+  /**
+   * Gets the cutscene status.
+   * @return true if cutscene is running, false otherwise
+   */
+  public static boolean getCutSceneStatus() {
+    return cutSceneRunning;
   }
 
   public static void registerGameArea(GameArea area) {
@@ -154,6 +180,12 @@ public class ServiceLocator {
   public static void registerPlanetOxygenService(PlanetOxygenService source) {
     logger.debug("Registering planet oxygen service {}", source);
     planetOxygenService = source;
+  }
+
+
+  public static void registerPlayerHungerService(PlayerHungerService source) {
+    logger.debug("Registering player hunger service {}", source);
+    playerHungerService = source;
   }
 
   public static void registerPlantCommandService(PlantCommandService source) {

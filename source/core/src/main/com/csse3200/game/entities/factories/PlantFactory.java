@@ -193,6 +193,11 @@ public class PlantFactory {
     }
 
 
+    /**
+     * Create a plant for testing
+     * @param cropTile Crop tile upon which the plant is planted
+     * @return new plant entity
+     */
     public static Entity createTest(CropTileComponent cropTile) {
         return new Entity(EntityType.Plant);
     }

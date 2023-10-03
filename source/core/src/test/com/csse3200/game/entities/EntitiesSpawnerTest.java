@@ -4,6 +4,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainComponent;
@@ -16,11 +17,13 @@ import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
+import net.dermetfan.gdx.physics.box2d.PositionController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -57,7 +60,7 @@ class EntitiesSpawnerTest {
         GameMap gameMap = new GameMap(terrainFactory);
         ServiceLocator.registerGameArea(area);
 
-        initialEntityCount = ServiceLocator.getEntityService().getSize();
+        initialEntityCount = getDummyEntityCount();
         player = new Entity();
         TerrainComponent terrain = mock(TerrainComponent.class);
         doReturn(new Vector2(0f, 0f)).when(terrain).tileToWorldPosition(0, 0);
@@ -69,7 +72,18 @@ class EntitiesSpawnerTest {
     //This method is meant to mirror what a normal create method would look like
     //e.g., createCow
     private Entity createDummyEntity(Entity player) {
-        return new Entity();
+        return new Entity(EntityType.Dummy);
+    }
+
+    private int getDummyEntityCount() {
+        Array<Entity> entities = ServiceLocator.getEntityService().getEntities();
+        int count = 0;
+        for (int i = 0; i < entities.size; i++) {
+            if (entities.get(i).getType().equals(EntityType.Dummy)) {
+                count++;
+            }
+        }
+        return count;
     }
 
     @Test
@@ -80,7 +94,7 @@ class EntitiesSpawnerTest {
         entitiesSpawner = new EntitiesSpawner(entitySpawners);
         entitiesSpawner.setGameAreas(area);
         entitiesSpawner.spawnNow();
-        assertEquals(initialEntityCount + 1, ServiceLocator.getEntityService().getSize());
+        assertEquals(initialEntityCount + 1, getDummyEntityCount());
     }
 
 
@@ -97,7 +111,7 @@ class EntitiesSpawnerTest {
         timeService.setHour(1);
         timeService.setHour(1);
         timeService.setHour(1);
-        assertEquals(initialEntityCount + 1, ServiceLocator.getEntityService().getSize());
+        assertEquals(initialEntityCount + 1, getDummyEntityCount());
     }
 
     @Test
@@ -109,7 +123,7 @@ class EntitiesSpawnerTest {
         entitiesSpawner.setGameAreas(area);
         entitiesSpawner.startPeriodicSpawning();
         timeService.setHour(0);
-        assertEquals(initialEntityCount, ServiceLocator.getEntityService().getSize());
+        assertEquals(initialEntityCount, getDummyEntityCount());
     }
 
     @Test
@@ -125,16 +139,16 @@ class EntitiesSpawnerTest {
         entitiesSpawner.setGameAreas(area);
 
         entitiesSpawner.startPeriodicSpawning();
-        assertEquals(initialEntityCount, ServiceLocator.getEntityService().getSize());
+        assertEquals(initialEntityCount, getDummyEntityCount());
 
         timeService.setHour(0);
-        assertEquals(initialEntityCount + 1, ServiceLocator.getEntityService().getSize());
+        assertEquals(initialEntityCount + 1, getDummyEntityCount());
 
         timeService.setHour(1);
-        assertEquals(initialEntityCount + 2, ServiceLocator.getEntityService().getSize());
+        assertEquals(initialEntityCount + 2, getDummyEntityCount());
 
         timeService.setHour(2);
-        assertEquals(initialEntityCount + 3, ServiceLocator.getEntityService().getSize());
+        assertEquals(initialEntityCount + 3, getDummyEntityCount());
     }
 
     @Test
@@ -150,23 +164,23 @@ class EntitiesSpawnerTest {
         entitiesSpawner.setGameAreas(area);
 
         entitiesSpawner.startPeriodicSpawning();
-        assertEquals(initialEntityCount, ServiceLocator.getEntityService().getSize());
+        assertEquals(initialEntityCount, getDummyEntityCount());
 
         timeService.setHour(0);
-        assertEquals(initialEntityCount, ServiceLocator.getEntityService().getSize());
+        assertEquals(initialEntityCount, getDummyEntityCount());
 
         timeService.setHour(0);
-        assertEquals(initialEntityCount + 1, ServiceLocator.getEntityService().getSize());
+        assertEquals(initialEntityCount + 1, getDummyEntityCount());
 
         timeService.setHour(0);
-        assertEquals(initialEntityCount + 2, ServiceLocator.getEntityService().getSize());
+        assertEquals(initialEntityCount + 2, getDummyEntityCount());
 
         timeService.setHour(0);
-        assertEquals(initialEntityCount + 4, ServiceLocator.getEntityService().getSize());
+        assertEquals(initialEntityCount + 4, getDummyEntityCount());
 
         timeService.setHour(0);
         timeService.setHour(0);
-        assertEquals(initialEntityCount + 6, ServiceLocator.getEntityService().getSize());
+        assertEquals(initialEntityCount + 6, getDummyEntityCount());
     }
 
     class GameAreaSimple extends GameArea {

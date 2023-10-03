@@ -1,20 +1,17 @@
 package com.csse3200.game.missions.quests;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import com.badlogic.gdx.utils.JsonValue;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.rewards.Reward;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class QuestTest {
 
@@ -315,17 +312,22 @@ class QuestTest {
 
     @Test
     public void testQuestsExpiry() {
+        Quest nonExpireQuest = new AutoQuest("Quest 6", r1, "Description");
         assertTrue(q1.isExpired());
         assertFalse(q2.isExpired());
         assertFalse(q3.isExpired());
         assertFalse(q4.isExpired());
         assertFalse(q5.isExpired());
 
+        assertFalse(nonExpireQuest.isExpired());
+
         q1.updateExpiry();
         q2.updateExpiry();
         q3.updateExpiry();
         q4.updateExpiry();
         q5.updateExpiry();
+
+        nonExpireQuest.updateExpiry();
 
         assertTrue(q1.isExpired());
         assertTrue(q2.isExpired());
@@ -333,11 +335,7 @@ class QuestTest {
         assertFalse(q4.isExpired());
         assertFalse(q5.isExpired());
 
-        q1.updateExpiry();
-        q2.updateExpiry();
-        q3.updateExpiry();
-        q4.updateExpiry();
-        q5.updateExpiry();
+        assertFalse(nonExpireQuest.isExpired());
 
         q1.updateExpiry();
         q2.updateExpiry();
@@ -345,17 +343,35 @@ class QuestTest {
         q4.updateExpiry();
         q5.updateExpiry();
 
+        nonExpireQuest.updateExpiry();
+
         q1.updateExpiry();
         q2.updateExpiry();
         q3.updateExpiry();
         q4.updateExpiry();
         q5.updateExpiry();
+
+        nonExpireQuest.updateExpiry();
+
+        q1.updateExpiry();
+        q2.updateExpiry();
+        q3.updateExpiry();
+        q4.updateExpiry();
+        q5.updateExpiry();
+
+        nonExpireQuest.updateExpiry();
 
         assertTrue(q1.isExpired());
         assertTrue(q2.isExpired());
         assertTrue(q3.isExpired());
         assertTrue(q4.isExpired());
         assertTrue(q5.isExpired());
+
+        assertFalse(nonExpireQuest.isExpired());
+
+        nonExpireQuest.resetExpiry();
+        
+        assertFalse(nonExpireQuest.isExpired());
     }
 
     @Test

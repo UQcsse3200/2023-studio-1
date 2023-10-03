@@ -7,6 +7,7 @@ import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.TractorFactory;
 import com.csse3200.game.missions.MissionManager;
+import com.csse3200.game.missions.cutscenes.Cutscene;
 import com.csse3200.game.missions.rewards.*;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -54,7 +55,7 @@ public class QuestFactory {
         MultiReward reward = new MultiReward(List.of(
                 new ItemReward(List.of(ItemFactory.createShovel())),
                 new QuestReward(questsToAdd, questsToActivate),
-                new DialogueReward(dialogue)
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
         return new AutoQuest(FIRST_CONTACT_QUEST_NAME, reward, "Wake up after your crash landing.");
     }
@@ -83,7 +84,7 @@ public class QuestFactory {
                         ItemFactory.createCosmicCobSeed()
                 )),
                 new QuestReward(questsToAdd, questsToActivate),
-                new DialogueReward(dialogue)
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
         return new ClearDebrisQuest(CLEARING_YOUR_MESS_QUEST_NAME, reward, 15);
     }
@@ -104,7 +105,7 @@ public class QuestFactory {
         MultiReward reward = new MultiReward(List.of(
                 new ItemReward(List.of(ItemFactory.createScythe(), ItemFactory.createWateringcan())),
                 new QuestReward(questsToAdd, questsToActivate),
-                new DialogueReward(dialogue)
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
         return new PlantInteractionQuest(SOWING_YOUR_FIRST_SEEDS_QUEST_NAME, reward, MissionManager.MissionEvent.PLANT_CROP,
                 Set.of("Cosmic Cob"), 6);
@@ -126,11 +127,11 @@ public class QuestFactory {
         MultiReward reward = new MultiReward(List.of(
                 new ItemReward(List.of(
                         ItemFactory.createSprinklerItem(),
-                        ItemFactory.createSprinklerItem()
-                        // TODO import sprinkler pump
+                        ItemFactory.createSprinklerItem(),
+                        ItemFactory.createPumpItem()
                 )),
                 new QuestReward(questsToAdd, questsToActivate),
-                new DialogueReward(dialogue)
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
         return new PlantInteractionQuest(REAPING_YOUR_REWARDS_QUEST_NAME, reward, MissionManager.MissionEvent.HARVEST_CROP,
                 Set.of("Cosmic Cob"), 6);
@@ -146,7 +147,7 @@ public class QuestFactory {
                 """;
         MultiReward reward = new MultiReward(List.of(
                 new EntityReward(List.of(TractorFactory.createTractor(ServiceLocator.getGameArea().getPlayer()))),
-                new DialogueReward(dialogue)
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
         return new MissionCompleteQuest(TRACTOR_GO_BRRRRRR, reward, 1);
     }
@@ -166,7 +167,7 @@ public class QuestFactory {
 
         MultiReward reward = new MultiReward(List.of(
                 new QuestReward(questsToAdd, questsToActivate),
-                new DialogueReward(dialogue)
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
         return new TameAnimalsQuest(MAKING_FRIENDS_QUEST_NAME, reward, 1);
     }
@@ -199,14 +200,13 @@ public class QuestFactory {
                 new ItemReward(itemRewards),
                 new QuestReward(questsToAdd, questsToActivate),
                 new TriggerHostilesReward(List.of(
-                        // TODO - Add extra hostile types
                         NPCFactory.createOxygenEater(ServiceLocator.getGameArea().getPlayer()),
                         NPCFactory.createOxygenEater(ServiceLocator.getGameArea().getPlayer()),
-                        NPCFactory.createOxygenEater(ServiceLocator.getGameArea().getPlayer()),
-                        NPCFactory.createOxygenEater(ServiceLocator.getGameArea().getPlayer()),
-                        NPCFactory.createOxygenEater(ServiceLocator.getGameArea().getPlayer())
+                        NPCFactory.createDragonfly(ServiceLocator.getGameArea().getPlayer()),
+                        NPCFactory.createDragonfly(ServiceLocator.getGameArea().getPlayer()),
+                        NPCFactory.createBat(ServiceLocator.getGameArea().getPlayer())
                 )),
-                new DialogueReward(dialogue)
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
         return new FertiliseCropTilesQuest(FERTILISING_FIESTA_QUEST_NAME, reward, 1);
     }
@@ -225,7 +225,7 @@ public class QuestFactory {
                         ItemFactory.createHammerPlantSeed(),
                         ItemFactory.createAloeVeraSeed()
                 )),
-                new DialogueReward(dialogue)
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
 
         return new ManageHostilesQuest(ALIENS_ATTACK_QUEST_NAME, reward, Set.of(EntityType.OxygenEater), 5);
@@ -261,7 +261,7 @@ public class QuestFactory {
         MultiReward reward = new MultiReward(List.of(
                 new ItemReward(itemRewards),
                 new QuestReward(questsToAdd, questsToActivate),
-                new DialogueReward(dialogue)
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
 
         return new MainQuest(ACT_I_MAIN_QUEST_NAME, reward, 5, requiredQuests, "gain ALIEN NPC's trust");
@@ -288,7 +288,7 @@ public class QuestFactory {
                         ItemFactory.createDeadlyNightshadeSeed()
                 )),
                 new QuestReward(questsToAdd, questsToActivate),
-                new DialogueReward(dialogue)
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
         return new AutoQuest(CONNECTION_QUEST_NAME, reward, "Make a connection with ALIEN NPC, figure out how you can be reunited with Humanity.");
     }
@@ -313,7 +313,7 @@ public class QuestFactory {
                         ItemFactory.createShipPart()
                 )),
                 new QuestReward(questsToAdd, questsToActivate),
-                new DialogueReward(dialogue)
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
         return new PlantInteractionQuest(HOME_SICK_QUEST_NAME, reward, MissionManager.MissionEvent.HARVEST_CROP,
                 Set.of("Deadly Nightshade"), 3);
@@ -337,7 +337,7 @@ public class QuestFactory {
                         ItemFactory.createShipPart()
                 )),
                 new QuestReward(questsToAdd, questsToActivate),
-                new DialogueReward(dialogue)
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
         return new ShipRepairQuest(SHIP_REPAIRS_QUEST_NAME, reward, 3);
     }
@@ -351,7 +351,7 @@ public class QuestFactory {
                 "Nice work. {WAIT}The {COLOR=#76428A}SHIP{COLOR=WHITE} is fully repaired - the radio should be working now. {WAIT}Come speak to me when you are ready to attempt to make contact with your people."
                 """;
 
-        DialogueReward reward = new DialogueReward(dialogue);
+        DialogueReward reward = new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN);
         return new ShipRepairQuest(BRINGING_IT_ALL_TOGETHER_QUEST_NAME, reward, 17);
     }
 
@@ -375,7 +375,7 @@ public class QuestFactory {
 
         MultiReward reward = new MultiReward(List.of(
                 new QuestReward(questsToAdd, questsToActivate),
-                new DialogueReward(dialogue)
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
 
         return new MainQuest(ACT_II_MAIN_QUEST_NAME, reward, 10, requiredQuests, "make connection with the rest of your people");
@@ -409,7 +409,7 @@ public class QuestFactory {
                         new SolarSurgeEvent(312, 2, 100, 1.5f)
                 )),
                 new QuestReward(questsToAdd, questsToActivate),
-                new DialogueReward(dialogue)
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
         return new AutoQuest(AN_IMMINENT_THREAT_QUEST_NAME, reward, "Learn about the imminent threat.");
     }
@@ -427,7 +427,7 @@ public class QuestFactory {
                         ItemFactory.createAtomicAlgaeSeed(),
                         ItemFactory.createAtomicAlgaeSeed()
                 )),
-                new DialogueReward(dialogue)
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
         return new PlantInteractionQuest(AIR_AND_ALGAE_QUEST_NAME, reward, MissionManager.MissionEvent.PLANT_CROP,
                 Set.of("Atomic Algae"), 3);
@@ -441,7 +441,7 @@ public class QuestFactory {
         String dialogue = """
                 "Well done! {WAIT}You have your people one more chance at survival. {WAIT}Come with me, let us use your ship to signal the others for landing. {WAIT}I hope our people can help each other rebuild what we each have lost."
                 """;
-        DialogueReward reward = new DialogueReward(dialogue);
+        DialogueReward reward = new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN);
         return new OxygenLevelQuest(STRATOSPHERIC_SENTINEL_QUEST_NAME, reward, ServiceLocator.getPlanetOxygenService(),
                 "the planet's oxygen level", 348, 95);
     }

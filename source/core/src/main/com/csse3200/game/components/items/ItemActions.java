@@ -9,9 +9,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.npc.TamableComponent;
+import com.csse3200.game.components.player.HungerComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
@@ -108,6 +110,35 @@ public class ItemActions extends Component {
     }
   }
 
+  public void eat(Entity player) {
+    ItemComponent type = entity.getComponent(ItemComponent.class);
+    // Wasn't an item or did not have ItemComponent class
+    if (type == null) {
+      return;
+    }
+    if (type.getItemType() == ItemType.FOOD) {
+      switch (type.getItemName()) {
+        case "Ear of Cosmic Cob":
+          player.getComponent(HungerComponent.class).increaseHungerLevel(-10);
+          entity.dispose();
+          return;
+        case "Nightshade Berry":
+          player.getComponent(CombatStatsComponent.class).addHealth(-10);
+          player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
+          entity.dispose();
+          return;
+        case "Hammer Flower":
+          player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
+          entity.dispose();
+          return;
+        case "Aloe Vera Leaf":
+          player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
+          player.getComponent(CombatStatsComponent.class).addHealth(30);
+          entity.dispose();
+      }
+    }
+  }
+
   /**
    * Places a placeable object based on its name (from ItemComponent) on a
    * TerrainTile
@@ -132,6 +163,8 @@ public class ItemActions extends Component {
     placeable.setPosition(adjustedPos);
     ServiceLocator.getGameArea().spawnEntity(placeable);
     tile.setOccupant(placeable);
+    // Placing a placeable item should remove it from inventory
+    ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class).removeItem(entity);
     return true;
   }
 
@@ -276,6 +309,8 @@ public class ItemActions extends Component {
   private boolean fertilise(TerrainTile tile) {
     if (isCropTile(tile.getOccupant())) {
       tile.getOccupant().getEvents().trigger("fertilise");
+      // Fertilising a crop tile should remove the item from the player inventory
+      ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class).removeItem(entity);
       return true;
     }
     return false;
@@ -291,6 +326,8 @@ public class ItemActions extends Component {
     if (isCropTile(tile.getOccupant())) {
       tile.getOccupant().getEvents().trigger("plant", FactoryService.getPlantFactories()
               .get(entity.getComponent(ItemComponent.class).getItemName().replace(" Seeds", "")));
+      // Planting using seeds should remove the item from player inventory
+      ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class).removeItem(entity);
       return true;
     }
     return false;
@@ -328,6 +365,8 @@ public class ItemActions extends Component {
     }
 
     entityToFeed.getEvents().trigger("feed");
+    // Feeding animals should remove the food from player inventory
+    player.getComponent(InventoryComponent.class).removeItem(entity);
     return true;
   }
 

@@ -25,6 +25,7 @@ public class ItemComponent extends Component {
     private final ItemType itemType; // Type of item
     private Texture itemTexture;
 
+    private final boolean perishable; // will the item be consumed on use
 
 
     /**
@@ -40,6 +41,17 @@ public class ItemComponent extends Component {
         this.itemDescription = "" ; //default description
         this.price = 0;
         this.sellable = false; //default sellable
+        this.perishable = false;
+    }
+    public ItemComponent(String itemName, ItemType itemType, Texture invSprite, boolean perishable) {
+        this.itemTexture = invSprite;
+        this.itemType = itemType;
+        this.itemName = itemName;
+        this.itemId = generateUniqueID(); // Generate a unique ID for the item
+        this.itemDescription = "" ; //default description
+        this.price = 0;
+        this.sellable = false; //default sellable
+        this.perishable = perishable;
     }
 
     /**
@@ -56,6 +68,7 @@ public class ItemComponent extends Component {
         this.itemDescription = "" ; //default description
         this.price = price;
         this.sellable = true;
+        this.perishable = false;
     }
 
     /**
@@ -71,6 +84,16 @@ public class ItemComponent extends Component {
         this.itemId = generateUniqueID(); // Generate a unique ID for the item
         this.itemDescription = itemDescription ; //default description
         this.sellable = false; //default sellable
+        this.perishable = false;
+    }
+    public ItemComponent(String itemName, ItemType itemType, String itemDescription, Texture itemTexture, boolean perishable) {
+        this.itemTexture = itemTexture;
+        this.itemType = itemType;
+        this.itemName = itemName;
+        this.itemId = generateUniqueID(); // Generate a unique ID for the item
+        this.itemDescription = itemDescription ; //default description
+        this.sellable = false; //default sellable
+        this.perishable = perishable;
     }
 
     /**
@@ -88,9 +111,16 @@ public class ItemComponent extends Component {
         this.itemDescription = itemDescription ; //default description
         this.price = price;
         this.sellable = true;
+        this.perishable = false;
     }
 
-
+    /**
+     * Returns if the item is consumable
+     * @return boolean whether the item is perishable or not
+     */
+    public boolean isPerishable() {
+        return perishable;
+    }
     /**
      * Returns the price of the item
      * @return int price of item
