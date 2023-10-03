@@ -20,6 +20,7 @@ public class CoordinatesDisplay extends UIComponent {
 		this.clueComponent = clueComponent;
 	}
 
+	@Override
 	public void create() {
 		super.create();
 		isOpen = false;
@@ -31,7 +32,7 @@ public class CoordinatesDisplay extends UIComponent {
 
 	@Override
 	protected void draw(SpriteBatch batch) {
-
+		// Not needed
 	}
 
 	/**
@@ -65,10 +66,10 @@ public class CoordinatesDisplay extends UIComponent {
 		}
 	}
 
+	@Override
 	public void dispose() {
 		window.clear();
 		window.remove();
-
 		super.dispose();
 	}
 

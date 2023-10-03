@@ -7,10 +7,11 @@ import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 public class FenceComponent extends Component {
 
     private ConnectedEntityUtility connectedEntityUtility;
+
     /**
      * Texture paths for different fence orientation.
      * The order of this array is very important, correct order ensures a fence gets the correct texture.
-     */ // TODO add texture desc.
+     */
     private static final String[] textures_fence= {
             "images/placeable/fences/f.png",
             "images/placeable/fences/f_l.png",
@@ -71,11 +72,6 @@ public class FenceComponent extends Component {
 
     private boolean isGate = false;
     private boolean isOpen = false;
-
-    /**
-     * The paths to the sound associated with the gate
-     */
-    private String[] sounds;
 
     public FenceComponent(boolean isGate) {
         this.isGate = isGate;

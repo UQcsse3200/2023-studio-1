@@ -42,7 +42,6 @@ public class SolarSurgeEvent extends WeatherEvent {
      */
     @Override
     public void startEffect() {
-        return;
     }
 
     /**
@@ -50,6 +49,5 @@ public class SolarSurgeEvent extends WeatherEvent {
      */
     @Override
     public void stopEffect() {
-        return;
     }
 }

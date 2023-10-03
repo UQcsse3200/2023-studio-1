@@ -49,65 +49,7 @@ public class EndCreditsDisplay extends UIComponent {
      */
     private TypingLabel creditsLabel;
 
-    /**
-     * Creates a new EndCreditsDisplay instance.
-     *
-     * @param game The GdxGame instance.
-     */
-    public EndCreditsDisplay(GdxGame game) {
-        super();
-        this.game = game;
-    }
-
-    @Override
-    public void create() {
-        super.create();
-        addActors();
-    }
-
-    /**
-     * Adds UI elements and initializes the screen.
-     */
-    private void addActors() {
-        background =
-                new Image(
-                        ServiceLocator.getResourceService()
-                                .getAsset("images/intro_background_v2.png", Texture.class));
-        background.setPosition(0, 0);
-        float scaledHeight = Gdx.graphics.getWidth() * (background.getHeight() / background.getWidth());
-        background.setHeight(scaledHeight);
-        String credits = getCredits();
-        creditsLabel = new TypingLabel(credits, skin);
-        creditsLabel.setAlignment(Align.center);
-        // Create a "Return" button
-        this.returnButton =  new TextButton("Return to Main Menu", skin);
-        // Add a listener to the "Skip" button
-        this.returnButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                logger.debug("Player Returned to Main Menu");
-                returnToMenu();
-            }
-        });
-        // Set the position of the "Skip" button in the top-right corner
-        this.returnButton.setPosition(Gdx.graphics.getWidth() - this.returnButton.getWidth() - 10, Gdx.graphics.getHeight() - this.returnButton.getHeight() - 10);
-        Table rootTable = new Table();
-        rootTable.setFillParent(true); // Make the table fill the screen
-        rootTable.row();
-        rootTable.add(creditsLabel).top().padTop((float) (Gdx.graphics.getHeight() * 2.5));
-        // Add the "Skip" button to the stage
-        stage.addActor(background);
-        stage.addActor(returnButton);
-        stage.addActor(rootTable);
-    }
-
-    /**
-     * Gets the credits text to be displayed on the credits screen.
-     *
-     * @return The credits text.
-     */
-    private String getCredits() {
-        return """
+    private final static String credits = """
                     {SLOW}
                     {RAINBOW}GARDENERS OF THE GALAXY: LEGEND OF THE ASTROHOE {ENDRAINBOW}
                     
@@ -179,6 +121,56 @@ public class EndCreditsDisplay extends UIComponent {
                     Player inventory system
                     Generic inventory system
                     Win and loss screens""";
+
+    /**
+     * Creates a new EndCreditsDisplay instance.
+     *
+     * @param game The GdxGame instance.
+     */
+    public EndCreditsDisplay(GdxGame game) {
+        super();
+        this.game = game;
+    }
+
+    @Override
+    public void create() {
+        super.create();
+        addActors();
+    }
+
+    /**
+     * Adds UI elements and initializes the screen.
+     */
+    private void addActors() {
+        background =
+                new Image(
+                        ServiceLocator.getResourceService()
+                                .getAsset("images/intro_background_v2.png", Texture.class));
+        background.setPosition(0, 0);
+        float scaledHeight = Gdx.graphics.getWidth() * (background.getHeight() / background.getWidth());
+        background.setHeight(scaledHeight);
+        creditsLabel = new TypingLabel(credits, skin);
+        creditsLabel.setAlignment(Align.center);
+        // Create a "Return" button
+        this.returnButton =  new TextButton("Return to Main Menu", skin);
+        // Add a listener to the "Skip" button
+        this.returnButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                logger.debug("Player Returned to Main Menu");
+                returnToMenu();
+            }
+        });
+        // Set the position of the "Skip" button in the top-right corner
+        this.returnButton.setPosition(Gdx.graphics.getWidth() - this.returnButton.getWidth() - 10, Gdx.graphics.getHeight() - this.returnButton.getHeight() - 10);
+        Table rootTable = new Table();
+        rootTable.setFillParent(true); // Make the table fill the screen
+        rootTable.row();
+        rootTable.add(creditsLabel).top().padTop((float) (Gdx.graphics.getHeight() * 2.5));
+        // Add the "Skip" button to the stage
+        stage.addActor(background);
+        stage.addActor(returnButton);
+        stage.addActor(rootTable);
     }
 
     /**

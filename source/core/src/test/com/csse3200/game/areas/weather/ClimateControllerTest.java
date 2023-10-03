@@ -191,7 +191,7 @@ class ClimateControllerTest {
 		jsonData.addChild("Events", events);
 		assertEquals(events, jsonData.get("Events"));
 
-		controller.setValues(json, jsonData);
+		controller.setValues(jsonData);
 
 		assertEquals(26.0f, controller.getTemperature());
 		assertEquals(1.2f, controller.getHumidity());

@@ -8,13 +8,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.utils.Align;
-
 import java.util.Objects;
 
 /**
  * A class used to combine all the data necessary to the individual inventory slots
  */
 public class ItemSlot extends Stack {
+    private final String selectedString = "images/selected.png";
+    private final String itemFrameString = "images/itemFrame.png";
     private Texture itemTexture;
     private Integer count;
     private final Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
@@ -25,8 +26,6 @@ public class ItemSlot extends Stack {
 
     private Label label;
     private Stack draggable;
-    private Label countLabel;
-    private Label toolbarLabel;
 
     /**
      * Construct an itemSlot with a texture, count and selected state
@@ -37,8 +36,8 @@ public class ItemSlot extends Stack {
     public ItemSlot(Texture itemTexture, Integer count, boolean selected) {
         this.itemTexture = itemTexture;
         this.count = count;
-        this.background = new Image(new Texture(Gdx.files.internal("images/selected.png")));
-        this.frame = new Image(new Texture(Gdx.files.internal("images/itemFrame.png")));
+        this.background = new Image(new Texture(Gdx.files.internal(selectedString)));
+        this.frame = new Image(new Texture(Gdx.files.internal(itemFrameString)));
         this.selected = selected;
         this.createItemSlot();
     }
@@ -51,8 +50,8 @@ public class ItemSlot extends Stack {
     public ItemSlot(Texture itemTexture, boolean selected) {
         this.itemTexture = itemTexture;
         this.count = null;
-        this.background = new Image(new Texture(Gdx.files.internal("images/selected.png")));
-        this.frame = new Image(new Texture(Gdx.files.internal("images/itemFrame.png")));
+        this.background = new Image(new Texture(Gdx.files.internal(selectedString)));
+        this.frame = new Image(new Texture(Gdx.files.internal(itemFrameString)));
         this.selected = selected;
         this.createItemSlot();
     }
@@ -64,8 +63,8 @@ public class ItemSlot extends Stack {
     public ItemSlot(boolean selected) {
         this.itemTexture = null;
         this.count = null;
-        this.background = new Image(new Texture(Gdx.files.internal("images/selected.png")));
-        this.frame = new Image(new Texture(Gdx.files.internal("images/itemFrame.png")));
+        this.background = new Image(new Texture(Gdx.files.internal(selectedString)));
+        this.frame = new Image(new Texture(Gdx.files.internal(itemFrameString)));
         this.selected = selected;
         this.createItemSlot();
 
@@ -155,11 +154,9 @@ public class ItemSlot extends Stack {
                 label.setText(this.count + " ");
             }
         }
-        if (this.count != null && this.count <= 1) {
-            if (label != null) {
-                draggable.removeActor(label);
-                this.label = null;
-            }
+        if (this.count != null && this.count <= 1 && label != null) {
+            draggable.removeActor(label);
+            this.label = null;
         }
 
         this.add(draggable);

@@ -86,6 +86,8 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
                 case "Decay" -> decayAndDeadEffect();
                 case "Health" -> healthEffect();
                 case "Poison" -> poisonEffect();
+                default -> { // Cry or something
+                }
             }
         }
 
@@ -144,14 +146,9 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
             // Check for any crop tiles near the plant.
             if (entityInRange.getType() == EntityType.Tile) {
                 Entity plant = entityInRange.getComponent(CropTileComponent.class).getPlant();
-                if (plant != null) {
-
-                    // Make sure the plant does not harm itself.
-                    if (entity.getId() != plant.getId()) {
-
-                        // Decrease the health of all plants in the effect area.
-                        plant.getComponent(PlantComponent.class).increasePlantHealth(-1);
-                    }
+                if (plant != null && entity.getId() != plant.getId()) {
+                    // Decrease the health of all plants in the effect area.
+                    plant.getComponent(PlantComponent.class).increasePlantHealth(-1);
                 }
             }
 
@@ -167,10 +164,8 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
 
                 // First check for other plants in the area.
                 Entity plant = entityInRange.getComponent(CropTileComponent.class).getPlant();
-                if (plant != null) {
-                    if (entity.getId() != plant.getId()) {
+                if (plant != null && entity.getId() != plant.getId()) {
                         plant.getComponent(PlantComponent.class).increasePlantHealth(1);
-                    }
                 }
 
             // Now check if the player.

@@ -49,7 +49,7 @@ public class WateringCanLevelComponent extends Component {
     public void setCapacity(float newCapacity){
         capacity = newCapacity;
 
-        if (currentLevel >= capacity){
+        if (currentLevel >= capacity) {
             currentLevel = capacity;    //if the current level is greater than the new capacity
                                         //then lower the current level to capacity
         }
@@ -131,7 +131,9 @@ public class WateringCanLevelComponent extends Component {
      * @return
      */
     public boolean isFull() {
-        if (currentLevel >= capacity){ return true; }
+        if (currentLevel >= capacity) {
+            return true;
+        }
         return false;
     }
     
@@ -140,7 +142,9 @@ public class WateringCanLevelComponent extends Component {
      * @return 
      */
     public boolean isEmpty() {
-        if (currentLevel <= 0){ return true; }
+        if (currentLevel <= 0) {
+            return true;
+        }
         return false;
     }
 

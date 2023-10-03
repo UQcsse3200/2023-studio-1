@@ -180,7 +180,8 @@ public class WinScreenDisplay extends UIComponent {
                 (textAnimationDuration * (float)Gdx.graphics.getFramesPerSecond());
         // The universal speed limit must be enforced
         spaceSpeed = Math.min(calculatedSpeed, 1.5f);
-        logger.debug(String.format("Space Speed: %s", spaceSpeed));
+        String log = String.format("Space Speed: %s", spaceSpeed);
+        logger.debug(log);
     }
 
     @Override

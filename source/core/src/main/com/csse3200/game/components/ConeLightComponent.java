@@ -186,6 +186,7 @@ public class ConeLightComponent extends Component {
 	/**
 	 * Writes to the json in order to store the lights state
 	 */
+	@Override
 	public void write(Json json){
 		json.writeObjectStart(this.getClass().getSimpleName());
 		//Save the muted value to the json file

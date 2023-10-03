@@ -1,6 +1,5 @@
 package com.csse3200.game.components.gamearea;
 
-import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.inventory.InventoryDisplayManager;
 import com.csse3200.game.components.maingame.MainGameActions;
 import org.slf4j.Logger;
@@ -28,9 +27,6 @@ public class GameAreaDisplay extends UIComponent {
   private static final Logger logger = LoggerFactory.getLogger(GameAreaDisplay.class);
   private Group pausingGroup = new Group();
   private OpenPauseComponent openPauseComponent;
-  private Image popUp;
-  private GdxGame game;
-  private boolean isPaused = false;
   private Image backgroundOverlay;
   private InventoryDisplayManager inventoryDisplayManager;
 

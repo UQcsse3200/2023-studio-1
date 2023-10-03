@@ -94,6 +94,7 @@ public class ToolbarDisplay extends UIComponent {
      *  @see Table for positioning options
      */
     private void initialiseToolbar() {
+        logger.debug("Toolbar being made");
         table.defaults().size(64, 64);
 
         for (int i = 0; i < 10; i++) {
@@ -112,6 +113,7 @@ public class ToolbarDisplay extends UIComponent {
             item.add(label);
             int finalI = i;
             item.addListener(new InputListener() {
+                @Override
                 public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                     inventory.setHeldItem(finalI);
                     updateItemSlot(finalI);
@@ -139,6 +141,7 @@ public class ToolbarDisplay extends UIComponent {
      */
     @Override
     public void draw(SpriteBatch batch)  {
+        // Handled else where
     }
 
     /**
@@ -180,13 +183,5 @@ public class ToolbarDisplay extends UIComponent {
             }
             slots.set(i, curSlot);
         }
-    }
-
-    /**
-     * Dispose of Toolbar
-     */
-    @Override
-    public void dispose() {
-        super.dispose();
     }
 }

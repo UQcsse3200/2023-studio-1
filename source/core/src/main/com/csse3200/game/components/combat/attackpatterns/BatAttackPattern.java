@@ -16,16 +16,6 @@ public class BatAttackPattern extends AttackPatternComponent {
     }
 
     /**
-     * Initializes the BatAttackPattern component when it is created.
-     * This method sets up event listeners and interaction detection for the bat.
-     */
-    @Override
-    public void create() {
-        super.create();
-    }
-
-
-    /**
      * Performs the attack action, which involves determining the nearest entity, changing direction,
      * triggering attack events, and scheduling the next attack.
      */

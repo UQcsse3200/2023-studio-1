@@ -47,7 +47,7 @@ public class PlaceableFactory {
      */
     public static Entity createFence() {
         EntityType type = EntityType.Fence;
-        type.setPlaceableCategory(PlaceableCategory.Fences);
+        type.setPlaceableCategory(PlaceableCategory.FENCES);
         Entity fence = createBasePlaceable(type)
                 .addComponent(new DynamicTextureRenderComponent("images/placeable/fences/f.png"))
                 .addComponent(new FenceComponent(false));
@@ -62,7 +62,7 @@ public class PlaceableFactory {
      */
     public static Entity createGate() {
         EntityType type = EntityType.Gate;
-        type.setPlaceableCategory(PlaceableCategory.Fences);
+        type.setPlaceableCategory(PlaceableCategory.FENCES);
         Entity gate = createBasePlaceable(type)  //used to be .Gate.
                 .addComponent(new DynamicTextureRenderComponent("images/placeable/fences/g_r_l.png"))
                 .addComponent(new FenceComponent(true));
@@ -76,7 +76,7 @@ public class PlaceableFactory {
      */
     public static Entity createSprinkler() {
         EntityType type = EntityType.Sprinkler;
-        type.setPlaceableCategory(PlaceableCategory.Sprinklers);
+        type.setPlaceableCategory(PlaceableCategory.SPRINKLERS);
         Entity sprinkler = createBasePlaceable(type)
                 .addComponent(new DynamicTextureRenderComponent("images/placeable/sprinkler/pipe_null.png"));
         // stop from blocking player movement
@@ -92,7 +92,7 @@ public class PlaceableFactory {
      */
     public static Entity createPump() {
         EntityType type = EntityType.Pump;
-        type.setPlaceableCategory(PlaceableCategory.Sprinklers);
+        type.setPlaceableCategory(PlaceableCategory.SPRINKLERS);
         Entity pump = createBasePlaceable(type);
         // set temp texture to differentiate from other entities
         pump.addComponent(new DynamicTextureRenderComponent("images/placeable/sprinkler/pump.png"));
