@@ -315,47 +315,57 @@ class QuestTest {
 
     @Test
     public void testQuestsExpiry() {
+        Quest nonExpireQuest = new AutoQuest("Quest 6", r1, "Description");
         assertTrue(q1.isExpired());
         assertFalse(q2.isExpired());
         assertFalse(q3.isExpired());
         assertFalse(q4.isExpired());
         assertFalse(q5.isExpired());
+        assertFalse(nonExpireQuest.isExpired());
 
         q1.updateExpiry();
         q2.updateExpiry();
         q3.updateExpiry();
         q4.updateExpiry();
         q5.updateExpiry();
+        nonExpireQuest.updateExpiry();
 
         assertTrue(q1.isExpired());
         assertTrue(q2.isExpired());
         assertTrue(q3.isExpired());
         assertFalse(q4.isExpired());
         assertFalse(q5.isExpired());
+        assertFalse(nonExpireQuest.isExpired());
 
         q1.updateExpiry();
         q2.updateExpiry();
         q3.updateExpiry();
         q4.updateExpiry();
         q5.updateExpiry();
+        nonExpireQuest.updateExpiry();
 
         q1.updateExpiry();
         q2.updateExpiry();
         q3.updateExpiry();
         q4.updateExpiry();
         q5.updateExpiry();
+        nonExpireQuest.updateExpiry();
 
         q1.updateExpiry();
         q2.updateExpiry();
         q3.updateExpiry();
         q4.updateExpiry();
         q5.updateExpiry();
+        nonExpireQuest.updateExpiry();
 
         assertTrue(q1.isExpired());
         assertTrue(q2.isExpired());
         assertTrue(q3.isExpired());
         assertTrue(q4.isExpired());
         assertTrue(q5.isExpired());
+        assertFalse(nonExpireQuest.isExpired());
+        nonExpireQuest.resetExpiry();
+        assertFalse(nonExpireQuest.isExpired());
     }
 
     @Test
