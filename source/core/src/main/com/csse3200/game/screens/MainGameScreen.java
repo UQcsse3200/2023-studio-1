@@ -1,5 +1,6 @@
 package com.csse3200.game.screens;
 
+import com.csse3200.game.services.*;
 import com.csse3200.game.components.plants.PlantInfoDisplayComponent;
 import com.csse3200.game.entities.FireflySpawner;
 import com.csse3200.game.components.losescreen.LoseScreenDisplay;
@@ -30,15 +31,6 @@ import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
-import com.csse3200.game.services.GameTime;
-import com.csse3200.game.services.GameTimeDisplay;
-import com.csse3200.game.services.LightService;
-import com.csse3200.game.services.OxygenDisplay;
-import com.csse3200.game.services.ParticleService;
-import com.csse3200.game.services.PlanetOxygenService;
-import com.csse3200.game.services.ResourceService;
-import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.services.TimeService;
 import com.csse3200.game.services.plants.PlantCommandService;
 import com.csse3200.game.services.plants.PlantInfoService;
 import com.csse3200.game.ui.terminal.Terminal;
@@ -80,8 +72,9 @@ public class MainGameScreen extends ScreenAdapter {
             "images/time_system_ui/indicator_21.png",
             "images/time_system_ui/indicator_22.png",
             "images/time_system_ui/indicator_23.png",
-            "images/oxygen_ui/oxygen_outline.png",
-            "images/oxygen_ui/oxygen_fill.png",
+            "images/bars_ui/bar_outline.png",
+            "images/bars_ui/healthy_fill.png",
+            "images/bars_ui/danger_fill.png",
             "images/weather_event/weather-border.png",
             "images/weather_event/acid-rain.png",
             "images/weather_event/solar-flare.png"
@@ -251,10 +244,17 @@ public class MainGameScreen extends ScreenAdapter {
                 .addComponent(new Terminal())
                 .addComponent(inputComponent)
                 .addComponent(new TerminalDisplay())
+                .addComponent(new PlantInfoDisplayComponent())
+                .addComponent(new WeatherEventDisplay())
+            // NOTE: VERY IMPORTANT
+            // UI components that require transitions must be added AFTER those that don't, otherwise screen
+            // entities added after them will transition even if you don't want them to. Add components with
+            // transitions underneath this comment. Hopefully it should work, it fixed my bug at least.
                 .addComponent(new GameTimeDisplay())
                 .addComponent(new OxygenDisplay())
-                .addComponent(new PlantInfoDisplayComponent())
-                .addComponent(new WeatherEventDisplay());
+                .addComponent(new HealthDisplay());
+
+
 
         ServiceLocator.getEntityService().register(ui);
     }
