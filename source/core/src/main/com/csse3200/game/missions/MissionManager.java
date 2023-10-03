@@ -1,8 +1,5 @@
 package com.csse3200.game.missions;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.events.EventHandler;
@@ -11,6 +8,9 @@ import com.csse3200.game.missions.achievements.PlantCropsAchievement;
 import com.csse3200.game.missions.quests.Quest;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MissionManager implements Json.Serializable {
 
@@ -39,10 +39,9 @@ public class MissionManager implements Json.Serializable {
 		// Triggers when a crop is harvested, a single String representing the plant name is provided as an argument
 		HARVEST_CROP,
 		// Triggers when an animal is tamed
-		TAME_ANIMAL,
+		ANIMAL_TAMED,
 		// Triggers when a reward is collected used for MissionCompleteQuests
 		REWARD_COMPLETE,
-		ANIMAL_TAMED,
 		// Triggers when an animal is defeated in combat, a EntityType enum value is provided representing the type of
 		// entity defeated is provided as an argument
 		ANIMAL_DEFEATED,
@@ -157,10 +156,17 @@ public class MissionManager implements Json.Serializable {
 			quest.updateExpiry();
 			if (quest.isExpired()) {
 				events.trigger(MissionEvent.QUEST_EXPIRED.name());
+				if (quest.isMandatory()) {
+					events.trigger("loseScreen", quest.getName());
+				}
 			}
 		}
 	}
 
+	/**
+	 * Writes the {@link MissionManager} to a Json object for saving
+	 * @param json Json object written to
+	 */
 	@Override
 	public void write(Json json) {
 		json.writeObjectStart("ActiveQuests");
@@ -182,6 +188,11 @@ public class MissionManager implements Json.Serializable {
 		json.writeObjectEnd();
 	}
 
+	/**
+	 * Method for loading the {@link MissionManager} for the game
+	 * @param json
+	 * @param jsonMap
+	 */
 	@Override
 	public void read(Json json, JsonValue jsonMap) {
 		JsonValue active = jsonMap.get("ActiveQuests");

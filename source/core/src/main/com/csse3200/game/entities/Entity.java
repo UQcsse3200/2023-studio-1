@@ -1,43 +1,38 @@
 package com.csse3200.game.entities;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 
-import com.csse3200.game.areas.terrain.CropTileComponent;
-import com.csse3200.game.areas.terrain.TerrainCropTileFactory;
-import com.csse3200.game.areas.terrain.TerrainTile;
+import com.csse3200.game.areas.terrain.*;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ComponentType;
 import com.csse3200.game.components.ConeLightComponent;
 import com.csse3200.game.components.items.ItemComponent;
-import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.items.WateringCanLevelComponent;
 import com.csse3200.game.components.npc.AnimalAnimationController;
 import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.npc.TamableComponent;
-import com.csse3200.game.components.placeables.FenceComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.ItemPickupComponent;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.components.player.PlayerAnimationController;
+import com.csse3200.game.components.ship.ShipAnimationController;
 import com.csse3200.game.components.ship.ShipLightComponent;
 import com.csse3200.game.components.ship.ShipProgressComponent;
+import com.csse3200.game.components.ship.ShipTimeSkipComponent;
 import com.csse3200.game.components.tractor.TractorActions;
+import com.csse3200.game.entities.factories.ShipDebrisFactory;
 import com.csse3200.game.entities.factories.ShipFactory;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Core entity class. Entities exist in the game and are updated each frame. All
@@ -449,6 +444,7 @@ public class Entity implements Json.Serializable {
                     }
                     this.addComponent(coneLightComponent);
                     break;
+                    
                 case Tile:
                     // Makes a new tile
                     Entity tile = TerrainCropTileFactory.createTerrainEntity(position);
@@ -458,20 +454,58 @@ public class Entity implements Json.Serializable {
                     TerrainTile terrainTile = ServiceLocator.getGameArea().getMap().getTile(tile.getPosition());
                     terrainTile.setOccupant(tile);
                     break;
+                case ShipPartTile:
+                    Entity partTile = ShipPartTileFactory.createShipPartTile(position);
+                    ServiceLocator.getGameArea().spawnEntity(partTile);
+                    partTile.setPosition(position);
+
+                    TerrainTile partTerrainTile = ServiceLocator.getGameArea().getMap().getTile(position);
+                    if (partTerrainTile.isOccupied() && partTerrainTile.getOccupant().getType() == EntityType.ShipDebris) {
+                        // remove the ship debris that is occupying the terrain tile, since it will
+                        // be recreated by the ShipPartTileComponent
+                        Entity unneededShipDebris = partTerrainTile.getOccupant();
+                        unneededShipDebris.dispose();
+                        partTerrainTile.removeOccupant();
+
+                        partTile.getComponent(ShipPartTileComponent.class).read(json, jsonMap);
+
+                        partTerrainTile.setOccupant(partTile);
+                        partTerrainTile.setOccupied();
+                    }
+                    break;
+                case ShipDebris:
+                    Entity shipDebris = ShipDebrisFactory.createShipDebris(null);
+                    ServiceLocator.getGameArea().spawnEntity(shipDebris);
+                    shipDebris.setPosition(position);
+
+                    TerrainTile debrisTerrainTile = ServiceLocator.getGameArea().getMap().getTile(position);
+                    debrisTerrainTile.setOccupant(shipDebris);
+                    debrisTerrainTile.setOccupied();
+                    break;
+
                 case Ship:
                     Entity ship = ShipFactory.createShip();
 
-                    ShipLightComponent shipLightComponent = ship.getComponent(ShipLightComponent.class);
-                    JsonValue shipLightComponentJson = jsonMap.get("components")
-                            .get(ShipLightComponent.class.getSimpleName());
-                    shipLightComponent.read(json, shipLightComponentJson);
-
-                    ShipProgressComponent progressComponent = ship.getComponent(ShipProgressComponent.class);
-                    progressComponent.read(json, jsonMap.get("components").get(ShipProgressComponent.class.getSimpleName()));
-
                     ServiceLocator.getGameArea().spawnEntity(ship);
+
+                    ShipAnimationController shipAnimationController = ship.getComponent(ShipAnimationController.class);
+                    shipAnimationController.read(json, jsonMap.get("components").get(ShipAnimationController.class.getSimpleName()));
+
+	                ShipProgressComponent progressComponent = ship.getComponent(ShipProgressComponent.class);
+	                progressComponent.read(json, jsonMap.get("components").get(ShipProgressComponent.class.getSimpleName()));
+
+	                ShipTimeSkipComponent shipTimeSkipComponent = ship.getComponent(ShipTimeSkipComponent.class);
+	                JsonValue shipTimeSkipComponentJson = jsonMap.get("components").get(ShipTimeSkipComponent.class.getSimpleName());
+	                shipTimeSkipComponent.read(json, shipTimeSkipComponentJson);
+
+	                ShipLightComponent shipLightComponent = ship.getComponent(ShipLightComponent.class);
+	                JsonValue shipLightComponentJson = jsonMap.get("components")
+			                .get(ShipLightComponent.class.getSimpleName());
+	                shipLightComponent.read(json, shipLightComponentJson);
+
                     ship.setPosition(position);
                     break;
+                    
                 case Player:
                     // Does not make a new player, instead just updates the current one
                     InventoryComponent inventoryComponent = new InventoryComponent();
@@ -479,14 +513,13 @@ public class Entity implements Json.Serializable {
                     inventoryComponent.read(json, inv);
                     this.addComponent(inventoryComponent);
                     break;
+                    
                 default:
                     if (FactoryService.getNpcFactories().containsKey(type) && ServiceLocator.getGameArea().getLoadableTypes().contains(type)) {
                         // Makes a new NPC
                         Entity npc = FactoryService.getNpcFactories().get(type).apply(ServiceLocator.getGameArea().getPlayer());
                         if (npc.getComponent(TamableComponent.class) != null) {
                             npc.getComponent(TamableComponent.class).read(json, jsonMap.get("components"));
-                        } else if (npc.getType() == EntityType.ShipDebris) {
-                            ServiceLocator.getGameArea().getMap().getTile(position).setOccupant(npc);
                         }
                         ServiceLocator.getGameArea().spawnEntity(npc);
                         npc.setPosition(position);

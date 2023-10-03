@@ -4,8 +4,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
-import com.badlogic.gdx.utils.Json;
-import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
 
 /**
@@ -62,124 +60,154 @@ public class TerrainTile implements TiledMapTile {
 
     // define properties of the TerrainTile based on its terrain category
     switch (terrainCategory) {
-      case PATH:
+      case PATH -> {
         this.isTraversable = true;
         this.isTillable = true;
         this.speedModifier = 1.2f;
-        break;
-      case BEACHSAND:
+      }
+      case BEACHSAND -> {
         this.isTraversable = true;
         this.isTillable = false;
         this.speedModifier = 0.9f;
-        break;
-      case GRASS:
+      }
+      case GRASS -> {
         this.isTraversable = true;
         this.isTillable = true;
         this.speedModifier = 1.0f;
-        break;
-      case DIRT:
+      }
+      case DIRT -> {
         this.isTraversable = true;
         this.isTillable = true;
         this.speedModifier = 1.0f;
-        break;
-      case SHALLOWWATER:
+      }
+      case SHALLOWWATER -> {
         this.isTraversable = true;
         this.isTillable = false;
         this.speedModifier = 0.4f;
-        break;
-      case DESERT:
+      }
+      case DESERT -> {
         this.isTraversable = true;
         this.isTillable = false;
         this.speedModifier = 0.8f;
-        break;
-      case SNOW:
+      }
+      case SNOW -> {
         this.isTraversable = true;
         this.isTillable = false;
         this.speedModifier = 0.8f;
-        break;
-      case ICE:
+      }
+      case ICE -> {
         this.isTraversable = true;
         this.isTillable = false;
         this.speedModifier = 1.5f;
-        break;
-      case DEEPWATER:
+      }
+      case DEEPWATER -> {
         this.isTraversable = false;
         this.isTillable = false;
-        this.speedModifier = 0.2f; // Not traversable
-        break;
-      case ROCK:
+        this.speedModifier = 0.2f; // nontraversable
+      }
+      case ROCK -> {
         this.isTraversable = false;
         this.isTillable = false;
-        this.speedModifier = 0.2f; // Not traversable
-        break;
-      case LAVA:
+        this.speedModifier = 0.2f; // nontraversable
+      }
+      case LAVA -> {
         this.isTraversable = false;
         this.isTillable = false;
-        this.speedModifier = 0.2f; // Not traversable
-        break;
-      case LAVAGROUND:
+        this.speedModifier = 0.2f; // nontraversable
+      }
+      case LAVAGROUND -> {
         this.isTraversable = true;
         this.isTillable = false;
         this.speedModifier = 0.7f;
-        break;
-      case GRAVEL:
+      }
+      case GRAVEL -> {
         this.isTraversable = true;
         this.isTillable = false;
         this.speedModifier = 1.0f;
-        break;
-      case FLOWINGWATER:
+      }
+      case FLOWINGWATER -> {
         this.isTraversable = true;
         this.isTillable = false;
         this.speedModifier = 0.4f;
-        break;
+      }
     }
   }
 
+  /**
+   * Returns the id of the terrain tile
+   */
   @Override
   public int getId() {
     return id;
   }
 
+  /**
+   * Sets the id of the terrain tile
+   */
   @Override
   public void setId(int id) {
     this.id = id;
   }
 
+  /**
+   * Returns the blend mode of the terrain tile
+   */
   @Override
   public BlendMode getBlendMode() {
     return blendMode;
   }
 
+  /**
+   * Sets the blend mode of the terrain tile
+   */
   @Override
   public void setBlendMode(BlendMode blendMode) {
     this.blendMode = blendMode;
   }
 
+  /**
+   * Returns the texture region of the terrain tile
+   */
   @Override
   public TextureRegion getTextureRegion() {
     return textureRegion;
   }
 
+  /**
+   * Sets the texture region of the terrain tile
+   */
   @Override
   public void setTextureRegion(TextureRegion textureRegion) {
     this.textureRegion = textureRegion;
   }
 
+  /**
+   * Returns the x offset of the terrain tile
+   */
   @Override
   public float getOffsetX() {
     return offsetX;
   }
 
+  /**
+   * Sets the x offset of the terrain tile
+   */
   @Override
   public void setOffsetX(float offsetX) {
     this.offsetX = offsetX;
   }
 
+  /**
+   * Returns the y offset of the terrain tile
+   */
   @Override
   public float getOffsetY() {
     return offsetY;
   }
 
+  /**
+   * Sets the y offset of the terrain tile
+   */
   @Override
   public void setOffsetY(float offsetY) {
     this.offsetY = offsetY;
@@ -317,7 +345,7 @@ public class TerrainTile implements TiledMapTile {
 
   /**
    * Returns the speed modifier of the terrain tile
-   * 
+   *
    * @return the speed modifier of the terrain tile
    */
   public float getSpeedModifier() {

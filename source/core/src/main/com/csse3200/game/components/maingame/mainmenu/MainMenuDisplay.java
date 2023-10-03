@@ -1,4 +1,4 @@
-package com.csse3200.game.components.mainmenu;
+package com.csse3200.game.components.maingame.mainmenu;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

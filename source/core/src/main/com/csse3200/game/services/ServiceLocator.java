@@ -1,5 +1,7 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.services.sound.SoundService;
+import com.csse3200.game.components.inventory.InventoryDisplayManager;
 import com.csse3200.game.services.plants.PlantCommandService;
 import com.csse3200.game.services.plants.PlantInfoService;
 import org.slf4j.Logger;
@@ -35,6 +37,7 @@ public class ServiceLocator {
   private static LightService lightService;
   private static GameAreaDisplay pauseMenuArea;
   private static GameAreaDisplay craftArea;
+  private static InventoryDisplayManager inventoryDisplayManager;
   private static CameraComponent cameraComponent;
   private static SaveLoadService saveLoadService;
   private static MissionManager missions;
@@ -42,8 +45,11 @@ public class ServiceLocator {
 
   private static PlayerHungerService playerHungerService;
 
+  private static SoundService soundService;
   private static PlantCommandService plantCommandService;
   private static PlantInfoService plantInfoService;
+  private static boolean cutSceneRunning; // true for running and false otherwise
+
   private static ParticleService particleService;
   public static PlantCommandService getPlantCommandService() {
     return plantCommandService;
@@ -103,8 +109,28 @@ public class ServiceLocator {
     return saveLoadService;
   }
 
+  public static SoundService getSoundService() {
+    return soundService;
+  }
+
   public static ParticleService getParticleService() {
     return particleService;
+  }
+
+  /**
+   * Sets the cutscene status to either running or not running.
+   * @param isRunning true if cutscene is running, false otherwise
+   */
+  public static void setCutSceneRunning(boolean isRunning) {
+    cutSceneRunning = isRunning;
+  }
+
+  /**
+   * Gets the cutscene status.
+   * @return true if cutscene is running, false otherwise
+   */
+  public static boolean getCutSceneStatus() {
+    return cutSceneRunning;
   }
 
   public static void registerGameArea(GameArea area) {
@@ -184,6 +210,11 @@ public class ServiceLocator {
     lightService = source;
   }
 
+  public static void registerInventoryDisplayManager(InventoryDisplayManager source){
+    logger.debug("Registering inventory display manager {}", source);
+    inventoryDisplayManager = source;
+  }
+
   public static void registerParticleService(ParticleService source) {
     particleService = source;
   }
@@ -195,6 +226,11 @@ public class ServiceLocator {
   public static void registerSaveLoadService(SaveLoadService source) {
     logger.debug("Registering Save/Load service {}", source);
     saveLoadService = source;
+  }
+
+  public static void registerSoundService(SoundService source) {
+    logger.debug("Registering sound service {}", source);
+    soundService = source;
   }
 
   /**
@@ -209,6 +245,7 @@ public class ServiceLocator {
     inputService = null;
     resourceService = null;
     gameArea = null;
+    soundService = null;
     lightService = null;
     particleService = null;
     timeService = null;
@@ -222,6 +259,10 @@ public class ServiceLocator {
 
   public static GameAreaDisplay getPauseMenuArea() {
     return pauseMenuArea;
+  }
+
+  public static InventoryDisplayManager getInventoryDisplayManager() {
+    return inventoryDisplayManager;
   }
 
   public static void registerCraftArea(GameAreaDisplay area){

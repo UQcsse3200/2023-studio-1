@@ -1,20 +1,16 @@
 package com.csse3200.game.components.plants;
 
 
+import java.util.List;
+
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.badlogic.gdx.utils.Align;
-import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.quests.Quest;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
-
-import java.util.List;
 
 public class PlantInfoDisplayComponent extends UIComponent {
 
@@ -129,7 +125,7 @@ public class PlantInfoDisplayComponent extends UIComponent {
     private void makeFirstContactWindow() {
         window.reset();
         window.getTitleLabel().setText("First Contact");
-        label = new Label("You have crash landed\nand you're all alone...\nor are you?", skin);
+        label = new Label("Better do what the angry\n Alien Creature says...", skin);
         label.setFontScale(1.4f);
         label.setColor(Color.BROWN);
         window.add(label);

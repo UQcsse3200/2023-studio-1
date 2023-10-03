@@ -1,26 +1,17 @@
 package com.csse3200.game.services;
 
-import com.csse3200.game.components.AuraLightComponent;
-import com.csse3200.game.components.ConeLightComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.badlogic.gdx.utils.Array;
-import com.csse3200.game.areas.terrain.CropTileComponent;
-import com.csse3200.game.areas.terrain.GameMap;
-import com.csse3200.game.areas.terrain.TerrainCropTileFactory;
-import com.csse3200.game.areas.terrain.TerrainTile;
-import com.csse3200.game.areas.weather.ClimateController;
-import com.csse3200.game.components.npc.TamableComponent;
-import com.csse3200.game.components.plants.PlantComponent;
+import com.csse3200.game.components.AuraLightComponent;
+import com.csse3200.game.components.ConeLightComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.files.SaveGame;
 import com.csse3200.game.files.SaveGame.GameState;
-import com.csse3200.game.missions.MissionManager;
 
 import java.util.HashMap;
 

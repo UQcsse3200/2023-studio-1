@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.utils.Align;
 
+import java.util.Objects;
+
 /**
  * A class used to combine all the data necessary to the individual inventory slots
  */
@@ -16,14 +18,15 @@ public class ItemSlot extends Stack {
     private Texture itemTexture;
     private Integer count;
     private final Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
-
     private Image background;
     private Image frame;
-
     private boolean selected;
     private Image itemImage;
 
     private Label label;
+    private Stack draggable;
+    private Label countLabel;
+    private Label toolbarLabel;
 
     /**
      * Construct an itemSlot with a texture, count and selected state
@@ -73,16 +76,39 @@ public class ItemSlot extends Stack {
      * @param count integer of number of item
      */
     public void setCount(Integer count) {
+        if (Objects.equals(count, this.count)) {
+            return;
+        }
         this.count = count;
-        createItemSlot();
-    }
+        if (this.count > 1) {
+            if (label == null) {
+                label = new Label(this.count + " ", this.skin);
+                label.setColor(Color.BLACK);
+                label.setAlignment(Align.bottomRight);
+                draggable.add(label);
+            } else {
+                label.setText(this.count + " ");
+                draggable.add(label);
 
+            }
+        }
+        else {
+            draggable.removeActor(label);
+            if (label != null) {
+                this.label = null;
+
+            }
+        }
+    }
     /**
      * Get the item count
      * @return count integer of number of item
      */
     public Integer getCount() {
-        return count;
+        if (count != null) {
+            return count;
+        }
+        return -1;
     }
 
     /**
@@ -102,6 +128,7 @@ public class ItemSlot extends Stack {
      * Creates the itemSlot
      */
     private void createItemSlot() {
+        draggable = new Stack();
 
         //Add the selection background if necessary
         if (this.selected) {
@@ -114,20 +141,29 @@ public class ItemSlot extends Stack {
         //Add the item image to the itemSlot
         if (this.itemTexture != null) {
             itemImage = new Image(this.itemTexture);
-            this.add(itemImage);
+            draggable.add(itemImage);
         }
 
         // Add or update the count label if the number is not 0
-        if (this.count != null && this.count > 0) {
+        if (this.count != null && this.count > 1) {
             if (label == null) {
                 label = new Label(this.count + " ", this.skin);
                 label.setColor(Color.BLACK);
                 label.setAlignment(Align.bottomRight);
-                this.add(label);
+                draggable.add(label);
             } else {
                 label.setText(this.count + " ");
             }
         }
+        if (this.count != null && this.count <= 1) {
+            if (label != null) {
+                draggable.removeActor(label);
+                this.label = null;
+            }
+        }
+
+        this.add(draggable);
+
     }
 
     /**
@@ -137,11 +173,25 @@ public class ItemSlot extends Stack {
     public Image getItemImage() {
         return itemImage;
     }
+    public Stack getDraggable() {
+        return draggable;
+    }
+    public boolean setDraggable(Stack stack) {
+        boolean ans = false;
+        if (!this.removeActor(this.draggable)) {
+            ans = true;
+        }
+
+        if (stack != null) {
+            this.draggable = stack;
+            this.add(stack);
+        }
+        return ans;
+    }
     public void setItemImage(Image image) {
-        this.removeActor(itemImage);
-        itemImage = null;
+        draggable.removeActor(itemImage);
         if (image != null) {
-            this.add(image);
+            draggable.addActorAt(0, image);
             this.itemImage = image;
         }
     }

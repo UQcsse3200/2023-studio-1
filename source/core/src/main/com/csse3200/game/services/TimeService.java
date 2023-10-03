@@ -1,8 +1,5 @@
 package com.csse3200.game.services;
 
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonValue;
-import com.csse3200.game.events.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -258,11 +255,6 @@ public class TimeService {
 
 		// This event has to be triggered after the hour is checked the hour isn't 24 when the event is sent
 		events.trigger("dayUpdate");
-
-		// lose the game if the game reaches 30 days
-		if (day >= 30) {
-			ServiceLocator.getGameArea().getPlayer().getEvents().trigger("loseScreen");
-		}
 	}
 
 	public void loadTime(int day, int hour, int minute) {

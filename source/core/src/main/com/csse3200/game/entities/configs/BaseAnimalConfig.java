@@ -8,4 +8,5 @@ public class BaseAnimalConfig {
     public int tamingThreshold = 1;
     public double tamingProbability = 1;
     public String favouriteFood = "ANIMAL FOOD";
+    public int baseAttack = 10;
 }

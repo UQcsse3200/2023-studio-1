@@ -7,6 +7,11 @@ import static org.mockito.Mockito.mock;
 
 import java.io.IOException;
 
+import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.missions.MissionManager;
+import com.csse3200.game.physics.components.ColliderComponent;
+import com.csse3200.game.services.TimeService;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,6 +42,12 @@ import com.csse3200.game.services.ServiceLocator;
 // Setup fields and config were taken from GameAreaTest and the authors were co-authored to share credit for the work
 @ExtendWith(GameExtension.class)
 public class ItemActionsTest {
+    /**
+     * NOTE TO MARKER I TRIED MOVING THE BIT OF CODE THAT HAPPENS BEFORE EACH TEST TO A BEFORE EACH AND IT FAILED?????
+     * so i know it can be writtern better but it just died? also not all need it and some break if it has it so technically
+     * its fine?
+     */
+
     private GameMap gameMap;
     private static TerrainTile pathTerrainTile;
     private static TerrainTile beachSandTerrainTile;
@@ -77,7 +88,8 @@ public class ItemActionsTest {
     void setup() {
         TerrainFactory terrainFactory = mock(TerrainFactory.class);
         doReturn(new GridPoint2(4, 4)).when(terrainFactory).getMapSize();
-
+        ServiceLocator.registerTimeService(new TimeService());
+        ServiceLocator.registerMissionManager(new MissionManager());
         TerrainComponent terrainComponent = mock(TerrainComponent.class);
         doReturn(0.5f).when(terrainComponent).getTileSize();
 
@@ -107,7 +119,10 @@ public class ItemActionsTest {
 
         tiledMap.getLayers().add(layer);
 
-        player = new Entity(EntityType.Player).addComponent(new InteractionDetector(100)).addComponent(new HitboxComponent());
+        player = new Entity(EntityType.Player)
+                .addComponent(new InteractionDetector(100))
+                .addComponent(new HitboxComponent())
+                .addComponent(new InventoryComponent());
     }
 
     @Test
@@ -233,9 +248,12 @@ public class ItemActionsTest {
 
         Entity seed = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("Test Seeds", ItemType.SEED, null));
         Entity hoe = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("hoe", ItemType.HOE, null));
+        Entity poop = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("poop", ItemType.FERTILISER, null));
         assertFalse(seed.getComponent(ItemActions.class).use(player, mousePos, gameMap));
+        assertFalse(poop.getComponent(ItemActions.class).use(player, mousePos, gameMap));
         assertTrue(hoe.getComponent(ItemActions.class).use(player, mousePos, gameMap));
         assertTrue(seed.getComponent(ItemActions.class).use(player, mousePos, gameMap));
+        assertTrue(poop.getComponent(ItemActions.class).use(player, mousePos, gameMap));
     }
 
     @Test
@@ -280,6 +298,55 @@ public class ItemActionsTest {
         Entity gate = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("Gate", ItemType.PLACEABLE, null));
         assertTrue(gate.getComponent(ItemActions.class).use(player, mousePos, gameMap));
         assertFalse(gate.getComponent(ItemActions.class).use(player, mousePos, gameMap));
+    }
+
+    @Test
+    void testAttack() {
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+        ServiceLocator.registerEntityService(new EntityService());
+        ServiceLocator.registerRenderService(new RenderService());
+        mousePos = new Vector2(10,10);
+        player.setPosition(gameMap.tileCoordinatesToVector(new GridPoint2(1,1)));
+        CameraComponent cam = mock(CameraComponent.class);
+        doReturn(player.getPosition()).when(cam).screenPositionToWorldPosition(mousePos);
+        ServiceLocator.registerCameraComponent(cam);
+        GameArea area = mock(GameArea.class);
+        doReturn(player).when(area).getPlayer();
+        doReturn(gameMap).when(area).getMap();
+        ServiceLocator.registerGameArea(area);
+        ServiceLocator.registerResourceService(mock(ResourceService.class));
+        FileLoader fl = new FileLoader();
+
+        Entity sword = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("sword", ItemType.SWORD, null));
+        assertTrue(sword.getComponent(ItemActions.class).use(player, mousePos, gameMap));
+        Entity gun = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("sword", ItemType.GUN, null));
+        assertTrue(gun.getComponent(ItemActions.class).use(player, mousePos, gameMap));
+    }
+
+    @Test
+    void testShipItems() {
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+        ServiceLocator.registerEntityService(new EntityService());
+        ServiceLocator.registerRenderService(new RenderService());
+        mousePos = new Vector2(10,10);
+        player.setPosition(gameMap.tileCoordinatesToVector(new GridPoint2(1,1)));
+        CameraComponent cam = mock(CameraComponent.class);
+        doReturn(player.getPosition()).when(cam).screenPositionToWorldPosition(mousePos);
+        ServiceLocator.registerCameraComponent(cam);
+        GameArea area = mock(GameArea.class);
+        doReturn(player).when(area).getPlayer();
+        doReturn(gameMap).when(area).getMap();
+        ServiceLocator.registerGameArea(area);
+        ServiceLocator.registerResourceService(mock(ResourceService.class));
+        FileLoader fl = new FileLoader();
+
+        Entity clue = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("clue", ItemType.CLUE_ITEM, null));
+        assertTrue(clue.getComponent(ItemActions.class).use(player, mousePos, gameMap));
+        Entity ship = new Entity(EntityType.Ship).addComponent(new HitboxComponent()).addComponent(new ColliderComponent());
+        Entity repair = new Entity(EntityType.Item).addComponent(new ItemActions()).addComponent(new ItemComponent("part", ItemType.SHIP_PART, null));
+        assertFalse(repair.getComponent(ItemActions.class).use(player, mousePos, gameMap));
+        ship.setPosition(player.getPosition());
+        assertFalse(repair.getComponent(ItemActions.class).use(new Entity(), mousePos, gameMap));
     }
 
     @Test

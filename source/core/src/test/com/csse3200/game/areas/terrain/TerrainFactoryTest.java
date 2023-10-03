@@ -1,8 +1,5 @@
 package com.csse3200.game.areas.terrain;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,6 +14,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.csse3200.game.extensions.GameExtension;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(GameExtension.class)
 public class TerrainFactoryTest {
@@ -25,7 +24,7 @@ public class TerrainFactoryTest {
      * Test to see that image filePaths all exist
      */
     @Test
-    public void testTileImagesExist(){
+    void testTileImagesExist(){
         for (String filepath: TerrainFactory.charToTileImageMap.values()) {
             FileHandle file = Gdx.files.internal(filepath);
             assertTrue(file.exists());
@@ -38,7 +37,7 @@ public class TerrainFactoryTest {
      *        https://www.w3schools.blog/validate-image-file-extension-regular-expression-regex-java
      */
     @Test
-    public void testTileImagesArePNGs(){
+    void testTileImagesArePNGs(){
         String pngRegex = "([^\\s]+(\\.(?i)(png))$)";
         Pattern pattern = Pattern.compile(pngRegex);
         for (String filepath: TerrainFactory.charToTileImageMap.values()) {
@@ -51,7 +50,7 @@ public class TerrainFactoryTest {
      * Test to see that the map filePath exists
      */
     @Test
-    public void testMapExist(){
+    void testMapExist(){
         FileHandle file = Gdx.files.internal(TerrainFactory.mapPath);
         assertTrue(file.exists());
     }
@@ -62,7 +61,7 @@ public class TerrainFactoryTest {
      *      *        https://www.w3schools.blog/validate-image-file-extension-regular-expression-regex-java
      */
     @Test
-    public void testMapisTxt(){
+    void testMapisTxt(){
         String pngRegex = "([^\\s]+(\\.(?i)(txt))$)";
         Pattern pattern = Pattern.compile(pngRegex);
         Matcher matcher = pattern.matcher(TerrainFactory.mapPath);
@@ -73,7 +72,7 @@ public class TerrainFactoryTest {
      * Test to see that map sizes specified correctly
      */
     @Test
-    public void testMapSyntaxSizeStated(){
+    void testMapSyntaxSizeStated(){
         BufferedReader bf = new BufferedReader(new InputStreamReader(Gdx.files.internal(TerrainFactory.mapPath).read()));
         String line1, line2;
         try {
@@ -92,7 +91,7 @@ public class TerrainFactoryTest {
      * Test to see that map fits specified map dimensions (dimensions are 1-indexed when specifying size)
      */
     @Test
-    public void testMapSizeCorrect(){
+    void testMapSizeCorrect(){
         BufferedReader bf = new BufferedReader(new InputStreamReader(Gdx.files.internal(TerrainFactory.mapPath).read()));
         String line1, line2, line;
         try {
@@ -104,10 +103,10 @@ public class TerrainFactoryTest {
             line = bf.readLine();
             while(line != null){
                 y++;
-                assertTrue(line.length() == maxX);
+                assertEquals(line.length(), maxX);
                 line = bf.readLine();
             }
-            assertTrue(y == maxY);
+            assertEquals(y, maxY);
         } catch (IOException e) {
             fail();
         } catch (NumberFormatException e) {
@@ -119,7 +118,7 @@ public class TerrainFactoryTest {
      * Test to see map contents are correct.
      */
     @Test
-    public void testMapCharsValid(){
+    void testMapCharsValid(){
         BufferedReader bf = new BufferedReader(new InputStreamReader(Gdx.files.internal(TerrainFactory.mapPath).read()));
         String line;
         try {

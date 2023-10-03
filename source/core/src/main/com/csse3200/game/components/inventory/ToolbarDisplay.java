@@ -3,6 +3,8 @@ package com.csse3200.game.components.inventory;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -70,10 +72,8 @@ public class ToolbarDisplay extends UIComponent {
                 itemTexture = item.getItemTexture();
                 ItemSlot curSlot = slots.get(i);
                 curSlot.setItemImage(new Image(itemTexture));
+                curSlot.setCount(itemCount);
 
-                if (itemCount > 0) {
-                    curSlot.setCount(itemCount);
-                }
 
                 curSlot.add(label);
 
@@ -83,7 +83,7 @@ public class ToolbarDisplay extends UIComponent {
             else {
                 ItemSlot curSlot = slots.get(i);
                 curSlot.setItemImage(null);
-                curSlot.setCount(null);
+                curSlot.setCount(0);
                 slots.set(i, curSlot);
             }
         }
@@ -110,6 +110,15 @@ public class ToolbarDisplay extends UIComponent {
             // Check if slot is selected
             ItemSlot item = new ItemSlot(i == selectedSlot);
             item.add(label);
+            int finalI = i;
+            item.addListener(new InputListener() {
+                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                    inventory.setHeldItem(finalI);
+                    updateItemSlot(finalI);
+                    return true;
+                }
+            });
+
             table.add(item).pad(10, 10, 10, 10).fill();
             slots.add(item);
         }
@@ -135,7 +144,7 @@ public class ToolbarDisplay extends UIComponent {
     /**
      * Toggle Toolbar to open state
      */
-    private void toggleOpen(){
+    public void toggleOpen(){
         if (this.isOpen) {
             this.window.setVisible(false);
             this.isOpen = false;
