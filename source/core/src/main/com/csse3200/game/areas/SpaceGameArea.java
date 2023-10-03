@@ -482,7 +482,7 @@ public class SpaceGameArea extends GameArea {
     resourceService.loadTextures(forestTextures);
     resourceService.loadTextureAtlases(forestTextureAtlases);
     try {
-      ServiceLocator.getBackgroundMusicService()
+      ServiceLocator.getSoundService().getBackgroundMusicService()
               .loadSounds(Arrays.asList(BackgroundSoundFile.values()));
     } catch (InvalidSoundFileException e) {
       throw new RuntimeException(e);
