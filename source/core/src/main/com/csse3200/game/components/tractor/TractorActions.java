@@ -11,7 +11,6 @@ import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ConeLightComponent;
-import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
@@ -76,6 +75,8 @@ public class TractorActions extends Component {
    */
   private GameMap map;
 
+  private static final String RIGHT_STRING = "right";
+
   private static final Logger logger = LoggerFactory.getLogger(TractorActions.class);
 
 
@@ -129,7 +130,7 @@ public class TractorActions extends Component {
    */
   private String getDirection(float direction) {
     if (direction < 45) {
-      return "right";
+      return RIGHT_STRING;
     } else if (direction < 135) {
       return "up";
     } else if (direction < 225) {
@@ -139,7 +140,7 @@ public class TractorActions extends Component {
     }
     logger.error("Direction was not in range of 0-360, was {}", direction);
 
-    return "right";
+    return RIGHT_STRING;
   }
 
   /**
@@ -205,25 +206,64 @@ public class TractorActions extends Component {
    *          in the same order as the tiles in slots 2 and 3.
    */
   private Array<Object> getTiles(TractorMode mode, String dir) {
+    if (mode == TractorMode.TILLING) {
+      return getTilesTilling(dir);
+    } else if (mode == TractorMode.HARVESTING) {
+      return getTilesHarvest(dir);
+    }
+    return null;
+  }
+
+  private Array<Object> getTilesTilling(String dir) {
     Array<Object> tiles = new Array<>(4);
     Vector2 pos1 = new Vector2();
     Vector2 pos2 = new Vector2();
-    if ((Objects.equals(dir, "right") && mode == TractorMode.TILLING) || (Objects.equals(dir, "left") && mode == TractorMode.HARVESTING)) {
+
+    if (Objects.equals(dir, RIGHT_STRING)) {
       pos1.set(entity.getPosition().x, entity.getPosition().y + 1);
       pos2.set(entity.getPosition().x, entity.getPosition().y + 2);
       tiles.add(map.getTile(pos1), map.getTile(pos2), pos1, pos2);
       return tiles;
-    } else if ((Objects.equals(dir, "left") && mode == TractorMode.TILLING) || (Objects.equals(dir, "right") && mode == TractorMode.HARVESTING)) {
+    } else if (Objects.equals(dir, "left")) {
       pos1.set(entity.getPosition().x + 5, entity.getPosition().y + 1);
       pos2.set(entity.getPosition().x + 5, entity.getPosition().y + 2);
       tiles.add(map.getTile(pos1), map.getTile(pos2), pos1, pos2);
       return tiles;
-    } else if ((Objects.equals(dir, "up") && mode == TractorMode.TILLING) || (Objects.equals(dir, "down") && mode == TractorMode.HARVESTING)) {
+    } else if (Objects.equals(dir, "up")) {
       pos1.set(entity.getPosition().x + 2, entity.getPosition().y + 1);
       pos2.set(entity.getPosition().x + 3, entity.getPosition().y + 1);
       tiles.add(map.getTile(pos1), map.getTile(pos2), pos1, pos2);
       return tiles;
-    } else if ((Objects.equals(dir, "down") && mode == TractorMode.TILLING) || (Objects.equals(dir, "up") && mode == TractorMode.HARVESTING)) {
+    } else if (Objects.equals(dir, "down")) {
+      pos1.set(entity.getPosition().x + 2, entity.getPosition().y + 3);
+      pos2.set(entity.getPosition().x + 3, entity.getPosition().y + 3);
+      tiles.add(map.getTile(pos1), map.getTile(pos2), pos1, pos2);
+      return tiles;
+    }
+    return null;
+  }
+
+  private Array<Object> getTilesHarvest(String dir) {
+    Array<Object> tiles = new Array<>(4);
+    Vector2 pos1 = new Vector2();
+    Vector2 pos2 = new Vector2();
+
+    if (Objects.equals(dir, "left")) {
+      pos1.set(entity.getPosition().x, entity.getPosition().y + 1);
+      pos2.set(entity.getPosition().x, entity.getPosition().y + 2);
+      tiles.add(map.getTile(pos1), map.getTile(pos2), pos1, pos2);
+      return tiles;
+    } else if (Objects.equals(dir, RIGHT_STRING)) {
+      pos1.set(entity.getPosition().x + 5, entity.getPosition().y + 1);
+      pos2.set(entity.getPosition().x + 5, entity.getPosition().y + 2);
+      tiles.add(map.getTile(pos1), map.getTile(pos2), pos1, pos2);
+      return tiles;
+    } else if (Objects.equals(dir, "down")) {
+      pos1.set(entity.getPosition().x + 2, entity.getPosition().y + 1);
+      pos2.set(entity.getPosition().x + 3, entity.getPosition().y + 1);
+      tiles.add(map.getTile(pos1), map.getTile(pos2), pos1, pos2);
+      return tiles;
+    } else if (Objects.equals(dir, "up")) {
       pos1.set(entity.getPosition().x + 2, entity.getPosition().y + 3);
       pos2.set(entity.getPosition().x + 3, entity.getPosition().y + 3);
       tiles.add(map.getTile(pos1), map.getTile(pos2), pos1, pos2);

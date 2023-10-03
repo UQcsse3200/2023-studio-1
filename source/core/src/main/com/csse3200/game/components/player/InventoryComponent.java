@@ -24,11 +24,11 @@ import com.badlogic.gdx.math.Vector2;
 public class InventoryComponent extends Component {
 
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
-  public HashMap<String, Integer> itemCount = new HashMap<>();
+  private HashMap<String, Integer> itemCount = new HashMap<>();
 
-  public HashMap<String,Entity> heldItemsEntity = new HashMap<>();
+  private HashMap<String,Entity> heldItemsEntity = new HashMap<>();
 
-  public HashMap<Integer,String> itemPlace = new HashMap<>();
+  private HashMap<Integer,String> itemPlace = new HashMap<>();
 
   private Entity heldItem = null;
 
