@@ -17,7 +17,7 @@ public class ParticleEffectWrapperTest {
     private ParticleEffectWrapper particleEffectWrapper1, particleEffectWrapper2, particleEffectWrapper3;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         mockPooledEffect1 = mock(ParticleEffectPool.PooledEffect.class);
         mockPooledEffect2 = mock(ParticleEffectPool.PooledEffect.class);
         mockPooledEffect3 = mock(ParticleEffectPool.PooledEffect.class);
@@ -29,7 +29,7 @@ public class ParticleEffectWrapperTest {
     }
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         assertEquals(mockPooledEffect1, particleEffectWrapper1.getPooledEffect());
         assertEquals(mockPooledEffect2, particleEffectWrapper2.getPooledEffect());
         assertEquals(mockPooledEffect3, particleEffectWrapper3.getPooledEffect());
@@ -42,7 +42,7 @@ public class ParticleEffectWrapperTest {
     }
 
     @Test
-    public void testGetPooledEffect() {
+    void testGetPooledEffect() {
         assertEquals(mockPooledEffect1, particleEffectWrapper1.getPooledEffect());
         assertEquals(mockPooledEffect2, particleEffectWrapper2.getPooledEffect());
         assertEquals(mockPooledEffect3, particleEffectWrapper3.getPooledEffect());
@@ -52,14 +52,14 @@ public class ParticleEffectWrapperTest {
     }
 
     @Test
-    public void testGetCategory() {
+    void testGetCategory() {
         assertEquals(category, particleEffectWrapper1.getCategory());
         assertEquals(category, particleEffectWrapper2.getCategory());
         assertEquals(category, particleEffectWrapper3.getCategory());
     }
 
     @Test
-    public void testGetType() {
+    void testGetType() {
         assertEquals(type, particleEffectWrapper1.getType());
         assertEquals(type, particleEffectWrapper2.getType());
         assertEquals(type, particleEffectWrapper3.getType());
