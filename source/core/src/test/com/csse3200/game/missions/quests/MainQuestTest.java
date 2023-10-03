@@ -2,14 +2,11 @@ package com.csse3200.game.missions.quests;
 
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
-import com.badlogic.gdx.utils.JsonWriter;
-import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.rewards.Reward;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
-import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +17,6 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 class MainQuestTest {
     private MainQuest mainQuest1, mainQuest2, mainQuest3;
@@ -111,9 +107,18 @@ class MainQuestTest {
         String desc2 = "You must Test 2!\nComplete the quests: " + requirement1 + ", " + requirement2 + ".";
         String desc3 = "You must Test 3!\nComplete the quests: " + requirement1 + ", " + requirement2 + ", " +
                 requirement3 + ".";
+        String desc4 = "You must Test 1!\nComplete the quests: .";
+        String desc5 = "You must Test 2!\nComplete the quests: " + requirement2 + ".";
+        String desc6 = "You must Test 3!\nComplete the quests: " + requirement2 + ", " +
+                requirement3 + ".";
         assertEquals(desc1, mainQuest1.getDescription());
         assertEquals(desc2, mainQuest2.getDescription());
         assertEquals(desc3, mainQuest3.getDescription());
+        ServiceLocator.getMissionManager().getEvents().trigger(
+                MissionManager.MissionEvent.QUEST_REWARD_COLLECTED.name(), requirement1);
+        assertEquals(desc4, mainQuest1.getDescription());
+        assertEquals(desc5, mainQuest2.getDescription());
+        assertEquals(desc6, mainQuest3.getDescription());
     }
 
     @Test
