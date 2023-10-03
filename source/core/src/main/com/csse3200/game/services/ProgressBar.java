@@ -74,9 +74,9 @@ public class ProgressBar extends UIComponent {
         int day = ServiceLocator.getTimeService().getDay() - dayOffset;
 
         switch (this.act) {
-            case 1 -> progressBar = progressBarImagesAct1.get(day);
-            case 2 -> progressBar = progressBarImagesAct2.get(day);
-            case 3 -> progressBar = progressBarImagesAct3.get(day);
+            case 1 -> progressBar = (day > 5) ? progressBarImagesAct1.get(day) : progressBarImagesAct1.get(0);
+            case 2 -> progressBar = (day > 10) ? progressBarImagesAct2.get(day) : progressBarImagesAct2.get(0);
+            case 3 -> progressBar = (day > 15) ? progressBarImagesAct3.get(day) : progressBarImagesAct3.get(0);
         }
     }
 
@@ -90,7 +90,6 @@ public class ProgressBar extends UIComponent {
         group.clear();
         table.top().left();
         table.setFillParent(true);
-        //table.padTop(-1000f);
         table.padTop(-30f).padLeft(190f);
 
 
