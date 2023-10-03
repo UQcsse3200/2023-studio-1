@@ -1,7 +1,6 @@
 package com.csse3200.game.entities.factories;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
@@ -16,6 +15,13 @@ import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.util.stream.Stream;
 
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.csse3200.game.components.plants.PlantAreaOfEffectComponent;
+import com.csse3200.game.components.plants.PlantComponent;
+import com.csse3200.game.components.plants.PlantMouseHoverComponent;
+import com.csse3200.game.components.plants.PlantProximityComponent;
+import com.csse3200.game.physics.PhysicsLayer;
+import com.csse3200.game.physics.components.HitboxComponent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -66,6 +72,7 @@ class PlantFactoryTest {
     AnimationRenderComponent mockAnimationRenderComponent;
     @Mock
     BasePlantConfig mockConfig;
+    Entity plant;
 
     /**
      * Set up required objects and mocked dependencies before each test.
@@ -75,6 +82,16 @@ class PlantFactoryTest {
         MockitoAnnotations.openMocks(this);
         setupMocks();
         setupGdxFiles();
+
+        plant = PlantFactory.createTest(mockCropTile)
+                .addComponent(new PlantAreaOfEffectComponent(2f, "None"))
+                .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
+                .addComponent(new ColliderComponent().setSensor(true))
+                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
+                .addComponent(new PlantMouseHoverComponent())
+                .addComponent(new PlantProximityComponent())
+                .addComponent(new PlantComponent(1,"name", "type", "description", 1, 1, 1,
+                        mockCropTile, new int[]{1, 1, 1}, new String[]{"", "", "", "", "", "", "", ""}));
     }
 
     /**
@@ -110,14 +127,14 @@ class PlantFactoryTest {
     /**
      * Test to ensure plant configurations are loaded correctly.
      *
-     * @param id           The unique identifier for the plant.
-     * @param health       The health value of the plant.
-     * @param name         The name of the plant.
-     * @param type         The type category of the plant.
-     * @param description  A brief description of the plant's characteristics or purpose.
-     * @param water        The ideal water level for the plant.
-     * @param life         The expected adult lifespan of the plant.
-     * @param maxHealth    The maximum possible health value of the plant.
+     * @param id - The unique identifier for the plant.
+     * @param health - The health value of the plant.
+     * @param name - The name of the plant.
+     * @param type - The type category of the plant.
+     * @param description - A brief description of the plant's characteristics or purpose.
+     * @param water - The ideal water level for the plant.
+     * @param life - The expected adult lifespan of the plant.
+     * @param maxHealth - The maximum possible health value of the plant.
      */
     @ParameterizedTest
     @MethodSource("plantConfigProvider")
@@ -166,8 +183,8 @@ class PlantFactoryTest {
     /**
      * Utility method to fetch the actual plant configuration based on the plant name.
      *
-     * @param id    The unique identifier of the plant.
-     * @return      The actual plant configuration.
+     * @param id - The unique identifier of the plant.
+     * @return The actual plant configuration.
      */
     BasePlantConfig getActualValue(String id) {
         return switch (id) {
@@ -185,24 +202,48 @@ class PlantFactoryTest {
      * Test for the creation of a base plant. Ensures that all necessary components
      * are properly attached to the created plant entity.
      */
-    /*
     @Test
-    void shouldCreateBasePlantWithExpectedComponents() {
-        when(mockResourceService.getAsset("images/plants/cosmic_cob/4_adult.png", Texture.class)).thenReturn(mockTexture);
-        Entity plant = PlantFactory.createBasePlant(mockConfig, mockCropTile);
+    void shouldCreateBasePlant() {
         assertNotNull(plant, "Plant Entity should not be null");
+    }
 
+    /**
+     * Test to ensure that the plant has the PlantAreaOfEffectComponent.
+     */
+    @Test
+    void shouldHavePlantAOEComponent() {
+        PlantAreaOfEffectComponent aoeComponent = plant.getComponent(PlantAreaOfEffectComponent.class);
+        assertNotNull(aoeComponent, "PlantAreaOfEffectComponent should not be null");
+    }
+
+    /**
+     * Test to ensure that the plant has the PhysicsComponent.
+     */
+    @Test
+    void shouldHavePhysicsComponent() {
         PhysicsComponent physicsComponent = plant.getComponent(PhysicsComponent.class);
         assertNotNull(physicsComponent, "Plant PhysicsComponent should not be null");
         assertEquals(BodyDef.BodyType.StaticBody, physicsComponent.getBody().getType(),
                 "Plant physics body type should be StaticBody");
+    }
 
+    /**
+     * Test to ensure that the plant has the ColliderComponent.
+     */
+    @Test
+    void shouldHaveColliderComponent() {
         ColliderComponent colliderComponent = plant.getComponent(ColliderComponent.class);
         colliderComponent.create();
         assertNotNull(colliderComponent, "Plant ColliderComponent should not be null");
         assertTrue(colliderComponent.getFixture().isSensor(),
                 "Plant collider should be a sensor");
+    }
 
+    /**
+     * Test to ensure that the plant has the HitboxComponent.
+     */
+    @Test
+    void shouldHaveHitboxComponent() {
         HitboxComponent hitboxComponent = plant.getComponent(HitboxComponent.class);
         hitboxComponent.create();
         assertNotNull(hitboxComponent, "Plant HitboxComponent should not be null");
@@ -212,7 +253,52 @@ class PlantFactoryTest {
                 "Plant Hitbox layer should be OBSTACLE");
     }
 
+    /**
+     * Test to ensure that the plant has the PlantMouseHoverComponent.
      */
+    @Test
+    void shouldHavePlantMouseHoverComponent() {
+        PlantMouseHoverComponent mouseHoverComponent = plant.getComponent(PlantMouseHoverComponent.class);
+        assertNotNull(mouseHoverComponent, "PlantMouseHoverComponent should not be null");
+    }
+
+    /**
+     * Test to ensure that the plant has the PlantProximityComponent.
+     */
+    @Test
+    void shouldHavePlantProximityComponent() {
+        PlantProximityComponent proximityComponent = plant.getComponent(PlantProximityComponent.class);
+        assertNotNull(proximityComponent, "PlantProximityComponent should not be null");
+    }
+
+    /**
+     * Test to ensure that the plant has the PlantComponent.
+     */
+    @Test
+    void shouldHavePlantComponent() {
+        PlantComponent plantComponent = plant.getComponent(PlantComponent.class);
+        assertNotNull(plantComponent, "PlantComponent should not be null");
+    }
+
+    /**
+     * Tests that the setScaledCollider sets the collider of the plant entity correctly.
+     */
+    @Test
+    void testSetScaledCollider() {
+        Entity plant = new Entity();
+        plant.setScale(2f, 2f);
+        ColliderComponent mockCollider = mock(ColliderComponent.class);
+        plant.addComponent(mockCollider);
+
+        PhysicsUtils.setScaledCollider(plant, 0.5f, 0.2f);
+
+        Vector2 expectedScale = new Vector2(1f, 0.4f);
+        verify(mockCollider, times(1)).setAsBoxAligned(
+                eq(expectedScale),
+                eq(PhysicsComponent.AlignX.CENTER),
+                eq(PhysicsComponent.AlignY.BOTTOM)
+        );
+    }
 
     /**
      * Provides plant statistics for parameterized tests.
@@ -323,23 +409,5 @@ class PlantFactoryTest {
 
      */
 
-    /**
-     * Tests that the setScaledCollider sets the collider of the plant entity correctly.
-     */
-    @Test
-    void testSetScaledCollider() {
-        Entity plant = new Entity();
-        plant.setScale(2f, 2f);
-        ColliderComponent mockCollider = mock(ColliderComponent.class);
-        plant.addComponent(mockCollider);
 
-        PhysicsUtils.setScaledCollider(plant, 0.5f, 0.2f);
-
-        Vector2 expectedScale = new Vector2(1f, 0.4f);
-        verify(mockCollider, times(1)).setAsBoxAligned(
-                eq(expectedScale),
-                eq(PhysicsComponent.AlignX.CENTER),
-                eq(PhysicsComponent.AlignY.BOTTOM)
-        );
-    }
 }
