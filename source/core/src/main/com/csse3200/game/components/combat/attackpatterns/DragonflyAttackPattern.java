@@ -56,7 +56,7 @@ public class DragonflyAttackPattern extends AttackPatternComponent {
        }
 
         for (int i = 0; i < entitiesInRange.size(); i++) {
-            if (entitiesInRange.get(i).getType() == EntityType.Player) {
+            if (entitiesInRange.get(i).getType() == EntityType.PLAYER) {
                 attackPlayer(entitiesInRange.get(i));
                 super.attack();
                 return;
@@ -65,7 +65,7 @@ public class DragonflyAttackPattern extends AttackPatternComponent {
 
         Entity nearestEntity = interactionDetector.getNearest(interactionDetector.getEntitiesInRange());
 
-        if (nearestEntity.getType() == EntityType.Plant && entity.getPosition().dst(nearestEntity.getPosition().x,
+        if (nearestEntity.getType() == EntityType.PLANT && entity.getPosition().dst(nearestEntity.getPosition().x,
                 nearestEntity.getPosition().y) < 1f) {
             // Plant detected, check if close enough to attack
             attackPlant(nearestEntity);

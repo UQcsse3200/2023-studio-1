@@ -36,7 +36,7 @@ public class TamingTest {
         player.create();
 
         for (int index = 0; index < 4; index++) {
-            foodEntity = new Entity(EntityType.Item);
+            foodEntity = new Entity(EntityType.ITEM);
             ItemComponent fooditem = new ItemComponent("AFood", ItemType.ANIMAL_FOOD,
                     new Texture("images/tool_shovel.png")); //texture is just used as a placeholder.
             foodEntity.addComponent(fooditem);

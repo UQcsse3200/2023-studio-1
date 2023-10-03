@@ -144,7 +144,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
         for (Entity entityInRange : getEntitiesInRange()) {
 
             // Check for any crop tiles near the plant.
-            if (entityInRange.getType() == EntityType.Tile) {
+            if (entityInRange.getType() == EntityType.TILE) {
                 Entity plant = entityInRange.getComponent(CropTileComponent.class).getPlant();
                 if (plant != null && entity.getId() != plant.getId()) {
                     // Decrease the health of all plants in the effect area.
@@ -160,7 +160,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
      */
     private void healthEffect() {
         for (Entity entityInRange : getEntitiesInRange()) {
-            if (entityInRange.getType() == EntityType.Tile) {
+            if (entityInRange.getType() == EntityType.TILE) {
 
                 // First check for other plants in the area.
                 Entity plant = entityInRange.getComponent(CropTileComponent.class).getPlant();
@@ -169,7 +169,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
                 }
 
             // Now check if the player.
-            } else if (entityInRange.getType() == EntityType.Player) {
+            } else if (entityInRange.getType() == EntityType.PLAYER) {
                 entityInRange.getComponent(CombatStatsComponent.class).addHealth(10);
             }
             // add animals to this.
@@ -182,7 +182,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
     private void poisonEffect() {
         for (Entity entityInRange : getEntitiesInRange()) {
 
-            if (entityInRange.getType() == EntityType.Player) {
+            if (entityInRange.getType() == EntityType.PLAYER) {
                 entityInRange.getComponent(CombatStatsComponent.class).addHealth(-20);
             }
             // add animals to this.
@@ -199,10 +199,10 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
 
             for (Entity entityInRange : getEntitiesInRange()) {
 
-                if (entityInRange.getType() == EntityType.Cow
-                        || entityInRange.getType() == EntityType.Chicken
-                        || entityInRange.getType() == EntityType.Astrolotl
-                        || entityInRange.getType() == EntityType.OxygenEater) {
+                if (entityInRange.getType() == EntityType.COW
+                        || entityInRange.getType() == EntityType.CHICKEN
+                        || entityInRange.getType() == EntityType.ASTROLOTL
+                        || entityInRange.getType() == EntityType.OXYGEN_EATER) {
 
                     // If a valid entity is in the area, tell the plant it is eating.
                     entity.getComponent(PlantComponent.class).setIsEating();
@@ -228,7 +228,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
     private void soundEffect() {
         for (Entity entityInRange : getEntitiesInRange()) {
 
-            if (entityInRange.getType() == EntityType.Player) {
+            if (entityInRange.getType() == EntityType.PLAYER) {
                 entity.getComponent(PlantComponent.class).playSound("nearby");
             }
         }

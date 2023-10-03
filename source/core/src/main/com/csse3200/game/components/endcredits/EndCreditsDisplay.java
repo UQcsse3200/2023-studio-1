@@ -49,7 +49,7 @@ public class EndCreditsDisplay extends UIComponent {
      */
     private TypingLabel creditsLabel;
 
-    private final static String credits = """
+    private final static String CREDITS = """
                     {SLOW}
                     {RAINBOW}GARDENERS OF THE GALAXY: LEGEND OF THE ASTROHOE {ENDRAINBOW}
                     
@@ -149,7 +149,7 @@ public class EndCreditsDisplay extends UIComponent {
         background.setPosition(0, 0);
         float scaledHeight = Gdx.graphics.getWidth() * (background.getHeight() / background.getWidth());
         background.setHeight(scaledHeight);
-        creditsLabel = new TypingLabel(credits, skin);
+        creditsLabel = new TypingLabel(CREDITS, skin);
         creditsLabel.setAlignment(Align.center);
         // Create a "Return" button
         this.returnButton =  new TextButton("Return to Main Menu", skin);

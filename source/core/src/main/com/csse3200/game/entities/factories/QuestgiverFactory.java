@@ -25,7 +25,7 @@ public class QuestgiverFactory {
 
     AnimationRenderComponent animator = setupQuestgiverAnimations();
 
-    Entity questgiver = new Entity(EntityType.Questgiver)
+    Entity questgiver = new Entity(EntityType.QUESTGIVER)
         .addComponent(new PhysicsComponent())
         .addComponent(new PhysicsMovementComponent())
         .addComponent(new ColliderComponent())
@@ -49,7 +49,7 @@ public class QuestgiverFactory {
     QuestIndicatorComponent indicator = new QuestIndicatorComponent();
     indicator.registerQuestgiver(questgiver);
 
-    Entity questgiverIndicator = new Entity(EntityType.QuestgiverIndicator)
+    Entity questgiverIndicator = new Entity(EntityType.QUESTGIVER_INDICATOR)
             .addComponent(indicator)
             .addComponent(animator);
 

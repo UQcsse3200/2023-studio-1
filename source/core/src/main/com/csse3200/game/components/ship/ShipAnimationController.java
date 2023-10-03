@@ -31,7 +31,7 @@ public class ShipAnimationController extends Component {
 	 * Changes the stage of the ship to match progress, progress from
 	 * ShipProgressComponent
 	 */
-	private void animateShipStage(int progress, Set<Feature> unlocked_features) {
+	private void animateShipStage(int progress, Set<Feature> unlockedFeatures) {
 		String animation = "default";
 
 		//TODO change states to match final amount of progress

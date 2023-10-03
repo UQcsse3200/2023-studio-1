@@ -35,8 +35,8 @@ class InventoryComponentTest {
     inventoryComponent = spy(new InventoryComponent(new ArrayList<>()));
     player = new Entity().addComponent(inventoryComponent);
     player.create();
-    item1 = new Entity(EntityType.Item);
-    item2 = new Entity(EntityType.Item);
+    item1 = new Entity(EntityType.ITEM);
+    item2 = new Entity(EntityType.ITEM);
 //    items.put(item1.getComponent(ItemComponent.class).getItemName(),item1);
 //    items.put(item2.getComponent(ItemComponent.class).getItemName(),item2);
     ItemComponent itemComponent1 = new ItemComponent("itemTest1", ItemType.HOE,
@@ -82,7 +82,7 @@ class InventoryComponentTest {
   @Test
   public void testAddItem() {
     // Create a new item
-    Entity newItem = new Entity(EntityType.Item);
+    Entity newItem = new Entity(EntityType.ITEM);
     ItemComponent itemComponent3 = new ItemComponent("itemTest3", ItemType.SCYTHE,
             new Texture("images/tool_shovel.png")); // Texture is not used...
     // Add the new item to the inventory
@@ -98,7 +98,7 @@ class InventoryComponentTest {
   @Test
   public void testRemoveItem() {
     // Remove an item from the inventory
-    Entity newItem = new Entity(EntityType.Item);
+    Entity newItem = new Entity(EntityType.ITEM);
     ItemComponent itemComponent3 = new ItemComponent("itemTest3", ItemType.SCYTHE,
             new Texture("images/tool_shovel.png")); // Texture is not used...
     // Add the new item to the inventory

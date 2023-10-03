@@ -28,7 +28,7 @@ public class MainMenuDisplay extends UIComponent {
     private Image transitionFrames;
     private long lastFrameTime;
     private static int fps = 15;
-    private final static long frameDuration = (800 / fps);
+    private final static long FRAME_DURATION = (800 / fps);
 
     @Override
     public void create() {
@@ -150,7 +150,7 @@ public class MainMenuDisplay extends UIComponent {
 
     @Override
     public void update() {
-        if (System.currentTimeMillis() - lastFrameTime > frameDuration) {
+        if (System.currentTimeMillis() - lastFrameTime > FRAME_DURATION) {
             updateAnimation();
         }
     }

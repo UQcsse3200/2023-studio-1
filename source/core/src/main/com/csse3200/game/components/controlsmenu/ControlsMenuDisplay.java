@@ -59,7 +59,7 @@ public class ControlsMenuDisplay extends UIComponent {
   /**
    * The duration for which each frame should be displayed
    */
-  private final static long frameDuration = 800 / fps;
+  private final static long FRAME_DURATION = 800 / fps;
 
   public ControlsMenuDisplay(GdxGame game) {
     super();
@@ -203,7 +203,7 @@ public class ControlsMenuDisplay extends UIComponent {
   @Override
   public void update() {
     // Update the animation frame if the time threshold has been hit
-    if (System.currentTimeMillis() - lastFrameTime > frameDuration) {
+    if (System.currentTimeMillis() - lastFrameTime > FRAME_DURATION) {
       updateAnimation();
     }
 

@@ -16,7 +16,7 @@ public class ShipPartTileComponent extends Component {
 	/**
 	 * Sonarcloud wanted this over dup code?
 	 */
-	private static final String destroyString = "destroy";
+	private static final String DESTROY_STRING = "destroy";
 	private Entity shipDebris;
 	private Entity shipClueItem;
 
@@ -26,7 +26,7 @@ public class ShipPartTileComponent extends Component {
 
 	@Override
 	public void create() {
-		entity.getEvents().addListener(destroyString, this::destroyTile);
+		entity.getEvents().addListener(DESTROY_STRING, this::destroyTile);
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class ShipPartTileComponent extends Component {
 	 * from the tile.
 	 */
 	private void destroyShipDebris() {
-		shipDebris.getEvents().trigger(destroyString, null);
+		shipDebris.getEvents().trigger(DESTROY_STRING, null);
 		shipDebris = null;
 	}
 
@@ -85,7 +85,7 @@ public class ShipPartTileComponent extends Component {
 
 			// remove self from the terrain tile, destroy clue item & self-destruct
 			if (tile != null) tile.removeOccupant();
-			if (shipClueItem != null) shipClueItem.getEvents().trigger(destroyString);
+			if (shipClueItem != null) shipClueItem.getEvents().trigger(DESTROY_STRING);
 			entity.dispose();
 		}
 	}

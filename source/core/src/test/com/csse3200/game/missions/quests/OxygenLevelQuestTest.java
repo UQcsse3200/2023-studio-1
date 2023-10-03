@@ -1,10 +1,7 @@
 package com.csse3200.game.missions.quests;
 
 import com.badlogic.gdx.utils.JsonValue;
-import com.csse3200.game.components.plants.PlantComponent;
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.entities.factories.PlantFactory;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.events.listeners.EventListener0;
 import com.csse3200.game.missions.MissionManager;
@@ -17,10 +14,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.EventListener;
-import java.util.function.Function;
-
-import static com.csse3200.game.entities.EntityType.Plant;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
