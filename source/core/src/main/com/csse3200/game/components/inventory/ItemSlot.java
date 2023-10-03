@@ -16,14 +16,12 @@ public class ItemSlot extends Stack {
     private Texture itemTexture;
     private Integer count;
     private final Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
-
     private Image background;
     private Image frame;
-
     private boolean selected;
     private Image itemImage;
-
-    private Label label;
+    private Label countLabel;
+    private Label toolbarLabel;
 
     /**
      * Construct an itemSlot with a texture, count and selected state
@@ -72,17 +70,23 @@ public class ItemSlot extends Stack {
      * Set the item count
      * @param count integer of number of item
      */
-    public void setCount(Integer count) {
+    public void setCount(Integer count) {  // Add this method to update the count label
         this.count = count;
-        createItemSlot();
+        if (count != null && count > 0) {
+            countLabel.setText(count + " ");
+        } else {
+            countLabel.setText("");
+        }
     }
-
     /**
      * Get the item count
      * @return count integer of number of item
      */
     public Integer getCount() {
-        return count;
+        if (count != null) {
+            return count;
+        }
+        return -1;
     }
 
     /**
@@ -117,15 +121,23 @@ public class ItemSlot extends Stack {
             this.add(itemImage);
         }
 
-        // Add or update the count label if the number is not 0
+        // Add or update the count countLabel if the number is not 0
         if (this.count != null && this.count > 0) {
-            if (label == null) {
-                label = new Label(this.count + " ", this.skin);
-                label.setColor(Color.BLACK);
-                label.setAlignment(Align.bottomRight);
-                this.add(label);
+            if (countLabel == null) {
+                countLabel = new Label(this.count + " ", this.skin);
+                countLabel.setColor(Color.BLACK);
+                countLabel.setAlignment(Align.bottomRight);
+                this.add(countLabel);
             } else {
-                label.setText(this.count + " ");
+                countLabel.setText(this.count + " ");
+            }
+        }
+        else {
+            if (countLabel == null) {
+                countLabel = new Label(" ", this.skin);
+                countLabel.setColor(Color.BLACK);
+                countLabel.setAlignment(Align.bottomRight);
+                this.add(countLabel);
             }
         }
     }

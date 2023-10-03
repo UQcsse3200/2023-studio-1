@@ -1,7 +1,6 @@
 package com.csse3200.game.entities;
 
 import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.services.ServiceLocator;
 

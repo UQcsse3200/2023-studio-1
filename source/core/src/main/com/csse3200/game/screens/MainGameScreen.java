@@ -1,6 +1,7 @@
 package com.csse3200.game.screens;
 
 import com.csse3200.game.services.*;
+import com.csse3200.game.components.losescreen.LoseScreenDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -153,7 +154,8 @@ public class MainGameScreen extends ScreenAdapter {
     /**
      * Switch to the losing screen in case of player loss
      */
-    public void playLoseScreen() {
+    public void playLoseScreen(String causeOfDeath) {
+        LoseScreenDisplay.setLoseReason(causeOfDeath);
         currentScreenType = ScreenType.LOSE;
     }
 

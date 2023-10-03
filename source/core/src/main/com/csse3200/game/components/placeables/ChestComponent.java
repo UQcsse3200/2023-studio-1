@@ -1,8 +1,12 @@
 package com.csse3200.game.components.placeables;
 
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.inventory.InventoryDisplay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ChestComponent extends Component  {
+    private static final Logger logger = LoggerFactory.getLogger(InventoryDisplay.class);
     public void create(){
         entity.getEvents().addListener("interact", this::openChest);
 
@@ -19,6 +23,7 @@ public class ChestComponent extends Component  {
         //  if (Chest in use) { closeChest(); }
         
         //TODO: Display the UI for the chest inventory, once inventory is complete
+        entity.getEvents().trigger("openChest");
     }
 
     /**
@@ -26,5 +31,6 @@ public class ChestComponent extends Component  {
      */
     private void closeChest(){
         //TODO: Hide the UI for the chest inventory, once inventory is complete
+        entity.getEvents().trigger("openChest");
     }
 }
