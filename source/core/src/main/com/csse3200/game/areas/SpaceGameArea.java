@@ -319,25 +319,10 @@ public class SpaceGameArea extends GameArea {
     spawnTerrain();
     spawnInvisibleObstacle();// spawn invisible obstacle on the non-traversable area of the map
 
-    // Todo: Remove this code that automatically spawns plants
-    // Leaving commented for testing, will delete next sprint.
-    /*
-    spawnCrop(20, 80, "Cosmic Cob");
-    spawnCrop(22, 80, "Aloe Vera");
-    spawnCrop(24, 80, "Hammer Plant");
-    spawnCrop(26, 80, "Space Snapper");
-    spawnCrop(28, 80, "Deadly Nightshade");
-    spawnCrop(30, 80, "Atomic Algae");
-     */
-
     spawnShipDebris();
 
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
-
-    //TODO - temporarily spawning here, will add as quest reward in sprint 4
-    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createSword());
-    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createGun());
 
     tractor = spawnTractor();
     spawnPlayerHighlight();
@@ -347,7 +332,6 @@ public class SpaceGameArea extends GameArea {
 
     ServiceLocator.getMissionManager().acceptQuest(QuestFactory.createFirstContactQuest());
 
-    //playMusic();
 
     //Spawning behaviour for passive animals
     List<EntitySpawner> passiveSpawners = new ArrayList<>();
