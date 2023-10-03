@@ -123,8 +123,7 @@ public class OxygenDisplay extends UIComponent{
     public void draw(SpriteBatch batch) {
         table.clear();
         group.clear();
-
-        table.top().left();
+        table.top();
         table.setFillParent(true);
 
         table.padTop(-130f).padLeft(-180f);

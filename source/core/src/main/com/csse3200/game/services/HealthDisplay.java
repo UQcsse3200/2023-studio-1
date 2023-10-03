@@ -116,8 +116,7 @@ public class HealthDisplay extends UIComponent{
     public void draw(SpriteBatch batch) {
         table.clear();
         group.clear();
-
-        table.bottom().right();
+        table.top();
         table.setFillParent(true);
         table.padTop(-130f).padLeft(820f);
 

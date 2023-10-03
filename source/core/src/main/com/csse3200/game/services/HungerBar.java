@@ -89,8 +89,7 @@ public class HungerBar extends UIComponent{
     public void draw(SpriteBatch batch) {
         table1.clear();
         group1.clear();
-
-        table1.bottom().right();
+        table1.top();
         table1.setFillParent(true);
 
         table1.padTop(-130f).padLeft(-1000f);
