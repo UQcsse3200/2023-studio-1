@@ -19,7 +19,6 @@ import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.services.PlanetOxygenService;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -768,7 +767,7 @@ public class PlantComponent extends Component {
             case JUVENILE -> this.currentMaxHealth = this.maxHealthAtStages[2];
             case ADULT, DECAYING, DEAD -> this.currentMaxHealth = this.maxHealth;
             default -> throw new IllegalStateException("Unexpected value: " + getGrowthStage());
-        };
+        }
     }
 
     /**

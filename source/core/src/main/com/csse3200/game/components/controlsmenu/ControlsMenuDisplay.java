@@ -54,12 +54,12 @@ public class ControlsMenuDisplay extends UIComponent {
   /**
    * The target fps at which the frames should be updated
    */
-  private int fps = 15;
+  private static int fps = 15;
 
   /**
    * The duration for which each frame should be displayed
    */
-  private final long frameDuration = 800 / fps;
+  private final static long frameDuration = 800 / fps;
 
   public ControlsMenuDisplay(GdxGame game) {
     super();
@@ -162,7 +162,7 @@ public class ControlsMenuDisplay extends UIComponent {
     // Create a dictionary to store all the controls
     // LinkedHashMap is the only map the preserves order of insertion.
     // Performance is a non-issue in a static table, so using a linked list structure doesn't matter
-    ArrayList<Pair<String, String>> controls = new ArrayList<Pair<String, String>>();
+    ArrayList<Pair<String, String>> controls = new ArrayList<>();
 
     // To add another control, simply put it in the map below.
     controls.add(new Pair<>("W", "Moves the character upwards"));

@@ -104,8 +104,10 @@ public class Component implements Json.Serializable {
   }
 
   public void write(Json json) {
+    // Overwrite this method to save data
   }
 
   public void read(Json json, JsonValue jsonMap) {
+    // Overwrite this method to load data
   }
 }

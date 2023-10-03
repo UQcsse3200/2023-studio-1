@@ -1,18 +1,11 @@
 package com.csse3200.game.components.inventory;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.services.ServiceLocator;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -22,13 +15,11 @@ import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.ui.UIComponent;
 import com.badlogic.gdx.graphics.Texture;
-import com.csse3200.game.services.ServiceLocator;
 
 /**
  * An ui component for displaying player stats, e.g. health.
  */
 public class InventoryDisplay extends UIComponent {
-    private static final Logger logger = LoggerFactory.getLogger(InventoryDisplay.class);
     private InventoryComponent inventory;
     private final Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
     private final Table table = new Table(skin);
@@ -41,7 +32,7 @@ public class InventoryDisplay extends UIComponent {
     private Map<ItemSlot,Integer> indexes;
     private final Integer size;
     private final Integer rowSize;
-    private final Boolean toolbar;
+    private final boolean toolbar;
     private final String refreshEvent;
     private final String openEvent;
     private final InventoryDisplayManager inventoryDisplayManager;
@@ -109,13 +100,6 @@ public class InventoryDisplay extends UIComponent {
       if (slot.getItemImage() != null) {
         slot.getItemImage().setDebug(false);
       }
-      /*
-      slot.addListener(new InputListener() {
-        public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-          System.out.println(slot);
-          return true;
-        }
-      });*/
     }
 
         // Create a window for the inventory using the skin
@@ -192,7 +176,7 @@ public class InventoryDisplay extends UIComponent {
               @Override
               public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
                   if (target == null) {
-                      ItemSlot itemSlot = map.get((Stack) getActor());
+                      ItemSlot itemSlot = map.get(getActor());
                       itemSlot.removeActor(getActor());
                       itemSlot.add(getActor());
                   }
@@ -211,7 +195,7 @@ public class InventoryDisplay extends UIComponent {
 
               @Override
               public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                  ItemSlot sourceSlot = map.get(((Stack) source.getActor()));
+                  ItemSlot sourceSlot = map.get((source.getActor()));
 
                   inventory.swapPosition(indexes.get(sourceSlot), indexes.get(slot));
                   map.put(slot.getDraggable(), sourceSlot);
@@ -242,6 +226,7 @@ public class InventoryDisplay extends UIComponent {
      */
     @Override
     public void draw(SpriteBatch batch) {
+        // Handled else where
     }
 
     /**

@@ -23,6 +23,11 @@ import com.csse3200.game.services.ServiceLocator;
 public class CropTileComponent extends Component {
 
 	/**
+	 * Sonarcloud said to do it like this instead?
+	 */
+	private static final String plantString = "plant";
+
+	/**
 	 * Default rate that a tile's water level decreases
 	 */
 	private static final float WATER_DECREASE_RATE = 0.005f;
@@ -48,7 +53,6 @@ public class CropTileComponent extends Component {
 	private boolean isFertilised;
 	private Entity plant;
 	private DynamicTextureRenderComponent currentTexture;
-	private TerrainTile terrainTile;
 
 	/**
 	 * Creates a new crop tile with default values
@@ -92,7 +96,7 @@ public class CropTileComponent extends Component {
 	public void create() {
 		entity.getEvents().addListener("water", this::waterTile);
 		entity.getEvents().addListener("fertilise", this::fertiliseTile);
-		entity.getEvents().addListener("plant", this::plantCrop);
+		entity.getEvents().addListener(plantString, this::plantCrop);
 		entity.getEvents().addListener("destroy", this::destroyTile);
 		entity.getEvents().addListener("harvest", this::harvestCrop);
 		currentTexture = entity.getComponent(DynamicTextureRenderComponent.class);
@@ -253,7 +257,7 @@ public class CropTileComponent extends Component {
 	 *         status.
 	 */
 	private String getTexturePath() {
-		String path = "images/cropTile_fertilised.png";
+		String path;
 		if (isFertilised) {
 			if (waterContent < 0.5) {
 				path = "images/cropTile_fertilised.png";
@@ -299,7 +303,7 @@ public class CropTileComponent extends Component {
 		json.writeValue("waterContent", waterContent);
 		json.writeValue("soilQuality", soilQuality);
 		json.writeValue("isFertilised", isFertilised);
-		json.writeValue("plant", plant);
+		json.writeValue(plantString, plant);
 		json.writeObjectEnd();
 	}
 
@@ -309,20 +313,13 @@ public class CropTileComponent extends Component {
 		waterContent = jsonMap.getFloat("waterContent");
 		soilQuality = jsonMap.getFloat("soilQuality");
 		isFertilised = jsonMap.getBoolean("isFertilised");
-		JsonValue plantData = jsonMap.get("plant");
+		JsonValue plantData = jsonMap.get(plantString);
 		if (plantData.get("Entity") != null) {
 			plantData = plantData.get("components").get("PlantComponent");
 			plant = FactoryService.getPlantFactories().get(plantData.getString("name")).apply(this);
 			plant.getComponent(PlantComponent.class).read(json, plantData);
 		} else {
 			plant = null;
-		}
-	}
-
-	public void setTerrainTile(TerrainTile terrainTile) {
-		this.terrainTile = terrainTile;
-		if (terrainTile.getOccupant() == null) {
-			terrainTile.setOccupant(entity);
 		}
 	}
 }

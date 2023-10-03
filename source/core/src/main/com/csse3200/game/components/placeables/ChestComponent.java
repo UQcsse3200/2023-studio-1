@@ -1,12 +1,13 @@
 package com.csse3200.game.components.placeables;
 
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.inventory.InventoryDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ChestComponent extends Component  {
-    private static final Logger logger = LoggerFactory.getLogger(InventoryDisplay.class);
+    private static final Logger logger = LoggerFactory.getLogger(ChestComponent.class);
+
+    @Override
     public void create(){
         entity.getEvents().addListener("interact", this::openChest);
 
@@ -21,7 +22,7 @@ public class ChestComponent extends Component  {
     private void openChest(){
         //check if the chest is already being accessed and if so just close
         //  if (Chest in use) { closeChest(); }
-        
+        logger.info("Open chest");
         //TODO: Display the UI for the chest inventory, once inventory is complete
         entity.getEvents().trigger("openChest");
     }

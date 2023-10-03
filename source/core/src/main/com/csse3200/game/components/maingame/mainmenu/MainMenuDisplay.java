@@ -24,11 +24,11 @@ public class MainMenuDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(MainMenuDisplay.class);
     private static final float Z_INDEX = 2f;
     private Table table;
-    public static int frame;
+    private int frame;
     private Image transitionFrames;
     private long lastFrameTime;
-    private int fps = 15;
-    private final long frameDuration =  (long)(800 / fps);
+    private static int fps = 15;
+    private final static long frameDuration = (800 / fps);
 
     @Override
     public void create() {

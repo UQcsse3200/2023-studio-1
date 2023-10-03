@@ -24,22 +24,18 @@ public class LightController extends Component {
 
     public boolean turnOn() {
         AuraLightComponent light = entity.getComponent(AuraLightComponent.class);
-        if (light != null) {
-            if (!light.getActive()) {
-                light.toggleLight();
-                entity.getComponent(AnimationRenderComponent.class).startAnimation("light_on");
-            }
+        if (light != null && !light.getActive()) {
+            light.toggleLight();
+            entity.getComponent(AnimationRenderComponent.class).startAnimation("light_on");
         }
         return true;
     }
 
     public boolean turnOff() {
         AuraLightComponent light = entity.getComponent(AuraLightComponent.class);
-        if (light != null) {
-            if (light.getActive()) {
-                light.toggleLight();
-                entity.getComponent(AnimationRenderComponent.class).startAnimation("light_off");
-            }
+        if (light != null && light.getActive()) {
+            light.toggleLight();
+            entity.getComponent(AnimationRenderComponent.class).startAnimation("light_off");
         }
         return true;
     }

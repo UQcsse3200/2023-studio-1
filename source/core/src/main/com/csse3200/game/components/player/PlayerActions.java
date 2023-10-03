@@ -294,7 +294,7 @@ public class PlayerActions extends Component {
     if (itemInHand != null) {
       if (itemInHand.getComponent(ItemActions.class) != null) {
         pauseMoving();
-        itemInHand.getComponent(ItemActions.class).use(entity, mousePos, map);
+        itemInHand.getComponent(ItemActions.class).use(entity, mousePos);
       }
     }
   }

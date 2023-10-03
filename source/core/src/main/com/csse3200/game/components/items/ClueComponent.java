@@ -36,6 +36,7 @@ public class ClueComponent extends Component {
 		Collections.rotate(possibleBaseLocations, 1);
 	}
 
+	@Override
 	public void create() {
 		super.create();
 		entity.getEvents().addListener("destroy", this::destroy);
