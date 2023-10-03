@@ -100,6 +100,7 @@ loadScripts(document, 'script');</script>
 <li><a href="com/csse3200/game/screens/package-tree.html">com.csse3200.game.screens</a>, </li>
 <li><a href="com/csse3200/game/services/package-tree.html">com.csse3200.game.services</a>, </li>
 <li><a href="com/csse3200/game/services/plants/package-tree.html">com.csse3200.game.services.plants</a>, </li>
+<li><a href="com/csse3200/game/services/sound/package-tree.html">com.csse3200.game.services.sound</a>, </li>
 <li><a href="com/csse3200/game/ui/package-tree.html">com.csse3200.game.ui</a>, </li>
 <li><a href="com/csse3200/game/ui/terminal/package-tree.html">com.csse3200.game.ui.terminal</a>, </li>
 <li><a href="com/csse3200/game/ui/terminal/commands/package-tree.html">com.csse3200.game.ui.terminal.commands</a>, </li>
@@ -132,6 +133,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">com.csse3200.game.ui.terminal.commands.<a href="com/csse3200/game/ui/terminal/commands/AddItemCommand.html" class="type-name-link" title="class in com.csse3200.game.ui.terminal.commands">AddItemCommand</a> (implements com.csse3200.game.ui.terminal.commands.<a href="com/csse3200/game/ui/terminal/commands/Command.html" title="interface in com.csse3200.game.ui.terminal.commands">Command</a>)</li>
 <li class="circle">com.csse3200.game.ui.terminal.commands.<a href="com/csse3200/game/ui/terminal/commands/AddWeatherCommand.html" class="type-name-link" title="class in com.csse3200.game.ui.terminal.commands">AddWeatherCommand</a> (implements com.csse3200.game.ui.terminal.commands.<a href="com/csse3200/game/ui/terminal/commands/Command.html" title="interface in com.csse3200.game.ui.terminal.commands">Command</a>)</li>
 <li class="circle">com.csse3200.game.physics.raycast.<a href="com/csse3200/game/physics/raycast/AllHitCallback.html" class="type-name-link" title="class in com.csse3200.game.physics.raycast">AllHitCallback</a> (implements com.badlogic.gdx.physics.box2d.RayCastCallback)</li>
+<li class="circle">com.csse3200.game.services.sound.<a href="com/csse3200/game/services/sound/BackgroundMusicService.html" class="type-name-link" title="class in com.csse3200.game.services.sound">BackgroundMusicService</a> (implements com.csse3200.game.services.sound.<a href="com/csse3200/game/services/sound/MusicService.html" title="interface in com.csse3200.game.services.sound">MusicService</a>)</li>
 <li class="circle">com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/BaseAnimalConfig.html" class="type-name-link" title="class in com.csse3200.game.entities.configs">BaseAnimalConfig</a></li>
 <li class="circle">com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/BaseEntityConfig.html" class="type-name-link" title="class in com.csse3200.game.entities.configs">BaseEntityConfig</a>
 <ul>
@@ -299,6 +301,7 @@ loadScripts(document, 'script');</script>
 </li>
 <li class="circle">com.csse3200.game.ui.terminal.commands.<a href="com/csse3200/game/ui/terminal/commands/DialogueScreenCommand.html" class="type-name-link" title="class in com.csse3200.game.ui.terminal.commands">DialogueScreenCommand</a> (implements com.csse3200.game.ui.terminal.commands.<a href="com/csse3200/game/ui/terminal/commands/Command.html" title="interface in com.csse3200.game.ui.terminal.commands">Command</a>)</li>
 <li class="circle">com.csse3200.game.utils.<a href="com/csse3200/game/utils/DirectionUtils.html" class="type-name-link" title="class in com.csse3200.game.utils">DirectionUtils</a></li>
+<li class="circle">com.csse3200.game.services.sound.<a href="com/csse3200/game/services/sound/EffectsMusicService.html" class="type-name-link" title="class in com.csse3200.game.services.sound">EffectsMusicService</a> (implements com.csse3200.game.services.sound.<a href="com/csse3200/game/services/sound/MusicService.html" title="interface in com.csse3200.game.services.sound">MusicService</a>)</li>
 <li class="circle">com.csse3200.game.entities.<a href="com/csse3200/game/entities/EntitiesSpawner.html" class="type-name-link" title="class in com.csse3200.game.entities">EntitiesSpawner</a></li>
 <li class="circle">com.csse3200.game.entities.<a href="com/csse3200/game/entities/Entity.html" class="type-name-link" title="class in com.csse3200.game.entities">Entity</a> (implements com.badlogic.gdx.utils.Json.Serializable)</li>
 <li class="circle">com.csse3200.game.entities.<a href="com/csse3200/game/entities/EntityService.html" class="type-name-link" title="class in com.csse3200.game.entities">EntityService</a></li>
@@ -435,11 +438,21 @@ loadScripts(document, 'script');</script>
 <li class="circle">com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/SingleDropHandler.html" class="type-name-link" title="class in com.csse3200.game.components.npc">SingleDropHandler</a></li>
 <li class="circle">com.csse3200.game.physics.raycast.<a href="com/csse3200/game/physics/raycast/SingleHitCallback.html" class="type-name-link" title="class in com.csse3200.game.physics.raycast">SingleHitCallback</a> (implements com.badlogic.gdx.physics.box2d.RayCastCallback)</li>
 <li class="circle">com.csse3200.game.utils.<a href="com/csse3200/game/utils/SortedIntMap.html" class="type-name-link" title="class in com.csse3200.game.utils">SortedIntMap</a>&lt;V&gt; (implements java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;T&gt;)</li>
+<li class="circle">com.csse3200.game.services.sound.<a href="com/csse3200/game/services/sound/SoundService.html" class="type-name-link" title="class in com.csse3200.game.services.sound">SoundService</a></li>
 <li class="circle">com.csse3200.game.ui.terminal.commands.<a href="com/csse3200/game/ui/terminal/commands/SpawnCommand.html" class="type-name-link" title="class in com.csse3200.game.ui.terminal.commands">SpawnCommand</a> (implements com.csse3200.game.ui.terminal.commands.<a href="com/csse3200/game/ui/terminal/commands/Command.html" title="interface in com.csse3200.game.ui.terminal.commands">Command</a>)</li>
 <li class="circle">com.csse3200.game.utils.<a href="com/csse3200/game/utils/StringDecorator.html" class="type-name-link" title="class in com.csse3200.game.utils">StringDecorator</a>&lt;T&gt;</li>
 <li class="circle">com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainCropTileFactory.html" class="type-name-link" title="class in com.csse3200.game.areas.terrain">TerrainCropTileFactory</a></li>
 <li class="circle">com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainFactory.html" class="type-name-link" title="class in com.csse3200.game.areas.terrain">TerrainFactory</a></li>
 <li class="circle">com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainTile.html" class="type-name-link" title="class in com.csse3200.game.areas.terrain">TerrainTile</a> (implements com.badlogic.gdx.maps.tiled.TiledMapTile)</li>
+<li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html" class="type-name-link external-link" title="class or interface in java.lang">Throwable</a> (implements java.io.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a>)
+<ul>
+<li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" class="type-name-link external-link" title="class or interface in java.lang">Exception</a>
+<ul>
+<li class="circle">com.csse3200.game.services.sound.<a href="com/csse3200/game/services/sound/InvalidSoundFileException.html" class="type-name-link" title="class in com.csse3200.game.services.sound">InvalidSoundFileException</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="circle">com.csse3200.game.services.<a href="com/csse3200/game/services/TimeService.html" class="type-name-link" title="class in com.csse3200.game.services">TimeService</a></li>
 <li class="circle">com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/TractorFactory.html" class="type-name-link" title="class in com.csse3200.game.entities.factories">TractorFactory</a></li>
 <li class="circle">com.csse3200.game.files.<a href="com/csse3200/game/files/UserSettings.html" class="type-name-link" title="class in com.csse3200.game.files">UserSettings</a></li>
@@ -474,7 +487,9 @@ loadScripts(document, 'script');</script>
 </ul>
 </li>
 <li class="circle">com.csse3200.game.ai.movement.<a href="com/csse3200/game/ai/movement/MovementController.html" class="type-name-link" title="interface in com.csse3200.game.ai.movement">MovementController</a></li>
+<li class="circle">com.csse3200.game.services.sound.<a href="com/csse3200/game/services/sound/MusicService.html" class="type-name-link" title="interface in com.csse3200.game.services.sound">MusicService</a></li>
 <li class="circle">com.csse3200.game.services.<a href="com/csse3200/game/services/OxygenLevel.html" class="type-name-link" title="interface in com.csse3200.game.services">OxygenLevel</a></li>
+<li class="circle">com.csse3200.game.services.sound.<a href="com/csse3200/game/services/sound/SoundFile.html" class="type-name-link" title="interface in com.csse3200.game.services.sound">SoundFile</a></li>
 <li class="circle">com.csse3200.game.ai.tasks.<a href="com/csse3200/game/ai/tasks/Task.html" class="type-name-link" title="interface in com.csse3200.game.ai.tasks">Task</a>
 <ul>
 <li class="circle">com.csse3200.game.ai.tasks.<a href="com/csse3200/game/ai/tasks/PriorityTask.html" class="type-name-link" title="interface in com.csse3200.game.ai.tasks">PriorityTask</a></li>
@@ -490,7 +505,10 @@ loadScripts(document, 'script');</script>
 <ul>
 <li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html" class="type-name-link external-link" title="class or interface in java.lang">Enum</a>&lt;E&gt; (implements java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Comparable.html" title="class or interface in java.lang" class="external-link">Comparable</a>&lt;T&gt;, java.lang.constant.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/constant/Constable.html" title="class or interface in java.lang.constant" class="external-link">Constable</a>, java.io.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a>)
 <ul>
+<li class="circle">com.csse3200.game.services.sound.<a href="com/csse3200/game/services/sound/BackgroundMusicType.html" class="type-name-link" title="enum class in com.csse3200.game.services.sound">BackgroundMusicType</a></li>
+<li class="circle">com.csse3200.game.services.sound.<a href="com/csse3200/game/services/sound/BackgroundSoundFile.html" class="type-name-link" title="enum class in com.csse3200.game.services.sound">BackgroundSoundFile</a> (implements com.csse3200.game.services.sound.<a href="com/csse3200/game/services/sound/SoundFile.html" title="interface in com.csse3200.game.services.sound">SoundFile</a>)</li>
 <li class="circle">com.csse3200.game.missions.cutscenes.<a href="com/csse3200/game/missions/cutscenes/Cutscene.CutsceneType.html" class="type-name-link" title="enum class in com.csse3200.game.missions.cutscenes">Cutscene.CutsceneType</a></li>
+<li class="circle">com.csse3200.game.services.sound.<a href="com/csse3200/game/services/sound/EffectSoundFile.html" class="type-name-link" title="enum class in com.csse3200.game.services.sound">EffectSoundFile</a> (implements com.csse3200.game.services.sound.<a href="com/csse3200/game/services/sound/SoundFile.html" title="interface in com.csse3200.game.services.sound">SoundFile</a>)</li>
 <li class="circle">com.csse3200.game.entities.<a href="com/csse3200/game/entities/EntityType.html" class="type-name-link" title="enum class in com.csse3200.game.entities">EntityType</a></li>
 <li class="circle">com.csse3200.game.files.<a href="com/csse3200/game/files/FileLoader.Location.html" class="type-name-link" title="enum class in com.csse3200.game.files">FileLoader.Location</a></li>
 <li class="circle">com.csse3200.game.<a href="com/csse3200/game/GdxGame.ScreenType.html" class="type-name-link" title="enum class in com.csse3200.game">GdxGame.ScreenType</a></li>

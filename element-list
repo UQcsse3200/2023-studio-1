@@ -48,6 +48,7 @@ com.csse3200.game.rendering
 com.csse3200.game.screens
 com.csse3200.game.services
 com.csse3200.game.services.plants
+com.csse3200.game.services.sound
 com.csse3200.game.ui
 com.csse3200.game.ui.terminal
 com.csse3200.game.ui.terminal.commands
