@@ -226,7 +226,7 @@ public class ItemFactory {
             .addComponent(new TextureRenderComponent("images/plants/aloe_vera/item_drop.png"))
             .addComponent(new ItemComponent("Aloe Vera Leaf", ItemType.FOOD,
                     "The gel oozing from this leaf has mystical healing properties",
-                    new Texture("images/plants/aloe_vera/item_drop.png")));
+                    new Texture("images/plants/aloe_vera/item_drop.png"), true));
     return itemDrop;
   }
 
@@ -266,7 +266,7 @@ public class ItemFactory {
             .addComponent(new TextureRenderComponent("images/plants/cosmic_cob/item_drop.png"))
             .addComponent(new ItemComponent("Ear of Cosmic Cob", ItemType.FOOD,
                     "Nutritious space corn essential for surviving out in space",
-                    new Texture("images/plants/cosmic_cob/item_drop.png")));
+                    new Texture("images/plants/cosmic_cob/item_drop.png"), true));
     return itemDrop;
   }
 
@@ -293,7 +293,7 @@ public class ItemFactory {
             .addComponent(new TextureRenderComponent("images/plants/deadly_nightshade/item_drop.png"))
             .addComponent(new ItemComponent("Nightshade Berry", ItemType.FOOD,
                     "Deadly poisonous to humans, but the local wildlife find it delectable",
-                    new Texture("images/plants/deadly_nightshade/item_drop.png")));
+                    new Texture("images/plants/deadly_nightshade/item_drop.png"), true));
     return itemDrop;
   }
 
@@ -320,7 +320,7 @@ public class ItemFactory {
             .addComponent(new TextureRenderComponent("images/plants/hammer_plant/item_drop.png"))
             .addComponent(new ItemComponent("Hammer Flower", ItemType.FOOD,
                     "Unusually shaped flower that looks like the tool it is named after",
-                    new Texture("images/plants/hammer_plant/item_drop.png")));
+                    new Texture("images/plants/hammer_plant/item_drop.png"), true));
     return itemDrop;
   }
 
