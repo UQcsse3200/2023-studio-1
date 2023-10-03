@@ -18,6 +18,7 @@ class ItemComponentTest {
     assertEquals(0, item.getPrice());
     assertEquals("", item.getItemDescription());
     assertEquals(false, item.isSellable());
+    assertEquals(false, item.isPerishable());
     assertEquals(ItemType.SHOVEL, item.getItemType());
   }
 

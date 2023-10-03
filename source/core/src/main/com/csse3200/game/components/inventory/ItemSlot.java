@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.utils.Align;
 
+import java.util.Objects;
+
 /**
  * A class used to combine all the data necessary to the individual inventory slots
  */
@@ -20,6 +22,9 @@ public class ItemSlot extends Stack {
     private Image frame;
     private boolean selected;
     private Image itemImage;
+
+    private Label label;
+    private Stack draggable;
     private Label countLabel;
     private Label toolbarLabel;
 
@@ -70,12 +75,29 @@ public class ItemSlot extends Stack {
      * Set the item count
      * @param count integer of number of item
      */
-    public void setCount(Integer count) {  // Add this method to update the count label
+    public void setCount(Integer count) {
+        if (Objects.equals(count, this.count)) {
+            return;
+        }
         this.count = count;
-        if (count != null && count > 0) {
-            countLabel.setText(count + " ");
-        } else {
-            countLabel.setText("");
+        if (this.count > 1) {
+            if (label == null) {
+                label = new Label(this.count + " ", this.skin);
+                label.setColor(Color.BLACK);
+                label.setAlignment(Align.bottomRight);
+                draggable.add(label);
+            } else {
+                label.setText(this.count + " ");
+                draggable.add(label);
+
+            }
+        }
+        else {
+            draggable.removeActor(label);
+            if (label != null) {
+                this.label = null;
+
+            }
         }
     }
     /**
@@ -106,6 +128,7 @@ public class ItemSlot extends Stack {
      * Creates the itemSlot
      */
     private void createItemSlot() {
+        draggable = new Stack();
 
         //Add the selection background if necessary
         if (this.selected) {
@@ -118,28 +141,29 @@ public class ItemSlot extends Stack {
         //Add the item image to the itemSlot
         if (this.itemTexture != null) {
             itemImage = new Image(this.itemTexture);
-            this.add(itemImage);
+            draggable.add(itemImage);
         }
 
-        // Add or update the count countLabel if the number is not 0
-        if (this.count != null && this.count > 0) {
-            if (countLabel == null) {
-                countLabel = new Label(this.count + " ", this.skin);
-                countLabel.setColor(Color.BLACK);
-                countLabel.setAlignment(Align.bottomRight);
-                this.add(countLabel);
+        // Add or update the count label if the number is not 0
+        if (this.count != null && this.count > 1) {
+            if (label == null) {
+                label = new Label(this.count + " ", this.skin);
+                label.setColor(Color.BLACK);
+                label.setAlignment(Align.bottomRight);
+                draggable.add(label);
             } else {
-                countLabel.setText(this.count + " ");
+                label.setText(this.count + " ");
             }
         }
-        else {
-            if (countLabel == null) {
-                countLabel = new Label(" ", this.skin);
-                countLabel.setColor(Color.BLACK);
-                countLabel.setAlignment(Align.bottomRight);
-                this.add(countLabel);
+        if (this.count != null && this.count <= 1) {
+            if (label != null) {
+                draggable.removeActor(label);
+                this.label = null;
             }
         }
+
+        this.add(draggable);
+
     }
 
     /**
@@ -149,11 +173,25 @@ public class ItemSlot extends Stack {
     public Image getItemImage() {
         return itemImage;
     }
+    public Stack getDraggable() {
+        return draggable;
+    }
+    public boolean setDraggable(Stack stack) {
+        boolean ans = false;
+        if (!this.removeActor(this.draggable)) {
+            ans = true;
+        }
+
+        if (stack != null) {
+            this.draggable = stack;
+            this.add(stack);
+        }
+        return ans;
+    }
     public void setItemImage(Image image) {
-        this.removeActor(itemImage);
-        itemImage = null;
+        draggable.removeActor(itemImage);
         if (image != null) {
-            this.add(image);
+            draggable.addActorAt(0, image);
             this.itemImage = image;
         }
     }
