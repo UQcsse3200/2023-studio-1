@@ -371,34 +371,31 @@ public class PlantComponent extends Component {
      * has died before reaching adult growth stage.
      */
     public void decayCheck() {
-        if (!plantDestroyed) {
-            if (getGrowthStage().getValue() == GrowthStage.ADULT.getValue()) {
-                if (getPlantHealth() <= 0) {
-                    setGrowthStage(GrowthStage.DECAYING.getValue());
-                    updateTexture();
-                }
+        if (plantDestroyed) {
+            return;
+        }
+        if (getGrowthStage().getValue() == GrowthStage.ADULT.getValue() && getPlantHealth() <= 0) {
+                setGrowthStage(GrowthStage.DECAYING.getValue());
+                updateTexture();
+        }
+        // If the plants health drops to zero while decaying, then update the growth stage to dead.
+        if (getGrowthStage().getValue() == GrowthStage.DECAYING.getValue()) {
+            if (getPlantHealth() <= 0) {
+                setGrowthStage(GrowthStage.DEAD.getValue());
+                playSound(destroy);
+                updateTexture();
             }
 
-            // If the plants health drops to zero while decaying, then update the growth stage to dead.
-            if (getGrowthStage().getValue() == GrowthStage.DECAYING.getValue()) {
-                if (getPlantHealth() <= 0) {
-                    setGrowthStage(GrowthStage.DEAD.getValue());
-                    playSound(destroy);
-                    updateTexture();
-                }
-
-                // If the plants health drops to zero before it becomes an adult its dead.
-                // Only destroyed immediately if the plant is a seedling.
-            } else if (getGrowthStage().getValue() < GrowthStage.ADULT.getValue())
-                if (getPlantHealth() <= 0) {
-                    if (getGrowthStage().getValue() != GrowthStage.SEEDLING.getValue()) {
-                        deadBeforeMaturity = true;
-                        setGrowthStage(GrowthStage.DEAD.getValue());
-                        updateTexture();
-                    } else {
-                        destroyPlant();
-                    }
-                }
+            // If the plants health drops to zero before it becomes an adult its dead.
+            // Only destroyed immediately if the plant is a seedling.
+        } else if (getGrowthStage().getValue() < GrowthStage.ADULT.getValue()) {
+            if (getGrowthStage().getValue() != GrowthStage.SEEDLING.getValue() && getPlantHealth() <= 0) {
+                deadBeforeMaturity = true;
+                setGrowthStage(GrowthStage.DEAD.getValue());
+                updateTexture();
+            } else if (getPlantHealth() <= 0) {
+                destroyPlant();
+            }
         }
     }
 

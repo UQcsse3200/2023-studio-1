@@ -49,7 +49,7 @@ public class EndCreditsDisplay extends UIComponent {
      */
     private TypingLabel creditsLabel;
 
-    private final static String CREDITS = """
+    private static final  String CREDITS = """
                     {SLOW}
                     {RAINBOW}GARDENERS OF THE GALAXY: LEGEND OF THE ASTROHOE {ENDRAINBOW}
                     

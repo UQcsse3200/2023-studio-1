@@ -14,8 +14,8 @@ import java.util.Objects;
  * A class used to combine all the data necessary to the individual inventory slots
  */
 public class ItemSlot extends Stack {
-    private final String selectedString = "images/selected.png";
-    private final String itemFrameString = "images/itemFrame.png";
+    private static final String selectedString = "images/selected.png";
+    private static final String itemFrameString = "images/itemFrame.png";
     private Texture itemTexture;
     private Integer count;
     private final Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));

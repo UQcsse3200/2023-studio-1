@@ -377,7 +377,7 @@ public class InventoryComponent extends Component {
             return false;
         } else {
             this.itemCount.put(item.getComponent(ItemComponent.class).getItemName(), this.itemCount.get(item.getComponent(ItemComponent.class).getItemName()) - 1);
-            if (this.itemCount.get(item.getComponent(ItemComponent.class).getItemName()) == 0) {
+            if (this.itemCount.get(item.getComponent(ItemComponent.class).getItemName()).equals(0)) {
                 this.itemCount.remove(item.getComponent(ItemComponent.class).getItemName());
                 // find the position of the item and remove the item from the position
                 for (int i = 0; i < this.itemPlace.size(); i++) {
@@ -453,6 +453,9 @@ public class InventoryComponent extends Component {
         json.writeArrayStart("inventory");
         for (Integer i : itemPlace.keySet()) {
             String e = itemPlace.get(i);
+            if (e == null) {
+                continue;
+            }
             json.writeObjectStart();
             heldItemsEntity.get(e).writeItem(json);
             json.writeValue("count", getItemCount(e));

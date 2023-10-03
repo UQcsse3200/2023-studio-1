@@ -44,7 +44,9 @@ public class BackgroundMusicService implements MusicService {
     
     /** The current type of background music playing. */
     private BackgroundMusicType currentType;
-    
+
+    private Random rand = new Random();
+
     public BackgroundMusicService() {
         logger.debug("Initialising BackgroundMusicService");
         this.tracks = new ArrayList<>();
@@ -73,7 +75,6 @@ public class BackgroundMusicService implements MusicService {
         logger.debug("Attempting to play background music of a given type.");
         this.stopCurrentlyPlaying();
         currentType = type;
-        Random rand = new Random();
         if (categorisedMusic.get(type).isEmpty()) {
             throw new IllegalStateException("No tracks loaded of type " + type);
         } else {

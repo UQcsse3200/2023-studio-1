@@ -18,7 +18,7 @@ import java.util.Map;
  */
 public class EffectsMusicService implements MusicService {
 
-    private static final Logger logger = LoggerFactory.getLogger(SoundService.class);
+    private static final Logger logger = LoggerFactory.getLogger(EffectsMusicService.class);
 
     /**
      * EffectSoundFiles that are loaded in memory and associated Sound object.
