@@ -436,7 +436,7 @@ public class InventoryComponent extends Component {
                 this.itemCount.remove(item.getComponent(ItemComponent.class).getItemName());
                 // find the position of the item and remove the item from the position
                 for (int i = 0; i < this.itemPlace.size(); i++) {
-                    if (this.itemPlace.get(i) == item.getComponent(ItemComponent.class).getItemName()) {
+                    if (this.itemPlace.get(i).equals(item.getComponent(ItemComponent.class).getItemName())) {
                         this.itemPlace.remove(i);
                         setHeldItem(heldIndex);
                         break;
