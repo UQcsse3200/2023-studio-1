@@ -1,5 +1,7 @@
 package com.csse3200.game.missions.rewards;
 
+import com.csse3200.game.missions.cutscenes.Cutscene;
+
 /**
  * DialogueReward is a Reward that on collect() will call the correct dialogue display with its
  * given dialogue.
@@ -14,12 +16,12 @@ public class DialogueReward extends Reward {
     /**
      * The type of dialogue screen the dialogue will be shown on.
      */
-    // private DialogueScreenType type; - based on team 3 screen implementation
+    private Cutscene.CutsceneType type;
 
-    public DialogueReward(String dialogue/*, DialogueScreenType type*/) {
+    public DialogueReward(String dialogue, Cutscene.CutsceneType type) {
         super();
         this.dialogue = dialogue;
-        // this.type = type;
+        this.type = type;
     }
 
     /**
@@ -28,6 +30,7 @@ public class DialogueReward extends Reward {
     @Override
     public void collect() {
         setCollected();
-        // trigger correct screen (based on team 3 dialogue screen)
+        Cutscene cutscene = new Cutscene(dialogue, type);
+        cutscene.spawnCutscene();
     }
 }
