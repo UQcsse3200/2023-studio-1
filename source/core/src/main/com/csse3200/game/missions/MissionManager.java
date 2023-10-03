@@ -201,6 +201,7 @@ public class MissionManager implements Json.Serializable {
 			active.forEach(jsonValue -> {
 				Quest q = FactoryService.getQuests().get(jsonValue.getString("name")).get();
 				q.read(jsonValue);
+				q.registerMission(events);
 				activeQuests.add(q);
 			});
 		}
