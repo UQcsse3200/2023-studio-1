@@ -309,7 +309,7 @@ public class ItemActions extends Component {
   private boolean fertilise(TerrainTile tile) {
     if (isCropTile(tile.getOccupant())) {
       CropTileComponent cropTileComponent = tile.getOccupant().getComponent(CropTileComponent.class);
-      if (cropTileComponent != null && !cropTileComponent.isFertilised()) {
+      if (!cropTileComponent.isFertilised()) {
         // Fertilising a crop tile should remove the item from the player inventory
         ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class).removeItem(entity);
         tile.getOccupant().getEvents().trigger("fertilise");
@@ -328,7 +328,7 @@ public class ItemActions extends Component {
   private boolean plant(TerrainTile tile) {
     if (isCropTile(tile.getOccupant())) {
       CropTileComponent cropTileComponent = tile.getOccupant().getComponent(CropTileComponent.class);
-      if (cropTileComponent != null && cropTileComponent.getPlant() == null) {
+      if (cropTileComponent.getPlant() == null) {
         // Planting using seeds should remove the item from player inventory
         ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class).removeItem(entity);
         tile.getOccupant().getEvents().trigger("plant", FactoryService.getPlantFactories()
