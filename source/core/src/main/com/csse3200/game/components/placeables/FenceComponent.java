@@ -31,23 +31,26 @@ public class FenceComponent extends Component {
             "images/placeable/fences/f_r_d_l_u.png",
     };
 
-    private static final String[] textures_gate_open= {
-            "images/placeable/fences/g_r_l_o.png",
-            "images/placeable/fences/g_r_l_o.png",
-            "images/placeable/fences/g_r_l_o.png",
-            "images/placeable/fences/g_r_l_o.png",
-            "images/placeable/fences/g_d_u_o.png",
-            "images/placeable/fences/g_r_l_o.png",
-            "images/placeable/fences/g_r_l_o.png",
-            "images/placeable/fences/g_r_l_o.png",
-            "images/placeable/fences/g_d_u_o.png",
-            "images/placeable/fences/g_r_l_o.png",
-            "images/placeable/fences/g_r_l_o.png",
-            "images/placeable/fences/g_r_l_o.png",
-            "images/placeable/fences/g_d_u_o.png",
-            "images/placeable/fences/g_r_l_o.png",
-            "images/placeable/fences/g_r_l_o.png",
-            "images/placeable/fences/g_r_l_o.png",
+    private static final String IMAGE_GATE_OPEN = "images/placeable/fences/g_r_l_o.png";
+    private static final String IMAGE_GATE_DUPLICATE = "images/placeable/fences/g_d_u_o.png";
+
+    private static final String[] textures_gate_open = {
+            IMAGE_GATE_OPEN,
+            IMAGE_GATE_OPEN,
+            IMAGE_GATE_OPEN,
+            IMAGE_GATE_OPEN,
+            IMAGE_GATE_DUPLICATE,
+            IMAGE_GATE_OPEN,
+            IMAGE_GATE_OPEN,
+            IMAGE_GATE_OPEN,
+            IMAGE_GATE_DUPLICATE,
+            IMAGE_GATE_OPEN,
+            IMAGE_GATE_OPEN,
+            IMAGE_GATE_OPEN,
+            IMAGE_GATE_DUPLICATE,
+            IMAGE_GATE_OPEN,
+            IMAGE_GATE_OPEN,
+            IMAGE_GATE_OPEN,
     };
 
     private static final String[] textures_gate_closed= {
