@@ -8,16 +8,6 @@ import com.csse3200.game.services.ServiceLocator;
 
 
 public class ItemComponent extends Component {
-	/**
-	 * Item class for all items in the game
-	 *
-	 * @param itemName user facing name for item
-	 * @param itemDescription user facing description for item
-	 * @param price price of item
-	 * @param sellable is the item sellable. true if sellable false otherwise
-	 * @param itemId unique id of the item
-	 * @param itemType type of item
-	 */
 	private String itemName; // User facing name for item. can be customised by user.
 	private String itemDescription; // User facing description for item.
 	private final String itemId;
