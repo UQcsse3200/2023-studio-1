@@ -19,7 +19,8 @@ import com.csse3200.game.extensions.GameExtension;
 
 @ExtendWith(GameExtension.class)
 public class GameMapTest {
-    private GameMap gameMap;
+    private static final GameMap gameMap = new GameMap(new TerrainFactory(new CameraComponent()));
+    private static final ResourceService resourceService = new ResourceService();
     private static final ArrayList<GridPoint2> traversableTilesList = new ArrayList<>();
     private static final ArrayList<GridPoint2> nonTraversableTilesList = new ArrayList<>();
 
@@ -41,17 +42,11 @@ public class GameMapTest {
         nonTraversableTilesList.add(new GridPoint2(3,1)); //Rock
         traversableTilesList.add(new GridPoint2(3,2)); //Desert
         traversableTilesList.add(new GridPoint2(3,3)); //Beach sand
-    }
 
-    @BeforeEach
-    void setup() {
-        ResourceService resourceService = new ResourceService();
+        //ResourceService resourceService = new ResourceService();
         resourceService.loadTextures(TerrainFactory.mapTextures);
         resourceService.loadAll();
         ServiceLocator.registerResourceService(resourceService);
-
-        TerrainFactory terrainFactory = new TerrainFactory(new CameraComponent());
-        gameMap = new GameMap(terrainFactory);
 
         TerrainComponent terrainComponent = mock(TerrainComponent.class);
         doReturn(TerrainFactory.worldTileSize).when(terrainComponent).getTileSize();
@@ -160,10 +155,9 @@ public class GameMapTest {
         assertEquals(arrayList, nonTraversableTilesList);
     }
 
-    @AfterEach
-    public void cleanUp(){
-        // unload assets
-        ResourceService resourceService = ServiceLocator.getResourceService();
+    @AfterAll
+    public static void cleanUp(){
+        //unload assets
         resourceService.unloadAssets(TerrainFactory.mapTextures);
         resourceService.dispose();
     }
