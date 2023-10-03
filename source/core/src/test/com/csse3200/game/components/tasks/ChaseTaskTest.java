@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.csse3200.game.utils.math.Vector2Utils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,7 +40,8 @@ class ChaseTaskTest {
     Entity target = new Entity();
     target.setPosition(2f, 2f);
 
-    AITaskComponent ai = new AITaskComponent().addTask(new ChaseTask(target, 10, 5, 10));
+    AITaskComponent ai = new AITaskComponent().addTask(new ChaseTask(target, 10, 5, 10,
+            Vector2Utils.ONE));
     Entity entity = makePhysicsEntity().addComponent(ai);
     entity.create();
     entity.setPosition(0f, 0f);
@@ -64,7 +66,7 @@ class ChaseTaskTest {
     entity.create();
     entity.setPosition(0f, 0f);
 
-    ChaseTask chaseTask = new ChaseTask(target, 10, 5, 10);
+    ChaseTask chaseTask = new ChaseTask(target, 10, 5, 10, Vector2Utils.ONE);
     chaseTask.create(() -> entity);
 
     // Not currently active, target is too far, should have negative priority

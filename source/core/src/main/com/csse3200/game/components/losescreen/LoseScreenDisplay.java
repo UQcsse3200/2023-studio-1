@@ -1,5 +1,6 @@
 package com.csse3200.game.components.losescreen;
 
+import com.csse3200.game.missions.quests.QuestFactory;
 import com.csse3200.game.services.ServiceLocator;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -147,25 +148,17 @@ public class LoseScreenDisplay extends UIComponent {
     public static void setLoseReason(String causeOfDeath) {
         String reason = getString(causeOfDeath);
         losingMessage = """ 
-                {SLOW}
-                Despite your best efforts, Alpha Centauri remains a wasteland.
+                {SLOW}Despite your best efforts,
                 
-                {WAIT}
                 """
                 + reason +
                 """
                 
-                {WAIT}
                 
-                You gave it your all, but in the end... {WAIT=1} it wasn't enough.
-                {WAIT}
+                {WAIT}Humanity has been lost to the ages.
                 
-                This is the end of the human race.
-                {WAIT}
-                
-                {COLOR=red}Game Over
-                {WAIT=1}
-            """;
+                {COLOR=RED}Game Over
+                """;
     }
 
     /**
@@ -178,14 +171,11 @@ public class LoseScreenDisplay extends UIComponent {
     private static String getString(String causeOfDeath) {
         String reason;
         switch (causeOfDeath) {
-            case "oxygen" -> reason = "As your oxygen supply dwindles, so does humanities hope for survival.";
-            case "mission1" -> reason = "Failed mission 1.";
-            case "mission2" -> reason = "Failed mission 2.";
-            case "mission3" -> reason = "Failed mission 3.";
-            case "mission4" -> reason = "Failed mission 4.";
-            case "mission5" -> reason = "Failed mission 5.";
-            case "mission6" -> reason = "Failed mission 6.";
-            default -> reason = "default reason";
+            case "oxygen" -> reason = "your oxygen supply dwindles,\nand so does humanity's hope for survival.";
+            case QuestFactory.ACT_I_MAIN_QUEST_NAME -> reason = "you failed to gain the Alien's trust in time,\nand so you were removed from the crash landing site.";
+            case QuestFactory.ACT_II_MAIN_QUEST_NAME -> reason = "you failed to contact the rest of humanity in time,\nleaving you stranded and alone on an Alien world.";
+            case QuestFactory.ACT_III_MAIN_QUEST_NAME -> reason = "you failed to make the planet liveable for humanity,\nleading what remains of the human race to their doom.";
+            default -> reason = "Error Unknown Reason for Defeat";
         }
         return reason;
     }

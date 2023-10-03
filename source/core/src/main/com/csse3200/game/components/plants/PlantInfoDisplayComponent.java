@@ -125,7 +125,7 @@ public class PlantInfoDisplayComponent extends UIComponent {
     private void makeFirstContactWindow() {
         window.reset();
         window.getTitleLabel().setText("First Contact");
-        label = new Label("You have crash landed\nand you're all alone...\nor are you?", skin);
+        label = new Label("Better do what the angry\n Alien Creature says...", skin);
         label.setFontScale(1.4f);
         label.setColor(Color.BROWN);
         window.add(label);

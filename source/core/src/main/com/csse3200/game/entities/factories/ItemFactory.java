@@ -1,14 +1,12 @@
 package com.csse3200.game.entities.factories;
 
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.function.Supplier;
-
 import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.items.WateringCanLevelComponent;
+import com.csse3200.game.components.items.ClueComponent;
+import com.csse3200.game.components.items.CoordinatesDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -16,6 +14,10 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.FactoryService;
+
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.function.Supplier;
 
 /**
  * Factory to create an item
@@ -108,15 +110,39 @@ public class ItemFactory {
   }
 
   /**
+   * Creates a sword item
+   *
+   * @return sword
+   */
+  public static Entity createSword() {
+    Entity sword = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/tool_sword.png"))
+            .addComponent(new ItemComponent("sword", ItemType.SWORD, new Texture("images/tool_sword.png")));
+    return sword;
+  }
+
+  /**
+   * Creates a gun item
+   *
+   * @return gun
+   */
+  public static Entity createGun() {
+    Entity gun = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/tool_gun.png"))
+            .addComponent(new ItemComponent("gun", ItemType.GUN, new Texture("images/tool_gun.png")));
+    return gun;
+  }
+
+  /**
    * Creates a milk item
    *
    * @return milk item
    */
   public static Entity createMilk() {
     Entity milk = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/milk.png"))
+            .addComponent(new TextureRenderComponent("images/animals/milk.png"))
             .addComponent(new ItemComponent("milk",
-                    ItemType.MILK, new Texture("images/milk.png")));
+                    ItemType.MILK, new Texture("images/animals/milk.png")));
     milk.scaleHeight(0.75f);
     return milk;
   }
@@ -128,13 +154,42 @@ public class ItemFactory {
    */
   public static Entity createEgg() {
     Entity egg = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/egg.png"))
+            .addComponent(new TextureRenderComponent("images/animals/egg.png"))
             .addComponent(new ItemComponent("egg", ItemType.EGG,
-                    new Texture("images/egg.png")));
+                    new Texture("images/animals/egg.png")));
     egg.scaleHeight(0.75f);
     return egg;
   }
 
+  /**
+   * Creates a golden egg item
+   *
+   * @return golden egg item
+   */
+  public static Entity createGoldenEgg() {
+    Entity egg = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/animals/golden_egg.png"))
+            .addComponent(new ItemComponent("golden egg", ItemType.EGG,
+                    new Texture("images/animals/golden_egg.png")));
+    egg.scaleHeight(0.75f);
+    return egg;
+  }
+
+  /**
+   * Creates a Map Clue item
+   *
+   * @return Map Item
+   */
+  public static Entity createMapItem() {
+    ClueComponent clueComponent = new ClueComponent();
+    Entity mapItem = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/ship/ship_clue.png"))
+            .addComponent(new ItemComponent("map", ItemType.CLUE_ITEM, new Texture("images/ship/ship_clue.png")))
+            .addComponent(clueComponent)
+            .addComponent(new CoordinatesDisplay(clueComponent));
+
+    return mapItem;
+  }
    /**
    * Creates a fertiliser item
    *
@@ -283,16 +338,30 @@ public class ItemFactory {
   }
 
   /**
-   * Creates a 'Cow food' item
+   * Creates a beef item
    *
-   * @return tobacco seed
+   * @return beef item
    */
-  public static Entity createCowFood() {
+  public static Entity createBeef() {
     Entity animalFood = createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/cosmic_cob/1_seedling.png"))
-            .addComponent(new ItemComponent("COW FOOD", ItemType.FOOD,
-                    "Cow food", new Texture("images/plants/cosmic_cob/1_seedling.png")));
+            .addComponent(new TextureRenderComponent("images/animals/beef.png"))
+            .addComponent(new ItemComponent("Beef", ItemType.FOOD,
+                    "Beef", new Texture("images/animals/beef.png")));
     return animalFood;
+  }
+
+  /**
+   * Creates a chicken item
+   *
+   * @return chicken item
+   */
+  public static Entity createChickenMeat() {
+    Entity chickenMeat = createBaseItem()
+            .addComponent(new TextureRenderComponent("images/animals/chicken_meat.png"))
+            .addComponent(new ItemComponent("Chicken", ItemType.FOOD,
+                    "Chicken", new Texture("images/animals/chicken_meat.png")));
+    chickenMeat.scaleHeight(0.6f);
+    return chickenMeat;
   }
 
   /**
@@ -374,12 +443,12 @@ public class ItemFactory {
    * @return ship part
    */
   public static Entity createShipPart() {
-    Entity ShipPart = createBaseItem()
+    Entity shipPart = createBaseItem()
             .addComponent(new TextureRenderComponent("images/ship/ship_part.png"))
             .addComponent(new ItemComponent("Ship Part", ItemType.SHIP_PART,
                     "Pieces of scrap metal in surprisingly good condition. Seems like it could be used" +
                             " for ship repairs...",
                     new Texture("images/ship/ship_part.png")));
-    return ShipPart;
+    return shipPart;
   }
 }

@@ -102,6 +102,18 @@ public abstract class Quest extends Mission {
 	}
 
 	/**
+	 * Notifies the {@link MissionManager} that this {@link Quest} has been completed if {@link #isCompleted()}
+	 * returns true (and this {@link Quest}'s reward has not yet been collected), else do nothing. You should call this
+	 * method whenever you update the state of your {@link Quest}.
+	 */
+	@Override
+	protected void notifyUpdate() {
+		if (!isRewardCollected()) {
+			super.notifyUpdate();
+		}
+	}
+
+	/**
 	 * Returns a boolean value representing if this quest's rewards has been collected yet.
 	 * @return True if the reward has been collected, false otherwise.
 	 */

@@ -724,6 +724,8 @@ public class PlantComponent extends Component {
 
         plantDestroyed = true;
 
+        ServiceLocator.getGameArea().removeEntity(entity);
+
 
     }
 
@@ -732,8 +734,11 @@ public class PlantComponent extends Component {
      * To attack plants and damage their health.
      */
     private void attack() {
-        int attackDamage = 10;
+        int attackDamage = 1;
         increasePlantHealth(-attackDamage);
+        if (plantHealth <= 0) {
+            destroyPlant();
+        }
     }
 
     /**

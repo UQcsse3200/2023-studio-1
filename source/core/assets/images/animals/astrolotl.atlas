@@ -1,6 +1,6 @@
 
 astrolotl.png
-size: 128, 256
+size: 256, 256
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
@@ -168,6 +168,174 @@ walk_right
 walk_right
   rotate: false
   xy: 2, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+idle_left_tamed
+  rotate: false
+  xy: 164, 206
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+idle_left_tamed
+  rotate: false
+  xy: 164, 172
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 7
+walk_left_tamed
+  rotate: false
+  xy: 164, 172
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+idle_left_tamed
+  rotate: false
+  xy: 164, 138
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 4
+idle_left_tamed
+  rotate: false
+  xy: 164, 104
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+idle_left_tamed
+  rotate: false
+  xy: 130, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 6
+idle_left_tamed
+  rotate: false
+  xy: 198, 104
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+idle_left_tamed
+  rotate: false
+  xy: 164, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 0
+idle_left_tamed
+  rotate: false
+  xy: 164, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 5
+idle_right_tamed
+  rotate: false
+  xy: 130, 206
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 0
+idle_right_tamed
+  rotate: false
+  xy: 130, 138
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 5
+idle_right_tamed
+  rotate: false
+  xy: 198, 206
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+idle_right_tamed
+  rotate: false
+  xy: 198, 172
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 7
+walk_right_tamed
+  rotate: false
+  xy: 198, 172
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+idle_right_tamed
+  rotate: false
+  xy: 198, 138
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 4
+idle_right_tamed
+  rotate: false
+  xy: 164, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+idle_right_tamed
+  rotate: false
+  xy: 130, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 6
+idle_right_tamed
+  rotate: false
+  xy: 198, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+walk_left_tamed
+  rotate: false
+  xy: 130, 104
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 0
+walk_left_tamed
+  rotate: false
+  xy: 130, 104
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+walk_left_tamed
+  rotate: false
+  xy: 198, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+walk_right_tamed
+  rotate: false
+  xy: 130, 172
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+walk_right_tamed
+  rotate: false
+  xy: 130, 172
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 0
+walk_right_tamed
+  rotate: false
+  xy: 130, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
