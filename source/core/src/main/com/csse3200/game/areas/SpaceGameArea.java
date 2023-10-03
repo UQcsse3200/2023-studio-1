@@ -551,8 +551,8 @@ public class SpaceGameArea extends GameArea {
 
     // Add effects that are needed
     List<SoundFile> effects = new ArrayList();
-    effects.add(EffectSoundFile.TractorHonk);
-    effects.add(EffectSoundFile.Impact);
+    effects.add(EffectSoundFile.TRACTOR_HONK);
+    effects.add(EffectSoundFile.IMPACT);
     try {
       ServiceLocator.getSoundService().getEffectsMusicService().loadSounds(effects);
     } catch (InvalidSoundFileException e) {

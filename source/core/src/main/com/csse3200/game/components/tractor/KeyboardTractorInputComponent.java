@@ -59,7 +59,7 @@ public class KeyboardTractorInputComponent extends InputComponent {
           return true;
         case Input.Keys.SPACE:
           try {
-            ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.TractorHonk);
+            ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.TRACTOR_HONK);
           } catch (InvalidSoundFileException e) {
             throw new RuntimeException(e);
           }
