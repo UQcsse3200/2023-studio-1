@@ -445,16 +445,16 @@ public class InventoryComponent extends Component {
     @Override
     public void write(Json json) {
         json.writeObjectStart(this.getClass().getSimpleName());
-        json.writeObjectStart("inventory");
+        json.writeArrayStart("inventory");
         for (Integer i : itemPlace.keySet()) {
             String e = itemPlace.get(i);
-            json.writeObjectStart("item");
+            json.writeObjectStart();
             heldItemsEntity.get(e).writeItem(json);
             json.writeValue("count", getItemCount(e));
             json.writeValue("place", i);
             json.writeObjectEnd();
         }
-        json.writeObjectEnd();
+        json.writeArrayEnd();
         json.writeObjectEnd();
     }
 
@@ -465,6 +465,7 @@ public class InventoryComponent extends Component {
         inv.forEach(jsonValue -> {
             Entity itemEntity = FactoryService.getItemFactories().get(jsonValue.getString("name")).get();
             ServiceLocator.getGameArea().spawnEntity(itemEntity);
+            itemEntity.readItem(json, jsonValue.get("components"));
             itemCount.put(jsonValue.getString("name"),  jsonValue.getInt("count"));
             heldItemsEntity.put(jsonValue.getString("name"), itemEntity);
             itemPlace.put(jsonValue.getInt("place"), jsonValue.getString("name"));
