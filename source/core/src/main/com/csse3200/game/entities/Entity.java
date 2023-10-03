@@ -443,6 +443,7 @@ public class Entity implements Json.Serializable {
             type = EntityType.valueOf(value);
         } catch (IllegalArgumentException e) {
             type = null;
+            return;
         }
 
         switch (type) {
