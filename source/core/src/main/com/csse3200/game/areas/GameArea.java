@@ -108,11 +108,15 @@ public abstract class GameArea implements Disposable {
    */
   public void removeLoadableEntities(Array<Entity> entities) {
     logger.debug("Removing all loadable entities");
-    ArrayList<EntityType> placeableTypes = new ArrayList<>(Arrays.asList(EntityType.Tile));
+    ArrayList<EntityType> placeableTypes = new ArrayList<>(Arrays.asList(EntityType.TILE, EntityType.CHEST,
+            EntityType.FENCE, EntityType.LIGHT, EntityType.GATE, EntityType.SPRINKLER, EntityType.SHIP_DEBRIS,
+            EntityType.SHIP_PART_TILE, EntityType.PUMP));
     for (Entity e : entities) {
       if (loadableTypes.contains(e.getType())) {
         if (placeableTypes.contains(e.getType())) {
-
+          if (getMap() != null) {
+            getMap().getTile(e.getPosition()).removeOccupant();
+          }
         }
         removeEntity(e);
       }
