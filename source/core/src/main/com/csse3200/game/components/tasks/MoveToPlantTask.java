@@ -132,7 +132,7 @@ public class MoveToPlantTask extends DefaultTask implements PriorityTask {
      * @return The nearest plant entity, null if there are no plants.
      */
     private Entity getNearestPlant() {
-        Array<Entity> entities = ServiceLocator.getEntityService().getEntityList();
+        Array<Entity> entities = ServiceLocator.getEntityService().getEntities();
         int size = entities.size;
 
         HashMap<Entity, Float> plantDistances = new HashMap<>();
