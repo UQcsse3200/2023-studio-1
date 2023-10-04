@@ -7,7 +7,7 @@ GAME_PID=$!
 sleep 35 # Give the game some time to launch
 
 # Click 640,417 to start new game and then 640,790 to skip the intro sequence
-DISPLAY=:1 xdotool mousemove 640 417 click 1 # Click 'New Game' 
+DISPLAY=:1 xdotool mousemove 640 380 click 1 # Click 'New Game'
 
 sleep 10
 DISPLAY=:1 xdotool mousemove 640 790 click 1 # Click 'Continue'
