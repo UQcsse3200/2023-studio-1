@@ -30,21 +30,29 @@ public class CutsceneDisplay extends UIComponent {
      * The Image that contains the npc sprite.
      */
     private Image npcSprite;
-    private static final Logger logger = LoggerFactory.getLogger(com.csse3200.game.missions.cutscenes.Cutscene.class);
     /**
-     * The table that forms the basis for the layout of the cutscene
+     * Logger to log events
      */
-    private Table table;
+    private static final Logger logger = LoggerFactory.getLogger(com.csse3200.game.missions.cutscenes.Cutscene.class);
     /**
      * Stores the cutscene object that created the cutscene display
      */
     private Cutscene cutscene;
+    /**
+     * Stores the transparent rectangle
+     */
     private Image transparentRectangle;
     /**
      * Stores the dialogue text
      */
     private final String dialogue;
+    /**
+     * Stores the table used to display the dialogue
+     */
     private Table dialogueTable;
+    /**
+     * Stores the cutscene type
+     */
     private final Cutscene.CutsceneType cutsceneType;
 
     /**
