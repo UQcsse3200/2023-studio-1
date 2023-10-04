@@ -419,15 +419,14 @@ public class PlantComponent extends Component {
      * Also, if the plant is in a state of decay then decrease the health every hour.
      */
     public void updateGrowthStage() {
-        if ((getGrowthStage().getValue() < GrowthStage.ADULT.getValue())) {
-            if (this.currentGrowthLevel >= this.growthStageThresholds[getGrowthStage().getValue() - 1]) {
+        if ((getGrowthStage().getValue() < GrowthStage.ADULT.getValue()) &&
+                this.currentGrowthLevel >= this.growthStageThresholds[getGrowthStage().getValue() - 1]) {
                 setGrowthStage(getGrowthStage().getValue() + 1);
                 if (getGrowthStage().getValue() == GrowthStage.ADULT.getValue()) {
                     entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType(this.adultEffect);
                     setAreaOfEffectRadius();
                 }
                 updateTexture();
-            }
         }
     }
 
@@ -730,8 +729,6 @@ public class PlantComponent extends Component {
 
         entity.getComponent(PlantAreaOfEffectComponent.class).dispose();
 
-        //entity.getComponent(PhysicsComponent.class).dispose();
-
         entity.getComponent(ColliderComponent.class).dispose();
         entity.getComponent(HitboxComponent.class).dispose();
         entity.getComponent(PlantMouseHoverComponent.class).plantDied();
@@ -787,11 +784,8 @@ public class PlantComponent extends Component {
                 }
 
             }
-        } else if (this.isEating) {
-            if (this.currentAnimator != null) {
+        } else if (this.isEating && this.currentAnimator != null) {
                 this.currentAnimator.startAnimation("digesting");
-            }
-
         }
     }
 
@@ -805,7 +799,7 @@ public class PlantComponent extends Component {
     public void playSound(String functionCalled) {
         if (!plantDestroyed && playerInProximity) {
 
-            logger.debug("The sound being called: " + functionCalled);
+            logger.debug("The sound being called: {}", functionCalled);
 
             switch (functionCalled) {
                 case "click" -> chooseSound(sounds[0], sounds[1]);
@@ -826,7 +820,7 @@ public class PlantComponent extends Component {
     void chooseSound(String lore, String notLore) {
         boolean playLoreSound = random.nextInt(100) <= 0; //Gives 1% chance of being true
         Sound soundEffect;
-        logger.debug("is the sound lore?: " + playLoreSound);
+        logger.debug("is the sound lore?: {}", playLoreSound);
         if (!playLoreSound) {
             soundEffect = ServiceLocator.getResourceService().getAsset(lore, Sound.class);
         } else {
@@ -836,6 +830,7 @@ public class PlantComponent extends Component {
     }
 
     public void setCurrentAge(float age) {
+        // Age is currently not implemented
     }
 
     public float getCurrentAge() {
@@ -862,7 +857,6 @@ public class PlantComponent extends Component {
      * Tell the plant it is now eating an animal.
      */
     public void setIsEating() {
-        //this.countOfHoursOfDigestion = 0;
         this.countMinutesOfDigestion = 0;
         this.isEating = true;
     }
@@ -1028,6 +1022,9 @@ public class PlantComponent extends Component {
                 case "adult" -> forceAdult();
                 case decay -> forceDecay();
                 case "dead" -> forceDead();
+                default -> {
+                    // Not needed
+                }
             }
         }
     }
@@ -1040,9 +1037,9 @@ public class PlantComponent extends Component {
     public String currentInfo() {
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
         String waterLevel = decimalFormat.format(cropTile.getWaterContent());
-        String idealWaterLevel = decimalFormat.format(this.idealWaterLevel);
+        String idealWaterLevelString = decimalFormat.format(this.idealWaterLevel);
         String growthLevel = decimalFormat.format(currentGrowthLevel);
-        String currentMaxHealth = Integer.toString(this.currentMaxHealth);
+        String currentMaxHealthString = Integer.toString(this.currentMaxHealth);
         String waterLevelStatus = "";
 
         float waterLevelDiff = cropTile.getWaterContent() - this.idealWaterLevel;
@@ -1055,12 +1052,11 @@ public class PlantComponent extends Component {
             waterLevelStatus = "Ideal water level";
         }
 
-
         String returnString =
                 "Growth Stage: " + getGrowthStage().name() +
-                        "\nWater level: " + waterLevel + "/" + idealWaterLevel +
+                        "\nWater level: " + waterLevel + "/" + idealWaterLevelString +
                         "\nWater Status: " + waterLevelStatus +
-                        "\nHealth: " + plantHealth + "/" + currentMaxHealth;
+                        "\nHealth: " + plantHealth + "/" + currentMaxHealthString;
 
 
         if (getGrowthStage().getValue() < GrowthStage.ADULT.getValue()) {
@@ -1091,7 +1087,6 @@ public class PlantComponent extends Component {
         json.writeObjectStart(this.getClass().getSimpleName());
         json.writeValue("name", getPlantName());
         json.writeValue("health", getPlantHealth());
-        json.writeValue("age", 0);
         json.writeValue("growth", getCurrentGrowthLevel());
         json.writeValue("animation", currentAnimator.getCurrentAnimation());
         json.writeObjectEnd();
@@ -1102,9 +1097,7 @@ public class PlantComponent extends Component {
         ServiceLocator.getGameArea().spawnEntity(entity);
         this.currentAnimator = entity.getComponent(AnimationRenderComponent.class);
         currentAnimator.startAnimation(plantData.getString("animation"));
-
         plantHealth = plantData.getInt("health");
         currentGrowthLevel = plantData.getInt("growth");
-        // age = plantData.getFloat("age");
     }
 }

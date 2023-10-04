@@ -38,7 +38,7 @@ public class Cutscene{
         this.pauseGame();
         Stage stage = ServiceLocator.getRenderService().getStage();
         cutsceneEntity = new Entity();
-        cutsceneEntity.addComponent(new CutsceneDisplay(dialogue, this, this.cutsceneType))
+        cutsceneEntity.addComponent(new CutsceneDisplay(dialogue, this))
                 .addComponent(new InputDecorator(stage, 10));
         ServiceLocator.getEntityService().register(cutsceneEntity);
     }

@@ -11,14 +11,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
-
-/*
- * TODO:
- *  - animate watering.
- *  - integrate with save&load.
- *  - need finished textures for all sprinkler bits and the pump.
- */
-
 public class SprinklerComponent extends Component {
 
   /**

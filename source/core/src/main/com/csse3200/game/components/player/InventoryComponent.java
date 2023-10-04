@@ -4,7 +4,6 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.ItemComponent;
-import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.FactoryService;
@@ -13,8 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.List;
-
-import com.badlogic.gdx.math.Vector2;
 
 
 /**
@@ -50,7 +47,7 @@ public class InventoryComponent extends Component {
     /**
      * String representing the event that the inventory has been updated
      */
-    public final String updateInventory = "updateInventory";
+    public static final String updateInventory = "updateInventory";
 
     /**
      * Integer representing the index of the item currently held by the player.
@@ -61,15 +58,6 @@ public class InventoryComponent extends Component {
      * The maximum size of the inventory.
      */
     private int maxInventorySize = 30; // default size 30
-
-    /**
-     * Creates a new InventoryComponent.
-     */
-  @Override
-  public void create() {
-    super.create();
-    //entity.getEvents().addListener("use", this::useItem);
-  }
 
     /**
      * Creates a new InventoryComponent with a given list of items.
@@ -83,7 +71,7 @@ public class InventoryComponent extends Component {
    *
    * @return boolean if the item is consumable, whether or not the item was successfully removed otherwise true;
    */
-  public boolean useItem(Vector2 mousePos, Entity itemInHand) {
+  public boolean useItem() {
     if (heldItem == null) {
       return false;
     }

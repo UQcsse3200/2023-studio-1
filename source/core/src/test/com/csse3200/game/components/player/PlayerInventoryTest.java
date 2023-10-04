@@ -16,7 +16,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.entities.Entity;
@@ -40,7 +39,7 @@ public class PlayerInventoryTest {
         player = new Entity()
                 .addComponent(inventoryComponent);
         player.create();
-        player.getEvents().addListener("use", inventoryComponent::useItem);
+        player.getEvents().addListener("use", (Vector2 mousePos, Entity itemInHand) -> inventoryComponent.useItem());
         item1 = new Entity(EntityType.ITEM).addComponent(new ItemComponent("Hoe", ItemType.HOE, "images/tool_shovel.png"));
         item2 = new Entity(EntityType.ITEM).addComponent(new ItemComponent("Scythe",ItemType.SCYTHE, "images/tool_shovel.png"));
     }
