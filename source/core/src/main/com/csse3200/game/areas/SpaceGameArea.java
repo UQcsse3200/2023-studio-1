@@ -1,13 +1,10 @@
 package com.csse3200.game.areas;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.areas.terrain.*;
 import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
-import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntitySpawner;
@@ -443,16 +440,6 @@ public class SpaceGameArea extends GameArea {
      }
    }
 
-  private Entity spawnCrop(int x, int y, String plantType) {
-    GridPoint2 pos = new GridPoint2(x, y);
-    Entity newPlayer = TerrainCropTileFactory.createTerrainEntity(0,0);
-    spawnEntityAt(newPlayer, pos, true, true);
-    Entity plant = FactoryService.getPlantFactories().get(plantType).apply(newPlayer.getComponent(CropTileComponent.class));
-    ServiceLocator.getEntityService().register(plant);
-    newPlayer.getComponent(CropTileComponent.class).setPlant(plant);
-    return newPlayer;
-  }
-
   /**
    * Spawns the initial Ship Debris randomly around the Player Ship's location.
    * Random position generation adapted from Team 1's spawnTool() below.
@@ -547,7 +534,7 @@ public class SpaceGameArea extends GameArea {
       throw new RuntimeException(e);
     }
     // Add effects that are needed
-    List<SoundFile> effects = new ArrayList<SoundFile>();
+    List<SoundFile> effects = new ArrayList<>();
     effects.add(EffectSoundFile.TRACTOR_HONK);
     effects.add(EffectSoundFile.IMPACT);
     try {

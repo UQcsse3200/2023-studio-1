@@ -49,7 +49,7 @@ public class ItemActions extends Component {
     }
     switch (type.getItemType()) {
       case HOE -> {
-        resultStatus = hoe(playerPos, mousePos);
+        resultStatus = hoe(mousePos);
         return resultStatus;
       }
       case SHOVEL -> {
@@ -273,11 +273,10 @@ public class ItemActions extends Component {
   /**
    * Hoes the tile at the given position
    *
-   * @param playerPos the position of the player
-   * @param mousePos  the position of the mouse
+   * @param mousePos the position of the mouse
    * @return if hoeing was successful return true else return false
    */
-  private boolean hoe(Vector2 playerPos, Vector2 mousePos) {
+  private boolean hoe(Vector2 mousePos) {
     TerrainTile tile = getTileAtPosition(mousePos);
     if (tile.isOccupied() || !tile.isTillable()) {
       return false;
