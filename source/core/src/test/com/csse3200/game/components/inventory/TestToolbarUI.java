@@ -35,6 +35,8 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
 
+import javax.swing.*;
+
 /**
  * Factory to create a mock player entity for testing.
  * Only includes necessary components for testing.
@@ -49,12 +51,16 @@ public class TestToolbarUI {
 	static InventoryComponent inventory;
 	ArgumentCaptor<Window> windowArgument;
 	Stage stage;
-	String[] texturePaths = {
+	static String[] texturePaths = {
 			"images/tool_shovel.png",
 			"images/tool_hoe.png",
 			"images/tool_scythe.png",
 			"images/selected.png",
 			"images/itemFrame.png"
+	};
+
+	static String[] skinPaths = {
+			"gardens-of-the-galaxy/gardens-of-the-galaxy.json"
 	};
 
 
@@ -68,6 +74,10 @@ public class TestToolbarUI {
 	 */
 	@BeforeEach
 	void createPlayer() {
+		ServiceLocator.registerResourceService(new ResourceService());
+		ServiceLocator.getResourceService().loadTextures(texturePaths);
+		ServiceLocator.getResourceService().loadSkins(skinPaths);
+		ServiceLocator.getResourceService().loadAll();
 
 		stage = mock(Stage.class);
 		windowArgument = ArgumentCaptor.forClass(Window.class);
@@ -90,9 +100,6 @@ public class TestToolbarUI {
 
 	@Test
 	void testToggleToolbar() {
-		ServiceLocator.registerResourceService(new ResourceService());
-		ServiceLocator.getResourceService().loadTextures(texturePaths);
-		ServiceLocator.getResourceService().loadAll();
 		player.create();
 		verify(toolbarDisplay).create();
 		verify(stage).addActor(windowArgument.capture());
@@ -113,7 +120,8 @@ public class TestToolbarUI {
 	@MethodSource({"addingItemsShouldAddInventoryImagesParams"})
 	void addingItemsShouldAddInventoryImages(ItemComponent component, int expected) {
 		ServiceLocator.registerResourceService(new ResourceService());
-		ServiceLocator.getResourceService().loadTextures(new String[]{"images/tool_hoe.png", "images/tool_shovel.png", "images/tool_scythe.png", "images/selected.png", "images/itemFrame.png"});
+		ServiceLocator.getResourceService().loadTextures(texturePaths);
+		ServiceLocator.getResourceService().loadSkins(skinPaths);
 		ServiceLocator.getResourceService().loadAll();
 		player.create();
 		ArgumentCaptor<Window> win = ArgumentCaptor.forClass(Window.class);
@@ -141,7 +149,7 @@ public class TestToolbarUI {
 
 	private static Stream<Arguments> addingItemsShouldAddInventoryImagesParams() {
 		ServiceLocator.registerResourceService(new ResourceService());
-		ServiceLocator.getResourceService().loadTextures(new String[]{"images/tool_hoe.png", "images/tool_shovel.png", "images/tool_scythe.png"});
+		ServiceLocator.getResourceService().loadTextures(texturePaths);
 		ServiceLocator.getResourceService().loadAll();
 		return Stream.of(
 				arguments(new ItemComponent("Hoe", ItemType.HOE, "images/tool_hoe.png"), 0),
