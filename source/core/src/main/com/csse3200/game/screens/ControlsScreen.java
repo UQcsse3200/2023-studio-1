@@ -41,7 +41,7 @@ public class ControlsScreen extends ScreenAdapter {
   /**
    * A list of textures that must be loaded for the animation
    */
-  public static final String[] transitionTextures = new String[FRAME_COUNT];
+  private static final String[] transitionTextures = new String[FRAME_COUNT];
 
   /**
    * A common name prefix for all the animation textures

@@ -47,7 +47,7 @@ public class InventoryComponent extends Component {
     /**
      * String representing the event that the inventory has been updated
      */
-    public static final String updateInventory = "updateInventory";
+    public static final String UPDATE_INVENTORY = "updateInventory";
 
     /**
      * Integer representing the index of the item currently held by the player.
@@ -399,7 +399,7 @@ public class InventoryComponent extends Component {
             // Add item to next available position
             setPosition(item);
             setHeldItem(getHeldIndex());
-            entity.getEvents().trigger(updateInventory);
+            entity.getEvents().trigger(UPDATE_INVENTORY);
             return true;
         }
     }
@@ -435,7 +435,7 @@ public class InventoryComponent extends Component {
                     }
                 }
             }
-            entity.getEvents().trigger(updateInventory);
+            entity.getEvents().trigger(UPDATE_INVENTORY);
             logger.info("Removing item from inventory - " + item.getComponent(ItemComponent.class).getItemName() + ", new count " + this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(), 0));
             return true;
         }
@@ -502,7 +502,7 @@ public class InventoryComponent extends Component {
         this.itemCount = itemCount;
         this.heldItemsEntity = heldItemsEntity;
         this.itemPlace = itemPlace;
-        entity.getEvents().trigger(updateInventory);
+        entity.getEvents().trigger(UPDATE_INVENTORY);
         logger.debug("Loading inventory completed");
     }
 
