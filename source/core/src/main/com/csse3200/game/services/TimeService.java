@@ -19,6 +19,12 @@ public class TimeService {
 	private boolean paused;
 	private final EventHandler events;
 
+	private static final String DAY_UPDATE = "dayUpdate";
+
+	private static final String MINUTE_UPDATE = "minuteUpdate";
+
+	private static final String HOUR_UPDATE = "hourUpdate";
+
 
 
 	/**
@@ -110,7 +116,7 @@ public class TimeService {
 		logger.debug("Day is being set to: {}", this.day);
 		this.day = day;
 		this.timeBuffer = 0;
-		events.trigger("dayUpdate");
+		events.trigger(DAY_UPDATE);
 	}
 
 	/**
@@ -126,7 +132,7 @@ public class TimeService {
 		logger.debug("Hour is being set to: {}", this.hour);
 		this.hour = hour;
 		this.timeBuffer = 0;
-		events.trigger("hourUpdate");
+		events.trigger(HOUR_UPDATE);
 	}
 
 	/**
@@ -142,7 +148,7 @@ public class TimeService {
 		logger.debug("Minute is being set to: {}", this.minute);
 		this.minute = minute;
 		this.timeBuffer = 0;
-		events.trigger("minuteUpdate");
+		events.trigger(MINUTE_UPDATE);
 	}
 
 	/**
@@ -167,14 +173,14 @@ public class TimeService {
 			this.hour += 1;
 		}
 		this.minute = minute;
-		events.trigger("minuteUpdate");
+		events.trigger(MINUTE_UPDATE);
 
 		if (this.hour > hour) {
 			this.day += 1;
-			events.trigger("dayUpdate");
+			events.trigger(DAY_UPDATE);
 		}
 		this.hour = hour;
-		events.trigger("hourUpdate");
+		events.trigger(HOUR_UPDATE);
 
 		this.timeBuffer = 0;
 
@@ -204,7 +210,7 @@ public class TimeService {
 		}
 
 		// Always trigger an hour update event
-		events.trigger("hourUpdate");
+		events.trigger(HOUR_UPDATE);
 	}
 
 	/**
@@ -229,7 +235,7 @@ public class TimeService {
 
 		// If minute is between 0 and 59, hour hasn't elapsed - don't do anything
 		if (minute < 60) {
-			events.trigger("minuteUpdate");
+			events.trigger(MINUTE_UPDATE);
 			return;
 		}
 
@@ -238,7 +244,7 @@ public class TimeService {
 		int hoursPassed = minute / 60;
 		hour += hoursPassed;
 		minute -= (hoursPassed * 60);
-		events.trigger("minuteUpdate");
+		events.trigger(MINUTE_UPDATE);
 
 		// If hour is between 0 and 23, day hasn't elapsed, do nothing
 		if (hour < 24) {
@@ -254,7 +260,7 @@ public class TimeService {
 		triggerHourEvents();
 
 		// This event has to be triggered after the hour is checked the hour isn't 24 when the event is sent
-		events.trigger("dayUpdate");
+		events.trigger(DAY_UPDATE);
 	}
 
 	public void loadTime(int day, int hour, int minute) {
