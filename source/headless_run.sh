@@ -32,12 +32,14 @@ if [ $? -eq 0 ]; then
 fi
 
 # Check that the run actually made it to the game screen
-grep MAIN_GAME game.log
+grep MAIN_GAME game.log > /dev/null
 if [ $? -eq 1 ]; then
   # Not found, e.g.
   echo "Run failed: did not succesfully enter game"
   OUTPUT_VAL=1
 fi
+
+# Future improvements: verify that the game fully loads, not just the main-game was selected.
 
 rm game.log gradle.log
 exit ${OUTPUT_VAL}
