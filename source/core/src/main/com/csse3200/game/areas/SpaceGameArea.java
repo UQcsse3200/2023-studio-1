@@ -1,7 +1,9 @@
 package com.csse3200.game.areas;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.areas.terrain.*;
 import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
@@ -39,7 +41,7 @@ public class SpaceGameArea extends GameArea {
   private static final float WALL_WIDTH = 0.1f;
   private EntitiesSpawner hostileSpawner;
 
-  private static final String[] forestTextures = {
+  private static final String[] texturePaths = {
           "images/tree.png",
           "images/ghost_king.png",
           "images/ghost_1.png",
@@ -245,10 +247,17 @@ public class SpaceGameArea extends GameArea {
           "images/ship/ship_debris.png",
           "images/ship/ship.png",
           "images/ship/ship_part.png",
-          "images/ship/ship_clue.png"
+          "images/ship/ship_clue.png",
+
+          "images/selected.png",
+          "images/itemFrame.png",
+          "images/PauseMenu/Pause_Overlay.jpg",
+          "images/PauseMenu/Pausenew.jpg"
+
+
   };
 
-  private static final String[] forestTextureAtlases = {
+  private static final String[] textureAtlasPaths = {
       "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
       "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas",
       "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas", "images/questgiver.atlas",
@@ -258,7 +267,7 @@ public class SpaceGameArea extends GameArea {
           "images/animals/bat.atlas", "images/projectiles/oxygen_eater_projectile.atlas",
           "images/ship/ship.atlas", "images/light.atlas", "images/projectiles/dragon_fly_projectile.atlas"
   };
-  private static final String[] forestSounds = {
+  private static final String[] soundPaths = {
           "sounds/Impact4.ogg", "sounds/car-horn-6408.mp3",
           "sounds/plants/aloeVera/click.wav", "sounds/plants/aloeVera/clickLore.wav",
           "sounds/plants/aloeVera/decay.wav", "sounds/plants/aloeVera/decayLore.wav",
@@ -286,6 +295,11 @@ public class SpaceGameArea extends GameArea {
           "sounds/plants/waterWeed/nearby.wav", "sounds/plants/waterWeed/nearbyLore.wav",
   };
 
+  String[] skinPaths = {
+          "flat-earth/skin/flat-earth-ui.json",
+          "gardens-of-the-galaxy/gardens-of-the-galaxy.json",
+          "gardens-of-the-galaxy-v2-orange/gardens-of-the-galaxy-v2-orange.json"
+  };
   private final GameMap gameMap;
 
   private Entity player;
@@ -522,9 +536,10 @@ public class SpaceGameArea extends GameArea {
   private void loadAssets() {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
-    resourceService.loadTextures(forestTextures);
+    resourceService.loadTextures(texturePaths);
     resourceService.loadTextures(TerrainFactory.getMapTextures());
-    resourceService.loadTextureAtlases(forestTextureAtlases);
+    resourceService.loadTextureAtlases(textureAtlasPaths);
+    resourceService.loadSkins(skinPaths);
     try {
       ServiceLocator.getSoundService().getBackgroundMusicService()
               .loadSounds(Arrays.asList(BackgroundSoundFile.values()));
@@ -550,9 +565,9 @@ public class SpaceGameArea extends GameArea {
   private void unloadAssets() {
     logger.debug("Unloading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
-    resourceService.unloadAssets(forestTextures);
-    resourceService.unloadAssets(forestTextureAtlases);
-    resourceService.unloadAssets(forestSounds);
+    resourceService.unloadAssets(texturePaths);
+    resourceService.unloadAssets(textureAtlasPaths);
+    resourceService.unloadAssets(soundPaths);
   }
 
   @Override
