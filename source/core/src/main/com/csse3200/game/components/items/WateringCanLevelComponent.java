@@ -147,6 +147,7 @@ public class WateringCanLevelComponent extends Component {
     public void write(Json json) {
 		json.writeObjectStart(this.getClass().getSimpleName());
         json.writeValue("level", getCurrentLevel());
+        json.writeObjectEnd();
     }
 
     @Override
