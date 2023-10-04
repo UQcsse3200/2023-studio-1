@@ -8,6 +8,7 @@ import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.utils.math.Vector2Utils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,6 +27,7 @@ import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.io.Serial;
 import java.util.ArrayList;
 
 @ExtendWith(GameExtension.class)
@@ -36,9 +38,14 @@ public class TamedFollowTaskTest {
     private Entity target;
     private InventoryComponent targetInventory;
     private InventoryComponent targetInvSpy;
+    String[] texturePaths = {"images/animals/egg.png"};
 
     @BeforeEach
     void beforeEach() {
+        ServiceLocator.registerResourceService(new ResourceService());
+        ServiceLocator.getResourceService().loadTextures(texturePaths);
+        ServiceLocator.getResourceService().loadAll();
+
         targetInventory = new InventoryComponent(new ArrayList<>());
         targetInvSpy = spy(targetInventory);
         target = new Entity().addComponent(targetInvSpy);
