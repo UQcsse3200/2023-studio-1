@@ -73,7 +73,6 @@ public class HungerBar extends UIComponent{
 
 //        hungerBarOutline.setPosition(-550f, -5f);
 
-        // Add a safety check to ensure that the array is always accessed at a possible index
         if (0 <= hungerLevel && hungerLevel <= 100) {
             hungerLabel = hungerLabels.get(hungerLevel);
             hungerLabel.setPosition(hungerBarOutline.getImageX() + 125f, hungerBarOutline.getImageY() + 8.5f);

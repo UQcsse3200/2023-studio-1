@@ -3,6 +3,9 @@ package com.csse3200.game.missions.achievements;
 import com.badlogic.gdx.utils.Json;
 import com.csse3200.game.missions.Mission;
 
+/**
+ * Adding test achievement to fix broken build
+ */
 public abstract class Achievement extends Mission {
 
 	/**
