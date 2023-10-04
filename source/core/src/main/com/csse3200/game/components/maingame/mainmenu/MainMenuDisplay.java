@@ -24,11 +24,11 @@ public class MainMenuDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(MainMenuDisplay.class);
     private static final float Z_INDEX = 2f;
     private Table table;
-    public static int frame;
+    private int frame;
     private Image transitionFrames;
     private long lastFrameTime;
-    private int fps = 15;
-    private final long frameDuration =  (long)(800 / fps);
+    private static int fps = 15;
+    private static final long FRAME_DURATION = (800 / fps);
 
     @Override
     public void create() {
@@ -135,7 +135,7 @@ public class MainMenuDisplay extends UIComponent {
     }
 
     private void updateAnimation() {
-        if (frame < MainMenuScreen.frameCount) {
+        if (frame < MainMenuScreen.FRAME_COUNT) {
             transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
                     .getAsset(MainMenuScreen.transitionTextures[frame], Texture.class))));
             transitionFrames.setWidth(Gdx.graphics.getWidth());
@@ -150,7 +150,7 @@ public class MainMenuDisplay extends UIComponent {
 
     @Override
     public void update() {
-        if (System.currentTimeMillis() - lastFrameTime > frameDuration) {
+        if (System.currentTimeMillis() - lastFrameTime > FRAME_DURATION) {
             updateAnimation();
         }
     }

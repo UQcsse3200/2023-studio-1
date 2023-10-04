@@ -1,6 +1,7 @@
 package com.csse3200.game.areas.terrain;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +10,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.areas.SpaceGameArea;
 
 /** the GameMap class is used to store and easily access and manage the components related to the game map */
 public class GameMap {
@@ -20,7 +20,7 @@ public class GameMap {
     /** The TerrainComponent used to render the terrain of the map */
     private TerrainComponent terrainComponent;
     /** The logger used to log information for debugging and info */
-    private static final Logger logger = LoggerFactory.getLogger(SpaceGameArea.class);
+    private static final Logger logger = LoggerFactory.getLogger(GameMap.class);
 
     /**
      * Creates a new GameMap instance, setting the terrainFactory and instantiating a new TiledMap instance.
@@ -51,7 +51,6 @@ public class GameMap {
      */
     public void createTestTerrainComponent(String testMapFilePath) {
         terrainComponent = terrainFactory.createTestTerrain(tiledMap, testMapFilePath);
-        //terrainFactory.createTestTerrain(tiledMap, testMapFilePath);
     }
 
     /**
@@ -191,11 +190,10 @@ public class GameMap {
         int yMax = mapBounds.y;
 
         if (x < xMin || x >= xMax || y < yMin || y >= yMax) {
-            logger.info("The provided coordinates (" + x + "," + y + ") do not fall" + "within the map bounds of x:" +
-                    xMin + "-" + xMax + " and y:" + yMin + "-" + yMax);
+            String log = String.format("The provided coordinates (%d , %d) do not fall within the map bounds of x: %d - %d and y: %d - %d", x, y, xMin, xMax, yMin, yMax);
+            logger.info(log);
             return null;
         }
-
         return ((TiledMapTileLayer) this.tiledMap.getLayers().get(0)).getCell(x, y);
     }
 
@@ -203,7 +201,7 @@ public class GameMap {
      * Retrieves a list of grid coordinates representing traversable tiles on the map.
      * @return An ArrayList of GridPoint2 objects containing the coordinates of traversable tiles.
      */
-    public ArrayList<GridPoint2> getTraversableTileCoordinates() {
+    public List<GridPoint2> getTraversableTileCoordinates() {
         return traversableTileCoordinatesHelper(true);
     }
 
@@ -211,7 +209,7 @@ public class GameMap {
      * Retrieves a list of grid coordinates representing non-traversable tiles on the map.
      * @return An ArrayList of GridPoint2 objects containing the coordinates of non-traversable tiles.
      */
-    public ArrayList<GridPoint2> getNonTraversableTileCoordinates() {
+    public List<GridPoint2> getNonTraversableTileCoordinates() {
         return traversableTileCoordinatesHelper(false);
     }
 
@@ -222,7 +220,7 @@ public class GameMap {
      * @return An ArrayList of GridPoint2 objects containing the coordinates of tiles based on the specified
      *         traversability.
      */
-    private ArrayList<GridPoint2> traversableTileCoordinatesHelper(Boolean isTraversable) {
+    private List<GridPoint2> traversableTileCoordinatesHelper(boolean isTraversable) {
         GridPoint2 mapBounds = this.getMapSize();
         int xMax = mapBounds.x;
         int yMax = mapBounds.y;

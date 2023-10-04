@@ -91,7 +91,7 @@ public class PlayerHighlightComponentTest {
 
         TiledMap tiledMap = gameMap.getTiledMap();
 
-        Entity player = new Entity(EntityType.Player).addComponent(new InteractionDetector(1));
+        Entity player = new Entity(EntityType.PLAYER).addComponent(new InteractionDetector(1));
 
         playerHighlight.setPosition(new Vector2(1,1));
         Vector2 mousePos = new Vector2(Gdx.input.getX(), Gdx.input.getY());

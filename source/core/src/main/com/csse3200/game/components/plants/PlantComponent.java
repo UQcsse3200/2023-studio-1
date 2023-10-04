@@ -19,7 +19,6 @@ import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.services.PlanetOxygenService;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -47,6 +46,13 @@ public class PlantComponent extends Component {
      * The type of plant (food, health, repair, defence, production, deadly)
      */
     private final String plantType;
+
+    private static final String alive = "alive";
+    private static final String decay = "decay";
+    private static final String decays = "decays";
+    private static final String Decay = "Decay";
+    private static final String destroy = "destroy";
+
 
     /**
      * User facing description of the plant
@@ -285,7 +291,7 @@ public class PlantComponent extends Component {
         ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::dayUpdate);
         ServiceLocator.getPlantCommandService().getEvents().addListener("forceGrowthStage", this::forceGrowthStage);
 
-        ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(1, "alive");
+        ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(1, alive);
         ServiceLocator.getPlantInfoService().increaseSeedsPlanted(1, plantName);
 
         this.currentAnimator = entity.getComponent(AnimationRenderComponent.class);
@@ -348,10 +354,10 @@ public class PlantComponent extends Component {
         if (getGrowthStage().getValue() == GrowthStage.ADULT.getValue()) {
             this.numOfDaysAsAdult += 1;
             if (getNumOfDaysAsAdult() > getAdultLifeSpan()) {
-                entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType("Decay");
+                entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType(Decay);
                 entity.getComponent(PlantAreaOfEffectComponent.class).setRadius(2f);
                 setGrowthStage(getGrowthStage().getValue() + 1);
-                playSound("decays");
+                playSound(decays);
                 updateTexture();
             }
         }
@@ -362,34 +368,31 @@ public class PlantComponent extends Component {
      * has died before reaching adult growth stage.
      */
     public void decayCheck() {
-        if (!plantDestroyed) {
-            if (getGrowthStage().getValue() == GrowthStage.ADULT.getValue()) {
-                if (getPlantHealth() <= 0) {
-                    setGrowthStage(GrowthStage.DECAYING.getValue());
-                    updateTexture();
-                }
+        if (plantDestroyed) {
+            return;
+        }
+        if (getGrowthStage().getValue() == GrowthStage.ADULT.getValue() && getPlantHealth() <= 0) {
+                setGrowthStage(GrowthStage.DECAYING.getValue());
+                updateTexture();
+        }
+        // If the plants health drops to zero while decaying, then update the growth stage to dead.
+        if (getGrowthStage().getValue() == GrowthStage.DECAYING.getValue()) {
+            if (getPlantHealth() <= 0) {
+                setGrowthStage(GrowthStage.DEAD.getValue());
+                playSound(destroy);
+                updateTexture();
             }
 
-            // If the plants health drops to zero while decaying, then update the growth stage to dead.
-            if (getGrowthStage().getValue() == GrowthStage.DECAYING.getValue()) {
-                if (getPlantHealth() <= 0) {
-                    setGrowthStage(GrowthStage.DEAD.getValue());
-                    playSound("destroy");
-                    updateTexture();
-                }
-
-                // If the plants health drops to zero before it becomes an adult its dead.
-                // Only destroyed immediately if the plant is a seedling.
-            } else if (getGrowthStage().getValue() < GrowthStage.ADULT.getValue())
-                if (getPlantHealth() <= 0) {
-                    if (getGrowthStage().getValue() != GrowthStage.SEEDLING.getValue()) {
-                        deadBeforeMaturity = true;
-                        setGrowthStage(GrowthStage.DEAD.getValue());
-                        updateTexture();
-                    } else {
-                        destroyPlant();
-                    }
-                }
+            // If the plants health drops to zero before it becomes an adult its dead.
+            // Only destroyed immediately if the plant is a seedling.
+        } else if (getGrowthStage().getValue() < GrowthStage.ADULT.getValue()) {
+            if (getGrowthStage().getValue() != GrowthStage.SEEDLING.getValue() && getPlantHealth() <= 0) {
+                deadBeforeMaturity = true;
+                setGrowthStage(GrowthStage.DEAD.getValue());
+                updateTexture();
+            } else if (getPlantHealth() <= 0) {
+                destroyPlant();
+            }
         }
     }
 
@@ -564,14 +567,14 @@ public class PlantComponent extends Component {
     public void setGrowthStage(int newGrowthStage) {
 
         if (newGrowthStage == GrowthStage.DEAD.getValue()) {
-            ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(-1, "alive");
+            ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(-1, alive);
             if (!deadBeforeMaturity && !forced) {
-                ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(-1, "decay");
+                ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(-1, decay);
             } else if (forced) {
                 forced = false;
             }
         } else if (newGrowthStage == GrowthStage.DECAYING.getValue()) {
-            ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(1, "decay");
+            ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(1, decay);
         }
 
         if (newGrowthStage >= 1 && newGrowthStage <= GrowthStage.values().length) {
@@ -719,7 +722,7 @@ public class PlantComponent extends Component {
      */
     private void destroyPlant() {
         if (getGrowthStage().getValue() < GrowthStage.DEAD.getValue()) {
-            ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(-1, "alive");
+            ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(-1, alive);
         }
 
         // This is such a cumbersome way of doing this, but there is an annoying bug that
@@ -768,7 +771,7 @@ public class PlantComponent extends Component {
             case JUVENILE -> this.currentMaxHealth = this.maxHealthAtStages[2];
             case ADULT, DECAYING, DEAD -> this.currentMaxHealth = this.maxHealth;
             default -> throw new IllegalStateException("Unexpected value: " + getGrowthStage());
-        };
+        }
     }
 
     /**
@@ -806,8 +809,8 @@ public class PlantComponent extends Component {
 
             switch (functionCalled) {
                 case "click" -> chooseSound(sounds[0], sounds[1]);
-                case "decays" -> chooseSound(sounds[2], sounds[3]);
-                case "destroy" -> chooseSound(sounds[4], sounds[5]);
+                case decays -> chooseSound(sounds[2], sounds[3]);
+                case destroy -> chooseSound(sounds[4], sounds[5]);
                 case "nearby" -> chooseSound(sounds[6], sounds[7]);
                 default -> throw new IllegalStateException("Unexpected function: " + functionCalled);
             }
@@ -879,7 +882,7 @@ public class PlantComponent extends Component {
         }
 
         if (getGrowthStage() == GrowthStage.DEAD) {
-            ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(1, "alive");
+            ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(1, alive);
         }
 
         this.setGrowthStage(GrowthStage.SEEDLING.getValue());
@@ -905,7 +908,7 @@ public class PlantComponent extends Component {
         }
 
         if (getGrowthStage() == GrowthStage.DEAD) {
-            ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(1, "alive");
+            ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(1, alive);
         }
 
         this.setGrowthStage(GrowthStage.SPROUT.getValue());
@@ -931,7 +934,7 @@ public class PlantComponent extends Component {
         }
 
         if (getGrowthStage() == GrowthStage.DEAD) {
-            ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(1, "alive");
+            ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(1, alive);
         }
 
         this.setGrowthStage(GrowthStage.JUVENILE.getValue());
@@ -957,7 +960,7 @@ public class PlantComponent extends Component {
         }
 
         if (getGrowthStage() == GrowthStage.DEAD) {
-            ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(1, "alive");
+            ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(1, alive);
         }
 
         this.setGrowthStage(GrowthStage.ADULT.getValue());
@@ -983,13 +986,13 @@ public class PlantComponent extends Component {
         }
 
         if (getGrowthStage() == GrowthStage.DEAD) {
-            ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(1, "alive");
+            ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(1, alive);
         }
 
         this.setGrowthStage(GrowthStage.DECAYING.getValue());
         this.setPlantHealth(30);
-        entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType("Decay");
-        playSound("decays");
+        entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType(Decay);
+        playSound(decays);
         updateTexture();
         updateMaxHealth();
     }
@@ -1012,7 +1015,7 @@ public class PlantComponent extends Component {
         this.setGrowthStage(GrowthStage.DEAD.getValue());
         this.setPlantHealth(0);
         updateTexture();
-        playSound("destroy");
+        playSound(destroy);
         updateMaxHealth();
     }
 
@@ -1023,7 +1026,7 @@ public class PlantComponent extends Component {
                 case "sprout" -> forceSprout();
                 case "juvenile" -> forceJuvenile();
                 case "adult" -> forceAdult();
-                case "decay" -> forceDecay();
+                case decay -> forceDecay();
                 case "dead" -> forceDead();
             }
         }
@@ -1090,12 +1093,16 @@ public class PlantComponent extends Component {
         json.writeValue("health", getPlantHealth());
         json.writeValue("age", 0);
         json.writeValue("growth", getCurrentGrowthLevel());
+        json.writeValue("animation", currentAnimator.getCurrentAnimation());
         json.writeObjectEnd();
     }
 
     @Override
     public void read(Json json, JsonValue plantData) {
         ServiceLocator.getGameArea().spawnEntity(entity);
+        this.currentAnimator = entity.getComponent(AnimationRenderComponent.class);
+        currentAnimator.startAnimation(plantData.getString("animation"));
+
         plantHealth = plantData.getInt("health");
         currentGrowthLevel = plantData.getInt("growth");
         // age = plantData.getFloat("age");

@@ -34,12 +34,12 @@ public class HungerBar extends UIComponent{
         updateDisplay(30);
     }
 
-    /**
-     * Initialises all the possible images and labels that will be used by
-     * the class, and stores them in an array to be called when needed.
-     */
-    public void createTexture() {
-        Skin hungerSkin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
+	/**
+	 * Initialises all the possible images and labels that will be used by
+	 * the class, and stores them in an array to be called when needed.
+	 */
+	public void createTexture() {
+		Skin hungerSkin = ServiceLocator.getResourceService().getAsset("flat-earth/skin/flat-earth-ui.json", Skin.class);
 
         hungerBarOutline = new Image(ServiceLocator.getResourceService().getAsset(
                 "images/bars_ui/bar_outline.png", Texture.class));
@@ -65,7 +65,7 @@ public class HungerBar extends UIComponent{
             createTexture();
         }
 
-        float scaling = (float) hungerLevel / 100;
+		float scaling = (float) hungerLevel / 100;
 
         // Accounts for scaling of the hunger bar due to the hunger percent
         hungerBarFill.setX(hungerBarFill.getImageX() + 14 * (1 - scaling));
@@ -73,7 +73,6 @@ public class HungerBar extends UIComponent{
 
 //        hungerBarOutline.setPosition(-550f, -5f);
 
-        // Add a safety check to ensure that the array is always accessed at a possible index
         if (0 <= hungerLevel && hungerLevel <= 100) {
             hungerLabel = hungerLabels.get(hungerLevel);
             hungerLabel.setPosition(hungerBarOutline.getImageX() + 125f, hungerBarOutline.getImageY() + 8.5f);

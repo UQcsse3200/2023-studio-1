@@ -28,7 +28,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     NONE
   }
 
-  private static final Logger logger = LoggerFactory.getLogger(Component.class);
+  private static final Logger logger = LoggerFactory.getLogger(KeyboardPlayerInputComponent.class);
 
   public KeyboardPlayerInputComponent() {
     super(5);

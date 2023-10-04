@@ -24,23 +24,27 @@ import com.csse3200.game.areas.terrain.TerrainComponent.TerrainOrientation;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** Factory for creating game terrains. */
 public class TerrainFactory {
     /** GridPoint2 instance representing the size of the map */
-    private GridPoint2 MAP_SIZE;
+    private GridPoint2 mapSize;
     /** The file path for the SpaceGameArea map file */
-    protected static final String mapPath = "configs/Map.txt"; //protected for testing
+    protected static final String MAP_PATH = "configs/Map.txt"; //protected for testing
     /** The camera of the map */
     private final OrthographicCamera camera;
     /** The orientation of the camera */
     private final TerrainOrientation orientation;
     /** The tile size constant used for each tile in the TiledMap class */
-    protected static final float worldTileSize = 1f;
+    protected static final float WORLD_TILE_SIZE = 1f;
     /** HashMap used to map characters in map files to texture regions for the individual tiles */
     private final Map<Character, TextureRegion> charToTextureMap = new HashMap<>();
     /** HashMap used to map characters in map files to file paths containing their textures */
     protected static final Map<Character, String> charToTileImageMap; //protected for testing
+    private static final Logger logger = LoggerFactory.getLogger(TerrainFactory.class);
+
     static {
         Map<Character, String> tempMapA = new HashMap<>();
         tempMapA.put('g', "images/grass_1.png");
@@ -121,7 +125,7 @@ public class TerrainFactory {
     }
 
     /** List of strings storing map texture file paths */
-    public static String[] mapTextures = {
+    private static final String[] mapTextures = {
             "images/grass_1.png",
             "images/grass_2.png",
             "images/grass_3.png",
@@ -178,6 +182,10 @@ public class TerrainFactory {
         this.orientation = orientation;
     }
 
+    public static String[] getMapTextures() {
+        return mapTextures;
+    }
+
     /**
      * Loads textures into the charToTextureMap based upon the images within the charToTileImageMap and resourceService.
      */
@@ -195,7 +203,7 @@ public class TerrainFactory {
      * @return GridPoint2 instance representing Map Size.
      */
     public GridPoint2 getMapSize() {
-        return MAP_SIZE.cpy();
+        return mapSize.cpy();
     }
 
     /**
@@ -205,8 +213,7 @@ public class TerrainFactory {
      * @return Terrain component which renders the terrain.
      */
     public TerrainComponent createSpaceGameTerrain(TiledMap tiledMap) {
-        //loadTextures();
-        return createGameTerrain(tiledMap, mapPath);
+        return createGameTerrain(tiledMap, MAP_PATH);
     }
 
     /**
@@ -245,8 +252,8 @@ public class TerrainFactory {
         GridPoint2 tilePixelSize = new GridPoint2(charToTextureMap.get('g').getRegionWidth(),
                 charToTextureMap.get('g').getRegionHeight());
         createGameTiles(tilePixelSize, tiledMap, mapFilePath);
-        TiledMapRenderer renderer = createRenderer(tiledMap, worldTileSize / tilePixelSize.x);
-        return new TerrainComponent(camera, tiledMap, renderer, orientation, worldTileSize);
+        TiledMapRenderer renderer = createRenderer(tiledMap, WORLD_TILE_SIZE / tilePixelSize.x);
+        return new TerrainComponent(camera, tiledMap, renderer, orientation, WORLD_TILE_SIZE);
     }
 
     /**
@@ -275,34 +282,36 @@ public class TerrainFactory {
     private void createGameTiles(GridPoint2 tileSize, TiledMap tiledMap, String mapFilePath) {
         try {
             BufferedReader bf = new BufferedReader(new InputStreamReader(Gdx.files.internal(mapFilePath).read()));
-            String line1, line2, line;
+            String line1;
+            String line2;
+            String line;
             line1 = bf.readLine();
             line2 = bf.readLine();
 
             setMapSize(line1,line2);
 
-            TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
+            TiledMapTileLayer layer = new TiledMapTileLayer(mapSize.x, mapSize.y, tileSize.x, tileSize.y);
 
-            int x_pos = 0, y_pos = MAP_SIZE.y - 1;
+            int xPos;
+            int yPos = mapSize.y - 1;
             // checking for end of file
-            for (line = bf.readLine(); line != null; x_pos++, line = bf.readLine(), y_pos--) {
-                for (x_pos = line.length() -1; x_pos >= 0; x_pos--) {
-                    GridPoint2 point = new GridPoint2(x_pos, y_pos);
+            for (line = bf.readLine(); line != null; line = bf.readLine(), yPos--) {
+                for (xPos = line.length() -1; xPos >= 0; xPos--) {
+                    GridPoint2 point = new GridPoint2(xPos, yPos);
                     layer.setCell(point.x, point.y, new Cell().setTile(
                             new TerrainTile(charToTextureMap.get(line.charAt(point.x)),
                                     charToTileTypeMap.get(line.charAt(point.x)))));
                 }
             }
-            // closing buffer reader object
-            // bf.close();
 
             tiledMap.getLayers().add(layer);
         } catch (FileNotFoundException e) {
-            System.out.println("fillTilesWithFile -> File Not Found error!");
+            logger.error("fillTilesWithFile -> File Not Found error!");
         } catch (IOException e) {
-            System.out.println("fillTilesWithFile -> Readfile error!");
+            logger.error("fillTilesWithFile -> Readfile error!");
         } catch (Exception e) {
-            System.out.println("fillTilesWithFile -> Testcase error!: " + e);
+            String log = String.format("fillTilesWithFile -> Testcase error!: %s", e);
+            logger.error(log);
         }
     }
 
@@ -313,20 +322,20 @@ public class TerrainFactory {
      * @param line2 the second line in the file (y parameter).
      */
     private void setMapSize(String line1, String line2) {
-        int x_MapSize = 0, y_MapSize = 0;
+        int xMapSize = 0;
+        int yMapSize = 0;
         // read 2 first lines
         if (isNumeric(line1)) {
-            x_MapSize = Integer.parseInt(line1);
+            xMapSize = Integer.parseInt(line1);
         } else {
-            System.out.println("Can't read x -> Incorrect input file!");
+            logger.error("Can't read x -> Incorrect input file!");
         }
         if (isNumeric(line2)) {
-            y_MapSize = Integer.parseInt(line2);
+            yMapSize = Integer.parseInt(line2);
         } else {
-            System.out.println("Can't read y -> Incorrect input file!");
+            logger.error("Can't read y -> Incorrect input file!");
         }
-
-        MAP_SIZE = new GridPoint2(x_MapSize, y_MapSize);
+        mapSize = new GridPoint2(xMapSize, yMapSize);
     }
 
     /**
@@ -340,7 +349,6 @@ public class TerrainFactory {
             return false;
         }
         try {
-            //int value = Integer.parseInt(strNum);
             Integer.parseInt(strNum);
             return true;
         } catch (NumberFormatException nfe) {

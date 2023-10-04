@@ -86,6 +86,8 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
                 case "Decay" -> decayAndDeadEffect();
                 case "Health" -> healthEffect();
                 case "Poison" -> poisonEffect();
+                default -> { // Cry or something
+                }
             }
         }
 
@@ -142,16 +144,11 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
         for (Entity entityInRange : getEntitiesInRange()) {
 
             // Check for any crop tiles near the plant.
-            if (entityInRange.getType() == EntityType.Tile) {
+            if (entityInRange.getType() == EntityType.TILE) {
                 Entity plant = entityInRange.getComponent(CropTileComponent.class).getPlant();
-                if (plant != null) {
-
-                    // Make sure the plant does not harm itself.
-                    if (entity.getId() != plant.getId()) {
-
-                        // Decrease the health of all plants in the effect area.
-                        plant.getComponent(PlantComponent.class).increasePlantHealth(-1);
-                    }
+                if (plant != null && entity.getId() != plant.getId()) {
+                    // Decrease the health of all plants in the effect area.
+                    plant.getComponent(PlantComponent.class).increasePlantHealth(-1);
                 }
             }
 
@@ -163,18 +160,16 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
      */
     private void healthEffect() {
         for (Entity entityInRange : getEntitiesInRange()) {
-            if (entityInRange.getType() == EntityType.Tile) {
+            if (entityInRange.getType() == EntityType.TILE) {
 
                 // First check for other plants in the area.
                 Entity plant = entityInRange.getComponent(CropTileComponent.class).getPlant();
-                if (plant != null) {
-                    if (entity.getId() != plant.getId()) {
+                if (plant != null && entity.getId() != plant.getId()) {
                         plant.getComponent(PlantComponent.class).increasePlantHealth(1);
-                    }
                 }
 
             // Now check if the player.
-            } else if (entityInRange.getType() == EntityType.Player) {
+            } else if (entityInRange.getType() == EntityType.PLAYER) {
                 entityInRange.getComponent(CombatStatsComponent.class).addHealth(10);
             }
             // add animals to this.
@@ -186,9 +181,8 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
      */
     private void poisonEffect() {
         for (Entity entityInRange : getEntitiesInRange()) {
-
-            if (entityInRange.getType() == EntityType.Player) {
-                entityInRange.getComponent(CombatStatsComponent.class).addHealth(-3);
+            if (entityInRange.getType() == EntityType.PLAYER) {
+                entityInRange.getComponent(CombatStatsComponent.class).addHealth(-1);
             }
             // add animals to this.
         }
@@ -204,10 +198,10 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
 
             for (Entity entityInRange : getEntitiesInRange()) {
 
-                if (entityInRange.getType() == EntityType.Cow
-                        || entityInRange.getType() == EntityType.Chicken
-                        || entityInRange.getType() == EntityType.Astrolotl
-                        || entityInRange.getType() == EntityType.OxygenEater) {
+                if (entityInRange.getType() == EntityType.COW
+                        || entityInRange.getType() == EntityType.CHICKEN
+                        || entityInRange.getType() == EntityType.ASTROLOTL
+                        || entityInRange.getType() == EntityType.OXYGEN_EATER) {
 
                     // If a valid entity is in the area, tell the plant it is eating.
                     entity.getComponent(PlantComponent.class).setIsEating();
@@ -233,7 +227,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
     private void soundEffect() {
         for (Entity entityInRange : getEntitiesInRange()) {
 
-            if (entityInRange.getType() == EntityType.Player) {
+            if (entityInRange.getType() == EntityType.PLAYER) {
                 entity.getComponent(PlantComponent.class).playSound("nearby");
             }
         }

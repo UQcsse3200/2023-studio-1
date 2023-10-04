@@ -1,6 +1,7 @@
 package com.csse3200.game.missions.rewards;
 
 import com.badlogic.gdx.utils.JsonValue;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,7 @@ public class RewardTest {
     Reward reward;
 
     @BeforeEach
-    public void init() {
+    void init() {
         isTrue = mock(JsonValue.class);
         when(isTrue.getBoolean("collected")).thenReturn(true);
         isFalse = mock(JsonValue.class);
@@ -29,21 +30,21 @@ public class RewardTest {
     }
 
     @Test
-    public void readTrue() {
+    void readTrue() {
         reward.read(isTrue);
-        assertTrue(reward.isCollected());
+        Assertions.assertTrue(reward.isCollected());
     }
 
     @Test
-    public void readFalse() {
+    void readFalse() {
         reward.read(isFalse);
-        assertFalse(reward.isCollected());
+        Assertions.assertFalse(reward.isCollected());
     }
 
     @Test
-    public void testCollected() {
-        assertFalse(reward.isCollected());
+    void testCollected() {
+        Assertions.assertFalse(reward.isCollected());
         reward.setCollected();
-        assertTrue(reward.isCollected());
+        Assertions.assertTrue(reward.isCollected());
     }
 }

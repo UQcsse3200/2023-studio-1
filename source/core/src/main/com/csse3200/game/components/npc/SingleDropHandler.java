@@ -6,6 +6,8 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.listeners.EventListener0;
 import com.csse3200.game.services.ServiceLocator;
 
+import java.security.SecureRandom;
+import java.util.Random;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
@@ -48,6 +50,8 @@ public class SingleDropHandler {
      */
     private final boolean requiresTamed;
     private boolean disposed;
+
+    private final Random random = new SecureRandom();
 
     /**
      * Constructor for SingleDropHandler
@@ -105,8 +109,8 @@ public class SingleDropHandler {
             Entity item = createItem.get();
             Vector2 position = entity.getPosition();
             //Spawn different items in different locations around entity
-            position.add((float) ((Math.random() - 0.5) * 1.5),
-                    (float) ((Math.random() - 0.5) * 1.5));
+            position.add((float) ((random.nextFloat() - 0.5) * 1.5),
+                    (float) ((random.nextFloat() - 0.5) * 1.5));
             item.setPosition(position);
             gameArea.spawnEntity(item);
         }

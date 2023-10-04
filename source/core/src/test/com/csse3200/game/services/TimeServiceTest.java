@@ -18,19 +18,19 @@ class TimeServiceTest {
 	private TimeService timeService;
 
 	@BeforeEach
-	public void setup() {
+	void setup() {
 		gameTime = mock(GameTime.class);
 		ServiceLocator.registerTimeSource(gameTime);
 		timeService = new TimeService();
 	}
 
 	@AfterEach
-	public void clear() {
+	void clear() {
 		ServiceLocator.clear();
 	}
 
 	@Test
-	public void testConstructor() {
+	void testConstructor() {
 		assertEquals(6, timeService.getHour());
 		assertEquals(0, timeService.getDay());
 		assertEquals(0, timeService.getMinute());
@@ -38,25 +38,25 @@ class TimeServiceTest {
 	}
 
 	@Test
-	public void testIsPaused() {
+	void testIsPaused() {
 		timeService.setPaused(false);
 		assertFalse(timeService.isPaused());
 	}
 
 	@Test
-	public void testPause() {
+	void testPause() {
 		timeService.setPaused(true);
 		verify(gameTime, times(1)).setTimeScale(0);
 	}
 
 	@Test
-	public void testUnpause() {
+	void testUnpause() {
 		timeService.setPaused(false);
 		verify(gameTime, times(1)).setTimeScale(1);
 	}
 
 	@Test
-	public void testSetDay() {
+	void testSetDay() {
 		int time = 10;
 		timeService.setDay(time);
 		assertEquals(time, timeService.getDay());
@@ -66,7 +66,7 @@ class TimeServiceTest {
 	}
 
 	@Test
-	public void testSetHour() {
+	void testSetHour() {
 		int time = 10;
 		timeService.setHour(time);
 		assertEquals(time, timeService.getHour());
@@ -79,7 +79,7 @@ class TimeServiceTest {
 	}
 
 	@Test
-	public void testSetMinute() {
+	void testSetMinute() {
 		int time = 10;
 		timeService.setMinute(time);
 		assertEquals(time, timeService.getMinute());
@@ -92,7 +92,7 @@ class TimeServiceTest {
 	}
 
 	@Test
-	public void testUpdate() {
+	void testUpdate() {
 		when(gameTime.getDeltaTime()).thenReturn(0.50f);
 		assertEquals(6, timeService.getHour());
 		assertEquals(0, timeService.getMinute());
@@ -116,7 +116,7 @@ class TimeServiceTest {
 	}
 
 	@Test
-	public void testIsDay() {
+	void testIsDay() {
 		timeService.setHour(2);
 		System.out.println(timeService.getHour());
 		assertFalse(timeService.isDay());

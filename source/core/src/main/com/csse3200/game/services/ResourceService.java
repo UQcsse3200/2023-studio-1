@@ -1,6 +1,7 @@
 package com.csse3200.game.services;
 
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -178,6 +179,10 @@ public class ResourceService implements Disposable {
    */
   public void loadParticleEffects(String[] particleNames) {
     loadAssets(particleNames, ParticleEffect.class);
+  }
+
+  public void loadSkins(String[] skinNames) {
+    loadAssets(skinNames, Skin.class);
   }
 
   /**

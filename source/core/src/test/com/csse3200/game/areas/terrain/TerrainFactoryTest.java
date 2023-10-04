@@ -51,7 +51,7 @@ public class TerrainFactoryTest {
      */
     @Test
     void testMapExist(){
-        FileHandle file = Gdx.files.internal(TerrainFactory.mapPath);
+        FileHandle file = Gdx.files.internal(TerrainFactory.MAP_PATH);
         assertTrue(file.exists());
     }
 
@@ -64,7 +64,7 @@ public class TerrainFactoryTest {
     void testMapisTxt(){
         String pngRegex = "([^\\s]+(\\.(?i)(txt))$)";
         Pattern pattern = Pattern.compile(pngRegex);
-        Matcher matcher = pattern.matcher(TerrainFactory.mapPath);
+        Matcher matcher = pattern.matcher(TerrainFactory.MAP_PATH);
         assertTrue(matcher.matches());
     }
 
@@ -73,7 +73,7 @@ public class TerrainFactoryTest {
      */
     @Test
     void testMapSyntaxSizeStated(){
-        BufferedReader bf = new BufferedReader(new InputStreamReader(Gdx.files.internal(TerrainFactory.mapPath).read()));
+        BufferedReader bf = new BufferedReader(new InputStreamReader(Gdx.files.internal(TerrainFactory.MAP_PATH).read()));
         String line1, line2;
         try {
             line1 = bf.readLine();
@@ -92,7 +92,7 @@ public class TerrainFactoryTest {
      */
     @Test
     void testMapSizeCorrect(){
-        BufferedReader bf = new BufferedReader(new InputStreamReader(Gdx.files.internal(TerrainFactory.mapPath).read()));
+        BufferedReader bf = new BufferedReader(new InputStreamReader(Gdx.files.internal(TerrainFactory.MAP_PATH).read()));
         String line1, line2, line;
         try {
             line1 = bf.readLine();
@@ -119,7 +119,7 @@ public class TerrainFactoryTest {
      */
     @Test
     void testMapCharsValid(){
-        BufferedReader bf = new BufferedReader(new InputStreamReader(Gdx.files.internal(TerrainFactory.mapPath).read()));
+        BufferedReader bf = new BufferedReader(new InputStreamReader(Gdx.files.internal(TerrainFactory.MAP_PATH).read()));
         String line;
         try {
             line = bf.readLine();

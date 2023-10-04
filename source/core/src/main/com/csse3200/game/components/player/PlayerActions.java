@@ -1,8 +1,5 @@
 package com.csse3200.game.components.player;
 
-import java.security.SecureRandom;
-import java.util.List;
-
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -21,6 +18,9 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ProjectileFactory;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
+
+import java.security.SecureRandom;
+import java.util.List;
 
 /**
  * Action component for interacting with the player. Player events should be
@@ -43,7 +43,9 @@ public class PlayerActions extends Component {
 
   private SecureRandom random = new SecureRandom();
 
-  int SWORDDAMAGE = 5;
+  int swordDamage = 5;
+
+  private static final String RIGHT_STRING = "right";
 
   @Override
   public void create() {
@@ -87,7 +89,7 @@ public class PlayerActions extends Component {
       String animationName = "animationWalkStop";
       float direction = getPrevMoveDirection();
       if (direction < 45) {
-        entity.getEvents().trigger(animationName, "right", animationRandomizer, false);
+        entity.getEvents().trigger(animationName, RIGHT_STRING, animationRandomizer, false);
       } else if (direction < 135) {
         entity.getEvents().trigger(animationName, "up", animationRandomizer, false);
       } else if (direction < 225) {
@@ -102,7 +104,7 @@ public class PlayerActions extends Component {
     String animationName = String.format("animation%sStart", running ? "Run" : "Walk");
     float direction = moveDirection.angleDeg();
     if (direction < 45) {
-      entity.getEvents().trigger(animationName, "right");
+      entity.getEvents().trigger(animationName, RIGHT_STRING);
     } else if (direction < 135) {
       entity.getEvents().trigger(animationName, "up");
     } else if (direction < 225) {
@@ -188,15 +190,16 @@ public class PlayerActions extends Component {
   }
 
   void interact() {
+    String animationInteract = "animationInteract";
     float direction = getPrevMoveDirection();
     if (direction < 45) {
-      entity.getEvents().trigger("animationInteract", "right");
+      entity.getEvents().trigger(animationInteract, RIGHT_STRING);
     } else if (direction < 135) {
-      entity.getEvents().trigger("animationInteract", "up");
+      entity.getEvents().trigger(animationInteract, "up");
     } else if (direction < 225) {
-      entity.getEvents().trigger("animationInteract", "left");
+      entity.getEvents().trigger(animationInteract, "left");
     } else if (direction < 315) {
-      entity.getEvents().trigger("animationInteract", "down");
+      entity.getEvents().trigger(animationInteract, "down");
     }
 
     /*
@@ -239,7 +242,7 @@ public class PlayerActions extends Component {
           float difference = Math.abs(resAngle - mouseResAngle);
           difference = difference > 180 ? 360 - difference : difference;
           if(difference <= 45) {
-            combat.setHealth(combat.getHealth() - SWORDDAMAGE);
+            combat.setHealth(combat.getHealth() - swordDamage);
             animal.getEvents().trigger("panicStart");
           }
         }
@@ -296,7 +299,7 @@ public class PlayerActions extends Component {
     if (itemInHand != null) {
       if (itemInHand.getComponent(ItemActions.class) != null) {
         pauseMoving();
-        itemInHand.getComponent(ItemActions.class).use(entity, mousePos, map);
+        itemInHand.getComponent(ItemActions.class).use(entity, mousePos);
       }
     }
   }

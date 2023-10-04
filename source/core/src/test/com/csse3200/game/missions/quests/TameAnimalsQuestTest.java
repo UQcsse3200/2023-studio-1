@@ -31,12 +31,12 @@ class TameAnimalsQuestTest {
 
     }
     @AfterEach
-    public void reset() {
+    void reset() {
         ServiceLocator.clear();
     }
 
     @Test
-    public void testIsCompleted() {
+    void testIsCompleted() {
         TAQuest1.registerMission(ServiceLocator.getMissionManager().getEvents());
         TAQuest2.registerMission(ServiceLocator.getMissionManager().getEvents());
         TAQuest3.registerMission(ServiceLocator.getMissionManager().getEvents());
@@ -72,7 +72,7 @@ class TameAnimalsQuestTest {
     }
 
     @Test
-    public void testGetDescription() {
+    void testGetDescription() {
         TAQuest1.registerMission(ServiceLocator.getMissionManager().getEvents());
         TAQuest2.registerMission(ServiceLocator.getMissionManager().getEvents());
         TAQuest3.registerMission(ServiceLocator.getMissionManager().getEvents());
@@ -91,7 +91,7 @@ class TameAnimalsQuestTest {
     }
 
     @Test
-    public void testReadAndGetProgress() {
+    void testReadAndGetProgress() {
         assertEquals(0, TAQuest1.getProgress());
         assertEquals(0, TAQuest2.getProgress());
         assertEquals(0, TAQuest3.getProgress());

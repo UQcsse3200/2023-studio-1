@@ -58,7 +58,7 @@ public class PlantProximityComponent extends HitboxComponent {
 
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
 
-        if (target.getType() == EntityType.Player) {
+        if (target.getType() == EntityType.PLAYER) {
             entity.getComponent(PlantComponent.class).setPlayerInProximity(true);
         }
 
@@ -76,7 +76,7 @@ public class PlantProximityComponent extends HitboxComponent {
         }
 
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
-        if (target.getType() == EntityType.Player) {
+        if (target.getType() == EntityType.PLAYER) {
             entity.getComponent(PlantComponent.class).setPlayerInProximity(false);
         }
     }
