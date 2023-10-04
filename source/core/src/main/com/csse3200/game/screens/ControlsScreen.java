@@ -41,7 +41,7 @@ public class ControlsScreen extends ScreenAdapter {
   /**
    * A list of textures that must be loaded for the animation
    */
-  public static String[] transitionTextures = new String[FRAME_COUNT];
+  private static final String[] transitionTextures = new String[FRAME_COUNT];
 
   /**
    * A common name prefix for all the animation textures
@@ -134,5 +134,13 @@ public class ControlsScreen extends ScreenAdapter {
     ui.addComponent(new ControlsMenuDisplay(game))
             .addComponent(new InputDecorator(stage, 10));
     ServiceLocator.getEntityService().register(ui);
+  }
+
+  /**
+   * Get the transition textures for control screen
+   * @return the transition textures
+   */
+  public static String[] getTransitionTextures() {
+    return transitionTextures;
   }
 }

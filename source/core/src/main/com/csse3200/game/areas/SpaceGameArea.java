@@ -1,13 +1,10 @@
 package com.csse3200.game.areas;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.areas.terrain.*;
 import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
-import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntitySpawner;
@@ -551,7 +548,7 @@ public class SpaceGameArea extends GameArea {
       throw new RuntimeException(e);
     }
     // Add effects that are needed
-    List<SoundFile> effects = new ArrayList<SoundFile>();
+    List<SoundFile> effects = new ArrayList<>();
     effects.add(EffectSoundFile.TRACTOR_HONK);
     effects.add(EffectSoundFile.IMPACT);
     try {

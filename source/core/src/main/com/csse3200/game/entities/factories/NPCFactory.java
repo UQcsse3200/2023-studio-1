@@ -52,6 +52,20 @@ import java.util.List;
  * similar characteristics.
  */
 public class NPCFactory {
+
+  private static final String IDLE_LEFT = "idle_left";
+  private static final String IDLE_RIGHT = "idle_right";
+  private static final String WALK_LEFT = "walk_left";
+  private static final String WALK_RIGHT = "walk_right";
+  private static final String RUN_LEFT = "run_left";
+  private static final String RUN_RIGHT = "run_right";
+  private static final String ATTACK_LEFT = "attack_left";
+  private static final String ATTACK_RIGHT = "attack_right";
+  private static final String IDLE_LEFT_TAMED = "idle_left_tamed";
+  private static final String IDLE_RIGHT_TAMED = "idle_right_tamed";
+  private static final String WALK_LEFT_TAMED = "walk_left_tamed";
+    private static final String WALK_RIGHT_TAMED = "walk_right_tamed";
+
   private static final NPCConfigs configs =
       FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 
@@ -70,18 +84,18 @@ public class NPCFactory {
             16f
     );
 
-    animator.addAnimation("idle_left", Float.MAX_VALUE);
-    animator.addAnimation("idle_right", Float.MAX_VALUE);
-    animator.addAnimation("walk_left", 0.2f, Animation.PlayMode.LOOP_REVERSED);
-    animator.addAnimation("walk_right", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("run_left", 0.1f, Animation.PlayMode.LOOP_REVERSED);
-    animator.addAnimation("run_right", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(IDLE_LEFT, Float.MAX_VALUE);
+    animator.addAnimation(IDLE_RIGHT, Float.MAX_VALUE);
+    animator.addAnimation(WALK_LEFT, 0.2f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation(WALK_RIGHT, 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation(RUN_LEFT, 0.1f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation(RUN_RIGHT, 0.1f, Animation.PlayMode.LOOP);
 
     // Tamed Animations
-    animator.addAnimation("idle_left_tamed", Float.MAX_VALUE);
-    animator.addAnimation("idle_right_tamed", Float.MAX_VALUE);
-    animator.addAnimation("walk_left_tamed", 0.2f, Animation.PlayMode.LOOP_REVERSED);
-    animator.addAnimation("walk_right_tamed", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation(IDLE_LEFT_TAMED, Float.MAX_VALUE);
+    animator.addAnimation(IDLE_RIGHT_TAMED, Float.MAX_VALUE);
+    animator.addAnimation(WALK_LEFT_TAMED, 0.2f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation(WALK_RIGHT_TAMED, 0.2f, Animation.PlayMode.LOOP);
     animator.addAnimation("run_left_tamed", 0.1f, Animation.PlayMode.LOOP_REVERSED);
     animator.addAnimation("run_right_tamed", 0.1f, Animation.PlayMode.LOOP);
 
@@ -133,16 +147,16 @@ public class NPCFactory {
             ServiceLocator.getResourceService().getAsset("images/animals/cow.atlas", TextureAtlas.class),
             16f
     );
-    animator.addAnimation("idle_left", 0.25f, Animation.PlayMode.LOOP);
-    animator.addAnimation("idle_right", 0.5f, Animation.PlayMode.LOOP);
-    animator.addAnimation("walk_left", 0.25f, Animation.PlayMode.LOOP_REVERSED);
-    animator.addAnimation("walk_right", 0.25f, Animation.PlayMode.LOOP);
+    animator.addAnimation(IDLE_LEFT, 0.25f, Animation.PlayMode.LOOP);
+    animator.addAnimation(IDLE_RIGHT, 0.5f, Animation.PlayMode.LOOP);
+    animator.addAnimation(WALK_LEFT, 0.25f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation(WALK_RIGHT, 0.25f, Animation.PlayMode.LOOP);
 
     // Tamed Animations
-    animator.addAnimation("idle_left_tamed", Float.MAX_VALUE);
-    animator.addAnimation("idle_right_tamed", Float.MAX_VALUE);
-    animator.addAnimation("walk_left_tamed", 0.2f, Animation.PlayMode.LOOP_REVERSED);
-    animator.addAnimation("walk_right_tamed", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation(IDLE_LEFT_TAMED, Float.MAX_VALUE);
+    animator.addAnimation(IDLE_RIGHT_TAMED, Float.MAX_VALUE);
+    animator.addAnimation(WALK_LEFT_TAMED, 0.2f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation(WALK_RIGHT_TAMED, 0.2f, Animation.PlayMode.LOOP);
 
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
@@ -192,14 +206,14 @@ public class NPCFactory {
     AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/animals/astrolotl.atlas", TextureAtlas.class)
             , 20f);
-    animator.addAnimation("idle_left", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("idle_right", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("walk_left", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("walk_right", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("idle_left_tamed", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("idle_right_tamed", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("walk_left_tamed", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("walk_right_tamed", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(IDLE_LEFT, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(IDLE_RIGHT, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(WALK_LEFT, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(WALK_RIGHT, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(IDLE_LEFT_TAMED, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(IDLE_RIGHT_TAMED, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(WALK_LEFT_TAMED, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(WALK_RIGHT_TAMED, 0.15f, Animation.PlayMode.LOOP);
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(1.5f, 1.5f), 5f))
@@ -235,12 +249,12 @@ public class NPCFactory {
             16f
     );
 
-    animator.addAnimation("idle_left", 0.5f, Animation.PlayMode.LOOP);
-    animator.addAnimation("walk_left", 0.5f, Animation.PlayMode.LOOP);
-    animator.addAnimation("idle_right", 0.5f, Animation.PlayMode.LOOP_REVERSED);
-    animator.addAnimation("walk_right", 0.5f, Animation.PlayMode.LOOP_REVERSED);
-    animator.addAnimation("attack_right", 0.1f, Animation.PlayMode.REVERSED);
-    animator.addAnimation("attack_left", 0.1f);
+    animator.addAnimation(IDLE_LEFT, 0.5f, Animation.PlayMode.LOOP);
+    animator.addAnimation(WALK_LEFT, 0.5f, Animation.PlayMode.LOOP);
+    animator.addAnimation(IDLE_RIGHT, 0.5f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation(WALK_RIGHT, 0.5f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation(ATTACK_RIGHT, 0.1f, Animation.PlayMode.REVERSED);
+    animator.addAnimation(ATTACK_LEFT, 0.1f);
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
@@ -307,14 +321,14 @@ public class NPCFactory {
             ServiceLocator.getResourceService().getAsset("images/animals/dragonfly.atlas",
                     TextureAtlas.class)
             , 20f);
-    animator.addAnimation("attack_left", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("attack_right", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("walk_left", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("walk_right", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("idle_left", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("idle_right", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("run_left", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("run_right", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(ATTACK_LEFT, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(ATTACK_RIGHT, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(WALK_LEFT, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(WALK_RIGHT, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(IDLE_LEFT, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(IDLE_RIGHT, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(RUN_LEFT, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(RUN_RIGHT, 0.15f, Animation.PlayMode.LOOP);
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(1.5f, 1.5f), 5f))
@@ -350,12 +364,12 @@ public class NPCFactory {
             ServiceLocator.getResourceService().getAsset("images/animals/bat.atlas",
                     TextureAtlas.class)
             , 20f);
-    animator.addAnimation("attack_left", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("attack_right", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("walk_left", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("walk_right", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("idle_left", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("idle_right", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(ATTACK_LEFT, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(ATTACK_RIGHT, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(WALK_LEFT, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(WALK_RIGHT, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(IDLE_LEFT, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(IDLE_RIGHT, 0.15f, Animation.PlayMode.LOOP);
 
 
     AITaskComponent aiTaskComponent = new AITaskComponent()

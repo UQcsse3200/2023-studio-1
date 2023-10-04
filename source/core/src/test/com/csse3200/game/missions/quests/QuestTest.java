@@ -650,9 +650,4 @@ class QuestTest {
         ServiceLocator.getMissionManager().getEvents().trigger("e2");
         assertEquals(6, counts[0]);
     }
-
-    @Test
-    void testWrite() {
-    }
-
 }

@@ -92,7 +92,7 @@ public class PlantInfoDisplayComponent extends UIComponent {
             createWindow("Active Quests");
             List<Quest> quests = missionManager.getActiveQuests();
 
-            String activeQuestsString = "No Active Quests";
+            StringBuilder activeQuestsString = new StringBuilder("No Active Quests");
             int numOfLines = 0; // will be used to configure that max amount of information in the window later
             for (Quest q : quests) {
                 if (q.isRewardCollected()) {
@@ -100,15 +100,15 @@ public class PlantInfoDisplayComponent extends UIComponent {
                 }
 
                 if (numOfLines == 0) {
-                    activeQuestsString = q.getName();
+                    activeQuestsString = new StringBuilder(q.getName());
                 } else {
-                    activeQuestsString += "\n" + q.getName();
+                    activeQuestsString.append("\n").append(q.getName());
                 }
                 numOfLines += 1;
 
             }
 
-            label = new Label(activeQuestsString, skin);
+            label = new Label(activeQuestsString.toString(), skin);
             label.setFontScale(1.4f);
             label.setColor(Color.BROWN);
             window.add(label);

@@ -125,7 +125,7 @@ public class ControlsMenuDisplay extends UIComponent {
     if (frame < ControlsScreen.FRAME_COUNT) {
       // set the next frame of the animation
       transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
-              .getAsset(ControlsScreen.transitionTextures[frame], Texture.class))));
+              .getAsset(ControlsScreen.getTransitionTextures()[frame], Texture.class))));
       transitionFrames.setWidth(Gdx.graphics.getWidth());
       transitionFrames.setHeight((float)Gdx.graphics.getHeight() / 2);
       transitionFrames.setPosition(0, (float)Gdx.graphics.getHeight() / 2 + 15);

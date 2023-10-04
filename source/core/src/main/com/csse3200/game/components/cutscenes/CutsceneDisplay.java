@@ -42,10 +42,11 @@ public class CutsceneDisplay extends UIComponent {
 
     /**
      * Creates a cutscene display using the given parameters
+     *
      * @param dialogue the dialogue that will be displayed
      * @param cutscene the cutscene object that created the cutscene display
      */
-    public CutsceneDisplay(String dialogue, Cutscene cutscene, Cutscene.CutsceneType cutsceneType) {
+    public CutsceneDisplay(String dialogue, Cutscene cutscene) {
         super();
         this.dialogue = dialogue;
         this.cutscene = cutscene;
