@@ -89,6 +89,7 @@ class InputServiceTest {
     shouldCallInputHandlersInPriorityOrder(method, serviceMethod, 5f, 6f);
   }
 
+
   @ParameterizedTest
   @ValueSource(strings = {"panStop", "tap", "touchDown"})
   void shouldHandleInput2(String input)
