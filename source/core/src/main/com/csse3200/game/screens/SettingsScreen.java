@@ -26,7 +26,7 @@ public class SettingsScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(SettingsScreen.class);
   public static final int FRAME_COUNT = 71;
   private static final String[] mainMenuTextures = {"images/galaxy_home_still.png"};
-  public static String[] transitionTextures = new String[FRAME_COUNT];
+  private static String[] transitionTextures = new String[FRAME_COUNT];
   private static final String ANIMATION_PREFIX = "images/menu_animations/menu_animations";
   private Texture backgroundTexture;
   private SpriteBatch batch;
@@ -103,5 +103,13 @@ public class SettingsScreen extends ScreenAdapter {
     Entity ui = new Entity();
     ui.addComponent(new SettingsMenuDisplay(game)).addComponent(new InputDecorator(stage, 10));
     ServiceLocator.getEntityService().register(ui);
+  }
+
+  /**
+   * Get the transition textures for control screen
+   * @return the transition textures
+   */
+  public static String[] getTransitionTextures() {
+    return transitionTextures;
   }
 }
