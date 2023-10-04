@@ -86,9 +86,4 @@ class PlanetOxygenServiceTest {
         assertNotNull(planetOxygenService.getEvents(),
             "Event handler should not be null");
     }
-    
-    @Test
-    void update() {
-        // Do this when entity oxygen levels can be tracked.
-    }
 }
