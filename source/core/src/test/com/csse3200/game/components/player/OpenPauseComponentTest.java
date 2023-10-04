@@ -27,11 +27,14 @@ class OpenPauseComponentTest {
     Entity player;
     OpenPauseComponent openPauseComponent;
 
+    String[] texturePaths = {"images/PauseMenu/Pause_Overlay.jpg", "images/PauseMenu/Pausenew.jpg"};
     @BeforeEach
     void init() {
         AssetManager assetManager = spy(AssetManager.class);
         ResourceService resourceService = new ResourceService(assetManager);
         ServiceLocator.registerResourceService(resourceService);
+        ServiceLocator.getResourceService().loadTextures(texturePaths);
+        ServiceLocator.getResourceService().loadAll();
         TimeService timeService = new TimeService();
         ServiceLocator.registerTimeService(timeService);
         GameTime gameTime = new GameTime();
