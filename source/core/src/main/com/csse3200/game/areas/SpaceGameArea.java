@@ -363,7 +363,7 @@ public class SpaceGameArea extends GameArea {
     spawnShip();
 
     ServiceLocator.getMissionManager().acceptQuest(QuestFactory.createFirstContactQuest());
-    
+
 //    spawnTool(ItemType.WATERING_CAN);
 //    spawnTool(ItemType.SHOVEL);
 //    spawnTool(ItemType.SCYTHE);
