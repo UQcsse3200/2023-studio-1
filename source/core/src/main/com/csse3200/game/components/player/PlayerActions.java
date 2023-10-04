@@ -10,6 +10,8 @@ import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.items.ItemActions;
+import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
@@ -305,10 +307,10 @@ public class PlayerActions extends Component {
   void eat(Entity itemInHand) {
     if (itemInHand != null) {
       pauseMoving();
-      entity.getComponent(InventoryComponent.class).removeItem(itemInHand);
-      itemInHand.getComponent(ItemActions.class).eat(entity);
-
-      itemInHand.dispose();
+      if (itemInHand.getComponent(ItemComponent.class).getItemType() == ItemType.FOOD) {
+        itemInHand.getComponent(ItemActions.class).eat(entity);
+        entity.getComponent(InventoryComponent.class).removeItem(itemInHand);
+      }
     }
   }
 

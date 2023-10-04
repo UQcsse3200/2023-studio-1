@@ -112,21 +112,17 @@ public class ItemActions extends Component {
       switch (type.getItemName()) {
         case "Ear of Cosmic Cob":
           player.getComponent(HungerComponent.class).increaseHungerLevel(-10);
-          entity.dispose();
           return;
         case "Nightshade Berry":
           player.getComponent(CombatStatsComponent.class).addHealth(-10);
           player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
-          entity.dispose();
           return;
         case "Hammer Flower":
           player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
-          entity.dispose();
           return;
         case "Aloe Vera Leaf":
           player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
           player.getComponent(CombatStatsComponent.class).addHealth(30);
-          entity.dispose();
           return;
         default:
           // Nothing

@@ -333,7 +333,7 @@ public class SpaceGameArea extends GameArea {
 
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
-
+    
     tractor = spawnTractor();
     spawnPlayerHighlight();
     spawnQuestgiver();
@@ -341,7 +341,6 @@ public class SpaceGameArea extends GameArea {
     spawnShip();
 
     ServiceLocator.getMissionManager().acceptQuest(QuestFactory.createFirstContactQuest());
-
 
     //Spawning behaviour for passive animals
     List<EntitySpawner> passiveSpawners = new ArrayList<>();
@@ -497,6 +496,17 @@ public class SpaceGameArea extends GameArea {
     spawnEntityAt(newShip, SHIP_SPAWN, true, true);
   }
 
+  // This function is just to make testing some plants stuff a bit easier. Will remove when im done with it.
+  private void spawnTestItems() {
+    Entity item = ItemFactory.createCosmicCobEar();
+    spawnEntityAt(item, PLAYER_SPAWN, true, true);
+    spawnEntityAt(ItemFactory.createDeadlyNightshadeSeed(), PLAYER_SPAWN, true, true);
+    spawnEntityAt(ItemFactory.createHoe(), PLAYER_SPAWN, true, true);
+    spawnEntityAt(ItemFactory.createCosmicCobSeed(), PLAYER_SPAWN, true, true);
+    spawnEntityAt(ItemFactory.createScythe(), PLAYER_SPAWN, true, true);
+    spawnEntityAt(ItemFactory.createAloeVeraSeed(), PLAYER_SPAWN, true, true);
+  }
+
   /**
    * Spawns the Tractor Entity be calling upon it's factory
    *
@@ -522,6 +532,10 @@ public class SpaceGameArea extends GameArea {
   private void loadAssets() {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
+
+    // Leave this in until all sounds are added to the new sound system pls
+    resourceService.loadSounds(soundPaths);
+
     resourceService.loadTextures(texturePaths);
     resourceService.loadTextures(TerrainFactory.getMapTextures());
     resourceService.loadTextureAtlases(textureAtlasPaths);
