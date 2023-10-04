@@ -62,14 +62,18 @@ public class ItemPickupComponentTest {
         }
     }
 
+    String[] texturePaths = {"images/tool_shovel.png"};
+
     @BeforeEach
     void beforeEach() {
+        ServiceLocator.registerResourceService(new ResourceService());
+        ServiceLocator.getResourceService().loadTextures(texturePaths);
         ServiceLocator.registerPhysicsService(new PhysicsService());
         ServiceLocator.registerInputService(new InputService());
-        ServiceLocator.registerResourceService(new ResourceService());
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerRenderService(new RenderService());
         ServiceLocator.registerGameArea(new TestGameArea());
+        ServiceLocator.getResourceService().loadAll();
         /* Create two test entities (one that picks up the other) */
         picker = new Entity()
                 .addComponent(new PhysicsComponent())
