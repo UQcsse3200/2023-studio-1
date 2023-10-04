@@ -6,6 +6,8 @@ import static org.mockito.Mockito.spy;
 
 import java.util.ArrayList;
 
+import com.csse3200.game.services.ResourceService;
+import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,9 +29,14 @@ public class TamingTest {
     private InventoryComponent playerInvSpy;
     private Entity foodEntity;
     private Entity nonFood;
+    String[] texturePaths = {"images/tool_shovel.png"};
 
     @BeforeEach
     void beforeEach() {
+        ServiceLocator.registerResourceService(new ResourceService());
+        ServiceLocator.getResourceService().loadTextures(texturePaths);
+        ServiceLocator.getResourceService().loadAll();
+
         playerInventory = new InventoryComponent(new ArrayList<>());
         playerInvSpy = spy(playerInventory);
         player = new Entity().addComponent(playerInvSpy);
