@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.*;
 import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
+import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
@@ -362,7 +363,7 @@ public class SpaceGameArea extends GameArea {
     spawnShip();
 
     ServiceLocator.getMissionManager().acceptQuest(QuestFactory.createFirstContactQuest());
-
+    
 //    spawnTool(ItemType.WATERING_CAN);
 //    spawnTool(ItemType.SHOVEL);
 //    spawnTool(ItemType.SCYTHE);
@@ -552,6 +553,10 @@ public class SpaceGameArea extends GameArea {
   private void spawnItem() {
     Entity item = ItemFactory.createCosmicCobEar();
     spawnEntityAt(item, PLAYER_SPAWN, true, true);
+    spawnEntityAt(ItemFactory.createDeadlyNightshadeSeed(), PLAYER_SPAWN, true, true);
+    spawnEntityAt(ItemFactory.createHoe(), PLAYER_SPAWN, true, true);
+    spawnEntityAt(ItemFactory.createCosmicCobSeed(), PLAYER_SPAWN, true, true);
+    spawnEntityAt(ItemFactory.createScythe(), PLAYER_SPAWN, true, true);
   }
 
   private void spawnTool(ItemType tool) {
@@ -692,6 +697,9 @@ public class SpaceGameArea extends GameArea {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(forestTextures);
+
+    // Leave this in until all sounds are added to the new sound system pls
+    resourceService.loadSounds(forestSounds);
     resourceService.loadTextures(TerrainFactory.mapTextures);
     resourceService.loadTextureAtlases(forestTextureAtlases);
     resourceService.loadSounds(forestSounds);
