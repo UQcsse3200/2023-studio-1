@@ -51,23 +51,23 @@ public class FactoryService {
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Space Snapper Seeds", ItemFactory::createSpaceSnapperSeed),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("egg", ItemFactory::createEgg),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("milk", ItemFactory::createMilk),
-            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Chest", ItemFactory::createChestItem),
-            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Fence", ItemFactory::createFenceItem),
-            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Gate", ItemFactory::createGateItem),
-            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Light", ItemFactory::createLightItem),
-            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Sprinkler", ItemFactory::createSprinklerItem),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("CHEST", ItemFactory::createChestItem),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("FENCE", ItemFactory::createFenceItem),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("GATE", ItemFactory::createGateItem),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("LIGHT", ItemFactory::createLightItem),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("SPRINKLER", ItemFactory::createSprinklerItem),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("gun", ItemFactory::createGun),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("sword", ItemFactory::createSword),
-            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Pump", ItemFactory::createPumpItem),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("PUMP", ItemFactory::createPumpItem),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("map", ItemFactory::createMapItem));
 
     private static final Map<String, Supplier<Entity>> placeableFactories = Map.ofEntries(
-            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Chest", PlaceableFactory::createChest),
-            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Fence", PlaceableFactory::createFence),
-            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Gate", PlaceableFactory::createGate),
-            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Light", PlaceableFactory::createLight),
-            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Sprinkler", PlaceableFactory::createSprinkler),
-            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Pump", PlaceableFactory::createPump));
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("CHEST", PlaceableFactory::createChest),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("FENCE", PlaceableFactory::createFence),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("GATE", PlaceableFactory::createGate),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("LIGHT", PlaceableFactory::createLight),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("SPRINKLER", PlaceableFactory::createSprinkler),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("PUMP", PlaceableFactory::createPump));
 
     private static final Map<String, Supplier<Quest>> questFactories = Map.ofEntries(
             new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.FIRST_CONTACT_QUEST_NAME, QuestFactory::createFirstContactQuest),
