@@ -438,6 +438,10 @@ public class InventoryComponent extends Component {
                 for (int i = 0; i < this.itemPlace.size(); i++) {
                     if (this.itemPlace.get(i).equals(item.getComponent(ItemComponent.class).getItemName())) {
                         this.itemPlace.remove(i);
+                        if(this.heldIndex == i) {
+                            this.heldItem = null;
+                            this.heldIndex = -1;
+                        }
                         setHeldItem(heldIndex);
                         break;
                     }
