@@ -347,6 +347,29 @@ public class NPCFactory {
   }
 
   /**
+   * Creates a Ship Eater entity.
+   * @param player player entity
+   * @return Ship Eater entity
+   */
+  public static Entity createShipEater() {
+
+    AnimationRenderComponent animator = new AnimationRenderComponent(
+            ServiceLocator.getResourceService().getAsset("images/shipeater.atlas", TextureAtlas.class),
+            16f
+    );
+
+    animator.addAnimation("running", 0.5f, Animation.PlayMode.LOOP);
+    animator.addAnimation("eating", 0.5f, Animation.PlayMode.LOOP);
+    animator.addAnimation("hiding", 0.5f, Animation.PlayMode.LOOP);
+    animator.startAnimation("hiding");
+
+    Entity shipEater = new Entity(EntityType.SHIP_EATER)
+            .addComponent(animator)
+            .addComponent(new PhysicsComponent());
+    return shipEater;
+  }
+
+  /**
    * Creates a Dragonfly entity
    *
    * @return Dragonfly entity
