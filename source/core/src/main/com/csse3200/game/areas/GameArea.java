@@ -10,6 +10,7 @@ import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
+import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -109,8 +110,12 @@ public abstract class GameArea implements Disposable {
             EntityType.Cow, EntityType.Chicken, EntityType.Astrolotl, EntityType.Plant, EntityType.Tile,
             EntityType.OxygenEater, EntityType.ShipDebris, EntityType.FireFlies, EntityType.Dragonfly, EntityType.Bat));
 
+    ArrayList<EntityType> placeableTypes = new ArrayList<>(Arrays.asList(EntityType.Tile));
     for (Entity e : entities) {
       if (loadableTypes.contains(e.getType())) {
+        if (placeableTypes.contains(e.getType())) {
+
+        }
         removeEntity(e);
       }
     }
