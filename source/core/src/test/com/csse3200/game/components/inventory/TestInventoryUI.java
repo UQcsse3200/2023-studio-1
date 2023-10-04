@@ -48,7 +48,13 @@ public class TestInventoryUI {
 	InventoryDisplayManager inventoryDisplayManager;
 	ArgumentCaptor<Window> windowArgument;
 
-	static String[] texturePaths = {"images/tool_shovel.png", "images/tool_hoe.png", "images/tool_scythe.png"};
+	static String[] texturePaths = {
+			"images/tool_shovel.png",
+			"images/tool_hoe.png",
+			"images/tool_scythe.png",
+			"images/selected.png",
+			"images/itemFrame.png"
+	};
 
 	@BeforeAll
 	static void Create() {
@@ -60,6 +66,9 @@ public class TestInventoryUI {
 	 */
 	@BeforeEach
 	void createPlayer() {
+		ServiceLocator.registerResourceService(new ResourceService());
+		ServiceLocator.getResourceService().loadTextures(texturePaths);
+		ServiceLocator.getResourceService().loadAll();
 
 		windowArgument = ArgumentCaptor.forClass(Window.class);
 		stage = mock(Stage.class);
@@ -81,7 +90,6 @@ public class TestInventoryUI {
 
 	@Test
 	void testToggleInventory() {
-
 		player.create();
 		verify(inventoryDisplay).create();
 		verify(stage).addActor(windowArgument.capture());

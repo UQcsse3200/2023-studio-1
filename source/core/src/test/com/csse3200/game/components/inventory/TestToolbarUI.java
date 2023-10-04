@@ -49,7 +49,13 @@ public class TestToolbarUI {
 	static InventoryComponent inventory;
 	ArgumentCaptor<Window> windowArgument;
 	Stage stage;
-	String[] texturePaths = {"images/tool_shovel.png", "images/tool_hoe.png", "images/tool_scythe.png"};
+	String[] texturePaths = {
+			"images/tool_shovel.png",
+			"images/tool_hoe.png",
+			"images/tool_scythe.png",
+			"images/selected.png",
+			"images/itemFrame.png"
+	};
 
 
 	@BeforeAll
@@ -84,6 +90,9 @@ public class TestToolbarUI {
 
 	@Test
 	void testToggleToolbar() {
+		ServiceLocator.registerResourceService(new ResourceService());
+		ServiceLocator.getResourceService().loadTextures(texturePaths);
+		ServiceLocator.getResourceService().loadAll();
 		player.create();
 		verify(toolbarDisplay).create();
 		verify(stage).addActor(windowArgument.capture());
@@ -103,6 +112,9 @@ public class TestToolbarUI {
 	@ParameterizedTest
 	@MethodSource({"addingItemsShouldAddInventoryImagesParams"})
 	void addingItemsShouldAddInventoryImages(ItemComponent component, int expected) {
+		ServiceLocator.registerResourceService(new ResourceService());
+		ServiceLocator.getResourceService().loadTextures(new String[]{"images/tool_hoe.png", "images/tool_shovel.png", "images/tool_scythe.png", "images/selected.png", "images/itemFrame.png"});
+		ServiceLocator.getResourceService().loadAll();
 		player.create();
 		ArgumentCaptor<Window> win = ArgumentCaptor.forClass(Window.class);
 		verify(stage).addActor(windowArgument.capture());

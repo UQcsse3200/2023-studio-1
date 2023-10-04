@@ -8,14 +8,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.utils.Align;
+import com.csse3200.game.services.ServiceLocator;
+
 import java.util.Objects;
 
 /**
  * A class used to combine all the data necessary to the individual inventory slots
  */
 public class ItemSlot extends Stack {
-    private static final String selectedString = "images/selected.png";
-    private static final String itemFrameString = "images/itemFrame.png";
+    private static final String SELECTED_PATH = "images/selected.png";
+    private static final String ITEM_FRAME_PATH = "images/itemFrame.png";
     private Texture itemTexture;
     private Integer count;
     private final Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
@@ -36,8 +38,8 @@ public class ItemSlot extends Stack {
     public ItemSlot(Texture itemTexture, Integer count, boolean selected) {
         this.itemTexture = itemTexture;
         this.count = count;
-        this.background = new Image(new Texture(Gdx.files.internal(selectedString)));
-        this.frame = new Image(new Texture(Gdx.files.internal(itemFrameString)));
+        this.background = new Image(ServiceLocator.getResourceService().getAsset(SELECTED_PATH, Texture.class));
+        this.frame = new Image(ServiceLocator.getResourceService().getAsset(ITEM_FRAME_PATH, Texture.class));
         this.selected = selected;
         this.createItemSlot();
     }
@@ -50,8 +52,8 @@ public class ItemSlot extends Stack {
     public ItemSlot(Texture itemTexture, boolean selected) {
         this.itemTexture = itemTexture;
         this.count = null;
-        this.background = new Image(new Texture(Gdx.files.internal(selectedString)));
-        this.frame = new Image(new Texture(Gdx.files.internal(itemFrameString)));
+        this.background = new Image(ServiceLocator.getResourceService().getAsset(SELECTED_PATH, Texture.class));
+        this.frame = new Image(ServiceLocator.getResourceService().getAsset(ITEM_FRAME_PATH, Texture.class));
         this.selected = selected;
         this.createItemSlot();
     }
@@ -63,8 +65,8 @@ public class ItemSlot extends Stack {
     public ItemSlot(boolean selected) {
         this.itemTexture = null;
         this.count = null;
-        this.background = new Image(new Texture(Gdx.files.internal(selectedString)));
-        this.frame = new Image(new Texture(Gdx.files.internal(itemFrameString)));
+        this.background = new Image(ServiceLocator.getResourceService().getAsset(SELECTED_PATH, Texture.class));
+        this.frame = new Image(ServiceLocator.getResourceService().getAsset(ITEM_FRAME_PATH, Texture.class));
         this.selected = selected;
         this.createItemSlot();
 
