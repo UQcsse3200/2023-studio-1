@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
-import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.achievements.Achievement;
 import com.csse3200.game.missions.quests.Quest;
 import com.csse3200.game.services.ServiceLocator;
@@ -22,8 +21,6 @@ import java.util.function.Function;
  * Renders a UI for interacting with Missions.
  */
 public class MissionDisplay extends UIComponent {
-    private MissionManager missionManager;
-
     private Window window;
     private boolean isOpen;
     private boolean showCompletedMissions = false;
@@ -36,7 +33,6 @@ public class MissionDisplay extends UIComponent {
     @Override
     public void create() {
         super.create();
-        missionManager = ServiceLocator.getMissionManager();
         isOpen = false;
 
         addActors();
@@ -91,7 +87,7 @@ public class MissionDisplay extends UIComponent {
         window.clear();
         window.getTitleLabel().setText("Incomplete Achievements");
 
-        Achievement[] achievements = missionManager.getAchievements();
+        Achievement[] achievements = ServiceLocator.getMissionManager().getAchievements();
 
         Table achievementsTable = new Table();
 
@@ -307,7 +303,7 @@ public class MissionDisplay extends UIComponent {
             actionButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent changeEvent, Actor actor) {
-                    missionManager.acceptQuest(quest);
+                    ServiceLocator.getMissionManager().acceptQuest(quest);
                     generateQuestsMenu();
                 }
             });
@@ -437,8 +433,8 @@ public class MissionDisplay extends UIComponent {
         window.clear();
         window.getTitleLabel().setText("Active Quests");
 
-        List<Quest> selectableQuests = missionManager.getSelectableQuests();
-        List<Quest> activeQuests = missionManager.getActiveQuests();
+        List<Quest> selectableQuests = ServiceLocator.getMissionManager().getSelectableQuests();
+        List<Quest> activeQuests = ServiceLocator.getMissionManager().getActiveQuests();
         List<Quest> inProgressQuests = activeQuests.stream().filter(quest -> !(quest.isExpired() || quest.isCompleted())).toList();
         List<Quest> expiredQuests = activeQuests.stream().filter(Quest::isExpired).toList();
         List<Quest> completedQuests = activeQuests.stream().filter(quest -> quest.isCompleted() && !quest.isRewardCollected()).toList();
@@ -624,7 +620,6 @@ public class MissionDisplay extends UIComponent {
             window.setVisible(false);
             isOpen = false;
         } else {
-            missionManager = ServiceLocator.getMissionManager();
             openMenu();
         }
     }
