@@ -13,6 +13,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.files.SaveGame;
 import com.csse3200.game.files.SaveGame.GameState;
 
+import java.io.File;
 import java.util.HashMap;
 
 
@@ -24,6 +25,9 @@ import java.util.HashMap;
  */
 public class SaveLoadService {
     private static final Logger logger = LoggerFactory.getLogger(SaveLoadService.class);
+    private static final String ROOT_DIR = "saves";
+    private static final String SAVE_FILE = "saveFile.json";
+
     /**
      * Saves the current state of the game into a GameState
      */
@@ -55,13 +59,13 @@ public class SaveLoadService {
      * Load function which based on contents in saveFile.json
      * Makes the game state match saveFile.json
      */
-    public void load() {
+    public void load(String path) {
         // Get all entities currently in game:
         Array<Entity> currentGameEntities = ServiceLocator.getEntityService().getEntities();
         // Remove them
         ServiceLocator.getGameArea().removeLoadableEntities(currentGameEntities);
 
-        SaveGame.GameState state = SaveGame.get();
+        SaveGame.GameState state = SaveGame.get(path);
         if (state == null) {
             logger.error("Couldn't read the file assets/saves/saveFile.json");
             return;
@@ -71,6 +75,10 @@ public class SaveLoadService {
         logger.debug("The game state has been loaded from the file assets/saves/saveFile.json");
     }
 
+    public void load() {
+        load(ROOT_DIR + File.separator + SAVE_FILE);
+    }
+
     /**
      * Check to see if there is a valid save file stored
      * if not return false
@@ -78,7 +86,11 @@ public class SaveLoadService {
      * @return true if there exists a valid save file, false otherwise
      */
     public boolean validSaveFile(){
-        SaveGame.GameState state = SaveGame.get();
+        return validSaveFile(ROOT_DIR + File.separator + SAVE_FILE);
+    }
+
+    public boolean validSaveFile(String path) {
+        SaveGame.GameState state = SaveGame.get(path);
         return state != null;
     }
 
