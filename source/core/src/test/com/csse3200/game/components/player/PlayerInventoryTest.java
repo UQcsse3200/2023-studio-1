@@ -10,6 +10,8 @@ import java.util.HashMap;
 
 import com.csse3200.game.entities.EntityType;
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.services.ResourceService;
+import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,8 +28,14 @@ public class PlayerInventoryTest {
     private InventoryComponent inventoryComponent;
     private Entity item1;
     private Entity item2;
+
+    String[] texturePaths = {"images/tool_shovel.png"};
     @BeforeEach
     void initialiseTest() {
+        ServiceLocator.registerResourceService(new ResourceService());
+        ServiceLocator.getResourceService().loadTextures(texturePaths);
+        ServiceLocator.getResourceService().loadAll();
+
         inventoryComponent = spy(new InventoryComponent(new ArrayList<>()));
         player = new Entity()
                 .addComponent(inventoryComponent);
