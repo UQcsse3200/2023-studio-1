@@ -31,7 +31,9 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: logs
-          path: source/*.log
+          path: |
+            source/game.log
+            source/gradle.log
       - name: Test Success
         uses: rjstone/discord-webhook-notify@v1
         if: success()
