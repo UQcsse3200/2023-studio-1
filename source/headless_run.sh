@@ -41,5 +41,4 @@ fi
 
 # Future improvements: verify that the game fully loads, not just the main-game was selected.
 
-rm game.log gradle.log
 exit ${OUTPUT_VAL}
