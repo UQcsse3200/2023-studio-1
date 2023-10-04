@@ -60,9 +60,6 @@ public class TestInventoryUI {
 	 */
 	@BeforeEach
 	void createPlayer() {
-		ServiceLocator.registerResourceService(new ResourceService());
-		ServiceLocator.getResourceService().loadTextures(texturePaths);
-		ServiceLocator.getResourceService().loadAll();
 
 		windowArgument = ArgumentCaptor.forClass(Window.class);
 		stage = mock(Stage.class);
@@ -136,6 +133,9 @@ public class TestInventoryUI {
 	}
 
 	private static Stream<Arguments> addingItemsShouldAddInventoryImagesParams() {
+		ServiceLocator.registerResourceService(new ResourceService());
+		ServiceLocator.getResourceService().loadTextures(texturePaths);
+		ServiceLocator.getResourceService().loadAll();
 		return Stream.of(
 				arguments(new ItemComponent("Hoe", ItemType.HOE, "images/tool_hoe.png"), 0),
 				arguments(new ItemComponent("Scythe", ItemType.SCYTHE, "images/tool_scythe.png"), 1),
