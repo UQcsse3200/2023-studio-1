@@ -173,7 +173,7 @@ public class ItemActionsTest {
         assertFalse(shovel.getComponent(ItemActions.class).use(player2, mousePos));
         assertFalse(shovel.getComponent(ItemActions.class).use(player, mousePos));
 
-        Entity gate = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("Gate", ItemType.PLACEABLE, null));
+        Entity gate = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("GATE", ItemType.PLACEABLE, null));
         assertTrue(gate.getComponent(ItemActions.class).use(player, mousePos));
         assertTrue(shovel.getComponent(ItemActions.class).use(player, mousePos));
     }
@@ -295,7 +295,7 @@ public class ItemActionsTest {
         ServiceLocator.registerResourceService(mock(ResourceService.class));
         FileLoader fl = new FileLoader();
 
-        Entity gate = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("Gate", ItemType.PLACEABLE, null));
+        Entity gate = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("GATE", ItemType.PLACEABLE, null));
         assertTrue(gate.getComponent(ItemActions.class).use(player, mousePos));
         assertFalse(gate.getComponent(ItemActions.class).use(player, mousePos));
     }
