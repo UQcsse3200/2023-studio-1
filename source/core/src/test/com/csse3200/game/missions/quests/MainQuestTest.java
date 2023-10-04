@@ -1,5 +1,6 @@
 package com.csse3200.game.missions.quests;
 
+import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.missions.MissionManager;
@@ -147,13 +148,14 @@ class MainQuestTest {
 
     @Test
     public void testReadProgress() {
+        Json json = new Json();
         JsonReader reader = new JsonReader();
         String[] progressArray1 = {requirement1};
         String[] progressArray2 = {requirement1, requirement2};
         String[] progressArray3 = {requirement1, requirement2, requirement3};
-        JsonValue progress1 = reader.parse(Arrays.toString(progressArray1));
-        JsonValue progress2 = reader.parse(Arrays.toString(progressArray2));
-        JsonValue progress3 = reader.parse(Arrays.toString(progressArray3));
+        JsonValue progress1 = reader.parse(json.toJson(progressArray1));
+        JsonValue progress2 = reader.parse(json.toJson(progressArray2));
+        JsonValue progress3 = reader.parse(json.toJson(progressArray3));
         mainQuest1.readProgress(progress1);
         mainQuest2.readProgress(progress1);
         mainQuest3.readProgress(progress1);

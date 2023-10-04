@@ -137,7 +137,7 @@ public class MainMenuDisplay extends UIComponent {
     private void updateAnimation() {
         if (frame < MainMenuScreen.FRAME_COUNT) {
             transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
-                    .getAsset(MainMenuScreen.transitionTextures[frame], Texture.class))));
+                    .getAsset(MainMenuScreen.getTransitionTextures()[frame], Texture.class))));
             transitionFrames.setWidth(Gdx.graphics.getWidth());
             transitionFrames.setHeight(Gdx.graphics.getHeight() / (float)2); //https://rules.sonarsource.com/java/tag/overflow/RSPEC-2184/
             transitionFrames.setPosition(0, Gdx.graphics.getHeight() / (float)2 + 15); //https://rules.sonarsource.com/java/tag/overflow/RSPEC-2184/

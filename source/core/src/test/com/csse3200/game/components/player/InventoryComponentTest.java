@@ -8,6 +8,8 @@ import static org.mockito.Mockito.spy;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.csse3200.game.services.ResourceService;
+import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,6 +32,9 @@ class InventoryComponentTest {
 
   @BeforeEach
   public void setUp() {
+    ServiceLocator.registerResourceService(new ResourceService());
+    ServiceLocator.getResourceService().loadTextures(new String[] {"images/tool_shovel.png"});
+    ServiceLocator.getResourceService().loadAll();
     // Set up the inventory with two initial items
     List<Entity> items = new ArrayList<>();
     inventoryComponent = spy(new InventoryComponent(new ArrayList<>()));
@@ -40,9 +45,9 @@ class InventoryComponentTest {
 //    items.put(item1.getComponent(ItemComponent.class).getItemName(),item1);
 //    items.put(item2.getComponent(ItemComponent.class).getItemName(),item2);
     ItemComponent itemComponent1 = new ItemComponent("itemTest1", ItemType.HOE,
-            new Texture("images/tool_shovel.png")); // Texture is not used...
+            "images/tool_shovel.png"); // Texture is not used...
     ItemComponent itemComponent2 = new ItemComponent("itemTest2", ItemType.SCYTHE,
-            new Texture("images/tool_shovel.png")); // Texture is not used...
+            "images/tool_shovel.png"); // Texture is not used...
     item1.addComponent(itemComponent1);
     item2.addComponent(itemComponent2);
     inventoryComponent.addItem(item1);
@@ -84,7 +89,7 @@ class InventoryComponentTest {
     // Create a new item
     Entity newItem = new Entity(EntityType.ITEM);
     ItemComponent itemComponent3 = new ItemComponent("itemTest3", ItemType.SCYTHE,
-            new Texture("images/tool_shovel.png")); // Texture is not used...
+            "images/tool_shovel.png"); // Texture is not used...
     // Add the new item to the inventory
     newItem.addComponent(itemComponent3);
     assertTrue(inventoryComponent.addItem(newItem));
@@ -100,7 +105,7 @@ class InventoryComponentTest {
     // Remove an item from the inventory
     Entity newItem = new Entity(EntityType.ITEM);
     ItemComponent itemComponent3 = new ItemComponent("itemTest3", ItemType.SCYTHE,
-            new Texture("images/tool_shovel.png")); // Texture is not used...
+            "images/tool_shovel.png"); // Texture is not used...
     // Add the new item to the inventory
     newItem.addComponent(itemComponent3);
     if(inventoryComponent.getItemCount(item1) == 0){

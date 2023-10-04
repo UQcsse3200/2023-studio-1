@@ -114,7 +114,7 @@ public class PlaceableFactory {
         chest.addComponent(new InventoryComponent())
             .addComponent(new DynamicTextureRenderComponent("images/Temp-Chest.png"))
             .addComponent(new ChestComponent())
-            .addComponent(new InventoryDisplay("refreshChest", "openChest", 30, 10, false));
+            .addComponent(new InventoryDisplay("refreshChest", "toggleChest", 30, 10, false));
         return chest;
     }
 

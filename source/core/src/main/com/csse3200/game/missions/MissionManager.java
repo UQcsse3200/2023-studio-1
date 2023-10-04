@@ -201,7 +201,7 @@ public class MissionManager implements Json.Serializable {
 			active.forEach(jsonValue -> {
 				Quest q = FactoryService.getQuests().get(jsonValue.getString("name")).get();
 				q.read(jsonValue);
-				activeQuests.add(q);
+				acceptQuest(q);
 			});
 		}
 		JsonValue selectable = jsonMap.get("SelectableQuests");
@@ -210,7 +210,7 @@ public class MissionManager implements Json.Serializable {
 			selectable.forEach(jsonValue -> {
 				Quest q = FactoryService.getQuests().get(jsonValue.getString("name")).get();
 				q.read(jsonValue);
-				selectableQuests.add(q);
+				addQuest(q);
 			});
 		}
 		if (selectable.has("Achievement")) {
