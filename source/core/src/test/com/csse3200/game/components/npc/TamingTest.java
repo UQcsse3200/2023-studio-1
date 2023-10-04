@@ -6,8 +6,12 @@ import static org.mockito.Mockito.spy;
 
 import java.util.ArrayList;
 
+import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.missions.MissionManager;
+import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.TimeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,6 +40,9 @@ public class TamingTest {
         ServiceLocator.registerResourceService(new ResourceService());
         ServiceLocator.getResourceService().loadTextures(texturePaths);
         ServiceLocator.getResourceService().loadAll();
+        ServiceLocator.registerMissionManager(new MissionManager());
+        ServiceLocator.registerTimeSource(new GameTime());
+        ServiceLocator.registerTimeService(new TimeService());
 
         playerInventory = new InventoryComponent(new ArrayList<>());
         playerInvSpy = spy(playerInventory);

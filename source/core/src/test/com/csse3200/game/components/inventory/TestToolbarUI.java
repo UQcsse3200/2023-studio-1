@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.entities.EntityType;
+import com.csse3200.game.services.ResourceService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -48,6 +49,7 @@ public class TestToolbarUI {
     static InventoryComponent inventory;
     ArgumentCaptor<Window> windowArgument;
     Stage stage;
+    String[] texturePaths = {"images/tool_shovel.png", "images/tool_hoe.png", "images/tool_scythe.png"};
 
 
     @BeforeAll
@@ -59,6 +61,7 @@ public class TestToolbarUI {
      */
     @BeforeEach
     void createPlayer() {
+
         stage = mock(Stage.class);
         windowArgument = ArgumentCaptor.forClass(Window.class);
         RenderService renderService = new RenderService();
@@ -68,6 +71,10 @@ public class TestToolbarUI {
         ServiceLocator.registerInputService(new InputService());
         inventory = new InventoryComponent(new ArrayList<>());
         toolbarDisplay = spy(new ToolbarDisplay());
+
+        ServiceLocator.registerResourceService(new ResourceService());
+        ServiceLocator.getResourceService().loadTextures(texturePaths);
+        ServiceLocator.getResourceService().loadAll();
 
         player =
                 new Entity()
