@@ -188,7 +188,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
         for (Entity entityInRange : getEntitiesInRange()) {
 
             if (entityInRange.getType() == EntityType.Player) {
-                entityInRange.getComponent(CombatStatsComponent.class).addHealth(-20);
+                entityInRange.getComponent(CombatStatsComponent.class).addHealth(-3);
             }
             // add animals to this.
         }
