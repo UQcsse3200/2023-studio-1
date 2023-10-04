@@ -18,16 +18,25 @@ DISPLAY=:1 xwd -root -out game_launched.xwd
 # Clean up 
 pkill -P $$
 
-# Check if run was successful
-grep Exception game.log
+# Start by assuming run passed
+OUTPUT_VAL=0
+
+# Check if run threw exceptions
+grep Exception game.log > /dev/null
 if [ $? -eq 0 ]; then
-  echo "Run failed. If this is unexpected, see https://github.com/UQcsse3200/2023-studio-1/wiki/Launch-Testing#my-commits-fail-this-test-and-i-dont-know-why"
+  echo "Run failed: Exception thrown."
+  echo "If this is unexpected, see https://github.com/UQcsse3200/2023-studio-1/wiki/Launch-Testing#my-commits-fail-this-test-and-i-dont-know-why"
   echo "Last 30 lines of log:"
   tail -30 game.log
   OUTPUT_VAL=1
-else
-  OUTPUT_VAL=0
 fi
+
+# Check that the run actually made it to the game screen
+grep MAIN_GAME game.log
+if [ $? -eq 1 ]; then
+  # Not found, e.g.
+  echo "Run failed: did not succesfully enter game - were UI buttons moved?"
+  OUTPUT_VAL=1
 
 rm game.log gradle.log
 exit ${OUTPUT_VAL}
