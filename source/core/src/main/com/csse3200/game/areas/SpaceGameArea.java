@@ -387,6 +387,10 @@ public class SpaceGameArea extends GameArea {
 
     hostileSpawner = new EntitiesSpawner(hostileSpawners);
     hostileSpawner.setGameAreas(this);
+
+
+    Entity shipEater = NPCFactory.createShipEater();
+    spawnEntityAt(shipEater, PLAYER_SPAWN, true, true);
   }
 
   /**
