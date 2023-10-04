@@ -20,11 +20,10 @@ import java.io.Serial;
 @ExtendWith(GameExtension.class)
 class ItemComponentTest {
 
-  static String[] texturePaths = {"images/tool_shovel.png", "images/tool_hoe.png"};
   @BeforeEach
   void setup() {
     ServiceLocator.registerResourceService(new ResourceService());
-    ServiceLocator.getResourceService().loadTextures(texturePaths);
+    ServiceLocator.getResourceService().loadTextures(new String[]{"images/tool_shovel.png", "images/tool_hoe.png"});
     ServiceLocator.getResourceService().loadAll();
   }
 
