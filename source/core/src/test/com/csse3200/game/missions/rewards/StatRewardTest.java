@@ -67,7 +67,7 @@ class StatRewardTest {
     }
 
     @Test
-    public void noHealthReward() {
+    void noHealthReward() {
         CombatStatsComponent initialStats = ServiceLocator.getGameArea().getPlayer().getComponent(CombatStatsComponent.class);
         r1.collect();
         initialStats.addHealth(0);
@@ -76,7 +76,7 @@ class StatRewardTest {
     }
 
     @Test
-    public void negativeHealthReward() {
+    void negativeHealthReward() {
         CombatStatsComponent initialStats = ServiceLocator.getGameArea().getPlayer().getComponent(CombatStatsComponent.class);
         r2.collect();
         initialStats.addHealth(-200);
@@ -86,7 +86,7 @@ class StatRewardTest {
     }
 
     @Test
-    public void positiveHealthReward() {
+    void positiveHealthReward() {
         CombatStatsComponent initialStats = ServiceLocator.getGameArea().getPlayer().getComponent(CombatStatsComponent.class);
         r3.collect();
         initialStats.addHealth(200);

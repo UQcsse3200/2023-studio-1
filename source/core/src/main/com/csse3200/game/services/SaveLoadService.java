@@ -124,7 +124,6 @@ public class SaveLoadService {
         HashMap<String, Entity> heldItemsEntity = stateInventory.getHeldItemsEntity();
         HashMap<Integer, String> itemPlace = stateInventory.getItemPlace();
         currentPlayer.getComponent(InventoryComponent.class).loadInventory(itemCount, heldItemsEntity, itemPlace);
-        System.out.println(currentPlayer.getComponent(InventoryComponent.class).heldItemsEntity);
     }
 
     /**

@@ -17,13 +17,11 @@ import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
-import net.dermetfan.gdx.physics.box2d.PositionController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -72,14 +70,14 @@ class EntitiesSpawnerTest {
     //This method is meant to mirror what a normal create method would look like
     //e.g., createCow
     private Entity createDummyEntity(Entity player) {
-        return new Entity(EntityType.Dummy);
+        return new Entity(EntityType.DUMMY);
     }
 
     private int getDummyEntityCount() {
         Array<Entity> entities = ServiceLocator.getEntityService().getEntities();
         int count = 0;
         for (int i = 0; i < entities.size; i++) {
-            if (entities.get(i).getType().equals(EntityType.Dummy)) {
+            if (entities.get(i).getType().equals(EntityType.DUMMY)) {
                 count++;
             }
         }

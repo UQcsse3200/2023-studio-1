@@ -43,11 +43,11 @@ class TractorActionsTest {
 
   @Test
   void testGetMode() {
-    Entity tractor = new Entity(EntityType.Tractor).addComponent(new TractorActions());
-    assertEquals(tractor.getComponent(TractorActions.class).getMode(), TractorMode.normal);
-    tractor.getComponent(TractorActions.class).setMode(TractorMode.harvesting);
-    assertEquals(tractor.getComponent(TractorActions.class).getMode(), TractorMode.harvesting);
-    tractor.getComponent(TractorActions.class).setMode(TractorMode.tilling);
-    assertEquals(tractor.getComponent(TractorActions.class).getMode(), TractorMode.tilling);
+    Entity tractor = new Entity(EntityType.TRACTOR).addComponent(new TractorActions());
+    assertEquals(tractor.getComponent(TractorActions.class).getMode(), TractorMode.NORMAL);
+    tractor.getComponent(TractorActions.class).setMode(TractorMode.HARVESTING);
+    assertEquals(tractor.getComponent(TractorActions.class).getMode(), TractorMode.HARVESTING);
+    tractor.getComponent(TractorActions.class).setMode(TractorMode.TILLING);
+    assertEquals(tractor.getComponent(TractorActions.class).getMode(), TractorMode.TILLING);
   }
 }

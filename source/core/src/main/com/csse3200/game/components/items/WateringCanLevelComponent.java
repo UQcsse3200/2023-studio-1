@@ -1,6 +1,7 @@
 package com.csse3200.game.components.items;
 
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
 
 public class WateringCanLevelComponent extends Component {
@@ -49,7 +50,7 @@ public class WateringCanLevelComponent extends Component {
     public void setCapacity(float newCapacity){
         capacity = newCapacity;
 
-        if (currentLevel >= capacity){
+        if (currentLevel >= capacity) {
             currentLevel = capacity;    //if the current level is greater than the new capacity
                                         //then lower the current level to capacity
         }
@@ -127,25 +128,31 @@ public class WateringCanLevelComponent extends Component {
     }
     
     /**
-     * Check and return whether the the wateringCan is full
-     * @return
+     * Check and return whether the wateringCan is full
+     * @return true if full, false otherwise
      */
     public boolean isFull() {
-        if (currentLevel >= capacity){ return true; }
-        return false;
+        return currentLevel >= capacity;
     }
     
     /**
-     * check and return whether the the wateringCan is empty
-     * @return 
+     * check and return whether the wateringCan is empty
+     * @return true if empty, false otherwise
      */
     public boolean isEmpty() {
-        if (currentLevel <= 0){ return true; }
-        return false;
+        return currentLevel <= 0;
     }
 
     @Override
     public void write(Json json) {
+		json.writeObjectStart(this.getClass().getSimpleName());
         json.writeValue("level", getCurrentLevel());
+        json.writeObjectEnd();
+    }
+
+    @Override
+    public void read(Json json, JsonValue jsonMap) {
+		jsonMap = jsonMap.get(this.getClass().getSimpleName());
+        currentLevel = jsonMap.getFloat("level");
     }
 }

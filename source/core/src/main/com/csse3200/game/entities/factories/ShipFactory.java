@@ -24,7 +24,7 @@ public class ShipFactory {
 
     AnimationRenderComponent animator = setupShipAnimations();
 
-    Entity ship = new Entity(EntityType.Ship)
+    Entity ship = new Entity(EntityType.SHIP)
         .addComponent(new PhysicsComponent())
         .addComponent(new PhysicsMovementComponent())
         .addComponent(new ColliderComponent())

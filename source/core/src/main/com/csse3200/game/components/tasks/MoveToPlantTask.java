@@ -4,12 +4,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.ai.tasks.DefaultTask;
 import com.csse3200.game.ai.tasks.PriorityTask;
-import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
-import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
-import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.HashMap;
@@ -143,7 +140,7 @@ public class MoveToPlantTask extends DefaultTask implements PriorityTask {
         // Find a target
         for (int i = 0; i < size; i++) {
             Entity entity = entities.get(i);
-            if (entity.getType() == EntityType.Plant) {
+            if (entity.getType() == EntityType.PLANT) {
                 Float dist = owner.getEntity().getCenterPosition().dst(entity.getCenterPosition());
                 plantDistances.put(entity, dist);
             }

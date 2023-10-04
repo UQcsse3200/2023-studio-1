@@ -1,6 +1,5 @@
 package com.csse3200.game.components;
 
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -27,7 +26,7 @@ public class CombatStatsComponent extends Component {
    *
    * @return is player dead
    */
-  public Boolean isDead() {
+  public boolean isDead() {
     return health <= 0;
   }
 
@@ -93,7 +92,7 @@ public class CombatStatsComponent extends Component {
   }
 
   public void handleDeath() {
-    if(!entity.getType().equals(EntityType.Player)) {
+    if(!entity.getType().equals(EntityType.PLAYER)) {
       ServiceLocator.getGameArea().removeEntity(entity);
     }
   }

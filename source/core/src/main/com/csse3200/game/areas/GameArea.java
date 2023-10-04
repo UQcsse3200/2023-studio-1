@@ -30,10 +30,11 @@ public abstract class GameArea implements Disposable {
   protected List<Entity> areaEntities;
   private static final Logger logger = LoggerFactory.getLogger(GameArea.class);
   private Entity player;
-  private final ArrayList<EntityType> loadableTypes = new ArrayList<>(Arrays.asList(EntityType.Tile,
-          EntityType.Cow, EntityType.Chicken, EntityType.Astrolotl, EntityType.Plant,
-          EntityType.OxygenEater, EntityType.ShipDebris, EntityType.Ship, EntityType.ShipPartTile,
-		  EntityType.Sprinkler, EntityType.Pump, EntityType.Fence, EntityType.Light, EntityType.Gate, EntityType.Chest));
+  private final ArrayList<EntityType> loadableTypes = new ArrayList<>(Arrays.asList(EntityType.TILE,
+          EntityType.COW, EntityType.CHICKEN, EntityType.ASTROLOTL, EntityType.PLANT,
+          EntityType.OXYGEN_EATER, EntityType.SHIP_DEBRIS, EntityType.SHIP, EntityType.SHIP_PART_TILE,
+		  EntityType.SPRINKLER, EntityType.PUMP, EntityType.FENCE, EntityType.LIGHT, EntityType.GATE, EntityType.CHEST,
+          EntityType.DRAGONFLY, EntityType.BAT));
 
   protected GameArea() {
     areaEntities = new ArrayList<>();
@@ -44,6 +45,7 @@ public abstract class GameArea implements Disposable {
 
   /** Dispose of all internal entities in the area */
   public void dispose() {
+    logger.debug("Running dispose; Disposes all internal entities in GameArea");
     for (Entity entity : areaEntities) {
       entity.dispose();
     }
@@ -105,11 +107,7 @@ public abstract class GameArea implements Disposable {
    * @param entities Array of entities currently in game.
    */
   public void removeLoadableEntities(Array<Entity> entities) {
-
-    ArrayList<EntityType> loadableTypes = new ArrayList<>(Arrays.asList(EntityType.Tile, EntityType.Cow,
-            EntityType.Cow, EntityType.Chicken, EntityType.Astrolotl, EntityType.Plant, EntityType.Tile,
-            EntityType.OxygenEater, EntityType.ShipDebris, EntityType.FireFlies, EntityType.Dragonfly, EntityType.Bat));
-
+    logger.debug("Removing all loadable entities");
     ArrayList<EntityType> placeableTypes = new ArrayList<>(Arrays.asList(EntityType.Tile));
     for (Entity e : entities) {
       if (loadableTypes.contains(e.getType())) {
@@ -124,7 +122,6 @@ public abstract class GameArea implements Disposable {
   public Entity getPlayer() {
     return player;
   }
- // public abstract Entity getPlayer();
 
   public abstract ClimateController getClimateController();
 
@@ -138,7 +135,7 @@ public abstract class GameArea implements Disposable {
     return areaEntities;
   }
 
-  public ArrayList<EntityType> getLoadableTypes() {
+  public List<EntityType> getLoadableTypes() {
     return loadableTypes;
   }
 }

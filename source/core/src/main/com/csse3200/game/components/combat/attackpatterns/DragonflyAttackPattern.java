@@ -7,6 +7,7 @@ import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.DirectionUtils;
 
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
@@ -20,6 +21,8 @@ public class DragonflyAttackPattern extends AttackPatternComponent {
     private final Supplier<Entity> projectileSupplier;
 
     private static final String SHOOTER = "shoot";
+
+    private Random random = new SecureRandom();
 
     /**
      * @param attackFrequency How often the dragonfly attacks.
@@ -56,7 +59,7 @@ public class DragonflyAttackPattern extends AttackPatternComponent {
        }
 
         for (int i = 0; i < entitiesInRange.size(); i++) {
-            if (entitiesInRange.get(i).getType() == EntityType.Player) {
+            if (entitiesInRange.get(i).getType() == EntityType.PLAYER) {
                 attackPlayer(entitiesInRange.get(i));
                 super.attack();
                 return;
@@ -65,7 +68,7 @@ public class DragonflyAttackPattern extends AttackPatternComponent {
 
         Entity nearestEntity = interactionDetector.getNearest(interactionDetector.getEntitiesInRange());
 
-        if (nearestEntity.getType() == EntityType.Plant && entity.getPosition().dst(nearestEntity.getPosition().x,
+        if (nearestEntity.getType() == EntityType.PLANT && entity.getPosition().dst(nearestEntity.getPosition().x,
                 nearestEntity.getPosition().y) < 1f) {
             // Plant detected, check if close enough to attack
             attackPlant(nearestEntity);
@@ -82,7 +85,6 @@ public class DragonflyAttackPattern extends AttackPatternComponent {
      */
     private void shoot(Vector2 position) {
         Entity projectile = projectileSupplier.get();
-        Random random = new Random();
         position.add(random.nextFloat() - 1f, random.nextFloat() -1f);
 
         float randomSpeed = 6f + 4f * random.nextFloat();

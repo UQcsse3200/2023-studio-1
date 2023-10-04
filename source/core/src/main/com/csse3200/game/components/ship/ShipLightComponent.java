@@ -13,7 +13,7 @@ import java.util.Set;
  * Adds a controllable light source to the player ship.
  */
 public class ShipLightComponent extends AuraLightComponent {
-	private static final Logger logger = LoggerFactory.getLogger(ShipTimeSkipComponent.class);
+	private static final Logger logger = LoggerFactory.getLogger(ShipLightComponent.class);
 	private boolean unlocked;
 
 	public ShipLightComponent() {

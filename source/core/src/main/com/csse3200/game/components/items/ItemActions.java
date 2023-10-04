@@ -1,13 +1,10 @@
 package com.csse3200.game.components.items;
 
 import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
-
 import java.util.Arrays;
 import java.util.List;
-
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.CropTileComponent;
-import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
@@ -22,8 +19,6 @@ import com.csse3200.game.services.ServiceLocator;
 
 public class ItemActions extends Component {
 
-  private GameMap map;
-
   @Override
   public void create() {
     // Just in case we need constructor for later
@@ -34,12 +29,9 @@ public class ItemActions extends Component {
    *
    * @param player   the player entity using the item
    * @param mousePos the position of the mouse
-   * @param map      item to use/ interact with tile
    * @return if interaction with tile was success return true else return false.
    */
-  public boolean use(Entity player, Vector2 mousePos, GameMap map) {
-    this.map = map;
-
+  public boolean use(Entity player, Vector2 mousePos) {
     Vector2 playerPos = player.getPosition();
     Vector2 mouseWorldPos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
 
@@ -51,7 +43,7 @@ public class ItemActions extends Component {
 
     // Add your item here!!!
     boolean resultStatus;
-    TerrainTile tile = getTileAtPosition(playerPos, mousePos);
+    TerrainTile tile = getTileAtPosition(mousePos);
     if (tile == null) {
       return false;
     }
@@ -93,7 +85,7 @@ public class ItemActions extends Component {
         return resultStatus;
       }
       case PLACEABLE -> {
-        resultStatus = place(tile, getAdjustedPos(playerPos, mousePos));
+        resultStatus = place(tile, getAdjustedPos(mousePos));
         return resultStatus;
       }
       case CLUE_ITEM -> {
@@ -135,6 +127,9 @@ public class ItemActions extends Component {
           player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
           player.getComponent(CombatStatsComponent.class).addHealth(30);
           entity.dispose();
+          return;
+        default:
+          // Nothing
       }
     }
   }
@@ -170,13 +165,11 @@ public class ItemActions extends Component {
 
   /**
    * Gets the tile at the given position. else returns null
-   *
-   * @param playerPos the position of the player
    * @param mousePos  the position of the mouse
    * @return Entity of tile at location else returns null
    */
-  private TerrainTile getTileAtPosition(Vector2 playerPos, Vector2 mousePos) {
-    Vector2 pos = getAdjustedPos(playerPos, mousePos);
+  private TerrainTile getTileAtPosition(Vector2 mousePos) {
+    Vector2 pos = getAdjustedPos(mousePos);
     return ServiceLocator.getGameArea().getMap().getTile(pos);
   }
 
@@ -187,11 +180,10 @@ public class ItemActions extends Component {
    * up, down, diagonal left up, diagonal right up, diagonal left down, diagonal
    * right down of the player.
    *
-   * @param playerPos the position of the player
-   * @param mousePos  the position of the mouse
+   * @param mousePos the position of the mouse
    * @return a vector of the position where the player should hit
    */
-  private Vector2 getAdjustedPos(Vector2 playerPos, Vector2 mousePos) {
+  private Vector2 getAdjustedPos(Vector2 mousePos) {
     Vector2 mouseWorldPos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
     Vector2 adjustedPosition = new Vector2(
             ServiceLocator.getGameArea().getMap().tileCoordinatesToVector(ServiceLocator.getGameArea().getMap().vectorToTileCoordinates(new Vector2(mouseWorldPos.x, mouseWorldPos.y))));
@@ -200,7 +192,6 @@ public class ItemActions extends Component {
     playerPosCenter.add(0, -1.0f); // Player entity sprite's feet are located -1.0f below the centre of the entity. ty Hunter
 
     playerPosCenter = ServiceLocator.getGameArea().getMap().tileCoordinatesToVector(ServiceLocator.getGameArea().getMap().vectorToTileCoordinates(playerPosCenter));
-    ;
     if (adjustedPosition.x - 0.5 > playerPosCenter.x) {
       playerPosCenter.x += 1;
     } else if (adjustedPosition.x + 0.5 < playerPosCenter.x) {
@@ -287,12 +278,12 @@ public class ItemActions extends Component {
    * @return if hoeing was successful return true else return false
    */
   private boolean hoe(Vector2 playerPos, Vector2 mousePos) {
-    TerrainTile tile = getTileAtPosition(playerPos, mousePos);
+    TerrainTile tile = getTileAtPosition(mousePos);
     if (tile.isOccupied() || !tile.isTillable()) {
       return false;
     }
     // Make a new tile
-    Vector2 newPos = getAdjustedPos(playerPos, mousePos);
+    Vector2 newPos = getAdjustedPos(mousePos);
     Entity cropTile = createTerrainEntity(newPos);
     ServiceLocator.getEntityService().register(cropTile);
     tile.setOccupant(cropTile);
@@ -308,9 +299,12 @@ public class ItemActions extends Component {
    */
   private boolean fertilise(TerrainTile tile) {
     if (isCropTile(tile.getOccupant())) {
-      tile.getOccupant().getEvents().trigger("fertilise");
-      // Fertilising a crop tile should remove the item from the player inventory
-      ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class).removeItem(entity);
+      CropTileComponent cropTileComponent = tile.getOccupant().getComponent(CropTileComponent.class);
+      if (!cropTileComponent.isFertilised()) {
+        // Fertilising a crop tile should remove the item from the player inventory
+        ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class).removeItem(entity);
+        tile.getOccupant().getEvents().trigger("fertilise");
+      }
       return true;
     }
     return false;
@@ -324,10 +318,13 @@ public class ItemActions extends Component {
    */
   private boolean plant(TerrainTile tile) {
     if (isCropTile(tile.getOccupant())) {
-      tile.getOccupant().getEvents().trigger("plant", FactoryService.getPlantFactories()
-              .get(entity.getComponent(ItemComponent.class).getItemName().replace(" Seeds", "")));
-      // Planting using seeds should remove the item from player inventory
-      ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class).removeItem(entity);
+      CropTileComponent cropTileComponent = tile.getOccupant().getComponent(CropTileComponent.class);
+      if (cropTileComponent.getPlant() == null) {
+        // Planting using seeds should remove the item from player inventory
+        ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class).removeItem(entity);
+        tile.getOccupant().getEvents().trigger("plant", FactoryService.getPlantFactories()
+                .get(entity.getComponent(ItemComponent.class).getItemName().replace(" Seeds", "")));
+      }
       return true;
     }
     return false;
@@ -385,13 +382,13 @@ public class ItemActions extends Component {
 
     List<Entity> entities = detector.getEntitiesTowardsPosition(mouseWorldPos);
     entities.removeIf(entity -> entity.getType() == null);
-    entities.removeIf(entity -> entity.getType() != EntityType.Ship);
+    entities.removeIf(entity -> entity.getType() != EntityType.SHIP);
 
     Entity ship = detector.getNearest(entities);
     if (ship == null) {
       return false;
     }
-    if (ship.getType() == EntityType.Ship) {
+    if (ship.getType() == EntityType.SHIP) {
       ship.getEvents().trigger("addPart", 1);
       player.getComponent(InventoryComponent.class).removeItem(entity);
       return true;

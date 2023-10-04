@@ -52,7 +52,7 @@ public class HealthDisplay extends UIComponent{
      */
     public void createTexture() {
         logger.debug("Health display texture being created");
-        Skin healthSkin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
+        Skin healthSkin = ServiceLocator.getResourceService().getAsset("flat-earth/skin/flat-earth-ui.json", Skin.class);
 
         healthOutline = new Image(ServiceLocator.getResourceService().getAsset(
             "images/bars_ui/bar_outline.png", Texture.class));

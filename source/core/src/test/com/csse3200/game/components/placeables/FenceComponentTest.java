@@ -81,13 +81,13 @@ public class FenceComponentTest {
 
         DynamicTextureRenderComponent dtrc = mock(DynamicTextureRenderComponent.class);
 
-        f1 = new Entity(EntityType.Fence)
+        f1 = new Entity(EntityType.FENCE)
                 .addComponent(new PhysicsComponent())
                 .addComponent(new HitboxComponent())
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
                 .addComponent(dtrc)
                 .addComponent(new FenceComponent(false));
-        g1 = new Entity(EntityType.Gate)
+        g1 = new Entity(EntityType.GATE)
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
                 .addComponent(new HitboxComponent())
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))

@@ -11,7 +11,6 @@ import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.EntityType;
-import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsService;
@@ -19,6 +18,7 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.GameTime;
+import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,14 +40,15 @@ class MultiDropComponentTest {
     private TimeService timeService;
     private int initialEntityCount;
     private MultiDropComponent multiDropComponent;
+    String[] texturePaths = {"images/dont_delete_test_image.png"};
 
     private Entity createDummyItem() {
-        return new Entity(EntityType.Dummy)
+        return new Entity(EntityType.DUMMY)
                 .addComponent(new PhysicsComponent())
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ITEM))
                 .addComponent(new ItemActions())
                 .addComponent(new ItemComponent("dummy", ItemType.FERTILISER,
-                        new Texture("images/dont_delete_test_image.png")));
+                        "images/dont_delete_test_image.png"));
     }
 
     private Entity createDummyEntity() {
@@ -86,7 +87,7 @@ class MultiDropComponentTest {
         Array<Entity> entities = ServiceLocator.getEntityService().getEntities();
         int count = 0;
         for (int i = 0; i < entities.size; i++) {
-            if (entities.get(i).getType().equals(EntityType.Dummy)) {
+            if (entities.get(i).getType().equals(EntityType.DUMMY)) {
                 count++;
             }
         }
@@ -95,6 +96,8 @@ class MultiDropComponentTest {
 
     @BeforeEach
     void beforeEach() {
+        ServiceLocator.registerResourceService(new ResourceService());
+        ServiceLocator.getResourceService().loadTextures(texturePaths);
         ServiceLocator.registerPhysicsService(new PhysicsService());
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerRenderService(new RenderService());
@@ -128,6 +131,7 @@ class MultiDropComponentTest {
         ServiceLocator.registerTimeSource(gameTime);
         timeService = new TimeService();
         ServiceLocator.registerTimeService(timeService);
+        ServiceLocator.getResourceService().loadAll();
         initialEntityCount = getDummyEntityCount();
     }
 

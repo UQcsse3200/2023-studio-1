@@ -43,14 +43,14 @@ class AddItemCommandTest {
 	}
 
 	@Test
-	public void tooManyArgs() {
+	void tooManyArgs() {
 		args.add("wrong");
 		args.add("item");
 		assertFalse(command.isValid(args));
 	}
 
 	@Test
-	public void addHoe() {
+	void addHoe() {
 		try (MockedStatic<ItemFactory> factory = mockStatic(ItemFactory.class)) {
 			args.add("hoe");
 			Entity hoe = new Entity();
@@ -62,7 +62,7 @@ class AddItemCommandTest {
 	}
 
 	@Test
-	public void addCan() {
+	void addCan() {
 		try (MockedStatic<ItemFactory> factory = mockStatic(ItemFactory.class)) {
 			args.add("can");
 			Entity can = new Entity();
@@ -74,7 +74,7 @@ class AddItemCommandTest {
 	}
 
 	@Test
-	public void addShovel() {
+	void addShovel() {
 		try (MockedStatic<ItemFactory> factory = mockStatic(ItemFactory.class)) {
 			args.add("shovel");
 			Entity shovel = new Entity();
@@ -86,7 +86,7 @@ class AddItemCommandTest {
 	}
 
 	@Test
-	public void addScythe() {
+	void addScythe() {
 		try (MockedStatic<ItemFactory> factory = mockStatic(ItemFactory.class)) {
 			args.add("scythe");
 			Entity scythe = new Entity();
@@ -98,7 +98,7 @@ class AddItemCommandTest {
 	}
 
 	@Test
-	public void invalidToolName() {
+	void invalidToolName() {
 		args.add("wrongName");
 		assertFalse(command.action(args));
 	}

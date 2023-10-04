@@ -6,6 +6,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.ui.UIComponent;
 
 /**
@@ -20,6 +22,7 @@ public class CoordinatesDisplay extends UIComponent {
 		this.clueComponent = clueComponent;
 	}
 
+	@Override
 	public void create() {
 		super.create();
 		isOpen = false;
@@ -31,7 +34,7 @@ public class CoordinatesDisplay extends UIComponent {
 
 	@Override
 	protected void draw(SpriteBatch batch) {
-
+		// Not needed
 	}
 
 	/**
@@ -65,11 +68,17 @@ public class CoordinatesDisplay extends UIComponent {
 		}
 	}
 
+	@Override
 	public void dispose() {
 		window.clear();
 		window.remove();
-
 		super.dispose();
 	}
 
+	@Override
+	public void read(Json json, JsonValue jsonMap) {
+		window.clear();
+		window.remove();
+		addActors();
+	}
 }

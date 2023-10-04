@@ -2,19 +2,16 @@ package com.csse3200.game.components.inventory;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.csse3200.game.components.inventory.InventoryDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class InventoryDisplayManager {
     private final List<InventoryDisplay> inventoryDisplays;
     private final Stage stage;
 
-    private static final Logger logger = LoggerFactory.getLogger(InventoryDisplay.class);
+    private static final Logger logger = LoggerFactory.getLogger(InventoryDisplayManager.class);
 
     /**
      * Initialise the Inventory Display Manager
@@ -38,6 +35,7 @@ public class InventoryDisplayManager {
      * @param inventoryDisplay display to be removed
      */
     public void removeInventoryDisplay(InventoryDisplay inventoryDisplay) {
+        logger.info("Removing inventory display");
         this.inventoryDisplays.remove(inventoryDisplay);
     }
 
