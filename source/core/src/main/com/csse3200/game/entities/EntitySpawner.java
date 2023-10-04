@@ -74,21 +74,20 @@ public class EntitySpawner {
     /**
      * Constructor for EntitySpawner
      *
-     * @param maxSpawnCount maximum number of entities that can be spawned in one cycle
-     * @param spawner method that creates the entity
-     * @param player the player entity of the game
-     * @param growthRate linear growth rate of number of entities spawned each spawn cycle
+     * @param maxSpawnCount     maximum number of entities that can be spawned in one cycle
+     * @param spawner           method that creates the entity
+     * @param growthRate        linear growth rate of number of entities spawned each spawn cycle
      * @param initialSpawnCount the initial number of entities to be spawned
-     * @param spawnHour the hour that the entities will be spawned or the hour after which a
-     *                  randomGoal will be determined.
-     * @param randomRange max number of hours that the entity may spawn after spawnHour
+     * @param spawnHour         the hour that the entities will be spawned or the hour after which a
+     *                          randomGoal will be determined.
+     * @param randomRange       max number of hours that the entity may spawn after spawnHour
      * @param daysBetweenSpawns minimum number of times spawnHour must occur between spawns
      */
-    public EntitySpawner(int maxSpawnCount, Function<Entity, Entity> spawner, Entity player, int growthRate,
+    public EntitySpawner(int maxSpawnCount, Function<Entity, Entity> spawner, int growthRate,
                          int initialSpawnCount, int spawnHour, int randomRange, int daysBetweenSpawns) {
         this.maxSpawnCount = maxSpawnCount;
         this.spawner = spawner;
-        this.player = player;
+        this.player = ServiceLocator.getGameArea().getPlayer();
         this.growthRate = growthRate;
         this.spawnCount = initialSpawnCount;
         this.spawnHour = spawnHour;
