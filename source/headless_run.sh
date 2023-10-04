@@ -35,8 +35,9 @@ fi
 grep MAIN_GAME game.log
 if [ $? -eq 1 ]; then
   # Not found, e.g.
-  echo "Run failed: did not succesfully enter game - were UI buttons moved?"
+  echo "Run failed: did not succesfully enter game"
   OUTPUT_VAL=1
+fi
 
 rm game.log gradle.log
 exit ${OUTPUT_VAL}
