@@ -98,7 +98,7 @@ public class CutsceneDisplay extends UIComponent {
     /**
      * Dims the screen
      */
-    public void dimScreen() {
+    private void dimScreen() {
         logger.debug("Screen dimmed");
         //Following code for making transparent rectangle from
         //https://stackoverflow.com/questions/44260510/is-it-possible-to-draw-a-transparent-layer-without-using-image-libgdx
