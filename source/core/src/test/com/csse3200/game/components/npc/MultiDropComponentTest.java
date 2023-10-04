@@ -18,6 +18,7 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.GameTime;
+import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,6 +40,7 @@ class MultiDropComponentTest {
     private TimeService timeService;
     private int initialEntityCount;
     private MultiDropComponent multiDropComponent;
+    String[] texturePaths = {"images/dont_delete_test_image.png"};
 
     private Entity createDummyItem() {
         return new Entity(EntityType.DUMMY)
@@ -94,6 +96,8 @@ class MultiDropComponentTest {
 
     @BeforeEach
     void beforeEach() {
+        ServiceLocator.registerResourceService(new ResourceService());
+        ServiceLocator.getResourceService().loadTextures(texturePaths);
         ServiceLocator.registerPhysicsService(new PhysicsService());
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerRenderService(new RenderService());
@@ -127,6 +131,7 @@ class MultiDropComponentTest {
         ServiceLocator.registerTimeSource(gameTime);
         timeService = new TimeService();
         ServiceLocator.registerTimeService(timeService);
+        ServiceLocator.getResourceService().loadAll();
         initialEntityCount = getDummyEntityCount();
     }
 
