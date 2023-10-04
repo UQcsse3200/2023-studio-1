@@ -1093,12 +1093,16 @@ public class PlantComponent extends Component {
         json.writeValue("health", getPlantHealth());
         json.writeValue("age", 0);
         json.writeValue("growth", getCurrentGrowthLevel());
+        json.writeValue("animation", currentAnimator.getCurrentAnimation());
         json.writeObjectEnd();
     }
 
     @Override
     public void read(Json json, JsonValue plantData) {
         ServiceLocator.getGameArea().spawnEntity(entity);
+        this.currentAnimator = entity.getComponent(AnimationRenderComponent.class);
+        currentAnimator.startAnimation(plantData.getString("animation"));
+
         plantHealth = plantData.getInt("health");
         currentGrowthLevel = plantData.getInt("growth");
         // age = plantData.getFloat("age");
