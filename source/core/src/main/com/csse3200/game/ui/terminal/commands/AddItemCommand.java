@@ -48,6 +48,7 @@ public class AddItemCommand implements Command {
 				return false;
 			}
 		}
+		ServiceLocator.getGameArea().spawnEntity(item);
 		player.getComponent(InventoryComponent.class).addItem(item);
 		return true;
 	}
