@@ -557,6 +557,7 @@ public class SpaceGameArea extends GameArea {
     spawnEntityAt(ItemFactory.createHoe(), PLAYER_SPAWN, true, true);
     spawnEntityAt(ItemFactory.createCosmicCobSeed(), PLAYER_SPAWN, true, true);
     spawnEntityAt(ItemFactory.createScythe(), PLAYER_SPAWN, true, true);
+    spawnEntityAt(ItemFactory.createAloeVeraSeed(), PLAYER_SPAWN, true, true);
   }
 
   private void spawnTool(ItemType tool) {
