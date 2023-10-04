@@ -4,9 +4,9 @@ XVFB_PID=$!
 DISPLAY=:1 ./gradlew clean run 2>game.log 1>gradle.log &
 GAME_PID=$!
 
-sleep 35 # Give the game some time to launch
+sleep 60 # Give the game some time to launch
 
-# Click 640,417 to start new game and then 640,790 to skip the intro sequence
+# Click 640,380 to start new game and then 640,790 to skip the intro sequence
 DISPLAY=:1 xdotool mousemove 640 380 click 1 # Click 'New Game'
 
 sleep 10
