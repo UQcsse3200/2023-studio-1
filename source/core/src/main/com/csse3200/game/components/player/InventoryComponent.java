@@ -12,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 
 /**
@@ -345,7 +347,7 @@ public class InventoryComponent extends Component {
 
   private int nextAvailablePosition() {
     for (int i = 0; i < this.getInventorySize(); i++) {
-      if (this.itemPlace.get(i) == null) {
+      if (this.itemPlace.get(i) == null || Objects.equals(this.itemPlace.get(i), "(empty)")) {
         return i;
       }
     }
@@ -423,14 +425,12 @@ public class InventoryComponent extends Component {
             if (this.itemCount.get(item.getComponent(ItemComponent.class).getItemName()).equals(0)) {
                 this.itemCount.remove(item.getComponent(ItemComponent.class).getItemName());
                 // find the position of the item and remove the item from the position
-                for (int i = 0; i < this.itemPlace.size(); i++) {
-                    if (this.itemPlace.get(i).equals(item.getComponent(ItemComponent.class).getItemName())) {
-                        this.itemPlace.remove(i);
-                        if(this.heldIndex == i) {
+                for (Map.Entry<Integer,String> entry: itemPlace.entrySet())
+                    if (entry.getValue().equals(item.getComponent(ItemComponent.class).getItemName())) {
+                        this.itemPlace.remove(entry.getKey());
+                        if (this.heldIndex == entry.getKey()) {
                             this.heldItem = null;
-                            this.heldIndex = -1;
                         }
-                        setHeldItem(heldIndex);
                         break;
                     }
                 }
@@ -438,7 +438,7 @@ public class InventoryComponent extends Component {
             entity.getEvents().trigger(UPDATE_INVENTORY);
             logger.info("Removing item from inventory - " + item.getComponent(ItemComponent.class).getItemName() + ", new count " + this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(), 0));
             return true;
-        }
+
     }
 
     /**
