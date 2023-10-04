@@ -56,6 +56,10 @@ public class TestInventoryUI {
 			"images/itemFrame.png"
 	};
 
+	static String[] skinPaths = {
+			"gardens-of-the-galaxy/gardens-of-the-galaxy.json"
+	};
+
 	@BeforeAll
 	static void Create() {
 		inventory = new InventoryComponent(new ArrayList<>());
@@ -68,6 +72,7 @@ public class TestInventoryUI {
 	void createPlayer() {
 		ServiceLocator.registerResourceService(new ResourceService());
 		ServiceLocator.getResourceService().loadTextures(texturePaths);
+		ServiceLocator.getResourceService().loadSkins(skinPaths);
 		ServiceLocator.getResourceService().loadAll();
 
 		windowArgument = ArgumentCaptor.forClass(Window.class);
@@ -114,6 +119,7 @@ public class TestInventoryUI {
 	void addingItemsShouldAddInventoryImages(ItemComponent component, int expected) {
 		ServiceLocator.registerResourceService(new ResourceService());
 		ServiceLocator.getResourceService().loadTextures(texturePaths);
+		ServiceLocator.getResourceService().loadSkins(skinPaths);
 		ServiceLocator.getResourceService().loadAll();
 
 		player.create();
