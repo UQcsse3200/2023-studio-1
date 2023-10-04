@@ -12,6 +12,8 @@ import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
+import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,9 +42,9 @@ public class TamingTest {
         ServiceLocator.registerResourceService(new ResourceService());
         ServiceLocator.getResourceService().loadTextures(texturePaths);
         ServiceLocator.getResourceService().loadAll();
-        ServiceLocator.registerMissionManager(new MissionManager());
         ServiceLocator.registerTimeSource(new GameTime());
         ServiceLocator.registerTimeService(new TimeService());
+        ServiceLocator.registerMissionManager(new MissionManager());
 
         playerInventory = new InventoryComponent(new ArrayList<>());
         playerInvSpy = spy(playerInventory);
@@ -58,6 +60,11 @@ public class TamingTest {
             foodEntity.addComponent(fooditem);
             playerInvSpy.addItem(foodEntity);
         }
+    }
+
+    @AfterEach
+    void clear() {
+        ServiceLocator.clear();
     }
 
     @Test
