@@ -248,7 +248,9 @@ public class SpaceGameArea extends GameArea {
           "images/ship/ship_clue.png",
 
           "images/selected.png",
-          "images/itemFrame.png"
+          "images/itemFrame.png",
+          "images/PauseMenu/Pause_Overlay.jpg",
+          "images/PauseMenu/Pausenew.jpg"
 
 
   };
