@@ -33,7 +33,7 @@ public class MainMenuScreen extends ScreenAdapter {
   private final Renderer renderer;
   public static final int FRAME_COUNT = 71;
   private static final String[] mainMenuTextures = {"images/galaxy_home_still.png"};
-  public static String[] transitionTextures = new String[FRAME_COUNT];
+  public final static String[] transitionTextures = new String[FRAME_COUNT];
   private static final String ANIMATION_PREFIX = "images/menu_animations/menu_animations";
   private Texture backgroundTexture;
   private SpriteBatch batch;
