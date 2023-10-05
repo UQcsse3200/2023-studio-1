@@ -215,6 +215,8 @@ public class CutsceneDisplay extends UIComponent {
         ServiceLocator.getTimeService().getEvents().trigger("toggleUI", false);
         ServiceLocator.getPlanetOxygenService().getEvents().trigger("toggleUI", false);
         ServiceLocator.getPlayerHungerService().getEvents().trigger("toggleUI", false);
+        ServiceLocator.getGameArea().getPlayer().getEvents().trigger("toggleUI", false);
+
     }
 
     /**
@@ -226,6 +228,7 @@ public class CutsceneDisplay extends UIComponent {
         ServiceLocator.getTimeService().getEvents().trigger("toggleUI", true);
         ServiceLocator.getPlanetOxygenService().getEvents().trigger("toggleUI", true);
         ServiceLocator.getPlayerHungerService().getEvents().trigger("toggleUI", true);
+        ServiceLocator.getGameArea().getPlayer().getEvents().trigger("toggleUI", true);
     }
 }
 

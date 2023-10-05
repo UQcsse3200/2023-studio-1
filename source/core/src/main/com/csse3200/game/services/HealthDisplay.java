@@ -43,11 +43,15 @@ public class HealthDisplay extends UIComponent{
         // Adds a listener to check for health updates
         entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
         ServiceLocator.getGameArea().getPlayer().getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
+        ServiceLocator.getGameArea().getPlayer().getEvents().addListener("toggleUI", this::toggleDisplay);
         currentHealth = ServiceLocator.getGameArea().getPlayer().getComponent(CombatStatsComponent.class).getHealth();
         updatePlayerHealthUI(currentHealth);
 
         // Initial update
         updatePlayerHealthUI(currentHealth);
+    }
+
+    private void toggleDisplay(boolean isDisplayed) {table.setVisible(isDisplayed);
     }
 
     /**
