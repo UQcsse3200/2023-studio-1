@@ -5,7 +5,6 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.sound.EffectSoundFile;
-import com.csse3200.game.services.sound.InvalidSoundFileException;
 
 public class FenceComponent extends Component {
 
