@@ -25,7 +25,7 @@ public class WeatherEventDisplay extends UIComponent {
 	@Override
 	public void create() {
 		super.create();
-		ServiceLocator.getTimeService().getEvents().addListener("toggleClockDisplay", this::toggleDisplay);
+		ServiceLocator.getTimeService().getEvents().addListener("toggleUI", this::toggleDisplay);
 		ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateDisplay);
 		updateDisplay();
 	}

@@ -41,7 +41,7 @@ public class GameTimeDisplay extends UIComponent {
 
         // Listen for the "hourUpdate" event to update the display
         ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateDisplay);
-        ServiceLocator.getTimeService().getEvents().addListener("toggleClockDisplay", this::toggleDisplay);
+        ServiceLocator.getTimeService().getEvents().addListener("toggleUI", this::toggleDisplay);
         // Initial update
         updateDisplay();
     }
