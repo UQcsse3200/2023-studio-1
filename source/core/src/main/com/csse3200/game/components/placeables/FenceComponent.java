@@ -140,8 +140,8 @@ public class FenceComponent extends Component {
         /* Play the interact sound */
         try {
             ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.GATE_INTERACT);
-        } catch (InvalidSoundFileException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+
         }
 
         isOpen = !isOpen;
