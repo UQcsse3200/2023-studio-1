@@ -32,9 +32,7 @@ public class ItemActions extends Component {
    * @return if interaction with tile was success return true else return false.
    */
   public boolean use(Entity player, Vector2 mousePos) {
-    Vector2 playerPos = player.getPosition();
     Vector2 mouseWorldPos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
-
     ItemComponent type = entity.getComponent(ItemComponent.class);
     // Wasn't an item or did not have ItemComponent class
     if (type == null) {

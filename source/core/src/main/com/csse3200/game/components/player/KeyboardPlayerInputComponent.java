@@ -7,7 +7,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.components.Component;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
@@ -20,8 +19,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private PlayerActions actions;
   private static int keyPressedCounter;
   private static boolean menuOpened = false;
-  private static Enum currentMenu = MenuTypes.NONE;
-  private final int hotKeyOffset = 6;
+  private static Enum<MenuTypes> currentMenu = MenuTypes.NONE;
+
   private static boolean showPlantInfoUI = true;
   public enum MenuTypes{
     PAUSEMENU,
@@ -94,6 +93,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           return true;
         case Keys.R:
           entity.getEvents().trigger("eat", entity.getComponent(InventoryComponent.class).getHeldItem());
+            return true;
         default:
           return false;
       }
