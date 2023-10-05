@@ -162,7 +162,7 @@ public class EntitySpawner {
         for (int i = 0; i < spawnCount; i++) {
             //Get random traverseable tile to spawn the entity
             List<GridPoint2> traverseables = gameArea.getMap().getTraversableTileCoordinates();
-            int randomTileIndex = (int) Math.floor(random.nextFloat() * (traverseables.size() - 1));
+            int randomTileIndex = random.nextInt(traverseables.size());
             GridPoint2 position = traverseables.get(randomTileIndex);
 
             //Create entity and spawn on gameArea
