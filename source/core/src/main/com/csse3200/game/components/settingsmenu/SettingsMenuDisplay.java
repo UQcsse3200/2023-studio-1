@@ -77,7 +77,7 @@ public class SettingsMenuDisplay extends UIComponent {
   /**
    * The duration for which each frame should be displayed
    */
-  private final long frameDuration = (long) (800 / fps);
+  private final long frameDuration = 800L / fps;
 
 
   public SettingsMenuDisplay(GdxGame game) {

@@ -103,9 +103,11 @@ public class GameTimeDisplay extends UIComponent {
             sequenceAction.addAction(Actions.fadeOut(0.5f));
 
             // Change the planet image to the new one
-            sequenceAction.addAction(Actions.run(() -> {
-                planetImage.setDrawable(planetImages.get(time).getDrawable());
-            }));
+            sequenceAction.addAction(Actions.run(() -> planetImage.setDrawable(planetImages.get(time).getDrawable())));
+
+
+
+
 
             // Fade in the new planet image (adjust the duration)
             sequenceAction.addAction(Actions.fadeIn(0.5f));

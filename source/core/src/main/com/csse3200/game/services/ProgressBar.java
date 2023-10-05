@@ -74,9 +74,11 @@ public class ProgressBar extends UIComponent {
         int day = ServiceLocator.getTimeService().getDay() - dayOffset;
 
         switch (this.act) {
+
             case 1 -> progressBar = (day >= 5) ? progressBarImagesAct1.get(4) : progressBarImagesAct1.get(day);
             case 2 -> progressBar = (day >= 10) ? progressBarImagesAct2.get(9) : progressBarImagesAct2.get(day);
             case 3 -> progressBar = (day >= 15) ? progressBarImagesAct3.get(14) : progressBarImagesAct3.get(day);
+
         }
     }
 

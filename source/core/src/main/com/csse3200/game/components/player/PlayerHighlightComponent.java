@@ -81,6 +81,7 @@ public class PlayerHighlightComponent extends Component {
         playerPosCenter.add(0, -1.0f); // Player entity sprite's feet are located -1.0f below the centre of the entity. ty Hunter
 
         playerPosCenter = map.tileCoordinatesToVector(map.vectorToTileCoordinates(playerPosCenter));
+
         if (adjustedPosition.x - 0.5 > playerPosCenter.x) {
             playerPosCenter.x += 1;
         } else if (adjustedPosition.x + 0.5 < playerPosCenter.x) {

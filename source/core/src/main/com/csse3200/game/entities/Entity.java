@@ -322,8 +322,8 @@ public class Entity implements Json.Serializable {
             }
         }
         for (Component component : createdComponents) {
-            if (component instanceof AnimationRenderComponent) {
-                ((AnimationRenderComponent) component).togglePauseAnimation();
+            if (component instanceof AnimationRenderComponent animationRenderComponent) {
+                animationRenderComponent.togglePauseAnimation();
             }
         }
     }
@@ -350,7 +350,7 @@ public class Entity implements Json.Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        return (obj instanceof Entity && ((Entity) obj).getId() == this.getId());
+        return (obj instanceof Entity entity) && entity.getId() == this.getId();
     }
 
     @Override

@@ -72,7 +72,7 @@ public class PlayerFactory {
             .addComponent(new OpenPauseComponent())
             .addComponent(new PlayerAnimationController())
             .addComponent(new ItemPickupComponent())
-            .addComponent(new InteractionDetector(2f, new ArrayList<EntityType>(Arrays.asList(EntityType.QUESTGIVER, EntityType.GATE, EntityType.CHEST, EntityType.CHICKEN,
+            .addComponent(new InteractionDetector(2f, new ArrayList<>(Arrays.asList(EntityType.QUESTGIVER, EntityType.GATE, EntityType.CHEST, EntityType.CHICKEN,
                     EntityType.COW, EntityType.ASTROLOTL, EntityType.OXYGEN_EATER, EntityType.SHIP_DEBRIS, EntityType.SHIP))))
             .addComponent(new ToolbarDisplay())
 	        .addComponent(new AuraLightComponent(6f))

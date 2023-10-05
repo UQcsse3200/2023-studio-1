@@ -243,6 +243,7 @@ public class NPCFactory {
     Entity oxygenEater = createBaseAnimal(EntityType.OXYGEN_EATER);
     BaseAnimalConfig config = configs.OXYGEN_EATER;
 
+
     AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/animals/oxygen_eater.atlas",
                     TextureAtlas.class),
