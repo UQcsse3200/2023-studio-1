@@ -4,8 +4,8 @@ package com.csse3200.game.entities.configs;
  * Defines the properties stored in player config files to be loaded by the Player Factory.
  */
 public class PlayerConfig extends BaseEntityConfig  {
-  public int gold = 1;
-  public String favouriteColour = "none";
-  public int health = 200;
-  public int baseAttack = 0;
+  public static final int GOLD = 1;
+  public static final String FAVOURITE_COLOUR = "purple";
+  public static final int health = 200;
+  public static final int BASE_ATTACK = 0;
 }

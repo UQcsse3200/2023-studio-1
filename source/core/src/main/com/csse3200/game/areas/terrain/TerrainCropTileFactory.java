@@ -52,7 +52,7 @@ public class TerrainCropTileFactory {
 				.addComponent(new ColliderComponent().setSensor(true))
 				.addComponent(new PhysicsComponent())
 				.addComponent(renderComponent)
-				.addComponent(new CropTileComponent(stats.initialWaterContent, stats.initialSoilQuality));
+				.addComponent(new CropTileComponent(stats.INITIAL_WATER_CONTENT, stats.INITIAL_SOIL_QUALITY));
 
 		tile.setPosition(position);
 		return tile;
