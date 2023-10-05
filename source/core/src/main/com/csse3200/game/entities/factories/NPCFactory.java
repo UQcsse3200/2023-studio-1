@@ -244,6 +244,7 @@ public class NPCFactory {
 
     BaseAnimalConfig config = configs.OXYGEN_EATER;
 
+
     AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/animals/oxygen_eater.atlas",
                     TextureAtlas.class),
