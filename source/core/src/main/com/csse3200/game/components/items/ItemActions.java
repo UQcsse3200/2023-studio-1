@@ -32,9 +32,7 @@ public class ItemActions extends Component {
    * @return if interaction with tile was success return true else return false.
    */
   public boolean use(Entity player, Vector2 mousePos) {
-    Vector2 playerPos = player.getPosition();
     Vector2 mouseWorldPos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
-
     ItemComponent type = entity.getComponent(ItemComponent.class);
     // Wasn't an item or did not have ItemComponent class
     if (type == null) {
@@ -112,21 +110,17 @@ public class ItemActions extends Component {
       switch (type.getItemName()) {
         case "Ear of Cosmic Cob":
           player.getComponent(HungerComponent.class).increaseHungerLevel(-10);
-          entity.dispose();
           return;
         case "Nightshade Berry":
           player.getComponent(CombatStatsComponent.class).addHealth(-10);
           player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
-          entity.dispose();
           return;
         case "Hammer Flower":
           player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
-          entity.dispose();
           return;
         case "Aloe Vera Leaf":
           player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
           player.getComponent(CombatStatsComponent.class).addHealth(30);
-          entity.dispose();
           return;
         default:
           // Nothing
