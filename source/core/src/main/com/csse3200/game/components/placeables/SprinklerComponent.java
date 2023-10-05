@@ -11,14 +11,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
-
-/*
- * TODO:
- *  - animate watering.
- *  - integrate with save&load.
- *  - need finished textures for all sprinkler bits and the pump.
- */
-
 public class SprinklerComponent extends Component {
 
   /**
@@ -86,6 +78,7 @@ public class SprinklerComponent extends Component {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void create() {
     // Create a list of the adjacent sprinklers:
     this.connectedEntityUtility = new ConnectedEntityUtility(entity);
@@ -257,7 +250,8 @@ public class SprinklerComponent extends Component {
    */
   private void setAoe() {
     this.aoe = new Vector2[12];
-    float x = entity.getPosition().x, y = entity.getPosition().y;
+    float x = entity.getPosition().x;
+    float y = entity.getPosition().y;
     this.aoe = new Vector2[]{
             // 2up, 2down, 2right, 2left.
             new Vector2(x, y + 1),

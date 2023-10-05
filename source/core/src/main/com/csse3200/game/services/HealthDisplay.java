@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,7 @@ public class HealthDisplay extends UIComponent{
     private Image healthDanger;
     private Array<Label> healthLabels;
     private Label healthLabel;
+    private int currentHealth;
 
     /**
      * Creates reusable ui styles and adds actors to the stage.
@@ -40,10 +42,12 @@ public class HealthDisplay extends UIComponent{
         logger.debug("Adding listener to healthUpdate event");
         // Adds a listener to check for health updates
         entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
-        updatePlayerHealthUI(100);
+        ServiceLocator.getGameArea().getPlayer().getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
+        currentHealth = ServiceLocator.getGameArea().getPlayer().getComponent(CombatStatsComponent.class).getHealth();
+        updatePlayerHealthUI(currentHealth);
 
         // Initial update
-        updatePlayerHealthUI(100);
+        updatePlayerHealthUI(currentHealth);
     }
 
     /**
@@ -52,7 +56,7 @@ public class HealthDisplay extends UIComponent{
      */
     public void createTexture() {
         logger.debug("Health display texture being created");
-        Skin healthSkin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
+        Skin healthSkin = ServiceLocator.getResourceService().getAsset("flat-earth/skin/flat-earth-ui.json", Skin.class);
 
         healthOutline = new Image(ServiceLocator.getResourceService().getAsset(
             "images/bars_ui/bar_outline.png", Texture.class));
@@ -116,10 +120,10 @@ public class HealthDisplay extends UIComponent{
     public void draw(SpriteBatch batch) {
         table.clear();
         group.clear();
-
         table.top();
         table.setFillParent(true);
-        table.padTop(-130f).padLeft(320f);
+        table.padTop(-130f).padLeft(820f);
+
 
         group.addActor(healthOutline);
         group.addActor(healthFill);

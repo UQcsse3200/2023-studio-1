@@ -18,7 +18,7 @@ import java.util.Map;
  */
 public class EffectsMusicService implements MusicService {
 
-    private static final Logger logger = LoggerFactory.getLogger(SoundService.class);
+    private static final Logger logger = LoggerFactory.getLogger(EffectsMusicService.class);
 
     /**
      * EffectSoundFiles that are loaded in memory and associated Sound object.
@@ -46,7 +46,7 @@ public class EffectsMusicService implements MusicService {
     public long play(SoundFile soundFile, boolean looping) throws InvalidSoundFileException {
         long playStatus = -1;
         if (!this.isMuted()) {
-            if (soundFile instanceof EffectSoundFile) {
+            if (soundFile instanceof EffectSoundFile effectsoundfile) {
                 if (this.loadedSounds.containsKey(soundFile)) {
                     Sound sound = this.loadedSounds.get(soundFile); // get the sound object for the chosen effect
                     long id = sound.play(); // play the sound

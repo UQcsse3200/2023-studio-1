@@ -18,6 +18,7 @@ public class Cutscene{
      */
     private final String dialogue;
     private final CutsceneType cutsceneType;
+
     /**
      * Creates an instance of the cutscene class and assigns all variables as they need to be assigned - DOES NOT SPAWN THE ACTUAL CUTSCENE
      * @param dialogue - the dialogue to be displayed in the cutscene
@@ -32,13 +33,12 @@ public class Cutscene{
      * Creates the whole cutscene - to call other methods below this method
      */
     public void spawnCutscene() {
-        System.out.println("CUTSCENE SPAWNED");
         logger.info("Cutscene spawned");
 
         this.pauseGame();
         Stage stage = ServiceLocator.getRenderService().getStage();
         cutsceneEntity = new Entity();
-        cutsceneEntity.addComponent(new CutsceneDisplay(dialogue, this, this.cutsceneType))
+        cutsceneEntity.addComponent(new CutsceneDisplay(dialogue, this))
                 .addComponent(new InputDecorator(stage, 10));
         ServiceLocator.getEntityService().register(cutsceneEntity);
     }

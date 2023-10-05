@@ -1,11 +1,6 @@
 package com.csse3200.game.components.tasks;
 
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
-import com.csse3200.game.areas.terrain.CropTileComponent;
-import com.csse3200.game.components.plants.PlantAreaOfEffectComponent;
-import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.EntityType;
@@ -14,13 +9,11 @@ import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.DebugRenderer;
-import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
-import com.csse3200.game.services.plants.PlantInfoService;
 import com.csse3200.game.utils.math.Vector2Utils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,7 +21,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -55,9 +47,9 @@ public class MoveToPlantTaskTest {
     @Test
     void shouldMoveTowardsTarget() {
 
-        Entity firstTarget = new Entity(EntityType.Plant);
+        Entity firstTarget = new Entity(EntityType.PLANT);
         firstTarget.setPosition(0f, 13f);
-        Entity secondTarget = new Entity(EntityType.Plant);
+        Entity secondTarget = new Entity(EntityType.PLANT);
         secondTarget.setPosition(0f, 5f);
 
         ServiceLocator.getEntityService().register(firstTarget);

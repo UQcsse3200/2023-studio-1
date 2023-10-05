@@ -55,7 +55,7 @@ public class PlantFactory {
                 config.soundFolderPath + "nearby.wav", config.soundFolderPath + "nearbyLore.wav",
         };
 
-        Entity plant = new Entity(EntityType.Plant)
+        Entity plant = new Entity(EntityType.PLANT)
                 .addComponent(animator)
                 .addComponent(new PlantAreaOfEffectComponent(2f, "None"))
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
@@ -193,7 +193,12 @@ public class PlantFactory {
     }
 
 
+    /**
+     * Create a plant for testing
+     * @param cropTile Crop tile upon which the plant is planted
+     * @return new plant entity
+     */
     public static Entity createTest(CropTileComponent cropTile) {
-        return new Entity(EntityType.Plant);
+        return new Entity(EntityType.PLANT);
     }
 }

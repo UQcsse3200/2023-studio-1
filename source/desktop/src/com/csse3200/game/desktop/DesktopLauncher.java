@@ -10,5 +10,4 @@ public class DesktopLauncher {
     Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
     new Lwjgl3Application(new GdxGame(), config);
   }
-
 }

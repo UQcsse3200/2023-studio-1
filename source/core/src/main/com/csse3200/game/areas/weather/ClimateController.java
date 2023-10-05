@@ -5,11 +5,15 @@ import java.util.ArrayList;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.services.ServiceLocator;
 
 public class ClimateController implements Json.Serializable {
 
+
+	private static final Logger logger = LoggerFactory.getLogger(ClimateController.class);
 
 	/**
 	 * In-game humidity
@@ -265,29 +269,24 @@ public class ClimateController implements Json.Serializable {
 
 	@Override
 	public void read(Json json, JsonValue jsonData) {
-		ServiceLocator.getGameArea().getClimateController().setValues(json, jsonData);
+		ServiceLocator.getGameArea().getClimateController().setValues(jsonData);
 	}
 
 
-	public void setValues(Json json, JsonValue jsonData) {
+	public void setValues(JsonValue jsonData) {
 		temperature = jsonData.getFloat("Temp");
 		humidity = jsonData.getFloat("Humidity");
 		jsonData = jsonData.get("Events");
 		jsonData.forEach(jsonValue -> {
 			if (jsonValue.get("Event") != null) {
 				switch (jsonValue.getString("name")) {
-					case ("AcidShowerEvent") -> {
-						addWeatherEvent(new AcidShowerEvent(jsonValue.getInt("hoursUntil"),
+					case ("AcidShowerEvent") -> addWeatherEvent(new AcidShowerEvent(jsonValue.getInt("hoursUntil"),
 								jsonValue.getInt("duration"), jsonValue.getInt("priority"),
 								jsonValue.getFloat("severity")));
-					}
-					case ("SolarSurgeEvent") -> {
-						addWeatherEvent(new SolarSurgeEvent(jsonValue.getInt("hoursUntil"),
+					case ("SolarSurgeEvent") -> addWeatherEvent(new SolarSurgeEvent(jsonValue.getInt("hoursUntil"),
 								jsonValue.getInt("duration"), jsonValue.getInt("priority"),
 								jsonValue.getFloat("severity")));
-					}
-					default -> {
-					}
+					default -> logger.error("Invalid weather event type while loading");
 				}
 			}
 		});

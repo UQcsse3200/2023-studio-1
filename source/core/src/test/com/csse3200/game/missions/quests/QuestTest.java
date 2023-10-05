@@ -19,7 +19,7 @@ class QuestTest {
     private Quest q1, q2, q3, q4, q5;
 
     @BeforeEach
-    public void preTest() {
+    void preTest() {
         ServiceLocator.registerTimeSource(new GameTime());
         ServiceLocator.registerTimeService(new TimeService());
         ServiceLocator.registerMissionManager(new MissionManager());
@@ -253,12 +253,12 @@ class QuestTest {
     }
 
     @AfterEach
-    public void postTest() {
+    void postTest() {
         ServiceLocator.clear();
     }
 
     @Test
-    public void testGetName() {
+    void testGetName() {
         assertEquals("My Quest 1", q1.getName());
         assertEquals("My Quest 2", q2.getName());
         assertEquals("My Quest 3", q3.getName());
@@ -267,7 +267,7 @@ class QuestTest {
     }
 
     @Test
-    public void testIsMandatory() {
+    void testIsMandatory() {
         assertFalse(q1.isMandatory());
         assertFalse(q2.isMandatory());
         assertTrue(q3.isMandatory());
@@ -276,7 +276,7 @@ class QuestTest {
     }
 
     @Test
-    public void testGetDescription() {
+    void testGetDescription() {
         assertEquals("Long Description 1", q1.getDescription());
         assertEquals("Long Description 2", q2.getDescription());
         assertEquals("Long Description 3", q3.getDescription());
@@ -292,7 +292,7 @@ class QuestTest {
     }
 
     @Test
-    public void testGetShortDescription() {
+    void testGetShortDescription() {
         assertEquals("Short Description 1", q1.getShortDescription());
         assertEquals("Short Description 2", q2.getShortDescription());
         assertEquals("Short Description 3", q3.getShortDescription());
@@ -311,7 +311,7 @@ class QuestTest {
     }
 
     @Test
-    public void testQuestsExpiry() {
+    void testQuestsExpiry() {
         Quest nonExpireQuest = new AutoQuest("Quest 6", r1, "Description");
         assertTrue(q1.isExpired());
         assertFalse(q2.isExpired());
@@ -375,7 +375,7 @@ class QuestTest {
     }
 
     @Test
-    public void testIsCompleted() {
+    void testIsCompleted() {
         assertTrue(q1.isCompleted());
         assertFalse(q2.isCompleted());
         assertFalse(q3.isCompleted());
@@ -410,7 +410,7 @@ class QuestTest {
     }
 
     @Test
-    public void testCollectRewards() {
+    void testCollectRewards() {
         assertFalse(r1.isCollected());
         q1.collectReward();
         assertTrue(r1.isCollected());
@@ -458,7 +458,7 @@ class QuestTest {
     }
 
     @Test
-    public void testCollectRewardOnlyCollectsOnce() {
+    void testCollectRewardOnlyCollectsOnce() {
         int[] counts = new int[]{0};
         Reward r = new Reward() {
             @Override
@@ -511,7 +511,7 @@ class QuestTest {
     }
 
     @Test
-    public void testResetExpiryResetsTimeToExpiry() {
+    void testResetExpiryResetsTimeToExpiry() {
         assertTrue(q1.isExpired());
         assertFalse(q2.isExpired());
         assertFalse(q3.isExpired());
@@ -572,7 +572,7 @@ class QuestTest {
     }
 
     @Test
-    public void testResetExpiryResetsState() {
+    void testResetExpiryResetsState() {
         assertTrue(q1.isCompleted());
         assertFalse(q2.isCompleted());
         assertFalse(q3.isCompleted());
@@ -615,7 +615,7 @@ class QuestTest {
     }
 
     @Test
-    public void testQuestCompletionTriggersEvent() {
+    void testQuestCompletionTriggersEvent() {
         int[] counts = new int[]{0};
         ServiceLocator.getMissionManager().getEvents().addListener(
                 MissionManager.MissionEvent.MISSION_COMPLETE.name(),
@@ -650,10 +650,4 @@ class QuestTest {
         ServiceLocator.getMissionManager().getEvents().trigger("e2");
         assertEquals(6, counts[0]);
     }
-
-    @Test
-    public void testWrite() {
-
-    }
-
 }

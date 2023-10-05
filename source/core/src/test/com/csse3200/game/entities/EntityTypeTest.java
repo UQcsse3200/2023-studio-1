@@ -21,10 +21,10 @@ public class EntityTypeTest {
     // Expected enum names.
     // https://github.com/UQcsse3200/2023-studio-1/wiki/Save---Load-game
     expectedEnumNames = new HashSet<>(Arrays.asList(
-        "Player", "Tractor", "Plant", "Tile", "Cow",
-        "Chicken", "Astrolotl", "OxygenEater", "Item",
-        "Questgiver", "QuestgiverIndicator", "Sprinkler","Ship", "ShipDebris", "ShipPartTile",
-            "Gate", "Fence", "Chest", "Pump", "Light", "FireFlies", "Dragonfly", "Bat", "Dummy"));
+        "PLAYER", "TRACTOR", "PLANT", "DECAYING_PLANT", "TILE", "COW",
+        "CHICKEN", "ASTROLOTL", "OXYGEN_EATER", "ITEM", "FIRE_FLIES",
+        "QUESTGIVER", "QUESTGIVER_INDICATOR", "SPRINKLER","SHIP", "SHIP_DEBRIS", "SHIP_PART_TILE",
+            "GATE", "FENCE", "CHEST", "PUMP", "LIGHT", "FIRE_FLIES", "DRAGONFLY", "BAT", "DUMMY"));
   }
 
   /*
@@ -86,9 +86,9 @@ public class EntityTypeTest {
 
   @Test
   void testOxygenReturn() {
-    assertEquals(EntityType.Cow.getOxygenRate(), 0);
-    assertEquals(EntityType.Chicken.getOxygenRate(), 0);
-    assertEquals(EntityType.Gate.getOxygenRate(), 0);
-    assertEquals(EntityType.Fence.getOxygenRate(), 0);
+    assertEquals(EntityType.COW.getOxygenRate(), 0);
+    assertEquals(EntityType.CHICKEN.getOxygenRate(), 0);
+    assertEquals(EntityType.GATE.getOxygenRate(), 0);
+    assertEquals(EntityType.FENCE.getOxygenRate(), 0);
   }
 }

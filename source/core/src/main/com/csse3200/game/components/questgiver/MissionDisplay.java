@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
-import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.achievements.Achievement;
 import com.csse3200.game.missions.quests.Quest;
 import com.csse3200.game.services.ServiceLocator;
@@ -22,16 +21,18 @@ import java.util.function.Function;
  * Renders a UI for interacting with Missions.
  */
 public class MissionDisplay extends UIComponent {
-    private MissionManager missionManager;
-
     private Window window;
     private boolean isOpen;
     private boolean showCompletedMissions = false;
 
+    private static final String TEXT_COLOUR = "black";
+    private static final String PIXEL_BODY = "pixel-body";
+    private static final String BACKGROUND_COLOUR = "small-grey";
+    private static final String SIZE = "small";
+
     @Override
     public void create() {
         super.create();
-        missionManager = ServiceLocator.getMissionManager();
         isOpen = false;
 
         addActors();
@@ -71,8 +72,8 @@ public class MissionDisplay extends UIComponent {
     private void createAchievementsTable(Table achievementsTable, List<Achievement> achievements) {
         achievementsTable.clearChildren();
         for (Achievement achievement : achievements) {
-            Label titleLabel = new Label(achievement.getName(), skin, "pixel-mid", "black");
-            Label descriptionLabel = new Label(achievement.getDescription(), skin, "pixel-body", "black");
+            Label titleLabel = new Label(achievement.getName(), skin, "pixel-mid", TEXT_COLOUR);
+            Label descriptionLabel = new Label(achievement.getDescription(), skin, PIXEL_BODY, TEXT_COLOUR);
 
             achievementsTable.add(titleLabel).left().expand().fill().row();
             achievementsTable.add(descriptionLabel).left().expand().fill().padBottom(10f).row();
@@ -86,7 +87,7 @@ public class MissionDisplay extends UIComponent {
         window.clear();
         window.getTitleLabel().setText("Incomplete Achievements");
 
-        Achievement[] achievements = missionManager.getAchievements();
+        Achievement[] achievements = ServiceLocator.getMissionManager().getAchievements();
 
         Table achievementsTable = new Table();
 
@@ -104,12 +105,12 @@ public class MissionDisplay extends UIComponent {
         TextButton completeButton = new TextButton(
                 "Complete",
                 skin,
-                "small-grey"
+                BACKGROUND_COLOUR
         );
         TextButton incompleteButton = new TextButton(
                 "Incomplete",
                 skin,
-                "small-grey"
+                BACKGROUND_COLOUR
         );
 
         completeButton.addListener(new ChangeListener() {
@@ -208,8 +209,8 @@ public class MissionDisplay extends UIComponent {
         Label missionDescription = new Label(
                 "Looks like your skills could be useful for us here on Alpha Centauri. Why don't you take a look at how you can help?",
                 skin,
-                "pixel-body",
-                "black"
+                PIXEL_BODY,
+                TEXT_COLOUR
         );
         missionDescription.setWrap(true);
         missionDescription.setAlignment(Align.center);
@@ -237,7 +238,7 @@ public class MissionDisplay extends UIComponent {
                 quest.getName(),
                 skin,
                 "pixel-mid",
-                "black"
+                TEXT_COLOUR
         );
     }
 
@@ -251,8 +252,8 @@ public class MissionDisplay extends UIComponent {
         return new Label(
                 quest.getShortDescription(),
                 skin,
-                "pixel-body",
-                "black"
+                PIXEL_BODY,
+                TEXT_COLOUR
         );
     }
 
@@ -266,8 +267,8 @@ public class MissionDisplay extends UIComponent {
         Label descriptionLabel = new Label(
                 quest.getDescription(),
                 skin,
-                "pixel-body",
-                "black"
+                PIXEL_BODY,
+                TEXT_COLOUR
         );
         descriptionLabel.setWrap(true);
         return descriptionLabel;
@@ -297,12 +298,12 @@ public class MissionDisplay extends UIComponent {
             actionButton = new TextButton(
                     "Accept",
                     skin,
-                    "small"
+                    SIZE
             );
             actionButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent changeEvent, Actor actor) {
-                    missionManager.acceptQuest(quest);
+                    ServiceLocator.getMissionManager().acceptQuest(quest);
                     generateQuestsMenu();
                 }
             });
@@ -310,7 +311,7 @@ public class MissionDisplay extends UIComponent {
             actionButton = new TextButton(
                     "Reactivate",
                     skin,
-                    "small"
+                    SIZE
             );
             actionButton.addListener(new ChangeListener() {
                 @Override
@@ -324,7 +325,7 @@ public class MissionDisplay extends UIComponent {
             actionButton = new TextButton(
                     "Collect Reward",
                     skin,
-                    "small"
+                    SIZE
             );
             actionButton.addListener(new ChangeListener() {
                 @Override
@@ -359,7 +360,7 @@ public class MissionDisplay extends UIComponent {
         TextButton viewButton = new TextButton(
                 "View",
                 skin,
-                "small"
+                SIZE
         );
         viewButton.addListener(new ChangeListener() {
             @Override
@@ -375,7 +376,7 @@ public class MissionDisplay extends UIComponent {
         return new TextButton(
                 "< Back",
                 skin,
-                "small"
+                SIZE
         );
     }
 
@@ -432,8 +433,8 @@ public class MissionDisplay extends UIComponent {
         window.clear();
         window.getTitleLabel().setText("Active Quests");
 
-        List<Quest> selectableQuests = missionManager.getSelectableQuests();
-        List<Quest> activeQuests = missionManager.getActiveQuests();
+        List<Quest> selectableQuests = ServiceLocator.getMissionManager().getSelectableQuests();
+        List<Quest> activeQuests = ServiceLocator.getMissionManager().getActiveQuests();
         List<Quest> inProgressQuests = activeQuests.stream().filter(quest -> !(quest.isExpired() || quest.isCompleted())).toList();
         List<Quest> expiredQuests = activeQuests.stream().filter(Quest::isExpired).toList();
         List<Quest> completedQuests = activeQuests.stream().filter(quest -> quest.isCompleted() && !quest.isRewardCollected()).toList();
@@ -441,22 +442,22 @@ public class MissionDisplay extends UIComponent {
         TextButton newButton = new TextButton(
                 "New",
                 skin,
-                "small-grey"
+                BACKGROUND_COLOUR
         );
         TextButton activeButton = new TextButton(
                 "Active",
                 skin,
-                "small-grey"
+                BACKGROUND_COLOUR
         );
         TextButton expiredButton = new TextButton(
                 "Expired",
                 skin,
-                "small-grey"
+                BACKGROUND_COLOUR
         );
         TextButton completedButton = new TextButton(
                 "Completed",
                 skin,
-                "small-grey"
+                BACKGROUND_COLOUR
         );
 
 
@@ -619,7 +620,6 @@ public class MissionDisplay extends UIComponent {
             window.setVisible(false);
             isOpen = false;
         } else {
-            missionManager = ServiceLocator.getMissionManager();
             openMenu();
         }
     }

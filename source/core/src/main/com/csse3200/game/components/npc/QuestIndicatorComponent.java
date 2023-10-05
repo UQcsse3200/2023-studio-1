@@ -27,6 +27,7 @@ public class QuestIndicatorComponent extends Component {
      * This will create the questgiver indicator - it listens to events on the mission manager
      * to discover when missions become available, are completed or expire.
      */
+    @Override
     public void create() {
         super.create();
         this.parentAnimator = this.entity.getComponent(AnimationRenderComponent.class);

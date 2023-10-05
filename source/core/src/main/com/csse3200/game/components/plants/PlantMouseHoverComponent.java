@@ -13,7 +13,6 @@ public class PlantMouseHoverComponent extends Component {
     private boolean showInfo;
     private boolean plantDead;
     private boolean noMoreUse;
-    private float lastTime;
 
     /**
      * {@inheritDoc}
@@ -23,7 +22,6 @@ public class PlantMouseHoverComponent extends Component {
         showInfo = false;
         plantDead = false;
         noMoreUse = false;
-        lastTime = ServiceLocator.getTimeSource().getTime();
     }
 
     /**

@@ -12,6 +12,7 @@ import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.inventory.InventoryDisplay;
 import com.csse3200.game.components.inventory.ToolbarDisplay;
 import com.csse3200.game.components.maingame.PauseMenuActions;
+import com.csse3200.game.components.player.*;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.ItemPickupComponent;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
@@ -58,20 +59,21 @@ public class PlayerFactory {
     //InventoryComponent playerInventory = new InventoryComponent(new ArrayList<>());
 
     Entity player =
-        new Entity(EntityType.Player)
+        new Entity(EntityType.PLAYER)
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
             .addComponent(new PlayerActions())
             .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack))
             .addComponent(new InventoryComponent())
+            .addComponent(new HungerComponent(30))
             .addComponent(inputComponent)
             .addComponent(animator)
             .addComponent(new OpenPauseComponent())
             .addComponent(new PlayerAnimationController())
             .addComponent(new ItemPickupComponent())
-            .addComponent(new InteractionDetector(2f, new ArrayList<EntityType>(Arrays.asList(EntityType.Questgiver, EntityType.Gate, EntityType.Chest, EntityType.Chicken,
-                    EntityType.Cow, EntityType.Astrolotl, EntityType.OxygenEater, EntityType.ShipDebris, EntityType.Ship))))
+            .addComponent(new InteractionDetector(2f, new ArrayList<EntityType>(Arrays.asList(EntityType.QUESTGIVER, EntityType.GATE, EntityType.CHEST, EntityType.CHICKEN,
+                    EntityType.COW, EntityType.ASTROLOTL, EntityType.OXYGEN_EATER, EntityType.SHIP_DEBRIS, EntityType.SHIP))))
             .addComponent(new ToolbarDisplay())
 	        .addComponent(new AuraLightComponent(6f))
             .addComponent(new InventoryDisplay("updateInventory", "toggleInventory", 30, 10, true))

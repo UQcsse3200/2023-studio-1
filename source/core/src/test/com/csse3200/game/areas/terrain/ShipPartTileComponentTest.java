@@ -28,11 +28,11 @@ public class ShipPartTileComponentTest {
         EntityService mockEntityService = spy(EntityService.class);
         ServiceLocator.registerEntityService(mockEntityService);
 
-        Entity shipPartTile = new Entity(EntityType.Tile)
+        Entity shipPartTile = new Entity(EntityType.TILE)
                 .addComponent(new ShipPartTileComponent());
         mockEntityService.register(shipPartTile);
 
-        Entity shipDebris = new Entity(EntityType.ShipDebris)
+        Entity shipDebris = new Entity(EntityType.SHIP_DEBRIS)
                 .addComponent(new ShipDebrisComponent());
 
         // should register the shipDebris when added to the shipPartTile
@@ -53,14 +53,14 @@ public class ShipPartTileComponentTest {
         TerrainTile terrainTile = new TerrainTile(null, TerrainTile.TerrainCategory.GRASS);
         TerrainTile mockTerrainTile = spy(terrainTile);
 
-        Entity shipPartTile = new Entity(EntityType.Tile)
+        Entity shipPartTile = new Entity(EntityType.TILE)
                 .addComponent(new ShipPartTileComponent());
         mockEntityService.register(shipPartTile);
 
         mockTerrainTile.setOccupant(shipPartTile);
         mockTerrainTile.setOccupied();
 
-        Entity mockItem = new Entity(EntityType.Item);
+        Entity mockItem = new Entity(EntityType.ITEM);
 
         try (MockedStatic<ItemFactory> itemFactory = mockStatic(ItemFactory.class)) {
             itemFactory.when(ItemFactory::createShipPart).thenReturn(mockItem);

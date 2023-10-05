@@ -14,6 +14,7 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
 public class PlayerAnimationController extends Component {
     AnimationRenderComponent animator;
     String animationPrev;
+
     @Override
     public void create() {
         super.create();
@@ -123,16 +124,16 @@ public class PlayerAnimationController extends Component {
     /**
      * Starts the default player animation when they stop walking.
      */
-    void animationWalkStop(String direction, int AnimationRandomizer, boolean testBypass) {
+    void animationWalkStop(String direction, int animationRandomizer, boolean testBypass) {
 
         if (!readyToPlay()) {
             return;
         }
 
         String animationType;
-        if (AnimationRandomizer > 50){
+        if (animationRandomizer > 50){
             animationType = "blink";
-        } else if (AnimationRandomizer > 25){
+        } else if (animationRandomizer > 25){
             animationType = "yawn";
         } else {
             animationType = "snooze";

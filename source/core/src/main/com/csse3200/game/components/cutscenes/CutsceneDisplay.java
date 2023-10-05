@@ -24,18 +24,27 @@ import org.slf4j.LoggerFactory;
 import com.csse3200.game.ui.UIComponent;
 
 public class CutsceneDisplay extends UIComponent {
+
     /**
      * The atlas for the npc sprite.
      */
     private TextureAtlas npcAtlas;
+
     /**
      * The Image that contains the npc sprite.
      */
     private Image npcSprite;
+
     /**
      * Logger to log events
      */
     private static final Logger logger = LoggerFactory.getLogger(com.csse3200.game.missions.cutscenes.Cutscene.class);
+
+    /**
+     * The table that forms the basis for the layout of the cutscene
+     */
+    private Table table;
+
     /**
      * Stores the cutscene object that created the cutscene display
      */
@@ -59,6 +68,7 @@ public class CutsceneDisplay extends UIComponent {
 
     /**
      * Creates a cutscene display using the given parameters
+     *
      * @param dialogue the dialogue that will be displayed
      * @param cutscene the cutscene object that created the cutscene display
      */

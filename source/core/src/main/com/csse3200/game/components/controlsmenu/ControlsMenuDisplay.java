@@ -54,12 +54,12 @@ public class ControlsMenuDisplay extends UIComponent {
   /**
    * The target fps at which the frames should be updated
    */
-  private int fps = 15;
+  private static int fps = 15;
 
   /**
    * The duration for which each frame should be displayed
    */
-  private final long frameDuration = 800 / fps;
+  private static final long FRAME_DURATION = 800 / fps;
 
   public ControlsMenuDisplay(GdxGame game) {
     super();
@@ -122,10 +122,10 @@ public class ControlsMenuDisplay extends UIComponent {
    * Update the frame of the background animation
    */
   private void updateAnimation() {
-    if (frame < ControlsScreen.frameCount) {
+    if (frame < ControlsScreen.FRAME_COUNT) {
       // set the next frame of the animation
       transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
-              .getAsset(ControlsScreen.transitionTextures[frame], Texture.class))));
+              .getAsset(ControlsScreen.getTransitionTextures()[frame], Texture.class))));
       transitionFrames.setWidth(Gdx.graphics.getWidth());
       transitionFrames.setHeight((float)Gdx.graphics.getHeight() / 2);
       transitionFrames.setPosition(0, (float)Gdx.graphics.getHeight() / 2 + 15);
@@ -162,7 +162,7 @@ public class ControlsMenuDisplay extends UIComponent {
     // Create a dictionary to store all the controls
     // LinkedHashMap is the only map the preserves order of insertion.
     // Performance is a non-issue in a static table, so using a linked list structure doesn't matter
-    ArrayList<Pair<String, String>> controls = new ArrayList<Pair<String, String>>();
+    ArrayList<Pair<String, String>> controls = new ArrayList<>();
 
     // To add another control, simply put it in the map below.
     controls.add(new Pair<>("W", "Moves the character upwards"));
@@ -203,7 +203,7 @@ public class ControlsMenuDisplay extends UIComponent {
   @Override
   public void update() {
     // Update the animation frame if the time threshold has been hit
-    if (System.currentTimeMillis() - lastFrameTime > frameDuration) {
+    if (System.currentTimeMillis() - lastFrameTime > FRAME_DURATION) {
       updateAnimation();
     }
 

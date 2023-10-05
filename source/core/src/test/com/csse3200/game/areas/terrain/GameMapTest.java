@@ -44,12 +44,12 @@ public class GameMapTest {
         traversableTilesList.add(new GridPoint2(3,3)); //Beach sand
 
         //ResourceService resourceService = new ResourceService();
-        resourceService.loadTextures(TerrainFactory.mapTextures);
+        resourceService.loadTextures(TerrainFactory.getMapTextures());
         resourceService.loadAll();
         ServiceLocator.registerResourceService(resourceService);
 
         TerrainComponent terrainComponent = mock(TerrainComponent.class);
-        doReturn(TerrainFactory.worldTileSize).when(terrainComponent).getTileSize();
+        doReturn(TerrainFactory.WORLD_TILE_SIZE).when(terrainComponent).getTileSize();
         gameMap.setTerrainComponent(terrainComponent);
 
         gameMap.loadTestTerrain("configs/TestMaps/gameMapTest_map.txt");
@@ -143,14 +143,14 @@ public class GameMapTest {
 
     @Test
     void testGetTraversableTileCoordinates() {
-        ArrayList<GridPoint2> arrayList = gameMap.getTraversableTileCoordinates();
+        ArrayList<GridPoint2> arrayList = (ArrayList<GridPoint2>) gameMap.getTraversableTileCoordinates();
 
         assertEquals(arrayList, traversableTilesList);
     }
 
     @Test
     void testGetNonTraversableTileCoordinates() {
-        ArrayList<GridPoint2> arrayList = gameMap.getNonTraversableTileCoordinates();
+        ArrayList<GridPoint2> arrayList = (ArrayList<GridPoint2>) gameMap.getNonTraversableTileCoordinates();
 
         assertEquals(arrayList, nonTraversableTilesList);
     }
@@ -158,7 +158,7 @@ public class GameMapTest {
     @AfterAll
     public static void cleanUp(){
         //unload assets
-        resourceService.unloadAssets(TerrainFactory.mapTextures);
+        resourceService.unloadAssets(TerrainFactory.getMapTextures());
         resourceService.dispose();
     }
 }

@@ -1,23 +1,16 @@
 package com.csse3200.game.components.combat.attackpatterns;
 
-import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.combat.ProjectileComponent;
-import com.csse3200.game.components.combat.attackpatterns.AttackPatternComponent;
-import com.csse3200.game.components.plants.PlantAreaOfEffectComponent;
 import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
-import com.csse3200.game.entities.factories.ProjectileFactory;
-import com.csse3200.game.events.EventHandler;
-import com.csse3200.game.events.listeners.EventListener0;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
@@ -31,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
@@ -96,7 +88,7 @@ public class AttackPatternTest {
 
     @Test
     void testOxygenEaterAttack() {
-        attackPatternComponent = spy(getAttackPatternComponent(EntityType.OxygenEater));
+        attackPatternComponent = spy(getAttackPatternComponent(EntityType.OXYGEN_EATER));
 
         entity.addComponent(attackPatternComponent);
         entity.create();
@@ -133,13 +125,13 @@ public class AttackPatternTest {
 
     @Test
     void testDragonflyAttackPlayer() {
-        attackPatternComponent = spy(getAttackPatternComponent(EntityType.Dragonfly));
+        attackPatternComponent = spy(getAttackPatternComponent(EntityType.DRAGONFLY));
 
         entity.addComponent(attackPatternComponent);
         entity.create();
 
-        Entity playerTarget = new Entity(EntityType.Player);
-        Entity plantTarget = new Entity(EntityType.Plant);
+        Entity playerTarget = new Entity(EntityType.PLAYER);
+        Entity plantTarget = new Entity(EntityType.PLANT);
 
         // Place it close enough to the plant
         entity.setPosition(1f, 1f);
@@ -180,12 +172,12 @@ public class AttackPatternTest {
 
     @Test
     void testDragonflyAttackPlant() {
-        attackPatternComponent = spy(getAttackPatternComponent(EntityType.Dragonfly));
+        attackPatternComponent = spy(getAttackPatternComponent(EntityType.DRAGONFLY));
 
         entity.addComponent(attackPatternComponent);
         entity.create();
 
-        Entity plantTarget = new Entity(EntityType.Plant);
+        Entity plantTarget = new Entity(EntityType.PLANT);
 
         int[] growthStageThresholds = new int[]{1,2,3};
         String[] soundArray = new String[]{"1", "2", "3", "4", "5", "6", "7", "8"};
@@ -216,13 +208,13 @@ public class AttackPatternTest {
     @Test
     void testBatAttack() {
 
-        attackPatternComponent = spy(getAttackPatternComponent(EntityType.Bat));
+        attackPatternComponent = spy(getAttackPatternComponent(EntityType.BAT));
 
         entity.addComponent(attackPatternComponent);
         entity.addComponent(new CombatStatsComponent(10, 10));
         entity.create();
 
-        Entity target = new Entity(EntityType.Player);
+        Entity target = new Entity(EntityType.PLAYER);
 
         CombatStatsComponent combatStatsComponent = new CombatStatsComponent(100, 0);
         target.addComponent(combatStatsComponent);
@@ -250,11 +242,11 @@ public class AttackPatternTest {
 
 
     private AttackPatternComponent getAttackPatternComponent(EntityType type) {
-        if (type == EntityType.Dragonfly) {
+        if (type == EntityType.DRAGONFLY) {
             return new DragonflyAttackPattern(1f, this::createMockProjectile);
-        } else if (type == EntityType.OxygenEater) {
+        } else if (type == EntityType.OXYGEN_EATER) {
             return new OxygenEaterAttackPattern(1f, this::createMockProjectile);
-        }  else if (type == EntityType.Bat) {
+        }  else if (type == EntityType.BAT) {
         return new BatAttackPattern(1f);
     }
 

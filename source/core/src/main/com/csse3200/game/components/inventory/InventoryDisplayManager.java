@@ -2,10 +2,8 @@ package com.csse3200.game.components.inventory;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.csse3200.game.components.inventory.InventoryDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +11,7 @@ public class InventoryDisplayManager {
     private final List<InventoryDisplay> inventoryDisplays;
     private final Stage stage;
 
-    private static final Logger logger = LoggerFactory.getLogger(InventoryDisplay.class);
+    private static final Logger logger = LoggerFactory.getLogger(InventoryDisplayManager.class);
 
     /**
      * Initialise the Inventory Display Manager
@@ -37,6 +35,7 @@ public class InventoryDisplayManager {
      * @param inventoryDisplay display to be removed
      */
     public void removeInventoryDisplay(InventoryDisplay inventoryDisplay) {
+        logger.info("Removing inventory display");
         this.inventoryDisplays.remove(inventoryDisplay);
     }
 
@@ -51,25 +50,28 @@ public class InventoryDisplayManager {
      * Update the position of the displays
      */
     public void updateDisplays() {
-        int displayCount = inventoryDisplays.size();
+        List<InventoryDisplay> openInventoryDisplays = inventoryDisplays.stream()
+                .filter(InventoryDisplay::isOpen)
+                .toList();
+
+        int displayCount = openInventoryDisplays.size();
 
         if (displayCount == 1) {
-            Window window = (Window) inventoryDisplays.get(0).getWindow();
+            Window window = (Window) openInventoryDisplays.get(0).getWindow();
             window.setPosition(stage.getWidth() / 2 - window.getWidth() / 2, stage.getHeight() / 2 - window.getHeight() / 2);
         }
         else if (displayCount == 2){
-            InventoryDisplay displayOne = inventoryDisplays.get(0);
-            InventoryDisplay displayTwo = inventoryDisplays.get(1);
+            InventoryDisplay displayOne = openInventoryDisplays.get(0);
+            InventoryDisplay displayTwo = openInventoryDisplays.get(1);
 
-            if (displayOne.isOpen() && displayTwo.isOpen()) {
-                float totalHeight = displayOne.getWindow().getHeight() + displayTwo.getWindow().getHeight();
+            float totalHeight = displayOne.getWindow().getHeight() + displayTwo.getWindow().getHeight();
 
-                float yOne = (stage.getHeight() - totalHeight - 50) / 2;
-                float yTwo = yOne + displayOne.getWindow().getHeight() + 50;
+            float yOne = (stage.getHeight() - totalHeight - 50) / 2;
+            float yTwo = yOne + displayOne.getWindow().getHeight() + 50;
 
-                displayOne.getWindow().setPosition(stage.getWidth() / 2 - displayOne.getWindow().getWidth() / 2, yOne);
-                displayTwo.getWindow().setPosition(stage.getWidth() / 2 - displayTwo.getWindow().getWidth() / 2, yTwo);
-            }
+            displayOne.getWindow().setPosition(stage.getWidth() / 2 - displayOne.getWindow().getWidth() / 2, yOne);
+            displayTwo.getWindow().setPosition(stage.getWidth() / 2 - displayTwo.getWindow().getWidth() / 2, yTwo);
         }
     }
+
 }

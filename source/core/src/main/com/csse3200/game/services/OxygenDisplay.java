@@ -1,6 +1,7 @@
 package com.csse3200.game.services;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
@@ -18,127 +19,134 @@ import org.slf4j.LoggerFactory;
 /**
  * A UI component for displaying the current oxygen level on the Main Game Screen.
  */
-public class OxygenDisplay extends UIComponent{
-    
-    private static final Logger logger = LoggerFactory.getLogger(OxygenDisplay.class);
-    Table table = new Table();
-    Group group = new Group();
-    private Image oxygenOutline;
-    private Image oxygenFill;
-    private Image oxygenHealthy;
-    private Image oxygenDanger;
-    private Array<Label> oxygenLabels;
-    private Label oxygenLabel;
+public class OxygenDisplay extends UIComponent {
 
-    /**
-     * Creates reusable ui styles and adds actors to the stage.
-     */
-    @Override
-    public void create() {
-        super.create();
-    
-        logger.debug("Adding listener to oxygenUpdate event");
-        // Adds a listener to check for oxygen updates
-        ServiceLocator.getPlanetOxygenService().getEvents()
-                .addListener("oxygenUpdate", this::updateDisplay);
+	private static final Logger logger = LoggerFactory.getLogger(OxygenDisplay.class);
+	Table table = new Table();
+	Group group = new Group();
+	private Image oxygenOutline;
+	private Image oxygenFill;
+	private Image oxygenHealthy;
+	private Image oxygenDanger;
+	private Array<Label> oxygenLabels;
+	private Label oxygenLabel;
 
-        // Initial update
-        updateDisplay();
-    }
+	/**
+	 * Creates reusable ui styles and adds actors to the stage.
+	 */
+	@Override
+	public void create() {
+		super.create();
 
-    /**
-     * Initialises all the possible images and labels that will be used by
-     * the class, and stores them in an array.
-     */
-    public void createTexture() {
-        logger.debug("Oxygen display texture being created");
-        Skin oxygenSkin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
+		logger.debug("Adding listener to oxygenUpdate event");
+		// Adds a listener to check for oxygen updates
+		ServiceLocator.getPlanetOxygenService().getEvents()
+				.addListener("oxygenUpdate", this::updateDisplay);
 
-        oxygenOutline = new Image(ServiceLocator.getResourceService().getAsset(
-            "images/bars_ui/bar_outline.png", Texture.class));
-        oxygenHealthy = new Image(ServiceLocator.getResourceService().getAsset(
-            "images/bars_ui/healthy_fill.png", Texture.class));
-        oxygenDanger = new Image(ServiceLocator.getResourceService().getAsset(
-            "images/bars_ui/danger_fill.png", Texture.class));
+		// Initial update
+		updateDisplay();
+	}
 
-        // Set oxygenFill to the initial starting one (VERY IMPORTANT)
-        oxygenFill = oxygenDanger;
-        oxygenFill.setScaleX(0.1f);
+	/**
+	 * Initialises all the possible images and labels that will be used by
+	 * the class, and stores them in an array.
+	 */
+	public void createTexture() {
+		logger.debug("Oxygen display texture being created");
+		Skin oxygenSkin = ServiceLocator.getResourceService().getAsset("flat-earth/skin/flat-earth-ui.json", Skin.class);
 
-        // Create labels for each percent
-        oxygenLabels = new Array<>();
-        for (int i = 0; i <= 100; i++) {
-            oxygenLabels.add(new Label(String.format("Oxygen: %d%%", i), oxygenSkin));
-        }
-    }
+		oxygenOutline = new Image(ServiceLocator.getResourceService().getAsset(
+				"images/bars_ui/bar_outline.png", Texture.class));
+		oxygenHealthy = new Image(ServiceLocator.getResourceService().getAsset(
+				"images/bars_ui/healthy_fill.png", Texture.class));
+		oxygenDanger = new Image(ServiceLocator.getResourceService().getAsset(
+				"images/bars_ui/danger_fill.png", Texture.class));
 
-    /**
-     * Updates the display, showing the oxygen bar in the top of the main game screen.
-     */
-    public void updateDisplay() {
-        boolean switched;
-        if (oxygenLabels == null) {
-            createTexture();
-        }
+		// Set oxygenFill to the initial starting one (VERY IMPORTANT)
+		oxygenFill = oxygenDanger;
+		oxygenFill.setScaleX(0.1f);
 
-        int newOxygenPercent = ServiceLocator.getPlanetOxygenService().getOxygenPercentage();
-        float scaling = (float) newOxygenPercent / 100;
+		// Create labels for each percent
+		oxygenLabels = new Array<>();
+		for (int i = 0; i <= 100; i++) {
+//            oxygenLabels.add(new Label(String.format("Oxygen: %d%%", i), oxygenSkin));
+			Label label = new Label(String.format("Oxygen: %d%%", i), oxygenSkin);
+			Label.LabelStyle labelStyle = label.getStyle();
+			labelStyle.fontColor = Color.WHITE; // Set the text color to red (you can choose any color)
+			label.setStyle(labelStyle);
+			oxygenLabels.add(label);
+		}
+	}
 
-        // Adjusts the oxygen bar based on the oxygen percent
-        if (newOxygenPercent <= 25) {
-            switched = (oxygenFill != oxygenDanger);
-            oxygenFill = oxygenDanger;
-        } else {
-            switched = (oxygenFill != oxygenHealthy);
-            oxygenFill = oxygenHealthy;
-        }
+	/**
+	 * Updates the display, showing the oxygen bar in the top of the main game screen.
+	 */
+	public void updateDisplay() {
+		boolean switched;
+		if (oxygenLabels == null) {
+			createTexture();
+		}
 
-        oxygenFill.setX(oxygenFill.getImageX() + 14 * (1 - scaling));
+		int newOxygenPercent = ServiceLocator.getPlanetOxygenService().getOxygenPercentage();
+		float scaling = (float) newOxygenPercent / 100;
 
-        // Ensure that the array is always accessed within bounds
-        if (0 <= newOxygenPercent && newOxygenPercent <= 100) {
-            logger.debug("Oxygen display updated");
-            oxygenLabel = oxygenLabels.get(newOxygenPercent);
-            oxygenLabel.setPosition(oxygenOutline.getImageX() + 125f, oxygenOutline.getImageY() + 8.5f);
-        }
+		// Adjusts the oxygen bar based on the oxygen percent
+		if (newOxygenPercent <= 25) {
+			switched = (oxygenFill != oxygenDanger);
+			oxygenFill = oxygenDanger;
+		} else {
+			switched = (oxygenFill != oxygenHealthy);
+			oxygenFill = oxygenHealthy;
+		}
 
-        if (!switched) {
-            oxygenFill.addAction(Actions.scaleTo(scaling, 1.0f, 1.0f, Interpolation.pow2InInverse));
-        } else {
-            oxygenFill.setScaleX(scaling);
-        }
-    }
+		oxygenFill.setX(oxygenFill.getImageX() + 14 * (1 - scaling));
 
-    /**
-     * Draws the table and group onto the main game screen. Adds the oxygen elements onto the stage.
-     * @param batch Batch to render to.
-     */
-    @Override
-    public void draw(SpriteBatch batch) {
-        table.clear();
-        group.clear();
+		// Ensure that the array is always accessed within bounds
+		if (0 <= newOxygenPercent && newOxygenPercent <= 100) {
+			logger.debug("Oxygen display updated");
+			oxygenLabel = oxygenLabels.get(newOxygenPercent);
+			oxygenLabel.setPosition(oxygenOutline.getImageX() + 125f, oxygenOutline.getImageY() + 8.5f);
+		}
 
-        table.top();
-        table.setFillParent(true);
-        table.padTop(-130f).padLeft(-520f);
+		if (!switched) {
+			oxygenFill.addAction(Actions.scaleTo(scaling, 1.0f, 1.0f, Interpolation.pow2InInverse));
+		} else {
+			oxygenFill.setScaleX(scaling);
+		}
+	}
 
-        group.addActor(oxygenOutline);
-        group.addActor(oxygenFill);
-        group.addActor(oxygenLabel);
+	/**
+	 * Draws the table and group onto the main game screen. Adds the oxygen elements onto the stage.
+	 *
+	 * @param batch Batch to render to.
+	 */
+	@Override
+	public void draw(SpriteBatch batch) {
+		table.clear();
+		group.clear();
+		table.top();
+		table.setFillParent(true);
 
-        table.add(group).size(200);
-        stage.addActor(table);
-    }
+		table.padTop(-130f).padLeft(-180f);
 
-    /**
-     * Removes all entities from the screen and releases all resources from this class.
-     */
-    @Override
-    public void dispose() {
-        super.dispose();
-        oxygenOutline.remove();
-        oxygenFill.remove();
-        oxygenHealthy.remove();
-        oxygenLabel.remove();
-    }
+
+		group.addActor(oxygenOutline);
+		group.addActor(oxygenFill);
+		group.addActor(oxygenLabel);
+
+		table.add(group).size(200);
+		stage.addActor(table);
+	}
+
+	/**
+	 * Removes all entities from the screen and releases all resources from this class.
+	 */
+	@Override
+	public void dispose() {
+		super.dispose();
+		oxygenOutline.remove();
+		oxygenFill.remove();
+		oxygenHealthy.remove();
+		oxygenLabel.remove();
+	}
 }
