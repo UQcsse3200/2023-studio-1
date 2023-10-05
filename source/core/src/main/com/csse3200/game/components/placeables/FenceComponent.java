@@ -3,6 +3,9 @@ package com.csse3200.game.components.placeables;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
+import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.sound.EffectSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
 
 public class FenceComponent extends Component {
 
@@ -133,6 +136,14 @@ public class FenceComponent extends Component {
     }
 
     private void toggleGate() {
+        
+        /* Play the interact sound */
+        try {
+            ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.GATE_INTERACT);
+        } catch (InvalidSoundFileException e) {
+            throw new RuntimeException(e);
+        }
+
         isOpen = !isOpen;
 
         if (isOpen) {
