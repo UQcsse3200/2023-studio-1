@@ -37,15 +37,15 @@ public class AddItemCommand implements Command {
 		for (String partOfName : args) {
 			str.add(partOfName);
 		}
-		String itemName = str.toString();
+		Entity item;
 		try {
-			Entity item = FactoryService.getItemFactories().get(itemName).get();
-			ServiceLocator.getGameArea().spawnEntity(item);
-			player.getComponent(InventoryComponent.class).addItem(item);
+			item = FactoryService.getItemFactories().get(str.toString()).get();
 		} catch (Exception e) {
 			logger.info("Incorrect item name given to addItem command.");
 			return false;
 		}
+        ServiceLocator.getGameArea().spawnEntity(item);
+        player.getComponent(InventoryComponent.class).addItem(item);
 		return true;
 	}
 
