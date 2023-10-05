@@ -42,9 +42,15 @@ public class OxygenDisplay extends UIComponent {
 		// Adds a listener to check for oxygen updates
 		ServiceLocator.getPlanetOxygenService().getEvents()
 				.addListener("oxygenUpdate", this::updateDisplay);
+		ServiceLocator.getPlanetOxygenService().getEvents()
+				.addListener("toggleUI", this::toggleDisplay);
 
 		// Initial update
 		updateDisplay();
+	}
+
+	private void toggleDisplay(boolean isDisplayed) {
+		table.setVisible(isDisplayed);
 	}
 
 	/**
