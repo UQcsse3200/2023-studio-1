@@ -22,7 +22,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
     /**
      * The radius of the area of effect.
      */
-    private float radius;
+    private final float radius;
 
     /**
      * The type of effect to be implemented.
@@ -32,12 +32,12 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
     /**
      * List of entities within the area
      */
-    private List<Entity> entitiesInRange = new ArrayList<>();
+    private final List<Entity> entitiesInRange = new ArrayList<>();
 
     /**
      * Circle shape of the area.
      */
-    private CircleShape shape = new CircleShape();
+    private final CircleShape shape = new CircleShape();
 
     /**
      * Constructor for the Area of Effect class.
