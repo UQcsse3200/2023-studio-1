@@ -44,8 +44,7 @@ import com.csse3200.game.services.plants.PlantCommandService;
 import com.csse3200.game.services.plants.PlantInfoService;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 
 /**
