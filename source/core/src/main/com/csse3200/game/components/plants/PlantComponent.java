@@ -100,7 +100,7 @@ public class PlantComponent extends Component {
     /**
      * The crop tile on which this plant is planted on.
      */
-    private CropTileComponent cropTile;
+    private final CropTileComponent cropTile;
 
     /**
      * The growth thresholds for different growth stages (Sprout Juvenile, Adult).
@@ -115,12 +115,12 @@ public class PlantComponent extends Component {
     /**
      * The current max health. This limits the amount of health a plant can have at different growth stages.
      */
-    private int currentMaxHealth = 0;
+    private int currentMaxHealth;
 
     /**
      * The maximum health a plant can have at different growth stages (stages 1, 2, 3).
      */
-    private int[] maxHealthAtStages = {0, 0, 0};
+    private final int[] maxHealthAtStages = {0, 0, 0};
 
     /**
      * Used to track how long a plant has been an adult.
@@ -147,17 +147,12 @@ public class PlantComponent extends Component {
     /**
      * The effect a plant has when it is an adult.
      */
-    private String adultEffect;
+    private final String adultEffect;
 
     /**
      * Indicated whether a plant is eating. Can only be true if the plant is a space snapper.
      */
     private boolean isEating;
-
-    /**
-     * Constant used to control how long a space snapper waits before eating again.
-     */
-    private int eatingCoolDown = 60;
 
     /**
      * Count of minutes since the space snapper ate. Used to determine whether the plant is ready to eat again.
@@ -414,7 +409,6 @@ public class PlantComponent extends Component {
      * If the currentGrowthLevel exceeds the corresponding growth threshold, then the plant will
      * advance to the next growth stage.
      * When a plant becomes an adult, it has an adult life span.
-     *
      * Also, if the plant is in a state of decay then decrease the health every hour.
      */
     public void updateGrowthStage() {
@@ -438,6 +432,10 @@ public class PlantComponent extends Component {
 
             this.countMinutesOfDigestion += 1;
 
+            /**
+             * Constant used to control how long a space snapper waits before eating again.
+             */
+            int eatingCoolDown = 60;
             if (this.countMinutesOfDigestion >= eatingCoolDown) {
                 this.isEating = false;
                 this.countMinutesOfDigestion = 0;
@@ -1039,7 +1037,7 @@ public class PlantComponent extends Component {
         String idealWaterLevelString = decimalFormat.format(this.idealWaterLevel);
         String growthLevel = decimalFormat.format(currentGrowthLevel);
         String currentMaxHealthString = Integer.toString(this.currentMaxHealth);
-        String waterLevelStatus = "";
+        String waterLevelStatus ;
 
         float waterLevelDiff = cropTile.getWaterContent() - this.idealWaterLevel;
 
