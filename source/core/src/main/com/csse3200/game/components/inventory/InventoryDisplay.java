@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.csse3200.game.services.ServiceLocator;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import org.jetbrains.annotations.NotNull;
@@ -90,6 +91,14 @@ public class InventoryDisplay extends UIComponent {
 			} else {
 				slot = new ItemSlot(false);
 			}
+			slot.addListener(new InputListener() {
+				@Override
+				public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+					System.out.println(slot);
+					return true;
+				}
+			});
+
 
 			table.add(slot).width(70).height(70).pad(10, 10, 10, 10);
 
@@ -144,7 +153,7 @@ public class InventoryDisplay extends UIComponent {
 				ItemSlot curSlot = slots.get(i);
 				curSlot.setItemImage(null);
 				curSlot.getDraggable().clear();
-
+				curSlot.setCount(0);
 				slots.set(i, curSlot);
 			}
 

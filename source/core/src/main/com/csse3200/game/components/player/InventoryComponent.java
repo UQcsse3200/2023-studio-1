@@ -68,20 +68,6 @@ public class InventoryComponent extends Component {
   public InventoryComponent(List<Entity> items) {
     setInventory(items);
   }
-  /**
-   * Called when an item in the inventory is used.
-   *
-   * @return boolean if the item is consumable, whether or not the item was successfully removed otherwise true;
-   */
-  public boolean useItem() {
-    if (heldItem == null) {
-      return false;
-    }
-    if (heldItem.getComponent(ItemComponent.class).isPerishable()) {
-      return removeItem(this.heldItem);
-    }
-    return true;
-  }
 
     /**
      * Creates a new InventoryComponent with a given maximum size.
@@ -425,8 +411,8 @@ public class InventoryComponent extends Component {
             if (this.itemCount.get(item.getComponent(ItemComponent.class).getItemName()).equals(0)) {
                 this.itemCount.remove(item.getComponent(ItemComponent.class).getItemName());
                 // find the position of the item and remove the item from the position
-                for (Map.Entry<Integer,String> entry: itemPlace.entrySet())
-                    if (entry.getValue().equals(item.getComponent(ItemComponent.class).getItemName())) {
+                for (Map.Entry<Integer,String> entry: itemPlace.entrySet()){
+                    if ((entry.getValue() != null ? entry.getValue() : "").equals(item.getComponent(ItemComponent.class).getItemName())) {
                         this.itemPlace.remove(entry.getKey());
                         if (this.heldIndex == entry.getKey()) {
                             this.heldItem = null;
@@ -434,6 +420,7 @@ public class InventoryComponent extends Component {
                         break;
                     }
                 }
+            }
             }
             entity.getEvents().trigger(UPDATE_INVENTORY);
             logger.info("Removing item from inventory - " + item.getComponent(ItemComponent.class).getItemName() + ", new count " + this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(), 0));

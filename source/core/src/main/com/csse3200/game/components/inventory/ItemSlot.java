@@ -2,6 +2,7 @@ package com.csse3200.game.components.inventory;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -85,12 +86,14 @@ public class ItemSlot extends Stack {
 		this.count = count;
 		if (this.count > 1) {
 			if (label == null) {
-				label = new Label(this.count + " ", this.skin);
-				label.setColor(Color.BLACK);
+				label = new Label(this.count +"", this.skin);
+				label.setColor(Color.BROWN);
+				label.setX(0);
+				label.setY(0);
 				label.setAlignment(Align.bottomRight);
 				draggable.add(label);
 			} else {
-				label.setText(this.count + " ");
+				label.setText(this.count+"");
 				draggable.add(label);
 
 			}
@@ -153,7 +156,7 @@ public class ItemSlot extends Stack {
 		if (this.count != null && this.count > 1) {
 			if (label == null) {
 				label = new Label(this.count + " ", this.skin);
-				label.setColor(Color.BLACK);
+				label.setColor(Color.WHITE);
 				label.setAlignment(Align.bottomRight);
 				draggable.add(label);
 			} else {
@@ -187,6 +190,12 @@ public class ItemSlot extends Stack {
 		if (!this.removeActor(this.draggable)) {
 			ans = true;
 		}
+		if (stack.getChildren().size == 2) {
+			label = (Label) (stack.getChild(1));
+		}
+		else {
+			label = null;
+		}
 
 		if (stack != null) {
 			this.draggable = stack;
@@ -196,7 +205,9 @@ public class ItemSlot extends Stack {
 	}
 
 	public void setItemImage(Image image) {
-		draggable.removeActor(itemImage);
+		if (draggable.hasChildren()) {
+		draggable.removeActorAt(0,true);
+		}
 		if (image != null) {
 			draggable.addActorAt(0, image);
 			this.itemImage = image;
