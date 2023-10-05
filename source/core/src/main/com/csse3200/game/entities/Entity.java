@@ -14,7 +14,6 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ComponentType;
 import com.csse3200.game.components.ConeLightComponent;
 import com.csse3200.game.components.items.ItemComponent;
-import com.csse3200.game.components.items.WateringCanLevelComponent;
 import com.csse3200.game.components.npc.AnimalAnimationController;
 import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.npc.TamableComponent;
@@ -323,8 +322,8 @@ public class Entity implements Json.Serializable {
             }
         }
         for (Component component : createdComponents) {
-            if (component instanceof AnimationRenderComponent) {
-                ((AnimationRenderComponent) component).togglePauseAnimation();
+            if (component instanceof AnimationRenderComponent animationRenderComponent) {
+                animationRenderComponent.togglePauseAnimation();
             }
         }
     }
@@ -351,7 +350,7 @@ public class Entity implements Json.Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        return (obj instanceof Entity && ((Entity) obj).getId() == this.getId());
+        return (obj instanceof Entity entity) && entity.getId() == this.getId();
     }
 
     @Override
