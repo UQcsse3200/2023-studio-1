@@ -93,6 +93,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           return true;
         case Keys.R:
           entity.getEvents().trigger("eat", entity.getComponent(InventoryComponent.class).getHeldItem());
+            return true;
         default:
           return false;
       }
