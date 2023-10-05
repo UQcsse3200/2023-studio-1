@@ -140,7 +140,7 @@ public class FenceComponent extends Component {
         try {
             ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.GATE_INTERACT);
         } catch (Exception e) {
-
+            /* Catch exception when sound service not available */
         }
 
         isOpen = !isOpen;
