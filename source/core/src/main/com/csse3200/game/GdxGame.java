@@ -10,7 +10,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.csse3200.game.files.UserSettings;
-import com.csse3200.game.services.ResourceService;
 
 /**
  * Entry point of the non-platform-specific game logic. Controls which screen is currently running.
@@ -19,10 +18,6 @@ import com.csse3200.game.services.ResourceService;
  */
 public class GdxGame extends Game {
   private static final Logger logger = LoggerFactory.getLogger(GdxGame.class);
-  private ScreenType screenType;
-  private ResourceService resourceService;
-  private String saveState;
-  private boolean loadState = false;
   private boolean loadSaveOnStart = false;
 
   @Override

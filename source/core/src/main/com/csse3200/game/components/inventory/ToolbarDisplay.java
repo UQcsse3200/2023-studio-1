@@ -1,6 +1,5 @@
 package com.csse3200.game.components.inventory;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -12,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
  */
 public class ToolbarDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(ToolbarDisplay.class);
-    private final Skin skin = new Skin(Gdx.files.internal("gardens-of-the-galaxy/gardens-of-the-galaxy.json"));
+    private final Skin skin = ServiceLocator.getResourceService().getAsset("gardens-of-the-galaxy/gardens-of-the-galaxy.json", Skin.class);
     private final Table table = new Table(skin);
     private final Window window = new Window("", skin);
     private boolean isOpen;
@@ -94,6 +94,7 @@ public class ToolbarDisplay extends UIComponent {
      *  @see Table for positioning options
      */
     private void initialiseToolbar() {
+        logger.debug("Toolbar being made");
         table.defaults().size(64, 64);
 
         for (int i = 0; i < 10; i++) {
@@ -112,6 +113,7 @@ public class ToolbarDisplay extends UIComponent {
             item.add(label);
             int finalI = i;
             item.addListener(new InputListener() {
+                @Override
                 public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                     inventory.setHeldItem(finalI);
                     updateItemSlot(finalI);
@@ -139,6 +141,7 @@ public class ToolbarDisplay extends UIComponent {
      */
     @Override
     public void draw(SpriteBatch batch)  {
+        // Handled else where
     }
 
     /**
@@ -180,13 +183,5 @@ public class ToolbarDisplay extends UIComponent {
             }
             slots.set(i, curSlot);
         }
-    }
-
-    /**
-     * Dispose of Toolbar
-     */
-    @Override
-    public void dispose() {
-        super.dispose();
     }
 }

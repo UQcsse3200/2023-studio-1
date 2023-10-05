@@ -1,8 +1,5 @@
 package com.csse3200.game.components.player;
 
-import java.security.SecureRandom;
-import java.util.List;
-
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -13,12 +10,17 @@ import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.items.ItemActions;
+import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ProjectileFactory;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
+
+import java.security.SecureRandom;
+import java.util.List;
 
 /**
  * Action component for interacting with the player. Player events should be
@@ -41,7 +43,9 @@ public class PlayerActions extends Component {
 
   private SecureRandom random = new SecureRandom();
 
-  int SWORDDAMAGE = 5;
+  int swordDamage = 5;
+
+  private static final String RIGHT_STRING = "right";
 
   @Override
   public void create() {
@@ -56,7 +60,7 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("enterTractor", this::enterTractor);
     entity.getEvents().addListener("use", this::use);
     entity.getEvents().addListener("hotkeySelection", this::hotkeySelection);
-
+    entity.getEvents().addListener("eat", this::eat);
   }
 
   @Override
@@ -85,7 +89,7 @@ public class PlayerActions extends Component {
       String animationName = "animationWalkStop";
       float direction = getPrevMoveDirection();
       if (direction < 45) {
-        entity.getEvents().trigger(animationName, "right", animationRandomizer, false);
+        entity.getEvents().trigger(animationName, RIGHT_STRING, animationRandomizer, false);
       } else if (direction < 135) {
         entity.getEvents().trigger(animationName, "up", animationRandomizer, false);
       } else if (direction < 225) {
@@ -100,7 +104,7 @@ public class PlayerActions extends Component {
     String animationName = String.format("animation%sStart", running ? "Run" : "Walk");
     float direction = moveDirection.angleDeg();
     if (direction < 45) {
-      entity.getEvents().trigger(animationName, "right");
+      entity.getEvents().trigger(animationName, RIGHT_STRING);
     } else if (direction < 135) {
       entity.getEvents().trigger(animationName, "up");
     } else if (direction < 225) {
@@ -186,15 +190,16 @@ public class PlayerActions extends Component {
   }
 
   void interact() {
+    String animationInteract = "animationInteract";
     float direction = getPrevMoveDirection();
     if (direction < 45) {
-      entity.getEvents().trigger("animationInteract", "right");
+      entity.getEvents().trigger(animationInteract, RIGHT_STRING);
     } else if (direction < 135) {
-      entity.getEvents().trigger("animationInteract", "up");
+      entity.getEvents().trigger(animationInteract, "up");
     } else if (direction < 225) {
-      entity.getEvents().trigger("animationInteract", "left");
+      entity.getEvents().trigger(animationInteract, "left");
     } else if (direction < 315) {
-      entity.getEvents().trigger("animationInteract", "down");
+      entity.getEvents().trigger(animationInteract, "down");
     }
 
     /*
@@ -202,7 +207,6 @@ public class PlayerActions extends Component {
      * 1. Go to InteractionDetector.java
      * 2. Add the entity to the interactableEntities array
      */
-    // TODO: do we want it so that it searches in direction instead of just anything in range? functionality for this already exists
     InteractionDetector interactionDetector = entity.getComponent(InteractionDetector.class);
     List<Entity> entitiesInRange = interactionDetector.getEntitiesInRange();
     Entity closestEntity = interactionDetector.getNearest(entitiesInRange);
@@ -224,8 +228,7 @@ public class PlayerActions extends Component {
     List<Entity> areaEntities = ServiceLocator.getGameArea().getAreaEntities();
     for(Entity animal : areaEntities) {
       CombatStatsComponent combat = animal.getComponent(CombatStatsComponent.class);
-      if(combat != null && animal != entity) {
-        if (entity.getPosition().dst(animal.getPosition()) < 3) {
+      if(combat != null && animal != entity && entity.getPosition().dst(animal.getPosition()) < 3) {
           Vector2 result = new Vector2(0, 0);
           result.x = animal.getCenterPosition().x - entity.getCenterPosition().x;
           result.y = animal.getCenterPosition().y - entity.getCenterPosition().y;
@@ -237,10 +240,9 @@ public class PlayerActions extends Component {
           float difference = Math.abs(resAngle - mouseResAngle);
           difference = difference > 180 ? 360 - difference : difference;
           if(difference <= 45) {
-            combat.setHealth(combat.getHealth() - SWORDDAMAGE);
+            combat.setHealth(combat.getHealth() - swordDamage);
             animal.getEvents().trigger("panicStart");
           }
-        }
       }
     }
   }
@@ -291,10 +293,18 @@ public class PlayerActions extends Component {
   }
 
   void use(Vector2 mousePos, Entity itemInHand) {
+    if (itemInHand != null && itemInHand.getComponent(ItemActions.class) != null) {
+      pauseMoving();
+      itemInHand.getComponent(ItemActions.class).use(entity, mousePos);
+    }
+  }
+
+  void eat(Entity itemInHand) {
     if (itemInHand != null) {
-      if (itemInHand.getComponent(ItemActions.class) != null) {
-        pauseMoving();
-        itemInHand.getComponent(ItemActions.class).use(entity, mousePos, map);
+      pauseMoving();
+      if (itemInHand.getComponent(ItemComponent.class).getItemType() == ItemType.FOOD) {
+        itemInHand.getComponent(ItemActions.class).eat(entity);
+        entity.getComponent(InventoryComponent.class).removeItem(itemInHand);
       }
     }
   }

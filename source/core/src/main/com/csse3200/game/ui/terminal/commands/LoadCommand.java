@@ -18,9 +18,14 @@ public class LoadCommand implements Command {
    * @param args command arguments
    */
   public boolean action(ArrayList<String> args) {
-    if (!args.isEmpty()) {
+    if (args.size() > 1) {
       logger.debug("Invalid arguments received for 'load' command: {}", args);
       return false;
+    }
+    if (args.size() == 1) {
+      if (ServiceLocator.getSaveLoadService().validSaveFile(args.get(0))) {
+        ServiceLocator.getSaveLoadService().load(args.get(0));
+      }
     }
     ServiceLocator.getSaveLoadService().load();
     return true;

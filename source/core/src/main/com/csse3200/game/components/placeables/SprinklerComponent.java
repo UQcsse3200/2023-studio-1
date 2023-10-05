@@ -11,14 +11,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
-
-/*
- * TODO:
- *  - animate watering.
- *  - integrate with save&load.
- *  - need finished textures for all sprinkler bits and the pump.
- */
-
 public class SprinklerComponent extends Component {
 
   /**
@@ -86,6 +78,7 @@ public class SprinklerComponent extends Component {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void create() {
     // Create a list of the adjacent sprinklers:
     this.connectedEntityUtility = new ConnectedEntityUtility(entity);
@@ -135,7 +128,7 @@ public class SprinklerComponent extends Component {
   }
 
   /**
-   * Getter for adj entity list TODO doc
+   * Getter for adj entity list
    * @return array of adj entities
    */
   protected Entity[] getAdjList() {
@@ -164,7 +157,6 @@ public class SprinklerComponent extends Component {
 
   /**
    * Helper method to set the texture of this sprinkler, using a given power status and orientation
-   * TODO could modify/simplify
    * @param powerStatus powered status of sprinkler, used for texture selection
    * @param orientation orientation of sprinkler based off of adjacent sprinklers.
    */
@@ -180,7 +172,6 @@ public class SprinklerComponent extends Component {
    * Called via ConnectedEntityComponent's "reconfigure" trigger -
    * This trigger is called when a new sprinkler is placed in this sprinklers' vicinity.
    * Re-configures using pathfinding (see findPump() and notifyConnected() methods).
-   * TODO: findPump and notifyConnected could be cleaned up.
    */
   public void reConfigure() {
     // A pump doesn't need to reconfigure, it's power and texture are constant, and cannot be effected.
@@ -221,7 +212,6 @@ public class SprinklerComponent extends Component {
    * Uses pathfinding to set all connected sprinkles (from this.entity) to the given powerStatus &
    * sets their texture appropriately.
    * @param powerStatus the truth value used to set all sprinklers found via search.
-   * TODO can probably improve efficiency.
    */
   private void notifyConnected(boolean powerStatus) {
     // Set the calling sprinkler to match powerStatus
@@ -257,7 +247,8 @@ public class SprinklerComponent extends Component {
    */
   private void setAoe() {
     this.aoe = new Vector2[12];
-    float x = entity.getPosition().x, y = entity.getPosition().y;
+    float x = entity.getPosition().x;
+    float y = entity.getPosition().y;
     this.aoe = new Vector2[]{
             // 2up, 2down, 2right, 2left.
             new Vector2(x, y + 1),

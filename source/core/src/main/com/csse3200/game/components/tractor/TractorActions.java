@@ -1,9 +1,5 @@
 package com.csse3200.game.components.tractor;
 
-import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
-
-import java.util.Objects;
-
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
@@ -20,6 +16,12 @@ import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Objects;
+
+import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
 
 public class TractorActions extends Component {
   /**
@@ -66,12 +68,17 @@ public class TractorActions extends Component {
   /**
    * The mode the tractor is in, used to interact with tiles
    */
-  private TractorMode mode = TractorMode.normal;
+  private TractorMode mode = TractorMode.NORMAL;
 
   /**
    * The map of the tiles, used to aid in getting / setting tiles
    */
   private GameMap map;
+
+  private static final String RIGHT_STRING = "right";
+
+  private static final Logger logger = LoggerFactory.getLogger(TractorActions.class);
+
 
   @Override
   /**
@@ -123,7 +130,7 @@ public class TractorActions extends Component {
    */
   private String getDirection(float direction) {
     if (direction < 45) {
-      return "right";
+      return RIGHT_STRING;
     } else if (direction < 135) {
       return "up";
     } else if (direction < 225) {
@@ -131,8 +138,9 @@ public class TractorActions extends Component {
     } else if (direction < 315) {
       return "down";
     }
-    // TODO add logger to provide error here?
-    return "right";
+    logger.error("Direction was not in range of 0-360, was {}", direction);
+
+    return RIGHT_STRING;
   }
 
   /**
@@ -152,7 +160,7 @@ public class TractorActions extends Component {
     } else if (direction < 315) {
       return 270;
     }
-    // TODO add logger to provide error here?
+    logger.error("Direction was not in range of 0-360, was {}", direction);
     return 0;
   }
 
@@ -163,8 +171,8 @@ public class TractorActions extends Component {
    */
   private void use() {
     switch (getMode()) {
-      case tilling -> {
-        Array<Object> tiles = getTiles(TractorMode.tilling, getDirection(walkDirection.angleDeg()));
+      case TILLING -> {
+        Array<Object> tiles = getTiles(TractorMode.TILLING, getDirection(walkDirection.angleDeg()));
         if (tiles == null) {
           return;
         }
@@ -174,8 +182,8 @@ public class TractorActions extends Component {
         hoe((TerrainTile) tiles.get(0), (Vector2) tiles.get(2));
         hoe((TerrainTile) tiles.get(1), (Vector2) tiles.get(3));
       }
-      case harvesting -> {
-        Array<Object> tiles = getTiles(TractorMode.tilling, getDirection(walkDirection.angleDeg()));
+      case HARVESTING -> {
+        Array<Object> tiles = getTiles(TractorMode.TILLING, getDirection(walkDirection.angleDeg()));
         if (tiles == null) {
           return;
         }
@@ -198,25 +206,64 @@ public class TractorActions extends Component {
    *          in the same order as the tiles in slots 2 and 3.
    */
   private Array<Object> getTiles(TractorMode mode, String dir) {
+    if (mode == TractorMode.TILLING) {
+      return getTilesTilling(dir);
+    } else if (mode == TractorMode.HARVESTING) {
+      return getTilesHarvest(dir);
+    }
+    return null;
+  }
+
+  private Array<Object> getTilesTilling(String dir) {
     Array<Object> tiles = new Array<>(4);
     Vector2 pos1 = new Vector2();
     Vector2 pos2 = new Vector2();
-    if ((Objects.equals(dir, "right") && mode == TractorMode.tilling) || (Objects.equals(dir, "left") && mode == TractorMode.harvesting)) {
+
+    if (Objects.equals(dir, RIGHT_STRING)) {
       pos1.set(entity.getPosition().x, entity.getPosition().y + 1);
       pos2.set(entity.getPosition().x, entity.getPosition().y + 2);
       tiles.add(map.getTile(pos1), map.getTile(pos2), pos1, pos2);
       return tiles;
-    } else if ((Objects.equals(dir, "left") && mode == TractorMode.tilling) || (Objects.equals(dir, "right") && mode == TractorMode.harvesting)) {
+    } else if (Objects.equals(dir, "left")) {
       pos1.set(entity.getPosition().x + 5, entity.getPosition().y + 1);
       pos2.set(entity.getPosition().x + 5, entity.getPosition().y + 2);
       tiles.add(map.getTile(pos1), map.getTile(pos2), pos1, pos2);
       return tiles;
-    } else if ((Objects.equals(dir, "up") && mode == TractorMode.tilling) || (Objects.equals(dir, "down") && mode == TractorMode.harvesting)) {
+    } else if (Objects.equals(dir, "up")) {
       pos1.set(entity.getPosition().x + 2, entity.getPosition().y + 1);
       pos2.set(entity.getPosition().x + 3, entity.getPosition().y + 1);
       tiles.add(map.getTile(pos1), map.getTile(pos2), pos1, pos2);
       return tiles;
-    } else if ((Objects.equals(dir, "down") && mode == TractorMode.tilling) || (Objects.equals(dir, "up") && mode == TractorMode.harvesting)) {
+    } else if (Objects.equals(dir, "down")) {
+      pos1.set(entity.getPosition().x + 2, entity.getPosition().y + 3);
+      pos2.set(entity.getPosition().x + 3, entity.getPosition().y + 3);
+      tiles.add(map.getTile(pos1), map.getTile(pos2), pos1, pos2);
+      return tiles;
+    }
+    return null;
+  }
+
+  private Array<Object> getTilesHarvest(String dir) {
+    Array<Object> tiles = new Array<>(4);
+    Vector2 pos1 = new Vector2();
+    Vector2 pos2 = new Vector2();
+
+    if (Objects.equals(dir, "left")) {
+      pos1.set(entity.getPosition().x, entity.getPosition().y + 1);
+      pos2.set(entity.getPosition().x, entity.getPosition().y + 2);
+      tiles.add(map.getTile(pos1), map.getTile(pos2), pos1, pos2);
+      return tiles;
+    } else if (Objects.equals(dir, RIGHT_STRING)) {
+      pos1.set(entity.getPosition().x + 5, entity.getPosition().y + 1);
+      pos2.set(entity.getPosition().x + 5, entity.getPosition().y + 2);
+      tiles.add(map.getTile(pos1), map.getTile(pos2), pos1, pos2);
+      return tiles;
+    } else if (Objects.equals(dir, "down")) {
+      pos1.set(entity.getPosition().x + 2, entity.getPosition().y + 1);
+      pos2.set(entity.getPosition().x + 3, entity.getPosition().y + 1);
+      tiles.add(map.getTile(pos1), map.getTile(pos2), pos1, pos2);
+      return tiles;
+    } else if (Objects.equals(dir, "up")) {
       pos1.set(entity.getPosition().x + 2, entity.getPosition().y + 3);
       pos2.set(entity.getPosition().x + 3, entity.getPosition().y + 3);
       tiles.add(map.getTile(pos1), map.getTile(pos2), pos1, pos2);
@@ -322,7 +369,7 @@ public class TractorActions extends Component {
    */
   void exitTractor() {
     this.stopMoving();
-    this.mode = TractorMode.normal;
+    this.mode = TractorMode.NORMAL;
     player.getComponent(PlayerActions.class).setMuted(false);
     muted = true;
     entity.getComponent(AuraLightComponent.class).toggleLight();

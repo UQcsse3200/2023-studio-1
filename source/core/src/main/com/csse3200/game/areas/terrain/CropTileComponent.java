@@ -23,6 +23,11 @@ import com.csse3200.game.services.ServiceLocator;
 public class CropTileComponent extends Component {
 
 	/**
+	 * Sonarcloud said to do it like this instead?
+	 */
+	private static final String PLANT_STRING = "plant";
+
+	/**
 	 * Default rate that a tile's water level decreases
 	 */
 	private static final float WATER_DECREASE_RATE = 0.005f;
@@ -48,7 +53,6 @@ public class CropTileComponent extends Component {
 	private boolean isFertilised;
 	private Entity plant;
 	private DynamicTextureRenderComponent currentTexture;
-	private TerrainTile terrainTile;
 
 	/**
 	 * Creates a new crop tile with default values
@@ -92,7 +96,7 @@ public class CropTileComponent extends Component {
 	public void create() {
 		entity.getEvents().addListener("water", this::waterTile);
 		entity.getEvents().addListener("fertilise", this::fertiliseTile);
-		entity.getEvents().addListener("plant", this::plantCrop);
+		entity.getEvents().addListener(PLANT_STRING, this::plantCrop);
 		entity.getEvents().addListener("destroy", this::destroyTile);
 		entity.getEvents().addListener("harvest", this::harvestCrop);
 		currentTexture = entity.getComponent(DynamicTextureRenderComponent.class);
@@ -135,6 +139,14 @@ public class CropTileComponent extends Component {
 	}
 
 	/**
+	 * Returns whether the tile is fertilised.
+	 * @return True if the tile is fertilised, false otherwise.
+	 */
+	public boolean isFertilised() {
+		return isFertilised;
+	}
+
+	/**
 	 * Destroys both the tile and any plant that is on it
 	 */
 	private void destroyTile(TerrainTile tile) {
@@ -146,7 +158,6 @@ public class CropTileComponent extends Component {
 			entity.dispose();
 		}
 	}
-
 
 	/**
 	 * Plants a plant entity on the tile and stores the plant as a member variable in the tile
@@ -246,7 +257,7 @@ public class CropTileComponent extends Component {
 	 *         status.
 	 */
 	private String getTexturePath() {
-		String path = "images/cropTile_fertilised.png";
+		String path;
 		if (isFertilised) {
 			if (waterContent < 0.5) {
 				path = "images/cropTile_fertilised.png";
@@ -292,7 +303,7 @@ public class CropTileComponent extends Component {
 		json.writeValue("waterContent", waterContent);
 		json.writeValue("soilQuality", soilQuality);
 		json.writeValue("isFertilised", isFertilised);
-		json.writeValue("plant", plant);
+		json.writeValue(PLANT_STRING, plant);
 		json.writeObjectEnd();
 	}
 
@@ -302,20 +313,13 @@ public class CropTileComponent extends Component {
 		waterContent = jsonMap.getFloat("waterContent");
 		soilQuality = jsonMap.getFloat("soilQuality");
 		isFertilised = jsonMap.getBoolean("isFertilised");
-		JsonValue plantData = jsonMap.get("plant");
+		JsonValue plantData = jsonMap.get(PLANT_STRING);
 		if (plantData.get("Entity") != null) {
 			plantData = plantData.get("components").get("PlantComponent");
 			plant = FactoryService.getPlantFactories().get(plantData.getString("name")).apply(this);
 			plant.getComponent(PlantComponent.class).read(json, plantData);
 		} else {
 			plant = null;
-		}
-	}
-
-	public void setTerrainTile(TerrainTile terrainTile) {
-		this.terrainTile = terrainTile;
-		if (terrainTile.getOccupant() == null) {
-			terrainTile.setOccupant(entity);
 		}
 	}
 }

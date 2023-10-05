@@ -1,5 +1,6 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.services.sound.SoundService;
 import com.csse3200.game.components.inventory.InventoryDisplayManager;
 import com.csse3200.game.services.plants.PlantCommandService;
 import com.csse3200.game.services.plants.PlantInfoService;
@@ -41,6 +42,8 @@ public class ServiceLocator {
   private static SaveLoadService saveLoadService;
   private static MissionManager missions;
   private static PlanetOxygenService planetOxygenService;
+  private static SoundService soundService;
+
   private static PlantCommandService plantCommandService;
   private static PlayerHungerService playerHungerService;
 
@@ -54,6 +57,7 @@ public class ServiceLocator {
   public static PlantInfoService getPlantInfoService() {
     return plantInfoService;
   }
+
 
   public static GameArea getGameArea() {
     return gameArea;
@@ -103,6 +107,10 @@ public class ServiceLocator {
 
   public static SaveLoadService getSaveLoadService() {
     return saveLoadService;
+  }
+
+  public static SoundService getSoundService() {
+    return soundService;
   }
 
   public static ParticleService getParticleService() {
@@ -180,13 +188,15 @@ public class ServiceLocator {
     planetOxygenService = source;
   }
 
-  public static void registerPlantCommandService(PlantCommandService source) {
-    logger.debug("Registering plant command service {}", source);
-    plantCommandService = source;
-  }
+
   public static void registerPlayerHungerService(PlayerHungerService source) {
     logger.debug("Registering player hunger service {}", source);
     playerHungerService = source;
+  }
+
+  public static void registerPlantCommandService(PlantCommandService source) {
+    logger.debug("Registering plant command service {}", source);
+    plantCommandService = source;
   }
 
   public static void registerPlantInfoService(PlantInfoService source) {
@@ -217,6 +227,11 @@ public class ServiceLocator {
     saveLoadService = source;
   }
 
+  public static void registerSoundService(SoundService source) {
+    logger.debug("Registering sound service {}", source);
+    soundService = source;
+  }
+
   /**
    * Clears all registered services.
    * Do not clear saveLoadService
@@ -229,6 +244,7 @@ public class ServiceLocator {
     inputService = null;
     resourceService = null;
     gameArea = null;
+    soundService = null;
     lightService = null;
     particleService = null;
     timeService = null;

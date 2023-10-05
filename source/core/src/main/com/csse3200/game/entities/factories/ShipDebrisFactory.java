@@ -17,7 +17,7 @@ public class ShipDebrisFactory {
      * @return new Ship Debris Entity.
      */
     public static Entity createShipDebris(Entity player) {
-        Entity shipDebris = new Entity(EntityType.ShipDebris)
+        Entity shipDebris = new Entity(EntityType.SHIP_DEBRIS)
                 .addComponent(new TextureRenderComponent("images/ship/ship_debris.png"))
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
                 .addComponent(new ColliderComponent())

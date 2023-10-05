@@ -38,14 +38,14 @@ class ManageHostilesQuestTest {
         Set<EntityType> hostileTypes1 = new HashSet<>();
         Set<EntityType> hostileTypes2 = new HashSet<>();
         Set<EntityType> hostileTypes3 = new HashSet<>();
-        hostileTypes1.add(EntityType.OxygenEater);
+        hostileTypes1.add(EntityType.OXYGEN_EATER);
 
-        hostileTypes2.add(EntityType.OxygenEater);
-        hostileTypes2.add(EntityType.Cow);
+        hostileTypes2.add(EntityType.OXYGEN_EATER);
+        hostileTypes2.add(EntityType.COW);
 
-        hostileTypes3.add(EntityType.OxygenEater);
-        hostileTypes3.add(EntityType.Cow);
-        hostileTypes3.add(EntityType.Astrolotl);
+        hostileTypes3.add(EntityType.OXYGEN_EATER);
+        hostileTypes3.add(EntityType.COW);
+        hostileTypes3.add(EntityType.ASTROLOTL);
 
         MHQuest1 = new ManageHostilesQuest("Manage Hostiles Quest 1", r1, hostileTypes1, 10);
         MHQuest2 = new ManageHostilesQuest("Manage Hostiles Quest 2", r2, hostileTypes2, 0);
@@ -124,7 +124,7 @@ class ManageHostilesQuestTest {
                 assertTrue(MHQuest7.isCompleted());
             }
             ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.ANIMAL_DEFEATED.name(),
-                    EntityType.Astrolotl);
+                    EntityType.ASTROLOTL);
         }
         assertFalse(MHQuest1.isCompleted());
         assertTrue(MHQuest2.isCompleted());
@@ -156,7 +156,7 @@ class ManageHostilesQuestTest {
                 assertTrue(MHQuest7.isCompleted());
             }
             ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.ANIMAL_DEFEATED.name(),
-                    EntityType.Cow);
+                    EntityType.COW);
         }
         assertFalse(MHQuest1.isCompleted());
         assertTrue(MHQuest2.isCompleted());
@@ -189,7 +189,7 @@ class ManageHostilesQuestTest {
                 assertTrue(MHQuest7.isCompleted());
             }
             ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.ANIMAL_DEFEATED.name(),
-                    EntityType.OxygenEater);
+                    EntityType.OXYGEN_EATER);
         }
         assertTrue(MHQuest1.isCompleted());
         assertTrue(MHQuest2.isCompleted());
@@ -209,11 +209,11 @@ class ManageHostilesQuestTest {
                 "%d out of %d hostiles dealt with.";
         String desc2 = "Manage the presence of hostile creatures on your farm.\n" +
                 "Deal with hostile creatures by defeating them with weapons, or let your Space Snappers eat them.\n" +
-                "Deal with %d creatures of type Cow, Oxygen Eater.\n" +
+                "Deal with %d creatures of type COW, Oxygen Eater.\n" +
                 "%d out of %d hostiles dealt with.";
         String desc3 = "Manage the presence of hostile creatures on your farm.\n" +
                 "Deal with hostile creatures by defeating them with weapons, or let your Space Snappers eat them.\n" +
-                "Deal with %d creatures of type Cow, Astrolotl, Oxygen Eater.\n" +
+                "Deal with %d creatures of type COW, ASTROLOTL, Oxygen Eater.\n" +
                 "%d out of %d hostiles dealt with.";
         for (int i = 0; i < 10; i++) {
             int min7 = Math.min(i, 3);
@@ -232,7 +232,7 @@ class ManageHostilesQuestTest {
             assertEquals(formatted6, MHQuest6.getDescription());
             assertEquals(formatted7, MHQuest7.getDescription());
             ServiceLocator.getMissionManager().getEvents().trigger(
-                    MissionManager.MissionEvent.ANIMAL_DEFEATED.name(), EntityType.OxygenEater);
+                    MissionManager.MissionEvent.ANIMAL_DEFEATED.name(), EntityType.OXYGEN_EATER);
         }
     }
 
@@ -257,7 +257,7 @@ class ManageHostilesQuestTest {
             assertEquals(formatted6, MHQuest6.getShortDescription());
             assertEquals(formatted7, MHQuest7.getShortDescription());
             ServiceLocator.getMissionManager().getEvents().trigger(
-                    MissionManager.MissionEvent.ANIMAL_DEFEATED.name(), EntityType.OxygenEater);
+                    MissionManager.MissionEvent.ANIMAL_DEFEATED.name(), EntityType.OXYGEN_EATER);
         }
         MHQuest1.resetState();
         MHQuest2.resetState();
@@ -283,7 +283,7 @@ class ManageHostilesQuestTest {
             assertEquals(formatted6, MHQuest6.getShortDescription());
             assertEquals(formatted7, MHQuest7.getShortDescription());
             ServiceLocator.getMissionManager().getEvents().trigger(
-                    MissionManager.MissionEvent.ANIMAL_DEFEATED.name(), EntityType.Cow);
+                    MissionManager.MissionEvent.ANIMAL_DEFEATED.name(), EntityType.COW);
         }MHQuest1.resetState();
         MHQuest2.resetState();
         MHQuest3.resetState();
@@ -308,7 +308,7 @@ class ManageHostilesQuestTest {
             assertEquals(formatted6, MHQuest6.getShortDescription());
             assertEquals(formatted7, MHQuest7.getShortDescription());
             ServiceLocator.getMissionManager().getEvents().trigger(
-                    MissionManager.MissionEvent.ANIMAL_DEFEATED.name(), EntityType.Astrolotl);
+                    MissionManager.MissionEvent.ANIMAL_DEFEATED.name(), EntityType.ASTROLOTL);
         }
     }
 
@@ -322,11 +322,11 @@ class ManageHostilesQuestTest {
                 "%d out of %d hostiles dealt with.";
         String desc2 = "Manage the presence of hostile creatures on your farm.\n" +
                 "Deal with hostile creatures by defeating them with weapons, or let your Space Snappers eat them.\n" +
-                "Deal with %d creatures of type Cow, Oxygen Eater.\n" +
+                "Deal with %d creatures of type COW, Oxygen Eater.\n" +
                 "%d out of %d hostiles dealt with.";
         String desc3 = "Manage the presence of hostile creatures on your farm.\n" +
                 "Deal with hostile creatures by defeating them with weapons, or let your Space Snappers eat them.\n" +
-                "Deal with %d creatures of type Cow, Astrolotl, Oxygen Eater.\n" +
+                "Deal with %d creatures of type COW, ASTROLOTL, Oxygen Eater.\n" +
                 "%d out of %d hostiles dealt with.";
         String shortDesc = "%d out of %d hostiles dealt with";
         MHQuest1.readProgress(progress);

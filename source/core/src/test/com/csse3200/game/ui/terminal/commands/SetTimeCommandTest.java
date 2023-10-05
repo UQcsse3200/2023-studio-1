@@ -32,7 +32,7 @@ class SetTimeCommandTest {
   }
 
   @Test
-  public void validTimeInput() {
+  void validTimeInput() {
     String timeArg = "10";
     args.add(timeArg);
     ServiceLocator.registerTimeSource(mock(GameTime.class));
@@ -44,7 +44,7 @@ class SetTimeCommandTest {
   }
 
   @Test
-  public void tooManyArgs() {
+  void tooManyArgs() {
     args.add("10");
     args.add("10");
     assertFalse(command.isValid(args));
@@ -52,13 +52,13 @@ class SetTimeCommandTest {
   }
 
   @Test
-  public void invalidTimeNumber() {
+  void invalidTimeNumber() {
     args.add("invalid");
     assertFalse(command.isValid(args));
   }
 
   @Test
-  public void invalidTimeRange() {
+  void invalidTimeRange() {
     args.add("24");
     assertFalse(command.isValid(args));
   }

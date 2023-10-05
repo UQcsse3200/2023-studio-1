@@ -23,8 +23,7 @@ public class SaveGame {
    * 
    * @return Copy of the saved game state
    */
-  public static GameState get() {
-    String path = ROOT_DIR + File.separator + SAVE_FILE;
+  public static GameState get(String path) {
     GameState saveFile = FileLoader.readClass(GameState.class, path, Location.LOCAL);
     return saveFile;
   }
@@ -105,10 +104,10 @@ public class SaveGame {
       // If you edit this original array you edit what is in the ResourceService
       Array<Entity> tmp = new Array<>();
       for (Entity e : entities) {
-        if (e.getType() == EntityType.Astrolotl || e.getType() == EntityType.Chicken ||
-                e.getType() == EntityType.Cow || e.getType() == EntityType.OxygenEater ||
-                e.getType() == EntityType.ShipDebris || e.getType() == EntityType.FireFlies ||
-                e.getType() == EntityType.Ship) {
+        if (e.getType() == EntityType.ASTROLOTL || e.getType() == EntityType.CHICKEN ||
+                e.getType() == EntityType.COW || e.getType() == EntityType.OXYGEN_EATER ||
+                e.getType() == EntityType.SHIP_DEBRIS || e.getType() == EntityType.FIRE_FLIES ||
+                e.getType() == EntityType.SHIP) {
           tmp.add(e);
         }
       }
@@ -138,7 +137,7 @@ public class SaveGame {
       // If you edit this original array you edit what is in the ResourceService
       Array<Entity> tiles = new Array<>(entities);
       for (int i = 0; i < tiles.size; i++) {
-        if (tiles.get(i).getType() != EntityType.Tile && tiles.get(i).getType() != EntityType.ShipPartTile) {
+        if (tiles.get(i).getType() != EntityType.TILE && tiles.get(i).getType() != EntityType.SHIP_PART_TILE) {
           tiles.removeIndex(i);
           // Moves the indexing down when removed so keep index same
           i--;
@@ -186,8 +185,8 @@ public class SaveGame {
 
     private Array<Entity> filterPlaceables(Array<Entity> entities) {
       Array<Entity> returnValue = new Array<>(entities);
-      ArrayList<EntityType> placeableTypes = new ArrayList<EntityType>(Arrays.asList(EntityType.Chest, EntityType.Light,
-              EntityType.Fence, EntityType.Gate, EntityType.Sprinkler, EntityType.Pump));
+      ArrayList<EntityType> placeableTypes = new ArrayList<EntityType>(Arrays.asList(EntityType.CHEST, EntityType.LIGHT,
+              EntityType.FENCE, EntityType.GATE, EntityType.SPRINKLER, EntityType.PUMP));
       for (int i = 0; i < returnValue.size; i++) {
         if (!placeableTypes.contains(returnValue.get(i).getType())) {
           returnValue.removeIndex(i);

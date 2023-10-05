@@ -7,7 +7,7 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.services.ServiceLocator;
 
 public class OpenPauseComponent extends Component {
-    private final static Logger logger = LoggerFactory.getLogger(OpenPauseComponent.class);
+    private static final Logger logger = LoggerFactory.getLogger(OpenPauseComponent.class);
     private Boolean pauseOpen;
 
     @Override

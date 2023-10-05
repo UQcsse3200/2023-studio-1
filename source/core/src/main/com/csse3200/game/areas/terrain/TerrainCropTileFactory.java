@@ -48,11 +48,11 @@ public class TerrainCropTileFactory {
 		DynamicTextureRenderComponent renderComponent = new DynamicTextureRenderComponent("images/cropTile.png");
 		renderComponent.setLayer(1);
 
-		Entity tile = new Entity(EntityType.Tile)
+		Entity tile = new Entity(EntityType.TILE)
 				.addComponent(new ColliderComponent().setSensor(true))
 				.addComponent(new PhysicsComponent())
 				.addComponent(renderComponent)
-				.addComponent(new CropTileComponent(stats.initialWaterContent, stats.initialSoilQuality));
+				.addComponent(new CropTileComponent(stats.INITIAL_WATER_CONTENT, stats.INITIAL_SOIL_QUALITY));
 
 		tile.setPosition(position);
 		return tile;

@@ -132,9 +132,9 @@ public class SettingsMenuDisplay extends UIComponent {
   }
 
   private void updateAnimation() {
-    if (frame < SettingsScreen.frameCount) {
+    if (frame < SettingsScreen.FRAME_COUNT) {
       transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
-              .getAsset(SettingsScreen.transitionTextures[frame], Texture.class))));
+              .getAsset(SettingsScreen.getTransitionTextures()[frame], Texture.class))));
       transitionFrames.setWidth(Gdx.graphics.getWidth());
       transitionFrames.setHeight(Gdx.graphics.getHeight() / (float)2); //https://rules.sonarsource.com/java/RSPEC-2184/
       transitionFrames.setPosition(0, Gdx.graphics.getHeight() / (float)2 + 15); //https://rules.sonarsource.com/java/RSPEC-2184/

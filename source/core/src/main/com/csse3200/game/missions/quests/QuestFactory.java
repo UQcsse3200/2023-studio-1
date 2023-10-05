@@ -228,7 +228,7 @@ public class QuestFactory {
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
 
-        return new ManageHostilesQuest(ALIENS_ATTACK_QUEST_NAME, reward, Set.of(EntityType.OxygenEater), 5);
+        return new ManageHostilesQuest(ALIENS_ATTACK_QUEST_NAME, reward, Set.of(EntityType.OXYGEN_EATER), 5);
     }
 
     /**

@@ -12,7 +12,7 @@ import java.util.Set;
 import static java.lang.Math.min;
 
 public class ShipProgressComponent extends Component {
-	static int maximum_repair = 20;
+	static int maximumRepair = 20;
 	private int progress;
 	private Set<Feature> unlockedFeatures;
 
@@ -52,9 +52,9 @@ public class ShipProgressComponent extends Component {
 	 * [NOTE: Currently adds one part at a time, amount changeable in repair in ItemActions.java]
 	 */
 	private void incrementProgress(int amount) {
-		if (this.progress < maximum_repair) {
+		if (this.progress < maximumRepair) {
 			// Bound maximum repair state
-			this.progress = min(this.progress + amount, maximum_repair);
+			this.progress = min(this.progress + amount, maximumRepair);
 
 			for (Feature feature : Feature.values()) {
 				if (feature.unlockLevel <= this.progress) {
