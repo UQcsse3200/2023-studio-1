@@ -10,7 +10,6 @@ import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
-import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -113,10 +112,8 @@ public abstract class GameArea implements Disposable {
             EntityType.SHIP_PART_TILE, EntityType.PUMP));
     for (Entity e : entities) {
       if (loadableTypes.contains(e.getType())) {
-        if (placeableTypes.contains(e.getType())) {
-          if (getMap() != null) {
+        if (placeableTypes.contains(e.getType()) && getMap() != null) {
             getMap().getTile(e.getPosition()).removeOccupant();
-          }
         }
         removeEntity(e);
       }

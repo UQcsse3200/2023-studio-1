@@ -27,17 +27,17 @@ public class InventoryComponent extends Component {
     /**
      * HashMap of the String and the count of the item in the inventory
      */
-    public HashMap<String, Integer> itemCount = new HashMap<>();
+    private HashMap<String, Integer> itemCount = new HashMap<>();
 
     /**
      * HashMap of the String and Entity of the item in the inventory
      */
-    public HashMap<String,Entity> heldItemsEntity = new HashMap<>();
+    private HashMap<String,Entity> heldItemsEntity = new HashMap<>();
 
     /**
      * HashMap of the Position and the String of the item in the inventory
      */
-    public HashMap<Integer,String> itemPlace = new HashMap<>();
+    private HashMap<Integer,String> itemPlace = new HashMap<>();
 
     /**
      * Entity representing the item currently held by the player.
@@ -384,14 +384,11 @@ public class InventoryComponent extends Component {
      */
     public boolean addItem(Entity item) {
         if(item.getType() != EntityType.ITEM || item.getComponent(ItemComponent.class) == null) {
-            logger.info("Adding Entity is not an item");
             return false;
         }
         if (isFull()) {
-            logger.info("Inventory is full");
             return false;
         } else {
-            logger.info("Adding item to inventory - " + item.getComponent(ItemComponent.class).getItemName() + ", old count " + this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(), 0));
             // Update the count of the Item Type
             this.itemCount.put(item.getComponent(ItemComponent.class).getItemName(), this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(), 0) + 1);
             // Add to Entity against Item Type for setting Held Item
@@ -411,34 +408,39 @@ public class InventoryComponent extends Component {
      * @return boolean representing if the item was removed successfully
      */
     public boolean removeItem(Entity item) {
+        // Check if it is an Item
         if(item.getType() != EntityType.ITEM) {
             logger.info("To be removed Entity is not an item");
             return false;
         }
-        // check if item is in inventory
+        // Check if item is in inventory
         if (!this.itemCount.containsKey(item.getComponent(ItemComponent.class).getItemName())) {
             return false;
-        } else {
-            this.itemCount.put(item.getComponent(ItemComponent.class).getItemName(), this.itemCount.get(item.getComponent(ItemComponent.class).getItemName()) - 1);
-            if (this.itemCount.get(item.getComponent(ItemComponent.class).getItemName()).equals(0)) {
-                this.itemCount.remove(item.getComponent(ItemComponent.class).getItemName());
-                // find the position of the item and remove the item from the position
-                for (int i = 0; i < this.itemPlace.size(); i++) {
-                    if (this.itemPlace.get(i).equals(item.getComponent(ItemComponent.class).getItemName())) {
-                        this.itemPlace.remove(i);
-                        if(this.heldIndex == i) {
-                            this.heldItem = null;
-                            this.heldIndex = -1;
-                        }
-                        setHeldItem(heldIndex);
-                        break;
+        }
+        // Decrease item count by 1
+        this.itemCount.put(item.getComponent(ItemComponent.class).getItemName(), this.itemCount.get(item.getComponent(ItemComponent.class).getItemName()) - 1);
+        // If item count is now 0
+        if (this.itemCount.get(item.getComponent(ItemComponent.class).getItemName()).equals(0)) {
+            // Remove it from the item count
+            this.itemCount.remove(item.getComponent(ItemComponent.class).getItemName());
+            // Find the position of the item and remove the item from the position
+            for (Integer i : itemPlace.keySet()) {
+                // Remove the item from item place
+                if (this.itemPlace.get(i).equals(item.getComponent(ItemComponent.class).getItemName())) {
+                    this.itemPlace.remove(i);
+                    // If it was the held item set held item to null
+                    if (this.heldIndex == i) {
+                        this.heldItem = null;
+                        this.heldIndex = -1;
                     }
+                    setHeldItem(heldIndex);
+                    break;
                 }
             }
-            entity.getEvents().trigger(UPDATE_INVENTORY);
-            logger.info("Removing item from inventory - " + item.getComponent(ItemComponent.class).getItemName() + ", new count " + this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(), 0));
-            return true;
         }
+        entity.getEvents().trigger(UPDATE_INVENTORY);
+        logger.info("Removing item from inventory - " + item.getComponent(ItemComponent.class).getItemName() + ", new count " + this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(), 0));
+        return true;
     }
 
     /**

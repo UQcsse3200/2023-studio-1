@@ -207,7 +207,6 @@ public class PlayerActions extends Component {
      * 1. Go to InteractionDetector.java
      * 2. Add the entity to the interactableEntities array
      */
-    // TODO: do we want it so that it searches in direction instead of just anything in range? functionality for this already exists
     InteractionDetector interactionDetector = entity.getComponent(InteractionDetector.class);
     List<Entity> entitiesInRange = interactionDetector.getEntitiesInRange();
     Entity closestEntity = interactionDetector.getNearest(entitiesInRange);
@@ -229,8 +228,7 @@ public class PlayerActions extends Component {
     List<Entity> areaEntities = ServiceLocator.getGameArea().getAreaEntities();
     for(Entity animal : areaEntities) {
       CombatStatsComponent combat = animal.getComponent(CombatStatsComponent.class);
-      if(combat != null && animal != entity) {
-        if (entity.getPosition().dst(animal.getPosition()) < 3) {
+      if(combat != null && animal != entity && entity.getPosition().dst(animal.getPosition()) < 3) {
           Vector2 result = new Vector2(0, 0);
           result.x = animal.getCenterPosition().x - entity.getCenterPosition().x;
           result.y = animal.getCenterPosition().y - entity.getCenterPosition().y;
@@ -245,7 +243,6 @@ public class PlayerActions extends Component {
             combat.setHealth(combat.getHealth() - swordDamage);
             animal.getEvents().trigger("panicStart");
           }
-        }
       }
     }
   }
@@ -296,11 +293,9 @@ public class PlayerActions extends Component {
   }
 
   void use(Vector2 mousePos, Entity itemInHand) {
-    if (itemInHand != null) {
-      if (itemInHand.getComponent(ItemActions.class) != null) {
-        pauseMoving();
-        itemInHand.getComponent(ItemActions.class).use(entity, mousePos);
-      }
+    if (itemInHand != null && itemInHand.getComponent(ItemActions.class) != null) {
+      pauseMoving();
+      itemInHand.getComponent(ItemActions.class).use(entity, mousePos);
     }
   }
 
