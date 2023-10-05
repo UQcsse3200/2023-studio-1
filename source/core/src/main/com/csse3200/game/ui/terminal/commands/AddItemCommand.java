@@ -44,6 +44,7 @@ public class AddItemCommand implements Command {
 			player.getComponent(InventoryComponent.class).addItem(item);
 		} catch (Exception e) {
 			logger.info("Incorrect item name given to addItem command.");
+			return false;
 		}
 		return true;
 	}
