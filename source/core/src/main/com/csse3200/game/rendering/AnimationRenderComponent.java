@@ -109,8 +109,8 @@ public class AnimationRenderComponent extends RenderComponent {
   public void scaleEntity() {
     TextureRegion defaultTexture = this.atlas.findRegion("default");
     entity.setScale(
-            (float) defaultTexture.getRegionWidth() / this.scaleFactor,
-            (float) defaultTexture.getRegionHeight() / this.scaleFactor
+            defaultTexture.getRegionWidth() / this.scaleFactor,
+            defaultTexture.getRegionHeight() / this.scaleFactor
     );
   }
 
@@ -201,8 +201,8 @@ public class AnimationRenderComponent extends RenderComponent {
       TextureRegion region = currentAnimation.getKeyFrame(animationPlayTime);
       Vector2 pos = entity.getPosition();
       entity.setScale(
-              (float) region.getRegionWidth() / this.scaleFactor,
-              (float) region.getRegionHeight() / this.scaleFactor
+               region.getRegionWidth() / this.scaleFactor,
+               region.getRegionHeight() / this.scaleFactor
       );
       Vector2 scale = entity.getScale();
       batch.draw(region, pos.x, pos.y, scale.x, scale.y);
