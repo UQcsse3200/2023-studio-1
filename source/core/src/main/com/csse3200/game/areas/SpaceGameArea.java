@@ -496,7 +496,7 @@ public class SpaceGameArea extends GameArea {
     spawnEntityAt(newShip, SHIP_SPAWN, true, true);
   }
 
-  // This function is just to make testing some plants stuff a bit easier. Will remove when im done with it.
+  // TODO This function is just to make testing some plants stuff a bit easier. Will remove when im done with it.
   private void spawnTestItems() {
     Entity item = ItemFactory.createCosmicCobEar();
     spawnEntityAt(item, PLAYER_SPAWN, true, true);
