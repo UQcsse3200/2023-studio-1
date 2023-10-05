@@ -384,14 +384,11 @@ public class InventoryComponent extends Component {
      */
     public boolean addItem(Entity item) {
         if(item.getType() != EntityType.ITEM || item.getComponent(ItemComponent.class) == null) {
-            logger.info("Adding Entity is not an item");
             return false;
         }
         if (isFull()) {
-            logger.info("Inventory is full");
             return false;
         } else {
-            logger.info("Adding item to inventory - " + item.getComponent(ItemComponent.class).getItemName() + ", old count " + this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(), 0));
             // Update the count of the Item Type
             this.itemCount.put(item.getComponent(ItemComponent.class).getItemName(), this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(), 0) + 1);
             // Add to Entity against Item Type for setting Held Item
