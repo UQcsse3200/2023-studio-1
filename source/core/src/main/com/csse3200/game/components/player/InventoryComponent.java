@@ -8,6 +8,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.HashMap;
@@ -424,12 +425,16 @@ public class InventoryComponent extends Component {
             // Remove it from the item count
             this.itemCount.remove(item.getComponent(ItemComponent.class).getItemName());
             // Find the position of the item and remove the item from the position
-            for (Integer i : itemPlace.keySet()) {
+            for (Map.Entry<Integer, String> placeEntry : itemPlace.entrySet()) {
+                if (placeEntry.getValue() == null) {
+                    // Ignore the position if a remnant null is left behind after moving an item.
+                    continue;
+                }
                 // Remove the item from item place
-                if (this.itemPlace.get(i).equals(item.getComponent(ItemComponent.class).getItemName())) {
-                    this.itemPlace.remove(i);
+                if (placeEntry.getValue().equals(item.getComponent(ItemComponent.class).getItemName())) {
+                    itemPlace.remove(placeEntry.getKey());
                     // If it was the held item set held item to null
-                    if (this.heldIndex == i) {
+                    if (this.heldIndex == placeEntry.getKey()) {
                         this.heldItem = null;
                         this.heldIndex = -1;
                     }
