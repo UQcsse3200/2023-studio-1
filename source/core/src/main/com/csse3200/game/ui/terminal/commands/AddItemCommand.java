@@ -1,7 +1,10 @@
 package com.csse3200.game.ui.terminal.commands;
 
 import java.util.ArrayList;
+import java.util.StringJoiner;
 
+import com.badlogic.gdx.graphics.glutils.FacedCubemapData;
+import com.csse3200.game.services.FactoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,31 +33,24 @@ public class AddItemCommand implements Command {
 			return false;
 		}
 		Entity player = ServiceLocator.getGameArea().getPlayer();
-		String itemName = args.get(0);
-		Entity item;
-		switch (itemName) {
-			case "hoe" -> item = ItemFactory.createHoe();
-			case "shovel" -> item = ItemFactory.createShovel();
-			case "can" -> item = ItemFactory.createWateringcan();
-			case "scythe" -> item = ItemFactory.createScythe();
-			case "sprinkler" -> item = ItemFactory.createSprinklerItem();
-			case "pump" -> item = ItemFactory.createPumpItem();
-			case "fence" -> item = ItemFactory.createFenceItem();
-			case "gate" -> item = ItemFactory.createGateItem();
-			case "chest" -> item = ItemFactory.createChestItem();
-			case "shipPart" -> item = ItemFactory.createShipPart();
-			default -> {
-				logger.debug("The provided item name does not exist");
-				return false;
-			}
+		StringJoiner str = new StringJoiner(" ");
+		for (String partOfName : args) {
+			str.add(partOfName);
 		}
-		ServiceLocator.getGameArea().spawnEntity(item);
-		player.getComponent(InventoryComponent.class).addItem(item);
+		Entity item;
+		try {
+			item = FactoryService.getItemFactories().get(str.toString()).get();
+		} catch (Exception e) {
+			logger.info("Incorrect item name given to addItem command.");
+			return false;
+		}
+        ServiceLocator.getGameArea().spawnEntity(item);
+        player.getComponent(InventoryComponent.class).addItem(item);
 		return true;
 	}
 
 	boolean isValid(ArrayList<String> args) {
-		return args.size() == 1;
+		return args.size() > 0;
 	}
 
 }

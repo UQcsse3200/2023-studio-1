@@ -42,12 +42,6 @@ class AddItemCommandTest {
 		when(ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class)).thenReturn(inventoryComponent);
 	}
 
-	@Test
-	void tooManyArgs() {
-		args.add("wrong");
-		args.add("item");
-		assertFalse(command.isValid(args));
-	}
 
 	@Test
 	void addHoe() {
@@ -64,7 +58,7 @@ class AddItemCommandTest {
 	@Test
 	void addCan() {
 		try (MockedStatic<ItemFactory> factory = mockStatic(ItemFactory.class)) {
-			args.add("can");
+			args.add("watering_can");
 			Entity can = new Entity();
 			factory.when(ItemFactory::createWateringcan).thenReturn(can);
 			command.action(args);
