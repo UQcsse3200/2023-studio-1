@@ -212,11 +212,7 @@ public class CutsceneDisplay extends UIComponent {
      */
     public void removeExternalUI() {
         ServiceLocator.getPlantInfoService().getEvents().trigger("toggleOpen", false);
-        ServiceLocator.getTimeService().getEvents().trigger("toggleUI", false);
-        ServiceLocator.getPlanetOxygenService().getEvents().trigger("toggleUI", false);
-        ServiceLocator.getPlayerHungerService().getEvents().trigger("toggleUI", false);
-        ServiceLocator.getGameArea().getPlayer().getEvents().trigger("toggleUI", false);
-
+        ServiceLocator.getUIService().getEvents().trigger("toggleUI", false);
     }
 
     /**
@@ -225,10 +221,7 @@ public class CutsceneDisplay extends UIComponent {
     public void recoverExternalUI() {
         ServiceLocator.getPlantInfoService().getEvents().
                 trigger("toggleOpen", KeyboardPlayerInputComponent.getShowPlantInfoUI());
-        ServiceLocator.getTimeService().getEvents().trigger("toggleUI", true);
-        ServiceLocator.getPlanetOxygenService().getEvents().trigger("toggleUI", true);
-        ServiceLocator.getPlayerHungerService().getEvents().trigger("toggleUI", true);
-        ServiceLocator.getGameArea().getPlayer().getEvents().trigger("toggleUI", true);
+        ServiceLocator.getUIService().getEvents().trigger("toggleUI", true);
     }
 }
 

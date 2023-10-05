@@ -4,6 +4,7 @@ import com.csse3200.game.services.sound.SoundService;
 import com.csse3200.game.components.inventory.InventoryDisplayManager;
 import com.csse3200.game.services.plants.PlantCommandService;
 import com.csse3200.game.services.plants.PlantInfoService;
+import com.csse3200.game.ui.UIService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,6 +44,7 @@ public class ServiceLocator {
   private static MissionManager missions;
   private static PlanetOxygenService planetOxygenService;
   private static SoundService soundService;
+  private static UIService uiService;
 
   private static PlantCommandService plantCommandService;
   private static PlayerHungerService playerHungerService;
@@ -112,6 +114,8 @@ public class ServiceLocator {
   public static SoundService getSoundService() {
     return soundService;
   }
+
+  public static UIService getUIService() {return uiService;}
 
   public static ParticleService getParticleService() {
     return particleService;
@@ -183,6 +187,11 @@ public class ServiceLocator {
     missions = source;
   }
 
+  public static void registerUIService(UIService source) {
+    logger.debug("Registering UI service {}", source);
+    uiService = source;
+  }
+
   public static void registerPlanetOxygenService(PlanetOxygenService source) {
     logger.debug("Registering planet oxygen service {}", source);
     planetOxygenService = source;
@@ -248,6 +257,7 @@ public class ServiceLocator {
     lightService = null;
     particleService = null;
     timeService = null;
+    uiService = null;
   }
 
   private ServiceLocator() {

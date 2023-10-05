@@ -30,7 +30,7 @@ public class HungerBar extends UIComponent{
         // Adds a listener to check for hunger updates
         ServiceLocator.getPlayerHungerService().getEvents()
                 .addListener("hungerUpdate", this::updateDisplay);
-        ServiceLocator.getPlayerHungerService().getEvents()
+        ServiceLocator.getUIService().getEvents()
                 .addListener("toggleUI", this::toggleDisplay);
 
         updateDisplay(30);

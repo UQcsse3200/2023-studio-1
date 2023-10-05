@@ -4,6 +4,7 @@ import com.csse3200.game.services.*;
 import com.csse3200.game.components.plants.PlantInfoDisplayComponent;
 import com.csse3200.game.entities.FireflySpawner;
 import com.csse3200.game.components.losescreen.LoseScreenDisplay;
+import com.csse3200.game.ui.UIService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.ScreenAdapter;
@@ -126,6 +127,7 @@ public class MainGameScreen extends ScreenAdapter {
         ServiceLocator.registerPlayerHungerService(new PlayerHungerService());
         ServiceLocator.registerPlantInfoService(new PlantInfoService());
 
+        ServiceLocator.registerUIService(new UIService());
         ServiceLocator.registerSoundService(new SoundService());
 
 

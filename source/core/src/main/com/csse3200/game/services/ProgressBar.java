@@ -28,7 +28,7 @@ public class ProgressBar extends UIComponent {
         this.dayOffset = 0;
         ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::updateDisplay);
         ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::updateDisplay);
-        ServiceLocator.getTimeService().getEvents().addListener("toggleUI", this::toggleDisplay);
+        ServiceLocator.getUIService().getEvents().addListener("toggleUI", this::toggleDisplay);
         ServiceLocator.getMissionManager().getEvents().addListener("An Agreement", this::updateProgressBarAct2);
         ServiceLocator.getMissionManager().getEvents().addListener("Making Contact", this::updateProgressBarAct3);
         progressBarImagesAct1 = new Array<Image>();
