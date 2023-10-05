@@ -196,4 +196,13 @@ public class KeyboardPlayerInputComponent extends InputComponent {
      }
      entity.getEvents().trigger("hotkeySelection", index);
    }
+
+  /**
+   * Shows whether the plant info window is currently being displayed
+   *
+   * @return boolean that represents whether plant info was being shown
+   */
+   public static boolean getShowPlantInfoUI() {
+     return showPlantInfoUI;
+   }
 }

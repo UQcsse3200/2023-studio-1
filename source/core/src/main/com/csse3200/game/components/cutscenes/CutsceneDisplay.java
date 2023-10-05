@@ -14,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
+import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.missions.cutscenes.Cutscene;
 import com.csse3200.game.services.ServiceLocator;
 import com.rafaskoberg.gdx.typinglabel.TypingLabel;
@@ -78,7 +80,7 @@ public class CutsceneDisplay extends UIComponent {
      */
     public void spawnCutsceneDisplay() {
         logger.debug("Cutscene Display spawned");
-
+        removeExternalUI();
         logger.debug("Cutscene table spawned");
         dialogueTable = new Table();
         dialogueTable.setFillParent(true);
@@ -109,7 +111,7 @@ public class CutsceneDisplay extends UIComponent {
         pixmap.dispose();
         transparentRectangle = new Image(transparentRecTex);
         transparentRectangle.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        transparentRectangle.getColor().a = 0.5f;
+        transparentRectangle.getColor().a = 0.65f;
         stage.addActor(transparentRectangle);
     }
 
@@ -187,11 +189,27 @@ public class CutsceneDisplay extends UIComponent {
         stage.getRoot().removeActor(transparentRectangle);
         stage.getRoot().removeActor(dialogueTable);
         super.dispose();
+        recoverExternalUI();
     }
 
     @Override
     public void draw(SpriteBatch batch) {
         // handled by the stage
+    }
+
+    /**
+     * Removes the UI components on the screen so that cutscene is not so cluttered
+     */
+    public void removeExternalUI() {
+        ServiceLocator.getPlantInfoService().getEvents().trigger("toggleOpen", false);
+    }
+
+    /**
+     * Recovers the UI components that were removed back onto the screen
+     */
+    public void recoverExternalUI() {
+        ServiceLocator.getPlantInfoService().getEvents().
+                trigger("toggleOpen", KeyboardPlayerInputComponent.getShowPlantInfoUI());
     }
 }
 
