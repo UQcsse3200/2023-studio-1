@@ -202,6 +202,7 @@ public class CutsceneDisplay extends UIComponent {
      */
     public void removeExternalUI() {
         ServiceLocator.getPlantInfoService().getEvents().trigger("toggleOpen", false);
+        ServiceLocator.getTimeService().getEvents().trigger("toggleClockDisplay", false);
     }
 
     /**
@@ -210,6 +211,7 @@ public class CutsceneDisplay extends UIComponent {
     public void recoverExternalUI() {
         ServiceLocator.getPlantInfoService().getEvents().
                 trigger("toggleOpen", KeyboardPlayerInputComponent.getShowPlantInfoUI());
+        ServiceLocator.getTimeService().getEvents().trigger("toggleClockDisplay", true);
     }
 }
 
