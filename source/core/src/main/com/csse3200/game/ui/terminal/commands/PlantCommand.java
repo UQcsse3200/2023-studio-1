@@ -19,8 +19,8 @@ public class PlantCommand implements Command {
             logger.debug("Invalid arguments received for 'plant' command: {}", args);
             return false;
         }
-        events = ServiceLocator.getPlantCommandService().getEvents();
-        events.trigger("forceGrowthStage", (String)args.get(0));
+        EventHandler events = ServiceLocator.getPlantCommandService().getEvents();
+        events.trigger("forceGrowthStage", args.get(0));  // Removed unnecessary cast
         return true;
     }
 
