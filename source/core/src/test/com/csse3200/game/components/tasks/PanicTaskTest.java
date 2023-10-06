@@ -28,7 +28,7 @@ import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 
 @ExtendWith(GameExtension.class)
-public class PanicTaskTest {
+class PanicTaskTest {
     private Entity entity;
     private PhysicsMovementComponent movementComponent;
     private PanicTask panicTask;
@@ -53,7 +53,7 @@ public class PanicTaskTest {
     }
 
     @Test
-    public void testStartMovesEntity() {
+    void testStartMovesEntity() {
         entity.create();
         entity.setPosition(0f, 0f);
         EventListener0 callback = mock(EventListener0.class);
@@ -76,7 +76,7 @@ public class PanicTaskTest {
     }
 
     @Test
-    public void testPanicTaskUpdate() {
+    void testPanicTaskUpdate() {
         entity.create();
         entity.setPosition(0f, 0f);
         entity.getEvents().trigger("panicTrigger");
@@ -94,7 +94,7 @@ public class PanicTaskTest {
     }
 
     @Test
-    public void testPanicFinishes() {
+    void testPanicFinishes() {
         entity.create();
         entity.setPosition(0f, 0f);
         entity.getEvents().trigger("panicTrigger");
