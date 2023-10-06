@@ -49,10 +49,13 @@ public class SpaceGameArea extends GameArea {
           "images/iso_grass_2.png",
           "images/iso_grass_3.png",
           "images/tool_shovel.png",
+          "images/fishing_rod.png",
           "images/animals/egg.png",
           "images/animals/milk.png",
           "images/animals/golden_egg.png",
           "images/animals/beef.png",
+          "images/lava_eel.png",
+          "images/salmon.png",
           "images/animals/chicken_meat.png",
 
           "images/tool_hoe.png",
@@ -138,8 +141,6 @@ public class SpaceGameArea extends GameArea {
 
           "images/Player_Hunger/hunger_bar_outline.png",
           "images/Player_Hunger/hunger_bar_fill.png",
-
-
 
           "images/plants/misc/atomic_algae_seed.png",
           "images/invisible_sprite.png",

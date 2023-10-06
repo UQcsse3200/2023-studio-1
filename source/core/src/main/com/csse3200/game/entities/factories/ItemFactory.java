@@ -446,22 +446,22 @@ return createBaseItem()
 
   public static Entity createFishingRod() {
     return createBaseItem()
-            .addComponent(new TextureRenderComponent("images/ship/ship_part.png"))
+            .addComponent(new TextureRenderComponent("images/fishing_rod.png"))
             .addComponent(new ItemComponent("Fishing Rod", ItemType.FISHING_ROD,
-                    "Used to fish in the ocean, lakes and lava!" , "images/ship/ship_part.png"));
+                    "Used to fish in the ocean, lakes and lava!" , "images/fishing_rod.png"));
   }
 
   public static Entity createLavaEel() {
     return createBaseItem()
-            .addComponent(new TextureRenderComponent("images/ship/ship_part.png"))
+            .addComponent(new TextureRenderComponent("images/lava_eel.png"))
             .addComponent(new ItemComponent("Lava Eel", ItemType.FOOD,
-                    "Huge eel that dwells in the bottoms of volcano's" , "images/ship/ship_part.png"));
+                    "Huge eel that dwells in the bottoms of volcano's" , "images/lava_eel.png"));
   }
 
   public static Entity createSalmon() {
     return createBaseItem()
-            .addComponent(new TextureRenderComponent("images/ship/ship_part.png"))
+            .addComponent(new TextureRenderComponent("images/salmon.png"))
             .addComponent(new ItemComponent("Salmon", ItemType.FOOD,
-                    "A common fish that lives near the shorelines" , "images/ship/ship_part.png"));
+                    "A common fish that lives near the shorelines" , "images/salmon.png"));
   }
 }
