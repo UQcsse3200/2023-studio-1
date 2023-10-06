@@ -150,8 +150,6 @@ public class MainGameScreen extends ScreenAdapter {
         renderer.getCamera().setTrackEntity(spaceGameArea.getPlayer());
 
         createUI();
-        spaceGameArea.getPlayer().getComponent(PlayerActions.class).setCameraVar(renderer.getCamera());
-        spaceGameArea.getTractor().getComponent(TractorActions.class).setCameraVar(renderer.getCamera());
 
         ServiceLocator.getMissionManager().getEvents().addListener("loseScreen", this::playLoseScreen);
 

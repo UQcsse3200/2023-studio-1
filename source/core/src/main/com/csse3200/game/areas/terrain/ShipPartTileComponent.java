@@ -102,7 +102,7 @@ public class ShipPartTileComponent extends Component {
 		jsonMap = jsonMap.get("components").get(this.getClass().getSimpleName());
 		JsonValue debrisData = jsonMap.get("shipDebris");
 		if (debrisData.get("Entity") != null) {
-			Entity newShipDebris = ShipDebrisFactory.createShipDebris(null);
+			Entity newShipDebris = ShipDebrisFactory.createShipDebris();
 			addShipDebris(newShipDebris);
 		} else {
 			shipDebris = null;

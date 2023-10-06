@@ -3,6 +3,7 @@ package com.csse3200.game.missions.rewards;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.List;
@@ -33,6 +34,9 @@ public class EntityReward extends Reward {
         GridPoint2 playerPositionGrid = new GridPoint2((int) playerPosition.x, (int) playerPosition.y);
         for (Entity entity : rewardEntities) {
             ServiceLocator.getGameArea().spawnEntityAt(entity, playerPositionGrid, true, true);
+            if (entity.getType() == EntityType.TRACTOR) {
+                ServiceLocator.getGameArea().setTractor(entity);
+            }
         }
     }
 }
