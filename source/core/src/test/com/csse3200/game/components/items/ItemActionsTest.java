@@ -41,7 +41,7 @@ import com.csse3200.game.services.ServiceLocator;
 
 // Setup fields and config were taken from GameAreaTest and the authors were co-authored to share credit for the work
 @ExtendWith(GameExtension.class)
-public class ItemActionsTest {
+class ItemActionsTest {
     /**
      * NOTE TO MARKER I TRIED MOVING THE BIT OF CODE THAT HAPPENS BEFORE EACH TEST TO A BEFORE EACH AND IT FAILED?????
      * so i know it can be writtern better but it just died? also not all need it and some break if it has it so technically

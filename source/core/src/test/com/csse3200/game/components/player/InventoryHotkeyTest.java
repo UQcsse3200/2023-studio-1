@@ -25,7 +25,7 @@ import com.csse3200.game.input.InputService;
 import com.csse3200.game.services.ServiceLocator;
 
 @ExtendWith(GameExtension.class)
-public class InventoryHotkeyTest {
+class InventoryHotkeyTest {
 	private Entity player;
 	private InventoryComponent inventoryComponent;
 	private PlayerActions playerActions;
