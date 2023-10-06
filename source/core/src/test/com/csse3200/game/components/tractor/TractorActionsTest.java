@@ -29,9 +29,10 @@ class TractorActionsTest {
 
   @Test
   void testMove() {
+    Entity tractor = new Entity(EntityType.TRACTOR);
     ServiceLocator.registerPhysicsService(new PhysicsService());
     TractorActions tractorActions = new TractorActions();
-    tractorActions.setPhysicsComponent(new PhysicsComponent());
+    tractor.addComponent(tractorActions).addComponent(new PhysicsComponent());
     assertFalse(tractorActions.isMoving()); // Initial state
 
     Vector2 direction = new Vector2(1, 1);

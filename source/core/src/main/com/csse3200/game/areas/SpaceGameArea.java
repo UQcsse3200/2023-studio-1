@@ -302,7 +302,6 @@ public class SpaceGameArea extends GameArea {
 
   private Entity player;
   private final ClimateController climateController;
-  private Entity tractor;
 
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
@@ -336,7 +335,6 @@ public class SpaceGameArea extends GameArea {
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
 
-    tractor = spawnTractor();
     spawnPlayerHighlight();
     spawnQuestgiver();
 
@@ -498,17 +496,6 @@ public class SpaceGameArea extends GameArea {
     spawnEntityAt(newShip, SHIP_SPAWN, true, true);
   }
 
-  /**
-   * Spawns the Tractor Entity be calling upon it's factory
-   *
-   * @return a reference to the tractor
-   */
-  private Entity spawnTractor() {
-    Entity newTractor = TractorFactory.createTractor(player);
-    spawnEntityAt(newTractor, TRACTOR_SPAWN, true, true);
-    return newTractor;
-  }
-
   private void playMusic() {
     /*
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
@@ -567,13 +554,6 @@ public class SpaceGameArea extends GameArea {
   public void dispose() {
     super.dispose();
     this.unloadAssets();
-  }
-
-  /**
-   * Returns the tractor entity
-   */
-  public Entity getTractor() {
-    return tractor;
   }
 
 

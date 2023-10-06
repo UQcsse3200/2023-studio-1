@@ -228,7 +228,7 @@ class QuestFactoryTest {
     @Test
     void testCreateTractorQuest() {
         try (MockedStatic<TractorFactory> tractorFactoryMockedStatic = mockStatic(TractorFactory.class)) {
-            tractorFactoryMockedStatic.when(() -> TractorFactory.createTractor(any())).thenReturn(mockEntity);
+            tractorFactoryMockedStatic.when(() -> TractorFactory.createTractor()).thenReturn(mockEntity);
             MissionCompleteQuest quest = QuestFactory.createTractorQuest();
             assertEquals(QuestFactory.TRACTOR_GO_BRRRRRR, quest.getName());
             assertFalse(quest.isCompleted());
