@@ -21,7 +21,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private static boolean menuOpened = false;
   private static Enum<MenuTypes> currentMenu = MenuTypes.NONE;
 
-  private static boolean showPlantInfoUI = true;
+  private boolean showPlantInfoUI = true;
   public enum MenuTypes{
     PAUSEMENU,
     NONE
@@ -88,7 +88,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           entity.getEvents().trigger("toggleLight");
           return true;
         case Keys.Q:
-          KeyboardPlayerInputComponent.showPlantInfoUI = !KeyboardPlayerInputComponent.showPlantInfoUI;
+          showPlantInfoUI = !showPlantInfoUI;
           ServiceLocator.getPlantInfoService().getEvents().trigger("toggleOpen", showPlantInfoUI);
           return true;
         case Keys.R:

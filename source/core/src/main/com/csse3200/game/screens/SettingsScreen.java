@@ -26,7 +26,7 @@ public class SettingsScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(SettingsScreen.class);
   public static final int FRAME_COUNT = 71;
   private static final String[] mainMenuTextures = {"images/galaxy_home_still.png"};
-  private static String[] transitionTextures = new String[FRAME_COUNT];
+  private String[] transitionTextures = new String[FRAME_COUNT];
   private static final String ANIMATION_PREFIX = "images/menu_animations/menu_animations";
   private Texture backgroundTexture;
   private SpriteBatch batch;
@@ -80,7 +80,7 @@ public class SettingsScreen extends ScreenAdapter {
     ResourceService resourceService = ServiceLocator.getResourceService();
 
     for (int i = 0; i < FRAME_COUNT; i++) {
-      SettingsScreen.transitionTextures[i] = ANIMATION_PREFIX + i + ".png";
+      transitionTextures[i] = ANIMATION_PREFIX + i + ".png";
     }
     resourceService.loadTextures(transitionTextures);
     ServiceLocator.getResourceService().loadAll();
@@ -109,7 +109,7 @@ public class SettingsScreen extends ScreenAdapter {
    * Get the transition textures for control screen
    * @return the transition textures
    */
-  public static String[] getTransitionTextures() {
+  public String[] getTransitionTextures() {
     return transitionTextures;
   }
 }
