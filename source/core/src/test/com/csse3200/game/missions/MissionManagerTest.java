@@ -160,14 +160,14 @@ class MissionManagerTest {
     }
 
     @Test
-    public void testAchievementsLoadCorrectly() {
+    void testAchievementsLoadCorrectly() {
         assertEquals("Plant President", ServiceLocator.getMissionManager().getAchievements()[0].getName());
         assertEquals("Crop Enjoyer", ServiceLocator.getMissionManager().getAchievements()[1].getName());
         assertEquals("Gardener of the Galaxy", ServiceLocator.getMissionManager().getAchievements()[2].getName());
     }
 
     @Test
-    public void testAcceptNonSelectableQuest() {
+    void testAcceptNonSelectableQuest() {
         int initialNumberSelectableQuests = ServiceLocator.getMissionManager().getSelectableQuests().size();
         int initialNumberActiveQuests = ServiceLocator.getMissionManager().getActiveQuests().size();
 
@@ -185,7 +185,7 @@ class MissionManagerTest {
     }
 
     @Test
-    public void testAddQuest() {
+    void testAddQuest() {
         int initialNumberSelectableQuests = ServiceLocator.getMissionManager().getSelectableQuests().size();
         int initialNumberActiveQuests = ServiceLocator.getMissionManager().getActiveQuests().size();
 
@@ -203,7 +203,7 @@ class MissionManagerTest {
     }
 
     @Test
-    public void testAcceptSelectableQuest() {
+    void testAcceptSelectableQuest() {
         int initialNumberSelectableQuests = ServiceLocator.getMissionManager().getSelectableQuests().size();
         int initialNumberActiveQuests = ServiceLocator.getMissionManager().getActiveQuests().size();
 
@@ -233,7 +233,7 @@ class MissionManagerTest {
     }
 
     @Test
-    public void testSelectableQuestsDoNotUpdate() {
+    void testSelectableQuestsDoNotUpdate() {
         ServiceLocator.getMissionManager().addQuest(q1);
         ServiceLocator.getMissionManager().addQuest(q2);
         ServiceLocator.getMissionManager().addQuest(q3);
@@ -258,7 +258,7 @@ class MissionManagerTest {
     }
 
     @Test
-    public void testActiveQuestsUpdate() {
+    void testActiveQuestsUpdate() {
         ServiceLocator.getMissionManager().acceptQuest(q1);
         ServiceLocator.getMissionManager().acceptQuest(q2);
         ServiceLocator.getMissionManager().acceptQuest(q3);
@@ -283,7 +283,7 @@ class MissionManagerTest {
     }
 
     @Test
-    public void testQuestsOnlyUpdateOnceAccepted() {
+    void testQuestsOnlyUpdateOnceAccepted() {
         ServiceLocator.getMissionManager().addQuest(q1);
         ServiceLocator.getMissionManager().addQuest(q2);
         ServiceLocator.getMissionManager().addQuest(q3);
@@ -330,7 +330,7 @@ class MissionManagerTest {
     }
 
     @Test
-    public void testSelectableQuestsDoNotExpire() {
+    void testSelectableQuestsDoNotExpire() {
         ServiceLocator.getMissionManager().addQuest(q1);
         ServiceLocator.getMissionManager().addQuest(q2);
         ServiceLocator.getMissionManager().addQuest(q3);
@@ -356,7 +356,7 @@ class MissionManagerTest {
     }
 
     @Test
-    public void testActiveQuestsExpire() {
+    void testActiveQuestsExpire() {
         ServiceLocator.getMissionManager().acceptQuest(q1);
         ServiceLocator.getMissionManager().acceptQuest(q2);
         ServiceLocator.getMissionManager().acceptQuest(q3);
@@ -382,7 +382,7 @@ class MissionManagerTest {
     }
 
     @Test
-    public void testQuestsOnlyExpireOnceAccepted() {
+    void testQuestsOnlyExpireOnceAccepted() {
         ServiceLocator.getMissionManager().addQuest(q1);
         ServiceLocator.getMissionManager().addQuest(q2);
         ServiceLocator.getMissionManager().addQuest(q3);
@@ -431,7 +431,7 @@ class MissionManagerTest {
     }
 
     @Test
-    public void testQuestExpiryTriggersEvent() {
+    void testQuestExpiryTriggersEvent() {
         int[] counts = new int[]{0};
         ServiceLocator.getMissionManager().getEvents().addListener(
                 MissionManager.MissionEvent.QUEST_EXPIRED.name(),
@@ -456,7 +456,7 @@ class MissionManagerTest {
     }
 
     @Test
-    public void testAddingQuestTriggersEvent() {
+    void testAddingQuestTriggersEvent() {
         int[] counts = new int[]{0};
         ServiceLocator.getMissionManager().getEvents().addListener(
                 MissionManager.MissionEvent.NEW_QUEST.name(),
@@ -477,7 +477,7 @@ class MissionManagerTest {
     }
 
     @Test
-    public void testMandatoryQuestExpiryEndsGame() {
+    void testMandatoryQuestExpiryEndsGame() {
         ServiceLocator.getMissionManager().addQuest(q1);
         ServiceLocator.getMissionManager().addQuest(q2);
         ServiceLocator.getMissionManager().addQuest(q3);

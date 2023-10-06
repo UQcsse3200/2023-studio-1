@@ -47,7 +47,7 @@ class ConeLightComponentTest {
 	}
 
 	@Test
-	public void testSetDistance() {
+	void testSetDistance() {
 		try (MockedConstruction<ConeLight> mock = mockConstruction(ConeLight.class)) {
 			ConeLightComponent component = new ConeLightComponent();
 			light = mock.constructed().get(0);
@@ -58,7 +58,7 @@ class ConeLightComponentTest {
 	}
 
 	@Test
-	public void testToggle() {
+	void testToggle() {
 		try (MockedConstruction<ConeLight> mock = mockConstruction(ConeLight.class)) {
 			Entity entity = createEntity();
 			ConeLightComponent component = entity.getComponent(ConeLightComponent.class);
@@ -70,7 +70,7 @@ class ConeLightComponentTest {
 	}
 
 	@Test
-	public void testCreate() {
+	void testCreate() {
 		try (MockedConstruction<ConeLight> mock = mockConstruction(ConeLight.class)) {
 			Entity entity = createEntity();
 			ConeLightComponent component = entity.getComponent(ConeLightComponent.class);
@@ -81,7 +81,7 @@ class ConeLightComponentTest {
 	}
 
 	@Test
-	public void testSetColor() {
+	void testSetColor() {
 		try (MockedConstruction<ConeLight> mock = mockConstruction(ConeLight.class)) {
 			ConeLightComponent component = new ConeLightComponent();
 			light = mock.constructed().get(0);
@@ -93,7 +93,7 @@ class ConeLightComponentTest {
 	}
 
 	@Test
-	public void testGetActive() {
+	void testGetActive() {
 		try (MockedConstruction<ConeLight> mock = mockConstruction(ConeLight.class)) {
 			ConeLightComponent component = new ConeLightComponent();
 			light = mock.constructed().get(0);
@@ -103,7 +103,7 @@ class ConeLightComponentTest {
 	}
 
 	@Test
-	public void testUpdate() {
+	void testUpdate() {
 		try (MockedConstruction<ConeLight> mock = mockConstruction(ConeLight.class)) {
 			Entity entity = createEntity();
 			ConeLightComponent component = entity.getComponent(ConeLightComponent.class);
@@ -121,7 +121,7 @@ class ConeLightComponentTest {
 	}
 
 	@Test
-	public void testDispose() {
+	void testDispose() {
 		try (MockedConstruction<ConeLight> mock = mockConstruction(ConeLight.class)) {
 			Entity entity = createEntity();
 			ConeLightComponent component = entity.getComponent(ConeLightComponent.class);
@@ -132,7 +132,7 @@ class ConeLightComponentTest {
 	}
 
 	@Test
-	public void testSetDirection() {
+	void testSetDirection() {
 		try (MockedConstruction<ConeLight> mock = mockConstruction(ConeLight.class)) {
 			Entity entity = createEntity();
 			ConeLightComponent component = entity.getComponent(ConeLightComponent.class);

@@ -55,8 +55,8 @@ public class EntityService {
         entity.togglePauseAnimations(true);
       }
     }
-    pauseStartFlag = false;
-    pauseEndFlag = false;
+    EntityService.pauseStartFlag = false;
+    EntityService.pauseEndFlag = false;
 
   }
 

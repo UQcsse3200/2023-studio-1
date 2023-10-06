@@ -607,6 +607,7 @@ public class MissionDisplay extends UIComponent {
      */
     @Override
     public void draw(SpriteBatch batch) {
+        // Handled else where
     }
 
     /**

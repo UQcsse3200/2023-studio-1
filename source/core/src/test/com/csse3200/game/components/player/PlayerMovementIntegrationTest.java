@@ -27,7 +27,7 @@ import com.csse3200.game.utils.math.Vector2Utils;
 
 
 @ExtendWith(GameExtension.class)
-public class PlayerMovementIntegrationTest {
+class PlayerMovementIntegrationTest {
     private Entity player;
 
     @BeforeEach
