@@ -443,4 +443,11 @@ return createBaseItem()
                             " for ship repairs...",
                     "images/ship/ship_part.png"));
   }
+
+  public static Entity createFishingRod() {
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/ship/ship_part.png"))
+            .addComponent(new ItemComponent("Fishing Rod", ItemType.FISHING_ROD,
+                    "Used to fish in the ocean, lakes and lava!" , "images/ship/ship_part.png"));
+  }
 }
