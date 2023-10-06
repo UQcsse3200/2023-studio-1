@@ -468,7 +468,7 @@ public class Entity implements Json.Serializable {
             default:
                 if (FactoryService.getNpcFactories().containsKey(type)) {
                     // Makes a new NPC
-                    Entity npc = FactoryService.getNpcFactories().get(type).apply(ServiceLocator.getGameArea().getPlayer());
+                    Entity npc = FactoryService.getNpcFactories().get(type).get();
                     if (npc.getComponent(TamableComponent.class) != null) {
                         npc.getComponent(TamableComponent.class).read(json, jsonMap.get(COMPONENTS_STRING));
                     }
@@ -520,7 +520,7 @@ public class Entity implements Json.Serializable {
     }
 
     private void readShipDebris() {
-        Entity shipDebris = ShipDebrisFactory.createShipDebris(null);
+        Entity shipDebris = ShipDebrisFactory.createShipDebris();
         ServiceLocator.getGameArea().spawnEntity(shipDebris);
         shipDebris.setPosition(position);
 

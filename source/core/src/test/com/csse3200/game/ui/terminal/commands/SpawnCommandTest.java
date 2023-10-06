@@ -55,9 +55,9 @@ class SpawnCommandTest {
 		args.add("cow");
 		try (MockedStatic<NPCFactory> factory = mockStatic(NPCFactory.class)) {
 			Entity cow = mock(Entity.class);
-			factory.when(() -> NPCFactory.createCow(player)).thenReturn(cow);
+			factory.when(() -> NPCFactory.createCow()).thenReturn(cow);
 			command.action(args);
-			factory.verify(() -> NPCFactory.createCow(player), times(1));
+			factory.verify(() -> NPCFactory.createCow(), times(1));
 			verify(player, times(1)).getPosition();
 			verify(cow).setPosition(playerPosition);
 			verify(entityService).register(cow);
@@ -72,9 +72,9 @@ class SpawnCommandTest {
 		Vector2 position = new Vector2(1, 1);
 		try (MockedStatic<NPCFactory> factory = mockStatic(NPCFactory.class)) {
 			Entity cow = mock(Entity.class);
-			factory.when(() -> NPCFactory.createCow(player)).thenReturn(cow);
+			factory.when(() -> NPCFactory.createCow()).thenReturn(cow);
 			command.action(args);
-			factory.verify(() -> NPCFactory.createCow(player), times(1));
+			factory.verify(() -> NPCFactory.createCow(), times(1));
 			verify(player, times(0)).getPosition();
 			verify(cow).setPosition(position);
 			verify(entityService).register(cow);
@@ -89,9 +89,9 @@ class SpawnCommandTest {
 		Vector2 position = new Vector2(1, 1);
 		try (MockedStatic<NPCFactory> factory = mockStatic(NPCFactory.class)) {
 			Entity cow = mock(Entity.class);
-			factory.when(() -> NPCFactory.createCow(player)).thenReturn(cow);
+			factory.when(() -> NPCFactory.createCow()).thenReturn(cow);
 			assertFalse(command.action(args));
-			factory.verify(() -> NPCFactory.createCow(player), times(1));
+			factory.verify(() -> NPCFactory.createCow(), times(1));
 			verify(player, times(0)).getPosition();
 			verify(cow,times(0)).setPosition(position);
 			verify(entityService, times(0)).register(cow);

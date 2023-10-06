@@ -72,7 +72,7 @@ public class ClueReward extends ItemReward {
 		tile.setOccupant(partTile);
 		tile.setOccupied();
 
-		Entity shipDebris = ShipDebrisFactory.createShipDebris(null);
+		Entity shipDebris = ShipDebrisFactory.createShipDebris();
 
 		partTile.getComponent(ShipPartTileComponent.class).addShipDebris(shipDebris);
 		partTile.getComponent(ShipPartTileComponent.class).addClueItem(mapItem);

@@ -200,11 +200,11 @@ public class QuestFactory {
                 new ItemReward(itemRewards),
                 new QuestReward(questsToAdd, questsToActivate),
                 new TriggerHostilesReward(List.of(
-                        NPCFactory.createOxygenEater(ServiceLocator.getGameArea().getPlayer()),
-                        NPCFactory.createOxygenEater(ServiceLocator.getGameArea().getPlayer()),
-                        NPCFactory.createDragonfly(ServiceLocator.getGameArea().getPlayer()),
-                        NPCFactory.createDragonfly(ServiceLocator.getGameArea().getPlayer()),
-                        NPCFactory.createBat(ServiceLocator.getGameArea().getPlayer())
+                        NPCFactory.createOxygenEater(),
+                        NPCFactory.createOxygenEater(),
+                        NPCFactory.createDragonfly(),
+                        NPCFactory.createDragonfly(),
+                        NPCFactory.createBat()
                 )),
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
