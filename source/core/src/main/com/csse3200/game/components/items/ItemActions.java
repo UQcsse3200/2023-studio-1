@@ -122,6 +122,11 @@ public class ItemActions extends Component {
           player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
           player.getComponent(CombatStatsComponent.class).addHealth(30);
           return;
+        case "Lave Eel":
+          player.getComponent(HungerComponent.class).increaseHungerLevel(-50);
+          player.getComponent(CombatStatsComponent.class).addHealth(100);
+        case "Salmon":
+          player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
         default:
           // Nothing
       }
