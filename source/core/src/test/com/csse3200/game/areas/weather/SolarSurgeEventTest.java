@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class SolarSurgeEventTest {
+class SolarSurgeEventTest {
 
     private SolarSurgeEvent solarSurgeEvent1, solarSurgeEvent2, solarSurgeEvent3, solarSurgeEvent4, solarSurgeEvent5;
 
@@ -19,7 +19,7 @@ public class SolarSurgeEventTest {
     }
 
     @Test
-    public void testIsExpired() {
+    void testIsExpired() {
         // case: numHoursUntil == 0 and duration > 0
         assertFalse(solarSurgeEvent1.isExpired());
         // case: numHoursUntil > 0 and duration > 0
@@ -37,13 +37,13 @@ public class SolarSurgeEventTest {
     }
 
     @Test
-    public void testIsActiveButNotIsExpired() {
+    void testIsActiveButNotIsExpired() {
         assertFalse(solarSurgeEvent1.isExpired());
         assertTrue(solarSurgeEvent1.isActive());
     }
 
     @Test
-    public void testSolarSurgeEventGetHumidityModifier() {
+    void testSolarSurgeEventGetHumidityModifier() {
         assertEquals(-0.44f, solarSurgeEvent1.getHumidityModifier(), 0.00001);
         assertEquals(-0.48f, solarSurgeEvent2.getHumidityModifier(), 0.00001);
         assertEquals(-0.4f, solarSurgeEvent3.getHumidityModifier(), 0.00001);
@@ -52,7 +52,7 @@ public class SolarSurgeEventTest {
     }
 
     @Test
-    public void testSolarSurgeEventGetTemperatureModifier() {
+    void testSolarSurgeEventGetTemperatureModifier() {
         assertEquals(33.0f, solarSurgeEvent1.getTemperatureModifier(), 0.00001);
         assertEquals(36.0f, solarSurgeEvent2.getTemperatureModifier(), 0.00001);
         assertEquals(30.0f, solarSurgeEvent3.getTemperatureModifier(), 0.00001);
