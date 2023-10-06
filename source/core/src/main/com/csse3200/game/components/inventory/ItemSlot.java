@@ -80,22 +80,15 @@ public class ItemSlot extends Stack {
 	 * @param count integer of number of item
 	 */
 	public void setCount(Integer count) {
-		if (Objects.equals(count, this.count)) {
-			return;
-		}
 		this.count = count;
 		if (this.count > 1) {
 			if (label == null) {
 				label = new Label(this.count +"", this.skin);
-				label.setColor(Color.BROWN);
-				label.setX(0);
-				label.setY(0);
+				label.setColor(Color.BLACK);
 				label.setAlignment(Align.bottomRight);
 				draggable.add(label);
 			} else {
 				label.setText(this.count+"");
-				draggable.add(label);
-
 			}
 		} else {
 			draggable.removeActor(label);
@@ -190,14 +183,13 @@ public class ItemSlot extends Stack {
 		if (!this.removeActor(this.draggable)) {
 			ans = true;
 		}
-		if (stack.getChildren().size == 2) {
-			label = (Label) (stack.getChild(1));
-		}
-		else {
-			label = null;
-		}
-
 		if (stack != null) {
+			if (stack.getChildren().size == 2) {
+				label = (Label) (stack.getChild(1));
+			}
+			else {
+				label = null;
+			}
 			this.draggable = stack;
 			this.add(stack);
 		}
