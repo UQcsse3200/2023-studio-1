@@ -107,7 +107,7 @@ public class ControlsScreen extends ScreenAdapter {
 
     // Add the name of each animation texture to the transitionTextures array
     for (int i = 0; i < FRAME_COUNT; i++) {
-      transitionTextures[i] = ANIMATION_PREFIX + i + ".png";
+      ControlsScreen.transitionTextures[i] = ANIMATION_PREFIX + i + ".png";
     }
     resourceService.loadTextures(transitionTextures);
     ServiceLocator.getResourceService().loadAll();

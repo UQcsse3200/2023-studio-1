@@ -56,7 +56,7 @@ class OxygenLevelQuestTest {
     }
 
     @Test
-    public void testRegisterMission() {
+    void testRegisterMission() {
         EventHandler mockEventHandler = mock(EventHandler.class);
         assertTrue(OLQuest1.isCompleted());
         assertFalse(OLQuest2.isCompleted());
@@ -86,7 +86,7 @@ class OxygenLevelQuestTest {
     }
 
     @Test
-    public void testIsCompleted() {
+    void testIsCompleted() {
         testRegisterMission();
         for (int i = 0; i < 50; i++) {
             assertTrue(OLQuest1.isCompleted());
@@ -119,7 +119,7 @@ class OxygenLevelQuestTest {
     }
 
     @Test
-    public void testGetDescription() {
+    void testGetDescription() {
         testRegisterMission();
         String descHour = "Oxygen is key for human survival.\n" +
                 "Get oxygenlevel to be greater than %d%s in %d hours.";
@@ -146,7 +146,7 @@ class OxygenLevelQuestTest {
         }
     }
     @Test
-    public void testGetShortDescription() {
+    void testGetShortDescription() {
         testRegisterMission();
         String descHour = "Get oxygenlevel to be greater than %d%s in %d hours";
         String descDay = "Get oxygenlevel to be greater than %d%s in %d days";
@@ -172,7 +172,7 @@ class OxygenLevelQuestTest {
     }
 
     @Test
-    public void testReadProgress() {
+    void testReadProgress() {
         int progressInt = 3;
         JsonValue progress = new JsonValue(progressInt);
         testRegisterMission();
@@ -208,7 +208,7 @@ class OxygenLevelQuestTest {
     }
 
     @Test
-    public void testGetProgress() {
+    void testGetProgress() {
         testRegisterMission();
         assertEquals(0, OLQuest1.getProgress());
         assertEquals(0, OLQuest2.getProgress());
@@ -240,7 +240,7 @@ class OxygenLevelQuestTest {
     }
 
     @Test
-    public void testResetState() {
+    void testResetState() {
         testIsCompleted();
         assertTrue(OLQuest1.isCompleted());
         assertTrue(OLQuest2.isCompleted());

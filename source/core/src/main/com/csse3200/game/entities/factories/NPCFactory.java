@@ -141,7 +141,7 @@ public class NPCFactory {
    */
   public static Entity createCow(Entity player) {
     Entity cow = createBaseAnimal(EntityType.COW);
-    BaseAnimalConfig config = configs.COW;
+    BaseAnimalConfig config = NPCConfigs.COW;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/animals/cow.atlas", TextureAtlas.class),
@@ -201,7 +201,7 @@ public class NPCFactory {
    */
   public static Entity createAstrolotl(Entity player) {
     Entity astrolotl = createBaseAnimal(EntityType.ASTROLOTL);
-    BaseAnimalConfig config = configs.ASTROLOTL;
+    BaseAnimalConfig config = NPCConfigs.ASTROLOTL;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/animals/astrolotl.atlas", TextureAtlas.class)
@@ -241,7 +241,7 @@ public class NPCFactory {
    */
   public static Entity createOxygenEater(Entity player) {
     Entity oxygenEater = createBaseAnimal(EntityType.OXYGEN_EATER);
-    BaseAnimalConfig config = configs.OXYGEN_EATER;
+    BaseAnimalConfig config = NPCConfigs.OXYGEN_EATER;
 
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
@@ -316,7 +316,7 @@ public class NPCFactory {
    */
   public static Entity createDragonfly(Entity player) {
     Entity dragonfly = createBaseAnimal(EntityType.DRAGONFLY);
-    BaseAnimalConfig config = configs.DRAGONFLY;
+    BaseAnimalConfig config = NPCConfigs.DRAGONFLY;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/animals/dragonfly.atlas",
@@ -359,7 +359,7 @@ public class NPCFactory {
    */
   public static Entity createBat(Entity player) {
     Entity bat = createBaseAnimal(EntityType.BAT);
-    BaseAnimalConfig config = configs.BAT;
+    BaseAnimalConfig config = NPCConfigs.BAT;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/animals/bat.atlas",

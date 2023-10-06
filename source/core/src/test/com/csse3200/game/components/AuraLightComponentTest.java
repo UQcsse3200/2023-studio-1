@@ -38,7 +38,7 @@ class AuraLightComponentTest {
 	}
 
 	@Test
-	public void testSetDistance() {
+	void testSetDistance() {
 		try (MockedConstruction<PointLight> mock = mockConstruction(PointLight.class)) {
 			AuraLightComponent component = new AuraLightComponent();
 			light = mock.constructed().get(0);
@@ -49,7 +49,7 @@ class AuraLightComponentTest {
 	}
 
 	@Test
-	public void testToggle() {
+	void testToggle() {
 		try (MockedConstruction<PointLight> mock = mockConstruction(PointLight.class)) {
 			Entity entity = createEntity();
 			AuraLightComponent component = entity.getComponent(AuraLightComponent.class);
@@ -61,7 +61,7 @@ class AuraLightComponentTest {
 	}
 
 	@Test
-	public void testCreate() {
+	void testCreate() {
 		try (MockedConstruction<PointLight> mock = mockConstruction(PointLight.class)) {
 			Entity entity = createEntity();
 			AuraLightComponent component = entity.getComponent(AuraLightComponent.class);
@@ -72,7 +72,7 @@ class AuraLightComponentTest {
 	}
 
 	@Test
-	public void testSetColor() {
+	void testSetColor() {
 		try (MockedConstruction<PointLight> mock = mockConstruction(PointLight.class)) {
 			AuraLightComponent component = new AuraLightComponent();
 			light = mock.constructed().get(0);
@@ -84,7 +84,7 @@ class AuraLightComponentTest {
 	}
 
 	@Test
-	public void testGetActive() {
+	void testGetActive() {
 		try (MockedConstruction<PointLight> mock = mockConstruction(PointLight.class)) {
 			AuraLightComponent component = new AuraLightComponent();
 			light = mock.constructed().get(0);
@@ -94,7 +94,7 @@ class AuraLightComponentTest {
 	}
 
 	@Test
-	public void testUpdate() {
+	void testUpdate() {
 		try (MockedConstruction<PointLight> mock = mockConstruction(PointLight.class)) {
 			Entity entity = createEntity();
 			AuraLightComponent component = entity.getComponent(AuraLightComponent.class);
@@ -112,7 +112,7 @@ class AuraLightComponentTest {
 	}
 
 	@Test
-	public void testDispose() {
+	void testDispose() {
 		try (MockedConstruction<PointLight> mock = mockConstruction(PointLight.class)) {
 			Entity entity = createEntity();
 			AuraLightComponent component = entity.getComponent(AuraLightComponent.class);

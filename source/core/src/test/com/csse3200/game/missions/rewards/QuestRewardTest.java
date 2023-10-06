@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class QuestRewardTest {
+class QuestRewardTest {
 
     private QuestReward questReward1, questReward2, questReward3, questReward4;
 

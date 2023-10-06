@@ -50,11 +50,6 @@ public class SettingsMenuDisplay extends UIComponent {
   private Table rootTable;
 
   /**
-   * The Image that represents the background of the page
-   */
-  private Image background;
-
-  /**
    * An Image that stores the current frame of the menu screen animation
    */
   private Image transitionFrames;

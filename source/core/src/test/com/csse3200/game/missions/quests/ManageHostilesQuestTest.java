@@ -63,7 +63,7 @@ class ManageHostilesQuestTest {
     }
 
     @Test
-    public void testRegisterMission() {
+    void testRegisterMission() {
         assertFalse(MHQuest1.isCompleted());
         assertTrue(MHQuest2.isCompleted());
         assertFalse(MHQuest3.isCompleted());
@@ -102,7 +102,7 @@ class ManageHostilesQuestTest {
     }
 
     @Test
-    public void testIsCompleted() {
+    void testIsCompleted() {
         testRegisterMission();
         assertFalse(MHQuest1.isCompleted());
         assertTrue(MHQuest2.isCompleted());
@@ -201,7 +201,7 @@ class ManageHostilesQuestTest {
     }
 
     @Test
-    public void testGetDescription() {
+    void testGetDescription() {
         testRegisterMission();
         String desc1 = "Manage the presence of hostile creatures on your farm.\n" +
                 "Deal with hostile creatures by defeating them with weapons, or let your Space Snappers eat them.\n" +
@@ -237,7 +237,7 @@ class ManageHostilesQuestTest {
     }
 
     @Test
-    public void testGetShortDescription() {
+    void testGetShortDescription() {
         testRegisterMission();
         String desc = "%d out of %d hostiles dealt with";
         for (int i = 0; i < 10; i++) {
@@ -313,7 +313,7 @@ class ManageHostilesQuestTest {
     }
 
     @Test
-    public void testReadProgress() {
+    void testReadProgress() {
         int progressInt = 3;
         JsonValue progress = new JsonValue(progressInt);
         String desc1 = "Manage the presence of hostile creatures on your farm.\n" +
@@ -367,7 +367,7 @@ class ManageHostilesQuestTest {
     }
 
     @Test
-    public void testGetProgress() {
+    void testGetProgress() {
         assertEquals(0, MHQuest1.getProgress());
         assertEquals(0, MHQuest2.getProgress());
         assertEquals(0, MHQuest3.getProgress());
@@ -394,7 +394,7 @@ class ManageHostilesQuestTest {
     }
     
     @Test
-    public void testResetState() {
+    void testResetState() {
         testIsCompleted();
         assertTrue(MHQuest1.isCompleted());
         assertTrue(MHQuest2.isCompleted());

@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
-public class ProjectileTest {
+class ProjectileTest {
     private Entity projectileEntity;
     private ProjectileComponent projectileComponent;
     private PhysicsComponent physicsComponent;
@@ -53,7 +53,7 @@ public class ProjectileTest {
     }
 
     @Test
-    public void testProjectileExpiresAndDestroyed() {
+    void testProjectileExpiresAndDestroyed() {
 
         // not destroyed
         verify(ServiceLocator.getGameArea(), times(0)).removeEntity(projectileEntity);
@@ -71,7 +71,7 @@ public class ProjectileTest {
     }
 
     @Test
-    public void testSetsTargetDirection() {
+    void testSetsTargetDirection() {
         // pushes from center position, so set target direction to right of that
         projectileComponent.setTargetDirection(projectileEntity.getCenterPosition().add(Vector2Utils.RIGHT));
 
@@ -99,7 +99,7 @@ public class ProjectileTest {
     }
 
     @Test
-    public void testSetsSpeed() {
+    void testSetsSpeed() {
         // pushes from center position, so set target direction to right of that
         projectileComponent.setTargetDirection(projectileEntity.getCenterPosition().add(Vector2Utils.RIGHT));
 
@@ -128,7 +128,7 @@ public class ProjectileTest {
     }
 
     @Test
-    public void testSetsConstantVelocity() {
+    void testSetsConstantVelocity() {
         // pushes from center position, so set target direction to right of that
         projectileComponent.setConstantVelocity(false);
         // default speed in right direction results in velocity Vector2(1, 0)
@@ -158,7 +158,7 @@ public class ProjectileTest {
     }
 
     @Test
-    public void testSetGetVelocity() {
+    void testSetGetVelocity() {
         projectileComponent.setVelocity(new Vector2(5f, 5f));
         assertEquals(new Vector2(5f, 5f), projectileComponent.getVelocity());
 
@@ -170,7 +170,7 @@ public class ProjectileTest {
     }
 
     @Test
-    public void testImpact() {
+    void testImpact() {
         // test is not destroyed when impact animation is finished
         projectileComponent.setDestroyOnImpact(false);
 
