@@ -78,7 +78,9 @@ public class ProgressBar extends UIComponent {
             case 1 -> progressionBar = (day >= 5) ? progressBarImagesAct1.get(4) : progressBarImagesAct1.get(day);
             case 2 -> progressionBar = (day >= 10) ? progressBarImagesAct2.get(9) : progressBarImagesAct2.get(day);
             case 3 -> progressionBar = (day >= 15) ? progressBarImagesAct3.get(14) : progressBarImagesAct3.get(day);
-
+            default -> {
+                // Default case should do nothing
+            }
         }
     }
 

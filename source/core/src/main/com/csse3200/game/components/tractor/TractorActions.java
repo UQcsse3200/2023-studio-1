@@ -193,6 +193,9 @@ public class TractorActions extends Component {
         harvest((TerrainTile) tiles.get(0));
         harvest((TerrainTile) tiles.get(1));
       }
+      default -> {
+        // Nothing
+      }
     }
   }
 

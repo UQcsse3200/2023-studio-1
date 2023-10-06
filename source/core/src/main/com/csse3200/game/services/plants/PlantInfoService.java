@@ -70,6 +70,9 @@ public class PlantInfoService {
         switch (growthStage) {
             case "alive" -> alivePlantCount += num;
             case "decay" -> decayingPlantCount += num;
+            default -> {
+                // Default case should do nothing
+            }
         }
         updateClearInfo();
     }
@@ -88,6 +91,9 @@ public class PlantInfoService {
             case "Space Snapper" -> seedPlantCount[3] += num;
             case "Deadly Nightshade" -> seedPlantCount[4] += num;
             case "Atomic Algae" -> seedPlantCount[5] += num;
+            default -> {
+                // Default case should do nothing
+            }
         }
         int sum = 0;
         for (int i : seedPlantCount) {
@@ -111,6 +117,9 @@ public class PlantInfoService {
             case "Space Snapper" -> plantHarvestCount[3] += num;
             case "Deadly Nightshade" -> plantHarvestCount[4] += num;
             case "Atomic Algae" -> plantHarvestCount[5] += num;
+            default -> {
+                // Default case should do nothing
+            }
         }
         int sum = 0;
         for (int i : plantHarvestCount) {

@@ -497,17 +497,6 @@ public class SpaceGameArea extends GameArea {
     spawnEntityAt(newShip, SHIP_SPAWN, true, true);
   }
 
-  // TODO This function is just to make testing some plants stuff a bit easier. Will remove when im done with it.
-  private void spawnTestItems() {
-    Entity item = ItemFactory.createCosmicCobEar();
-    spawnEntityAt(item, PLAYER_SPAWN, true, true);
-    spawnEntityAt(ItemFactory.createDeadlyNightshadeSeed(), PLAYER_SPAWN, true, true);
-    spawnEntityAt(ItemFactory.createHoe(), PLAYER_SPAWN, true, true);
-    spawnEntityAt(ItemFactory.createCosmicCobSeed(), PLAYER_SPAWN, true, true);
-    spawnEntityAt(ItemFactory.createScythe(), PLAYER_SPAWN, true, true);
-    spawnEntityAt(ItemFactory.createAloeVeraSeed(), PLAYER_SPAWN, true, true);
-  }
-
   /**
    * Spawns the Tractor Entity be calling upon it's factory
    *
