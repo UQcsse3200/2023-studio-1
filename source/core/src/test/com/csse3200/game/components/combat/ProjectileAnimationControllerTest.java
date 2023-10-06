@@ -11,7 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
-public class ProjectileAnimationControllerTest {
+class ProjectileAnimationControllerTest {
     private Entity entity;
     private ProjectileAnimationController controller;
     private AnimationRenderComponent animator;
