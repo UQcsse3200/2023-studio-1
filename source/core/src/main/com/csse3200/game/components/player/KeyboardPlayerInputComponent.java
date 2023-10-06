@@ -88,7 +88,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           entity.getEvents().trigger("toggleLight");
           return true;
         case Keys.Q:
-          showPlantInfoUI = !showPlantInfoUI;
+          KeyboardPlayerInputComponent.showPlantInfoUI = !KeyboardPlayerInputComponent.showPlantInfoUI;
           ServiceLocator.getPlantInfoService().getEvents().trigger("toggleOpen", showPlantInfoUI);
           return true;
         case Keys.R:
@@ -172,6 +172,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   }
 
   private void triggerEnterEvent() {
+    logger.info("Entering tractor");
     entity.getEvents().trigger("enterTractor");
   }
 

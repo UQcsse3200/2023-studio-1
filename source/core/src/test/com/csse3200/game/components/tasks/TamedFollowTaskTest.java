@@ -31,7 +31,7 @@ import java.io.Serial;
 import java.util.ArrayList;
 
 @ExtendWith(GameExtension.class)
-public class TamedFollowTaskTest {
+class TamedFollowTaskTest {
     private TamableComponent tame;
     private ItemComponent fooditem;
     private Entity foodEntity;

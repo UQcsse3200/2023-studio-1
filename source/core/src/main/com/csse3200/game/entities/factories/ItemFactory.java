@@ -21,6 +21,9 @@ import java.util.function.Supplier;
  * Factory to create an item
  */
 public class ItemFactory {
+  private ItemFactory() {
+    // Hiding public one for Utility class
+  }
 
   /**
    * Map of item names to their supplier function.

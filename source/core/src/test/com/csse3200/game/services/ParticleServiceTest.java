@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class ParticleServiceTest {
+class ParticleServiceTest {
 
 
 	ParticleEffect mockEffect;

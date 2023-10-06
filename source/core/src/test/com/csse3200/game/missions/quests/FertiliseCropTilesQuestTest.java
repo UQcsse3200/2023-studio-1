@@ -51,7 +51,7 @@ class FertiliseCropTilesQuestTest {
     }
 
     @Test
-    public void testRegisterMission() {
+    void testRegisterMission() {
         assertFalse(FCTQuest1.isCompleted());
         assertFalse(FCTQuest2.isCompleted());
         assertTrue(FCTQuest3.isCompleted());
@@ -85,7 +85,7 @@ class FertiliseCropTilesQuestTest {
     }
 
     @Test
-    public void testIsCompleted() {
+    void testIsCompleted() {
         testRegisterMission();
         for (int i = 0; i < 10; i++) {
             assertFalse(FCTQuest1.isCompleted());
@@ -118,7 +118,7 @@ class FertiliseCropTilesQuestTest {
     }
 
     @Test
-    public void testGetDescription() {
+    void testGetDescription() {
         testRegisterMission();
         String desc = "Fertilising crop tiles will cause your plants to grow faster.\n" +
                 "Apply fertiliser to %d tiles.\n" +
@@ -143,7 +143,7 @@ class FertiliseCropTilesQuestTest {
     }
 
     @Test
-    public void testGetShortDescription() {
+    void testGetShortDescription() {
         testRegisterMission();
         String desc = "%d out of %d crop tiles fertilised";
         for (int i = 0; i < 50; i++) {
@@ -166,7 +166,7 @@ class FertiliseCropTilesQuestTest {
     }
 
     @Test
-    public void testReadProgress() {
+    void testReadProgress() {
         int progressInt = 3;
         JsonValue progress = new JsonValue(progressInt);
         String desc = "Fertilising crop tiles will cause your plants to grow faster.\n" +
@@ -206,7 +206,7 @@ class FertiliseCropTilesQuestTest {
     }
 
     @Test
-    public void testGetProgress() {
+    void testGetProgress() {
         assertEquals(0, FCTQuest1.getProgress());
         assertEquals(0, FCTQuest2.getProgress());
         assertEquals(0, FCTQuest3.getProgress());
@@ -229,7 +229,7 @@ class FertiliseCropTilesQuestTest {
     }
 
     @Test
-    public void testResetState() {
+    void testResetState() {
         testIsCompleted();
         assertTrue(FCTQuest1.isCompleted());
         assertTrue(FCTQuest2.isCompleted());
