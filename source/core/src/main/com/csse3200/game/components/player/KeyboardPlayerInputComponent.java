@@ -172,6 +172,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   }
 
   private void triggerEnterEvent() {
+    logger.info("Entering tractor");
     entity.getEvents().trigger("enterTractor");
   }
 

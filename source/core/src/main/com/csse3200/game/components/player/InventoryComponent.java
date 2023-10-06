@@ -522,8 +522,9 @@ public class InventoryComponent extends Component {
     public void write(Json json) {
         json.writeObjectStart(this.getClass().getSimpleName());
         json.writeArrayStart("inventory");
-        for (Integer i : itemPlace.keySet()) {
-            String e = itemPlace.get(i);
+        for (Map.Entry<Integer, String> placeEntry : itemPlace.entrySet()) {
+            Integer i = placeEntry.getKey();
+            String e = placeEntry.getValue();
             if (e == null) {
                 continue;
             }

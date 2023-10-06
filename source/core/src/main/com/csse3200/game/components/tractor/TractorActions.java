@@ -439,6 +439,7 @@ public class TractorActions extends Component {
    * Writes to the json in order to store the tractor's state, used to save the game
    * @param json The json that will be converted to a file
    */
+  @Override
   public void write(Json json){
     json.writeObjectStart(this.getClass().getSimpleName());
     //Save the muted value to the json file

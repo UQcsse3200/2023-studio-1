@@ -57,8 +57,8 @@ public class SaveGame {
     private Array<Entity> tiles;
     private Array<Entity> placeables;
 
-    private GameState() {
-      // No constructor needed
+    public GameState() {
+      // No constructor code needed
     }
 
     public int getDay() {
