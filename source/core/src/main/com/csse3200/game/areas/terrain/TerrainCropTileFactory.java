@@ -16,9 +16,6 @@ public class TerrainCropTileFactory {
 
 	private static final Logger logger = LoggerFactory.getLogger(TerrainCropTileFactory.class);
 
-	private static final CropTileConfig stats =
-			FileLoader.readClass(CropTileConfig.class, "configs/cropTile.json");
-
 	private TerrainCropTileFactory() {
 		throw new IllegalStateException("Instantiating static util class");
 	}
@@ -52,7 +49,7 @@ public class TerrainCropTileFactory {
 				.addComponent(new ColliderComponent().setSensor(true))
 				.addComponent(new PhysicsComponent())
 				.addComponent(renderComponent)
-				.addComponent(new CropTileComponent(stats.INITIAL_WATER_CONTENT, stats.INITIAL_SOIL_QUALITY));
+				.addComponent(new CropTileComponent(CropTileConfig.INITIAL_WATER_CONTENT, CropTileConfig.INITIAL_SOIL_QUALITY));
 
 		tile.setPosition(position);
 		return tile;

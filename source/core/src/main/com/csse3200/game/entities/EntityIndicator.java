@@ -25,7 +25,7 @@ public class EntityIndicator extends UIComponent{
     /**
      * The hostile entity being tracked
      */
-    private Entity entity;
+    private Entity entityToTractor;
 
     /**
      * X and Y position of the indicator on the game screen
@@ -48,7 +48,7 @@ public class EntityIndicator extends UIComponent{
      * @param entity: the entity which will be tracked
      */
     public EntityIndicator(Entity entity) {
-        this.entity = entity;
+        this.entityToTractor = entity;
         cameraComponent = ServiceLocator.getCameraComponent();
     }
 
@@ -77,7 +77,7 @@ public class EntityIndicator extends UIComponent{
     @Override
     public void update() {
         // If the entity is on the screen then there is no reason to display the indicator
-        if (cameraComponent.entityOnScreen(entity)) {
+        if (cameraComponent.entityOnScreen(entityToTractor)) {
             indicator.setVisible(false);
         } else {
             // NOTE: Add more conditions to the if-else statement if you want the indicator to only display at
@@ -93,7 +93,7 @@ public class EntityIndicator extends UIComponent{
      */
     public void updateIndicator() {
         // Get the latest entity position
-        Vector2 entityPosition = entity.getCenterPosition();
+        Vector2 entityPosition = entityToTractor.getCenterPosition();
 
         // Make the entity position into a 3D vector
         Vector3 entityPos = new Vector3(entityPosition.x, entityPosition.y, 0);
@@ -117,6 +117,7 @@ public class EntityIndicator extends UIComponent{
 
     @Override
     public void draw(SpriteBatch batch) {
+        // Handled else where
     }
 
     /**

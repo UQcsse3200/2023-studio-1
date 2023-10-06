@@ -275,6 +275,9 @@ public class EventHandler {
           case 1 -> trigger(eventName, args.get(0));
           case 2 -> trigger(eventName, args.get(0), args.get(1));
           case 3 -> trigger(eventName, args.get(0), args.get(1), args.get(2));
+          default -> {
+              // Nothing
+          }
       }
   }
 
