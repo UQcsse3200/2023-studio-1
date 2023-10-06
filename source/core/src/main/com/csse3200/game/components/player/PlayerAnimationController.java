@@ -30,7 +30,6 @@ public class PlayerAnimationController extends Component {
     }
 
     void use(Vector2 mousePos, Entity itemInHand) {
-        Vector2 playerPos = entity.getPosition();
         if (itemInHand != null && itemInHand.getComponent(ItemComponent.class) != null) {
             String direction = getDirection(mousePos);
             String animation = String.format("%s_%s", itemInHand.getComponent(ItemComponent.class).getItemName().toLowerCase(),

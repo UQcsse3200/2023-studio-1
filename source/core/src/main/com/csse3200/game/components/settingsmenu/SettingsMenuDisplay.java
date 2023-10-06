@@ -67,12 +67,12 @@ public class SettingsMenuDisplay extends UIComponent {
   /**
    * The target fps at which the frames should be updated
    */
-  private int fps = 15;
+  private static int fps = 15;
 
   /**
    * The duration for which each frame should be displayed
    */
-  private final long frameDuration = 800L / fps;
+  private static final long FRAME_DURATION = 800L / fps;
 
 
   public SettingsMenuDisplay(GdxGame game) {
@@ -297,7 +297,7 @@ public class SettingsMenuDisplay extends UIComponent {
 
   @Override
   public void update() {
-    if (System.currentTimeMillis() - lastFrameTime > frameDuration) {
+    if (System.currentTimeMillis() - lastFrameTime > FRAME_DURATION) {
       updateAnimation();
     }
     stage.act(ServiceLocator.getTimeSource().getDeltaTime());

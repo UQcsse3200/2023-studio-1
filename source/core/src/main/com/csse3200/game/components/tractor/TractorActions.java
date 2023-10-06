@@ -282,9 +282,9 @@ public class TractorActions extends Component {
    */
   private void harvest(TerrainTile tile) {
     if (tile == null) {
-      return;
+      // Leave
     } else if (tile.getOccupant() == null) {
-      return;
+      // Leave
     } else if (isCropTile(tile.getOccupant())) {
       tile.getOccupant().getEvents().trigger("harvest");
     }
