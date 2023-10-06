@@ -29,7 +29,7 @@ import java.util.List;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
-public class AttackPatternTest {
+class AttackPatternTest {
 
     private AttackPatternComponent attackPatternComponent;
     private Entity entity;
