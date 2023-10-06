@@ -41,7 +41,7 @@ public class ControlsScreen extends ScreenAdapter {
   /**
    * A list of textures that must be loaded for the animation
    */
-  private final String[] transitionTextures = new String[FRAME_COUNT];
+  private static final String[] transitionTextures = new String[FRAME_COUNT];
 
   /**
    * A common name prefix for all the animation textures
@@ -52,6 +52,7 @@ public class ControlsScreen extends ScreenAdapter {
 
   public ControlsScreen(GdxGame game) {
     this.game = game;
+
     logger.debug("Initialising controls screen services");
     ServiceLocator.registerTimeSource(new GameTime());
     ServiceLocator.registerInputService(new InputService());
@@ -106,7 +107,7 @@ public class ControlsScreen extends ScreenAdapter {
 
     // Add the name of each animation texture to the transitionTextures array
     for (int i = 0; i < FRAME_COUNT; i++) {
-      transitionTextures[i] = ANIMATION_PREFIX + i + ".png";
+      ControlsScreen.transitionTextures[i] = ANIMATION_PREFIX + i + ".png";
     }
     resourceService.loadTextures(transitionTextures);
     ServiceLocator.getResourceService().loadAll();
@@ -139,7 +140,7 @@ public class ControlsScreen extends ScreenAdapter {
    * Get the transition textures for control screen
    * @return the transition textures
    */
-  public String[] getTransitionTextures() {
+  public static String[] getTransitionTextures() {
     return transitionTextures;
   }
 }

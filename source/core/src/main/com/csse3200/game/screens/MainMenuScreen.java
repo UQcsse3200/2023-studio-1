@@ -33,7 +33,7 @@ public class MainMenuScreen extends ScreenAdapter {
   private final Renderer renderer;
   public static final int FRAME_COUNT = 71;
   private static final String[] mainMenuTextures = {"images/galaxy_home_still.png"};
-  private final String[] transitionTextures = new String[FRAME_COUNT];
+  private static final String[] transitionTextures = new String[FRAME_COUNT];
   private static final String ANIMATION_PREFIX = "images/menu_animations/menu_animations";
   private Texture backgroundTexture;
   private SpriteBatch batch;
@@ -103,7 +103,7 @@ public class MainMenuScreen extends ScreenAdapter {
     ResourceService resourceService = ServiceLocator.getResourceService();
 
     for (int i = 0; i < FRAME_COUNT; i++) {
-      transitionTextures[i] = ANIMATION_PREFIX + i + ".png";
+      MainMenuScreen.transitionTextures[i] = ANIMATION_PREFIX + i + ".png";
     }
     resourceService.loadTextures(transitionTextures);
     ServiceLocator.getResourceService().loadAll();
@@ -133,7 +133,7 @@ public class MainMenuScreen extends ScreenAdapter {
    * Get the transition textures for control screen
    * @return the transition textures
    */
-  public String[] getTransitionTextures() {
+  public static String[] getTransitionTextures() {
     return transitionTextures;
   }
 }
