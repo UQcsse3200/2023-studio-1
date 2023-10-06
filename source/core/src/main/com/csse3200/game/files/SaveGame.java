@@ -24,8 +24,7 @@ public class SaveGame {
    * @return Copy of the saved game state
    */
   public static GameState get(String path) {
-    GameState saveFile = FileLoader.readClass(GameState.class, path, Location.LOCAL);
-    return saveFile;
+    return FileLoader.readClass(GameState.class, path, Location.LOCAL);
   }
 
   /**

@@ -177,7 +177,6 @@ public class NPCFactory {
     //Drop beef on death
     singleDropHandlers.add(new SingleDropHandler(ItemFactory::createBeef, 1,
             cow.getEvents()::addListener, "death", false));
-    System.out.println(config.favouriteFood);
     cow
             .addComponent(aiTaskComponent)
             .addComponent(multiDropComponent)
@@ -300,13 +299,12 @@ public class NPCFactory {
     animator.addAnimation(animation, 0.5f, Animation.PlayMode.LOOP);
     animator.startAnimation(animation);
 
-    Entity fireflies = new Entity(EntityType.FIRE_FLIES)
+    return new Entity(EntityType.FIRE_FLIES)
             .addComponent(animator)
             .addComponent(light)
             // Not actually scaring just dying from daylight (named from previous idea for feature)
             .addComponent(new FireflyScareComponent())
             .addComponent(new PhysicsComponent());
-    return fireflies;
   }
 
   /**
