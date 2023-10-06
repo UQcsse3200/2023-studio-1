@@ -190,7 +190,7 @@ public class MainGameScreen extends ScreenAdapter {
                 }
                 ServiceLocator.getTimeService().update();
                 renderer.render();
-                if (PauseMenuActions.getQuitGameStatus()) {
+                if (Boolean.TRUE.equals(PauseMenuActions.getQuitGameStatus())) {
                     entity.getEvents().trigger("exit");
                     PauseMenuActions.setQuitGameStatus();
                 }

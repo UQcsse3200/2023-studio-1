@@ -134,7 +134,7 @@ public class EntitySpawner {
 
         if (hour == spawnHour && !hourReached) {
             hourReached = true;
-            randomGoal = (random.nextInt(randomRange));
+            randomGoal = (int) (random.nextFloat() * randomRange);
         }
 
          if (hourReached) {

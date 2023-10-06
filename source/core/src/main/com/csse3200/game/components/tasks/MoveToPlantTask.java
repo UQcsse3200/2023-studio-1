@@ -80,7 +80,7 @@ public class MoveToPlantTask extends DefaultTask implements PriorityTask {
         if (currentTarget == plant) {
             // Stop the movement if already at the plant
             float distanceToTarget = owner.getEntity().getCenterPosition().dst(currentTarget.getCenterPosition());
-            owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(distanceToTarget <= stoppingDistance);
+            owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(distanceToTarget > stoppingDistance);
             return;
         }
 

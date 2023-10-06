@@ -141,18 +141,18 @@ public class PlantInfoService {
      * @return - formatted string with relevant information about plants.
      */
     public String plantInfoSummary() {
-        String returnString = "Total Seeds Planted: " + String.valueOf(totalSeedsPlanted);
+        String returnString = "Total Seeds Planted: " + totalSeedsPlanted;
 
         if (totalPlantHarvestCount != 0) {
-            returnString += "\nPlants Harvested: " + String.valueOf(totalPlantHarvestCount);
+            returnString += "\nPlants Harvested: " + totalPlantHarvestCount;
          }
 
         if (alivePlantCount != 0) {
-            returnString += "\nAlive Plants: " + String.valueOf(alivePlantCount);
+            returnString += "\nAlive Plants: " + alivePlantCount;
         }
 
         if (decayingPlantCount != 0) {
-            returnString += "\nDecaying Plants: " + String.valueOf(decayingPlantCount);
+            returnString += "\nDecaying Plants: " + decayingPlantCount;
         }
 
         return returnString;
