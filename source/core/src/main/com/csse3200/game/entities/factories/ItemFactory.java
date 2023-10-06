@@ -450,4 +450,18 @@ return createBaseItem()
             .addComponent(new ItemComponent("Fishing Rod", ItemType.FISHING_ROD,
                     "Used to fish in the ocean, lakes and lava!" , "images/ship/ship_part.png"));
   }
+
+  public static Entity createLavaEel() {
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/ship/ship_part.png"))
+            .addComponent(new ItemComponent("Lava Eel", ItemType.FOOD,
+                    "Huge eel that dwells in the bottoms of volcano's" , "images/ship/ship_part.png"));
+  }
+
+  public static Entity createSalmon() {
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/ship/ship_part.png"))
+            .addComponent(new ItemComponent("Salmon", ItemType.FOOD,
+                    "A common fish that lives near the shorelines" , "images/ship/ship_part.png"));
+  }
 }

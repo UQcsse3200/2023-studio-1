@@ -60,6 +60,8 @@ public class FactoryService {
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("sword", ItemFactory::createSword),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("PUMP", ItemFactory::createPumpItem),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Fishing Rod", ItemFactory::createFishingRod),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Lava Eel", ItemFactory::createLavaEel),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Salmon", ItemFactory::createSalmon),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("map", ItemFactory::createMapItem));
 
     private static final Map<String, Supplier<Entity>> placeableFactories = Map.ofEntries(
