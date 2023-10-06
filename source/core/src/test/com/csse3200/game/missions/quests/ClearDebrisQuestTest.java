@@ -52,7 +52,7 @@ class ClearDebrisQuestTest {
     }
 
     @Test
-    public void testRegisterMission() {
+    void testRegisterMission() {
         assertFalse(CDQuest1.isCompleted());
         assertFalse(CDQuest2.isCompleted());
         assertFalse(CDQuest3.isCompleted());
@@ -91,7 +91,7 @@ class ClearDebrisQuestTest {
     }
 
     @Test
-    public void testIsCompleted() {
+    void testIsCompleted() {
         testRegisterMission();
         for (int i = 0; i < 10; i++) {
             assertFalse(CDQuest1.isCompleted());
@@ -121,7 +121,7 @@ class ClearDebrisQuestTest {
     }
 
     @Test
-    public void testGetDescription() {
+    void testGetDescription() {
         testRegisterMission();
         String desc = "Gather scattered parts of your ship.\n" +
                 "Use your shovel to clear %d Ship Debris in the world!\n" +
@@ -148,7 +148,7 @@ class ClearDebrisQuestTest {
     }
 
     @Test
-    public void testGetShortDescription() {
+    void testGetShortDescription() {
         testRegisterMission();
         String desc = "%d out of %d debris pieces cleared";
         for (int i = 0; i < 50; i++) {
@@ -173,7 +173,7 @@ class ClearDebrisQuestTest {
     }
 
     @Test
-    public void testReadProgress() {
+    void testReadProgress() {
         int progressInt = 3;
         JsonValue progress = new JsonValue(progressInt);
         String desc = "Gather scattered parts of your ship.\n" +
@@ -218,7 +218,7 @@ class ClearDebrisQuestTest {
     }
 
     @Test
-    public void testGetProgress() {
+    void testGetProgress() {
         assertEquals(0, CDQuest1.getProgress());
         assertEquals(0, CDQuest2.getProgress());
         assertEquals(0, CDQuest3.getProgress());
@@ -244,7 +244,7 @@ class ClearDebrisQuestTest {
     }
 
     @Test
-    public void testResetState() {
+    void testResetState() {
         testIsCompleted();
         assertTrue(CDQuest1.isCompleted());
         assertTrue(CDQuest2.isCompleted());
