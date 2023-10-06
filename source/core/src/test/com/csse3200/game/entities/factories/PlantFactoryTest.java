@@ -294,9 +294,9 @@ class PlantFactoryTest {
 
         Vector2 expectedScale = new Vector2(1f, 0.4f);
         verify(mockCollider, times(1)).setAsBoxAligned(
-                eq(expectedScale),
-                eq(PhysicsComponent.AlignX.CENTER),
-                eq(PhysicsComponent.AlignY.BOTTOM)
+                expectedScale,
+                PhysicsComponent.AlignX.CENTER,
+                PhysicsComponent.AlignY.BOTTOM
         );
     }
 
