@@ -13,7 +13,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-public class MultiRewardTest {
+class MultiRewardTest {
     private MultiReward multiReward1, multiReward2;
     private List<Reward> rewards;
 
