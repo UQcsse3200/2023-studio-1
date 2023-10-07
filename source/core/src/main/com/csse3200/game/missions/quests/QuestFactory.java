@@ -158,10 +158,9 @@ public class QuestFactory {
                 Fosh!
                 """;
         MultiReward reward = new MultiReward(List.of(
-                new ItemReward(List.of(ItemFactory.createFertiliser())),
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
-        return new FishingQuest(FISHING_QUEST, reward, 1);
+        return new FishingQuest(FISHING_QUEST, reward, 5);
     }
 
     /**
@@ -172,7 +171,7 @@ public class QuestFactory {
         List<Quest> questsToAdd = new ArrayList<>();
         List<Quest> questsToActivate = new ArrayList<>();
         questsToActivate.add(createFertilisingFiestaQuest());
-        questsToActivate.add(createFishingQuest());
+        //questsToActivate.add(createFishingQuest());
 
         String dialogue = """
                 "You are beginning to understand... {WAIT}Treat this planet well, and it will treat you well in return." {WAIT}Memories of a shattered Earth and a sky alight cloud your vision. {WAIT}You snap back to now. {WAIT}"You may have noticed the {COLOR=#76428A}KIND OFFERINGS{COLOR=WHITE} our fauna provide. {WAIT}Maybe you could try to use them?"
