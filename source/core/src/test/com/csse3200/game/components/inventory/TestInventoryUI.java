@@ -25,6 +25,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.params.provider.Arguments.arguments;
@@ -51,7 +52,8 @@ import static org.mockito.Mockito.*;
 			"images/tool_hoe.png",
 			"images/tool_scythe.png",
 			"images/selected.png",
-			"images/itemFrame.png"
+			"images/itemFrame.png",
+			"images/bin.png"
 	};
 
 	static String[] skinPaths = {
@@ -131,8 +133,9 @@ import static org.mockito.Mockito.*;
 		assert (window.getTitleLabel().textEquals("null Inventory"));
 		inventoryDisplay.refreshInventory();
 		Table inventorySlots = (Table) window.getChildren().begin()[1];
+		Cell[] cells = Arrays.copyOfRange(inventorySlots.getCells().toArray(Cell.class), 0, 29);
 		int i = 0;
-		for (Cell slot : inventorySlots.getCells().toArray(Cell.class)) {
+		for (Cell slot : cells) {
 			System.out.println(slot);
 			assert ((ItemSlot) slot.getActor()).getChild(0) instanceof Image;
 			assert ((ItemSlot) slot.getActor()).getChild(1) instanceof Stack;
