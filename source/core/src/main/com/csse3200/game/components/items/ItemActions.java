@@ -3,11 +3,14 @@ package com.csse3200.game.components.items;
 import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Supplier;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.CombatStatsComponent;
@@ -26,9 +29,21 @@ import org.slf4j.LoggerFactory;
 
 public class ItemActions extends Component {
 
-  Random random = new SecureRandom();
+  private final Random random = new SecureRandom();
 
-  Logger logger = LoggerFactory.getLogger(ItemActions.class);
+  private final Logger logger = LoggerFactory.getLogger(ItemActions.class);
+
+  private final ArrayList<Supplier<Entity>> oceanFish =
+          new ArrayList<>(Arrays.asList(ItemFactory::createAtomicAlgaeSeed,
+                  ItemFactory::createSpaceSnapperSeed,
+                  ItemFactory::createAloeVeraSeed,
+                  ItemFactory::createCosmicCobSeed,
+                  ItemFactory::createDeadlyNightshadeSeed,
+                  ItemFactory::createHammerPlantSeed,
+                  ItemFactory::createSalmon));
+
+  private final ArrayList<Supplier<Entity>> lavaFish =
+          new ArrayList<>(Arrays.asList(ItemFactory::createLavaEel);
 
   @Override
   public void create() {
@@ -42,11 +57,11 @@ public class ItemActions extends Component {
     switch (place) {
       case "ocean":
         // Get an ocean fish
-        item = ItemFactory.createSalmon();
+        item = oceanFish.get(random.nextInt(oceanFish.size())).get();
         break;
       case "lava":
         // Get a lava fish
-        item = ItemFactory.createLavaEel();
+        item = lavaFish.get(random.nextInt(lavaFish.size())).get();
         break;
       default:
         // Error
