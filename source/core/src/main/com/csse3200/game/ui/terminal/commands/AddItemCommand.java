@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.StringJoiner;
 import java.util.function.Supplier;
 
+import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.services.FactoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
