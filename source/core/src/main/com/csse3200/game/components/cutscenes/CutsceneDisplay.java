@@ -159,6 +159,7 @@ public class CutsceneDisplay extends UIComponent {
         TypingLabel dialogueLabel = new TypingLabel(this.dialogue, skin);
         dialogueLabel.setAlignment(Align.center);
         dialogueLabel.setWrap(true);
+        dialogueLabel.setDefaultToken("{COLOR=BLACK}");
         Graphics.DisplayMode active = Gdx.graphics.getDisplayMode();
         float dialogueLabelWidth = (float) (active.width * 0.6);
         dialogueWindow.add(dialogueLabel).width(dialogueLabelWidth).expandX();
