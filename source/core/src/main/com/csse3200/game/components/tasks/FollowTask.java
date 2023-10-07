@@ -66,8 +66,6 @@ public class FollowTask extends ChaseTask {
     if(getDistanceToTarget() <= stoppingDistance) {
       owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(false);
       status = Status.INACTIVE;
-      return;
-    } else {
       owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(true);
       getMovementTask().setTarget(getTarget().getCenterPosition());
       getMovementTask().update();

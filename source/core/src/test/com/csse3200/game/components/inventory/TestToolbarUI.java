@@ -45,7 +45,7 @@ import javax.swing.*;
  * the properties stores in 'PlayerConfig'.
  */
 @ExtendWith(GameExtension.class)
-public class TestToolbarUI {
+class TestToolbarUI {
 	Entity player;
 	ToolbarDisplay toolbarDisplay;
 	static InventoryComponent inventory;

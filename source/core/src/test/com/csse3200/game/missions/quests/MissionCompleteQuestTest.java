@@ -64,7 +64,7 @@ class MissionCompleteQuestTest {
     }
 
     @Test
-    public void testRegisterMission() {
+    void testRegisterMission() {
         assertFalse(MCQuest1.isCompleted());
         assertTrue(MCQuest2.isCompleted());
         assertTrue(MCQuest3.isCompleted());
@@ -93,7 +93,7 @@ class MissionCompleteQuestTest {
     }
 
     @Test
-    public void testIsCompleted() {
+    void testIsCompleted() {
         testRegisterMission();
         assertFalse(MCQuest1.isCompleted());
         assertTrue(MCQuest2.isCompleted());
@@ -124,7 +124,7 @@ class MissionCompleteQuestTest {
     }
 
     @Test
-    public void testGetDescription() {
+    void testGetDescription() {
         testRegisterMission();
         String desc = "Complete %d missions to get a tractor.\n%d out of %d required quests completed.";
         for (int i = 0; i < 10; i++) {
@@ -140,7 +140,7 @@ class MissionCompleteQuestTest {
     }
 
     @Test
-    public void testGetShortDescription() {
+    void testGetShortDescription() {
         testRegisterMission();
         String desc = "%d out of %d required quests completed";
         for (int i = 0; i < 10; i++) {
@@ -156,7 +156,7 @@ class MissionCompleteQuestTest {
     }
 
     @Test
-    public void testReadProgress() {
+    void testReadProgress() {
         int progressInt = 3;
         JsonValue progress = new JsonValue(progressInt);
         assertEquals(0, MCQuest1.getProgress());
@@ -180,7 +180,7 @@ class MissionCompleteQuestTest {
     }
 
     @Test
-    public void testGetProgress() {
+    void testGetProgress() {
         assertEquals(0, MCQuest1.getProgress());
         assertEquals(0, MCQuest2.getProgress());
         assertEquals(0, MCQuest3.getProgress());
@@ -200,7 +200,7 @@ class MissionCompleteQuestTest {
     }
 
     @Test
-    public void testResetState() {
+    void testResetState() {
         testIsCompleted();
         assertTrue(MCQuest1.isCompleted());
         assertTrue(MCQuest2.isCompleted());

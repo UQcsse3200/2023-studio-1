@@ -27,7 +27,7 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.DirectionUtils;
 
 @ExtendWith(GameExtension.class)
-public class InteractionDetectorTest {
+class InteractionDetectorTest {
 
     private InteractionDetector interactor;
     private Entity interactionEntity;
@@ -48,7 +48,7 @@ public class InteractionDetectorTest {
     }
 
     @Test
-    public void testGetEntitiesInRange() {
+    void testGetEntitiesInRange() {
         // This test ensures event listeners work as intended, and entities in range are detected
 
         Entity entity1 = makeEntity();
@@ -88,7 +88,7 @@ public class InteractionDetectorTest {
     }
 
     @Test
-    public void testGetEntitiesTowardsDirection() {
+    void testGetEntitiesTowardsDirection() {
         Entity entity1 = makeEntity(new Vector2(0f, 1f)); // up direction
         Entity entity2 = makeEntity(new Vector2(-1f, 0f)); // left direction
         Entity entity3 = makeEntity(new Vector2(0, -1)); // down direction
@@ -134,7 +134,7 @@ public class InteractionDetectorTest {
     }
 
     @Test
-    public void testGetEntitiesTowardsPosition() {
+    void testGetEntitiesTowardsPosition() {
         Entity entity1 = makeEntity(new Vector2(0f, 1f)); // up direction
         Entity entity2 = makeEntity(new Vector2(-1f, 0f)); // left direction
         Entity entity3 = makeEntity(new Vector2(0, -1)); // down direction
@@ -184,7 +184,7 @@ public class InteractionDetectorTest {
     }
 
     @Test
-    public void testGetNearest() {
+    void testGetNearest() {
         Entity entity1 = makeEntity(new Vector2(12f, 10f));
         Entity entity2 = makeEntity(new Vector2(-1f, 0f));
         Entity entity3 = makeEntity(new Vector2(0f, -1f));
@@ -201,7 +201,7 @@ public class InteractionDetectorTest {
         assertTrue(interactor.getNearest(entities) == entity3 || interactor.getNearest(entities) == entity2);
     }
 
-    public Entity makeEntity() {
+    Entity makeEntity() {
         Entity entity = new Entity()
                 .addComponent(new PhysicsComponent())
                 .addComponent(new HitboxComponent());
@@ -209,7 +209,7 @@ public class InteractionDetectorTest {
         return entity;
     }
 
-    public Entity makeEntity(Vector2 position) {
+    Entity makeEntity(Vector2 position) {
         Entity entity = new Entity()
                 .addComponent(new PhysicsComponent())
                 .addComponent(new HitboxComponent());

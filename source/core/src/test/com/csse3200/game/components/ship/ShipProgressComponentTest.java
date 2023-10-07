@@ -12,7 +12,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.extensions.GameExtension;
 
 @ExtendWith(GameExtension.class)
-public class ShipProgressComponentTest {
+class ShipProgressComponentTest {
 	private Entity ship;
 	private ShipProgressComponent shipProgressComponent;
 

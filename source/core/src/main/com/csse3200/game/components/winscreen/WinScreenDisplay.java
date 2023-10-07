@@ -177,7 +177,7 @@ public class WinScreenDisplay extends UIComponent {
         // adjust the speed of movement based on screen size and current fps to ensure planet
         float textAnimationDuration = 12;
         float calculatedSpeed = (planet.getY(Align.center) - storyLabel.getY(Align.top) + planetToTextPadding) /
-                (textAnimationDuration * (float)Gdx.graphics.getFramesPerSecond());
+                (textAnimationDuration * Gdx.graphics.getFramesPerSecond());
         // The universal speed limit must be enforced
         spaceSpeed = Math.min(calculatedSpeed, 1.5f);
         String log = String.format("Space Speed: %s", spaceSpeed);

@@ -22,7 +22,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.extensions.GameExtension;
 
 @ExtendWith(GameExtension.class)
-public class PlayerInventoryTest {
+class PlayerInventoryTest {
     private Entity player;
     private InventoryComponent inventoryComponent;
     private Entity item1;

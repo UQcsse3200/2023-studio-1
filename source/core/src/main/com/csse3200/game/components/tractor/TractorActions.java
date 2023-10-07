@@ -30,16 +30,6 @@ public class TractorActions extends Component {
   private static final Vector2 MAX_SPEED = new Vector2(5f, 5f); // Metres per second
 
   /**
-   * The reference to the player entity
-   */
-  private Entity player;
-
-  /**
-   * The reference to the PhysicsComponent
-   */
-  private PhysicsComponent physicsComponent;
-
-  /**
    * The move direction of the tractor
    */
   private Vector2 walkDirection = Vector2.Zero.cpy();
@@ -59,11 +49,6 @@ public class TractorActions extends Component {
    * If the tractor's inputs should be muted or not
    */
   private boolean muted = true;
-
-  /**
-   * A reference to the camera, used to track the player / tractor on exit / enter
-   */
-  private CameraComponent camera;
 
   /**
    * The mode the tractor is in, used to interact with tiles
@@ -86,7 +71,6 @@ public class TractorActions extends Component {
    */
   public void create() {
     this.map = ServiceLocator.getGameArea().getMap();
-    physicsComponent = entity.getComponent(PhysicsComponent.class);
     entity.getEvents().addListener("move", this::move);
     entity.getEvents().addListener("moveStop", this::stopMoving);
     entity.getEvents().addListener("exitTractor", this::exitTractor);
@@ -193,6 +177,9 @@ public class TractorActions extends Component {
         harvest((TerrainTile) tiles.get(0));
         harvest((TerrainTile) tiles.get(1));
       }
+      default -> {
+        // Nothing
+      }
     }
   }
 
@@ -278,11 +265,8 @@ public class TractorActions extends Component {
    * @param tile The TerrainTile that should be interacted with
    */
   private void harvest(TerrainTile tile) {
-    if (tile == null) {
-      return;
-    } else if (tile.getOccupant() == null) {
-      return;
-    } else if (isCropTile(tile.getOccupant())) {
+
+    if (tile != null && tile.getOccupant() != null && isCropTile(tile.getOccupant())) {
       tile.getOccupant().getEvents().trigger("harvest");
     }
   }
@@ -316,7 +300,7 @@ public class TractorActions extends Component {
    * Updates the speed of the tractor.
    */
   private void updateSpeed() {
-    Body body = physicsComponent.getBody();
+    Body body = entity.getComponent(PhysicsComponent.class).getBody();
     Vector2 velocity = body.getLinearVelocity();
     Vector2 desiredVelocity = walkDirection.cpy().scl(MAX_SPEED);
     // impulse = (desiredVel - currentVel) * mass
@@ -354,30 +338,19 @@ public class TractorActions extends Component {
   }
 
   /**
-   * Sets the player reference to the tractor, used to enter and exit the tractor
-   * Will most likely be removed in Sprint 4 as this was code before there was a way to
-   * easily get a reference to the player
-   * @param player the player Entity
-   */
-  public void setPlayer(Entity player) {
-    this.player = player;
-    player.getComponent(PlayerActions.class).setTractor(this.entity);
-  }
-
-  /**
    * Makes the player get into tractor.
    */
   void exitTractor() {
     this.stopMoving();
     this.mode = TractorMode.NORMAL;
-    player.getComponent(PlayerActions.class).setMuted(false);
+    ServiceLocator.getGameArea().getPlayer().getComponent(PlayerActions.class).setMuted(false);
     muted = true;
     entity.getComponent(AuraLightComponent.class).toggleLight();
     entity.getEvents().trigger("idle", getDirection(prevDirection));
-    player.getComponent(KeyboardPlayerInputComponent.class)
+    ServiceLocator.getGameArea().getPlayer().getComponent(KeyboardPlayerInputComponent.class)
         .setWalkDirection(entity.getComponent(KeyboardTractorInputComponent.class).getWalkDirection());
-    player.setPosition(this.entity.getPosition());
-    camera.setTrackEntity(player);
+    ServiceLocator.getGameArea().getPlayer().setPosition(this.entity.getPosition());
+    ServiceLocator.getCameraComponent().setTrackEntity(ServiceLocator.getGameArea().getPlayer());
   }
 
   /**
@@ -395,25 +368,6 @@ public class TractorActions extends Component {
    */
   public void setMuted(boolean muted) {
     this.muted = muted;
-  }
-
-  /**
-   * ONLY USE FOR TESTING PURPOSES, USED TO TEST MOVEMENT
-   * 
-   * @param comp a physics component
-   */
-  public void setPhysicsComponent(PhysicsComponent comp) {
-    this.physicsComponent = comp;
-  }
-
-  /**
-   * Sets the camera reference to the tractor, used to enter and exit the tractor
-   * Will most likely be removed in Sprint 4 as this was code before there was a way to
-   * easily get a reference to the camera
-   * @param cam The game camera
-   */
-  public void setCameraVar(CameraComponent cam) {
-    this.camera = cam;
   }
 
   /**
@@ -436,6 +390,7 @@ public class TractorActions extends Component {
    * Writes to the json in order to store the tractor's state, used to save the game
    * @param json The json that will be converted to a file
    */
+  @Override
   public void write(Json json){
     json.writeObjectStart(this.getClass().getSimpleName());
     //Save the muted value to the json file

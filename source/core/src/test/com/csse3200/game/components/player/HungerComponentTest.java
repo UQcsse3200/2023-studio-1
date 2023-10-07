@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(GameExtension.class)
-public class HungerComponentTest {
+class HungerComponentTest {
     HungerComponent hungerComponent;
     PlayerHungerService mockPlayerHungerService;
     EventHandler mockEventHandler;
