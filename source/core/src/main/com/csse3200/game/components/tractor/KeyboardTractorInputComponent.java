@@ -59,7 +59,7 @@ public class KeyboardTractorInputComponent extends InputComponent {
           return true;
         case Input.Keys.SPACE:
           try {
-            ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.TractorHonk);
+            ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.TRACTOR_HONK);
           } catch (InvalidSoundFileException e) {
             throw new RuntimeException(e);
           }
@@ -68,13 +68,13 @@ public class KeyboardTractorInputComponent extends InputComponent {
           entity.getEvents().trigger("toggleConeLight");
           return true;
         case Input.Keys.NUM_1:
-          actions.setMode(TractorMode.normal);
+          actions.setMode(TractorMode.NORMAL);
           return true;
         case Input.Keys.NUM_2:
-          actions.setMode(TractorMode.tilling);
+          actions.setMode(TractorMode.TILLING);
           return true;
         case Input.Keys.NUM_3:
-          actions.setMode(TractorMode.harvesting);
+          actions.setMode(TractorMode.HARVESTING);
           return true;
         default:
           return false;

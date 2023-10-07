@@ -52,6 +52,20 @@ import java.util.List;
  * similar characteristics.
  */
 public class NPCFactory {
+
+  private static final String IDLE_LEFT = "idle_left";
+  private static final String IDLE_RIGHT = "idle_right";
+  private static final String WALK_LEFT = "walk_left";
+  private static final String WALK_RIGHT = "walk_right";
+  private static final String RUN_LEFT = "run_left";
+  private static final String RUN_RIGHT = "run_right";
+  private static final String ATTACK_LEFT = "attack_left";
+  private static final String ATTACK_RIGHT = "attack_right";
+  private static final String IDLE_LEFT_TAMED = "idle_left_tamed";
+  private static final String IDLE_RIGHT_TAMED = "idle_right_tamed";
+  private static final String WALK_LEFT_TAMED = "walk_left_tamed";
+    private static final String WALK_RIGHT_TAMED = "walk_right_tamed";
+
   private static final NPCConfigs configs =
       FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 
@@ -62,7 +76,7 @@ public class NPCFactory {
    * @return chicken entity
    */
   public static Entity createChicken(Entity player) {
-    Entity chicken = createBaseAnimal(EntityType.Chicken);
+    Entity chicken = createBaseAnimal(EntityType.CHICKEN);
     BaseAnimalConfig config = configs.chicken;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
@@ -70,18 +84,18 @@ public class NPCFactory {
             16f
     );
 
-    animator.addAnimation("idle_left", Float.MAX_VALUE);
-    animator.addAnimation("idle_right", Float.MAX_VALUE);
-    animator.addAnimation("walk_left", 0.2f, Animation.PlayMode.LOOP_REVERSED);
-    animator.addAnimation("walk_right", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("run_left", 0.1f, Animation.PlayMode.LOOP_REVERSED);
-    animator.addAnimation("run_right", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(IDLE_LEFT, Float.MAX_VALUE);
+    animator.addAnimation(IDLE_RIGHT, Float.MAX_VALUE);
+    animator.addAnimation(WALK_LEFT, 0.2f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation(WALK_RIGHT, 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation(RUN_LEFT, 0.1f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation(RUN_RIGHT, 0.1f, Animation.PlayMode.LOOP);
 
     // Tamed Animations
-    animator.addAnimation("idle_left_tamed", Float.MAX_VALUE);
-    animator.addAnimation("idle_right_tamed", Float.MAX_VALUE);
-    animator.addAnimation("walk_left_tamed", 0.2f, Animation.PlayMode.LOOP_REVERSED);
-    animator.addAnimation("walk_right_tamed", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation(IDLE_LEFT_TAMED, Float.MAX_VALUE);
+    animator.addAnimation(IDLE_RIGHT_TAMED, Float.MAX_VALUE);
+    animator.addAnimation(WALK_LEFT_TAMED, 0.2f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation(WALK_RIGHT_TAMED, 0.2f, Animation.PlayMode.LOOP);
     animator.addAnimation("run_left_tamed", 0.1f, Animation.PlayMode.LOOP_REVERSED);
     animator.addAnimation("run_right_tamed", 0.1f, Animation.PlayMode.LOOP);
 
@@ -126,23 +140,23 @@ public class NPCFactory {
    * @return cow entity
    */
   public static Entity createCow(Entity player) {
-    Entity cow = createBaseAnimal(EntityType.Cow);
+    Entity cow = createBaseAnimal(EntityType.COW);
     BaseAnimalConfig config = configs.cow;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/animals/cow.atlas", TextureAtlas.class),
             16f
     );
-    animator.addAnimation("idle_left", 0.25f, Animation.PlayMode.LOOP);
-    animator.addAnimation("idle_right", 0.5f, Animation.PlayMode.LOOP);
-    animator.addAnimation("walk_left", 0.25f, Animation.PlayMode.LOOP_REVERSED);
-    animator.addAnimation("walk_right", 0.25f, Animation.PlayMode.LOOP);
+    animator.addAnimation(IDLE_LEFT, 0.25f, Animation.PlayMode.LOOP);
+    animator.addAnimation(IDLE_RIGHT, 0.5f, Animation.PlayMode.LOOP);
+    animator.addAnimation(WALK_LEFT, 0.25f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation(WALK_RIGHT, 0.25f, Animation.PlayMode.LOOP);
 
     // Tamed Animations
-    animator.addAnimation("idle_left_tamed", Float.MAX_VALUE);
-    animator.addAnimation("idle_right_tamed", Float.MAX_VALUE);
-    animator.addAnimation("walk_left_tamed", 0.2f, Animation.PlayMode.LOOP_REVERSED);
-    animator.addAnimation("walk_right_tamed", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation(IDLE_LEFT_TAMED, Float.MAX_VALUE);
+    animator.addAnimation(IDLE_RIGHT_TAMED, Float.MAX_VALUE);
+    animator.addAnimation(WALK_LEFT_TAMED, 0.2f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation(WALK_RIGHT_TAMED, 0.2f, Animation.PlayMode.LOOP);
 
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
@@ -186,20 +200,20 @@ public class NPCFactory {
    * @return Astrolotl entity
    */
   public static Entity createAstrolotl(Entity player) {
-    Entity astrolotl = createBaseAnimal(EntityType.Astrolotl);
+    Entity astrolotl = createBaseAnimal(EntityType.ASTROLOTL);
     BaseAnimalConfig config = configs.astrolotl;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/animals/astrolotl.atlas", TextureAtlas.class)
             , 20f);
-    animator.addAnimation("idle_left", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("idle_right", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("walk_left", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("walk_right", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("idle_left_tamed", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("idle_right_tamed", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("walk_left_tamed", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("walk_right_tamed", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(IDLE_LEFT, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(IDLE_RIGHT, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(WALK_LEFT, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(WALK_RIGHT, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(IDLE_LEFT_TAMED, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(IDLE_RIGHT_TAMED, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(WALK_LEFT_TAMED, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(WALK_RIGHT_TAMED, 0.15f, Animation.PlayMode.LOOP);
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(1.5f, 1.5f), 5f))
@@ -226,7 +240,7 @@ public class NPCFactory {
    * @return Oxygen Eater entity
    */
   public static Entity createOxygenEater(Entity player) {
-    Entity oxygenEater = createBaseAnimal(EntityType.OxygenEater);
+    Entity oxygenEater = createBaseAnimal(EntityType.OXYGEN_EATER);
     BaseAnimalConfig config = configs.oxygenEater;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
@@ -235,12 +249,12 @@ public class NPCFactory {
             16f
     );
 
-    animator.addAnimation("idle_left", 0.5f, Animation.PlayMode.LOOP);
-    animator.addAnimation("walk_left", 0.5f, Animation.PlayMode.LOOP);
-    animator.addAnimation("idle_right", 0.5f, Animation.PlayMode.LOOP_REVERSED);
-    animator.addAnimation("walk_right", 0.5f, Animation.PlayMode.LOOP_REVERSED);
-    animator.addAnimation("attack_right", 0.1f, Animation.PlayMode.REVERSED);
-    animator.addAnimation("attack_left", 0.1f);
+    animator.addAnimation(IDLE_LEFT, 0.5f, Animation.PlayMode.LOOP);
+    animator.addAnimation(WALK_LEFT, 0.5f, Animation.PlayMode.LOOP);
+    animator.addAnimation(IDLE_RIGHT, 0.5f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation(WALK_RIGHT, 0.5f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation(ATTACK_RIGHT, 0.1f, Animation.PlayMode.REVERSED);
+    animator.addAnimation(ATTACK_LEFT, 0.1f);
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
@@ -252,7 +266,7 @@ public class NPCFactory {
             .addComponent(new CombatStatsComponent(10, 0))
             .addComponent(new HostileAnimationController())
             .addComponent(new OxygenEaterAttackPattern(1.5f, ProjectileFactory::createOxygenEaterProjectile))
-            .addComponent(new InteractionDetector(5f, new ArrayList<>(Arrays.asList(EntityType.Player)))); // TODO: Do we want it to attack anything
+            .addComponent(new InteractionDetector(5f, new ArrayList<>(Arrays.asList(EntityType.PLAYER)))); // TODO: Do we want it to attack anything
 
     oxygenEater.scaleHeight(2f);
     oxygenEater.getComponent(ColliderComponent.class).setAsBoxAligned(new Vector2(1f, 1f),
@@ -285,7 +299,7 @@ public class NPCFactory {
     animator.addAnimation(animation, 0.5f, Animation.PlayMode.LOOP);
     animator.startAnimation(animation);
 
-    Entity fireflies = new Entity(EntityType.FireFlies)
+    Entity fireflies = new Entity(EntityType.FIRE_FLIES)
             .addComponent(animator)
             .addComponent(light)
             // Not actually scaring just dying from daylight (named from previous idea for feature)
@@ -300,21 +314,21 @@ public class NPCFactory {
    * @return Dragonfly entity
    */
   public static Entity createDragonfly(Entity player) {
-    Entity dragonfly = createBaseAnimal(EntityType.Dragonfly);
+    Entity dragonfly = createBaseAnimal(EntityType.DRAGONFLY);
     BaseAnimalConfig config = configs.dragonfly;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/animals/dragonfly.atlas",
                     TextureAtlas.class)
             , 20f);
-    animator.addAnimation("attack_left", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("attack_right", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("walk_left", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("walk_right", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("idle_left", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("idle_right", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("run_left", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("run_right", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(ATTACK_LEFT, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(ATTACK_RIGHT, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(WALK_LEFT, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(WALK_RIGHT, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(IDLE_LEFT, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(IDLE_RIGHT, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(RUN_LEFT, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(RUN_RIGHT, 0.15f, Animation.PlayMode.LOOP);
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(1.5f, 1.5f), 5f))
@@ -329,7 +343,7 @@ public class NPCFactory {
             .addComponent(new EntityIndicator(dragonfly))
             .addComponent(new DragonflyAttackPattern(1.5f, ProjectileFactory::createDragonflyProjectile))
             .addComponent(new InteractionDetector(5f,
-                    new ArrayList<>(Arrays.asList((EntityType.Player), (EntityType.Plant)))))
+                    new ArrayList<>(Arrays.asList((EntityType.PLAYER), (EntityType.PLANT)))))
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
 
 
@@ -343,19 +357,19 @@ public class NPCFactory {
    * @return Bat entity
    */
   public static Entity createBat(Entity player) {
-    Entity bat = createBaseAnimal(EntityType.Bat);
+    Entity bat = createBaseAnimal(EntityType.BAT);
     BaseAnimalConfig config = configs.bat;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/animals/bat.atlas",
                     TextureAtlas.class)
             , 20f);
-    animator.addAnimation("attack_left", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("attack_right", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("walk_left", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("walk_right", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("idle_left", 0.15f, Animation.PlayMode.LOOP);
-    animator.addAnimation("idle_right", 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(ATTACK_LEFT, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(ATTACK_RIGHT, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(WALK_LEFT, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(WALK_RIGHT, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(IDLE_LEFT, 0.15f, Animation.PlayMode.LOOP);
+    animator.addAnimation(IDLE_RIGHT, 0.15f, Animation.PlayMode.LOOP);
 
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
@@ -369,7 +383,7 @@ public class NPCFactory {
             .addComponent(new BatAttackPattern(1.5f))
             .addComponent(new EntityIndicator(bat))
             .addComponent(new InteractionDetector(1.5f,
-                    new ArrayList<>(Arrays.asList(EntityType.Player))))
+                    new ArrayList<>(Arrays.asList(EntityType.PLAYER))))
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
 
 
@@ -390,7 +404,7 @@ public class NPCFactory {
             .addComponent(new PhysicsMovementComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC));
 
-    if (type != EntityType.Dragonfly && type != EntityType.Bat) {
+    if (type != EntityType.DRAGONFLY && type != EntityType.BAT) {
       animal.addComponent(new ColliderComponent());
     }
 

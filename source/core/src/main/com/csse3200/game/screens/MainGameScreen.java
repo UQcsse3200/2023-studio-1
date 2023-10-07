@@ -4,6 +4,7 @@ import com.csse3200.game.services.*;
 import com.csse3200.game.components.plants.PlantInfoDisplayComponent;
 import com.csse3200.game.entities.FireflySpawner;
 import com.csse3200.game.components.losescreen.LoseScreenDisplay;
+import com.csse3200.game.ui.UIService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.ScreenAdapter;
@@ -121,10 +122,18 @@ public class MainGameScreen extends ScreenAdapter {
         ServiceLocator.registerRenderService(new RenderService());
         ServiceLocator.registerTimeService(new TimeService());
         ServiceLocator.registerPlanetOxygenService(new PlanetOxygenService());
+
         ServiceLocator.registerPlantCommandService(new PlantCommandService());
+        ServiceLocator.registerPlayerHungerService(new PlayerHungerService());
         ServiceLocator.registerPlantInfoService(new PlantInfoService());
 
+        ServiceLocator.registerUIService(new UIService());
         ServiceLocator.registerSoundService(new SoundService());
+
+
+        ServiceLocator.registerMissionManager(new MissionManager());
+        // Why does this not exist??
+        //ServiceLocator.registerSoundService(new SoundService());
 
         ServiceLocator.registerMissionManager(new MissionManager());
         renderer = RenderFactory.createRenderer();
@@ -265,10 +274,13 @@ public class MainGameScreen extends ScreenAdapter {
             // entities added after them will transition even if you don't want them to. Add components with
             // transitions underneath this comment. Hopefully it should work, it fixed my bug at least.
                 .addComponent(new GameTimeDisplay())
+                .addComponent(new ProgressBar())
                 .addComponent(new OxygenDisplay())
+                .addComponent(new HungerBar())
+                .addComponent(new PlantInfoDisplayComponent())
+
+                .addComponent(new WeatherEventDisplay())
                 .addComponent(new HealthDisplay());
-
-
 
         ServiceLocator.getEntityService().register(ui);
     }

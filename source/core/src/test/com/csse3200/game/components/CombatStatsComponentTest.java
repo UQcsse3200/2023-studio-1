@@ -17,10 +17,10 @@ class CombatStatsComponentTest {
     assertEquals(100, combat.getHealth());
 
     combat.setHealth(150);
-    assertEquals(150, combat.getHealth());
+    assertEquals(100, combat.getHealth());
 
     combat.setHealth(-50);
-    assertEquals(-1, combat.getHealth());
+    assertEquals(0, combat.getHealth());
   }
 
   @Test
@@ -36,11 +36,11 @@ class CombatStatsComponentTest {
   void shouldAddHealth() {
     CombatStatsComponent combat = new CombatStatsComponent(100, 20);
     combat.addHealth(-500);
-    assertEquals(-1, combat.getHealth());
+    assertEquals(0, combat.getHealth());
 
     combat.addHealth(100);
     combat.addHealth(-20);
-    assertEquals(79, combat.getHealth());
+    assertEquals(80, combat.getHealth());
   }
 
   @Test

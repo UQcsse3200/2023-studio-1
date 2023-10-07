@@ -4,8 +4,10 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.services.ServiceLocator;
 
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.function.Function;
+import java.util.Random;
 
 /**
  * Handles periodic spawning of one entity
@@ -66,24 +68,26 @@ public class EntitySpawner {
      * Number of times spawnHour has occurred this spawn cycle
      */
     private int dayCounter;
+
+    private final Random random = new SecureRandom();
+
     /**
      * Constructor for EntitySpawner
      *
-     * @param maxSpawnCount maximum number of entities that can be spawned in one cycle
-     * @param spawner method that creates the entity
-     * @param player the player entity of the game
-     * @param growthRate linear growth rate of number of entities spawned each spawn cycle
+     * @param maxSpawnCount     maximum number of entities that can be spawned in one cycle
+     * @param spawner           method that creates the entity
+     * @param growthRate        linear growth rate of number of entities spawned each spawn cycle
      * @param initialSpawnCount the initial number of entities to be spawned
-     * @param spawnHour the hour that the entities will be spawned or the hour after which a
-     *                  randomGoal will be determined.
-     * @param randomRange max number of hours that the entity may spawn after spawnHour
+     * @param spawnHour         the hour that the entities will be spawned or the hour after which a
+     *                          randomGoal will be determined.
+     * @param randomRange       max number of hours that the entity may spawn after spawnHour
      * @param daysBetweenSpawns minimum number of times spawnHour must occur between spawns
      */
-    public EntitySpawner(int maxSpawnCount, Function<Entity, Entity> spawner, Entity player, int growthRate,
+    public EntitySpawner(int maxSpawnCount, Function<Entity, Entity> spawner, int growthRate,
                          int initialSpawnCount, int spawnHour, int randomRange, int daysBetweenSpawns) {
         this.maxSpawnCount = maxSpawnCount;
         this.spawner = spawner;
-        this.player = player;
+        this.player = ServiceLocator.getGameArea().getPlayer();
         this.growthRate = growthRate;
         this.spawnCount = initialSpawnCount;
         this.spawnHour = spawnHour;
@@ -129,7 +133,7 @@ public class EntitySpawner {
 
         if (hour == spawnHour && !hourReached) {
             hourReached = true;
-            randomGoal = (int) (Math.random() * randomRange);
+            randomGoal = (int) (random.nextFloat() * randomRange);
         }
 
          if (hourReached) {
@@ -158,7 +162,7 @@ public class EntitySpawner {
         for (int i = 0; i < spawnCount; i++) {
             //Get random traverseable tile to spawn the entity
             List<GridPoint2> traverseables = gameArea.getMap().getTraversableTileCoordinates();
-            int randomTileIndex = (int) Math.floor(Math.random() * (traverseables.size() - 1));
+            int randomTileIndex = (int) Math.floor(random.nextFloat() * (traverseables.size() - 1));
             GridPoint2 position = traverseables.get(randomTileIndex);
 
             //Create entity and spawn on gameArea

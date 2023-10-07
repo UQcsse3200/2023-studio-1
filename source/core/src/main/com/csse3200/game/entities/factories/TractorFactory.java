@@ -33,7 +33,7 @@ public class TractorFactory {
     AnimationRenderComponent animator = setupTractorAnimations();
     InputComponent inputComponent = ServiceLocator.getInputService().getInputFactory().createForTractor();
 
-    Entity tractor = new Entity(EntityType.Tractor)
+    Entity tractor = new Entity(EntityType.TRACTOR)
         .addComponent(new PhysicsComponent())
         .addComponent(new TractorAnimationController())
         .addComponent(new ColliderComponent())

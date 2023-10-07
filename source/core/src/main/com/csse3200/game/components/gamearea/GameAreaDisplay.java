@@ -1,6 +1,5 @@
 package com.csse3200.game.components.gamearea;
 
-import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.inventory.InventoryDisplayManager;
 import com.csse3200.game.components.maingame.MainGameActions;
 import org.slf4j.Logger;
@@ -18,8 +17,6 @@ import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.components.player.OpenPauseComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Displays the name of the current game area.
@@ -30,9 +27,6 @@ public class GameAreaDisplay extends UIComponent {
   private static final Logger logger = LoggerFactory.getLogger(GameAreaDisplay.class);
   private Group pausingGroup = new Group();
   private OpenPauseComponent openPauseComponent;
-  private Image popUp;
-  private GdxGame game;
-  private boolean isPaused = false;
   private Image backgroundOverlay;
   private InventoryDisplayManager inventoryDisplayManager;
 
@@ -41,7 +35,7 @@ public class GameAreaDisplay extends UIComponent {
     super.create();
     ServiceLocator.registerCraftArea(this);
     addActors();
-    backgroundOverlay = new Image(new Texture(Gdx.files.internal("images/PauseMenu/Pause_Overlay.jpg")));
+    backgroundOverlay = new Image(ServiceLocator.getResourceService().getAsset("images/PauseMenu/Pause_Overlay.jpg", Texture.class));
     backgroundOverlay.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     backgroundOverlay.setColor(0, 0, 0, 0.8f);
     backgroundOverlay.setVisible(false);
@@ -71,7 +65,7 @@ public class GameAreaDisplay extends UIComponent {
     backgroundOverlay.setVisible(true); // Initially, set it to invisible
 
 
-    Image pauseMenu = new Image(new Texture(Gdx.files.internal("images/PauseMenu/Pausenew.jpg")));
+    Image pauseMenu = new Image(ServiceLocator.getResourceService().getAsset("images/PauseMenu/Pausenew.jpg", Texture.class));
     pauseMenu.setSize(1300, 700);
     pauseMenu.setPosition((float) (Gdx.graphics.getWidth() / 2.0 - pauseMenu.getWidth() / 2),
             (float) (Gdx.graphics.getHeight() / 2.0 - pauseMenu.getHeight() / 2));

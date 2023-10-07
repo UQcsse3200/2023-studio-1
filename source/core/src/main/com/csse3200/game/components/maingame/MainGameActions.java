@@ -15,9 +15,8 @@ public class MainGameActions extends Component {
   private static GdxGame game;
 
   public MainGameActions(GdxGame game) {
-    this.game = game;
+    MainGameActions.game = game;
   }
-
 
   @Override
   public void create() {

@@ -18,7 +18,7 @@ public class MultiRewardTest {
     private List<Reward> rewards;
 
     @BeforeEach
-    public void init() {
+    void init() {
         multiReward1 = new MultiReward(new ArrayList<>());
 
         rewards = List.of(
@@ -31,13 +31,13 @@ public class MultiRewardTest {
     }
 
     @Test
-    public void testEmptyCollect() {
+    void testEmptyCollect() {
         multiReward1.collect();
         assertTrue(multiReward1.isCollected());
     }
 
     @Test
-    public void nonEmptyCollect() {
+    void nonEmptyCollect() {
         multiReward2.collect();
         assertTrue(multiReward2.isCollected());
 

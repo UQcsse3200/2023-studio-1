@@ -28,7 +28,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     NONE
   }
 
-  private static final Logger logger = LoggerFactory.getLogger(Component.class);
+  private static final Logger logger = LoggerFactory.getLogger(KeyboardPlayerInputComponent.class);
 
   public KeyboardPlayerInputComponent() {
     super(5);
@@ -92,6 +92,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           showPlantInfoUI = !showPlantInfoUI;
           ServiceLocator.getPlantInfoService().getEvents().trigger("toggleOpen", showPlantInfoUI);
           return true;
+        case Keys.R:
+          entity.getEvents().trigger("eat", entity.getComponent(InventoryComponent.class).getHeldItem());
         default:
           return false;
       }
@@ -195,5 +197,14 @@ public class KeyboardPlayerInputComponent extends InputComponent {
        index = 9;
      }
      entity.getEvents().trigger("hotkeySelection", index);
+   }
+
+  /**
+   * Shows whether the plant info window is currently being displayed
+   *
+   * @return boolean that represents whether plant info was being shown
+   */
+   public static boolean getShowPlantInfoUI() {
+     return showPlantInfoUI;
    }
 }

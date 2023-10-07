@@ -187,7 +187,7 @@ public class IntroDisplay extends UIComponent {
         // adjust the speed of movement based on screen size and current fps to ensure planet
         // hits position at the right time
         float calculatedSpeed = (planet.getY(Align.center) - storyLabel.getY(Align.top) + planetToTextPadding) /
-                (textAnimationDuration * (float)Gdx.graphics.getFramesPerSecond());
+                (textAnimationDuration * Gdx.graphics.getFramesPerSecond());
 
         // The universal speed limit must be enforced
         if (calculatedSpeed > 1.5f) {
@@ -196,9 +196,8 @@ public class IntroDisplay extends UIComponent {
             spaceSpeed = calculatedSpeed;
         }
 
-
-        logger.debug(String.format("Space Speed: %s", spaceSpeed));
-
+        String log = String.format("Space Speed: %s", spaceSpeed);
+        logger.debug(log);
 
         stage.act(ServiceLocator.getTimeSource().getDeltaTime());
     }

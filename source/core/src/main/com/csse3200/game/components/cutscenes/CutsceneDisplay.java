@@ -14,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
+import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.missions.cutscenes.Cutscene;
 import com.csse3200.game.services.ServiceLocator;
 import com.rafaskoberg.gdx.typinglabel.TypingLabel;
@@ -22,33 +24,51 @@ import org.slf4j.LoggerFactory;
 import com.csse3200.game.ui.UIComponent;
 
 public class CutsceneDisplay extends UIComponent {
+
     /**
      * The atlas for the npc sprite.
      */
     private TextureAtlas npcAtlas;
+
     /**
      * The Image that contains the npc sprite.
      */
     private Image npcSprite;
+
+    /**
+     * Logger to log events
+     */
     private static final Logger logger = LoggerFactory.getLogger(com.csse3200.game.missions.cutscenes.Cutscene.class);
+
     /**
      * The table that forms the basis for the layout of the cutscene
      */
     private Table table;
+
     /**
      * Stores the cutscene object that created the cutscene display
      */
     private Cutscene cutscene;
+    /**
+     * Stores the transparent rectangle
+     */
     private Image transparentRectangle;
     /**
      * Stores the dialogue text
      */
     private final String dialogue;
+    /**
+     * Stores the table used to display the dialogue
+     */
     private Table dialogueTable;
+    /**
+     * Stores the cutscene type
+     */
     private final Cutscene.CutsceneType cutsceneType;
 
     /**
      * Creates a cutscene display using the given parameters
+     *
      * @param dialogue the dialogue that will be displayed
      * @param cutscene the cutscene object that created the cutscene display
      */
@@ -70,7 +90,7 @@ public class CutsceneDisplay extends UIComponent {
      */
     public void spawnCutsceneDisplay() {
         logger.debug("Cutscene Display spawned");
-
+        removeExternalUI();
         logger.debug("Cutscene table spawned");
         dialogueTable = new Table();
         dialogueTable.setFillParent(true);
@@ -90,7 +110,7 @@ public class CutsceneDisplay extends UIComponent {
     /**
      * Dims the screen
      */
-    public void dimScreen() {
+    private void dimScreen() {
         logger.debug("Screen dimmed");
         //Following code for making transparent rectangle from
         //https://stackoverflow.com/questions/44260510/is-it-possible-to-draw-a-transparent-layer-without-using-image-libgdx
@@ -101,7 +121,7 @@ public class CutsceneDisplay extends UIComponent {
         pixmap.dispose();
         transparentRectangle = new Image(transparentRecTex);
         transparentRectangle.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        transparentRectangle.getColor().a = 0.5f;
+        transparentRectangle.getColor().a = 0.65f;
         stage.addActor(transparentRectangle);
     }
 
@@ -179,11 +199,29 @@ public class CutsceneDisplay extends UIComponent {
         stage.getRoot().removeActor(transparentRectangle);
         stage.getRoot().removeActor(dialogueTable);
         super.dispose();
+        recoverExternalUI();
     }
 
     @Override
     public void draw(SpriteBatch batch) {
         // handled by the stage
+    }
+
+    /**
+     * Removes the UI components on the screen so that cutscene is not so cluttered
+     */
+    public void removeExternalUI() {
+        ServiceLocator.getPlantInfoService().getEvents().trigger("toggleOpen", false);
+        ServiceLocator.getUIService().getEvents().trigger("toggleUI", false);
+    }
+
+    /**
+     * Recovers the UI components that were removed back onto the screen
+     */
+    public void recoverExternalUI() {
+        ServiceLocator.getPlantInfoService().getEvents().
+                trigger("toggleOpen", KeyboardPlayerInputComponent.getShowPlantInfoUI());
+        ServiceLocator.getUIService().getEvents().trigger("toggleUI", true);
     }
 }
 

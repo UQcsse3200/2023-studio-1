@@ -10,6 +10,13 @@ import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 public class ShipPartTileFactory {
 
 	/**
+	 * To hide implicit public constructor
+	 */
+	private ShipPartTileFactory() {
+		throw new IllegalArgumentException("Utility class");
+	}
+
+	/**
 	 * Creates an Entity that contains a ShipPartTileComponent.
 	 *
 	 * @param position where the entity will be placed.
@@ -20,7 +27,7 @@ public class ShipPartTileFactory {
 		DynamicTextureRenderComponent renderComponent = new DynamicTextureRenderComponent("images/cropTile.png");
 		renderComponent.setLayer(1);
 
-		Entity shipPartTile = new Entity(EntityType.ShipPartTile)
+		Entity shipPartTile = new Entity(EntityType.SHIP_PART_TILE)
 				.addComponent(new ColliderComponent().setSensor(true))
 				.addComponent(new PhysicsComponent())
 				.addComponent(new ShipPartTileComponent())

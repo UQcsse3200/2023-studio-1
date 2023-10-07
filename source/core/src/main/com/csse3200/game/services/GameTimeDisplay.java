@@ -28,6 +28,8 @@ public class GameTimeDisplay extends UIComponent {
     private Array<Label> timeLabels;
     private Label timeLabel;
 
+    private static final String LARGE = "large";
+
     /**
      * Creates reusable ui styles and adds actors to the stage.
      */
@@ -39,9 +41,13 @@ public class GameTimeDisplay extends UIComponent {
 
         // Listen for the "hourUpdate" event to update the display
         ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateDisplay);
-
+        ServiceLocator.getUIService().getEvents().addListener("toggleUI", this::toggleDisplay);
         // Initial update
         updateDisplay();
+    }
+
+    private void toggleDisplay(boolean isDisplayed) {
+        table.setVisible(isDisplayed);
     }
 
     /**
@@ -66,13 +72,13 @@ public class GameTimeDisplay extends UIComponent {
         timeLabels = new Array<>();
         for (int i = 0; i < 24; i++) {
             if (i == 0) {
-                timeLabels.add(new Label("12 am", skin, "large"));
+                timeLabels.add(new Label("12 am", skin, LARGE));
             } else if (i < 12) {
-                timeLabels.add(new Label(String.format("%d am", i), skin, "large"));
+                timeLabels.add(new Label(String.format("%d am", i), skin, LARGE));
             } else if (i == 12) {
-                timeLabels.add(new Label("12 pm", skin, "large"));
+                timeLabels.add(new Label("12 pm", skin, LARGE));
             } else {
-                timeLabels.add(new Label(String.format("%d pm", i - 12), skin, "large"));
+                timeLabels.add(new Label(String.format("%d pm", i - 12), skin, LARGE));
             }
         }
 

@@ -86,7 +86,7 @@ class ItemRewardTest {
     }
 
     @Test
-    public void testEmptyCollect() {
+    void testEmptyCollect() {
         InventoryComponent initialPlayerInventory = ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class);
         assertFalse(r1.isCollected());
         r1.collect();
@@ -95,7 +95,7 @@ class ItemRewardTest {
     }
 
     @Test
-    public void testSingleCollect() {
+    void testSingleCollect() {
         InventoryComponent initialPlayerInventory = ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class);
         r2.collect();
         initialPlayerInventory.addItem(e1);
@@ -105,7 +105,7 @@ class ItemRewardTest {
     }
 
     @Test
-    public void testManyCollect() {
+    void testManyCollect() {
         InventoryComponent initialPlayerInventory = ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class);
         r3.collect();
         initialPlayerInventory.addItem(e2);
