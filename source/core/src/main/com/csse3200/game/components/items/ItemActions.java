@@ -43,7 +43,8 @@ public class ItemActions extends Component {
                   ItemFactory::createSalmon));
 
   private final ArrayList<Supplier<Entity>> lavaFish =
-          new ArrayList<>(Arrays.asList(ItemFactory::createLavaEel));
+          new ArrayList<>(Arrays.asList(ItemFactory::createLavaEel,
+                  ItemFactory::createSprinklerItem));
 
   @Override
   public void create() {
@@ -60,9 +61,14 @@ public class ItemActions extends Component {
         item = oceanFish.get(random.nextInt(oceanFish.size())).get();
         break;
       case "lava":
-        // Get a lava fish
-        item = lavaFish.get(random.nextInt(lavaFish.size())).get();
-        break;
+        // Have a chance to receive a drop 1 / 5
+        if (random.nextInt(5) == 0) {
+          // Get a lava fish
+          item = lavaFish.get(random.nextInt(lavaFish.size())).get();
+          break;
+        }
+        // Unlucky
+        return;
       default:
         // Error
         return;
