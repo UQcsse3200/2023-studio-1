@@ -4,6 +4,7 @@ import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerra
 import java.util.Arrays;
 import java.util.List;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.CombatStatsComponent;
@@ -94,10 +95,53 @@ public class ItemActions extends Component {
         resultStatus = repair(player, mouseWorldPos);
         return resultStatus;
       }
+      case FISHING_ROD -> {
+        return fish(player, mouseWorldPos);
+      }
       default -> {
         return false;
       }
     }
+  }
+
+  /**
+   * This method of getting direction was adjusted to fit fishing (changed return values)
+   * from the code written by Team 2, in PlayerActions and PlayerAnimationController.
+   * @return a String that matches with where the fishing rod should go, values can be "right", "left", "up" or "down"
+   *          defaults to "right" in an error situation to avoid crashes.
+   */
+  private String getDirection(Vector2 playerPos, Vector2 mousePos) {
+    Float direction = playerPos.angleDeg(mousePos);
+    if (direction < 45) {
+      return "right";
+    } else if (direction < 135) {
+      return "up";
+    } else if (direction < 225) {
+      return "left";
+    } else if (direction < 315) {
+      return "down";
+    }
+    return "right";
+  }
+
+  private boolean fish(Entity player, Vector2 mousePos) {
+    String direction = getDirection(player.getPosition(), mousePos);
+    Vector2 tileCoords = new Vector2();
+    switch (direction) {
+      case "right": tileCoords.set(2, 0);
+      case "left": tileCoords.set(-2, 0);
+      case "up": tileCoords.set(0, 2);
+      case "down": tileCoords.set(0, -2);
+      default: // All covered from above
+    }
+    TerrainTile tile = ServiceLocator.getGameArea().getMap().getTile(player.getPosition().add(tileCoords));
+    // Is there viable water where the tile would land
+    if (tile.getTerrainCategory() == TerrainTile.TerrainCategory.DEEPWATER) {
+      // Ocean fish
+    } else if (tile.getTerrainCategory() == TerrainTile.TerrainCategory.LAVA) {
+      // Lava fish
+    }
+    return false;
   }
 
   public void eat(Entity player) {
