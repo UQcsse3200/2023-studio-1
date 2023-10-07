@@ -21,7 +21,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private static boolean menuOpened = false;
   private static Enum<MenuTypes> currentMenu = MenuTypes.NONE;
 
-  private boolean showPlantInfoUI = true;
+  private static boolean showPlantInfoUI = true;
   private boolean showMap = false;
   public enum MenuTypes{
     PAUSEMENU,
