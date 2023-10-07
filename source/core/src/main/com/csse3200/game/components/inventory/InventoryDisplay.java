@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.services.ServiceLocator;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import org.jetbrains.annotations.NotNull;
@@ -106,8 +105,8 @@ public class InventoryDisplay extends UIComponent {
 			}
 		}
 		table.row();
-		Image deleteSlot = new Image(ServiceLocator.getResourceService().getAsset("images/PauseMenu/Pause_Overlay.jpg", Texture.class));
-		deleteSlot.setColor(Color.BLACK);
+		Image deleteSlot = new Image(ServiceLocator.getResourceService().getAsset("images/bin.png", Texture.class));
+		//deleteSlot.setColor(Color.BLACK);
 		table.add(deleteSlot).colspan(10);
 
 		// Create a window for the inventory using the skin
