@@ -32,7 +32,7 @@ public class CameraComponent extends Component {
    */
   public CameraComponent(Camera camera) {
     OrthographicCamera orthographicCamera = (OrthographicCamera) camera;
-    orthographicCamera.zoom = 2f;
+    orthographicCamera.zoom = 1.5f;
     this.camera = camera;
     lastPosition = Vector2.Zero.cpy();
   }
