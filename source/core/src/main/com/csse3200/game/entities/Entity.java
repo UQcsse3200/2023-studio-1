@@ -1,5 +1,6 @@
 package com.csse3200.game.entities;
 
+import com.csse3200.game.entities.factories.TractorFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -467,7 +468,7 @@ public class Entity implements Json.Serializable {
             default:
                 if (FactoryService.getNpcFactories().containsKey(type)) {
                     // Makes a new NPC
-                    Entity npc = FactoryService.getNpcFactories().get(type).apply(ServiceLocator.getGameArea().getPlayer());
+                    Entity npc = FactoryService.getNpcFactories().get(type).get();
                     if (npc.getComponent(TamableComponent.class) != null) {
                         npc.getComponent(TamableComponent.class).read(json, jsonMap.get(COMPONENTS_STRING));
                     }
@@ -519,7 +520,7 @@ public class Entity implements Json.Serializable {
     }
 
     private void readShipDebris() {
-        Entity shipDebris = ShipDebrisFactory.createShipDebris(null);
+        Entity shipDebris = ShipDebrisFactory.createShipDebris();
         ServiceLocator.getGameArea().spawnEntity(shipDebris);
         shipDebris.setPosition(position);
 
@@ -567,18 +568,22 @@ public class Entity implements Json.Serializable {
     }
 
     public void readTractor(JsonValue jsonMap) {
-        // Does not need a new one (may change depending on how tractor is obtained)
+        // Make a new tractor
+        System.out.println("s");
+        Entity tractor = TractorFactory.createTractor();
+        JsonValue tractorActions = jsonMap.get(COMPONENTS_STRING).get("TractorActions");
+        System.out.println("d");
+        tractor.getComponent(TractorActions.class).setMuted(tractorActions.getBoolean("isMuted"));
+        System.out.println("e");
         JsonValue lightJsonMap = jsonMap.get(COMPONENTS_STRING).get("ConeLightComponent");
-        jsonMap = jsonMap.get(COMPONENTS_STRING).get("TractorActions");
-        TractorActions tractorActions = new TractorActions();
-        // Update the tractor 'muted' variable based on the info in the json file
-        tractorActions.setMuted(jsonMap.getBoolean("isMuted"));
-        this.addComponent(tractorActions);
-
-        ConeLightComponent coneLightComponent = new ConeLightComponent(lightJsonMap.getFloat("distance"));
+        System.out.println("f");
         if (lightJsonMap.getBoolean("isActive")) {
-            coneLightComponent.toggleLight();
+            tractor.getComponent(ConeLightComponent.class).toggleLight();
+            System.out.println("e");
         }
-        this.addComponent(coneLightComponent);
+        System.out.println("read");
+        ServiceLocator.getGameArea().setTractor(tractor);
+        tractor.setPosition(position);
+        ServiceLocator.getGameArea().spawnEntity(tractor);
     }
 }

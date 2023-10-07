@@ -60,6 +60,6 @@ public class FireflySpawner {
         do {
             randomGrid = new GridPoint2(random.nextInt(mapSizeX), random.nextInt(mapSizeY));
         } while (!ServiceLocator.getGameArea().getMap().getTile(randomGrid).isTraversable());
-        ServiceLocator.getGameArea().spawnEntityAt(NPCFactory.createFireFlies(null), randomGrid, true, true);
+        ServiceLocator.getGameArea().spawnEntityAt(NPCFactory.createFireFlies(), randomGrid, true, true);
     }
 }
