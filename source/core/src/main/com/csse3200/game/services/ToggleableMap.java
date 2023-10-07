@@ -24,6 +24,8 @@ public class ToggleableMap extends UIComponent {
      * The table used to display the map.
      */
     Table table = new Table();
+
+    Table Tmap;
     Group group = new Group(); // what is this for? Angus
 
     /**
@@ -115,7 +117,7 @@ public class ToggleableMap extends UIComponent {
      */
     public void createAssets() {
         int map_x = 100, map_y = 100; // x length of map
-        Table Tmap = new Table();
+        Tmap = new Table();
         tiledMap = ServiceLocator.getGameArea().getMap().getTiledMap();
         TiledMapTileLayer layer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
         // interate through the layers and add them to the table (not sure if this works)
@@ -129,7 +131,7 @@ public class ToggleableMap extends UIComponent {
                     }
                 }
             }
-            table.row(); // new row
+            Tmap.row(); // new row
         }
     }
 
@@ -142,14 +144,16 @@ public class ToggleableMap extends UIComponent {
         window.reset();
         window.getTitleLabel().setText("MAP");
         window.setVisible(isOpen);
-        /*window.setSize((Gdx.graphics.getHeight() * (map.getWidth() / map.getHeight())),
-                Gdx.graphics.getHeight() * (map.getHeight() / map.getWidth()));
+        float mapHeight = Tmap.getChild(0).getHeight();
+        float mapWidth = Tmap.getChild(0).getWidth();
+        window.setSize((Gdx.graphics.getHeight() * (mapWidth / mapHeight)),
+                Gdx.graphics.getHeight() * (mapHeight / mapWidth));
         window.padBottom(10f);
         window.setPosition(Gdx.graphics.getWidth()/5, 20f);
         window.setMovable(false);
         window.setResizable(false);
-        window.add(map).expandX().width((Gdx.graphics.getHeight() * (map.getWidth() / map.getHeight()))-20f).
-                expandY().height(Gdx.graphics.getHeight() * (map.getHeight() / map.getWidth())-20f);*/
+        window.add(Tmap).expandX().width((Gdx.graphics.getHeight() * (mapWidth / mapHeight))-20f).
+                expandY().height(Gdx.graphics.getHeight() * (mapHeight / mapWidth)-20f);
         // Add the player's dot to the window's content
 
         stage.addActor(window);
