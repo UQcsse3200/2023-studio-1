@@ -265,11 +265,8 @@ public class TractorActions extends Component {
    * @param tile The TerrainTile that should be interacted with
    */
   private void harvest(TerrainTile tile) {
-    if (tile == null) {
-      // Leave
-    } else if (tile.getOccupant() == null) {
-      // Leave
-    } else if (isCropTile(tile.getOccupant())) {
+
+    if (tile != null && tile.getOccupant() != null && isCropTile(tile.getOccupant())) {
       tile.getOccupant().getEvents().trigger("harvest");
     }
   }

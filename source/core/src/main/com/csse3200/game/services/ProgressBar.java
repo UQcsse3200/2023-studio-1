@@ -101,7 +101,9 @@ public class ProgressBar extends UIComponent {
         table.padTop(-30f).padLeft(190f);
 
 
+
         group.addActor(progressionBar);
+
 
         table.add(group).size(200);
         stage.addActor(table);
@@ -114,6 +116,8 @@ public class ProgressBar extends UIComponent {
     @Override
     public void dispose() {
         super.dispose();
+
         progressionBar.remove();
+
     }
 }
