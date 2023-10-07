@@ -196,7 +196,6 @@ public class EventHandler {
 
     ScheduledEvent scheduledEvent = new ScheduledEvent(eventName, args, endTime);
     scheduledEvents.add(scheduledEvent);
-
     return scheduledEvent;
   }
 

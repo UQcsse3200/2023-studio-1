@@ -49,7 +49,7 @@ public class ItemActions extends Component {
   @Override
   public void create() {
     // Just in case we need constructor for later
-    entity.getEvents().addListener("fish", this::getFish);
+    entity.getEvents().addListener("fishCaught", this::getFish);
   }
 
   private void getFish(String place) {
@@ -58,19 +58,23 @@ public class ItemActions extends Component {
     switch (place) {
       case "ocean":
         // Get an ocean fish
+        item = ItemFactory.createSalmon();
         item = oceanFish.get(random.nextInt(oceanFish.size())).get();
+        ServiceLocator.getMissionManager().getEvents().trigger("FISH");
         break;
       case "lava":
         // Have a chance to receive a drop 1 / 5
         if (random.nextInt(5) == 0) {
           // Get a lava fish
           item = lavaFish.get(random.nextInt(lavaFish.size())).get();
+          ServiceLocator.getMissionManager().getEvents().trigger("FISH");
           break;
         }
         // Unlucky
         return;
       default:
         // Error
+        logger.error("Error while fishing");
         return;
     }
     // Add to inventory
@@ -190,13 +194,15 @@ public class ItemActions extends Component {
     Integer randomNumber;
     if (tile.getTerrainCategory() == TerrainTile.TerrainCategory.DEEPWATER) {
       // Ocean fish
-      randomNumber = random.nextInt(5);
-      entity.getEvents().scheduleEvent(randomNumber,"fish", "ocean");
+      randomNumber = random.nextInt(5) + 1;
+      logger.info("Fishing occurred");
+      entity.getEvents().scheduleEvent(randomNumber,"fishCaught", "ocean");
       return true;
     } else if (tile.getTerrainCategory() == TerrainTile.TerrainCategory.LAVA) {
       // Lava fish
-      randomNumber = random.nextInt(10);
-      entity.getEvents().scheduleEvent(randomNumber,"fish", "lava");
+      randomNumber = random.nextInt(10) + 1;
+      logger.info("Fishing occurred");
+      entity.getEvents().scheduleEvent(randomNumber,"fishCaught", "lava");
       return true;
     }
     return false;
