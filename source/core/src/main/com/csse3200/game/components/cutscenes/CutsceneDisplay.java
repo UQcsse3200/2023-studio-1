@@ -2,6 +2,7 @@ package com.csse3200.game.components.cutscenes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,6 +17,7 @@ import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.missions.cutscenes.Cutscene;
 import com.csse3200.game.services.ServiceLocator;
+import com.rafaskoberg.gdx.typinglabel.TypingAdapter;
 import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -175,6 +177,16 @@ public class CutsceneDisplay extends UIComponent {
         dialogueLabel.setAlignment(Align.center);
         dialogueLabel.setWrap(true);
         dialogueLabel.setDefaultToken("{COLOR=BLACK}");
+
+        dialogueLabel.setTypingListener(new TypingAdapter() {
+            @Override
+            public void onChar(Character c) {
+                Sound shortBeep = Gdx.audio.newSound(Gdx.files.internal("sounds/beep.mp3"));
+                long id = shortBeep.play(0.1f);
+                shortBeep.setPitch(id, 0.75f);
+            }
+        });
+
         Graphics.DisplayMode active = Gdx.graphics.getDisplayMode();
         float dialogueLabelWidth = (float) (active.width * 0.6);
         dialogueWindow.add(dialogueLabel).width(dialogueLabelWidth).expandX();
