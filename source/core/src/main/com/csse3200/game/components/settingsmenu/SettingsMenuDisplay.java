@@ -67,12 +67,14 @@ public class SettingsMenuDisplay extends UIComponent {
   /**
    * The target fps at which the frames should be updated
    */
-  private static int fps = 15;
+
+  private static final int fps = 60;  // Assuming you have a static fps value
 
   /**
    * The duration for which each frame should be displayed
    */
-  private static final long FRAME_DURATION = 800L / fps;
+
+  private static final long frameDuration = 800L / fps;
 
 
   public SettingsMenuDisplay(GdxGame game) {
