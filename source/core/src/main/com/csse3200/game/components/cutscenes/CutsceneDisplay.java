@@ -9,13 +9,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.missions.cutscenes.Cutscene;
 import com.csse3200.game.services.ServiceLocator;
 import com.rafaskoberg.gdx.typinglabel.TypingLabel;
@@ -39,12 +37,6 @@ public class CutsceneDisplay extends UIComponent {
      * Logger to log events
      */
     private static final Logger logger = LoggerFactory.getLogger(com.csse3200.game.missions.cutscenes.Cutscene.class);
-
-    /**
-     * The table that forms the basis for the layout of the cutscene
-     */
-    private Table table;
-
     /**
      * Stores the cutscene object that created the cutscene display
      */
@@ -58,12 +50,9 @@ public class CutsceneDisplay extends UIComponent {
      */
     private final String dialogue;
     /**
-     * Stores the table used to display the dialogue
-     */
-    private Table dialogueTable;
-    /**
      * Stores the cutscene type
      */
+    private  Window dialogueWindow;
     private final Cutscene.CutsceneType cutsceneType;
 
     /**
@@ -92,11 +81,9 @@ public class CutsceneDisplay extends UIComponent {
         logger.debug("Cutscene Display spawned");
         removeExternalUI();
         logger.debug("Cutscene table spawned");
-        dialogueTable = new Table();
-        dialogueTable.setFillParent(true);
-        //dialogueTable.setDebug(true);
-        dialogueTable.bottom();
-        dialogueTable.padBottom(160);
+        dialogueWindow = new Window("cutscene dialogue", skin);
+        dialogueWindow.setDebug(true);
+        dialogueWindow.bottom();
 
         this.dimScreen();
 
@@ -104,7 +91,13 @@ public class CutsceneDisplay extends UIComponent {
         this.spawnDialogueBox();
         this.spawnContinueButton();
 
-        stage.addActor(dialogueTable);
+        Graphics.DisplayMode active = Gdx.graphics.getDisplayMode();
+        float dialogueWindowWidth = (float) (active.width * 0.5);
+        float dialogueWindowHeight = (float) (active.height * 0.5);
+
+        dialogueWindow.pack();
+        dialogueWindow.setPosition(dialogueWindowWidth, dialogueWindowHeight, Align.center);
+        stage.addActor(dialogueWindow);
     }
 
     /**
@@ -136,7 +129,7 @@ public class CutsceneDisplay extends UIComponent {
         float scaledHeight = scaledWidth * (sprite.getHeight() / sprite.getWidth());
         sprite.setWidth(scaledWidth);
         sprite.setHeight(scaledHeight);
-        dialogueTable.add(sprite).expandX().width(scaledWidth).expandY().height(scaledHeight);
+        dialogueWindow.add(sprite).expandX().width(scaledWidth).expandY().height(scaledHeight);
     }
 
     /**
@@ -164,9 +157,9 @@ public class CutsceneDisplay extends UIComponent {
         TypingLabel dialogueLabel = new TypingLabel(this.dialogue, skin);
         dialogueLabel.setAlignment(Align.center);
         dialogueLabel.setWrap(true);
-        //Window dialogueWindow = new Window("Alien", skin);
         Graphics.DisplayMode active = Gdx.graphics.getDisplayMode();
-        dialogueTable.add(dialogueLabel).width(active.width - 700).expandX(); // need to make it so text always contains the same proportion of the screen
+        float dialogueLabelWidth = (float) (active.width * 0.6);
+        dialogueWindow.add(dialogueLabel).width(dialogueLabelWidth).expandX();
     }
 
     /**
@@ -186,18 +179,18 @@ public class CutsceneDisplay extends UIComponent {
                     }
                 });
 
-        dialogueTable.row();
-        dialogueTable.add();
-        dialogueTable.add(continueBtn);
+        dialogueWindow.row();
+        dialogueWindow.add();
+        dialogueWindow.add(continueBtn);
     }
 
     @Override
     public void dispose() {
-        dialogueTable.clear();
+        dialogueWindow.clear();
         transparentRectangle.clear();
         npcSprite.clear();
         stage.getRoot().removeActor(transparentRectangle);
-        stage.getRoot().removeActor(dialogueTable);
+        stage.getRoot().removeActor(dialogueWindow);
         super.dispose();
         recoverExternalUI();
     }
