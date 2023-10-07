@@ -272,5 +272,11 @@
 		"background": "metalPanel_red",
 		"titleFont": "thick_white"
 	}
-}
+},
+	"com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle": {
+		"default": {
+			"label": {"font": "thin_white","fontColor": "black"},
+			"background": "metalPanel_blue",
+			"wrapWidth": 300}
+	}
 }
