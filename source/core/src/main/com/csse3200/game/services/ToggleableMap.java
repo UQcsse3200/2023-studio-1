@@ -5,21 +5,29 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.Map;
+import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ToggleableMap extends UIComponent {
-
+    
     private static final Logger logger = LoggerFactory.getLogger(ToggleableMap.class);
-
+    
     /**
      * The table used to display the map.
      */
@@ -85,31 +93,12 @@ public class ToggleableMap extends UIComponent {
         transparentRectangle.setVisible(isOpen);
     }
 
-    /**
-     * Updates the map to display the player's current position.
-     */
-    public void playerDot() {
-        logger.debug("player dot");
-        //Following code for making transparent rectangle from
-        //https://stackoverflow.com/questions/44260510/is-it-possible-to-draw-a-transparent-layer-without-using-image-libgdx
-        Pixmap pixmap = new Pixmap(1,1, Pixmap.Format.RGBA8888);
-        pixmap.setColor(Color.RED);
-        pixmap.fillRectangle(0, 0, 1, 1);
-        Texture transparentDotTex = new Texture(pixmap);
-        pixmap.dispose();
-    }
-
-    /**
-     * Updates the map to display the player's current position.
-     *
-     * @param isOpen Whether the map is open or not.
-     */
     public void toggleOpen(Boolean isOpen) {
         this.isOpen = isOpen;
         window.setVisible(isOpen);
         transparentRectangle.setVisible(isOpen);
     }
-
+    
     /**
      * Creates assets used
      */
@@ -161,6 +150,7 @@ public class ToggleableMap extends UIComponent {
      */
     @Override
     public void draw(SpriteBatch batch) {
+        //
     }
 
     /**
