@@ -49,7 +49,7 @@ public class Cutscene{
     public void pauseGame() {
         logger.info("Setting paused state to: 0");
         ServiceLocator.setCutSceneRunning(true);
-        ServiceLocator.getTimeSource().setTimeScale(0);
+        ServiceLocator.getTimeService().setPaused(true);
     }
 
     /**
@@ -59,7 +59,7 @@ public class Cutscene{
         logger.info("Setting paused state to: 1");
         // 1 is for delta time to run in normal speed
         ServiceLocator.setCutSceneRunning(false);
-        ServiceLocator.getTimeSource().setTimeScale(1);
+        ServiceLocator.getTimeService().setPaused(false);
     }
 
     /**
