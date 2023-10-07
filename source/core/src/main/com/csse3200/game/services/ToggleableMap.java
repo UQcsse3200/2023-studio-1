@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -110,6 +111,11 @@ public class ToggleableMap extends UIComponent {
         this.isOpen = isOpen;
         window.setVisible(isOpen);
         transparentRectangle.setVisible(isOpen);
+        if (!isOpen) {
+            recoverExternalUI();
+        } else {
+            removeExternalUI();
+        }
     }
 
     /**
@@ -175,5 +181,21 @@ public class ToggleableMap extends UIComponent {
         super.dispose();
         window.clear();
         //
+    }
+    /**
+     * Removes the UI components on the screen so that cutscene is not so cluttered
+     */
+    public void removeExternalUI() {
+        ServiceLocator.getPlantInfoService().getEvents().trigger("toggleOpen", false);
+        ServiceLocator.getUIService().getEvents().trigger("toggleUI", false);
+    }
+
+    /**
+     * Recovers the UI components that were removed back onto the screen
+     */
+    public void recoverExternalUI() {
+        ServiceLocator.getPlantInfoService().getEvents().
+                trigger("toggleOpen", KeyboardPlayerInputComponent.getShowPlantInfoUI());
+        ServiceLocator.getUIService().getEvents().trigger("toggleUI", true);
     }
 }
