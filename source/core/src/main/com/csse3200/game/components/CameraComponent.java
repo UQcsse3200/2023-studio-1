@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 
 /**
@@ -30,6 +31,8 @@ public class CameraComponent extends Component {
    * @param camera The camera to use for rendering.
    */
   public CameraComponent(Camera camera) {
+    OrthographicCamera orthographicCamera = (OrthographicCamera) camera;
+    orthographicCamera.zoom = 2f;
     this.camera = camera;
     lastPosition = Vector2.Zero.cpy();
   }

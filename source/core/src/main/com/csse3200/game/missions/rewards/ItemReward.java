@@ -3,6 +3,7 @@ package com.csse3200.game.missions.rewards;
 import java.util.List;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.services.ServiceLocator;
 
 /**
@@ -34,6 +35,7 @@ public class ItemReward extends Reward {
         Entity player = ServiceLocator.getGameArea().getPlayer();
         InventoryComponent inventory = player.getComponent(InventoryComponent.class);
         for (Entity item : rewardItems) {
+            ServiceLocator.getGameArea().spawnEntity(item);
             inventory.addItem(item);
         }
     }

@@ -47,7 +47,8 @@ public class AddItemCommand implements Command {
 			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("gun", ItemFactory::createGun),
 			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("sword", ItemFactory::createSword),
 			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("pump", ItemFactory::createPumpItem),
-			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("map", ItemFactory::createMapItem));
+			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("map", ItemFactory::createMapItem),
+			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("ship", ItemFactory::createShipPart));
 
 	/**
 	 * Action a command to add an item to a player's inventory

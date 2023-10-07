@@ -3,9 +3,11 @@ package com.csse3200.game.missions.rewards;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
 
+import com.csse3200.game.entities.EntityService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -58,6 +60,8 @@ class ItemRewardTest {
     @BeforeEach
     void beforeTest() {
         ServiceLocator.registerGameArea(new TestGameArea());
+        EntityService mockEntityService = mock(EntityService.class);
+        ServiceLocator.registerEntityService(mockEntityService);
 
         // empty item list
         items1 = new ArrayList<Entity>();
