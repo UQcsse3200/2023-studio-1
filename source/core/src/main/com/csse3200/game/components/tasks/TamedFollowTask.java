@@ -34,7 +34,7 @@ public class TamedFollowTask extends FollowTask {
     @Override
     protected int getActivePriority() {
         Entity playerCurItem = getTarget().getComponent(InventoryComponent.class).getHeldItem();
-        if (playerCurItem.getComponent(ItemComponent.class) == null ||
+        if (playerCurItem == null || playerCurItem.getComponent(ItemComponent.class) == null ||
                 !playerCurItem.getComponent(ItemComponent.class).getItemName().equals(favouriteFood)) {
             return -1;
         }
