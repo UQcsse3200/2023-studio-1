@@ -7,7 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
-
+import com.csse3200.game.components.ship.ShipTimeSkipComponent;
+import com.csse3200.game.components.ship.ShipLightComponent;
 public class ShipDisplay extends UIComponent {
     private Window window;
     private boolean isOpen;
@@ -19,7 +20,7 @@ public class ShipDisplay extends UIComponent {
         isOpen = false;
         addActors();
 
-        entity.getEvents().addListener("interact", this::toggleOpen);
+        entity.getEvents().addListener("interactShip", this::toggleOpen);
     }
 
     private void addActors() {
@@ -42,7 +43,7 @@ public class ShipDisplay extends UIComponent {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 isLightOn = !isLightOn;
-                // addd ship light trigger
+
             }
         });
 
