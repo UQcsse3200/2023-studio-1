@@ -18,7 +18,7 @@ import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 
 @ExtendWith(GameExtension.class)
-public class TimedTaskTest {
+class TimedTaskTest {
     private Entity entity;
     @BeforeEach
     void beforeEach() {
@@ -46,7 +46,7 @@ public class TimedTaskTest {
     }
 
     @Test
-    public void testTaskPriorityResetsAfterDuration() {
+    void testTaskPriorityResetsAfterDuration() {
         // Arrange
         TimedTask task = new TimedTask("trigger", 5.0f, 10);
 
@@ -63,7 +63,7 @@ public class TimedTaskTest {
     }
 
     @Test
-    public void testTaskStops() {
+    void testTaskStops() {
         TimedTask task = new TimedTask("trigger", 2.0f, 10);
 
         task.create(() -> entity);
@@ -77,7 +77,7 @@ public class TimedTaskTest {
     }
 
     @Test
-    public void testTaskGetsOverruledByHigherPriorityTask() {
+    void testTaskGetsOverruledByHigherPriorityTask() {
         TimedTask lowPriorityTask = new TimedTask("low", 10f, 1);
         TimedTask highPriorityTask = new TimedTask("high", 10f, 2);
 

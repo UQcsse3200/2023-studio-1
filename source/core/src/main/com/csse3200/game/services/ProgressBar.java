@@ -11,7 +11,7 @@ import com.csse3200.game.ui.UIComponent;
 public class ProgressBar extends UIComponent {
     Table table = new Table();
     Group group = new Group();
-    private Image progressionbar;
+    private Image progressionBar;
     private Array<Image> progressBarImagesAct1;
     private Array<Image> progressBarImagesAct2;
     private Array<Image> progressBarImagesAct3;
@@ -29,9 +29,9 @@ public class ProgressBar extends UIComponent {
         ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::updateDisplay);
         ServiceLocator.getMissionManager().getEvents().addListener("An Agreement", this::updateProgressBarAct2);
         ServiceLocator.getMissionManager().getEvents().addListener("Making Contact", this::updateProgressBarAct3);
-        progressBarImagesAct1 = new Array<Image>();
-        progressBarImagesAct2 = new Array<Image>();
-        progressBarImagesAct3 = new Array<Image>();
+        progressBarImagesAct1 = new Array<>();
+        progressBarImagesAct2 = new Array<>();
+        progressBarImagesAct3 = new Array<>();
         updateDisplay();
     }
 
@@ -74,9 +74,13 @@ public class ProgressBar extends UIComponent {
         int day = ServiceLocator.getTimeService().getDay() - dayOffset;
 
         switch (this.act) {
-            case 1 -> progressionbar = (day > 5) ? progressBarImagesAct1.get(0) : progressBarImagesAct1.get(day);
-            case 2 -> progressionbar = (day > 10) ? progressBarImagesAct2.get(0) : progressBarImagesAct2.get(day);
-            case 3 -> progressionbar = (day > 15) ? progressBarImagesAct3.get(0) : progressBarImagesAct3.get(day);
+
+            case 1 -> progressionBar = (day >= 5) ? progressBarImagesAct1.get(4) : progressBarImagesAct1.get(day);
+            case 2 -> progressionBar = (day >= 10) ? progressBarImagesAct2.get(9) : progressBarImagesAct2.get(day);
+            case 3 -> progressionBar = (day >= 15) ? progressBarImagesAct3.get(14) : progressBarImagesAct3.get(day);
+            default -> {
+                // Default case should do nothing
+            }
         }
     }
 
@@ -93,7 +97,9 @@ public class ProgressBar extends UIComponent {
         table.padTop(-30f).padLeft(190f);
 
 
-        group.addActor(progressionbar);
+
+        group.addActor(progressionBar);
+
 
         table.add(group).size(200);
         stage.addActor(table);
@@ -106,6 +112,8 @@ public class ProgressBar extends UIComponent {
     @Override
     public void dispose() {
         super.dispose();
-        progressionbar.remove();
+
+        progressionBar.remove();
+
     }
 }

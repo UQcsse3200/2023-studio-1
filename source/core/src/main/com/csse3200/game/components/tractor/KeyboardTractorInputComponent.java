@@ -16,11 +16,6 @@ public class KeyboardTractorInputComponent extends InputComponent {
   private final Vector2 walkDirection = Vector2.Zero.cpy();
 
   /**
-   * A reference to the TractorActions component from the tractor entity
-   */
-  private TractorActions actions;
-
-  /**
    * Constructor for the tractor, sets same priority as the player's input constructor
    */
   public KeyboardTractorInputComponent() {
@@ -35,7 +30,7 @@ public class KeyboardTractorInputComponent extends InputComponent {
    */
   @Override
   public boolean keyDown(int keycode) {
-    if (!actions.isMuted()) {
+    if (!entity.getComponent(TractorActions.class).isMuted()) {
       switch (keycode) {
         case Input.Keys.W:
           walkDirection.add(Vector2Utils.UP);
@@ -68,13 +63,13 @@ public class KeyboardTractorInputComponent extends InputComponent {
           entity.getEvents().trigger("toggleConeLight");
           return true;
         case Input.Keys.NUM_1:
-          actions.setMode(TractorMode.NORMAL);
+          entity.getComponent(TractorActions.class).setMode(TractorMode.NORMAL);
           return true;
         case Input.Keys.NUM_2:
-          actions.setMode(TractorMode.TILLING);
+          entity.getComponent(TractorActions.class).setMode(TractorMode.TILLING);
           return true;
         case Input.Keys.NUM_3:
-          actions.setMode(TractorMode.HARVESTING);
+          entity.getComponent(TractorActions.class).setMode(TractorMode.HARVESTING);
           return true;
         default:
           return false;
@@ -91,7 +86,7 @@ public class KeyboardTractorInputComponent extends InputComponent {
    */
   @Override
   public boolean keyUp(int keycode) {
-    if (!actions.isMuted()) {
+    if (!entity.getComponent(TractorActions.class).isMuted()) {
       switch (keycode) {
         case Input.Keys.W:
           walkDirection.sub(Vector2Utils.UP);
@@ -132,16 +127,6 @@ public class KeyboardTractorInputComponent extends InputComponent {
    */
   private void triggerExitEvent() {
     entity.getEvents().trigger("exitTractor");
-  }
-
-  /**
-   * Should be used to set the action variable to the tractor's TractorAction
-   * Component
-   *
-   * @param actions the TractorActions component from the tractor entity
-   */
-  public void setActions(TractorActions actions) {
-    this.actions = actions;
   }
 
   /**

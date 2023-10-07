@@ -24,7 +24,7 @@ import com.csse3200.game.services.ServiceLocator;
 
 
 @ExtendWith(GameExtension.class)
-public class PlayerAnimationControllerTest {
+class PlayerAnimationControllerTest {
     private Entity player;
 
     private AnimationRenderComponent animationRenderComponent;

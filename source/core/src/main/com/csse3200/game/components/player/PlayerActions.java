@@ -31,14 +31,12 @@ public class PlayerActions extends Component {
   private static final Vector2 MAX_WALK_SPEED = new Vector2(3f, 3f); // Metres per second
   private static final Vector2 MAX_RUN_SPEED = new Vector2(5f, 5f); // Metres per second
   private float prevMoveDirection = 300; // Initialize it with a default value
-  private Entity tractor;
 
   private PhysicsComponent physicsComponent;
   private Vector2 moveDirection = Vector2.Zero.cpy();
   private boolean moving = false;
   private boolean running = false;
   private boolean muted = false;
-  private CameraComponent camera;
   private GameMap map;
 
   private SecureRandom random = new SecureRandom();
@@ -207,7 +205,6 @@ public class PlayerActions extends Component {
      * 1. Go to InteractionDetector.java
      * 2. Add the entity to the interactableEntities array
      */
-    // TODO: do we want it so that it searches in direction instead of just anything in range? functionality for this already exists
     InteractionDetector interactionDetector = entity.getComponent(InteractionDetector.class);
     List<Entity> entitiesInRange = interactionDetector.getEntitiesInRange();
     Entity closestEntity = interactionDetector.getNearest(entitiesInRange);
@@ -229,8 +226,7 @@ public class PlayerActions extends Component {
     List<Entity> areaEntities = ServiceLocator.getGameArea().getAreaEntities();
     for(Entity animal : areaEntities) {
       CombatStatsComponent combat = animal.getComponent(CombatStatsComponent.class);
-      if(combat != null && animal != entity) {
-        if (entity.getPosition().dst(animal.getPosition()) < 3) {
+      if(combat != null && animal != entity && entity.getPosition().dst(animal.getPosition()) < 3) {
           Vector2 result = new Vector2(0, 0);
           result.x = animal.getCenterPosition().x - entity.getCenterPosition().x;
           result.y = animal.getCenterPosition().y - entity.getCenterPosition().y;
@@ -245,7 +241,6 @@ public class PlayerActions extends Component {
             combat.setHealth(combat.getHealth() - swordDamage);
             animal.getEvents().trigger("panicStart");
           }
-        }
       }
     }
   }
@@ -268,39 +263,27 @@ public class PlayerActions extends Component {
   }
 
   /**
-   * Sets tractor to the tractor entity, can be used to calculate distances and
-   * mute inputs
-   * 
-   * @param tractor
-   */
-  public void setTractor(Entity tractor) {
-    this.tractor = tractor;
-  }
-
-  /**
    * Makes the player get into tractor.
    */
   void enterTractor() {
     // check within 4 units of tractor
-    if (this.entity.getPosition().dst(tractor.getPosition()) > 4) {
+    if (ServiceLocator.getGameArea().getTractor() == null || this.entity.getPosition().dst(ServiceLocator.getGameArea().getTractor().getPosition()) > 4) {
       return;
     }
     this.stopMoving();
     muted = true;
-    tractor.getEvents().trigger("toggleAuraLight");
-    tractor.getComponent(TractorActions.class).setMuted(false);
-    tractor.getComponent(KeyboardTractorInputComponent.class)
+    ServiceLocator.getGameArea().getTractor().getEvents().trigger("toggleAuraLight");
+    ServiceLocator.getGameArea().getTractor().getComponent(TractorActions.class).setMuted(false);
+    ServiceLocator.getGameArea().getTractor().getComponent(KeyboardTractorInputComponent.class)
         .setWalkDirection(entity.getComponent(KeyboardPlayerInputComponent.class).getWalkDirection());
     this.entity.setPosition(new Vector2(-10, -10));
-    camera.setTrackEntity(tractor);
+    ServiceLocator.getCameraComponent().setTrackEntity(ServiceLocator.getGameArea().getTractor());
   }
 
   void use(Vector2 mousePos, Entity itemInHand) {
-    if (itemInHand != null) {
-      if (itemInHand.getComponent(ItemActions.class) != null) {
-        pauseMoving();
-        itemInHand.getComponent(ItemActions.class).use(entity, mousePos);
-      }
+    if (itemInHand != null && itemInHand.getComponent(ItemActions.class) != null) {
+      pauseMoving();
+      itemInHand.getComponent(ItemActions.class).use(entity, mousePos);
     }
   }
 
@@ -333,14 +316,6 @@ public class PlayerActions extends Component {
 
   public void setMuted(boolean muted) {
     this.muted = muted;
-  }
-
-  public void setCameraVar(CameraComponent cam) {
-    this.camera = cam;
-  }
-
-  public CameraComponent getCameraVar() {
-    return camera;
   }
 
   public void setGameMap(GameMap map) {

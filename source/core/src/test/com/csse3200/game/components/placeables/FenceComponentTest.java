@@ -34,7 +34,7 @@ import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
 @ExtendWith(GameExtension.class)
-public class FenceComponentTest {
+class FenceComponentTest {
 
     private Entity f1;
     private Entity g1;
@@ -99,13 +99,13 @@ public class FenceComponentTest {
     }
 
     @Test
-    public void shouldCreateComponent() {
+    void shouldCreateComponent() {
         assertNotNull(f1.getComponent(FenceComponent.class));
         assertNotNull(g1.getComponent(FenceComponent.class));
     }
 
     @Test
-    public void shouldOpenGate() {
+    void shouldOpenGate() {
         /* Pretend we open the gate */
         g1.getEvents().trigger("interact");
         Fixture fix = g1.getComponent(ColliderComponent.class).getFixture();
@@ -117,7 +117,7 @@ public class FenceComponentTest {
     }
 
     @Test
-    public void shouldCloseGate() {
+    void shouldCloseGate() {
         /* Open and close gate */
         g1.getEvents().trigger("interact");
         g1.getEvents().trigger("interact");
@@ -130,7 +130,7 @@ public class FenceComponentTest {
     }
 
     @Test
-    public void shouldNotInteractFence() {
+    void shouldNotInteractFence() {
         f1.getEvents().trigger("interact");
         Fixture fix = f1.getComponent(ColliderComponent.class).getFixture();
 

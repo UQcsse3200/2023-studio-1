@@ -25,7 +25,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 @ExtendWith(GameExtension.class)
-public class PlantComponentTest {
+class PlantComponentTest {
 
     PlantComponent testPlant;
     CropTileComponent mockCropTile;
@@ -225,7 +225,7 @@ public class PlantComponentTest {
     }
 
     @Test
-    public void testInvalidFunctionForPlaySound() {
+    void testInvalidFunctionForPlaySound() {
         testPlant.setPlayerInProximity(true);
         assertThrows(IllegalStateException.class, () -> testPlant.playSound("invalidFunctionName"));
     }

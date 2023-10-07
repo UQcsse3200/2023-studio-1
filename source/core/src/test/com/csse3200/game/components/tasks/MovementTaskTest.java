@@ -81,7 +81,7 @@ class MovementTaskTest {
   }
 
   @Test
-  public void testSetSpeedChangesSpeed() {
+  void testSetSpeedChangesSpeed() {
     int framesElapsed1 = 0;
     int framesElapsed2 = 0;
 
@@ -165,7 +165,7 @@ class MovementTaskTest {
     task.stop();
 
     // Verify that setMaxSpeed is called with the expected argument
-    verify(movementComponent).setMaxSpeed(eq(Vector2Utils.ONE));
+    verify(movementComponent).setMaxSpeed(Vector2Utils.ONE);
     assertFalse(movementComponent.getMoving());
   }
 

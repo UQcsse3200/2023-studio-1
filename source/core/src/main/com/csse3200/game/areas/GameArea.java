@@ -10,7 +10,6 @@ import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
-import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,11 +29,12 @@ public abstract class GameArea implements Disposable {
   protected List<Entity> areaEntities;
   private static final Logger logger = LoggerFactory.getLogger(GameArea.class);
   private Entity player;
+  private Entity tractor;
   private final ArrayList<EntityType> loadableTypes = new ArrayList<>(Arrays.asList(EntityType.TILE,
           EntityType.COW, EntityType.CHICKEN, EntityType.ASTROLOTL, EntityType.PLANT,
           EntityType.OXYGEN_EATER, EntityType.SHIP_DEBRIS, EntityType.SHIP, EntityType.SHIP_PART_TILE,
 		  EntityType.SPRINKLER, EntityType.PUMP, EntityType.FENCE, EntityType.LIGHT, EntityType.GATE, EntityType.CHEST,
-          EntityType.DRAGONFLY, EntityType.BAT));
+          EntityType.DRAGONFLY, EntityType.BAT, EntityType.TRACTOR));
 
   protected GameArea() {
     areaEntities = new ArrayList<>();
@@ -113,10 +113,8 @@ public abstract class GameArea implements Disposable {
             EntityType.SHIP_PART_TILE, EntityType.PUMP));
     for (Entity e : entities) {
       if (loadableTypes.contains(e.getType())) {
-        if (placeableTypes.contains(e.getType())) {
-          if (getMap() != null) {
+        if (placeableTypes.contains(e.getType()) && getMap() != null) {
             getMap().getTile(e.getPosition()).removeOccupant();
-          }
         }
         removeEntity(e);
       }
@@ -129,11 +127,17 @@ public abstract class GameArea implements Disposable {
 
   public abstract ClimateController getClimateController();
 
-  public abstract Entity getTractor();
+  public Entity getTractor() {
+    return tractor;
+  }
 
   public abstract GameMap getMap();
 
   public void setPlayer(Entity customPlayer) { player = customPlayer; }
+
+  public void setTractor(Entity tractor) {
+    this.tractor = tractor;
+  }
 
   public List<Entity> getAreaEntities() {
     return areaEntities;

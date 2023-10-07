@@ -2,9 +2,7 @@ package com.csse3200.game.entities;
 
 import com.csse3200.game.areas.GameArea;
 
-import java.security.SecureRandom;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Handles periodic spawning of multiple entities

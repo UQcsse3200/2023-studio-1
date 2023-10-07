@@ -30,19 +30,15 @@ public class PlayerAnimationController extends Component {
     }
 
     void use(Vector2 mousePos, Entity itemInHand) {
-        Vector2 playerPos = entity.getPosition();
-        if (itemInHand != null) {
-            if (itemInHand.getComponent(ItemComponent.class) != null) {
-                String direction = getDirection(playerPos, mousePos);
-
-                String animation = String.format("%s_%s", itemInHand.getComponent(ItemComponent.class).getItemName().toLowerCase(),
-                        direction);
-                if (!animator.getCurrentAnimation().equals(animation)) {
-                    if (animator.hasAnimation(animation)) {
-                        animator.startAnimation(animation);
-                    } else {
-                        entity.getEvents().trigger("animationInteract", direction);
-                    }
+        if (itemInHand != null && itemInHand.getComponent(ItemComponent.class) != null) {
+            String direction = getDirection(mousePos);
+            String animation = String.format("%s_%s", itemInHand.getComponent(ItemComponent.class).getItemName().toLowerCase(),
+                    direction);
+            if (!animator.getCurrentAnimation().equals(animation)) {
+                if (animator.hasAnimation(animation)) {
+                    animator.startAnimation(animation);
+                } else {
+                    entity.getEvents().trigger("animationInteract", direction);
                 }
             }
         }
@@ -50,11 +46,11 @@ public class PlayerAnimationController extends Component {
 
     /**
      * Gets the direction the animation should be player
-     * @param playerPos the position of the player
+     *
      * @param mousePos the position of the mouse
      * @return a String either up, down, left or right depending on where the mouse is in relation to the player.
      */
-    private String getDirection(Vector2 playerPos, Vector2 mousePos) {
+    private String getDirection(Vector2 mousePos) {
         int width = Gdx.graphics.getWidth();
         int height = Gdx.graphics.getHeight();
 
@@ -63,7 +59,6 @@ public class PlayerAnimationController extends Component {
         int playerYPos = height/2;
 
         int xDelta = 0;
-        int yDelta = 0;
 
         if (playerYPos + 48 < mousePos.y) {
             return "down";

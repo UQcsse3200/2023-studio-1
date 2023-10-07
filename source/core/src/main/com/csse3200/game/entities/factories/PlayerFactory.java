@@ -64,7 +64,7 @@ public class PlayerFactory {
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
             .addComponent(new PlayerActions())
-            .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack))
+            .addComponent(new CombatStatsComponent(stats.PLAYER_HEALTH, stats.BASE_ATTACK))
             .addComponent(new InventoryComponent())
             .addComponent(new HungerComponent(30))
             .addComponent(inputComponent)
@@ -72,7 +72,7 @@ public class PlayerFactory {
             .addComponent(new OpenPauseComponent())
             .addComponent(new PlayerAnimationController())
             .addComponent(new ItemPickupComponent())
-            .addComponent(new InteractionDetector(2f, new ArrayList<EntityType>(Arrays.asList(EntityType.QUESTGIVER, EntityType.GATE, EntityType.CHEST, EntityType.CHICKEN,
+            .addComponent(new InteractionDetector(2f, new ArrayList<>(Arrays.asList(EntityType.QUESTGIVER, EntityType.GATE, EntityType.CHEST, EntityType.CHICKEN,
                     EntityType.COW, EntityType.ASTROLOTL, EntityType.OXYGEN_EATER, EntityType.SHIP_DEBRIS, EntityType.SHIP))))
             .addComponent(new ToolbarDisplay())
 	        .addComponent(new AuraLightComponent(6f))

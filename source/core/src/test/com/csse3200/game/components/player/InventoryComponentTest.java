@@ -72,7 +72,7 @@ class InventoryComponentTest {
    * Test case for the hasItem() method.
    */
   @Test
-  public void testHasItem() {
+  void testHasItem() {
     // Check if an item is present in the inventory
 
     assertTrue(player.getComponent(InventoryComponent.class).hasItem(item1));
@@ -85,7 +85,7 @@ class InventoryComponentTest {
    */
 
   @Test
-  public void testAddItem() {
+  void testAddItem() {
     // Create a new item
     Entity newItem = new Entity(EntityType.ITEM);
     ItemComponent itemComponent3 = new ItemComponent("itemTest3", ItemType.SCYTHE,
@@ -101,7 +101,7 @@ class InventoryComponentTest {
    * Test case for the removeItem() method.
    */
   @Test
-  public void testRemoveItem() {
+  void testRemoveItem() {
     // Remove an item from the inventory
     Entity newItem = new Entity(EntityType.ITEM);
     ItemComponent itemComponent3 = new ItemComponent("itemTest3", ItemType.SCYTHE,

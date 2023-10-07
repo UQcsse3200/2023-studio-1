@@ -26,7 +26,7 @@ import com.csse3200.game.services.TimeService;
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(GameExtension.class)
-public class CropTileComponentTest {
+class CropTileComponentTest {
     private Entity cropTile1, cropTile2, cropTile3, cropTile4, cropTile5, cropTile6, cropTile7;
     @BeforeEach
     public void init() {
@@ -51,7 +51,7 @@ public class CropTileComponentTest {
     }
 
     @Test
-    public void shouldGiveExpectedGrowthRate() {
+    void shouldGiveExpectedGrowthRate() {
         assertEquals(0.5, cropTile1.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
         assertEquals(0.27694, cropTile2.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
         assertEquals(1.0, cropTile3.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
@@ -60,7 +60,7 @@ public class CropTileComponentTest {
     }
 
     @Test
-    public void shouldGiveWateredGrowthRate() {
+    void shouldGiveWateredGrowthRate() {
         cropTile1.getEvents().trigger("water", 0.5f);
         cropTile2.getEvents().trigger("water", 0.5f);
         cropTile3.getEvents().trigger("water", 0.5f);
@@ -84,7 +84,7 @@ public class CropTileComponentTest {
     }
 
     @Test
-    public void shouldGiveFertilisedGrowthRate() {
+    void shouldGiveFertilisedGrowthRate() {
         cropTile1.getEvents().trigger("fertilise");
         cropTile2.getEvents().trigger("fertilise");
         cropTile3.getEvents().trigger("fertilise");
@@ -109,7 +109,7 @@ public class CropTileComponentTest {
     }
 
     @Test
-    public void testUpdate() {
+    void testUpdate() {
         DynamicTextureRenderComponent dynamock = mock(DynamicTextureRenderComponent.class);
         cropTile1 = new Entity().addComponent(new CropTileComponent(1f, 0.5f)).addComponent(dynamock);
         cropTile2 = new Entity().addComponent(new CropTileComponent(0.5f, 0.5f)).addComponent(dynamock);
@@ -167,7 +167,7 @@ public class CropTileComponentTest {
     }
 
     @Test
-    public void testSetUnoccupiedWhenUnoccupied() {
+    void testSetUnoccupiedWhenUnoccupied() {
         EntityService mockEntityService = mock(EntityService.class);
         ServiceLocator.registerEntityService(mockEntityService);
         cropTile1.getComponent(CropTileComponent.class).setUnoccupied();
@@ -181,7 +181,7 @@ public class CropTileComponentTest {
     }
 
     @Test
-    public void testSetUnoccupiedWhenOccupied() {
+    void testSetUnoccupiedWhenOccupied() {
         EntityService mockEntityService = mock(EntityService.class);
         ServiceLocator.registerEntityService(mockEntityService);
         Entity plant = mock(Entity.class);
@@ -203,7 +203,7 @@ public class CropTileComponentTest {
     }
 
     @Test
-    public void testPlantCrop() {
+    void testPlantCrop() {
         EntityService mockEntityService = mock(EntityService.class);
         ServiceLocator.registerEntityService(mockEntityService);
         Entity plant = mock(Entity.class);
@@ -218,7 +218,7 @@ public class CropTileComponentTest {
     }
 
     @Test
-    public void testDestroyTile() {
+    void testDestroyTile() {
         EntityService mockEntityService = mock(EntityService.class);
         ServiceLocator.registerEntityService(mockEntityService);
         Entity plant = new Entity().addComponent(new PlantComponent(

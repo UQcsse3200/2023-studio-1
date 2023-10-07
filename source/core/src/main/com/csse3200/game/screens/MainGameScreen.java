@@ -44,8 +44,7 @@ import com.csse3200.game.services.plants.PlantCommandService;
 import com.csse3200.game.services.plants.PlantInfoService;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 
 /**
@@ -151,8 +150,6 @@ public class MainGameScreen extends ScreenAdapter {
         renderer.getCamera().setTrackEntity(spaceGameArea.getPlayer());
 
         createUI();
-        spaceGameArea.getPlayer().getComponent(PlayerActions.class).setCameraVar(renderer.getCamera());
-        spaceGameArea.getTractor().getComponent(TractorActions.class).setCameraVar(renderer.getCamera());
 
         ServiceLocator.getMissionManager().getEvents().addListener("loseScreen", this::playLoseScreen);
 
@@ -191,7 +188,7 @@ public class MainGameScreen extends ScreenAdapter {
                 }
                 ServiceLocator.getTimeService().update();
                 renderer.render();
-                if (PauseMenuActions.getQuitGameStatus()) {
+                if (Boolean.TRUE.equals(PauseMenuActions.getQuitGameStatus())) {
                     entity.getEvents().trigger("exit");
                     PauseMenuActions.setQuitGameStatus();
                 }

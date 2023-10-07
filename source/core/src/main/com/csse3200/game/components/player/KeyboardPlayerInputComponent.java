@@ -7,7 +7,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.components.Component;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
@@ -20,9 +19,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private PlayerActions actions;
   private static int keyPressedCounter;
   private static boolean menuOpened = false;
-  private static Enum currentMenu = MenuTypes.NONE;
-  private final int hotKeyOffset = 6;
-  private static boolean showPlantInfoUI = true;
+  private static Enum<MenuTypes> currentMenu = MenuTypes.NONE;
+
+  private boolean showPlantInfoUI = true;
   public enum MenuTypes{
     PAUSEMENU,
     NONE
@@ -79,10 +78,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.ESCAPE:
           entity.getEvents().trigger("escInput");
           return true;
-        case Keys.NUM_0: case Keys.NUM_1: case Keys.NUM_2:
-        case Keys.NUM_3: case Keys.NUM_4: case Keys.NUM_5:
-        case Keys.NUM_6: case Keys.NUM_7: case Keys.NUM_8:
-        case Keys.NUM_9:
+        case Keys.NUM_0, Keys.NUM_1, Keys.NUM_2, Keys.NUM_3, Keys.NUM_4, Keys.NUM_5, Keys.NUM_6, Keys.NUM_7, Keys.NUM_8, Keys.NUM_9:
           triggerHotKeySelection(keycode);
           return true;
         case Keys.T:
@@ -94,6 +90,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           return true;
         case Keys.R:
           entity.getEvents().trigger("eat", entity.getComponent(InventoryComponent.class).getHeldItem());
+            return true;
         default:
           return false;
       }
@@ -172,6 +169,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   }
 
   private void triggerEnterEvent() {
+    logger.info("Entering tractor");
     entity.getEvents().trigger("enterTractor");
   }
 
