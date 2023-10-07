@@ -186,10 +186,12 @@ public class ItemActions extends Component {
       // Ocean fish
       randomNumber = random.nextInt(5);
       entity.getEvents().scheduleEvent(randomNumber,"fish", "ocean");
+      return true;
     } else if (tile.getTerrainCategory() == TerrainTile.TerrainCategory.LAVA) {
       // Lava fish
       randomNumber = random.nextInt(10);
       entity.getEvents().scheduleEvent(randomNumber,"fish", "lava");
+      return true;
     }
     return false;
   }
