@@ -29,11 +29,12 @@ public abstract class GameArea implements Disposable {
   protected List<Entity> areaEntities;
   private static final Logger logger = LoggerFactory.getLogger(GameArea.class);
   private Entity player;
+  private Entity tractor;
   private final ArrayList<EntityType> loadableTypes = new ArrayList<>(Arrays.asList(EntityType.TILE,
           EntityType.COW, EntityType.CHICKEN, EntityType.ASTROLOTL, EntityType.PLANT,
           EntityType.OXYGEN_EATER, EntityType.SHIP_DEBRIS, EntityType.SHIP, EntityType.SHIP_PART_TILE,
 		  EntityType.SPRINKLER, EntityType.PUMP, EntityType.FENCE, EntityType.LIGHT, EntityType.GATE, EntityType.CHEST,
-          EntityType.DRAGONFLY, EntityType.BAT));
+          EntityType.DRAGONFLY, EntityType.BAT, EntityType.TRACTOR));
 
   protected GameArea() {
     areaEntities = new ArrayList<>();
@@ -126,11 +127,17 @@ public abstract class GameArea implements Disposable {
 
   public abstract ClimateController getClimateController();
 
-  public abstract Entity getTractor();
+  public Entity getTractor() {
+    return tractor;
+  }
 
   public abstract GameMap getMap();
 
   public void setPlayer(Entity customPlayer) { player = customPlayer; }
+
+  public void setTractor(Entity tractor) {
+    this.tractor = tractor;
+  }
 
   public List<Entity> getAreaEntities() {
     return areaEntities;

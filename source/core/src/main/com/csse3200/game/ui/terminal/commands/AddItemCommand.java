@@ -6,12 +6,11 @@ import java.util.Map;
 import java.util.StringJoiner;
 import java.util.function.Supplier;
 
+import com.csse3200.game.services.FactoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.services.ServiceLocator;
 
 public class AddItemCommand implements Command {
@@ -79,7 +78,7 @@ public class AddItemCommand implements Command {
 	}
 
 	boolean isValid(ArrayList<String> args) {
-		return args.size() > 0;
+		return !args.isEmpty();
 	}
 
 }

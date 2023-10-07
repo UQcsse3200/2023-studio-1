@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.Json;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class WeatherEventTest {
+class WeatherEventTest {
 
     private WeatherEvent weatherEvent1, weatherEvent2, weatherEvent3, weatherEvent4, weatherEvent5;
 
@@ -74,7 +74,7 @@ public class WeatherEventTest {
     }
 
     @Test
-    public void testUpdateTime() {
+    void testUpdateTime() {
         WeatherEvent weatherEventSpy1 = spy(weatherEvent1);
         WeatherEvent weatherEventSpy2 = spy(weatherEvent2);
         WeatherEvent weatherEventSpy3 = spy(weatherEvent3);
@@ -99,7 +99,7 @@ public class WeatherEventTest {
     }
 
     @Test
-    public void testGetDuration() {
+    void testGetDuration() {
         assertEquals(weatherEvent1.getDuration(), 10);
         assertEquals(weatherEvent2.getDuration(), 2);
         assertEquals(weatherEvent3.getDuration(), 4);
@@ -108,7 +108,7 @@ public class WeatherEventTest {
     }
 
     @Test
-    public void testGetNumHoursUntil() {
+    void testGetNumHoursUntil() {
         assertEquals(weatherEvent1.getNumHoursUntil(), 0);
         assertEquals(weatherEvent2.getNumHoursUntil(), 1);
         assertEquals(weatherEvent3.getNumHoursUntil(), 2);
@@ -117,7 +117,7 @@ public class WeatherEventTest {
     }
 
     @Test
-    public void testGetPriority() {
+    void testGetPriority() {
         assertEquals(weatherEvent1.getPriority(), 1);
         assertEquals(weatherEvent2.getPriority(), 2);
         assertEquals(weatherEvent3.getPriority(), 5);
@@ -126,7 +126,7 @@ public class WeatherEventTest {
     }
 
     @Test
-    public void testIsExpired() {
+    void testIsExpired() {
         // case: numHoursUntil == 0 and duration > 0
         assertFalse(weatherEvent1.isExpired());
         // case: numHoursUntil > 0 and duration > 0
@@ -150,13 +150,13 @@ public class WeatherEventTest {
     }
 
     @Test
-    public void testIsActiveButNotIsExpired() {
+    void testIsActiveButNotIsExpired() {
         assertFalse(weatherEvent1.isExpired());
         assertTrue(weatherEvent1.isActive());
     }
 
     @Test
-    public void testGetSeverity() {
+    void testGetSeverity() {
         assertEquals(weatherEvent1.getSeverity(), 1.2f);
         assertEquals(weatherEvent2.getSeverity(), 1.4f);
         assertEquals(weatherEvent3.getSeverity(), 1.0f);
@@ -165,7 +165,7 @@ public class WeatherEventTest {
     }
 
     @Test
-    public void testWeatherEventGetHumidityModifier() {
+    void testWeatherEventGetHumidityModifier() {
         assertEquals(weatherEvent1.getHumidityModifier(), 1.0f);
         assertEquals(weatherEvent2.getHumidityModifier(), 1.0f);
         assertEquals(weatherEvent3.getHumidityModifier(), 1.0f);
@@ -174,7 +174,7 @@ public class WeatherEventTest {
     }
 
     @Test
-    public void testWeatherEventGetTemperatureModifier() {
+    void testWeatherEventGetTemperatureModifier() {
         assertEquals(weatherEvent1.getTemperatureModifier(), 1.0f);
         assertEquals(weatherEvent2.getTemperatureModifier(), 1.0f);
         assertEquals(weatherEvent3.getTemperatureModifier(), 1.0f);
@@ -183,7 +183,7 @@ public class WeatherEventTest {
     }
 
     @Test
-    public void testConstructorWithNegativePriority() {
+    void testConstructorWithNegativePriority() {
         assertThrows(IllegalArgumentException.class, () -> new WeatherEvent(4, 5, -1, 1.1f) {
             @Override
             public void startEffect() {
@@ -198,7 +198,7 @@ public class WeatherEventTest {
     }
 
     @Test
-    public void testConstructorWithZeroDuration() {
+    void testConstructorWithZeroDuration() {
         assertThrows(IllegalArgumentException.class, () -> new WeatherEvent(0, 0, 1, 1.2f) {
             @Override
             public void startEffect() {
@@ -213,7 +213,7 @@ public class WeatherEventTest {
     }
 
     @Test
-    public void testConstructorWithNegativeDuration() {
+    void testConstructorWithNegativeDuration() {
         assertThrows(IllegalArgumentException.class, () -> new WeatherEvent(5, -1, 3, 1.3f) {
             @Override
             public void startEffect() {
@@ -228,7 +228,7 @@ public class WeatherEventTest {
     }
 
     @Test
-    public void testConstructorWithNegativeNumHoursUntil() {
+    void testConstructorWithNegativeNumHoursUntil() {
         assertThrows(IllegalArgumentException.class, () -> new WeatherEvent(-1, 5, 1, 1.2f) {
             @Override
             public void startEffect() {
@@ -243,7 +243,7 @@ public class WeatherEventTest {
     }
 
     @Test
-    public void testConstructorWithInvalidSeverity() {
+    void testConstructorWithInvalidSeverity() {
         assertThrows(IllegalArgumentException.class, () -> new WeatherEvent(2, 3, 1, -1f) {
             @Override
             public void startEffect() {
@@ -258,7 +258,7 @@ public class WeatherEventTest {
     }
 
     @Test
-    public void testWrite() {
+    void testWrite() {
         Json mockJson1 = mock(Json.class);
         weatherEvent1.write(mockJson1);
         verify(mockJson1).writeObjectStart("Event");
