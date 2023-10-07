@@ -1,8 +1,13 @@
 package com.csse3200.game.components.items;
 
 import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
+
+import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
+
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.areas.terrain.CropTileComponent;
@@ -15,14 +20,40 @@ import com.csse3200.game.components.player.HungerComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
+import com.csse3200.game.entities.factories.ItemFactory;
+import com.csse3200.game.events.listeners.EventListener0;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
 
 public class ItemActions extends Component {
 
+  Random random = new SecureRandom();
+
   @Override
   public void create() {
     // Just in case we need constructor for later
+    entity.getEvents().addListener("fish", this::getFish);
+  }
+
+  private void getFish(String place) {
+    Entity item;
+    System.out.println("Triggered");
+    switch (place) {
+      case "ocean":
+        // Get an ocean fish
+        item = ItemFactory.createSalmon();
+        break;
+      case "lava":
+        // Get a lava fish
+        item = ItemFactory.createLavaEel();
+        break;
+      default:
+        // Error
+        return;
+    }
+    // Add to inventory
+    System.out.println("added fish");
+    ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class).addItem(item);
   }
 
   /**
@@ -96,7 +127,7 @@ public class ItemActions extends Component {
         return resultStatus;
       }
       case FISHING_ROD -> {
-        return fish(player, mouseWorldPos);
+        return fish(player, mousePos);
       }
       default -> {
         return false;
@@ -104,42 +135,44 @@ public class ItemActions extends Component {
     }
   }
 
-  /**
-   * This method of getting direction was adjusted to fit fishing (changed return values)
-   * from the code written by Team 2, in PlayerActions and PlayerAnimationController.
-   * @return a String that matches with where the fishing rod should go, values can be "right", "left", "up" or "down"
-   *          defaults to "right" in an error situation to avoid crashes.
-   */
-  private String getDirection(Vector2 playerPos, Vector2 mousePos) {
-    Float direction = playerPos.angleDeg(mousePos);
-    if (direction < 45) {
-      return "right";
-    } else if (direction < 135) {
-      return "up";
-    } else if (direction < 225) {
-      return "left";
-    } else if (direction < 315) {
-      return "down";
+  private Vector2 getAdjustedPosFish(Vector2 mousePos) {
+    Vector2 mouseWorldPos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
+    Vector2 adjustedPosition = new Vector2(
+            ServiceLocator.getGameArea().getMap().tileCoordinatesToVector(ServiceLocator.getGameArea().getMap().vectorToTileCoordinates(new Vector2(mouseWorldPos.x, mouseWorldPos.y))));
+
+    Vector2 playerPosCenter = ServiceLocator.getGameArea().getPlayer().getCenterPosition();
+    playerPosCenter.add(0, -1.0f); // Player entity sprite's feet are located -1.0f below the centre of the entity. ty Hunter
+
+    playerPosCenter = ServiceLocator.getGameArea().getMap().tileCoordinatesToVector(ServiceLocator.getGameArea().getMap().vectorToTileCoordinates(playerPosCenter));
+    if (adjustedPosition.x - 0.5 > playerPosCenter.x) {
+      playerPosCenter.x += 2;
+    } else if (adjustedPosition.x + 0.5 < playerPosCenter.x) {
+      playerPosCenter.x -= 2;
     }
-    return "right";
+    if (adjustedPosition.y - 0.5 > playerPosCenter.y) {
+      playerPosCenter.y += 2;
+    } else if (adjustedPosition.y + 0.5 < playerPosCenter.y) {
+      playerPosCenter.y -= 2;
+    }
+    return playerPosCenter;
   }
 
   private boolean fish(Entity player, Vector2 mousePos) {
-    String direction = getDirection(player.getPosition(), mousePos);
-    Vector2 tileCoords = new Vector2();
-    switch (direction) {
-      case "right": tileCoords.set(2, 0);
-      case "left": tileCoords.set(-2, 0);
-      case "up": tileCoords.set(0, 2);
-      case "down": tileCoords.set(0, -2);
-      default: // All covered from above
+    if (entity.getEvents().getScheduledEventsSize() != 0) {
+      entity.getEvents().cancelAllEvents();
+      return false;
     }
-    TerrainTile tile = ServiceLocator.getGameArea().getMap().getTile(player.getPosition().add(tileCoords));
+    TerrainTile tile = ServiceLocator.getGameArea().getMap().getTile(getAdjustedPosFish(mousePos));
     // Is there viable water where the tile would land
+    Integer randomNumber;
     if (tile.getTerrainCategory() == TerrainTile.TerrainCategory.DEEPWATER) {
       // Ocean fish
+      randomNumber = random.nextInt(5);
+      entity.getEvents().scheduleEvent(randomNumber,"fish", "ocean");
     } else if (tile.getTerrainCategory() == TerrainTile.TerrainCategory.LAVA) {
       // Lava fish
+      randomNumber = random.nextInt(10);
+      entity.getEvents().scheduleEvent(randomNumber,"fish", "lava");
     }
     return false;
   }
