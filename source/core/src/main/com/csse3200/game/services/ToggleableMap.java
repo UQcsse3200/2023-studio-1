@@ -70,8 +70,8 @@ public class ToggleableMap extends UIComponent {
         map.setPosition(0, 0);
         // Scale the height of the background to maintain the original aspect ratio of the image
         // This prevents distortion of the image.
-        float scaledWidth = (Gdx.graphics.getWidth() * (map.getWidth() / map.getHeight()));
-        float scaledHeight = Gdx.graphics.getWidth() * (map.getHeight() / map.getWidth());
+        float scaledWidth = (Gdx.graphics.getHeight() * (map.getWidth() / map.getHeight()));
+        float scaledHeight = Gdx.graphics.getHeight() * (map.getHeight() / map.getWidth());
         map.setHeight(scaledHeight);
         map.setWidth(scaledWidth);
     }
