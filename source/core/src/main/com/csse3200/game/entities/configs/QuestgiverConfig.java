@@ -5,5 +5,5 @@ package com.csse3200.game.entities.configs;
  */
 public class QuestgiverConfig extends BaseEntityConfig  {
   public static final int GOLD = 1;
-  public static final String FAVOURITE_COLOUR = "none";
+  public static final String FAVOURITE_COLOUR = "pink";
 }

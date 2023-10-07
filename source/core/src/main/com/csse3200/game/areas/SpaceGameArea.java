@@ -301,7 +301,6 @@ public class SpaceGameArea extends GameArea {
 
   private Entity player;
   private final ClimateController climateController;
-  private Entity tractor;
 
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
@@ -334,8 +333,7 @@ public class SpaceGameArea extends GameArea {
 
     player = spawnPlayer();
     player.getComponent(PlayerActions.class).setGameMap(gameMap);
-    
-    tractor = spawnTractor();
+
     spawnPlayerHighlight();
     spawnQuestgiver();
 
@@ -345,11 +343,11 @@ public class SpaceGameArea extends GameArea {
 
     //Spawning behaviour for passive animals
     List<EntitySpawner> passiveSpawners = new ArrayList<>();
-    passiveSpawners.add(new EntitySpawner(1, NPCFactory::createAstrolotl,
+    passiveSpawners.add(new EntitySpawner(1, player2 -> NPCFactory.createAstrolotl(),
             0, 1, 0, 0, 10));
-    passiveSpawners.add(new EntitySpawner(6, NPCFactory::createChicken,
+    passiveSpawners.add(new EntitySpawner(6, player3 -> NPCFactory.createChicken(),
             1, 4, 8, 4, 2));
-    passiveSpawners.add(new EntitySpawner(5, NPCFactory::createCow,
+    passiveSpawners.add(new EntitySpawner(5, player2 -> NPCFactory.createCow(),
             1, 3, 12, 4, 1));
     EntitiesSpawner passiveSpawner = new EntitiesSpawner(passiveSpawners);
     passiveSpawner.setGameAreas(this);
@@ -360,11 +358,11 @@ public class SpaceGameArea extends GameArea {
 
     //Spawning behaviour for hostiles
     List<EntitySpawner> hostileSpawners = new ArrayList<>();
-    hostileSpawners.add(new EntitySpawner(3, NPCFactory::createOxygenEater,
+    hostileSpawners.add(new EntitySpawner(3, player1 -> NPCFactory.createOxygenEater(),
             0, 1, 5, 5, 2));
-    hostileSpawners.add(new EntitySpawner(5, NPCFactory::createDragonfly,
+    hostileSpawners.add(new EntitySpawner(5, player1 -> NPCFactory.createDragonfly(),
             0, 2, 5, 5, 3));
-    hostileSpawners.add(new EntitySpawner(7, NPCFactory::createBat,
+    hostileSpawners.add(new EntitySpawner(7, player1 -> NPCFactory.createBat(),
             0, 1, 5, 5, 2));
 
 
@@ -469,7 +467,7 @@ public class SpaceGameArea extends GameArea {
         tile = gameMap.getTile(randomPos);
       }
 
-      Entity shipDebris = ShipDebrisFactory.createShipDebris(player);
+      Entity shipDebris = ShipDebrisFactory.createShipDebris();
       spawnEntity(shipDebris);
       shipDebris.setPosition(terrain.tileToWorldPosition(randomPos));
 
@@ -495,17 +493,6 @@ public class SpaceGameArea extends GameArea {
   private void spawnShip() {
     Entity newShip = ShipFactory.createShip();
     spawnEntityAt(newShip, SHIP_SPAWN, true, true);
-  }
-
-  /**
-   * Spawns the Tractor Entity be calling upon it's factory
-   *
-   * @return a reference to the tractor
-   */
-  private Entity spawnTractor() {
-    Entity newTractor = TractorFactory.createTractor(player);
-    spawnEntityAt(newTractor, TRACTOR_SPAWN, true, true);
-    return newTractor;
   }
 
   private void playMusic() {
@@ -566,13 +553,6 @@ public class SpaceGameArea extends GameArea {
   public void dispose() {
     super.dispose();
     this.unloadAssets();
-  }
-
-  /**
-   * Returns the tractor entity
-   */
-  public Entity getTractor() {
-    return tractor;
   }
 
 
