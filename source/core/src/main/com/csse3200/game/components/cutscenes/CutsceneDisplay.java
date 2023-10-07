@@ -81,7 +81,13 @@ public class CutsceneDisplay extends UIComponent {
         logger.debug("Cutscene Display spawned");
         removeExternalUI();
         logger.debug("Cutscene table spawned");
-        dialogueWindow = new Window("cutscene dialogue", skin);
+
+        if (this.cutsceneType == Cutscene.CutsceneType.ALIEN) {
+            dialogueWindow = new Window("Alien Jaleel", skin);
+        } else {
+            dialogueWindow = new Window("Radio", skin);
+        }
+
         dialogueWindow.getTitleLabel().setAlignment(Align.center);
         dialogueWindow.setDebug(true);
         dialogueWindow.bottom();
@@ -139,13 +145,22 @@ public class CutsceneDisplay extends UIComponent {
      */
     private void spawnSprite() {
         TextureAtlas.AtlasRegion region;
-        //Spawn npc
-        npcAtlas = ServiceLocator.getResourceService()
-                .getAsset("images/questgiver.atlas", TextureAtlas.class);
-        region = npcAtlas.findRegion("default");
+
+        //Spawn sprite
+        if (this.cutsceneType == Cutscene.CutsceneType.ALIEN) {
+            npcAtlas = ServiceLocator.getResourceService()
+                    .getAsset("images/questgiver.atlas", TextureAtlas.class);
+            region = npcAtlas.findRegion("default");
+        } else { // NO DIFFERENCE SINCE NO RADIO SPRITE YET
+            npcAtlas = ServiceLocator.getResourceService()
+                    .getAsset("images/questgiver.atlas", TextureAtlas.class);
+            region = npcAtlas.findRegion("default");
+        }
+
         if (region == null) {
             throw new IllegalArgumentException("images/questgiver.atlas is an invalid filePath");
         }
+
         npcSprite = new Image(region);
         placeSprite(npcSprite,  0.15f);
     }
