@@ -7,9 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.CombatStatsComponent;
@@ -21,13 +19,16 @@ import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.ItemFactory;
-import com.csse3200.game.events.listeners.EventListener0;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ItemActions extends Component {
 
   Random random = new SecureRandom();
+
+  Logger logger = LoggerFactory.getLogger(ItemActions.class);
 
   @Override
   public void create() {
@@ -37,7 +38,7 @@ public class ItemActions extends Component {
 
   private void getFish(String place) {
     Entity item;
-    System.out.println("Triggered");
+    logger.info("Fish caught!");
     switch (place) {
       case "ocean":
         // Get an ocean fish
@@ -52,7 +53,7 @@ public class ItemActions extends Component {
         return;
     }
     // Add to inventory
-    System.out.println("added fish");
+    logger.info("Added fish to inventory");
     ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class).addItem(item);
   }
 
@@ -127,7 +128,7 @@ public class ItemActions extends Component {
         return resultStatus;
       }
       case FISHING_ROD -> {
-        return fish(player, mousePos);
+        return fish(mousePos);
       }
       default -> {
         return false;
@@ -157,9 +158,10 @@ public class ItemActions extends Component {
     return playerPosCenter;
   }
 
-  private boolean fish(Entity player, Vector2 mousePos) {
+  private boolean fish(Vector2 mousePos) {
     if (entity.getEvents().getScheduledEventsSize() != 0) {
       entity.getEvents().cancelAllEvents();
+      logger.info("Fishing cancelled");
       return false;
     }
     TerrainTile tile = ServiceLocator.getGameArea().getMap().getTile(getAdjustedPosFish(mousePos));
