@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.services.ServiceLocator;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import org.jetbrains.annotations.NotNull;
@@ -103,6 +105,10 @@ public class InventoryDisplay extends UIComponent {
 				slot.getItemImage().setDebug(false);
 			}
 		}
+		table.row();
+		Image deleteSlot = new Image(ServiceLocator.getResourceService().getAsset("images/PauseMenu/Pause_Overlay.jpg", Texture.class));
+		deleteSlot.setColor(Color.BLACK);
+		table.add(deleteSlot).colspan(10);
 
 		// Create a window for the inventory using the skin
 		window.pad(40, 20, 20, 20);
@@ -186,30 +192,47 @@ public class InventoryDisplay extends UIComponent {
 		}
 
 		for (Cell<?> targetItem : table.getCells()) {
-			dnd.addTarget(new DragAndDrop.Target(targetItem.getActor()) {
-				final ItemSlot slot = (ItemSlot) targetItem.getActor();
+			if (targetItem.getActor() instanceof ItemSlot) {
+				dnd.addTarget(new DragAndDrop.Target(targetItem.getActor()) {
+					final ItemSlot slot = (ItemSlot) targetItem.getActor();
 
-				@Override
-				public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-					return true;
-				}
+					@Override
+					public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+						return true;
+					}
 
-				@Override
-				public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-					ItemSlot sourceSlot = map.get((source.getActor()));
+					@Override
+					public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+						ItemSlot sourceSlot = map.get((source.getActor()));
 
-					inventory.swapPosition(indexes.get(sourceSlot), indexes.get(slot));
-					map.put(slot.getDraggable(), sourceSlot);
+						inventory.swapPosition(indexes.get(sourceSlot), indexes.get(slot));
+						map.put(slot.getDraggable(), sourceSlot);
 
-					map.put((Stack) payload.getDragActor(), slot);
+						map.put((Stack) payload.getDragActor(), slot);
 
-					sourceSlot.setDraggable(slot.getDraggable());
-					slot.setDraggable((Stack) source.getActor());
+						sourceSlot.setDraggable(slot.getDraggable());
+						slot.setDraggable((Stack) source.getActor());
 
-					entity.getEvents().trigger("updateToolbar");
-					inventory.setHeldItem(inventory.getHeldIndex());
-				}
-			});
+						entity.getEvents().trigger("updateToolbar");
+						inventory.setHeldItem(inventory.getHeldIndex());
+					}
+				});
+			} else {
+				dnd.addTarget(new DragAndDrop.Target(targetItem.getActor()) {
+					@Override
+					public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+						return true;
+					}
+					@Override
+					public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+						ItemSlot itemSlot = map.get(source.getActor());
+						itemSlot.removeActor(source.getActor());
+						itemSlot.add(source.getActor());
+						ItemSlot sourceSlot = map.get((source.getActor()));
+						inventory.removeItem(inventory.getHeldItemsEntity().get(inventory.getItemPlace().get(indexes.get(sourceSlot))));
+					}
+				});
+			}
 		}
 	}
 
