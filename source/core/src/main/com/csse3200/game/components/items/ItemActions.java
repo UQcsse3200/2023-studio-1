@@ -43,7 +43,7 @@ public class ItemActions extends Component {
                   ItemFactory::createSalmon));
 
   private final ArrayList<Supplier<Entity>> lavaFish =
-          new ArrayList<>(Arrays.asList(ItemFactory::createLavaEel);
+          new ArrayList<>(Arrays.asList(ItemFactory::createLavaEel));
 
   @Override
   public void create() {
