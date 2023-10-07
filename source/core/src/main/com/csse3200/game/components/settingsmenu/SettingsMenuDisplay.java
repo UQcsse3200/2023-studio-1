@@ -299,7 +299,7 @@ public class SettingsMenuDisplay extends UIComponent {
 
   @Override
   public void update() {
-    if (System.currentTimeMillis() - lastFrameTime > FRAME_DURATION) {
+    if (System.currentTimeMillis() - lastFrameTime > frameDuration) {
       updateAnimation();
     }
     stage.act(ServiceLocator.getTimeSource().getDeltaTime());
