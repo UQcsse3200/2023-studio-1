@@ -82,8 +82,10 @@ public class CutsceneDisplay extends UIComponent {
         removeExternalUI();
         logger.debug("Cutscene table spawned");
         dialogueWindow = new Window("cutscene dialogue", skin);
+        dialogueWindow.getTitleLabel().setAlignment(Align.center);
         dialogueWindow.setDebug(true);
         dialogueWindow.bottom();
+        dialogueWindow.setResizable(false);
 
         this.dimScreen();
 
