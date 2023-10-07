@@ -22,6 +22,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private static Enum<MenuTypes> currentMenu = MenuTypes.NONE;
 
   private boolean showPlantInfoUI = true;
+  private boolean showMap = false;
   public enum MenuTypes{
     PAUSEMENU,
     NONE
@@ -88,6 +89,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           showPlantInfoUI = !showPlantInfoUI;
           ServiceLocator.getPlantInfoService().getEvents().trigger("toggleOpen", showPlantInfoUI);
           return true;
+        case Keys.M:
+          showMap = !showMap;
+          ServiceLocator.getPlayerMapService().getEvents().trigger("toggleOpen", showMap);
         case Keys.R:
           entity.getEvents().trigger("eat", entity.getComponent(InventoryComponent.class).getHeldItem());
             return true;

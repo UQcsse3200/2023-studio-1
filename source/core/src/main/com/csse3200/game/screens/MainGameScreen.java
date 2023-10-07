@@ -123,6 +123,7 @@ public class MainGameScreen extends ScreenAdapter {
 
         ServiceLocator.registerPlantCommandService(new PlantCommandService());
         ServiceLocator.registerPlayerHungerService(new PlayerHungerService());
+        ServiceLocator.registerPlayerMapService(new PlayerMapService());
         ServiceLocator.registerPlantInfoService(new PlantInfoService());
 
         ServiceLocator.registerSoundService(new SoundService());
@@ -275,7 +276,8 @@ public class MainGameScreen extends ScreenAdapter {
                 .addComponent(new PlantInfoDisplayComponent())
 
                 .addComponent(new WeatherEventDisplay())
-                .addComponent(new HealthDisplay());
+                .addComponent(new HealthDisplay())
+                .addComponent(new ToggleableMap());
 
         ServiceLocator.getEntityService().register(ui);
     }
