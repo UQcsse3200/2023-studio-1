@@ -18,6 +18,8 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ProjectileFactory;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.sound.EffectSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
 
 import java.security.SecureRandom;
 import java.util.List;
@@ -38,6 +40,8 @@ public class PlayerActions extends Component {
   private boolean running = false;
   private boolean muted = false;
   private GameMap map;
+
+  private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(PlayerActions.class);
 
   private SecureRandom random = new SecureRandom();
 
@@ -269,6 +273,11 @@ public class PlayerActions extends Component {
     // check within 4 units of tractor
     if (ServiceLocator.getGameArea().getTractor() == null || this.entity.getPosition().dst(ServiceLocator.getGameArea().getTractor().getPosition()) > 4) {
       return;
+    }
+    try {
+      ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.TRACTOR_START_UP);
+    } catch (InvalidSoundFileException e) {
+      logger.error("Failed to play tractor start up sound", e);
     }
     this.stopMoving();
     muted = true;
