@@ -35,8 +35,6 @@ class QuestFactoryTest {
     @Mock
     TimeService mockTimeService;
     @Mock
-    MissionManager mockMissionManager;
-    @Mock
     ResourceService mockResourceService;
     @Mock
     Texture mockTexture;
@@ -53,8 +51,8 @@ class QuestFactoryTest {
         Gdx.gl = mock(GL20.class);
         MockitoAnnotations.openMocks(this);
         ServiceLocator.registerTimeSource(mockGameTime);
-        ServiceLocator.registerTimeService(mockTimeService);
-        ServiceLocator.registerMissionManager(mockMissionManager);
+        ServiceLocator.registerTimeService(new TimeService());
+        ServiceLocator.registerMissionManager(new MissionManager());
         ServiceLocator.registerPhysicsService(new PhysicsService());
         ServiceLocator.registerResourceService(mockResourceService);
         ServiceLocator.registerGameArea(mockGameArea);
