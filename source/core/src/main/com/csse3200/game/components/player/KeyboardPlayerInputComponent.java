@@ -21,7 +21,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private static boolean menuOpened = false;
   private static Enum<MenuTypes> currentMenu = MenuTypes.NONE;
 
-  private boolean showPlantInfoUI = true;
+  private static boolean showPlantInfoUI = true;
   private boolean showMap = false;
   public enum MenuTypes{
     PAUSEMENU,
@@ -199,5 +199,14 @@ public class KeyboardPlayerInputComponent extends InputComponent {
        index = 9;
      }
      entity.getEvents().trigger("hotkeySelection", index);
+   }
+
+  /**
+   * Shows whether the plant info window is currently being displayed
+   *
+   * @return boolean that represents whether plant info was being shown
+   */
+   public static boolean getShowPlantInfoUI() {
+     return showPlantInfoUI;
    }
 }

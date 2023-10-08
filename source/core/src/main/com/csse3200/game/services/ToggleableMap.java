@@ -19,7 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.badlogic.gdx.utils.Array;
+import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +33,7 @@ public class ToggleableMap extends UIComponent {
      */
     Table Tmap = new Table();
     GridPoint2 g_pos = new GridPoint2(0,0);
+
     Group group = new Group(); // what is this for? Angus
     Boolean Switch = false;
     Color prev_color;
@@ -95,6 +96,11 @@ public class ToggleableMap extends UIComponent {
         this.isOpen = isOpen;
         window.setVisible(isOpen);
         transparentRectangle.setVisible(isOpen);
+        if (!isOpen) {
+            recoverExternalUI();
+        } else {
+            removeExternalUI();
+        }
     }
     
     /**
@@ -129,15 +135,17 @@ public class ToggleableMap extends UIComponent {
         window.reset();
         window.getTitleLabel().setText("MAP");
         window.setVisible(isOpen);
-        /*window.setSize((Gdx.graphics.getHeight() * (map.getWidth() / map.getHeight())),
-                Gdx.graphics.getHeight() * (map.getHeight() / map.getWidth()));
+        float mapHeight = Tmap.getChild(0).getHeight();
+        float mapWidth = Tmap.getChild(0).getWidth();
+        window.setSize((Gdx.graphics.getHeight() * (mapWidth / mapHeight)),
+                Gdx.graphics.getHeight() * (mapHeight / mapWidth));
         window.padBottom(10f);
         window.setPosition(Gdx.graphics.getWidth()/5, 20f);
         window.setMovable(false);
         window.setResizable(false);
-        window.add(map).expandX().width((Gdx.graphics.getHeight() * (map.getWidth() / map.getHeight()))-20f).
-                expandY().height(Gdx.graphics.getHeight() * (map.getHeight() / map.getWidth())-20f);*/
-        window.add(Tmap);
+        window.add(Tmap).expandX().width((Gdx.graphics.getHeight() * (mapWidth / mapHeight))-20f).
+                expandY().height(Gdx.graphics.getHeight() * (mapHeight / mapWidth)-20f);
+        // Add the player's dot to the window's content
 
         stage.addActor(window);
     }
@@ -194,5 +202,21 @@ public class ToggleableMap extends UIComponent {
         super.dispose();
         window.clear();
         //
+    }
+    /**
+     * Removes the UI components on the screen so that cutscene is not so cluttered
+     */
+    public void removeExternalUI() {
+        ServiceLocator.getPlantInfoService().getEvents().trigger("toggleOpen", false);
+        ServiceLocator.getUIService().getEvents().trigger("toggleUI", false);
+    }
+
+    /**
+     * Recovers the UI components that were removed back onto the screen
+     */
+    public void recoverExternalUI() {
+        ServiceLocator.getPlantInfoService().getEvents().
+                trigger("toggleOpen", KeyboardPlayerInputComponent.getShowPlantInfoUI());
+        ServiceLocator.getUIService().getEvents().trigger("toggleUI", true);
     }
 }

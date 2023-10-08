@@ -23,6 +23,5 @@ public class DialogueScreenCommand implements Command {
     }
 
     boolean isValid(ArrayList<String> args) {
-        return args.size() == 0;
-    }
-}
+        return args.isEmpty();  // Using isEmpty() to check if the list is empty
+    }}

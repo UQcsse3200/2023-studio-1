@@ -240,7 +240,6 @@ public class NPCFactory {
    */
   public static Entity createOxygenEater() {
     Entity oxygenEater = createBaseAnimal(EntityType.OXYGEN_EATER);
-    BaseAnimalConfig config = configs.oxygenEater;
 
 
     AnimationRenderComponent animator = new AnimationRenderComponent(

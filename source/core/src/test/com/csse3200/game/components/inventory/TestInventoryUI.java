@@ -1,8 +1,6 @@
 package com.csse3200.game.components.inventory;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.csse3200.game.components.items.ItemComponent;
@@ -40,7 +38,7 @@ import static org.mockito.Mockito.*;
  * the properties stores in 'PlayerConfig'.
  */
 @ExtendWith(GameExtension.class)
-public class TestInventoryUI {
+ public class TestInventoryUI {
 	Entity player;
 	InventoryDisplay inventoryDisplay;
 	static InventoryComponent inventory;
