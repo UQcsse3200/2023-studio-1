@@ -12,6 +12,8 @@ import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.sound.EffectSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -182,6 +184,13 @@ public class ToolbarDisplay extends UIComponent {
                 curSlot.setSelected();
             }
             slots.set(i, curSlot);
+        }
+
+        //Play the item select sound
+        try {
+            ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.HOTKEY_SELECT);
+        } catch (InvalidSoundFileException e) {
+            throw new RuntimeException(e);
         }
     }
 }

@@ -82,11 +82,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           return true;
         case Keys.NUM_0, Keys.NUM_1, Keys.NUM_2, Keys.NUM_3, Keys.NUM_4, Keys.NUM_5, Keys.NUM_6, Keys.NUM_7, Keys.NUM_8, Keys.NUM_9:
           triggerHotKeySelection(keycode);
-          try {
-            ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.HOTKEY_SELECT);
-          } catch (InvalidSoundFileException e) {
-            throw new RuntimeException(e);
-          }
           return true;
         case Keys.T:
           entity.getEvents().trigger("toggleLight");
