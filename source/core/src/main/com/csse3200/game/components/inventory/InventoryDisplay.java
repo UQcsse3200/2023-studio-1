@@ -126,7 +126,6 @@ public class InventoryDisplay extends UIComponent {
 	 */
 
 	private void updateInventory() {
-		System.out.println("UI");
 		dnd.clear();
 		actors.clear(); // Clear the actors ArrayList
 
@@ -152,7 +151,7 @@ public class InventoryDisplay extends UIComponent {
 				ItemSlot curSlot = slots.get(i);
 				curSlot.setItemImage(null);
 				curSlot.getDraggable().clear();
-
+				curSlot.setCount(0);
 				slots.set(i, curSlot);
 			}
 

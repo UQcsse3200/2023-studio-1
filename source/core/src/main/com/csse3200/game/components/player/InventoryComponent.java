@@ -67,20 +67,6 @@ public class InventoryComponent extends Component {
   public InventoryComponent(List<Entity> items) {
     setInventory(items);
   }
-  /**
-   * Called when an item in the inventory is used.
-   *
-   * @return boolean if the item is consumable, whether or not the item was successfully removed otherwise true;
-   */
-  public boolean useItem() {
-    if (heldItem == null) {
-      return false;
-    }
-    if (heldItem.getComponent(ItemComponent.class).isPerishable()) {
-      return removeItem(this.heldItem);
-    }
-    return true;
-  }
 
     /**
      * Creates a new InventoryComponent with a given maximum size.
@@ -436,7 +422,6 @@ public class InventoryComponent extends Component {
                     // If it was the held item set held item to null
                     if (this.heldIndex == placeEntry.getKey()) {
                         this.heldItem = null;
-                        this.heldIndex = -1;
                     }
                     setHeldItem(heldIndex);
                     break;
