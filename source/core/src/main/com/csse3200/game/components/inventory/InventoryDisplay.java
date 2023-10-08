@@ -6,6 +6,8 @@ import java.util.Map;
 
 import com.csse3200.game.services.ServiceLocator;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.csse3200.game.services.sound.EffectSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
 import org.jetbrains.annotations.NotNull;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -239,6 +241,12 @@ public class InventoryDisplay extends UIComponent {
 		isOpen = !isOpen;
 		window.setVisible(isOpen);
 		inventoryDisplayManager.updateDisplays();
+		//Play the inventory sound effect
+		try {
+			ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.INVENTORY_OPEN);
+		} catch (InvalidSoundFileException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	/**
