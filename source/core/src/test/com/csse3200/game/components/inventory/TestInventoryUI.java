@@ -133,8 +133,10 @@ import static org.mockito.Mockito.*;
 		assert (window.getTitleLabel().textEquals("null Inventory"));
 		inventoryDisplay.refreshInventory();
 		Table inventorySlots = (Table) window.getChildren().begin()[1];
-		Cell[] cells = Arrays.copyOfRange(inventorySlots.getCells().toArray(Cell.class), 0, 29);
+		Cell[] cells = Arrays.copyOfRange(inventorySlots.getCells().toArray(Cell.class), 0, 30);
+		Cell deleteButton = Arrays.stream(inventorySlots.getCells().toArray(Cell.class)).toList().get(30);
 		int i = 0;
+		assert (deleteButton.getActor()) instanceof Image;
 		for (Cell slot : cells) {
 			System.out.println(slot);
 			assert ((ItemSlot) slot.getActor()).getChild(0) instanceof Image;
