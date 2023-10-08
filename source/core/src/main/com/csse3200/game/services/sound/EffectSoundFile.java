@@ -9,6 +9,7 @@ public enum EffectSoundFile implements SoundFile {
     SCYTHE("sounds/hoe.wav"),
     WATERING_CAN("sounds/watering-can.wav"),
     FISHING_CAST("sounds/fishing-cast.wav"),
+    FISHING_CATCH("sounds/applause.wav"),
     PLACE("sounds/place.wav"),
     GATE_INTERACT("sounds/gate-interact.wav"),
     IMPACT("sounds/Impact4.ogg");
