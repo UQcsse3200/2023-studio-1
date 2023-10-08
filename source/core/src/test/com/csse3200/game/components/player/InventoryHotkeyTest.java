@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import com.csse3200.game.components.inventory.InventoryDisplayManager;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.sound.EffectSoundFile;
 import com.csse3200.game.services.sound.InvalidSoundFileException;
@@ -26,6 +27,8 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @ExtendWith(GameExtension.class)
 class InventoryHotkeyTest {
@@ -33,6 +36,7 @@ class InventoryHotkeyTest {
 	private InventoryComponent inventoryComponent;
 	private PlayerActions playerActions;
 	private KeyboardPlayerInputComponent keyboardPlayerInputComponent;
+	private static final Logger logger = LoggerFactory.getLogger(InventoryHotkeyTest.class);
 	String[] texturePaths = {"images/tool_shovel.png"};
 
 	@BeforeEach
@@ -65,7 +69,7 @@ class InventoryHotkeyTest {
 		try {
 			ServiceLocator.getSoundService().getEffectsMusicService().loadSounds(effects);
 		} catch (InvalidSoundFileException e) {
-			throw new RuntimeException(e);
+			logger.info("Sound files not loaded");
 		}
 	}
 

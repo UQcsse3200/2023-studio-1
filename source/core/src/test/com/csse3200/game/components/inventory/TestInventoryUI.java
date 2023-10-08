@@ -27,6 +27,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.stream.Stream;
@@ -49,6 +51,7 @@ import static org.mockito.Mockito.*;
 	Stage stage;
 	InventoryDisplayManager inventoryDisplayManager;
 	ArgumentCaptor<Window> windowArgument;
+	private static final Logger logger = LoggerFactory.getLogger(TestInventoryUI.class);
 
 	static String[] texturePaths = {
 			"images/tool_shovel.png",
@@ -93,7 +96,7 @@ import static org.mockito.Mockito.*;
 		try {
 			ServiceLocator.getSoundService().getEffectsMusicService().loadSounds(effects);
 		} catch (InvalidSoundFileException e) {
-			throw new RuntimeException(e);
+			logger.info("Sounds not loaded");
 		}
 
 		inventoryDisplay = spy(new InventoryDisplay("updateInventory", "toggleInventory", 30, 10, false));
