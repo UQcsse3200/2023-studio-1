@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.badlogic.gdx.graphics.Color;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.ServiceLocator;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import org.jetbrains.annotations.NotNull;
@@ -104,9 +106,10 @@ public class InventoryDisplay extends UIComponent {
 			}
 		}
 		table.row();
-		Image deleteSlot = new Image(ServiceLocator.getResourceService().getAsset("images/bin.png", Texture.class));
-		//deleteSlot.setColor(Color.BLACK);
-		table.add(deleteSlot).colspan(10);
+		if (entity.getType() == EntityType.PLAYER) {
+			Image deleteSlot = new Image(ServiceLocator.getResourceService().getAsset("images/bin.png", Texture.class));
+			table.add(deleteSlot).colspan(10);
+		}
 
 		// Create a window for the inventory using the skin
 		window.pad(40, 20, 20, 20);
@@ -239,7 +242,7 @@ public class InventoryDisplay extends UIComponent {
 	 *
 	 * @return current window
 	 */
-	public Actor getWindow() {
+	public Window getWindow() {
 		return this.window;
 	}
 
@@ -293,5 +296,9 @@ public class InventoryDisplay extends UIComponent {
 
 	public boolean isOpen() {
 		return isOpen;
+	}
+	public DragAndDrop getDnd() {
+		return dnd;
+
 	}
 }

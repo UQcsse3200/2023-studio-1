@@ -86,7 +86,7 @@ import static org.mockito.Mockito.*;
 
 		inventoryDisplay = spy(new InventoryDisplay("updateInventory", "toggleInventory", 30, 10, false));
 		player =
-				new Entity()
+				new Entity(EntityType.PLAYER)
 						.addComponent(new PlayerActions())
 						.addComponent(new KeyboardPlayerInputComponent())
 						.addComponent(inventoryDisplay)
@@ -130,7 +130,7 @@ import static org.mockito.Mockito.*;
 		inventory.addItem(i1);
 		inventoryDisplay.toggleOpen();
 		Window window = win.getValue();
-		assert (window.getTitleLabel().textEquals("null Inventory"));
+		assert (window.getTitleLabel().textEquals("PLAYER Inventory"));
 		inventoryDisplay.refreshInventory();
 		Table inventorySlots = (Table) window.getChildren().begin()[1];
 		Cell[] cells = Arrays.copyOfRange(inventorySlots.getCells().toArray(Cell.class), 0, 30);
