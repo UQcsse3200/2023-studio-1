@@ -8,6 +8,8 @@ import java.util.Objects;
 import com.csse3200.game.components.items.WateringCanLevelComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.csse3200.game.services.sound.EffectSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
 import org.jetbrains.annotations.NotNull;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -17,6 +19,9 @@ import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.ui.UIComponent;
 import com.badlogic.gdx.graphics.Texture;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * An ui component for displaying player stats, e.g. health.
  */
@@ -39,6 +44,7 @@ public class InventoryDisplay extends UIComponent {
 	private final InventoryDisplayManager inventoryDisplayManager;
 	private final Map<Integer, TextTooltip> tooltips = new HashMap<>();
 	private final InstantTooltipManager instantTooltipManager = new InstantTooltipManager();
+	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(InventoryDisplay.class);
 
 	/**
 	 * Constructor for class
@@ -151,7 +157,7 @@ public class InventoryDisplay extends UIComponent {
 				ItemSlot curSlot = slots.get(i);
 				curSlot.setItemImage(null);
 				curSlot.getDraggable().clear();
-				curSlot.setCount(0);
+
 				slots.set(i, curSlot);
 			}
 
@@ -271,6 +277,12 @@ public class InventoryDisplay extends UIComponent {
 		isOpen = !isOpen;
 		window.setVisible(isOpen);
 		inventoryDisplayManager.updateDisplays();
+		//Play the inventory sound effect
+		try {
+			ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.INVENTORY_OPEN);
+		} catch (InvalidSoundFileException e) {
+			logger.info("Inventory open sound not loaded");
+		}
 	}
 
 	/**

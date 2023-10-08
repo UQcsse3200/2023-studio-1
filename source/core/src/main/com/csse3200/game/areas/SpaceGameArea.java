@@ -529,6 +529,8 @@ public class SpaceGameArea extends GameArea {
     effects.add(EffectSoundFile.TRACTOR_HONK);
     effects.add(EffectSoundFile.IMPACT);
     effects.add(EffectSoundFile.GATE_INTERACT);
+    effects.add(EffectSoundFile.INVENTORY_OPEN);
+    effects.add(EffectSoundFile.HOTKEY_SELECT);
     
     try {
       ServiceLocator.getSoundService().getEffectsMusicService().loadSounds(effects);
