@@ -3,6 +3,9 @@ package com.csse3200.game.components.inventory;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.csse3200.game.areas.SpaceGameArea;
+import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
@@ -15,6 +18,10 @@ import com.csse3200.game.input.InputService;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.sound.EffectSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
+import com.csse3200.game.services.sound.SoundFile;
+import com.csse3200.game.services.sound.SoundService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -81,6 +88,16 @@ import static org.mockito.Mockito.*;
 		renderService.setStage(stage);
 		ServiceLocator.registerRenderService(renderService);
 		ServiceLocator.registerInputService(new InputService());
+		// Set up dependencies for the Inventory Open sound
+		ServiceLocator.registerSoundService(new SoundService());
+		java.util.List<SoundFile> effects = new ArrayList<>();
+		effects.add(EffectSoundFile.INVENTORY_OPEN);
+		//Load sound file
+		try {
+			ServiceLocator.getSoundService().getEffectsMusicService().loadSounds(effects);
+		} catch (InvalidSoundFileException e) {
+			throw new RuntimeException(e);
+		}
 
 		inventoryDisplay = spy(new InventoryDisplay("updateInventory", "toggleInventory", 30, 10, false));
 		player =

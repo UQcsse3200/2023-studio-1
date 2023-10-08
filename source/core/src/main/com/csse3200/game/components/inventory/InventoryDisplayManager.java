@@ -59,13 +59,13 @@ public class InventoryDisplayManager {
 
         int displayCount = openInventoryDisplays.size();
 
-        if (displayCount != 0) {
-            try {
-                ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.INVENTORY_OPEN);
-            } catch (InvalidSoundFileException e) {
-                throw new RuntimeException(e);
-            }
+        //Play the inventory sound effect
+        try {
+            ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.INVENTORY_OPEN);
+        } catch (InvalidSoundFileException e) {
+            throw new RuntimeException(e);
         }
+
         if (displayCount == 1) {
             Window window = (Window) openInventoryDisplays.get(0).getWindow();
             window.setPosition(stage.getWidth() / 2 - window.getWidth() / 2, stage.getHeight() / 2 - window.getHeight() / 2);

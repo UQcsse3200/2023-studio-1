@@ -10,6 +10,10 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import com.csse3200.game.services.ResourceService;
+import com.csse3200.game.services.sound.EffectSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
+import com.csse3200.game.services.sound.SoundFile;
+import com.csse3200.game.services.sound.SoundService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -35,6 +39,7 @@ class InventoryHotkeyTest {
 	@BeforeEach
 	void initialiseTest() {
 		ServiceLocator.registerResourceService(new ResourceService());
+		ServiceLocator.registerSoundService(new SoundService());
 		ServiceLocator.getResourceService().loadTextures(texturePaths);
 		ServiceLocator.getResourceService().loadAll();
 		inventoryComponent = spy(new InventoryComponent(new ArrayList<>()));
@@ -53,6 +58,17 @@ class InventoryHotkeyTest {
 			items.add(new Entity().addComponent(new ItemComponent(itemNames[i++], ItemType.HOE, "images/tool_shovel.png")));
 		}
 		inventoryComponent.setInventory(items);
+
+		//Set up the dependencies for the item select sound
+		ServiceLocator.registerSoundService(new SoundService());
+		java.util.List<SoundFile> effects = new ArrayList<>();
+		effects.add(EffectSoundFile.HOTKEY_SELECT);
+		//Load sound file
+		try {
+			ServiceLocator.getSoundService().getEffectsMusicService().loadSounds(effects);
+		} catch (InvalidSoundFileException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@ParameterizedTest
