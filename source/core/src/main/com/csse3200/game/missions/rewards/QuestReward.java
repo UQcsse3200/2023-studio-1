@@ -1,6 +1,7 @@
 package com.csse3200.game.missions.rewards;
 
 import com.csse3200.game.missions.MissionManager;
+import com.csse3200.game.missions.quests.AutoQuest;
 import com.csse3200.game.missions.quests.Quest;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -46,6 +47,13 @@ public class QuestReward extends Reward {
 
         for (Quest quest : activeQuests) {
             missionManager.acceptQuest(quest);
+            if (quest instanceof AutoQuest) {
+                if (quest.getName().equals("Connection")) {
+                    ServiceLocator.getMissionManager().getEvents().trigger("An Agreement");
+                } else if (quest.getName().equals("An Imminent Threat")) {
+                    ServiceLocator.getMissionManager().getEvents().trigger("Making Contact");
+                }
+            }
         }
     }
 }

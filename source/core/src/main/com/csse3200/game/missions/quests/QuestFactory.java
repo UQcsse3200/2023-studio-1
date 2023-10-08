@@ -187,8 +187,9 @@ public class QuestFactory {
 
         List<Entity> itemRewards = new ArrayList<>();
         // TODO - Add weapon to defeat incoming enemies
-        itemRewards.add(ItemFactory.createSpaceSnapperSeed());
-        itemRewards.add(ItemFactory.createSpaceSnapperSeed());
+        for (int i = 0; i < 5; i++) {
+            itemRewards.add(ItemFactory.createSpaceSnapperSeed());
+        }
         for (int i = 0; i < 20; i++) {
             itemRewards.add(ItemFactory.createFenceItem());
         }
@@ -202,9 +203,12 @@ public class QuestFactory {
                 new TriggerHostilesReward(List.of(
                         NPCFactory.createOxygenEater(),
                         NPCFactory.createOxygenEater(),
-                        NPCFactory.createDragonfly(),
-                        NPCFactory.createDragonfly(),
-                        NPCFactory.createBat()
+                        NPCFactory.createOxygenEater(),
+                        NPCFactory.createOxygenEater(),
+                        NPCFactory.createOxygenEater()
+//                        NPCFactory.createDragonfly(),
+//                        NPCFactory.createDragonfly(),
+//                        NPCFactory.createBat()
                 )),
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
@@ -277,6 +281,7 @@ public class QuestFactory {
         List<Quest> questsToActivate = new ArrayList<>();
         questsToActivate.add(createHomeSickQuest());
         questsToActivate.add(createActIIMainQuest());
+        ServiceLocator.getMissionManager().getEvents().trigger("An Agreement");
 
         String dialogue = """
                 As you finish explaining your crash landing, you warn Jarrael that if you aren't able to make contact with your people within {COLOR=#3ABE88}5 DAYS{COLOR=WHITE}, they will leave this planet's orbit, making reaching them again nearly impossible. {WAIT}"Hmm... {WAIT}This is indeed a grave issue. {WAIT}I will need some time to think of a possible solution. {WAIT}In the mean time, I have a favour to ask. {WAIT}The {COLOR=#76428A}NIGHTSHADE{COLOR=WHITE} produces {COLOR=#76428A}BERRIES{COLOR=WHITE} which are damaging to fleshy creatures such as you, but they are a delicacy to our people. {WAIT}A more appropriate name for you might be "{COLOR=#76428A}DEADLY NIGHTSHADE{COLOR=WHITE}". Here are some {COLOR=#76428A}SEEDS{COLOR=WHITE}. {WAIT}Come back to me when you have harvested them, and I should have thought of a solution by then."
@@ -392,6 +397,7 @@ public class QuestFactory {
         questsToActivate.add(createAirAndAlgaeQuest());
         questsToActivate.add(createStratosphericSentinelQuest());
         questsToActivate.add(createActIIIMainQuest());
+        ServiceLocator.getMissionManager().getEvents().trigger("Making Contact");
 
         String dialogue = """
                 You let out a cry of desperation, as the fate of humanity now rests in your hands. {WAIT}Jarrael puts a hand on your shoulder. {WAIT}"I have an idea. {WAIT}I was sent here to cultivate a very special type of plant, the {COLOR=#76428A}ATOMIC ALGAE{COLOR=WHITE}. {WAIT}It is a very strong photosynthesiser, and we were going to use it to reverse the negative affects of {COLOR=RED}The Night of the Black Sun{COLOR=WHITE}. {WAIT}If you plant and cultivate enough of them, you should be able to manifestly increase the oxygen content of our atmosphere, and make the planet survivable for your kind. {WAIT}I believe I only have a few {COLOR=#76428A}SEEDS{COLOR=WHITE} to spare, so make sure you treat them well."

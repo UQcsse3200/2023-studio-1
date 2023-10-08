@@ -56,11 +56,13 @@ public class ProgressBar extends UIComponent {
     public void updateProgressBarAct2() {
         this.act = 2;
         this.dayOffset = ServiceLocator.getTimeService().getDay();
+        this.updateDisplay();
     }
 
     public void updateProgressBarAct3() {
         this.act = 3;
         this.dayOffset = ServiceLocator.getTimeService().getDay();
+        this.updateDisplay();
     }
 
     /**
