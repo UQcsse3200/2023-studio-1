@@ -147,6 +147,13 @@ public class ItemActions extends Component {
       // Do not place
       return false;
     }
+
+    try {
+      ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.PLACE);
+    } catch (Exception e) {
+      logger.error("Failed to play place sound", e);
+    }
+
     // Make the Entity to place
     Entity placeable = FactoryService.getPlaceableFactories()
         .get(entity.getComponent(ItemComponent.class).getItemName()).get();
