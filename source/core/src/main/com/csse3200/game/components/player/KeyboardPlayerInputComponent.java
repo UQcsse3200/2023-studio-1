@@ -1,7 +1,5 @@
 package com.csse3200.game.components.player;
 
-import com.csse3200.game.services.sound.EffectSoundFile;
-import com.csse3200.game.services.sound.InvalidSoundFileException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

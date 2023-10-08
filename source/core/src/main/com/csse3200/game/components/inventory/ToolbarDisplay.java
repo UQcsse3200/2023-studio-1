@@ -190,7 +190,7 @@ public class ToolbarDisplay extends UIComponent {
         try {
             ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.HOTKEY_SELECT);
         } catch (InvalidSoundFileException e) {
-            throw new RuntimeException(e);
+            logger.info("Hotkey sound not loaded");
         }
     }
 }

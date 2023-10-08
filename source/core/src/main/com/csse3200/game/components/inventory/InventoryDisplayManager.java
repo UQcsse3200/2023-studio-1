@@ -2,9 +2,6 @@ package com.csse3200.game.components.inventory;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.services.sound.EffectSoundFile;
-import com.csse3200.game.services.sound.InvalidSoundFileException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
