@@ -534,6 +534,13 @@ public class SpaceGameArea extends GameArea {
     effects.add(EffectSoundFile.INVENTORY_OPEN);
     effects.add(EffectSoundFile.HOTKEY_SELECT);
     effects.add(EffectSoundFile.SHOVEL);
+    effects.add(EffectSoundFile.HOE);
+    effects.add(EffectSoundFile.WATERING_CAN);
+    effects.add(EffectSoundFile.PLACE);
+    effects.add(EffectSoundFile.FISHING_CAST);
+    effects.add(EffectSoundFile.FISHING_CATCH);
+    effects.add(EffectSoundFile.SCYTHE);
+
 
     try {
       ServiceLocator.getSoundService().getEffectsMusicService().loadSounds(effects);
