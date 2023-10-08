@@ -112,15 +112,18 @@ public class ToggleableMap extends UIComponent {
         tiledMap = ServiceLocator.getGameArea().getMap().getTiledMap();
         TiledMapTileLayer layer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
         // interate through the layers and add them to the table (not sure if this works)
-        for (int i = 0; i < map_x;i ++) {
-            for (int j = 0 ; j < map_y; j++) {
-                TiledMapTileLayer.Cell cell = layer.getCell(i, j);
+
+        for (int yPos = map_x -1; yPos >= 0; yPos --) {
+            for (int xPos = 0; xPos <= map_y -1; xPos++) {
+                TiledMapTileLayer.Cell cell = layer.getCell(xPos, yPos);
                 if (cell != null) {
                     TiledMapTile tile = cell.getTile();
                     if (tile != null) {
                         Tmap.add(new Image(tile.getTextureRegion()));
                     }
+                    else logger.info("tile at (" + xPos + ", " + yPos + ") is null");
                 }
+                else logger.info("Cell at (" + xPos + ", " + yPos + ") is null");
             }
             Tmap.row(); // new row
         }
@@ -143,8 +146,9 @@ public class ToggleableMap extends UIComponent {
         window.setPosition(Gdx.graphics.getWidth()/5, 20f);
         window.setMovable(false);
         window.setResizable(false);
-        window.add(Tmap).expandX().width((Gdx.graphics.getHeight() * (mapWidth / mapHeight))-20f).
-                expandY().height(Gdx.graphics.getHeight() * (mapHeight / mapWidth)-20f);
+        window.add(Tmap);
+        //window.add(Tmap).expandX().width((Gdx.graphics.getHeight() * (mapWidth / mapHeight))-20f).
+        //        expandY().height(Gdx.graphics.getHeight() * (mapHeight / mapWidth)-20f);
         // Add the player's dot to the window's content
 
         stage.addActor(window);
@@ -161,17 +165,17 @@ public class ToggleableMap extends UIComponent {
             pauseGame();
             // Draw the player's position dot on the mini-map
             Vector2 v_pos = ServiceLocator.getGameArea().getPlayer().getPosition();
-            GridPoint2 g_pos = ServiceLocator.getGameArea().getMap().vectorToTileCoordinates(v_pos);
+            g_pos = ServiceLocator.getGameArea().getMap().vectorToTileCoordinates(v_pos);
+            g_pos = new GridPoint2(g_pos.x +1, g_pos.y +1); // because it takes bottom left corner
 
             // store the player's position in a temporary variable and change that cell's color
-
-            prev_color = Tmap.getChildren().get(g_pos.x + g_pos.y * 100).getColor();
-            Tmap.getChildren().get(g_pos.x + g_pos.y * 100).setColor(Color.RED);
+            prev_color = Tmap.getChildren().get(g_pos.x + (100 - (g_pos.y +1)) * 100).getColor();
+            Tmap.getChildren().get(g_pos.x + (100 - (g_pos.y +1)) * 100).setColor(Color.MAGENTA);
             Switch = true;
         }
         else {
             if(Switch) {
-                Tmap.getChildren().get(g_pos.x + g_pos.y * 100).setColor(prev_color);
+                Tmap.getChildren().get(g_pos.x + (100 - (g_pos.y + 1)) * 100).setColor(prev_color);
                 Switch = false;
                 unPauseGame();
             }
