@@ -531,8 +531,10 @@ public class SpaceGameArea extends GameArea {
     effects.add(EffectSoundFile.TRACTOR_START_UP);
     effects.add(EffectSoundFile.IMPACT);
     effects.add(EffectSoundFile.GATE_INTERACT);
+    effects.add(EffectSoundFile.INVENTORY_OPEN);
+    effects.add(EffectSoundFile.HOTKEY_SELECT);
     effects.add(EffectSoundFile.SHOVEL);
-    
+
     try {
       ServiceLocator.getSoundService().getEffectsMusicService().loadSounds(effects);
     } catch (InvalidSoundFileException e) {

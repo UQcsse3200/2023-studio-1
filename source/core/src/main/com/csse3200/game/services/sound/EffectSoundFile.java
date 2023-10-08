@@ -12,7 +12,9 @@ public enum EffectSoundFile implements SoundFile {
     FISHING_CATCH("sounds/applause.wav"),
     PLACE("sounds/place.wav"),
     GATE_INTERACT("sounds/gate-interact.wav"),
-    IMPACT("sounds/Impact4.ogg");
+    IMPACT("sounds/Impact4.ogg"),
+    INVENTORY_OPEN("sounds/open-bag-sound-effect.mp3"),
+    HOTKEY_SELECT("sounds/take-item-sound-effect.mp3");
 
     private final String filePath;
 
