@@ -250,6 +250,11 @@ public class ItemActions extends Component {
    * @return if harvesting was successful return true else return false
    */
   private boolean harvest(TerrainTile tile) {
+    try {
+      ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.SCYTHE);
+    } catch (Exception e) {
+      logger.error("Failed to play harvest sound", e);
+    }
     boolean tileHarvestable = isCropTile(tile.getOccupant());
     if (tileHarvestable) {
       tile.getOccupant().getEvents().trigger("harvest");
