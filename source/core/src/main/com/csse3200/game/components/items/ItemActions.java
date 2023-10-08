@@ -279,6 +279,11 @@ public class ItemActions extends Component {
    * @return if hoeing was successful return true else return false
    */
   private boolean hoe(Vector2 mousePos) {
+    try {
+      ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.HOE);
+    } catch (Exception e) {
+      logger.error("Failed to play scy sound", e);
+    }
     TerrainTile tile = getTileAtPosition(mousePos);
     if (tile.isOccupied() || !tile.isTillable()) {
       return false;

@@ -289,7 +289,8 @@ public class SpaceGameArea extends GameArea {
           "sounds/plants/waterWeed/decay.wav", "sounds/plants/waterWeed/decayLore.wav",
           "sounds/plants/waterWeed/destroy.wav", "sounds/plants/waterWeed/destroyLore.wav",
           "sounds/plants/waterWeed/nearby.wav", "sounds/plants/waterWeed/nearbyLore.wav",
-          "sounds/gate-interact.wav","sounds/tractor-start-up.wav", "sounds/shovel.wav"
+          "sounds/gate-interact.wav","sounds/tractor-start-up.wav", "sounds/shovel.wav",
+          "sounds/hoe.wav"
   };
 
   String[] skinPaths = {

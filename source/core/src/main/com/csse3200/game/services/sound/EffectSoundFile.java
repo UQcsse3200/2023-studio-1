@@ -5,6 +5,7 @@ public enum EffectSoundFile implements SoundFile {
     TRACTOR_HONK("sounds/car-horn-6408.mp3"),
     TRACTOR_START_UP("sounds/tractor-start-up.wav"),
     SHOVEL("sounds/shovel.wav"),
+    HOE("sounds/hoe.wav"),
     GATE_INTERACT("sounds/gate-interact.wav"),
     IMPACT("sounds/Impact4.ogg");
 
