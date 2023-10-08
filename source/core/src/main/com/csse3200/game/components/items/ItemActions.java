@@ -16,8 +16,11 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.sound.EffectSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
 
 public class ItemActions extends Component {
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(ItemActions.class);
 
   @Override
   public void create() {
@@ -255,6 +258,11 @@ public class ItemActions extends Component {
    * @return if shoveling was successful return true else return false
    */
   private boolean shovel(TerrainTile tile) {
+    try {
+      ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.SHOVEL);
+    } catch (Exception e) {
+      logger.error("Failed to play shovel sound", e);
+    }
     // If there is something to remove
     if (tile.getOccupant() != null) {
       // Trigger the destroy method within that occupant

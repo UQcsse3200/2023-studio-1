@@ -289,7 +289,7 @@ public class SpaceGameArea extends GameArea {
           "sounds/plants/waterWeed/decay.wav", "sounds/plants/waterWeed/decayLore.wav",
           "sounds/plants/waterWeed/destroy.wav", "sounds/plants/waterWeed/destroyLore.wav",
           "sounds/plants/waterWeed/nearby.wav", "sounds/plants/waterWeed/nearbyLore.wav",
-          "sounds/gate-interact.wav","sounds/tractor-start-up.wav"
+          "sounds/gate-interact.wav","sounds/tractor-start-up.wav", "sounds/shovel.wav"
   };
 
   String[] skinPaths = {
@@ -529,6 +529,7 @@ public class SpaceGameArea extends GameArea {
     effects.add(EffectSoundFile.TRACTOR_START_UP);
     effects.add(EffectSoundFile.IMPACT);
     effects.add(EffectSoundFile.GATE_INTERACT);
+    effects.add(EffectSoundFile.SHOVEL);
     
     try {
       ServiceLocator.getSoundService().getEffectsMusicService().loadSounds(effects);
