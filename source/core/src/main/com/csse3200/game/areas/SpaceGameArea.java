@@ -250,9 +250,18 @@ public class SpaceGameArea extends GameArea {
           "images/selected.png",
           "images/itemFrame.png",
           "images/PauseMenu/Pause_Overlay.jpg",
-          "images/PauseMenu/Pausenew.jpg"
-
-
+          "images/PauseMenu/Pausenew.jpg",
+          "images/fish/fish_1.png",
+          "images/fish/fish_2.png",
+          "images/fish/fish_3.png",
+          "images/fish/fish_4.png",
+          "images/fish/fish_5.png",
+          "images/fish/fish_6.png",
+          "images/fish/fish_7.png",
+          "images/fish/fish_8.png",
+          "images/fish/fish_9.png",
+          "images/fish/fish_10.png",
+          "images/fish/fish_11.png",
   };
 
   private static final String[] textureAtlasPaths = {

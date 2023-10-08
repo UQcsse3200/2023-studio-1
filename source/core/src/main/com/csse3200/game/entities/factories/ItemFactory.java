@@ -464,4 +464,82 @@ return createBaseItem()
             .addComponent(new ItemComponent("Salmon", ItemType.FOOD,
                     "A common fish that lives near the shorelines" , "images/salmon.png"));
   }
+
+  public static Entity createYak3() {
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/fish/fish_11.png"))
+            .addComponent(new ItemComponent("Yak3", ItemType.FOOD,
+                    "BRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" , "images/fish/fish_11.png"));
+  }
+
+  public static Entity createNetty() {
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/fish/fish_1.png"))
+            .addComponent(new ItemComponent("Netty", ItemType.FOOD,
+                    "A thicc fish!" , "images/fish/fish_1.png"));
+  }
+  public static Entity createLola() {
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/fish/fish_2.png"))
+            .addComponent(new ItemComponent("Lola", ItemType.FOOD,
+                    "smash" , "images/fish/fish_2.png"));
+  }
+
+  public static Entity createLarry() {
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/fish/fish_3.png"))
+            .addComponent(new ItemComponent("Larry", ItemType.FOOD,
+                    "LIGHTWEIGHT BABY!" , "images/fish/fish_3.png"));
+  }
+
+  public static Entity createBraydan() {
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/fish/fish_4.png"))
+            .addComponent(new ItemComponent("Braydan", ItemType.FOOD,
+                    "A somewhat thicc fish that loves seaweed" , "images/fish/fish_4.png"));
+  }
+
+  public static Entity createHarry() {
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/fish/fish_5.png"))
+            .addComponent(new ItemComponent("Harry", ItemType.FOOD,
+                    "HARRY!" , "images/fish/fish_5.png"));
+  }
+
+  public static Entity createMrKrabs() {
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/fish/fish_6.png"))
+            .addComponent(new ItemComponent("Mr Krabs", ItemType.FOOD,
+                    "A delicate krab that loves money" , "images/fish/fish_6.png"));
+  }
+
+  public static Entity createPharLap() {
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/fish/fish_10.png"))
+            .addComponent(new ItemComponent("Phar Lap", ItemType.FOOD,
+                    "Fast asf boi" , "images/fish/fish_10.png"));
+  }
+
+  public static Entity createBryton() {
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/fish/fish_8.png"))
+            .addComponent(new ItemComponent("Bryton", ItemType.FOOD,
+                    "A easily distracted fish that sometimes struggles." , "images/fish/fish_8.png"));
+  }
+
+  public static Entity createSanders() {
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/fish/fish_9.png"))
+            .addComponent(new ItemComponent("Sanders", ItemType.FOOD,
+                    "Tastes like chicken" , "images/fish/fish_9.png"));
+  }
+
+
+  public static Entity createChurchill() {
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/fish/fish_7.png"))
+            .addComponent(new ItemComponent("Churchill", ItemType.FOOD,
+                    "The best argument against democracy is a five-minute conversation with the average voter.",
+                    "images/fish/fish_7.png"));
+  }
 }

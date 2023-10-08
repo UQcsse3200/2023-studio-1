@@ -40,11 +40,22 @@ public class ItemActions extends Component {
                   ItemFactory::createCosmicCobSeed,
                   ItemFactory::createDeadlyNightshadeSeed,
                   ItemFactory::createHammerPlantSeed,
-                  ItemFactory::createSalmon));
+                  ItemFactory::createSalmon,
+                  ItemFactory::createBryton,
+                  ItemFactory::createMrKrabs,
+                  ItemFactory::createBraydan,
+                  ItemFactory::createNetty,
+                  ItemFactory::createHarry,
+                  ItemFactory::createLarry));
 
   private final ArrayList<Supplier<Entity>> lavaFish =
           new ArrayList<>(Arrays.asList(ItemFactory::createLavaEel,
-                  ItemFactory::createSprinklerItem));
+                  ItemFactory::createSprinklerItem,
+                  ItemFactory::createChurchill,
+                  ItemFactory::createSanders,
+                  ItemFactory::createLola,
+                  ItemFactory::createYak3,
+                  ItemFactory::createPharLap));
 
   @Override
   public void create() {
