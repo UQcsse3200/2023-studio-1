@@ -7,6 +7,8 @@ import java.util.Map;
 import com.badlogic.gdx.graphics.Color;
 import com.csse3200.game.services.ServiceLocator;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.csse3200.game.services.sound.EffectSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
 import org.jetbrains.annotations.NotNull;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -16,6 +18,8 @@ import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.ui.UIComponent;
 import com.badlogic.gdx.graphics.Texture;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An ui component for displaying player stats, e.g. health.
@@ -37,6 +41,7 @@ public class InventoryDisplay extends UIComponent {
 	private final String refreshEvent;
 	private final String openEvent;
 	private final InventoryDisplayManager inventoryDisplayManager;
+	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(InventoryDisplay.class);
 
 	/**
 	 * Constructor for class
@@ -261,6 +266,12 @@ public class InventoryDisplay extends UIComponent {
 		isOpen = !isOpen;
 		window.setVisible(isOpen);
 		inventoryDisplayManager.updateDisplays();
+		//Play the inventory sound effect
+		try {
+			ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.INVENTORY_OPEN);
+		} catch (InvalidSoundFileException e) {
+			logger.info("Inventory open sound not loaded");
+		}
 	}
 
 	/**
