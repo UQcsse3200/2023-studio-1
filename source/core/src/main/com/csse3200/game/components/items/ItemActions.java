@@ -211,6 +211,7 @@ public class ItemActions extends Component {
    * @return if watering was successful return true else return false
    */
   private boolean water(TerrainTile tile) {
+
     WateringCanLevelComponent wateringCan = entity.getComponent(WateringCanLevelComponent.class);
     List<String> waterTiles = Arrays.asList("SHALLOWWATER", "FLOWINGWATER", "DEEPWATER");
     //if the tile is an unoccupied water tile then fill the watering can instead of emptying
@@ -222,6 +223,12 @@ public class ItemActions extends Component {
     //check if there even is any water in the can
     if (wateringCan.isEmpty()){
       return false;
+    }
+
+    try {
+      ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.WATERING_CAN);
+    } catch (Exception e) {
+      logger.error("Failed to play wateringCan sound", e);
     }
 
     boolean tileWaterable = isCropTile(tile.getOccupant());
