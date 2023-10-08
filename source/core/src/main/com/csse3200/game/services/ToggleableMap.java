@@ -31,13 +31,11 @@ public class ToggleableMap extends UIComponent {
     /**
      * The table used to display the map.
      */
-    Table table = new Table();
+    Table Tmap = new Table();
+    GridPoint2 g_pos = new GridPoint2(0,0);
     Group group = new Group(); // what is this for? Angus
-
-    /**
-     * The map to be displayed.
-     */
-    private Image map;
+    Boolean Switch = false;
+    Color prev_color;
 
     /**
      * Dimmed screen
@@ -104,7 +102,7 @@ public class ToggleableMap extends UIComponent {
      */
     public void createAssets() {
         int map_x = 100, map_y = 100; // x length of map
-        Table Tmap = new Table();
+        Tmap = new Table();
         tiledMap = ServiceLocator.getGameArea().getMap().getTiledMap();
         TiledMapTileLayer layer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
         // interate through the layers and add them to the table (not sure if this works)
@@ -118,7 +116,7 @@ public class ToggleableMap extends UIComponent {
                     }
                 }
             }
-            table.row(); // new row
+            Tmap.row(); // new row
         }
     }
 
@@ -139,7 +137,7 @@ public class ToggleableMap extends UIComponent {
         window.setResizable(false);
         window.add(map).expandX().width((Gdx.graphics.getHeight() * (map.getWidth() / map.getHeight()))-20f).
                 expandY().height(Gdx.graphics.getHeight() * (map.getHeight() / map.getWidth())-20f);*/
-        // Add the player's dot to the window's content
+        window.add(Tmap);
 
         stage.addActor(window);
     }
@@ -151,6 +149,41 @@ public class ToggleableMap extends UIComponent {
     @Override
     public void draw(SpriteBatch batch) {
         //
+        if (isOpen) {
+            pauseGame();
+            // Draw the player's position dot on the mini-map
+            Vector2 v_pos = ServiceLocator.getGameArea().getPlayer().getPosition();
+            GridPoint2 g_pos = ServiceLocator.getGameArea().getMap().vectorToTileCoordinates(v_pos);
+
+            // store the player's position in a temporary variable and change that cell's color
+
+            prev_color = Tmap.getChildren().get(g_pos.x + g_pos.y * 100).getColor();
+            Tmap.getChildren().get(g_pos.x + g_pos.y * 100).setColor(Color.RED);
+            Switch = true;
+        }
+        else {
+            if(Switch) {
+                Tmap.getChildren().get(g_pos.x + g_pos.y * 100).setColor(prev_color);
+                Switch = false;
+                unPauseGame();
+            }
+        }
+    }
+
+    public void pauseGame() {
+        logger.info("Setting paused state to: 0");
+        ServiceLocator.setCutSceneRunning(true);
+        ServiceLocator.getTimeSource().setTimeScale(0);
+    }
+
+    /**
+     * Unpauses the game
+     */
+    public void unPauseGame() {
+        logger.info("Setting paused state to: 1");
+        // 1 is for delta time to run in normal speed
+        ServiceLocator.setCutSceneRunning(false);
+        ServiceLocator.getTimeSource().setTimeScale(1);
     }
 
     /**
