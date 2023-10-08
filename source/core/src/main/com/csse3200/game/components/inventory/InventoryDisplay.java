@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.badlogic.gdx.graphics.Color;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.ServiceLocator;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -184,7 +183,7 @@ public class InventoryDisplay extends UIComponent {
 				@Override
 				public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
 					if (target == null) {
-						ItemSlot itemSlot = map.get(getActor());
+						ItemSlot itemSlot = map.get((Stack) getActor());
 						itemSlot.removeActor(getActor());
 						itemSlot.add(getActor());
 					}
@@ -204,7 +203,7 @@ public class InventoryDisplay extends UIComponent {
 
 					@Override
 					public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-						ItemSlot sourceSlot = map.get((source.getActor()));
+						ItemSlot sourceSlot = map.get(( (Stack) source.getActor()));
 
 						inventory.swapPosition(indexes.get(sourceSlot), indexes.get(slot));
 						map.put(slot.getDraggable(), sourceSlot);
@@ -226,10 +225,10 @@ public class InventoryDisplay extends UIComponent {
 					}
 					@Override
 					public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-						ItemSlot itemSlot = map.get(source.getActor());
+						ItemSlot itemSlot = map.get( (Stack)source.getActor());
 						itemSlot.removeActor(source.getActor());
 						itemSlot.add(source.getActor());
-						ItemSlot sourceSlot = map.get((source.getActor()));
+						ItemSlot sourceSlot = map.get((Stack) (source.getActor()));
 						inventory.removeItem(inventory.getHeldItemsEntity().get(inventory.getItemPlace().get(indexes.get(sourceSlot))));
 					}
 				});
