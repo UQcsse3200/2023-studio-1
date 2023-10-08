@@ -39,7 +39,6 @@ class InventoryHotkeyTest {
 	@BeforeEach
 	void initialiseTest() {
 		ServiceLocator.registerResourceService(new ResourceService());
-		ServiceLocator.registerSoundService(new SoundService());
 		ServiceLocator.getResourceService().loadTextures(texturePaths);
 		ServiceLocator.getResourceService().loadAll();
 		inventoryComponent = spy(new InventoryComponent(new ArrayList<>()));
