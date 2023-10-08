@@ -9,21 +9,19 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
 import com.badlogic.gdx.scenes.scene2d.ui.Tooltip;
-import com.badlogic.gdx.scenes.scene2d.ui.TooltipManager;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 public class InstantTooltipManager extends com.badlogic.gdx.scenes.scene2d.ui.TooltipManager {
-    static private TooltipManager instance;
+    static private InstantTooltipManager instance;
     static private Files files;
 
     /** Seconds from when an actor is hovered to when the tooltip is shown. Default is 2. Call {@link #hideAll()} after changing to
      * reset internal state. */
-    public float initialTime = 2;
+
     /** Once a tooltip is shown, this is used instead of {@link #initialTime}. Default is 0. */
     public float subsequentTime = 0;
     /** Seconds to use {@link #subsequentTime}. Default is 1.5. */
-    public float resetTime = 1.5f;
+    public float resetTime = 0f;
     /** If false, tooltips will not be shown. Default is true. */
     public boolean enabled = true;
     /** If false, tooltips will be shown without animations. Default is true. */
@@ -65,4 +63,11 @@ public class InstantTooltipManager extends com.badlogic.gdx.scenes.scene2d.ui.To
 
     }
 
+    static public InstantTooltipManager getInstance () {
+        if (files == null || files != Gdx.files) {
+            files = Gdx.files;
+            instance = new InstantTooltipManager();
+        }
+        return instance;
+    }
 }

@@ -3,8 +3,9 @@ package com.csse3200.game.components.inventory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
-import com.badlogic.gdx.graphics.Color;
+import com.csse3200.game.components.items.WateringCanLevelComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import org.jetbrains.annotations.NotNull;
@@ -16,7 +17,6 @@ import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.ui.UIComponent;
 import com.badlogic.gdx.graphics.Texture;
-
 /**
  * An ui component for displaying player stats, e.g. health.
  */
@@ -37,6 +37,8 @@ public class InventoryDisplay extends UIComponent {
 	private final String refreshEvent;
 	private final String openEvent;
 	private final InventoryDisplayManager inventoryDisplayManager;
+	private final Map<Integer, TextTooltip> tooltips = new HashMap<>();
+	private final InstantTooltipManager instantTooltipManager = new InstantTooltipManager();
 
 	/**
 	 * Constructor for class
@@ -124,6 +126,7 @@ public class InventoryDisplay extends UIComponent {
 	 */
 
 	private void updateInventory() {
+		System.out.println("UI");
 		dnd.clear();
 		actors.clear(); // Clear the actors ArrayList
 
@@ -156,6 +159,7 @@ public class InventoryDisplay extends UIComponent {
 		}
 		dnd = new DragAndDrop();
 		setDragItems(actors, map);
+		addTooltips();
 	}
 
 	/**
@@ -168,6 +172,7 @@ public class InventoryDisplay extends UIComponent {
 		for (Actor item : actors) {
 			dnd.addSource(new DragAndDrop.Source(item) {
 				final DragAndDrop.Payload payload = new DragAndDrop.Payload();
+				TextTooltip tooltip;
 
 				@Override
 				public DragAndDrop.Payload dragStart(InputEvent event, float x, float y, int pointer) {
@@ -175,16 +180,20 @@ public class InventoryDisplay extends UIComponent {
 					payload.setDragActor(getActor());
 					stage.addActor(getActor());
 					dnd.setDragActorPosition(50, -getActor().getHeight() / 2);
-
+					ItemSlot slot = map.get((Stack)getActor());
+					tooltips.get(indexes.get(slot)).hide();
+					tooltip = tooltips.get(indexes.get(slot));
+					slot.removeListener(tooltips.get(indexes.get(slot)));
 					return payload;
 				}
 
 				@Override
 				public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
 					if (target == null) {
-						ItemSlot itemSlot = map.get(getActor());
+						ItemSlot itemSlot = map.get((Stack) getActor());
 						itemSlot.removeActor(getActor());
 						itemSlot.add(getActor());
+						itemSlot.addListener(tooltip);
 					}
 				}
 			});
@@ -202,7 +211,7 @@ public class InventoryDisplay extends UIComponent {
 
 					@Override
 					public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-						ItemSlot sourceSlot = map.get((source.getActor()));
+						ItemSlot sourceSlot = map.get(((Stack) source.getActor()));
 
 						inventory.swapPosition(indexes.get(sourceSlot), indexes.get(slot));
 						map.put(slot.getDraggable(), sourceSlot);
@@ -214,6 +223,7 @@ public class InventoryDisplay extends UIComponent {
 
 						entity.getEvents().trigger("updateToolbar");
 						inventory.setHeldItem(inventory.getHeldIndex());
+						addTooltips();
 					}
 				});
 			} else {
@@ -224,11 +234,12 @@ public class InventoryDisplay extends UIComponent {
 					}
 					@Override
 					public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-						ItemSlot itemSlot = map.get(source.getActor());
+						ItemSlot itemSlot = map.get((Stack) source.getActor());
 						itemSlot.removeActor(source.getActor());
 						itemSlot.add(source.getActor());
-						ItemSlot sourceSlot = map.get((source.getActor()));
+						ItemSlot sourceSlot = map.get(((Stack) source.getActor()));
 						inventory.removeItem(inventory.getHeldItemsEntity().get(inventory.getItemPlace().get(indexes.get(sourceSlot))));
+						addTooltips();
 					}
 				});
 			}
@@ -294,5 +305,34 @@ public class InventoryDisplay extends UIComponent {
 
 	public boolean isOpen() {
 		return isOpen;
+	}
+
+	public void addTooltips() {
+		TextTooltip tooltip;
+		for (ItemSlot slot : slots) {
+			int i = indexes.get(slot);
+			if (inventory.getItem(i) != null) {
+				ItemComponent item = inventory.getItem(indexes.get(slot)).getComponent(ItemComponent.class);
+				if (Objects.equals(item.getItemName(), "watering_can")) {
+					float level = item.getEntity().getComponent(WateringCanLevelComponent.class).getCurrentLevel();
+					tooltip = new TextTooltip(item.getItemName() + "\n\nCurrent level is " + level, skin);
+				} else {
+					tooltip = new TextTooltip(item.getItemName() + "\n\n" + item.getItemDescription(),instantTooltipManager,skin);
+				}
+				if (tooltips.get(i) != null) {
+					slot.removeListener(tooltips.get(i));
+				}
+				tooltip.setInstant(true);
+				slot.addListener(tooltip);
+				tooltips.put(i, tooltip);
+			}
+			else {
+				if (tooltips.get(i) != null) {
+					tooltips.get(i).hide();
+					slot.removeListener(tooltips.get(i));
+					tooltips.remove(i);
+				}
+			}
+		}
 	}
 }
