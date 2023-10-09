@@ -8,7 +8,6 @@ import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.AuraLightComponent;
-import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ConeLightComponent;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;

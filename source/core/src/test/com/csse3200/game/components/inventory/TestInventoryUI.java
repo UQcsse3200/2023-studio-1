@@ -15,6 +15,10 @@ import com.csse3200.game.input.InputService;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.sound.EffectSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
+import com.csse3200.game.services.sound.SoundFile;
+import com.csse3200.game.services.sound.SoundService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,8 +27,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.params.provider.Arguments.arguments;
@@ -45,13 +52,15 @@ import static org.mockito.Mockito.*;
 	Stage stage;
 	InventoryDisplayManager inventoryDisplayManager;
 	ArgumentCaptor<Window> windowArgument;
+	private static final Logger logger = LoggerFactory.getLogger(TestInventoryUI.class);
 
 	static String[] texturePaths = {
 			"images/tool_shovel.png",
 			"images/tool_hoe.png",
 			"images/tool_scythe.png",
 			"images/selected.png",
-			"images/itemFrame.png"
+			"images/itemFrame.png",
+			"images/bin.png"
 	};
 
 	static String[] skinPaths = {
@@ -81,10 +90,20 @@ import static org.mockito.Mockito.*;
 		renderService.setStage(stage);
 		ServiceLocator.registerRenderService(renderService);
 		ServiceLocator.registerInputService(new InputService());
+		// Set up dependencies for the Inventory Open sound
+		ServiceLocator.registerSoundService(new SoundService());
+		java.util.List<SoundFile> effects = new ArrayList<>();
+		effects.add(EffectSoundFile.INVENTORY_OPEN);
+		//Load sound file
+		try {
+			ServiceLocator.getSoundService().getEffectsMusicService().loadSounds(effects);
+		} catch (InvalidSoundFileException e) {
+			logger.info("Sounds not loaded");
+		}
 
 		inventoryDisplay = spy(new InventoryDisplay("updateInventory", "toggleInventory", 30, 10, false));
 		player =
-				new Entity()
+				new Entity(EntityType.PLAYER)
 						.addComponent(new PlayerActions())
 						.addComponent(new KeyboardPlayerInputComponent())
 						.addComponent(inventoryDisplay)
@@ -128,11 +147,14 @@ import static org.mockito.Mockito.*;
 		inventory.addItem(i1);
 		inventoryDisplay.toggleOpen();
 		Window window = win.getValue();
-		assert (window.getTitleLabel().textEquals("null Inventory"));
+		assert (window.getTitleLabel().textEquals("PLAYER Inventory"));
 		inventoryDisplay.refreshInventory();
 		Table inventorySlots = (Table) window.getChildren().begin()[1];
+		Cell<?>[] cells = Arrays.copyOfRange(inventorySlots.getCells().toArray(Cell.class), 0, 30);
+		Cell<?> deleteButton = Arrays.stream(inventorySlots.getCells().toArray(Cell.class)).toList().get(30);
 		int i = 0;
-		for (Cell slot : inventorySlots.getCells().toArray(Cell.class)) {
+		assert (deleteButton.getActor()) instanceof Image;
+		for (Cell<?> slot : cells) {
 			System.out.println(slot);
 			assert ((ItemSlot) slot.getActor()).getChild(0) instanceof Image;
 			assert ((ItemSlot) slot.getActor()).getChild(1) instanceof Stack;
