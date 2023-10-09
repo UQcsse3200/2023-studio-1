@@ -216,7 +216,7 @@ public class ItemActions extends Component {
     }
     Integer randomNumber;
     Vector2 pos = getAdjustedPos(mousePos);
-    if (pos == nullValue):
+    if (pos == nullValue) {
       randomNumber = random.nextInt(5) + 1;
       logger.info("Fishing occurred");
       try {
@@ -225,8 +225,9 @@ public class ItemActions extends Component {
         logger.error("Failed to play fishsound", e);
       }
       player.getEvents().trigger("castFishingRod", mousePos);
-      entity.getEvents().scheduleEvent(randomNumber,"fishCaught", "ḓ̸̺̯̰͍͇̫̻͔̜̮͔̫̘̮̆͗̏͛̃͐̓̓̈́̉͋͒j̴͇̗̱̝̜͌̃ ̷̨̠̝̲͍͚̥̭̪͕̜̯̔̉̑k̷̮̤̺̎͑͊̓̈̽̈́̃̿̐̐͛͘͝h̵͍̳̲̟̝̀̐͗͌̄̔a̶̢̧̛̫̥̙͈̪̲͇̿͒̇́͋̈́̄̉͗̕͜ͅl̷̨͎̻͇̞̩̪̪̦͙̹̳͚̜̍͌͋̀ͅḗ̵̪͕̰̥̊̓̅͌́͠d̶͕͚̦̽̄̏̍͘", player);
+      entity.getEvents().scheduleEvent(randomNumber, "fishCaught", "ḓ̸̺̯̰͍͇̫̻͔̜̮͔̫̘̮̆͗̏͛̃͐̓̓̈́̉͋͒j̴͇̗̱̝̜͌̃ ̷̨̠̝̲͍͚̥̭̪͕̜̯̔̉̑k̷̮̤̺̎͑͊̓̈̽̈́̃̿̐̐͛͘͝h̵͍̳̲̟̝̀̐͗͌̄̔a̶̢̧̛̫̥̙͈̪̲͇̿͒̇́͋̈́̄̉͗̕͜ͅl̷̨͎̻͇̞̩̪̪̦͙̹̳͚̜̍͌͋̀ͅḗ̵̪͕̰̥̊̓̅͌́͠d̶͕͚̦̽̄̏̍͘", player);
       return true;
+    }
     TerrainTile tile = ServiceLocator.getGameArea().getMap().getTile(pos);
     // Is there viable water where the tile would land
     if (tile.getTerrainCategory() == TerrainTile.TerrainCategory.DEEPWATER) {
