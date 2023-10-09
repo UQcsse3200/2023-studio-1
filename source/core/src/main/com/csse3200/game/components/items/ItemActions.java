@@ -43,8 +43,7 @@ public class ItemActions extends Component {
                   ItemFactory::createBraydan,
                   ItemFactory::createNetty,
                   ItemFactory::createHarry,
-                  ItemFactory::createLarry,
-		          ItemFactory::createGoldenFish)); // always keep golden fish at the bottom
+                  ItemFactory::createLarry));
 
   private final ArrayList<Supplier<Entity>> lavaFish =
           new ArrayList<>(Arrays.asList(ItemFactory::createLavaEel,
