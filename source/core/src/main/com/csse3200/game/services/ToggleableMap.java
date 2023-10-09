@@ -5,18 +5,13 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.Map;
-import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
@@ -32,18 +27,18 @@ public class ToggleableMap extends UIComponent {
      * The table used to display the map.
      */
     Table Tmap = new Table();
-    GridPoint2 g_pos = new GridPoint2(0,0);
 
-    Group group = new Group(); // what is this for? Angus
+    GridPoint2 mapSize = new GridPoint2(0,0);
+    GridPoint2 g_pos = new GridPoint2(0,0);
     Boolean Switch = false;
-    Color prev_color;
+    //Color prev_color; // can not used this =((
 
     /**
      * Dimmed screen
      */
     private Image transparentRectangle;
 
-    /*
+    /**
      * The mini-map to be displayed.
      */
     TiledMap tiledMap;
@@ -67,7 +62,7 @@ public class ToggleableMap extends UIComponent {
         logger.debug("Adding listener to toggleOpen event");
         ServiceLocator.getPlayerMapService().getEvents().addListener("toggleOpen", this::toggleOpen);
         window = new Window("", skin);
-        createMap();
+        createNewMap();
         //starts closed so no updateDisplay()
         tiledMap = ServiceLocator.getGameArea().getMap().getTiledMap();
     }
@@ -92,6 +87,10 @@ public class ToggleableMap extends UIComponent {
         transparentRectangle.setVisible(isOpen);
     }
 
+    /**
+     * Toggles the map open or closed and updates the display.
+     * @param isOpen Whether the map is open or not.
+     */
     public void toggleOpen(Boolean isOpen) {
         this.isOpen = isOpen;
         window.setVisible(isOpen);
@@ -101,20 +100,42 @@ public class ToggleableMap extends UIComponent {
         } else {
             removeExternalUI();
         }
+        mapSize = ServiceLocator.getGameArea().getMap().getMapSize();
+        if (isOpen) {
+            pauseGame();
+            // Draw the player's position dot on the mini-map
+            Vector2 v_pos = ServiceLocator.getGameArea().getPlayer().getPosition();
+            g_pos = ServiceLocator.getGameArea().getMap().vectorToTileCoordinates(v_pos);
+            g_pos = new GridPoint2(g_pos.x +1, g_pos.y +1); // because it takes bottom left corner
+
+            // store the player's position in a temporary variable and change that cell's color
+            //prev_color = Tmap.getChildren().get(g_pos.x + (mapSize.y - (g_pos.y +1)) * mapSize.x).getColor();
+            Tmap.getChildren().get(g_pos.x + (mapSize.y - (g_pos.y +1)) * mapSize.x).setColor(Color.WHITE);
+            Tmap.getChildren().get(g_pos.x + (mapSize.y - (g_pos.y +1)) * mapSize.x).setColor(Color.RED);
+            Switch = true;
+        }
+        else {
+            if(Switch) {
+                //Tmap.getChildren().get(g_pos.x + (mapSize.y - (g_pos.y +1)) * mapSize.x).setColor(prev_color);
+                Switch = false;
+                createMap(); // re-create the map because the position of player is now updated
+                unPauseGame();
+            }
+        }
     }
     
     /**
      * Creates assets used
      */
     public void createAssets() {
-        int map_x = 100, map_y = 100; // x length of map
+        GridPoint2 mapSize = ServiceLocator.getGameArea().getMap().getMapSize();
         Tmap = new Table();
         tiledMap = ServiceLocator.getGameArea().getMap().getTiledMap();
         TiledMapTileLayer layer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
         // interate through the layers and add them to the table (not sure if this works)
 
-        for (int yPos = map_x -1; yPos >= 0; yPos --) {
-            for (int xPos = 0; xPos <= map_y -1; xPos++) {
+        for (int yPos = mapSize.x -1; yPos >= 0; yPos --) {
+            for (int xPos = 0; xPos <= mapSize.y -1; xPos++) {
                 TiledMapTileLayer.Cell cell = layer.getCell(xPos, yPos);
                 if (cell != null) {
                     TiledMapTile tile = cell.getTile();
@@ -133,6 +154,23 @@ public class ToggleableMap extends UIComponent {
      * Create the window used to display the map.
      */
     private void createMap() {
+        createAssets();
+        window.reset();
+        window.getTitleLabel().setText("MAP");
+        window.setVisible(isOpen);
+        float mapHeight = Tmap.getChild(0).getHeight();
+        float mapWidth = Tmap.getChild(0).getWidth();
+        window.setSize((Gdx.graphics.getHeight() * (mapWidth / mapHeight)),
+                Gdx.graphics.getHeight() * (mapHeight / mapWidth));
+        window.padBottom(10f);
+        window.setPosition(Gdx.graphics.getWidth()/5, 20f);
+        window.setMovable(false);
+        window.setResizable(false);
+        window.add(Tmap);
+        stage.addActor(window);
+    }
+
+    private void createNewMap() {
         createAssets();
         dimScreen();
         window.reset();
@@ -154,32 +192,13 @@ public class ToggleableMap extends UIComponent {
         stage.addActor(window);
     }
 
+
     /**
      * Draws the actors to the game.
      * @param batch Batch to render to.
      */
     @Override
     public void draw(SpriteBatch batch) {
-        //
-        if (isOpen) {
-            pauseGame();
-            // Draw the player's position dot on the mini-map
-            Vector2 v_pos = ServiceLocator.getGameArea().getPlayer().getPosition();
-            g_pos = ServiceLocator.getGameArea().getMap().vectorToTileCoordinates(v_pos);
-            g_pos = new GridPoint2(g_pos.x +1, g_pos.y +1); // because it takes bottom left corner
-
-            // store the player's position in a temporary variable and change that cell's color
-            prev_color = Tmap.getChildren().get(g_pos.x + (100 - (g_pos.y +1)) * 100).getColor();
-            Tmap.getChildren().get(g_pos.x + (100 - (g_pos.y +1)) * 100).setColor(Color.MAGENTA);
-            Switch = true;
-        }
-        else {
-            if(Switch) {
-                Tmap.getChildren().get(g_pos.x + (100 - (g_pos.y + 1)) * 100).setColor(prev_color);
-                Switch = false;
-                unPauseGame();
-            }
-        }
     }
 
     public void pauseGame() {
