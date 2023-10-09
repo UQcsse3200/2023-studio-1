@@ -3,10 +3,7 @@ package com.csse3200.game.components.items;
 import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
 
 import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.function.Supplier;
 
 import com.badlogic.gdx.math.Vector2;
@@ -46,7 +43,8 @@ public class ItemActions extends Component {
                   ItemFactory::createBraydan,
                   ItemFactory::createNetty,
                   ItemFactory::createHarry,
-                  ItemFactory::createLarry));
+                  ItemFactory::createLarry,
+		          ItemFactory::createGoldenFish)); // always keep golden fish at the bottom
 
   private final ArrayList<Supplier<Entity>> lavaFish =
           new ArrayList<>(Arrays.asList(ItemFactory::createLavaEel,
@@ -69,8 +67,14 @@ public class ItemActions extends Component {
     switch (place) {
       case "ocean":
         // Get an ocean fish
-        item = ItemFactory.createSalmon();
         item = oceanFish.get(random.nextInt(oceanFish.size())).get();
+        if (
+                !(Objects.equals(item.getComponent(ItemComponent.class).getItemName(), "Golden Fish")
+                && random.nextInt(1000) == 0)
+        ) {
+          // unlucky, get another item
+          item = oceanFish.get(random.nextInt(oceanFish.size() - 1)).get();
+        }
         ServiceLocator.getMissionManager().getEvents().trigger("FISH");
         break;
       case "lava":

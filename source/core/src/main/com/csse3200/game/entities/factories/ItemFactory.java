@@ -1,4 +1,5 @@
 package com.csse3200.game.entities.factories;
+import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
@@ -541,5 +542,16 @@ return createBaseItem()
             .addComponent(new ItemComponent("Churchill", ItemType.FOOD,
                     "The best argument against democracy is a five-minute conversation with the average voter.",
                     "images/fish/fish_7.png"));
+  }
+
+  public static Entity createGoldenFish() {
+    AuraLightComponent lightComponent = new AuraLightComponent();
+    lightComponent.toggleLight();
+
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/golden_fish.png"))
+            .addComponent(new ItemComponent("Golden Fish", ItemType.PLACEABLE,
+                    "A golden fish, the rarest of them all. A placeable collector's item.","images/golden_fish.png"))
+            .addComponent(lightComponent);
   }
 }
