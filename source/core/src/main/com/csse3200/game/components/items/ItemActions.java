@@ -25,7 +25,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ItemActions extends Component {
-    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(ItemActions.class);
 
   private final Random random = new SecureRandom();
 
@@ -66,17 +65,15 @@ public class ItemActions extends Component {
     player.getEvents().trigger("fishCaught");
     Entity item;
     logger.info("Fish caught!");
+    try {
+      ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.FISHING_CATCH);
+    } catch (Exception e) {
+      logger.error("Failed to play fishsound", e);
+    }
     switch (place) {
       case "ocean":
         // Get an ocean fish
         item = oceanFish.get(random.nextInt(oceanFish.size())).get();
-        if (
-                !(Objects.equals(item.getComponent(ItemComponent.class).getItemName(), "Golden Fish")
-                && random.nextInt(1000) == 0)
-        ) {
-          // unlucky, get another item
-          item = oceanFish.get(random.nextInt(oceanFish.size() - 1)).get();
-        }
         ServiceLocator.getMissionManager().getEvents().trigger("FISH");
         break;
       case "lava":
@@ -89,6 +86,10 @@ public class ItemActions extends Component {
         }
         // Unlucky
         return;
+      case "ḓ̸̺̯̰͍͇̫̻͔̜̮͔̫̘̮̆͗̏͛̃͐̓̓̈́̉͋͒j̴͇̗̱̝̜͌̃ ̷̨̠̝̲͍͚̥̭̪͕̜̯̔̉̑k̷̮̤̺̎͑͊̓̈̽̈́̃̿̐̐͛͘͝h̵͍̳̲̟̝̀̐͗͌̄̔a̶̢̧̛̫̥̙͈̪̲͇̿͒̇́͋̈́̄̉͗̕͜ͅl̷̨͎̻͇̞̩̪̪̦͙̹̳͚̜̍͌͋̀ͅḗ̵̪͕̰̥̊̓̅͌́͠d̶͕͚̦̽̄̏̍͘":
+        item = ItemFactory.createGoldenFish();
+        ServiceLocator.getMissionManager().getEvents().trigger("FISH");
+        break;
       default:
         // Error
         logger.error("Error while fishing");
@@ -201,15 +202,33 @@ public class ItemActions extends Component {
   }
 
   private boolean fish(Entity player, Vector2 mousePos) {
+    Vector2 nullValue = new Vector2(65, 65);
     if (entity.getEvents().getScheduledEventsSize() != 0) {
       player.getEvents().trigger("fishCaught");
       entity.getEvents().cancelAllEvents();
       logger.info("Fishing cancelled");
+      try {
+        ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.FISHING_CATCH);
+      } catch (Exception e) {
+        logger.error("Failed to play fishsound", e);
+      }
       return false;
     }
-    TerrainTile tile = ServiceLocator.getGameArea().getMap().getTile(getAdjustedPosFish(mousePos));
-    // Is there viable water where the tile would land
     Integer randomNumber;
+    Vector2 pos = getAdjustedPos(mousePos);
+    if (pos == nullValue):
+      randomNumber = random.nextInt(5) + 1;
+      logger.info("Fishing occurred");
+      try {
+        ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.FISHING_CAST);
+      } catch (Exception e) {
+        logger.error("Failed to play fishsound", e);
+      }
+      player.getEvents().trigger("castFishingRod", mousePos);
+      entity.getEvents().scheduleEvent(randomNumber,"fishCaught", "ḓ̸̺̯̰͍͇̫̻͔̜̮͔̫̘̮̆͗̏͛̃͐̓̓̈́̉͋͒j̴͇̗̱̝̜͌̃ ̷̨̠̝̲͍͚̥̭̪͕̜̯̔̉̑k̷̮̤̺̎͑͊̓̈̽̈́̃̿̐̐͛͘͝h̵͍̳̲̟̝̀̐͗͌̄̔a̶̢̧̛̫̥̙͈̪̲͇̿͒̇́͋̈́̄̉͗̕͜ͅl̷̨͎̻͇̞̩̪̪̦͙̹̳͚̜̍͌͋̀ͅḗ̵̪͕̰̥̊̓̅͌́͠d̶͕͚̦̽̄̏̍͘", player);
+      return true;
+    TerrainTile tile = ServiceLocator.getGameArea().getMap().getTile(pos);
+    // Is there viable water where the tile would land
     if (tile.getTerrainCategory() == TerrainTile.TerrainCategory.DEEPWATER) {
       // Ocean fish
       randomNumber = random.nextInt(5) + 1;
@@ -264,9 +283,9 @@ public class ItemActions extends Component {
           player.getComponent(HungerComponent.class).increaseHungerLevel(-50);
           player.getComponent(CombatStatsComponent.class).addHealth(100);
         case "Salmon":
-          player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
+          player.getComponent(HungerComponent.class).increaseHungerLevel(-10);
         default:
-          // Nothing
+          player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
       }
     }
   }
