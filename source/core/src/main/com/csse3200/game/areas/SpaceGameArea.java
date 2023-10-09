@@ -68,6 +68,7 @@ public class SpaceGameArea extends GameArea {
           "images/overwatered_cropTile.png",
           "images/overwatered_cropTile_fertilised.png",
           "images/Temp-Chest.png",
+          "images/bin.png",
 
           "images/tractor.png",
           "images/fertiliser.png",
@@ -289,7 +290,9 @@ public class SpaceGameArea extends GameArea {
           "sounds/plants/waterWeed/decay.wav", "sounds/plants/waterWeed/decayLore.wav",
           "sounds/plants/waterWeed/destroy.wav", "sounds/plants/waterWeed/destroyLore.wav",
           "sounds/plants/waterWeed/nearby.wav", "sounds/plants/waterWeed/nearbyLore.wav",
-          "sounds/gate-interact.wav",
+          "sounds/gate-interact.wav","sounds/tractor-start-up.wav", "sounds/shovel.wav",
+          "sounds/hoe.wav", "sounds/watering-can.wav", "sounds/place.wav", "sounds/fishing-cast.wav",
+          "sounds/applause.wav"
   };
 
   String[] skinPaths = {
@@ -526,9 +529,20 @@ public class SpaceGameArea extends GameArea {
     // Add effects that are needed
     List<SoundFile> effects = new ArrayList<>();
     effects.add(EffectSoundFile.TRACTOR_HONK);
+    effects.add(EffectSoundFile.TRACTOR_START_UP);
     effects.add(EffectSoundFile.IMPACT);
     effects.add(EffectSoundFile.GATE_INTERACT);
-    
+    effects.add(EffectSoundFile.INVENTORY_OPEN);
+    effects.add(EffectSoundFile.HOTKEY_SELECT);
+    effects.add(EffectSoundFile.SHOVEL);
+    effects.add(EffectSoundFile.HOE);
+    effects.add(EffectSoundFile.WATERING_CAN);
+    effects.add(EffectSoundFile.PLACE);
+    effects.add(EffectSoundFile.FISHING_CAST);
+    effects.add(EffectSoundFile.FISHING_CATCH);
+    effects.add(EffectSoundFile.SCYTHE);
+
+
     try {
       ServiceLocator.getSoundService().getEffectsMusicService().loadSounds(effects);
     } catch (InvalidSoundFileException e) {

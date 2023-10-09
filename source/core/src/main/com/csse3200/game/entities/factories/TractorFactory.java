@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.ConeLightComponent;
-import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.components.tractor.TractorAnimationController;
 import com.csse3200.game.entities.Entity;
