@@ -433,6 +433,21 @@ public class InventoryComponent extends Component {
                 this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(), 0));
         return true;
     }
+    public boolean removeAll(Entity item) {
+        if(item.getType() != EntityType.ITEM) {
+            logger.info("To be removed Entity is not an item");
+            return false;
+        }
+        if (this.itemCount.get(item.getComponent(ItemComponent.class).getItemName()) == 0) {
+            return false;
+        }
+        else {
+            while ((this.itemCount.get(item.getComponent(ItemComponent.class).getItemName()) > 0)) {
+                removeItem(item);
+            }
+        }
+        return true;
+    }
 
     /**
      * Sets the held item for the Player.
