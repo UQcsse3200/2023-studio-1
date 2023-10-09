@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.ServiceLocator;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.csse3200.game.services.sound.EffectSoundFile;
@@ -108,6 +109,11 @@ public class InventoryDisplay extends UIComponent {
 				slot.getItemImage().setDebug(false);
 			}
 		}
+		table.row();
+		if (entity.getType() == EntityType.PLAYER) {
+			Image deleteSlot = new Image(ServiceLocator.getResourceService().getAsset("images/bin.png", Texture.class));
+			table.add(deleteSlot).colspan(10);
+		}
 
 		// Create a window for the inventory using the skin
 		window.pad(40, 20, 20, 20);
@@ -149,7 +155,7 @@ public class InventoryDisplay extends UIComponent {
 				ItemSlot curSlot = slots.get(i);
 				curSlot.setItemImage(null);
 				curSlot.getDraggable().clear();
-
+				curSlot.setCount(0);
 				slots.set(i, curSlot);
 			}
 
@@ -182,7 +188,7 @@ public class InventoryDisplay extends UIComponent {
 				@Override
 				public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
 					if (target == null) {
-						ItemSlot itemSlot = map.get(getActor());
+						ItemSlot itemSlot = map.get((Stack) getActor());
 						itemSlot.removeActor(getActor());
 						itemSlot.add(getActor());
 					}
@@ -191,30 +197,47 @@ public class InventoryDisplay extends UIComponent {
 		}
 
 		for (Cell<?> targetItem : table.getCells()) {
-			dnd.addTarget(new DragAndDrop.Target(targetItem.getActor()) {
-				final ItemSlot slot = (ItemSlot) targetItem.getActor();
+			if (targetItem.getActor() instanceof ItemSlot) {
+				dnd.addTarget(new DragAndDrop.Target(targetItem.getActor()) {
+					final ItemSlot slot = (ItemSlot) targetItem.getActor();
 
-				@Override
-				public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-					return true;
-				}
+					@Override
+					public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+						return true;
+					}
 
-				@Override
-				public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-					ItemSlot sourceSlot = map.get((source.getActor()));
+					@Override
+					public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+						ItemSlot sourceSlot = map.get(( (Stack) source.getActor()));
 
-					inventory.swapPosition(indexes.get(sourceSlot), indexes.get(slot));
-					map.put(slot.getDraggable(), sourceSlot);
+						inventory.swapPosition(indexes.get(sourceSlot), indexes.get(slot));
+						map.put(slot.getDraggable(), sourceSlot);
 
-					map.put((Stack) payload.getDragActor(), slot);
+						map.put((Stack) payload.getDragActor(), slot);
 
-					sourceSlot.setDraggable(slot.getDraggable());
-					slot.setDraggable((Stack) source.getActor());
+						sourceSlot.setDraggable(slot.getDraggable());
+						slot.setDraggable((Stack) source.getActor());
 
-					entity.getEvents().trigger("updateToolbar");
-					inventory.setHeldItem(inventory.getHeldIndex());
-				}
-			});
+						entity.getEvents().trigger("updateToolbar");
+						inventory.setHeldItem(inventory.getHeldIndex());
+					}
+				});
+			} else {
+				dnd.addTarget(new DragAndDrop.Target(targetItem.getActor()) {
+					@Override
+					public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+						return true;
+					}
+					@Override
+					public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+						ItemSlot itemSlot = map.get( (Stack)source.getActor());
+						itemSlot.removeActor(source.getActor());
+						itemSlot.add(source.getActor());
+						ItemSlot sourceSlot = map.get((Stack) (source.getActor()));
+						inventory.removeItem(inventory.getHeldItemsEntity().get(inventory.getItemPlace().get(indexes.get(sourceSlot))));
+					}
+				});
+			}
 		}
 	}
 
@@ -223,7 +246,7 @@ public class InventoryDisplay extends UIComponent {
 	 *
 	 * @return current window
 	 */
-	public Actor getWindow() {
+	public Window getWindow() {
 		return this.window;
 	}
 
@@ -283,5 +306,9 @@ public class InventoryDisplay extends UIComponent {
 
 	public boolean isOpen() {
 		return isOpen;
+	}
+	public DragAndDrop getDnd() {
+		return dnd;
+
 	}
 }

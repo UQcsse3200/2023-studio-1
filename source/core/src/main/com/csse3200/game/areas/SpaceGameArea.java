@@ -68,6 +68,7 @@ public class SpaceGameArea extends GameArea {
           "images/overwatered_cropTile.png",
           "images/overwatered_cropTile_fertilised.png",
           "images/Temp-Chest.png",
+          "images/bin.png",
 
           "images/tractor.png",
           "images/fertiliser.png",
