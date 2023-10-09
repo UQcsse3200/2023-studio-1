@@ -60,8 +60,7 @@ class ItemRewardTest {
     @BeforeEach
     void beforeTest() {
         ServiceLocator.registerGameArea(new TestGameArea());
-        EntityService mockEntityService = mock(EntityService.class);
-        ServiceLocator.registerEntityService(mockEntityService);
+        ServiceLocator.registerEntityService(new EntityService());
 
         // empty item list
         items1 = new ArrayList<Entity>();
