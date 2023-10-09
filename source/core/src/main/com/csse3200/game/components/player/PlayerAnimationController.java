@@ -2,10 +2,12 @@ package com.csse3200.game.components.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.services.ServiceLocator;
 
 import java.util.Objects;
 
@@ -85,33 +87,27 @@ public class PlayerAnimationController extends Component {
      * @return a String either up, down, left or right depending on where the mouse is in relation to the player.
      */
     private String getDirection(Vector2 mousePos) {
-        int width = Gdx.graphics.getWidth();
-        int height = Gdx.graphics.getHeight();
+        GameMap map = ServiceLocator.getGameArea().getMap();
+        Vector2 mouseWorldPos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
+        Vector2 adjustedPosition = new Vector2(
+                map.tileCoordinatesToVector(map.vectorToTileCoordinates(new Vector2(mouseWorldPos.x, mouseWorldPos.y))));
 
+        Vector2 playerPosCenter = ServiceLocator.getGameArea().getPlayer().getCenterPosition();
+        playerPosCenter.add(0, -1.0f); // Player entity sprite's feet are located -1.0f below the centre of the entity. ty Hunter
 
-        int playerXPos = width/2;
-        int playerYPos = height/2;
+        playerPosCenter = map.tileCoordinatesToVector(map.vectorToTileCoordinates(playerPosCenter));
 
-        int xDelta = 0;
-
-        if (playerYPos + 48 < mousePos.y) {
-            return "down";
-        } else if (playerYPos - 48 > mousePos.y) {
+        if (adjustedPosition.y - 0.5> playerPosCenter.y) {
             return "up";
-        }
-
-        if (playerXPos - 24 > mousePos.x){
-            xDelta -= 1;
-        } else if (playerXPos + 24 < mousePos.x) {
-            xDelta += 1;
-        }
-
-        if (xDelta == -1) {
-            return "left";
-        } else if (xDelta == 1) {
+        } else if (adjustedPosition.y  + 0.5 < playerPosCenter.y) {
+            return "down";
+        }else if (adjustedPosition.x - 0.5 > playerPosCenter.x) {
             return "right";
+        } else if (adjustedPosition.x + 0.5 < playerPosCenter.x) {
+            return "left";
         }
-        return "up";
+        // Default
+        return "down";
     }
 
     /**
