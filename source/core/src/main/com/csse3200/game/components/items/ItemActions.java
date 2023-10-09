@@ -87,6 +87,10 @@ public class ItemActions extends Component {
         // Unlucky
         return;
       case "ḓ̸̺̯̰͍͇̫̻͔̜̮͔̫̘̮̆͗̏͛̃͐̓̓̈́̉͋͒j̴͇̗̱̝̜͌̃ ̷̨̠̝̲͍͚̥̭̪͕̜̯̔̉̑k̷̮̤̺̎͑͊̓̈̽̈́̃̿̐̐͛͘͝h̵͍̳̲̟̝̀̐͗͌̄̔a̶̢̧̛̫̥̙͈̪̲͇̿͒̇́͋̈́̄̉͗̕͜ͅl̷̨͎̻͇̞̩̪̪̦͙̹̳͚̜̍͌͋̀ͅḗ̵̪͕̰̥̊̓̅͌́͠d̶͕͚̦̽̄̏̍͘":
+        if (random.nextInt(3) == 0) {
+          // God didn't
+          return;
+        }
         item = ItemFactory.createGoldenFish();
         ServiceLocator.getMissionManager().getEvents().trigger("FISH");
         break;
