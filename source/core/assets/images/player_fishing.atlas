@@ -1,0 +1,145 @@
+player_fishing.png
+size: 320, 320
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+cast_right
+  rotate: false
+  xy: 0, 0
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
+cast_right
+  rotate: false
+  xy: 80, 0
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 1
+cast_right
+  rotate: false
+  xy: 160, 0
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 2
+cast_right
+  rotate: false
+  xy: 240, 0
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 3
+cast_left
+  rotate: false
+  xy: 0, 80
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
+cast_left
+  rotate: false
+  xy: 80, 80
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 1
+cast_left
+  rotate: false
+  xy: 160, 80
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 2
+cast_left
+  rotate: false
+  xy: 240, 80
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 3
+cast_down
+  rotate: false
+  xy: 0, 160
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
+cast_down
+  rotate: false
+  xy: 80, 160
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 1
+cast_down
+  rotate: false
+  xy: 160, 160
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 2
+cast_down
+  rotate: false
+  xy: 240, 160
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 3
+cast_up
+  rotate: false
+  xy: 0, 240
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
+cast_up
+  rotate: false
+  xy: 80, 240
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 1
+cast_up
+  rotate: false
+  xy: 160, 240
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 2
+cast_up
+  rotate: false
+  xy: 240, 240
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 3
+fishing_right
+  rotate: false
+  xy: 240, 0
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
+fishing_left
+  rotate: false
+  xy: 240, 80
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
+fishing_down
+  rotate: false
+  xy: 240, 160
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
+fishing_up
+  rotate: false
+  xy: 240, 240
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
