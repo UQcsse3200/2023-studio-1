@@ -61,7 +61,8 @@ public class ItemActions extends Component {
     entity.getEvents().addListener("fishCaught", this::getFish);
   }
 
-  private void getFish(String place) {
+  private void getFish(String place, Entity player) {
+    player.getEvents().trigger("fishCaught");
     Entity item;
     logger.info("Fish caught!");
     switch (place) {
@@ -168,7 +169,7 @@ public class ItemActions extends Component {
         return resultStatus;
       }
       case FISHING_ROD -> {
-        return fish(mousePos);
+        return fish(player, mousePos);
       }
       default -> {
         return false;
@@ -198,7 +199,7 @@ public class ItemActions extends Component {
     return playerPosCenter;
   }
 
-  private boolean fish(Vector2 mousePos) {
+  private boolean fish(Entity player, Vector2 mousePos) {
     if (entity.getEvents().getScheduledEventsSize() != 0) {
       entity.getEvents().cancelAllEvents();
       logger.info("Fishing cancelled");
@@ -211,13 +212,15 @@ public class ItemActions extends Component {
       // Ocean fish
       randomNumber = random.nextInt(5) + 1;
       logger.info("Fishing occurred");
-      entity.getEvents().scheduleEvent(randomNumber,"fishCaught", "ocean");
+      player.getEvents().trigger("castFishingRod", mousePos);
+      entity.getEvents().scheduleEvent(randomNumber,"fishCaught", "ocean", player);
       return true;
     } else if (tile.getTerrainCategory() == TerrainTile.TerrainCategory.LAVA) {
       // Lava fish
       randomNumber = random.nextInt(10) + 1;
       logger.info("Fishing occurred");
-      entity.getEvents().scheduleEvent(randomNumber,"fishCaught", "lava");
+      player.getEvents().trigger("castFishingRod", mousePos);
+      entity.getEvents().scheduleEvent(randomNumber,"fishCaught", "lava", player);
       return true;
     }
     return false;
