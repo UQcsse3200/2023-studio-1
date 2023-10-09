@@ -44,7 +44,7 @@ public class PlantInfoDisplayComponent extends UIComponent {
 
     }
 
-    private void madeFirstContact() {
+    public void madeFirstContact() {
         madeFirstContact = true;
     }
 
@@ -118,7 +118,7 @@ public class PlantInfoDisplayComponent extends UIComponent {
         }
     }
 
-    private void makeFirstContactWindow() {
+    public void makeFirstContactWindow() {
         window.reset();
         window.getTitleLabel().setText("First Contact");
         label = new Label("Better do what the angry\n Alien Creature says...", skin);

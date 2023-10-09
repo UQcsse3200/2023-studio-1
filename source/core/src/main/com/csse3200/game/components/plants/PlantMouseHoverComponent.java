@@ -35,8 +35,8 @@ public class PlantMouseHoverComponent extends Component {
     /**
      * Used to update the information being shown in the Plant information widget.
      */
-    private void updateInfo() {
-        if (!plantDead) {
+    public void updateInfo() {
+        if (!isPlantDead()) {
             Vector2 mousePos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
             Vector2 tilePos = entity.getComponent(PlantComponent.class).getCropTile().getEntity().getPosition();
             int x = (int) mousePos.x;
@@ -68,5 +68,9 @@ public class PlantMouseHoverComponent extends Component {
      */
     public void plantDied() {
         this.plantDead = true;
+    }
+
+    public boolean isPlantDead() {
+        return this.plantDead;
     }
 }
