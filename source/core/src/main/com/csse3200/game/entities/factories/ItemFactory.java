@@ -550,7 +550,7 @@ return createBaseItem()
 
     return createBaseItem()
             .addComponent(new TextureRenderComponent("images/golden_fish.png"))
-            .addComponent(new ItemComponent("Golden Fish", ItemType.PLACEABLE,
+            .addComponent(new ItemComponent("GOLDEN_STATUE", ItemType.PLACEABLE,
                     "A golden fish, the rarest of them all. A placeable collector's item.","images/golden_fish.png"))
             .addComponent(lightComponent);
   }

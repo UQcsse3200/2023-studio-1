@@ -78,7 +78,7 @@ public class FactoryService {
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Bryton", ItemFactory::createBryton),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Sanders", ItemFactory::createSanders),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Churchill", ItemFactory::createChurchill),
-		    new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Golden Fish", ItemFactory::createGoldenFish)
+		    new AbstractMap.SimpleEntry<String, Supplier<Entity>>("GOLDEN_STATUE", ItemFactory::createGoldenFish)
             );
 
     private static final Map<String, Supplier<Entity>> placeableFactories = Map.ofEntries(
@@ -88,7 +88,7 @@ public class FactoryService {
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("LIGHT", PlaceableFactory::createLight),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("SPRINKLER", PlaceableFactory::createSprinkler),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("PUMP", PlaceableFactory::createPump),
-            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Golden Fish", PlaceableFactory::createGoldenTrophy));
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("GOLDEN_STATUE", PlaceableFactory::createGoldenTrophy));
 
     private static final Map<String, Supplier<Quest>> questFactories = Map.ofEntries(
             new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.FIRST_CONTACT_QUEST_NAME, QuestFactory::createFirstContactQuest),
