@@ -202,21 +202,16 @@ public class ItemActions extends Component {
   }
 
   private boolean fish(Entity player, Vector2 mousePos) {
-    Vector2 nullValue = new Vector2(65, 65);
+    Vector2 nullValue = new Vector2(82, 25);
     if (entity.getEvents().getScheduledEventsSize() != 0) {
       player.getEvents().trigger("fishCaught");
       entity.getEvents().cancelAllEvents();
       logger.info("Fishing cancelled");
-      try {
-        ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.FISHING_CATCH);
-      } catch (Exception e) {
-        logger.error("Failed to play fishsound", e);
-      }
       return false;
     }
     Integer randomNumber;
-    Vector2 pos = getAdjustedPos(mousePos);
-    if (pos == nullValue) {
+    Vector2 pos = getAdjustedPosFish(mousePos);
+    if (pos.equals(nullValue)) {
       randomNumber = random.nextInt(5) + 1;
       logger.info("Fishing occurred");
       try {
