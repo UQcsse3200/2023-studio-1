@@ -17,7 +17,6 @@ import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.sound.EffectSoundFile;
-import com.csse3200.game.services.sound.InvalidSoundFileException;
 
 public class ItemActions extends Component {
     private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(ItemActions.class);
