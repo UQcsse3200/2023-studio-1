@@ -7,7 +7,7 @@ import java.util.*;
 import java.util.function.Supplier;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
+import com.csse3200.game.services.sound.EffectSoundFile;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.CombatStatsComponent;
@@ -213,6 +213,11 @@ public class ItemActions extends Component {
       // Ocean fish
       randomNumber = random.nextInt(5) + 1;
       logger.info("Fishing occurred");
+      try {
+        ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.FISHING_CAST);
+      } catch (Exception e) {
+        logger.error("Failed to play fishsound", e);
+      }
       player.getEvents().trigger("castFishingRod", mousePos);
       entity.getEvents().scheduleEvent(randomNumber,"fishCaught", "ocean", player);
       return true;
@@ -220,6 +225,11 @@ public class ItemActions extends Component {
       // Lava fish
       randomNumber = random.nextInt(10) + 1;
       logger.info("Fishing occurred");
+      try {
+        ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.FISHING_CAST);
+      } catch (Exception e) {
+        logger.error("Failed to play fishsound", e);
+      }
       player.getEvents().trigger("castFishingRod", mousePos);
       entity.getEvents().scheduleEvent(randomNumber,"fishCaught", "lava", player);
       return true;
