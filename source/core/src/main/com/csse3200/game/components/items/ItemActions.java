@@ -201,6 +201,7 @@ public class ItemActions extends Component {
 
   private boolean fish(Entity player, Vector2 mousePos) {
     if (entity.getEvents().getScheduledEventsSize() != 0) {
+      player.getEvents().trigger("fishCaught");
       entity.getEvents().cancelAllEvents();
       logger.info("Fishing cancelled");
       return false;
