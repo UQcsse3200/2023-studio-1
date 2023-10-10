@@ -356,11 +356,12 @@ public class InventoryComponent extends Component {
      * @param item ItemComponent to be added
      * @return boolean representing if the item was added successfully
      */
-  public boolean addMultipleItem(int count, Entity item) {
-    for (int i = 0; i < count; i++) {
-      addItem(item);
-    }
-    return true;
+  public boolean addMultipleItem(int count, Entity item, int place) {
+      itemPlace.put(place, item.getComponent(ItemComponent.class).getItemName());
+        for (int i = 0; i < count; i++) {
+          addItem(item);
+        }
+        return true;
   }
 
     /**
@@ -442,7 +443,7 @@ public class InventoryComponent extends Component {
             return false;
         }
         else {
-            while ((this.itemCount.get(item.getComponent(ItemComponent.class).getItemName()) > 0)) {
+            while ((this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(),0) > 0)) {
                 removeItem(item);
             }
         }

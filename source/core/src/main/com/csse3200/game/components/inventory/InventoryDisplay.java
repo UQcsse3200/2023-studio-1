@@ -122,7 +122,7 @@ public class InventoryDisplay extends UIComponent {
 		window.setMovable(false);
 		window.setVisible(false);
 		stage.addActor(window);
-		setDragItems(actors, map);
+		//setDragItems(actors, map);
 	}
 
 	/**
@@ -160,8 +160,8 @@ public class InventoryDisplay extends UIComponent {
 			}
 
 		}
-		dnd = new DragAndDrop();
-		setDragItems(actors, map);
+		//dnd = new DragAndDrop();
+		//setDragItems(actors, map);
 	}
 
 	/**
@@ -189,7 +189,7 @@ public class InventoryDisplay extends UIComponent {
 				public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
 					if (target == null) {
 						ItemSlot itemSlot = map.get((Stack) getActor());
-						itemSlot.removeActor(getActor());
+						//itemSlot.removeActor(getActor());
 						itemSlot.add(getActor());
 					}
 				}
@@ -203,7 +203,7 @@ public class InventoryDisplay extends UIComponent {
 
 					@Override
 					public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-						return true;
+						return false;
 					}
 
 					@Override
@@ -239,6 +239,22 @@ public class InventoryDisplay extends UIComponent {
 				});
 			}
 		}
+	}
+
+	public Map<ItemSlot, Integer> getIndexes() {
+		return indexes;
+	}
+
+	public Map<Stack, ItemSlot> getMap() {
+		return map;
+	}
+
+	public ArrayList<Actor> getActors() {
+		return actors;
+	}
+
+	public ArrayList<ItemSlot> getSlots() {
+		return slots;
 	}
 
 	/**
