@@ -1,5 +1,6 @@
 package com.csse3200.game.services;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
@@ -29,6 +30,7 @@ public class HealthDisplay extends UIComponent{
     private Image healthDanger;
     private Array<Label> healthLabels;
     private Label healthLabel;
+    private int currentHealth;
 
     /**
      * Creates reusable ui styles and adds actors to the stage.
@@ -41,11 +43,15 @@ public class HealthDisplay extends UIComponent{
         // Adds a listener to check for health updates
         entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
         ServiceLocator.getGameArea().getPlayer().getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
-        int currentHealth = ServiceLocator.getGameArea().getPlayer().getComponent(CombatStatsComponent.class).getHealth();
+        ServiceLocator.getUIService().getEvents().addListener("toggleUI", this::toggleDisplay);
+        currentHealth = ServiceLocator.getGameArea().getPlayer().getComponent(CombatStatsComponent.class).getHealth();
         updatePlayerHealthUI(currentHealth);
 
         // Initial update
         updatePlayerHealthUI(currentHealth);
+    }
+
+    private void toggleDisplay(boolean isDisplayed) {table.setVisible(isDisplayed);
     }
 
     /**
