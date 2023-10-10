@@ -15,6 +15,7 @@ import com.csse3200.game.components.combat.TouchAttackComponent;
 import com.csse3200.game.components.combat.attackpatterns.BatAttackPattern;
 import com.csse3200.game.components.combat.attackpatterns.DragonflyAttackPattern;
 import com.csse3200.game.components.combat.attackpatterns.OxygenEaterAttackPattern;
+import com.csse3200.game.components.combat.attackpatterns.ShipEaterAttackPattern;
 import com.csse3200.game.components.npc.*;
 import com.csse3200.game.components.npc.AnimalAnimationController;
 import com.csse3200.game.components.npc.FireflyScareComponent;
@@ -370,6 +371,7 @@ public class NPCFactory {
                     new ArrayList<>(Arrays.asList((EntityType.PLAYER), (EntityType.SHIP)))))
             .addComponent(animator)
             .addComponent(new ShipEaterAnimationController())
+            .addComponent(new ShipEaterScareComponent())
             .addComponent(aiTaskComponent);
 
     shipEater.addComponent(new EntityIndicator(shipEater));
