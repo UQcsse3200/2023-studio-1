@@ -12,6 +12,7 @@ import com.csse3200.game.missions.rewards.*;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 public class QuestFactory {
 
@@ -44,10 +45,10 @@ public class QuestFactory {
      * @return - the First Contact Quest
      */
     public static AutoQuest createFirstContactQuest() {
-        List<Quest> questsToAdd = new ArrayList<>();
-        List<Quest> questsToActivate = new ArrayList<>();
-        questsToActivate.add(createClearingYourMessQuest());
-        questsToActivate.add(createActIMainQuest());
+        List<Supplier<Quest>> questsToAdd = new ArrayList<>();
+        List<Supplier<Quest>> questsToActivate = new ArrayList<>();
+        questsToActivate.add(QuestFactory::createClearingYourMessQuest);
+        questsToActivate.add(QuestFactory::createActIMainQuest);
 
         String dialogue = """
                 As you come to consciousness, you notice a towering {COLOR=#76428A}ALIEN CREATURE{COLOR=WHITE} with what you can only describe as a vicious scowl standing over you. {SHAKE}"WHAT HAVE YOU DONE!!! {WAIT}CLEAR THIS MESS UP AT ONCE, OR {COLOR=RED}THERE WILL BE CONSEQUENCES{COLOR=WHITE}!!!"{ENDSHAKE}
@@ -66,9 +67,9 @@ public class QuestFactory {
      * @return - the Clearing Your Mess Quest
      */
     public static ClearDebrisQuest createClearingYourMessQuest() {
-        List<Quest> questsToAdd = new ArrayList<>();
-        List<Quest> questsToActivate = new ArrayList<>();
-        questsToActivate.add(createSowingYourFirstSeedsQuest());
+        List<Supplier<Quest>> questsToAdd = new ArrayList<>();
+        List<Supplier<Quest>> questsToActivate = new ArrayList<>();
+        questsToActivate.add(QuestFactory::createSowingYourFirstSeedsQuest);
 
         String dialogue = """
                 "Good. But your {WAIT}"landing"{WAIT} has {SHAKE}completely{ENDSHAKE} destroyed my crops! {WAIT}Take this {COLOR=#76428A}HOE{COLOR=WHITE} and these {COLOR=#76428A}SEEDS{COLOR=WHITE} and start replanting the crops you so viciously destroyed!"
@@ -95,9 +96,9 @@ public class QuestFactory {
      * @return - the Sowing Your First Seeds Quest
      */
     public static PlantInteractionQuest createSowingYourFirstSeedsQuest() {
-        List<Quest> questsToAdd = new ArrayList<>();
-        List<Quest> questsToActivate = new ArrayList<>();
-        questsToActivate.add(createReapingYourRewardsQuest());
+        List<Supplier<Quest>> questsToAdd = new ArrayList<>();
+        List<Supplier<Quest>> questsToActivate = new ArrayList<>();
+        questsToActivate.add(QuestFactory::createReapingYourRewardsQuest);
 
         String dialogue = """
                 "Impressive. {WAIT}I see that you can follow basic instructions. {WAIT}I understand that you probably didn't {WAIT}intend{WAIT} to crash here. {WAIT}I will let you stay, as long as you can prove yourself worthy of staying. {WAIT}I have a few more tasks for you to repair my work area, and only then might I consider helping you."
@@ -117,9 +118,9 @@ public class QuestFactory {
      * @return - the Reaping Your Rewards Quest
      */
     public static PlantInteractionQuest createReapingYourRewardsQuest() {
-        List<Quest> questsToAdd = new ArrayList<>();
-        List<Quest> questsToActivate = new ArrayList<>();
-        questsToActivate.add(createMakingFriendsQuest());
+        List<Supplier<Quest>> questsToAdd = new ArrayList<>();
+        List<Supplier<Quest>> questsToActivate = new ArrayList<>();
+        questsToActivate.add(QuestFactory::createMakingFriendsQuest);
 
         String dialogue = """
                 "Good job. {WAIT}You have proven capable of tending to crops. {WAIT}But in isolation, that means nothing. {WAIT}Now prove to me that you can use the fruits of your labour for the benefit of this planet. {WAIT}You may have noticed some {COLOR=#76428A}COW LIKE CREATURES{COLOR=WHITE} roaming about - show me you can gain their trust." {WAIT}You are suspicious that this {COLOR=#76428A}ANGRY ALIEN CREATURE{COLOR=WHITE} knows of cows...
@@ -168,9 +169,9 @@ public class QuestFactory {
      * @return - the Making Friends Quest
      */
     public static TameAnimalsQuest createMakingFriendsQuest() {
-        List<Quest> questsToAdd = new ArrayList<>();
-        List<Quest> questsToActivate = new ArrayList<>();
-        questsToActivate.add(createFertilisingFiestaQuest());
+        List<Supplier<Quest>> questsToAdd = new ArrayList<>();
+        List<Supplier<Quest>> questsToActivate = new ArrayList<>();
+        questsToActivate.add(QuestFactory::createFertilisingFiestaQuest);
         //questsToActivate.add(createFishingQuest());
 
         String dialogue = """
@@ -190,9 +191,9 @@ public class QuestFactory {
      * @return - the Fertilising Fiesta Quest
      */
     public static FertiliseCropTilesQuest createFertilisingFiestaQuest() {
-        List<Quest> questsToAdd = new ArrayList<>();
-        List<Quest> questsToActivate = new ArrayList<>();
-        questsToActivate.add(createAliensAttackQuest());
+        List<Supplier<Quest>> questsToAdd = new ArrayList<>();
+        List<Supplier<Quest>> questsToActivate = new ArrayList<>();
+        questsToActivate.add(QuestFactory::createAliensAttackQuest);
 
         String dialogue = """
                 "It seems like you're getting the hang of this. There's only one more thing you must do, before I know to trust you. Some of our wildlife are {COLOR=RED}not so kind{COLOR=WHITE}. In particular, there are 3 {COLOR=#76428A}HOSTILE CREATURES{COLOR=WHITE} we consider pests. Take this {COLOR=#76428A}WEAPON{COLOR=WHITE}, and defend our work. I will also give you this {COLOR=#76428A}SPACE SNAPPER SEED{COLOR=WHITE}. When grown, the {COLOR=#76428A}SPACE SNAPPER{COLOR=WHITE} will happily munch on any creatures nearby, even non-hostile creatures."
@@ -253,10 +254,10 @@ public class QuestFactory {
      * @return - the Act I Main Quest
      */
     public static MainQuest createActIMainQuest() {
-        List<Quest> questsToAdd = new ArrayList<>();
-        List<Quest> questsToActivate = new ArrayList<>();
-        questsToActivate.add(createConnectionQuest());
-        questsToActivate.add(createTractorQuest());
+        List<Supplier<Quest>> questsToAdd = new ArrayList<>();
+        List<Supplier<Quest>> questsToActivate = new ArrayList<>();
+        questsToActivate.add(QuestFactory::createConnectionQuest);
+        questsToActivate.add(QuestFactory::createTractorQuest);
 
         String dialogue = """
                 For the first time since your landing, the {COLOR=#76428A}ALIEN CREATURE{COLOR=WHITE}'s vicious scowl fades. {WAIT}"I apologise for my initial hostility. {WAIT}My name is Jarrael. {WAIT}I am- {WAIT}was a member of the Karreshiq people. {WAIT}I was sent here for a special purpose, after {COLOR=RED}The Night of the Black Sun{COLOR=WHITE}. {WAIT}Our people had interacted with your civilisation many millennia ago, but we found a home here after we were {COLOR=RED}driven out{COLOR=WHITE}. {WAIT}So imagine my shock when you came crashing down from the sky. {WAIT}What happened?" {WAIT}You begin to explain your predicament to Jarrael...
@@ -290,10 +291,10 @@ public class QuestFactory {
      * @return - the Connection Quest
      */
     public static AutoQuest createConnectionQuest() {
-        List<Quest> questsToAdd = new ArrayList<>();
-        List<Quest> questsToActivate = new ArrayList<>();
-        questsToActivate.add(createHomeSickQuest());
-        questsToActivate.add(createActIIMainQuest());
+        List<Supplier<Quest>> questsToAdd = new ArrayList<>();
+        List<Supplier<Quest>> questsToActivate = new ArrayList<>();
+        questsToActivate.add(QuestFactory::createHomeSickQuest);
+        questsToActivate.add(QuestFactory::createActIIMainQuest);
         ServiceLocator.getMissionManager().getEvents().trigger("An Agreement");
 
         String dialogue = """
@@ -317,9 +318,9 @@ public class QuestFactory {
      * @return - the Home Sick Quest
      */
     public static PlantInteractionQuest createHomeSickQuest() {
-        List<Quest> questsToAdd = new ArrayList<>();
-        List<Quest> questsToActivate = new ArrayList<>();
-        questsToActivate.add(createShipRepairsQuest());
+        List<Supplier<Quest>> questsToAdd = new ArrayList<>();
+        List<Supplier<Quest>> questsToActivate = new ArrayList<>();
+        questsToActivate.add(QuestFactory::createShipRepairsQuest);
 
         String dialogue = """
                 Jarrael takes the {COLOR=#76428A}BERRIES{COLOR=WHITE} you harvested, and consumes them. {WAIT}"Ah... It reminds me of our life here before {COLOR=RED}The Night of the Black Sun{COLOR=WHITE}". {WAIT}Jarrael's eyes seem to trail off for a moment, before focussing again. {WAIT}"I've thought of a solution to your issue. {WAIT}Your {COLOR=#76428A}SHIP{COLOR=WHITE} is in need of repair, that much is clear. {WAIT}I don't think we will be able to get it space-worthy in time, but maybe I could work on repairing your {COLOR=#76428A}SHIP{COLOR=WHITE}'s radio communications device. {WAIT}Take a few {COLOR=#76428A}SHIP PARTS{COLOR=WHITE} that you cleaned up when we first met, and see if you can make a start."
@@ -343,9 +344,9 @@ public class QuestFactory {
      * @return - the Ship Repairs Quest
      */
     public static ShipRepairQuest createShipRepairsQuest() {
-        List<Quest> questsToAdd = new ArrayList<>();
-        List<Quest> questsToActivate = new ArrayList<>();
-        questsToActivate.add(createBringingItAllTogetherQuest());
+        List<Supplier<Quest>> questsToAdd = new ArrayList<>();
+        List<Supplier<Quest>> questsToActivate = new ArrayList<>();
+        questsToActivate.add(QuestFactory::createBringingItAllTogetherQuest);
 
         String dialogue = """
                 "Well done. {WAIT}Now I can get started on repairing your radio. {WAIT}Keep repairing the {COLOR=#76428A}SHIP{COLOR=WHITE}, and come to me when you have added enough {COLOR=#76428A}SHIP PARTS{COLOR=WHITE}."
@@ -379,9 +380,9 @@ public class QuestFactory {
      * @return - the Act II Main Quest
      */
     public static MainQuest createActIIMainQuest() {
-        List<Quest> questsToAdd = new ArrayList<>();
-        List<Quest> questsToActivate = new ArrayList<>();
-        questsToActivate.add(createAnImminentThreatQuest());
+        List<Supplier<Quest>> questsToAdd = new ArrayList<>();
+        List<Supplier<Quest>> questsToActivate = new ArrayList<>();
+        questsToActivate.add(QuestFactory::createAnImminentThreatQuest);
 
         String dialogue = """
                 Jarrael ushers you into your {COLOR=#76428A}SHIP{COLOR=WHITE}, where your radio device currently sits. {WAIT}A faint crackle emanates from the radio as it turns on. {WAIT}You tune it to the {COLOR=#3ABE88}MOTHERSHIP{COLOR=WHITE}'s frequency. {WAIT}A distant voice is transmitted from the radio, {WAIT}"Hello? {WAIT}Hello? {WAIT}Is this {SHAKE}STATIC{ENDSHAKE}? The {COLOR=#3ABE88}SOLAR SURGE{COLOR=WHITE} which caused your crash wiped out some of our life support systems. {WAIT}We predict an increase in {COLOR=#3ABE88}SOLAR SURGE{COLOR=WHITE} activity over the next 15 days. {WAIT}We need to be able to land on your planet and survive without life support, or {COLOR=RED}humanity may be lost{COLOR=WHITE}!" {SHAKE}STATIC{ENDSHAKE} begins to take over the radio, as a powerful {COLOR=#3ABE88}SOLAR SURGE{COLOR=WHITE} hits you...
@@ -405,11 +406,11 @@ public class QuestFactory {
      * @return - the Imminent Threat Quest
      */
     public static AutoQuest createAnImminentThreatQuest() {
-        List<Quest> questsToAdd = new ArrayList<>();
-        List<Quest> questsToActivate = new ArrayList<>();
-        questsToActivate.add(createAirAndAlgaeQuest());
-        questsToActivate.add(createStratosphericSentinelQuest());
-        questsToActivate.add(createActIIIMainQuest());
+        List<Supplier<Quest>> questsToAdd = new ArrayList<>();
+        List<Supplier<Quest>> questsToActivate = new ArrayList<>();
+        questsToActivate.add(QuestFactory::createAirAndAlgaeQuest);
+        questsToActivate.add(QuestFactory::createStratosphericSentinelQuest);
+        questsToActivate.add(QuestFactory::createActIIIMainQuest);
         ServiceLocator.getMissionManager().getEvents().trigger("Making Contact");
 
         String dialogue = """
