@@ -21,7 +21,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private static boolean menuOpened = false;
   private static Enum<MenuTypes> currentMenu = MenuTypes.NONE;
 
-  private boolean showPlantInfoUI = true;
+  private static boolean showPlantInfoUI = true;
+  private boolean showMap = false;
   public enum MenuTypes{
     PAUSEMENU,
     NONE
@@ -88,6 +89,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           showPlantInfoUI = !showPlantInfoUI;
           ServiceLocator.getPlantInfoService().getEvents().trigger("toggleOpen", showPlantInfoUI);
           return true;
+        case Keys.M:
+          showMap = !showMap;
+          ServiceLocator.getPlayerMapService().getEvents().trigger("toggleOpen", showMap);
         case Keys.R:
           entity.getEvents().trigger("eat", entity.getComponent(InventoryComponent.class).getHeldItem());
             return true;
@@ -195,5 +199,14 @@ public class KeyboardPlayerInputComponent extends InputComponent {
        index = 9;
      }
      entity.getEvents().trigger("hotkeySelection", index);
+   }
+
+  /**
+   * Shows whether the plant info window is currently being displayed
+   *
+   * @return boolean that represents whether plant info was being shown
+   */
+   public static boolean getShowPlantInfoUI() {
+     return showPlantInfoUI;
    }
 }
