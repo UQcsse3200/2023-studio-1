@@ -2,14 +2,21 @@ package com.csse3200.game.components.player;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doReturn;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import com.csse3200.game.areas.TestGameArea;
+import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.areas.terrain.TerrainComponent;
+import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.services.ResourceService;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -31,6 +38,15 @@ class InventoryHotkeyTest {
 	private PlayerActions playerActions;
 	private KeyboardPlayerInputComponent keyboardPlayerInputComponent;
 	String[] texturePaths = {"images/tool_shovel.png"};
+	//TestGameArea to register so GameMap can be accessed through the ServiceLocator
+	private static final TestGameArea gameArea = new TestGameArea();
+
+	// Necessary for the playerActions component
+	@BeforeAll
+	static void setupGameAreaAndMap() {
+		GameMap gameMap = mock(GameMap.class);
+		gameArea.setGameMap(gameMap);
+	}
 
 	@BeforeEach
 	void initialiseTest() {
@@ -40,6 +56,7 @@ class InventoryHotkeyTest {
 		inventoryComponent = spy(new InventoryComponent(new ArrayList<>()));
 		keyboardPlayerInputComponent = spy(new KeyboardPlayerInputComponent());
 		ServiceLocator.registerInputService(new InputService());
+		ServiceLocator.registerGameArea(gameArea);
 		playerActions = spy(new PlayerActions());
 		keyboardPlayerInputComponent.setActions(playerActions);
 		player = new Entity()
@@ -105,5 +122,11 @@ class InventoryHotkeyTest {
 				arguments(7)
 
 		);
+	}
+
+	@AfterEach
+	public void cleanUp() {
+		// Clears all loaded services
+		ServiceLocator.clear();
 	}
 }

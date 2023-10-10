@@ -332,7 +332,6 @@ public class SpaceGameArea extends GameArea {
     spawnShipDebris();
 
     player = spawnPlayer();
-    player.getComponent(PlayerActions.class).setGameMap(gameMap);
 
     spawnPlayerHighlight();
     spawnQuestgiver();

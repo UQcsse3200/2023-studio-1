@@ -37,10 +37,9 @@ public class PlayerActions extends Component {
   private boolean moving = false;
   private boolean running = false;
   private boolean muted = false;
-  private GameMap map;
-
+  //private GameMap map;
+  private GameMap gameMap = ServiceLocator.getGameArea().getMap();
   private SecureRandom random = new SecureRandom();
-
   int swordDamage = 5;
 
   private static final String RIGHT_STRING = "right";
@@ -118,11 +117,9 @@ public class PlayerActions extends Component {
     Vector2 velocityScale = this.running ? MAX_RUN_SPEED.cpy() : MAX_WALK_SPEED.cpy();
 
     // Used to apply the terrainSpeedModifier
-
-    Vector2 playerCenterPosVector = this.entity.getCenterPosition();
-    Vector2 playerBottomLeftPosVector = this.entity.getPosition();
-    Vector2 playerCenterBottomPosVector = new Vector2(playerCenterPosVector.x, playerBottomLeftPosVector.y);
-    float terrainSpeedModifier = map.getTile(playerCenterBottomPosVector).getSpeedModifier();
+    Vector2 playerVector = this.entity.getCenterPosition(); // Centre position is better indicator of player location
+    playerVector.add(0, -1.0f); // Player entity sprite's feet are located -1.0f below the centre of the entity
+    float terrainSpeedModifier = gameMap.getTile(playerVector).getSpeedModifier();
     velocityScale.scl(terrainSpeedModifier);
 
 //    Vector2 playerVector = this.entity.getCenterPosition(); // Centre position is better indicator of player location
@@ -323,9 +320,5 @@ public class PlayerActions extends Component {
 
   public void setMuted(boolean muted) {
     this.muted = muted;
-  }
-
-  public void setGameMap(GameMap map) {
-    this.map = map;
   }
 }
