@@ -50,6 +50,8 @@ public class MissionManager implements Json.Serializable {
 		ANIMAL_EATEN,
 		// Triggers when a ship part is added to the Ship
 		SHIP_PART_ADDED,
+		// Triggers when a fish is caught (includes any item from fishing)
+		FISH,
 	}
 
 	/**

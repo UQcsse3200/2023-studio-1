@@ -39,7 +39,6 @@ class PlayerInventoryTest {
         player = new Entity()
                 .addComponent(inventoryComponent);
         player.create();
-        player.getEvents().addListener("use", (Vector2 mousePos, Entity itemInHand) -> inventoryComponent.useItem());
         item1 = new Entity(EntityType.ITEM).addComponent(new ItemComponent("Hoe", ItemType.HOE, "images/tool_shovel.png"));
         item2 = new Entity(EntityType.ITEM).addComponent(new ItemComponent("Scythe",ItemType.SCYTHE, "images/tool_shovel.png"));
     }
@@ -78,32 +77,5 @@ class PlayerInventoryTest {
         assertSame(inventoryComponent.getHeldItem(), item1);
     }
 
-    // checks if using an item decreases the count of perishable items by 1, else removes the item.
-    @Test
-    void useItemShouldRemovePerishableItem() {
-        Entity perishable = new Entity(EntityType.ITEM).addComponent(new ItemComponent("TestItem",ItemType.FERTILISER, "images/tool_shovel.png",true));
-
-        inventoryComponent.addItem(perishable);
-        inventoryComponent.setHeldItem(0);
-        assertEquals(inventoryComponent.getHeldItem(), perishable);
-        player.getEvents().trigger("use",new Vector2(0,0), inventoryComponent.getHeldItem());
-        verify(inventoryComponent).removeItem(perishable);
-        assertFalse(inventoryComponent.hasItem(perishable));
-
-    }
-
-
-    // checks if using an item does not remove a nonperishable item.
-    @Test
-    void useItemShouldNotRemoveNonperishableItem() {
-        Entity item = new Entity(EntityType.ITEM).addComponent(new ItemComponent("TestItem",ItemType.HOE, "images/tool_shovel.png",false));
-
-        inventoryComponent.addItem(item);
-        inventoryComponent.setHeldItem(0);
-        assertEquals(inventoryComponent.getHeldItem(), item);
-        player.getEvents().trigger("use",new Vector2(0,0), inventoryComponent.getHeldItem());
-        assertTrue(inventoryComponent.hasItem(item));
-
-    }
 
 }

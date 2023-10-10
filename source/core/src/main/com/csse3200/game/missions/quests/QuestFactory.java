@@ -33,6 +33,7 @@ public class QuestFactory {
     public static final String STRATOSPHERIC_SENTINEL_QUEST_NAME = "Stratospheric Sentinel";
     public static final String ACT_III_MAIN_QUEST_NAME = "Weather the Storm";
     public static final String TRACTOR_GO_BRRRRRR = "Tractor Go BRRRRRR";
+    public static final String FISHING_QUEST = "BLOP";
 
     private QuestFactory() {
         // This class should not be instantiated - if it is, do nothing
@@ -152,6 +153,16 @@ public class QuestFactory {
         return new MissionCompleteQuest(TRACTOR_GO_BRRRRRR, reward, 1);
     }
 
+    public static FishingQuest createFishingQuest() {
+        String dialogue = """
+                Fosh!
+                """;
+        MultiReward reward = new MultiReward(List.of(
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
+        ));
+        return new FishingQuest(FISHING_QUEST, reward, 5);
+    }
+
     /**
      * Creates the Making Friends {@link TameAnimalsQuest}.
      * @return - the Making Friends Quest
@@ -160,12 +171,14 @@ public class QuestFactory {
         List<Quest> questsToAdd = new ArrayList<>();
         List<Quest> questsToActivate = new ArrayList<>();
         questsToActivate.add(createFertilisingFiestaQuest());
+        //questsToActivate.add(createFishingQuest());
 
         String dialogue = """
                 "You are beginning to understand... {WAIT}Treat this planet well, and it will treat you well in return." {WAIT}Memories of a shattered Earth and a sky alight cloud your vision. {WAIT}You snap back to now. {WAIT}"You may have noticed the {COLOR=#76428A}KIND OFFERINGS{COLOR=BLACK} our fauna provide. {WAIT}Maybe you could try to use them?"
                 """;
 
         MultiReward reward = new MultiReward(List.of(
+                new ItemReward(List.of(ItemFactory.createFishingRod())),
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
