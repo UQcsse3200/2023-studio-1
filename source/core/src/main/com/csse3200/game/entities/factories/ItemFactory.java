@@ -1,6 +1,5 @@
 package com.csse3200.game.entities.factories;
-
-import com.badlogic.gdx.graphics.Texture;
+import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
@@ -24,6 +23,9 @@ import java.util.function.Supplier;
  * Factory to create an item
  */
 public class ItemFactory {
+  private ItemFactory() {
+    // Hiding public one for Utility class
+  }
 
   /**
    * Map of item names to their supplier function.
@@ -52,12 +54,12 @@ public class ItemFactory {
 
 
   public static Entity createBaseItem() {
-    Entity item = new Entity(EntityType.ITEM)
-        .addComponent(new PhysicsComponent())
-        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ITEM))
-        .addComponent(new ItemActions());
-    return item;
+    return new Entity(EntityType.ITEM)
+            .addComponent(new PhysicsComponent())
+            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ITEM))
+            .addComponent(new ItemActions());
   }
+
 
   /**
    * Creates a shovel item
@@ -65,11 +67,9 @@ public class ItemFactory {
    * @return shovel
    */
   public static Entity createShovel() {
-    Entity shovel = createBaseItem()
-        .addComponent(new TextureRenderComponent("images/tool_shovel.png"))
-        .addComponent(new ItemComponent("shovel", ItemType.SHOVEL, "Shovel for removing items",
-            "images/tool_shovel.png"));
-    return shovel;
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/tool_shovel.png"))
+            .addComponent(new ItemComponent("shovel", ItemType.SHOVEL, "Shovel for removing items", "images/tool_shovel.png"));
   }
 
   /**
@@ -78,11 +78,11 @@ public class ItemFactory {
    * @return hoe
    */
   public static Entity createHoe() {
-    Entity hoe = createBaseItem()
-        .addComponent(new TextureRenderComponent("images/tool_hoe.png"))
-        .addComponent(new ItemComponent("hoe", ItemType.HOE, "images/tool_hoe.png"));
-    return hoe;
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/tool_hoe.png"))
+            .addComponent(new ItemComponent("hoe", ItemType.HOE, "images/tool_hoe.png"));
   }
+
 
   /**
    * Creates a watering-can item
@@ -90,13 +90,12 @@ public class ItemFactory {
    * @return watering can
    */
   public static Entity createWateringcan() {
-    Entity wateringCan = createBaseItem()
-        .addComponent(new TextureRenderComponent("images/tool_watering_can.png"))
-        .addComponent(
-            new ItemComponent("watering_can", ItemType.WATERING_CAN, "images/tool_watering_can.png"))
-        .addComponent(new WateringCanLevelComponent(150));
-    return wateringCan;
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/tool_watering_can.png"))
+            .addComponent(new ItemComponent("watering_can", ItemType.WATERING_CAN, "images/tool_watering_can.png"))
+            .addComponent(new WateringCanLevelComponent(150));
   }
+
 
   /**
    * Creates a scythe item
@@ -104,10 +103,9 @@ public class ItemFactory {
    * @return scythe
    */
   public static Entity createScythe() {
-    Entity scythe = createBaseItem()
-        .addComponent(new TextureRenderComponent("images/tool_scythe.png"))
-        .addComponent(new ItemComponent("scythe", ItemType.SCYTHE, "images/tool_scythe.png"));
-    return scythe;
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/tool_scythe.png"))
+            .addComponent(new ItemComponent("scythe", ItemType.SCYTHE, "images/tool_scythe.png"));
   }
 
   /**
@@ -116,10 +114,9 @@ public class ItemFactory {
    * @return sword
    */
   public static Entity createSword() {
-    Entity sword = createBaseItem()
+    return createBaseItem()
             .addComponent(new TextureRenderComponent("images/tool_sword.png"))
             .addComponent(new ItemComponent("sword", ItemType.SWORD, "images/tool_sword.png"));
-    return sword;
   }
 
   /**
@@ -128,10 +125,9 @@ public class ItemFactory {
    * @return gun
    */
   public static Entity createGun() {
-    Entity gun = createBaseItem()
+    return createBaseItem()
             .addComponent(new TextureRenderComponent("images/tool_gun.png"))
             .addComponent(new ItemComponent("gun", ItemType.GUN, "images/tool_gun.png"));
-    return gun;
   }
 
   /**
@@ -183,13 +179,11 @@ public class ItemFactory {
    */
   public static Entity createMapItem() {
     ClueComponent clueComponent = new ClueComponent();
-    Entity mapItem = createBaseItem()
+    return createBaseItem()
             .addComponent(new TextureRenderComponent("images/ship/ship_clue.png"))
             .addComponent(new ItemComponent("map", ItemType.CLUE_ITEM, "images/ship/ship_clue.png"))
             .addComponent(clueComponent)
             .addComponent(new CoordinatesDisplay(clueComponent));
-
-    return mapItem;
   }
 
    /**
@@ -198,11 +192,10 @@ public class ItemFactory {
    * @return fertiliser
    */
   public static Entity createFertiliser() {
-    Entity fertiliser = createBaseItem()
+return createBaseItem()
             .addComponent(new TextureRenderComponent("images/fertiliser.png"))
             .addComponent(new ItemComponent("fertiliser", ItemType.FERTILISER,
                     "images/fertiliser.png"));
-    return fertiliser;
   }
 
   /**
@@ -355,11 +348,11 @@ public class ItemFactory {
    * @return beef item
    */
   public static Entity createBeef() {
-    Entity animalFood = createBaseItem()
+return createBaseItem()
             .addComponent(new TextureRenderComponent("images/animals/beef.png"))
             .addComponent(new ItemComponent("Beef", ItemType.FOOD,
                     "Beef", "images/animals/beef.png"));
-    return animalFood;
+
   }
 
   /**
@@ -381,12 +374,12 @@ public class ItemFactory {
    * @return the fence item
    */
   public static Entity createFenceItem() {
-    Entity fence = createBaseItem()
+return createBaseItem()
             .addComponent(new TextureRenderComponent("images/placeable/fences/f.png"))
             .addComponent(new ItemComponent("FENCE", ItemType.PLACEABLE,
                     "A fence to keep animals in or out",
                     "images/placeable/fences/f.png"));
-    return fence;
+
   }
 
   /**
@@ -394,12 +387,12 @@ public class ItemFactory {
    * @return the gate item
    */
   public static Entity createGateItem() {
-    Entity gate = createBaseItem()
+return createBaseItem()
             .addComponent(new TextureRenderComponent("images/placeable/fences/g_r_l.png"))
             .addComponent(new ItemComponent("GATE", ItemType.PLACEABLE,
                     "Allows the player to walk in and out of enclosed areas",
                     "images/placeable/fences/g_r_l.png"));
-    return gate;
+
   }
 
   /**
@@ -407,12 +400,12 @@ public class ItemFactory {
    * @return the sprinkler item
    */
   public static Entity createSprinklerItem() {
-    Entity sprinkler = createBaseItem()
+return createBaseItem()
             .addComponent(new TextureRenderComponent("images/placeable/sprinkler/pipe_null.png"))
             .addComponent(new ItemComponent("SPRINKLER", ItemType.PLACEABLE,
                     "Waters crops in the surrounding area",
                     "images/placeable/sprinkler/pipe_null.png"));
-    return sprinkler;
+
   }
 
   /**
@@ -420,12 +413,12 @@ public class ItemFactory {
    * @return the sprinkler item
    */
   public static Entity createPumpItem() {
-    Entity pump = createBaseItem()
+return createBaseItem()
             .addComponent(new TextureRenderComponent("images/placeable/sprinkler/pump.png"))
             .addComponent(new ItemComponent("PUMP", ItemType.PLACEABLE,
                     "Powers connected sprinklers",
                     "images/placeable/sprinkler/pump.png"));
-    return pump;
+
   }
 
   /**
@@ -433,21 +426,21 @@ public class ItemFactory {
    * @return the chest item
    */
   public static Entity createChestItem() {
-    Entity chest = createBaseItem()
+return createBaseItem()
             .addComponent(new TextureRenderComponent("images/Temp-Chest.png"))
             .addComponent(new ItemComponent("CHEST", ItemType.PLACEABLE,
                     "A storage container to keep your seeds and goodies",
                     "images/Temp-Chest.png"));
-    return chest;
+
   }
 
   public static Entity createLightItem() {
-    Entity light = createBaseItem()
+return createBaseItem()
             .addComponent(new TextureRenderComponent("images/plants/misc/aloe_vera_seed.png"))
             .addComponent(new ItemComponent("LIGHT", ItemType.PLACEABLE,
                     "A quick and easy fix to being scared of the dark!",
                     "images/plants/misc/aloe_vera_seed.png"));
-    return light;
+
   }
 
   /**
@@ -455,12 +448,121 @@ public class ItemFactory {
    * @return ship part
    */
   public static Entity createShipPart() {
-    Entity shipPart = createBaseItem()
+return createBaseItem()
             .addComponent(new TextureRenderComponent("images/ship/ship_part.png"))
             .addComponent(new ItemComponent("Ship Part", ItemType.SHIP_PART,
                     "Pieces of scrap metal in surprisingly good condition. Seems like it could be used" +
                             " for ship repairs...",
                     "images/ship/ship_part.png"));
-    return shipPart;
+  }
+
+  public static Entity createFishingRod() {
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/fishing_rod.png"))
+            .addComponent(new ItemComponent("Fishing Rod", ItemType.FISHING_ROD,
+                    "Used to fish in the ocean, lakes and lava!" , "images/fishing_rod.png"));
+  }
+
+  public static Entity createLavaEel() {
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/lava_eel.png"))
+            .addComponent(new ItemComponent("Lava Eel", ItemType.FOOD,
+                    "Huge eel that dwells in the bottoms of volcano's" , "images/lava_eel.png"));
+  }
+
+  public static Entity createSalmon() {
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/salmon.png"))
+            .addComponent(new ItemComponent("Salmon", ItemType.FOOD,
+                    "A common fish that lives near the shorelines" , "images/salmon.png"));
+  }
+
+  public static Entity createYak3() {
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/fish/fish_11.png"))
+            .addComponent(new ItemComponent("Yak3", ItemType.FOOD,
+                    "BRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" , "images/fish/fish_11.png"));
+  }
+
+  public static Entity createNetty() {
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/fish/fish_1.png"))
+            .addComponent(new ItemComponent("Netty", ItemType.FOOD,
+                    "A thicc fish!" , "images/fish/fish_1.png"));
+  }
+  public static Entity createLola() {
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/fish/fish_2.png"))
+            .addComponent(new ItemComponent("Lola", ItemType.FOOD,
+                    "smash" , "images/fish/fish_2.png"));
+  }
+
+  public static Entity createLarry() {
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/fish/fish_3.png"))
+            .addComponent(new ItemComponent("Larry", ItemType.FOOD,
+                    "LIGHTWEIGHT BABY!" , "images/fish/fish_3.png"));
+  }
+
+  public static Entity createBraydan() {
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/fish/fish_4.png"))
+            .addComponent(new ItemComponent("Braydan", ItemType.FOOD,
+                    "A somewhat thicc fish that loves seaweed" , "images/fish/fish_4.png"));
+  }
+
+  public static Entity createHarry() {
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/fish/fish_5.png"))
+            .addComponent(new ItemComponent("Harry", ItemType.FOOD,
+                    "HARRY!" , "images/fish/fish_5.png"));
+  }
+
+  public static Entity createMrKrabs() {
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/fish/fish_6.png"))
+            .addComponent(new ItemComponent("Mr Krabs", ItemType.FOOD,
+                    "A delicate krab that loves money" , "images/fish/fish_6.png"));
+  }
+
+  public static Entity createPharLap() {
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/fish/fish_10.png"))
+            .addComponent(new ItemComponent("Phar Lap", ItemType.FOOD,
+                    "Fast asf boi" , "images/fish/fish_10.png"));
+  }
+
+  public static Entity createBryton() {
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/fish/fish_8.png"))
+            .addComponent(new ItemComponent("Bryton", ItemType.FOOD,
+                    "A easily distracted fish that sometimes struggles." , "images/fish/fish_8.png"));
+  }
+
+  public static Entity createSanders() {
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/fish/fish_9.png"))
+            .addComponent(new ItemComponent("Sanders", ItemType.FOOD,
+                    "Tastes like chicken" , "images/fish/fish_9.png"));
+  }
+
+
+  public static Entity createChurchill() {
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/fish/fish_7.png"))
+            .addComponent(new ItemComponent("Churchill", ItemType.FOOD,
+                    "The best argument against democracy is a five-minute conversation with the average voter.",
+                    "images/fish/fish_7.png"));
+  }
+
+  public static Entity createGoldenFish() {
+    AuraLightComponent lightComponent = new AuraLightComponent();
+    lightComponent.toggleLight();
+
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/golden_fish.png"))
+            .addComponent(new ItemComponent("GOLDEN_STATUE", ItemType.PLACEABLE,
+                    "A golden fish, the rarest of them all. A placeable collector's item.","images/golden_fish.png"))
+            .addComponent(lightComponent);
   }
 }

@@ -17,7 +17,7 @@ import org.mockito.MockedStatic;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
-public class ShipPartTileComponentTest {
+class ShipPartTileComponentTest {
     @Test
     void destroysShipDebrisFirst() {
         ServiceLocator.registerTimeService(new TimeService());

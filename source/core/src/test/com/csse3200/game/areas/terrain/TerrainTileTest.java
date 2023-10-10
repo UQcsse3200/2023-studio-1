@@ -50,7 +50,7 @@ class TerrainTileTest {
     }
 
     @Test
-    public void testGetTerrainCategory() {
+    void testGetTerrainCategory() {
         assertEquals(pathTerrainTile.getTerrainCategory(), TerrainTile.TerrainCategory.PATH);
         assertEquals(beachSandTerrainTile.getTerrainCategory(), TerrainTile.TerrainCategory.BEACHSAND);
         assertEquals(grassTerrainTile.getTerrainCategory(), TerrainTile.TerrainCategory.GRASS);
@@ -68,13 +68,13 @@ class TerrainTileTest {
     }
 
     @Test
-    public void testSetTerrainCategory() {
+    void testSetTerrainCategory() {
         basicTestTile.setTerrainCategory(TerrainTile.TerrainCategory.BEACHSAND);
         assertEquals(basicTestTile.getTerrainCategory(), TerrainTile.TerrainCategory.BEACHSAND);
     }
 
     @Test
-    public void testIsTraversable() {
+    void testIsTraversable() {
         assertTrue(pathTerrainTile.isTraversable());
         assertTrue(beachSandTerrainTile.isTraversable());
         assertTrue(grassTerrainTile.isTraversable());
@@ -92,25 +92,25 @@ class TerrainTileTest {
     }
 
     @Test
-    public void testIsUnoccupiedAtStart() {
+    void testIsUnoccupiedAtStart() {
         assertFalse(basicTestTile.isOccupied());
     }
 
     @Test
-    public void testSetOccupied() {
+    void testSetOccupied() {
         basicTestTile.setOccupied();
         assertTrue(basicTestTile.isOccupied());
     }
 
     @Test
-    public void testSetUnoccupied() {
+    void testSetUnoccupied() {
         basicTestTile.setOccupied();
         basicTestTile.setUnOccupied();
         assertFalse(basicTestTile.isOccupied());
     }
 
     @Test
-    public void testIsTillable() {
+    void testIsTillable() {
         assertTrue(pathTerrainTile.isTillable());
         assertFalse(beachSandTerrainTile.isTillable());
         assertTrue(grassTerrainTile.isTillable());
@@ -128,7 +128,7 @@ class TerrainTileTest {
     }
 
     @Test
-    public void testGetSpeedModifier() {
+    void testGetSpeedModifier() {
         assertEquals(1.2f, pathTerrainTile.getSpeedModifier());
         assertEquals(0.9f, beachSandTerrainTile.getSpeedModifier());
         assertEquals(1.0f, grassTerrainTile.getSpeedModifier());
@@ -146,12 +146,12 @@ class TerrainTileTest {
     }
 
     @Test
-    public void testTerrainTileCropEntityNullAfterInitialisation() {
+    void testTerrainTileCropEntityNullAfterInitialisation() {
         assertNull(basicTestTile.getOccupant());
     }
 
     @Test
-    public void testSetCropTileSetsCropTile() {
+    void testSetCropTileSetsCropTile() {
         Entity cropTile = new Entity();
         cropTile.addComponent(new CropTileComponent());
         basicTestTile.setOccupant(cropTile);
@@ -159,7 +159,7 @@ class TerrainTileTest {
     }
 
     @Test
-    public void testSetCropTileSetsTileOccupied() {
+    void testSetCropTileSetsTileOccupied() {
         Entity cropTile = new Entity();
         cropTile.addComponent(new CropTileComponent());
         basicTestTile.setOccupant(cropTile);
@@ -167,7 +167,7 @@ class TerrainTileTest {
     }
 
     @Test
-    public void testRemoveCropTileSetsTileUnoccupied() {
+    void testRemoveCropTileSetsTileUnoccupied() {
         Entity cropTile = new Entity();
         cropTile.addComponent(new CropTileComponent());
         basicTestTile.setOccupant(cropTile);
@@ -176,7 +176,7 @@ class TerrainTileTest {
     }
 
     @Test
-    public void testRemoveCropTileSetsCropTileAsNull() {
+    void testRemoveCropTileSetsCropTileAsNull() {
         Entity cropTile = new Entity();
         cropTile.addComponent(new CropTileComponent());
         basicTestTile.setOccupant(cropTile);
@@ -185,7 +185,7 @@ class TerrainTileTest {
     }
 
     @Test
-    public void testPathTerrainTileProperties() {
+    void testPathTerrainTileProperties() {
         assertEquals(TerrainTile.TerrainCategory.PATH, pathTerrainTile.getTerrainCategory());
         assertTrue(pathTerrainTile.isTraversable());
         assertTrue(pathTerrainTile.isTillable());
@@ -193,7 +193,7 @@ class TerrainTileTest {
     }
 
     @Test
-    public void testBeachSandTerrainTileProperties() {
+    void testBeachSandTerrainTileProperties() {
         assertEquals(TerrainTile.TerrainCategory.BEACHSAND, beachSandTerrainTile.getTerrainCategory());
         assertTrue(beachSandTerrainTile.isTraversable());
         assertFalse(beachSandTerrainTile.isTillable());
@@ -201,7 +201,7 @@ class TerrainTileTest {
     }
 
     @Test
-    public void testGrassTerrainTileProperties() {
+    void testGrassTerrainTileProperties() {
         assertEquals(TerrainTile.TerrainCategory.GRASS, grassTerrainTile.getTerrainCategory());
         assertTrue(grassTerrainTile.isTraversable());
         assertTrue(grassTerrainTile.isTillable());
@@ -209,7 +209,7 @@ class TerrainTileTest {
     }
 
     @Test
-    public void testDirtTerrainTileProperties() {
+    void testDirtTerrainTileProperties() {
         assertEquals(TerrainTile.TerrainCategory.DIRT, dirtTerrainTile.getTerrainCategory());
         assertTrue(dirtTerrainTile.isTraversable());
         assertTrue(dirtTerrainTile.isTillable());
@@ -217,7 +217,7 @@ class TerrainTileTest {
     }
 
     @Test
-    public void testShallowWaterTerrainTileProperties() {
+    void testShallowWaterTerrainTileProperties() {
         assertEquals(TerrainTile.TerrainCategory.SHALLOWWATER, shallowWaterTerrainTile.getTerrainCategory());
         assertTrue(shallowWaterTerrainTile.isTraversable());
         assertFalse(shallowWaterTerrainTile.isTillable());
@@ -225,7 +225,7 @@ class TerrainTileTest {
     }
 
     @Test
-    public void testDesertTerrainTileProperties() {
+    void testDesertTerrainTileProperties() {
         assertEquals(TerrainTile.TerrainCategory.DESERT, desertTerrainTile.getTerrainCategory());
         assertTrue(desertTerrainTile.isTraversable());
         assertFalse(desertTerrainTile.isTillable());
@@ -233,7 +233,7 @@ class TerrainTileTest {
     }
 
     @Test
-    public void testSnowTerrainTileProperties() {
+    void testSnowTerrainTileProperties() {
         assertEquals(TerrainTile.TerrainCategory.SNOW, snowTerrainTile.getTerrainCategory());
         assertTrue(snowTerrainTile.isTraversable());
         assertFalse(snowTerrainTile.isTillable());
@@ -241,7 +241,7 @@ class TerrainTileTest {
     }
 
     @Test
-    public void testIceTerrainTileProperties() {
+    void testIceTerrainTileProperties() {
         assertEquals(TerrainTile.TerrainCategory.ICE, iceTerrainTile.getTerrainCategory());
         assertTrue(iceTerrainTile.isTraversable());
         assertFalse(iceTerrainTile.isTillable());
@@ -249,7 +249,7 @@ class TerrainTileTest {
     }
 
     @Test
-    public void testDeepWaterTerrainTileProperties() {
+    void testDeepWaterTerrainTileProperties() {
         assertEquals(TerrainTile.TerrainCategory.DEEPWATER, deepwaterTerrainTile.getTerrainCategory());
         assertFalse(deepwaterTerrainTile.isTraversable());
         assertFalse(deepwaterTerrainTile.isTillable());
@@ -257,7 +257,7 @@ class TerrainTileTest {
     }
 
     @Test
-    public void testRockTerrainTileProperties() {
+    void testRockTerrainTileProperties() {
         assertEquals(TerrainTile.TerrainCategory.ROCK, rockTerrainTile.getTerrainCategory());
         assertFalse(rockTerrainTile.isTraversable());
         assertFalse(rockTerrainTile.isTillable());
@@ -265,7 +265,7 @@ class TerrainTileTest {
     }
 
     @Test
-    public void testLavaTerrainTileProperties() {
+    void testLavaTerrainTileProperties() {
         assertEquals(TerrainTile.TerrainCategory.LAVA, lavaTerrainTile.getTerrainCategory());
         assertFalse(lavaTerrainTile.isTraversable());
         assertFalse(lavaTerrainTile.isTillable());
@@ -273,7 +273,7 @@ class TerrainTileTest {
     }
 
     @Test
-    public void testLavaGroundTerrainTileProperties() {
+    void testLavaGroundTerrainTileProperties() {
         assertEquals(TerrainTile.TerrainCategory.LAVAGROUND, lavaGroundTerrainTile.getTerrainCategory());
         assertTrue(lavaGroundTerrainTile.isTraversable());
         assertFalse(lavaGroundTerrainTile.isTillable());
@@ -281,7 +281,7 @@ class TerrainTileTest {
     }
 
     @Test
-    public void testGravelTerrainTileProperties() {
+    void testGravelTerrainTileProperties() {
         assertEquals(TerrainTile.TerrainCategory.GRAVEL, gravelTerrainTile.getTerrainCategory());
         assertTrue(gravelTerrainTile.isTraversable());
         assertFalse(gravelTerrainTile.isTillable());
@@ -289,7 +289,7 @@ class TerrainTileTest {
     }
 
     @Test
-    public void testFlowingWaterTerrainTileProperties() {
+    void testFlowingWaterTerrainTileProperties() {
         assertEquals(TerrainTile.TerrainCategory.FLOWINGWATER, flowingWaterTerrainTile.getTerrainCategory());
         assertTrue(flowingWaterTerrainTile.isTraversable());
         assertFalse(flowingWaterTerrainTile.isTillable());

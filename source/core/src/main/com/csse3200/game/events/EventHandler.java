@@ -196,7 +196,6 @@ public class EventHandler {
 
     ScheduledEvent scheduledEvent = new ScheduledEvent(eventName, args, endTime);
     scheduledEvents.add(scheduledEvent);
-
     return scheduledEvent;
   }
 
@@ -275,6 +274,9 @@ public class EventHandler {
           case 1 -> trigger(eventName, args.get(0));
           case 2 -> trigger(eventName, args.get(0), args.get(1));
           case 3 -> trigger(eventName, args.get(0), args.get(1), args.get(2));
+          default -> {
+              // Nothing
+          }
       }
   }
 
@@ -332,5 +334,9 @@ public class EventHandler {
 
   private static void logTrigger(String eventName) {
     logger.debug("Triggering event {}", eventName);
+  }
+
+  public Integer getScheduledEventsSize() {
+    return scheduledEvents.size();
   }
 }

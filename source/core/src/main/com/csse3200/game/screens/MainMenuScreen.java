@@ -103,7 +103,7 @@ public class MainMenuScreen extends ScreenAdapter {
     ResourceService resourceService = ServiceLocator.getResourceService();
 
     for (int i = 0; i < FRAME_COUNT; i++) {
-      transitionTextures[i] = ANIMATION_PREFIX + i + ".png";
+      MainMenuScreen.transitionTextures[i] = ANIMATION_PREFIX + i + ".png";
     }
     resourceService.loadTextures(transitionTextures);
     ServiceLocator.getResourceService().loadAll();

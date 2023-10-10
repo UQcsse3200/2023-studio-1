@@ -64,7 +64,7 @@ class PlantInteractionQuestTest {
     }
 
     @Test
-    public void testRegisterMission() {
+    void testRegisterMission() {
         assertFalse(PIQuest1.isCompleted());
         assertTrue(PIQuest2.isCompleted());
         assertFalse(PIQuest3.isCompleted());
@@ -103,7 +103,7 @@ class PlantInteractionQuestTest {
     }
 
     @Test
-    public void testIsCompleted() {
+    void testIsCompleted() {
         testRegisterMission();
         assertFalse(PIQuest1.isCompleted());
         assertTrue(PIQuest2.isCompleted());
@@ -216,7 +216,7 @@ class PlantInteractionQuestTest {
     }
 
     @Test
-    public void testGetDescription() {
+    void testGetDescription() {
         testRegisterMission();
         String desc1 = "Plant %d crops of type Cosmic Cob.\n%d out of %d crops planted.";
         String desc2 = "Plant %d crops of type Aloe Vera, Cosmic Cob.\n%d out of %d crops planted.";
@@ -326,7 +326,7 @@ class PlantInteractionQuestTest {
     }
 
     @Test
-    public void testGetShortDescription() {
+    void testGetShortDescription() {
         testRegisterMission();
         String desc1 = "%d out of %d crops planted";
         String desc2 = "%d out of %d crops harvested";
@@ -430,7 +430,7 @@ class PlantInteractionQuestTest {
     }
 
     @Test
-    public void testReadProgress() {
+    void testReadProgress() {
         int progressInt = 3;
         JsonValue progress = new JsonValue(progressInt);
         String desc1 = "Plant %d crops of type Cosmic Cob.\n%d out of %d crops planted.";
@@ -477,7 +477,7 @@ class PlantInteractionQuestTest {
     }
 
     @Test
-    public void testGetProgress() {
+    void testGetProgress() {
         assertEquals(0, PIQuest1.getProgress());
         assertEquals(0, PIQuest2.getProgress());
         assertEquals(0, PIQuest3.getProgress());

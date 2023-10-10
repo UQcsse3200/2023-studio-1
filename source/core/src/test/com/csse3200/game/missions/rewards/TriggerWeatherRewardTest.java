@@ -21,7 +21,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
-public class TriggerWeatherRewardTest {
+class TriggerWeatherRewardTest {
 
     private TriggerWeatherReward reward1, reward2;
 

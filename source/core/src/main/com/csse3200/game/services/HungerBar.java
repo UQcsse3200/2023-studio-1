@@ -1,6 +1,5 @@
 package com.csse3200.game.services;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -30,8 +29,14 @@ public class HungerBar extends UIComponent{
         // Adds a listener to check for hunger updates
         ServiceLocator.getPlayerHungerService().getEvents()
                 .addListener("hungerUpdate", this::updateDisplay);
+        ServiceLocator.getUIService().getEvents()
+                .addListener("toggleUI", this::toggleDisplay);
 
         updateDisplay(30);
+    }
+
+    private void toggleDisplay(boolean isDisplayed) {
+        table1.setVisible(isDisplayed);
     }
 
 	/**

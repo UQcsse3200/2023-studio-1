@@ -10,7 +10,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class RewardTest {
+class RewardTest {
     JsonValue isTrue, isFalse;
     Reward reward;
 

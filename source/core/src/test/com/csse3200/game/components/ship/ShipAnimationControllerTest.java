@@ -22,7 +22,7 @@ import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
 @ExtendWith(GameExtension.class)
-public class ShipAnimationControllerTest {
+class ShipAnimationControllerTest {
 	private Entity ship;
 	private AnimationRenderComponent animationRenderComponent;
 

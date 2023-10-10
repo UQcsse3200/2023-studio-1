@@ -33,14 +33,14 @@ class TerrainCropTileFactoryTest {
   }
 
   @Test
-  public void cropTileComponentDetected() {
+  void cropTileComponentDetected() {
     tile = TerrainCropTileFactory.createTerrainEntity(0, 0);
     CropTileComponent cropTileComponent = tile.getComponent(CropTileComponent.class);
     assertNotNull(cropTileComponent);
   }
 
   @Test
-  public void cropTilePositionCorrect() {
+  void cropTilePositionCorrect() {
     Vector2 position = new Vector2(0, 0);
     tile = TerrainCropTileFactory.createTerrainEntity(position);
     assertEquals(position, tile.getPosition());

@@ -23,7 +23,7 @@ import static org.mockito.Mockito.*;
  * the properties stores in 'PlayerConfig'.
  */
 @ExtendWith(GameExtension.class)
-public class TestInventoryManager {
+class TestInventoryManager {
     InventoryDisplayManager displayManager;
     Stage stage;
 

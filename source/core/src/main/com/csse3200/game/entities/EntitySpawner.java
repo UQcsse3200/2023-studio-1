@@ -8,6 +8,7 @@ import java.security.SecureRandom;
 import java.util.List;
 import java.util.function.Function;
 import java.util.Random;
+import java.util.function.UnaryOperator;
 
 /**
  * Handles periodic spawning of one entity
@@ -83,7 +84,7 @@ public class EntitySpawner {
      * @param randomRange       max number of hours that the entity may spawn after spawnHour
      * @param daysBetweenSpawns minimum number of times spawnHour must occur between spawns
      */
-    public EntitySpawner(int maxSpawnCount, Function<Entity, Entity> spawner, int growthRate,
+    public EntitySpawner(int maxSpawnCount, UnaryOperator<Entity> spawner, int growthRate,
                          int initialSpawnCount, int spawnHour, int randomRange, int daysBetweenSpawns) {
         this.maxSpawnCount = maxSpawnCount;
         this.spawner = spawner;
@@ -162,7 +163,7 @@ public class EntitySpawner {
         for (int i = 0; i < spawnCount; i++) {
             //Get random traverseable tile to spawn the entity
             List<GridPoint2> traverseables = gameArea.getMap().getTraversableTileCoordinates();
-            int randomTileIndex = (int) Math.floor(random.nextFloat() * (traverseables.size() - 1));
+            int randomTileIndex = random.nextInt(traverseables.size());
             GridPoint2 position = traverseables.get(randomTileIndex);
 
             //Create entity and spawn on gameArea

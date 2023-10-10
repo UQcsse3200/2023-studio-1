@@ -50,11 +50,6 @@ public class SettingsMenuDisplay extends UIComponent {
   private Table rootTable;
 
   /**
-   * The Image that represents the background of the page
-   */
-  private Image background;
-
-  /**
    * An Image that stores the current frame of the menu screen animation
    */
   private Image transitionFrames;
@@ -72,12 +67,14 @@ public class SettingsMenuDisplay extends UIComponent {
   /**
    * The target fps at which the frames should be updated
    */
-  private int fps = 15;
+
+  private static final int fps = 60;  // Assuming you have a static fps value
 
   /**
    * The duration for which each frame should be displayed
    */
-  private final long frameDuration = (long) (800 / fps);
+
+  private static final long frameDuration = 800L / fps;
 
 
   public SettingsMenuDisplay(GdxGame game) {

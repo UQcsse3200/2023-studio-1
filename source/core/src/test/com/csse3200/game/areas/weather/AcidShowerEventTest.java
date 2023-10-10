@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class AcidShowerEventTest {
+class AcidShowerEventTest {
 
     private AcidShowerEvent acidShowerEvent1, acidShowerEvent2, acidShowerEvent3, acidShowerEvent4, acidShowerEvent5;
 
@@ -30,7 +30,7 @@ public class AcidShowerEventTest {
     }
 
     @Test
-    public void testIsExpired() {
+    void testIsExpired() {
         // case: numHoursUntil == 0 and duration > 0
         assertFalse(acidShowerEvent1.isExpired());
         // case: numHoursUntil > 0 and duration > 0
@@ -48,7 +48,7 @@ public class AcidShowerEventTest {
     }
 
     @Test
-    public void testIsActiveButNotIsExpired() {
+    void testIsActiveButNotIsExpired() {
         assertFalse(acidShowerEvent1.isExpired());
         assertTrue(acidShowerEvent1.isActive());
     }
@@ -56,7 +56,7 @@ public class AcidShowerEventTest {
 
 
     @Test
-    public void testAcidShowerEventGetHumidityModifier() {
+    void testAcidShowerEventGetHumidityModifier() {
         assertEquals(0.23f, acidShowerEvent1.getHumidityModifier(), 0.00001);
         assertEquals(0.26f, acidShowerEvent2.getHumidityModifier(), 0.00001);
         assertEquals(0.2f, acidShowerEvent3.getHumidityModifier(), 0.00001);
@@ -65,7 +65,7 @@ public class AcidShowerEventTest {
     }
 
     @Test
-    public void testAcidShowerEventGetTemperatureModifier() {
+    void testAcidShowerEventGetTemperatureModifier() {
         assertEquals(-11.0f, acidShowerEvent1.getTemperatureModifier(), 0.00001);
         assertEquals(-12.0f, acidShowerEvent2.getTemperatureModifier(), 0.00001);
         assertEquals(-10.0f, acidShowerEvent3.getTemperatureModifier(), 0.00001);
@@ -74,7 +74,7 @@ public class AcidShowerEventTest {
     }
 
     @Test
-    public void testStartEffect() {
+    void testStartEffect() {
         acidShowerEvent1.startEffect();
         acidShowerEvent2.startEffect();
         acidShowerEvent3.startEffect();
@@ -85,7 +85,7 @@ public class AcidShowerEventTest {
     }
 
     @Test
-    public void testStopEffect() {
+    void testStopEffect() {
         acidShowerEvent1.stopEffect();
         acidShowerEvent2.stopEffect();
         acidShowerEvent3.stopEffect();

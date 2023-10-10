@@ -18,7 +18,7 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 @ExtendWith(GameExtension.class)
-public class CameraComponentTest {
+class CameraComponentTest {
     Entity camEntity;
     CameraComponent cameraComponent;
     Camera camera;

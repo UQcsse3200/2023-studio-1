@@ -72,7 +72,6 @@ public class PlayerHighlightComponent extends Component {
             String texturePath = this.getTexturePath();
             currentTexture.setTexture(texturePath);
         }
-        Vector2 playerPos = ServiceLocator.getGameArea().getPlayer().getPosition();
         Vector2 mouseWorldPos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
 
         Vector2 adjustedPosition = new Vector2(
@@ -82,7 +81,7 @@ public class PlayerHighlightComponent extends Component {
         playerPosCenter.add(0, -1.0f); // Player entity sprite's feet are located -1.0f below the centre of the entity. ty Hunter
 
         playerPosCenter = map.tileCoordinatesToVector(map.vectorToTileCoordinates(playerPosCenter));
-        ;
+
         if (adjustedPosition.x - 0.5 > playerPosCenter.x) {
             playerPosCenter.x += 1;
         } else if (adjustedPosition.x + 0.5 < playerPosCenter.x) {

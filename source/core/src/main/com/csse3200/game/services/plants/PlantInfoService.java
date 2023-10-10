@@ -70,6 +70,9 @@ public class PlantInfoService {
         switch (growthStage) {
             case "alive" -> alivePlantCount += num;
             case "decay" -> decayingPlantCount += num;
+            default -> {
+                // Default case should do nothing
+            }
         }
         updateClearInfo();
     }
@@ -88,6 +91,9 @@ public class PlantInfoService {
             case "Space Snapper" -> seedPlantCount[3] += num;
             case "Deadly Nightshade" -> seedPlantCount[4] += num;
             case "Atomic Algae" -> seedPlantCount[5] += num;
+            default -> {
+                // Default case should do nothing
+            }
         }
         int sum = 0;
         for (int i : seedPlantCount) {
@@ -111,6 +117,9 @@ public class PlantInfoService {
             case "Space Snapper" -> plantHarvestCount[3] += num;
             case "Deadly Nightshade" -> plantHarvestCount[4] += num;
             case "Atomic Algae" -> plantHarvestCount[5] += num;
+            default -> {
+                // Default case should do nothing
+            }
         }
         int sum = 0;
         for (int i : plantHarvestCount) {
@@ -132,18 +141,18 @@ public class PlantInfoService {
      * @return - formatted string with relevant information about plants.
      */
     public String plantInfoSummary() {
-        String returnString = "Total Seeds Planted: " + String.valueOf(totalSeedsPlanted);
+        String returnString = "Total Seeds Planted: " + totalSeedsPlanted;
 
         if (totalPlantHarvestCount != 0) {
-            returnString += "\nPlants Harvested: " + String.valueOf(totalPlantHarvestCount);
+            returnString += "\nPlants Harvested: " + totalPlantHarvestCount;
          }
 
         if (alivePlantCount != 0) {
-            returnString += "\nAlive Plants: " + String.valueOf(alivePlantCount);
+            returnString += "\nAlive Plants: " + alivePlantCount;
         }
 
         if (decayingPlantCount != 0) {
-            returnString += "\nDecaying Plants: " + String.valueOf(decayingPlantCount);
+            returnString += "\nDecaying Plants: " + decayingPlantCount;
         }
 
         return returnString;

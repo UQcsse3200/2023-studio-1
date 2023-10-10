@@ -41,9 +41,13 @@ public class GameTimeDisplay extends UIComponent {
 
         // Listen for the "hourUpdate" event to update the display
         ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateDisplay);
-
+        ServiceLocator.getUIService().getEvents().addListener("toggleUI", this::toggleDisplay);
         // Initial update
         updateDisplay();
+    }
+
+    private void toggleDisplay(boolean isDisplayed) {
+        table.setVisible(isDisplayed);
     }
 
     /**
@@ -103,9 +107,11 @@ public class GameTimeDisplay extends UIComponent {
             sequenceAction.addAction(Actions.fadeOut(0.5f));
 
             // Change the planet image to the new one
-            sequenceAction.addAction(Actions.run(() -> {
-                planetImage.setDrawable(planetImages.get(time).getDrawable());
-            }));
+            sequenceAction.addAction(Actions.run(() -> planetImage.setDrawable(planetImages.get(time).getDrawable())));
+
+
+
+
 
             // Fade in the new planet image (adjust the duration)
             sequenceAction.addAction(Actions.fadeIn(0.5f));
