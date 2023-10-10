@@ -38,7 +38,7 @@ public class TerrainFactory {
     /** The orientation of the camera */
     private final TerrainOrientation orientation;
     /** The tile size constant used for each tile in the TiledMap class */
-    protected static final float WORLD_TILE_SIZE = 1f;
+    public static final float WORLD_TILE_SIZE = 1f;
     /** HashMap used to map characters in map files to texture regions for the individual tiles */
     private final Map<Character, TextureRegion> charToTextureMap = new HashMap<>();
     /** HashMap used to map characters in map files to file paths containing their textures */

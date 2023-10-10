@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 
+import com.csse3200.game.entities.EntityService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -58,6 +59,7 @@ class ItemRewardTest {
     @BeforeEach
     void beforeTest() {
         ServiceLocator.registerGameArea(new TestGameArea());
+        ServiceLocator.registerEntityService(new EntityService());
 
         // empty item list
         items1 = new ArrayList<Entity>();

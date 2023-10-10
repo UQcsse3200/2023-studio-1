@@ -371,6 +371,8 @@ class ItemActionsTest {
 
         Entity itemWithNoUse = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("milk", ItemType.EGG, null));
         assertFalse(itemWithNoUse.getComponent(ItemActions.class).use(player, mousePos));
+        Entity rod = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("Fishing Rod", ItemType.FISHING_ROD, null));
+        assertFalse(rod.getComponent(ItemActions.class).use(player, mousePos));
     }
 
     @Test
@@ -415,5 +417,133 @@ class ItemActionsTest {
 
         Entity gate = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("Gate", ItemType.PLACEABLE, null));
         assertFalse(gate.getComponent(ItemActions.class).use(player, mousePos));
+    }
+
+    @Test
+    void testFishWater() {
+        TiledMap tiledMap = gameMap.getTiledMap();
+        tiledMap.getLayers().remove(0);
+        TiledMapTileLayer layer = new TiledMapTileLayer(6, 6, 16, 16);
+
+        layer.setCell(0, 0, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(0, 1, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(0, 2, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(0, 3, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(1, 0, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(1, 1, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(1, 2, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(1, 3, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(2, 0, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(2, 1, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(2, 2, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(2, 3, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(3, 0, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(3, 1, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(3, 2, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(3, 3, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(0, 4, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(0, 5, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(1, 4, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(1, 5, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(2, 4, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(2, 5, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(3, 4, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(3, 5, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(4, 0, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(4, 1, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(4, 2, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(4, 3, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(4, 4, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(4, 5, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(5, 0, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(5, 1, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(5, 2, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(5, 3, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(5, 4, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(5, 5, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+
+        tiledMap.getLayers().add(layer);
+
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+        ServiceLocator.registerEntityService(new EntityService());
+        ServiceLocator.registerRenderService(new RenderService());
+        mousePos = new Vector2(10,10);
+        player.setPosition(gameMap.tileCoordinatesToVector(new GridPoint2(2,2)));
+        CameraComponent cam = mock(CameraComponent.class);
+        doReturn(player.getPosition()).when(cam).screenPositionToWorldPosition(mousePos);
+        ServiceLocator.registerCameraComponent(cam);
+        GameArea area = mock(GameArea.class);
+        doReturn(player).when(area).getPlayer();
+        doReturn(gameMap).when(area).getMap();
+        ServiceLocator.registerGameArea(area);
+        ServiceLocator.registerResourceService(mock(ResourceService.class));
+        FileLoader fl = new FileLoader();
+
+        Entity rod = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("FISHING_ROD", ItemType.FISHING_ROD, null));
+        assertTrue(rod.getComponent(ItemActions.class).use(player, mousePos));
+    }
+
+    @Test
+    void testFishLava() {
+        TiledMap tiledMap = gameMap.getTiledMap();
+        tiledMap.getLayers().remove(0);
+        TiledMapTileLayer layer = new TiledMapTileLayer(6, 6, 16, 16);
+
+        layer.setCell(0, 0, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(0, 1, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(0, 2, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(0, 3, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(1, 0, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(1, 1, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(1, 2, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(1, 3, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(2, 0, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(2, 1, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(2, 2, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(2, 3, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(3, 0, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(3, 1, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(3, 2, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(3, 3, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(0, 4, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(0, 5, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(1, 4, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(1, 5, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(2, 4, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(2, 5, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(3, 4, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(3, 5, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(4, 0, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(4, 1, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(4, 2, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(4, 3, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(4, 4, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(4, 5, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(5, 0, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(5, 1, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(5, 2, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(5, 3, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(5, 4, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(5, 5, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+
+        tiledMap.getLayers().add(layer);
+
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+        ServiceLocator.registerEntityService(new EntityService());
+        ServiceLocator.registerRenderService(new RenderService());
+        mousePos = new Vector2(10,10);
+        player.setPosition(gameMap.tileCoordinatesToVector(new GridPoint2(2,2)));
+        CameraComponent cam = mock(CameraComponent.class);
+        doReturn(player.getPosition()).when(cam).screenPositionToWorldPosition(mousePos);
+        ServiceLocator.registerCameraComponent(cam);
+        GameArea area = mock(GameArea.class);
+        doReturn(player).when(area).getPlayer();
+        doReturn(gameMap).when(area).getMap();
+        ServiceLocator.registerGameArea(area);
+        ServiceLocator.registerResourceService(mock(ResourceService.class));
+        FileLoader fl = new FileLoader();
+
+        Entity rod = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("FISHING_ROD", ItemType.FISHING_ROD, null));
+        assertTrue(rod.getComponent(ItemActions.class).use(player, mousePos));
     }
 }
