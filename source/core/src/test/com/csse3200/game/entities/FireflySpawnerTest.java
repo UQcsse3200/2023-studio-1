@@ -46,7 +46,7 @@ public class FireflySpawnerTest {
         FireflySpawner spawner = spy(new FireflySpawner());
         try {
             ServiceLocator.getTimeService().getEvents().trigger("nightTime");
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             // Tried to make a firefly but couldn't load file or get lights (would pass in real game) and since this just tests the one comp it is all good
             return;
         }
