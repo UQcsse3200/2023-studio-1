@@ -11,6 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
 import com.badlogic.gdx.scenes.scene2d.ui.Tooltip;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer.Task;
+
+/* Credit: LibGDX TooltipManager
+* */
 public class InstantTooltipManager extends com.badlogic.gdx.scenes.scene2d.ui.TooltipManager {
     static private InstantTooltipManager instance;
     static private Files files;
