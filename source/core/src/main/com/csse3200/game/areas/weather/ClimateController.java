@@ -1,14 +1,14 @@
 package com.csse3200.game.areas.weather;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
 
 public class ClimateController implements Json.Serializable {
 
@@ -250,10 +250,12 @@ public class ClimateController implements Json.Serializable {
 		}
 		weatherEvents.removeIf(WeatherEvent::isExpired);
 		if (currentWeatherEvent != null) {
+			if (currentWeatherEvent instanceof AcidShowerEvent) {
+				getEvents().trigger("acidShower");
+			}
 			currentWeatherEvent.startEffect();
 		}
 	}
-
 
 	@Override
 	public void write(Json json) {

@@ -285,6 +285,7 @@ public class PlantComponent extends Component {
         entity.getEvents().addListener("harvest", this::harvest);
         entity.getEvents().addListener("destroyPlant", this::destroyPlant);
         entity.getEvents().addListener("attack", this::attack);
+        entity.getEvents().addListener("acidShower", this::onAcidShower);
         ServiceLocator.getTimeService().getEvents().addListener("minuteUpdate", this::minuteUpdate);
         ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::hourUpdate);
         ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::dayUpdate);
@@ -1079,6 +1080,10 @@ public class PlantComponent extends Component {
      */
     public void setPlayerInProximity(boolean bool) {
         this.playerInProximity = bool;
+    }
+
+    private void onAcidShower() {
+        increasePlantHealth(-2);
     }
 
     @Override
