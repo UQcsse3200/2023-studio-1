@@ -366,6 +366,8 @@ public class NPCFactory {
             .addTask(new MoveToShipTask(5, new Vector2(2f, 2f), 0.5f));
 
     Entity shipEater = createBaseAnimal(EntityType.SHIP_EATER)
+            .addComponent(new InteractionDetector(3f,
+                    new ArrayList<>(Arrays.asList((EntityType.PLAYER), (EntityType.SHIP)))))
             .addComponent(animator)
             .addComponent(new ShipEaterAnimationController())
             .addComponent(aiTaskComponent);
