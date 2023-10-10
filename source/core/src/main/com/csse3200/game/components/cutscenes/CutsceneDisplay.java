@@ -2,6 +2,7 @@ package com.csse3200.game.components.cutscenes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -9,12 +10,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
+import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.missions.cutscenes.Cutscene;
 import com.csse3200.game.services.ServiceLocator;
+import com.rafaskoberg.gdx.typinglabel.TypingAdapter;
 import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,22 +26,36 @@ import com.csse3200.game.ui.UIComponent;
 public class CutsceneDisplay extends UIComponent {
 
     /**
+     * The atlas for the npc sprite.
+     */
+    private TextureAtlas npcAtlas;
+
+    /**
      * The Image that contains the npc sprite.
      */
     private Image npcSprite;
 
-    private static final Logger logger = LoggerFactory.getLogger(CutsceneDisplay.class);
-
+    /**
+     * Logger to log events
+     */
+    private static final Logger logger = LoggerFactory.getLogger(com.csse3200.game.missions.cutscenes.Cutscene.class);
     /**
      * Stores the cutscene object that created the cutscene display
      */
     private Cutscene cutscene;
+    /**
+     * Stores the transparent rectangle
+     */
     private Image transparentRectangle;
     /**
      * Stores the dialogue text
      */
     private final String dialogue;
-    private Table dialogueTable;
+    /**
+     * Stores the cutscene type
+     */
+    private  Window dialogueWindow;
+    private final Cutscene.CutsceneType cutsceneType;
 
     /**
      * Creates a cutscene display using the given parameters
@@ -46,10 +63,11 @@ public class CutsceneDisplay extends UIComponent {
      * @param dialogue the dialogue that will be displayed
      * @param cutscene the cutscene object that created the cutscene display
      */
-    public CutsceneDisplay(String dialogue, Cutscene cutscene) {
+    public CutsceneDisplay(String dialogue, Cutscene cutscene, Cutscene.CutsceneType cutsceneType) {
         super();
         this.dialogue = dialogue;
         this.cutscene = cutscene;
+        this.cutsceneType = cutsceneType;
     }
 
     @Override
@@ -63,12 +81,19 @@ public class CutsceneDisplay extends UIComponent {
      */
     public void spawnCutsceneDisplay() {
         logger.debug("Cutscene Display spawned");
-
+        removeExternalUI();
         logger.debug("Cutscene table spawned");
-        dialogueTable = new Table();
-        dialogueTable.setFillParent(true);
-        dialogueTable.bottom();
-        dialogueTable.padBottom(160);
+
+        if (this.cutsceneType == Cutscene.CutsceneType.ALIEN) {
+            dialogueWindow = new Window("Alien Jaleel", skin);
+        } else {
+            dialogueWindow = new Window("Radio", skin);
+        }
+
+        dialogueWindow.getTitleLabel().setAlignment(Align.center);
+        dialogueWindow.setDebug(true);
+        dialogueWindow.bottom();
+        dialogueWindow.setResizable(false);
 
         this.dimScreen();
 
@@ -76,13 +101,19 @@ public class CutsceneDisplay extends UIComponent {
         this.spawnDialogueBox();
         this.spawnContinueButton();
 
-        stage.addActor(dialogueTable);
+        Graphics.DisplayMode active = Gdx.graphics.getDisplayMode();
+        float dialogueWindowWidth = (float) (active.width * 0.5);
+        float dialogueWindowHeight = (float) (active.height * 0.5);
+
+        dialogueWindow.pack();
+        dialogueWindow.setPosition(dialogueWindowWidth, dialogueWindowHeight, Align.center);
+        stage.addActor(dialogueWindow);
     }
 
     /**
      * Dims the screen
      */
-    public void dimScreen() {
+    private void dimScreen() {
         logger.debug("Screen dimmed");
         //Following code for making transparent rectangle from
         //https://stackoverflow.com/questions/44260510/is-it-possible-to-draw-a-transparent-layer-without-using-image-libgdx
@@ -93,7 +124,7 @@ public class CutsceneDisplay extends UIComponent {
         pixmap.dispose();
         transparentRectangle = new Image(transparentRecTex);
         transparentRectangle.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        transparentRectangle.getColor().a = 0.5f;
+        transparentRectangle.getColor().a = 0.65f;
         stage.addActor(transparentRectangle);
     }
 
@@ -104,11 +135,11 @@ public class CutsceneDisplay extends UIComponent {
      */
     private void placeSprite(Image sprite, float sizeIncrease) {
         logger.debug("Image spawning");
-        float scaledWidth = (Gdx.graphics.getWidth() * sizeIncrease);
+        float scaledWidth = (float) (Gdx.graphics.getWidth() * sizeIncrease);
         float scaledHeight = scaledWidth * (sprite.getHeight() / sprite.getWidth());
         sprite.setWidth(scaledWidth);
         sprite.setHeight(scaledHeight);
-        dialogueTable.add(sprite).expandX().width(scaledWidth).expandY().height(scaledHeight);
+        dialogueWindow.add(sprite).expandX().width(scaledWidth).expandY().height(scaledHeight);
     }
 
     /**
@@ -116,13 +147,22 @@ public class CutsceneDisplay extends UIComponent {
      */
     private void spawnSprite() {
         TextureAtlas.AtlasRegion region;
-        //Spawn npc
-        TextureAtlas npcAtlas = ServiceLocator.getResourceService()
-                .getAsset("images/questgiver.atlas", TextureAtlas.class);
-        region = npcAtlas.findRegion("default");
+
+        //Spawn sprite
+        if (this.cutsceneType == Cutscene.CutsceneType.ALIEN) {
+            npcAtlas = ServiceLocator.getResourceService()
+                    .getAsset("images/questgiver.atlas", TextureAtlas.class);
+            region = npcAtlas.findRegion("default");
+        } else { // NO DIFFERENCE SINCE NO RADIO SPRITE YET
+            npcAtlas = ServiceLocator.getResourceService()
+                    .getAsset("images/questgiver.atlas", TextureAtlas.class);
+            region = npcAtlas.findRegion("default");
+        }
+
         if (region == null) {
             throw new IllegalArgumentException("images/questgiver.atlas is an invalid filePath");
         }
+
         npcSprite = new Image(region);
         placeSprite(npcSprite,  0.15f);
     }
@@ -136,14 +176,27 @@ public class CutsceneDisplay extends UIComponent {
         TypingLabel dialogueLabel = new TypingLabel(this.dialogue, skin);
         dialogueLabel.setAlignment(Align.center);
         dialogueLabel.setWrap(true);
+        dialogueLabel.setDefaultToken("{COLOR=BLACK}");
+
+        dialogueLabel.setTypingListener(new TypingAdapter() {
+            @Override
+            public void onChar(Character c) {
+                Sound shortBeep = Gdx.audio.newSound(Gdx.files.internal("sounds/beep.mp3"));
+                long id = shortBeep.play(0.1f);
+                shortBeep.setPitch(id, 0.75f);
+            }
+        });
+
         Graphics.DisplayMode active = Gdx.graphics.getDisplayMode();
-        dialogueTable.add(dialogueLabel).width((float) active.width - 700).expandX(); // need to make it so text always contains the same proportion of the screen
+        float dialogueLabelWidth = (float) (active.width * 0.6);
+        dialogueWindow.add(dialogueLabel).width(dialogueLabelWidth).expandX();
     }
 
     /**
      * Spawns the continue button
      */
     private void spawnContinueButton() {
+        System.out.println("CUTSCENE CONTINUE SPAWNED");
         logger.debug("Cutscene continue spawned");
 
         TextButton continueBtn = new TextButton("Continue", skin);
@@ -156,24 +209,42 @@ public class CutsceneDisplay extends UIComponent {
                     }
                 });
 
-        dialogueTable.row();
-        dialogueTable.add();
-        dialogueTable.add(continueBtn);
+        dialogueWindow.row();
+        dialogueWindow.add();
+        dialogueWindow.add(continueBtn);
     }
 
     @Override
     public void dispose() {
-        dialogueTable.clear();
+        dialogueWindow.clear();
         transparentRectangle.clear();
         npcSprite.clear();
         stage.getRoot().removeActor(transparentRectangle);
-        stage.getRoot().removeActor(dialogueTable);
+        stage.getRoot().removeActor(dialogueWindow);
         super.dispose();
+        recoverExternalUI();
     }
 
     @Override
     public void draw(SpriteBatch batch) {
         // handled by the stage
+    }
+
+    /**
+     * Removes the UI components on the screen so that cutscene is not so cluttered
+     */
+    public void removeExternalUI() {
+        ServiceLocator.getPlantInfoService().getEvents().trigger("toggleOpen", false);
+        ServiceLocator.getUIService().getEvents().trigger("toggleUI", false);
+    }
+
+    /**
+     * Recovers the UI components that were removed back onto the screen
+     */
+    public void recoverExternalUI() {
+        ServiceLocator.getPlantInfoService().getEvents().
+                trigger("toggleOpen", KeyboardPlayerInputComponent.getShowPlantInfoUI());
+        ServiceLocator.getUIService().getEvents().trigger("toggleUI", true);
     }
 }
 

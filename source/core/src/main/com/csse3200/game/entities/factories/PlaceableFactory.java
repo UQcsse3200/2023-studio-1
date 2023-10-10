@@ -133,4 +133,21 @@ public class PlaceableFactory {
                 .addComponent(animator);
 
     }
+
+    public static Entity createGoldenTrophy() {
+        AnimationRenderComponent animator = new AnimationRenderComponent(
+                ServiceLocator.getResourceService().getAsset("images/golden_trophy.atlas", TextureAtlas.class),
+                16f
+        );
+
+        animator.addAnimation("default", 0.5f, Animation.PlayMode.LOOP);
+        animator.startAnimation("default");
+
+        AuraLightComponent lightComponent = new AuraLightComponent();
+        lightComponent.toggleLight();
+
+        return createBasePlaceable(EntityType.GOLDEN_STATUE)
+                .addComponent(lightComponent)
+                .addComponent(animator);
+    }
 }

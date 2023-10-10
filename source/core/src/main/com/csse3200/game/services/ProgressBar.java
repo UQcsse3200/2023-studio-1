@@ -27,6 +27,8 @@ public class ProgressBar extends UIComponent {
         this.act = 1;
         this.dayOffset = 0;
         ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::updateDisplay);
+        ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::updateDisplay);
+        ServiceLocator.getUIService().getEvents().addListener("toggleUI", this::toggleDisplay);
         ServiceLocator.getMissionManager().getEvents().addListener("An Agreement", this::updateProgressBarAct2);
         ServiceLocator.getMissionManager().getEvents().addListener("Making Contact", this::updateProgressBarAct3);
         progressBarImagesAct1 = new Array<>();
@@ -34,7 +36,9 @@ public class ProgressBar extends UIComponent {
         progressBarImagesAct3 = new Array<>();
         updateDisplay();
     }
-
+    private void toggleDisplay(boolean isDisplayed) {
+        table.setVisible(isDisplayed);
+    }
     /**
      * Creates each image as an image object then adds to an array of images for later use
      */

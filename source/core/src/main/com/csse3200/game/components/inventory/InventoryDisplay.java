@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import com.csse3200.game.components.items.WateringCanLevelComponent;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.ServiceLocator;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.csse3200.game.services.sound.EffectSoundFile;
@@ -19,7 +20,6 @@ import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.ui.UIComponent;
 import com.badlogic.gdx.graphics.Texture;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -113,9 +113,10 @@ public class InventoryDisplay extends UIComponent {
 			}
 		}
 		table.row();
-		Image deleteSlot = new Image(ServiceLocator.getResourceService().getAsset("images/bin.png", Texture.class));
-		//deleteSlot.setColor(Color.BLACK);
-		table.add(deleteSlot).colspan(10);
+		if (entity.getType() == EntityType.PLAYER) {
+			Image deleteSlot = new Image(ServiceLocator.getResourceService().getAsset("images/bin.png", Texture.class));
+			table.add(deleteSlot).colspan(10);
+		}
 
 		// Create a window for the inventory using the skin
 		window.pad(40, 20, 20, 20);
@@ -256,7 +257,7 @@ public class InventoryDisplay extends UIComponent {
 	 *
 	 * @return current window
 	 */
-	public Actor getWindow() {
+	public Window getWindow() {
 		return this.window;
 	}
 
@@ -316,6 +317,10 @@ public class InventoryDisplay extends UIComponent {
 
 	public boolean isOpen() {
 		return isOpen;
+	}
+	public DragAndDrop getDnd() {
+		return dnd;
+
 	}
 
 	public void addTooltips() {
