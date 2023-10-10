@@ -91,7 +91,7 @@ public class CutsceneDisplay extends UIComponent {
         }
 
         dialogueWindow.getTitleLabel().setAlignment(Align.center);
-        dialogueWindow.setDebug(true);
+        //dialogueWindow.setDebug(true);
         dialogueWindow.bottom();
         dialogueWindow.setResizable(false);
 
