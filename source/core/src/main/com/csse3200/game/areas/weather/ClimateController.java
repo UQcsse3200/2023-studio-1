@@ -1,8 +1,11 @@
 package com.csse3200.game.areas.weather;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
+import com.csse3200.game.components.plants.PlantComponent;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -251,7 +254,13 @@ public class ClimateController implements Json.Serializable {
 		weatherEvents.removeIf(WeatherEvent::isExpired);
 		if (currentWeatherEvent != null) {
 			if (currentWeatherEvent instanceof AcidShowerEvent) {
-				getEvents().trigger("acidShower");
+				Array<Entity> entities = ServiceLocator.getEntityService().getEntities();
+				for (Entity entity : entities) {
+					PlantComponent plantComponent = entity.getComponent(PlantComponent.class);
+					if (plantComponent != null) {
+						entity.getEvents().trigger("acidShower");
+					}
+				}
 			}
 			currentWeatherEvent.startEffect();
 		}
