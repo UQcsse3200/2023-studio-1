@@ -11,7 +11,6 @@ import java.util.ArrayList;
 public class PlantCommand implements Command {
 
     private static final Logger logger = LoggerFactory.getLogger(PlantCommand.class);
-    private EventHandler events;
 
     @Override
     public boolean action(ArrayList<String> args) {
@@ -19,8 +18,9 @@ public class PlantCommand implements Command {
             logger.debug("Invalid arguments received for 'plant' command: {}", args);
             return false;
         }
-        events = ServiceLocator.getPlantCommandService().getEvents();
-        events.trigger("forceGrowthStage", (String)args.get(0));
+        EventHandler events = ServiceLocator.getPlantCommandService().getEvents();
+
+        events.trigger("forceGrowthStage", args.get(0));  // Removed unnecessary cast
         return true;
     }
 

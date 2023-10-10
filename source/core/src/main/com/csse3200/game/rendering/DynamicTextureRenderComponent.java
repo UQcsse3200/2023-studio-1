@@ -40,8 +40,7 @@ public class DynamicTextureRenderComponent extends RenderComponent {
   protected void draw(SpriteBatch batch) {
     Vector2 position = entity.getPosition();
     Vector2 scale = entity.getScale();
-    float textureWidth = texture.getWidth();
-    float textureHeight = texture.getHeight();
+
     batch.draw(texture, position.x, position.y, scale.x, scale.y);
   }
 

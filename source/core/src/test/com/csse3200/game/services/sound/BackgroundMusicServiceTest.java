@@ -7,7 +7,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BackgroundMusicServiceTest {
-    
+
+    // TODO remove or do something like why is this in main?????????????????
+
     @BeforeEach
     void setUp() {
     }

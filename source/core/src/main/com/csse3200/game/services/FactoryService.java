@@ -17,11 +17,15 @@ import com.csse3200.game.missions.quests.Quest;
 import com.csse3200.game.missions.quests.QuestFactory;
 
 public class FactoryService {
-    private static final Map<EntityType, Function<Entity, Entity>> npcFactories = Map.of(EntityType.CHICKEN, NPCFactory::createChicken,
-            EntityType.COW, NPCFactory::createCow, EntityType.ASTROLOTL, NPCFactory::createAstrolotl,
-            EntityType.OXYGEN_EATER, NPCFactory::createOxygenEater, EntityType.SHIP_DEBRIS, ShipDebrisFactory::createShipDebris,
-            EntityType.FIRE_FLIES, NPCFactory::createFireFlies, EntityType.BAT, NPCFactory::createBat,
-            EntityType.DRAGONFLY, NPCFactory::createDragonfly);
+    private static final Map<EntityType, Supplier<Entity>> npcFactories = Map.ofEntries(
+            new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.CHICKEN, NPCFactory::createChicken),
+            new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.COW, NPCFactory::createCow),
+            new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.ASTROLOTL, NPCFactory::createAstrolotl),
+            new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.BAT, NPCFactory::createBat),
+            new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.OXYGEN_EATER, NPCFactory::createOxygenEater),
+            new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.SHIP_DEBRIS, ShipDebrisFactory::createShipDebris),
+            new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.FIRE_FLIES, NPCFactory::createFireFlies),
+            new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.DRAGONFLY, NPCFactory::createDragonfly));
 
     private static final Map<String, Function<CropTileComponent, Entity>> plantFactories = Map.of(
             "Cosmic Cob", PlantFactory::createCosmicCob,
@@ -59,7 +63,23 @@ public class FactoryService {
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("gun", ItemFactory::createGun),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("sword", ItemFactory::createSword),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("PUMP", ItemFactory::createPumpItem),
-            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("map", ItemFactory::createMapItem));
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Fishing Rod", ItemFactory::createFishingRod),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Lava Eel", ItemFactory::createLavaEel),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Salmon", ItemFactory::createSalmon),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("map", ItemFactory::createMapItem),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Netty", ItemFactory::createNetty),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Yak3", ItemFactory::createYak3),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Lola", ItemFactory::createLola),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Larry", ItemFactory::createLarry),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Braydan", ItemFactory::createBraydan),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Harry", ItemFactory::createHarry),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Mr Krabs", ItemFactory::createMrKrabs),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Phar Lap", ItemFactory::createPharLap),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Bryton", ItemFactory::createBryton),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Sanders", ItemFactory::createSanders),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Churchill", ItemFactory::createChurchill),
+		    new AbstractMap.SimpleEntry<String, Supplier<Entity>>("GOLDEN_STATUE", ItemFactory::createGoldenFish)
+            );
 
     private static final Map<String, Supplier<Entity>> placeableFactories = Map.ofEntries(
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("CHEST", PlaceableFactory::createChest),
@@ -67,7 +87,8 @@ public class FactoryService {
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("GATE", PlaceableFactory::createGate),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("LIGHT", PlaceableFactory::createLight),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("SPRINKLER", PlaceableFactory::createSprinkler),
-            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("PUMP", PlaceableFactory::createPump));
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("PUMP", PlaceableFactory::createPump),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("GOLDEN_STATUE", PlaceableFactory::createGoldenTrophy));
 
     private static final Map<String, Supplier<Quest>> questFactories = Map.ofEntries(
             new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.FIRST_CONTACT_QUEST_NAME, QuestFactory::createFirstContactQuest),
@@ -89,13 +110,14 @@ public class FactoryService {
             new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.ACT_III_MAIN_QUEST_NAME, QuestFactory::createActIIIMainQuest),
             new AbstractMap.SimpleEntry<String, Supplier<Quest>>("Haber Hobbyist", QuestFactory::createHaberHobbyist),
             new AbstractMap.SimpleEntry<String, Supplier<Quest>>("Fertiliser Fanatic", QuestFactory::createFertiliserFanatic),
-            new AbstractMap.SimpleEntry<String, Supplier<Quest>>("Tractor Go BRRRRRR", QuestFactory::createTractorQuest));
+            new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.FISHING_QUEST, QuestFactory::createFishingQuest),
+            new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.TRACTOR_GO_BRRRRRR, QuestFactory::createTractorQuest));
 
     public static Map<String, Function<CropTileComponent, Entity>> getPlantFactories() {
         return plantFactories;
     }
 
-    public static Map<EntityType, Function<Entity, Entity>> getNpcFactories() {
+    public static Map<EntityType, Supplier<Entity>> getNpcFactories() {
         return npcFactories;
     }
 

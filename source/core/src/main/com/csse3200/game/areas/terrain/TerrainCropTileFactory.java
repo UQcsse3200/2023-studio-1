@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.configs.CropTileConfig;
-import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
@@ -15,9 +14,6 @@ import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 public class TerrainCropTileFactory {
 
 	private static final Logger logger = LoggerFactory.getLogger(TerrainCropTileFactory.class);
-
-	private static final CropTileConfig stats =
-			FileLoader.readClass(CropTileConfig.class, "configs/cropTile.json");
 
 	private TerrainCropTileFactory() {
 		throw new IllegalStateException("Instantiating static util class");
@@ -52,7 +48,7 @@ public class TerrainCropTileFactory {
 				.addComponent(new ColliderComponent().setSensor(true))
 				.addComponent(new PhysicsComponent())
 				.addComponent(renderComponent)
-				.addComponent(new CropTileComponent(stats.initialWaterContent, stats.initialSoilQuality));
+				.addComponent(new CropTileComponent(CropTileConfig.INITIAL_WATER_CONTENT, CropTileConfig.INITIAL_SOIL_QUALITY));
 
 		tile.setPosition(position);
 		return tile;

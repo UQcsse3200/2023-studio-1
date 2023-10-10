@@ -17,8 +17,8 @@ public class EntityService {
   private static final int INITIAL_CAPACITY = 16;
   private final Array<Entity> entities = new Array<>(false, INITIAL_CAPACITY);
   private static boolean paused = false;
-  private static boolean pauseStartFlag = false;
-  private static boolean pauseEndFlag = false;
+  private boolean pauseStartFlag = false;
+  private boolean pauseEndFlag = false;
 
   /**
    * Register a new entity with the entity service. The entity will be created and start updating.
@@ -60,7 +60,7 @@ public class EntityService {
 
   }
 
-  public static void pauseAndResume() {
+  public void pauseAndResume() {
     paused = !paused;
     if (paused) {
       pauseStartFlag = true;
@@ -69,12 +69,12 @@ public class EntityService {
     }
   }
 
-  public static void pauseGame() {
+  public void pauseGame() {
     paused = true;
     pauseStartFlag = true;
   }
 
-  public static void unpauseGame() {
+  public void unpauseGame() {
     paused = false;
     pauseEndFlag = true;
   }

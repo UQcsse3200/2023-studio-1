@@ -7,7 +7,7 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.services.ServiceLocator;
 
 public class OpenPauseComponent extends Component {
-    private final static Logger logger = LoggerFactory.getLogger(OpenPauseComponent.class);
+    private static final Logger logger = LoggerFactory.getLogger(OpenPauseComponent.class);
     private Boolean pauseOpen;
 
     @Override
@@ -32,7 +32,7 @@ public class OpenPauseComponent extends Component {
         logger.info("Opening pause window");
         ServiceLocator.getPauseMenuArea().setPauseMenu();
         pauseOpen = true;
-        logger.info("Pause status:" + ServiceLocator.getCutSceneStatus() + " line 35");
+        logger.info("Pause status: {} line 35", ServiceLocator.getCutSceneStatus());
         if (!ServiceLocator.getCutSceneStatus()) {
             // temporary neutralise setPause to false while cut screen is running
             ServiceLocator.getTimeService().setPaused(true);
@@ -45,6 +45,7 @@ public class OpenPauseComponent extends Component {
         ServiceLocator.getPauseMenuArea().disposePauseMenu();
 
         logger.info("Pause status:" + ServiceLocator.getCutSceneStatus() + " line 46");
+        pauseOpen = false;
         if (!ServiceLocator.getCutSceneStatus()) {
             pauseOpen = false;
             // temporary neutralise setPause to false while cut screen is running

@@ -24,8 +24,7 @@ public class SaveGame {
    * @return Copy of the saved game state
    */
   public static GameState get(String path) {
-    GameState saveFile = FileLoader.readClass(GameState.class, path, Location.LOCAL);
-    return saveFile;
+    return FileLoader.readClass(GameState.class, path, Location.LOCAL);
   }
 
   /**
@@ -58,7 +57,8 @@ public class SaveGame {
     private Array<Entity> placeables;
 
     public GameState() {
-    };
+      // No constructor code needed
+    }
 
     public int getDay() {
       return day;
@@ -94,7 +94,7 @@ public class SaveGame {
 
     /**
      * Filter out all entities that are in the NPC Factory, player or tractor. This
-     * function is mainly for SaveLoadService.java. Produces a Array of entities
+     * function is mainly for SaveLoadService.java. Produces an Array of entities
      * from the NPC factory that needs to be remade
      * 
      * @param entities the entities to filter in Array<Entity>
@@ -185,8 +185,8 @@ public class SaveGame {
 
     private Array<Entity> filterPlaceables(Array<Entity> entities) {
       Array<Entity> returnValue = new Array<>(entities);
-      ArrayList<EntityType> placeableTypes = new ArrayList<EntityType>(Arrays.asList(EntityType.CHEST, EntityType.LIGHT,
-              EntityType.FENCE, EntityType.GATE, EntityType.SPRINKLER, EntityType.PUMP));
+      ArrayList<EntityType> placeableTypes = new ArrayList<>(Arrays.asList(EntityType.CHEST, EntityType.LIGHT,
+              EntityType.FENCE, EntityType.GATE, EntityType.SPRINKLER, EntityType.PUMP, EntityType.GOLDEN_STATUE));
       for (int i = 0; i < returnValue.size; i++) {
         if (!placeableTypes.contains(returnValue.get(i).getType())) {
           returnValue.removeIndex(i);

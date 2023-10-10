@@ -13,12 +13,12 @@ import com.csse3200.game.entities.Entity;
 /**
  * Tests for the PlayerHighlightFactory
  */
-public class PlayerHighlightFactoryTest {
+class PlayerHighlightFactoryTest {
     /**
      * Tests that the player highlight entity is created and that the components are not null
      */
     @Test
-    public void testCreatePlayerHighlight() {
+    void testCreatePlayerHighlight() {
         Entity playerHighlight = PlayerHighlightFactory.createPlayerHighlight();
 
         // Check if the entity is not null
@@ -37,7 +37,7 @@ public class PlayerHighlightFactoryTest {
      * Tests that the PlayerHighlightFactory class can be created
      */
     @Test
-    public void testPlayerHighlightFactoryInstantiation() {
+    void testPlayerHighlightFactoryInstantiation() {
         Entity playerHighlight = PlayerHighlightFactory.createPlayerHighlight();
         Assertions.assertNotNull(playerHighlight);
     }

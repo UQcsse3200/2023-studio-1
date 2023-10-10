@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.csse3200.game.components.CameraComponent;
@@ -26,13 +25,7 @@ public class EntityIndicator extends UIComponent{
     /**
      * The hostile entity being tracked
      */
-    private Entity entity;
-
-    /**
-     * X and Y position of the indicator on the game screen
-     */
-    private float indicatorPosX;
-    private float indicatorPosY;
+    private Entity entityToTractor;
 
     /**
      * The camera component of the game
@@ -49,7 +42,7 @@ public class EntityIndicator extends UIComponent{
      * @param entity: the entity which will be tracked
      */
     public EntityIndicator(Entity entity) {
-        this.entity = entity;
+        this.entityToTractor = entity;
         cameraComponent = ServiceLocator.getCameraComponent();
     }
 
@@ -78,7 +71,7 @@ public class EntityIndicator extends UIComponent{
     @Override
     public void update() {
         // If the entity is on the screen then there is no reason to display the indicator
-        if (cameraComponent.entityOnScreen(entity)) {
+        if (cameraComponent.entityOnScreen(entityToTractor)) {
             indicator.setVisible(false);
         } else {
             // NOTE: Add more conditions to the if-else statement if you want the indicator to only display at
@@ -93,8 +86,10 @@ public class EntityIndicator extends UIComponent{
      * Calculates where the entity should be positioned along the edge of the screen
      */
     public void updateIndicator() {
+        float indicatorPosX;
+        float indicatorPosY;
         // Get the latest entity position
-        Vector2 entityPosition = entity.getCenterPosition();
+        Vector2 entityPosition = entityToTractor.getCenterPosition();
 
         // Make the entity position into a 3D vector
         Vector3 entityPos = new Vector3(entityPosition.x, entityPosition.y, 0);
@@ -118,6 +113,7 @@ public class EntityIndicator extends UIComponent{
 
     @Override
     public void draw(SpriteBatch batch) {
+        // Handled else where
     }
 
     /**

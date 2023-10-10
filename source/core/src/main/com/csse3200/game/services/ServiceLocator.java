@@ -278,4 +278,8 @@ public class ServiceLocator {
     craftArea = area;
   }
 
+  public static GameAreaDisplay getCraftArea() {
+    return craftArea;
+  }
+
 }

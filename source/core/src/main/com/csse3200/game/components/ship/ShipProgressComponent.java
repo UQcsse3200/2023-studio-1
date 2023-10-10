@@ -40,7 +40,7 @@ public class ShipProgressComponent extends Component {
 	@Override
 	public void create() {
 		this.progress = 0;
-		unlockedFeatures = new HashSet<Feature>();
+		unlockedFeatures = new HashSet<>();
 		// listen to add part call
 		entity.getEvents().addListener("addPart", this::incrementProgress);
 		entity.getEvents().addListener("removePart", this::decrementProgress);

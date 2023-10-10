@@ -80,7 +80,7 @@ public class SettingsScreen extends ScreenAdapter {
     ResourceService resourceService = ServiceLocator.getResourceService();
 
     for (int i = 0; i < FRAME_COUNT; i++) {
-      transitionTextures[i] = ANIMATION_PREFIX + i + ".png";
+      SettingsScreen.transitionTextures[i] = ANIMATION_PREFIX + i + ".png";
     }
     resourceService.loadTextures(transitionTextures);
     ServiceLocator.getResourceService().loadAll();

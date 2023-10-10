@@ -27,7 +27,7 @@ import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.extensions.GameExtension;
 
 @ExtendWith(GameExtension.class)
-public class TamingTest {
+class TamingTest {
 
     private Entity player;
     private Entity animalToTest;
