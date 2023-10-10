@@ -348,7 +348,7 @@ public class PlantComponent extends Component {
         if (getGrowthStage().getValue() == GrowthStage.ADULT.getValue()) {
             this.numOfDaysAsAdult += 1;
             if (getNumOfDaysAsAdult() > getAdultLifeSpan()) {
-                entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType(DECAY.substring(0, 1).toUpperCase() + DECAY.substring(1));
+                entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType(DECAY);
                 entity.getComponent(PlantAreaOfEffectComponent.class).setRadius(2f);
                 setGrowthStage(getGrowthStage().getValue() + 1);
                 playSound(DECAYS);
@@ -982,7 +982,7 @@ public class PlantComponent extends Component {
 
         this.setGrowthStage(GrowthStage.DECAYING.getValue());
         this.setPlantHealth(30);
-        entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType(DECAY.substring(0, 1).toUpperCase() + DECAY.substring(1));
+        entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType("Decay");
         playSound(DECAYS);
         updateTexture();
         updateMaxHealth();
