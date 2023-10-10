@@ -362,10 +362,15 @@ public class NPCFactory {
     animator.addAnimation("hiding", 0.5f, Animation.PlayMode.LOOP);
     animator.startAnimation("running");
 
-    Entity shipEater = new Entity(EntityType.SHIP_EATER)
-            .addComponent(animator)
-            .addComponent(new ShipEaterAnimationController());
+    AITaskComponent aiTaskComponent = new AITaskComponent()
+            .addTask(new MoveToShipTask(5, new Vector2(2f, 2f), 0.5f));
 
+    Entity shipEater = createBaseAnimal(EntityType.SHIP_EATER)
+            .addComponent(animator)
+            .addComponent(new ShipEaterAnimationController())
+            .addComponent(aiTaskComponent);
+
+    shipEater.addComponent(new EntityIndicator(shipEater));
     return shipEater;
   }
 
