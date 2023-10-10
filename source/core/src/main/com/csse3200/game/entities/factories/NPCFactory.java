@@ -348,7 +348,6 @@ public class NPCFactory {
 
   /**
    * Creates a Ship Eater entity.
-   * @param player player entity
    * @return Ship Eater entity
    */
   public static Entity createShipEater() {
@@ -361,11 +360,12 @@ public class NPCFactory {
     animator.addAnimation("running", 0.5f, Animation.PlayMode.LOOP);
     animator.addAnimation("eating", 0.5f, Animation.PlayMode.LOOP);
     animator.addAnimation("hiding", 0.5f, Animation.PlayMode.LOOP);
-    animator.startAnimation("hiding");
+    animator.startAnimation("running");
 
     Entity shipEater = new Entity(EntityType.SHIP_EATER)
             .addComponent(animator)
-            .addComponent(new PhysicsComponent());
+            .addComponent(new ShipEaterAnimationController());
+
     return shipEater;
   }
 
