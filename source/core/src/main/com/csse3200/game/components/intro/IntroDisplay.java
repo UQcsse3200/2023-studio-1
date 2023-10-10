@@ -169,19 +169,25 @@ public class IntroDisplay extends UIComponent {
         stage.addActor(background);
         stage.addActor(planet);
         stage.addActor(rootTable);
-        
+
+        /*
         cockpitTable = new Table();
         cockpitTable.setFillParent(true);
-        
+        cockpitTable.debug();
+        cockpitTable.add(cockpitTop).top();
+        cockpitTable.row();
+        cockpitTable.add(cockpitBottom).bottom();
+        stage.addActor(cockpitTable);
+        */
+
+
         cockpitTop = new Image(ServiceLocator.getResourceService()
                 .getAsset("images/crash-animation/Cockpit_Top.png", Texture.class));
         cockpitBottom = new Image(ServiceLocator.getResourceService()
                 .getAsset("images/crash-animation/Cockpit_Bottom.png", Texture.class));
         
-        cockpitTable.add(cockpitTop).top().expandX();
-        cockpitTable.row();
-        cockpitTable.add(cockpitBottom).bottom().expandX();
-        stage.addActor(cockpitTable);
+        stage.addActor(cockpitTop);
+        stage.addActor(cockpitBottom);
     }
 
     /**
@@ -227,6 +233,18 @@ public class IntroDisplay extends UIComponent {
 
         String log = String.format("Space Speed: %s", spaceSpeed);
         logger.debug(log);
+
+        // Resize & reposition cockpit images
+        cockpitTop.setWidth(Gdx.graphics.getWidth());
+        cockpitTop.setHeight(Gdx.graphics.getHeight() * 0.3f);
+        cockpitTop.setPosition(0,Gdx.graphics.getHeight(), Align.topLeft);
+
+        cockpitBottom.setWidth(Gdx.graphics.getWidth());
+        cockpitBottom.setHeight(Gdx.graphics.getHeight() * 0.3f);
+        cockpitBottom.setPosition(0, 0, Align.bottomLeft);
+
+
+
 
         stage.act(ServiceLocator.getTimeSource().getDeltaTime());
     }
