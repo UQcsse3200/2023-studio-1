@@ -17,19 +17,26 @@ import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.services.ResourceService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import com.csse3200.game.components.inventory.InventoryDisplayManager;
+import com.csse3200.game.services.ResourceService;
+import com.csse3200.game.services.sound.EffectSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
+import com.csse3200.game.services.sound.SoundFile;
+import com.csse3200.game.services.sound.SoundService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @ExtendWith(GameExtension.class)
 class InventoryHotkeyTest {
@@ -37,6 +44,7 @@ class InventoryHotkeyTest {
 	private InventoryComponent inventoryComponent;
 	private PlayerActions playerActions;
 	private KeyboardPlayerInputComponent keyboardPlayerInputComponent;
+	private static final Logger logger = LoggerFactory.getLogger(InventoryHotkeyTest.class);
 	String[] texturePaths = {"images/tool_shovel.png"};
 	//TestGameArea to register so GameMap can be accessed through the ServiceLocator
 	private static final TestGameArea gameArea = new TestGameArea();
@@ -70,6 +78,17 @@ class InventoryHotkeyTest {
 			items.add(new Entity().addComponent(new ItemComponent(itemNames[i++], ItemType.HOE, "images/tool_shovel.png")));
 		}
 		inventoryComponent.setInventory(items);
+
+		//Set up the dependencies for the item select sound
+		ServiceLocator.registerSoundService(new SoundService());
+		java.util.List<SoundFile> effects = new ArrayList<>();
+		effects.add(EffectSoundFile.HOTKEY_SELECT);
+		//Load sound file
+		try {
+			ServiceLocator.getSoundService().getEffectsMusicService().loadSounds(effects);
+		} catch (InvalidSoundFileException e) {
+			logger.info("Sound files not loaded");
+		}
 	}
 
 	@ParameterizedTest

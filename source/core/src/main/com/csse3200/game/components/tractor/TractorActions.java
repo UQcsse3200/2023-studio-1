@@ -8,7 +8,6 @@ import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.AuraLightComponent;
-import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ConeLightComponent;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
@@ -265,11 +264,8 @@ public class TractorActions extends Component {
    * @param tile The TerrainTile that should be interacted with
    */
   private void harvest(TerrainTile tile) {
-    if (tile == null) {
-      // Leave
-    } else if (tile.getOccupant() == null) {
-      // Leave
-    } else if (isCropTile(tile.getOccupant())) {
+
+    if (tile != null && tile.getOccupant() != null && isCropTile(tile.getOccupant())) {
       tile.getOccupant().getEvents().trigger("harvest");
     }
   }

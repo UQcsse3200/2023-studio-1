@@ -19,7 +19,8 @@ public class PlantCommand implements Command {
             return false;
         }
         EventHandler events = ServiceLocator.getPlantCommandService().getEvents();
-        events.trigger("forceGrowthStage", (String)args.get(0));
+
+        events.trigger("forceGrowthStage", args.get(0));  // Removed unnecessary cast
         return true;
     }
 
