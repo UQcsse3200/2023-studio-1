@@ -18,6 +18,8 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 
+import java.security.SecureRandom;
+
 /**
  * Display and logic for the intro screen.
  * This screen runs automatically and does not have any user introduction.
@@ -78,6 +80,11 @@ public class IntroDisplay extends UIComponent {
      * TypingLabel is a superclass of Label, which allows Label text to be animated.
      */
     private TypingLabel storyLabel;
+
+    private boolean isShaking = true;
+
+    private float[] cockpitBottomPosition = {0, 0};
+    private float[] cockpitTopPosition = {0, 0};
 
     public IntroDisplay(GdxGame game) {
         super();
@@ -152,7 +159,18 @@ public class IntroDisplay extends UIComponent {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.debug("Continue button clicked");
-                startGame();
+                //startGame();
+                continueButton.setVisible(false);
+                storyLabel.setVisible(false);
+
+                cockpitTop.setVisible(true);
+                cockpitBottom.setVisible(true);
+
+                planet.setPosition(Gdx.graphics.getWidth()/2f, (cockpitTop.getY(Align.bottom) - cockpitBottom.getY(Align.top))/2f);
+
+                logger.error("({}, {}) - Cockpit Top", cockpitTopPosition[0], cockpitTopPosition[1]);
+                logger.error("({}, {}) - Cockpit Bottom", cockpitBottomPosition[0], cockpitBottomPosition[1]);
+                isShaking = true;
             }
         });
 
@@ -183,8 +201,19 @@ public class IntroDisplay extends UIComponent {
 
         cockpitTop = new Image(ServiceLocator.getResourceService()
                 .getAsset("images/crash-animation/Cockpit_Top.png", Texture.class));
+        cockpitTop.setVisible(false);
+
         cockpitBottom = new Image(ServiceLocator.getResourceService()
                 .getAsset("images/crash-animation/Cockpit_Bottom.png", Texture.class));
+        cockpitBottom.setVisible(false);
+
+        cockpitTop.setPosition(Gdx.graphics.getWidth() / 2f,Gdx.graphics.getHeight(), Align.top);
+        cockpitTopPosition[0] = cockpitTop.getX();
+        cockpitTopPosition[1] = cockpitTop.getY();
+
+        cockpitBottom.setPosition(Gdx.graphics.getWidth() / 2f, 0, Align.bottom);
+        cockpitBottomPosition[0] = cockpitBottom.getX();
+        cockpitBottomPosition[1] = cockpitBottom.getY();
         
         stage.addActor(cockpitTop);
         stage.addActor(cockpitBottom);
@@ -200,6 +229,35 @@ public class IntroDisplay extends UIComponent {
     @Override
     protected void draw(SpriteBatch batch) {
         // draw is handled by the stage
+    }
+
+    private void shake(float shakeFactor) {
+        float maxX = 10f;
+        float maxY = 10f;
+
+        SecureRandom random = new SecureRandom();
+
+        boolean xDirection = random.nextBoolean();
+        float xMagnitude = random.nextFloat() * (xDirection ? 1f : -1f);
+        xMagnitude = xMagnitude * shakeFactor;
+
+        boolean yDirection = random.nextBoolean();
+        float yMagnitude = random.nextFloat() * (yDirection ? 1f : -1f);
+        yMagnitude = yMagnitude * shakeFactor;
+
+        float newCockpitTopX = cockpitTop.getX() + xMagnitude;
+        float newCockpitTopY = cockpitTop.getY() + yMagnitude;
+
+        float newCockpitBottomX = cockpitBottom.getX() + xMagnitude;
+        float newCockpitBottomY = cockpitBottom.getY() + yMagnitude;
+
+        if (Math.abs(cockpitTopPosition[0] - newCockpitTopX) < maxX
+                && Math.abs(cockpitTopPosition[1] - newCockpitTopY) < maxY
+                && Math.abs(cockpitBottomPosition[0] - newCockpitBottomX) < maxX
+                && Math.abs(cockpitBottomPosition[1] - newCockpitBottomY) < maxY) {
+            cockpitTop.setPosition(newCockpitTopX, newCockpitTopY);
+            cockpitBottom.setPosition(newCockpitBottomX, newCockpitBottomY);
+        }
     }
 
     @Override
@@ -235,16 +293,19 @@ public class IntroDisplay extends UIComponent {
         logger.debug(log);
 
         // Resize & reposition cockpit images
-        cockpitTop.setWidth(Gdx.graphics.getWidth());
+        cockpitTop.setWidth(Gdx.graphics.getWidth() * 1.1f);
         cockpitTop.setHeight(Gdx.graphics.getHeight() * 0.3f);
-        cockpitTop.setPosition(0,Gdx.graphics.getHeight(), Align.topLeft);
 
-        cockpitBottom.setWidth(Gdx.graphics.getWidth());
-        cockpitBottom.setHeight(Gdx.graphics.getHeight() * 0.3f);
-        cockpitBottom.setPosition(0, 0, Align.bottomLeft);
+        cockpitBottom.setWidth(Gdx.graphics.getWidth() * 1.1f);
+        cockpitBottom.setHeight(Gdx.graphics.getHeight() * 0.4f);
 
-
-
+        if (isShaking) {
+            //logger.error("SHAKE!!!!");
+            shake(5f);
+        } else {
+            cockpitTop.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight(), Align.top);
+            cockpitBottom.setPosition(Gdx.graphics.getWidth() / 2f, 0, Align.bottom);
+        }
 
         stage.act(ServiceLocator.getTimeSource().getDeltaTime());
     }
