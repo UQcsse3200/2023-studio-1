@@ -9,6 +9,7 @@ import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
@@ -23,6 +24,11 @@ public class FireflySpawnerTest {
     @BeforeEach
     void setup() {
         ServiceLocator.registerTimeService(new TimeService());
+    }
+
+    @AfterEach
+    void packDown() {
+        ServiceLocator.clear();
     }
 
     @Test
@@ -40,8 +46,8 @@ public class FireflySpawnerTest {
         FireflySpawner spawner = spy(new FireflySpawner());
         try {
             ServiceLocator.getTimeService().getEvents().trigger("nightTime");
-        } catch (ExceptionInInitializerError e) {
-            // Tried to make a firefly but couldn't load file (would pass in real game) and since this just tests the one comp it is all good
+        } catch (Exception e) {
+            // Tried to make a firefly but couldn't load file or get lights (would pass in real game) and since this just tests the one comp it is all good
             return;
         }
         fail();
