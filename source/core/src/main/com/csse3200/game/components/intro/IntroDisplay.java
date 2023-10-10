@@ -51,11 +51,27 @@ public class IntroDisplay extends UIComponent {
      * The Image that contains the animated planet.
      */
     private Image planet;
+    
+    /**
+     * The Image that contains the top half of the cockpit.
+     */
+    private Image cockpitTop;
+    
+    /**
+     * The Image that contains the bottom half of the cockpit.
+     */
+    private Image cockpitBottom;
 
     /**
      * The table that forms the basis for the layout of the textual elements on the screen.
      */
     private Table rootTable;
+    
+    /**
+     * The table that forms the basis for the layout of the cockpit's textual elements
+     * on the screen.
+     */
+    private Table cockpitTable;
 
     /**
      * The TypingLabel that contains the story that is displayed on the screen.
@@ -153,6 +169,19 @@ public class IntroDisplay extends UIComponent {
         stage.addActor(background);
         stage.addActor(planet);
         stage.addActor(rootTable);
+        
+        cockpitTable = new Table();
+        cockpitTable.setFillParent(true);
+        
+        cockpitTop = new Image(ServiceLocator.getResourceService()
+                .getAsset("images/crash-animation/Cockpit_Top.png", Texture.class));
+        cockpitBottom = new Image(ServiceLocator.getResourceService()
+                .getAsset("images/crash-animation/Cockpit_Bottom.png", Texture.class));
+        
+        cockpitTable.add(cockpitTop).top().expandX();
+        cockpitTable.row();
+        cockpitTable.add(cockpitBottom).bottom().expandX();
+        stage.addActor(cockpitTable);
     }
 
     /**

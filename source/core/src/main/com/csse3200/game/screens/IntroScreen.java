@@ -24,7 +24,9 @@ public class IntroScreen extends ScreenAdapter {
     /**
      * An array of paths to image textures needed for this screen
      */
-    private static final String[] introScreenAssets = {"images/intro_background_v2.png", "images/intro_planet.png"};
+    private static final String[] introScreenAssets = {"images/intro_background_v2.png",
+            "images/intro_planet.png", "images/crash-animation/Cockpit_Bottom.png",
+            "images/crash-animation/Cockpit_Top.png"};
     private final GdxGame game;
     private final Renderer renderer;
 
