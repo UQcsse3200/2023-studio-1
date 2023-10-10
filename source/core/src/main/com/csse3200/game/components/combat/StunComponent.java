@@ -2,7 +2,6 @@ package com.csse3200.game.components.combat;
 
 import com.csse3200.game.components.Component;
 import com.csse3200.game.events.ScheduledEvent;
-import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 
 public class StunComponent extends Component {

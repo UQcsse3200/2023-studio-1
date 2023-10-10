@@ -65,7 +65,7 @@ public class PlayerActions extends Component {
   @Override
   public void update() {
     if (entity.getComponent(PlayerAnimationController.class).readyToPlay()) {
-      if (moving && isStunned()) {
+      if (moving && !isStunned()) {
         updateSpeed();
       }
       updateAnimation();
