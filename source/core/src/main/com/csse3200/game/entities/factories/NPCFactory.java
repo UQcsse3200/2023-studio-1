@@ -72,12 +72,12 @@ public class NPCFactory {
 
   /**
    * Creates a chicken entity
-   * @param player player entity
+   *
    * @return chicken entity
    */
-  public static Entity createChicken(Entity player) {
+  public static Entity createChicken() {
     Entity chicken = createBaseAnimal(EntityType.CHICKEN);
-    BaseAnimalConfig config = configs.CHICKEN;
+    BaseAnimalConfig config = configs.chicken;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/animals/chicken.atlas", TextureAtlas.class),
@@ -101,9 +101,9 @@ public class NPCFactory {
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-            .addTask(new RunAwayTask(player, 10, 2.25f, 4.25f, new Vector2(3f, 3f)))
+            .addTask(new RunAwayTask(ServiceLocator.getGameArea().getPlayer(), 10, 2.25f, 4.25f, new Vector2(3f, 3f)))
             .addTask(new PanicTask("panicStart", 10f, 20, new Vector2(3f, 3f), new Vector2(3f, 3f)))
-            .addTask(new TamedFollowTask(player, 11, 8, 10, 2f, config.FAVOURITE_FOOD, Vector2Utils.ONE));
+            .addTask(new TamedFollowTask(ServiceLocator.getGameArea().getPlayer(), 11, 8, 10, 2f, config.favouriteFood, Vector2Utils.ONE));
 
     List<SingleDropHandler> singleDropHandlers = new ArrayList<>();
     MultiDropComponent multiDropComponent = new MultiDropComponent(singleDropHandlers, true);
@@ -126,8 +126,8 @@ public class NPCFactory {
             .addComponent(animator)
             .addComponent(new AnimalAnimationController())
             .addComponent(new CombatStatsComponent(10, 0))
-            .addComponent(new TamableComponent(player, config.TAMING_THRESHOLD,
-                    config.TAMING_PROBABILITY, config.FAVOURITE_FOOD));
+            .addComponent(new TamableComponent(ServiceLocator.getGameArea().getPlayer(), config.tamingThreshold,
+                    config.tamingProbability, config.favouriteFood));
 
     PhysicsUtils.setScaledCollider(chicken, 0.8f, 0.4f);
 
@@ -136,12 +136,12 @@ public class NPCFactory {
 
   /**
    * Creates a cow entity
-   * @param player player entity
+   *
    * @return cow entity
    */
-  public static Entity createCow(Entity player) {
+  public static Entity createCow() {
     Entity cow = createBaseAnimal(EntityType.COW);
-    BaseAnimalConfig config = NPCConfigs.COW;
+    BaseAnimalConfig config = configs.cow;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/animals/cow.atlas", TextureAtlas.class),
@@ -161,7 +161,7 @@ public class NPCFactory {
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-            .addTask(new TamedFollowTask(player, 10, 8, 10, 2f, config.FAVOURITE_FOOD, Vector2Utils.ONE));
+            .addTask(new TamedFollowTask(ServiceLocator.getGameArea().getPlayer(), 10, 8, 10, 2f, config.favouriteFood, Vector2Utils.ONE));
 
     List<SingleDropHandler> singleDropHandlers = new ArrayList<>();
     MultiDropComponent multiDropComponent = new MultiDropComponent(singleDropHandlers, true);
@@ -177,7 +177,6 @@ public class NPCFactory {
     //Drop beef on death
     singleDropHandlers.add(new SingleDropHandler(ItemFactory::createBeef, 1,
             cow.getEvents()::addListener, "death", false));
-
     cow
             .addComponent(aiTaskComponent)
             .addComponent(multiDropComponent)
@@ -185,8 +184,8 @@ public class NPCFactory {
             .addComponent(new CombatStatsComponent(20, 0))
             .addComponent(new AnimalAnimationController())
             .addComponent(new TamableComponent(
-                    player, config.TAMING_THRESHOLD,
-                    config.TAMING_PROBABILITY, config.FAVOURITE_FOOD));
+                    ServiceLocator.getGameArea().getPlayer(), config.tamingThreshold,
+                    config.tamingProbability, config.favouriteFood));
 
     cow.scaleHeight(1.8f);
     PhysicsUtils.setScaledCollider(cow, 0.7f, 0.4f);
@@ -196,12 +195,12 @@ public class NPCFactory {
 
   /**
    * Creates an Astrolotl entity
-   * @param player player entity
+   *
    * @return Astrolotl entity
    */
-  public static Entity createAstrolotl(Entity player) {
+  public static Entity createAstrolotl() {
     Entity astrolotl = createBaseAnimal(EntityType.ASTROLOTL);
-    BaseAnimalConfig config = NPCConfigs.ASTROLOTL;
+    BaseAnimalConfig config = configs.astrolotl;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/animals/astrolotl.atlas", TextureAtlas.class)
@@ -217,7 +216,7 @@ public class NPCFactory {
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(1.5f, 1.5f), 5f))
-            .addTask(new FollowTask(player, 10, 8, 10, 3f, new Vector2(3f, 3f)));
+            .addTask(new FollowTask(ServiceLocator.getGameArea().getPlayer(), 10, 8, 10, 3f, new Vector2(3f, 3f)));
 
     astrolotl
             .addComponent(aiTaskComponent)
@@ -225,8 +224,8 @@ public class NPCFactory {
             .addComponent(new CombatStatsComponent(80, 0))
             .addComponent(new AnimalAnimationController())
             .addComponent(new TamableComponent(
-                    player, config.TAMING_THRESHOLD,
-                    config.TAMING_PROBABILITY, config.FAVOURITE_FOOD));
+                    ServiceLocator.getGameArea().getPlayer(), config.tamingThreshold,
+                    config.tamingProbability, config.favouriteFood));
 
 
     astrolotl.scaleHeight(1.2f);
@@ -236,12 +235,11 @@ public class NPCFactory {
 
   /**
    * Creates an Oxygen Eater entity.
-   * @param player player entity
+   *
    * @return Oxygen Eater entity
    */
-  public static Entity createOxygenEater(Entity player) {
+  public static Entity createOxygenEater() {
     Entity oxygenEater = createBaseAnimal(EntityType.OXYGEN_EATER);
-    BaseAnimalConfig config = NPCConfigs.OXYGEN_EATER;
 
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
@@ -281,10 +279,10 @@ public class NPCFactory {
 
   /**
    * Creates a Fire Fly entity.
-   * @param player player entity
+   *
    * @return Fire Fly entity
    */
-  public static Entity createFireFlies(Entity player) {
+  public static Entity createFireFlies() {
     SecureRandom random = new SecureRandom();
     AuraLightComponent light = new AuraLightComponent(3f, Color.ORANGE);
     light.toggleLight();
@@ -300,23 +298,22 @@ public class NPCFactory {
     animator.addAnimation(animation, 0.5f, Animation.PlayMode.LOOP);
     animator.startAnimation(animation);
 
-    Entity fireflies = new Entity(EntityType.FIRE_FLIES)
+    return new Entity(EntityType.FIRE_FLIES)
             .addComponent(animator)
             .addComponent(light)
             // Not actually scaring just dying from daylight (named from previous idea for feature)
             .addComponent(new FireflyScareComponent())
             .addComponent(new PhysicsComponent());
-    return fireflies;
   }
 
   /**
    * Creates a Dragonfly entity
-   * @param player player entity
+   *
    * @return Dragonfly entity
    */
-  public static Entity createDragonfly(Entity player) {
+  public static Entity createDragonfly() {
     Entity dragonfly = createBaseAnimal(EntityType.DRAGONFLY);
-    BaseAnimalConfig config = NPCConfigs.DRAGONFLY;
+    BaseAnimalConfig config = configs.dragonfly;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/animals/dragonfly.atlas",
@@ -334,7 +331,7 @@ public class NPCFactory {
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(1.5f, 1.5f), 5f))
             .addTask(new MoveToPlantTask(5, new Vector2(2f, 2f), 0.5f))
-            .addTask(new RunAwayTask(player, 10, 5f, 5f, new Vector2(2f, 2f), false));
+            .addTask(new RunAwayTask(ServiceLocator.getGameArea().getPlayer(), 10, 5f, 5f, new Vector2(2f, 2f), false));
 
 
     dragonfly
@@ -345,7 +342,7 @@ public class NPCFactory {
             .addComponent(new DragonflyAttackPattern(1.5f, ProjectileFactory::createDragonflyProjectile))
             .addComponent(new InteractionDetector(5f,
                     new ArrayList<>(Arrays.asList((EntityType.PLAYER), (EntityType.PLANT)))))
-            .addComponent(new CombatStatsComponent(config.HEALTH, config.BASE_ATTACK));
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
 
 
     dragonfly.scaleHeight(1.2f);
@@ -354,12 +351,12 @@ public class NPCFactory {
 
   /**
    * Creates a Bat entity
-   * @param player player entity
+   *
    * @return Bat entity
    */
-  public static Entity createBat(Entity player) {
+  public static Entity createBat() {
     Entity bat = createBaseAnimal(EntityType.BAT);
-    BaseAnimalConfig config = NPCConfigs.BAT;
+    BaseAnimalConfig config = configs.bat;
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/animals/bat.atlas",
@@ -375,7 +372,7 @@ public class NPCFactory {
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(1.5f, 1.5f), 5f))
-            .addTask(new FollowTask(player, 10, 8, 10, 1.5f, new Vector2(3f, 3f), false));
+            .addTask(new FollowTask(ServiceLocator.getGameArea().getPlayer(), 10, 8, 10, 1.5f, new Vector2(3f, 3f), false));
 
     bat
             .addComponent(aiTaskComponent)
@@ -385,7 +382,7 @@ public class NPCFactory {
             .addComponent(new EntityIndicator(bat))
             .addComponent(new InteractionDetector(1.5f,
                     new ArrayList<>(Arrays.asList(EntityType.PLAYER))))
-            .addComponent(new CombatStatsComponent(config.HEALTH, config.BASE_ATTACK));
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
 
 
 

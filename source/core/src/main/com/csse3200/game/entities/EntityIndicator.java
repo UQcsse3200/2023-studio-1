@@ -28,12 +28,6 @@ public class EntityIndicator extends UIComponent{
     private Entity entityToTractor;
 
     /**
-     * X and Y position of the indicator on the game screen
-     */
-    private float indicatorPosX;
-    private float indicatorPosY;
-
-    /**
      * The camera component of the game
      */
     private CameraComponent cameraComponent;
@@ -92,6 +86,8 @@ public class EntityIndicator extends UIComponent{
      * Calculates where the entity should be positioned along the edge of the screen
      */
     public void updateIndicator() {
+        float indicatorPosX;
+        float indicatorPosY;
         // Get the latest entity position
         Vector2 entityPosition = entityToTractor.getCenterPosition();
 

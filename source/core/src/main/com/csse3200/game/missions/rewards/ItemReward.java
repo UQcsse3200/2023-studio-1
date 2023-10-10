@@ -34,6 +34,7 @@ public class ItemReward extends Reward {
         Entity player = ServiceLocator.getGameArea().getPlayer();
         InventoryComponent inventory = player.getComponent(InventoryComponent.class);
         for (Entity item : rewardItems) {
+            ServiceLocator.getGameArea().spawnEntity(item);
             inventory.addItem(item);
         }
     }

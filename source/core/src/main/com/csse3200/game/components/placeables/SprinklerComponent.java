@@ -1,8 +1,10 @@
 package com.csse3200.game.components.placeables;
 
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -10,6 +12,7 @@ import com.csse3200.game.services.ServiceLocator;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+
 
 public class SprinklerComponent extends Component {
 
@@ -89,7 +92,7 @@ public class SprinklerComponent extends Component {
       // Add listener for reconfigure requests:
       entity.getEvents().addListener("reconfigure", this::reConfigure);
       // set to sprinkle every minute:
-      ServiceLocator.getTimeService().getEvents().addListener("minuteUpdate", this::sprinkle);
+      ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::sprinkle);
     }
     // Update adjacent sprinklers:
     this.connectedEntityUtility.notifyAdjacent();
@@ -263,17 +266,30 @@ public class SprinklerComponent extends Component {
   }
 
   /**
-   * Waters the aoe, this is relevant to this sprinklers position and looks like:
-   * * 2 tiles: above, below, left, right.
-   * * 1 tile in each diagonal.
-   * Creating a circular watering effect.
+   * Waters plants to the ideal amount within the aoe.
+   * The aoe is relevant to this sprinklers position and looks like:
+   * 2 tiles: above, below, left, right.
    */
   private void sprinkle() {
     if (!isPowered) return;
     for (Vector2 pos : aoe) {
       TerrainTile tt = ServiceLocator.getGameArea().getMap().getTile(pos);
-      if (tt.getOccupant() != null) {
-        tt.getOccupant().getEvents().trigger("water", 0.5f);
+      Entity occupant = tt.getOccupant();
+      if (occupant != null) {
+        CropTileComponent cropTile = occupant.getComponent(CropTileComponent.class);
+        if (cropTile != null) {
+          Entity plant = cropTile.getPlant();
+          if (plant != null) {
+            // water a plant to its ideal water amount
+            float currWater = cropTile.getWaterContent();
+            float ideaWater = plant.getComponent(PlantComponent.class).getIdealWaterLevel();
+            if (currWater < ideaWater) {
+              // Watering plant!
+              occupant.getEvents().trigger("water", ideaWater - currWater);
+            }
+          // no plant but we'll water the cropTile just for visuals
+          } else occupant.getEvents().trigger("water", 0.25f);
+        }
       }
     }
   }

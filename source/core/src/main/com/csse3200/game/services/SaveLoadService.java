@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.components.AuraLightComponent;
-import com.csse3200.game.components.ConeLightComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.tractor.TractorActions;
@@ -63,6 +62,7 @@ public class SaveLoadService {
         // Get all entities currently in game:
         Array<Entity> currentGameEntities = ServiceLocator.getEntityService().getEntities();
         // Remove them
+        ServiceLocator.getGameArea().setTractor(null);
         ServiceLocator.getGameArea().removeLoadableEntities(currentGameEntities);
 
         SaveGame.GameState state = SaveGame.get(path);
@@ -117,7 +117,7 @@ public class SaveLoadService {
     private void updatePlayer(GameState state) {
         Entity currentPlayer = ServiceLocator.getGameArea().getPlayer();
         currentPlayer.setPosition(state.getPlayer().getPosition());
-        currentPlayer.getComponent(PlayerActions.class).getCameraVar().setTrackEntity(currentPlayer);
+        ServiceLocator.getCameraComponent().setTrackEntity(currentPlayer);
         currentPlayer.getComponent(PlayerActions.class).setMuted(false);
         InventoryComponent stateInventory = state.getPlayer().getComponent(InventoryComponent.class);
         HashMap<String, Integer> itemCount = stateInventory.getItemCount();
@@ -133,18 +133,14 @@ public class SaveLoadService {
      */
     private void updateTractor(GameState state){
         Entity tractor = ServiceLocator.getGameArea().getTractor(); // Get the tractor in the game
-        Entity tractorState = state.getTractor();   // Get tractor entity stored within the json file
 
         //if there isn't a tractor currently in the game, return
-        if (tractorState == null || tractor == null) {
-            logger.error("Error, No tractor found!");
+        if (tractor == null) {
+            logger.info("No tractor found!");
             return;
         }
 
-        boolean inTractor = !tractorState.getComponent(TractorActions.class).isMuted();  // Store the inverse of the muted value from tractor state entity
-
-        tractor.setPosition(tractorState.getPosition());   // Update the tractors position to the values stored in the json file
-
+        boolean inTractor = !tractor.getComponent(TractorActions.class).isMuted();  // Store the inverse of the muted value from tractor state entity
         // Check whether the player was in the tractor when they last saved
         if (inTractor) {
             // Set the player inside the tractor
@@ -152,11 +148,6 @@ public class SaveLoadService {
             player.setPosition(tractor.getPosition());              // Teleport the player to the tractor (Needed so that they are in 5 units of each other)
             player.getEvents().trigger("enterTractor");   // Trigger the enterTractor event
             tractor.getComponent(AuraLightComponent.class).toggleLight();
-        }
-        // HeadLights on tractor
-        boolean active = tractorState.getComponent(ConeLightComponent.class).getActive();
-        if (active != tractor.getComponent(ConeLightComponent.class).getActive()) {
-            tractor.getComponent(ConeLightComponent.class).toggleLight();
         }
     }
 

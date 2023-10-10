@@ -29,9 +29,9 @@ public class ProgressBar extends UIComponent {
         ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::updateDisplay);
         ServiceLocator.getMissionManager().getEvents().addListener("An Agreement", this::updateProgressBarAct2);
         ServiceLocator.getMissionManager().getEvents().addListener("Making Contact", this::updateProgressBarAct3);
-        progressBarImagesAct1 = new Array<Image>();
-        progressBarImagesAct2 = new Array<Image>();
-        progressBarImagesAct3 = new Array<Image>();
+        progressBarImagesAct1 = new Array<>();
+        progressBarImagesAct2 = new Array<>();
+        progressBarImagesAct3 = new Array<>();
         updateDisplay();
     }
 
@@ -97,7 +97,9 @@ public class ProgressBar extends UIComponent {
         table.padTop(-30f).padLeft(190f);
 
 
+
         group.addActor(progressionBar);
+
 
         table.add(group).size(200);
         stage.addActor(table);
@@ -110,6 +112,8 @@ public class ProgressBar extends UIComponent {
     @Override
     public void dispose() {
         super.dispose();
+
         progressionBar.remove();
+
     }
 }

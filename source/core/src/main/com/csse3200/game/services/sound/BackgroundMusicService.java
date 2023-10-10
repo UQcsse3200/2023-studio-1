@@ -2,7 +2,6 @@ package com.csse3200.game.services.sound;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,8 +50,8 @@ public class BackgroundMusicService implements MusicService {
     public BackgroundMusicService() {
         logger.debug("Initialising BackgroundMusicService");
         this.tracks = new ArrayList<>();
-        this.loadedMusic = new HashMap<>();
-        this.categorisedMusic = new HashMap<>();
+        this.loadedMusic = new EnumMap<>(BackgroundSoundFile.class);
+        this.categorisedMusic = new EnumMap<>(BackgroundMusicType.class);
         // Add a map key for every music type for later sorting of loaded music, to be stored
         // in the value array.
         for (BackgroundMusicType type : BackgroundMusicType.values()) {
@@ -108,15 +107,15 @@ public class BackgroundMusicService implements MusicService {
     public long play(SoundFile sound, boolean looping) throws InvalidSoundFileException {
         logger.debug("Running checks on background music file.");
         if (!this.isMuted()) {
-            if (sound instanceof BackgroundSoundFile) {
+            if (sound instanceof BackgroundSoundFile backgroundSoundFile) {
                 logger.debug("Creating Music instance.");
-                Music music = loadedMusic.get((BackgroundSoundFile) sound);
+                Music music = loadedMusic.get(backgroundSoundFile);
                 if (music != null) { // If a loaded Key-Value pair is present for this sound file
                     logger.debug("Background music play checks successful. " +
                             "Attempting to play file");
                     music.setLooping(looping); // Set whether the track loops
                     music.play(); // Play the music instance of the sound file
-                    this.currentlyActive = (BackgroundSoundFile) sound; //Update currently playing
+                    this.currentlyActive = backgroundSoundFile; //Update currently playing
                 } else {
                     throw new InvalidSoundFileException("SoundFile not loaded.");
                 }
@@ -238,9 +237,9 @@ public class BackgroundMusicService implements MusicService {
      */
     @Override
     public boolean isPlaying(SoundFile sound) throws InvalidSoundFileException {
-        if (sound instanceof BackgroundSoundFile
-                && loadedMusic.get((BackgroundSoundFile) sound) != null) {
-            return loadedMusic.get((BackgroundSoundFile) sound).isPlaying();
+        if (sound instanceof BackgroundSoundFile backgroundSoundFile
+                && loadedMusic.get(backgroundSoundFile) != null) {
+            return loadedMusic.get(backgroundSoundFile).isPlaying();
         } else {
             throw new InvalidSoundFileException("SoundFile not loaded or not an instance of " +
                     "BackgroundSoundFile.");
@@ -262,15 +261,15 @@ public class BackgroundMusicService implements MusicService {
                 logger.debug("10 music track maximum reached - further loading aborted");
                 break;
             }
-            if (sound instanceof BackgroundSoundFile) {
+            if (sound instanceof BackgroundSoundFile backgroundSoundFile) {
                 logger.debug("Loading a background track.");
-                tracks.add((BackgroundSoundFile) sound);
-                Music music = Gdx.audio.newMusic(Gdx.files.internal(sound.getFilePath()));
+                tracks.add(backgroundSoundFile);
+                Music music = Gdx.audio.newMusic(Gdx.files.internal(backgroundSoundFile.getFilePath()));
                 //Music music = ServiceLocator.getResourceService()
                 //        .getAsset(sound.getFilePath(), Music.class);
-                loadedMusic.put((BackgroundSoundFile) sound, music);
+                loadedMusic.put(backgroundSoundFile, music);
                 logger.debug("Categorising Music instance by BackgroundMusicType.");
-                categorisedMusic.get(((BackgroundSoundFile) sound).getType()).add(music);
+                categorisedMusic.get((backgroundSoundFile).getType()).add(music);
                 numLoaded++;
             } else {
                 throw new InvalidSoundFileException("Not an instance of BackgroundSoundFile");
@@ -308,7 +307,7 @@ public class BackgroundMusicService implements MusicService {
             loadedMusic.get(track).dispose();
         }
         this.tracks = new ArrayList<>();
-        this.loadedMusic = new HashMap<>();
-        this.categorisedMusic = new HashMap<>();
+        this.loadedMusic = new EnumMap<>(BackgroundSoundFile.class);
+        this.categorisedMusic = new EnumMap<>(BackgroundMusicType.class);
     }
 }

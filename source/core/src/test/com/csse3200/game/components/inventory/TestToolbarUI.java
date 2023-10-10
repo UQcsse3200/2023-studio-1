@@ -1,9 +1,7 @@
 package com.csse3200.game.components.inventory;
 
 import static org.junit.jupiter.params.provider.Arguments.arguments;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.stream.Stream;
@@ -11,10 +9,16 @@ import java.util.stream.Stream;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.csse3200.game.areas.TestGameArea;
+import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.areas.terrain.TerrainComponent;
+import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.ResourceService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -51,6 +55,9 @@ class TestToolbarUI {
 	static InventoryComponent inventory;
 	ArgumentCaptor<Window> windowArgument;
 	Stage stage;
+	//TestGameArea to register so GameMap can be accessed through the ServiceLocator
+	private static final TestGameArea gameArea = new TestGameArea();
+
 	static String[] texturePaths = {
 			"images/tool_shovel.png",
 			"images/tool_hoe.png",
@@ -67,6 +74,10 @@ class TestToolbarUI {
 	@BeforeAll
 	static void Create() {
 		inventory = new InventoryComponent(new ArrayList<>());
+
+		// Necessary for the playerActions component
+		GameMap gameMap = mock(GameMap.class);
+		gameArea.setGameMap(gameMap);
 	}
 
 	/**
@@ -89,6 +100,7 @@ class TestToolbarUI {
 		inventory = new InventoryComponent(new ArrayList<>());
 		toolbarDisplay = spy(new ToolbarDisplay());
 
+		ServiceLocator.registerGameArea(gameArea);
 
 		player =
 				new Entity()
@@ -165,5 +177,9 @@ class TestToolbarUI {
 		);
 	}
 
-
+	@AfterEach
+	public void cleanUp() {
+		// Clears all loaded services
+		ServiceLocator.clear();
+	}
 }

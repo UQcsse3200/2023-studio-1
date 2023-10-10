@@ -58,7 +58,7 @@ class AddItemCommandTest {
 	@Test
 	void addCan() {
 		try (MockedStatic<ItemFactory> factory = mockStatic(ItemFactory.class)) {
-			args.add("watering_can");
+			args.add("watering can");
 			Entity can = new Entity();
 			factory.when(ItemFactory::createWateringcan).thenReturn(can);
 			command.action(args);
