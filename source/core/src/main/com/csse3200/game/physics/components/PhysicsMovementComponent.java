@@ -74,21 +74,11 @@ public class PhysicsMovementComponent extends Component implements MovementContr
   private void updateDirection(Body body) {
     Vector2 desiredVelocity = getDirection().scl(maxSpeed);
 
-//    try {
-//      Vector2 entityCenterPosVector = this.entity.getCenterPosition();
-//      Vector2 entityBottomLeftPosVector = this.entity.getPosition();
-//      Vector2 entityCentreBottomPosVector = new Vector2(entityCenterPosVector.x, entityBottomLeftPosVector.y);
-//      float terrainSpeedModifier = gameMap.getTile(entityCentreBottomPosVector).getSpeedModifier();
-//      desiredVelocity.scl(terrainSpeedModifier);
-//    } catch (Exception e) {
-//      logger.info("{entity} yadda yadda"); // Put entity in here
-//    }
-
     Vector2 entityCenterPosVector = this.entity.getCenterPosition();
     Vector2 entityBottomLeftPosVector = this.entity.getPosition();
-    Vector2 entityCentreBottomPosVector = new Vector2(entityCenterPosVector.x, entityBottomLeftPosVector.y);
+    Vector2 entityCenterBottomPosVector = new Vector2(entityCenterPosVector.x, entityBottomLeftPosVector.y);
 
-    float terrainSpeedModifier = gameMap.getTile(entityCentreBottomPosVector).getSpeedModifier();
+    float terrainSpeedModifier = gameMap.getTile(entityCenterBottomPosVector).getSpeedModifier();
     desiredVelocity.scl(terrainSpeedModifier);
 
     setToVelocity(body, desiredVelocity);

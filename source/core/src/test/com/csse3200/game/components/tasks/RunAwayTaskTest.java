@@ -76,13 +76,13 @@ class RunAwayTaskTest {
   @Test
   void shouldMoveAwayFromTarget() {
     Entity target = new Entity();
-    target.setPosition(2f, 2f);
+    target.setPosition(12f, 12f); // changed from 2,2 to 12,12 so that entity does not walk out of bounds
 
     Vector2 speed = new Vector2(3f, 3f);
     AITaskComponent ai = new AITaskComponent().addTask(new RunAwayTask(target, 10, 5, 10, speed));
     Entity entity = makePhysicsEntity().addComponent(ai);
     entity.create();
-    entity.setPosition(0f, 0f);
+    entity.setPosition(10f, 10f);// changed from 0,0 to 10,10 so that entity does not walk out of bounds
 
     float initialDistance = entity.getPosition().dst(target.getPosition());
     // Run the game for a few cycles

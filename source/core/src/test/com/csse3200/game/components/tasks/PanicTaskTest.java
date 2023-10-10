@@ -86,7 +86,7 @@ class PanicTaskTest {
     @Test
     void testStartMovesEntity() {
         entity.create();
-        entity.setPosition(0f, 0f);
+        entity.setPosition(10f, 10f); // changed from 0,0 to 10,10 so that entity does not walk out of bounds
         EventListener0 callback = mock(EventListener0.class);
         entity.getEvents().addListener("runStart", callback);
 
@@ -109,7 +109,7 @@ class PanicTaskTest {
     @Test
     void testPanicTaskUpdate() {
         entity.create();
-        entity.setPosition(0f, 0f);
+        entity.setPosition(10f, 10f); // changed from 0,0 to 10,10 so that entity does not walk out of bounds
         entity.getEvents().trigger("panicTrigger");
 
         // increase delta to decrease loop size
@@ -127,7 +127,7 @@ class PanicTaskTest {
     @Test
     void testPanicFinishes() {
         entity.create();
-        entity.setPosition(0f, 0f);
+        entity.setPosition(10f, 10f); // changed from 0,0 to 10,10 so that entity does not walk out of bounds
         entity.getEvents().trigger("panicTrigger");
 
         // increase delta to decrease loop size
