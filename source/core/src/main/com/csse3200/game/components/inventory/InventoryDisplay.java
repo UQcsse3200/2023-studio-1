@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.items.WateringCanLevelComponent;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.ServiceLocator;
@@ -320,7 +321,6 @@ public class InventoryDisplay extends UIComponent {
 	}
 	public DragAndDrop getDnd() {
 		return dnd;
-
 	}
 
 	public void addTooltips() {
@@ -336,8 +336,10 @@ public class InventoryDisplay extends UIComponent {
 					tooltip = new TextTooltip(item.getItemName() + "\n\n" + item.getItemDescription(),instantTooltipManager,skin);
 				}
 				if (tooltips.get(i) != null) {
+					tooltips.get(i).hide();
 					slot.removeListener(tooltips.get(i));
 				}
+				tooltip.getActor().setAlignment(Align.center);
 				tooltip.setInstant(true);
 				slot.addListener(tooltip);
 				tooltips.put(i, tooltip);

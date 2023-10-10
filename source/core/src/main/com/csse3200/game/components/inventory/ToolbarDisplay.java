@@ -18,9 +18,9 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import com.badlogic.gdx.graphics.Texture;
-import org.w3c.dom.Text;
 
 /**
  * Display the UI for the toolbar
@@ -35,7 +35,7 @@ public class ToolbarDisplay extends UIComponent {
     private int selectedSlot = -1;
     private final ArrayList<ItemSlot> slots = new ArrayList<>();
     private final Map<Integer, TextTooltip> tooltips = new HashMap<>();
-    private InstantTooltipManager instantTooltipManager = new InstantTooltipManager();
+    private final InstantTooltipManager instantTooltipManager = new InstantTooltipManager();
 
     /**
      * Creates the event listeners, ui, and gets the UI.
@@ -81,16 +81,17 @@ public class ToolbarDisplay extends UIComponent {
 
                 curSlot.add(label);
                 TextTooltip tooltip;
-                if (item.getItemName() == "watering_can") {
+                if (Objects.equals(item.getItemName(), "watering_can")) {
                     float level = item.getEntity().getComponent(WateringCanLevelComponent.class).getCurrentLevel();
                     tooltip = new TextTooltip(item.getItemName() + "\n\nCurrent level is " + level, instantTooltipManager, skin);
 
                 } else {
                     tooltip = new TextTooltip(item.getItemName() + "\n\n" + item.getItemDescription(), instantTooltipManager, skin);
                 }
+                tooltip.getActor().setAlignment(Align.center);
                 tooltip.setInstant(true);
-                if (tooltips.get(i) == null) {
-                } else {
+                if (tooltips.get(i) != null) {
+                    tooltips.get(i).hide();
                     curSlot.removeListener(tooltips.get(i));
                 }
                 curSlot.addListener(tooltip);
