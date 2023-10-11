@@ -102,7 +102,7 @@ eating
   offset: 0, 0
   rotate: false
 digging
-  xy: 36, 0
+  xy: 72, 16
   index: 0
   size: 18, 16
   orig: 18, 16
