@@ -292,7 +292,7 @@ public class NPCFactory {
             16f
     );
     String animation = "default";
-    if (random.nextInt(10000) == 0) {
+    if (random.nextInt(100) == 0) {
       animation = "DancinInTheMoonlight";
     }
     animator.addAnimation(animation, 0.5f, Animation.PlayMode.LOOP);
