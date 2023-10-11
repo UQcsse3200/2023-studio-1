@@ -77,7 +77,7 @@ public class ProjectileFactory {
         projectile
                 .addComponent(new CombatStatsComponent(1, 1))
                 .addComponent(new ProjectileComponent(3f))
-                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 5f))
+                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 5f, 0.05f))
                 .addComponent(animator);
 
         projectile.getComponent(HitboxComponent.class).setAsBoxAligned(
@@ -109,7 +109,7 @@ public class ProjectileFactory {
 
         projectile
                 .addComponent(new ProjectileComponent(2f))
-                .addComponent(new TouchAttackComponent(PhysicsLayer.NPC, 10f))
+                .addComponent(new TouchAttackComponent(PhysicsLayer.NPC, 10f, 0.3f))
                 .addComponent(new CombatStatsComponent(1, 10))
                 .addComponent(animator);
 

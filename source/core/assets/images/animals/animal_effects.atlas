@@ -1,0 +1,33 @@
+animal_effects.png
+size: 44, 11
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+heart
+  rotate: false
+  xy: 0, 0
+  size: 11, 11
+  orig: 11, 11
+  offset: 0, 0
+  index: -1
+fed
+  rotate: false
+  xy: 11, 0
+  size: 11, 11
+  orig: 11, 11
+  offset: 0, 0
+  index: -1
+exclamation
+  rotate: false
+  xy: 22, 0
+  size: 11, 11
+  orig: 11, 11
+  offset: 0, 0
+  index: -1
+red_exclamation
+  rotate: false
+  xy: 33, 0
+  size: 11, 11
+  orig: 11, 11
+  offset: 0, 0
+  index: -1

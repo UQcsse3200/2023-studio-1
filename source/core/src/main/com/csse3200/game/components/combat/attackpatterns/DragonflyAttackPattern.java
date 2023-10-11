@@ -52,9 +52,12 @@ public class DragonflyAttackPattern extends AttackPatternComponent {
     protected void attack() {
 
        List<Entity> entitiesInRange = interactionDetector.getEntitiesInRange();
+       entity.getEvents().trigger("startEffect", "attack");
+
 
        if (entitiesInRange.isEmpty()) { // No entity detected, clear attack loop
            currentAttackEvent = null;
+           entity.getEvents().trigger("stopEffect", "attack");
            return;
        }
 
