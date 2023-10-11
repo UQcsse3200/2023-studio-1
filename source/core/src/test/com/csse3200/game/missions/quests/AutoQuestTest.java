@@ -61,7 +61,7 @@ class AutoQuestTest {
     }
 
     @Test
-    public void testRegisterMission() {
+    void testRegisterMission() {
         assertFalse(r1.isCollected());
         assertFalse(r2.isCollected());
         assertFalse(r3.isCollected());
@@ -80,21 +80,21 @@ class AutoQuestTest {
     }
 
     @Test
-    public void testIsCompleted() {
+    void testIsCompleted() {
         assertTrue(autoQuest1.isCompleted());
         assertTrue(autoQuest2.isCompleted());
         assertTrue(autoQuest3.isCompleted());
     }
 
     @Test
-    public void testGetDescription() {
+    void testGetDescription() {
         assertEquals("Auto Quest 1", autoQuest1.getDescription());
         assertEquals("Auto Quest 2", autoQuest2.getDescription());
         assertEquals("Auto Quest 3", autoQuest3.getDescription());
     }
 
     @Test
-    public void testGetShortDescription() {
+    void testGetShortDescription() {
         assertEquals("Auto Quest 1", autoQuest1.getShortDescription());
         assertEquals("Auto Quest 2", autoQuest2.getShortDescription());
         assertEquals("Auto Quest 3", autoQuest3.getShortDescription());
@@ -104,7 +104,7 @@ class AutoQuestTest {
     }
 
     @Test
-    public void testReadProgress() {
+    void testReadProgress() {
         JsonValue mockProgress = mock(JsonValue.class);
         testGetDescription();
         String autoQuest1Desc = autoQuest1.getDescription();
@@ -134,14 +134,14 @@ class AutoQuestTest {
     }
 
     @Test
-    public void testGetProgress() {
+    void testGetProgress() {
         assertEquals(0, autoQuest1.getProgress());
         assertEquals(0, autoQuest2.getProgress());
         assertEquals(0, autoQuest3.getProgress());
     }
 
     @Test
-    public void testResetState() {
+    void testResetState() {
         testIsCompleted();
         autoQuest1.resetState();
         autoQuest2.resetState();

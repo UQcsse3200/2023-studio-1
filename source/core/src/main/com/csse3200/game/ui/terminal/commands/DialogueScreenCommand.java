@@ -20,9 +20,8 @@ public class DialogueScreenCommand implements Command {
         cutscene = new Cutscene(dialogue1, Cutscene.CutsceneType.ALIEN);
         cutscene.spawnCutscene();
         return true;
-    };
+    }
 
     boolean isValid(ArrayList<String> args) {
-        return args.size() == 0;
-    }
-}
+        return args.isEmpty();  // Using isEmpty() to check if the list is empty
+    }}

@@ -10,7 +10,7 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class EntityTypeTest {
+class EntityTypeTest {
   EntityType[] enumValues;
   Set<String> expectedEnumNames;
 
@@ -24,7 +24,7 @@ public class EntityTypeTest {
         "PLAYER", "TRACTOR", "PLANT", "DECAYING_PLANT", "TILE", "COW",
         "CHICKEN", "ASTROLOTL", "OXYGEN_EATER", "ITEM", "FIRE_FLIES",
         "QUESTGIVER", "QUESTGIVER_INDICATOR", "SPRINKLER","SHIP", "SHIP_DEBRIS", "SHIP_PART_TILE",
-            "GATE", "FENCE", "CHEST", "PUMP", "LIGHT", "FIRE_FLIES", "DRAGONFLY", "BAT", "DUMMY"));
+            "GATE", "FENCE", "CHEST", "PUMP", "LIGHT", "FIRE_FLIES", "DRAGONFLY", "BAT", "DUMMY", "GOLDEN_STATUE"));
   }
 
   /*
@@ -42,7 +42,7 @@ public class EntityTypeTest {
    */
 
   @Test
-  public void testEnumValuesAddedFollowedProcedure() {
+  void testEnumValuesAddedFollowedProcedure() {
 
     for (EntityType enumValue : enumValues) {
       if (!expectedEnumNames.contains(enumValue.name())) {
@@ -67,7 +67,7 @@ public class EntityTypeTest {
    */
 
   @Test
-  public void testEnumValuesRemovedFollowedProcedure() {
+  void testEnumValuesRemovedFollowedProcedure() {
 
     // Check if any expected enum names are missing.
     for (String expectedEnumName : expectedEnumNames) {

@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.Mockito.mock;
 
-public class ParticleEffectWrapperTest {
+class ParticleEffectWrapperTest {
 
     private ParticleEffectPool.PooledEffect mockPooledEffect1, mockPooledEffect2, mockPooledEffect3;
     private String category;

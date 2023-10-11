@@ -49,7 +49,7 @@ class ClimateControllerTest {
 	}
 
 	@Test
-	public void testAddingEvent() {
+	void testAddingEvent() {
 		WeatherEvent event = new AcidShowerEvent(1, 1, 1, 1.3f);
 		controller.addWeatherEvent(event);
 
@@ -63,7 +63,7 @@ class ClimateControllerTest {
 	}
 
 	@Test
-	public void testValidTemperature() {
+	void testValidTemperature() {
 		ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
 		float temperature = controller.getTemperature();
 
@@ -73,7 +73,7 @@ class ClimateControllerTest {
 	}
 
 	@Test
-	public void testValidHumidity() {
+	void testValidHumidity() {
 		ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
 		float humidity = controller.getHumidity();
 
@@ -83,7 +83,7 @@ class ClimateControllerTest {
 	}
 
 	@Test
-	public void testNoEventAdded() {
+	void testNoEventAdded() {
 		assertNull(controller.getCurrentWeatherEvent());
 		try (MockedStatic<MathUtils> mathUtils = mockStatic(MathUtils.class)) {
 			mathUtils.when(MathUtils::random).thenReturn(0f);
@@ -99,7 +99,7 @@ class ClimateControllerTest {
 	 * Testing the case of SolarSurgeEvent.
 	 */
 	@Test
-	public void testAddedEvent1() {
+	void testAddedEvent1() {
 		assertNull(controller.getCurrentWeatherEvent());
 		try (MockedStatic<MathUtils> mathUtils = mockStatic(MathUtils.class)) {
 			mathUtils.when(MathUtils::random).thenReturn(1f);
@@ -116,7 +116,7 @@ class ClimateControllerTest {
 	 * Testing the case of AcidShowerEvent.
 	 */
 	@Test
-	public void testAddDailyEventCase0() {
+	void testAddDailyEventCase0() {
 		assertNull(controller.getCurrentWeatherEvent());
 
 		try (MockedStatic<MathUtils> mathUtils = mockStatic(MathUtils.class)) {
@@ -136,7 +136,7 @@ class ClimateControllerTest {
 	}
 
 	@Test
-	public void testExpiringEvent() {
+	void testExpiringEvent() {
 		WeatherEvent event = new SolarSurgeEvent(1, 1, 1, 1.4f);
 		controller.addWeatherEvent(event);
 
@@ -147,12 +147,12 @@ class ClimateControllerTest {
 	}
 
 	@Test
-	public void testAddEventWithNull() {
+	void testAddEventWithNull() {
 		assertThrows(IllegalArgumentException.class, () -> controller.addWeatherEvent(null));
 	}
 
 	@Test
-	public void testAddInstantEvent() {
+	void testAddInstantEvent() {
 		AcidShowerEvent event = new AcidShowerEvent(0, 1, 2, 1.5f);
 		controller.addWeatherEvent(event);
 		assertEquals(controller.getCurrentWeatherEvent(), event);
@@ -161,7 +161,7 @@ class ClimateControllerTest {
 	}
 
 	@Test
-	public void testOverridenEvent() {
+	void testOverridenEvent() {
 		AcidShowerEvent event = new AcidShowerEvent(0, 1, 2, 1.5f);
 		controller.addWeatherEvent(event);
 		assertEquals(controller.getCurrentWeatherEvent(), event);
@@ -173,7 +173,7 @@ class ClimateControllerTest {
 	}
 
 	@Test
-	public void testSetValues() {
+	void testSetValues() {
 		Json json = new Json();
 		JsonValue jsonData = new JsonValue(JsonValue.ValueType.object);
 		jsonData.addChild("Temp", new JsonValue(26.0f));
@@ -196,5 +196,4 @@ class ClimateControllerTest {
 		assertEquals(26.0f, controller.getTemperature());
 		assertEquals(1.2f, controller.getHumidity());
 	}
-
 }

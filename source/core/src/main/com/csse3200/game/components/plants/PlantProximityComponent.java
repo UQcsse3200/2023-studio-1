@@ -15,12 +15,12 @@ public class PlantProximityComponent extends HitboxComponent {
     /**
      * The radius of the hitbox area.
      */
-    private float radius;
+    private final float radius;
 
     /**
      * The shape of the hitbox area.
      */
-    private CircleShape shape = new CircleShape();
+    private final CircleShape shape = new CircleShape();
 
     /**
      * Constructor for the plant proximity component. Just used to setting the

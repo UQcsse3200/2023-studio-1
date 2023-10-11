@@ -18,8 +18,6 @@ import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.components.maingame.PauseMenuActions;
-import com.csse3200.game.components.player.PlayerActions;
-import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
@@ -45,8 +43,7 @@ import com.csse3200.game.services.plants.PlantCommandService;
 import com.csse3200.game.services.plants.PlantInfoService;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 
 /**
@@ -125,6 +122,7 @@ public class MainGameScreen extends ScreenAdapter {
 
         ServiceLocator.registerPlantCommandService(new PlantCommandService());
         ServiceLocator.registerPlayerHungerService(new PlayerHungerService());
+        ServiceLocator.registerPlayerMapService(new PlayerMapService());
         ServiceLocator.registerPlantInfoService(new PlantInfoService());
 
         ServiceLocator.registerUIService(new UIService());
@@ -153,8 +151,6 @@ public class MainGameScreen extends ScreenAdapter {
         renderer.getCamera().setTrackEntity(spaceGameArea.getPlayer());
 
         createUI();
-        spaceGameArea.getPlayer().getComponent(PlayerActions.class).setCameraVar(renderer.getCamera());
-        spaceGameArea.getTractor().getComponent(TractorActions.class).setCameraVar(renderer.getCamera());
 
         ServiceLocator.getMissionManager().getEvents().addListener("loseScreen", this::playLoseScreen);
 
@@ -193,7 +189,7 @@ public class MainGameScreen extends ScreenAdapter {
                 }
                 ServiceLocator.getTimeService().update();
                 renderer.render();
-                if (PauseMenuActions.getQuitGameStatus()) {
+                if (Boolean.TRUE.equals(PauseMenuActions.getQuitGameStatus())) {
                     entity.getEvents().trigger("exit");
                     PauseMenuActions.setQuitGameStatus();
                 }
@@ -280,7 +276,8 @@ public class MainGameScreen extends ScreenAdapter {
                 .addComponent(new PlantInfoDisplayComponent())
 
                 .addComponent(new WeatherEventDisplay())
-                .addComponent(new HealthDisplay());
+                .addComponent(new HealthDisplay())
+                .addComponent(new ToggleableMap());
 
         ServiceLocator.getEntityService().register(ui);
     }

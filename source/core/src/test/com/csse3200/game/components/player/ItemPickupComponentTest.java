@@ -28,7 +28,7 @@ import com.csse3200.game.services.ServiceLocator;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(GameExtension.class)
-public class ItemPickupComponentTest {
+class ItemPickupComponentTest {
 
     private Entity picker;
     private Entity pickupItem;

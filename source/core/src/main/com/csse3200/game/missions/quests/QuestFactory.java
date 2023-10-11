@@ -33,6 +33,7 @@ public class QuestFactory {
     public static final String STRATOSPHERIC_SENTINEL_QUEST_NAME = "Stratospheric Sentinel";
     public static final String ACT_III_MAIN_QUEST_NAME = "Weather the Storm";
     public static final String TRACTOR_GO_BRRRRRR = "Tractor Go BRRRRRR";
+    public static final String FISHING_QUEST = "BLOP";
 
     private QuestFactory() {
         // This class should not be instantiated - if it is, do nothing
@@ -146,10 +147,20 @@ public class QuestFactory {
                 Traktor Go BRRRR!!!
                 """;
         MultiReward reward = new MultiReward(List.of(
-                new EntityReward(List.of(TractorFactory.createTractor(ServiceLocator.getGameArea().getPlayer()))),
+                new EntityReward(List.of(TractorFactory.createTractor())),
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
         return new MissionCompleteQuest(TRACTOR_GO_BRRRRRR, reward, 1);
+    }
+
+    public static FishingQuest createFishingQuest() {
+        String dialogue = """
+                Fosh!
+                """;
+        MultiReward reward = new MultiReward(List.of(
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
+        ));
+        return new FishingQuest(FISHING_QUEST, reward, 5);
     }
 
     /**
@@ -160,12 +171,14 @@ public class QuestFactory {
         List<Quest> questsToAdd = new ArrayList<>();
         List<Quest> questsToActivate = new ArrayList<>();
         questsToActivate.add(createFertilisingFiestaQuest());
+        //questsToActivate.add(createFishingQuest());
 
         String dialogue = """
                 "You are beginning to understand... {WAIT}Treat this planet well, and it will treat you well in return." {WAIT}Memories of a shattered Earth and a sky alight cloud your vision. {WAIT}You snap back to now. {WAIT}"You may have noticed the {COLOR=#76428A}KIND OFFERINGS{COLOR=BLACK} our fauna provide. {WAIT}Maybe you could try to use them?"
                 """;
 
         MultiReward reward = new MultiReward(List.of(
+                new ItemReward(List.of(ItemFactory.createFishingRod())),
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
@@ -200,11 +213,11 @@ public class QuestFactory {
                 new ItemReward(itemRewards),
                 new QuestReward(questsToAdd, questsToActivate),
                 new TriggerHostilesReward(List.of(
-                        NPCFactory.createOxygenEater(ServiceLocator.getGameArea().getPlayer()),
-                        NPCFactory.createOxygenEater(ServiceLocator.getGameArea().getPlayer()),
-                        NPCFactory.createDragonfly(ServiceLocator.getGameArea().getPlayer()),
-                        NPCFactory.createDragonfly(ServiceLocator.getGameArea().getPlayer()),
-                        NPCFactory.createBat(ServiceLocator.getGameArea().getPlayer())
+                        NPCFactory.createOxygenEater(),
+                        NPCFactory.createOxygenEater(),
+                        NPCFactory.createDragonfly(),
+                        NPCFactory.createDragonfly(),
+                        NPCFactory.createBat()
                 )),
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
@@ -239,6 +252,7 @@ public class QuestFactory {
         List<Quest> questsToAdd = new ArrayList<>();
         List<Quest> questsToActivate = new ArrayList<>();
         questsToActivate.add(createConnectionQuest());
+        questsToActivate.add(createTractorQuest());
 
         String dialogue = """
                 For the first time since your landing, the {COLOR=#76428A}ALIEN CREATURE{COLOR=BLACK}'s vicious scowl fades. {WAIT}"I apologise for my initial hostility. {WAIT}My name is Jarrael. {WAIT}I am- {WAIT}was a member of the Karreshiq people. {WAIT}I was sent here for a special purpose, after {COLOR=RED}The Night of the Black Sun{COLOR=BLACK}. {WAIT}Our people had interacted with your civilisation many millennia ago, but we found a home here after we were {COLOR=RED}driven out{COLOR=BLACK}. {WAIT}So imagine my shock when you came crashing down from the sky. {WAIT}What happened?" {WAIT}You begin to explain your predicament to Jarrael...

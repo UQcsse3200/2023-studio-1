@@ -32,12 +32,12 @@ public class PlaceableFactory {
      * @return the entity that was made
      */
     public static Entity createBasePlaceable(EntityType type) {
-        Entity placeable = new Entity(type)
+        return new Entity(type)
                 .addComponent(new PlaceableEvents())
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
                 .addComponent(new HitboxComponent())
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-        return placeable;
+
     }
 
     /**
@@ -48,11 +48,10 @@ public class PlaceableFactory {
     public static Entity createFence() {
         EntityType type = EntityType.FENCE;
         type.setPlaceableCategory(PlaceableCategory.FENCES);
-        Entity fence = createBasePlaceable(type)
+        return createBasePlaceable(type)
                 .addComponent(new DynamicTextureRenderComponent("images/placeable/fences/f.png"))
                 .addComponent(new FenceComponent(false));
         // Add components here
-        return fence;
     }
 
     /**
@@ -63,10 +62,9 @@ public class PlaceableFactory {
     public static Entity createGate() {
         EntityType type = EntityType.GATE;
         type.setPlaceableCategory(PlaceableCategory.FENCES);
-        Entity gate = createBasePlaceable(type)  //used to be .Gate.
+        return createBasePlaceable(type)  //used to be .Gate.
                 .addComponent(new DynamicTextureRenderComponent("images/placeable/fences/g_r_l.png"))
                 .addComponent(new FenceComponent(true));
-        return gate;
     }
 
     /**
@@ -129,10 +127,27 @@ public class PlaceableFactory {
 
         animator.startAnimation("light_off");
 
-        Entity light = createBasePlaceable(EntityType.LIGHT)
+        return createBasePlaceable(EntityType.LIGHT)
                 .addComponent(new AuraLightComponent(4f, Color.TAN))
                 .addComponent(new LightController())
                 .addComponent(animator);
-        return light;
+
+    }
+
+    public static Entity createGoldenTrophy() {
+        AnimationRenderComponent animator = new AnimationRenderComponent(
+                ServiceLocator.getResourceService().getAsset("images/golden_trophy.atlas", TextureAtlas.class),
+                16f
+        );
+
+        animator.addAnimation("default", 0.5f, Animation.PlayMode.LOOP);
+        animator.startAnimation("default");
+
+        AuraLightComponent lightComponent = new AuraLightComponent();
+        lightComponent.toggleLight();
+
+        return createBasePlaceable(EntityType.GOLDEN_STATUE)
+                .addComponent(lightComponent)
+                .addComponent(animator);
     }
 }

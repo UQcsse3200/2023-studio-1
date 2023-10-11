@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(GameExtension.class)
-public class TerrainFactoryTest {
+class TerrainFactoryTest {
 
     /**
      * Test to see that image filePaths all exist

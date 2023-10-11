@@ -1,7 +1,5 @@
 package com.csse3200.game.entities.configs;
 
-import com.badlogic.gdx.utils.compression.lzma.Base;
-
 /**
  * Defines all NPC configs to be loaded by the NPC Factory.
  */

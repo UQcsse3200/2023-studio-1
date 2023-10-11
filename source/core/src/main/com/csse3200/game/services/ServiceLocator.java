@@ -49,6 +49,8 @@ public class ServiceLocator {
   private static PlantCommandService plantCommandService;
   private static PlayerHungerService playerHungerService;
 
+  private static PlayerMapService playerMapService;
+
   private static PlantInfoService plantInfoService;
   private static boolean cutSceneRunning; // true for running and false otherwise
 
@@ -105,6 +107,10 @@ public class ServiceLocator {
 
   public static PlayerHungerService getPlayerHungerService() {
     return playerHungerService;
+  }
+
+  public static PlayerMapService getPlayerMapService() {
+    return playerMapService;
   }
 
   public static SaveLoadService getSaveLoadService() {
@@ -203,6 +209,10 @@ public class ServiceLocator {
     playerHungerService = source;
   }
 
+  public static void registerPlayerMapService(PlayerMapService source) {
+    logger.debug("Registering player map service {}", source);
+    playerMapService = source;
+  }
   public static void registerPlantCommandService(PlantCommandService source) {
     logger.debug("Registering plant command service {}", source);
     plantCommandService = source;
@@ -276,6 +286,10 @@ public class ServiceLocator {
 
   public static void registerCraftArea(GameAreaDisplay area){
     craftArea = area;
+  }
+
+  public static GameAreaDisplay getCraftArea() {
+    return craftArea;
   }
 
 }

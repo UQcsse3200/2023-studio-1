@@ -35,7 +35,7 @@ import com.csse3200.game.services.ServiceLocator;
  * Tests for the PlayerHighlightComponent
  */
 @ExtendWith(GameExtension.class)
-public class PlayerHighlightComponentTest {
+class PlayerHighlightComponentTest {
     private Entity playerHighlight; // the playerHighlight entity
 
     /**
@@ -51,7 +51,7 @@ public class PlayerHighlightComponentTest {
      * Tests that the playerHighlight entity is created and that the events are not null
      */
     @Test
-    public void create() {
+    void create() {
         assertNotNull(playerHighlight.getComponent(PlayerHighlightComponent.class));
         EventHandler events = playerHighlight.getEvents();
         assertNotNull(events);
@@ -61,7 +61,7 @@ public class PlayerHighlightComponentTest {
      * Tests that the playerHighlight is muted and unmuted correctly
      */
     @Test
-    public void isMuted() {
+    void isMuted() {
         assertFalse(playerHighlight.getComponent(PlayerHighlightComponent.class).isMuted());
         playerHighlight.getComponent(PlayerHighlightComponent.class).mute();
         assertTrue(playerHighlight.getComponent(PlayerHighlightComponent.class).isMuted());
@@ -74,7 +74,7 @@ public class PlayerHighlightComponentTest {
      * based off mouse input correctly.
      */
     @Test
-    public void updatePosition() {
+    void updatePosition() {
 
         GameMap gameMap;
         ServiceLocator.registerPhysicsService(new PhysicsService());
@@ -132,7 +132,7 @@ public class PlayerHighlightComponentTest {
     }
 
     @Test
-    public void getTexturePath() {
+    void getTexturePath() {
         assertEquals("images/yellowSquare.png", playerHighlight.getComponent(PlayerHighlightComponent.class).getTexturePath());
     }
 
