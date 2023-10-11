@@ -7,6 +7,7 @@ import java.util.*;
 import java.util.function.Supplier;
 
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.entities.factories.ShipFactory;
 import com.csse3200.game.services.sound.EffectSoundFile;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.TerrainTile;
@@ -572,7 +573,7 @@ public class ItemActions extends Component {
       return false;
     }
     if (ship.getType() == EntityType.SHIP) {
-      ship.getEvents().trigger("addPart", 1);
+      ship.getEvents().trigger(ShipFactory.events.ADD_PART.name(), 1);
       player.getComponent(InventoryComponent.class).removeItem(entity);
       return true;
     }
