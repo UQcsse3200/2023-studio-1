@@ -206,17 +206,23 @@ public class IntroDisplay extends UIComponent {
         cockpitBottom = new Image(ServiceLocator.getResourceService()
                 .getAsset("images/crash-animation/Cockpit_Bottom.png", Texture.class));
         cockpitBottom.setVisible(false);
-
-        cockpitTop.setPosition(Gdx.graphics.getWidth() / 2f,Gdx.graphics.getHeight(), Align.top);
-        cockpitTopPosition[0] = cockpitTop.getX();
-        cockpitTopPosition[1] = cockpitTop.getY();
-
-        cockpitBottom.setPosition(Gdx.graphics.getWidth() / 2f, 0, Align.bottom);
-        cockpitBottomPosition[0] = cockpitBottom.getX();
-        cockpitBottomPosition[1] = cockpitBottom.getY();
         
         stage.addActor(cockpitTop);
         stage.addActor(cockpitBottom);
+    
+        cockpitTop.setWidth(Gdx.graphics.getWidth() * 1.1f);
+        cockpitTop.setHeight(Gdx.graphics.getHeight() * 0.3f);
+    
+        cockpitBottom.setWidth(Gdx.graphics.getWidth() * 1.1f);
+        cockpitBottom.setHeight(Gdx.graphics.getHeight() * 0.4f);
+        
+        cockpitTop.setPosition( -Gdx.graphics.getWidth() * 0.05f,Gdx.graphics.getHeight(), Align.topLeft);
+        cockpitTopPosition[0] = cockpitTop.getX();
+        cockpitTopPosition[1] = cockpitTop.getY();
+    
+        cockpitBottom.setPosition(-Gdx.graphics.getWidth() * 0.05f, 0);
+        cockpitBottomPosition[0] = cockpitBottom.getX();
+        cockpitBottomPosition[1] = cockpitBottom.getY();
     }
 
     /**
@@ -244,12 +250,12 @@ public class IntroDisplay extends UIComponent {
         boolean yDirection = random.nextBoolean();
         float yMagnitude = random.nextFloat() * (yDirection ? 1f : -1f);
         yMagnitude = yMagnitude * shakeFactor;
-
-        float newCockpitTopX = cockpitTop.getX() + xMagnitude;
-        float newCockpitTopY = cockpitTop.getY() + yMagnitude;
-
-        float newCockpitBottomX = cockpitBottom.getX() + xMagnitude;
-        float newCockpitBottomY = cockpitBottom.getY() + yMagnitude;
+    
+        float newCockpitTopX = cockpitTopPosition[0] + xMagnitude;
+        float newCockpitTopY = cockpitTopPosition[1] + yMagnitude;
+    
+        float newCockpitBottomX = cockpitBottomPosition[0] + xMagnitude;
+        float newCockpitBottomY = cockpitBottomPosition[1] + yMagnitude;
 
         if (Math.abs(cockpitTopPosition[0] - newCockpitTopX) < maxX
                 && Math.abs(cockpitTopPosition[1] - newCockpitTopY) < maxY
@@ -257,6 +263,9 @@ public class IntroDisplay extends UIComponent {
                 && Math.abs(cockpitBottomPosition[1] - newCockpitBottomY) < maxY) {
             cockpitTop.setPosition(newCockpitTopX, newCockpitTopY);
             cockpitBottom.setPosition(newCockpitBottomX, newCockpitBottomY);
+        } else {
+            //cockpitTop.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight(), Align.top);
+            //cockpitBottom.setPosition(Gdx.graphics.getWidth() / 2f, 0, Align.bottom);
         }
     }
 
@@ -303,8 +312,8 @@ public class IntroDisplay extends UIComponent {
             //logger.error("SHAKE!!!!");
             shake(5f);
         } else {
-            cockpitTop.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight(), Align.top);
-            cockpitBottom.setPosition(Gdx.graphics.getWidth() / 2f, 0, Align.bottom);
+            cockpitTop.setPosition(Gdx.graphics.getWidth() / 1f, Gdx.graphics.getHeight(), Align.top);
+            cockpitBottom.setPosition(Gdx.graphics.getWidth() / 1f, 0, Align.bottom);
         }
 
         stage.act(ServiceLocator.getTimeSource().getDeltaTime());
