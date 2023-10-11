@@ -23,6 +23,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.ui.UIComponent;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+
 public class CutsceneDisplay extends UIComponent {
 
     /**
@@ -172,6 +176,7 @@ public class CutsceneDisplay extends UIComponent {
      */
     private void spawnDialogueBox () {
         logger.debug("Cutscene dialogue spawned");
+        Random random = new Random();
 
         TypingLabel dialogueLabel = new TypingLabel(this.dialogue, skin);
         dialogueLabel.setAlignment(Align.center);
@@ -183,7 +188,8 @@ public class CutsceneDisplay extends UIComponent {
             public void onChar(Character c) {
                 Sound shortBeep = Gdx.audio.newSound(Gdx.files.internal("sounds/beep.mp3"));
                 long id = shortBeep.play(0.1f);
-                shortBeep.setPitch(id, 0.75f);
+                List<Float> pitches = Arrays.asList(0.55f, 0.65f, 0.75f, 0.85f, 0.95f);
+                shortBeep.setPitch(id, pitches.get(random.nextInt(5)));
             }
         });
 
