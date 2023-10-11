@@ -43,11 +43,9 @@ public class OpenPauseComponent extends Component {
         logger.info("Closing pause window");
         KeyboardPlayerInputComponent.clearMenuOpening();
         ServiceLocator.getPauseMenuArea().disposePauseMenu();
-
-        logger.info("Pause status:" + ServiceLocator.getCutSceneStatus() + " line 46");
         pauseOpen = false;
+        logger.info("Pause status: {} line 46", ServiceLocator.getCutSceneStatus());
         if (!ServiceLocator.getCutSceneStatus()) {
-            pauseOpen = false;
             // temporary neutralise setPause to false while cut screen is running
             ServiceLocator.getTimeService().setPaused(false);
         }
