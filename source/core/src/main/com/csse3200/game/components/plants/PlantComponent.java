@@ -1083,18 +1083,34 @@ public class PlantComponent extends Component {
     public void write(Json json) {
         json.writeObjectStart(this.getClass().getSimpleName());
         json.writeValue("name", getPlantName());
-        json.writeValue("health", getPlantHealth());
-        json.writeValue("growth", getCurrentGrowthLevel());
+        json.writeValue("plantHealth", getPlantHealth());
         json.writeValue("animation", currentAnimator.getCurrentAnimation());
+        json.writeValue("currentGrowthLevel", getCurrentGrowthLevel());
+        json.writeValue("currentMaxHealth", getCurrentMaxHealth());
+        json.writeValue("numOfDaysAsAdult", getNumOfDaysAsAdult());
+        json.writeValue("isEating", getIsEating());
+        json.writeValue("countMinutesOfDigestion", countMinutesOfDigestion);
+        json.writeValue("deadBeforeMaturity", deadBeforeMaturity);
+        json.writeValue("plantDestroyed", plantDestroyed);
+        json.writeValue("forced", forced);
+        json.writeValue("growthStage", getGrowthStage().name());
         json.writeObjectEnd();
     }
 
     @Override
     public void read(Json json, JsonValue plantData) {
         ServiceLocator.getGameArea().spawnEntity(entity);
+        setPlantHealth(plantData.getInt("plantHealth"));
         this.currentAnimator = entity.getComponent(AnimationRenderComponent.class);
         currentAnimator.startAnimation(plantData.getString("animation"));
-        plantHealth = plantData.getInt("health");
-        currentGrowthLevel = plantData.getInt("growth");
+        setCurrentGrowthLevel(plantData.getInt("currentGrowthLevel"));
+        currentMaxHealth = plantData.getInt("currentMaxHealth");
+        setNumOfDaysAsAdult(plantData.getInt("numOfDaysAsAdult"));
+        isEating = plantData.getBoolean("isEating");
+        countMinutesOfDigestion = plantData.getInt("countMinutesOfDigestion");
+        deadBeforeMaturity = plantData.getBoolean("deadBeforeMaturity");
+        plantDestroyed = plantData.getBoolean("plantDestroyed");
+        forced = plantData.getBoolean("forced");
+        growthStages = GrowthStage.valueOf(plantData.getString("growthStage"));
     }
 }
