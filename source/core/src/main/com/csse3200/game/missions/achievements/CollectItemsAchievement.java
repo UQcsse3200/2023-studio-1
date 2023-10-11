@@ -1,4 +1,4 @@
-package com.csse3200.game.missions.quests;
+package com.csse3200.game.missions.achievements;
 
 import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.events.EventHandler;
@@ -7,9 +7,9 @@ import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.rewards.Reward;
 
 /**
- * Inventory Quests is a quest that makes the player collect a number of unique items
+ * An {@link Achievement} completed by collecting a certain number of items
  */
-public class CollectItemsQuest extends Quest {
+public class CollectItemsAchievement extends Achievement {
 
     /**
      * Number of items the player needs to collect
@@ -22,33 +22,18 @@ public class CollectItemsQuest extends Quest {
     private int numberOfItemsCollected;
 
     /**
-     * A Quest where player is required to clear a certain amount of debris.
-     * @param name - Human-readable name of the Quest.
-     * @param reward - Reward player will receive after completing the Quest.
-     * @param numberOfItems - Amount of debris the player is required to clear.
+     * An achievement where player is required to collect a certain number of items
+     * @param name - Human-readable name of the Achievement.
+     * @param numberOfItems - Amount of items the player needs to collect.
      */
-    public CollectItemsQuest(String name, Reward reward, int numberOfItems) {
-        super(name, reward);
+    public CollectItemsAchievement(String name, Reward reward, int numberOfItems) {
+        super(name);
         this.numberOfItemsToCollect = Math.max(numberOfItems, 0);
         this.numberOfItemsCollected = 0;
     }
 
     /**
-     * Constructor for a ClearDebrisQuest where isMandatory and expiryDuration can be specified.
-     * @param name - Human-readable name of the Quest.
-     * @param reward - Reward player will receive after completing the Quest.
-     * @param expiryDuration - Number of in-game hours before the Quest is considered expired.
-     * @param numberOfItems - Amount of debris the player is required to clear.
-     */
-    public CollectItemsQuest(String name, Reward reward, int expiryDuration, int numberOfItems) {
-        super(name, reward, expiryDuration, false);
-
-        this.numberOfItemsToCollect = Math.max(numberOfItems, 0);
-        this.numberOfItemsCollected = 0;
-    }
-
-    /**
-     * Registers the Quest with the {@link MissionManager} by listening to the DEBRIS_CLEAR Mission event.
+     * Registers the Achievement with the {@link MissionManager} by listening to the ITEMS_COLLECTED Mission event.
      * @param missionManagerEvents - A reference to the {@link EventHandler} on the
      *                             {@link MissionManager}, with which relevant events should be
      *                             listened to.
@@ -59,7 +44,7 @@ public class CollectItemsQuest extends Quest {
     }
 
     /**
-     * Updating the state of the InventoryQuest. If called this method will increment the numberOfDebrisCleared
+     * Updating the state of the CollectItemsAchievement. If called this method will increment the numberOfItemsCollected
      * and then notifyUpdate().
      */
     private void updateState() {
@@ -70,7 +55,7 @@ public class CollectItemsQuest extends Quest {
     }
 
     /**
-     * Checks if the  InventoryQuest is complete
+     * Checks if the CollectItemsAchievement is complete
      * @return - True if player has cleared at least numberOfItemsToCollect, otherwise False.
      */
     @Override
@@ -79,8 +64,8 @@ public class CollectItemsQuest extends Quest {
     }
 
     /**
-     * The description of the Quest to give a representation of the player's progress in the Quest.
-     * @return - Human-readable description of the InventoryQuest.
+     * The description of the Achievement to give a representation of the player's progress in the Achievement.
+     * @return - Human-readable description of the CollectItemsAchievement.
      */
     @Override
     public String getDescription() {
@@ -90,7 +75,7 @@ public class CollectItemsQuest extends Quest {
     }
 
     /**
-     * Gives the player's progress in the InventoryQuest.
+     * Gives the player's progress in the CollectItemsAchievement.
      * @return - Human-readable String of how many items the player has collected and how many they have left to collect
      */
     @Override
@@ -109,7 +94,7 @@ public class CollectItemsQuest extends Quest {
     }
 
     /**
-     * Get the number of debris the player has cleared since Quest was registered.
+     * Get the number of debris the player has cleared since Achievements was registered.
      * @return - number of items collected
      */
     @Override
@@ -120,9 +105,7 @@ public class CollectItemsQuest extends Quest {
     /**
      * Resets the number of debris cleared to 0.
      */
-    @Override
     protected void resetState() {
         numberOfItemsCollected = 0;
     }
-
 }

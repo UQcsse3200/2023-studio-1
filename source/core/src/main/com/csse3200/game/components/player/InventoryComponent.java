@@ -377,7 +377,7 @@ public class InventoryComponent extends Component {
         if (isFull()) {
             return false;
         } else {
-            //Update the collect items quest
+            //Update the collect items achievement
             ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.ITEMS_COLLECTED.name());
             // Update the count of the Item Type
             this.itemCount.put(item.getComponent(ItemComponent.class).getItemName(), this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(), 0) + 1);
