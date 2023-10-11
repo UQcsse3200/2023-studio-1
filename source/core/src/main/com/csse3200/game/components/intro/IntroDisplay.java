@@ -88,6 +88,7 @@ public class IntroDisplay extends UIComponent {
 
     private float screenWidth;
     private float screenHeight;
+    private float shakeFactor = 1f;
 
     public IntroDisplay(GdxGame game) {
         super();
@@ -230,8 +231,8 @@ public class IntroDisplay extends UIComponent {
 
     private void shake(float shakeFactor) {
         if (shakeFactor != 0) {
-            float maxX = 10f;
-            float maxY = 10f;
+            float maxX = 20f;
+            float maxY = 20f;
 
             SecureRandom random = new SecureRandom();
 
@@ -264,17 +265,17 @@ public class IntroDisplay extends UIComponent {
     }
 
     private void repositionCockpit() {
-        cockpitTop.setWidth(Gdx.graphics.getWidth() * 1.1f);
-        cockpitTop.setHeight(Gdx.graphics.getHeight() * 0.3f);
+        cockpitTop.setWidth(Gdx.graphics.getWidth() * 1.2f);
+        cockpitTop.setHeight(Gdx.graphics.getHeight() * 0.4f);
 
-        cockpitBottom.setWidth(Gdx.graphics.getWidth() * 1.1f);
+        cockpitBottom.setWidth(Gdx.graphics.getWidth() * 1.2f);
         cockpitBottom.setHeight(Gdx.graphics.getHeight() * 0.4f);
 
-        cockpitTop.setPosition( -Gdx.graphics.getWidth() * 0.05f,Gdx.graphics.getHeight(), Align.topLeft);
+        cockpitTop.setPosition( -Gdx.graphics.getWidth() * 0.1f,Gdx.graphics.getHeight(), Align.topLeft);
         cockpitTopPosition[0] = cockpitTop.getX();
         cockpitTopPosition[1] = cockpitTop.getY();
 
-        cockpitBottom.setPosition(-Gdx.graphics.getWidth() * 0.05f, 0);
+        cockpitBottom.setPosition(-Gdx.graphics.getWidth() * 0.1f, 0);
         cockpitBottomPosition[0] = cockpitBottom.getX();
         cockpitBottomPosition[1] = cockpitBottom.getY();
     }
@@ -339,12 +340,16 @@ public class IntroDisplay extends UIComponent {
 
         resizePlanetAnimation();
 
-        if (titleSequenceFinished) {
+        if (!titleSequenceFinished) {
             updateTitleAnimation();
+        } else {
+            shake(shakeFactor);
+            shakeFactor = shakeFactor * 1.01f;
+            //TODO call next screen
+            if (shakeFactor >= 20f) {
+                startGame();
+            }
         }
-
-        shake(5f);
-
         stage.act(ServiceLocator.getTimeSource().getDeltaTime());
     }
 
