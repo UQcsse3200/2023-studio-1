@@ -68,12 +68,6 @@ public class IntroDisplay extends UIComponent {
      * The table that forms the basis for the layout of the textual elements on the screen.
      */
     private Table rootTable;
-    
-    /**
-     * The table that forms the basis for the layout of the cockpit's textual elements
-     * on the screen.
-     */
-    private Table cockpitTable;
 
     /**
      * The TypingLabel that contains the story that is displayed on the screen.
@@ -89,6 +83,7 @@ public class IntroDisplay extends UIComponent {
     private float screenWidth;
     private float screenHeight;
     private float shakeFactor = 1f;
+    private boolean calledStart = false;
 
     public IntroDisplay(GdxGame game) {
         super();
@@ -172,8 +167,8 @@ public class IntroDisplay extends UIComponent {
 
                 planet.setPosition(Gdx.graphics.getWidth() / 2f, (cockpitTop.getY(Align.bottom) - cockpitBottom.getY(Align.top)) / 2f);
 
-                logger.error("({}, {}) - Cockpit Top", cockpitTopPosition[0], cockpitTopPosition[1]);
-                logger.error("({}, {}) - Cockpit Bottom", cockpitBottomPosition[0], cockpitBottomPosition[1]);
+                logger.debug("({}, {}) - Cockpit Top", cockpitTopPosition[0], cockpitTopPosition[1]);
+                logger.debug("({}, {}) - Cockpit Bottom", cockpitBottomPosition[0], cockpitBottomPosition[1]);
                 titleSequenceFinished = true;
             }
         });
@@ -344,10 +339,13 @@ public class IntroDisplay extends UIComponent {
             updateTitleAnimation();
         } else {
             shake(shakeFactor);
-            shakeFactor = shakeFactor * 1.01f;
-            //TODO call next screen
-            if (shakeFactor >= 20f) {
+            if (shakeFactor < 20) {
+                shakeFactor = shakeFactor * 1.008f;
+            }
+            //TODO fix call next screen
+            if (shakeFactor >= 20f && !calledStart) {
                 startGame();
+                calledStart = true;
             }
         }
         stage.act(ServiceLocator.getTimeSource().getDeltaTime());
@@ -357,6 +355,8 @@ public class IntroDisplay extends UIComponent {
     public void dispose() {
         rootTable.clear();
         planet.clear();
+        cockpitTop.clear();
+        cockpitBottom.clear();
         background.clear();
         storyLabel.clear();
         super.dispose();
