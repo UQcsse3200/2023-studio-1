@@ -3,9 +3,7 @@ package com.csse3200.game.missions.rewards;
 import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.SpaceGameArea;
-import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.RandomUtils;
 
@@ -55,9 +53,5 @@ public class TriggerHostilesReward extends Reward {
 
         //Begin passive spawning for hostiles
         ((SpaceGameArea) gameArea).getHostileSpawner().startPeriodicSpawning();
-
-        // Give player gun and sword
-        gameArea.getPlayer().getComponent(InventoryComponent.class).addItem(ItemFactory.createGun());
-        gameArea.getPlayer().getComponent(InventoryComponent.class).addItem(ItemFactory.createSword());
     }
 }
