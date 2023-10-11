@@ -37,6 +37,7 @@ public class ShipEaterScareComponent extends Component {
 	private void stopHiding(Entity entity) {
 		if (isHiding && entity.getType() == EntityType.PLAYER) {
 			isHiding = false;
+			this.entity.getEvents().trigger("attackStart");
 		}
 	}
 }
