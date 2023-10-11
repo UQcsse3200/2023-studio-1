@@ -6,6 +6,7 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
+import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
 import java.util.Map;
@@ -376,6 +377,8 @@ public class InventoryComponent extends Component {
         if (isFull()) {
             return false;
         } else {
+            //Update the collect items achievement
+            ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.ITEMS_COLLECTED.name());
             // Update the count of the Item Type
             this.itemCount.put(item.getComponent(ItemComponent.class).getItemName(), this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(), 0) + 1);
             // Add to Entity against Item Type for setting Held Item
@@ -386,6 +389,8 @@ public class InventoryComponent extends Component {
             entity.getEvents().trigger(UPDATE_INVENTORY);
             return true;
         }
+
+
     }
 
     /**
