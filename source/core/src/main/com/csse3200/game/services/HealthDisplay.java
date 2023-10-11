@@ -1,16 +1,12 @@
 package com.csse3200.game.services;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -27,8 +23,6 @@ public class HealthDisplay extends UIComponent{
     private Image healthFrame;
     private Image healthFill;
     private Image healthIcon;
-    private Array<Label> healthLabels;
-    private Label healthLabel;
     private int currentHealth;
 
     /**
@@ -37,6 +31,8 @@ public class HealthDisplay extends UIComponent{
     @Override
     public void create() {
         super.create();
+
+        createTexture();
 
         logger.debug("Adding listener to healthUpdate event");
         // Adds a listener to check for health updates
@@ -59,7 +55,6 @@ public class HealthDisplay extends UIComponent{
      */
     public void createTexture() {
         logger.debug("Health display texture being created");
-        Skin healthSkin = ServiceLocator.getResourceService().getAsset("flat-earth/skin/flat-earth-ui.json", Skin.class);
 
         healthFrame = new Image(ServiceLocator.getResourceService().getAsset(
             "images/status_ui/status_frame.png", Texture.class));
@@ -70,33 +65,19 @@ public class HealthDisplay extends UIComponent{
 
         // Set health fill to the initial starting one
         healthFill.setScaleY(1.0f);
-
-        // Create labels for each percent
-        healthLabels = new Array<>();
-        for (int i = 0; i <= 100; i++) {
-            healthLabels.add(new Label(String.format("Health: %d%%", i), healthSkin));
-        }
     }
 
     /**
      * Updates the display, showing the health bar in the top of the main game screen.
      */
     public void updatePlayerHealthUI(int health) {
-        if (healthLabels == null) {
-            createTexture();
-        }
 
         float scaling = (float) health / 100;
 
         // Adjusts the health bar based on the health percent
         healthFill.setY(healthFill.getImageY() + 48 * (1 - scaling));
 
-        // Ensure that the array is always accessed within bounds
-        if (0 <= health && health <= 100) {
-            logger.debug("Health display updated");
-            healthLabel = healthLabels.get(health);
-            healthLabel.setPosition(healthFrame.getImageX() + 125f, healthFrame.getImageY() + 8.5f);
-        }
+        logger.debug("Health display updated");
 
         healthFill.addAction(Actions.scaleTo(1.0f, scaling, 1.0f, Interpolation.pow2InInverse));
     }
@@ -115,7 +96,6 @@ public class HealthDisplay extends UIComponent{
 
         group.addActor(healthFill);
         group.addActor(healthFrame);
-        //group.addActor(healthLabel);
         group.addActor(healthIcon);
 
         table.add(group).size(200);
@@ -130,6 +110,6 @@ public class HealthDisplay extends UIComponent{
         super.dispose();
         healthFrame.remove();
         healthFill.remove();
-        healthLabel.remove();
+        healthIcon.remove();
     }
 }
