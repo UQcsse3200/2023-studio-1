@@ -3,6 +3,7 @@ package com.csse3200.game.services;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -72,14 +73,16 @@ public class HealthDisplay extends UIComponent{
      */
     public void updatePlayerHealthUI(int health) {
 
-        float scaling = (float) health / 100;
-
-        // Adjusts the health bar based on the health percent
-        healthFill.setY(healthFill.getImageY() + 48 * (1 - scaling));
-
         logger.debug("Health display updated");
 
-        healthFill.addAction(Actions.scaleTo(1.0f, scaling, 1.0f, Interpolation.pow2InInverse));
+        float scaling = (float) health / 100;
+        float targetY = healthFill.getImageY() + 48 * (1 - scaling);
+
+        // Moves the health filling to the correct position, while it is being scaled to give a nice transition.
+        Action action1 = Actions.moveTo(healthFill.getX(), targetY, 1.0f, Interpolation.pow2InInverse);
+        Action action2 = Actions.scaleTo(1.0f, scaling, 1.0f, Interpolation.pow2InInverse);
+
+        healthFill.addAction(Actions.parallel(action1, action2));
     }
 
     /**

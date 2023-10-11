@@ -3,6 +3,7 @@ package com.csse3200.game.services;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -70,16 +71,21 @@ public class OxygenDisplay extends UIComponent {
 	 */
 	public void updateDisplay() {
 
+		logger.debug("Oxygen display updated");
+
 		int newOxygenPercent = ServiceLocator.getPlanetOxygenService().getOxygenPercentage();
 		float scaling = (float) newOxygenPercent / 100;
 
-		oxygenFill.setY(oxygenFill.getImageY() + 48 * (1 - scaling));
+		float targetY = oxygenFill.getImageY() + 48 * (1 - scaling);
 
-		logger.debug("Oxygen display updated");
+		// Moves the oxygen filling to the correct position, while it is being scaled to give a nice transition.
+		Action action1 = Actions.moveTo(oxygenFill.getX(), targetY, 1.0f, Interpolation.pow2InInverse);
+		Action action2 = Actions.scaleTo(1.0f, scaling, 1.0f, Interpolation.pow2InInverse);
 
-		oxygenFill.addAction(Actions.scaleTo(1.0f, scaling, 1.0f, Interpolation.pow2InInverse));
+		oxygenFill.addAction(Actions.parallel(action1, action2));
 
-		ServiceLocator.getPlanetOxygenService().addOxygen(100);
+		// Uncomment to add oxygen. Can also be set to remove oxygen.
+		//ServiceLocator.getPlanetOxygenService().addOxygen(100);
 	}
 
 	/**

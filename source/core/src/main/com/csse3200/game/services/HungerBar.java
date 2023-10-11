@@ -3,13 +3,17 @@ package com.csse3200.game.services;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.csse3200.game.ui.UIComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class HungerBar extends UIComponent{
+    private static final Logger logger = LoggerFactory.getLogger(HungerBar.class);
     Table table = new Table();
     Group group = new Group();
     private Image hungerFrame;
@@ -25,6 +29,7 @@ public class HungerBar extends UIComponent{
 
         createTexture();
 
+        logger.debug("Adding listener to hungerUpdate event");
         // Adds a listener to check for hunger updates
         ServiceLocator.getPlayerHungerService().getEvents()
                 .addListener("hungerUpdate", this::updateDisplay);
@@ -44,6 +49,8 @@ public class HungerBar extends UIComponent{
 	 */
 	public void createTexture() {
 
+        logger.debug("Hunger display texture being created");
+
         hungerFrame = new Image(ServiceLocator.getResourceService().getAsset(
                 "images/status_ui/status_frame.png", Texture.class));
         hungerFill = new Image(ServiceLocator.getResourceService().getAsset(
@@ -59,12 +66,16 @@ public class HungerBar extends UIComponent{
      */
     public void updateDisplay(int hungerLevel) {
 
-		float scaling = (float) hungerLevel / 100;
+        logger.debug("Hunger display updated");
 
-        // Accounts for scaling of the hunger bar due to the hunger percent
-        hungerFill.setY(hungerFill.getImageY() + 48 * (1 - scaling));
+        float scaling = (float) hungerLevel / 100;
+        float targetY = hungerFill.getImageY() + 48 * (1 - scaling);
 
-        hungerFill.addAction(Actions.scaleTo(1.0f, scaling, 1.0f, Interpolation.fade));
+        // Moves the hunger filling to the correct position, while it is being scaled to give a nice transition.
+        Action action1 = Actions.moveTo(hungerFill.getX(), targetY, 1.0f, Interpolation.pow2InInverse);
+        Action action2 = Actions.scaleTo(1.0f, scaling, 1.0f, Interpolation.pow2InInverse);
+
+        hungerFill.addAction(Actions.parallel(action1, action2));
     }
 
     /**
