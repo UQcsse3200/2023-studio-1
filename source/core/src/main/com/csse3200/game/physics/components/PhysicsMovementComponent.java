@@ -1,5 +1,8 @@
 package com.csse3200.game.physics.components;
 
+import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +19,7 @@ public class PhysicsMovementComponent extends Component implements MovementContr
   private PhysicsComponent physicsComponent;
   private Vector2 targetPosition;
   private boolean movementEnabled = true;
+  private final GameMap gameMap = ServiceLocator.getGameArea().getMap();
 
   @Override
   public void create() {
@@ -70,9 +74,12 @@ public class PhysicsMovementComponent extends Component implements MovementContr
   private void updateDirection(Body body) {
     Vector2 desiredVelocity = getDirection().scl(maxSpeed);
 
-    /* Can continue implementation of terrain movement modifiers once the GameMap class has been updated and a way to
-       access the game map class from this component has been implemented. */
-    //Vector2 entityPosition = this.getEntity().getCenterPosition();
+    Vector2 entityCenterPosVector = this.entity.getCenterPosition();
+    Vector2 entityBottomLeftPosVector = this.entity.getPosition();
+    Vector2 entityCenterBottomPosVector = new Vector2(entityCenterPosVector.x, entityBottomLeftPosVector.y);
+
+    float terrainSpeedModifier = gameMap.getTile(entityCenterBottomPosVector).getSpeedModifier();
+    desiredVelocity.scl(terrainSpeedModifier);
 
     setToVelocity(body, desiredVelocity);
   }

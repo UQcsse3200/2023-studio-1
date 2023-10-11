@@ -34,7 +34,8 @@ public enum EntityType {
     SHIP_DEBRIS(0),
     SHIP_PART_TILE(0),
     DUMMY(0), // Used for testing
-    FIRE_FLIES(0);
+    FIRE_FLIES(0),
+    GOLDEN_STATUE(0);
 
 
     // Negative rate for consumption, positive for production of oxygen

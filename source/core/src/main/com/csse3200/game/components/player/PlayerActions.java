@@ -6,7 +6,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.components.*;
 import com.csse3200.game.components.combat.ProjectileComponent;
-import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.items.ItemActions;
@@ -39,12 +38,9 @@ public class PlayerActions extends Component {
   private boolean moving = false;
   private boolean running = false;
   private boolean muted = false;
-  private GameMap map;
-
+  private GameMap gameMap = ServiceLocator.getGameArea().getMap();
   private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(PlayerActions.class);
-
   private SecureRandom random = new SecureRandom();
-
   int swordDamage = 5;
 
   private static final String RIGHT_STRING = "right";
@@ -124,20 +120,25 @@ public class PlayerActions extends Component {
     // Used to apply the terrainSpeedModifier
     Vector2 playerVector = this.entity.getCenterPosition(); // Centre position is better indicator of player location
     playerVector.add(0, -1.0f); // Player entity sprite's feet are located -1.0f below the centre of the entity
+    float terrainSpeedModifier = gameMap.getTile(playerVector).getSpeedModifier();
+    velocityScale.scl(terrainSpeedModifier);
 
-    try {
-      float terrainSpeedModifier = map.getTile(playerVector).getSpeedModifier();
-      velocityScale.scl(terrainSpeedModifier);
-    } catch (Exception e) {
-      // This should only occur when either:
-      // The map is not instantiated (some tests do not instantiate a gameMap
-      // instance)
-      // the getTile method returns null
-      // In this event, the speed will not be modified. This will need to be updated
-      // to throw an exception once the
-      // GameMap class is slightly modified to allow for easier instantiation of test
-      // maps for testing.
-    }
+//    Vector2 playerVector = this.entity.getCenterPosition(); // Centre position is better indicator of player location
+//    playerVector.add(0, -1.0f); // Player entity sprite's feet are located -1.0f below the centre of the entity
+//
+//    try {
+//      float terrainSpeedModifier = map.getTile(playerVector).getSpeedModifier();
+//      velocityScale.scl(terrainSpeedModifier);
+//    } catch (Exception e) {
+//      // This should only occur when either:
+//      // The map is not instantiated (some tests do not instantiate a gameMap
+//      // instance)
+//      // the getTile method returns null
+//      // In this event, the speed will not be modified. This will need to be updated
+//      // to throw an exception once the
+//      // GameMap class is slightly modified to allow for easier instantiation of test
+//      // maps for testing.
+//    }
 
     Vector2 desiredVelocity = moveDirection.cpy().scl(velocityScale);
     // impulse = (desiredVel - currentVel) * mass
@@ -325,9 +326,5 @@ public class PlayerActions extends Component {
 
   public void setMuted(boolean muted) {
     this.muted = muted;
-  }
-
-  public void setGameMap(GameMap map) {
-    this.map = map;
   }
 }
