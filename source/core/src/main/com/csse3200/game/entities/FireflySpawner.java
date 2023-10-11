@@ -46,7 +46,7 @@ public class FireflySpawner {
      * Starts to spawn the fireflies
      * Spawns MAX_FIREFLIES fireflies
      */
-    private void startSpawning() {
+    protected void startSpawning() {
         for (int i = 0; i < MAX_FIREFLIES; i++) {
             spawnFirefly();
         }
