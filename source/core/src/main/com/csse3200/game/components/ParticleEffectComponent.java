@@ -20,6 +20,8 @@ public class ParticleEffectComponent extends Component {
 	public void create() {
 		super.create();
 		ServiceLocator.getParticleService().addComponent(this);
+		entity.getEvents().addListener("startEffect", this::startEffect);
+		entity.getEvents().addListener("stopEffect", this::stopEffect);
 	}
 
 	public void render(SpriteBatch batch, float delta) {
@@ -47,6 +49,15 @@ public class ParticleEffectComponent extends Component {
 		this.effectType = effectType;
 		effect = ServiceLocator.getParticleService().getEffect(effectType);
 		effect.start();
+	}
+
+	public void stopEffect(ParticleService.ParticleEffectType effectType) {
+		if (this.effectType != effectType) {
+			return;
+		}
+		isActive = false;
+		effect.free();
+		effect = null;
 	}
 
 	public ParticleService.ParticleEffectType getEffectType() {
