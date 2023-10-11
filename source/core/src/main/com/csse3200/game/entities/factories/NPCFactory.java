@@ -162,17 +162,22 @@ public class NPCFactory {
     animator.addAnimation(IDLE_RIGHT, 0.5f, Animation.PlayMode.LOOP);
     animator.addAnimation(WALK_LEFT, 0.25f, Animation.PlayMode.LOOP_REVERSED);
     animator.addAnimation(WALK_RIGHT, 0.25f, Animation.PlayMode.LOOP);
+    animator.addAnimation(RUN_LEFT, 0.1f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation(RUN_RIGHT, 0.1f, Animation.PlayMode.LOOP);
 
     // Tamed Animations
     animator.addAnimation(IDLE_LEFT_TAMED, Float.MAX_VALUE);
     animator.addAnimation(IDLE_RIGHT_TAMED, Float.MAX_VALUE);
     animator.addAnimation(WALK_LEFT_TAMED, 0.2f, Animation.PlayMode.LOOP_REVERSED);
     animator.addAnimation(WALK_RIGHT_TAMED, 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("run_left_tamed", 0.1f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation("run_right_tamed", 0.1f, Animation.PlayMode.LOOP);
 
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-            .addTask(new TamedFollowTask(ServiceLocator.getGameArea().getPlayer(), 10, 8, 10, 2f, config.favouriteFood, Vector2Utils.ONE));
+            .addTask(new TamedFollowTask(ServiceLocator.getGameArea().getPlayer(), 10, 8, 10, 2f, config.favouriteFood, Vector2Utils.ONE))
+            .addTask(new PanicTask("panicStart", 5f, 20, new Vector2(2f, 2f), new Vector2(1.5f, 1.5f)));
 
     List<SingleDropHandler> singleDropHandlers = new ArrayList<>();
     MultiDropComponent multiDropComponent = new MultiDropComponent(singleDropHandlers, true);

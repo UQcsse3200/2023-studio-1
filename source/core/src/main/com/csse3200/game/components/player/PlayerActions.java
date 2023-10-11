@@ -20,6 +20,7 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.sound.EffectSoundFile;
 import com.csse3200.game.services.sound.InvalidSoundFileException;
+import com.csse3200.game.utils.math.Vector2Utils;
 
 import java.security.SecureRandom;
 import java.util.List;
@@ -42,6 +43,8 @@ public class PlayerActions extends Component {
   private GameMap gameMap = ServiceLocator.getGameArea().getMap();
   private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(PlayerActions.class);
   private SecureRandom random = new SecureRandom();
+  private float speedMultiplier = 1f;
+  private float damageMultiplier = 1f;
   int swordDamage = 5;
 
   private static final String RIGHT_STRING = "right";
@@ -60,6 +63,8 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("use", this::use);
     entity.getEvents().addListener("hotkeySelection", this::hotkeySelection);
     entity.getEvents().addListener("eat", this::eat);
+    entity.getEvents().addListener("setSpeedMultiplier", this::setSpeedMultiplier);
+    entity.getEvents().addListener("setDamageMultiplier", this::setDamageMultiplier);
   }
 
   @Override
@@ -123,6 +128,7 @@ public class PlayerActions extends Component {
     playerVector.add(0, -1.0f); // Player entity sprite's feet are located -1.0f below the centre of the entity
     float terrainSpeedModifier = gameMap.getTile(playerVector).getSpeedModifier();
     velocityScale.scl(terrainSpeedModifier);
+    velocityScale.scl(speedMultiplier);
 
 //    Vector2 playerVector = this.entity.getCenterPosition(); // Centre position is better indicator of player location
 //    playerVector.add(0, -1.0f); // Player entity sprite's feet are located -1.0f below the centre of the entity
@@ -244,7 +250,8 @@ public class PlayerActions extends Component {
           float difference = Math.abs(resAngle - mouseResAngle);
           difference = difference > 180 ? 360 - difference : difference;
           if(difference <= 45) {
-            combat.setHealth(combat.getHealth() - swordDamage);
+            combat.addHealth((int) -(swordDamage * damageMultiplier));
+            animal.getEvents().trigger("hit", entity);
             animal.getEvents().trigger("panicStart");
           }
       }
@@ -261,6 +268,9 @@ public class PlayerActions extends Component {
     attackSound.play();
     mousePos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
     Entity projectile = ProjectileFactory.createPlayerProjectile();
+
+    CombatStatsComponent combatStatsComponent = projectile.getComponent(CombatStatsComponent.class);
+    combatStatsComponent.setBaseAttack((int) (combatStatsComponent.getBaseAttack() * damageMultiplier));
     projectile.setCenterPosition(entity.getCenterPosition());
     ServiceLocator.getGameArea().spawnEntity(projectile);
     ProjectileComponent projectileComponent = projectile.getComponent(ProjectileComponent.class);
@@ -301,7 +311,9 @@ public class PlayerActions extends Component {
   void eat(Entity itemInHand) {
     if (itemInHand != null) {
       pauseMoving();
-      if (itemInHand.getComponent(ItemComponent.class).getItemType() == ItemType.FOOD) {
+      ItemType itemType = itemInHand.getComponent(ItemComponent.class).getItemType();
+
+      if (itemType == ItemType.FOOD || itemType == ItemType.EGG || itemType == ItemType.MILK) {
         itemInHand.getComponent(ItemActions.class).eat(entity);
         entity.getComponent(InventoryComponent.class).removeItem(itemInHand);
       }
@@ -332,6 +344,14 @@ public class PlayerActions extends Component {
     }
 
     return stunComponent.isStunned();
+  }
+
+  public void setSpeedMultiplier(float multiplier) {
+    this.speedMultiplier = multiplier;
+  }
+
+  public void setDamageMultiplier(float multiplier) {
+    this.damageMultiplier = multiplier;
   }
 
   public void setMuted(boolean muted) {

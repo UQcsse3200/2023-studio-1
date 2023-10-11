@@ -39,6 +39,14 @@ public class AnimalEffectsController extends Component {
                     animator.startAnimation("exclamation");
                 }
             }
+            case "panicStart" -> animator.startAnimation("exclamation");
+            case "followStart" -> {
+                if (entity.getType() == EntityType.BAT) {
+
+                } else {
+
+                }
+            }
             case "attack" -> animator.startAnimation("red_exclamation");
             default -> logger.error("unrecognised effect trigger");
         }

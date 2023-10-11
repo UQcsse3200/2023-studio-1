@@ -96,5 +96,6 @@ public class TouchAttackComponent extends Component {
 
     target.getEvents().trigger("hit", entity);
     target.getEvents().trigger("triggerStunDuration", stunDuration);
+    target.getEvents().trigger("panicStart");
   }
 }

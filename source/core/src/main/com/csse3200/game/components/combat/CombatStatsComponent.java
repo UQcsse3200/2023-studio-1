@@ -7,6 +7,8 @@ import com.csse3200.game.entities.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Objects;
+
 /**
  * Component used to store information related to combat such as health, attack, etc. Any entities
  * which engage it combat should have an instance of this class registered. This class can be
@@ -101,7 +103,7 @@ public class CombatStatsComponent extends Component {
   }
 
   public void handleDeath() {
-    if(!entity.getType().equals(EntityType.PLAYER)) {
+    if(!Objects.equals(entity.getType(), EntityType.PLAYER)) {
       ServiceLocator.getGameArea().removeEntity(entity);
     }
   }
