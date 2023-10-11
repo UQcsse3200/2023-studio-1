@@ -1093,6 +1093,9 @@ public class PlantComponent extends Component {
         increasePlantHealth(-2);
         int growthRate = (int)(this.cropTile.getGrowthRate(this.idealWaterLevel) * 20);
         this.currentGrowthLevel += growthRate;
+        if (Objects.equals(this.adultEffect, "Health") && this.getGrowthStage() == GrowthStage.ADULT) {
+            entity.getComponent(PlantAreaOfEffectComponent.class).setRadius(3f);
+        }
     }
 
     @Override
