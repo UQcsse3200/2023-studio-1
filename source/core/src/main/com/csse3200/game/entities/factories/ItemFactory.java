@@ -629,4 +629,12 @@ return createBaseItem()
                     "A golden fish, the rarest of them all. A placeable collector's item.","images/golden_fish.png"))
             .addComponent(lightComponent);
   }
+
+  public static Entity createTeleportDevice() {
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/walkietalkie.png"))
+            .addComponent(new ItemComponent("TeleportDevice", ItemType.TELEPORT_DEVICE,
+                    "beep boop",
+                    "images/walkietalkie.png"));
+  }
 }
