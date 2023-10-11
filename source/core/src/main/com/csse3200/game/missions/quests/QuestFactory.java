@@ -47,7 +47,6 @@ public class QuestFactory {
      * @return - the First Contact Quest
      */
     public static AutoQuest createFirstContactQuest() {
-        List<Supplier<Quest>> questsToAdd = new ArrayList<>();
         List<Supplier<Quest>> questsToActivate = new ArrayList<>();
         questsToActivate.add(QuestFactory::createClearingYourMessQuest);
         questsToActivate.add(QuestFactory::createActIMainQuest);
@@ -59,7 +58,7 @@ public class QuestFactory {
 
         MultiReward reward = new MultiReward(List.of(
                 new ItemReward(List.of(ItemFactory.createShovel())),
-                new QuestReward(questsToAdd, questsToActivate),
+                new QuestReward(new ArrayList<>(), questsToActivate),
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
         return new AutoQuest(FIRST_CONTACT_QUEST_NAME, reward, "Wake up after your crash landing.");
@@ -70,7 +69,6 @@ public class QuestFactory {
      * @return - the Clearing Your Mess Quest
      */
     public static ClearDebrisQuest createClearingYourMessQuest() {
-        List<Supplier<Quest>> questsToAdd = new ArrayList<>();
         List<Supplier<Quest>> questsToActivate = new ArrayList<>();
         questsToActivate.add(QuestFactory::createSowingYourFirstSeedsQuest);
 
@@ -89,7 +87,7 @@ public class QuestFactory {
                         ItemFactory.createCosmicCobSeed(),
                         ItemFactory.createCosmicCobSeed()
                 )),
-                new QuestReward(questsToAdd, questsToActivate),
+                new QuestReward(new ArrayList<>(), questsToActivate),
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
         return new ClearDebrisQuest(CLEARING_YOUR_MESS_QUEST_NAME, reward, 15);
@@ -100,7 +98,6 @@ public class QuestFactory {
      * @return - the Sowing Your First Seeds Quest
      */
     public static PlantInteractionQuest createSowingYourFirstSeedsQuest() {
-        List<Supplier<Quest>> questsToAdd = new ArrayList<>();
         List<Supplier<Quest>> questsToActivate = new ArrayList<>();
         questsToActivate.add(QuestFactory::createReapingYourRewardsQuest);
 
@@ -113,7 +110,7 @@ public class QuestFactory {
 
         MultiReward reward = new MultiReward(List.of(
                 new ItemReward(List.of(ItemFactory.createScythe(), ItemFactory.createWateringcan())),
-                new QuestReward(questsToAdd, questsToActivate),
+                new QuestReward(new ArrayList<>(), questsToActivate),
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
         return new PlantInteractionQuest(SOWING_YOUR_FIRST_SEEDS_QUEST_NAME, reward, MissionManager.MissionEvent.PLANT_CROP,
@@ -125,7 +122,6 @@ public class QuestFactory {
      * @return - the Reaping Your Rewards Quest
      */
     public static PlantInteractionQuest createReapingYourRewardsQuest() {
-        List<Supplier<Quest>> questsToAdd = new ArrayList<>();
         List<Supplier<Quest>> questsToActivate = new ArrayList<>();
         questsToActivate.add(QuestFactory::createMakingFriendsQuest);
 
@@ -142,7 +138,7 @@ public class QuestFactory {
                         ItemFactory.createSprinklerItem(),
                         ItemFactory.createPumpItem()
                 )),
-                new QuestReward(questsToAdd, questsToActivate),
+                new QuestReward(new ArrayList<>(), questsToActivate),
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
         return new PlantInteractionQuest(REAPING_YOUR_REWARDS_QUEST_NAME, reward, MissionManager.MissionEvent.HARVEST_CROP,
@@ -179,7 +175,6 @@ public class QuestFactory {
      * @return - the Making Friends Quest
      */
     public static TameAnimalsQuest createMakingFriendsQuest() {
-        List<Supplier<Quest>> questsToAdd = new ArrayList<>();
         List<Supplier<Quest>> questsToActivate = new ArrayList<>();
         questsToActivate.add(QuestFactory::createFertilisingFiestaQuest);
 //        questsToActivate.add(QuestFactory::createFishingQuest);
@@ -192,7 +187,7 @@ public class QuestFactory {
 
         MultiReward reward = new MultiReward(List.of(
                 new ItemReward(List.of(ItemFactory.createFishingRod())),
-                new QuestReward(questsToAdd, questsToActivate),
+                new QuestReward(new ArrayList<>(), questsToActivate),
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
         return new TameAnimalsQuest(MAKING_FRIENDS_QUEST_NAME, reward, 1);
@@ -203,7 +198,6 @@ public class QuestFactory {
      * @return - the Fertilising Fiesta Quest
      */
     public static FertiliseCropTilesQuest createFertilisingFiestaQuest() {
-        List<Supplier<Quest>> questsToAdd = new ArrayList<>();
         List<Supplier<Quest>> questsToActivate = new ArrayList<>();
         questsToActivate.add(QuestFactory::createAliensAttackQuest);
 
@@ -229,7 +223,7 @@ public class QuestFactory {
 
         MultiReward reward = new MultiReward(List.of(
                 new ItemReward(itemRewards),
-                new QuestReward(questsToAdd, questsToActivate),
+                new QuestReward(new ArrayList<>(), questsToActivate),
                 new TriggerHostilesReward(List.of(
                         NPCFactory.createOxygenEater(),
                         NPCFactory.createOxygenEater(),
@@ -274,7 +268,6 @@ public class QuestFactory {
      * @return - the Act I Main Quest
      */
     public static MainQuest createActIMainQuest() {
-        List<Supplier<Quest>> questsToAdd = new ArrayList<>();
         List<Supplier<Quest>> questsToActivate = new ArrayList<>();
         questsToActivate.add(QuestFactory::createConnectionQuest);
         questsToActivate.add(QuestFactory::createTractorQuest);
@@ -306,7 +299,7 @@ public class QuestFactory {
 
         MultiReward reward = new MultiReward(List.of(
                 new ItemReward(itemRewards),
-                new QuestReward(questsToAdd, questsToActivate),
+                new QuestReward(new ArrayList<>(), questsToActivate),
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
 
@@ -318,7 +311,6 @@ public class QuestFactory {
      * @return - the Connection Quest
      */
     public static AutoQuest createConnectionQuest() {
-        List<Supplier<Quest>> questsToAdd = new ArrayList<>();
         List<Supplier<Quest>> questsToActivate = new ArrayList<>();
         questsToActivate.add(QuestFactory::createHomeSickQuest);
         questsToActivate.add(QuestFactory::createActIIMainQuest);
@@ -338,7 +330,7 @@ public class QuestFactory {
                         ItemFactory.createDeadlyNightshadeSeed(),
                         ItemFactory.createDeadlyNightshadeSeed()
                 )),
-                new QuestReward(questsToAdd, questsToActivate),
+                new QuestReward(new ArrayList<>(), questsToActivate),
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
         return new AutoQuest(CONNECTION_QUEST_NAME, reward, "Make a connection with ALIEN NPC, figure out how you can be reunited with Humanity.");
@@ -349,7 +341,6 @@ public class QuestFactory {
      * @return - the Home Sick Quest
      */
     public static PlantInteractionQuest createHomeSickQuest() {
-        List<Supplier<Quest>> questsToAdd = new ArrayList<>();
         List<Supplier<Quest>> questsToActivate = new ArrayList<>();
         questsToActivate.add(QuestFactory::createShipRepairsQuest);
 
@@ -369,7 +360,7 @@ public class QuestFactory {
                         ItemFactory.createShipPart(),
                         ItemFactory.createShipPart()
                 )),
-                new QuestReward(questsToAdd, questsToActivate),
+                new QuestReward(new ArrayList<>(), questsToActivate),
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
         return new PlantInteractionQuest(HOME_SICK_QUEST_NAME, reward, MissionManager.MissionEvent.HARVEST_CROP,
@@ -381,7 +372,6 @@ public class QuestFactory {
      * @return - the Ship Repairs Quest
      */
     public static ShipRepairQuest createShipRepairsQuest() {
-        List<Supplier<Quest>> questsToAdd = new ArrayList<>();
         List<Supplier<Quest>> questsToActivate = new ArrayList<>();
         questsToActivate.add(QuestFactory::createBringingItAllTogetherQuest);
 
@@ -394,7 +384,7 @@ public class QuestFactory {
                 new ItemReward(List.of(
                         ItemFactory.createShipPart()
                 )),
-                new QuestReward(questsToAdd, questsToActivate),
+                new QuestReward(new ArrayList<>(), questsToActivate),
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
         return new ShipRepairQuest(SHIP_REPAIRS_QUEST_NAME, reward, 3);
@@ -419,7 +409,6 @@ public class QuestFactory {
      * @return - the Act II Main Quest
      */
     public static MainQuest createActIIMainQuest() {
-        List<Supplier<Quest>> questsToAdd = new ArrayList<>();
         List<Supplier<Quest>> questsToActivate = new ArrayList<>();
         questsToActivate.add(QuestFactory::createAnImminentThreatQuest);
 
@@ -441,7 +430,7 @@ public class QuestFactory {
         requiredQuests.add(BRINGING_IT_ALL_TOGETHER_QUEST_NAME);
 
         MultiReward reward = new MultiReward(List.of(
-                new QuestReward(questsToAdd, questsToActivate),
+                new QuestReward(new ArrayList<>(), questsToActivate),
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
 
@@ -453,7 +442,6 @@ public class QuestFactory {
      * @return - the Imminent Threat Quest
      */
     public static AutoQuest createAnImminentThreatQuest() {
-        List<Supplier<Quest>> questsToAdd = new ArrayList<>();
         List<Supplier<Quest>> questsToActivate = new ArrayList<>();
         questsToActivate.add(QuestFactory::createAirAndAlgaeQuest);
         questsToActivate.add(QuestFactory::createStratosphericSentinelQuest);
@@ -481,7 +469,7 @@ public class QuestFactory {
                         new SolarSurgeEvent(240, 2, 100, 1.5f),
                         new SolarSurgeEvent(312, 2, 100, 1.5f)
                 )),
-                new QuestReward(questsToAdd, questsToActivate),
+                new QuestReward(new ArrayList<>(), questsToActivate),
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
         return new AutoQuest(AN_IMMINENT_THREAT_QUEST_NAME, reward, "Learn about the imminent threat.");
@@ -492,10 +480,6 @@ public class QuestFactory {
      * @return - the Air and Alge Quest
      */
     public static PlantInteractionQuest createAirAndAlgaeQuest() {
-        List<Supplier<Quest>> questsToAdd = new ArrayList<>();
-        List<Supplier<Quest>> questsToActivate = new ArrayList<>();
-        questsToAdd.add(QuestFactory::createHaberHobbyist);
-
         String dialogue = """
                 "Keep at it.
                 {WAIT}If your people are to survive the coming {COLOR=#3ABE88}SOLAR SURGES{COLOR=BLACK}, you will need to ensure the relative oxygen content of atmosphere is above 95% on the day they land.
@@ -504,7 +488,7 @@ public class QuestFactory {
                 {WAIT}Good luck!"
                 """;
         MultiReward reward = new MultiReward(List.of(
-                new QuestReward(questsToAdd, questsToActivate),
+                new QuestReward(List.of(QuestFactory::createHaberHobbyist), new ArrayList<>()),
                 new ItemReward(List.of(
                         ItemFactory.createAtomicAlgaeSeed(),
                         ItemFactory.createAtomicAlgaeSeed()
@@ -561,7 +545,7 @@ public class QuestFactory {
 
         MultiReward reward = new MultiReward(List.of(
                 itemReward,
-                new QuestReward(List.of(QuestFactory::createFertiliserFanatic), List.of())
+                new QuestReward(List.of(QuestFactory::createFertiliserFanatic), new ArrayList<>())
         ));
         return new FertiliseCropTilesQuest(HABER_HOBBYIST_QUEST_NAME, reward, 24, 5);
     }
@@ -586,7 +570,7 @@ public class QuestFactory {
 
         MultiReward reward = new MultiReward(List.of(
                 itemReward,
-                new QuestReward(List.of(QuestFactory::createHaberHobbyist), List.of())
+                new QuestReward(List.of(QuestFactory::createHaberHobbyist), new ArrayList<>())
         ));
         return new FertiliseCropTilesQuest(FERTILISER_FANATIC_QUEST_NAME, reward, 48, 15);
     }
