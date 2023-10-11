@@ -21,6 +21,11 @@ import java.util.List;
  */
 public class InventoryComponent extends Component {
 
+    private int curTab = 0;  // current toolbar tab;
+    public void switchTab() {
+        this.curTab = (curTab + 1) % 3;
+        setHeldItem(heldIndex);
+    }
     /**
      * Logger for InventoryComponent
      */
@@ -196,6 +201,9 @@ public class InventoryComponent extends Component {
     }
 
     private void newInventory() {
+        if (entity != null) {
+            entity.getEvents().addListener("switchToolbar",this::switchTab);
+        }
         this.itemPlace = new HashMap<>();
         this.itemCount = new HashMap<>();
         this.heldItemsEntity = new HashMap<>();
@@ -309,7 +317,7 @@ public class InventoryComponent extends Component {
      * @param entity entity to be added
      * @return boolean representing if the item was added successfully
      */
-    public boolean setPosition(Entity entity){
+    public boolean setPosition(Entity entity) {
         int position = nextAvailablePosition();
         if (position == -1) {
             return false;
@@ -331,6 +339,11 @@ public class InventoryComponent extends Component {
    */
 
   private int nextAvailablePosition() {
+      for (int i = curTab * 10; i < this.getInventorySize(); i++) {
+          if (this.itemPlace.get(i) == null) {
+              return i;
+          }
+      }
     for (int i = 0; i < this.getInventorySize(); i++) {
       if (this.itemPlace.get(i) == null) {
         return i;
@@ -440,10 +453,8 @@ public class InventoryComponent extends Component {
      * @param index The index of the item in the inventory to be set as the held item.
      */
     public void setHeldItem(int index) {
-        if (index >= 0 && index < 10) {
-            this.heldItem = this.heldItemsEntity.get(this.itemPlace.get(index));
+            this.heldItem = this.heldItemsEntity.get(this.itemPlace.get(index + 10 * curTab));
             this.heldIndex = index;
-        }
     }
 
     /**

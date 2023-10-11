@@ -36,6 +36,7 @@ public class ToolbarDisplay extends UIComponent {
     private final ArrayList<ItemSlot> slots = new ArrayList<>();
     private final Map<Integer, TextTooltip> tooltips = new HashMap<>();
     private final InstantTooltipManager instantTooltipManager = new InstantTooltipManager();
+    private int curTab = 0;
 
     /**
      * Creates the event listeners, ui, and gets the UI.
@@ -48,6 +49,8 @@ public class ToolbarDisplay extends UIComponent {
         entity.getEvents().addListener("updateToolbar", this::updateInventory);
         entity.getEvents().addListener("toggleInventory",this::toggleOpen);
         entity.getEvents().addListener("hotkeySelection",this::updateItemSlot);
+        entity.getEvents().addListener("toolbarSwitch",this::switchToolbar);
+
         inventory = entity.getComponent(InventoryComponent.class);
     }
 
@@ -56,7 +59,12 @@ public class ToolbarDisplay extends UIComponent {
      * @see Table for positioning options
      */
 
-    private void updateToolbar(){
+    private void updateToolbar() {
+        tooltips.forEach((index ,tooltip) -> {
+            if (tooltip != null) {
+                tooltip.hide();
+            }});
+
         for (int i = 0; i < 10; i++){
             int idx = i + 1;
             if (idx == 10) {
@@ -69,10 +77,11 @@ public class ToolbarDisplay extends UIComponent {
             ItemComponent item;
             int itemCount;
             Texture itemTexture;
+            int cur = i + curTab * 10;
 
-            if (inventory != null && inventory.getItem(i) != null) {
+            if (inventory != null && inventory.getItem(cur) != null) {
                 // Since the item isn't null, we want to make sure that the itemSlot at that position is modified
-                item = inventory.getItem(i).getComponent(ItemComponent.class);
+                item = inventory.getItem(cur).getComponent(ItemComponent.class);
                 itemCount = inventory.getItemCount(item.getEntity());
                 itemTexture = item.getItemTexture();
                 ItemSlot curSlot = slots.get(i);
@@ -84,7 +93,6 @@ public class ToolbarDisplay extends UIComponent {
                 if (Objects.equals(item.getItemName(), "watering_can")) {
                     float level = item.getEntity().getComponent(WateringCanLevelComponent.class).getCurrentLevel();
                     tooltip = new TextTooltip(item.getItemName() + "\n\nCurrent level is " + level, instantTooltipManager, skin);
-
                 } else {
                     tooltip = new TextTooltip(item.getItemName() + "\n\n" + item.getItemDescription(), instantTooltipManager, skin);
                 }
@@ -213,5 +221,9 @@ public class ToolbarDisplay extends UIComponent {
         } catch (InvalidSoundFileException e) {
             logger.info("Hotkey sound not loaded");
         }
+    }
+    private void switchToolbar() {
+        curTab = (curTab + 1) % 3;
+        updateToolbar();
     }
 }

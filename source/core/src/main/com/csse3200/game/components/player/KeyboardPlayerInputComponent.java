@@ -82,6 +82,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.NUM_0, Keys.NUM_1, Keys.NUM_2, Keys.NUM_3, Keys.NUM_4, Keys.NUM_5, Keys.NUM_6, Keys.NUM_7, Keys.NUM_8, Keys.NUM_9:
           triggerHotKeySelection(keycode);
           return true;
+        case Keys.TAB:
+          triggerSwitchToolbar();
+          return true;
         case Keys.T:
           entity.getEvents().trigger("toggleLight");
           return true;
@@ -172,6 +175,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     }
   }
 
+
   private void triggerEnterEvent() {
     logger.info("Entering tractor");
     entity.getEvents().trigger("enterTractor");
@@ -199,6 +203,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
        index = 9;
      }
      entity.getEvents().trigger("hotkeySelection", index);
+   }
+   public void triggerSwitchToolbar() {
+     entity.getEvents().trigger("toolbarSwitch");
    }
 
   /**

@@ -58,6 +58,7 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("enterTractor", this::enterTractor);
     entity.getEvents().addListener("use", this::use);
     entity.getEvents().addListener("hotkeySelection", this::hotkeySelection);
+    entity.getEvents().addListener("toolbarSwitch", this::toolbarSwitch);
     entity.getEvents().addListener("eat", this::eat);
   }
 
@@ -313,6 +314,12 @@ public class PlayerActions extends Component {
     if (inventoryComponent != null) {
       inventoryComponent.setHeldItem(index);
     }
+  }
+  void toolbarSwitch() {
+    InventoryComponent inventoryComponent = entity.getComponent(InventoryComponent.class);
+    inventoryComponent.switchTab();
+
+    // Make sure its initialised
   }
 
   /**
