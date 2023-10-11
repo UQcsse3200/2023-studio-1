@@ -67,7 +67,7 @@ public class PlayerFactory {
             .addComponent(new PlayerAnimationController())
             .addComponent(new ItemPickupComponent())
             .addComponent(new InteractionDetector(2f, new ArrayList<>(Arrays.asList(EntityType.QUESTGIVER, EntityType.GATE, EntityType.CHEST, EntityType.CHICKEN,
-                    EntityType.COW, EntityType.ASTROLOTL, EntityType.OXYGEN_EATER, EntityType.SHIP_DEBRIS, EntityType.SHIP))))
+                    EntityType.COW, EntityType.ASTROLOTL, EntityType.OXYGEN_EATER, EntityType.SHIP_DEBRIS, EntityType.SHIP, EntityType.GOLDEN_STATUE))))
             .addComponent(new ToolbarDisplay())
 	        .addComponent(new AuraLightComponent(6f))
             .addComponent(new InventoryDisplay("updateInventory", "toggleInventory", 30, 10, true))

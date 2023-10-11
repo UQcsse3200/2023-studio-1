@@ -6,12 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.inventory.InventoryDisplay;
 import com.csse3200.game.components.AuraLightComponent;
-import com.csse3200.game.components.placeables.ChestComponent;
-import com.csse3200.game.components.placeables.FenceComponent;
-import com.csse3200.game.components.placeables.LightController;
-import com.csse3200.game.components.placeables.PlaceableCategory;
-import com.csse3200.game.components.placeables.PlaceableEvents;
-import com.csse3200.game.components.placeables.SprinklerComponent;
+import com.csse3200.game.components.placeables.*;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
@@ -148,6 +143,7 @@ public class PlaceableFactory {
 
         return createBasePlaceable(EntityType.GOLDEN_STATUE)
                 .addComponent(lightComponent)
+                .addComponent(new DialogueComponent())
                 .addComponent(animator);
     }
 }

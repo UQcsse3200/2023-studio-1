@@ -23,6 +23,7 @@ public class DialogueComponent extends Component {
     private void interact() {
         if (talked) {
             fly();
+            return;
         }
         talk();
     }
