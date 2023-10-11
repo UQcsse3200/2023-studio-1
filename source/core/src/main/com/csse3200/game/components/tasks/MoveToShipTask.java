@@ -10,6 +10,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.ColliderComponent;
+import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -68,7 +69,7 @@ public class MoveToShipTask extends DefaultTask implements PriorityTask {
             stop();
         } else {
             // Start a movement task towards the ship
-            setMovementTask(new MovementTask(currentTarget.getCenterPosition(), speed, 1f));
+            setMovementTask(new MovementTask(currentTarget.getCenterPosition(), speed, 1.5f));
             getMovementTask().create(owner);
             getMovementTask().start();
             this.owner.getEntity().getEvents().trigger("moveToShipStart");
@@ -80,12 +81,17 @@ public class MoveToShipTask extends DefaultTask implements PriorityTask {
      */
     @Override
     public void update() {
+        owner.getEntity().getComponent(HitboxComponent.class).setLayer(PhysicsLayer.NPC);
+        owner.getEntity().getComponent(ColliderComponent.class).setLayer(PhysicsLayer.NPC);
+
         if (movementTask.getStatus() == Status.FINISHED) {
             status = Status.FINISHED;
             return;
         }
 
         if (owner.getEntity().getComponent(ShipEaterScareComponent.class).getIsHiding()) {
+            owner.getEntity().getComponent(ColliderComponent.class).setLayer(PhysicsLayer.NONE);
+            owner.getEntity().getComponent(HitboxComponent.class).setLayer(PhysicsLayer.NONE);
             owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(false);
             return;
         }
@@ -102,7 +108,6 @@ public class MoveToShipTask extends DefaultTask implements PriorityTask {
         } else if (diggingUnderObstacle && ServiceLocator.getTimeSource().getTime() - startedDiggingAt >= 1000L) {
             TerrainTile tile = ServiceLocator.getGameArea().getMap().getTile(owner.getEntity().getCenterPosition());
             if (tile.isTraversable() && !tile.isOccupied()) {
-                owner.getEntity().getComponent(ColliderComponent.class).setLayer(PhysicsLayer.NPC);
                 diggingUnderObstacle = false;
                 owner.getEntity().getEvents().trigger("walkStart");
             }

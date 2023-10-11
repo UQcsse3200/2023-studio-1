@@ -365,7 +365,7 @@ public class NPCFactory {
     animator.startAnimation("running");
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
-            .addTask(new MoveToShipTask(5, new Vector2(2f, 2f), 1f));
+            .addTask(new MoveToShipTask(5, new Vector2(2f, 2f), 1.5f));
 
     Entity shipEater = createBaseAnimal(EntityType.SHIP_EATER)
             .addComponent(new InteractionDetector(3f,
@@ -374,6 +374,7 @@ public class NPCFactory {
             .addComponent(new ShipEaterAttackPattern(2f))
             .addComponent(new ShipEaterAnimationController())
             .addComponent(new ShipEaterScareComponent())
+            .addComponent(new CombatStatsComponent(50, 0))
             .addComponent(aiTaskComponent);
 
     shipEater.getComponent(ColliderComponent.class).setDensity(100);
