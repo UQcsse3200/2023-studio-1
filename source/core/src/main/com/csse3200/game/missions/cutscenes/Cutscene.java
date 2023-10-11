@@ -76,6 +76,7 @@ public class Cutscene{
      */
     public enum CutsceneType {
         ALIEN, // Alien quest giver talks to player
+        PLACEABLE, // dw bout it <3
         RADIO // Radio talks to player
     }
 }
