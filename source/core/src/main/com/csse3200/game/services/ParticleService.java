@@ -104,6 +104,9 @@ public class ParticleService {
 				wrapper.getPooledEffect().reset();
 			}
 		}
+		for (ParticleEffectComponent component: effectComponents) {
+			component.render(batch, delta);
+		}
 	}
 
 	/**
