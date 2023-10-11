@@ -157,7 +157,12 @@ public class CutsceneDisplay extends UIComponent {
             npcAtlas = ServiceLocator.getResourceService()
                     .getAsset("images/questgiver.atlas", TextureAtlas.class);
             region = npcAtlas.findRegion("default");
-        } else { // NO DIFFERENCE SINCE NO RADIO SPRITE YET
+        } else if (this.cutsceneType == Cutscene.CutsceneType.RADIO) { // NO DIFFERENCE SINCE NO RADIO SPRITE YET
+            npcAtlas = ServiceLocator.getResourceService()
+                    .getAsset("images/walkietalkie.atlas", TextureAtlas.class);
+            region = npcAtlas.findRegion("default");
+        } else {
+            // Team 1 will do there stuff here for now quest giver
             npcAtlas = ServiceLocator.getResourceService()
                     .getAsset("images/questgiver.atlas", TextureAtlas.class);
             region = npcAtlas.findRegion("default");
