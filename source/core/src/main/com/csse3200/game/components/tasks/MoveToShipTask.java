@@ -7,6 +7,8 @@ import com.csse3200.game.ai.tasks.PriorityTask;
 import com.csse3200.game.components.npc.ShipEaterScareComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
+import com.csse3200.game.physics.PhysicsLayer;
+import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -27,6 +29,8 @@ public class MoveToShipTask extends DefaultTask implements PriorityTask {
     private Entity currentTarget;
     /** Distance to target before stopping */
     private final float stoppingDistance;
+    private boolean diggingUnderObstacle;
+    private long startedDiggingAt;
 
     /**
      * @param priority Task priority when moving (-1 when not moving)
@@ -36,6 +40,7 @@ public class MoveToShipTask extends DefaultTask implements PriorityTask {
         this.priority = priority;
         this.speed = speed;
         this.stoppingDistance = stoppingDistance;
+        this.diggingUnderObstacle = false;
     }
 
     /**
@@ -74,15 +79,39 @@ public class MoveToShipTask extends DefaultTask implements PriorityTask {
      */
     @Override
     public void update() {
+        if (movementTask.getStatus() == Status.FINISHED) {
+            status = Status.FINISHED;
+            return;
+        }
+
         if (owner.getEntity().getComponent(ShipEaterScareComponent.class).getIsHiding()) {
             owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(false);
             return;
         }
 
-        owner.getEntity().getEvents().trigger("walkStart");
+        if (movementTask.getStatus() == Status.FAILED) {
+            // stuck, dig under obstacle
+            owner.getEntity().getComponent(ColliderComponent.class).setLayer(PhysicsLayer.NONE);
+            movementTask.start();
+            diggingUnderObstacle = true;
+            startedDiggingAt = ServiceLocator.getTimeSource().getTime();
+            owner.getEntity().getEvents().trigger("digging");
+            movementTask.update();
+            return;
+        } else if (diggingUnderObstacle && ServiceLocator.getTimeSource().getTime() - startedDiggingAt >= 2000L) {
+            owner.getEntity().getComponent(ColliderComponent.class).setLayer(PhysicsLayer.NPC);
+            diggingUnderObstacle = false;
+            owner.getEntity().getEvents().trigger("walkStart");
+        } else if (!diggingUnderObstacle) {
+            owner.getEntity().getEvents().trigger("walkStart");
+        }
+
+        Vector2 ownerPos = owner.getEntity().getCenterPosition();
         // Stop the movement if already at the ship
-        float distanceToTarget = owner.getEntity().getCenterPosition().dst(currentTarget.getCenterPosition());
+        float distanceToTarget = ownerPos.dst(currentTarget.getCenterPosition());
         owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(distanceToTarget > stoppingDistance);
+
+        movementTask.update();
     }
 
     /**

@@ -8,6 +8,12 @@ public class ShipEaterAnimationController extends AnimalAnimationController {
 		super.create();
 
 		entity.getEvents().addListener("attackStart", this::animateAttack);
+		entity.getEvents().addListener("digging", this::digging);
+	}
+	void digging() {
+		if (!Objects.equals(animator.getCurrentAnimation(), "digging")) {
+			animator.startAnimation("digging");
+		}
 	}
 
 	void animateAttack() {

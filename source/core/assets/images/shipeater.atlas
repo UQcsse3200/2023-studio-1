@@ -101,3 +101,10 @@ eating
   orig: 18, 16
   offset: 0, 0
   rotate: false
+digging
+  xy: 36, 0
+  index: 0
+  size: 18, 16
+  orig: 18, 16
+  offset: 0, 0
+  rotate: false
