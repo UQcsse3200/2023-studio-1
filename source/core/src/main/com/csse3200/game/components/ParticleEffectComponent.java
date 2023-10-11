@@ -48,6 +48,7 @@ public class ParticleEffectComponent extends Component {
 		isActive = true;
 		this.effectType = effectType;
 		effect = ServiceLocator.getParticleService().getEffect(effectType);
+		effect.setPosition(entity.getCenterPosition().x, entity.getCenterPosition().y);
 		effect.start();
 	}
 
