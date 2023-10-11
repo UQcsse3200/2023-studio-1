@@ -26,7 +26,7 @@ public class CollectItemsAchievement extends Achievement {
      * @param name - Human-readable name of the Achievement.
      * @param numberOfItems - Amount of items the player needs to collect.
      */
-    public CollectItemsAchievement(String name, Reward reward, int numberOfItems) {
+    public CollectItemsAchievement(String name, int numberOfItems) {
         super(name);
         this.numberOfItemsToCollect = Math.max(numberOfItems, 0);
         this.numberOfItemsCollected = 0;
