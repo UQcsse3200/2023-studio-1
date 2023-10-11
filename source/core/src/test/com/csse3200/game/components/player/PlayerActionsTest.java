@@ -3,6 +3,7 @@ package com.csse3200.game.components.player;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.combat.CombatStatsComponent;
 import com.csse3200.game.components.combat.ProjectileComponent;
 import com.csse3200.game.entities.Entity;
@@ -36,14 +37,10 @@ class PlayerActionsTest {
         ServiceLocator.registerTimeSource(new GameTime());
 
         ServiceLocator.registerPhysicsService(physicsService);
-
-        ServiceLocator.registerInputService(new InputService());
         ServiceLocator.registerResourceService(mock(ResourceService.class));
 
         ServiceLocator.registerEntityService(mock(EntityService.class));
-        ServiceLocator.registerRenderService(new RenderService());
         ServiceLocator.registerTimeService(new TimeService());
-        ServiceLocator.registerPlanetOxygenService(new PlanetOxygenService());
 
         ServiceLocator.registerGameArea(mock(GameArea.class));
 
@@ -57,8 +54,11 @@ class PlayerActionsTest {
         areaEntities.add(player);
         areaEntities.add(chicken);
 
+
         when(ServiceLocator.getGameArea().getAreaEntities()).thenReturn(areaEntities);
         when(ServiceLocator.getResourceService().getAsset(any(), any())).thenReturn(mock(Sound.class));
+
+        ServiceLocator.registerCameraComponent(mock(CameraComponent.class));
         when(ServiceLocator.getCameraComponent().screenPositionToWorldPosition(any())).thenReturn(new Vector2(2, 2));
     }
 
@@ -73,6 +73,7 @@ class PlayerActionsTest {
     void playerShouldShootNPC() {
         Entity bullet = new Entity();
         bullet.addComponent(mock(ProjectileComponent.class));
+        bullet.addComponent(new CombatStatsComponent(1, 1));
         mockStatic(ProjectileFactory.class);
         when(ProjectileFactory.createPlayerProjectile()).thenReturn(bullet);
         doAnswer((i) -> {

@@ -29,8 +29,6 @@ public class AnimalEffectsController extends Component {
     }
 
     public void startEffect(String trigger) {
-        entity.getEvents().cancelEvent(stopAnimationEvent);
-
         switch (trigger) {
             case "tamed" -> animator.startAnimation("heart");
             case "fed" -> animator.startAnimation("fed");
@@ -42,15 +40,21 @@ public class AnimalEffectsController extends Component {
             case "panicStart" -> animator.startAnimation("exclamation");
             case "followStart" -> {
                 if (entity.getType() == EntityType.BAT) {
-
-                } else {
-
+                    animator.startAnimation("red_exclamation");
+                } else if (entity.getType() == EntityType.CHICKEN || entity.getType() == EntityType.COW) {
+                    if (Objects.equals(animator.getCurrentAnimation(), "heart")) {
+                        entity.getEvents().scheduleEvent(0.25f, "startEffect", "followStart");
+                        return;
+                    } else {
+                        animator.startAnimation("question");
+                    }
                 }
             }
             case "attack" -> animator.startAnimation("red_exclamation");
             default -> logger.error("unrecognised effect trigger");
         }
 
+        entity.getEvents().cancelEvent(stopAnimationEvent);
         this.currentTrigger = trigger;
     }
 
@@ -62,6 +66,7 @@ public class AnimalEffectsController extends Component {
     private void stopEffect(String trigger) {
         if (Objects.equals(currentTrigger, trigger)) {
             animator.stopAnimation();
+            this.currentTrigger = null;
         }
     }
 }

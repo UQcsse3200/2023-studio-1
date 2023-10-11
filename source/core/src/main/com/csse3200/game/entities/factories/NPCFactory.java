@@ -447,6 +447,8 @@ public class NPCFactory {
     animationEffectsComponent.addAnimation("fed", 0.07f);
     animationEffectsComponent.addAnimation("exclamation", 0.07f);
     animationEffectsComponent.addAnimation("red_exclamation", 0.07f);
+    animationEffectsComponent.addAnimation("question", 0.07f);
+
     animationEffectsComponent.setScale(new Vector2(11f / 16f, 13f / 16f));
 
     Entity animal = new Entity(type)
