@@ -97,14 +97,11 @@ public class TamableComponent extends Component {
           if (numTimesFed == tamingThreshold || randomDecimal > tamingProbability) {
               isTamed = true;
               ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.ANIMAL_TAMED.name());
-              entity.getEvents().trigger("startEffect", "tamed");
-              entity.getEvents().scheduleEvent(3f, "stopEffect", "tamed");
-
+              entity.getEvents().trigger("startTimedEffect", "tamed", 2f);
           }
           else {
               numTimesFed++;
-              entity.getEvents().trigger("startEffect", "fed");
-              entity.getEvents().scheduleEvent(3f, "stopEffect", "fed");
+              entity.getEvents().trigger("startTimedEffect", "fed", 2f);
           }
       }
   }

@@ -16,7 +16,8 @@ import java.util.function.Supplier;
  * The Dragonfly attack pattern class defines the attack behavior of a Dragonfly entity in the game.
  * It allows the dragonfly to detect the player and plants and attack them when in range.
  */
-public class DragonflyAttackPattern extends AttackPatternComponent {
+public class
+DragonflyAttackPattern extends AttackPatternComponent {
     /** Supplies the projectile to be shot by the dragonfly. */
     private final Supplier<Entity> projectileSupplier;
 
@@ -52,8 +53,6 @@ public class DragonflyAttackPattern extends AttackPatternComponent {
     protected void attack() {
 
        List<Entity> entitiesInRange = interactionDetector.getEntitiesInRange();
-       entity.getEvents().trigger("startEffect", "attack");
-
 
        if (entitiesInRange.isEmpty()) { // No entity detected, clear attack loop
            currentAttackEvent = null;
@@ -68,6 +67,7 @@ public class DragonflyAttackPattern extends AttackPatternComponent {
                 return;
             }
         }
+        entity.getEvents().trigger("stopEffect", "attack"); // if no player found, stop effect
 
         Entity nearestEntity = interactionDetector.getNearest(interactionDetector.getEntitiesInRange());
 
@@ -106,6 +106,7 @@ public class DragonflyAttackPattern extends AttackPatternComponent {
      * @param player the player entity to attack.
      */
     private void attackPlayer(Entity player) {
+
         Vector2 nearestEntityPosition = player.getCenterPosition();
         String attackDirection =
                 entity.getCenterPosition().sub(nearestEntityPosition).x < 0 ? DirectionUtils.RIGHT : DirectionUtils.LEFT;
@@ -113,6 +114,8 @@ public class DragonflyAttackPattern extends AttackPatternComponent {
         // Trigger events for direction change and attack animation
         entity.getEvents().trigger("directionChange", attackDirection);
         entity.getEvents().trigger("attackStart");
+        entity.getEvents().trigger("startEffect", "attack"); // if no player found, stop effect
+
 
         // Shoot projectiles with delay after entity's attack animation
         entity.getEvents().scheduleEvent(0.2f, SHOOTER, nearestEntityPosition);
