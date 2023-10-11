@@ -1,6 +1,7 @@
 package com.csse3200.game.components;
 
 import com.csse3200.game.entities.EntityType;
+import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,6 +55,10 @@ public class CombatStatsComponent extends Component {
     }
     if (entity != null) {
       entity.getEvents().trigger("updateHealth", this.health);
+      if (isDead()) {
+        ServiceLocator.getMissionManager().getEvents().trigger(
+                MissionManager.MissionEvent.COMBAT_ACTOR_DEFEATED.name(), entity.getType());
+      }
     }
   }
 

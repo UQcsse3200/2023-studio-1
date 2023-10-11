@@ -227,9 +227,9 @@ public class QuestFactory {
                 new TriggerHostilesReward(List.of(
                         NPCFactory.createOxygenEater(),
                         NPCFactory.createOxygenEater(),
-                        NPCFactory.createOxygenEater(),
-                        NPCFactory.createOxygenEater(),
-                        NPCFactory.createOxygenEater()
+                        NPCFactory.createDragonfly(),
+                        NPCFactory.createDragonfly(),
+                        NPCFactory.createBat()
                 )),
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
@@ -260,7 +260,8 @@ public class QuestFactory {
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
 
-        return new ManageHostilesQuest(ALIENS_ATTACK_QUEST_NAME, reward, Set.of(EntityType.OXYGEN_EATER), 5);
+        return new ManageHostilesQuest(ALIENS_ATTACK_QUEST_NAME, reward, Set.of(EntityType.BAT, EntityType.DRAGONFLY,
+                EntityType.OXYGEN_EATER), 5);
     }
 
     /**
