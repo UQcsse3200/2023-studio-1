@@ -438,11 +438,11 @@ public class NPCFactory {
                     "images/animals/animal_effects.atlas", TextureAtlas.class)
     );
 
-    animationEffectsComponent.addAnimation("heart", Float.MAX_VALUE);
-    animationEffectsComponent.addAnimation("fed", Float.MAX_VALUE);
-    animationEffectsComponent.addAnimation("exclamation", Float.MAX_VALUE);
-    animationEffectsComponent.addAnimation("red_exclamation", Float.MAX_VALUE);
-    animationEffectsComponent.setScale(Vector2Utils.ONE.cpy().scl(11f / 16f));
+    animationEffectsComponent.addAnimation("heart", 0.07f);
+    animationEffectsComponent.addAnimation("fed", 0.07f);
+    animationEffectsComponent.addAnimation("exclamation", 0.07f);
+    animationEffectsComponent.addAnimation("red_exclamation", 0.07f);
+    animationEffectsComponent.setScale(new Vector2(11f / 16f, 13f / 16f));
 
     Entity animal = new Entity(type)
             .addComponent(new PhysicsComponent())

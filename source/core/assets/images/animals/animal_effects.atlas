@@ -1,33 +1,117 @@
 animal_effects.png
-size: 44, 11
+size: 44, 52
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
 heart
   rotate: false
   xy: 0, 0
-  size: 11, 11
-  orig: 11, 11
+  size: 11, 13
+  orig: 11, 13
+  offset: 0, 0
+  index: -1
+heart
+  rotate: false
+  xy: 11, 0
+  size: 11, 13
+  orig: 11, 13
+  offset: 0, 0
+  index: -1
+heart
+  rotate: false
+  xy: 22, 0
+  size: 11, 13
+  orig: 11, 13
+  offset: 0, 0
+  index: -1
+heart
+  rotate: false
+  xy: 33, 0
+  size: 11, 13
+  orig: 11, 13
   offset: 0, 0
   index: -1
 fed
   rotate: false
-  xy: 11, 0
-  size: 11, 11
-  orig: 11, 11
+  xy: 0, 13
+  size: 11, 13
+  orig: 11, 13
+  offset: 0, 0
+  index: -1
+fed
+  rotate: false
+  xy: 11, 13
+  size: 11, 13
+  orig: 11, 13
+  offset: 0, 0
+  index: -1
+fed
+  rotate: false
+  xy: 22, 13
+  size: 11, 13
+  orig: 11, 13
+  offset: 0, 0
+  index: -1
+fed
+  rotate: false
+  xy: 33, 13
+  size: 11, 13
+  orig: 11, 13
   offset: 0, 0
   index: -1
 exclamation
   rotate: false
-  xy: 22, 0
-  size: 11, 11
-  orig: 11, 11
+  xy: 0, 26
+  size: 11, 13
+  orig: 11, 13
+  offset: 0, 0
+  index: -1
+exclamation
+  rotate: false
+  xy: 11, 26
+  size: 11, 13
+  orig: 11, 13
+  offset: 0, 0
+  index: -1
+exclamation
+  rotate: false
+  xy: 22, 26
+  size: 11, 13
+  orig: 11, 13
+  offset: 0, 0
+  index: -1
+exclamation
+  rotate: false
+  xy: 33, 26
+  size: 11, 13
+  orig: 11, 13
   offset: 0, 0
   index: -1
 red_exclamation
   rotate: false
-  xy: 33, 0
-  size: 11, 11
-  orig: 11, 11
+  xy: 0, 39
+  size: 11, 13
+  orig: 11, 13
+  offset: 0, 0
+  index: -1
+red_exclamation
+  rotate: false
+  xy: 11, 39
+  size: 11, 13
+  orig: 11, 13
+  offset: 0, 0
+  index: -1
+red_exclamation
+  rotate: false
+  xy: 22, 39
+  size: 11, 13
+  orig: 11, 13
+  offset: 0, 0
+  index: -1
+red_exclamation
+  rotate: false
+  xy: 33, 39
+  size: 11, 13
+  orig: 11, 13
   offset: 0, 0
   index: -1
