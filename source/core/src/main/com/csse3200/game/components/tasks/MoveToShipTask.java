@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.ai.tasks.DefaultTask;
 import com.csse3200.game.ai.tasks.PriorityTask;
+import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.npc.ShipEaterScareComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
@@ -67,7 +68,7 @@ public class MoveToShipTask extends DefaultTask implements PriorityTask {
             stop();
         } else {
             // Start a movement task towards the ship
-            setMovementTask(new MovementTask(getEntityTargetVector(currentTarget), speed, 1f));
+            setMovementTask(new MovementTask(currentTarget.getCenterPosition(), speed, 1f));
             getMovementTask().create(owner);
             getMovementTask().start();
             this.owner.getEntity().getEvents().trigger("moveToShipStart");
@@ -98,17 +99,19 @@ public class MoveToShipTask extends DefaultTask implements PriorityTask {
             owner.getEntity().getEvents().trigger("digging");
             movementTask.update();
             return;
-        } else if (diggingUnderObstacle && ServiceLocator.getTimeSource().getTime() - startedDiggingAt >= 2000L) {
-            owner.getEntity().getComponent(ColliderComponent.class).setLayer(PhysicsLayer.NPC);
-            diggingUnderObstacle = false;
-            owner.getEntity().getEvents().trigger("walkStart");
+        } else if (diggingUnderObstacle && ServiceLocator.getTimeSource().getTime() - startedDiggingAt >= 1000L) {
+            TerrainTile tile = ServiceLocator.getGameArea().getMap().getTile(owner.getEntity().getCenterPosition());
+            if (tile.isTraversable() && !tile.isOccupied()) {
+                owner.getEntity().getComponent(ColliderComponent.class).setLayer(PhysicsLayer.NPC);
+                diggingUnderObstacle = false;
+                owner.getEntity().getEvents().trigger("walkStart");
+            }
+            startedDiggingAt = ServiceLocator.getTimeSource().getTime();
         } else if (!diggingUnderObstacle) {
             owner.getEntity().getEvents().trigger("walkStart");
         }
 
-        Vector2 ownerPos = owner.getEntity().getCenterPosition();
-        // Stop the movement if already at the ship
-        float distanceToTarget = ownerPos.dst(currentTarget.getCenterPosition());
+        float distanceToTarget = owner.getEntity().getCenterPosition().dst(currentTarget.getCenterPosition());
         owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(distanceToTarget > stoppingDistance);
 
         movementTask.update();
@@ -123,7 +126,6 @@ public class MoveToShipTask extends DefaultTask implements PriorityTask {
         if (movementTask != null) {
             movementTask.stop();
         }
-        owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(true);
         this.owner.getEntity().getEvents().trigger("moveToShipStop");
     }
 
@@ -153,20 +155,5 @@ public class MoveToShipTask extends DefaultTask implements PriorityTask {
      */
     private void setMovementTask(MovementTask movementTask) {
         this.movementTask = movementTask;
-    }
-
-    /**
-     * Calculates a vector towards the target entity for movement.
-     *
-     * @param target the target to return a vector towards.
-     * @return the vector towards the entity.
-     */
-    private Vector2 getEntityTargetVector(Entity target) {
-        Vector2 targetVec = new Vector2();
-        targetVec.x = owner.getEntity().getCenterPosition().x +
-                (target.getPosition().x - owner.getEntity().getCenterPosition().x);
-        targetVec.y = owner.getEntity().getCenterPosition().y +
-                (target.getPosition().y - owner.getEntity().getCenterPosition().y);
-        return targetVec;
     }
 }
