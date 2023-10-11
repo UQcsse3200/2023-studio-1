@@ -1,8 +1,10 @@
 package com.csse3200.game.components.plants;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.areas.terrain.CropTileComponent;
+import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
@@ -22,7 +24,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
     /**
      * The radius of the area of effect.
      */
-    private float radius;
+    private final float radius;
 
     /**
      * The type of effect to be implemented.
@@ -32,12 +34,14 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
     /**
      * List of entities within the area
      */
-    private List<Entity> entitiesInRange = new ArrayList<>();
+    private final List<Entity> entitiesInRange = new ArrayList<>();
 
     /**
      * Circle shape of the area.
      */
-    private CircleShape shape = new CircleShape();
+    private final CircleShape shape = new CircleShape();
+
+    private Vector2[] aoeVectors;
 
     /**
      * Constructor for the Area of Effect class.
@@ -138,41 +142,93 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
     /**
      * Effect that is triggered when the plant is decaying or dead. This effect decreases the health of all plants
      * near the decaying or dead plant. This encourages the player to remove dead and decaying plants.
+     * This effects all other plants within a 1 tile radius of the decaying plant.
+     * Thanks to the person that implemented sprinklers for coming up with this
+     * approach for aoe.
      */
     private void decayAndDeadEffect() {
+        // Position of this decaying plant
+        Vector2 plantPos = entity.getPosition();
 
-        for (Entity entityInRange : getEntitiesInRange()) {
+        // List of all coordinates in a 1 tile radius of the plant.
+        this.aoeVectors = new Vector2[]{
+                new Vector2(plantPos.x - 1, plantPos.y + 1),
+                new Vector2(plantPos.x, plantPos.y + 1),
+                new Vector2(plantPos.x + 1, plantPos.y + 1),
+                new Vector2(plantPos.x - 1, plantPos.y),
+                new Vector2(plantPos.x + 1, plantPos.y),
+                new Vector2(plantPos.x - 1, plantPos.y - 1),
+                new Vector2(plantPos.x, plantPos.y - 1),
+                new Vector2(plantPos.x + 1, plantPos.y - 1),
+        };
 
-            // Check for any crop tiles near the plant.
-            if (entityInRange.getType() == EntityType.TILE) {
-                Entity plant = entityInRange.getComponent(CropTileComponent.class).getPlant();
-                if (plant != null && entity.getId() != plant.getId()) {
-                    // Decrease the health of all plants in the effect area.
-                    plant.getComponent(PlantComponent.class).increasePlantHealth(-1);
+        // Decay effect for adjacent plants
+        for (Vector2 otherPos : aoeVectors) {
+            TerrainTile tile = ServiceLocator.getGameArea().getMap().getTile(otherPos);
+            Entity occupant = tile.getOccupant();
+            if (occupant != null) {
+                CropTileComponent cropTile = occupant.getComponent(CropTileComponent.class);
+                if (cropTile != null) {
+                    Entity otherPlant = cropTile.getPlant();
+                    if (otherPlant != null) {
+                        otherPlant.getComponent(PlantComponent.class).increasePlantHealth(-4);
+                    }
                 }
             }
-
         }
     }
 
     /**
      * Effect that increases the health of plants, animals, and the player.
+     * This increases the health of all plants within a 1 tile radius and increases
+     * the health of the player and all animals in the radius of the collider.
+     * Thanks to the person that implemented sprinklers for coming up with this
+     * approach for aoe.
      */
     private void healthEffect() {
-        for (Entity entityInRange : getEntitiesInRange()) {
-            if (entityInRange.getType() == EntityType.TILE) {
+        // Position of this health plant.
+        Vector2 plantPos = entity.getPosition();
 
-                // First check for other plants in the area.
-                Entity plant = entityInRange.getComponent(CropTileComponent.class).getPlant();
-                if (plant != null && entity.getId() != plant.getId()) {
-                        plant.getComponent(PlantComponent.class).increasePlantHealth(1);
+        // List of all coordinates in a 1 tile radius of the plant.
+        this.aoeVectors = new Vector2[]{
+                new Vector2(plantPos.x - 1, plantPos.y + 1),
+                new Vector2(plantPos.x, plantPos.y + 1),
+                new Vector2(plantPos.x + 1, plantPos.y + 1),
+                new Vector2(plantPos.x - 1, plantPos.y),
+                new Vector2(plantPos.x + 1, plantPos.y),
+                new Vector2(plantPos.x - 1, plantPos.y - 1),
+                new Vector2(plantPos.x, plantPos.y - 1),
+                new Vector2(plantPos.x + 1, plantPos.y - 1),
+        };
+
+        // Health effect for adjacent plants.
+        for (Vector2 otherPos : aoeVectors) {
+            TerrainTile tile = ServiceLocator.getGameArea().getMap().getTile(otherPos);
+            Entity occupant = tile.getOccupant();
+            if (occupant != null) {
+                CropTileComponent cropTile = occupant.getComponent(CropTileComponent.class);
+                if (cropTile != null) {
+                    Entity otherPlant = cropTile.getPlant();
+                    if (otherPlant != null) {
+                        otherPlant.getComponent(PlantComponent.class).increasePlantHealth(4);
+                    }
                 }
-
-            // Now check if the player.
-            } else if (entityInRange.getType() == EntityType.PLAYER) {
-                entityInRange.getComponent(CombatStatsComponent.class).addHealth(10);
             }
-            // add animals to this.
+        }
+
+        // Health effect for player and animals.
+        for (Entity entityInRange : getEntitiesInRange()) {
+
+            if (    entityInRange.getType() == EntityType.PLAYER ||
+                    entityInRange.getType() == EntityType.BAT ||
+                    entityInRange.getType() == EntityType.ASTROLOTL ||
+                    entityInRange.getType() == EntityType.DRAGONFLY ||
+                    entityInRange.getType() == EntityType.CHICKEN ||
+                    entityInRange.getType() == EntityType.OXYGEN_EATER ||
+                    entityInRange.getType() == EntityType.COW
+            ) {
+                entityInRange.getComponent(CombatStatsComponent.class).addHealth(4);
+            }
         }
     }
 
@@ -181,10 +237,16 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
      */
     private void poisonEffect() {
         for (Entity entityInRange : getEntitiesInRange()) {
-            if (entityInRange.getType() == EntityType.PLAYER) {
+            if (    entityInRange.getType() == EntityType.PLAYER ||
+                    entityInRange.getType() == EntityType.BAT ||
+                    entityInRange.getType() == EntityType.ASTROLOTL ||
+                    entityInRange.getType() == EntityType.DRAGONFLY ||
+                    entityInRange.getType() == EntityType.CHICKEN ||
+                    entityInRange.getType() == EntityType.OXYGEN_EATER ||
+                    entityInRange.getType() == EntityType.COW
+            ) {
                 entityInRange.getComponent(CombatStatsComponent.class).addHealth(-1);
             }
-            // add animals to this.
         }
     }
 
@@ -198,10 +260,12 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
 
             for (Entity entityInRange : getEntitiesInRange()) {
 
-                if (entityInRange.getType() == EntityType.COW
-                        || entityInRange.getType() == EntityType.CHICKEN
-                        || entityInRange.getType() == EntityType.ASTROLOTL
-                        || entityInRange.getType() == EntityType.OXYGEN_EATER) {
+                if (    entityInRange.getType() == EntityType.BAT ||
+                        entityInRange.getType() == EntityType.ASTROLOTL ||
+                        entityInRange.getType() == EntityType.DRAGONFLY ||
+                        entityInRange.getType() == EntityType.CHICKEN ||
+                        entityInRange.getType() == EntityType.OXYGEN_EATER ||
+                        entityInRange.getType() == EntityType.COW) {
 
                     // If a valid entity is in the area, tell the plant it is eating.
                     entity.getComponent(PlantComponent.class).setIsEating();
