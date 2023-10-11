@@ -1,13 +1,4 @@
 package com.csse3200.game.components.plants;
-import static com.badlogic.gdx.math.MathUtils.random;
-
-import java.text.DecimalFormat;
-import java.util.Map;
-import java.util.Objects;
-import java.util.function.Supplier;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Json;
@@ -21,6 +12,15 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.text.DecimalFormat;
+import java.util.Map;
+import java.util.Objects;
+import java.util.function.Supplier;
+
+import static com.badlogic.gdx.math.MathUtils.random;
 
 /**
  * Class for all plants in the game.
@@ -285,11 +285,11 @@ public class PlantComponent extends Component {
         entity.getEvents().addListener("harvest", this::harvest);
         entity.getEvents().addListener("destroyPlant", this::destroyPlant);
         entity.getEvents().addListener("attack", this::attack);
-        entity.getEvents().addListener("acidShower", this::onAcidShower);
         ServiceLocator.getTimeService().getEvents().addListener("minuteUpdate", this::minuteUpdate);
         ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::hourUpdate);
         ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::dayUpdate);
         ServiceLocator.getPlantCommandService().getEvents().addListener("forceGrowthStage", this::forceGrowthStage);
+        ServiceLocator.getGameArea().getClimateController().getEvents().addListener("acidShower", this::onAcidShower);
 
         ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(1, ALIVE);
         ServiceLocator.getPlantInfoService().increaseSeedsPlanted(1, plantName);
