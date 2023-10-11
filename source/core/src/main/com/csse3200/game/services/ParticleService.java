@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
+import com.csse3200.game.components.ParticleEffectComponent;
 import com.csse3200.game.rendering.ParticleEffectWrapper;
 
 import java.util.ArrayList;
@@ -20,6 +21,8 @@ public class ParticleService {
 	 * All the effects that will be rendered
 	 */
 	private final ArrayList<ParticleEffectWrapper> queuedEffects;
+
+	private final ArrayList<ParticleEffectComponent> effectComponents;
 
 	/**
 	 * Hashmap mapping the particle effect to the ParticleEffectType enum. This particle effect is needed in the
@@ -83,6 +86,8 @@ public class ParticleService {
 			particleEffects.put(effectType, ServiceLocator.getResourceService().getAsset(effectType.effectPath, ParticleEffect.class));
 			particleEffectPools.put(effectType, new ParticleEffectPool(particleEffects.get(effectType), effectType.minCapacity, effectType.maxCapacity));
 		}
+
+		effectComponents = new ArrayList<>();
 	}
 
 	/**
@@ -142,5 +147,13 @@ public class ParticleService {
 
 	public ParticleEffectPool.PooledEffect getEffect(ParticleEffectType effectType) {
 		return particleEffectPools.get(effectType).obtain();
+	}
+
+	public void addComponent(ParticleEffectComponent component) {
+		effectComponents.add(component);
+	}
+
+	public void removeComponent(ParticleEffectComponent component) {
+		effectComponents.remove(component);
 	}
 }
