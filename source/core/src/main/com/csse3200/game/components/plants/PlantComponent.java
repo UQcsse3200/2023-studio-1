@@ -290,6 +290,7 @@ public class PlantComponent extends Component {
         ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::dayUpdate);
         ServiceLocator.getPlantCommandService().getEvents().addListener("forceGrowthStage", this::forceGrowthStage);
         ServiceLocator.getGameArea().getClimateController().getEvents().addListener("acidShower", this::onAcidShower);
+        ServiceLocator.getGameArea().getClimateController().getEvents().addListener("solarSurge", this::onSolarSurge);
 
         ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(1, ALIVE);
         ServiceLocator.getPlantInfoService().increaseSeedsPlanted(1, plantName);
@@ -1083,6 +1084,12 @@ public class PlantComponent extends Component {
     }
 
     private void onAcidShower() {
+        increasePlantHealth(-2);
+        int growthRate = (int)(this.cropTile.getGrowthRate(this.idealWaterLevel) * 20);
+        this.currentGrowthLevel += growthRate;
+    }
+
+    private void onSolarSurge() {
         increasePlantHealth(-2);
         int growthRate = (int)(this.cropTile.getGrowthRate(this.idealWaterLevel) * 20);
         this.currentGrowthLevel += growthRate;
