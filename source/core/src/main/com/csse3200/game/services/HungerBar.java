@@ -3,7 +3,9 @@ package com.csse3200.game.services;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -12,10 +14,11 @@ import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.ui.UIComponent;
 
 public class HungerBar extends UIComponent{
-    Table table1 = new Table();
-    Group group1 = new Group();
-    private Image hungerBarOutline;
-    private Image hungerBarFill;
+    Table table = new Table();
+    Group group = new Group();
+    private Image hungerFrame;
+    private Image hungerFill;
+    private Image hungerIcon;
     private Array<Label> hungerLabels;
     private Label hungerLabel;
 
@@ -32,11 +35,11 @@ public class HungerBar extends UIComponent{
         ServiceLocator.getUIService().getEvents()
                 .addListener("toggleUI", this::toggleDisplay);
 
-        updateDisplay(30);
+        updateDisplay(100);
     }
 
     private void toggleDisplay(boolean isDisplayed) {
-        table1.setVisible(isDisplayed);
+        table.setVisible(isDisplayed);
     }
 
 	/**
@@ -46,11 +49,15 @@ public class HungerBar extends UIComponent{
 	public void createTexture() {
 		Skin hungerSkin = ServiceLocator.getResourceService().getAsset("flat-earth/skin/flat-earth-ui.json", Skin.class);
 
-        hungerBarOutline = new Image(ServiceLocator.getResourceService().getAsset(
-                "images/bars_ui/bar_outline.png", Texture.class));
-        hungerBarFill = new Image(ServiceLocator.getResourceService().getAsset(
-                "images/bars_ui/healthy_fill.png", Texture.class));
+        hungerFrame = new Image(ServiceLocator.getResourceService().getAsset(
+                "images/status_ui/status_frame.png", Texture.class));
+        hungerFill = new Image(ServiceLocator.getResourceService().getAsset(
+                "images/status_ui/hunger_fill.png", Texture.class));
+        hungerIcon = new Image(ServiceLocator.getResourceService().getAsset(
+                "images/status_ui/hunger_icon.png", Texture.class));
 
+
+        hungerFill.setScaleY(1.0f);
 
         hungerLabels = new Array<>();
         for (int i = 0; i <= 100; i++) {
@@ -73,15 +80,14 @@ public class HungerBar extends UIComponent{
 		float scaling = (float) hungerLevel / 100;
 
         // Accounts for scaling of the hunger bar due to the hunger percent
-        hungerBarFill.setX(hungerBarFill.getImageX() + 14 * (1 - scaling));
-        hungerBarFill.setScaleX(scaling);
-
-//        hungerBarOutline.setPosition(-550f, -5f);
+        hungerFill.setY(hungerFill.getImageY() + 48 * (1 - scaling));
 
         if (0 <= hungerLevel && hungerLevel <= 100) {
             hungerLabel = hungerLabels.get(hungerLevel);
-            hungerLabel.setPosition(hungerBarOutline.getImageX() + 125f, hungerBarOutline.getImageY() + 8.5f);
+            hungerLabel.setPosition(hungerFrame.getImageX() + 125f, hungerFrame.getImageY() + 8.5f);
         }
+
+        hungerFill.addAction(Actions.scaleTo(1.0f, scaling, 1.0f, Interpolation.fade));
 
     }
 
@@ -91,20 +97,20 @@ public class HungerBar extends UIComponent{
      */
     @Override
     public void draw(SpriteBatch batch) {
-        table1.clear();
-        group1.clear();
-        table1.top();
-        table1.setFillParent(true);
+        table.clear();
+        group.clear();
+        table.top();
+        table.setFillParent(true);
 
-        table1.padTop(-130f).padLeft(-1000f);
+        table.padTop(-50f).padLeft(-50f);
 
+        group.addActor(hungerFill);
+        group.addActor(hungerFrame);
+        //group.addActor(hungerLabel);
+        group.addActor(hungerIcon);
 
-        group1.addActor(hungerBarOutline);
-        group1.addActor(hungerBarFill);
-        group1.addActor(hungerLabel);
-
-        table1.add(group1).size(200);
-        stage.addActor(table1);
+        table.add(group).size(200);
+        stage.addActor(table);
     }
 
     /**
@@ -113,8 +119,8 @@ public class HungerBar extends UIComponent{
     @Override
     public void dispose() {
         super.dispose();
-        hungerBarOutline.remove();
-        hungerBarFill.remove();
+        hungerFrame.remove();
+        hungerFill.remove();
         hungerLabel.remove();
     }
 }

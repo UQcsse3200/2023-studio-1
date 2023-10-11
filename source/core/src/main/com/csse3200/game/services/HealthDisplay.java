@@ -24,10 +24,9 @@ public class HealthDisplay extends UIComponent{
     private static final Logger logger = LoggerFactory.getLogger(HealthDisplay.class);
     Table table = new Table();
     Group group = new Group();
-    private Image healthOutline;
+    private Image healthFrame;
     private Image healthFill;
-    private Image healthNormal;
-    private Image healthDanger;
+    private Image healthIcon;
     private Array<Label> healthLabels;
     private Label healthLabel;
     private int currentHealth;
@@ -62,16 +61,15 @@ public class HealthDisplay extends UIComponent{
         logger.debug("Health display texture being created");
         Skin healthSkin = ServiceLocator.getResourceService().getAsset("flat-earth/skin/flat-earth-ui.json", Skin.class);
 
-        healthOutline = new Image(ServiceLocator.getResourceService().getAsset(
-            "images/bars_ui/bar_outline.png", Texture.class));
-        healthNormal = new Image(ServiceLocator.getResourceService().getAsset(
-            "images/bars_ui/healthy_fill.png", Texture.class));
-        healthDanger = new Image(ServiceLocator.getResourceService().getAsset(
-            "images/bars_ui/danger_fill.png", Texture.class));
+        healthFrame = new Image(ServiceLocator.getResourceService().getAsset(
+            "images/status_ui/status_frame.png", Texture.class));
+        healthFill = new Image(ServiceLocator.getResourceService().getAsset(
+            "images/status_ui/health_fill.png", Texture.class));
+        healthIcon = new Image(ServiceLocator.getResourceService().getAsset(
+            "images/status_ui/health_icon.png", Texture.class));
 
         // Set health fill to the initial starting one
-        healthFill = healthNormal;
-        healthFill.setScaleX(1.0f);
+        healthFill.setScaleY(1.0f);
 
         // Create labels for each percent
         healthLabels = new Array<>();
@@ -84,7 +82,6 @@ public class HealthDisplay extends UIComponent{
      * Updates the display, showing the health bar in the top of the main game screen.
      */
     public void updatePlayerHealthUI(int health) {
-        boolean switched;
         if (healthLabels == null) {
             createTexture();
         }
@@ -92,28 +89,16 @@ public class HealthDisplay extends UIComponent{
         float scaling = (float) health / 100;
 
         // Adjusts the health bar based on the health percent
-        if (health <= 25) {
-            switched = (healthFill != healthDanger);
-            healthFill = healthDanger;
-        } else {
-            switched = (healthFill != healthNormal);
-            healthFill = healthNormal;
-        }
-
-        healthFill.setX(healthFill.getImageX() + 14 * (1 - scaling));
+        healthFill.setY(healthFill.getImageY() + 48 * (1 - scaling));
 
         // Ensure that the array is always accessed within bounds
         if (0 <= health && health <= 100) {
             logger.debug("Health display updated");
             healthLabel = healthLabels.get(health);
-            healthLabel.setPosition(healthOutline.getImageX() + 125f, healthOutline.getImageY() + 8.5f);
+            healthLabel.setPosition(healthFrame.getImageX() + 125f, healthFrame.getImageY() + 8.5f);
         }
 
-        if (!switched) {
-            healthFill.addAction(Actions.scaleTo(scaling, 1.0f, 1.0f, Interpolation.pow2InInverse));
-        } else {
-            healthFill.setScaleX(scaling);
-        }
+        healthFill.addAction(Actions.scaleTo(1.0f, scaling, 1.0f, Interpolation.pow2InInverse));
     }
 
     /**
@@ -126,12 +111,12 @@ public class HealthDisplay extends UIComponent{
         group.clear();
         table.top();
         table.setFillParent(true);
-        table.padTop(-130f).padLeft(820f);
+        table.padTop(-50f).padLeft(270f);
 
-
-        group.addActor(healthOutline);
         group.addActor(healthFill);
-        group.addActor(healthLabel);
+        group.addActor(healthFrame);
+        //group.addActor(healthLabel);
+        group.addActor(healthIcon);
 
         table.add(group).size(200);
         stage.addActor(table);
@@ -143,7 +128,7 @@ public class HealthDisplay extends UIComponent{
     @Override
     public void dispose() {
         super.dispose();
-        healthOutline.remove();
+        healthFrame.remove();
         healthFill.remove();
         healthLabel.remove();
     }
