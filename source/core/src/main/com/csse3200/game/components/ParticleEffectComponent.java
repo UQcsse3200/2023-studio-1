@@ -16,6 +16,12 @@ public class ParticleEffectComponent extends Component {
 		isActive = false;
 	}
 
+	@Override
+	public void create() {
+		super.create();
+		ServiceLocator.getParticleService().addComponent(this);
+	}
+
 	public void render(SpriteBatch batch, float delta) {
 		// Don't render if not active
 		if (!isActive) {
@@ -50,7 +56,6 @@ public class ParticleEffectComponent extends Component {
 	@Override
 	public void dispose() {
 		super.dispose();
-		// TODO Do i need to check this?
 		if (ServiceLocator.getParticleService() != null) {
 			ServiceLocator.getParticleService().removeComponent(this);
 		}
