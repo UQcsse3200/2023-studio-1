@@ -6,7 +6,11 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
+import com.csse3200.game.missions.MissionManager;
+import com.csse3200.game.missions.quests.QuestFactory;
 import com.csse3200.game.ui.UIComponent;
+
+import java.util.Objects;
 
 public class ProgressBar extends UIComponent {
     Table table = new Table();
@@ -29,8 +33,8 @@ public class ProgressBar extends UIComponent {
         ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::updateDisplay);
         ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::updateDisplay);
         ServiceLocator.getUIService().getEvents().addListener("toggleUI", this::toggleDisplay);
-        ServiceLocator.getMissionManager().getEvents().addListener("An Agreement", this::updateProgressBarAct2);
-        ServiceLocator.getMissionManager().getEvents().addListener("Making Contact", this::updateProgressBarAct3);
+        ServiceLocator.getMissionManager().getEvents().addListener(
+                MissionManager.MissionEvent.QUEST_REWARD_COLLECTED.name(), this::updateProgressBar);
         progressBarImagesAct1 = new Array<>();
         progressBarImagesAct2 = new Array<>();
         progressBarImagesAct3 = new Array<>();
@@ -57,13 +61,29 @@ public class ProgressBar extends UIComponent {
         }
     }
 
-    public void updateProgressBarAct2() {
+    public void updateProgressBar(String questName) {
+        if (Objects.equals(questName, QuestFactory.FIRST_CONTACT_QUEST_NAME)) {
+            updateProgressBarAct1();
+        } else if (Objects.equals(questName, QuestFactory.CONNECTION_QUEST_NAME)) {
+            updateProgressBarAct2();
+        } else if (Objects.equals(questName, QuestFactory.AN_IMMINENT_THREAT_QUEST_NAME)) {
+            updateProgressBarAct3();
+        }
+    }
+
+    private void updateProgressBarAct1() {
+        this.act = 1;
+        this.dayOffset = ServiceLocator.getTimeService().getDay();
+        this.updateDisplay();
+    }
+
+    private void updateProgressBarAct2() {
         this.act = 2;
         this.dayOffset = ServiceLocator.getTimeService().getDay();
         this.updateDisplay();
     }
 
-    public void updateProgressBarAct3() {
+    private void updateProgressBarAct3() {
         this.act = 3;
         this.dayOffset = ServiceLocator.getTimeService().getDay();
         this.updateDisplay();

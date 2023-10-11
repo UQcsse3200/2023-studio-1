@@ -49,13 +49,6 @@ public class QuestReward extends Reward {
         for (Supplier<Quest> questSupplier : activeQuests) {
             Quest quest = questSupplier.get();
             missionManager.acceptQuest(quest);
-            if (quest instanceof AutoQuest) {
-                if (quest.getName().equals("Connection")) {
-                    ServiceLocator.getMissionManager().getEvents().trigger("An Agreement");
-                } else if (quest.getName().equals("An Imminent Threat")) {
-                    ServiceLocator.getMissionManager().getEvents().trigger("Making Contact");
-                }
-            }
         }
     }
 }

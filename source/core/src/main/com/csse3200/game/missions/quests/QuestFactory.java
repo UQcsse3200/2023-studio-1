@@ -314,7 +314,6 @@ public class QuestFactory {
         List<Supplier<Quest>> questsToActivate = new ArrayList<>();
         questsToActivate.add(QuestFactory::createHomeSickQuest);
         questsToActivate.add(QuestFactory::createActIIMainQuest);
-        ServiceLocator.getMissionManager().getEvents().trigger("An Agreement");
 
         String dialogue = """
                 As you finish explaining your crash landing, you warn Jarrael that if you aren't able to make contact with your people within {COLOR=#3ABE88}6 DAYS{COLOR=BLACK}, they will leave this planet's orbit, making reaching them again nearly impossible.
@@ -446,7 +445,6 @@ public class QuestFactory {
         questsToActivate.add(QuestFactory::createAirAndAlgaeQuest);
         questsToActivate.add(QuestFactory::createStratosphericSentinelQuest);
         questsToActivate.add(QuestFactory::createActIIIMainQuest);
-        ServiceLocator.getMissionManager().getEvents().trigger("Making Contact");
 
         String dialogue = """
                 You let out a cry of desperation, as the fate of humanity now rests in your hands.
