@@ -101,6 +101,7 @@ public class CropTileComponent extends Component {
 		entity.getEvents().addListener("harvest", this::harvestCrop);
 		currentTexture = entity.getComponent(DynamicTextureRenderComponent.class);
 		ServiceLocator.getGameArea().getClimateController().getEvents().addListener("acidShower", this::waterTile);
+		ServiceLocator.getGameArea().getClimateController().getEvents().addListener("solarSurge", this::update);
 	}
 
 	/**
