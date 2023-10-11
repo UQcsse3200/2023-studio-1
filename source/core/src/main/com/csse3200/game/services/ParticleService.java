@@ -7,6 +7,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
 import com.csse3200.game.components.ParticleEffectComponent;
 import com.csse3200.game.rendering.ParticleEffectWrapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -14,8 +16,10 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class ParticleService {
+	private static final Logger logger = LoggerFactory.getLogger(ParticleService.class);
 
 	public static final String WEATHER_EVENT = "WEATHER_EVENT";
+	public static final String ENTITY_EFFECT = "ENTITY_EFFECT";
 
 	/**
 	 * All the effects that will be rendered
@@ -40,7 +44,8 @@ public class ParticleService {
 	 * Enum for each type of particle effect known to the particle system
 	 */
 	public enum ParticleEffectType {
-		ACID_RAIN(WEATHER_EVENT, "particle-effects/acid_rain.p", 1, 10);
+		ACID_RAIN(WEATHER_EVENT, "particle-effects/acidRain.p", 1, 10),
+		LEVEL_UP(ENTITY_EFFECT, "particle-effects/levelUp.p", 1, 10);
 
 		private final String category;
 		private final String effectPath;
@@ -149,6 +154,7 @@ public class ParticleService {
 	}
 
 	public ParticleEffectPool.PooledEffect getEffect(ParticleEffectType effectType) {
+		logger.debug("Obtaining effect for type - {}", effectType.name());
 		return particleEffectPools.get(effectType).obtain();
 	}
 
