@@ -376,6 +376,8 @@ public class NPCFactory {
             .addComponent(new ShipEaterScareComponent())
             .addComponent(aiTaskComponent);
 
+    shipEater.getComponent(ColliderComponent.class).setDensity(100);
+
     shipEater.addComponent(new EntityIndicator(shipEater));
     return shipEater;
   }
