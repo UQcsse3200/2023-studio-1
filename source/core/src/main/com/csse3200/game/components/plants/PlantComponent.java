@@ -1084,6 +1084,8 @@ public class PlantComponent extends Component {
 
     private void onAcidShower() {
         increasePlantHealth(-2);
+        int growthRate = (int)(this.cropTile.getGrowthRate(this.idealWaterLevel) * 20);
+        this.currentGrowthLevel += growthRate;
     }
 
     @Override
