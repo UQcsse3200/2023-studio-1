@@ -81,10 +81,13 @@ public class IntroDisplay extends UIComponent {
      */
     private TypingLabel storyLabel;
 
-    private boolean isShaking = true;
+    private boolean titleSequenceFinished = false;
 
     private float[] cockpitBottomPosition = {0, 0};
     private float[] cockpitTopPosition = {0, 0};
+
+    private float screenWidth;
+    private float screenHeight;
 
     public IntroDisplay(GdxGame game) {
         super();
@@ -125,7 +128,7 @@ public class IntroDisplay extends UIComponent {
         // The planet's speed is variable, it adjusts itself to make the planet appear above the text at the right time
         // The planet is placed at some offset above the screen in the center of the screen
         float planetOffset = 2500;
-        planet.setPosition((float)Gdx.graphics.getWidth()/2, planetOffset, Align.center);
+        planet.setPosition((float) Gdx.graphics.getWidth() / 2, planetOffset, Align.center);
 
 
         // The {TOKENS} in the String below are used by TypingLabel to create the requisite animation effects
@@ -166,11 +169,11 @@ public class IntroDisplay extends UIComponent {
                 cockpitTop.setVisible(true);
                 cockpitBottom.setVisible(true);
 
-                planet.setPosition(Gdx.graphics.getWidth()/2f, (cockpitTop.getY(Align.bottom) - cockpitBottom.getY(Align.top))/2f);
+                planet.setPosition(Gdx.graphics.getWidth() / 2f, (cockpitTop.getY(Align.bottom) - cockpitBottom.getY(Align.top)) / 2f);
 
                 logger.error("({}, {}) - Cockpit Top", cockpitTopPosition[0], cockpitTopPosition[1]);
                 logger.error("({}, {}) - Cockpit Bottom", cockpitBottomPosition[0], cockpitBottomPosition[1]);
-                isShaking = true;
+                titleSequenceFinished = true;
             }
         });
 
@@ -206,23 +209,11 @@ public class IntroDisplay extends UIComponent {
         cockpitBottom = new Image(ServiceLocator.getResourceService()
                 .getAsset("images/crash-animation/Cockpit_Bottom.png", Texture.class));
         cockpitBottom.setVisible(false);
-        
+
         stage.addActor(cockpitTop);
         stage.addActor(cockpitBottom);
-    
-        cockpitTop.setWidth(Gdx.graphics.getWidth() * 1.1f);
-        cockpitTop.setHeight(Gdx.graphics.getHeight() * 0.3f);
-    
-        cockpitBottom.setWidth(Gdx.graphics.getWidth() * 1.1f);
-        cockpitBottom.setHeight(Gdx.graphics.getHeight() * 0.4f);
-        
-        cockpitTop.setPosition( -Gdx.graphics.getWidth() * 0.05f,Gdx.graphics.getHeight(), Align.topLeft);
-        cockpitTopPosition[0] = cockpitTop.getX();
-        cockpitTopPosition[1] = cockpitTop.getY();
-    
-        cockpitBottom.setPosition(-Gdx.graphics.getWidth() * 0.05f, 0);
-        cockpitBottomPosition[0] = cockpitBottom.getX();
-        cockpitBottomPosition[1] = cockpitBottom.getY();
+
+        repositionCockpit();
     }
 
     /**
@@ -238,53 +229,63 @@ public class IntroDisplay extends UIComponent {
     }
 
     private void shake(float shakeFactor) {
-        float maxX = 10f;
-        float maxY = 10f;
+        if (shakeFactor != 0) {
+            float maxX = 10f;
+            float maxY = 10f;
 
-        SecureRandom random = new SecureRandom();
+            SecureRandom random = new SecureRandom();
 
-        boolean xDirection = random.nextBoolean();
-        float xMagnitude = random.nextFloat() * (xDirection ? 1f : -1f);
-        xMagnitude = xMagnitude * shakeFactor;
+            boolean xDirection = random.nextBoolean();
+            float xMagnitude = random.nextFloat() * (xDirection ? 1f : -1f);
+            xMagnitude = xMagnitude * shakeFactor;
 
-        boolean yDirection = random.nextBoolean();
-        float yMagnitude = random.nextFloat() * (yDirection ? 1f : -1f);
-        yMagnitude = yMagnitude * shakeFactor;
-    
-        float newCockpitTopX = cockpitTopPosition[0] + xMagnitude;
-        float newCockpitTopY = cockpitTopPosition[1] + yMagnitude;
-    
-        float newCockpitBottomX = cockpitBottomPosition[0] + xMagnitude;
-        float newCockpitBottomY = cockpitBottomPosition[1] + yMagnitude;
+            boolean yDirection = random.nextBoolean();
+            float yMagnitude = random.nextFloat() * (yDirection ? 1f : -1f);
+            yMagnitude = yMagnitude * shakeFactor;
 
-        if (Math.abs(cockpitTopPosition[0] - newCockpitTopX) < maxX
-                && Math.abs(cockpitTopPosition[1] - newCockpitTopY) < maxY
-                && Math.abs(cockpitBottomPosition[0] - newCockpitBottomX) < maxX
-                && Math.abs(cockpitBottomPosition[1] - newCockpitBottomY) < maxY) {
-            cockpitTop.setPosition(newCockpitTopX, newCockpitTopY);
-            cockpitBottom.setPosition(newCockpitBottomX, newCockpitBottomY);
+            float newCockpitTopX = cockpitTopPosition[0] + xMagnitude;
+            float newCockpitTopY = cockpitTopPosition[1] + yMagnitude;
+
+            float newCockpitBottomX = cockpitBottomPosition[0] + xMagnitude;
+            float newCockpitBottomY = cockpitBottomPosition[1] + yMagnitude;
+
+            if (Math.abs(cockpitTopPosition[0] - newCockpitTopX) < maxX
+                    && Math.abs(cockpitTopPosition[1] - newCockpitTopY) < maxY
+                    && Math.abs(cockpitBottomPosition[0] - newCockpitBottomX) < maxX
+                    && Math.abs(cockpitBottomPosition[1] - newCockpitBottomY) < maxY) {
+                cockpitTop.setPosition(newCockpitTopX, newCockpitTopY);
+                cockpitBottom.setPosition(newCockpitBottomX, newCockpitBottomY);
+            } else {
+                repositionCockpit();
+            }
         } else {
-            //cockpitTop.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight(), Align.top);
-            //cockpitBottom.setPosition(Gdx.graphics.getWidth() / 2f, 0, Align.bottom);
+            repositionCockpit();
         }
     }
 
-    @Override
-    public void update() {
+    private void repositionCockpit() {
+        cockpitTop.setWidth(Gdx.graphics.getWidth() * 1.1f);
+        cockpitTop.setHeight(Gdx.graphics.getHeight() * 0.3f);
+
+        cockpitBottom.setWidth(Gdx.graphics.getWidth() * 1.1f);
+        cockpitBottom.setHeight(Gdx.graphics.getHeight() * 0.4f);
+
+        cockpitTop.setPosition( -Gdx.graphics.getWidth() * 0.05f,Gdx.graphics.getHeight(), Align.topLeft);
+        cockpitTopPosition[0] = cockpitTop.getX();
+        cockpitTopPosition[1] = cockpitTop.getY();
+
+        cockpitBottom.setPosition(-Gdx.graphics.getWidth() * 0.05f, 0);
+        cockpitBottomPosition[0] = cockpitBottom.getX();
+        cockpitBottomPosition[1] = cockpitBottom.getY();
+    }
+
+    private void updateTitleAnimation() {
         // This movement logic is triggered on every frame, until the middle of the planet hits its target position
         // on screen
         if (planet.getY(Align.center) >= storyLabel.getY(Align.top) + planetToTextPadding) {
             planet.setY(planet.getY() - spaceSpeed); // Move the planet
             background.setY(background.getY() - spaceSpeed); // Move the background
         }
-
-        // Resize the planet to the new screen size, maintaining aspect ratio
-        float planetWidth = (float) (Gdx.graphics.getWidth() * 0.1);
-        float planetHeight = planetWidth * (planet.getHeight() / planet.getWidth());
-        planet.setSize(planetWidth, planetHeight);
-
-        // re-center the planet
-        planet.setPosition((float)Gdx.graphics.getWidth()/2, planet.getY(Align.center), Align.center);
 
         // adjust the speed of movement based on screen size and current fps to ensure planet
         // hits position at the right time
@@ -300,21 +301,49 @@ public class IntroDisplay extends UIComponent {
 
         String log = String.format("Space Speed: %s", spaceSpeed);
         logger.debug(log);
+    }
 
-        // Resize & reposition cockpit images
-        cockpitTop.setWidth(Gdx.graphics.getWidth() * 1.1f);
-        cockpitTop.setHeight(Gdx.graphics.getHeight() * 0.3f);
+    public void resizePlanetAnimation() {
+        if (!titleSequenceFinished) {
+            // Resize the planet to the new screen size, maintaining aspect ratio
+            float planetWidth = (float) (Gdx.graphics.getWidth() * 0.1);
+            float planetHeight = planetWidth * (planet.getHeight() / planet.getWidth());
+            planet.setSize(planetWidth, planetHeight);
 
-        cockpitBottom.setWidth(Gdx.graphics.getWidth() * 1.1f);
-        cockpitBottom.setHeight(Gdx.graphics.getHeight() * 0.4f);
-
-        if (isShaking) {
-            //logger.error("SHAKE!!!!");
-            shake(5f);
+            // re-center the planet
+            planet.setPosition((float)Gdx.graphics.getWidth()/2, planet.getY(Align.center), Align.center);
         } else {
-            cockpitTop.setPosition(Gdx.graphics.getWidth() / 1f, Gdx.graphics.getHeight(), Align.top);
-            cockpitBottom.setPosition(Gdx.graphics.getWidth() / 1f, 0, Align.bottom);
+            planet.setWidth(planet.getWidth() * 1.012f);
+            planet.setHeight(planet.getHeight() * 1.012f);
+
+            // re-center the planet
+            planet.setPosition(Gdx.graphics.getWidth() / 2f,
+                    ((cockpitTop.getY(Align.bottom) - cockpitBottom.getY(Align.top)) / 2f)
+                            + cockpitBottom.getY(Align.top), Align.center);
         }
+    }
+
+    @Override
+    public void update() {
+        // TODO: Make the stars move again
+        // TODO: Sort the naming of all the functions out
+        float newWidth = Gdx.graphics.getWidth();
+        float newHeight = Gdx.graphics.getHeight();
+
+        if (screenWidth != newWidth || screenHeight != newHeight) {
+            repositionCockpit();
+
+            screenWidth = newWidth;
+            screenHeight = newHeight;
+        }
+
+        resizePlanetAnimation();
+
+        if (titleSequenceFinished) {
+            updateTitleAnimation();
+        }
+
+        shake(5f);
 
         stage.act(ServiceLocator.getTimeSource().getDeltaTime());
     }
