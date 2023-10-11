@@ -20,7 +20,7 @@ public class ShipDisplay extends UIComponent {
         isOpen = false;
         addActors();
 
-        entity.getEvents().addListener("interactShip", this::toggleOpen);
+        entity.getEvents().addListener("interact", this::toggleOpen);
     }
 
     private void addActors() {
@@ -30,8 +30,14 @@ public class ShipDisplay extends UIComponent {
     }
 
     private void updateWindow() {
-
-        window.setVisible(true); // Make sure the window is visible
+        window.setMovable(false);
+        window.pad(50, 10, 10, 10);
+        window.pack();
+        window.setWidth(800f);
+        window.setPosition(
+                stage.getWidth() / 2 - window.getWidth() / 2,
+                stage.getHeight() / 2 - window.getHeight() / 2
+        );
     }
 
     private void generateShipControls() {
@@ -42,7 +48,8 @@ public class ShipDisplay extends UIComponent {
         toggleLightButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
-                isLightOn = !isLightOn;
+
+                entity.getEvents().trigger("toggleLight");
 
             }
         });
@@ -51,7 +58,7 @@ public class ShipDisplay extends UIComponent {
         timeSkipButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
-                // addd time skip trigger
+                entity.getEvents().trigger("timeSkip");
             }
         });
 
@@ -64,12 +71,12 @@ public class ShipDisplay extends UIComponent {
         });
 
         Table contentTable = new Table();
-        contentTable.defaults().size(200f, 50f).padBottom(10f);
-        contentTable.row().padTop(30f);
+        contentTable.defaults().size(500f, 50f).padBottom(10f);
+        contentTable.row().pad(30f);
         contentTable.add(toggleLightButton).fillX();
-        contentTable.row();
+        contentTable.row().pad(30f);
         contentTable.add(timeSkipButton).fillX();
-        contentTable.row();
+        contentTable.row().pad(30f);
         contentTable.add(closeButton).fillX();
 
         window.add(contentTable).expand().fill();
@@ -86,6 +93,8 @@ public class ShipDisplay extends UIComponent {
             isOpen = false;
         } else {
             generateShipControls();
+            window.setVisible(true);
+            isOpen = true;
         }
     }
 

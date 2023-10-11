@@ -26,7 +26,7 @@ public class ShipTimeSkipComponent extends Component {
 		timeSkipInProgress = false;
 
 		entity.getEvents().addListener("progressUpdated", this::progressUpdated);
-		entity.getEvents().addListener("interact", this::triggerTimeSkip);
+		entity.getEvents().addListener("timeSkip", this::triggerTimeSkip);
 
 		ServiceLocator.getTimeService().getEvents().addListener("morningTime", this::stopTimeSkip);
 	}
