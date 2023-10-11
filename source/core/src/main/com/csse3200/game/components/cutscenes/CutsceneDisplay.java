@@ -196,7 +196,6 @@ public class CutsceneDisplay extends UIComponent {
      * Spawns the continue button
      */
     private void spawnContinueButton() {
-        System.out.println("CUTSCENE CONTINUE SPAWNED");
         logger.debug("Cutscene continue spawned");
 
         TextButton continueBtn = new TextButton("Continue", skin);
