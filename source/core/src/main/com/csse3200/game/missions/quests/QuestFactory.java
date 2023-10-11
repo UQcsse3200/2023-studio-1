@@ -303,7 +303,7 @@ public class QuestFactory {
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
 
-        return new MainQuest(ACT_I_MAIN_QUEST_NAME, reward, 5, requiredQuests, "gain ALIEN NPC's trust");
+        return new MainQuest(ACT_I_MAIN_QUEST_NAME, reward, 3, requiredQuests, "gain ALIEN NPC's trust");
     }
 
     /**
@@ -317,7 +317,7 @@ public class QuestFactory {
         ServiceLocator.getMissionManager().getEvents().trigger("An Agreement");
 
         String dialogue = """
-                As you finish explaining your crash landing, you warn Jarrael that if you aren't able to make contact with your people within {COLOR=#3ABE88}5 DAYS{COLOR=BLACK}, they will leave this planet's orbit, making reaching them again nearly impossible.
+                As you finish explaining your crash landing, you warn Jarrael that if you aren't able to make contact with your people within {COLOR=#3ABE88}6 DAYS{COLOR=BLACK}, they will leave this planet's orbit, making reaching them again nearly impossible.
                 {WAIT}"Hmm... {WAIT}This is indeed a grave issue. {WAIT}I will need some time to think of a possible solution.
                 {WAIT}In the mean time, I have a favour to ask.
                 {WAIT}The {COLOR=#76428A}NIGHTSHADE{COLOR=BLACK} produces {COLOR=#76428A}BERRIES{COLOR=BLACK} which are damaging to fleshy creatures such as you, but they are a delicacy to our people, and those {COLOR=#76428A}ASTROLOTLS{COLOR=BLACK} floating around the place.
@@ -419,7 +419,7 @@ public class QuestFactory {
                 {WAIT}A distant voice is transmitted from the radio,
                 {WAIT}"Hello? {WAIT}Hello? {WAIT}Is this {SHAKE}--STATIC--{ENDSHAKE}?
                 The {COLOR=#3ABE88}SOLAR SURGE{COLOR=BLACK} which caused your crash wiped out some of our life support systems.
-                {WAIT}We predict an increase in {COLOR=#3ABE88}SOLAR SURGE{COLOR=BLACK} activity over the next 15 days.
+                {WAIT}We predict an increase in {COLOR=#3ABE88}SOLAR SURGE{COLOR=BLACK} activity over the next {COLOR=#3ABE88}9 DAYS{COLOR=BLACK}.
                 {WAIT}We need to be able to land on your planet and survive without life support, or {COLOR=RED}humanity may be lost{COLOR=BLACK}!"
                 {SHAKE}--STATIC--{ENDSHAKE} begins to take over the radio, as a powerful {COLOR=#3ABE88}SOLAR SURGE{COLOR=BLACK} hits you...
                 """;
@@ -434,7 +434,7 @@ public class QuestFactory {
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
 
-        return new MainQuest(ACT_II_MAIN_QUEST_NAME, reward, 10, requiredQuests, "make connection with the rest of your people");
+        return new MainQuest(ACT_II_MAIN_QUEST_NAME, reward, 6, requiredQuests, "make connection with the rest of your people");
     }
 
     /**
@@ -511,7 +511,7 @@ public class QuestFactory {
                 """;
         DialogueReward reward = new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN);
         return new OxygenLevelQuest(STRATOSPHERIC_SENTINEL_QUEST_NAME, reward, ServiceLocator.getPlanetOxygenService(),
-                "the planet's oxygen level", 348, 95);
+                "the planet's oxygen level", 192, 95);
     }
 
     /**
@@ -524,7 +524,7 @@ public class QuestFactory {
         requiredQuests.add(STRATOSPHERIC_SENTINEL_QUEST_NAME);
 
         WinReward reward = new WinReward();
-        return new MainQuest(ACT_III_MAIN_QUEST_NAME, reward, 15, requiredQuests, "weather the incoming storm, provide a haven for humanity");
+        return new MainQuest(ACT_III_MAIN_QUEST_NAME, reward, 9, requiredQuests, "weather the incoming storm, provide a haven for humanity");
     }
 
     /**
