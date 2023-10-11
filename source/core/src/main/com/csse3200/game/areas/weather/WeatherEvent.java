@@ -152,7 +152,6 @@ public abstract class WeatherEvent {
 	 * Stops the visual effect for the weather event
 	 */
 	public abstract void stopEffect();
-	public abstract String toString();
 
 	public void write(Json json) {
 		json.writeObjectStart("Event");
