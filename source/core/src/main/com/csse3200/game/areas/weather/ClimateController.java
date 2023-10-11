@@ -1,12 +1,8 @@
 package com.csse3200.game.areas.weather;
 
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
-import com.csse3200.game.components.plants.PlantComponent;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -49,14 +45,12 @@ public class ClimateController implements Json.Serializable {
 	 * Event handler that other entities can use to trigger weather-based events
 	 */
 	private final EventHandler events;
-	private final EntityService entityService;
 
 	/**
 	 * Creates a new climate controller that listens to time events and maintains the in-game climate
 	 */
 	public ClimateController() {
 		events = new EventHandler();
-  		entityService = ServiceLocator.getEntityService();
 		ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::addDailyEvent);
 		ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateWeatherEvent);
 		ServiceLocator.getTimeService().getEvents().addListener("minuteUpdate", this::updateClimate);
@@ -256,18 +250,8 @@ public class ClimateController implements Json.Serializable {
 		}
 		weatherEvents.removeIf(WeatherEvent::isExpired);
 		if (currentWeatherEvent != null) {
-			if (currentWeatherEvent instanceof AcidShowerEvent) {
-				if (entityService != null) {
-					Array<Entity> entities = entityService.getEntities();
-					for (Entity entity : entities) {
-						PlantComponent plantComponent = entity.getComponent(PlantComponent.class);
-						if (plantComponent != null) {
-							entity.getEvents().trigger("acidShower");
-						}
-					}
-				}
-			}
 			currentWeatherEvent.startEffect();
+			getEvents().trigger(currentWeatherEvent.toString());
 		}
 	}
 

@@ -52,4 +52,9 @@ public class SolarSurgeEvent extends WeatherEvent {
     public void stopEffect() {
         // Handled elsewhere
     }
+
+    @Override
+    public String toString() {
+        return "solarSurge";
+    }
 }

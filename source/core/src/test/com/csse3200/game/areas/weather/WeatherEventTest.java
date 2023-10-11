@@ -26,6 +26,11 @@ class WeatherEventTest {
             public void stopEffect() {
 
             }
+
+            @Override
+            public String toString() {
+                return null;
+            }
         };
         weatherEvent2 = new WeatherEvent(1, 2, 2, 1.4f) {
             @Override
@@ -36,6 +41,11 @@ class WeatherEventTest {
             @Override
             public void stopEffect() {
 
+            }
+
+            @Override
+            public String toString() {
+                return null;
             }
         };
         weatherEvent3 = new WeatherEvent(2, 4, 5, 1.0f) {
@@ -48,6 +58,11 @@ class WeatherEventTest {
             public void stopEffect() {
 
             }
+
+            @Override
+            public String toString() {
+                return null;
+            }
         };
         weatherEvent4 = new WeatherEvent(3, 3, 3, 1.3f) {
             @Override
@@ -59,6 +74,11 @@ class WeatherEventTest {
             public void stopEffect() {
 
             }
+
+            @Override
+            public String toString() {
+                return null;
+            }
         };
         weatherEvent5 = new WeatherEvent(5, 5, 1, 1.1f) {
             @Override
@@ -69,6 +89,11 @@ class WeatherEventTest {
             @Override
             public void stopEffect() {
 
+            }
+
+            @Override
+            public String toString() {
+                return null;
             }
         };
     }
@@ -194,6 +219,11 @@ class WeatherEventTest {
             public void stopEffect() {
 
             }
+
+            @Override
+            public String toString() {
+                return null;
+            }
         }, "Priority cannot be less than 0");
     }
 
@@ -208,6 +238,11 @@ class WeatherEventTest {
             @Override
             public void stopEffect() {
 
+            }
+
+            @Override
+            public String toString() {
+                return null;
             }
         }, "Duration cannot be 0");
     }
@@ -224,6 +259,11 @@ class WeatherEventTest {
             public void stopEffect() {
 
             }
+
+            @Override
+            public String toString() {
+                return null;
+            }
         }, "Duration cannot be less than 0");
     }
 
@@ -239,6 +279,11 @@ class WeatherEventTest {
             public void stopEffect() {
 
             }
+
+            @Override
+            public String toString() {
+                return null;
+            }
         }, "Number of hours until the event occurs cannot be less than 0");
     }
 
@@ -253,6 +298,11 @@ class WeatherEventTest {
             @Override
             public void stopEffect() {
 
+            }
+
+            @Override
+            public String toString() {
+                return null;
             }
         }, "Severity must be greater than 0.");
     }
