@@ -24,7 +24,9 @@ public class HungerComponent extends Component {
             increaseHungerLevel(1);
         }
         if (checkIfStarving()) {
-            entity.getComponent(CombatStatsComponent.class).addHealth(-5);
+            if (min % 10 == 0) {
+                entity.getComponent(CombatStatsComponent.class).addHealth(-5);
+            }
         }
         checkIfStarving();
     }

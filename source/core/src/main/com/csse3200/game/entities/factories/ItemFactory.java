@@ -11,6 +11,7 @@ import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.FactoryService;
 
@@ -203,11 +204,12 @@ return createBaseItem()
    * @return aloe vera seed
    */
   public static Entity createAloeVeraSeed() {
-return createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/aloe_vera/seedbag.png"))
+    Entity seed = createBaseItem()
+            .addComponent(new DynamicTextureRenderComponent("images/plants/aloe_vera/seedbag.png"))
             .addComponent(new ItemComponent("Aloe Vera Seeds", ItemType.SEED,
                     "Seed of Aloe Vera", "images/plants/aloe_vera/seedbag.png"));
-
+    seed.getComponent(DynamicTextureRenderComponent.class).setLayer(3);
+    return seed;
   }
 
   /**
@@ -216,12 +218,13 @@ return createBaseItem()
    * @return Aloe Vera Leaf
    */
   public static Entity createAloeVeraLeaf() {
-  return createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/aloe_vera/item_drop.png"))
+    Entity itemDrop = createBaseItem()
+            .addComponent(new DynamicTextureRenderComponent("images/plants/aloe_vera/item_drop.png"))
             .addComponent(new ItemComponent("Aloe Vera Leaf", ItemType.FOOD,
                     "The gel oozing from this leaf has mystical healing properties",
                     "images/plants/aloe_vera/item_drop.png"));
-
+    itemDrop.getComponent(DynamicTextureRenderComponent.class).setLayer(3);
+    return itemDrop;
   }
 
   /**
@@ -230,11 +233,12 @@ return createBaseItem()
    * @return atomic algae seed
    */
   public static Entity createAtomicAlgaeSeed() {
-    return createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/atomic_algae/seedbag.png"))
+    Entity seed = createBaseItem()
+            .addComponent(new DynamicTextureRenderComponent("images/plants/atomic_algae/seedbag.png"))
             .addComponent(new ItemComponent("Atomic Algae Seeds", ItemType.SEED,
                     "Seed of Atomic Algae", "images/plants/atomic_algae/seedbag.png"));
-
+    seed.getComponent(DynamicTextureRenderComponent.class).setLayer(3);
+    return seed;
   }
 
   /**
@@ -243,11 +247,12 @@ return createBaseItem()
    * @return cosmic cob seed
    */
   public static Entity createCosmicCobSeed() {
-return createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/cosmic_cob/seedbag.png"))
+    Entity seed = createBaseItem()
+            .addComponent(new DynamicTextureRenderComponent("images/plants/cosmic_cob/seedbag.png"))
             .addComponent(new ItemComponent("Cosmic Cob Seeds", ItemType.SEED,
                     "Seed of Cosmic Cob", "images/plants/cosmic_cob/seedbag.png"));
-
+    seed.getComponent(DynamicTextureRenderComponent.class).setLayer(3);
+    return seed;
   }
 
   /**
@@ -256,12 +261,13 @@ return createBaseItem()
    * @return Ear of Cosmic Cob
    */
   public static Entity createCosmicCobEar() {
- return createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/cosmic_cob/item_drop.png"))
+    Entity itemDrop = createBaseItem()
+            .addComponent(new DynamicTextureRenderComponent("images/plants/cosmic_cob/item_drop.png"))
             .addComponent(new ItemComponent("Ear of Cosmic Cob", ItemType.FOOD,
                     "Nutritious space corn essential for surviving out in space",
                     "images/plants/cosmic_cob/item_drop.png"));
-
+    itemDrop.getComponent(DynamicTextureRenderComponent.class).setLayer(3);
+    return itemDrop;
   }
 
   /**
@@ -270,11 +276,12 @@ return createBaseItem()
    * @return deadly nightshade seed
    */
   public static Entity createDeadlyNightshadeSeed() {
- return createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/deadly_nightshade/seedbag.png"))
+    Entity seed = createBaseItem()
+            .addComponent(new DynamicTextureRenderComponent("images/plants/deadly_nightshade/seedbag.png"))
             .addComponent(new ItemComponent("Deadly Nightshade Seeds", ItemType.SEED,
                     "Seed of Deadly Nightshade", "images/plants/deadly_nightshade/seedbag.png"));
-
+    seed.getComponent(DynamicTextureRenderComponent.class).setLayer(3);
+    return seed;
   }
 
   /**
@@ -283,12 +290,13 @@ return createBaseItem()
    * @return Nightshade Berry
    */
   public static Entity createDeadlyNightshadeBerry() {
-return createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/deadly_nightshade/item_drop.png"))
+    Entity itemDrop = createBaseItem()
+            .addComponent(new DynamicTextureRenderComponent("images/plants/deadly_nightshade/item_drop.png"))
             .addComponent(new ItemComponent("Nightshade Berry", ItemType.FOOD,
                     "Deadly poisonous to humans, but the local wildlife find it delectable",
                     "images/plants/deadly_nightshade/item_drop.png"));
-
+    itemDrop.getComponent(DynamicTextureRenderComponent.class).setLayer(3);
+    return itemDrop;
   }
 
   /**
@@ -297,11 +305,12 @@ return createBaseItem()
    * @return hammer plant seed
    */
   public static Entity createHammerPlantSeed() {
-return createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/hammer_plant/seedbag.png"))
+    Entity seed = createBaseItem()
+            .addComponent(new DynamicTextureRenderComponent("images/plants/hammer_plant/seedbag.png"))
             .addComponent(new ItemComponent("Hammer Plant Seeds", ItemType.SEED,
                     "Seed of Hammer Plant", "images/plants/hammer_plant/seedbag.png"));
-
+    seed.getComponent(DynamicTextureRenderComponent.class).setLayer(3);
+    return seed;
   }
 
   /**
@@ -310,12 +319,13 @@ return createBaseItem()
    * @return Hammer Flower
    */
   public static Entity createHammerFlower() {
-return createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/hammer_plant/item_drop.png"))
+    Entity itemDrop = createBaseItem()
+            .addComponent(new DynamicTextureRenderComponent("images/plants/hammer_plant/item_drop.png"))
             .addComponent(new ItemComponent("Hammer Flower", ItemType.FOOD,
                     "Unusually shaped flower that looks like the tool it is named after",
                     "images/plants/hammer_plant/item_drop.png"));
-
+    itemDrop.getComponent(DynamicTextureRenderComponent.class).setLayer(3);
+    return itemDrop;
   }
 
   /**
@@ -324,11 +334,12 @@ return createBaseItem()
    * @return space snapper seed
    */
   public static Entity createSpaceSnapperSeed() {
-return createBaseItem()
-            .addComponent(new TextureRenderComponent("images/plants/space_snapper/seedbag.png"))
+    Entity seed = createBaseItem()
+            .addComponent(new DynamicTextureRenderComponent("images/plants/space_snapper/seedbag.png"))
             .addComponent(new ItemComponent("Space Snapper Seeds", ItemType.SEED,
                     "Seed of Space Snapper", "images/plants/space_snapper/seedbag.png"));
-
+    seed.getComponent(DynamicTextureRenderComponent.class).setLayer(3);
+    return seed;
   }
 
   /**
