@@ -10,9 +10,9 @@ import com.csse3200.game.GdxGame;
 public class DesktopLauncher {
   public static void main(String[] arg) {
     Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-    config.setTitle("Gardener's of the Galaxy");
+    config.setTitle("Gardens of the Galaxy");
     config.setWindowIcon(Files.FileType.Internal, "images/icon.png", "images/icon2.png", "images/icon3.png");
-    config.setInitialBackgroundColor(Color.PURPLE);
+    config.setInitialBackgroundColor(Color.BLACK);
     new Lwjgl3Application(new GdxGame(), config);
   }
 }
