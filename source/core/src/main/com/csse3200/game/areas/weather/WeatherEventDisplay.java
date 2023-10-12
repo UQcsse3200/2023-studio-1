@@ -25,10 +25,14 @@ public class WeatherEventDisplay extends UIComponent {
 	@Override
 	public void create() {
 		super.create();
-		ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateDisplay);
+		ServiceLocator.getTimeService().getEvents().addListener("toggleUI", this::toggleDisplay);
+		ServiceLocator.getUIService().getEvents().addListener("hourUpdate", this::updateDisplay);
 		updateDisplay();
 	}
 
+	private void toggleDisplay(boolean isDisplayed) {
+		table.setVisible(isDisplayed);
+	}
 	public void createTextures() {
 		weatherImages = new Array<>();
 		weatherImages.add(new Image(ServiceLocator.getResourceService().getAsset(

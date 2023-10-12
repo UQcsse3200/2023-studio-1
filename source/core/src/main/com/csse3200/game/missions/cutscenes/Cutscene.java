@@ -38,7 +38,7 @@ public class Cutscene{
         this.pauseGame();
         Stage stage = ServiceLocator.getRenderService().getStage();
         cutsceneEntity = new Entity();
-        cutsceneEntity.addComponent(new CutsceneDisplay(dialogue, this))
+        cutsceneEntity.addComponent(new CutsceneDisplay(dialogue, this, this.cutsceneType))
                 .addComponent(new InputDecorator(stage, 10));
         ServiceLocator.getEntityService().register(cutsceneEntity);
     }
@@ -46,20 +46,20 @@ public class Cutscene{
     /**
      * Pauses the game
      */
-    public void pauseGame() {
+    private void pauseGame() {
         logger.info("Setting paused state to: 0");
         ServiceLocator.setCutSceneRunning(true);
-        ServiceLocator.getTimeSource().setTimeScale(0);
+        ServiceLocator.getTimeService().setPaused(true);
     }
 
     /**
      * Unpauses the game
      */
-    public void unPauseGame() {
+    private void unPauseGame() {
         logger.info("Setting paused state to: 1");
         // 1 is for delta time to run in normal speed
         ServiceLocator.setCutSceneRunning(false);
-        ServiceLocator.getTimeSource().setTimeScale(1);
+        ServiceLocator.getTimeService().setPaused(false);
     }
 
     /**

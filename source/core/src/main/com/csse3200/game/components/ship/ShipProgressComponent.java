@@ -3,6 +3,7 @@ package com.csse3200.game.components.ship;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.entities.factories.ShipFactory;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -42,8 +43,8 @@ public class ShipProgressComponent extends Component {
 		this.progress = 0;
 		unlockedFeatures = new HashSet<>();
 		// listen to add part call
-		entity.getEvents().addListener("addPart", this::incrementProgress);
-		entity.getEvents().addListener("removePart", this::decrementProgress);
+		entity.getEvents().addListener(ShipFactory.events.ADD_PART.name(), this::incrementProgress);
+		entity.getEvents().addListener(ShipFactory.events.REMOVE_PART.name(), this::decrementProgress);
 	}
 
 	/**
@@ -63,7 +64,7 @@ public class ShipProgressComponent extends Component {
 			}
 
 			// Only send progress update if repair actually happened
-			entity.getEvents().trigger("progressUpdated", this.progress, this.unlockedFeatures);
+			entity.getEvents().trigger(ShipFactory.events.PROGRESS_UPDATED.name(), this.progress, this.unlockedFeatures);
 			ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.SHIP_PART_ADDED.name());
 		}
 	}

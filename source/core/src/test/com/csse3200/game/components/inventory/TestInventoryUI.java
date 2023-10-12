@@ -3,6 +3,11 @@ package com.csse3200.game.components.inventory;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.csse3200.game.areas.TestGameArea;
+import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.areas.terrain.TerrainComponent;
+import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
@@ -19,6 +24,7 @@ import com.csse3200.game.services.sound.EffectSoundFile;
 import com.csse3200.game.services.sound.InvalidSoundFileException;
 import com.csse3200.game.services.sound.SoundFile;
 import com.csse3200.game.services.sound.SoundService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,6 +58,8 @@ import static org.mockito.Mockito.*;
 	Stage stage;
 	InventoryDisplayManager inventoryDisplayManager;
 	ArgumentCaptor<Window> windowArgument;
+	//TestGameArea to register so GameMap can be accessed through the ServiceLocator
+	private static final TestGameArea gameArea = new TestGameArea();
 	private static final Logger logger = LoggerFactory.getLogger(TestInventoryUI.class);
 
 	static String[] texturePaths = {
@@ -70,6 +78,10 @@ import static org.mockito.Mockito.*;
 	@BeforeAll
 	static void Create() {
 		inventory = new InventoryComponent(new ArrayList<>());
+
+		// Necessary for the playerActions component
+		GameMap gameMap = mock(GameMap.class);
+		gameArea.setGameMap(gameMap);
 	}
 
 	/**
@@ -90,6 +102,7 @@ import static org.mockito.Mockito.*;
 		renderService.setStage(stage);
 		ServiceLocator.registerRenderService(renderService);
 		ServiceLocator.registerInputService(new InputService());
+		ServiceLocator.registerGameArea(gameArea);
 		// Set up dependencies for the Inventory Open sound
 		ServiceLocator.registerSoundService(new SoundService());
 		java.util.List<SoundFile> effects = new ArrayList<>();
@@ -178,5 +191,10 @@ import static org.mockito.Mockito.*;
 		);
 	}
 
+	@AfterEach
+	public void cleanUp() {
+		// Clears all loaded services
+		ServiceLocator.clear();
+	}
 }
 

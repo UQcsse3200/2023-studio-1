@@ -54,6 +54,7 @@ public class RunAwayTask extends ChaseTask {
     getMovementTask().start();
 
     this.owner.getEntity().getEvents().trigger("runAwayStart");
+    this.owner.getEntity().getEvents().trigger("startEffect", "runAwayStart");
     this.owner.getEntity().getEvents().trigger("runStart");
   }
 
@@ -81,6 +82,7 @@ public class RunAwayTask extends ChaseTask {
   public void stop() {
     super.stop();
     this.owner.getEntity().getEvents().trigger("runAwayStop");
+    this.owner.getEntity().getEvents().trigger("stopEffect", "runAwayStart");
   }
 
   /**

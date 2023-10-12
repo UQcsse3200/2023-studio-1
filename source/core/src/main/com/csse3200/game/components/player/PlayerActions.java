@@ -4,7 +4,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.areas.terrain.GameMap;
-import com.csse3200.game.components.*;
+import com.csse3200.game.components.combat.CombatStatsComponent;
 import com.csse3200.game.components.combat.ProjectileComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractionDetector;
@@ -12,6 +12,7 @@ import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
+import com.csse3200.game.components.combat.StunComponent;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ProjectileFactory;
@@ -19,6 +20,7 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.sound.EffectSoundFile;
 import com.csse3200.game.services.sound.InvalidSoundFileException;
+import com.csse3200.game.utils.math.Vector2Utils;
 
 import java.security.SecureRandom;
 import java.util.List;
@@ -38,12 +40,11 @@ public class PlayerActions extends Component {
   private boolean moving = false;
   private boolean running = false;
   private boolean muted = false;
-  private GameMap map;
-
+  private GameMap gameMap = ServiceLocator.getGameArea().getMap();
   private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(PlayerActions.class);
-
   private SecureRandom random = new SecureRandom();
-
+  private float speedMultiplier = 1f;
+  private float damageMultiplier = 1f;
   int swordDamage = 5;
 
   private static final String RIGHT_STRING = "right";
@@ -62,12 +63,14 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("use", this::use);
     entity.getEvents().addListener("hotkeySelection", this::hotkeySelection);
     entity.getEvents().addListener("eat", this::eat);
+    entity.getEvents().addListener("setSpeedMultiplier", this::setSpeedMultiplier);
+    entity.getEvents().addListener("setDamageMultiplier", this::setDamageMultiplier);
   }
 
   @Override
   public void update() {
     if (entity.getComponent(PlayerAnimationController.class).readyToPlay()) {
-      if (moving) {
+      if (moving && !isStunned()) {
         updateSpeed();
       }
       updateAnimation();
@@ -123,20 +126,10 @@ public class PlayerActions extends Component {
     // Used to apply the terrainSpeedModifier
     Vector2 playerVector = this.entity.getCenterPosition(); // Centre position is better indicator of player location
     playerVector.add(0, -1.0f); // Player entity sprite's feet are located -1.0f below the centre of the entity
+    float terrainSpeedModifier = gameMap.getTile(playerVector).getSpeedModifier();
+    velocityScale.scl(terrainSpeedModifier);
+    velocityScale.scl(speedMultiplier);
 
-    try {
-      float terrainSpeedModifier = map.getTile(playerVector).getSpeedModifier();
-      velocityScale.scl(terrainSpeedModifier);
-    } catch (Exception e) {
-      // This should only occur when either:
-      // The map is not instantiated (some tests do not instantiate a gameMap
-      // instance)
-      // the getTile method returns null
-      // In this event, the speed will not be modified. This will need to be updated
-      // to throw an exception once the
-      // GameMap class is slightly modified to allow for easier instantiation of test
-      // maps for testing.
-    }
 
     Vector2 desiredVelocity = moveDirection.cpy().scl(velocityScale);
     // impulse = (desiredVel - currentVel) * mass
@@ -241,7 +234,8 @@ public class PlayerActions extends Component {
           float difference = Math.abs(resAngle - mouseResAngle);
           difference = difference > 180 ? 360 - difference : difference;
           if(difference <= 45) {
-            combat.setHealth(combat.getHealth() - swordDamage);
+            combat.addHealth((int) -(swordDamage * damageMultiplier));
+            animal.getEvents().trigger("hit", entity);
             animal.getEvents().trigger("panicStart");
           }
       }
@@ -258,6 +252,9 @@ public class PlayerActions extends Component {
     attackSound.play();
     mousePos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
     Entity projectile = ProjectileFactory.createPlayerProjectile();
+
+    CombatStatsComponent combatStatsComponent = projectile.getComponent(CombatStatsComponent.class);
+    combatStatsComponent.setBaseAttack((int) (combatStatsComponent.getBaseAttack() * damageMultiplier));
     projectile.setCenterPosition(entity.getCenterPosition());
     ServiceLocator.getGameArea().spawnEntity(projectile);
     ProjectileComponent projectileComponent = projectile.getComponent(ProjectileComponent.class);
@@ -298,7 +295,9 @@ public class PlayerActions extends Component {
   void eat(Entity itemInHand) {
     if (itemInHand != null) {
       pauseMoving();
-      if (itemInHand.getComponent(ItemComponent.class).getItemType() == ItemType.FOOD) {
+      ItemType itemType = itemInHand.getComponent(ItemComponent.class).getItemType();
+
+      if (itemType == ItemType.FOOD || itemType == ItemType.EGG || itemType == ItemType.MILK) {
         itemInHand.getComponent(ItemActions.class).eat(entity);
         entity.getComponent(InventoryComponent.class).removeItem(itemInHand);
       }
@@ -322,11 +321,24 @@ public class PlayerActions extends Component {
     return muted;
   }
 
-  public void setMuted(boolean muted) {
-    this.muted = muted;
+  public boolean isStunned() {
+    StunComponent stunComponent = entity.getComponent(StunComponent.class);
+    if (stunComponent == null) {
+      return false;
+    }
+
+    return stunComponent.isStunned();
   }
 
-  public void setGameMap(GameMap map) {
-    this.map = map;
+  public void setSpeedMultiplier(float multiplier) {
+    this.speedMultiplier = multiplier;
+  }
+
+  public void setDamageMultiplier(float multiplier) {
+    this.damageMultiplier = multiplier;
+  }
+
+  public void setMuted(boolean muted) {
+    this.muted = muted;
   }
 }
