@@ -48,6 +48,11 @@ public class PanicTask extends TimedTask implements PriorityTask {
         movementTask.start();
 
         this.owner.getEntity().getEvents().trigger("runStart");
+    }
+
+    @Override
+    public void triggerActivePriority() {
+        super.triggerActivePriority();
         this.owner.getEntity().getEvents().trigger("startEffect", "panicStart");
     }
 

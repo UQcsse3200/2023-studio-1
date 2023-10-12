@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.achievements.Achievement;
+import com.csse3200.game.missions.achievements.CollectItemsAchievement;
 import com.csse3200.game.missions.achievements.PlantCropsAchievement;
 import com.csse3200.game.missions.quests.Quest;
 import com.csse3200.game.services.FactoryService;
@@ -50,6 +51,8 @@ public class MissionManager implements Json.Serializable {
 		ANIMAL_EATEN,
 		// Triggers when a ship part is added to the Ship
 		SHIP_PART_ADDED,
+		//Triggers when an item is collected
+		ITEMS_COLLECTED,
 		// Triggers when a fish is caught (includes any item from fishing)
 		FISH,
 	}
@@ -78,7 +81,10 @@ public class MissionManager implements Json.Serializable {
 	private static final Achievement[] achievements = new Achievement[]{
 			new PlantCropsAchievement("Plant President", 50),
 			new PlantCropsAchievement("Crop Enjoyer", 200),
-			new PlantCropsAchievement("Gardener of the Galaxy", 800)
+			new PlantCropsAchievement("Gardener of the Galaxy", 800),
+			new CollectItemsAchievement("Collector", 10),
+			new CollectItemsAchievement("Item Hoarder", 20),
+			new CollectItemsAchievement("Average Tristan", 50)
 	};
 
 	/**
