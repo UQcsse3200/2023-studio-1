@@ -337,10 +337,10 @@ public class QuestFactory {
     }
 
     /**
-     * Creates the Home Sick {@link PlantInteractionQuest}
+     * Creates the Home Sick {@link InventoryStateQuest}
      * @return - the Home Sick Quest
      */
-    public static PlantInteractionQuest createHomeSickQuest() {
+    public static InventoryStateQuest createHomeSickQuest() {
         List<Supplier<Quest>> questsToActivate = new ArrayList<>();
         questsToActivate.add(QuestFactory::createShipRepairsQuest);
 
@@ -355,6 +355,7 @@ public class QuestFactory {
                 """;
 
         MultiReward reward = new MultiReward(List.of(
+                new ConsumePlayerItemsReward(Map.of("Nightshade Berry", 9)),
                 new ItemReward(List.of(
                         ItemFactory.createShipPart(),
                         ItemFactory.createShipPart(),
@@ -363,8 +364,7 @@ public class QuestFactory {
                 new QuestReward(new ArrayList<>(), questsToActivate),
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
-        return new PlantInteractionQuest(HOME_SICK_QUEST_NAME, reward, MissionManager.MissionEvent.HARVEST_CROP,
-                Set.of("Deadly Nightshade"), 3);
+        return new InventoryStateQuest(HOME_SICK_QUEST_NAME, reward, Map.of("Nightshade Berry", 9));
     }
 
     /**

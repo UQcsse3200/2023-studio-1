@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
 import com.csse3200.game.areas.SpaceGameArea;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.entities.factories.NPCFactory;
@@ -58,6 +59,12 @@ class QuestFactoryTest {
         ServiceLocator.registerGameArea(mockGameArea);
 
         when(mockResourceService.getAsset(any(), any())).thenReturn(mockTexture);
+
+        Entity playerMock = mock(Entity.class);
+        InventoryComponent playerInventoryMock = mock(InventoryComponent.class);
+        when(playerInventoryMock.getItemCount(anyString())).thenReturn(0);
+        when(playerMock.getComponent(InventoryComponent.class)).thenReturn(playerInventoryMock);
+        when(mockGameArea.getPlayer()).thenReturn(playerMock);
 
         TextureData mockTextureData = mock(TextureData.class);
         doNothing().when(mockTexture).load(mockTextureData);
