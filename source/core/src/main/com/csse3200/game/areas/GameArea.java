@@ -36,6 +36,9 @@ public abstract class GameArea implements Disposable {
 		  EntityType.SPRINKLER, EntityType.PUMP, EntityType.FENCE, EntityType.LIGHT, EntityType.GATE, EntityType.CHEST,
           EntityType.DRAGONFLY, EntityType.BAT, EntityType.TRACTOR, EntityType.GOLDEN_STATUE));
 
+  private final ArrayList<EntityType> cutsceneTypes = new ArrayList<>(Arrays.asList(EntityType.PLAYER,
+          EntityType.GOLDEN_STATUE));
+
   protected GameArea() {
     areaEntities = new ArrayList<>();
   }
@@ -146,4 +149,13 @@ public abstract class GameArea implements Disposable {
   public List<EntityType> getLoadableTypes() {
     return loadableTypes;
   }
+
+    public void removeEntitiesForCutscene(Array<Entity> entities) {
+      logger.debug("Removing all cutscene entities");
+      for (Entity e : entities) {
+        if (cutsceneTypes.contains(e.getType())) {
+          removeEntity(e);
+        }
+      }
+    }
 }

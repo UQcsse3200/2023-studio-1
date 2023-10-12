@@ -140,10 +140,18 @@ public class PlaceableFactory {
 
         AuraLightComponent lightComponent = new AuraLightComponent();
         lightComponent.toggleLight();
-
+        DialogueComponent dialogue = new DialogueComponent();
+        dialogue.addCutsceneAnimation(makeCutsceneEntity());
         return createBasePlaceable(EntityType.GOLDEN_STATUE)
                 .addComponent(lightComponent)
-                .addComponent(new DialogueComponent())
+                .addComponent(dialogue)
                 .addComponent(animator);
+    }
+
+    private static Entity makeCutsceneEntity() {
+        AnimationRenderComponent animation = new AnimationRenderComponent(
+                ServiceLocator.getResourceService().getAsset("images/player_fishing.atlas", TextureAtlas.class));
+        animation.addAnimation("cast_left", 0.1f, Animation.PlayMode.NORMAL);
+        return new Entity().addComponent(animation);
     }
 }
