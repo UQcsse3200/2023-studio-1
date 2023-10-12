@@ -74,7 +74,7 @@ class QuestFactoryTest {
 
             Quest quest = QuestFactory.createFirstContactQuest();
             assertEquals(QuestFactory.FIRST_CONTACT_QUEST_NAME, quest.getName());
-            assertTrue(quest.isCompleted());
+            assertFalse(quest.isCompleted());
         } catch (Exception ignored) {
             fail();
         }
@@ -208,7 +208,7 @@ class QuestFactoryTest {
 
             Quest quest = QuestFactory.createConnectionQuest();
             assertEquals(QuestFactory.CONNECTION_QUEST_NAME, quest.getName());
-            assertTrue(quest.isCompleted());
+            assertFalse(quest.isCompleted());
         } catch (Exception ignored) {
             fail();
         }
@@ -261,7 +261,7 @@ class QuestFactoryTest {
 
             Quest quest = QuestFactory.createAnImminentThreatQuest();
             assertEquals(QuestFactory.AN_IMMINENT_THREAT_QUEST_NAME, quest.getName());
-            assertTrue(quest.isCompleted());
+            assertFalse(quest.isCompleted());
         } catch (Exception ignored) {
             fail();
         }
@@ -318,4 +318,5 @@ class QuestFactoryTest {
             assertFalse(quest.isCompleted());
         }
     }
+
 }
