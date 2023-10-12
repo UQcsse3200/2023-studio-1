@@ -28,8 +28,8 @@ public class GdxGame extends Game {
 
     // Sets background to light yellow
     Gdx.gl.glClearColor(0.0f, 0.098f, 0.309f, 1.0f);
-    setScreen(ScreenType.MAIN_MENU);
     discordActivity = new DiscordActivity();
+    setScreen(ScreenType.MAIN_MENU);
   }
 
   /**
@@ -81,17 +81,17 @@ public class GdxGame extends Game {
   private Screen newScreen(ScreenType screenType) {
     switch (screenType) {
       case MAIN_MENU:
-        updateDiscordStatus("Perusing the Main Menu");
+        discordActivity.updateDiscordStatus("Perusing the Main Menu");
         return new MainMenuScreen(this);
       case LOAD_GAME:
-        updateDiscordStatus("Loading and ready to go!");
+        discordActivity.updateDiscordStatus("Loading and ready to go!");
         setLoadOnStart(true);
         return new MainGameScreen(this);
       case MAIN_GAME:
-        updateDiscordStatus("Watering Crops");
+        discordActivity.updateDiscordStatus("Watering Crops");
         return new MainGameScreen(this);
       case SETTINGS:
-        updateDiscordStatus("Changing Settings");
+        discordActivity.updateDiscordStatus("Changing Settings");
         return new SettingsScreen(this);
       case CONTROLS:
         return new ControlsScreen(this);
