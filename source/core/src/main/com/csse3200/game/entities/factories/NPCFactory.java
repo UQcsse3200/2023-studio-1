@@ -255,6 +255,12 @@ public class NPCFactory {
     astrolotl.scaleHeight(1.2f);
     PhysicsUtils.setScaledCollider(astrolotl, 0.9f, 0.4f);
 
+    // configure animation effects position
+    AnimationEffectsComponent animationEffectsComponent = astrolotl.getComponent(AnimationEffectsComponent.class);
+    animationEffectsComponent.setOffset(new Vector2(
+            astrolotl.getScale().scl(0.5f).x - animationEffectsComponent.getScale().scl(0.5f).x,
+            astrolotl.getScale().y
+    ));
 
 
     return astrolotl;
@@ -383,8 +389,8 @@ public class NPCFactory {
     // configure animation effects position
     AnimationEffectsComponent animationEffectsComponent = dragonfly.getComponent(AnimationEffectsComponent.class);
     animationEffectsComponent.setOffset(new Vector2(
-            dragonfly.getScale().scl(0.5f).x - animationEffectsComponent.getScale().scl(0.5f).x,
-            dragonfly.getScale().y - 0.3f
+            dragonfly.getScale().scl(0.5f).x - animationEffectsComponent.getScale().scl(0.5f).x + 0.2f,
+            dragonfly.getScale().y
     ));
 
     return dragonfly;
@@ -428,6 +434,14 @@ public class NPCFactory {
 
 
     bat.scaleHeight(1.2f);
+
+    // configure animation effects position
+    AnimationEffectsComponent animationEffectsComponent = bat.getComponent(AnimationEffectsComponent.class);
+    animationEffectsComponent.setOffset(new Vector2(
+            bat.getScale().scl(0.5f).x - animationEffectsComponent.getScale().scl(0.5f).x + 0.2f,
+            bat.getScale().y
+    ));
+
     return bat;
   }
 
