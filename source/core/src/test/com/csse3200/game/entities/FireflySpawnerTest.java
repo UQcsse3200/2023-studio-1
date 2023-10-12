@@ -43,7 +43,7 @@ public class FireflySpawnerTest {
         TerrainTile tile = mock(TerrainTile.class);
         doReturn(mockMap).when(mockGameArea).getMap();
         doNothing().when(mockGameArea).spawnEntityAt(any(Entity.class), any(GridPoint2.class), any(boolean.class), any(boolean.class));
-        doReturn(new GridPoint2(5,5)).when(mockMap).getMapSize();
+        doReturn(new GridPoint2(5, 5)).when(mockMap).getMapSize();
         doReturn(tile).when(mockMap).getTile(any(GridPoint2.class));
         doReturn(true).when(tile).isTraversable();
         FireflySpawner spawner = spy(new FireflySpawner());
