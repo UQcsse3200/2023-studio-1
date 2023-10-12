@@ -1,7 +1,6 @@
 package com.csse3200.game.missions.rewards;
 
 import com.csse3200.game.missions.MissionManager;
-import com.csse3200.game.missions.quests.AutoQuest;
 import com.csse3200.game.missions.quests.Quest;
 import com.csse3200.game.services.ServiceLocator;
 
