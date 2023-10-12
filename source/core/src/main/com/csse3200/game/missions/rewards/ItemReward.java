@@ -3,7 +3,6 @@ package com.csse3200.game.missions.rewards;
 import java.util.List;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.services.ServiceLocator;
 
 /**
