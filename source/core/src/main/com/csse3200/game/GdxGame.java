@@ -3,6 +3,7 @@ package com.csse3200.game;
 import static com.badlogic.gdx.Gdx.app;
 
 import com.csse3200.game.screens.*;
+import com.csse3200.game.utils.DiscordActivity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,9 +11,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.csse3200.game.files.UserSettings;
-import net.arikia.dev.drpc.DiscordEventHandlers;
-import net.arikia.dev.drpc.DiscordRPC;
-import net.arikia.dev.drpc.DiscordRichPresence;
 
 /**
  * Entry point of the non-platform-specific game logic. Controls which screen is currently running.
@@ -22,7 +20,7 @@ import net.arikia.dev.drpc.DiscordRichPresence;
 public class GdxGame extends Game {
   private static final Logger logger = LoggerFactory.getLogger(GdxGame.class);
   private boolean loadSaveOnStart = false;
-  public DiscordRichPresence rich;
+  private DiscordActivity discordActivity;
   @Override
   public void create() {
     logger.info("Creating game");
@@ -30,16 +28,9 @@ public class GdxGame extends Game {
 
     // Sets background to light yellow
     Gdx.gl.glClearColor(0.0f, 0.098f, 0.309f, 1.0f);
-
-
     setScreen(ScreenType.MAIN_MENU);
-
-    DiscordEventHandlers handlers = new DiscordEventHandlers();
-    DiscordRPC.discordInitialize("1160854151668957245", handlers, true, "");
-    rich = new DiscordRichPresence.Builder("Gardens of the Galaxy").setDetails("The Inventory is the Best Feature.").build();
-    DiscordRPC.discordUpdatePresence(rich);
+    discordActivity = new DiscordActivity();
   }
-
 
   /**
    * Loads the game's settings.
@@ -90,13 +81,17 @@ public class GdxGame extends Game {
   private Screen newScreen(ScreenType screenType) {
     switch (screenType) {
       case MAIN_MENU:
+        updateDiscordStatus("Perusing the Main Menu");
         return new MainMenuScreen(this);
       case LOAD_GAME:
+        updateDiscordStatus("Loading and ready to go!");
         setLoadOnStart(true);
         return new MainGameScreen(this);
       case MAIN_GAME:
+        updateDiscordStatus("Watering Crops");
         return new MainGameScreen(this);
       case SETTINGS:
+        updateDiscordStatus("Changing Settings");
         return new SettingsScreen(this);
       case CONTROLS:
         return new ControlsScreen(this);
