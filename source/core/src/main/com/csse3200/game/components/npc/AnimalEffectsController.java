@@ -42,7 +42,8 @@ public class AnimalEffectsController extends Component {
                 if (entity.getType() == EntityType.BAT) {
                     animator.startAnimation("red_exclamation");
                 } else if (entity.getType() == EntityType.CHICKEN || entity.getType() == EntityType.COW) {
-                    if (Objects.equals(animator.getCurrentAnimation(), "heart")) {
+                    if (Objects.equals(animator.getCurrentAnimation(), "heart") ||
+                        Objects.equals(animator.getCurrentAnimation(), "fed")) {
                         entity.getEvents().scheduleEvent(0.25f, "startEffect", "followStart");
                         return;
                     } else {
