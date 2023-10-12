@@ -398,14 +398,14 @@ public class ItemActions extends Component {
     }
 
     boolean tileWaterable = isCropTile(tile.getOccupant());
-    entity.getComponent(WateringCanLevelComponent.class).incrementLevel(-5);  //decrease the water level by 5 units
+    entity.getComponent(WateringCanLevelComponent.class).incrementLevel(-2);  //decrease the water level by 5 units
     
     if (!tileWaterable) {
       return false;
     }
 
-    // A water amount of 0.5 was recommended by team 7
-    tile.getOccupant().getEvents().trigger("water", 0.5f);
+    // A water amount of 0.2
+    tile.getOccupant().getEvents().trigger("water", 0.2f);
     return true;
   }
 
