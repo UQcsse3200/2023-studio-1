@@ -203,10 +203,10 @@ public class QuestFactory {
 
         String dialogue = """
                 "It seems like you're getting the hang of this. {WAIT}There's only one more thing you must do, before I know to trust you.
-                {WAIT}Some of our wildlife are {COLOR=RED}not so kind{COLOR=WHITE}. {WAIT}In particular, there are 3 {COLOR=#76428A}HOSTILE CREATURES{COLOR=WHITE} we consider pests.
-                {WAIT}Take this {COLOR=#76428A}WEAPON{COLOR=WHITE}, and defend our work.
-                {WAIT}I will also give you this {COLOR=#76428A}SPACE SNAPPER SEED{COLOR=WHITE}.
-                {WAIT}When grown, the {COLOR=#76428A}SPACE SNAPPER{COLOR=WHITE} will happily munch on any creatures nearby, even non-hostile creatures."
+                {WAIT}Some of our wildlife are {COLOR=RED}not so kind{COLOR=BLACK}. {WAIT}In particular, there are 3 {COLOR=#76428A}HOSTILE CREATURES{COLOR=BLACK} we consider pests.
+                {WAIT}Take this {COLOR=#76428A}WEAPON{COLOR=BLACK}, and defend our work.
+                {WAIT}I will also give you this {COLOR=#76428A}SPACE SNAPPER SEED{COLOR=BLACK}.
+                {WAIT}When grown, the {COLOR=#76428A}SPACE SNAPPER{COLOR=BLACK} will happily munch on any creatures nearby, even non-hostile creatures."
                 """;
 
         List<Entity> itemRewards = new ArrayList<>();
