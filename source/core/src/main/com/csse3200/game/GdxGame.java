@@ -82,16 +82,20 @@ public class GdxGame extends Game {
     switch (screenType) {
       case MAIN_MENU:
         discordActivity.updateDiscordStatus("Perusing the Main Menu");
+        discordActivity.startTimer();
         return new MainMenuScreen(this);
       case LOAD_GAME:
-        discordActivity.updateDiscordStatus("Loading and ready to go!");
+        discordActivity.updateDiscordStatus("Planting Crops");
+        discordActivity.startTimer();
         setLoadOnStart(true);
         return new MainGameScreen(this);
       case MAIN_GAME:
-        discordActivity.updateDiscordStatus("Watering Crops");
+        discordActivity.updateDiscordStatus("Planting Crops");
+        discordActivity.startTimer();
         return new MainGameScreen(this);
       case SETTINGS:
         discordActivity.updateDiscordStatus("Changing Settings");
+        discordActivity.startTimer();
         return new SettingsScreen(this);
       case CONTROLS:
         return new ControlsScreen(this);
