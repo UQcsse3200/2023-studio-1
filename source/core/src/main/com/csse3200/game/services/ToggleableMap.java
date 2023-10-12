@@ -10,7 +10,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
@@ -20,17 +19,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ToggleableMap extends UIComponent {
-    
+
+    private String toggleOpen = "toggleOpen";
     private static final Logger logger = LoggerFactory.getLogger(ToggleableMap.class);
     
     /**
      * The table used to display the map.
      */
-    Table Tmap = new Table();
+    Table tableMap = new Table();
 
     GridPoint2 mapSize = new GridPoint2(0,0);
-    GridPoint2 g_pos = new GridPoint2(0,0);
-    Boolean Switch = false;
+    GridPoint2 gpPos = new GridPoint2(0,0);
+    Boolean mapRunning = false;
     //Color prev_color; // can not used this =((
 
     /**
@@ -60,7 +60,7 @@ public class ToggleableMap extends UIComponent {
     public void create() {
         super.create();
         logger.debug("Adding listener to toggleOpen event");
-        ServiceLocator.getPlayerMapService().getEvents().addListener("toggleOpen", this::toggleOpen);
+        ServiceLocator.getPlayerMapService().getEvents().addListener(toggleOpen, this::toggleOpen);
         window = new Window("", skin);
         createNewMap();
         //starts closed so no updateDisplay()
@@ -95,29 +95,25 @@ public class ToggleableMap extends UIComponent {
         this.isOpen = isOpen;
         window.setVisible(isOpen);
         transparentRectangle.setVisible(isOpen);
-        if (!isOpen) {
+        if (!Boolean.TRUE.equals(isOpen)) {
             recoverExternalUI();
         } else {
             removeExternalUI();
         }
         mapSize = ServiceLocator.getGameArea().getMap().getMapSize();
-        if (isOpen) {
+        if (Boolean.TRUE.equals(isOpen)) {
             pauseGame();
             // Draw the player's position dot on the mini-map
             Vector2 v_pos = ServiceLocator.getGameArea().getPlayer().getPosition();
-            g_pos = ServiceLocator.getGameArea().getMap().vectorToTileCoordinates(v_pos);
-            g_pos = new GridPoint2(g_pos.x +1, g_pos.y +1); // because it takes bottom left corner
+            gpPos = ServiceLocator.getGameArea().getMap().vectorToTileCoordinates(v_pos);
+            gpPos = new GridPoint2(gpPos.x +1, gpPos.y +1); // because it takes bottom left corner
 
             // store the player's position in a temporary variable and change that cell's color
-            //prev_color = Tmap.getChildren().get(g_pos.x + (mapSize.y - (g_pos.y +1)) * mapSize.x).getColor();
-            Tmap.getChildren().get(g_pos.x + (mapSize.y - (g_pos.y +1)) * mapSize.x).setColor(Color.WHITE);
-            Tmap.getChildren().get(g_pos.x + (mapSize.y - (g_pos.y +1)) * mapSize.x).setColor(Color.RED);
-            Switch = true;
-        }
-        else {
-            if(Switch) {
-                //Tmap.getChildren().get(g_pos.x + (mapSize.y - (g_pos.y +1)) * mapSize.x).setColor(prev_color);
-                Switch = false;
+            tableMap.getChildren().get(gpPos.x + (mapSize.y - (gpPos.y +1)) * mapSize.x).setColor(Color.RED);
+            mapRunning = true;
+        } else {
+            if(Boolean.TRUE.equals(mapRunning)) { // if
+                mapRunning = false;
                 createMap(); // re-create the map because the position of player is now updated
                 unPauseGame();
             }
@@ -128,8 +124,8 @@ public class ToggleableMap extends UIComponent {
      * Creates assets used
      */
     public void createAssets() {
-        GridPoint2 mapSize = ServiceLocator.getGameArea().getMap().getMapSize();
-        Tmap = new Table();
+        mapSize = ServiceLocator.getGameArea().getMap().getMapSize();
+        tableMap = new Table();
         tiledMap = ServiceLocator.getGameArea().getMap().getTiledMap();
         TiledMapTileLayer layer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
         // interate through the layers and add them to the table (not sure if this works)
@@ -140,13 +136,14 @@ public class ToggleableMap extends UIComponent {
                 if (cell != null) {
                     TiledMapTile tile = cell.getTile();
                     if (tile != null) {
-                        Tmap.add(new Image(tile.getTextureRegion()));
+                        tableMap.add(new Image(tile.getTextureRegion()));
+                        // change this part
                     }
-                    else logger.info("tile at (" + xPos + ", " + yPos + ") is null");
+                    else logger.info("tile at (%d, %d) is null", xPos, yPos);
                 }
-                else logger.info("Cell at (" + xPos + ", " + yPos + ") is null");
+                else logger.info("Cell at (%d,%d) is null",xPos,yPos);
             }
-            Tmap.row(); // new row
+            tableMap.row(); // new row
         }
     }
 
@@ -158,15 +155,15 @@ public class ToggleableMap extends UIComponent {
         window.reset();
         window.getTitleLabel().setText("MAP");
         window.setVisible(isOpen);
-        float mapHeight = Tmap.getChild(0).getHeight();
-        float mapWidth = Tmap.getChild(0).getWidth();
+        float mapHeight = tableMap.getChild(0).getHeight();
+        float mapWidth = tableMap.getChild(0).getWidth();
         window.setSize((Gdx.graphics.getHeight() * (mapWidth / mapHeight)),
                 Gdx.graphics.getHeight() * (mapHeight / mapWidth));
         window.padBottom(10f);
-        window.setPosition(Gdx.graphics.getWidth()/5, 20f);
+        window.setPosition(((float) Gdx.graphics.getWidth())/5f, 20f);
         window.setMovable(false);
         window.setResizable(false);
-        window.add(Tmap);
+        window.add(tableMap);
         stage.addActor(window);
     }
 
@@ -176,18 +173,15 @@ public class ToggleableMap extends UIComponent {
         window.reset();
         window.getTitleLabel().setText("MAP");
         window.setVisible(isOpen);
-        float mapHeight = Tmap.getChild(0).getHeight();
-        float mapWidth = Tmap.getChild(0).getWidth();
+        float mapHeight = tableMap.getChild(0).getHeight();
+        float mapWidth = tableMap.getChild(0).getWidth();
         window.setSize((Gdx.graphics.getHeight() * (mapWidth / mapHeight)),
                 Gdx.graphics.getHeight() * (mapHeight / mapWidth));
         window.padBottom(10f);
-        window.setPosition(Gdx.graphics.getWidth()/5, 20f);
+        window.setPosition(((float) Gdx.graphics.getWidth())/5f, 20f);
         window.setMovable(false);
         window.setResizable(false);
-        window.add(Tmap);
-        //window.add(Tmap).expandX().width((Gdx.graphics.getHeight() * (mapWidth / mapHeight))-20f).
-        //        expandY().height(Gdx.graphics.getHeight() * (mapHeight / mapWidth)-20f);
-        // Add the player's dot to the window's content
+        window.add(tableMap);
 
         stage.addActor(window);
     }
@@ -197,7 +191,6 @@ public class ToggleableMap extends UIComponent {
      * Draws the actors to the game.
      * @param batch Batch to render to.
      */
-    @Override
     public void draw(SpriteBatch batch) {
     }
 
@@ -230,7 +223,7 @@ public class ToggleableMap extends UIComponent {
      * Removes the UI components on the screen so that cutscene is not so cluttered
      */
     public void removeExternalUI() {
-        ServiceLocator.getPlantInfoService().getEvents().trigger("toggleOpen", false);
+        ServiceLocator.getPlantInfoService().getEvents().trigger(toggleOpen, false);
         ServiceLocator.getUIService().getEvents().trigger("toggleUI", false);
     }
 
@@ -239,7 +232,7 @@ public class ToggleableMap extends UIComponent {
      */
     public void recoverExternalUI() {
         ServiceLocator.getPlantInfoService().getEvents().
-                trigger("toggleOpen", KeyboardPlayerInputComponent.getShowPlantInfoUI());
+                trigger(toggleOpen, KeyboardPlayerInputComponent.getShowPlantInfoUI());
         ServiceLocator.getUIService().getEvents().trigger("toggleUI", true);
     }
 }
