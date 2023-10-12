@@ -26,6 +26,8 @@ public class QuestFactory {
     public static final String CONNECTION_QUEST_NAME = "Connection";
     public static final String HOME_SICK_QUEST_NAME = "Home Sick";
     public static final String SHIP_REPAIRS_QUEST_NAME = "Ship Repairs";
+    public static final String PART_FINDER_QUEST_NAME = "Part Finder";
+    public static final String SPACE_DEBRIS_QUEST_NAME = "Space Debris";
     public static final String BRINGING_IT_ALL_TOGETHER_QUEST_NAME = "Bringing It All Together";
     public static final String ACT_II_MAIN_QUEST_NAME = "Making Contact";
     public static final String AN_IMMINENT_THREAT_QUEST_NAME = "An Imminent Threat";
@@ -340,20 +342,69 @@ public class QuestFactory {
     public static ShipRepairQuest createShipRepairsQuest() {
         List<Quest> questsToAdd = new ArrayList<>();
         List<Quest> questsToActivate = new ArrayList<>();
+        questsToActivate.add(createPartFinderQuest());
+        //questsToActivate.add(createBringingItAllTogetherQuest());
+
+        String dialogue = """
+                "Well done. {WAIT}Now I can get started on repairing your radio. {WAIT}By the way, it seems like there are some stray pieces of debris around here." Jarrael takes out a piece of paper with a rough sketch of the nearby area. {WAIT}"I've marked out the general area, go there and have a look. If you find any {COLOR=#76428A}SHIP PARTS{COLOR=WHITE} you should add them to the ship then come and see me."
+                """;
+        //{WAIT}Keep repairing the {COLOR=#76428A}SHIP{COLOR=BLACK}, and come to me when you have added enough {COLOR=#76428A}SHIP PARTS{COLOR=BLACK}.
+
+        MultiReward reward = new MultiReward(List.of(
+                new ClueReward(ItemFactory.createMapItem()),
+                new QuestReward(questsToAdd, questsToActivate),
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
+        ));
+        return new ShipRepairQuest(SHIP_REPAIRS_QUEST_NAME, reward, 3);
+    }
+
+    /**
+     * Creates the Clue {@link ShipRepairQuest}
+     * @return - the Clue Finder Quest
+     */
+    public static ShipRepairQuest createPartFinderQuest() {
+        List<Quest> questsToAdd = new ArrayList<>();
+        List<Quest> questsToActivate = new ArrayList<>();
+        questsToActivate.add(createSpaceDebrisQuest());
+
+        String dialogue = """
+                As you return to Jarrael, a bright flash in the sky catches your attention. {WAIT}"Well, it seems like some stray space debris has just broken through the atmosphere..." {WAIT}Both of you watch as the burning trail of debris slowly descends to the planet's surface in the south. {WAIT}"What a perfect opportunity! You should go over and check it out. Bring me back whatever wreckage you can find and I'll try my best to make them usable for repairs."
+                """;
+
+        MultiReward reward = new MultiReward(List.of(
+                new ClueReward(ItemFactory.createMapItem()),
+                new QuestReward(questsToAdd, questsToActivate),
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
+        ));
+        return new ShipRepairQuest(PART_FINDER_QUEST_NAME, reward, 1);
+    }
+
+    /**
+     * Creates the Space Debris {@link ClearDebrisQuest}
+     * @return - the Space Debris Quest
+     */
+    public static ClearDebrisQuest createSpaceDebrisQuest() {
+        List<Quest> questsToAdd = new ArrayList<>();
+        List<Quest> questsToActivate = new ArrayList<>();
         questsToActivate.add(createBringingItAllTogetherQuest());
 
         String dialogue = """
-                "Well done. {WAIT}Now I can get started on repairing your radio. {WAIT}Keep repairing the {COLOR=#76428A}SHIP{COLOR=BLACK}, and come to me when you have added enough {COLOR=#76428A}SHIP PARTS{COLOR=BLACK}."
+                "Lucky for you there's quite a few salvageable pieces from this wreckage. Here, I've cleaned them up for you. This should help with repairs. Come back here when you've fully repaired the {COLOR=#76428A}SHIP{COLOR=BLACK}."
                 """;
 
         MultiReward reward = new MultiReward(List.of(
                 new ItemReward(List.of(
+                        ItemFactory.createShipPart(),
+                        ItemFactory.createShipPart(),
+                        ItemFactory.createShipPart(),
+                        ItemFactory.createShipPart(),
+                        ItemFactory.createShipPart(),
                         ItemFactory.createShipPart()
                 )),
                 new QuestReward(questsToAdd, questsToActivate),
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
-        return new ShipRepairQuest(SHIP_REPAIRS_QUEST_NAME, reward, 3);
+        return new ClearDebrisQuest(SPACE_DEBRIS_QUEST_NAME, reward, 8);
     }
 
     /**
@@ -366,7 +417,7 @@ public class QuestFactory {
                 """;
 
         DialogueReward reward = new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN);
-        return new ShipRepairQuest(BRINGING_IT_ALL_TOGETHER_QUEST_NAME, reward, 17);
+        return new ShipRepairQuest(BRINGING_IT_ALL_TOGETHER_QUEST_NAME, reward, 6);
     }
 
     /**
