@@ -10,6 +10,9 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.csse3200.game.files.UserSettings;
+import net.arikia.dev.drpc.DiscordEventHandlers;
+import net.arikia.dev.drpc.DiscordRPC;
+import net.arikia.dev.drpc.DiscordRichPresence;
 
 /**
  * Entry point of the non-platform-specific game logic. Controls which screen is currently running.
@@ -19,7 +22,7 @@ import com.csse3200.game.files.UserSettings;
 public class GdxGame extends Game {
   private static final Logger logger = LoggerFactory.getLogger(GdxGame.class);
   private boolean loadSaveOnStart = false;
-
+  public DiscordRichPresence rich;
   @Override
   public void create() {
     logger.info("Creating game");
@@ -30,6 +33,11 @@ public class GdxGame extends Game {
 
 
     setScreen(ScreenType.MAIN_MENU);
+
+    DiscordEventHandlers handlers = new DiscordEventHandlers();
+    DiscordRPC.discordInitialize("1160854151668957245", handlers, true, "");
+    rich = new DiscordRichPresence.Builder("Gardens of the Galaxy").setDetails("The Inventory is the Best Feature.").build();
+    DiscordRPC.discordUpdatePresence(rich);
   }
 
 
