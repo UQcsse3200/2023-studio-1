@@ -35,12 +35,19 @@ public class InventoryStateQuest extends Quest {
 
     @Override
     public void registerMission(EventHandler missionManagerEvents) {
-        // All progress is tracked by directly accessing the state of the player's inventory
-        // This quest tracks no dynamic progress
+        // To notify the QuestGiver of potential completion of quest, we will try to check on minuteUpdate if this quest
+        // has been completed
+        ServiceLocator.getTimeService().getEvents().addListener("minuteUpdate", this::notifyUpdate);
     }
 
     @Override
     public boolean isCompleted() {
+        // We need to check this in case the player loses items from the inventory later (this would make the quest
+        // giver think that the quest is yet to be completed
+        if (isRewardCollected()) {
+            return true;
+        }
+
         if (checkPlayerInventoryMissing()) {
             return false;
         }

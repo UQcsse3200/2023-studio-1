@@ -38,6 +38,10 @@ public class ConsumePlayerItemsReward extends Reward {
 
         Entity player = ServiceLocator.getGameArea().getPlayer();
         InventoryComponent inventory = player.getComponent(InventoryComponent.class);
+        if (inventory == null) {
+            return;
+        }
+        
         for (Map.Entry<String, Integer> itemQuantity : itemsToRemove.entrySet()) {
             for (int i = 0; i < itemQuantity.getValue(); i++) {
                 inventory.removeItem(itemQuantity.getKey());
