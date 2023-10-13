@@ -44,6 +44,7 @@ public class PlantFactory {
      * @return entity
      */
     public static Entity createBasePlant(BasePlantConfig config, CropTileComponent cropTile) {
+        Entity aoeAnimator = createPlantAoeAnimatorEntity();
         AnimationRenderComponent animator = setupPlantAnimations(config.atlasPath);
 
         int[] growthThresholds = {config.sproutThreshold, config.juvenileThreshold, config.adultThreshold};
@@ -66,6 +67,9 @@ public class PlantFactory {
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
                         config.maxHealth, cropTile, growthThresholds, soundsArray));
+
+        aoeAnimator.setCenterPosition(plant.getComponent(PlantComponent.class).getCropTile().getEntity().getCenterPosition().add(-1.5f, -1.5f));
+        plant.getComponent(PlantComponent.class).addAoeAnimatorEntity(aoeAnimator);
 
         // Set plant position over crop tile.
         var cropTilePosition = cropTile.getEntity().getPosition();
@@ -103,6 +107,23 @@ public class PlantFactory {
         animator.startAnimation("1_seedling");
 
         return animator;
+    }
+
+    private static  Entity createPlantAoeAnimatorEntity() {
+        Entity aoeAnimator = new Entity(EntityType.DUMMY);
+
+        AnimationRenderComponent animator = new AnimationRenderComponent(
+                ServiceLocator.getResourceService().getAsset("images/plants/plant_aoe.atlas", TextureAtlas.class),
+                16f);
+        animator.addAnimation("default", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("deadly_nightshade_aoe_", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("hammer_plant_aoe_", 0.1f, Animation.PlayMode.LOOP);
+
+        animator.startAnimation("default");
+
+        aoeAnimator.addComponent(animator);
+
+        return aoeAnimator;
     }
 
     /**

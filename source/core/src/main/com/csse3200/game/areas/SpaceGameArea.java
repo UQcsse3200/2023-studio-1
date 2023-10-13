@@ -275,7 +275,7 @@ public class SpaceGameArea extends GameArea {
       "images/plants/deadly_nightshade.atlas", "images/fireflies.atlas", "images/animals/dragonfly.atlas",
       "images/animals/bat.atlas", "images/projectiles/oxygen_eater_projectile.atlas",
       "images/ship/ship.atlas", "images/light.atlas", "images/projectiles/dragon_fly_projectile.atlas", "images/golden_trophy.atlas",
-      "images/player_fishing.atlas", "images/animals/animal_effects.atlas"
+      "images/player_fishing.atlas", "images/animals/animal_effects.atlas", "images/plants/plant_aoe.atlas"
   };
   private static final String[] soundPaths = {
           "sounds/Impact4.ogg", "sounds/car-horn-6408.mp3",
@@ -379,7 +379,6 @@ public class SpaceGameArea extends GameArea {
             0, 2, 5, 5, 3));
     hostileSpawners.add(new EntitySpawner(7, player1 -> NPCFactory.createBat(),
             0, 1, 5, 5, 2));
-
 
     hostileSpawner = new EntitiesSpawner(hostileSpawners);
     hostileSpawner.setGameAreas(this);

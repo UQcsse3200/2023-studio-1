@@ -169,8 +169,8 @@ public class PlantComponent extends Component {
     private boolean plantDestroyed = false;
     private boolean deadBeforeMaturity = false;
     private boolean deadSeedling = false;
-
-
+    private Entity aoeAnimations;
+    private String currentAoeAnimation = "default";
     private boolean forced = false;
 
     /**
@@ -291,6 +291,7 @@ public class PlantComponent extends Component {
         ServiceLocator.getPlantInfoService().increaseSeedsPlanted(1, plantName);
 
         this.currentAnimator = entity.getComponent(AnimationRenderComponent.class);
+
         updateTexture();
         updateMaxHealth();
     }
@@ -808,6 +809,28 @@ public class PlantComponent extends Component {
         } else if (this.isEating && this.currentAnimator != null) {
                 this.currentAnimator.startAnimation("digesting");
         }
+
+        if (aoeAnimations != null) {
+            if (getGrowthStage().getValue() == GrowthStage.ADULT.getValue()) {
+                if (currentAoeAnimation.equals("default")) {
+                    if (plantName.equals("Deadly Nightshade")) {
+                        currentAoeAnimation = "deadly_nightshade_aoe_";
+                    } else if (plantName.equals("Hammer Plant")) {
+                        currentAoeAnimation = "hammer_plant_aoe_";
+                    }
+                    aoeAnimations.getComponent(AnimationRenderComponent.class).startAnimation(currentAoeAnimation);
+                }
+            } else if (getGrowthStage().getValue() > GrowthStage.ADULT.getValue()) {
+                if (!currentAoeAnimation.equals("default")) {
+                    currentAoeAnimation = "default";
+                    aoeAnimations.getComponent(AnimationRenderComponent.class).startAnimation(currentAoeAnimation);
+                }
+            }
+
+
+        }
+
+
     }
 
     /**
@@ -1091,6 +1114,14 @@ public class PlantComponent extends Component {
      */
     public void setPlayerInProximity(boolean bool) {
         this.playerInProximity = bool;
+    }
+
+    public void addAoeAnimatorEntity(Entity animator) {
+        this.aoeAnimations = animator;
+        this.aoeAnimations.create();
+    }
+    public Entity getAoeAnimatorEntity() {
+        return aoeAnimations;
     }
 
     @Override
