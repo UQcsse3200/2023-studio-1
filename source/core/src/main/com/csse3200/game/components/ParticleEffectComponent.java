@@ -62,6 +62,10 @@ public class ParticleEffectComponent extends Component {
 		effect = null;
 	}
 
+	public boolean isActive() {
+		return isActive;
+	}
+
 	public ParticleService.ParticleEffectType getEffectType() {
 		return effectType;
 	}
