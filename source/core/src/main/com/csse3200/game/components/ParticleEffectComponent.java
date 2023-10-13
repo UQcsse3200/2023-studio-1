@@ -3,17 +3,22 @@ package com.csse3200.game.components;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.csse3200.game.rendering.ParticleEffectWrapper;
 import com.csse3200.game.services.ParticleService;
 import com.csse3200.game.services.ServiceLocator;
 
+import java.awt.image.AreaAveragingScaleFilter;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.function.Predicate;
+
 public class ParticleEffectComponent extends Component {
 
-	private ParticleEffectPool.PooledEffect effect;
-	private ParticleService.ParticleEffectType effectType;
-	private boolean active;
+	private final ArrayList<ParticleEffectWrapper> effects;
 
 	public ParticleEffectComponent() {
-		active = false;
+		effects = new ArrayList<>();
 	}
 
 	@Override
@@ -25,67 +30,73 @@ public class ParticleEffectComponent extends Component {
 	}
 
 	public void render(SpriteBatch batch, float delta) {
-		// Don't render if not active
-		if (!isActive()) {
-			return;
-		}
-		// If effect was active and now is complete
-		if (effect.isComplete()) {
-			active = false;
-			effect.free();
-			effect = null;
-		} else {
-			effect.draw(batch, delta);
+		Iterator<ParticleEffectWrapper> itr = effects.iterator();
+		while (itr.hasNext()) {
+			ParticleEffectWrapper wrapper = itr.next();
+			// If effect is complete, don't render and free effect
+			if (wrapper.getPooledEffect().isComplete()) {
+				wrapper.getPooledEffect().free();
+				itr.remove();
+			} else {
+				wrapper.getPooledEffect().draw(batch, delta);
+			}
 		}
 	}
 
 	public void startEffect(ParticleService.ParticleEffectType effectType) {
-		// If effect is still going on, stop it for new effect
-		if (isActive()) {
-			effect.free();
-		}
-		active = true;
-		this.effectType = effectType;
-		effect = ServiceLocator.getParticleService().getEffect(effectType);
+		// Wrap the pooled effect with the wrapper
+		ParticleEffectPool.PooledEffect effect = ServiceLocator.getParticleService().getEffect(effectType);
+		ParticleEffectWrapper wrapper = new ParticleEffectWrapper(effect, effectType.getCategory(), effectType.name());
+		// Add the effect to the effects arraylist
+		effects.add(wrapper);
+
 		effect.setPosition(entity.getCenterPosition().x, entity.getPosition().y);
 		effect.scaleEffect(0.1f);
 		effect.start();
 	}
 
 	public void stopEffect(ParticleService.ParticleEffectType effectType) {
-		if (!isActive() || this.effectType != effectType) {
-			return;
+		Predicate<ParticleEffectWrapper> predicate = effectWrapper -> effectWrapper.getType().equals(effectType.name());
+		List<ParticleEffectWrapper> wrappers = effects.stream().filter(predicate).toList();
+		for (ParticleEffectWrapper wrapper : wrappers) {
+			wrapper.getPooledEffect().free();
 		}
-		active = false;
-		effect.free();
-		effect = null;
+		effects.removeIf(predicate);
+	}
+
+	/**
+	 * Stops all particle effects by category in the entity's list of effects
+	 * @param category category of particle effects
+	 */
+	public void stopEffectCategory(String category) {
+		Predicate<ParticleEffectWrapper> predicate = effectWrapper -> effectWrapper.getCategory().equals(category);
+		List<ParticleEffectWrapper> wrappers = effects.stream().filter(predicate).toList();
+		for (ParticleEffectWrapper wrapper : wrappers) {
+			wrapper.getPooledEffect().free();
+		}
+		effects.removeIf(predicate);
 	}
 
 	public void stopAllEffects() {
-		if (!isActive() || effect == null) {
-			return;
+		for (ParticleEffectWrapper wrapper : effects) {
+			wrapper.getPooledEffect().free();
 		}
-		active = false;
-		effect.free();
-		effect = null;
+		effects.clear();
 	}
 
-	public boolean isActive() {
-		return active;
+	public int getNumEffects() {
+		return effects.size();
 	}
 
-	public ParticleService.ParticleEffectType getEffectType() {
-		return effectType;
+	public boolean effectExists(ParticleService.ParticleEffectType effectType) {
+		Predicate<ParticleEffectWrapper> predicate = effectWrapper -> effectWrapper.getType().equals(effectType.name());
+		return !effects.stream().filter(predicate).toList().isEmpty();
 	}
 
 	@Override
 	public void dispose() {
 		super.dispose();
-		if (effect != null) {
-			active = false;
-			effect.free();
-			effect = null;
-		}
+		stopAllEffects();
 		if (ServiceLocator.getParticleService() != null) {
 			ServiceLocator.getParticleService().removeComponent(this);
 		}
