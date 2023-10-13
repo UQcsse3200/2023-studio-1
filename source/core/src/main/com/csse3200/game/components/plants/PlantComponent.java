@@ -680,7 +680,12 @@ public class PlantComponent extends Component {
                 && !isDecay()
                 && waterLevel > 0) {
             this.currentGrowthLevel += growthRate;
-            increasePlantHealth(1);
+            if (cropTile.isFertilised()) {
+                increasePlantHealth(5);
+            } else {
+                increasePlantHealth(2);
+            }
+
         } else if (waterLevel == 0) {
             increasePlantHealth(-1);
         }
