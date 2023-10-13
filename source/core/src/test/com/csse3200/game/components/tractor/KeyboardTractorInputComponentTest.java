@@ -63,4 +63,22 @@ public class KeyboardTractorInputComponentTest {
         assertTrue(inputComponent.keyDown(Input.Keys.NUM_2));
         assertTrue(inputComponent.keyDown(Input.Keys.NUM_3));
     }
+
+    @Test
+    void shouldHandleKeyUp(){
+        KeyboardTractorInputComponent inputComponent = spy(KeyboardTractorInputComponent.class);
+        Entity tractor = new Entity();
+
+        tractor.addComponent(mock(TractorActions.class));
+        tractor.addComponent(inputComponent);
+
+        //mock tractor so that do return on tractor is muted return false
+        doReturn(false).when(tractor.getComponent(TractorActions.class)).isMuted();
+
+        assertFalse(inputComponent.keyUp(1));
+        assertTrue(inputComponent.keyUp(Input.Keys.W));
+        assertTrue(inputComponent.keyUp(Input.Keys.A));
+        assertTrue(inputComponent.keyUp(Input.Keys.S));
+        assertTrue(inputComponent.keyUp(Input.Keys.D));
+    }
 }
