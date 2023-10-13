@@ -1,14 +1,14 @@
 package com.csse3200.game.entities;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
-
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.csse3200.game.components.placeables.PlaceableCategory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class EntityTypeTest {
   EntityType[] enumValues;
@@ -90,5 +90,25 @@ class EntityTypeTest {
     assertEquals(EntityType.CHICKEN.getOxygenRate(), 0);
     assertEquals(EntityType.GATE.getOxygenRate(), 0);
     assertEquals(EntityType.FENCE.getOxygenRate(), 0);
+  }
+
+  @Test
+  void testEntityType() {
+    EntityType type = EntityType.PLAYER;
+    assertEquals(type, EntityType.PLAYER);
+  }
+
+  @Test
+  void testPlaceableCategory() {
+    EntityType type = EntityType.PLAYER;
+    assertNull(type.getPlaceableCategory());
+
+    // Set a placeable category for an entity type.
+    PlaceableCategory category = PlaceableCategory.FENCES;
+    type.setPlaceableCategory(category);
+
+    // Check if the category is set correctly.
+    assertNotNull(type.getPlaceableCategory());
+    assertEquals(type.getPlaceableCategory(), category);
   }
 }

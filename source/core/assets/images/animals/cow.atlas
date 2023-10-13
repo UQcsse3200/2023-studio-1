@@ -144,3 +144,59 @@ walk_right_tamed
   orig: 32, 32
   offset: 0, 0
   index: 1
+run_left
+  rotate: false
+  xy: 320, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 0
+run_left_tamed
+  rotate: false
+  xy: 160, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 0
+run_left
+  rotate: false
+  xy: 32, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+run_left_tamed
+  rotate: false
+  xy: 192, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+run_right
+  rotate: false
+  xy: 512, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 0
+run_right_tamed
+  rotate: false
+  xy: 576, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 0
+run_right
+  rotate: false
+  xy: 256, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+run_right_tamed
+  rotate: false
+  xy: 608, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1

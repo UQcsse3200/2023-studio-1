@@ -89,6 +89,7 @@ public class UserSettings {
      * ui Scale. Currently unused, but can be implemented.
      */
     public float uiScale = 1f;
+    public float zoomScale = 1.5f;
     public DisplaySettings displayMode = null;
   }
 
@@ -99,6 +100,7 @@ public class UserSettings {
     public int width;
     public int height;
     public int refreshRate;
+    public int zoomScale;
 
     public DisplaySettings() {}
 
