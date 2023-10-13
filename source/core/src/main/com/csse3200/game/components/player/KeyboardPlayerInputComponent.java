@@ -85,7 +85,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           return true;
         case Keys.T:
           entity.getEvents().trigger("toggleLight");
-          entity.getEvents().trigger("startEffect", ParticleService.ParticleEffectType.SUCCESS_EFFECT);
           return true;
         case Keys.Q:
           showPlantInfoUI = !showPlantInfoUI;

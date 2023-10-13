@@ -82,8 +82,8 @@ class ParticleEffectComponentTest {
 
 		ParticleEffectComponent component = new ParticleEffectComponent();
 		Entity entity = mock(Entity.class);
-		Vector2 position = new Vector2(0, 0);
-		when(entity.getCenterPosition()).thenReturn(position);
+		when(entity.getCenterPosition()).thenReturn(new Vector2(0, 0));
+		when(entity.getPosition()).thenReturn(new Vector2(0, 0));
 		entity.addComponent(component);
 		component.setEntity(entity);
 
@@ -107,8 +107,10 @@ class ParticleEffectComponentTest {
 	void testStartEffect() {
 		ParticleEffectComponent component = new ParticleEffectComponent();
 		Entity entity = mock(Entity.class);
-		Vector2 position = new Vector2(0, 0);
-		when(entity.getCenterPosition()).thenReturn(position);
+		Vector2 position = new Vector2(1, 1);
+		Vector2 centerPosition = new Vector2(0, 0);
+		when(entity.getCenterPosition()).thenReturn(centerPosition);
+		when(entity.getPosition()).thenReturn(position);
 		entity.addComponent(component);
 		component.setEntity(entity);
 
@@ -117,7 +119,7 @@ class ParticleEffectComponentTest {
 
 		component.startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
 
-		verify(effect, times(1)).setPosition(position.x, position.y);
+		verify(effect, times(1)).setPosition(centerPosition.x, position.y);
 		verify(effect, times(1)).start();
 	}
 
@@ -125,8 +127,8 @@ class ParticleEffectComponentTest {
 	void testStopEffect() {
 		ParticleEffectComponent component = new ParticleEffectComponent();
 		Entity entity = mock(Entity.class);
-		Vector2 position = new Vector2(0, 0);
-		when(entity.getCenterPosition()).thenReturn(position);
+		when(entity.getCenterPosition()).thenReturn(new Vector2(0, 0));
+		when(entity.getPosition()).thenReturn(new Vector2(0, 0));
 		entity.addComponent(component);
 		component.setEntity(entity);
 
@@ -145,8 +147,8 @@ class ParticleEffectComponentTest {
 	void testStopAllEffects() {
 		ParticleEffectComponent component = new ParticleEffectComponent();
 		Entity entity = mock(Entity.class);
-		Vector2 position = new Vector2(0, 0);
-		when(entity.getCenterPosition()).thenReturn(position);
+		when(entity.getCenterPosition()).thenReturn(new Vector2(0, 0));
+		when(entity.getPosition()).thenReturn(new Vector2(0, 0));
 		entity.addComponent(component);
 		component.setEntity(entity);
 
@@ -165,8 +167,8 @@ class ParticleEffectComponentTest {
 	void getEffectType() {
 		ParticleEffectComponent component = new ParticleEffectComponent();
 		Entity entity = mock(Entity.class);
-		Vector2 position = new Vector2(0, 0);
-		when(entity.getCenterPosition()).thenReturn(position);
+		when(entity.getCenterPosition()).thenReturn(new Vector2(0, 0));
+		when(entity.getPosition()).thenReturn(new Vector2(0, 0));
 		entity.addComponent(component);
 		component.setEntity(entity);
 
