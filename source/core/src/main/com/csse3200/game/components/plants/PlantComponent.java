@@ -736,6 +736,13 @@ public class PlantComponent extends Component {
             ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(-1, ALIVE);
         }
 
+        // Spawn a seed item whenever a plant is destroyed.
+        String itemName = plantName + " Seeds";
+        Supplier<Entity> itemSupplier = FactoryService.getItemFactories().get(itemName);
+        Entity item = itemSupplier.get();
+        item.setPosition(entity.getPosition());
+        ServiceLocator.getEntityService().register(item);
+
         // This is such a cumbersome way of doing this, but there is an annoying bug that
         // occurs when the PhysicsComponent is disposed of.
 
