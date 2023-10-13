@@ -1,5 +1,5 @@
 player_sprites.png
-size: 960, 816
+size: 960, 864
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
@@ -1777,6 +1777,34 @@ fishing_down
 fishing_up
   rotate: false
   xy: 336, 336
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+gun_right
+  rotate: false
+  xy: 144, 816
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+gun_left
+  rotate: false
+  xy: 96, 816
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+gun_down
+  rotate: false
+  xy: 48, 816
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+gun_up
+  rotate: false
+  xy: 0, 816
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
