@@ -68,7 +68,7 @@ public class Entity implements Json.Serializable {
     private Array<Component> createdComponents;
 
     public Entity() {
-        this.type = null;
+        this.type = EntityType.DUMMY;
         id = nextId;
         nextId++;
 

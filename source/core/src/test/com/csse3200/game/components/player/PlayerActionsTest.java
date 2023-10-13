@@ -2,31 +2,19 @@ package com.csse3200.game.components.player;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.areas.GameArea;
-import com.csse3200.game.areas.SpaceGameArea;
-import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.CameraComponent;
-import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.Component;
+import com.csse3200.game.components.combat.CombatStatsComponent;
 import com.csse3200.game.components.combat.ProjectileComponent;
-import com.csse3200.game.components.tasks.FollowTask;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.ProjectileFactory;
-import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.input.InputService;
-import com.csse3200.game.missions.MissionManager;
-import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
-import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.rendering.RenderService;
-import com.csse3200.game.rendering.Renderer;
 import com.csse3200.game.services.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,14 +37,10 @@ class PlayerActionsTest {
         ServiceLocator.registerTimeSource(new GameTime());
 
         ServiceLocator.registerPhysicsService(physicsService);
-
-        ServiceLocator.registerInputService(new InputService());
         ServiceLocator.registerResourceService(mock(ResourceService.class));
 
         ServiceLocator.registerEntityService(mock(EntityService.class));
-        ServiceLocator.registerRenderService(new RenderService());
         ServiceLocator.registerTimeService(new TimeService());
-        ServiceLocator.registerPlanetOxygenService(new PlanetOxygenService());
 
         ServiceLocator.registerGameArea(mock(GameArea.class));
 
@@ -70,8 +54,11 @@ class PlayerActionsTest {
         areaEntities.add(player);
         areaEntities.add(chicken);
 
+
         when(ServiceLocator.getGameArea().getAreaEntities()).thenReturn(areaEntities);
         when(ServiceLocator.getResourceService().getAsset(any(), any())).thenReturn(mock(Sound.class));
+
+        ServiceLocator.registerCameraComponent(mock(CameraComponent.class));
         when(ServiceLocator.getCameraComponent().screenPositionToWorldPosition(any())).thenReturn(new Vector2(2, 2));
     }
 
@@ -86,6 +73,7 @@ class PlayerActionsTest {
     void playerShouldShootNPC() {
         Entity bullet = new Entity();
         bullet.addComponent(mock(ProjectileComponent.class));
+        bullet.addComponent(new CombatStatsComponent(1, 1));
         mockStatic(ProjectileFactory.class);
         when(ProjectileFactory.createPlayerProjectile()).thenReturn(bullet);
         doAnswer((i) -> {

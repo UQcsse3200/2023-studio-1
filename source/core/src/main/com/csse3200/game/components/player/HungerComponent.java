@@ -1,6 +1,6 @@
 package com.csse3200.game.components.player;
 
-import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.combat.CombatStatsComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -24,7 +24,9 @@ public class HungerComponent extends Component {
             increaseHungerLevel(1);
         }
         if (checkIfStarving()) {
-            entity.getComponent(CombatStatsComponent.class).addHealth(-5);
+            if (min % 10 == 0) {
+                entity.getComponent(CombatStatsComponent.class).addHealth(-5);
+            }
         }
         checkIfStarving();
     }

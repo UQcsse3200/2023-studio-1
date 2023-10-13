@@ -390,7 +390,7 @@ class MissionDisplayTest {
         while (!missionManager.getAchievements()[0].isCompleted()) {
             missionManager.getEvents().trigger(MissionManager.MissionEvent.PLANT_CROP.name(), "PlantName");
         }
-
+        // Not the Collect items quest for 10 items is already completed due to previous tests
         missionDisplay.openMenu();
         missionDisplay.openAchievements();
         verify(stage).addActor(actorCaptor.capture());
@@ -412,10 +412,10 @@ class MissionDisplayTest {
         Table achievementTable = contentTable.getChildren().toArray()[1].firstAscendant(Table.class);
         assert (achievementTable != null);
 
-        // should have 4 cells in the achievement table:
-        //      - 2 x achievement names
-        //      - 2 x achievement descriptions
-        assert (achievementTable.getCells().size == 4);
+        // should have 8 cells in the achievement table:
+        //      - 4 x achievement names
+        //      - 4 x achievement descriptions
+        assert (achievementTable.getCells().size == 8);
 
         // switch to the 'Complete' tab
         TextButton button = getButtonFromTable(tabTable, "Complete");
@@ -424,10 +424,10 @@ class MissionDisplayTest {
 
         assert (((Window) actor).getTitleLabel().textEquals("Complete Achievements"));
 
-        // should only have 2 cells in the achievement table now:
-        //      - 1 x achievement name
-        //      - 1 x achievement description
-        assert (achievementTable.getCells().size == 2);
+        // should only have 4 cells in the achievement table now:
+        //      - 2 x achievement name
+        //      - 2 x achievement description
+        assert (achievementTable.getCells().size == 4);
 
         // switch back to 'Incomplete' tab
         button = getButtonFromTable(tabTable, "Incomplete");

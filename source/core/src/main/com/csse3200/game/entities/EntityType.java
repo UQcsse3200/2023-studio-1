@@ -77,5 +77,3 @@ public enum EntityType {
         this.placeableCategory = placeableCategory;
     }
 }
-
-
