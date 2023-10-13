@@ -105,6 +105,7 @@ public class ToolbarDisplay extends UIComponent {
                 curSlot.setItemImage(null);
                 curSlot.setCount(0);
                 if (tooltips.get(i) != null) {
+                    tooltips.get(i).hide();
                     curSlot.removeListener(tooltips.get(i));
                     tooltips.remove(i);
                 }

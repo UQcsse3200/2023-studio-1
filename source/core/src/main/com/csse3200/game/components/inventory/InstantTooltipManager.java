@@ -37,7 +37,6 @@ public class InstantTooltipManager extends com.badlogic.gdx.scenes.scene2d.ui.To
      * the mouse cursor. Default is 7. */
     public float edgeDistance = 7;
 
-    final Array<Tooltip> shown = new Array();
 
     float time = initialTime;
     final Task resetTask = new Task() {
@@ -53,9 +52,6 @@ public class InstantTooltipManager extends com.badlogic.gdx.scenes.scene2d.ui.To
     @Override
     protected void showAction (Tooltip tooltip) {
         float actionTime = animations ? (time > 0 ? 0.5f : 0.15f) : 0.1f;
-        //tooltip.getContainer().setTransform(true);
-        //tooltip.getContainer().getColor().a = 0.2f;
-        //tooltip.getContainer().setScale(0.05f);
         tooltip.getContainer().addAction(parallel(fadeIn(actionTime, fade), scaleTo(1, 1, actionTime, Interpolation.fade)));
 
     }
