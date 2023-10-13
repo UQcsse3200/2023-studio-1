@@ -183,6 +183,11 @@ public class InventoryDisplay extends UIComponent {
 
 				@Override
 				public DragAndDrop.Payload dragStart(InputEvent event, float x, float y, int pointer) {
+					try {
+						ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.DRAG_ITEM);
+					} catch (InvalidSoundFileException e) {
+						logger.error("sound not loaded");
+					}
 					payload.setObject(getActor());
 					payload.setDragActor(getActor());
 					stage.addActor(getActor());
@@ -197,6 +202,11 @@ public class InventoryDisplay extends UIComponent {
 				@Override
 				public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
 					if (target == null) {
+						try {
+							ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.DROP_ITEM);
+						} catch (InvalidSoundFileException e) {
+							logger.error("sound not loaded");
+						}
 						ItemSlot itemSlot = map.get((Stack) getActor());
 						itemSlot.removeActor(getActor());
 						itemSlot.add(getActor());
@@ -231,6 +241,11 @@ public class InventoryDisplay extends UIComponent {
 						entity.getEvents().trigger("updateToolbar");
 						inventory.setHeldItem(inventory.getHeldIndex());
 						addTooltips();
+						try {
+							ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.DROP_ITEM);
+						} catch (InvalidSoundFileException e) {
+							logger.error("sound not loaded");
+						}
 					}
 				});
 			} else {
@@ -247,6 +262,11 @@ public class InventoryDisplay extends UIComponent {
 						ItemSlot sourceSlot = map.get(((Stack) source.getActor()));
 						inventory.removeItem(inventory.getHeldItemsEntity().get(inventory.getItemPlace().get(indexes.get(sourceSlot))));
 						addTooltips();
+						try {
+							ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.DELETE_ITEM);
+						} catch (InvalidSoundFileException e) {
+							logger.error("sound not loaded");
+						}
 					}
 				});
 			}

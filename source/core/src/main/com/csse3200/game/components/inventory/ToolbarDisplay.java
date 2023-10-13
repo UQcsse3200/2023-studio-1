@@ -2,6 +2,7 @@ package com.csse3200.game.components.inventory;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -19,8 +20,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
 import com.badlogic.gdx.graphics.Texture;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 /**
  * Display the UI for the toolbar
@@ -223,6 +224,12 @@ public class ToolbarDisplay extends UIComponent {
         }
     }
     private void switchToolbar() {
+        window.addAction(sequence(scaleTo(1.02f, 1.02f, 0.2f, Interpolation.fade),scaleTo(1, 1, 0.2f, Interpolation.fade)));
+        try {
+            ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.SWITCH_TOOLBAR);
+        } catch (InvalidSoundFileException e) {
+            logger.error("sound not loaded");
+        }
         curTab = (curTab + 1) % 3;
         updateToolbar();
     }
