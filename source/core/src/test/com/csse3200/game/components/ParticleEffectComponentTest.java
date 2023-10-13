@@ -23,6 +23,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -57,51 +58,33 @@ class ParticleEffectComponentTest {
 	}
 
 	@Test
-	void testNonActiveRender() throws IllegalAccessException {
+	void testRender() throws IllegalAccessException {
 		SpriteBatch batch = mock(SpriteBatch.class);
 		float delta = 0;
 
-		ParticleEffectComponent component = new ParticleEffectComponent();
-
-		ParticleEffectPool.PooledEffect effect = mock(ParticleEffectPool.PooledEffect.class);
-
-		Field effectField = ReflectionUtils.findFields(ParticleEffectComponent.class, f -> f.getName().equals("effect"), ReflectionUtils.HierarchyTraversalMode.TOP_DOWN).get(0);
-
-		effectField.setAccessible(true);
-		effectField.set(component, effect);
-
-		component.render(batch, delta);
-		verify(effect, times(0)).draw(batch, delta);
-	}
-
-
-	@Test
-	void testRenderEffect() {
-		SpriteBatch batch = mock(SpriteBatch.class);
-		float delta = 0;
+		@SuppressWarnings("unchecked")
+		ArrayList<ParticleEffectWrapper> effects = mock(ArrayList.class);
 
 		ParticleEffectComponent component = new ParticleEffectComponent();
-		Entity entity = mock(Entity.class);
-		when(entity.getCenterPosition()).thenReturn(new Vector2(0, 0));
-		when(entity.getPosition()).thenReturn(new Vector2(0, 0));
-		entity.addComponent(component);
-		component.setEntity(entity);
+		Field effectsField = ReflectionUtils.findFields(ParticleEffectComponent.class, f -> f.getName().equals("effects"), ReflectionUtils.HierarchyTraversalMode.TOP_DOWN).get(0);
+		effectsField.setAccessible(true);
+		effectsField.set(component, effects);
 
-		ParticleEffectPool.PooledEffect effect = mock(ParticleEffectPool.PooledEffect.class);
-		when(particleService.getEffect(any())).thenReturn(effect);
+		ParticleEffectWrapper wrapper = mock(ParticleEffectWrapper.class);
+		ParticleEffectPool.PooledEffect pooledEffect = mock(ParticleEffectPool.PooledEffect.class);
+		when(wrapper.getPooledEffect()).thenReturn(pooledEffect);
 
-		component.startEffect(any());
+		@SuppressWarnings("unchecked")
+		Iterator<ParticleEffectWrapper> iter = mock(Iterator.class);
+		when(effects.iterator()).thenReturn(iter);
+		when(iter.hasNext()).thenReturn(true, false);
+		when(iter.next()).thenReturn(wrapper);
 
-
-		when(effect.isComplete()).thenReturn(false);
 		component.render(batch, delta);
-		verify(effect).draw(batch, delta);
 
-		when(effect.isComplete()).thenReturn(true);
-		component.render(batch, delta);
-		assertFalse(component.isActive());
-		verify(effect, times(1)).free();
+		verify(pooledEffect, times(1)).draw(batch, delta);
 	}
+
 
 	@Test
 	void testStartEffect() {
@@ -140,7 +123,6 @@ class ParticleEffectComponentTest {
 		component.stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);
 
 		verify(effect, times(1)).free();
-		assertFalse(component.isActive());
 	}
 
 	@Test
@@ -160,8 +142,29 @@ class ParticleEffectComponentTest {
 		component.stopAllEffects();
 
 		verify(effect, times(1)).free();
-		assertFalse(component.isActive());
 	}
+
+	@Test
+	void testStopEffectCategory() throws IllegalAccessException {
+		ParticleEffectComponent component = new ParticleEffectComponent();
+		Entity entity = mock(Entity.class);
+		when(entity.getCenterPosition()).thenReturn(new Vector2(0, 0));
+		when(entity.getPosition()).thenReturn(new Vector2(0, 0));
+		entity.addComponent(component);
+		component.setEntity(entity);
+
+		ParticleEffectPool.PooledEffect effect = mock(ParticleEffectPool.PooledEffect.class);
+		when(particleService.getEffect(any())).thenReturn(effect);
+
+		component.startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+		component.stopEffectCategory(ParticleService.ENTITY_EFFECT);
+		verify(effect, times(0)).free();
+
+
+		component.stopEffectCategory(ParticleService.WEATHER_EVENT);
+		verify(effect, times(1)).free();
+	}
+
 
 	@Test
 	void getEffectType() {
@@ -176,7 +179,12 @@ class ParticleEffectComponentTest {
 		when(particleService.getEffect(any())).thenReturn(effect);
 
 		component.startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
-		assertEquals(ParticleService.ParticleEffectType.ACID_RAIN, component.getEffectType());
+	}
+
+	@Test
+	void testExists() {
+		ParticleEffectComponent component = new ParticleEffectComponent();
+		assertFalse(component.effectExists(ParticleService.ParticleEffectType.SUCCESS_EFFECT));
 	}
 
 	@Test
@@ -184,17 +192,25 @@ class ParticleEffectComponentTest {
 		ParticleEffectComponent component = new ParticleEffectComponent();
 
 		ParticleEffectPool.PooledEffect effect = mock(ParticleEffectPool.PooledEffect.class);
+		Field effectField = ReflectionUtils.findFields(ParticleEffectComponent.class, f -> f.getName().equals("effects"), ReflectionUtils.HierarchyTraversalMode.TOP_DOWN).get(0);
+		@SuppressWarnings("unchecked")
+		ArrayList<ParticleEffectWrapper> effects = mock(ArrayList.class);
+		ParticleEffectWrapper wrapper = mock(ParticleEffectWrapper.class);
 
-		Field effectField = ReflectionUtils.findFields(ParticleEffectComponent.class, f -> f.getName().equals("effect"), ReflectionUtils.HierarchyTraversalMode.TOP_DOWN).get(0);
+		when(wrapper.getPooledEffect()).thenReturn(effect);
+
+		@SuppressWarnings("unchecked")
+		Iterator<ParticleEffectWrapper> iter = mock(Iterator.class);
+		when(effects.iterator()).thenReturn(iter);
+		when(iter.hasNext()).thenReturn(true, false);
+		when(iter.next()).thenReturn(wrapper);
 
 		effectField.setAccessible(true);
-		effectField.set(component, effect);
+		effectField.set(component, effects);
 
 		component.dispose();
 
 		verify(effect, times(1)).free();
 		verify(particleService, times(1)).removeComponent(component);
-
-
 	}
 }
