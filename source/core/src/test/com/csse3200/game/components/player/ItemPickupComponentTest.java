@@ -114,4 +114,13 @@ class ItemPickupComponentTest {
                 picker.getComponent(HitboxComponent.class).getFixture());
         assertFalse(picker.getComponent(InventoryComponent.class).hasItem(pickupItem));
     }
+
+    @Test
+    void inventoryFull() {
+        InventoryComponent inv = picker.getComponent(InventoryComponent.class);
+        for (int i = 0; i < 30; i++) {
+            inv.addItem(new Entity().addComponent(new ItemComponent(String.valueOf(i), ItemType.EGG, "images/tool_shovel.png")));
+        }
+        assertFalse(inv.addItem(new Entity().addComponent(new ItemComponent("full", ItemType.EGG, "images/tool_shovel.png"))));
+    }
 }
