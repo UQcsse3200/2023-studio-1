@@ -7,11 +7,12 @@ import java.util.*;
 import java.util.function.Supplier;
 
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.factories.ShipFactory;
 import com.csse3200.game.services.sound.EffectSoundFile;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.TerrainTile;
-import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.combat.CombatStatsComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.npc.TamableComponent;
@@ -263,6 +264,7 @@ public class ItemActions extends Component {
     if (type == null) {
       return;
     }
+
     if (type.getItemType() == ItemType.FOOD) {
       switch (type.getItemName()) {
         case "Ear of Cosmic Cob":
@@ -287,7 +289,18 @@ public class ItemActions extends Component {
         default:
           player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
       }
+    } else if (type.getItemType() == ItemType.EGG) {
+        if (type.getItemName().equals("golden egg")) {
+            player.getComponent(PlayerActions.class).setSpeedMultiplier(5f);
+            player.getEvents().scheduleEvent(5f, "setSpeedMultiplier", 1f);
+        } else {
+            player.getComponent(HungerComponent.class).increaseHungerLevel(-10);
+        }
+    } else if (type.getItemType() == ItemType.MILK) {
+      player.getComponent(PlayerActions.class).setDamageMultiplier(5f);
+      player.getEvents().scheduleEvent(5f, "setDamageMultiplier", 1f);
     }
+
   }
 
   /**

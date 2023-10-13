@@ -1,10 +1,14 @@
-package com.csse3200.game.components;
+package com.csse3200.game.components.combat;
 
+import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.entities.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Objects;
 
 /**
  * Component used to store information related to combat such as health, attack, etc. Any entities
@@ -20,6 +24,11 @@ public class CombatStatsComponent extends Component {
   public CombatStatsComponent(int health, int baseAttack) {
     setHealth(health);
     setBaseAttack(baseAttack);
+  }
+
+  @Override
+  public void create() {
+    entity.getEvents().addListener("hit", this::hitFromEntity);
   }
 
   /**
@@ -99,8 +108,15 @@ public class CombatStatsComponent extends Component {
   }
 
   public void handleDeath() {
-    if(!entity.getType().equals(EntityType.PLAYER)) {
+    if(!Objects.equals(entity.getType(), EntityType.PLAYER)) {
       ServiceLocator.getGameArea().removeEntity(entity);
+    }
+  }
+
+  public void hitFromEntity(Entity attacker) {
+    CombatStatsComponent attackerStats = attacker.getComponent(CombatStatsComponent.class);
+    if (attackerStats != null) {
+      hit(attackerStats);
     }
   }
 

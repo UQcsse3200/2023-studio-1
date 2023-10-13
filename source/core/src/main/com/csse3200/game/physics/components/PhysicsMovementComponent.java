@@ -1,7 +1,7 @@
 package com.csse3200.game.physics.components;
 
-import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.components.combat.StunComponent;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -42,6 +42,10 @@ public class PhysicsMovementComponent extends Component implements MovementContr
 
     @Override
     public void update() {
+        if (isStunned()) {
+          return;
+        }   
+
         if (movementEnabled && targetPosition != null) {
             Body body = physicsComponent.getBody();
             updateDirection(body);
@@ -62,15 +66,16 @@ public class PhysicsMovementComponent extends Component implements MovementContr
             }
     }
 
+  /**
+   * @return Target position in the world
+   */
+  @Override
+  public Vector2 getTarget() {
+    return targetPosition;
+  }
     @Override
     public boolean getMoving() {
         return movementEnabled;
-    }
-
-    /** @return Target position in the world */
-    @Override
-    public Vector2 getTarget() {
-        return targetPosition;
     }
 
     /**
@@ -107,13 +112,22 @@ public class PhysicsMovementComponent extends Component implements MovementContr
         body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
     }
 
+  public void setMaxSpeed(Vector2 newSpeed) {
+    //Changes the speed of the current entity
+    this.maxSpeed = newSpeed;
+  }
+
+  public boolean isStunned() {
+    StunComponent stunComponent = entity.getComponent(StunComponent.class);
+    if (stunComponent == null) {
+      return false;
+    }
+
+    return stunComponent.isStunned();
+  }
+
     private Vector2 getDirection() {
         // Move towards targetPosition based on our current position
         return targetPosition.cpy().sub(entity.getPosition()).nor();
-    }
-
-    public void setMaxSpeed(Vector2 newSpeed){
-        //Changes the speed of the current entity
-        this.maxSpeed = newSpeed;
     }
 }

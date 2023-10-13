@@ -37,6 +37,7 @@ public class AddItemCommand implements Command {
 			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("hammer flower", ItemFactory::createHammerFlower),
 			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("space snapper seeds", ItemFactory::createSpaceSnapperSeed),
 			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("egg", ItemFactory::createEgg),
+			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("golden egg", ItemFactory::createGoldenEgg),
 			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("milk", ItemFactory::createMilk),
 			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("chest", ItemFactory::createChestItem),
 			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("fence", ItemFactory::createFenceItem),

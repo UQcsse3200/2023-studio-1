@@ -2,7 +2,7 @@ package com.csse3200.game.components.combat.attackpatterns;
 
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.terrain.CropTileComponent;
-import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.combat.CombatStatsComponent;
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.combat.ProjectileComponent;
 import com.csse3200.game.components.plants.PlantComponent;
