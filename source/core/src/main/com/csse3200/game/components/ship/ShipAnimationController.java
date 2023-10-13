@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ship.ShipProgressComponent.Feature;
+import com.csse3200.game.entities.factories.ShipFactory;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 
 /**
@@ -24,7 +25,7 @@ public class ShipAnimationController extends Component {
 	public void create() {
 		super.create();
 		animator = this.entity.getComponent(AnimationRenderComponent.class);
-		entity.getEvents().addListener("progressUpdated", this::animateShipStage);
+		entity.getEvents().addListener(ShipFactory.events.PROGRESS_UPDATED.name(), this::animateShipStage);
 	}
 
 	/**

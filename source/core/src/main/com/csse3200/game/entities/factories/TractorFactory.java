@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.ConeLightComponent;
-import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.components.tractor.TractorAnimationController;
 import com.csse3200.game.entities.Entity;
@@ -56,7 +55,7 @@ public class TractorFactory {
    *
    * @return an AnimationRenderComponent with the tractors animations added.
    */
-  private static AnimationRenderComponent setupTractorAnimations() {
+  public static AnimationRenderComponent setupTractorAnimations() {
     AnimationRenderComponent animator = new AnimationRenderComponent(
         ServiceLocator.getResourceService().getAsset("images/tractor.atlas", TextureAtlas.class),
         16f);

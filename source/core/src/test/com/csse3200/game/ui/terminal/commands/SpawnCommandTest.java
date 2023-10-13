@@ -1,11 +1,7 @@
 package com.csse3200.game.ui.terminal.commands;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 
@@ -46,6 +42,12 @@ class SpawnCommandTest {
 
 		player = mock(Entity.class);
 		when(gameArea.getPlayer()).thenReturn(player);
+		doAnswer(invocation -> {
+			Object arg0 = invocation.getArgument(0);
+
+			ServiceLocator.getEntityService().register((Entity) arg0);
+			return null;
+		}).when(gameArea).spawnEntity(any(Entity.class));
 		playerPosition = new Vector2(0, 0);
 		when(player.getPosition()).thenReturn(playerPosition);
 	}

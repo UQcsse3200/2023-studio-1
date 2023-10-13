@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.AuraLightComponent;
-import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.combat.CombatStatsComponent;
 import com.csse3200.game.components.combat.TouchAttackComponent;
 import com.csse3200.game.components.combat.attackpatterns.BatAttackPattern;
 import com.csse3200.game.components.combat.attackpatterns.DragonflyAttackPattern;
@@ -35,7 +35,9 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
+import com.csse3200.game.rendering.AnimationEffectsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.rendering.BlinkComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
 
@@ -64,7 +66,7 @@ public class NPCFactory {
   private static final String IDLE_LEFT_TAMED = "idle_left_tamed";
   private static final String IDLE_RIGHT_TAMED = "idle_right_tamed";
   private static final String WALK_LEFT_TAMED = "walk_left_tamed";
-    private static final String WALK_RIGHT_TAMED = "walk_right_tamed";
+  private static final String WALK_RIGHT_TAMED = "walk_right_tamed";
 
   private static final NPCConfigs configs =
       FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
@@ -83,6 +85,7 @@ public class NPCFactory {
             ServiceLocator.getResourceService().getAsset("images/animals/chicken.atlas", TextureAtlas.class),
             16f
     );
+
 
     animator.addAnimation(IDLE_LEFT, Float.MAX_VALUE);
     animator.addAnimation(IDLE_RIGHT, Float.MAX_VALUE);
@@ -131,6 +134,14 @@ public class NPCFactory {
 
     PhysicsUtils.setScaledCollider(chicken, 0.8f, 0.4f);
 
+    // configure animation effects position
+    AnimationEffectsComponent animationEffectsComponent = chicken.getComponent(AnimationEffectsComponent.class);
+    animationEffectsComponent.setOffset(new Vector2(
+            chicken.getScale().scl(0.5f).x - animationEffectsComponent.getScale().scl(0.5f).x,
+            chicken.getScale().y
+    ));
+
+
     return chicken;
   }
 
@@ -151,25 +162,30 @@ public class NPCFactory {
     animator.addAnimation(IDLE_RIGHT, 0.5f, Animation.PlayMode.LOOP);
     animator.addAnimation(WALK_LEFT, 0.25f, Animation.PlayMode.LOOP_REVERSED);
     animator.addAnimation(WALK_RIGHT, 0.25f, Animation.PlayMode.LOOP);
+    animator.addAnimation(RUN_LEFT, 0.1f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation(RUN_RIGHT, 0.1f, Animation.PlayMode.LOOP);
 
     // Tamed Animations
     animator.addAnimation(IDLE_LEFT_TAMED, Float.MAX_VALUE);
     animator.addAnimation(IDLE_RIGHT_TAMED, Float.MAX_VALUE);
     animator.addAnimation(WALK_LEFT_TAMED, 0.2f, Animation.PlayMode.LOOP_REVERSED);
     animator.addAnimation(WALK_RIGHT_TAMED, 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("run_left_tamed", 0.1f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation("run_right_tamed", 0.1f, Animation.PlayMode.LOOP);
 
 
     AITaskComponent aiTaskComponent = new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-            .addTask(new TamedFollowTask(ServiceLocator.getGameArea().getPlayer(), 10, 8, 10, 2f, config.favouriteFood, Vector2Utils.ONE));
+            .addTask(new TamedFollowTask(ServiceLocator.getGameArea().getPlayer(), 10, 8, 10, 2f, config.favouriteFood, Vector2Utils.ONE))
+            .addTask(new PanicTask("panicStart", 5f, 20, new Vector2(2f, 2f), new Vector2(1.5f, 1.5f)));
 
     List<SingleDropHandler> singleDropHandlers = new ArrayList<>();
     MultiDropComponent multiDropComponent = new MultiDropComponent(singleDropHandlers, true);
     //Cows untamed drop fertiliser
-    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createFertiliser, 24,
+    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createFertiliser, 12,
             ServiceLocator.getTimeService().getEvents()::addListener, "hourUpdate", false));
     //Once tamed, cows drop one extra fertiliser
-    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createFertiliser, 24,
+    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createFertiliser, 6,
             ServiceLocator.getTimeService().getEvents()::addListener, "hourUpdate", true));
     //Once tamed, cows can be fed to drop milk
     singleDropHandlers.add(new SingleDropHandler(ItemFactory::createMilk, 2,
@@ -189,6 +205,13 @@ public class NPCFactory {
 
     cow.scaleHeight(1.8f);
     PhysicsUtils.setScaledCollider(cow, 0.7f, 0.4f);
+
+    // configure animation effects position
+    AnimationEffectsComponent animationEffectsComponent = cow.getComponent(AnimationEffectsComponent.class);
+    animationEffectsComponent.setOffset(new Vector2(
+            cow.getScale().scl(0.5f).x - animationEffectsComponent.getScale().scl(0.5f).x,
+            cow.getScale().y - 0.5f
+    ));
 
     return cow;
   }
@@ -228,8 +251,18 @@ public class NPCFactory {
                     config.tamingProbability, config.favouriteFood));
 
 
+
     astrolotl.scaleHeight(1.2f);
     PhysicsUtils.setScaledCollider(astrolotl, 0.9f, 0.4f);
+
+    // configure animation effects position
+    AnimationEffectsComponent animationEffectsComponent = astrolotl.getComponent(AnimationEffectsComponent.class);
+    animationEffectsComponent.setOffset(new Vector2(
+            astrolotl.getScale().scl(0.5f).x - animationEffectsComponent.getScale().scl(0.5f).x,
+            astrolotl.getScale().y
+    ));
+
+
     return astrolotl;
   }
 
@@ -265,13 +298,20 @@ public class NPCFactory {
             .addComponent(new CombatStatsComponent(10, 0))
             .addComponent(new HostileAnimationController())
             .addComponent(new OxygenEaterAttackPattern(1.5f, ProjectileFactory::createOxygenEaterProjectile))
-            .addComponent(new InteractionDetector(5f, new ArrayList<>(Arrays.asList(EntityType.PLAYER)))); // TODO: Do we want it to attack anything
+            .addComponent(new InteractionDetector(5f, new ArrayList<>(List.of(EntityType.PLAYER))));
 
     oxygenEater.scaleHeight(2f);
     oxygenEater.getComponent(ColliderComponent.class).setAsBoxAligned(new Vector2(1f, 1f),
             PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.CENTER);
     oxygenEater.getComponent(HitboxComponent.class).setAsBoxAligned(new Vector2(1f, 1f),
             PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.CENTER);
+
+    // configure animation effects position
+    AnimationEffectsComponent animationEffectsComponent = oxygenEater.getComponent(AnimationEffectsComponent.class);
+    animationEffectsComponent.setOffset(new Vector2(
+            oxygenEater.getScale().scl(0.5f).x - animationEffectsComponent.getScale().scl(0.5f).x,
+            oxygenEater.getScale().y - 0.3f
+    ));
 
     return oxygenEater;
   }
@@ -344,8 +384,15 @@ public class NPCFactory {
                     new ArrayList<>(Arrays.asList((EntityType.PLAYER), (EntityType.PLANT)))))
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
 
-
     dragonfly.scaleHeight(1.2f);
+
+    // configure animation effects position
+    AnimationEffectsComponent animationEffectsComponent = dragonfly.getComponent(AnimationEffectsComponent.class);
+    animationEffectsComponent.setOffset(new Vector2(
+            dragonfly.getScale().scl(0.5f).x - animationEffectsComponent.getScale().scl(0.5f).x + 0.2f,
+            dragonfly.getScale().y
+    ));
+
     return dragonfly;
   }
 
@@ -387,6 +434,14 @@ public class NPCFactory {
 
 
     bat.scaleHeight(1.2f);
+
+    // configure animation effects position
+    AnimationEffectsComponent animationEffectsComponent = bat.getComponent(AnimationEffectsComponent.class);
+    animationEffectsComponent.setOffset(new Vector2(
+            bat.getScale().scl(0.5f).x - animationEffectsComponent.getScale().scl(0.5f).x + 0.2f,
+            bat.getScale().y
+    ));
+
     return bat;
   }
 
@@ -397,10 +452,26 @@ public class NPCFactory {
    * @return entity
    */
   private static Entity createBaseAnimal(EntityType type) {
+    AnimationEffectsComponent animationEffectsComponent = new AnimationEffectsComponent(
+            ServiceLocator.getResourceService().getAsset(
+                    "images/animals/animal_effects.atlas", TextureAtlas.class)
+    );
+
+    animationEffectsComponent.addAnimation("heart", 0.07f);
+    animationEffectsComponent.addAnimation("fed", 0.07f);
+    animationEffectsComponent.addAnimation("exclamation", 0.07f);
+    animationEffectsComponent.addAnimation("red_exclamation", 0.07f);
+    animationEffectsComponent.addAnimation("question", 0.07f);
+
+    animationEffectsComponent.setScale(new Vector2(11f / 16f, 13f / 16f));
+
     Entity animal = new Entity(type)
             .addComponent(new PhysicsComponent())
             .addComponent(new PhysicsMovementComponent())
-            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC));
+            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+            .addComponent(new BlinkComponent())
+            .addComponent(animationEffectsComponent)
+            .addComponent(new AnimalEffectsController());
 
     if (type != EntityType.DRAGONFLY && type != EntityType.BAT) {
       animal.addComponent(new ColliderComponent());
