@@ -142,6 +142,26 @@ class ParticleEffectComponentTest {
 	}
 
 	@Test
+	void testStopAllEffects() {
+		ParticleEffectComponent component = new ParticleEffectComponent();
+		Entity entity = mock(Entity.class);
+		Vector2 position = new Vector2(0, 0);
+		when(entity.getCenterPosition()).thenReturn(position);
+		entity.addComponent(component);
+		component.setEntity(entity);
+
+		ParticleEffectPool.PooledEffect effect = mock(ParticleEffectPool.PooledEffect.class);
+		when(particleService.getEffect(any())).thenReturn(effect);
+
+		component.startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+
+		component.stopAllEffects();
+
+		verify(effect, times(1)).free();
+		assertFalse(component.isActive());
+	}
+
+	@Test
 	void getEffectType() {
 		ParticleEffectComponent component = new ParticleEffectComponent();
 		Entity entity = mock(Entity.class);

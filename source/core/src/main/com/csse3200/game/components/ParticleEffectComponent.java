@@ -35,7 +35,6 @@ public class ParticleEffectComponent extends Component {
 			effect.free();
 			effect = null;
 		} else {
-			// TODO - Do we want to update position as well
 			effect.draw(batch, delta);
 		}
 	}
@@ -55,6 +54,15 @@ public class ParticleEffectComponent extends Component {
 
 	public void stopEffect(ParticleService.ParticleEffectType effectType) {
 		if (!isActive() || this.effectType != effectType) {
+			return;
+		}
+		active = false;
+		effect.free();
+		effect = null;
+	}
+
+	public void stopAllEffects() {
+		if (!isActive() || effect == null) {
 			return;
 		}
 		active = false;
