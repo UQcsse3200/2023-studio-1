@@ -263,7 +263,9 @@ loadScripts(document, 'script');</script>
 <h3>notifyUpdate</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">notifyUpdate</span>()</div>
 <div class="block">Notifies the <a href="MissionManager.html" title="class in com.csse3200.game.missions"><code>MissionManager</code></a> that this <a href="Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> has been completed if <a href="#isCompleted()"><code>isCompleted()</code></a>
- returns true, else do nothing. You should call this method whenever you update the state of your <a href="Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>.</div>
+ returns true, else do nothing. You should call this method whenever you update the state of your <a href="Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>.
+ If the event has already been triggered on the <a href="MissionManager.html" title="class in com.csse3200.game.missions"><code>MissionManager</code></a> for this <a href="Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a>, it will not
+ re-trigger the event, unless this method detects the <a href="Mission.html" title="class in com.csse3200.game.missions"><code>Mission</code></a> having become incomplete.</div>
 </section>
 </li>
 <li>

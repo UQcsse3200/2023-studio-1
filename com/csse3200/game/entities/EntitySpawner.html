@@ -89,9 +89,8 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int,java.util.function.Function,com.csse3200.game.entities.Entity,int,int,int,int,int)" class="member-name-link">EntitySpawner</a><wbr>(int&nbsp;maxSpawnCount,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;<a href="Entity.html" title="class in com.csse3200.game.entities">Entity</a>,<wbr><a href="Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;&nbsp;spawner,
- <a href="Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;player,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int,java.util.function.UnaryOperator,int,int,int,int,int)" class="member-name-link">EntitySpawner</a><wbr>(int&nbsp;maxSpawnCount,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/UnaryOperator.html" title="class or interface in java.util.function" class="external-link">UnaryOperator</a>&lt;<a href="Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;&nbsp;spawner,
  int&nbsp;growthRate,
  int&nbsp;initialSpawnCount,
  int&nbsp;spawnHour,
@@ -152,11 +151,10 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(int,java.util.function.Function,com.csse3200.game.entities.Entity,int,int,int,int,int)">
+<section class="detail" id="&lt;init&gt;(int,java.util.function.UnaryOperator,int,int,int,int,int)">
 <h3>EntitySpawner</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">EntitySpawner</span><wbr><span class="parameters">(int&nbsp;maxSpawnCount,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;<a href="Entity.html" title="class in com.csse3200.game.entities">Entity</a>,<wbr><a href="Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;&nbsp;spawner,
- <a href="Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;player,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/UnaryOperator.html" title="class or interface in java.util.function" class="external-link">UnaryOperator</a>&lt;<a href="Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;&nbsp;spawner,
  int&nbsp;growthRate,
  int&nbsp;initialSpawnCount,
  int&nbsp;spawnHour,
@@ -167,11 +165,10 @@ loadScripts(document, 'script');</script>
 <dt>Parameters:</dt>
 <dd><code>maxSpawnCount</code> - maximum number of entities that can be spawned in one cycle</dd>
 <dd><code>spawner</code> - method that creates the entity</dd>
-<dd><code>player</code> - the player entity of the game</dd>
 <dd><code>growthRate</code> - linear growth rate of number of entities spawned each spawn cycle</dd>
 <dd><code>initialSpawnCount</code> - the initial number of entities to be spawned</dd>
 <dd><code>spawnHour</code> - the hour that the entities will be spawned or the hour after which a
-                  randomGoal will be determined.</dd>
+                          randomGoal will be determined.</dd>
 <dd><code>randomRange</code> - max number of hours that the entity may spawn after spawnHour</dd>
 <dd><code>daysBetweenSpawns</code> - minimum number of times spawnHour must occur between spawns</dd>
 </dl>

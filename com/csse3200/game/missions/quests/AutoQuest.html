@@ -81,8 +81,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">AutoQuest</span>
 <span class="extends-implements">extends <a href="Quest.html" title="class in com.csse3200.game.missions.quests">Quest</a></span></div>
-<div class="block">AutoQuests are Quests that have no state or dynamic progress to track. They can be used just to trigger desired
- behaviours through the Reward.</div>
+<div class="block">AutoQuests are <a href="Quest.html" title="class in com.csse3200.game.missions.quests"><code>Quest</code></a>s whose <a href="../rewards/Reward.html" title="class in com.csse3200.game.missions.rewards"><code>Reward</code></a> is collected automatically, after a certain number of in-game
+ minutes.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -98,6 +98,13 @@ loadScripts(document, 'script');</script>
  <a href="../rewards/Reward.html" title="class in com.csse3200.game.missions.rewards">Reward</a>&nbsp;reward,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description)</code></div>
 <div class="col-last even-row-color">
+<div class="block">Creates an <a href="AutoQuest.html" title="class in com.csse3200.game.missions.quests"><code>AutoQuest</code></a>, whose <a href="../rewards/Reward.html" title="class in com.csse3200.game.missions.rewards"><code>Reward</code></a> will be collected in 1 minute.</div>
+</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.String,com.csse3200.game.missions.rewards.Reward,java.lang.String,int)" class="member-name-link">AutoQuest</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="../rewards/Reward.html" title="class in com.csse3200.game.missions.rewards">Reward</a>&nbsp;reward,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description,
+ int&nbsp;collectDelay)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Creates an <a href="AutoQuest.html" title="class in com.csse3200.game.missions.quests"><code>AutoQuest</code></a></div>
 </div>
 </div>
@@ -122,7 +129,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getProgress()" class="member-name-link">getProgress</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Get's the <a href="AutoQuest.html" title="class in com.csse3200.game.missions.quests"><code>AutoQuest</code></a>'s progress.</div>
+<div class="block">Gets the <a href="AutoQuest.html" title="class in com.csse3200.game.missions.quests"><code>AutoQuest</code></a>'s progress.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getShortDescription()" class="member-name-link">getShortDescription</a>()</code></div>
@@ -154,10 +161,10 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.csse3200.game.missions.quests.Quest">Methods inherited from class&nbsp;com.csse3200.game.missions.quests.<a href="Quest.html" title="class in com.csse3200.game.missions.quests">Quest</a></h3>
-<code><a href="Quest.html#collectReward()">collectReward</a>, <a href="Quest.html#isExpired()">isExpired</a>, <a href="Quest.html#isMandatory()">isMandatory</a>, <a href="Quest.html#isRewardCollected()">isRewardCollected</a>, <a href="Quest.html#notifyUpdate()">notifyUpdate</a>, <a href="Quest.html#read(com.badlogic.gdx.utils.JsonValue)">read</a>, <a href="Quest.html#resetExpiry()">resetExpiry</a>, <a href="Quest.html#updateExpiry()">updateExpiry</a>, <a href="Quest.html#write(com.badlogic.gdx.utils.Json)">write</a></code></div>
+<code><a href="Quest.html#collectReward()">collectReward</a>, <a href="Quest.html#isExpired()">isExpired</a>, <a href="Quest.html#isMandatory()">isMandatory</a>, <a href="Quest.html#isRewardCollected()">isRewardCollected</a>, <a href="Quest.html#read(com.badlogic.gdx.utils.JsonValue)">read</a>, <a href="Quest.html#resetExpiry()">resetExpiry</a>, <a href="Quest.html#updateExpiry()">updateExpiry</a>, <a href="Quest.html#write(com.badlogic.gdx.utils.Json)">write</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.csse3200.game.missions.Mission">Methods inherited from class&nbsp;com.csse3200.game.missions.<a href="../Mission.html" title="class in com.csse3200.game.missions">Mission</a></h3>
-<code><a href="../Mission.html#getName()">getName</a></code></div>
+<code><a href="../Mission.html#getName()">getName</a>, <a href="../Mission.html#notifyUpdate()">notifyUpdate</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -178,12 +185,29 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">AutoQuest</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="../rewards/Reward.html" title="class in com.csse3200.game.missions.rewards">Reward</a>&nbsp;reward,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description)</span></div>
+<div class="block">Creates an <a href="AutoQuest.html" title="class in com.csse3200.game.missions.quests"><code>AutoQuest</code></a>, whose <a href="../rewards/Reward.html" title="class in com.csse3200.game.missions.rewards"><code>Reward</code></a> will be collected in 1 minute.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - - name of the AutoQuest</dd>
+<dd><code>reward</code> - - the <a href="../rewards/Reward.html" title="class in com.csse3200.game.missions.rewards"><code>Reward</code></a> to be collected</dd>
+<dd><code>description</code> - - description of the AutoQuest</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(java.lang.String,com.csse3200.game.missions.rewards.Reward,java.lang.String,int)">
+<h3>AutoQuest</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">AutoQuest</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="../rewards/Reward.html" title="class in com.csse3200.game.missions.rewards">Reward</a>&nbsp;reward,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description,
+ int&nbsp;collectDelay)</span></div>
 <div class="block">Creates an <a href="AutoQuest.html" title="class in com.csse3200.game.missions.quests"><code>AutoQuest</code></a></div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>name</code> - - name of the AutoQuest</dd>
 <dd><code>reward</code> - - the <a href="../rewards/Reward.html" title="class in com.csse3200.game.missions.rewards"><code>Reward</code></a> to be collected</dd>
 <dd><code>description</code> - - description of the AutoQuest</dd>
+<dd><code>collectDelay</code> - - the number of minutes before this <a href="AutoQuest.html" title="class in com.csse3200.game.missions.quests"><code>AutoQuest</code></a>'s <a href="../rewards/Reward.html" title="class in com.csse3200.game.missions.rewards"><code>Reward</code></a> is to be collected</dd>
 </dl>
 </section>
 </li>
@@ -267,7 +291,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getProgress()">
 <h3>getProgress</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">getProgress</span>()</div>
-<div class="block">Get's the <a href="AutoQuest.html" title="class in com.csse3200.game.missions.quests"><code>AutoQuest</code></a>'s progress.</div>
+<div class="block">Gets the <a href="AutoQuest.html" title="class in com.csse3200.game.missions.quests"><code>AutoQuest</code></a>'s progress.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../Mission.html#getProgress()">getProgress</a></code>&nbsp;in class&nbsp;<code><a href="../Mission.html" title="class in com.csse3200.game.missions">Mission</a></code></dd>

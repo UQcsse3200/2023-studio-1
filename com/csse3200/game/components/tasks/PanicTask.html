@@ -150,8 +150,13 @@ implements <a href="../../ai/tasks/PriorityTask.html" title="interface in com.cs
 <div class="block">Stops the panic task and the associated movement task.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#triggerActivePriority()" class="member-name-link">triggerActivePriority</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the priority of the task to the active priority when triggered by an event.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Updates the panic task by checking if movement has finished, and if so, restarting the movement task.</div>
 </div>
 </div>
@@ -159,7 +164,7 @@ implements <a href="../../ai/tasks/PriorityTask.html" title="interface in com.cs
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.csse3200.game.ai.tasks.TimedTask">Methods inherited from class&nbsp;com.csse3200.game.ai.tasks.<a href="../../ai/tasks/TimedTask.html" title="class in com.csse3200.game.ai.tasks">TimedTask</a></h3>
-<code><a href="../../ai/tasks/TimedTask.html#create(com.csse3200.game.ai.tasks.TaskRunner)">create</a>, <a href="../../ai/tasks/TimedTask.html#getPriority()">getPriority</a>, <a href="../../ai/tasks/TimedTask.html#triggerActivePriority()">triggerActivePriority</a></code></div>
+<code><a href="../../ai/tasks/TimedTask.html#create(com.csse3200.game.ai.tasks.TaskRunner)">create</a>, <a href="../../ai/tasks/TimedTask.html#getPriority()">getPriority</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.csse3200.game.ai.tasks.DefaultTask">Methods inherited from class&nbsp;com.csse3200.game.ai.tasks.<a href="../../ai/tasks/DefaultTask.html" title="class in com.csse3200.game.ai.tasks">DefaultTask</a></h3>
 <code><a href="../../ai/tasks/DefaultTask.html#getStatus()">getStatus</a></code></div>
@@ -220,6 +225,18 @@ implements <a href="../../ai/tasks/PriorityTask.html" title="interface in com.cs
 <dd><code><a href="../../ai/tasks/Task.html#start()">start</a></code>&nbsp;in interface&nbsp;<code><a href="../../ai/tasks/Task.html" title="interface in com.csse3200.game.ai.tasks">Task</a></code></dd>
 <dt>Overrides:</dt>
 <dd><code><a href="../../ai/tasks/TimedTask.html#start()">start</a></code>&nbsp;in class&nbsp;<code><a href="../../ai/tasks/TimedTask.html" title="class in com.csse3200.game.ai.tasks">TimedTask</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="triggerActivePriority()">
+<h3>triggerActivePriority</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">triggerActivePriority</span>()</div>
+<div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="../../ai/tasks/TimedTask.html#triggerActivePriority()">TimedTask</a></code></span></div>
+<div class="block">Sets the priority of the task to the active priority when triggered by an event.</div>
+<dl class="notes">
+<dt>Overrides:</dt>
+<dd><code><a href="../../ai/tasks/TimedTask.html#triggerActivePriority()">triggerActivePriority</a></code>&nbsp;in class&nbsp;<code><a href="../../ai/tasks/TimedTask.html" title="class in com.csse3200.game.ai.tasks">TimedTask</a></code></dd>
 </dl>
 </section>
 </li>
