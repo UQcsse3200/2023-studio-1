@@ -52,7 +52,6 @@ public class TimedTask extends DefaultTask implements PriorityTask {
     @Override
     public void start() {
         super.start();
-        runningTime = 0f;
     }
 
     /**
@@ -60,6 +59,7 @@ public class TimedTask extends DefaultTask implements PriorityTask {
      */
     public void triggerActivePriority() {
         this.priority = activePriority;
+        runningTime = 0f;
     }
 
     /**

@@ -28,7 +28,7 @@ class OxygenLevelQuestTest {
         ServiceLocator.registerMissionManager(new MissionManager());
         ServiceLocator.registerPlanetOxygenService(new PlanetOxygenService());
         ServiceLocator.registerEntityService(new EntityService());
-        ServiceLocator.getPlanetOxygenService().removeOxygen(100);
+        ServiceLocator.getPlanetOxygenService().removeOxygen(1000);
 
         r1 = mock(Reward.class);
         r2 = mock(Reward.class);
@@ -105,7 +105,7 @@ class OxygenLevelQuestTest {
                 assertFalse(OLQuest7.isCompleted());
             }
             assertFalse(OLQuest8.isCompleted());
-            ServiceLocator.getPlanetOxygenService().addOxygen(10);
+            ServiceLocator.getPlanetOxygenService().addOxygen(100);
             ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
         }
         assertTrue(OLQuest1.isCompleted());
