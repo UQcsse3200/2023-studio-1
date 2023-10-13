@@ -10,10 +10,10 @@ public class ParticleEffectComponent extends Component {
 
 	private ParticleEffectPool.PooledEffect effect;
 	private ParticleService.ParticleEffectType effectType;
-	private boolean isActive;
+	private boolean active;
 
 	public ParticleEffectComponent() {
-		isActive = false;
+		active = false;
 	}
 
 	@Override
@@ -26,12 +26,12 @@ public class ParticleEffectComponent extends Component {
 
 	public void render(SpriteBatch batch, float delta) {
 		// Don't render if not active
-		if (!isActive) {
+		if (!isActive()) {
 			return;
 		}
 		// If effect was active and now is complete
 		if (effect.isComplete()) {
-			isActive = false;
+			active = false;
 			effect.free();
 			effect = null;
 		} else {
@@ -42,10 +42,10 @@ public class ParticleEffectComponent extends Component {
 
 	public void startEffect(ParticleService.ParticleEffectType effectType) {
 		// If effect is still going on, stop it for new effect
-		if (isActive) {
+		if (isActive()) {
 			effect.free();
 		}
-		isActive = true;
+		active = true;
 		this.effectType = effectType;
 		effect = ServiceLocator.getParticleService().getEffect(effectType);
 		effect.setPosition(entity.getCenterPosition().x, entity.getCenterPosition().y);
@@ -54,16 +54,16 @@ public class ParticleEffectComponent extends Component {
 	}
 
 	public void stopEffect(ParticleService.ParticleEffectType effectType) {
-		if (this.effectType != effectType) {
+		if (!isActive() || this.effectType != effectType) {
 			return;
 		}
-		isActive = false;
+		active = false;
 		effect.free();
 		effect = null;
 	}
 
 	public boolean isActive() {
-		return isActive;
+		return active;
 	}
 
 	public ParticleService.ParticleEffectType getEffectType() {
@@ -74,6 +74,7 @@ public class ParticleEffectComponent extends Component {
 	public void dispose() {
 		super.dispose();
 		if (effect != null) {
+			active = false;
 			effect.free();
 			effect = null;
 		}
