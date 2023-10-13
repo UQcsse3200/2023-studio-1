@@ -160,8 +160,8 @@ public class InventoryDisplay extends UIComponent {
 			}
 
 		}
-		//dnd = new DragAndDrop();
-		//setDragItems(actors, map);
+		dnd = new DragAndDrop();
+		setDragItems(actors, map);
 	}
 
 	/**
@@ -203,7 +203,7 @@ public class InventoryDisplay extends UIComponent {
 
 					@Override
 					public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-						return false;
+						return true;
 					}
 
 					@Override
@@ -306,6 +306,7 @@ public class InventoryDisplay extends UIComponent {
 	public void refreshInventory() {
 		this.inventory = entity.getComponent(InventoryComponent.class);
 		updateInventory();
+		inventoryDisplayManager.addTargets();
 		if (this.toolbar) {
 			entity.getEvents().trigger("updateToolbar");
 		}

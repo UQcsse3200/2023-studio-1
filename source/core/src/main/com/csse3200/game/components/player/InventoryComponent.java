@@ -434,20 +434,14 @@ public class InventoryComponent extends Component {
                 this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(), 0));
         return true;
     }
-    public boolean removeAll(Entity item) {
+    public void removeAll(Entity item) {
         if(item.getType() != EntityType.ITEM) {
             logger.info("To be removed Entity is not an item");
-            return false;
+            return;
         }
-        if (this.itemCount.get(item.getComponent(ItemComponent.class).getItemName()) == 0) {
-            return false;
+        while ((this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(),0) > 0)) {
+            removeItem(item);
         }
-        else {
-            while ((this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(),0) > 0)) {
-                removeItem(item);
-            }
-        }
-        return true;
     }
 
     /**

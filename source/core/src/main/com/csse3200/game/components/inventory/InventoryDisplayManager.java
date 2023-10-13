@@ -21,7 +21,6 @@ public class InventoryDisplayManager {
     private final Stage stage;
 
     private static final Logger logger = LoggerFactory.getLogger(InventoryDisplayManager.class);
-    private DragAndDrop dnd;
 
     /**
      * Initialise the Inventory Display Manager
@@ -60,7 +59,7 @@ public class InventoryDisplayManager {
      * Update the position of the displays
      */
     public void updateDisplays() {
-        dnd = new DragAndDrop();
+
         List<InventoryDisplay> openInventoryDisplays = inventoryDisplays.stream()
                 .filter(InventoryDisplay::isOpen)
                 .toList();
@@ -76,8 +75,8 @@ public class InventoryDisplayManager {
             InventoryDisplay displayTwo = openInventoryDisplays.get(1);
             displayTwo.refreshInventory();
             displayOne.refreshInventory();
-            setDragAndDrop(displayOne,displayTwo);
-
+            addTarget(displayTwo, displayOne);
+            addTarget(displayOne, displayTwo);
             float totalHeight = displayOne.getWindow().getHeight() + displayTwo.getWindow().getHeight();
 
             float yOne = (stage.getHeight() - totalHeight - 50) / 2;
@@ -88,129 +87,68 @@ public class InventoryDisplayManager {
         }
     }
 
-    public void setDragAndDrop(InventoryDisplay d1, InventoryDisplay d2) {
-        //System.out.println(d1.getIndexes().size());
-        d1.getDnd().clear();
-        d2.getDnd().clear();
-        //System.out.println(((Table) (d2.getWindow().getCells().get(0).getActor())).getCells());
-        ArrayList<Actor> allActors = new ArrayList<>();
-        allActors.addAll(d1.getActors());
-        allActors.addAll(d2.getActors());
-
-        Map<Stack, ItemSlot> map = new HashMap<>();
-        map.putAll(d1.getMap());
-        map.putAll(d2.getMap());
-        Map<ItemSlot,Integer> indexes = new HashMap<>();
-        indexes.putAll(d1.getIndexes());
-        indexes.putAll(d2.getIndexes());
-        //System.out.println(allActors);
-
-        addDragActors(allActors, map);
-
-        ArrayList<ItemSlot> slots = new ArrayList<>();
-        slots.addAll(d1.getSlots());
-        slots.addAll(d2.getSlots());
-
-        int i = 0;
-        for (ItemSlot slot: slots)  {
-                dnd.addTarget(new DragAndDrop.Target(slot) {
-                    final InventoryComponent slotInventory = d1.getIndexes().get(slot) == null ? d2.getInventory() : d1.getInventory();
-                    Stack s;
+        public void addTarget(InventoryDisplay d1, InventoryDisplay d2) {
+            final InventoryComponent slotInventory = d2.getInventory();
+            final InventoryComponent sourceInventory = d1.getInventory();
+            ArrayList<ItemSlot> slots = d2.getSlots();
+            DragAndDrop d = d1.getDnd();
+            for (ItemSlot slot: slots) {
+                d.addTarget(new DragAndDrop.Target(slot) {
 
                     @Override
                     public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                        //System.out.println("Dragg");
                         return true;
                     }
 
                     @Override
                     public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                        System.out.println(d1.getMap().size());
-                        System.out.println(d2.getMap().size());
-                        System.out.println(map.get(source.getActor()));
-                        InventoryDisplay sourceInventory = d1.getMap().get((Stack) source.getActor()) == null ? d2 : d1;
-                        System.out.println(sourceInventory == d1 ? "d1":"d2");
-                        ItemSlot sourceSlot = map.get(( (Stack) source.getActor()));
-                        sourceSlot.setDraggable(slot.getDraggable());
-                        slot.setDraggable((Stack) source.getActor());
-                        /*Actor[] stackors = ((Stack) payload.getDragActor()).getChildren().toArray();
-                        Stack s = new Stack();
-                        Arrays.stream(stackors).forEach(s::add);*/
+                        Stack sourceActor = (Stack) source.getActor();
+                        ItemSlot sourceSlot = d1.getMap().get(sourceActor);
+                        d1.getMap().get(sourceActor).setDraggable(slot.getDraggable());
+                        slot.setDraggable(sourceActor);
+                        Entity item = sourceInventory.getItem(d1.getIndexes().get(d1.getMap().get(sourceActor)));
+                        int count = sourceInventory.getItemCount(item);
 
+                        // gets slot inventory's map then puts the dragged item with destination slot
+                        slotInventory.getEntity().getComponent(InventoryDisplay.class).getMap().put((Stack) source.getActor(), slot);
 
-                        if (slotInventory == sourceInventory.getInventory()) {
-                            slotInventory.swapPosition(indexes.get(sourceSlot), indexes.get(slot));
-                            System.out.println(slotInventory.getItemPlace());
+                        slotInventory.getEntity().getComponent(InventoryDisplay.class).getMap().remove(slot.getDraggable());
 
-                            sourceInventory.getMap().put(slot.getDraggable(), sourceSlot);
-                            sourceInventory.getMap().put((Stack) payload.getDragActor(), slot);
+                        sourceInventory.removeAll(item);
+                        if (slotInventory.getItem(d2.getIndexes().get(slot)) != null) {
+                            Entity destItem = slotInventory.getItem(d2.getIndexes().get(slot));
+                            int destItemCount = slotInventory.getItemCount(destItem);
+                            int slotNum = d1.getIndexes().get(sourceSlot);
 
-                            sourceSlot.setDraggable(slot.getDraggable());
-                            slot.setDraggable((Stack) source.getActor());
-
-                            sourceInventory.getEntity().getEvents().trigger("updateToolbar");
-                            slotInventory.setHeldItem(slotInventory.getHeldIndex());
+                            sourceInventory.addMultipleItem(destItemCount,destItem,slotNum);
+                            slotInventory.removeAll(destItem);
                         }
-                        else {
-                            System.out.println(sourceInventory.getMap().get((Stack) source.getActor()));
-                            System.out.println(d2.getMap().get((Stack) source.getActor()));
-                            Entity item = sourceInventory.getInventory()
-                                    .getHeldItemsEntity()
-                                    .get(sourceInventory
-                                            .getInventory()
-                                            .getItemPlace()
-                                            .get(sourceInventory.getIndexes()
-                                                    .get(map
-                                                            .get((Stack) source.getActor()))));
-                            int count = sourceInventory.getInventory().getItemCount(item);
-                            s = (Stack) source.getActor();
 
-                            slotInventory.getEntity().getComponent(InventoryDisplay.class).getMap().put((Stack) source.getActor(), slot);
-                            System.out.println(d2.getMap().get((Stack) source.getActor()));
-                            slotInventory.getEntity().getComponent(InventoryDisplay.class).getMap().remove(slot.getDraggable());
-                            sourceInventory.getMap().put(slot.getDraggable(), sourceSlot);
-                            sourceInventory.getMap().remove((Stack) source.getActor());
-                            map.put(slot.getDraggable(), sourceSlot);
-                            map.put((Stack) source.getActor(), slot);
-                            sourceInventory.getInventory().removeAll(item);
-                            if (slotInventory.getItem(indexes.get(slot)) != null) {
-                                Entity destItem = slotInventory.getItem(indexes.get(slot));
-                                int destItemCount = slotInventory.getItemCount(destItem);
-                                int slotNum = indexes.get(sourceSlot);
-                                sourceInventory.getInventory().addMultipleItem(destItemCount,destItem,slotNum);
-                            }
-                            slotInventory.addMultipleItem(count, item,indexes.get(slot));
-                            System.out.println(slotInventory.getItemPlace());
+                        slotInventory.addMultipleItem(count, item, d2.getIndexes().get(slot));
 
+                        d1.refreshInventory();
+                        d2.refreshInventory();
 
-                        }
+                        addTarget(d2, d1);
+                        addTarget(d1, d2);
+
                     }
                 });
             }
         }
 
-        public void addDragActors(ArrayList<Actor> allActors, Map<Stack, ItemSlot> map){
-            for (Actor actor: allActors) {
-                dnd.addSource(new DragAndDrop.Source(actor) {
-                    final DragAndDrop.Payload payload = new DragAndDrop.Payload();
-                    @Override
-                    public DragAndDrop.Payload dragStart(InputEvent event, float x, float y, int pointer) {
-                        payload.setObject(getActor());
-                        payload.setDragActor(getActor());
-                        stage.addActor(getActor());
-                        dnd.setDragActorPosition(50, -getActor().getHeight() / 2);
+        public void addTargets() {
+            List<InventoryDisplay> openInventoryDisplays = inventoryDisplays.stream()
+                    .filter(InventoryDisplay::isOpen)
+                    .toList();
 
-                        return payload;
-                    }
-                    @Override
-                    public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
-                        if (target == null) {
-                            ItemSlot itemSlot = map.get((Stack) getActor());
-                            itemSlot.add(getActor());
-                        }
-                    }
-                });
+            if (openInventoryDisplays.size() == 2) {
+                InventoryDisplay displayOne = openInventoryDisplays.get(0);
+                InventoryDisplay displayTwo = openInventoryDisplays.get(1);
+                addTarget(displayTwo, displayOne);
+                addTarget(displayOne, displayTwo);
             }
         }
+
 
 }
