@@ -152,15 +152,9 @@ public class SaveGameTest {
   public void getClimate() {
     GameState state = new GameState();
     ClimateController mockClimate = mock(ClimateController.class);
-    when(mockClimate.getHumidity()).thenReturn(5f);
-    when(mockClimate.getTemperature()).thenReturn(5f);
     when(mockClimate.getCurrentWeatherEvent()).thenReturn(null);
-    mockClimate.setHumidity(5f);
-    mockClimate.setTemperature(5f);
     mockClimate.setCurrentWeatherEvent(null);
     state.setClimate(mockClimate);
-    assertEquals(mockClimate.getHumidity(),state.getClimate().getHumidity(), 0.1f);
-    assertEquals(mockClimate.getTemperature(),state.getClimate().getTemperature(), 0.1f);
     assertEquals(mockClimate.getCurrentWeatherEvent(),state.getClimate().getCurrentWeatherEvent());
   }
 

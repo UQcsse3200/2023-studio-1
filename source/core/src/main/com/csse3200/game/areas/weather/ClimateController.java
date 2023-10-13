@@ -16,31 +16,13 @@ public class ClimateController implements Json.Serializable {
 	private static final Logger logger = LoggerFactory.getLogger(ClimateController.class);
 
 	/**
-	 * In-game humidity
-	 */
-	private float humidity;
-	/**
-	 * In-game temperature
-	 */
-	private float temperature;
-
-	/**
-	 * Minimum temperature possible in the game without the effects of weather events
-	 */
-	private static final float MIN_TEMPERATURE = 0f;
-	/**
-	 * Maximum temperature possible in the game without the effects of weather events
-	 */
-	private static final float MAX_TEMPERATURE = 40f;
-
-	/**
 	 * The weather event that is currently occurring in the game
 	 */
 	private WeatherEvent currentWeatherEvent;
 	/**
 	 * List of all weather events that are either occurring or about to occur
 	 */
-	private static final ArrayList<WeatherEvent> weatherEvents = new ArrayList<>();
+	private final ArrayList<WeatherEvent> weatherEvents = new ArrayList<>();
 	/**
 	 * Event handler that other entities can use to trigger weather-based events
 	 */
@@ -55,22 +37,6 @@ public class ClimateController implements Json.Serializable {
 		ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateWeatherEvent);
 		ServiceLocator.getTimeService().getEvents().addListener("minuteUpdate", this::updateClimate);
 		updateClimate();
-	}
-
-	/**
-	 * Gets the current humidity of the game world
-	 *
-	 * @return current humidity value between 0 and 1
-	 */
-	public float getHumidity() {
-		return humidity;
-	}
-
-	/**
-	 * Sets the current humidity of the game world
-	 */
-	public void setHumidity(float humidity) {
-		this.humidity = humidity;
 	}
 
 	/**
@@ -117,24 +83,6 @@ public class ClimateController implements Json.Serializable {
 	}
 
 	/**
-	 * Gets the current temperature of the game world
-	 *
-	 * @return current game temperature
-	 */
-	public float getTemperature() {
-		return temperature;
-	}
-
-	/**
-	 * Sets the temperature to a given temperature
-	 *
-	 * @param temperature the temperature to set it to
-	 */
-	public void setTemperature(float temperature) {
-		this.temperature = temperature;
-	}
-
-	/**
 	 * Methods that is run every day to possibly generate a random weather event
 	 */
 	private void addDailyEvent() {
@@ -164,68 +112,7 @@ public class ClimateController implements Json.Serializable {
 	 * the weather event modifiers.
 	 */
 	private void updateClimate() {
-		float time = ServiceLocator.getTimeService().getDay() * 24
-				+ ServiceLocator.getTimeService().getHour()
-				+ (float) ServiceLocator.getTimeService().getMinute() / 60;
-
-
-		float humidityModifier = currentWeatherEvent == null ? 0 : currentWeatherEvent.getHumidityModifier();
-		float temperatureModifier = currentWeatherEvent == null ? 0 : currentWeatherEvent.getTemperatureModifier();
-
-		temperature = (MAX_TEMPERATURE - MIN_TEMPERATURE) * generateClimate(time, 4, 8, 0.24f, 2.8f)
-				+ MIN_TEMPERATURE + temperatureModifier;
-
-		humidity = generateClimate(time, -4, 8, 0.14f, 3.5f) + humidityModifier;
-	}
-
-	/**
-	 * Climate generation algorithm that is inspired by the Perlin noise algorithm. Credit to @Tom-Strooper for the Java
-	 * implementation.
-	 * Inspiration from this <a href="https://github.com/SebLague/Procedural-Landmass-Generation">GitHub Repo</a>
-	 *
-	 * @param time        in-game time value
-	 * @param offset      function offset
-	 * @param octaves     number of noise functions used in the calculation (must be greater than 0)
-	 * @param persistence how much each octave/function contributes to the noise generated
-	 * @param lacunarity  how much each octave increases in frequency
-	 * @return generated noise value used in calculating climate values
-	 */
-	private float generateClimate(
-			float time, float offset, int octaves, float persistence, float lacunarity) {
-		if (octaves <= 0) {
-			throw new IllegalArgumentException("Number of noise functions must be greater than 0");
-		}
-		float maxAmplitude = 0f;
-		float amplitude = 1.0f;
-		float frequency = 1.0f;
-
-		float temperatureNormalised = 0.0f;
-
-		for (int i = 0; i < octaves; i++) {
-			temperatureNormalised += amplitude * getClimateSin((time - offset) * frequency);
-			maxAmplitude += amplitude;
-
-			amplitude *= persistence;
-			frequency *= lacunarity;
-		}
-
-		// To avoid divide by zero
-		if (maxAmplitude == 0) {
-			return 0.5f;
-		}
-
-
-		return temperatureNormalised / maxAmplitude;
-	}
-
-	/**
-	 * Sin function used for calculating climate in the generateClimate() method
-	 *
-	 * @param x function variable
-	 * @return function result
-	 */
-	private float getClimateSin(float x) {
-		return 0.5f * MathUtils.sin((float) ((x - 6) * Math.PI / 12)) + 0.5f;
+		// TODO - Deal with weather system effects & lighting
 	}
 
 	/**
@@ -236,29 +123,36 @@ public class ClimateController implements Json.Serializable {
 		if (currentWeatherEvent != null) {
 			currentWeatherEvent.stopEffect();
 		}
-		currentWeatherEvent = null;
-		int priority = -1;
-		// Updates every weather event
+
+		// Update weather event durations
 		for (WeatherEvent event : weatherEvents) {
 			event.updateTime();
-			// Checks whether an event is active and is of higher priority
-			if (event.isActive() && event.getPriority() > priority) {
-				currentWeatherEvent = event;
-				priority = currentWeatherEvent.getPriority();
-				// If the event is expired, remove it from the list
-			}
 		}
+		// Remove inactive events
 		weatherEvents.removeIf(WeatherEvent::isExpired);
+
+		recalculateCurrentWeatherEvent();
+
 		if (currentWeatherEvent != null) {
 			currentWeatherEvent.startEffect();
 		}
 	}
 
+	private void recalculateCurrentWeatherEvent() {
+		currentWeatherEvent = null;
+		int priority = -1;
+		// Updates every weather event
+		for (WeatherEvent event : weatherEvents) {
+			// Checks whether an event is active and is of higher priority
+			if (event.isActive() && event.getPriority() > priority) {
+				currentWeatherEvent = event;
+				priority = currentWeatherEvent.getPriority();
+			}
+		}
+	}
 
 	@Override
 	public void write(Json json) {
-		json.writeValue("Temp", getTemperature());
-		json.writeValue("Humidity", getHumidity());
 		json.writeObjectStart("Events");
 		updateWeatherEvent();
 		for (WeatherEvent event : weatherEvents) {
@@ -272,24 +166,22 @@ public class ClimateController implements Json.Serializable {
 		ServiceLocator.getGameArea().getClimateController().setValues(jsonData);
 	}
 
-
 	public void setValues(JsonValue jsonData) {
-		temperature = jsonData.getFloat("Temp");
-		humidity = jsonData.getFloat("Humidity");
+		weatherEvents.clear();
 		jsonData = jsonData.get("Events");
-		jsonData.forEach(jsonValue -> {
-			if (jsonValue.get("Event") != null) {
+		if (jsonData.has("Event")) {
+			jsonData.forEach(jsonValue -> {
 				switch (jsonValue.getString("name")) {
 					case ("AcidShowerEvent") -> addWeatherEvent(new AcidShowerEvent(jsonValue.getInt("hoursUntil"),
-								jsonValue.getInt("duration"), jsonValue.getInt("priority"),
-								jsonValue.getFloat("severity")));
+							jsonValue.getInt("duration"), jsonValue.getInt("priority"),
+							jsonValue.getFloat("severity")));
 					case ("SolarSurgeEvent") -> addWeatherEvent(new SolarSurgeEvent(jsonValue.getInt("hoursUntil"),
-								jsonValue.getInt("duration"), jsonValue.getInt("priority"),
-								jsonValue.getFloat("severity")));
+							jsonValue.getInt("duration"), jsonValue.getInt("priority"),
+							jsonValue.getFloat("severity")));
 					default -> logger.error("Invalid weather event type while loading");
 				}
-			}
-		});
-		updateWeatherEvent();
+			});
+		}
+		recalculateCurrentWeatherEvent();
 	}
 }

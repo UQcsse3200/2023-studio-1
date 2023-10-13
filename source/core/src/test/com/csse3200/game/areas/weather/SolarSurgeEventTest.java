@@ -42,21 +42,4 @@ class SolarSurgeEventTest {
         assertTrue(solarSurgeEvent1.isActive());
     }
 
-    @Test
-    void testSolarSurgeEventGetHumidityModifier() {
-        assertEquals(-0.44f, solarSurgeEvent1.getHumidityModifier(), 0.00001);
-        assertEquals(-0.48f, solarSurgeEvent2.getHumidityModifier(), 0.00001);
-        assertEquals(-0.4f, solarSurgeEvent3.getHumidityModifier(), 0.00001);
-        assertEquals(-0.46f, solarSurgeEvent4.getHumidityModifier(), 0.00001);
-        assertEquals(-0.42f, solarSurgeEvent5.getHumidityModifier(), 0.00001);
-    }
-
-    @Test
-    void testSolarSurgeEventGetTemperatureModifier() {
-        assertEquals(33.0f, solarSurgeEvent1.getTemperatureModifier(), 0.00001);
-        assertEquals(36.0f, solarSurgeEvent2.getTemperatureModifier(), 0.00001);
-        assertEquals(30.0f, solarSurgeEvent3.getTemperatureModifier(), 0.00001);
-        assertEquals(34.5f, solarSurgeEvent4.getTemperatureModifier(), 0.00001);
-        assertEquals(31.5f, solarSurgeEvent5.getTemperatureModifier(), 0.00001);
-    }
 }
