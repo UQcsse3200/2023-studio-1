@@ -556,7 +556,7 @@ class ItemActionsTest {
         HungerComponent hunger = spy(new HungerComponent(50));
         player.addComponent(hunger);
         Entity food1 = new Entity(EntityType.ITEM).addComponent(new ItemActions())
-                .addComponent(new ItemComponent(name, ItemType.FOOD, null));
+                .addComponent(new ItemComponent(name, ItemType.FOOD, "images/tool_shovel.png"));
         food1.getComponent(ItemActions.class).eat(player);
         verify(hunger).increaseHungerLevel(any(Integer.class));
     }
@@ -566,11 +566,11 @@ class ItemActionsTest {
         HungerComponent hunger = spy(new HungerComponent(50));
         player.addComponent(hunger);
         Entity food1 = new Entity(EntityType.ITEM).addComponent(new ItemActions())
-                .addComponent(new ItemComponent("a large amount of wood", ItemType.CLUE_ITEM, null));
+                .addComponent(new ItemComponent("a large amount of wood", ItemType.CLUE_ITEM, "images/tool_shovel.png"));
         food1.getComponent(ItemActions.class).eat(player);
         verify(hunger, never()).increaseHungerLevel(any(Integer.class));
         Entity food2 = new Entity(EntityType.ITEM).addComponent(new ItemActions())
-                .addComponent(new ItemComponent("a large amount of wood", null, null));
+                .addComponent(new ItemComponent("a large amount of wood", null, "images/tool_shovel.png"));
         food2.getComponent(ItemActions.class).eat(player);
         verify(hunger, never()).increaseHungerLevel(any(Integer.class));
     }
