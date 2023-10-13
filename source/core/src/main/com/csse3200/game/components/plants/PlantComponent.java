@@ -319,10 +319,16 @@ public class PlantComponent extends Component {
     public void incrementOxygen() {
         if (currentGrowthLevel == GrowthStage.DECAYING.getValue() || currentGrowthLevel == GrowthStage.DEAD.getValue()) {
             ServiceLocator.getPlanetOxygenService().removeOxygen(10);
-        } else {
-            if (currentGrowthLevel == GrowthStage.ADULT.getValue() && Objects.equals(getPlantName(), "Atomic Algae")) {
+        } else if (currentGrowthLevel == GrowthStage.ADULT.getValue()) {
+            if (Objects.equals(getPlantName(), "Atomic Algae")) {
+                ServiceLocator.getPlanetOxygenService().addOxygen(20);
+            } else {
                 ServiceLocator.getPlanetOxygenService().addOxygen(10);
             }
+        } else if (currentGrowthLevel == GrowthStage.JUVENILE.getValue()) {
+            ServiceLocator.getPlanetOxygenService().addOxygen(5);
+        } else if (currentGrowthLevel < GrowthStage.JUVENILE.getValue()) {
+            ServiceLocator.getPlanetOxygenService().addOxygen(2);
         }
     }
 
