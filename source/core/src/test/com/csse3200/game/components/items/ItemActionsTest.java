@@ -2,11 +2,11 @@ package com.csse3200.game.components.items;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 import java.io.IOException;
 
+import com.csse3200.game.components.player.HungerComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.physics.components.ColliderComponent;
@@ -38,6 +38,9 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ArgumentsSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 // Setup fields and config were taken from GameAreaTest and the authors were co-authored to share credit for the work
 @ExtendWith(GameExtension.class)
@@ -545,5 +548,30 @@ class ItemActionsTest {
 
         Entity rod = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("FISHING_ROD", ItemType.FISHING_ROD, null));
         assertTrue(rod.getComponent(ItemActions.class).use(player, mousePos));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"Ear of Cosmic Cob", "Nightshade Berry", "Hammer Flower", "Aloe Vera Leaf", "Lave Eel", "French Fries"})
+    void testEat(String name) {
+        HungerComponent hunger = spy(new HungerComponent(50));
+        player.addComponent(hunger);
+        Entity food1 = new Entity(EntityType.ITEM).addComponent(new ItemActions())
+                .addComponent(new ItemComponent(name, ItemType.FOOD, null));
+        food1.getComponent(ItemActions.class).eat(player);
+        verify(hunger).increaseHungerLevel(any(Integer.class));
+    }
+
+    @Test
+    void notEat() {
+        HungerComponent hunger = spy(new HungerComponent(50));
+        player.addComponent(hunger);
+        Entity food1 = new Entity(EntityType.ITEM).addComponent(new ItemActions())
+                .addComponent(new ItemComponent("a large amount of wood", ItemType.CLUE_ITEM, null));
+        food1.getComponent(ItemActions.class).eat(player);
+        verify(hunger, never()).increaseHungerLevel(any(Integer.class));
+        Entity food2 = new Entity(EntityType.ITEM).addComponent(new ItemActions())
+                .addComponent(new ItemComponent("a large amount of wood", null, null));
+        food2.getComponent(ItemActions.class).eat(player);
+        verify(hunger, never()).increaseHungerLevel(any(Integer.class));
     }
 }
