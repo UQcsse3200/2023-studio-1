@@ -357,7 +357,9 @@ public class InventoryComponent extends Component {
      * @return boolean representing if the item was added successfully
      */
   public boolean addMultipleItem(int count, Entity item, int place) {
-      itemPlace.put(place, item.getComponent(ItemComponent.class).getItemName());
+      if (itemCount.get(item.getComponent(ItemComponent.class).getItemName()) == null) {
+        itemPlace.put(place, item.getComponent(ItemComponent.class).getItemName());
+      }
         for (int i = 0; i < count; i++) {
           addItem(item);
         }
