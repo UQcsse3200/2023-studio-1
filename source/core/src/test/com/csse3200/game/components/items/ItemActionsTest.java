@@ -6,10 +6,12 @@ import static org.mockito.Mockito.*;
 
 import java.io.IOException;
 
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.player.HungerComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.physics.components.ColliderComponent;
+import com.csse3200.game.services.PlayerHungerService;
 import com.csse3200.game.services.TimeService;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -553,8 +555,18 @@ class ItemActionsTest {
     @ParameterizedTest
     @ValueSource(strings = {"Ear of Cosmic Cob", "Nightshade Berry", "Hammer Flower", "Aloe Vera Leaf", "Lave Eel", "French Fries"})
     void testEat(String name) {
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+        ServiceLocator.registerEntityService(new EntityService());
+        ServiceLocator.registerRenderService(new RenderService());
+        ServiceLocator.registerPlayerHungerService(new PlayerHungerService());
+        GameArea area = mock(GameArea.class);
+        ServiceLocator.registerGameArea(area);
+        ServiceLocator.registerResourceService(mock(ResourceService.class));
+        FileLoader fl = new FileLoader();
+
         HungerComponent hunger = spy(new HungerComponent(50));
         player.addComponent(hunger);
+        player.addComponent(new CombatStatsComponent(1,1));
         Entity food1 = new Entity(EntityType.ITEM).addComponent(new ItemActions())
                 .addComponent(new ItemComponent(name, ItemType.FOOD, "images/tool_shovel.png"));
         food1.getComponent(ItemActions.class).eat(player);
@@ -563,6 +575,14 @@ class ItemActionsTest {
 
     @Test
     void notEat() {
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+        ServiceLocator.registerEntityService(new EntityService());
+        ServiceLocator.registerRenderService(new RenderService());
+        GameArea area = mock(GameArea.class);
+        ServiceLocator.registerGameArea(area);
+        ServiceLocator.registerResourceService(mock(ResourceService.class));
+        FileLoader fl = new FileLoader();
+
         HungerComponent hunger = spy(new HungerComponent(50));
         player.addComponent(hunger);
         Entity food1 = new Entity(EntityType.ITEM).addComponent(new ItemActions())
