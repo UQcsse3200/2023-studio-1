@@ -3,6 +3,7 @@ package com.csse3200.game.rendering;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.badlogic.gdx.graphics.Color;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,15 +39,16 @@ public class AnimationRenderComponent extends RenderComponent {
 
   private static final int DEFAULT_LAYER = 4;
   private static final Logger logger = LoggerFactory.getLogger(AnimationRenderComponent.class);
-  private final GameTime timeSource;
+  protected final GameTime timeSource;
   private final TextureAtlas atlas;
   private final Map<String, Animation<TextureRegion>> animations;
-  private Animation<TextureRegion> currentAnimation;
+  protected Animation<TextureRegion> currentAnimation;
   private String currentAnimationName;
-  private float animationPlayTime;
+  protected float animationPlayTime;
   private final float scaleFactor;
   private boolean animationPaused = false;
   private float animationPauseStart;
+  private BlinkComponent blinkComponent;
 
   /**
    * Create the component for a given texture atlas.
@@ -66,6 +68,12 @@ public class AnimationRenderComponent extends RenderComponent {
     this.animations = new HashMap<>(4);
     this.scaleFactor = scaleFactor;
     timeSource = ServiceLocator.getTimeSource();
+  }
+
+  @Override
+  public void create() {
+    super.create();
+    this.blinkComponent = entity.getComponent(BlinkComponent.class);
   }
 
   /**
@@ -205,7 +213,14 @@ public class AnimationRenderComponent extends RenderComponent {
                region.getRegionHeight() / this.scaleFactor
       );
       Vector2 scale = entity.getScale();
+
+      if (blinkComponent != null && blinkComponent.isBlinking()) {
+        batch.setColor(blinkComponent.getColor());
+      }
+
       batch.draw(region, pos.x, pos.y, scale.x, scale.y);
+      batch.setColor(Color.WHITE.cpy());
+
       animationPlayTime += timeSource.getDeltaTime();
   }
 
