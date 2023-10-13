@@ -150,7 +150,7 @@ public class PlaceableFactory {
 
     private static Entity makeCutsceneEntity() {
         AnimationRenderComponent animation = new AnimationRenderComponent(
-                ServiceLocator.getResourceService().getAsset("images/player_fishing.atlas", TextureAtlas.class));
+                ServiceLocator.getResourceService().getAsset("images/player_fishing.atlas", TextureAtlas.class), 16f);
         animation.addAnimation("cast_left", 0.1f, Animation.PlayMode.NORMAL);
         return new Entity().addComponent(animation);
     }
