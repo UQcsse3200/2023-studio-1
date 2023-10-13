@@ -69,6 +69,10 @@ public class ParticleEffectComponent extends Component {
 	@Override
 	public void dispose() {
 		super.dispose();
+		if (effect != null) {
+			effect.free();
+			effect = null;
+		}
 		if (ServiceLocator.getParticleService() != null) {
 			ServiceLocator.getParticleService().removeComponent(this);
 		}
