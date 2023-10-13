@@ -91,7 +91,7 @@ public class ClimateController implements Json.Serializable {
 		if (eventPossibility <= 0.25) {
 			return;
 		}
-		int eventGenerated = MathUtils.random(0, 1);
+		int eventGenerated = MathUtils.random(0, 3);
 		int numHoursUntil = MathUtils.random(1, 6);
 		int duration = MathUtils.random(2, 5);
 		int priority = MathUtils.random(0, 3);
@@ -99,7 +99,9 @@ public class ClimateController implements Json.Serializable {
 		WeatherEvent event;
 		switch (eventGenerated) {
 			case 0 -> event = new AcidShowerEvent(numHoursUntil, duration, priority, severity);
-			case 1 -> event = new SolarSurgeEvent(numHoursUntil, duration, priority, severity);
+			case 1 -> event = new RainStormEvent(numHoursUntil, duration, priority, severity);
+			case 2 -> event = new BlizzardEvent(numHoursUntil, duration, priority, severity);
+			case 3 -> event = new SolarSurgeEvent(numHoursUntil, duration, priority, severity);
 			default -> {
 				return;
 			}
