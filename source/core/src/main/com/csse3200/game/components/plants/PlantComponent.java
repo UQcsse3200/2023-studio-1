@@ -303,10 +303,12 @@ public class PlantComponent extends Component {
         int min = ServiceLocator.getTimeService().getMinute();
 
         if (min % 20 == 0) {
+            incrementOxygen();
+        }
+        if (min % 5 == 0) {
             increaseCurrentGrowthLevel();
             updateGrowthStage();
             updateMaxHealth();
-            incrementOxygen();
         }
 
         // Handle digestion functionality.
@@ -671,24 +673,31 @@ public class PlantComponent extends Component {
      * If the plant is already decaying, do nothing.
      */
     void increaseCurrentGrowthLevel() {
-        int growthRate = (int)(this.cropTile.getGrowthRate(this.idealWaterLevel) * 10);
+        int min = ServiceLocator.getTimeService().getMinute();
+
+        int growthRate = (int)(this.cropTile.getGrowthRate(this.idealWaterLevel) * 5);
         float waterLevel = cropTile.getWaterContent();
         // Check if the growth rate is negative
         // That the plant is not decaying
         if ((growthRate < 0) && !isDecay() && (getGrowthStage().getValue() <= GrowthStage.ADULT.getValue())) {
-            increasePlantHealth(-1);
+            if (min % 20 == 0) {
+                increasePlantHealth(-2);
+            }
+
         } else if ( getGrowthStage().getValue() < GrowthStage.ADULT.getValue()
                 && !isDecay()
                 && waterLevel > 0) {
             this.currentGrowthLevel += growthRate;
-            if (cropTile.isFertilised()) {
-                increasePlantHealth(5);
-            } else {
-                increasePlantHealth(2);
-            }
 
-        } else if (waterLevel == 0) {
-            increasePlantHealth(-1);
+            if (min % 20 == 0) {
+                if (cropTile.isFertilised()) {
+                    increasePlantHealth(5);
+                } else {
+                    increasePlantHealth(2);
+                }
+            }
+        } else if ((min % 20 == 0) && (waterLevel == 0)) {
+            increasePlantHealth(-2);
         }
     }
 
@@ -746,6 +755,7 @@ public class PlantComponent extends Component {
 
         // This is such a cumbersome way of doing this, but there is an annoying bug that
         // occurs when the PhysicsComponent is disposed of.
+        aoeAnimations.dispose();
 
         entity.getComponent(PlantAreaOfEffectComponent.class).dispose();
 
@@ -761,8 +771,6 @@ public class PlantComponent extends Component {
         plantDestroyed = true;
 
         ServiceLocator.getGameArea().removeEntity(entity);
-
-
     }
 
 

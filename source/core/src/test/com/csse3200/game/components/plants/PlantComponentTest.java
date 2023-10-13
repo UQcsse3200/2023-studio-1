@@ -9,6 +9,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.csse3200.game.services.TimeService;
 import com.csse3200.game.services.plants.PlantInfoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -49,6 +50,9 @@ class PlantComponentTest {
 
     @BeforeEach
     void beforeEach() {
+        ServiceLocator.registerTimeService(mock(TimeService.class));
+        when(ServiceLocator.getTimeService().getMinute()).thenReturn(20);
+
         mockCropTile = mock(CropTileComponent.class);
         mockEntity = mock(Entity.class);
         mockTextureComponent = mock(DynamicTextureRenderComponent.class);
@@ -191,7 +195,7 @@ class PlantComponentTest {
         when(mockCropTile.getGrowthRate(1.0f)).thenReturn(-0.5);
         testPlant.setGrowthStage(PlantComponent.GrowthStage.ADULT.getValue());
         testPlant.increaseCurrentGrowthLevel();
-        assertEquals(health - 1, testPlant.getPlantHealth());
+        assertEquals(health - 2, testPlant.getPlantHealth());
     }
 
     @Test

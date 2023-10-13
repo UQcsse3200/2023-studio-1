@@ -4,6 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
+
+import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.components.combat.CombatStatsComponent;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.services.PlayerHungerService;
@@ -17,16 +21,23 @@ class HungerComponentTest {
     HungerComponent hungerComponent;
     PlayerHungerService mockPlayerHungerService;
     EventHandler mockEventHandler;
+
     int INITIAL_HUNGER_LEVEL = 30;
     @BeforeEach
     void beforeEach() {
+        ServiceLocator.registerGameArea(mock(GameArea.class));
+
         hungerComponent = new HungerComponent(INITIAL_HUNGER_LEVEL);
 
         mockPlayerHungerService = mock(PlayerHungerService.class);
+
         ServiceLocator.registerPlayerHungerService(mockPlayerHungerService);
 
         mockEventHandler = mock(EventHandler.class);
+
         when(ServiceLocator.getPlayerHungerService().getEvents()).thenReturn(mockEventHandler);
+        when(ServiceLocator.getGameArea().getPlayer()).thenReturn(mock(Entity.class));
+        when(ServiceLocator.getGameArea().getPlayer().getComponent(CombatStatsComponent.class)).thenReturn(mock(CombatStatsComponent.class));
     }
 
     @Test

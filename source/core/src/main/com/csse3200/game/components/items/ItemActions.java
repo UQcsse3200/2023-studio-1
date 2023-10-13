@@ -269,6 +269,7 @@ public class ItemActions extends Component {
       switch (type.getItemName()) {
         case "Ear of Cosmic Cob":
           player.getComponent(HungerComponent.class).increaseHungerLevel(-10);
+          player.getComponent(CombatStatsComponent.class).addHealth(5);
           return;
         case "Nightshade Berry":
           player.getComponent(CombatStatsComponent.class).addHealth(-10);
@@ -276,6 +277,7 @@ public class ItemActions extends Component {
           return;
         case "Hammer Flower":
           player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
+          player.getComponent(CombatStatsComponent.class).addHealth(5);
           return;
         case "Aloe Vera Leaf":
           player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
@@ -286,6 +288,7 @@ public class ItemActions extends Component {
           player.getComponent(CombatStatsComponent.class).addHealth(100);
         case "Salmon":
           player.getComponent(HungerComponent.class).increaseHungerLevel(-10);
+          player.getComponent(CombatStatsComponent.class).addHealth(5);
         default:
           player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
       }
@@ -299,6 +302,8 @@ public class ItemActions extends Component {
     } else if (type.getItemType() == ItemType.MILK) {
       player.getComponent(PlayerActions.class).setDamageMultiplier(5f);
       player.getEvents().scheduleEvent(5f, "setDamageMultiplier", 1f);
+      player.getComponent(CombatStatsComponent.class).addHealth(5);
+      player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
     }
 
   }

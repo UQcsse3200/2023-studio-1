@@ -2,6 +2,7 @@ package com.csse3200.game.components.player;
 
 import com.csse3200.game.components.combat.CombatStatsComponent;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.ServiceLocator;
 
 public class HungerComponent extends Component {
@@ -53,5 +54,10 @@ public class HungerComponent extends Component {
         }
         // Inform the PlayerHungerService that the hunger has been updated
         ServiceLocator.getPlayerHungerService().getEvents().trigger("hungerUpdate", hungerLevel);
+
+        // If the players hunger level is below 50%, then the player gains health
+        if (hungerLevel < 50) {
+            ServiceLocator.getGameArea().getPlayer().getComponent(CombatStatsComponent.class).addHealth(3);
+        }
     }
 }
