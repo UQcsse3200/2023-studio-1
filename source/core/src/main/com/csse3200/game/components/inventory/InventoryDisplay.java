@@ -46,6 +46,7 @@ public class InventoryDisplay extends UIComponent {
 	private final Map<Integer, TextTooltip> tooltips = new HashMap<>();
 	private final InstantTooltipManager instantTooltipManager = new InstantTooltipManager();
 	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(InventoryDisplay.class);
+	private Image bin = null;
 
 	/**
 	 * Constructor for class
@@ -115,8 +116,8 @@ public class InventoryDisplay extends UIComponent {
 		}
 		table.row();
 		if (entity.getType() == EntityType.PLAYER) {
-			Image deleteSlot = new Image(ServiceLocator.getResourceService().getAsset("images/bin.png", Texture.class));
-			table.add(deleteSlot).colspan(10);
+			bin = new Image(ServiceLocator.getResourceService().getAsset("images/bin.png", Texture.class));
+			table.add(bin).colspan(10);
 		}
 
 		// Create a window for the inventory using the skin
@@ -244,8 +245,7 @@ public class InventoryDisplay extends UIComponent {
 						ItemSlot itemSlot = map.get((Stack) source.getActor());
 						itemSlot.removeActor(source.getActor());
 						itemSlot.add(source.getActor());
-						ItemSlot sourceSlot = map.get(((Stack) source.getActor()));
-						inventory.removeItem(inventory.getHeldItemsEntity().get(inventory.getItemPlace().get(indexes.get(sourceSlot))));
+						inventory.removeItem(inventory.getHeldItemsEntity().get(inventory.getItemPlace().get(indexes.get(itemSlot))));
 						addTooltips();
 					}
 				});
@@ -261,8 +261,8 @@ public class InventoryDisplay extends UIComponent {
 		return map;
 	}
 
-	public ArrayList<Actor> getActors() {
-		return actors;
+	public Image getBin() {
+		return bin;
 	}
 
 	public ArrayList<ItemSlot> getSlots() {

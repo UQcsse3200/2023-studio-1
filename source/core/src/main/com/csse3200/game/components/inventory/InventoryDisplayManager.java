@@ -1,16 +1,11 @@
 package com.csse3200.game.components.inventory;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,7 +62,7 @@ public class InventoryDisplayManager {
         int displayCount = openInventoryDisplays.size();
 
         if (displayCount == 1) {
-            Window window = (Window) openInventoryDisplays.get(0).getWindow();
+            Window window = openInventoryDisplays.get(0).getWindow();
             window.setPosition(stage.getWidth() / 2 - window.getWidth() / 2, stage.getHeight() / 2 - window.getHeight() / 2);
         }
         else if (displayCount == 2){
@@ -91,9 +86,9 @@ public class InventoryDisplayManager {
             final InventoryComponent slotInventory = d2.getInventory();
             final InventoryComponent sourceInventory = d1.getInventory();
             ArrayList<ItemSlot> slots = d2.getSlots();
-            DragAndDrop d = d1.getDnd();
+            DragAndDrop dnd = d1.getDnd();
             for (ItemSlot slot: slots) {
-                d.addTarget(new DragAndDrop.Target(slot) {
+                dnd.addTarget(new DragAndDrop.Target(slot) {
 
                     @Override
                     public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
@@ -132,6 +127,25 @@ public class InventoryDisplayManager {
                         addTarget(d2, d1);
                         addTarget(d1, d2);
 
+                    }
+                });
+            }
+            if (d2.getBin() != null) {
+                dnd.addTarget(new DragAndDrop.Target(d2.getBin()) {
+                    @Override
+                    public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+                        return true;
+                    }
+
+                    @Override
+                    public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+                        ItemSlot itemSlot = d1.getMap().get((Stack) source.getActor());
+                        itemSlot.removeActor(source.getActor());
+                        itemSlot.add(source.getActor());
+                        sourceInventory.removeItem(sourceInventory.getHeldItemsEntity().get(sourceInventory.getItemPlace().get(d1.getIndexes().get(itemSlot))));
+                        d1.refreshInventory();
+                        d1.addTooltips();
+                        System.out.println(d1.getInventory().getItemCount());
                     }
                 });
             }
