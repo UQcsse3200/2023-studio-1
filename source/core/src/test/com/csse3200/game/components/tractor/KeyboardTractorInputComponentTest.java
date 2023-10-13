@@ -62,6 +62,18 @@ public class KeyboardTractorInputComponentTest {
         assertTrue(inputComponent.keyDown(Input.Keys.NUM_1));
         assertTrue(inputComponent.keyDown(Input.Keys.NUM_2));
         assertTrue(inputComponent.keyDown(Input.Keys.NUM_3));
+
+        doReturn(true).when(tractor.getComponent(TractorActions.class)).isMuted();
+        assertFalse(inputComponent.keyDown(1));
+        assertFalse(inputComponent.keyDown(Input.Keys.W));
+        assertFalse(inputComponent.keyDown(Input.Keys.A));
+        assertFalse(inputComponent.keyDown(Input.Keys.S));
+        assertFalse(inputComponent.keyDown(Input.Keys.D));
+        assertFalse(inputComponent.keyDown(Input.Keys.F));
+        assertFalse(inputComponent.keyDown(Input.Keys.T));
+        assertFalse(inputComponent.keyDown(Input.Keys.NUM_1));
+        assertFalse(inputComponent.keyDown(Input.Keys.NUM_2));
+        assertFalse(inputComponent.keyDown(Input.Keys.NUM_3));
     }
 
     @Test
@@ -80,5 +92,12 @@ public class KeyboardTractorInputComponentTest {
         assertTrue(inputComponent.keyUp(Input.Keys.A));
         assertTrue(inputComponent.keyUp(Input.Keys.S));
         assertTrue(inputComponent.keyUp(Input.Keys.D));
+
+        doReturn(true).when(tractor.getComponent(TractorActions.class)).isMuted();
+        assertFalse(inputComponent.keyUp(1));
+        assertFalse(inputComponent.keyUp(Input.Keys.W));
+        assertFalse(inputComponent.keyUp(Input.Keys.A));
+        assertFalse(inputComponent.keyUp(Input.Keys.S));
+        assertFalse(inputComponent.keyUp(Input.Keys.D));
     }
 }
