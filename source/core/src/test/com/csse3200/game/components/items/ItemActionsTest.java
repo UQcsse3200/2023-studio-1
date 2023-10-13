@@ -6,7 +6,7 @@ import static org.mockito.Mockito.*;
 
 import java.io.IOException;
 
-import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.combat.CombatStatsComponent;
 import com.csse3200.game.components.player.HungerComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.missions.MissionManager;
