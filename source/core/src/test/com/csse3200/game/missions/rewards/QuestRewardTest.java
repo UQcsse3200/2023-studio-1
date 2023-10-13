@@ -14,9 +14,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -24,21 +24,21 @@ class QuestRewardTest {
 
     private QuestReward questReward1, questReward2, questReward3, questReward4;
 
-    private List<Quest> selectableQuests, activeQuests, emptySelectableQuests, emptyActiveQuests;
+    private List<Supplier<Quest>> selectableQuests, activeQuests, emptySelectableQuests, emptyActiveQuests;
 
     @BeforeEach
     public void init() {
         emptyActiveQuests = new ArrayList<>();
         emptySelectableQuests = new ArrayList<>();
         activeQuests = List.of(
-                mock(Quest.class),
-                mock(Quest.class),
-                mock(Quest.class)
+                () -> mock(Quest.class),
+                () -> mock(Quest.class),
+                () -> mock(Quest.class)
         );
         selectableQuests = List.of(
-                mock(Quest.class),
-                mock(Quest.class),
-                mock(Quest.class)
+                () -> mock(Quest.class),
+                () -> mock(Quest.class),
+                () -> mock(Quest.class)
         );
 
         questReward1 = new QuestReward(emptySelectableQuests, emptyActiveQuests);
@@ -75,8 +75,8 @@ class QuestRewardTest {
         questReward2.collect();
         assertTrue(questReward2.isCollected());
 
-        for (Quest quest : selectableQuests) {
-            oldSelectable.add(quest);
+        for (Supplier<Quest> quest : selectableQuests) {
+            oldSelectable.add(quest.get());
         }
 
         Assertions.assertEquals(oldActive, missionManager.getActiveQuests());
@@ -91,8 +91,8 @@ class QuestRewardTest {
         questReward3.collect();
         assertTrue(questReward3.isCollected());
 
-        for (Quest quest : activeQuests) {
-            oldActive.add(quest);
+        for (Supplier<Quest> quest : activeQuests) {
+            oldActive.add(quest.get());
         }
 
         Assertions.assertEquals(oldActive, missionManager.getActiveQuests());
@@ -107,12 +107,12 @@ class QuestRewardTest {
         questReward4.collect();
         assertTrue(questReward4.isCollected());
 
-        for (Quest quest : selectableQuests) {
-            oldSelectable.add(quest);
+        for (Supplier<Quest> quest : selectableQuests) {
+            oldSelectable.add(quest.get());
         }
 
-        for (Quest quest : activeQuests) {
-            oldActive.add(quest);
+        for (Supplier<Quest> quest : activeQuests) {
+            oldActive.add(quest.get());
         }
 
         Assertions.assertEquals(oldActive, missionManager.getActiveQuests());

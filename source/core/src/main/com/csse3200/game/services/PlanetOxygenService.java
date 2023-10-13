@@ -10,8 +10,8 @@ import com.csse3200.game.events.EventHandler;
 public class PlanetOxygenService implements OxygenLevel{
     
     private static final Logger logger = LoggerFactory.getLogger(PlanetOxygenService.class);
-    private static final float DEFAULT_OXYGEN_GOAL = 1000;
-    private static final float DEFAULT_INITIAL_OXYGEN = 100;
+    private static final float DEFAULT_OXYGEN_GOAL = 10000;
+    private static final float DEFAULT_INITIAL_OXYGEN = 1000;
     
     private float oxygenGoal;
     private float oxygenPresent;

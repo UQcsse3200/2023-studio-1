@@ -50,7 +50,7 @@ class PlanetOxygenServiceTest {
     void getOxygenPercentage() {
         // Test when oxygenGoal is positive
         planetOxygenService.setOxygenGoal(1000);
-        planetOxygenService.addOxygen(400);
+        planetOxygenService.removeOxygen(500);
 
         // Account for the initial 100 kilograms of oxygen already present.
         assertEquals(50,planetOxygenService.getOxygenPercentage(),
