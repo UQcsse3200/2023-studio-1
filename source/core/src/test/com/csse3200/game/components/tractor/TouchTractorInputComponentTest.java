@@ -43,9 +43,13 @@ public class TouchTractorInputComponentTest {
         tractor.addComponent(inputComponent);
 
         assertFalse(inputComponent.keyUp(1));
-        assertTrue(inputComponent.keyUp(Input.Keys.UP));
-        assertTrue(inputComponent.keyUp(Input.Keys.LEFT));
-        assertTrue(inputComponent.keyUp(Input.Keys.DOWN));
-        assertTrue(inputComponent.keyUp(Input.Keys.RIGHT));
+        assertFalse(inputComponent.keyUp(Input.Keys.UP));
+        assertFalse(inputComponent.keyUp(Input.Keys.LEFT));
+        assertFalse(inputComponent.keyUp(Input.Keys.DOWN));
+        assertFalse(inputComponent.keyUp(Input.Keys.RIGHT));
+        assertTrue(inputComponent.keyUp(Input.Keys.W));
+        assertTrue(inputComponent.keyUp(Input.Keys.A));
+        assertTrue(inputComponent.keyUp(Input.Keys.S));
+        assertTrue(inputComponent.keyUp(Input.Keys.D));
     }
 }
