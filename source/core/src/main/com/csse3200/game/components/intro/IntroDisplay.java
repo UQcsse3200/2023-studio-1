@@ -1,5 +1,7 @@
 package com.csse3200.game.components.intro;
 
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,6 +65,11 @@ public class IntroDisplay extends UIComponent {
      * The Image that contains the bottom half of the cockpit.
      */
     private Image cockpitBottom;
+    
+    /**
+     * The Image to be used as the 'white-out' effect in the crash.
+     */
+    private Image crashLight;
 
     /**
      * The table that forms the basis for the layout of the textual elements on the screen.
@@ -84,7 +91,8 @@ public class IntroDisplay extends UIComponent {
     private float screenHeight;
     private float shakeFactor = 1f;
     private boolean calledStart = false;
-
+    private boolean startedWhiteout = false;
+    
     public IntroDisplay(GdxGame game) {
         super();
         this.game = game;
@@ -158,18 +166,23 @@ public class IntroDisplay extends UIComponent {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.debug("Continue button clicked");
-                //startGame();
-                continueButton.setVisible(false);
-                storyLabel.setVisible(false);
-
-                cockpitTop.setVisible(true);
-                cockpitBottom.setVisible(true);
-
-                planet.setPosition(Gdx.graphics.getWidth() / 2f, (cockpitTop.getY(Align.bottom) - cockpitBottom.getY(Align.top)) / 2f);
-
-                logger.debug("({}, {}) - Cockpit Top", cockpitTopPosition[0], cockpitTopPosition[1]);
-                logger.debug("({}, {}) - Cockpit Bottom", cockpitBottomPosition[0], cockpitBottomPosition[1]);
-                titleSequenceFinished = true;
+                if (calledStart) {
+                    continueButton.setVisible(false);
+                    startGame();
+                } else {
+                    continueButton.setText("Awaken");
+                    storyLabel.setVisible(false);
+    
+                    cockpitTop.setVisible(true);
+                    cockpitBottom.setVisible(true);
+    
+                    planet.setPosition(Gdx.graphics.getWidth() / 2f, (cockpitTop.getY(Align.bottom) - cockpitBottom.getY(Align.top)) / 2f);
+    
+                    logger.debug("({}, {}) - Cockpit Top", cockpitTopPosition[0], cockpitTopPosition[1]);
+                    logger.debug("({}, {}) - Cockpit Bottom", cockpitBottomPosition[0], cockpitBottomPosition[1]);
+                    titleSequenceFinished = true;
+                }
+                
             }
         });
 
@@ -187,17 +200,6 @@ public class IntroDisplay extends UIComponent {
         stage.addActor(planet);
         stage.addActor(rootTable);
 
-        /*
-        cockpitTable = new Table();
-        cockpitTable.setFillParent(true);
-        cockpitTable.debug();
-        cockpitTable.add(cockpitTop).top();
-        cockpitTable.row();
-        cockpitTable.add(cockpitBottom).bottom();
-        stage.addActor(cockpitTable);
-        */
-
-
         cockpitTop = new Image(ServiceLocator.getResourceService()
                 .getAsset("images/crash-animation/Cockpit_Top.png", Texture.class));
         cockpitTop.setVisible(false);
@@ -205,9 +207,14 @@ public class IntroDisplay extends UIComponent {
         cockpitBottom = new Image(ServiceLocator.getResourceService()
                 .getAsset("images/crash-animation/Cockpit_Bottom.png", Texture.class));
         cockpitBottom.setVisible(false);
+        
+        crashLight = new Image(ServiceLocator.getResourceService()
+                .getAsset("images/crash-animation/bright_light.png", Texture.class));
+        crashLight.setVisible(false);
 
         stage.addActor(cockpitTop);
         stage.addActor(cockpitBottom);
+        stage.addActor(crashLight);
 
         repositionCockpit();
     }
@@ -321,7 +328,6 @@ public class IntroDisplay extends UIComponent {
 
     @Override
     public void update() {
-        // TODO: Make the stars move again
         // TODO: Sort the naming of all the functions out
         float newWidth = Gdx.graphics.getWidth();
         float newHeight = Gdx.graphics.getHeight();
@@ -340,11 +346,21 @@ public class IntroDisplay extends UIComponent {
         } else {
             shake(shakeFactor);
             if (shakeFactor < 20) {
+                if (shakeFactor > 15) {
+                    //SequenceAction sequenceAction = Actions.sequence();
+                    //sequenceAction.addAction(Actions.fadeIn(2f));
+                    //crashLight.addAction(sequenceAction);
+                    crashLight.scaleBy(1.1f);
+                    crashLight.setPosition(Gdx.graphics.getWidth() / 2f,
+                            Gdx.graphics.getHeight() / 2f);
+                    
+                    //startedWhiteout = true;
+                }
                 shakeFactor = shakeFactor * 1.008f;
-            }
-            //TODO fix call next screen
-            if (shakeFactor >= 20f && !calledStart) {
-                startGame();
+            } else if (!calledStart) {
+                cockpitTop.setVisible(false);
+                cockpitBottom.setVisible(false);
+                planet.setVisible(false);
                 calledStart = true;
             }
         }
