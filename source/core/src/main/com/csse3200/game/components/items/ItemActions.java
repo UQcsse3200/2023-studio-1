@@ -284,8 +284,7 @@ public class ItemActions extends Component {
         case "Lave Eel":
           player.getComponent(HungerComponent.class).increaseHungerLevel(-50);
           player.getComponent(CombatStatsComponent.class).addHealth(100);
-        case "Salmon":
-          player.getComponent(HungerComponent.class).increaseHungerLevel(-10);
+          return;
         default:
           player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
       }
@@ -411,14 +410,14 @@ public class ItemActions extends Component {
     }
 
     boolean tileWaterable = isCropTile(tile.getOccupant());
-    entity.getComponent(WateringCanLevelComponent.class).incrementLevel(-5);  //decrease the water level by 5 units
+    entity.getComponent(WateringCanLevelComponent.class).incrementLevel(-2);  //decrease the water level by 5 units
     
     if (!tileWaterable) {
       return false;
     }
 
-    // A water amount of 0.5 was recommended by team 7
-    tile.getOccupant().getEvents().trigger("water", 0.5f);
+    // A water amount of 0.2
+    tile.getOccupant().getEvents().trigger("water", 0.2f);
     return true;
   }
 
