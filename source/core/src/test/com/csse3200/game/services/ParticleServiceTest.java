@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.components.ParticleEffectComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.rendering.ParticleEffectWrapper;
 import org.junit.jupiter.api.AfterEach;
@@ -176,5 +177,66 @@ class ParticleServiceTest {
 	void testGetCategory() {
 		ParticleService.ParticleEffectType particleEffectType = ParticleService.ParticleEffectType.ACID_RAIN;
 		assertEquals(ParticleService.WEATHER_EVENT, particleEffectType.getCategory());
+	}
+
+	@Test
+	void testGetEffect() throws IllegalAccessException {
+		@SuppressWarnings("unchecked")
+		EnumMap<ParticleService.ParticleEffectType, ParticleEffectPool> mockPools = mock(EnumMap.class);
+
+		@SuppressWarnings("unchecked")
+		ArrayList<ParticleEffectWrapper> mockQueuedEffects = mock(ArrayList.class);
+
+		ParticleService particleService = new ParticleService();
+		Field poolsField = ReflectionUtils.findFields(ParticleService.class, f -> f.getName().equals("particleEffectPools"), ReflectionUtils.HierarchyTraversalMode.TOP_DOWN).get(0);
+
+		poolsField.setAccessible(true);
+		poolsField.set(particleService, mockPools);
+
+		ParticleEffectPool pool = mock(ParticleEffectPool.class);
+		ParticleEffectPool.PooledEffect pooledEffect = mock(ParticleEffectPool.PooledEffect.class);
+		when(mockPools.get(any(ParticleService.ParticleEffectType.class))).thenReturn(pool);
+		when(pool.obtain()).thenReturn(pooledEffect);
+
+		assertEquals(pooledEffect, particleService.getEffect(ParticleService.ParticleEffectType.ACID_RAIN));
+	}
+
+
+	@Test
+	void testAddComponent() throws IllegalAccessException {
+
+		ParticleEffectComponent component = new ParticleEffectComponent();
+
+		@SuppressWarnings("unchecked")
+		ArrayList<ParticleEffectComponent> mockedComponents = mock(ArrayList.class);
+
+		ParticleService particleService = new ParticleService();
+		Field componentsField = ReflectionUtils.findFields(ParticleService.class, f -> f.getName().equals("effectComponents"), ReflectionUtils.HierarchyTraversalMode.TOP_DOWN).get(0);
+
+		componentsField.setAccessible(true);
+		componentsField.set(particleService, mockedComponents);
+
+		particleService.addComponent(component);
+
+		verify(mockedComponents, times(1)).add(component);
+	}
+
+	@Test
+	void testRemoveComponent() throws IllegalAccessException {
+
+		ParticleEffectComponent component = new ParticleEffectComponent();
+
+		@SuppressWarnings("unchecked")
+		ArrayList<ParticleEffectComponent> mockedComponents = mock(ArrayList.class);
+
+		ParticleService particleService = new ParticleService();
+		Field componentsField = ReflectionUtils.findFields(ParticleService.class, f -> f.getName().equals("effectComponents"), ReflectionUtils.HierarchyTraversalMode.TOP_DOWN).get(0);
+
+		componentsField.setAccessible(true);
+		componentsField.set(particleService, mockedComponents);
+
+		particleService.removeComponent(component);
+
+		verify(mockedComponents, times(1)).remove(component);
 	}
 }

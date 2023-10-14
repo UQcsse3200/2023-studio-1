@@ -12,8 +12,11 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.EntityType;
+import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.services.ResourceService;
+import com.csse3200.game.services.TimeService;
 import com.csse3200.game.utils.math.Vector2Utils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -76,6 +79,10 @@ class TamedFollowTaskTest {
     void beforeEach() {
         ServiceLocator.registerResourceService(new ResourceService());
         ServiceLocator.getResourceService().loadTextures(texturePaths);
+        TimeService timeService = mock(TimeService.class);
+        when(timeService.getEvents()).thenReturn(mock(EventHandler.class));
+        ServiceLocator.registerTimeService(timeService);
+        ServiceLocator.registerMissionManager(new MissionManager());
         ServiceLocator.getResourceService().loadAll();
 
         targetInventory = new InventoryComponent(new ArrayList<>());
