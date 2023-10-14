@@ -42,7 +42,7 @@ public class AcidShowerEvent extends WeatherEvent {
     }
 
     private void scheduleNextAnimalPanic() {
-        nextAnimalPanic = climateControllerEvents.scheduleEvent(4.0f, "acidShowerAnimalPanic");
+        nextAnimalPanic = climateControllerEvents.scheduleEvent(1.0f, "acidShowerAnimalPanic");
     }
 
     private void triggerAnimalPanic() {
