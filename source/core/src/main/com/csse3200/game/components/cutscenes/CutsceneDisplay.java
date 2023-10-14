@@ -22,7 +22,7 @@ import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.ui.UIComponent;
-
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -90,8 +90,10 @@ public class CutsceneDisplay extends UIComponent {
 
         if (this.cutsceneType == Cutscene.CutsceneType.ALIEN) {
             dialogueWindow = new Window("Alien Jaleel", skin);
-        } else {
+        } else if (this.cutsceneType == Cutscene.CutsceneType.RADIO){
             dialogueWindow = new Window("Radio", skin);
+        } else if (this.cutsceneType == Cutscene.CutsceneType.PLACEABLE) {
+            dialogueWindow = new Window("DJ Khaled's Ghost", skin);
         }
 
         dialogueWindow.getTitleLabel().setAlignment(Align.center);
@@ -153,16 +155,15 @@ public class CutsceneDisplay extends UIComponent {
         TextureAtlas.AtlasRegion region;
 
         //Spawn sprite
-        if (this.cutsceneType == Cutscene.CutsceneType.ALIEN) {
-            npcAtlas = ServiceLocator.getResourceService()
-                    .getAsset("images/questgiver.atlas", TextureAtlas.class);
-            region = npcAtlas.findRegion("default");
-        } else if (this.cutsceneType == Cutscene.CutsceneType.RADIO) { // NO DIFFERENCE SINCE NO RADIO SPRITE YET
+        if (this.cutsceneType == Cutscene.CutsceneType.RADIO) {
             npcAtlas = ServiceLocator.getResourceService()
                     .getAsset("images/walkietalkie.atlas", TextureAtlas.class);
             region = npcAtlas.findRegion("default");
+        } else if (this.cutsceneType == Cutscene.CutsceneType.PLACEABLE) {
+            npcAtlas = ServiceLocator.getResourceService()
+                    .getAsset("images/GOD_IS_game_ver.atlas", TextureAtlas.class);
+            region = npcAtlas.findRegion("default");
         } else {
-            // Team 1 will do there stuff here for now quest giver
             npcAtlas = ServiceLocator.getResourceService()
                     .getAsset("images/questgiver.atlas", TextureAtlas.class);
             region = npcAtlas.findRegion("default");

@@ -74,6 +74,7 @@ public class SpaceGameArea extends GameArea {
           "images/overwatered_cropTile_fertilised.png",
           "images/Temp-Chest.png",
           "images/bin.png",
+          "images/GOD_IS_game_ver.png",
 
           "images/tractor.png",
           "images/fertiliser.png",
@@ -267,7 +268,7 @@ public class SpaceGameArea extends GameArea {
   };
 
   private static final String[] textureAtlasPaths = {
-      "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
+      "images/terrain_iso_grass.atlas", "images/GOD_IS_game_ver.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
       "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas",
       "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas", "images/questgiver.atlas",
       "images/missionStatus.atlas", "images/plants/cosmic_cob.atlas", "images/plants/aloe_vera.atlas",
@@ -275,7 +276,7 @@ public class SpaceGameArea extends GameArea {
       "images/plants/deadly_nightshade.atlas", "images/fireflies.atlas", "images/animals/dragonfly.atlas",
       "images/animals/bat.atlas", "images/projectiles/oxygen_eater_projectile.atlas",
       "images/ship/ship.atlas", "images/light.atlas", "images/projectiles/dragon_fly_projectile.atlas", "images/golden_trophy.atlas",
-          "images/player_fishing.atlas", "images/walkietalkie.atlas", "images/animals/animal_effects.atlas"
+          "images/player_fishing.atlas", "images/walkietalkie.atlas", "images/animals/animal_effects.atlas", "images/cutscene.atlas"
   };
   private static final String[] soundPaths = {
           "sounds/Impact4.ogg", "sounds/car-horn-6408.mp3",
@@ -553,6 +554,7 @@ public class SpaceGameArea extends GameArea {
     effects.add(EffectSoundFile.FISHING_CAST);
     effects.add(EffectSoundFile.FISHING_CATCH);
     effects.add(EffectSoundFile.SCYTHE);
+    effects.add(EffectSoundFile.GOD_DID);
 
 
     try {
