@@ -2,6 +2,7 @@ package com.csse3200.game.components.placeables;
 
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.entities.Entity;
@@ -16,11 +17,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
+
+// TODO: the bitmap will have to be tested in connEntityUtil.
 
 @ExtendWith(GameExtension.class)
 public class SprinklerComponentTest {
@@ -62,7 +64,7 @@ public class SprinklerComponentTest {
         pTile = new TerrainTile(null, TerrainTile.TerrainCategory.DIRT);
         TerrainTile emptyTile = new TerrainTile(null, TerrainTile.TerrainCategory.DIRT);
         for (int x = 0; x <= 6; x++) {
-            for (int y = 0; y < 5; y++) {
+            for (int y = 0; y <= 5; y++) {
                 Vector2 pos = new Vector2(x, y);
                 if (pos.equals(s1_pos)) {
                     when(gameMap.getTile(pos)).thenReturn(sTile);
@@ -149,5 +151,8 @@ public class SprinklerComponentTest {
         assertFalse(s1.getComponent(SprinklerComponent.class).getPowered());
     }
 
-    // could test the bitMap, aoe, if it waters the ground
+    @Test
+    public void sprinklerWaters() {
+        // haven't figured this test out yet
+    }
 }
