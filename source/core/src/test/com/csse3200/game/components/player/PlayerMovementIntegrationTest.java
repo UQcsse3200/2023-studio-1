@@ -130,7 +130,7 @@ class PlayerMovementIntegrationTest {
     @MethodSource({"shouldReturnToDefaultAnimationOnStopParams"})
     void shouldReturnToDefaultAnimationOnStop(String prevDirection, String expectedAnimation, int randomiser) {
         AnimationRenderComponent animationRenderComponent = player.getComponent(AnimationRenderComponent.class);
-        player.getEvents().trigger("animationWalkStop",prevDirection, randomiser, true );
+        player.getEvents().trigger(PlayerAnimationController.events.ANIMATION_WALK_STOP.name(),prevDirection, randomiser, true );
         assertEquals(expectedAnimation, animationRenderComponent.getCurrentAnimation());
     }
 
