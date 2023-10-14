@@ -155,17 +155,17 @@ public class CutsceneDisplay extends UIComponent {
         TextureAtlas.AtlasRegion region;
 
         //Spawn sprite
-        if (this.cutsceneType == Cutscene.CutsceneType.ALIEN) {
-            npcAtlas = ServiceLocator.getResourceService()
-                    .getAsset("images/questgiver.atlas", TextureAtlas.class);
-            region = npcAtlas.findRegion("default");
-        } else if (this.cutsceneType == Cutscene.CutsceneType.RADIO) {
+        if (this.cutsceneType == Cutscene.CutsceneType.RADIO) {
             npcAtlas = ServiceLocator.getResourceService()
                     .getAsset("images/walkietalkie.atlas", TextureAtlas.class);
             region = npcAtlas.findRegion("default");
-        } else {
+        } else if (this.cutsceneType == Cutscene.CutsceneType.PLACEABLE) {
             npcAtlas = ServiceLocator.getResourceService()
                     .getAsset("images/GOD_IS_game_ver.atlas", TextureAtlas.class);
+            region = npcAtlas.findRegion("default");
+        } else {
+            npcAtlas = ServiceLocator.getResourceService()
+                    .getAsset("images/questgiver.atlas", TextureAtlas.class);
             region = npcAtlas.findRegion("default");
         }
 
