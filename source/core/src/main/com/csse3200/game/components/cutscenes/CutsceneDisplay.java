@@ -22,9 +22,10 @@ import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.ui.UIComponent;
-
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class CutsceneDisplay extends UIComponent {
 
@@ -96,7 +97,7 @@ public class CutsceneDisplay extends UIComponent {
         }
 
         dialogueWindow.getTitleLabel().setAlignment(Align.center);
-        dialogueWindow.setDebug(true);
+        //dialogueWindow.setDebug(true);
         dialogueWindow.bottom();
         dialogueWindow.setResizable(false);
 
@@ -158,9 +159,9 @@ public class CutsceneDisplay extends UIComponent {
             npcAtlas = ServiceLocator.getResourceService()
                     .getAsset("images/questgiver.atlas", TextureAtlas.class);
             region = npcAtlas.findRegion("default");
-        } else if (this.cutsceneType == Cutscene.CutsceneType.RADIO) { // NO DIFFERENCE SINCE NO RADIO SPRITE YET
+        } else if (this.cutsceneType == Cutscene.CutsceneType.RADIO) {
             npcAtlas = ServiceLocator.getResourceService()
-                    .getAsset("images/questgiver.atlas", TextureAtlas.class);
+                    .getAsset("images/walkietalkie.atlas", TextureAtlas.class);
             region = npcAtlas.findRegion("default");
         } else {
             npcAtlas = ServiceLocator.getResourceService()
@@ -181,18 +182,22 @@ public class CutsceneDisplay extends UIComponent {
      */
     private void spawnDialogueBox () {
         logger.debug("Cutscene dialogue spawned");
+        Random random = new Random();
 
         TypingLabel dialogueLabel = new TypingLabel(this.dialogue, skin);
         dialogueLabel.setAlignment(Align.center);
         dialogueLabel.setWrap(true);
-        dialogueLabel.setDefaultToken("{COLOR=BLACK}");
+        dialogueLabel.setDefaultToken("{FAST}{COLOR=BLACK}");
 
         dialogueLabel.setTypingListener(new TypingAdapter() {
             @Override
             public void onChar(Character c) {
-                Sound shortBeep = Gdx.audio.newSound(Gdx.files.internal("sounds/beep.mp3"));
-                long id = shortBeep.play(0.1f);
-                shortBeep.setPitch(id, 0.75f);
+                if (Character.isLetter(c)) {
+                    Sound shortBeep = Gdx.audio.newSound(Gdx.files.internal("sounds/beep.mp3"));
+                    long id = shortBeep.play(0.1f);
+                    List<Float> pitches = Arrays.asList(0.5f, 0.6f, 0.7f, 0.8f);
+                    shortBeep.setPitch(id, pitches.get(random.nextInt(4)));
+                }
             }
         });
 
