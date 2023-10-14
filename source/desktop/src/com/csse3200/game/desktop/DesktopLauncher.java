@@ -11,7 +11,7 @@ public class DesktopLauncher {
   public static void main(String[] arg) {
     Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
     config.setTitle("Gardens of the Galaxy");
-    config.setWindowIcon(Files.FileType.Internal, "images/icon.png", "images/icon2.png", "images/icon3.png");
+    config.setWindowIcon(Files.FileType.Internal, "images/game_logo1.png", "images/game_logo.png", "images/game_logo2.png");
     config.setInitialBackgroundColor(Color.BLACK);
     new Lwjgl3Application(new GdxGame(), config);
   }
