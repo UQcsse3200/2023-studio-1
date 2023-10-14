@@ -33,12 +33,9 @@ public class EntityIndicator extends UIComponent{
     private CameraComponent cameraComponent;
 
     /**
-     * The space between the edge of the screen and the indicator
+     * Distance from center
      */
-    private static final float OFFSET = 8;
-
-    private static final float INDICATOR_DISTANCE = 175; // Distance from center
-    private static final float INDICATOR_ROTATION_SPEED = 45; // Rotation speed in degrees per second
+    private static final float INDICATOR_DISTANCE = 175;
 
     /**
      * Initialise a new indicator for the given entity
