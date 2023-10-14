@@ -128,7 +128,6 @@ public class InventoryDisplay extends UIComponent {
 		window.setMovable(false);
 		window.setVisible(false);
 		stage.addActor(window);
-		//setDragItems(actors, map);
 	}
 
 	/**
@@ -200,7 +199,6 @@ public class InventoryDisplay extends UIComponent {
 				public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
 					if (target == null) {
 						ItemSlot itemSlot = map.get((Stack) getActor());
-						//itemSlot.removeActor(getActor());
 						itemSlot.add(getActor());
 						itemSlot.addListener(tooltip);
 					}

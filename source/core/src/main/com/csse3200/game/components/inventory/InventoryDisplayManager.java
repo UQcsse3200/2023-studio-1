@@ -145,7 +145,6 @@ public class InventoryDisplayManager {
                         sourceInventory.removeItem(sourceInventory.getHeldItemsEntity().get(sourceInventory.getItemPlace().get(d1.getIndexes().get(itemSlot))));
                         d1.refreshInventory();
                         d1.addTooltips();
-                        System.out.println(d1.getInventory().getItemCount());
                     }
                 });
             }

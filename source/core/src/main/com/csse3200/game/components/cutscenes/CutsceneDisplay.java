@@ -42,7 +42,7 @@ public class CutsceneDisplay extends UIComponent {
     /**
      * Logger to log events
      */
-    private static final Logger logger = LoggerFactory.getLogger(com.csse3200.game.missions.cutscenes.Cutscene.class);
+    private static final Logger logger = LoggerFactory.getLogger(CutsceneDisplay.class);
     /**
      * Stores the cutscene object that created the cutscene display
      */
@@ -141,7 +141,7 @@ public class CutsceneDisplay extends UIComponent {
      */
     private void placeSprite(Image sprite, float sizeIncrease) {
         logger.debug("Image spawning");
-        float scaledWidth = (float) (Gdx.graphics.getWidth() * sizeIncrease);
+        float scaledWidth = (Gdx.graphics.getWidth() * sizeIncrease);
         float scaledHeight = scaledWidth * (sprite.getHeight() / sprite.getWidth());
         sprite.setWidth(scaledWidth);
         sprite.setHeight(scaledHeight);
@@ -210,7 +210,6 @@ public class CutsceneDisplay extends UIComponent {
      * Spawns the continue button
      */
     private void spawnContinueButton() {
-        System.out.println("CUTSCENE CONTINUE SPAWNED");
         logger.debug("Cutscene continue spawned");
 
         TextButton continueBtn = new TextButton("Continue", skin);
