@@ -64,14 +64,14 @@ class PlayerAnimationControllerTest {
     private static Stream<Arguments> shouldStartMoveAnimationOnEventTriggerParams() {
         return Stream.of(
                 // (animationEvent, movementDirection, expectedAnimationName)
-                arguments("animationWalkStart", "up", "walk_up"),
-                arguments("animationWalkStart", "left", "walk_left"),
-                arguments("animationWalkStart", "down", "walk_down"),
-                arguments("animationWalkStart", "right", "walk_right"),
-                arguments("animationRunStart", "up", "run_up"),
-                arguments("animationRunStart", "left", "run_left"),
-                arguments("animationRunStart", "down", "run_down"),
-                arguments("animationRunStart", "right", "run_right")
+                arguments(PlayerAnimationController.events.ANIMATION_WALK_START.name(), "up", "walk_up"),
+                arguments(PlayerAnimationController.events.ANIMATION_WALK_START.name(), "left", "walk_left"),
+                arguments(PlayerAnimationController.events.ANIMATION_WALK_START.name(), "down", "walk_down"),
+                arguments(PlayerAnimationController.events.ANIMATION_WALK_START.name(), "right", "walk_right"),
+                arguments(PlayerAnimationController.events.ANIMATION_RUN_START.name(), "up", "run_up"),
+                arguments(PlayerAnimationController.events.ANIMATION_RUN_START.name(), "left", "run_left"),
+                arguments(PlayerAnimationController.events.ANIMATION_RUN_START.name(), "down", "run_down"),
+                arguments(PlayerAnimationController.events.ANIMATION_RUN_START.name(), "right", "run_right")
         );
     }
 
@@ -92,14 +92,14 @@ class PlayerAnimationControllerTest {
     private static Stream<Arguments> shouldNotResetAnimationParams() {
         return Stream.of(
                 // (animationEvent, movementDirection, expectedAnimationName)
-                arguments("animationWalkStart", "up", "walk_up"),
-                arguments("animationWalkStart", "left", "walk_left"),
-                arguments("animationWalkStart", "down", "walk_down"),
-                arguments("animationWalkStart", "right", "walk_right"),
-                arguments("animationRunStart", "up", "run_up"),
-                arguments("animationRunStart", "left", "run_left"),
-                arguments("animationRunStart", "down", "run_down"),
-                arguments("animationRunStart", "right", "run_right")
+                arguments(PlayerAnimationController.events.ANIMATION_WALK_START.name(), "up", "walk_up"),
+                arguments(PlayerAnimationController.events.ANIMATION_WALK_START.name(), "left", "walk_left"),
+                arguments(PlayerAnimationController.events.ANIMATION_WALK_START.name(), "down", "walk_down"),
+                arguments(PlayerAnimationController.events.ANIMATION_WALK_START.name(), "right", "walk_right"),
+                arguments(PlayerAnimationController.events.ANIMATION_RUN_START.name(), "up", "run_up"),
+                arguments(PlayerAnimationController.events.ANIMATION_RUN_START.name(), "left", "run_left"),
+                arguments(PlayerAnimationController.events.ANIMATION_RUN_START.name(), "down", "run_down"),
+                arguments(PlayerAnimationController.events.ANIMATION_RUN_START.name(), "right", "run_right")
 
         );
     }

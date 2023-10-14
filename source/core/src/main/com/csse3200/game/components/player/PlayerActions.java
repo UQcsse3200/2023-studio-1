@@ -43,8 +43,6 @@ public class PlayerActions extends Component {
   private SecureRandom random = new SecureRandom();
   int swordDamage = 5;
 
-  private static final String RIGHT_STRING = "right";
-
   @Override
   public void create() {
     physicsComponent = entity.getComponent(PhysicsComponent.class);
@@ -84,10 +82,10 @@ public class PlayerActions extends Component {
     if (moveDirection.epsilonEquals(Vector2.Zero)) {
       // player is not moving
 
-      String animationName = "animationWalkStop";
+      String animationName = PlayerAnimationController.events.ANIMATION_WALK_STOP.name();
       float direction = getPrevMoveDirection();
       if (direction < 45) {
-        entity.getEvents().trigger(animationName, RIGHT_STRING, animationRandomizer, false);
+        entity.getEvents().trigger(animationName, "right", animationRandomizer, false);
       } else if (direction < 135) {
         entity.getEvents().trigger(animationName, "up", animationRandomizer, false);
       } else if (direction < 225) {
@@ -99,10 +97,12 @@ public class PlayerActions extends Component {
     }
 
     // player is moving
-    String animationName = String.format("animation%sStart", running ? "Run" : "Walk");
+    String animationName = running ?
+            PlayerAnimationController.events.ANIMATION_RUN_START.name() :
+            PlayerAnimationController.events.ANIMATION_WALK_START.name();
     float direction = moveDirection.angleDeg();
     if (direction < 45) {
-      entity.getEvents().trigger(animationName, RIGHT_STRING);
+      entity.getEvents().trigger(animationName, "right");
     } else if (direction < 135) {
       entity.getEvents().trigger(animationName, "up");
     } else if (direction < 225) {
@@ -193,10 +193,10 @@ public class PlayerActions extends Component {
   }
 
   void interact() {
-    String animationInteract = "animationInteract";
+    String animationInteract = PlayerAnimationController.events.ANIMATION_INTERACT.name();
     float direction = getPrevMoveDirection();
     if (direction < 45) {
-      entity.getEvents().trigger(animationInteract, RIGHT_STRING);
+      entity.getEvents().trigger(animationInteract, "right");
     } else if (direction < 135) {
       entity.getEvents().trigger(animationInteract, "up");
     } else if (direction < 225) {
