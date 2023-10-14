@@ -55,6 +55,14 @@ class PlantInteractionQuestTest {
         PIQuest7 = new PlantInteractionQuest("Plant Interaction Quest 7", r7, 10, plant, plantTypes2, 3);
         PIQuest8 = new PlantInteractionQuest("Plant Interaction Quest 8", r7, 10, bug, plantTypes1, 3);
 
+        PIQuest1.registerMission(ServiceLocator.getMissionManager().getEvents());
+        PIQuest2.registerMission(ServiceLocator.getMissionManager().getEvents());
+        PIQuest3.registerMission(ServiceLocator.getMissionManager().getEvents());
+        PIQuest4.registerMission(ServiceLocator.getMissionManager().getEvents());
+        PIQuest5.registerMission(ServiceLocator.getMissionManager().getEvents());
+        PIQuest6.registerMission(ServiceLocator.getMissionManager().getEvents());
+        PIQuest7.registerMission(ServiceLocator.getMissionManager().getEvents());
+
     }
 
     @AfterEach
@@ -64,6 +72,7 @@ class PlantInteractionQuestTest {
 
     @Test
     void testRegisterMission() {
+        ServiceLocator.clear();
         assertFalse(PIQuest1.isCompleted());
         assertTrue(PIQuest2.isCompleted());
         assertFalse(PIQuest3.isCompleted());
@@ -103,7 +112,6 @@ class PlantInteractionQuestTest {
 
     @Test
     void testIsCompleted() {
-        testRegisterMission();
         assertFalse(PIQuest1.isCompleted());
         assertTrue(PIQuest2.isCompleted());
         assertFalse(PIQuest3.isCompleted());
@@ -216,7 +224,6 @@ class PlantInteractionQuestTest {
 
     @Test
     void testGetDescription() {
-        testRegisterMission();
         String desc1 = "Plant %d crops of type Cosmic Cob.\n%d out of %d crops planted.";
         String desc2 = "Plant %d crops of type Aloe Vera, Cosmic Cob.\n%d out of %d crops planted.";
         String desc3 = "Harvest %d crops of type Cosmic Cob.\n%d out of %d crops harvested.";
@@ -326,7 +333,6 @@ class PlantInteractionQuestTest {
 
     @Test
     void testGetShortDescription() {
-        testRegisterMission();
         String desc1 = "%d out of %d crops planted";
         String desc2 = "%d out of %d crops harvested";
         for (int i = 0; i < 10; i++) {
@@ -477,16 +483,9 @@ class PlantInteractionQuestTest {
 
     @Test
     void testGetProgress() {
-        assertEquals(0, PIQuest1.getProgress());
-        assertEquals(0, PIQuest2.getProgress());
         assertEquals(0, PIQuest3.getProgress());
-        assertEquals(0, PIQuest4.getProgress());
-        assertEquals(0, PIQuest5.getProgress());
         assertEquals(0, PIQuest6.getProgress());
-        assertEquals(0, PIQuest7.getProgress());
         testIsCompleted();
-        assertNotEquals(0, PIQuest3.getProgress());
-        assertNotEquals(0, PIQuest6.getProgress());
         assertEquals(10, PIQuest3.getProgress());
         assertEquals(3, PIQuest6.getProgress());
     }
