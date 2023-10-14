@@ -49,7 +49,12 @@ public class ClimateController implements Json.Serializable {
 	 */
 	public ClimateController() {
 		events = new EventHandler();
+	}
 
+	/**
+	 * Initialises the events and listeners for this {@link ClimateController}.
+	 */
+	public void initialiseEvents() {
 		ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::addDailyEvent);
 		ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateWeatherEvent);
 		ServiceLocator.getTimeService().getEvents().addListener("minuteUpdate", this::updateClimate);

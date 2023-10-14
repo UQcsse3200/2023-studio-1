@@ -3,9 +3,11 @@ package com.csse3200.game.components.items;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doReturn;
 
 import java.io.IOException;
 
+import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.combat.CombatStatsComponent;
 import com.csse3200.game.components.player.HungerComponent;
 import com.csse3200.game.components.player.InventoryComponent;
@@ -14,6 +16,9 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.services.PlayerHungerService;
 import com.csse3200.game.services.TimeService;
 
+import com.csse3200.game.services.sound.EffectsMusicService;
+import com.csse3200.game.services.sound.SoundService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,6 +48,7 @@ import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 // Setup fields and config were taken from GameAreaTest and the authors were co-authored to share credit for the work
 @ExtendWith(GameExtension.class)
@@ -98,6 +104,11 @@ class ItemActionsTest {
         TerrainComponent terrainComponent = mock(TerrainComponent.class);
         doReturn(0.5f).when(terrainComponent).getTileSize();
 
+        SoundService soundService = mock(SoundService.class);
+        EffectsMusicService effectsMusicService = mock(EffectsMusicService.class);
+        doReturn(effectsMusicService).when(soundService).getEffectsMusicService();
+        ServiceLocator.registerSoundService(soundService);
+
         gameMap = new GameMap(terrainFactory);
         gameMap.setTerrainComponent(terrainComponent);
 
@@ -130,6 +141,11 @@ class ItemActionsTest {
                 .addComponent(new InventoryComponent());
     }
 
+    @AfterEach
+    void cleanUp() {
+        ServiceLocator.clear();
+    }
+
     @Test
     void testUseHoe() {
         ServiceLocator.registerPhysicsService(new PhysicsService());
@@ -143,6 +159,8 @@ class ItemActionsTest {
         GameArea area = mock(GameArea.class);
         doReturn(player).when(area).getPlayer();
         doReturn(gameMap).when(area).getMap();
+        ClimateController climateController = new ClimateController();
+        when(area.getClimateController()).thenReturn(climateController);
         ServiceLocator.registerGameArea(area);
         ServiceLocator.registerResourceService(mock(ResourceService.class));
         FileLoader fl = new FileLoader();
@@ -165,6 +183,8 @@ class ItemActionsTest {
         GameArea area = mock(GameArea.class);
         doReturn(player).when(area).getPlayer();
         doReturn(gameMap).when(area).getMap();
+        ClimateController climateController = new ClimateController();
+        when(area.getClimateController()).thenReturn(climateController);
         ServiceLocator.registerGameArea(area);
         ServiceLocator.registerResourceService(mock(ResourceService.class));
         FileLoader fl = new FileLoader();
@@ -196,6 +216,8 @@ class ItemActionsTest {
         GameArea area = mock(GameArea.class);
         doReturn(player).when(area).getPlayer();
         doReturn(gameMap).when(area).getMap();
+        ClimateController climateController = new ClimateController();
+        when(area.getClimateController()).thenReturn(climateController);
         ServiceLocator.registerGameArea(area);
         ServiceLocator.registerResourceService(mock(ResourceService.class));
         FileLoader fl = new FileLoader();
@@ -223,6 +245,8 @@ class ItemActionsTest {
         GameArea area = mock(GameArea.class);
         doReturn(player).when(area).getPlayer();
         doReturn(gameMap).when(area).getMap();
+        ClimateController climateController = new ClimateController();
+        when(area.getClimateController()).thenReturn(climateController);
         ServiceLocator.registerGameArea(area);
         ServiceLocator.registerResourceService(mock(ResourceService.class));
         FileLoader fl = new FileLoader();
@@ -247,6 +271,8 @@ class ItemActionsTest {
         GameArea area = mock(GameArea.class);
         doReturn(player).when(area).getPlayer();
         doReturn(gameMap).when(area).getMap();
+        ClimateController climateController = new ClimateController();
+        when(area.getClimateController()).thenReturn(climateController);
         ServiceLocator.registerGameArea(area);
         ServiceLocator.registerResourceService(mock(ResourceService.class));
         FileLoader fl = new FileLoader();

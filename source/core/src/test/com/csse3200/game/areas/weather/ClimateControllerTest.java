@@ -43,6 +43,7 @@ class ClimateControllerTest {
 		EventHandler handler = new EventHandler();
 		when(timeService.getEvents()).thenReturn(handler);
 		controller = new ClimateController();
+		controller.initialiseEvents();
 	}
 
 	@AfterEach
