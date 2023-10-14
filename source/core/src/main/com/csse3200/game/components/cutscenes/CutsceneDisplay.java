@@ -191,10 +191,12 @@ public class CutsceneDisplay extends UIComponent {
         dialogueLabel.setTypingListener(new TypingAdapter() {
             @Override
             public void onChar(Character c) {
-                Sound shortBeep = Gdx.audio.newSound(Gdx.files.internal("sounds/beep.mp3"));
-                long id = shortBeep.play(0.1f);
-                List<Float> pitches = Arrays.asList(0.55f, 0.65f, 0.75f, 0.85f, 0.95f);
-                shortBeep.setPitch(id, pitches.get(random.nextInt(5)));
+                if (Character.isLetter(c)) {
+                    Sound shortBeep = Gdx.audio.newSound(Gdx.files.internal("sounds/beep.mp3"));
+                    long id = shortBeep.play(0.1f);
+                    List<Float> pitches = Arrays.asList(0.5f, 0.6f, 0.7f, 0.8f);
+                    shortBeep.setPitch(id, pitches.get(random.nextInt(4)));
+                }
             }
         });
 
