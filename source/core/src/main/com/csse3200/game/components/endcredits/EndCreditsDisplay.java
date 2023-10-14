@@ -125,47 +125,12 @@ public class EndCreditsDisplay extends UIComponent {
                 Generic inventory system
                 Win and loss screens
                 This
-                
-                Team members
 
-                
-                              Team 1               |              Team 2               
-                Shanon Lakshan Chandrasekara       |Liv Ronda     
-                Jackson Trenerry                   |Wilko Grunefeld
-                Peter Lahanas                      |Ali Spanevello
-                Cohen Porteous                     |Alvaro Wong
-                Liam Anderson                      |Liam Hemmett
-                                                   |
-                              Team 3               |              Team 4               
-                Hunter Whitlock                    |Abdullah Badat     
-                Riley Whitlock                     |Vidyut Periyasamy
-                Angus Whittaker                    |Braden Bowie
-                Nathaniel                          |Pocholo Sarmiento
-                Cao Quoc Thang Hoang               |Tze Kheng Goh
-                                                   |
-                              Team 5               |              Team 6               
-                Gil Wise                           |Connor Morrison    
-                Manav Trivedi                      |Tom Edwards
-                Daniel Cottrell                    |Aadya
-                Matilda Damman                     |Sanchit Jain
-                Arjun Singh                        |Zebb
-                                                   |Codie Chung
-                                                   |                                                   
-                              Team 7               |              Team 8               
-                Charlotte Birkinshaw               |Tristan Duncombe    
-                Donghyug David Jeong               |Adam Fittler
-                Lucas Hicks                        |Abhinav
-                Shristi Gupta                      |Nimesh Garg
-                Tom Strooper                       |Leonard Guo
-                            
-                
 
-                            
-                            
-                            
-                            
-                            
-                
+
+
+
+
                 
                 {RAINBOW}Secret Khaled System™ {ENDRAINBOW}
                 Team 1 and Team 2 
