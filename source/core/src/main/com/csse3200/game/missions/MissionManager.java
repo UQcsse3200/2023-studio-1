@@ -43,9 +43,9 @@ public class MissionManager implements Json.Serializable {
 		ANIMAL_TAMED,
 		// Triggers when a reward is collected used for MissionCompleteQuests
 		REWARD_COMPLETE,
-		// Triggers when an animal is defeated in combat, a EntityType enum value is provided representing the type of
-		// entity defeated is provided as an argument
-		ANIMAL_DEFEATED,
+		// Triggers when a CombatStatsController is defeated by having it's health reduced to 0, a EntityType enum value
+		// is provided representing the type of entity defeated is provided as an argument
+		COMBAT_ACTOR_DEFEATED,
 		// Triggers when an animal is eaten by a Space Snapper, a EntityType enum value is provided representing the
 		// type of entity eaten is provided as an argument
 		ANIMAL_EATEN,
