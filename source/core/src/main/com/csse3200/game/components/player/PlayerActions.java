@@ -43,6 +43,7 @@ public class PlayerActions extends Component {
   private boolean moving = false;
   private boolean running = false;
   private boolean muted = false;
+  private boolean frozen = false;
   private GameMap gameMap = ServiceLocator.getGameArea().getMap();
   private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(PlayerActions.class);
   private SecureRandom random = new SecureRandom();
@@ -60,20 +61,40 @@ public class PlayerActions extends Component {
     Direction(String representation) {this.representation = representation;}
   }
 
+  public enum events {
+    FREEZE,
+    UNFREEZE,
+    MOVE,
+    MOVE_STOP,
+    RUN,
+    RUN_STOP,
+    ATTACK,
+    SHOOT,
+    ENTER_TRACTOR,
+    EXIT_TRACTOR,
+    USE,
+    EAT,
+    FISH_CAUGHT,
+    ESC_INPUT,
+    CAST_FISHING_RODS
+  }
+
   @Override
   public void create() {
     physicsComponent = entity.getComponent(PhysicsComponent.class);
-    entity.getEvents().addListener("move", this::move);
-    entity.getEvents().addListener("moveStop", this::stopMoving);
-    entity.getEvents().addListener("run", this::run);
-    entity.getEvents().addListener("runStop", this::stopRunning);
+    entity.getEvents().addListener(events.MOVE.name(), this::move);
+    entity.getEvents().addListener(events.MOVE_STOP.name(), this::stopMoving);
+    entity.getEvents().addListener(events.RUN.name(), this::run);
+    entity.getEvents().addListener(events.RUN_STOP.name(), this::stopRunning);
     entity.getEvents().addListener("interact", this::interact);
-    entity.getEvents().addListener("attack", this::attack);
-    entity.getEvents().addListener("shoot", this::shoot);
-    entity.getEvents().addListener("enterTractor", this::enterTractor);
-    entity.getEvents().addListener("use", this::use);
+    entity.getEvents().addListener(events.ATTACK.name(), this::attack);
+    entity.getEvents().addListener(events.SHOOT.name(), this::shoot);
+    entity.getEvents().addListener(events.ENTER_TRACTOR.name(), this::enterTractor);
+    entity.getEvents().addListener(events.USE.name(), this::use);
     entity.getEvents().addListener("hotkeySelection", this::hotkeySelection);
-    entity.getEvents().addListener("eat", this::eat);
+	entity.getEvents().addListener(events.EAT.name(), this::eat);
+	entity.getEvents().addListener(events.FREEZE.name(), this::freeze);
+	entity.getEvents().addListener(events.UNFREEZE.name(), this::unfreeze);
     entity.getEvents().addListener("setSpeedMultiplier", this::setSpeedMultiplier);
     entity.getEvents().addListener("setDamageMultiplier", this::setDamageMultiplier);
   }
@@ -81,11 +102,25 @@ public class PlayerActions extends Component {
   @Override
   public void update() {
     if (entity.getComponent(PlayerAnimationController.class).readyToPlay()) {
-      if (moving && !isStunned()) {
+      if (moving && !isStunned() && !frozen) {
         updateSpeed();
       }
       updateAnimation();
     }
+  }
+
+  /**
+   * Freeze the player (i.e. render them unable to move)
+   */
+  private void freeze() {
+    frozen = true;
+  }
+
+  /**
+   * Unfreeze the player (allow them to move)
+   */
+  private void unfreeze() {
+    frozen = false;
   }
 
   /**

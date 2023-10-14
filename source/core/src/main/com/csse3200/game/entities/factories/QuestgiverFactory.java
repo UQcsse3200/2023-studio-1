@@ -15,7 +15,6 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 public class QuestgiverFactory {
-
   /**
    * Creates a questgiver entity
    * 

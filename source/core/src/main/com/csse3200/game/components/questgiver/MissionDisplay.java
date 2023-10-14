@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
+import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.missions.achievements.Achievement;
 import com.csse3200.game.missions.quests.Quest;
 import com.csse3200.game.services.ServiceLocator;
@@ -620,7 +621,10 @@ public class MissionDisplay extends UIComponent {
         if (isOpen) {
             window.setVisible(false);
             isOpen = false;
+            ServiceLocator.getGameArea().getPlayer().getEvents().trigger(PlayerActions.events.UNFREEZE.name());
         } else {
+            // Prevent player from moving - freeze player
+            ServiceLocator.getGameArea().getPlayer().getEvents().trigger(PlayerActions.events.FREEZE.name());
             openMenu();
         }
     }
