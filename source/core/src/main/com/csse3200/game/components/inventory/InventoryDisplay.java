@@ -46,6 +46,7 @@ public class InventoryDisplay extends UIComponent {
 	private final Map<Integer, TextTooltip> tooltips = new HashMap<>();
 	private final InstantTooltipManager instantTooltipManager = new InstantTooltipManager();
 	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(InventoryDisplay.class);
+	private Image bin = null;
 
 	/**
 	 * Constructor for class
@@ -115,8 +116,8 @@ public class InventoryDisplay extends UIComponent {
 		}
 		table.row();
 		if (entity.getType() == EntityType.PLAYER) {
-			Image deleteSlot = new Image(ServiceLocator.getResourceService().getAsset("images/bin.png", Texture.class));
-			table.add(deleteSlot).colspan(10);
+			bin = new Image(ServiceLocator.getResourceService().getAsset("images/bin.png", Texture.class));
+			table.add(bin).colspan(10);
 		}
 
 		// Create a window for the inventory using the skin
@@ -126,7 +127,7 @@ public class InventoryDisplay extends UIComponent {
 		window.setMovable(false);
 		window.setVisible(false);
 		stage.addActor(window);
-		setDragItems(actors, map);
+		//setDragItems(actors, map);
 	}
 
 	/**
@@ -208,7 +209,7 @@ public class InventoryDisplay extends UIComponent {
 							logger.error("sound not loaded");
 						}
 						ItemSlot itemSlot = map.get((Stack) getActor());
-						itemSlot.removeActor(getActor());
+						//itemSlot.removeActor(getActor());
 						itemSlot.add(getActor());
 						itemSlot.addListener(tooltip);
 					}
@@ -259,8 +260,7 @@ public class InventoryDisplay extends UIComponent {
 						ItemSlot itemSlot = map.get((Stack) source.getActor());
 						itemSlot.removeActor(source.getActor());
 						itemSlot.add(source.getActor());
-						ItemSlot sourceSlot = map.get(((Stack) source.getActor()));
-						inventory.removeItem(inventory.getHeldItemsEntity().get(inventory.getItemPlace().get(indexes.get(sourceSlot))));
+						inventory.removeItem(inventory.getHeldItemsEntity().get(inventory.getItemPlace().get(indexes.get(itemSlot))));
 						addTooltips();
 						try {
 							ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.DELETE_ITEM);
@@ -271,6 +271,22 @@ public class InventoryDisplay extends UIComponent {
 				});
 			}
 		}
+	}
+
+	public Map<ItemSlot, Integer> getIndexes() {
+		return indexes;
+	}
+
+	public Map<Stack, ItemSlot> getMap() {
+		return map;
+	}
+
+	public Image getBin() {
+		return bin;
+	}
+
+	public ArrayList<ItemSlot> getSlots() {
+		return slots;
 	}
 
 	/**
@@ -322,6 +338,7 @@ public class InventoryDisplay extends UIComponent {
 	public void refreshInventory() {
 		this.inventory = entity.getComponent(InventoryComponent.class);
 		updateInventory();
+		inventoryDisplayManager.addTargets();
 		if (this.toolbar) {
 			entity.getEvents().trigger("updateToolbar");
 		}
