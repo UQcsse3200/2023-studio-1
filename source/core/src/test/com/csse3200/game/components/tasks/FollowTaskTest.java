@@ -158,14 +158,17 @@ class FollowTaskTest {
         FollowTask followTask = new FollowTask(target, 10, 5, 10, 2f, Vector2Utils.ONE);
         followTask.create(() -> entity);
 
-        // Not currently active, target is within stopping distance, should have negative priority
-        assertTrue(followTask.getPriority() < 0);
+        // Check Follow task still active but not moving
+        followTask.start();
+        followTask.update();
+        assertEquals(10, followTask.getPriority());
+        verify(entity.getComponent(PhysicsMovementComponent.class)).setEnabled(false);
     }
 
     private Entity makePhysicsEntity() {
         return new Entity()
                 .addComponent(new PhysicsComponent())
-                .addComponent(new PhysicsMovementComponent());
+                .addComponent(spy(new PhysicsMovementComponent()));
     }
 
     @AfterEach

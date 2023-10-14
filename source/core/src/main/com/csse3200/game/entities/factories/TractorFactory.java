@@ -55,7 +55,7 @@ public class TractorFactory {
    *
    * @return an AnimationRenderComponent with the tractors animations added.
    */
-  private static AnimationRenderComponent setupTractorAnimations() {
+  public static AnimationRenderComponent setupTractorAnimations() {
     AnimationRenderComponent animator = new AnimationRenderComponent(
         ServiceLocator.getResourceService().getAsset("images/tractor.atlas", TextureAtlas.class),
         16f);
