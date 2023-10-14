@@ -186,7 +186,7 @@ public class CutsceneDisplay extends UIComponent {
         TypingLabel dialogueLabel = new TypingLabel(this.dialogue, skin);
         dialogueLabel.setAlignment(Align.center);
         dialogueLabel.setWrap(true);
-        dialogueLabel.setDefaultToken("{COLOR=BLACK}");
+        dialogueLabel.setDefaultToken("{FAST}{COLOR=BLACK}");
 
         dialogueLabel.setTypingListener(new TypingAdapter() {
             @Override
