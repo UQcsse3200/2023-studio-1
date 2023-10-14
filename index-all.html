@@ -193,7 +193,7 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Add a listener to an event with three arguments</div>
 </dd>
-<dt><a href="com/csse3200/game/components/player/InventoryComponent.html#addMultipleItem(int,com.csse3200.game.entities.Entity)" class="member-name-link">addMultipleItem(int, Entity)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a></dt>
+<dt><a href="com/csse3200/game/components/player/InventoryComponent.html#addMultipleItem(int,com.csse3200.game.entities.Entity,int)" class="member-name-link">addMultipleItem(int, Entity, int)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a></dt>
 <dd>
 <div class="block">Adds an item to the Player's inventory</div>
 </dd>
@@ -211,6 +211,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Set the ship debris associated with this tile.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/inventory/InventoryDisplayManager.html#addTarget(com.csse3200.game.components.inventory.InventoryDisplay,com.csse3200.game.components.inventory.InventoryDisplay)" class="member-name-link">addTarget(InventoryDisplay, InventoryDisplay)</a> - Method in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/InventoryDisplayManager.html" title="class in com.csse3200.game.components.inventory">InventoryDisplayManager</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/inventory/InventoryDisplayManager.html#addTargets()" class="member-name-link">addTargets()</a> - Method in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/InventoryDisplayManager.html" title="class in com.csse3200.game.components.inventory">InventoryDisplayManager</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/ai/tasks/AITaskComponent.html#addTask(com.csse3200.game.ai.tasks.PriorityTask)" class="member-name-link">addTask(PriorityTask)</a> - Method in class com.csse3200.game.ai.tasks.<a href="com/csse3200/game/ai/tasks/AITaskComponent.html" title="class in com.csse3200.game.ai.tasks">AITaskComponent</a></dt>
 <dd>
 <div class="block">Add a priority task to the list of tasks.</div>
@@ -331,9 +335,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Create the component for a given texture atlas.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/inventory/InstantTooltipManager.html#animations" class="member-name-link">animations</a> - Variable in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/InstantTooltipManager.html" title="class in com.csse3200.game.components.inventory">InstantTooltipManager</a></dt>
-<dd>
-<div class="block">If false, tooltips will be shown without animations.</div>
-</dd>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/combat/ProjectileAnimationController.html#animator" class="member-name-link">animator</a> - Variable in class com.csse3200.game.components.combat.<a href="com/csse3200/game/components/combat/ProjectileAnimationController.html" title="class in com.csse3200.game.components.combat">ProjectileAnimationController</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/npc/AnimalAnimationController.html#animator" class="member-name-link">animator</a> - Variable in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/AnimalAnimationController.html" title="class in com.csse3200.game.components.npc">AnimalAnimationController</a></dt>
@@ -2127,11 +2129,6 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/components/items/ItemActions.html#eat(com.csse3200.game.entities.Entity)" class="member-name-link">eat(Entity)</a> - Method in class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/ItemActions.html" title="class in com.csse3200.game.components.items">ItemActions</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/inventory/InstantTooltipManager.html#edgeDistance" class="member-name-link">edgeDistance</a> - Variable in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/InstantTooltipManager.html" title="class in com.csse3200.game.components.inventory">InstantTooltipManager</a></dt>
-<dd>
-<div class="block">The distance from the tooltip actor position to the edge of the screen where the actor will be shown on the other side of
- the mouse cursor.</div>
-</dd>
 <dt><a href="com/csse3200/game/services/sound/EffectsMusicService.html" class="type-name-link" title="class in com.csse3200.game.services.sound">EffectsMusicService</a> - Class in <a href="com/csse3200/game/services/sound/package-summary.html">com.csse3200.game.services.sound</a></dt>
 <dd>
 <div class="block">A MusicService that handles playback for short (less than or equal to 5s) sound effects that are played from memory.</div>
@@ -2148,10 +2145,6 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/components/Component.html#enabled" class="member-name-link">enabled</a> - Variable in class com.csse3200.game.components.<a href="com/csse3200/game/components/Component.html" title="class in com.csse3200.game.components">Component</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/inventory/InstantTooltipManager.html#enabled" class="member-name-link">enabled</a> - Variable in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/InstantTooltipManager.html" title="class in com.csse3200.game.components.inventory">InstantTooltipManager</a></dt>
-<dd>
-<div class="block">If false, tooltips will not be shown.</div>
-</dd>
 <dt><a href="com/csse3200/game/input/InputService.html#enableInputType(int)" class="member-name-link">enableInputType(int)</a> - Method in class com.csse3200.game.input.<a href="com/csse3200/game/input/InputService.html" title="class in com.csse3200.game.input">InputService</a></dt>
 <dd>
 <div class="block">enable specific type(s) of input</div>
@@ -2578,6 +2571,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns the entity's base attack damage.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/inventory/InventoryDisplay.html#getBin()" class="member-name-link">getBin()</a> - Method in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/InventoryDisplay.html" title="class in com.csse3200.game.components.inventory">InventoryDisplay</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainTile.html#getBlendMode()" class="member-name-link">getBlendMode()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></dt>
 <dd>
 <div class="block">Returns the blend mode of the terrain tile</div>
@@ -2930,6 +2925,8 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/components/tasks/TamedFollowTask.html#getInactivePriority()" class="member-name-link">getInactivePriority()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/TamedFollowTask.html" title="class in com.csse3200.game.components.tasks">TamedFollowTask</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/inventory/InventoryDisplay.html#getIndexes()" class="member-name-link">getIndexes()</a> - Method in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/InventoryDisplay.html" title="class in com.csse3200.game.components.inventory">InventoryDisplay</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/input/InputService.html#getInputFactory()" class="member-name-link">getInputFactory()</a> - Method in class com.csse3200.game.input.<a href="com/csse3200/game/input/InputService.html" title="class in com.csse3200.game.input">InputService</a></dt>
 <dd>
 <div class="block">Get the input factory to create input handlers</div>
@@ -3053,6 +3050,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainComponent.html#getMap()" class="member-name-link">getMap()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/TestGameArea.html#getMap()" class="member-name-link">getMap()</a> - Method in class com.csse3200.game.areas.<a href="com/csse3200/game/areas/TestGameArea.html" title="class in com.csse3200.game.areas">TestGameArea</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/inventory/InventoryDisplay.html#getMap()" class="member-name-link">getMap()</a> - Method in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/InventoryDisplay.html" title="class in com.csse3200.game.components.inventory">InventoryDisplay</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainComponent.html#getMapBounds(int)" class="member-name-link">getMapBounds(int)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a></dt>
 <dd>&nbsp;</dd>
@@ -3421,6 +3420,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Get number of entities registered</div>
 </dd>
+<dt><a href="com/csse3200/game/components/inventory/InventoryDisplay.html#getSlots()" class="member-name-link">getSlots()</a> - Method in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/InventoryDisplay.html" title="class in com.csse3200.game.components.inventory">InventoryDisplay</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/ServiceLocator.html#getSoundService()" class="member-name-link">getSoundService()</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/tasks/MovementTask.html#getSpeed()" class="member-name-link">getSpeed()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/MovementTask.html" title="class in com.csse3200.game.components.tasks">MovementTask</a></dt>
@@ -4573,10 +4574,6 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/entities/configs/plants/BasePlantConfig.html#maxHealth" class="member-name-link">maxHealth</a> - Variable in class com.csse3200.game.entities.configs.plants.<a href="com/csse3200/game/entities/configs/plants/BasePlantConfig.html" title="class in com.csse3200.game.entities.configs.plants">BasePlantConfig</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/inventory/InstantTooltipManager.html#maxWidth" class="member-name-link">maxWidth</a> - Variable in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/InstantTooltipManager.html" title="class in com.csse3200.game.components.inventory">InstantTooltipManager</a></dt>
-<dd>
-<div class="block">The maximum width of a <code>TextTooltip</code>.</div>
-</dd>
 <dt><a href="com/csse3200/game/components/items/ItemType.html#MILK" class="member-name-link">MILK</a> - Enum constant in enum class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/ItemType.html" title="enum class in com.csse3200.game.components.items">ItemType</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/utils/math/Vector2Utils.html#MIN" class="member-name-link">MIN</a> - Static variable in class com.csse3200.game.utils.math.<a href="com/csse3200/game/utils/math/Vector2Utils.html" title="class in com.csse3200.game.utils.math">Vector2Utils</a></dt>
@@ -4762,14 +4759,6 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/entities/factories/ObstacleFactory.html" class="type-name-link" title="class in com.csse3200.game.entities.factories">ObstacleFactory</a> - Class in <a href="com/csse3200/game/entities/factories/package-summary.html">com.csse3200.game.entities.factories</a></dt>
 <dd>
 <div class="block">Factory to create obstacle entities.</div>
-</dd>
-<dt><a href="com/csse3200/game/components/inventory/InstantTooltipManager.html#offsetX" class="member-name-link">offsetX</a> - Variable in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/InstantTooltipManager.html" title="class in com.csse3200.game.components.inventory">InstantTooltipManager</a></dt>
-<dd>
-<div class="block">The distance from the mouse position to offset the tooltip actor.</div>
-</dd>
-<dt><a href="com/csse3200/game/components/inventory/InstantTooltipManager.html#offsetY" class="member-name-link">offsetY</a> - Variable in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/InstantTooltipManager.html" title="class in com.csse3200.game.components.inventory">InstantTooltipManager</a></dt>
-<dd>
-<div class="block">The distance from the mouse position to offset the tooltip actor.</div>
 </dd>
 <dt><a href="com/csse3200/game/utils/math/Vector2Utils.html#ONE" class="member-name-link">ONE</a> - Static variable in class com.csse3200.game.utils.math.<a href="com/csse3200/game/utils/math/Vector2Utils.html" title="class in com.csse3200.game.utils.math">Vector2Utils</a></dt>
 <dd>&nbsp;</dd>
@@ -5639,6 +5628,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/factories/ShipFactory.events.html#REMOVE_PART" class="member-name-link">REMOVE_PART</a> - Enum constant in enum class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ShipFactory.events.html" title="enum class in com.csse3200.game.entities.factories">ShipFactory.events</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/player/InventoryComponent.html#removeAll(com.csse3200.game.entities.Entity)" class="member-name-link">removeAll(Entity)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/rendering/AnimationRenderComponent.html#removeAnimation(java.lang.String)" class="member-name-link">removeAnimation(String)</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/AnimationRenderComponent.html" title="class in com.csse3200.game.rendering">AnimationRenderComponent</a></dt>
 <dd>
 <div class="block">Remove an animation from this animator.</div>
@@ -5815,10 +5806,6 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/missions/quests/TameAnimalsQuest.html#resetState()" class="member-name-link">resetState()</a> - Method in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/TameAnimalsQuest.html" title="class in com.csse3200.game.missions.quests">TameAnimalsQuest</a></dt>
 <dd>
 <div class="block">Resets number of animals tamed back to 0</div>
-</dd>
-<dt><a href="com/csse3200/game/components/inventory/InstantTooltipManager.html#resetTime" class="member-name-link">resetTime</a> - Variable in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/InstantTooltipManager.html" title="class in com.csse3200.game.components.inventory">InstantTooltipManager</a></dt>
-<dd>
-<div class="block">Seconds to use <a href="com/csse3200/game/components/inventory/InstantTooltipManager.html#subsequentTime"><code>InstantTooltipManager.subsequentTime</code></a>.</div>
 </dd>
 <dt><a href="com/csse3200/game/rendering/Renderer.html#resize(int,int)" class="member-name-link">resize(int, int)</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/Renderer.html" title="class in com.csse3200.game.rendering">Renderer</a></dt>
 <dd>
@@ -6969,10 +6956,6 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/combat/StunComponent.html#%3Cinit%3E()" class="member-name-link">StunComponent()</a> - Constructor for class com.csse3200.game.components.combat.<a href="com/csse3200/game/components/combat/StunComponent.html" title="class in com.csse3200.game.components.combat">StunComponent</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/inventory/InstantTooltipManager.html#subsequentTime" class="member-name-link">subsequentTime</a> - Variable in class com.csse3200.game.components.inventory.<a href="com/csse3200/game/components/inventory/InstantTooltipManager.html" title="class in com.csse3200.game.components.inventory">InstantTooltipManager</a></dt>
-<dd>
-<div class="block">Once a tooltip is shown, this is used instead of <code>TooltipManager.initialTime</code>.</div>
-</dd>
 <dt><a href="com/csse3200/game/components/player/InventoryComponent.html#swapPosition(int,int)" class="member-name-link">swapPosition(int, int)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a></dt>
 <dd>
 <div class="block">Function to get the exchange the position of two specific item in Inventory.</div>

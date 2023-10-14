@@ -93,52 +93,14 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>boolean</code></div>
 <div class="col-second even-row-color"><code><a href="#animations" class="member-name-link">animations</a></code></div>
-<div class="col-last even-row-color">
-<div class="block">If false, tooltips will be shown without animations.</div>
-</div>
-<div class="col-first odd-row-color"><code>float</code></div>
-<div class="col-second odd-row-color"><code><a href="#edgeDistance" class="member-name-link">edgeDistance</a></code></div>
-<div class="col-last odd-row-color">
-<div class="block">The distance from the tooltip actor position to the edge of the screen where the actor will be shown on the other side of
- the mouse cursor.</div>
-</div>
-<div class="col-first even-row-color"><code>boolean</code></div>
-<div class="col-second even-row-color"><code><a href="#enabled" class="member-name-link">enabled</a></code></div>
-<div class="col-last even-row-color">
-<div class="block">If false, tooltips will not be shown.</div>
-</div>
-<div class="col-first odd-row-color"><code>float</code></div>
-<div class="col-second odd-row-color"><code><a href="#maxWidth" class="member-name-link">maxWidth</a></code></div>
-<div class="col-last odd-row-color">
-<div class="block">The maximum width of a <code>TextTooltip</code>.</div>
-</div>
-<div class="col-first even-row-color"><code>float</code></div>
-<div class="col-second even-row-color"><code><a href="#offsetX" class="member-name-link">offsetX</a></code></div>
-<div class="col-last even-row-color">
-<div class="block">The distance from the mouse position to offset the tooltip actor.</div>
-</div>
-<div class="col-first odd-row-color"><code>float</code></div>
-<div class="col-second odd-row-color"><code><a href="#offsetY" class="member-name-link">offsetY</a></code></div>
-<div class="col-last odd-row-color">
-<div class="block">The distance from the mouse position to offset the tooltip actor.</div>
-</div>
-<div class="col-first even-row-color"><code>float</code></div>
-<div class="col-second even-row-color"><code><a href="#resetTime" class="member-name-link">resetTime</a></code></div>
-<div class="col-last even-row-color">
-<div class="block">Seconds to use <a href="#subsequentTime"><code>subsequentTime</code></a>.</div>
-</div>
+<div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>com.badlogic.gdx.scenes.scene2d.Stage</code></div>
 <div class="col-second odd-row-color"><code><a href="#stage" class="member-name-link">stage</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>float</code></div>
-<div class="col-second even-row-color"><code><a href="#subsequentTime" class="member-name-link">subsequentTime</a></code></div>
-<div class="col-last even-row-color">
-<div class="block">Once a tooltip is shown, this is used instead of <code>TooltipManager.initialTime</code>.</div>
-</div>
 </div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.badlogic.gdx.scenes.scene2d.ui.TooltipManager">Fields inherited from class&nbsp;com.badlogic.gdx.scenes.scene2d.ui.TooltipManager</h3>
-<code>initialTime</code></div>
+<code>edgeDistance, enabled, initialTime, maxWidth, offsetX, offsetY, resetTime, subsequentTime</code></div>
 </section>
 </li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
@@ -198,60 +160,9 @@ loadScripts(document, 'script');</script>
 <h2>Field Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="subsequentTime">
-<h3>subsequentTime</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">subsequentTime</span></div>
-<div class="block">Once a tooltip is shown, this is used instead of <code>TooltipManager.initialTime</code>. Default is 0.</div>
-</section>
-</li>
-<li>
-<section class="detail" id="resetTime">
-<h3>resetTime</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">resetTime</span></div>
-<div class="block">Seconds to use <a href="#subsequentTime"><code>subsequentTime</code></a>. Default is 1.5.</div>
-</section>
-</li>
-<li>
-<section class="detail" id="enabled">
-<h3>enabled</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">enabled</span></div>
-<div class="block">If false, tooltips will not be shown. Default is true.</div>
-</section>
-</li>
-<li>
 <section class="detail" id="animations">
 <h3>animations</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">animations</span></div>
-<div class="block">If false, tooltips will be shown without animations. Default is true.</div>
-</section>
-</li>
-<li>
-<section class="detail" id="maxWidth">
-<h3>maxWidth</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">maxWidth</span></div>
-<div class="block">The maximum width of a <code>TextTooltip</code>. The label will wrap if needed. Default is Integer.MAX_VALUE.</div>
-</section>
-</li>
-<li>
-<section class="detail" id="offsetX">
-<h3>offsetX</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">offsetX</span></div>
-<div class="block">The distance from the mouse position to offset the tooltip actor. Default is 15,19.</div>
-</section>
-</li>
-<li>
-<section class="detail" id="offsetY">
-<h3>offsetY</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">offsetY</span></div>
-<div class="block">The distance from the mouse position to offset the tooltip actor. Default is 15,19.</div>
-</section>
-</li>
-<li>
-<section class="detail" id="edgeDistance">
-<h3>edgeDistance</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">edgeDistance</span></div>
-<div class="block">The distance from the tooltip actor position to the edge of the screen where the actor will be shown on the other side of
- the mouse cursor. Default is 7.</div>
 </section>
 </li>
 <li>
