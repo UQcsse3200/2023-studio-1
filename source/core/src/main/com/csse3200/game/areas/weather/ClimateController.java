@@ -1,7 +1,9 @@
 package com.csse3200.game.areas.weather;
 
 import java.util.ArrayList;
+import java.util.function.Function;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
@@ -29,14 +31,32 @@ public class ClimateController implements Json.Serializable {
 	private final EventHandler events;
 
 	/**
+	 * The time specifying when the current lighting effect should stop
+	 */
+	private float currentLightingEffectEndPoint;
+	/**
+	 * The time specifying how far along the lighting effect is
+	 */
+	private float currentLightingEffectProgress;
+	/**
+	 * A function which returns the global colour offset for the lighting effect at some given t value between 0 and 1
+	 * representing how close to finish the lighting effect is (0 being just started, 1 being just finished)
+	 */
+	private Function<Float, Color> currentLightingEffectGradient;
+
+	/**
 	 * Creates a new climate controller that listens to time events and maintains the in-game climate
 	 */
 	public ClimateController() {
 		events = new EventHandler();
+
 		ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::addDailyEvent);
 		ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateWeatherEvent);
 		ServiceLocator.getTimeService().getEvents().addListener("minuteUpdate", this::updateClimate);
-		updateClimate();
+
+		events.addListener("lightingEffect", this::setLightingEffect);
+		currentLightingEffectProgress = ServiceLocator.getTimeSource().getTime();
+		currentLightingEffectEndPoint = ServiceLocator.getTimeSource().getTime();
 	}
 
 	/**
@@ -46,6 +66,35 @@ public class ClimateController implements Json.Serializable {
 	 */
 	public EventHandler getEvents() {
 		return events;
+	}
+
+	/**
+	 * Updates the global lighting based on the current lighting effect
+	 */
+	private void updateLightingEffect() {
+		currentLightingEffectProgress = 1 - currentLightingEffectEndPoint + ServiceLocator.getTimeSource().getTime();
+
+		if (currentLightingEffectProgress > 1.0f) {
+			// If the lighting effect has completed, clear any colour offsets
+			ServiceLocator.getLightService().setColourOffset(Color.CLEAR);
+			return;
+		}
+
+		// Apply lighting effect colour to global ambient lighting
+		ServiceLocator.getLightService().setColourOffset(
+				currentLightingEffectGradient.apply(currentLightingEffectProgress));
+	}
+
+	/**
+	 * Sets the current lighting effect to have the specified duration and colourGradient.
+	 * @param duration The duration of the lighting effect.
+	 * @param colourGradient The gradient of colour offsets. It should be a function which accepts a float, and returns
+	 *                       a colour offset.
+	 */
+	private void setLightingEffect(float duration, Function<Float, Color> colourGradient) {
+		currentLightingEffectEndPoint = ServiceLocator.getTimeSource().getTime() + duration;
+		currentLightingEffectProgress = 0.0f;
+		currentLightingEffectGradient = colourGradient;
 	}
 
 	/**
@@ -114,7 +163,8 @@ public class ClimateController implements Json.Serializable {
 	 * the weather event modifiers.
 	 */
 	private void updateClimate() {
-		// TODO - Deal with weather system effects & lighting
+		events.update();
+		updateLightingEffect();
 	}
 
 	/**
@@ -140,6 +190,9 @@ public class ClimateController implements Json.Serializable {
 		}
 	}
 
+	/**
+	 * Recalculates which {@link WeatherEvent} should be the currentWeatherEvent
+	 */
 	private void recalculateCurrentWeatherEvent() {
 		currentWeatherEvent = null;
 		int priority = -1;

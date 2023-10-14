@@ -1,9 +1,17 @@
 package com.csse3200.game.areas.weather;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.MathUtils;
+import com.csse3200.game.events.ScheduledEvent;
 import com.csse3200.game.services.ParticleService;
 import com.csse3200.game.services.ServiceLocator;
 
+import java.util.function.Function;
+
 public class RainStormEvent extends WeatherEvent {
+
+    private final ClimateController climateController;
+    private ScheduledEvent nextLightningStrike;
 
     /**
      * Constructs an {@link WeatherEvent} with a given duration, priority and countdown
@@ -15,6 +23,9 @@ public class RainStormEvent extends WeatherEvent {
      */
     public RainStormEvent(int numHoursUntil, int duration, int priority, float severity) throws IllegalArgumentException {
         super(numHoursUntil, duration, priority, severity);
+
+        climateController = ServiceLocator.getGameArea().getClimateController();
+        climateController.getEvents().addListener("lightningStrike", this::triggerStrike);
     }
 
     @Override
@@ -22,8 +33,10 @@ public class RainStormEvent extends WeatherEvent {
         // Trigger "beginRainstorm" event
         // TODO - update effect
         ServiceLocator.getParticleService().startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
-        // Adjust global lighting
-        // Add occasional light increase to mimic lighting if severe enough
+
+        // Add lighting effects
+        ServiceLocator.getLightService().setBrightnessMultiplier((1.0f - severity / 1.5f) * 0.3f + 0.6f);
+        scheduleNextLightningStrike();
     }
 
     @Override
@@ -31,8 +44,52 @@ public class RainStormEvent extends WeatherEvent {
         // Trigger "endRainstorm" event
         // TODO - update effect
         ServiceLocator.getParticleService().stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);
-        // Adjust global lighting
-        // Add occasional light increase to mimic lighting if severe enough
+
+        // Remove lighting effects
+        ServiceLocator.getLightService().setBrightnessMultiplier(1.0f);
+        climateController.getEvents().cancelEvent(nextLightningStrike);
+    }
+
+    private void scheduleNextLightningStrike() {
+        float timeToEndOfEvent = ((59 - ServiceLocator.getTimeService().getMinute()) / 60.0f + duration - 1) * 30.0f;
+        float timeToStrike = getNextTimeToLightningStrike();
+
+        if (timeToEndOfEvent < timeToStrike) {
+            return;
+        }
+
+        nextLightningStrike = climateController.getEvents().scheduleEvent(timeToStrike, "lightningStrike");
+    }
+
+    private void triggerStrike() {
+        // Apply the desired lighting effect
+        climateController.getEvents().trigger("lightingEffect", getNextLightningStrikeDuration(),
+                (Function<Float, Color>) this::getLightningColourOffset);
+        // Recursively schedule next strike
+        scheduleNextLightningStrike();
+    }
+
+    private float getNextTimeToLightningStrike() {
+        float maxTime = 6.0f + 8.0f * (1.5f - severity) / 1.5f;
+        float minTime = 2.0f + 3.0f * (1.5f - severity) / 1.5f;
+        return MathUtils.random(minTime, maxTime);
+    }
+
+    private float getNextLightningStrikeDuration() {
+        float maxTime = 1.8f + 2.0f * severity / 1.5f;
+        float minTime = 0.6f + 0.6f * severity / 1.5f;
+        return MathUtils.random(minTime, maxTime);
+    }
+
+    private Color getLightningColourOffset(float t) {
+        float brightnessOctave1 = MathUtils.sin((float) (Math.PI * t * (severity + 1.0f)));
+        brightnessOctave1 *= brightnessOctave1;
+
+        float brightnessOctave2 = MathUtils.sin((float) (Math.PI * t * (1.2f * severity + 1.0f)));
+        brightnessOctave2 = (float) Math.pow(brightnessOctave2, 4);
+
+        float totalBrightnessOffset = brightnessOctave1 * brightnessOctave2 * 0.6f;
+        return new Color(totalBrightnessOffset, totalBrightnessOffset, totalBrightnessOffset, 0.0f);
     }
 
 }
