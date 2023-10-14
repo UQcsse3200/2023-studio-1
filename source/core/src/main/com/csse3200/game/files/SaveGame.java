@@ -15,6 +15,11 @@ import com.csse3200.game.missions.MissionManager;
  * Reading, Writing, and applying user settings in the game.
  */
 public class SaveGame {
+
+  private SaveGame() {
+    throw new IllegalStateException("Util class");
+  }
+
   private static final String ROOT_DIR = "saves";
   private static final String SAVE_FILE = "saveFile.json";
 
