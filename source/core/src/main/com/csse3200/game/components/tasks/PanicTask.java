@@ -2,8 +2,10 @@ package com.csse3200.game.components.tasks;
 
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.PriorityTask;
+import com.csse3200.game.ai.tasks.TaskRunner;
 import com.csse3200.game.ai.tasks.TimedTask;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
+import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.RandomUtils;
 
 /**
@@ -33,6 +35,13 @@ public class PanicTask extends TimedTask implements PriorityTask {
         super(trigger, duration, priority);
         this.panicSpeed = panicSpeed;
         this.panicRange = panicRange;
+    }
+
+    @Override
+    public void create(TaskRunner taskRunner) {
+        super.create(taskRunner);
+        ServiceLocator.getGameArea().getClimateController().getEvents().addListener("acidShower", this::start);
+        ServiceLocator.getGameArea().getClimateController().getEvents().addListener("solarSurge", this::start);
     }
 
     /**
