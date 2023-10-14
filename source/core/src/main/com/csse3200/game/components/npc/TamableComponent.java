@@ -87,7 +87,6 @@ public class TamableComponent extends Component {
       // If so, we can check if player is holding the right item
 
       if (this.playerInventory.getHeldItem().getComponent(ItemComponent.class).getItemName().equals(favouriteFood)) {
-
           // Generate RNG number for taming
           double randomDecimal = generateRandomDecimal();
 
@@ -98,9 +97,11 @@ public class TamableComponent extends Component {
           if (numTimesFed == tamingThreshold || randomDecimal > tamingProbability) {
               isTamed = true;
               ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.ANIMAL_TAMED.name());
+              entity.getEvents().trigger("startTimedEffect", "tamed", 2f);
           }
           else {
               numTimesFed++;
+              entity.getEvents().trigger("startTimedEffect", "fed", 2f);
           }
       }
   }

@@ -217,17 +217,26 @@ class TamedFollowTaskTest {
 
         //target is too close to entity
         target.setPosition(0f, 4f);
-        assertTrue(tamedTask.getPriority() < 0);
+        tamedTask.start();
+        tamedTask.update();
+
+        // Check tamedTask still active but not moving
+        assertEquals(priorityVal, tamedTask.getPriority());
+        verify(entity.getComponent(PhysicsMovementComponent.class)).setEnabled(false);
+        tamedTask.stop();
 
         //task priority should be set to normal priority when task is active.
         target.setPosition(7f, 2f);
         tamedTask.start();
         assertEquals(priorityVal, tamedTask.getPriority());
 
-        //priority should be set to -1 if animal gets too close.
+        // too close
         target.setPosition(0f, 3f);
         tamedTask.update();
-        assertTrue(tamedTask.getPriority() < 0);
+
+        // Check tamedTask still active but not moving
+        assertEquals(priorityVal, tamedTask.getPriority());
+        verify(entity.getComponent(PhysicsMovementComponent.class), times(2)).setEnabled(false);
 
         //task priority should be re-triggered when target moves within range.
         target.setPosition(7f, 2f);
@@ -242,7 +251,7 @@ class TamedFollowTaskTest {
     private Entity makePhysicsEntity() {
         return new Entity()
                 .addComponent(new PhysicsComponent())
-                .addComponent(new PhysicsMovementComponent());
+                .addComponent(spy(new PhysicsMovementComponent()));
     }
 
     @AfterEach

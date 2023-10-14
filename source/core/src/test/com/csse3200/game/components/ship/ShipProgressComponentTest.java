@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.spy;
 
+import com.csse3200.game.entities.factories.ShipFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,20 +27,20 @@ class ShipProgressComponentTest {
 
 	@Test()
 	void testIncrement() {
-		ship.getEvents().trigger("addPart", 1);
+		ship.getEvents().trigger(ShipFactory.events.ADD_PART.name(), 1);
 		assertEquals(shipProgressComponent.getProgress(), 1);
 		assertEquals(shipProgressComponent.getUnlockedFeatures().size(), 0);
 
-		ship.getEvents().trigger("addPart", 2);
+		ship.getEvents().trigger(ShipFactory.events.ADD_PART.name(), 2);
 		assertEquals(shipProgressComponent.getProgress(), 3);
 		assertTrue(shipProgressComponent.getUnlockedFeatures().contains(ShipProgressComponent.Feature.BED));
 
-		ship.getEvents().trigger("addPart", 5);
+		ship.getEvents().trigger(ShipFactory.events.ADD_PART.name(), 5);
 		assertEquals(shipProgressComponent.getProgress(), 8);
 		assertTrue(shipProgressComponent.getUnlockedFeatures().contains(ShipProgressComponent.Feature.BED));
 		assertTrue(shipProgressComponent.getUnlockedFeatures().contains(ShipProgressComponent.Feature.LIGHT));
 
-		ship.getEvents().trigger("addPart", 7);
+		ship.getEvents().trigger(ShipFactory.events.ADD_PART.name(), 7);
 		assertEquals(shipProgressComponent.getProgress(), 15);
 		assertTrue(shipProgressComponent.getUnlockedFeatures().contains(ShipProgressComponent.Feature.BED));
 		assertTrue(shipProgressComponent.getUnlockedFeatures().contains(ShipProgressComponent.Feature.LIGHT));
@@ -49,11 +50,11 @@ class ShipProgressComponentTest {
 	@Test()
 	void testDecrement() {
 		// Start by unlocking all features
-		ship.getEvents().trigger("addPart", 15);
-		ship.getEvents().trigger("removePart", 5);
+		ship.getEvents().trigger(ShipFactory.events.ADD_PART.name(), 15);
+		ship.getEvents().trigger(ShipFactory.events.REMOVE_PART.name(), 5);
 		// Ensure the feature remains unlocked
 		assertTrue(shipProgressComponent.getUnlockedFeatures().contains(ShipProgressComponent.Feature.STORAGE));
-		ship.getEvents().trigger("removePart", 10);
+		ship.getEvents().trigger(ShipFactory.events.REMOVE_PART.name(), 10);
 		assertTrue(shipProgressComponent.getUnlockedFeatures().contains(ShipProgressComponent.Feature.BED));
 		assertTrue(shipProgressComponent.getUnlockedFeatures().contains(ShipProgressComponent.Feature.LIGHT));
 	}

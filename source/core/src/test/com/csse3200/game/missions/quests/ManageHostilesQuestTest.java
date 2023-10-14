@@ -123,7 +123,7 @@ class ManageHostilesQuestTest {
             } else {
                 assertTrue(MHQuest7.isCompleted());
             }
-            ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.ANIMAL_DEFEATED.name(),
+            ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.COMBAT_ACTOR_DEFEATED.name(),
                     EntityType.ASTROLOTL);
         }
         assertFalse(MHQuest1.isCompleted());
@@ -155,7 +155,7 @@ class ManageHostilesQuestTest {
             } else {
                 assertTrue(MHQuest7.isCompleted());
             }
-            ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.ANIMAL_DEFEATED.name(),
+            ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.COMBAT_ACTOR_DEFEATED.name(),
                     EntityType.COW);
         }
         assertFalse(MHQuest1.isCompleted());
@@ -188,7 +188,7 @@ class ManageHostilesQuestTest {
             } else {
                 assertTrue(MHQuest7.isCompleted());
             }
-            ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.ANIMAL_DEFEATED.name(),
+            ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.COMBAT_ACTOR_DEFEATED.name(),
                     EntityType.OXYGEN_EATER);
         }
         assertTrue(MHQuest1.isCompleted());
@@ -232,7 +232,7 @@ class ManageHostilesQuestTest {
             assertEquals(formatted6, MHQuest6.getDescription());
             assertEquals(formatted7, MHQuest7.getDescription());
             ServiceLocator.getMissionManager().getEvents().trigger(
-                    MissionManager.MissionEvent.ANIMAL_DEFEATED.name(), EntityType.OXYGEN_EATER);
+                    MissionManager.MissionEvent.COMBAT_ACTOR_DEFEATED.name(), EntityType.OXYGEN_EATER);
         }
     }
 
@@ -257,7 +257,7 @@ class ManageHostilesQuestTest {
             assertEquals(formatted6, MHQuest6.getShortDescription());
             assertEquals(formatted7, MHQuest7.getShortDescription());
             ServiceLocator.getMissionManager().getEvents().trigger(
-                    MissionManager.MissionEvent.ANIMAL_DEFEATED.name(), EntityType.OXYGEN_EATER);
+                    MissionManager.MissionEvent.COMBAT_ACTOR_DEFEATED.name(), EntityType.OXYGEN_EATER);
         }
         MHQuest1.resetState();
         MHQuest2.resetState();
@@ -283,7 +283,7 @@ class ManageHostilesQuestTest {
             assertEquals(formatted6, MHQuest6.getShortDescription());
             assertEquals(formatted7, MHQuest7.getShortDescription());
             ServiceLocator.getMissionManager().getEvents().trigger(
-                    MissionManager.MissionEvent.ANIMAL_DEFEATED.name(), EntityType.COW);
+                    MissionManager.MissionEvent.COMBAT_ACTOR_DEFEATED.name(), EntityType.COW);
         }MHQuest1.resetState();
         MHQuest2.resetState();
         MHQuest3.resetState();
@@ -308,7 +308,7 @@ class ManageHostilesQuestTest {
             assertEquals(formatted6, MHQuest6.getShortDescription());
             assertEquals(formatted7, MHQuest7.getShortDescription());
             ServiceLocator.getMissionManager().getEvents().trigger(
-                    MissionManager.MissionEvent.ANIMAL_DEFEATED.name(), EntityType.ASTROLOTL);
+                    MissionManager.MissionEvent.COMBAT_ACTOR_DEFEATED.name(), EntityType.ASTROLOTL);
         }
     }
 
