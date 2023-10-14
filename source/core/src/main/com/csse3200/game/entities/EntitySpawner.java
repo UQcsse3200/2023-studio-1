@@ -3,7 +3,6 @@ package com.csse3200.game.entities;
 import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.entities.EntityIndicator;
 
 import java.security.SecureRandom;
 import java.util.List;
@@ -169,7 +168,6 @@ public class EntitySpawner {
 
             //Create entity and spawn on gameArea
             Entity entity = spawner.apply(player);
-            entity.addComponent(new EntityIndicator(entity));
             gameArea.spawnEntityAt(entity, position, true, true);
         }
 
