@@ -63,7 +63,7 @@ public class OxygenDisplay extends UIComponent {
 				"images/status_ui/oxygen_icon.png", Texture.class));
 
 		// Set oxygenFill to the initial starting one
-		oxygenFill.setScaleY(0.1f);
+		oxygenFill.setScaleY(1.0f);
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class OxygenDisplay extends UIComponent {
 		oxygenFill.addAction(Actions.parallel(action1, action2));
 
 		// Uncomment to add oxygen. Can also be set to remove oxygen.
-		//ServiceLocator.getPlanetOxygenService().addOxygen(100);
+		// ServiceLocator.getPlanetOxygenService().addOxygen(250);
 	}
 
 	/**
