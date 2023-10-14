@@ -56,6 +56,8 @@ public class IntroDisplay extends UIComponent {
      */
     private Image planet;
     
+    private TextButton continueButton;
+    
     /**
      * The Image that contains the top half of the cockpit.
      */
@@ -157,7 +159,7 @@ public class IntroDisplay extends UIComponent {
         storyLabel.setDefaultToken(defaultTokens);
         storyLabel.setAlignment(Align.center); // Center align the text
 
-        TextButton continueButton = new TextButton("Continue", skin);
+        continueButton = new TextButton("Continue", skin);
 
         continueButton.setVisible(true); // Make the continue button invisible
 
@@ -273,7 +275,7 @@ public class IntroDisplay extends UIComponent {
         cockpitBottom.setWidth(Gdx.graphics.getWidth() * 1.2f);
         cockpitBottom.setHeight(Gdx.graphics.getHeight() * 0.4f);
 
-        cockpitTop.setPosition( -Gdx.graphics.getWidth() * 0.1f,Gdx.graphics.getHeight(), Align.topLeft);
+        cockpitTop.setPosition( -Gdx.graphics.getWidth() * 0.1f,Gdx.graphics.getHeight() * 1.05f, Align.topLeft);
         cockpitTopPosition[0] = cockpitTop.getX();
         cockpitTopPosition[1] = cockpitTop.getY();
 
@@ -345,16 +347,16 @@ public class IntroDisplay extends UIComponent {
             updateTitleAnimation();
         } else {
             shake(shakeFactor);
-            if (shakeFactor < 20) {
-                if (shakeFactor > 15) {
-                    //SequenceAction sequenceAction = Actions.sequence();
-                    //sequenceAction.addAction(Actions.fadeIn(2f));
-                    //crashLight.addAction(sequenceAction);
-                    crashLight.scaleBy(1.1f);
-                    crashLight.setPosition(Gdx.graphics.getWidth() / 2f,
-                            Gdx.graphics.getHeight() / 2f);
-                    
-                    //startedWhiteout = true;
+            if (shakeFactor < 30) {
+                if (shakeFactor > 14) {
+                    if (!startedWhiteout) {
+                        crashLight.setWidth(Gdx.graphics.getWidth() * 0.1f);
+                        crashLight.setHeight(Gdx.graphics.getHeight() * 0.1f);
+                        crashLight.setVisible(true);
+                        startedWhiteout = true;
+                    }
+                    crashLight.setWidth(crashLight.getWidth() * 1.1f);
+                    crashLight.setHeight(crashLight.getHeight() * 1.1f);
                 }
                 shakeFactor = shakeFactor * 1.008f;
             } else if (!calledStart) {
@@ -362,8 +364,20 @@ public class IntroDisplay extends UIComponent {
                 cockpitBottom.setVisible(false);
                 planet.setVisible(false);
                 calledStart = true;
+            } else {
+                continueButton.setPosition(Gdx.graphics.getWidth() / 2f,
+                        Gdx.graphics.getHeight() / 2f, Align.center);
+                continueButton.toFront();
+                
+                crashLight.toBack();
+                cockpitTop.toBack();
+                cockpitBottom.toBack();
+                planet.toBack();
+                background.toBack();
             }
         }
+        crashLight.setPosition(Gdx.graphics.getWidth() / 2f,
+                Gdx.graphics.getHeight() / 2f, Align.center);
         stage.act(ServiceLocator.getTimeSource().getDeltaTime());
     }
 
@@ -373,6 +387,7 @@ public class IntroDisplay extends UIComponent {
         planet.clear();
         cockpitTop.clear();
         cockpitBottom.clear();
+        crashLight.clear();
         background.clear();
         storyLabel.clear();
         super.dispose();
