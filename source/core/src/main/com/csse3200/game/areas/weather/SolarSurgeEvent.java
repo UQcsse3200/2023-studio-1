@@ -25,7 +25,6 @@ public class SolarSurgeEvent extends WeatherEvent {
 
     @Override
     public void stopEffect() {
-        // Handled elsewhere
         climateControllerEvents.trigger("stopWaterLevelEffect");
     }
 

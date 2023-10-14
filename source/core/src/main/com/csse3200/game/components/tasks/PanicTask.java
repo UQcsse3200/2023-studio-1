@@ -22,6 +22,8 @@ public class PanicTask extends TimedTask implements PriorityTask {
     /** Starting position when panic task starts. */
     private Vector2 startPos;
 
+    private boolean isWeatherEventPanicActive;
+
     /**
      * Constructs a PanicTask with the specified parameters.
      *
@@ -40,8 +42,7 @@ public class PanicTask extends TimedTask implements PriorityTask {
     @Override
     public void create(TaskRunner taskRunner) {
         super.create(taskRunner);
-        ServiceLocator.getGameArea().getClimateController().getEvents().addListener("acidShower", this::start);
-        ServiceLocator.getGameArea().getClimateController().getEvents().addListener("solarSurge", this::start);
+        ServiceLocator.getGameArea().getClimateController().getEvents().addListener("startPanicEffect", this::start);
     }
 
     /**

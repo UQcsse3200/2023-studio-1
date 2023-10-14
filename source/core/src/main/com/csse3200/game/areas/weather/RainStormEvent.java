@@ -28,6 +28,7 @@ public class RainStormEvent extends WeatherEvent {
     @Override
     public void startEffect() {
         climateControllerEvents.trigger("startWaterLevelEffect", getDryRate());
+
         // TODO - update effect
         ServiceLocator.getParticleService().startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
 
@@ -39,6 +40,7 @@ public class RainStormEvent extends WeatherEvent {
     @Override
     public void stopEffect() {
         climateControllerEvents.trigger("stopWaterLevelEffect");
+
         // TODO - update effect
         ServiceLocator.getParticleService().stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);
 
@@ -59,6 +61,8 @@ public class RainStormEvent extends WeatherEvent {
     }
 
     private void triggerStrike() {
+        // Trigger animal panic
+        climateControllerEvents.trigger("startPanicEffect");
         // Apply the desired lighting effect
         climateControllerEvents.trigger("lightingEffect", getNextLightningStrikeDuration(),
                 (Function<Float, Color>) this::getLightningColourOffset);
