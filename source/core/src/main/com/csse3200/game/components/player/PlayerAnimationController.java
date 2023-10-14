@@ -1,6 +1,5 @@
 package com.csse3200.game.components.player;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.components.Component;
@@ -127,11 +126,7 @@ public class PlayerAnimationController extends Component {
                 || animator.getCurrentAnimation().contains("shovel") || animator.getCurrentAnimation().contains("scythe")
                 || animator.getCurrentAnimation().contains("watering_can")) {
             return animator.isFinished();
-        } else if (animator.getCurrentAnimation().contains("fishing")) {
-            return false;
-        }
-
-        return true;
+        } else return !animator.getCurrentAnimation().contains("fishing");
     }
 
     /**
