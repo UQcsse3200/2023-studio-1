@@ -82,14 +82,9 @@ public class RainStormEvent extends WeatherEvent {
     }
 
     private Color getLightningColourOffset(float t) {
-        float brightnessOctave1 = MathUtils.sin((float) (Math.PI * t * (severity + 1.0f)));
-        brightnessOctave1 *= brightnessOctave1;
-
-        float brightnessOctave2 = MathUtils.sin((float) (Math.PI * t * (1.2f * severity + 1.0f)));
-        brightnessOctave2 = (float) Math.pow(brightnessOctave2, 4);
-
-        float totalBrightnessOffset = brightnessOctave1 * brightnessOctave2 * 0.6f;
-        return new Color(totalBrightnessOffset, totalBrightnessOffset, totalBrightnessOffset, 0.0f);
+        float brightness = 0.8f * MathUtils.sin((float) (Math.PI * t * (severity / 1.5f + 1.0f))) + 0.2f;
+        brightness *= brightness * 0.8f;
+        return new Color(brightness, brightness, brightness, 0.0f);
     }
 
 }

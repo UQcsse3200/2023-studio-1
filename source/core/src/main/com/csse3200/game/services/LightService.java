@@ -41,9 +41,7 @@ public class LightService {
 	 */
 	public void renderLight() {
 		float time = ServiceLocator.getTimeService().getHour() + (float) ServiceLocator.getTimeService().getMinute() / 60;
-//		float brightness = 1.2f * MathUtils.sin((float) (Math.PI * time / 23 - 0.1f)) - 0.1f;
 		rayHandler.setAmbientLight(getAmbientLight(time));
-//		rayHandler.setAmbientLight(brightness, brightness, brightness, brightness);
 		rayHandler.setCombinedMatrix(camera);
 		rayHandler.updateAndRender();
 	}
@@ -76,9 +74,10 @@ public class LightService {
 
 	private Color getAmbientLight(float timeOfDay) {
 		// Calculate expected brightness
-		float brightness = MathUtils.sin((float) (Math.PI * timeOfDay / 23.0f - 0.1f));
-		brightness = 0.8f * brightness * brightness + 0.2f;
-		brightness *= brightness;
+		float brightness = MathUtils.sin((float) (Math.PI * (timeOfDay - 13.0f) / 24.0f));
+		brightness = 0.92f * brightness * brightness;
+		brightness = 1 - (float) Math.pow(brightness, 1.5f);
+		brightness = (float) Math.pow(brightness, 1.5f);
 
 		// Apply brightness multiplier
 		brightness *= brightnessMultiplier;
