@@ -3,7 +3,10 @@ package com.csse3200.game.components.player;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.areas.terrain.TerrainTile;
+import com.csse3200.game.components.*;
 import com.csse3200.game.components.combat.CombatStatsComponent;
 import com.csse3200.game.components.combat.ProjectileComponent;
 import com.csse3200.game.components.Component;
@@ -127,10 +130,14 @@ public class PlayerActions extends Component {
     // Used to apply the terrainSpeedModifier
     Vector2 playerVector = this.entity.getCenterPosition(); // Centre position is better indicator of player location
     playerVector.add(0, -1.0f); // Player entity sprite's feet are located -1.0f below the centre of the entity
-    float terrainSpeedModifier = gameMap.getTile(playerVector).getSpeedModifier();
-    velocityScale.scl(terrainSpeedModifier);
-    velocityScale.scl(speedMultiplier);
+    TerrainTile terrainTile = gameMap.getTile(playerVector);
+    if (terrainTile != null) {
+      // Null check implemented for when the player Entity is moved out of bounds (Tractor spawning with terminal)
+      float terrainSpeedModifier = gameMap.getTile(playerVector).getSpeedModifier();
+      velocityScale.scl(terrainSpeedModifier);
+    }
 
+    velocityScale.scl(speedMultiplier);
 
     Vector2 desiredVelocity = moveDirection.cpy().scl(velocityScale);
     // impulse = (desiredVel - currentVel) * mass
