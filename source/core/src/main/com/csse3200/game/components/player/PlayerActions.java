@@ -20,6 +20,7 @@ import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ProjectileFactory;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.services.ParticleService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.sound.EffectSoundFile;
 import com.csse3200.game.services.sound.InvalidSoundFileException;
@@ -141,7 +142,12 @@ public class PlayerActions extends Component {
     Vector2 desiredVelocity = moveDirection.cpy().scl(velocityScale);
     // impulse = (desiredVel - currentVel) * mass
     Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
+
     body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
+
+    if (impulse.len() > 4) {
+      entity.getEvents().trigger("startEffect", ParticleService.ParticleEffectType.DIRT_EFFECT);
+    }
   }
 
   public float getPrevMoveDirection() {

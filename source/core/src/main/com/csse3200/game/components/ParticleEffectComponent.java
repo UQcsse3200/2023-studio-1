@@ -44,6 +44,9 @@ public class ParticleEffectComponent extends Component {
 	}
 
 	public void startEffect(ParticleService.ParticleEffectType effectType) {
+		if (effectExists(effectType)) {
+			return;
+		}
 		// Wrap the pooled effect with the wrapper
 		ParticleEffectPool.PooledEffect effect = ServiceLocator.getParticleService().getEffect(effectType);
 		ParticleEffectWrapper wrapper = new ParticleEffectWrapper(effect, effectType.getCategory(), effectType.name());
