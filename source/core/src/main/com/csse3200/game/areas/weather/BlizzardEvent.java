@@ -21,15 +21,14 @@ public class BlizzardEvent extends WeatherEvent {
     public void startEffect() {
         // Trigger "beginBlizzard" event
         // TODO - update effect
-        ServiceLocator.getParticleService().startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+        ServiceLocator.getParticleService().startEffect(ParticleService.ParticleEffectType.BLIZZARD);
         // Adjust global lighting
     }
 
     @Override
     public void stopEffect() {
         // Trigger "endBlizzard" event
-        // TODO - update effect
-        ServiceLocator.getParticleService().stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+        ServiceLocator.getParticleService().stopEffect(ParticleService.ParticleEffectType.BLIZZARD);
         // Adjust global lighting
     }
 
