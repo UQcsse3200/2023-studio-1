@@ -184,4 +184,13 @@ public class TamableComponent extends Component {
       jsonMap = jsonMap.get("TamableComponent");
       isTamed = jsonMap.getBoolean("Tamed");
     }
+
+    /**
+     * Getter for favourite food
+     *
+     * @return favourite food
+     */
+    public String getFavouriteFood() {
+      return favouriteFood;
+    }
 }
