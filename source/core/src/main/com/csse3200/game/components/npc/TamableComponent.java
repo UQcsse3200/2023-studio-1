@@ -5,11 +5,16 @@ import java.security.SecureRandom;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.sound.EffectSoundFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This the class for Tameable Component. These components should
@@ -24,6 +29,7 @@ public class TamableComponent extends Component {
   private final Entity player;
   private SecureRandom random = new SecureRandom(); // https://rules.sonarsource.com/java/RSPEC-2119/
   private InventoryComponent playerInventory;
+  private final Logger logger = LoggerFactory.getLogger(ItemActions.class);
 
   /**
    * Constructor for the Tameable Component class
@@ -47,8 +53,7 @@ public class TamableComponent extends Component {
 
   /**
    * Create the event and add it to the event hashmap so the function can be
-   * called
-   * and the player can observe the effects.
+   * called and the player can observe the effects.
    */
   @Override
   public void create() {
@@ -72,6 +77,26 @@ public class TamableComponent extends Component {
    * and item must be used to feed the animal.
    */
   private void feedAnimal() {
+      EntityType animalType = this.getEntity().getType();
+      String name = this.getEntity().getType().name();
+      EffectSoundFile effect = null;
+      switch(animalType) {
+          case ASTROLOTL:
+              effect = EffectSoundFile.ASTROLOTL_FEED;
+              break;
+          case CHICKEN:
+              effect = EffectSoundFile.CHICKEN_FEED;
+              break;
+          default:
+              effect = EffectSoundFile.COW_FEED;
+      }
+      logger.info("Fed " + name + "!");
+      try {
+          ServiceLocator.getSoundService().getEffectsMusicService().play(effect);
+      } catch (Exception e) {
+          logger.error("Failed to play animal sound", e);
+      }
+
       if (isTamed) {
           return;
       }
@@ -95,6 +120,12 @@ public class TamableComponent extends Component {
           // If player has already tried enough times, tame the animal (prevents frustration).
           // Use RNG to try and tame the animal
           if (numTimesFed == tamingThreshold || randomDecimal > tamingProbability) {
+              logger.info("Tamed " + name + "!");
+              try {
+                  ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.TAMED_ANIMAL);
+              } catch (Exception e) {
+                  logger.error("Failed to play animal sound", e);
+              }
               isTamed = true;
               ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.ANIMAL_TAMED.name());
               entity.getEvents().trigger("startTimedEffect", "tamed", 2f);
