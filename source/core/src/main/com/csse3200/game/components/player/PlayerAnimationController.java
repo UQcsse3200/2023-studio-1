@@ -22,18 +22,25 @@ public class PlayerAnimationController extends Component {
     Entity fishingRod;
     String fishingDirection;
 
+    public enum events {
+        ANIMATION_WALK_START,
+        ANIMATION_RUN_START,
+        ANIMATION_WALK_STOP,
+        ANIMATION_INTERACT
+    }
+
     @Override
     public void create() {
         super.create();
 
         animator = this.entity.getComponent(AnimationRenderComponent.class);
-        entity.getEvents().addListener("animationWalkStart", this::animationWalkStart);
-        entity.getEvents().addListener("animationRunStart", this::animationRunStart);
-        entity.getEvents().addListener("animationWalkStop", this::animationWalkStop);
-        entity.getEvents().addListener("animationInteract", this::animationInteract);
+        entity.getEvents().addListener(events.ANIMATION_WALK_START.name(), this::animationWalkStart);
+        entity.getEvents().addListener(events.ANIMATION_RUN_START.name(), this::animationRunStart);
+        entity.getEvents().addListener(events.ANIMATION_WALK_STOP.name(), this::animationWalkStop);
+        entity.getEvents().addListener(events.ANIMATION_INTERACT.name(), this::animationInteract);
         entity.getEvents().addListener("fishCaught", this::stopFishing);
         entity.getEvents().addListener("castFishingRod", this::castFishingRod);
-        entity.getEvents().addListener("use", this::use);
+        entity.getEvents().addListener(PlayerActions.events.USE.name(), this::use);
 
         animator.startAnimation("default");
     }
@@ -74,7 +81,7 @@ public class PlayerAnimationController extends Component {
                 if (animator.hasAnimation(animation)) {
                     animator.startAnimation(animation);
                 } else {
-                    entity.getEvents().trigger("animationInteract", direction);
+                    entity.getEvents().trigger(events.ANIMATION_INTERACT.name(), direction);
                 }
             }
         }

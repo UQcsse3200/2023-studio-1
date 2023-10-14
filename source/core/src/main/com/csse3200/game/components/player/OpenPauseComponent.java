@@ -12,7 +12,7 @@ public class OpenPauseComponent extends Component {
 
     @Override
     public void create() {
-        entity.getEvents().addListener("escInput", this::togglePauseMenu);
+        entity.getEvents().addListener(PlayerActions.events.ESC_INPUT.name(), this::togglePauseMenu);
         pauseOpen = false;
     }
 
