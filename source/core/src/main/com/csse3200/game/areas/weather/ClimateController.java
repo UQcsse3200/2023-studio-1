@@ -177,6 +177,12 @@ public class ClimateController implements Json.Serializable {
 					case ("AcidShowerEvent") -> addWeatherEvent(new AcidShowerEvent(jsonValue.getInt("hoursUntil"),
 							jsonValue.getInt("duration"), jsonValue.getInt("priority"),
 							jsonValue.getFloat("severity")));
+					case ("RainStormEvent") -> addWeatherEvent(new RainStormEvent(jsonValue.getInt("hoursUntil"),
+							jsonValue.getInt("duration"), jsonValue.getInt("priority"),
+							jsonValue.getFloat("severity")));
+					case ("BlizzardEvent") -> addWeatherEvent(new BlizzardEvent(jsonValue.getInt("hoursUntil"),
+							jsonValue.getInt("duration"), jsonValue.getInt("priority"),
+							jsonValue.getFloat("severity")));
 					case ("SolarSurgeEvent") -> addWeatherEvent(new SolarSurgeEvent(jsonValue.getInt("hoursUntil"),
 							jsonValue.getInt("duration"), jsonValue.getInt("priority"),
 							jsonValue.getFloat("severity")));

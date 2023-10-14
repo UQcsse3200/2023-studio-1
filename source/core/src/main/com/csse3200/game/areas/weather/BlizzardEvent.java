@@ -13,7 +13,7 @@ public class BlizzardEvent extends WeatherEvent {
      * @param priority      priority of the weather event
      * @param severity      the severity of this rainstorm event
      */
-    protected BlizzardEvent(int numHoursUntil, int duration, int priority, float severity) throws IllegalArgumentException {
+    public BlizzardEvent(int numHoursUntil, int duration, int priority, float severity) throws IllegalArgumentException {
         super(numHoursUntil, duration, priority, severity);
     }
 
@@ -29,7 +29,7 @@ public class BlizzardEvent extends WeatherEvent {
     public void stopEffect() {
         // Trigger "endBlizzard" event
         // TODO - update effect
-        ServiceLocator.getParticleService().startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+        ServiceLocator.getParticleService().stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);
         // Adjust global lighting
     }
 

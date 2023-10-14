@@ -2,12 +2,10 @@ package com.csse3200.game.ui.terminal.commands;
 
 import java.util.ArrayList;
 
+import com.csse3200.game.areas.weather.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.csse3200.game.areas.weather.AcidShowerEvent;
-import com.csse3200.game.areas.weather.SolarSurgeEvent;
-import com.csse3200.game.areas.weather.WeatherEvent;
 import com.csse3200.game.services.ServiceLocator;
 
 public class AddWeatherCommand implements Command {
@@ -70,6 +68,8 @@ public class AddWeatherCommand implements Command {
 
 		switch (weatherName) {
 			case "acidShower" -> weatherEvent = new AcidShowerEvent(numHoursUntil, duration, priority, severity);
+			case "rainStorm" -> weatherEvent = new RainStormEvent(numHoursUntil, duration, priority, severity);
+			case "blizzard" -> weatherEvent = new BlizzardEvent(numHoursUntil, duration, priority, severity);
 			case "solarSurge" -> weatherEvent = new SolarSurgeEvent(numHoursUntil, duration, priority, severity);
 			default -> {
 				logger.error("Valid weather event name was not entered");

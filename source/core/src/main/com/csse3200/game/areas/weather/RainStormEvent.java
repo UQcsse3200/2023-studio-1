@@ -30,7 +30,7 @@ public class RainStormEvent extends WeatherEvent {
     public void stopEffect() {
         // Trigger "endRainstorm" event
         // TODO - update effect
-        ServiceLocator.getParticleService().startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+        ServiceLocator.getParticleService().stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);
         // Adjust global lighting
         // Add occasional light increase to mimic lighting if severe enough
     }
