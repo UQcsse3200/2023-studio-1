@@ -1,0 +1,12 @@
+golden_trophy.png
+size: 64, 155
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+default
+  xy: 0, 0
+  index: 0
+  size: 64, 155
+  orig: 64, 155
+  offset: 0, 0
+  rotate: false
