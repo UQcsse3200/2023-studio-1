@@ -72,6 +72,7 @@ public class PlaceableFactory {
         type.setPlaceableCategory(PlaceableCategory.SPRINKLERS);
         Entity sprinkler = createBasePlaceable(type)
                 .addComponent(new DynamicTextureRenderComponent("images/placeable/sprinkler/pipe_null.png"));
+                // TODO: add animation render component here.
         // stop from blocking player movement
         sprinkler.getComponent(ColliderComponent.class).setLayer(PhysicsLayer.NONE);
         // add sprinkler component
