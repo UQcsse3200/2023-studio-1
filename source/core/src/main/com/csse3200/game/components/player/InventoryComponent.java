@@ -357,11 +357,14 @@ public class InventoryComponent extends Component {
      * @param item ItemComponent to be added
      * @return boolean representing if the item was added successfully
      */
-  public boolean addMultipleItem(int count, Entity item) {
-    for (int i = 0; i < count; i++) {
-      addItem(item);
-    }
-    return true;
+  public boolean addMultipleItem(int count, Entity item, int place) {
+      if (itemCount.get(item.getComponent(ItemComponent.class).getItemName()) == null) {
+        itemPlace.put(place, item.getComponent(ItemComponent.class).getItemName());
+      }
+        for (int i = 0; i < count; i++) {
+          addItem(item);
+        }
+        return true;
   }
 
     /**
@@ -405,16 +408,30 @@ public class InventoryComponent extends Component {
             logger.info("To be removed Entity is not an item");
             return false;
         }
+        if (item.getComponent(ItemComponent.class) == null) {
+            logger.info("To be removed Entity does not have an ItemComponent");
+            return false;
+        }
+        return removeItem(item.getComponent(ItemComponent.class).getItemName());
+    }
+
+    /**
+     * Removes an item from the Player's Inventory with the given {@link String} name.
+     *
+     * @param itemName the name of the item to be removed
+     * @return boolean representing if the item was removed successfully
+     */
+    public boolean removeItem(String itemName) {
         // Check if item is in inventory
-        if (!this.itemCount.containsKey(item.getComponent(ItemComponent.class).getItemName())) {
+        if (!this.itemCount.containsKey(itemName)) {
             return false;
         }
         // Decrease item count by 1
-        this.itemCount.put(item.getComponent(ItemComponent.class).getItemName(), this.itemCount.get(item.getComponent(ItemComponent.class).getItemName()) - 1);
+        this.itemCount.put(itemName, this.itemCount.get(itemName) - 1);
         // If item count is now 0
-        if (this.itemCount.get(item.getComponent(ItemComponent.class).getItemName()).equals(0)) {
+        if (this.itemCount.get(itemName).equals(0)) {
             // Remove it from the item count
-            this.itemCount.remove(item.getComponent(ItemComponent.class).getItemName());
+            this.itemCount.remove(itemName);
             // Find the position of the item and remove the item from the position
             for (Map.Entry<Integer, String> placeEntry : itemPlace.entrySet()) {
                 if (placeEntry.getValue() == null) {
@@ -422,7 +439,7 @@ public class InventoryComponent extends Component {
                     continue;
                 }
                 // Remove the item from item place
-                if (placeEntry.getValue().equals(item.getComponent(ItemComponent.class).getItemName())) {
+                if (placeEntry.getValue().equals(itemName)) {
                     itemPlace.remove(placeEntry.getKey());
                     // If it was the held item set held item to null
                     if (this.heldIndex == placeEntry.getKey()) {
@@ -434,9 +451,18 @@ public class InventoryComponent extends Component {
             }
         }
         entity.getEvents().trigger(UPDATE_INVENTORY);
-        logger.info("Removing item from inventory - {}, new count {}", item.getComponent(ItemComponent.class).getItemName(),
-                this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(), 0));
+        logger.info("Removing item from inventory - {}, new count {}", itemName,
+                this.itemCount.getOrDefault(itemName, 0));
         return true;
+    }
+    public void removeAll(Entity item) {
+        if(item.getType() != EntityType.ITEM) {
+            logger.info("To be removed Entity is not an item");
+            return;
+        }
+        while ((this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(),0) > 0)) {
+            removeItem(item);
+        }
     }
 
     /**

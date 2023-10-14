@@ -3,6 +3,7 @@ package com.csse3200.game;
 import static com.badlogic.gdx.Gdx.app;
 
 import com.csse3200.game.screens.*;
+import com.csse3200.game.utils.DiscordActivity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +20,7 @@ import com.csse3200.game.files.UserSettings;
 public class GdxGame extends Game {
   private static final Logger logger = LoggerFactory.getLogger(GdxGame.class);
   private boolean loadSaveOnStart = false;
-
+  private DiscordActivity discordActivity;
   @Override
   public void create() {
     logger.info("Creating game");
@@ -27,11 +28,9 @@ public class GdxGame extends Game {
 
     // Sets background to light yellow
     Gdx.gl.glClearColor(0.0f, 0.098f, 0.309f, 1.0f);
-
-
+    discordActivity = new DiscordActivity();
     setScreen(ScreenType.MAIN_MENU);
   }
-
 
   /**
    * Loads the game's settings.
@@ -82,13 +81,21 @@ public class GdxGame extends Game {
   private Screen newScreen(ScreenType screenType) {
     switch (screenType) {
       case MAIN_MENU:
+        discordActivity.updateDiscordStatus("Perusing the Main Menu");
+        discordActivity.startTimer();
         return new MainMenuScreen(this);
       case LOAD_GAME:
+        discordActivity.updateDiscordStatus("Planting Crops");
+        discordActivity.startTimer();
         setLoadOnStart(true);
         return new MainGameScreen(this);
       case MAIN_GAME:
+        discordActivity.updateDiscordStatus("Planting Crops");
+        discordActivity.startTimer();
         return new MainGameScreen(this);
       case SETTINGS:
+        discordActivity.updateDiscordStatus("Changing Settings");
+        discordActivity.startTimer();
         return new SettingsScreen(this);
       case CONTROLS:
         return new ControlsScreen(this);
