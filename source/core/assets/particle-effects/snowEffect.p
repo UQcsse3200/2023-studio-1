@@ -1,13 +1,13 @@
-SnowEffect
+snowEffect
 - Delay -
 active: false
-- Duration -
+- Duration - 
 lowMin: 30000.0
 lowMax: 30000.0
-- Count -
+- Count - 
 min: 0
 max: 20000
-- Emission -
+- Emission - 
 lowMin: 0.0
 lowMax: 0.0
 highMin: 100.0
@@ -17,7 +17,7 @@ scalingCount: 1
 scaling0: 1.0
 timelineCount: 1
 timeline0: 0.0
-- Life -
+- Life - 
 lowMin: 0.0
 lowMax: 0.0
 highMin: 3000.0
@@ -30,10 +30,10 @@ timelineCount: 2
 timeline0: 0.0
 timeline1: 1.0
 independent: false
-- Life Offset -
+- Life Offset - 
 active: false
 independent: false
-- X Offset -
+- X Offset - 
 active: true
 lowMin: -200.0
 lowMax: 200.0
@@ -44,7 +44,7 @@ scalingCount: 1
 scaling0: 1.0
 timelineCount: 1
 timeline0: 0.0
-- Y Offset -
+- Y Offset - 
 active: true
 lowMin: 300.0
 lowMax: 0.0
@@ -55,9 +55,9 @@ scalingCount: 1
 scaling0: 1.0
 timelineCount: 1
 timeline0: 0.0
-- Spawn Shape -
+- Spawn Shape - 
 shape: point
-- Spawn Width -
+- Spawn Width - 
 lowMin: 0.0
 lowMax: 0.0
 highMin: -300.0
@@ -67,7 +67,7 @@ scalingCount: 1
 scaling0: 1.0
 timelineCount: 1
 timeline0: 0.0
-- Spawn Height -
+- Spawn Height - 
 lowMin: 0.0
 lowMax: 0.0
 highMin: 100.0
@@ -77,28 +77,28 @@ scalingCount: 1
 scaling0: 1.0
 timelineCount: 1
 timeline0: 0.0
-- X Scale -
+- X Scale - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 20.0
-highMax: 20.0
+highMin: 8.0
+highMax: 8.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
 timelineCount: 1
 timeline0: 0.0
-- Y Scale -
+- Y Scale - 
 active: true
 lowMin: 0.0
 lowMax: 0.0
-highMin: 20.0
-highMax: 20.0
+highMin: 8.0
+highMax: 8.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
 timelineCount: 1
 timeline0: 0.0
-- Velocity -
+- Velocity - 
 active: true
 lowMin: -30.0
 lowMax: 0.0
@@ -115,7 +115,7 @@ timeline0: 0.0
 timeline1: 0.25342464
 timeline2: 0.6164383
 timeline3: 0.8835617
-- Angle -
+- Angle - 
 active: true
 lowMin: 90.0
 lowMax: 90.0
@@ -132,7 +132,7 @@ timeline0: 0.0
 timeline1: 0.1849315
 timeline2: 0.5684931
 timeline3: 0.9726027
-- Rotation -
+- Rotation - 
 active: true
 lowMin: 1.0
 lowMax: 1.0
@@ -145,11 +145,11 @@ scaling1: 1.0
 timelineCount: 2
 timeline0: 0.0
 timeline1: 1.0
-- Wind -
+- Wind - 
 active: true
 lowMin: 200.0
 lowMax: 0.0
-highMin: 300.0
+highMin: 500.0
 highMax: 100.0
 relative: false
 scalingCount: 5
@@ -166,10 +166,10 @@ timeline3: 0.6369863
 timeline4: 0.8561644
 - Gravity -
 active: true
-lowMin: -750.0
-lowMax: -750.0
-highMin: -750.0
-highMax: -750.0
+lowMin: -400.0
+lowMax: -400.0
+highMin: -200.0
+highMax: -200.0
 relative: false
 scalingCount: 2
 scaling0: 1.0
