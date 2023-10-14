@@ -11,7 +11,7 @@ public class FireflySpawner {
     /**
      * The amount of fireflies to spawn in
      */
-    private static final int MAX_FIREFLIES = 75;
+    protected static final int MAX_FIREFLIES = 75;
 
     /**
      * The width of the map
@@ -47,7 +47,7 @@ public class FireflySpawner {
      * Starts to spawn the fireflies
      * Spawns MAX_FIREFLIES fireflies
      */
-    private void startSpawning() {
+    protected void startSpawning() {
         for (int i = 0; i < MAX_FIREFLIES; i++) {
             spawnFirefly();
         }
@@ -56,7 +56,7 @@ public class FireflySpawner {
     /**
      * Spawns a firefly at a random traversable grid tile
      */
-    private void spawnFirefly() {
+    void spawnFirefly() {
         GridPoint2 randomGrid;
         do {
             randomGrid = new GridPoint2(random.nextInt(mapSizeX), random.nextInt(mapSizeY));

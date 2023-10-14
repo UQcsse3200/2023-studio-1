@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.components.AuraLightComponent;
-import com.csse3200.game.components.ConeLightComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.tractor.TractorActions;

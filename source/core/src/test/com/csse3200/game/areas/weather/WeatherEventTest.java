@@ -190,24 +190,6 @@ class WeatherEventTest {
     }
 
     @Test
-    void testWeatherEventGetHumidityModifier() {
-        assertEquals(weatherEvent1.getHumidityModifier(), 1.0f);
-        assertEquals(weatherEvent2.getHumidityModifier(), 1.0f);
-        assertEquals(weatherEvent3.getHumidityModifier(), 1.0f);
-        assertEquals(weatherEvent4.getHumidityModifier(), 1.0f);
-        assertEquals(weatherEvent5.getHumidityModifier(), 1.0f);
-    }
-
-    @Test
-    void testWeatherEventGetTemperatureModifier() {
-        assertEquals(weatherEvent1.getTemperatureModifier(), 1.0f);
-        assertEquals(weatherEvent2.getTemperatureModifier(), 1.0f);
-        assertEquals(weatherEvent3.getTemperatureModifier(), 1.0f);
-        assertEquals(weatherEvent4.getTemperatureModifier(), 1.0f);
-        assertEquals(weatherEvent5.getTemperatureModifier(), 1.0f);
-    }
-
-    @Test
     void testConstructorWithNegativePriority() {
         assertThrows(IllegalArgumentException.class, () -> new WeatherEvent(4, 5, -1, 1.1f) {
             @Override

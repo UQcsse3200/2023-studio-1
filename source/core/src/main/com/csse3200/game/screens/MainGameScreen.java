@@ -4,6 +4,7 @@ import com.csse3200.game.services.*;
 import com.csse3200.game.components.plants.PlantInfoDisplayComponent;
 import com.csse3200.game.entities.FireflySpawner;
 import com.csse3200.game.components.losescreen.LoseScreenDisplay;
+import com.csse3200.game.ui.UIService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.ScreenAdapter;
@@ -12,13 +13,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.SpaceGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.areas.weather.WeatherEventDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.components.maingame.PauseMenuActions;
-import com.csse3200.game.components.player.PlayerActions;
-import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
@@ -123,8 +121,10 @@ public class MainGameScreen extends ScreenAdapter {
 
         ServiceLocator.registerPlantCommandService(new PlantCommandService());
         ServiceLocator.registerPlayerHungerService(new PlayerHungerService());
+        ServiceLocator.registerPlayerMapService(new PlayerMapService());
         ServiceLocator.registerPlantInfoService(new PlantInfoService());
 
+        ServiceLocator.registerUIService(new UIService());
         ServiceLocator.registerSoundService(new SoundService());
 
 
@@ -263,7 +263,6 @@ public class MainGameScreen extends ScreenAdapter {
                 .addComponent(inputComponent)
                 .addComponent(new TerminalDisplay())
                 .addComponent(new PlantInfoDisplayComponent())
-                .addComponent(new WeatherEventDisplay())
             // NOTE: VERY IMPORTANT
             // UI components that require transitions must be added AFTER those that don't, otherwise screen
             // entities added after them will transition even if you don't want them to. Add components with
@@ -274,8 +273,8 @@ public class MainGameScreen extends ScreenAdapter {
                 .addComponent(new HungerBar())
                 .addComponent(new PlantInfoDisplayComponent())
 
-                .addComponent(new WeatherEventDisplay())
-                .addComponent(new HealthDisplay());
+                .addComponent(new HealthDisplay())
+                .addComponent(new ToggleableMap());
 
         ServiceLocator.getEntityService().register(ui);
     }

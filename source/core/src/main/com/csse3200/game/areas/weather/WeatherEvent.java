@@ -29,16 +29,6 @@ public abstract class WeatherEvent {
 	protected final float severity;
 
 	/**
-	 * Modifier that is used to calculate the humidity in game
-	 */
-	protected float humidityModifier;
-
-	/**
-	 * Modifier used to calculate the temperature in game
-	 */
-	protected float temperatureModifier;
-
-	/**
 	 * Constructs an {@link WeatherEvent} with a given duration, priority and countdown
 	 *
 	 * @param numHoursUntil number of in-game hours until the weather event can occur
@@ -59,8 +49,6 @@ public abstract class WeatherEvent {
 		this.duration = duration;
 		this.priority = priority;
 		this.severity = severity;
-		this.humidityModifier = 1.0f;
-		this.temperatureModifier = 1.0f;
 	}
 
 	/**
@@ -113,25 +101,6 @@ public abstract class WeatherEvent {
 	 */
 	public boolean isExpired() {
 		return numHoursUntil == 0 && duration <= 0;
-	}
-
-
-	/**
-	 * Gets the humidity modifier of this weather event
-	 *
-	 * @return humidity modifier
-	 */
-	public float getHumidityModifier() {
-		return humidityModifier;
-	}
-
-	/**
-	 * Gets the temperature modifier of this weather event
-	 *
-	 * @return temperature modifier
-	 */
-	public float getTemperatureModifier() {
-		return temperatureModifier;
 	}
 
 	/**

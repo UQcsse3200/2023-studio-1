@@ -1753,3 +1753,31 @@ sword_right
   orig: 48, 48
   offset: 0, 0
   index: -1
+fishing_right
+  rotate: false
+  xy: 336, 192
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+fishing_left
+  rotate: false
+  xy: 336, 240
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+fishing_down
+  rotate: false
+  xy: 336, 288
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+fishing_up
+  rotate: false
+  xy: 336, 336
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1

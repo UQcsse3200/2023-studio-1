@@ -1,8 +1,5 @@
 package com.csse3200.game.components.items;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.After;
@@ -16,6 +13,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.extensions.GameExtension;
 
 import java.io.Serial;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(GameExtension.class)
 class ItemComponentTest {
@@ -59,10 +58,14 @@ class ItemComponentTest {
   @Test
   void createItemComponentConstructorDescription() {
     ItemComponent item = new ItemComponent("test", ItemType.HOE, "test description", "images/tool_shovel.png");
+    ItemComponent item2 = new ItemComponent("test", ItemType.HOE, "test description", true, "images/tool_shovel.png");
+    ItemComponent item3 = new ItemComponent("test", ItemType.HOE, "images/tool_shovel.png", true);
+    assertTrue(item2.isPerishable());
+    assertTrue(item3.isPerishable());
     assertEquals("test", item.getItemName());
     assertEquals(0, item.getPrice());
     assertEquals("test description", item.getItemDescription());
-    assertEquals(false, item.isSellable());
+    assertFalse(item.isSellable());
     assertEquals(ItemType.HOE, item.getItemType());
   }
 

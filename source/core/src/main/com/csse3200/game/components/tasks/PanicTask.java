@@ -59,6 +59,12 @@ public class PanicTask extends TimedTask implements PriorityTask {
         this.owner.getEntity().getEvents().trigger("runStart");
     }
 
+    @Override
+    public void triggerActivePriority() {
+        super.triggerActivePriority();
+        this.owner.getEntity().getEvents().trigger("startEffect", "panicStart");
+    }
+
     /**
      * Updates the panic task by checking if movement has finished, and if so, restarting the movement task.
      */
@@ -82,6 +88,7 @@ public class PanicTask extends TimedTask implements PriorityTask {
     public void stop() {
         super.stop();
         movementTask.stop();
+        this.owner.getEntity().getEvents().trigger("stopEffect", "panicStart");
     }
 
     /**

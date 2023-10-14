@@ -15,6 +15,11 @@ import com.csse3200.game.missions.MissionManager;
  * Reading, Writing, and applying user settings in the game.
  */
 public class SaveGame {
+
+  private SaveGame() {
+    throw new IllegalStateException("Util class");
+  }
+
   private static final String ROOT_DIR = "saves";
   private static final String SAVE_FILE = "saveFile.json";
 
@@ -186,7 +191,7 @@ public class SaveGame {
     private Array<Entity> filterPlaceables(Array<Entity> entities) {
       Array<Entity> returnValue = new Array<>(entities);
       ArrayList<EntityType> placeableTypes = new ArrayList<>(Arrays.asList(EntityType.CHEST, EntityType.LIGHT,
-              EntityType.FENCE, EntityType.GATE, EntityType.SPRINKLER, EntityType.PUMP));
+              EntityType.FENCE, EntityType.GATE, EntityType.SPRINKLER, EntityType.PUMP, EntityType.GOLDEN_STATUE));
       for (int i = 0; i < returnValue.size; i++) {
         if (!placeableTypes.contains(returnValue.get(i).getType())) {
           returnValue.removeIndex(i);

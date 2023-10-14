@@ -1,12 +1,18 @@
 package com.csse3200.game.components.items;
 
 import static com.csse3200.game.areas.terrain.TerrainCropTileFactory.createTerrainEntity;
-import java.util.Arrays;
-import java.util.List;
+
+import java.security.SecureRandom;
+import java.util.*;
+import java.util.function.Supplier;
+
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.components.player.PlayerActions;
+import com.csse3200.game.entities.factories.ShipFactory;
+import com.csse3200.game.services.sound.EffectSoundFile;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.TerrainTile;
-import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.combat.CombatStatsComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.npc.TamableComponent;
@@ -14,14 +20,89 @@ import com.csse3200.game.components.player.HungerComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
+import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ItemActions extends Component {
+
+  private final Random random = new SecureRandom();
+
+  private final Logger logger = LoggerFactory.getLogger(ItemActions.class);
+
+  private final ArrayList<Supplier<Entity>> oceanFish =
+          new ArrayList<>(Arrays.asList(ItemFactory::createAtomicAlgaeSeed,
+                  ItemFactory::createSpaceSnapperSeed,
+                  ItemFactory::createAloeVeraSeed,
+                  ItemFactory::createCosmicCobSeed,
+                  ItemFactory::createDeadlyNightshadeSeed,
+                  ItemFactory::createHammerPlantSeed,
+                  ItemFactory::createSalmon,
+                  ItemFactory::createBryton,
+                  ItemFactory::createMrKrabs,
+                  ItemFactory::createBraydan,
+                  ItemFactory::createNetty,
+                  ItemFactory::createHarry,
+                  ItemFactory::createLarry));
+
+  private final ArrayList<Supplier<Entity>> lavaFish =
+          new ArrayList<>(Arrays.asList(ItemFactory::createLavaEel,
+                  ItemFactory::createSprinklerItem,
+                  ItemFactory::createChurchill,
+                  ItemFactory::createSanders,
+                  ItemFactory::createLola,
+                  ItemFactory::createYak3,
+                  ItemFactory::createPharLap));
 
   @Override
   public void create() {
     // Just in case we need constructor for later
+    entity.getEvents().addListener("fishCaught", this::getFish);
+  }
+
+  private void getFish(String place, Entity player) {
+    player.getEvents().trigger("fishCaught");
+    Entity item;
+    logger.info("Fish caught!");
+    try {
+      ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.FISHING_CATCH);
+    } catch (Exception e) {
+      logger.error("Failed to play fishsound", e);
+    }
+    switch (place) {
+      case "ocean":
+        // Get an ocean fish
+        item = oceanFish.get(random.nextInt(oceanFish.size())).get();
+        ServiceLocator.getMissionManager().getEvents().trigger("FISH");
+        break;
+      case "lava":
+        // Have a chance to receive a drop 1 / 5
+        if (random.nextInt(5) == 0) {
+          // Get a lava fish
+          item = lavaFish.get(random.nextInt(lavaFish.size())).get();
+          ServiceLocator.getMissionManager().getEvents().trigger("FISH");
+          break;
+        }
+        // Unlucky
+        return;
+      case "ḓ̸̺̯̰͍͇̫̻͔̜̮͔̫̘̮̆͗̏͛̃͐̓̓̈́̉͋͒j̴͇̗̱̝̜͌̃ ̷̨̠̝̲͍͚̥̭̪͕̜̯̔̉̑k̷̮̤̺̎͑͊̓̈̽̈́̃̿̐̐͛͘͝h̵͍̳̲̟̝̀̐͗͌̄̔a̶̢̧̛̫̥̙͈̪̲͇̿͒̇́͋̈́̄̉͗̕͜ͅl̷̨͎̻͇̞̩̪̪̦͙̹̳͚̜̍͌͋̀ͅḗ̵̪͕̰̥̊̓̅͌́͠d̶͕͚̦̽̄̏̍͘":
+        if (random.nextInt(3) == 0) {
+          // God didn't
+          return;
+        }
+        item = ItemFactory.createGoldenFish();
+        ServiceLocator.getMissionManager().getEvents().trigger("FISH");
+        break;
+      default:
+        // Error
+        logger.error("Error while fishing");
+        return;
+    }
+    // Add to inventory
+    logger.info("Added fish to inventory");
+    ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class).addItem(item);
   }
 
   /**
@@ -94,10 +175,87 @@ public class ItemActions extends Component {
         resultStatus = repair(player, mouseWorldPos);
         return resultStatus;
       }
+      case FISHING_ROD -> {
+        return fish(player, mousePos);
+      }
       default -> {
         return false;
       }
     }
+  }
+
+  private Vector2 getAdjustedPosFish(Vector2 mousePos) {
+    Vector2 mouseWorldPos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
+    Vector2 adjustedPosition = new Vector2(
+            ServiceLocator.getGameArea().getMap().tileCoordinatesToVector(ServiceLocator.getGameArea().getMap().vectorToTileCoordinates(new Vector2(mouseWorldPos.x, mouseWorldPos.y))));
+
+    Vector2 playerPosCenter = ServiceLocator.getGameArea().getPlayer().getCenterPosition();
+    playerPosCenter.add(0, -1.0f); // Player entity sprite's feet are located -1.0f below the centre of the entity. ty Hunter
+
+    playerPosCenter = ServiceLocator.getGameArea().getMap().tileCoordinatesToVector(ServiceLocator.getGameArea().getMap().vectorToTileCoordinates(playerPosCenter));
+    if (adjustedPosition.x - 0.5 > playerPosCenter.x) {
+      playerPosCenter.x += 2;
+    } else if (adjustedPosition.x + 0.5 < playerPosCenter.x) {
+      playerPosCenter.x -= 2;
+    }
+    if (adjustedPosition.y - 0.5 > playerPosCenter.y) {
+      playerPosCenter.y += 2;
+    } else if (adjustedPosition.y + 0.5 < playerPosCenter.y) {
+      playerPosCenter.y -= 2;
+    }
+    return playerPosCenter;
+  }
+
+  private boolean fish(Entity player, Vector2 mousePos) {
+    Vector2 nullValue = new Vector2(82, 25);
+    if (entity.getEvents().getScheduledEventsSize() != 0) {
+      player.getEvents().trigger("fishCaught");
+      entity.getEvents().cancelAllEvents();
+      logger.info("Fishing cancelled");
+      return false;
+    }
+    Integer randomNumber;
+    Vector2 pos = getAdjustedPosFish(mousePos);
+    if (pos.equals(nullValue)) {
+      randomNumber = random.nextInt(5) + 1;
+      logger.info("Fishing occurred");
+      try {
+        ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.FISHING_CAST);
+      } catch (Exception e) {
+        logger.error("Failed to play fishsound", e);
+      }
+      player.getEvents().trigger("castFishingRod", mousePos);
+      entity.getEvents().scheduleEvent(randomNumber, "fishCaught", "ḓ̸̺̯̰͍͇̫̻͔̜̮͔̫̘̮̆͗̏͛̃͐̓̓̈́̉͋͒j̴͇̗̱̝̜͌̃ ̷̨̠̝̲͍͚̥̭̪͕̜̯̔̉̑k̷̮̤̺̎͑͊̓̈̽̈́̃̿̐̐͛͘͝h̵͍̳̲̟̝̀̐͗͌̄̔a̶̢̧̛̫̥̙͈̪̲͇̿͒̇́͋̈́̄̉͗̕͜ͅl̷̨͎̻͇̞̩̪̪̦͙̹̳͚̜̍͌͋̀ͅḗ̵̪͕̰̥̊̓̅͌́͠d̶͕͚̦̽̄̏̍͘", player);
+      return true;
+    }
+    TerrainTile tile = ServiceLocator.getGameArea().getMap().getTile(pos);
+    // Is there viable water where the tile would land
+    if (tile.getTerrainCategory() == TerrainTile.TerrainCategory.DEEPWATER) {
+      // Ocean fish
+      randomNumber = random.nextInt(5) + 1;
+      logger.info("Fishing occurred");
+      try {
+        ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.FISHING_CAST);
+      } catch (Exception e) {
+        logger.error("Failed to play fishsound", e);
+      }
+      player.getEvents().trigger("castFishingRod", mousePos);
+      entity.getEvents().scheduleEvent(randomNumber,"fishCaught", "ocean", player);
+      return true;
+    } else if (tile.getTerrainCategory() == TerrainTile.TerrainCategory.LAVA) {
+      // Lava fish
+      randomNumber = random.nextInt(10) + 1;
+      logger.info("Fishing occurred");
+      try {
+        ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.FISHING_CAST);
+      } catch (Exception e) {
+        logger.error("Failed to play fishsound", e);
+      }
+      player.getEvents().trigger("castFishingRod", mousePos);
+      entity.getEvents().scheduleEvent(randomNumber,"fishCaught", "lava", player);
+      return true;
+    }
+    return false;
   }
 
   public void eat(Entity player) {
@@ -106,6 +264,7 @@ public class ItemActions extends Component {
     if (type == null) {
       return;
     }
+
     if (type.getItemType() == ItemType.FOOD) {
       switch (type.getItemName()) {
         case "Ear of Cosmic Cob":
@@ -122,10 +281,25 @@ public class ItemActions extends Component {
           player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
           player.getComponent(CombatStatsComponent.class).addHealth(30);
           return;
+        case "Lave Eel":
+          player.getComponent(HungerComponent.class).increaseHungerLevel(-50);
+          player.getComponent(CombatStatsComponent.class).addHealth(100);
+          return;
         default:
-          // Nothing
+          player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
       }
+    } else if (type.getItemType() == ItemType.EGG) {
+        if (type.getItemName().equals("golden egg")) {
+            player.getComponent(PlayerActions.class).setSpeedMultiplier(5f);
+            player.getEvents().scheduleEvent(5f, "setSpeedMultiplier", 1f);
+        } else {
+            player.getComponent(HungerComponent.class).increaseHungerLevel(-10);
+        }
+    } else if (type.getItemType() == ItemType.MILK) {
+      player.getComponent(PlayerActions.class).setDamageMultiplier(5f);
+      player.getEvents().scheduleEvent(5f, "setDamageMultiplier", 1f);
     }
+
   }
 
   /**
@@ -144,6 +318,13 @@ public class ItemActions extends Component {
       // Do not place
       return false;
     }
+
+    try {
+      ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.PLACE);
+    } catch (Exception e) {
+      logger.error("Failed to play place sound", e);
+    }
+
     // Make the Entity to place
     Entity placeable = FactoryService.getPlaceableFactories()
         .get(entity.getComponent(ItemComponent.class).getItemName()).get();
@@ -208,6 +389,7 @@ public class ItemActions extends Component {
    * @return if watering was successful return true else return false
    */
   private boolean water(TerrainTile tile) {
+
     WateringCanLevelComponent wateringCan = entity.getComponent(WateringCanLevelComponent.class);
     List<String> waterTiles = Arrays.asList("SHALLOWWATER", "FLOWINGWATER", "DEEPWATER");
     //if the tile is an unoccupied water tile then fill the watering can instead of emptying
@@ -221,15 +403,21 @@ public class ItemActions extends Component {
       return false;
     }
 
+    try {
+      ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.WATERING_CAN);
+    } catch (Exception e) {
+      logger.error("Failed to play wateringCan sound", e);
+    }
+
     boolean tileWaterable = isCropTile(tile.getOccupant());
-    entity.getComponent(WateringCanLevelComponent.class).incrementLevel(-5);  //decrease the water level by 5 units
+    entity.getComponent(WateringCanLevelComponent.class).incrementLevel(-2);  //decrease the water level by 5 units
     
     if (!tileWaterable) {
       return false;
     }
 
-    // A water amount of 0.5 was recommended by team 7
-    tile.getOccupant().getEvents().trigger("water", 0.5f);
+    // A water amount of 0.2
+    tile.getOccupant().getEvents().trigger("water", 0.2f);
     return true;
   }
 
@@ -240,6 +428,11 @@ public class ItemActions extends Component {
    * @return if harvesting was successful return true else return false
    */
   private boolean harvest(TerrainTile tile) {
+    try {
+      ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.SCYTHE);
+    } catch (Exception e) {
+      logger.error("Failed to play harvest sound", e);
+    }
     boolean tileHarvestable = isCropTile(tile.getOccupant());
     if (tileHarvestable) {
       tile.getOccupant().getEvents().trigger("harvest");
@@ -255,6 +448,11 @@ public class ItemActions extends Component {
    * @return if shoveling was successful return true else return false
    */
   private boolean shovel(TerrainTile tile) {
+    try {
+      ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.SHOVEL);
+    } catch (Exception e) {
+      logger.error("Failed to play shovel sound", e);
+    }
     // If there is something to remove
     if (tile.getOccupant() != null) {
       // Trigger the destroy method within that occupant
@@ -271,6 +469,11 @@ public class ItemActions extends Component {
    * @return if hoeing was successful return true else return false
    */
   private boolean hoe(Vector2 mousePos) {
+    try {
+      ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.HOE);
+    } catch (Exception e) {
+      logger.error("Failed to play scy sound", e);
+    }
     TerrainTile tile = getTileAtPosition(mousePos);
     if (tile.isOccupied() || !tile.isTillable()) {
       return false;
@@ -382,7 +585,7 @@ public class ItemActions extends Component {
       return false;
     }
     if (ship.getType() == EntityType.SHIP) {
-      ship.getEvents().trigger("addPart", 1);
+      ship.getEvents().trigger(ShipFactory.events.ADD_PART.name(), 1);
       player.getComponent(InventoryComponent.class).removeItem(entity);
       return true;
     }

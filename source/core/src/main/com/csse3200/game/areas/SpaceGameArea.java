@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.*;
 import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntitySpawner;
@@ -48,10 +49,14 @@ public class SpaceGameArea extends GameArea {
           "images/iso_grass_2.png",
           "images/iso_grass_3.png",
           "images/tool_shovel.png",
+          "images/fishing_rod.png",
           "images/animals/egg.png",
           "images/animals/milk.png",
           "images/animals/golden_egg.png",
           "images/animals/beef.png",
+          "images/lava_eel.png",
+          "images/salmon.png",
+          "images/golden_fish.png",
           "images/animals/chicken_meat.png",
 
           "images/tool_hoe.png",
@@ -68,6 +73,7 @@ public class SpaceGameArea extends GameArea {
           "images/overwatered_cropTile.png",
           "images/overwatered_cropTile_fertilised.png",
           "images/Temp-Chest.png",
+          "images/bin.png",
 
           "images/tractor.png",
           "images/fertiliser.png",
@@ -137,8 +143,6 @@ public class SpaceGameArea extends GameArea {
 
           "images/Player_Hunger/hunger_bar_outline.png",
           "images/Player_Hunger/hunger_bar_fill.png",
-
-
 
           "images/plants/misc/atomic_algae_seed.png",
           "images/invisible_sprite.png",
@@ -248,9 +252,18 @@ public class SpaceGameArea extends GameArea {
           "images/selected.png",
           "images/itemFrame.png",
           "images/PauseMenu/Pause_Overlay.jpg",
-          "images/PauseMenu/Pausenew.jpg"
-
-
+          "images/PauseMenu/Pausenew.jpg",
+          "images/fish/fish_1.png",
+          "images/fish/fish_2.png",
+          "images/fish/fish_3.png",
+          "images/fish/fish_4.png",
+          "images/fish/fish_5.png",
+          "images/fish/fish_6.png",
+          "images/fish/fish_7.png",
+          "images/fish/fish_8.png",
+          "images/fish/fish_9.png",
+          "images/fish/fish_10.png",
+          "images/fish/fish_11.png",
   };
 
   private static final String[] textureAtlasPaths = {
@@ -260,8 +273,9 @@ public class SpaceGameArea extends GameArea {
       "images/missionStatus.atlas", "images/plants/cosmic_cob.atlas", "images/plants/aloe_vera.atlas",
       "images/plants/hammer_plant.atlas", "images/plants/space_snapper.atlas", "images/plants/atomic_algae.atlas",
       "images/plants/deadly_nightshade.atlas", "images/fireflies.atlas", "images/animals/dragonfly.atlas",
-          "images/animals/bat.atlas", "images/projectiles/oxygen_eater_projectile.atlas",
-          "images/ship/ship.atlas", "images/light.atlas", "images/projectiles/dragon_fly_projectile.atlas"
+      "images/animals/bat.atlas", "images/projectiles/oxygen_eater_projectile.atlas",
+      "images/ship/ship.atlas", "images/light.atlas", "images/projectiles/dragon_fly_projectile.atlas", "images/golden_trophy.atlas",
+      "images/player_fishing.atlas", "images/animals/animal_effects.atlas"
   };
   private static final String[] soundPaths = {
           "sounds/Impact4.ogg", "sounds/car-horn-6408.mp3",
@@ -289,7 +303,9 @@ public class SpaceGameArea extends GameArea {
           "sounds/plants/waterWeed/decay.wav", "sounds/plants/waterWeed/decayLore.wav",
           "sounds/plants/waterWeed/destroy.wav", "sounds/plants/waterWeed/destroyLore.wav",
           "sounds/plants/waterWeed/nearby.wav", "sounds/plants/waterWeed/nearbyLore.wav",
-          "sounds/gate-interact.wav",
+          "sounds/gate-interact.wav","sounds/tractor-start-up.wav", "sounds/shovel.wav",
+          "sounds/hoe.wav", "sounds/watering-can.wav", "sounds/place.wav", "sounds/fishing-cast.wav",
+          "sounds/applause.wav"
   };
 
   String[] skinPaths = {
@@ -332,7 +348,6 @@ public class SpaceGameArea extends GameArea {
     spawnShipDebris();
 
     player = spawnPlayer();
-    player.getComponent(PlayerActions.class).setGameMap(gameMap);
 
     spawnPlayerHighlight();
     spawnQuestgiver();
@@ -526,9 +541,20 @@ public class SpaceGameArea extends GameArea {
     // Add effects that are needed
     List<SoundFile> effects = new ArrayList<>();
     effects.add(EffectSoundFile.TRACTOR_HONK);
+    effects.add(EffectSoundFile.TRACTOR_START_UP);
     effects.add(EffectSoundFile.IMPACT);
     effects.add(EffectSoundFile.GATE_INTERACT);
-    
+    effects.add(EffectSoundFile.INVENTORY_OPEN);
+    effects.add(EffectSoundFile.HOTKEY_SELECT);
+    effects.add(EffectSoundFile.SHOVEL);
+    effects.add(EffectSoundFile.HOE);
+    effects.add(EffectSoundFile.WATERING_CAN);
+    effects.add(EffectSoundFile.PLACE);
+    effects.add(EffectSoundFile.FISHING_CAST);
+    effects.add(EffectSoundFile.FISHING_CATCH);
+    effects.add(EffectSoundFile.SCYTHE);
+
+
     try {
       ServiceLocator.getSoundService().getEffectsMusicService().loadSounds(effects);
     } catch (InvalidSoundFileException e) {

@@ -15,6 +15,12 @@ import com.csse3200.game.services.ServiceLocator;
 
 public class ShipFactory {
 
+  public enum events {
+    ADD_PART,
+    REMOVE_PART,
+    PROGRESS_UPDATED
+  }
+
   /**
    * Creates a ship entity
    *

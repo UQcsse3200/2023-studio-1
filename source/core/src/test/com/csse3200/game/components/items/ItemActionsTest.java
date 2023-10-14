@@ -2,14 +2,16 @@ package com.csse3200.game.components.items;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 import java.io.IOException;
 
+import com.csse3200.game.components.combat.CombatStatsComponent;
+import com.csse3200.game.components.player.HungerComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.physics.components.ColliderComponent;
+import com.csse3200.game.services.PlayerHungerService;
 import com.csse3200.game.services.TimeService;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -38,6 +40,9 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ArgumentsSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 // Setup fields and config were taken from GameAreaTest and the authors were co-authored to share credit for the work
 @ExtendWith(GameExtension.class)
@@ -371,6 +376,8 @@ class ItemActionsTest {
 
         Entity itemWithNoUse = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("milk", ItemType.EGG, null));
         assertFalse(itemWithNoUse.getComponent(ItemActions.class).use(player, mousePos));
+        Entity rod = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("Fishing Rod", ItemType.FISHING_ROD, null));
+        assertFalse(rod.getComponent(ItemActions.class).use(player, mousePos));
     }
 
     @Test
@@ -415,5 +422,176 @@ class ItemActionsTest {
 
         Entity gate = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("Gate", ItemType.PLACEABLE, null));
         assertFalse(gate.getComponent(ItemActions.class).use(player, mousePos));
+    }
+
+    @Test
+    void testFishWater() {
+        TiledMap tiledMap = gameMap.getTiledMap();
+        tiledMap.getLayers().remove(0);
+        TiledMapTileLayer layer = new TiledMapTileLayer(6, 6, 16, 16);
+
+        layer.setCell(0, 0, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(0, 1, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(0, 2, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(0, 3, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(1, 0, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(1, 1, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(1, 2, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(1, 3, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(2, 0, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(2, 1, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(2, 2, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(2, 3, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(3, 0, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(3, 1, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(3, 2, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(3, 3, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(0, 4, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(0, 5, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(1, 4, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(1, 5, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(2, 4, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(2, 5, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(3, 4, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(3, 5, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(4, 0, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(4, 1, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(4, 2, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(4, 3, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(4, 4, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(4, 5, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(5, 0, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(5, 1, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(5, 2, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(5, 3, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(5, 4, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+        layer.setCell(5, 5, new TiledMapTileLayer.Cell().setTile(deepWaterTerrainTile));
+
+        tiledMap.getLayers().add(layer);
+
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+        ServiceLocator.registerEntityService(new EntityService());
+        ServiceLocator.registerRenderService(new RenderService());
+        mousePos = new Vector2(10,10);
+        player.setPosition(gameMap.tileCoordinatesToVector(new GridPoint2(2,2)));
+        CameraComponent cam = mock(CameraComponent.class);
+        doReturn(player.getPosition()).when(cam).screenPositionToWorldPosition(mousePos);
+        ServiceLocator.registerCameraComponent(cam);
+        GameArea area = mock(GameArea.class);
+        doReturn(player).when(area).getPlayer();
+        doReturn(gameMap).when(area).getMap();
+        ServiceLocator.registerGameArea(area);
+        ServiceLocator.registerResourceService(mock(ResourceService.class));
+        FileLoader fl = new FileLoader();
+
+        Entity rod = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("FISHING_ROD", ItemType.FISHING_ROD, null));
+        assertTrue(rod.getComponent(ItemActions.class).use(player, mousePos));
+    }
+
+    @Test
+    void testFishLava() {
+        TiledMap tiledMap = gameMap.getTiledMap();
+        tiledMap.getLayers().remove(0);
+        TiledMapTileLayer layer = new TiledMapTileLayer(6, 6, 16, 16);
+
+        layer.setCell(0, 0, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(0, 1, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(0, 2, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(0, 3, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(1, 0, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(1, 1, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(1, 2, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(1, 3, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(2, 0, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(2, 1, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(2, 2, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(2, 3, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(3, 0, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(3, 1, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(3, 2, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(3, 3, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(0, 4, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(0, 5, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(1, 4, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(1, 5, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(2, 4, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(2, 5, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(3, 4, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(3, 5, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(4, 0, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(4, 1, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(4, 2, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(4, 3, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(4, 4, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(4, 5, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(5, 0, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(5, 1, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(5, 2, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(5, 3, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(5, 4, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+        layer.setCell(5, 5, new TiledMapTileLayer.Cell().setTile(lavaTerrainTile));
+
+        tiledMap.getLayers().add(layer);
+
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+        ServiceLocator.registerEntityService(new EntityService());
+        ServiceLocator.registerRenderService(new RenderService());
+        mousePos = new Vector2(10,10);
+        player.setPosition(gameMap.tileCoordinatesToVector(new GridPoint2(2,2)));
+        CameraComponent cam = mock(CameraComponent.class);
+        doReturn(player.getPosition()).when(cam).screenPositionToWorldPosition(mousePos);
+        ServiceLocator.registerCameraComponent(cam);
+        GameArea area = mock(GameArea.class);
+        doReturn(player).when(area).getPlayer();
+        doReturn(gameMap).when(area).getMap();
+        ServiceLocator.registerGameArea(area);
+        ServiceLocator.registerResourceService(mock(ResourceService.class));
+        FileLoader fl = new FileLoader();
+
+        Entity rod = new Entity(EntityType.ITEM).addComponent(new ItemActions()).addComponent(new ItemComponent("FISHING_ROD", ItemType.FISHING_ROD, null));
+        assertTrue(rod.getComponent(ItemActions.class).use(player, mousePos));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"Ear of Cosmic Cob", "Nightshade Berry", "Hammer Flower", "Aloe Vera Leaf", "Lave Eel", "French Fries"})
+    void testEat(String name) {
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+        ServiceLocator.registerEntityService(new EntityService());
+        ServiceLocator.registerRenderService(new RenderService());
+        ServiceLocator.registerPlayerHungerService(new PlayerHungerService());
+        GameArea area = mock(GameArea.class);
+        ServiceLocator.registerGameArea(area);
+        ServiceLocator.registerResourceService(mock(ResourceService.class));
+        FileLoader fl = new FileLoader();
+
+        HungerComponent hunger = spy(new HungerComponent(50));
+        player.addComponent(hunger);
+        player.addComponent(new CombatStatsComponent(1,1));
+        Entity food1 = new Entity(EntityType.ITEM).addComponent(new ItemActions())
+                .addComponent(new ItemComponent(name, ItemType.FOOD, "images/tool_shovel.png"));
+        food1.getComponent(ItemActions.class).eat(player);
+        verify(hunger).increaseHungerLevel(any(Integer.class));
+    }
+
+    @Test
+    void notEat() {
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+        ServiceLocator.registerEntityService(new EntityService());
+        ServiceLocator.registerRenderService(new RenderService());
+        GameArea area = mock(GameArea.class);
+        ServiceLocator.registerGameArea(area);
+        ServiceLocator.registerResourceService(mock(ResourceService.class));
+        FileLoader fl = new FileLoader();
+
+        HungerComponent hunger = spy(new HungerComponent(50));
+        player.addComponent(hunger);
+        Entity food1 = new Entity(EntityType.ITEM).addComponent(new ItemActions())
+                .addComponent(new ItemComponent("a large amount of wood", ItemType.CLUE_ITEM, "images/tool_shovel.png"));
+        food1.getComponent(ItemActions.class).eat(player);
+        verify(hunger, never()).increaseHungerLevel(any(Integer.class));
+        Entity food2 = new Entity(EntityType.ITEM).addComponent(new ItemActions())
+                .addComponent(new ItemComponent("a large amount of wood", null, "images/tool_shovel.png"));
+        food2.getComponent(ItemActions.class).eat(player);
+        verify(hunger, never()).increaseHungerLevel(any(Integer.class));
     }
 }

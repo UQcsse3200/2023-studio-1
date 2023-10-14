@@ -1,24 +1,16 @@
 package com.csse3200.game.entities.factories;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.AuraLightComponent;
-import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.combat.CombatStatsComponent;
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.inventory.InventoryDisplay;
 import com.csse3200.game.components.inventory.ToolbarDisplay;
 import com.csse3200.game.components.maingame.PauseMenuActions;
 import com.csse3200.game.components.player.*;
-import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.components.player.ItemPickupComponent;
-import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
-import com.csse3200.game.components.player.OpenPauseComponent;
-import com.csse3200.game.components.player.PlayerActions;
-import com.csse3200.game.components.player.PlayerAnimationController;
+import com.csse3200.game.components.combat.StunComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.configs.PlayerConfig;
@@ -29,7 +21,11 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.rendering.BlinkComponent;
 import com.csse3200.game.services.ServiceLocator;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Factory to create a player entity.
@@ -77,6 +73,8 @@ public class PlayerFactory {
             .addComponent(new ToolbarDisplay())
 	        .addComponent(new AuraLightComponent(6f))
             .addComponent(new InventoryDisplay("updateInventory", "toggleInventory", 30, 10, true))
+            .addComponent(new BlinkComponent())
+            .addComponent(new StunComponent())
             .addComponent(new PauseMenuActions());
 
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
@@ -84,6 +82,9 @@ public class PlayerFactory {
     player.getComponent(HitboxComponent.class).setAsBox(new Vector2(1f, 2f), new Vector2(1.5f, 1.5f));
     player.getComponent(AnimationRenderComponent.class).scaleEntity();
     player.getComponent(KeyboardPlayerInputComponent.class).setActions(player.getComponent(PlayerActions.class));
+
+    player.getComponent(PlayerAnimationController.class).addFishingRodAnimatorEntity(createFishingRodAnimatorEntity());
+
     return player;
   }
 
@@ -137,6 +138,29 @@ public class PlayerFactory {
     animator.addAnimation("sword_left",0.1f,Animation.PlayMode.NORMAL);
     animator.addAnimation("sword_right",0.1f,Animation.PlayMode.NORMAL);
     animator.addAnimation("sword_down",0.1f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("fishing_left", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("fishing_right", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("fishing_up", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("fishing_down", 0.1f, Animation.PlayMode.LOOP);
+  }
+
+  public static Entity createFishingRodAnimatorEntity() {
+    AnimationRenderComponent playerFishingRodAnimator = new AnimationRenderComponent(
+            ServiceLocator.getResourceService().getAsset("images/player_fishing.atlas", TextureAtlas.class),
+            16f
+    );
+
+    playerFishingRodAnimator.addAnimation("cast_left", 0.1f, Animation.PlayMode.LOOP);
+    playerFishingRodAnimator.addAnimation("cast_right", 0.1f, Animation.PlayMode.LOOP);
+    playerFishingRodAnimator.addAnimation("cast_up", 0.1f, Animation.PlayMode.LOOP);
+    playerFishingRodAnimator.addAnimation("cast_down", 0.1f, Animation.PlayMode.LOOP);
+    playerFishingRodAnimator.addAnimation("fishing_left", 0.1f, Animation.PlayMode.NORMAL);
+    playerFishingRodAnimator.addAnimation("fishing_right", 0.1f, Animation.PlayMode.NORMAL);
+    playerFishingRodAnimator.addAnimation("fishing_up", 0.1f, Animation.PlayMode.NORMAL);
+    playerFishingRodAnimator.addAnimation("fishing_down", 0.1f, Animation.PlayMode.NORMAL);
+
+	  return new Entity(EntityType.DUMMY)
+            .addComponent(playerFishingRodAnimator);
   }
 
   private PlayerFactory() {
