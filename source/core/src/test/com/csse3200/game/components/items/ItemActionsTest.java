@@ -11,8 +11,7 @@ import com.csse3200.game.components.player.HungerComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.physics.components.ColliderComponent;
-import com.csse3200.game.services.PlayerHungerService;
-import com.csse3200.game.services.TimeService;
+import com.csse3200.game.services.*;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,8 +37,6 @@ import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.rendering.RenderService;
-import com.csse3200.game.services.ResourceService;
-import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -91,6 +88,7 @@ class ItemActionsTest {
 
     @BeforeEach
     void setup() {
+        ServiceLocator.registerParticleService(mock(ParticleService.class));
         TerrainFactory terrainFactory = mock(TerrainFactory.class);
         doReturn(new GridPoint2(4, 4)).when(terrainFactory).getMapSize();
         ServiceLocator.registerTimeService(new TimeService());
