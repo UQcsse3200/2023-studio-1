@@ -19,7 +19,7 @@ public class BlizzardEvent extends WeatherEvent {
 
     @Override
     public void startEffect() {
-        // Trigger "beginBlizzard" event
+        climateControllerEvents.trigger("startWaterLevelEffect", getDryRate());
         // TODO - update effect
         ServiceLocator.getParticleService().startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
         // Adjust global lighting
@@ -27,10 +27,16 @@ public class BlizzardEvent extends WeatherEvent {
 
     @Override
     public void stopEffect() {
-        // Trigger "endBlizzard" event
+        climateControllerEvents.trigger("stopWaterLevelEffect");
         // TODO - update effect
         ServiceLocator.getParticleService().stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);
         // Adjust global lighting
+    }
+
+    private float getDryRate() {
+        // Lowest severity: Dry at regular rate
+        // Highest severity: Dry at 2x regular rate
+        return 0.0005f + 0.0005f * severity / 1.5f;
     }
 
 }

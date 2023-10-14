@@ -212,7 +212,6 @@ public class ClimateController implements Json.Serializable {
 		weatherEvents.removeIf(WeatherEvent::isExpired);
 		if (currentWeatherEvent != null) {
 			currentWeatherEvent.startEffect();
-			getEvents().trigger(currentWeatherEvent.toString());
 		}
 	}
 

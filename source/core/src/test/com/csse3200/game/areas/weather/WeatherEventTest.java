@@ -7,6 +7,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 import com.badlogic.gdx.utils.Json;
+import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.services.ServiceLocator;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,6 +19,11 @@ class WeatherEventTest {
 
     @BeforeEach
     public void setUp() {
+        GameArea gameArea = mock(GameArea.class);
+        ClimateController climateController = new ClimateController();
+        when(gameArea.getClimateController()).thenReturn(climateController);
+        ServiceLocator.registerGameArea(gameArea);
+
         weatherEvent1 = new WeatherEvent(0, 10, 1, 1.2f) {
             @Override
             public void startEffect() {
@@ -96,6 +104,11 @@ class WeatherEventTest {
                 return null;
             }
         };
+    }
+
+    @AfterEach
+    public void cleanUp() {
+        ServiceLocator.clear();
     }
 
     @Test

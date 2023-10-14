@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.JsonWriter;
+import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.services.ParticleService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,6 +54,10 @@ class ClimateControllerTest {
 
 	@Test
 	void testAddingEvent() {
+		GameArea gameArea = mock(GameArea.class);
+		when(gameArea.getClimateController()).thenReturn(controller);
+		ServiceLocator.registerGameArea(gameArea);
+
 		WeatherEvent event = new AcidShowerEvent(1, 1, 1, 1.3f);
 		controller.addWeatherEvent(event);
 
@@ -100,6 +105,10 @@ class ClimateControllerTest {
 	void testAddDailyEventCase0() {
 		assertNull(controller.getCurrentWeatherEvent());
 
+		GameArea gameArea = mock(GameArea.class);
+		when(gameArea.getClimateController()).thenReturn(controller);
+		ServiceLocator.registerGameArea(gameArea);
+
 		try (MockedStatic<MathUtils> mathUtils = mockStatic(MathUtils.class)) {
 			mathUtils.when(MathUtils::random).thenReturn(0.5f);
 			mathUtils.when(() -> MathUtils.random(0, 1)).thenReturn(0); // weatherEvent - AcidShowerEvent
@@ -118,6 +127,10 @@ class ClimateControllerTest {
 
 	@Test
 	void testExpiringEvent() {
+		GameArea gameArea = mock(GameArea.class);
+		when(gameArea.getClimateController()).thenReturn(controller);
+		ServiceLocator.registerGameArea(gameArea);
+
 		WeatherEvent event = new SolarSurgeEvent(1, 1, 1, 1.4f);
 		controller.addWeatherEvent(event);
 
@@ -134,6 +147,10 @@ class ClimateControllerTest {
 
 	@Test
 	void testAddInstantEvent() {
+		GameArea gameArea = mock(GameArea.class);
+		when(gameArea.getClimateController()).thenReturn(controller);
+		ServiceLocator.registerGameArea(gameArea);
+
 		AcidShowerEvent event = new AcidShowerEvent(0, 1, 2, 1.5f);
 		controller.addWeatherEvent(event);
 		assertEquals(controller.getCurrentWeatherEvent(), event);
@@ -143,6 +160,10 @@ class ClimateControllerTest {
 
 	@Test
 	void testOverridenEvent() {
+		GameArea gameArea = mock(GameArea.class);
+		when(gameArea.getClimateController()).thenReturn(controller);
+		ServiceLocator.registerGameArea(gameArea);
+
 		AcidShowerEvent event = new AcidShowerEvent(0, 1, 2, 1.5f);
 		controller.addWeatherEvent(event);
 		assertEquals(controller.getCurrentWeatherEvent(), event);
@@ -155,6 +176,10 @@ class ClimateControllerTest {
 
 	@Test
 	void testSetValues() {
+		GameArea gameArea = mock(GameArea.class);
+		when(gameArea.getClimateController()).thenReturn(controller);
+		ServiceLocator.registerGameArea(gameArea);
+
 		JsonValue jsonData = new JsonValue(JsonValue.ValueType.object);
 		JsonValue events = new JsonValue(JsonValue.ValueType.object);
 		JsonValue event = new JsonValue(JsonValue.ValueType.object);

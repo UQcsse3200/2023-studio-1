@@ -1,5 +1,6 @@
 package com.csse3200.game.areas.weather;
 
+import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.services.ParticleService;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.AfterEach;
@@ -15,6 +16,11 @@ class AcidShowerEventTest {
 
     @BeforeEach
     public void setUp() {
+        GameArea gameArea = mock(GameArea.class);
+        ClimateController climateController = new ClimateController();
+        when(gameArea.getClimateController()).thenReturn(climateController);
+        ServiceLocator.registerGameArea(gameArea);
+
         acidShowerEvent1 = new AcidShowerEvent(0, 9, 1, 1.2f);
         acidShowerEvent2 = new AcidShowerEvent(1, 2, 2, 1.4f);
         acidShowerEvent3 = new AcidShowerEvent(2, 4, 5, 1.0f);

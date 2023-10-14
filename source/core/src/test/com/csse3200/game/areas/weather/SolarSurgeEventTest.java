@@ -1,9 +1,14 @@
 package com.csse3200.game.areas.weather;
 
+import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.services.ServiceLocator;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class SolarSurgeEventTest {
 
@@ -11,11 +16,21 @@ class SolarSurgeEventTest {
 
     @BeforeEach
     public void setUp() {
+        GameArea gameArea = mock(GameArea.class);
+        ClimateController climateController = new ClimateController();
+        when(gameArea.getClimateController()).thenReturn(climateController);
+        ServiceLocator.registerGameArea(gameArea);
+
         solarSurgeEvent1 = new SolarSurgeEvent(0, 9, 1, 1.2f);
         solarSurgeEvent2= new SolarSurgeEvent(1, 2, 2, 1.4f);
         solarSurgeEvent3 = new SolarSurgeEvent(2, 4, 5, 1.0f);
         solarSurgeEvent4= new SolarSurgeEvent(3, 3, 3, 1.3f);
         solarSurgeEvent5 = new SolarSurgeEvent(5, 5, 1, 1.1f);
+    }
+
+    @AfterEach
+    public void cleanUp() {
+        ServiceLocator.clear();
     }
 
     @Test

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
 import com.csse3200.game.areas.SpaceGameArea;
+import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ItemFactory;
@@ -57,6 +58,9 @@ class QuestFactoryTest {
         ServiceLocator.registerPhysicsService(new PhysicsService());
         ServiceLocator.registerResourceService(mockResourceService);
         ServiceLocator.registerGameArea(mockGameArea);
+
+        ClimateController climateController = new ClimateController();
+        when(mockGameArea.getClimateController()).thenReturn(climateController);
 
         when(mockResourceService.getAsset(any(), any())).thenReturn(mockTexture);
 

@@ -18,24 +18,21 @@ public class SolarSurgeEvent extends WeatherEvent {
         super(numHoursUntil, duration, priority, severity);
     }
 
-    /**
-     *
-     */
     @Override
     public void startEffect() {
-        //  Handled elsewhere
+        climateControllerEvents.trigger("startWaterLevelEffect", getDryRate());
     }
 
-    /**
-     *
-     */
     @Override
     public void stopEffect() {
         // Handled elsewhere
+        climateControllerEvents.trigger("stopWaterLevelEffect");
     }
 
-    @Override
-    public String toString() {
-        return "solarSurge";
+    private float getDryRate() {
+        // Lowest severity: Dry at 2x regular rate
+        // Highest severity: Dry at 20x regular rate
+        return 0.001f + 0.009f * severity / 1.5f;
     }
+
 }

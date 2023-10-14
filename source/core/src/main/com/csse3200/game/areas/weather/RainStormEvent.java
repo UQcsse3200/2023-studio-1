@@ -10,7 +10,6 @@ import java.util.function.Function;
 
 public class RainStormEvent extends WeatherEvent {
 
-    private final ClimateController climateController;
     private ScheduledEvent nextLightningStrike;
 
     /**
@@ -23,14 +22,12 @@ public class RainStormEvent extends WeatherEvent {
      */
     public RainStormEvent(int numHoursUntil, int duration, int priority, float severity) throws IllegalArgumentException {
         super(numHoursUntil, duration, priority, severity);
-
-        climateController = ServiceLocator.getGameArea().getClimateController();
-        climateController.getEvents().addListener("lightningStrike", this::triggerStrike);
+        climateControllerEvents.addListener("lightningStrike", this::triggerStrike);
     }
 
     @Override
     public void startEffect() {
-        // Trigger "beginRainstorm" event
+        climateControllerEvents.trigger("startWaterLevelEffect", getDryRate());
         // TODO - update effect
         ServiceLocator.getParticleService().startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
 
@@ -41,13 +38,13 @@ public class RainStormEvent extends WeatherEvent {
 
     @Override
     public void stopEffect() {
-        // Trigger "endRainstorm" event
+        climateControllerEvents.trigger("stopWaterLevelEffect");
         // TODO - update effect
         ServiceLocator.getParticleService().stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);
 
         // Remove lighting effects
         ServiceLocator.getLightService().setBrightnessMultiplier(1.0f);
-        climateController.getEvents().cancelEvent(nextLightningStrike);
+        climateControllerEvents.cancelEvent(nextLightningStrike);
     }
 
     private void scheduleNextLightningStrike() {
@@ -58,12 +55,12 @@ public class RainStormEvent extends WeatherEvent {
             return;
         }
 
-        nextLightningStrike = climateController.getEvents().scheduleEvent(timeToStrike, "lightningStrike");
+        nextLightningStrike = climateControllerEvents.scheduleEvent(timeToStrike, "lightningStrike");
     }
 
     private void triggerStrike() {
         // Apply the desired lighting effect
-        climateController.getEvents().trigger("lightingEffect", getNextLightningStrikeDuration(),
+        climateControllerEvents.trigger("lightingEffect", getNextLightningStrikeDuration(),
                 (Function<Float, Color>) this::getLightningColourOffset);
         // Recursively schedule next strike
         scheduleNextLightningStrike();
@@ -85,6 +82,12 @@ public class RainStormEvent extends WeatherEvent {
         float brightness = 0.8f * MathUtils.sin((float) (Math.PI * t * (severity / 1.5f + 1.0f))) + 0.2f;
         brightness *= brightness * 0.8f;
         return new Color(brightness, brightness, brightness, 0.0f);
+    }
+
+    private float getDryRate() {
+        // Lowest severity: Crop tiles do not dry or get watered
+        // Highest severity: Watered at 4x regular dry rate
+        return -0.002f * severity / 1.5f;
     }
 
 }

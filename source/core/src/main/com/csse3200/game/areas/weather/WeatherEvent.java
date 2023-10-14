@@ -1,6 +1,8 @@
 package com.csse3200.game.areas.weather;
 
 import com.badlogic.gdx.utils.Json;
+import com.csse3200.game.events.EventHandler;
+import com.csse3200.game.services.ServiceLocator;
 
 /**
  * Represents a Weather Event like Acid Shower or Solar Surge. These are updated based on in-game hours.
@@ -28,6 +30,8 @@ public abstract class WeatherEvent {
 	 */
 	protected final float severity;
 
+	protected final EventHandler climateControllerEvents;
+
 	/**
 	 * Constructs an {@link WeatherEvent} with a given duration, priority and countdown
 	 *
@@ -45,10 +49,13 @@ public abstract class WeatherEvent {
 		} else if (severity < 0f) {
 			throw new IllegalArgumentException("Severity must be greater than 0.");
 		}
+
 		this.numHoursUntil = numHoursUntil;
 		this.duration = duration;
 		this.priority = priority;
 		this.severity = severity;
+
+		this.climateControllerEvents = ServiceLocator.getGameArea().getClimateController().getEvents();
 	}
 
 	/**

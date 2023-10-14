@@ -23,16 +23,20 @@ public class AcidShowerEvent extends WeatherEvent {
 
     @Override
     public void startEffect() {
+        climateControllerEvents.trigger("startWaterLevelEffect", getDryRate());
         ServiceLocator.getParticleService().startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
     }
 
     @Override
     public void stopEffect() {
+        climateControllerEvents.trigger("stopWaterLevelEffect");
         ServiceLocator.getParticleService().stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);
     }
 
-    @Override
-    public String toString() {
-        return "acidShower";
+    private float getDryRate() {
+        // Lowest severity: Dry at regular rate
+        // Highest severity: Watered at regular dry rate
+        return 0.0005f - 0.001f * severity / 1.5f;
     }
+
 }
