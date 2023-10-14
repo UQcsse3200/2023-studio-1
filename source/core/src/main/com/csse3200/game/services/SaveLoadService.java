@@ -106,7 +106,7 @@ public class SaveLoadService {
         updateTractor(state);
         // Update Misc
         updateTime(state);
-        updateMissions(state);
+        //updateMissions(state);
     }
 
     /**
@@ -158,13 +158,5 @@ public class SaveLoadService {
      */
     private void updateTime(GameState state) {
         ServiceLocator.getTimeService().loadTime(state.getDay(), state.getHour(), state.getDay());
-    }
-
-    /**
-     * Updates the missions based off the gamestate
-     * @param state gamestate of the entire game based off safeFile.json
-     */
-    private void updateMissions(GameState state) {
-        ServiceLocator.registerMissionManager(state.getMissions());
     }
 }

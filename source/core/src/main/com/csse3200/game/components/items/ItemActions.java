@@ -7,8 +7,10 @@ import java.util.*;
 import java.util.function.Supplier;
 
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.factories.ShipFactory;
+import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.services.sound.EffectSoundFile;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.TerrainTile;
@@ -418,6 +420,11 @@ public class ItemActions extends Component {
 
     // A water amount of 0.2
     tile.getOccupant().getEvents().trigger("water", 0.2f);
+    if (tile.getOccupant().getComponent(CropTileComponent.class).getPlant() != null) {
+      ServiceLocator.getMissionManager().getEvents().trigger(
+              MissionManager.MissionEvent.WATER_CROP.name(),
+              tile.getOccupant().getComponent(CropTileComponent.class).getPlant().getComponent(PlantComponent.class).getPlantType());
+    }
     return true;
   }
 

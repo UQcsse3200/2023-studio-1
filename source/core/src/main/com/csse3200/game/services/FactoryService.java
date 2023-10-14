@@ -115,6 +115,9 @@ public class FactoryService {
             new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.HABER_HOBBYIST_QUEST_NAME, QuestFactory::createHaberHobbyist),
             new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.FERTILISER_FANATIC_QUEST_NAME, QuestFactory::createFertiliserFanatic),
             new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.FISHING_QUEST, QuestFactory::createFishingQuest),
+            new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.ANIMAL_REPEAT_QUEST, QuestFactory::createRecursiveAnimalQuest),
+            new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.PLANT_REPEAT_QUEST, QuestFactory::createRecursivePlantQuest),
+            new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.WATER_REPEAT_QUEST, QuestFactory::createRecursiveWaterQuest),
             new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.TRACTOR_GO_BRRRRRR, QuestFactory::createTractorQuest));
 
     public static Map<String, Function<CropTileComponent, Entity>> getPlantFactories() {
