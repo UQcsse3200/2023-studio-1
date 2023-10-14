@@ -5,8 +5,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.*;
 import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
-import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntitySpawner;
 import com.csse3200.game.entities.EntitiesSpawner;
@@ -553,6 +551,10 @@ public class SpaceGameArea extends GameArea {
     effects.add(EffectSoundFile.FISHING_CAST);
     effects.add(EffectSoundFile.FISHING_CATCH);
     effects.add(EffectSoundFile.SCYTHE);
+    effects.add(EffectSoundFile.SWITCH_TOOLBAR);
+    effects.add(EffectSoundFile.DRAG_ITEM);
+    effects.add(EffectSoundFile.DROP_ITEM);
+    effects.add(EffectSoundFile.DELETE_ITEM);
 
 
     try {

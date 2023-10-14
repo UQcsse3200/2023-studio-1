@@ -22,11 +22,7 @@ import java.util.List;
  */
 public class InventoryComponent extends Component {
 
-    private int curTab = 0;  // current toolbar tab;
-    public void switchTab() {
-        this.curTab = (curTab + 1) % 3;
-        setHeldItem(heldIndex);
-    }
+    public int curTab = 0;  // current toolbar tab;
     /**
      * Logger for InventoryComponent
      */
@@ -501,6 +497,13 @@ public class InventoryComponent extends Component {
      */
     public int getItemCount(Entity item) {
         return this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(), 0);
+    }
+    /**
+     * Switches the 10 item slots in the inventory where the next item is automatically added.
+     */
+    public void switchTab() {
+        this.curTab = (curTab + 1) % 3;
+        setHeldItem(heldIndex);
     }
 
     /**
