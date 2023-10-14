@@ -17,6 +17,10 @@ import com.csse3200.game.missions.quests.Quest;
 import com.csse3200.game.missions.quests.QuestFactory;
 
 public class FactoryService {
+    private FactoryService () {
+        throw new IllegalStateException("Util class");
+    }
+
     private static final Map<EntityType, Supplier<Entity>> npcFactories = Map.ofEntries(
             new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.CHICKEN, NPCFactory::createChicken),
             new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.COW, NPCFactory::createCow),
