@@ -134,10 +134,16 @@ public class PlayerFactory {
     animator.addAnimation("scythe_left",0.1f,Animation.PlayMode.NORMAL);
     animator.addAnimation("scythe_right",0.1f,Animation.PlayMode.NORMAL);
     animator.addAnimation("scythe_down",0.1f,Animation.PlayMode.NORMAL);
+
     animator.addAnimation("sword_up",0.1f,Animation.PlayMode.NORMAL);
     animator.addAnimation("sword_left",0.1f,Animation.PlayMode.NORMAL);
     animator.addAnimation("sword_right",0.1f,Animation.PlayMode.NORMAL);
     animator.addAnimation("sword_down",0.1f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("gun_up",0.3f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("gun_left",0.3f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("gun_right",0.3f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("gun_down",0.3f,Animation.PlayMode.NORMAL);
+
     animator.addAnimation("fishing_left", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("fishing_right", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("fishing_up", 0.1f, Animation.PlayMode.LOOP);

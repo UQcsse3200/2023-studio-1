@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.*;
 import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
+import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
@@ -181,6 +182,7 @@ public class SpaceGameArea extends GameArea {
           "images/Player_Hunger/hunger_bar_outline.png",
           "images/Player_Hunger/hunger_bar_fill.png",
           "images/projectiles/oxygen_eater_projectile.png",
+          "images/projectiles/gun_projectile.png",
 
           "images/yellowSquare.png",
           "images/yellowCircle.png",
@@ -275,7 +277,7 @@ public class SpaceGameArea extends GameArea {
       "images/plants/deadly_nightshade.atlas", "images/fireflies.atlas", "images/animals/dragonfly.atlas",
       "images/animals/bat.atlas", "images/projectiles/oxygen_eater_projectile.atlas",
       "images/ship/ship.atlas", "images/light.atlas", "images/projectiles/dragon_fly_projectile.atlas", "images/golden_trophy.atlas",
-      "images/player_fishing.atlas", "images/animals/animal_effects.atlas"
+      "images/player_fishing.atlas", "images/animals/animal_effects.atlas", "images/projectiles/gun_projectile.atlas"
   };
   private static final String[] soundPaths = {
           "sounds/Impact4.ogg", "sounds/car-horn-6408.mp3",
@@ -383,6 +385,24 @@ public class SpaceGameArea extends GameArea {
 
     hostileSpawner = new EntitiesSpawner(hostileSpawners);
     hostileSpawner.setGameAreas(this);
+
+    // TODO: REMOVE THIS TESTING PURPOSES ONLY
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createGun());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createSword());
+//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createCosmicCobEar());
+//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createCosmicCobEar());
+//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createCosmicCobEar());
+//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createCosmicCobEar());
+//
+//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHammerFlower());
+//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHammerFlower());
+//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHammerFlower());
+//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHammerFlower());
+//
+//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createDeadlyNightshadeBerry());
+//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createDeadlyNightshadeBerry());
+//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createDeadlyNightshadeBerry());
+//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createDeadlyNightshadeBerry());
   }
 
   /**
