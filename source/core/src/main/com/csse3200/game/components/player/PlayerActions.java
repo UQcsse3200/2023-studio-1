@@ -43,6 +43,16 @@ public class PlayerActions extends Component {
   private SecureRandom random = new SecureRandom();
   int swordDamage = 5;
 
+  enum Direction {
+    RIGHT("right"),
+    LEFT("left"),
+    UP("up"),
+    DOWN("down");
+
+    final String representation;
+    Direction(String representation) {this.representation = representation;}
+  }
+
   @Override
   public void create() {
     physicsComponent = entity.getComponent(PhysicsComponent.class);
@@ -85,13 +95,13 @@ public class PlayerActions extends Component {
       String animationName = PlayerAnimationController.events.ANIMATION_WALK_STOP.name();
       float direction = getPrevMoveDirection();
       if (direction < 45) {
-        entity.getEvents().trigger(animationName, "right", animationRandomizer, false);
+        entity.getEvents().trigger(animationName, Direction.RIGHT.representation, animationRandomizer, false);
       } else if (direction < 135) {
-        entity.getEvents().trigger(animationName, "up", animationRandomizer, false);
+        entity.getEvents().trigger(animationName, Direction.UP.representation, animationRandomizer, false);
       } else if (direction < 225) {
-        entity.getEvents().trigger(animationName, "left", animationRandomizer, false);
+        entity.getEvents().trigger(animationName, Direction.LEFT.representation, animationRandomizer, false);
       } else if (direction < 315) {
-        entity.getEvents().trigger(animationName, "down", animationRandomizer, false);
+        entity.getEvents().trigger(animationName, Direction.LEFT.representation, animationRandomizer, false);
       }
       return;
     }
@@ -102,13 +112,13 @@ public class PlayerActions extends Component {
             PlayerAnimationController.events.ANIMATION_WALK_START.name();
     float direction = moveDirection.angleDeg();
     if (direction < 45) {
-      entity.getEvents().trigger(animationName, "right");
+      entity.getEvents().trigger(animationName, Direction.RIGHT.representation);
     } else if (direction < 135) {
-      entity.getEvents().trigger(animationName, "up");
+      entity.getEvents().trigger(animationName, Direction.UP.representation);
     } else if (direction < 225) {
-      entity.getEvents().trigger(animationName, "left");
+      entity.getEvents().trigger(animationName, Direction.LEFT.representation);
     } else if (direction < 315) {
-      entity.getEvents().trigger(animationName, "down");
+      entity.getEvents().trigger(animationName, Direction.DOWN.representation);
     }
   }
 
@@ -196,13 +206,13 @@ public class PlayerActions extends Component {
     String animationInteract = PlayerAnimationController.events.ANIMATION_INTERACT.name();
     float direction = getPrevMoveDirection();
     if (direction < 45) {
-      entity.getEvents().trigger(animationInteract, "right");
+      entity.getEvents().trigger(animationInteract, Direction.RIGHT.representation);
     } else if (direction < 135) {
-      entity.getEvents().trigger(animationInteract, "up");
+      entity.getEvents().trigger(animationInteract, Direction.UP.representation);
     } else if (direction < 225) {
-      entity.getEvents().trigger(animationInteract, "left");
+      entity.getEvents().trigger(animationInteract, Direction.LEFT.representation);
     } else if (direction < 315) {
-      entity.getEvents().trigger(animationInteract, "down");
+      entity.getEvents().trigger(animationInteract, Direction.DOWN.representation);
     }
 
     /*
