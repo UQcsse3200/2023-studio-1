@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.weather.ClimateController;
@@ -113,5 +112,29 @@ class ItemPickupComponentTest {
         picker.getEvents().trigger("collisionStart", picker.getComponent(HitboxComponent.class).getFixture(),
                 picker.getComponent(HitboxComponent.class).getFixture());
         assertFalse(picker.getComponent(InventoryComponent.class).hasItem(pickupItem));
+    }
+
+    @Test
+    void shouldNotPickupNotItem() {
+        Entity notItem = new Entity().addComponent(new HitboxComponent());
+        // Try add the item to inventory
+        picker.getEvents().trigger("collisionStart", notItem.getComponent(HitboxComponent.class).getFixture(),
+                picker.getComponent(HitboxComponent.class).getFixture());
+        assertFalse(picker.getComponent(InventoryComponent.class).hasItem(notItem));
+
+        notItem.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.OBSTACLE);
+        picker.getEvents().trigger("collisionStart", picker.getComponent(HitboxComponent.class).getFixture(),
+                picker.getComponent(HitboxComponent.class).getFixture());
+        assertFalse(picker.getComponent(InventoryComponent.class).hasItem(notItem));
+    }
+
+    @Test
+    void inventoryFull() {
+        InventoryComponent inv = picker.getComponent(InventoryComponent.class);
+        for (int i = 0; i < 30; i++) {
+            inv.addItem(new Entity(EntityType.ITEM).addComponent(new ItemComponent(String.valueOf(i), ItemType.EGG, "images/tool_shovel.png")));
+        }
+        assertTrue(inv.isFull());
+        assertFalse(inv.addItem(new Entity(EntityType.ITEM).addComponent(new ItemComponent("full", ItemType.EGG, "images/tool_shovel.png"))));
     }
 }

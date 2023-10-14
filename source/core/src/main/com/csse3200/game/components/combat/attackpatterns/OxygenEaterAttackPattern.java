@@ -42,9 +42,11 @@ public class OxygenEaterAttackPattern extends AttackPatternComponent {
     @Override
     protected void attack() {
         Entity nearestEntity = interactionDetector.getNearest(interactionDetector.getEntitiesInRange());
+        entity.getEvents().trigger("startEffect", "attack");
 
         if (nearestEntity == null) { // No entity detected, clear attack loop
             currentAttackEvent = null;
+            entity.getEvents().trigger("stopEffect", "attack");
             return;
         }
 
