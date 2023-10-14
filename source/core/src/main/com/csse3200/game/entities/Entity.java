@@ -386,6 +386,9 @@ public class Entity implements Json.Serializable {
         json.writeValue("x", posX);
         json.writeValue("y", posY);
         json.writeObjectStart(COMPONENTS_STRING);
+        if (createdComponents == null) {
+            return;
+        }
         for (Component c : createdComponents) {
             c.write(json);
         }
