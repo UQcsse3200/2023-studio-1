@@ -146,7 +146,7 @@ public class SaveLoadService {
             // Set the player inside the tractor
             Entity player = ServiceLocator.getGameArea().getPlayer();
             player.setPosition(tractor.getPosition());              // Teleport the player to the tractor (Needed so that they are in 5 units of each other)
-            player.getEvents().trigger("enterTractor");   // Trigger the enterTractor event
+            player.getEvents().trigger(PlayerActions.events.ENTER_TRACTOR.name());   // Trigger the enterTractor event
             tractor.getComponent(AuraLightComponent.class).toggleLight();
         }
     }

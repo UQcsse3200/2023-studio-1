@@ -40,7 +40,7 @@ public class PlayerAnimationController extends Component {
         entity.getEvents().addListener(events.ANIMATION_INTERACT.name(), this::animationInteract);
         entity.getEvents().addListener("fishCaught", this::stopFishing);
         entity.getEvents().addListener("castFishingRod", this::castFishingRod);
-        entity.getEvents().addListener("use", this::use);
+        entity.getEvents().addListener(PlayerActions.events.USE.name(), this::use);
 
         animator.startAnimation("default");
     }

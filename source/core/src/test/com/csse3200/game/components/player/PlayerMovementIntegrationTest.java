@@ -98,8 +98,8 @@ class PlayerMovementIntegrationTest {
         AnimationRenderComponent animationRenderComponent = player.getComponent(AnimationRenderComponent.class);
         PlayerActions playerActionsComponent = player.getComponent(PlayerActions.class);
 
-        if (isRunning) player.getEvents().trigger("run");
-        player.getEvents().trigger("move", moveDirection);
+        if (isRunning) player.getEvents().trigger(PlayerActions.events.RUN.name());
+        player.getEvents().trigger(PlayerActions.events.MOVE.name(), moveDirection);
         playerActionsComponent.update();
         assertEquals(expectedAnimationName, animationRenderComponent.getCurrentAnimation());
     }

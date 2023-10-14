@@ -62,30 +62,30 @@ class OpenPauseComponentTest {
     @Test
     void shouldOpenPauseMenu() {
 
-        player.getEvents().trigger("escInput");
+        player.getEvents().trigger(PlayerActions.events.ESC_INPUT.name());
         assertTrue(openPauseComponent.getPauseOpen());
     }
 
     @Test
     void shouldOpenPauseMenuInventoryToggle() {
 
-        player.getEvents().trigger("escInput");
+        player.getEvents().trigger(PlayerActions.events.ESC_INPUT.name());
         assertTrue(openPauseComponent.getPauseOpen());
     }
 
     @Test
     void shouldClosePauseMenu() {
 
-        player.getEvents().trigger("escInput");
-        player.getEvents().trigger("escInput");
+        player.getEvents().trigger(PlayerActions.events.ESC_INPUT.name());
+        player.getEvents().trigger(PlayerActions.events.ESC_INPUT.name());
         assertFalse(openPauseComponent.getPauseOpen());
     }
 
     @Test
     void shouldClosePauseMenuInventoryToggle() {
 
-        player.getEvents().trigger("escInput");
-        player.getEvents().trigger("escInput");
+        player.getEvents().trigger(PlayerActions.events.ESC_INPUT.name());
+        player.getEvents().trigger(PlayerActions.events.ESC_INPUT.name());
         assertFalse(openPauseComponent.getPauseOpen());
     }
 }
