@@ -37,6 +37,9 @@ public class EntityIndicator extends UIComponent{
      */
     private static final float OFFSET = 8;
 
+    private static final float INDICATOR_DISTANCE = 175; // Distance from center
+    private static final float INDICATOR_ROTATION_SPEED = 45; // Rotation speed in degrees per second
+
     /**
      * Initialise a new indicator for the given entity
      * @param entity: the entity which will be tracked
@@ -88,27 +91,30 @@ public class EntityIndicator extends UIComponent{
     public void updateIndicator() {
         float indicatorPosX;
         float indicatorPosY;
-        // Get the latest entity position
+
+        // Get the latest entity position and transform it to a 3D vector in on-screen units based of the camera view
         Vector2 entityPosition = entityToTractor.getCenterPosition();
-
-        // Make the entity position into a 3D vector
         Vector3 entityPos = new Vector3(entityPosition.x, entityPosition.y, 0);
-
-        // Transforms world coordinates of the entity into screen coordinates based on the cameras view
         cameraComponent.getCamera().project(entityPos);
 
-        // Ensures that the position (entityPos.X - OFFSET) is within the specified range
-        // If the position is less than OFFSET then it sets the indicator to OFFSET
-        // If its greater than "Gdx.graphics.getWidth() - indicator.getWidth() - OFFSET" then it is set to
-        // "Gdx.graphics.getWidth() - indicator.getWidth() - OFFSET"
-        indicatorPosX = MathUtils.clamp(entityPos.x - OFFSET, OFFSET,
-                Gdx.graphics.getWidth() - indicator.getWidth() - OFFSET);
+        // Get the center of the screen and adjust the x and y coordinates to correctly position indicator
+        Vector3 centerPosition = new Vector3((Gdx.graphics.getWidth() / 2f) + 73, (Gdx.graphics.getHeight() / 2f) + 54, 0);
 
-        indicatorPosY = MathUtils.clamp(entityPos.y - OFFSET, OFFSET,
-                Gdx.graphics.getHeight() - indicator.getHeight() - OFFSET);
+        // Get the distance vector to the entity, and normalise it, and get the angle to the entity
+        Vector3 toEntity = entityPos.cpy().sub(centerPosition);
+        toEntity.nor();
+        float angle = MathUtils.atan2(toEntity.y, toEntity.x);
 
-        // Updates the position of the indicator based on the new coordinates
-        indicator.setPosition(indicatorPosX, indicatorPosY);
+        // Calculate the new position for the indicator
+        float indicatorX = centerPosition.x + INDICATOR_DISTANCE * toEntity.x;
+        float indicatorY = centerPosition.y + INDICATOR_DISTANCE * toEntity.y;
+
+        // Set the position of the indicator
+        indicator.setPosition(indicatorX - indicator.getWidth() / 2f, indicatorY - indicator.getHeight() / 2f);
+
+        // Rotate the indicator to point toward the entity
+        // -90 is to adjust for initial rotation
+        indicator.setRotation(angle * MathUtils.radiansToDegrees - 90);
     }
 
     @Override
