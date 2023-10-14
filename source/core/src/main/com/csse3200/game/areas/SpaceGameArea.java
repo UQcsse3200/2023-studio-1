@@ -74,6 +74,7 @@ public class SpaceGameArea extends GameArea {
           "images/overwatered_cropTile_fertilised.png",
           "images/Temp-Chest.png",
           "images/bin.png",
+          "images/GOD_IS_game_ver.png",
 
           "images/tractor.png",
           "images/fertiliser.png",
@@ -267,7 +268,7 @@ public class SpaceGameArea extends GameArea {
   };
 
   private static final String[] textureAtlasPaths = {
-      "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
+      "images/terrain_iso_grass.atlas", "images/GOD_IS_game_ver.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
       "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas",
       "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas", "images/questgiver.atlas",
       "images/missionStatus.atlas", "images/plants/cosmic_cob.atlas", "images/plants/aloe_vera.atlas",

@@ -23,6 +23,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.ui.UIComponent;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class CutsceneDisplay extends UIComponent {
 
     /**
@@ -86,8 +89,10 @@ public class CutsceneDisplay extends UIComponent {
 
         if (this.cutsceneType == Cutscene.CutsceneType.ALIEN) {
             dialogueWindow = new Window("Alien Jaleel", skin);
-        } else {
+        } else if (this.cutsceneType == Cutscene.CutsceneType.RADIO){
             dialogueWindow = new Window("Radio", skin);
+        } else if (this.cutsceneType == Cutscene.CutsceneType.PLACEABLE) {
+            dialogueWindow = new Window("DJ Khaled's Ghost", skin);
         }
 
         dialogueWindow.getTitleLabel().setAlignment(Align.center);
@@ -153,9 +158,13 @@ public class CutsceneDisplay extends UIComponent {
             npcAtlas = ServiceLocator.getResourceService()
                     .getAsset("images/questgiver.atlas", TextureAtlas.class);
             region = npcAtlas.findRegion("default");
-        } else { // NO DIFFERENCE SINCE NO RADIO SPRITE YET
+        } else if (this.cutsceneType == Cutscene.CutsceneType.RADIO) { // NO DIFFERENCE SINCE NO RADIO SPRITE YET
             npcAtlas = ServiceLocator.getResourceService()
                     .getAsset("images/questgiver.atlas", TextureAtlas.class);
+            region = npcAtlas.findRegion("default");
+        } else {
+            npcAtlas = ServiceLocator.getResourceService()
+                    .getAsset("images/GOD_IS_game_ver.atlas", TextureAtlas.class);
             region = npcAtlas.findRegion("default");
         }
 
