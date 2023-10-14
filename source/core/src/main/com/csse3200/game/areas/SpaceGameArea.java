@@ -386,25 +386,23 @@ public class SpaceGameArea extends GameArea {
     hostileSpawner = new EntitiesSpawner(hostileSpawners);
     hostileSpawner.setGameAreas(this);
 
-    hostileSpawner.spawnNow();
-
     // TODO: REMOVE THIS TESTING PURPOSES ONLY
     player.getComponent(InventoryComponent.class).addItem(ItemFactory.createGun());
     player.getComponent(InventoryComponent.class).addItem(ItemFactory.createSword());
-//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createCosmicCobEar());
-//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createCosmicCobEar());
-//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createCosmicCobEar());
-//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createCosmicCobEar());
-//
-//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHammerFlower());
-//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHammerFlower());
-//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHammerFlower());
-//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHammerFlower());
-//
-//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createDeadlyNightshadeBerry());
-//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createDeadlyNightshadeBerry());
-//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createDeadlyNightshadeBerry());
-//    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createDeadlyNightshadeBerry());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createCosmicCobEar());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createCosmicCobEar());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createCosmicCobEar());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createCosmicCobEar());
+
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHammerFlower());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHammerFlower());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHammerFlower());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createHammerFlower());
+
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createDeadlyNightshadeBerry());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createDeadlyNightshadeBerry());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createDeadlyNightshadeBerry());
+    player.getComponent(InventoryComponent.class).addItem(ItemFactory.createDeadlyNightshadeBerry());
   }
 
   /**
