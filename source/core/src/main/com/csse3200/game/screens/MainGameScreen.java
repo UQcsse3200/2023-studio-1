@@ -97,7 +97,8 @@ public class MainGameScreen extends ScreenAdapter {
     public enum ScreenType {
         MAIN_GAME,
         WIN,
-        LOSE
+        LOSE,
+        CREDIT
     }
     private ScreenType currentScreenType = ScreenType.MAIN_GAME;
 
@@ -155,6 +156,8 @@ public class MainGameScreen extends ScreenAdapter {
 
         ServiceLocator.getMissionManager().getEvents().addListener("winScreen", this::playWinScreen);
 
+        ServiceLocator.getMissionManager().getEvents().addListener("creditScreen", this::playCreditScreen);
+
         new FireflySpawner();
 
         // if the LoadSaveOnStart value is set true then load entities saved from file
@@ -169,6 +172,13 @@ public class MainGameScreen extends ScreenAdapter {
     public void playLoseScreen(String causeOfDeath) {
         LoseScreenDisplay.setLoseReason(causeOfDeath);
         currentScreenType = ScreenType.LOSE;
+    }
+
+    /**
+     * Switch to the credit screen
+     */
+    public void playCreditScreen() {
+        currentScreenType = ScreenType.CREDIT;
     }
 
     /**
@@ -195,6 +205,7 @@ public class MainGameScreen extends ScreenAdapter {
             }
             case LOSE -> game.setScreen(GdxGame.ScreenType.LOSESCREEN);
             case WIN -> game.setScreen(GdxGame.ScreenType.WINSCREEN);
+            case CREDIT -> game.setScreen(GdxGame.ScreenType.ENDCREDITS);
         }
     }
 
