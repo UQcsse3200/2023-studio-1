@@ -90,7 +90,7 @@ class ClimateControllerTest {
 			// Therefore event should be created
 			ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
 			assertNotNull(controller.getCurrentWeatherEvent());
-			assertTrue(controller.getCurrentWeatherEvent() instanceof SolarSurgeEvent);
+			assertTrue(controller.getCurrentWeatherEvent() instanceof RainStormEvent);
 		}
 	}
 
