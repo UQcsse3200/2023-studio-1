@@ -39,6 +39,8 @@ public class MissionManager implements Json.Serializable {
 		DEBRIS_CLEARED,
 		// Triggers when a crop is harvested, a single String representing the plant name is provided as an argument
 		HARVEST_CROP,
+		// Triggers on successful water use
+		WATER_CROP,
 		// Triggers when an animal is tamed
 		ANIMAL_TAMED,
 		// Triggers when a reward is collected used for MissionCompleteQuests
