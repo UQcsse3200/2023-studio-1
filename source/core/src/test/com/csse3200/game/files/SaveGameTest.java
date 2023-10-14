@@ -205,24 +205,6 @@ public class SaveGameTest {
   }
 
   @Test
-  public void setPlaceables() {
-    GameState gameState = new SaveGame.GameState();
-
-    Entity[] entities = { new Entity(EntityType.SPRINKLER),
-            new Entity(EntityType.CHEST),
-            new Entity(EntityType.FENCE),
-            new Entity(EntityType.LIGHT),
-            new Entity(EntityType.GOLDEN_STATUE),
-            new Entity(EntityType.PUMP),
-            new Entity(EntityType.GATE)};
-
-    Array<Entity> entityTest = new Array<Entity>(entities);
-
-    gameState.setTiles(entityTest);
-    assertEquals(entityTest, gameState.getPlaceables());
-  }
-
-  @Test
   public void testPlaceables() {
     Entity[] entities = { new Entity(EntityType.SPRINKLER),
             new Entity(EntityType.CHEST),
