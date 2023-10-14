@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 
 import java.io.IOException;
 
+import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.csse3200.game.components.combat.CombatStatsComponent;
 import com.csse3200.game.components.player.HungerComponent;
 import com.csse3200.game.components.player.InventoryComponent;
@@ -88,7 +89,10 @@ class ItemActionsTest {
 
     @BeforeEach
     void setup() {
-        ServiceLocator.registerParticleService(mock(ParticleService.class));
+        ParticleService mockParticleService = mock(ParticleService.class);
+        ServiceLocator.registerParticleService(mockParticleService);
+        ParticleEffectPool.PooledEffect mockEffect = mock(ParticleEffectPool.PooledEffect.class);
+        when(mockParticleService.getEffect(any())).thenReturn(mockEffect);
         TerrainFactory terrainFactory = mock(TerrainFactory.class);
         doReturn(new GridPoint2(4, 4)).when(terrainFactory).getMapSize();
         ServiceLocator.registerTimeService(new TimeService());
