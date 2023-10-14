@@ -11,6 +11,8 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.missions.cutscenes.Cutscene;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.sound.EffectSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
 import com.csse3200.game.ui.UIComponent;
 
 public class DialogueComponent extends UIComponent {
@@ -26,6 +28,7 @@ public class DialogueComponent extends UIComponent {
     private boolean talked;
     private Entity cutscene;
     private boolean waitingForCredits;
+    private boolean waitingForGodDid;
     Image transparentRectangle;
 
     @Override
@@ -38,6 +41,7 @@ public class DialogueComponent extends UIComponent {
         super.create();
         talked = false;
         waitingForCredits = false;
+        waitingForGodDid = false;
 
         // setup for dimming screen, taken from Team 3's cutscene dimming.
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
@@ -76,6 +80,16 @@ public class DialogueComponent extends UIComponent {
         cutscene.setCenterPosition(entity.getCenterPosition());
         if (waitingForCredits && cutscene.getComponent(AnimationRenderComponent.class).isFinished()) {
             waitingForCredits = false;
+            waitingForGodDid = true;
+            cutscene.getComponent(AnimationRenderComponent.class).startAnimation("god_did");
+
+            try {
+                ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.GOD_DID);
+            } catch (InvalidSoundFileException e) {
+                // god didn't :(
+            }
+        } else if (waitingForGodDid && cutscene.getComponent(AnimationRenderComponent.class).isFinished()) {
+            waitingForGodDid = false;
             cutscene.getComponent(AnimationRenderComponent.class).stopAnimation();
 
             this.entity.getEvents().trigger("dim", 0f);

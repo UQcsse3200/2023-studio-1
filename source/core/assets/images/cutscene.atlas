@@ -1,5 +1,5 @@
 cutscene.png
-size: 1792, 1792
+size: 1792, 2048
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
@@ -353,9 +353,100 @@ default
   orig: 256, 256
   offset: 0, 0
   rotate: false
-default
+god_did
   xy: 512, 1536
   index: 50
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  rotate: false
+god_did
+  xy: 512, 1536
+  index: 51
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  rotate: false
+god_did
+  xy: 512, 1536
+  index: 52
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  rotate: false
+god_did
+  xy: 512, 1536
+  index: 53
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  rotate: false
+god_did
+  xy: 512, 1536
+  index: 54
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  rotate: false
+god_did
+  xy: 768, 1536
+  index: 55
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  rotate: false
+god_did
+  xy: 1024, 1536
+  index: 56
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  rotate: false
+god_did
+  xy: 1280, 1536
+  index: 57
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  rotate: false
+god_did
+  xy: 1280, 1536
+  index: 58
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  rotate: false
+god_did
+  xy: 1280, 1536
+  index: 59
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  rotate: false
+god_did
+  xy: 1536, 1536
+  index: 60
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  rotate: false
+god_did
+  xy: 0, 1792
+  index: 61
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  rotate: false
+god_did
+  xy: 256, 1792
+  index: 62
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  rotate: false
+god_did
+  xy: 512, 1792
+  index: 63
   size: 256, 256
   orig: 256, 256
   offset: 0, 0

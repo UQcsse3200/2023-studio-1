@@ -156,6 +156,7 @@ public class PlaceableFactory {
         AnimationRenderComponent animation = new AnimationRenderComponent(
                 ServiceLocator.getResourceService().getAsset("images/cutscene.atlas", TextureAtlas.class), 16f);
         animation.addAnimation("default", 0.3f, Animation.PlayMode.NORMAL);
+        animation.addAnimation("god_did", 0.3f, Animation.PlayMode.NORMAL);
         return new Entity().addComponent(animation);
     }
 }
