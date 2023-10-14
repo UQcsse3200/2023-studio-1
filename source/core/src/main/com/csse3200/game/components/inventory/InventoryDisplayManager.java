@@ -6,6 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.sound.EffectSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -127,6 +130,12 @@ public class InventoryDisplayManager {
                         addTarget(d2, d1);
                         addTarget(d1, d2);
 
+                        try {
+                            ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.DROP_ITEM);
+                        } catch (InvalidSoundFileException e) {
+                            logger.error("sound not loaded");
+                        }
+
                     }
                 });
             }
@@ -145,7 +154,11 @@ public class InventoryDisplayManager {
                         sourceInventory.removeItem(sourceInventory.getHeldItemsEntity().get(sourceInventory.getItemPlace().get(d1.getIndexes().get(itemSlot))));
                         d1.refreshInventory();
                         d1.addTooltips();
-                        System.out.println(d1.getInventory().getItemCount());
+                        try {
+                            ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.DELETE_ITEM);
+                        } catch (InvalidSoundFileException e) {
+                            logger.error("sound not loaded");
+                        }
                     }
                 });
             }
