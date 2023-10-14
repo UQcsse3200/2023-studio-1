@@ -45,7 +45,8 @@ public class ParticleService {
 	 */
 	public enum ParticleEffectType {
 		ACID_RAIN(WEATHER_EVENT, "particle-effects/acidRain.p", 1, 10),
-		SUCCESS_EFFECT(ENTITY_EFFECT, "particle-effects/successEffect.p", 1, 10);
+		SUCCESS_EFFECT(ENTITY_EFFECT, "particle-effects/successEffect.p", 1, 10),
+		DIRT_EFFECT(ENTITY_EFFECT, "particle-effects/dirtEffect.p", 1, 10);
 
 		private final String category;
 		private final String effectPath;
