@@ -16,8 +16,8 @@ public enum EffectSoundFile implements SoundFile {
     INVENTORY_OPEN("sounds/open-bag-sound-effect.mp3"),
     HOTKEY_SELECT("sounds/take-item-sound-effect.mp3"),
     SWITCH_TOOLBAR("sounds/switchToolbar.wav"),
-    DRAG_ITEM("sounds/holdItem.wav"),
-    DROP_ITEM("sounds/dropItem.wav"),
+    DRAG_ITEM("sounds/hold.wav"),
+    DROP_ITEM("sounds/drop.wav"),
     DELETE_ITEM("sounds/bin.wav");
 
 
