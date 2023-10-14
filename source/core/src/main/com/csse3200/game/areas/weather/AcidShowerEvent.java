@@ -31,6 +31,9 @@ public class AcidShowerEvent extends WeatherEvent {
         triggerAnimalPanic();
 
         ServiceLocator.getParticleService().startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+
+        // Add lighting effects
+        ServiceLocator.getLightService().setBrightnessMultiplier((1.0f - severity / 1.5f) * 0.2f + 0.75f);
     }
 
     @Override
@@ -39,10 +42,13 @@ public class AcidShowerEvent extends WeatherEvent {
         climateControllerEvents.cancelEvent(nextAcidBurn);
 
         ServiceLocator.getParticleService().stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+
+        // Remove lighting effects
+        ServiceLocator.getLightService().setBrightnessMultiplier(1.0f);
     }
 
     private void scheduleNextAcidBurn() {
-        nextAcidBurn = climateControllerEvents.scheduleEvent(10.0f, "acidShowerAnimalPanic");
+        nextAcidBurn = climateControllerEvents.scheduleEvent(4.0f - 2.0f * severity / 1.5f, "acidShowerAnimalPanic");
     }
 
     private void triggerAnimalPanic() {
