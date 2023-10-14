@@ -11,10 +11,9 @@ public class DiscordActivity {
     public DiscordActivity() {
         handlers = new DiscordEventHandlers();
         DiscordRPC.discordInitialize("1160854151668957245", handlers, true, "");
-        rich = new DiscordRichPresence.Builder("Gardens of the Galaxy").setDetails("Legend of the AstroHoe").build();
+        rich = new DiscordRichPresence.Builder("Gardens of the Galaxy").build();
         DiscordRPC.discordUpdatePresence(rich);
-        updateLargeImage("https://i.imgur.com/dYNI4Vv.png");
-        updateSmallImage("https://i.imgur.com/Bm3UUxk.png");
+        updateLargeImage("https://raw.githubusercontent.com/UQcsse3200/2023-studio-1/main/source/core/assets/images/game_logo2.png");
     }
     public void updateDiscordStatus(String message) {
         if (this.rich != null) {
