@@ -3,21 +3,19 @@ package com.csse3200.game.components.inventory;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.Mockito.*;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.util.stream.Stream;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.csse3200.game.areas.TestGameArea;
 import com.csse3200.game.areas.terrain.GameMap;
-import com.csse3200.game.areas.terrain.TerrainComponent;
-import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.entities.EntityType;
+import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.services.ResourceService;
+import com.csse3200.game.services.TimeService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,8 +36,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
-
-import javax.swing.*;
 
 /**
  * Factory to create a mock player entity for testing.
@@ -89,6 +85,8 @@ class TestToolbarUI {
 		ServiceLocator.getResourceService().loadTextures(texturePaths);
 		ServiceLocator.getResourceService().loadSkins(skinPaths);
 		ServiceLocator.getResourceService().loadAll();
+		ServiceLocator.registerTimeService(new TimeService());
+		ServiceLocator.registerMissionManager(new MissionManager());
 
 		stage = mock(Stage.class);
 		windowArgument = ArgumentCaptor.forClass(Window.class);
@@ -104,10 +102,11 @@ class TestToolbarUI {
 
 		player =
 				new Entity()
+						.addComponent(inventory)
 						.addComponent(new PlayerActions())
 						.addComponent(new KeyboardPlayerInputComponent())
-						.addComponent(toolbarDisplay)
-						.addComponent(inventory);
+						.addComponent(toolbarDisplay);
+
 	}
 
 	@Test
@@ -130,7 +129,7 @@ class TestToolbarUI {
 
 	@ParameterizedTest
 	@MethodSource({"addingItemsShouldAddInventoryImagesParams"})
-	void addingItemsShouldAddInventoryImages(ItemComponent component, int expected) {
+	void addingItemsShouldAddInventoryImages(ItemComponent component) {
 		ServiceLocator.registerResourceService(new ResourceService());
 		ServiceLocator.getResourceService().loadTextures(texturePaths);
 		ServiceLocator.getResourceService().loadSkins(skinPaths);
@@ -146,7 +145,7 @@ class TestToolbarUI {
 		Window window = windowArgument.getValue();
 		Table inventorySlots = (Table) window.getChildren().begin()[1];
 		int i = 0;
-		for (Cell slot : inventorySlots.getCells().toArray(Cell.class)) {
+		for (Cell<?> slot : inventorySlots.getCells().toArray(Cell.class)) {
 			assert ((ItemSlot) slot.getActor()).getChild(0) instanceof Image;
 			assert ((ItemSlot) slot.getActor()).getChild(1) instanceof Stack;
 			assert ((ItemSlot) slot.getActor()).getChild(2) instanceof Label;
@@ -164,16 +163,16 @@ class TestToolbarUI {
 		ServiceLocator.getResourceService().loadTextures(texturePaths);
 		ServiceLocator.getResourceService().loadAll();
 		return Stream.of(
-				arguments(new ItemComponent("Hoe", ItemType.HOE, "images/tool_hoe.png"), 0),
-				arguments(new ItemComponent("Scythe", ItemType.SCYTHE, "images/tool_scythe.png"), 1),
-				arguments(new ItemComponent("Shovel", ItemType.SHOVEL, "images/tool_shovel.png"), 2),
-				arguments(new ItemComponent("Item", ItemType.FERTILISER, "images/tool_shovel.png"), 3),
-				arguments(new ItemComponent("Hoe", ItemType.HOE, "images/tool_hoe.png"), 4),
-				arguments(new ItemComponent("Scythe", ItemType.SCYTHE, "images/tool_scythe.png"), 5),
-				arguments(new ItemComponent("Shovel", ItemType.SHOVEL, "images/tool_shovel.png"), 6),
-				arguments(new ItemComponent("Item", ItemType.FERTILISER, "images/tool_shovel.png"), 7),
-				arguments(new ItemComponent("Hoe", ItemType.HOE, "images/tool_hoe.png"), 8),
-				arguments(new ItemComponent("Scythe", ItemType.SCYTHE, "images/tool_scythe.png"), 9)
+				arguments(new ItemComponent("Hoe", ItemType.HOE, "images/tool_hoe.png")),
+				arguments(new ItemComponent("Scythe", ItemType.SCYTHE, "images/tool_scythe.png")),
+				arguments(new ItemComponent("Shovel", ItemType.SHOVEL, "images/tool_shovel.png")),
+				arguments(new ItemComponent("Item", ItemType.FERTILISER, "images/tool_shovel.png")),
+				arguments(new ItemComponent("Hoe", ItemType.HOE, "images/tool_hoe.png")),
+				arguments(new ItemComponent("Scythe", ItemType.SCYTHE, "images/tool_scythe.png")),
+				arguments(new ItemComponent("Shovel", ItemType.SHOVEL, "images/tool_shovel.png")),
+				arguments(new ItemComponent("Item", ItemType.FERTILISER, "images/tool_shovel.png")),
+				arguments(new ItemComponent("Hoe", ItemType.HOE, "images/tool_hoe.png")),
+				arguments(new ItemComponent("Scythe", ItemType.SCYTHE, "images/tool_scythe.png"))
 		);
 	}
 
