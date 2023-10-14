@@ -5,8 +5,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.*;
 import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
-import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntitySpawner;
 import com.csse3200.game.entities.EntitiesSpawner;
@@ -32,8 +30,6 @@ public class SpaceGameArea extends GameArea {
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(24, 86);
   private static final GridPoint2 QUESTGIVER_SPAWN = new GridPoint2(42, 87);
   private static final GridPoint2 SHIP_SPAWN = new GridPoint2(20,85);
-
-  private static final GridPoint2 TRACTOR_SPAWN = new GridPoint2(15, 15);
 
   private static final float WALL_WIDTH = 0.1f;
   private EntitiesSpawner hostileSpawner;

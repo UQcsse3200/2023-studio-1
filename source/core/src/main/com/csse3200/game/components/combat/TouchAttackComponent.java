@@ -21,7 +21,6 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 public class TouchAttackComponent extends Component {
   private short targetLayer;
   private float knockbackForce = 0f;
-  private CombatStatsComponent combatStats;
   private HitboxComponent hitboxComponent;
   private float stunDuration = 0f;
 
@@ -51,7 +50,6 @@ public class TouchAttackComponent extends Component {
   @Override
   public void create() {
     entity.getEvents().addListener("collisionStart", this::onCollisionStart);
-    combatStats = entity.getComponent(CombatStatsComponent.class);
     hitboxComponent = entity.getComponent(HitboxComponent.class);
   }
 
