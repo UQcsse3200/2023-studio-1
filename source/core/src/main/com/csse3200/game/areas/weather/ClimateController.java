@@ -60,7 +60,7 @@ public class ClimateController implements Json.Serializable {
 		ServiceLocator.getTimeService().getEvents().addListener("minuteUpdate", this::updateClimate);
 
 		events.addListener("lightingEffect", this::setLightingEffect);
-		currentLightingEffectProgress = ServiceLocator.getTimeSource().getTime();
+		currentLightingEffectProgress = 0.0f;
 		currentLightingEffectEndPoint = ServiceLocator.getTimeSource().getTime();
 	}
 
@@ -77,7 +77,7 @@ public class ClimateController implements Json.Serializable {
 	 * Updates the global lighting based on the current lighting effect
 	 */
 	private void updateLightingEffect() {
-		currentLightingEffectProgress = 1 - currentLightingEffectEndPoint + ServiceLocator.getTimeSource().getTime();
+		currentLightingEffectProgress = (1000 - currentLightingEffectEndPoint + ServiceLocator.getTimeSource().getTime()) / 1000.0f;
 
 		if (currentLightingEffectProgress > 1.0f) {
 			// If the lighting effect has completed, clear any colour offsets
@@ -92,14 +92,15 @@ public class ClimateController implements Json.Serializable {
 
 	/**
 	 * Sets the current lighting effect to have the specified duration and colourGradient.
-	 * @param duration The duration of the lighting effect.
+	 * @param duration The duration of the lighting effect in seconds.
 	 * @param colourGradient The gradient of colour offsets. It should be a function which accepts a float, and returns
 	 *                       a colour offset.
 	 */
 	private void setLightingEffect(float duration, Function<Float, Color> colourGradient) {
-		currentLightingEffectEndPoint = ServiceLocator.getTimeSource().getTime() + duration;
+		currentLightingEffectEndPoint = ServiceLocator.getTimeSource().getTime() + duration * 1000.0f;
 		currentLightingEffectProgress = 0.0f;
 		currentLightingEffectGradient = colourGradient;
+		updateLightingEffect();
 	}
 
 	/**
