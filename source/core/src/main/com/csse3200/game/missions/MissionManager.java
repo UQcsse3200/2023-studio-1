@@ -196,13 +196,7 @@ public class MissionManager implements Json.Serializable {
 		json.writeObjectEnd();
 	}
 
-	/**
-	 * Method for loading the {@link MissionManager} for the game
-	 * @param json
-	 * @param jsonMap
-	 */
-	@Override
-	public void read(Json json, JsonValue jsonMap) {
+	public void readReal(Json json, JsonValue jsonMap) {
 		JsonValue active = jsonMap.get("ActiveQuests");
 		activeQuests.clear();
 		if (active.has("Quest")) {
@@ -227,5 +221,15 @@ public class MissionManager implements Json.Serializable {
 				a.readProgress(jsonValue.get("progress"));
 			});
 		}
+	}
+
+	/**
+	 * Method for loading the {@link MissionManager} for the game
+	 * @param json
+	 * @param jsonMap
+	 */
+	@Override
+	public void read(Json json, JsonValue jsonMap) {
+		ServiceLocator.getMissionManager().readReal(json, jsonMap);
 	}
 }
