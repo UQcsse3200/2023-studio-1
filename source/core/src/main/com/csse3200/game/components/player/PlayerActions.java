@@ -3,7 +3,9 @@ package com.csse3200.game.components.player;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.*;
 import com.csse3200.game.components.combat.ProjectileComponent;
 import com.csse3200.game.components.Component;
@@ -120,25 +122,12 @@ public class PlayerActions extends Component {
     // Used to apply the terrainSpeedModifier
     Vector2 playerVector = this.entity.getCenterPosition(); // Centre position is better indicator of player location
     playerVector.add(0, -1.0f); // Player entity sprite's feet are located -1.0f below the centre of the entity
-    float terrainSpeedModifier = gameMap.getTile(playerVector).getSpeedModifier();
-    velocityScale.scl(terrainSpeedModifier);
-
-//    Vector2 playerVector = this.entity.getCenterPosition(); // Centre position is better indicator of player location
-//    playerVector.add(0, -1.0f); // Player entity sprite's feet are located -1.0f below the centre of the entity
-//
-//    try {
-//      float terrainSpeedModifier = map.getTile(playerVector).getSpeedModifier();
-//      velocityScale.scl(terrainSpeedModifier);
-//    } catch (Exception e) {
-//      // This should only occur when either:
-//      // The map is not instantiated (some tests do not instantiate a gameMap
-//      // instance)
-//      // the getTile method returns null
-//      // In this event, the speed will not be modified. This will need to be updated
-//      // to throw an exception once the
-//      // GameMap class is slightly modified to allow for easier instantiation of test
-//      // maps for testing.
-//    }
+    TerrainTile terrainTile = gameMap.getTile(playerVector);
+    if (terrainTile != null) {
+      // Null check implemented for when the player Entity is moved out of bounds (Tractor spawning with terminal)
+      float terrainSpeedModifier = gameMap.getTile(playerVector).getSpeedModifier();
+      velocityScale.scl(terrainSpeedModifier);
+    }
 
     Vector2 desiredVelocity = moveDirection.cpy().scl(velocityScale);
     // impulse = (desiredVel - currentVel) * mass
