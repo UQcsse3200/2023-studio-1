@@ -21,17 +21,27 @@ public class SolarSurgeEvent extends WeatherEvent {
     @Override
     public void startEffect() {
         climateControllerEvents.trigger("startWaterLevelEffect", getDryRate());
+        climateControllerEvents.trigger("startPlantAoeEffect", getPlantEffectivenessMultiplier());
     }
 
     @Override
     public void stopEffect() {
         climateControllerEvents.trigger("stopWaterLevelEffect");
+        climateControllerEvents.trigger("stopPlantAoeEffect");
     }
 
     private float getDryRate() {
         // Lowest severity: Dry at 2x regular rate
         // Highest severity: Dry at 20x regular rate
         return 0.001f + 0.009f * severity / 1.5f;
+    }
+
+    private int getPlantEffectivenessMultiplier() {
+        if (severity > 0.75f) {
+            return 2;
+        } else {
+            return 1;
+        }
     }
 
 }

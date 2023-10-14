@@ -5,6 +5,8 @@ import com.csse3200.game.services.ServiceLocator;
 
 public class BlizzardEvent extends WeatherEvent {
 
+    private boolean hasSpawnedFireflies;
+
     /**
      * Constructs an {@link WeatherEvent} with a given duration, priority and countdown
      *
@@ -15,12 +17,17 @@ public class BlizzardEvent extends WeatherEvent {
      */
     public BlizzardEvent(int numHoursUntil, int duration, int priority, float severity) throws IllegalArgumentException {
         super(numHoursUntil, duration, priority, severity);
+        this.hasSpawnedFireflies = false;
     }
 
     @Override
     public void startEffect() {
         climateControllerEvents.trigger("startWaterLevelEffect", getDryRate());
-        climateControllerEvents.trigger("spawnFireflies");
+        climateControllerEvents.trigger("startPlantAoeEffect", getPlantEffectivenessMultiplier());
+        if (!hasSpawnedFireflies && !ServiceLocator.getTimeService().isNight()) {
+            climateControllerEvents.trigger("spawnFireflies");
+            hasSpawnedFireflies = true;
+        }
 
         // TODO - update effect
         ServiceLocator.getParticleService().startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
@@ -32,6 +39,7 @@ public class BlizzardEvent extends WeatherEvent {
     @Override
     public void stopEffect() {
         climateControllerEvents.trigger("stopWaterLevelEffect");
+        climateControllerEvents.trigger("stopPlantAoeEffect");
 
         // TODO - update effect
         ServiceLocator.getParticleService().stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);
@@ -44,6 +52,14 @@ public class BlizzardEvent extends WeatherEvent {
         // Lowest severity: Dry at regular rate
         // Highest severity: Dry at 2x regular rate
         return 0.0005f + 0.0005f * severity / 1.5f;
+    }
+
+    private int getPlantEffectivenessMultiplier() {
+        if (severity > 0.75f) {
+            return -2;
+        } else {
+            return -1;
+        }
     }
 
 }

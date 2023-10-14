@@ -10,7 +10,7 @@ import com.csse3200.game.services.ServiceLocator;
  */
 public class AcidShowerEvent extends WeatherEvent {
 
-    private ScheduledEvent nextAnimalPanic;
+    private ScheduledEvent nextAcidBurn;
 
     /**
      * Constructs a AcidShowerEvent with a given countdown, duration, priority and severity.
@@ -36,18 +36,19 @@ public class AcidShowerEvent extends WeatherEvent {
     @Override
     public void stopEffect() {
         climateControllerEvents.trigger("stopWaterLevelEffect");
-        climateControllerEvents.cancelEvent(nextAnimalPanic);
+        climateControllerEvents.cancelEvent(nextAcidBurn);
 
         ServiceLocator.getParticleService().stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);
     }
 
-    private void scheduleNextAnimalPanic() {
-        nextAnimalPanic = climateControllerEvents.scheduleEvent(1.0f, "acidShowerAnimalPanic");
+    private void scheduleNextAcidBurn() {
+        nextAcidBurn = climateControllerEvents.scheduleEvent(10.0f, "acidShowerAnimalPanic");
     }
 
     private void triggerAnimalPanic() {
         climateControllerEvents.trigger("startPanicEffect");
-        scheduleNextAnimalPanic();
+        climateControllerEvents.trigger("damagePlants");
+        scheduleNextAcidBurn();
     }
 
     private float getDryRate() {
