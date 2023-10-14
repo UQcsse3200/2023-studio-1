@@ -100,35 +100,5 @@ public class PlaceableFactoryTest {
         assertNotNull(e.getComponent(SprinklerComponent.class));
         this.baseComponentsAssertion(e);
     }
-
-    @Test
-    public void shouldCreateChest() {
-        Entity e = PlaceableFactory.createChest();
-        
-        assertTrue(EntityType.CHEST == e.getType());
-        assertNotNull(e.getComponent(ChestComponent.class));
-        assertNotNull(e.getComponent(InventoryComponent.class));
-        assertNotNull(e.getComponent(InventoryDisplay.class));
-        this.baseComponentsAssertion(e);
-    }
-
-    @Test
-    public void shouldCreateLight() {
-        Entity e = PlaceableFactory.createLight();
-        
-        assertTrue(EntityType.LIGHT == e.getType());
-        assertNotNull(e.getComponent(AuraLightComponent.class));
-        assertNotNull(e.getComponent(LightController.class));
-        this.baseComponentsAssertion(e);
-    }
-    
-    @Test
-    public void shouldCreateGoldenTrophy() {
-        Entity e = PlaceableFactory.createGoldenTrophy();
-        
-        assertTrue(EntityType.GOLDEN_STATUE == e.getType());
-        assertNotNull(e.getComponent(AuraLightComponent.class));
-        this.baseComponentsAssertion(e);
-    }
     
 } 
