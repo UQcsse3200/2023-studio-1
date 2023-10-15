@@ -75,14 +75,24 @@ class AcidShowerEventTest {
     }
 
     @Test
-    void testStartEffect() {
+    void testStartEffectParticleAndLightingSystem() {
         acidShowerEvent1.startEffect();
-        acidShowerEvent2.startEffect();
-        acidShowerEvent3.startEffect();
-        verify(ServiceLocator.getParticleService(), times(3)).startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+        verify(ServiceLocator.getParticleService(), times(1)).startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+        verify(ServiceLocator.getLightService(), times(1)).setBrightnessMultiplier(0.79f);
+    }
+
+    @Test
+    void testStartEffectTriggersEvents() {
+        acidShowerEvent1.startEffect();
+        ServiceLocator.getGameArea().getClimateController().getEvents().trigger("startWaterLevelEffect", -0.0003f);
+        ServiceLocator.getGameArea().getClimateController().getEvents().trigger("douseFlames");
+    }
+
+    @Test
+    void testStartEffectPlaysSound() throws InvalidSoundFileException {
         acidShowerEvent4.startEffect();
         acidShowerEvent5.startEffect();
-        verify(ServiceLocator.getParticleService(), times(5)).startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+        verify(ServiceLocator.getSoundService().getEffectsMusicService(), times(2)).play(EffectSoundFile.STORM, true);
     }
 
     @Test

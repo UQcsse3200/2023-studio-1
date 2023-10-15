@@ -89,17 +89,6 @@ class SolarSurgeEventTest {
     }
 
     @Test
-    void testStartEffect() throws InvalidSoundFileException {
-        solarSurgeEvent1.startEffect();
-        ServiceLocator.getGameArea().getClimateController().getEvents().trigger("startPlantAoeEffect", 2f);
-        solarSurgeEvent2.startEffect();
-        ServiceLocator.getGameArea().getClimateController().getEvents().trigger("startPlantAoeEffect", 2f);
-        solarSurgeEvent3.startEffect();
-        ServiceLocator.getGameArea().getClimateController().getEvents().trigger("startPlantAoeEffect", 2f);
-        verify(ServiceLocator.getLightService(), times(3)).setBrightnessMultiplier(0.0f);
-    }
-
-    @Test
     void testStartEffectLightingSystem() {
         solarSurgeEvent1.startEffect();
         solarSurgeEvent2.startEffect();

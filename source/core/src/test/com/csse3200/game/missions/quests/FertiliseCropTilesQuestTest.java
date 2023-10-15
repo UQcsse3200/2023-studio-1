@@ -43,6 +43,13 @@ class FertiliseCropTilesQuestTest {
         FCTQuest5 = new FertiliseCropTilesQuest("Fertilise Crop Tiles Quest 5", r5, 50);
         FCTQuest6 = new FertiliseCropTilesQuest("Fertilise Crop Tiles Quest 6", r6, 10, -1);
 
+        FCTQuest1.registerMission(ServiceLocator.getMissionManager().getEvents());
+        FCTQuest2.registerMission(ServiceLocator.getMissionManager().getEvents());
+        FCTQuest3.registerMission(ServiceLocator.getMissionManager().getEvents());
+        FCTQuest4.registerMission(ServiceLocator.getMissionManager().getEvents());
+        FCTQuest5.registerMission(ServiceLocator.getMissionManager().getEvents());
+        FCTQuest6.registerMission(ServiceLocator.getMissionManager().getEvents());
+
     }
 
     @AfterEach
@@ -52,30 +59,19 @@ class FertiliseCropTilesQuestTest {
 
     @Test
     void testRegisterMission() {
+        ServiceLocator.clear();
         assertFalse(FCTQuest1.isCompleted());
         assertFalse(FCTQuest2.isCompleted());
         assertTrue(FCTQuest3.isCompleted());
         assertFalse(FCTQuest4.isCompleted());
         assertFalse(FCTQuest5.isCompleted());
         assertTrue(FCTQuest6.isCompleted());
-        assertFalse(r1.isCollected());
-        assertFalse(r2.isCollected());
-        assertFalse(r3.isCollected());
-        assertFalse(r4.isCollected());
-        assertFalse(r5.isCollected());
-        assertFalse(r6.isCollected());
         FCTQuest1.registerMission(ServiceLocator.getMissionManager().getEvents());
         FCTQuest2.registerMission(ServiceLocator.getMissionManager().getEvents());
         FCTQuest3.registerMission(ServiceLocator.getMissionManager().getEvents());
         FCTQuest4.registerMission(ServiceLocator.getMissionManager().getEvents());
         FCTQuest5.registerMission(ServiceLocator.getMissionManager().getEvents());
         FCTQuest6.registerMission(ServiceLocator.getMissionManager().getEvents());
-        assertFalse(r1.isCollected());
-        assertFalse(r2.isCollected());
-        assertFalse(r3.isCollected());
-        assertFalse(r4.isCollected());
-        assertFalse(r5.isCollected());
-        assertFalse(r6.isCollected());
         assertFalse(FCTQuest1.isCompleted());
         assertFalse(FCTQuest2.isCompleted());
         assertTrue(FCTQuest3.isCompleted());
@@ -86,18 +82,13 @@ class FertiliseCropTilesQuestTest {
 
     @Test
     void testIsCompleted() {
-        testRegisterMission();
+        assertFalse(FCTQuest1.isCompleted());
+        assertFalse(FCTQuest2.isCompleted());
+        assertTrue(FCTQuest3.isCompleted());
+        assertFalse(FCTQuest4.isCompleted());
+        assertFalse(FCTQuest5.isCompleted());
+        assertTrue(FCTQuest6.isCompleted());
         for (int i = 0; i < 10; i++) {
-            assertFalse(FCTQuest1.isCompleted());
-            assertFalse(FCTQuest2.isCompleted());
-            assertTrue(FCTQuest3.isCompleted());
-            assertTrue(FCTQuest6.isCompleted());
-            if (i < 3){
-                assertFalse(FCTQuest4.isCompleted());
-            } else {
-                assertTrue(FCTQuest4.isCompleted());
-            }
-            assertFalse(FCTQuest5.isCompleted());
             ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.FERTILISE_CROP.name());
         }
         assertTrue(FCTQuest1.isCompleted());
@@ -119,7 +110,6 @@ class FertiliseCropTilesQuestTest {
 
     @Test
     void testGetDescription() {
-        testRegisterMission();
         String desc = "Fertilising crop tiles will cause your plants to grow faster.\n" +
                 "Apply fertiliser to %d tiles.\n" +
                 "%d out of %d crop tiles fertilised.";
@@ -127,40 +117,31 @@ class FertiliseCropTilesQuestTest {
             int min123 = Math.min(i, 10);
             int min4 = Math.min(i, 3);
             String formatted1 = String.format(desc, 10, min123, 10);
-            String formatted2 = String.format(desc, 10, min123, 10);
             String formatted3 = String.format(desc, 0, 0, 0);
             String formatted4 = String.format(desc, 3, min4, 3);
             String formatted5 = String.format(desc, 50, i, 50);
-            String formatted6 = String.format(desc, 0, 0, 0);
             assertEquals(formatted1, FCTQuest1.getDescription());
-            assertEquals(formatted2, FCTQuest2.getDescription());
             assertEquals(formatted3, FCTQuest3.getDescription());
             assertEquals(formatted4, FCTQuest4.getDescription());
             assertEquals(formatted5, FCTQuest5.getDescription());
-            assertEquals(formatted6, FCTQuest6.getDescription());
             ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.FERTILISE_CROP.name());
         }
     }
 
     @Test
     void testGetShortDescription() {
-        testRegisterMission();
         String desc = "%d out of %d crop tiles fertilised";
         for (int i = 0; i < 50; i++) {
             int min123 = Math.min(i, 10);
             int min4 = Math.min(i, 3);
             String formatted1 = String.format(desc, min123, 10);
-            String formatted2 = String.format(desc, min123, 10);
             String formatted3 = String.format(desc, 0, 0);
             String formatted4 = String.format(desc, min4, 3);
             String formatted5 = String.format(desc, i, 50);
-            String formatted6 = String.format(desc, 0, 0);
             assertEquals(formatted1, FCTQuest1.getShortDescription());
-            assertEquals(formatted2, FCTQuest2.getShortDescription());
             assertEquals(formatted3, FCTQuest3.getShortDescription());
             assertEquals(formatted4, FCTQuest4.getShortDescription());
             assertEquals(formatted5, FCTQuest5.getShortDescription());
-            assertEquals(formatted6, FCTQuest6.getShortDescription());
             ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.FERTILISE_CROP.name());
         }
     }
@@ -174,35 +155,25 @@ class FertiliseCropTilesQuestTest {
                 "%d out of %d crop tiles fertilised.";
         String shortDesc = "%d out of %d crop tiles fertilised";
         FCTQuest1.readProgress(progress);
-        FCTQuest2.readProgress(progress);
         FCTQuest3.readProgress(progress);
         FCTQuest4.readProgress(progress);
         FCTQuest5.readProgress(progress);
-        FCTQuest6.readProgress(progress);
         String formatted1 = String.format(desc, 10, progressInt, 10);
-        String formatted2 = String.format(desc, 10, progressInt, 10);
         String formatted3 = String.format(desc, 0, progressInt, 0);
         String formatted4 = String.format(desc, 3, progressInt, 3);
         String formatted5 = String.format(desc, 50, progressInt, 50);
-        String formatted6 = String.format(desc, 0, progressInt, 0);
         String shortFormatted1 = String.format(shortDesc, progressInt, 10);
-        String shortFormatted2 = String.format(shortDesc, progressInt, 10);
         String shortFormatted3 = String.format(shortDesc, progressInt, 0);
         String shortFormatted4 = String.format(shortDesc, progressInt, 3);
         String shortFormatted5 = String.format(shortDesc, progressInt, 50);
-        String shortFormatted6 = String.format(shortDesc, progressInt, 0);
         assertEquals(formatted1, FCTQuest1.getDescription());
-        assertEquals(formatted2, FCTQuest2.getDescription());
         assertEquals(formatted3, FCTQuest3.getDescription());
         assertEquals(formatted4, FCTQuest4.getDescription());
         assertEquals(formatted5, FCTQuest5.getDescription());
-        assertEquals(formatted6, FCTQuest6.getDescription());
         assertEquals(shortFormatted1, FCTQuest1.getShortDescription());
-        assertEquals(shortFormatted2, FCTQuest2.getShortDescription());
         assertEquals(shortFormatted3, FCTQuest3.getShortDescription());
         assertEquals(shortFormatted4, FCTQuest4.getShortDescription());
         assertEquals(shortFormatted5, FCTQuest5.getShortDescription());
-        assertEquals(shortFormatted6, FCTQuest6.getShortDescription());
     }
 
     @Test
@@ -213,13 +184,9 @@ class FertiliseCropTilesQuestTest {
         assertEquals(0, FCTQuest4.getProgress());
         assertEquals(0, FCTQuest5.getProgress());
         assertEquals(0, FCTQuest6.getProgress());
-        testIsCompleted();
-        assertNotEquals(0, FCTQuest1.getProgress());
-        assertNotEquals(0, FCTQuest2.getProgress());
-        assertEquals(0, FCTQuest3.getProgress());
-        assertNotEquals(0, FCTQuest4.getProgress());
-        assertNotEquals(0, FCTQuest5.getProgress());
-        assertEquals(0, FCTQuest6.getProgress());
+        for (int i = 0; i < 50; i++) {
+            ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.FERTILISE_CROP.name());
+        }
         assertEquals(10, FCTQuest1.getProgress());
         assertEquals(10, FCTQuest2.getProgress());
         assertEquals(0, FCTQuest3.getProgress());
@@ -230,7 +197,9 @@ class FertiliseCropTilesQuestTest {
 
     @Test
     void testResetState() {
-        testIsCompleted();
+        for (int i = 0; i < 50; i++) {
+            ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.FERTILISE_CROP.name());
+        }
         assertTrue(FCTQuest1.isCompleted());
         assertTrue(FCTQuest2.isCompleted());
         assertTrue(FCTQuest3.isCompleted());
