@@ -187,7 +187,7 @@ public class ToggleableMap extends UIComponent {
                         // check if the tile is in the list of player's position
                         if (inPlayerPos(listPlayerPos, new GridPoint2(xPos, yPos))) {
                             // create new image from "assets/wiki/placeables/fences/f.png"
-                            tableMap.add(new Image(new TextureRegion(ServiceLocator.getResourceService().getAsset("images/redSprite.png", Texture.class))));
+                            tableMap.add(new Image(new TextureRegion(ServiceLocator.getResourceService().getAsset("images/miniMap/playerIcon.png", Texture.class))));
                             logger.info("tile at ({}, {}) is an entity", xPos, yPos);
                         } else {
                             // check if the tile is in the list of entity's position
@@ -199,18 +199,18 @@ public class ToggleableMap extends UIComponent {
                                     }
                                     switch (pair.getValue()) {
                                         case PLANT:
-                                            tableMap.add(new Image(new TextureRegion(ServiceLocator.getResourceService().getAsset("images/greenSprite.png", Texture.class))));
+                                            tableMap.add(new Image(new TextureRegion(ServiceLocator.getResourceService().getAsset("images/miniMap/plantIcon.png", Texture.class))));
                                             logger.info("tile at ({}, {}) is an entity", xPos, yPos);
                                             isAdded = true;
                                             break;
                                         case QUESTGIVER:
-                                            tableMap.add(new Image(new TextureRegion(ServiceLocator.getResourceService().getAsset("images/darkGreenSprite.png", Texture.class))));
+                                            tableMap.add(new Image(new TextureRegion(ServiceLocator.getResourceService().getAsset("images/miniMap/questGiverIcon.png", Texture.class))));
                                             logger.info("tile at ({}, {}) is an entity", xPos, yPos);
                                             isAdded = true;
                                             break;
                                         case SHIP:
                                             // create new image from "assets/wiki/placeables/fences/f.png"
-                                            tableMap.add(new Image(new TextureRegion(ServiceLocator.getResourceService().getAsset("images/whiteSprite.png", Texture.class))));
+                                            tableMap.add(new Image(new TextureRegion(ServiceLocator.getResourceService().getAsset("images/miniMap/shipIcon.png", Texture.class))));
                                             logger.info("tile at ({}, {}) is an entity", xPos, yPos);
                                             isAdded = true;
                                             break;
