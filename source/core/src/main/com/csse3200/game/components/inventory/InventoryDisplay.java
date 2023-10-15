@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.items.WateringCanLevelComponent;
 import com.csse3200.game.components.player.PlayerActions;
@@ -171,13 +172,12 @@ public class InventoryDisplay extends UIComponent {
 				curSlot.setCount(itemCount);
 				map.put(curSlot.getDraggable(), curSlot);
 
-
 				slots.set(i, curSlot);
 			} else {
 				ItemSlot curSlot = slots.get(i);
 				curSlot.setItemImage(null);
+				curSlot.setCount(0);
 				curSlot.getDraggable().clear();
-
 				slots.set(i, curSlot);
 			}
 
@@ -389,7 +389,7 @@ public class InventoryDisplay extends UIComponent {
 		for (ItemSlot slot : slots) {
 			int i = indexes.get(slot);
 			if (inventory.getItem(i) != null) {
-				ItemComponent item = inventory.getItem(indexes.get(slot)).getComponent(ItemComponent.class);
+				ItemComponent item = inventory.getItem(i).getComponent(ItemComponent.class);
 				if (Objects.equals(item.getItemName(), "watering_can")) {
 					float level = item.getEntity().getComponent(WateringCanLevelComponent.class).getCurrentLevel();
 					tooltip = new TextTooltip(item.getItemName() + "\n\nCurrent level is " + level, skin);
@@ -403,7 +403,7 @@ public class InventoryDisplay extends UIComponent {
 				tooltip.getActor().setAlignment(Align.center);
 				tooltip.setInstant(true);
 				slot.addListener(tooltip);
-				tooltips.put(i, tooltip);
+				tooltips.put((i), tooltip);
 			}
 			else {
 				if (tooltips.get(i) != null) {

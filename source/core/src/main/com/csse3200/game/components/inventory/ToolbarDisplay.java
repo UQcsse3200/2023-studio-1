@@ -38,8 +38,6 @@ public class ToolbarDisplay extends UIComponent {
     private final ArrayList<ItemSlot> slots = new ArrayList<>();
     private final Map<Integer, TextTooltip> tooltips = new HashMap<>();
     private final InstantTooltipManager instantTooltipManager = new InstantTooltipManager();
-
-    private int curTab = 0;
     private boolean isPause = false;
     private boolean lastState = false;
 
@@ -96,11 +94,10 @@ public class ToolbarDisplay extends UIComponent {
             ItemComponent item;
             int itemCount;
             Texture itemTexture;
-            int cur = i + curTab * 10;
 
-            if (inventory != null && inventory.getItem(cur) != null) {
+            if (inventory != null && inventory.getItem(i) != null) {
                 // Since the item isn't null, we want to make sure that the itemSlot at that position is modified
-                item = inventory.getItem(cur).getComponent(ItemComponent.class);
+                item = inventory.getItem(i).getComponent(ItemComponent.class);
                 itemCount = inventory.getItemCount(item.getEntity());
                 itemTexture = item.getItemTexture();
                 ItemSlot curSlot = slots.get(i);
@@ -261,7 +258,5 @@ public class ToolbarDisplay extends UIComponent {
         } catch (InvalidSoundFileException e) {
             logger.error("sound not loaded");
         }
-        curTab = (curTab + 1) % 3;
-        updateToolbar();
     }
 }
