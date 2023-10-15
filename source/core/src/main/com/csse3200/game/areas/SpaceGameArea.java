@@ -248,9 +248,12 @@ public class SpaceGameArea extends GameArea {
           "images/selected.png",
           "images/itemFrame.png",
           "images/PauseMenu/Pause_Overlay.jpg",
-          "images/PauseMenu/Pausenew.jpg"
+          "images/PauseMenu/Pausenew.jpg",
 
-
+          "images/whiteSprite.png",
+          "images/redSprite.png",
+          "images/greenSprite.png",
+          "images/darkGreenSprite.png"
   };
 
   private static final String[] textureAtlasPaths = {

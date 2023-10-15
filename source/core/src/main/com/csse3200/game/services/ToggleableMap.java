@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -186,8 +187,8 @@ public class ToggleableMap extends UIComponent {
                         // check if the tile is in the list of player's position
                         if (inPlayerPos(listPlayerPos, new GridPoint2(xPos, yPos))) {
                             // create new image from "assets/wiki/placeables/fences/f.png"
-                            tableMap.add(new Image(new Texture("assets/wiki/placeables/fences/f.png")));
-                            logger.info("tile at ({}, {}) is player in create", xPos, yPos);
+                            tableMap.add(new Image(new TextureRegion(ServiceLocator.getResourceService().getAsset("images/redSprite.png", Texture.class))));
+                            logger.info("tile at ({}, {}) is an entity", xPos, yPos);
                         } else {
                             // check if the tile is in the list of entity's position
                             boolean isAdded = false;
@@ -198,12 +199,18 @@ public class ToggleableMap extends UIComponent {
                                     }
                                     switch (pair.getValue()) {
                                         case PLANT:
+                                            tableMap.add(new Image(new TextureRegion(ServiceLocator.getResourceService().getAsset("images/greenSprite.png", Texture.class))));
+                                            logger.info("tile at ({}, {}) is an entity", xPos, yPos);
+                                            isAdded = true;
+                                            break;
                                         case QUESTGIVER:
-                                        case SHIP_PART_TILE:
-                                        case TILE:
+                                            tableMap.add(new Image(new TextureRegion(ServiceLocator.getResourceService().getAsset("images/darkGreenSprite.png", Texture.class))));
+                                            logger.info("tile at ({}, {}) is an entity", xPos, yPos);
+                                            isAdded = true;
+                                            break;
                                         case SHIP:
                                             // create new image from "assets/wiki/placeables/fences/f.png"
-                                            tableMap.add(new Image(new Texture("assets/wiki/placeables/fences/f.png")));
+                                            tableMap.add(new Image(new TextureRegion(ServiceLocator.getResourceService().getAsset("images/whiteSprite.png", Texture.class))));
                                             logger.info("tile at ({}, {}) is an entity", xPos, yPos);
                                             isAdded = true;
                                             break;
