@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -25,6 +26,7 @@ public class ParticleService {
 	 * All the effects that will be rendered
 	 */
 	private final ArrayList<ParticleEffectWrapper> queuedEffects;
+	private final ArrayList<ParticleEffectWrapper> positionalEffects;
 
 	private final ArrayList<ParticleEffectComponent> effectComponents;
 
@@ -95,6 +97,7 @@ public class ParticleService {
 		}
 
 		effectComponents = new ArrayList<>();
+		positionalEffects = new ArrayList<>();
 	}
 
 	/**
@@ -111,8 +114,23 @@ public class ParticleService {
 				wrapper.getPooledEffect().reset();
 			}
 		}
+
+		// Render the particle effects attached to specific components
 		for (ParticleEffectComponent component: effectComponents) {
 			component.render(batch, delta);
+		}
+
+		// Render the particles at a certain position
+		Iterator<ParticleEffectWrapper> itr = positionalEffects.iterator();
+		while (itr.hasNext()) {
+			ParticleEffectWrapper wrapper = itr.next();
+			// If effect is complete, don't render and free effect
+			if (wrapper.getPooledEffect().isComplete()) {
+				wrapper.getPooledEffect().free();
+				itr.remove();
+			} else {
+				wrapper.getPooledEffect().draw(batch, delta);
+			}
 		}
 	}
 
@@ -158,6 +176,17 @@ public class ParticleService {
 	public ParticleEffectPool.PooledEffect getEffect(ParticleEffectType effectType) {
 		logger.debug("Obtaining effect for type - {}", effectType.name());
 		return particleEffectPools.get(effectType).obtain();
+	}
+
+	public void startEffectAtPosition(ParticleEffectType effectType, Vector2 position) {
+		// Grabs the effect from the effect pool using the enum
+		ParticleEffectWrapper effectWrapper = new ParticleEffectWrapper(particleEffectPools.get(effectType).obtain(), effectType.category, effectType.name());
+		// Adds the effect to the queued effects so the particle service knows to draw it
+		positionalEffects.add(effectWrapper);
+		effectWrapper.getPooledEffect().scaleEffect(0.1f);
+		effectWrapper.getPooledEffect().setPosition(position.x, position.y);
+		effectWrapper.getPooledEffect().start();
+
 	}
 
 	public void addComponent(ParticleEffectComponent component) {
