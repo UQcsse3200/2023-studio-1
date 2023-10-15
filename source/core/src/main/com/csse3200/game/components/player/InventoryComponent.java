@@ -63,7 +63,7 @@ public class InventoryComponent extends Component {
      */
     private int maxInventorySize = 30; // default size 30
 
-    private final List<String> forbiddenItems = Arrays.asList("shovel","hoe","watering_can","scythe","sword","gun");
+    private final List<String> forbiddenItems = Arrays.asList("shovel","hoe","watering_can","scythe","sword","gun","Fishing Rod");
 
     /**
      * Creates a new InventoryComponent with a given list of items.
