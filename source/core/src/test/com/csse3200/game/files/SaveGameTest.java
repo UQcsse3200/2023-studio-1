@@ -7,14 +7,11 @@ import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Files;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.headless.HeadlessFiles;
 import com.csse3200.game.areas.SpaceGameArea;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.components.player.PlayerActions;
-import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.SaveLoadService;
@@ -236,6 +233,6 @@ public class SaveGameTest {
     doReturn(null).when(mockArea).getTractor();
     doReturn(player).when(mockArea).getPlayer();
     Gdx.files = new HeadlessFiles();
-    ServiceLocator.getSaveLoadService().save();
+    ServiceLocator.getSaveLoadService().save("test/files/saveFileTest.json");
   }
 }
