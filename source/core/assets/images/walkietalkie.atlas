@@ -1,0 +1,12 @@
+walkietalkie.png
+size: 16, 48
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+default
+  xy: 0, 0
+  index: 0
+  size: 16, 48
+  orig: 16, 48
+  offset: 0, 0
+  rotate: false

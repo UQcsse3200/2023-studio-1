@@ -1,5 +1,6 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.services.sound.SoundService;
 import com.csse3200.game.components.inventory.InventoryDisplayManager;
 import com.csse3200.game.services.plants.PlantCommandService;
@@ -38,6 +39,7 @@ public class ServiceLocator {
   private static LightService lightService;
   private static GameAreaDisplay pauseMenuArea;
   private static GameAreaDisplay craftArea;
+  private static GdxGame game;
   private static InventoryDisplayManager inventoryDisplayManager;
   private static CameraComponent cameraComponent;
   private static SaveLoadService saveLoadService;
@@ -291,5 +293,14 @@ public class ServiceLocator {
   public static GameAreaDisplay getCraftArea() {
     return craftArea;
   }
+
+  public static void registerGame(GdxGame gameVar) {
+    game = gameVar;
+  }
+
+  public static GdxGame getGame() {
+    return game;
+  }
+
 
 }
