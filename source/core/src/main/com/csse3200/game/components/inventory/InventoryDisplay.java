@@ -76,6 +76,7 @@ public class InventoryDisplay extends UIComponent {
 		initialiseInventory();
 		entity.getEvents().addListener(openEvent, this::toggleOpen);
 		entity.getEvents().addListener(refreshEvent, this::refreshInventory);
+		entity.getEvents().addListener("hotkeySelection",this::updateSelected);
 		inventoryDisplayManager.addInventoryDisplay(this);
 	}
 
@@ -103,7 +104,7 @@ public class InventoryDisplay extends UIComponent {
 			// Create the label for the item slot
 			Label label = new Label(" " + idx, skin); //please please please work
 			if (inventory != null && inventory.getHeldIndex() == i) {
-				label.setColor(Color.RED);
+				label.setColor(Color.BLUE);
 			}
 			else {
 				label.setColor(Color.BLACK);
@@ -160,18 +161,6 @@ public class InventoryDisplay extends UIComponent {
 	private void updateInventory() {
 		dnd.clear();
 		actors.clear(); // Clear the actors ArrayList
-
-		for (int i = 0; i < (rowSize); i++){
-			Label label = labels.get(i);
-			if (inventory != null && i == inventory.getHeldIndex()) {
-				label.setColor(Color.RED);
-			}
-			else {
-				label.setColor(Color.BLACK);
-			}
-			labels.set(i, label);
-
-		}
 
 		for (int i = 0; i < size; i++) {
 			ItemComponent item;
@@ -290,6 +279,23 @@ public class InventoryDisplay extends UIComponent {
 				});
 			}
 		}
+	}
+
+	/**
+	 * Updates displayed number at top of inventory to represent what slot is selected
+	 * @param slotNum number of slot updated
+	 */
+	public void updateSelected(int slotNum) {
+		for (int i = 0; i < labels.size(); i++) {
+            Label label = labels.get(i);
+            if(slotNum == i) {
+                label.setColor(Color.BLUE);
+            }
+			else {
+                label.setColor(Color.BLACK);
+            }
+            labels.set(i, label);
+        }
 	}
 
 	/**
