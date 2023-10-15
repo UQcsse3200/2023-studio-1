@@ -39,6 +39,7 @@ public class BlizzardEvent extends WeatherEvent {
             climateControllerEvents.trigger("spawnFireflies");
             hasSpawnedFireflies = true;
         }
+        climateControllerEvents.trigger("igniteFlames");
 
         ServiceLocator.getParticleService().startEffect(ParticleService.ParticleEffectType.BLIZZARD);
 
@@ -61,6 +62,7 @@ public class BlizzardEvent extends WeatherEvent {
         climateControllerEvents.trigger("stopWaterLevelEffect");
         climateControllerEvents.trigger("stopPlantAoeEffect");
         climateControllerEvents.trigger("stopPlayerMovementSpeedEffect");
+        climateControllerEvents.trigger("stopPlacedLightEffects");
 
         ServiceLocator.getParticleService().stopEffect(ParticleService.ParticleEffectType.BLIZZARD);
 

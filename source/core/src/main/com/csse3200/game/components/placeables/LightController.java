@@ -11,18 +11,29 @@ import com.csse3200.game.services.ServiceLocator;
  */
 public class LightController extends Component {
 
-    private boolean isWeatherDousingFlames = false;
+    private enum WeatherEffectState {
+        NO_EFFECT,
+        DOUSING,
+        IGNITING
+    }
+
+    private WeatherEffectState weatherEffectState = WeatherEffectState.NO_EFFECT;
 
     @Override
     public void create() {
-        ServiceLocator.getGameArea().getClimateController().getEvents().addListener("douseFlames", () -> setWeatherDousingFlames(true));
-        ServiceLocator.getGameArea().getClimateController().getEvents().addListener("reigniteFlames", () -> setWeatherDousingFlames(false));
+        ServiceLocator.getGameArea().getClimateController().getEvents().addListener("igniteFlames",
+                () -> setWeatherDousingFlames(WeatherEffectState.IGNITING));
+        ServiceLocator.getGameArea().getClimateController().getEvents().addListener("douseFlames",
+                () -> setWeatherDousingFlames(WeatherEffectState.DOUSING));
+        ServiceLocator.getGameArea().getClimateController().getEvents().addListener("stopPlacedLightEffects",
+                () -> setWeatherDousingFlames(WeatherEffectState.NO_EFFECT));
     }
 
     @Override
     public void update() {
         // Would've liked to use the events but won't work if you place during the night
-        if (ServiceLocator.getTimeService().isDay() || isWeatherDousingFlames) {
+        if ((ServiceLocator.getTimeService().isDay() && weatherEffectState == WeatherEffectState.NO_EFFECT)
+                || weatherEffectState == WeatherEffectState.DOUSING) {
             turnOff();
         } else {
             turnOn();
@@ -48,8 +59,8 @@ public class LightController extends Component {
         return true;
     }
 
-    private void setWeatherDousingFlames(boolean isWeatherDousingFlames) {
-        this.isWeatherDousingFlames = isWeatherDousingFlames;
+    private void setWeatherDousingFlames(WeatherEffectState weatherEffectState) {
+        this.weatherEffectState = weatherEffectState;
     }
 
 }

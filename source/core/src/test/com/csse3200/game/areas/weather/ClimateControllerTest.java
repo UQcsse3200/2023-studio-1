@@ -1,5 +1,6 @@
 package com.csse3200.game.areas.weather;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.areas.GameArea;
@@ -15,6 +16,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.lang.reflect.Field;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
@@ -24,12 +27,14 @@ import static org.mockito.Mockito.*;
 class ClimateControllerTest {
 
 	ClimateController controller;
+	GameTime gameTime;
+	LightService lightService;
 
 	@BeforeEach
 	public void setUp() {
-		GameTime gameTime = mock(GameTime.class);
+		gameTime = mock(GameTime.class);
 		TimeService timeService = mock(TimeService.class);
-		LightService lightService = mock(LightService.class);
+		lightService = mock(LightService.class);
 		ServiceLocator.registerTimeSource(gameTime);
 		ServiceLocator.registerTimeService(timeService);
 		ServiceLocator.registerParticleService(mock(ParticleService.class));
@@ -230,4 +235,12 @@ class ClimateControllerTest {
 		assertEquals(1, currentEvent.getPriority());
 		assertEquals(1.5f, currentEvent.getSeverity(), 0.001f);
 	}
+
+	@Test
+	void testUpdateLightingEffect() {
+		when(gameTime.getTime()).thenReturn(3000L);
+		ServiceLocator.getTimeService().getEvents().trigger("minuteUpdate");
+		verify(lightService,times(1)).setColourOffset(Color.CLEAR);
+	}
+
 }

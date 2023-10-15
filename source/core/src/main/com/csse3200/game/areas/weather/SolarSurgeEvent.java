@@ -47,6 +47,7 @@ public class SolarSurgeEvent extends WeatherEvent {
         // Trigger in-game effects
         climateControllerEvents.trigger("startWaterLevelEffect", getDryRate());
         climateControllerEvents.trigger("startPlantAoeEffect", getPlantEffectivenessMultiplier());
+        scheduleNextSurge();
 
         // Apply the desired lighting effects
         ServiceLocator.getLightService().setBrightnessMultiplier(0.0f);
@@ -55,7 +56,6 @@ public class SolarSurgeEvent extends WeatherEvent {
         bOffset = MathUtils.random();
         climateControllerEvents.trigger("lightingEffect", 34.0f,
                 (Function<Float, Color>) this::getAuroraColourOffset);
-        scheduleNextSurge();
 
         // Start sound effects
         try {
@@ -72,10 +72,11 @@ public class SolarSurgeEvent extends WeatherEvent {
         // Cancel in-game effects
         climateControllerEvents.trigger("stopWaterLevelEffect");
         climateControllerEvents.trigger("stopPlantAoeEffect");
+        climateControllerEvents.cancelEvent(nextSurge);
+        nextSurge = null;
 
         // Remove lighting effects
         ServiceLocator.getLightService().setBrightnessMultiplier(1.0f);
-        climateControllerEvents.cancelEvent(nextSurge);
 
         // Stop sound effects
         try {
@@ -90,19 +91,23 @@ public class SolarSurgeEvent extends WeatherEvent {
     }
 
     private void triggerSurge() {
-        // Play SFX
-        try {
-            ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.SURGE);
-        } catch (InvalidSoundFileException exception) {
-            logger.error("Failed to play lightning strike sound effect", exception);
+        if (nextSurge != null) {
+            logger.info("Triggering surge");
+
+            // Play SFX
+            try {
+                ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.SURGE);
+            } catch (InvalidSoundFileException exception) {
+                logger.error("Failed to play lightning strike sound effect", exception);
+            }
+            // Trigger animal panic and damage plants (if sufficiently severe)
+            if (severity > 1.2f) {
+                climateControllerEvents.trigger("startPanicEffect");
+                climateControllerEvents.trigger("damagePlants");
+            }
+            // Recursively schedule next aurora
+            scheduleNextSurge();
         }
-        // Trigger animal panic and damage plants (if sufficiently severe)
-        if (severity > 1.2f) {
-            climateControllerEvents.trigger("startPanicEffect");
-            climateControllerEvents.trigger("damagePlants");
-        }
-        // Recursively schedule next aurora
-        scheduleNextSurge();
     }
 
     private Color getAuroraColourOffset(float t) {
