@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 
-import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.combat.CombatStatsComponent;
 import com.csse3200.game.components.combat.TouchAttackComponent;
 import com.csse3200.game.components.combat.ProjectileAnimationController;
 import com.csse3200.game.components.combat.ProjectileComponent;
@@ -47,7 +47,7 @@ public class ProjectileFactory {
         projectile
                 .addComponent(new CombatStatsComponent(1, 1))
                 .addComponent(new ProjectileComponent(2f))
-                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 10f))
+                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 10f, 0.25f))
                 .addComponent(animator);
 
         projectile.getComponent(HitboxComponent.class).setAsBoxAligned(
@@ -77,7 +77,7 @@ public class ProjectileFactory {
         projectile
                 .addComponent(new CombatStatsComponent(1, 1))
                 .addComponent(new ProjectileComponent(3f))
-                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 5f))
+                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 5f, 0.05f))
                 .addComponent(animator);
 
         projectile.getComponent(HitboxComponent.class).setAsBoxAligned(
@@ -109,7 +109,7 @@ public class ProjectileFactory {
 
         projectile
                 .addComponent(new ProjectileComponent(2f))
-                .addComponent(new TouchAttackComponent(PhysicsLayer.NPC, 10f))
+                .addComponent(new TouchAttackComponent(PhysicsLayer.NPC, 10f, 0.3f))
                 .addComponent(new CombatStatsComponent(1, 10))
                 .addComponent(animator);
 

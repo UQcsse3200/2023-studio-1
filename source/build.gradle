@@ -47,6 +47,7 @@ allprojects {
         google()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven { url 'https://jitpack.io' }
     }
 }
 
@@ -99,6 +100,9 @@ project(":core") {
 
         // Box 2D Lighting
         implementation "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
+
+        // Discord RPC
+        implementation 'com.github.Vatuu:discord-rpc:1.6.2'
 
         // Unit Testing
         testImplementation "org.junit.jupiter:junit-jupiter-api:$junit5Version"

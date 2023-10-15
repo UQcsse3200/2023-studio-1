@@ -7,10 +7,14 @@ import java.util.*;
 import java.util.function.Supplier;
 
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.components.plants.PlantComponent;
+import com.csse3200.game.components.player.PlayerActions;
+import com.csse3200.game.entities.factories.ShipFactory;
+import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.services.sound.EffectSoundFile;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.TerrainTile;
-import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.combat.CombatStatsComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.npc.TamableComponent;
@@ -61,7 +65,7 @@ public class ItemActions extends Component {
   }
 
   private void getFish(String place, Entity player) {
-    player.getEvents().trigger("fishCaught");
+    player.getEvents().trigger(PlayerActions.events.FISH_CAUGHT.name());
     Entity item;
     logger.info("Fish caught!");
     try {
@@ -142,11 +146,11 @@ public class ItemActions extends Component {
         return resultStatus;
       }
       case SWORD -> {
-        player.getEvents().trigger("attack", mousePos);
+        player.getEvents().trigger(PlayerActions.events.ATTACK.name(), mousePos);
         return true;
       }
       case GUN -> {
-        player.getEvents().trigger("shoot", mousePos);
+        player.getEvents().trigger(PlayerActions.events.SHOOT.name(), mousePos);
         return true;
       }
       case FOOD -> {
@@ -207,7 +211,7 @@ public class ItemActions extends Component {
   private boolean fish(Entity player, Vector2 mousePos) {
     Vector2 nullValue = new Vector2(82, 25);
     if (entity.getEvents().getScheduledEventsSize() != 0) {
-      player.getEvents().trigger("fishCaught");
+      player.getEvents().trigger(PlayerActions.events.FISH_CAUGHT.name());
       entity.getEvents().cancelAllEvents();
       logger.info("Fishing cancelled");
       return false;
@@ -222,7 +226,7 @@ public class ItemActions extends Component {
       } catch (Exception e) {
         logger.error("Failed to play fishsound", e);
       }
-      player.getEvents().trigger("castFishingRod", mousePos);
+      player.getEvents().trigger(PlayerActions.events.CAST_FISHING_RODS.name(), mousePos);
       entity.getEvents().scheduleEvent(randomNumber, "fishCaught", "ḓ̸̺̯̰͍͇̫̻͔̜̮͔̫̘̮̆͗̏͛̃͐̓̓̈́̉͋͒j̴͇̗̱̝̜͌̃ ̷̨̠̝̲͍͚̥̭̪͕̜̯̔̉̑k̷̮̤̺̎͑͊̓̈̽̈́̃̿̐̐͛͘͝h̵͍̳̲̟̝̀̐͗͌̄̔a̶̢̧̛̫̥̙͈̪̲͇̿͒̇́͋̈́̄̉͗̕͜ͅl̷̨͎̻͇̞̩̪̪̦͙̹̳͚̜̍͌͋̀ͅḗ̵̪͕̰̥̊̓̅͌́͠d̶͕͚̦̽̄̏̍͘", player);
       return true;
     }
@@ -237,7 +241,7 @@ public class ItemActions extends Component {
       } catch (Exception e) {
         logger.error("Failed to play fishsound", e);
       }
-      player.getEvents().trigger("castFishingRod", mousePos);
+      player.getEvents().trigger(PlayerActions.events.CAST_FISHING_RODS.name(), mousePos);
       entity.getEvents().scheduleEvent(randomNumber,"fishCaught", "ocean", player);
       return true;
     } else if (tile.getTerrainCategory() == TerrainTile.TerrainCategory.LAVA) {
@@ -249,7 +253,7 @@ public class ItemActions extends Component {
       } catch (Exception e) {
         logger.error("Failed to play fishsound", e);
       }
-      player.getEvents().trigger("castFishingRod", mousePos);
+      player.getEvents().trigger(PlayerActions.events.CAST_FISHING_RODS.name(), mousePos);
       entity.getEvents().scheduleEvent(randomNumber,"fishCaught", "lava", player);
       return true;
     }
@@ -262,6 +266,7 @@ public class ItemActions extends Component {
     if (type == null) {
       return;
     }
+
     if (type.getItemType() == ItemType.FOOD) {
       switch (type.getItemName()) {
         case "Ear of Cosmic Cob":
@@ -281,12 +286,22 @@ public class ItemActions extends Component {
         case "Lave Eel":
           player.getComponent(HungerComponent.class).increaseHungerLevel(-50);
           player.getComponent(CombatStatsComponent.class).addHealth(100);
-        case "Salmon":
-          player.getComponent(HungerComponent.class).increaseHungerLevel(-10);
+          return;
         default:
           player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
       }
+    } else if (type.getItemType() == ItemType.EGG) {
+        if (type.getItemName().equals("golden egg")) {
+            player.getComponent(PlayerActions.class).setSpeedMultiplier(5f);
+            player.getEvents().scheduleEvent(5f, "setSpeedMultiplier", 1f);
+        } else {
+            player.getComponent(HungerComponent.class).increaseHungerLevel(-10);
+        }
+    } else if (type.getItemType() == ItemType.MILK) {
+      player.getComponent(PlayerActions.class).setDamageMultiplier(5f);
+      player.getEvents().scheduleEvent(5f, "setDamageMultiplier", 1f);
     }
+
   }
 
   /**
@@ -397,14 +412,19 @@ public class ItemActions extends Component {
     }
 
     boolean tileWaterable = isCropTile(tile.getOccupant());
-    entity.getComponent(WateringCanLevelComponent.class).incrementLevel(-5);  //decrease the water level by 5 units
+    entity.getComponent(WateringCanLevelComponent.class).incrementLevel(-2);  //decrease the water level by 5 units
     
     if (!tileWaterable) {
       return false;
     }
 
-    // A water amount of 0.5 was recommended by team 7
-    tile.getOccupant().getEvents().trigger("water", 0.5f);
+    // A water amount of 0.2
+    tile.getOccupant().getEvents().trigger("water", 0.2f);
+    if (tile.getOccupant().getComponent(CropTileComponent.class).getPlant() != null) {
+      ServiceLocator.getMissionManager().getEvents().trigger(
+              MissionManager.MissionEvent.WATER_CROP.name(),
+              tile.getOccupant().getComponent(CropTileComponent.class).getPlant().getComponent(PlantComponent.class).getPlantType());
+    }
     return true;
   }
 
@@ -572,7 +592,7 @@ public class ItemActions extends Component {
       return false;
     }
     if (ship.getType() == EntityType.SHIP) {
-      ship.getEvents().trigger("addPart", 1);
+      ship.getEvents().trigger(ShipFactory.events.ADD_PART.name(), 1);
       player.getComponent(InventoryComponent.class).removeItem(entity);
       return true;
     }
