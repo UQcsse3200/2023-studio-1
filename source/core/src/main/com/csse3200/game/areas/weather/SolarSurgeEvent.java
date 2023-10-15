@@ -86,14 +86,7 @@ public class SolarSurgeEvent extends WeatherEvent {
     }
 
     private void scheduleNextSurge() {
-        float timeToEndOfEvent = ((59 - ServiceLocator.getTimeService().getMinute()) / 60.0f + duration - 1) * 30.0f;
-        float timeToSurge = getNextTimeToSurge();
-
-        if (timeToEndOfEvent < timeToSurge) {
-            return;
-        }
-
-        nextSurge = climateControllerEvents.scheduleEvent(timeToSurge, "surge");
+        nextSurge = climateControllerEvents.scheduleEvent(4.0f - 2.0f * severity / 1.5f, "surge");
     }
 
     private void triggerSurge() {
@@ -110,12 +103,6 @@ public class SolarSurgeEvent extends WeatherEvent {
         }
         // Recursively schedule next aurora
         scheduleNextSurge();
-    }
-
-    private float getNextTimeToSurge() {
-        float maxTime = 2.0f + 0.8f * (1.5f - severity) / 1.5f;
-        float minTime = 0.8f + 0.2f * (1.5f - severity) / 1.5f;
-        return MathUtils.random(minTime, maxTime);
     }
 
     private Color getAuroraColourOffset(float t) {
