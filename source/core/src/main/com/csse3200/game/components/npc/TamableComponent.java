@@ -79,7 +79,7 @@ public class TamableComponent extends Component {
   private void feedAnimal() {
       EntityType animalType = this.getEntity().getType();
       String name = this.getEntity().getType().name();
-      EffectSoundFile effect = null;
+      EffectSoundFile effect;
       switch(animalType) {
           case ASTROLOTL:
               effect = EffectSoundFile.ASTROLOTL_FEED;

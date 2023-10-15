@@ -284,7 +284,10 @@ public class SpaceGameArea extends GameArea {
           "sounds/Impact4.ogg", "sounds/car-horn-6408.mp3",
           "sounds/weapons/SwordHitEntity.mp3", "sounds/weapons/SwordSwing.mp3", "sounds/weapons/GunAttack.mp3",
           "sounds/animals/AstrolotlFeed.mp3", "sounds/animals/ChickenFeed.mp3",
-          "sounds/animals/CowFeed.mp3", "sounds/animals/TamedAnimal.mp3",
+          "sounds/animals/CowFeed.mp3", "sounds/animals/TamedAnimal.mp3", "sounds/animals/CowDeath.mp3",
+          "sounds/animals/ChickenDeath.mp3", "sounds/animals/DeathOxygenEater.mp3",
+          "sounds/animals/DeathDragonFly.mp3", "sounds/animals/DeathBats.mp3",
+          "sounds/player/PlayerDeath.mp3", "sounds/player/PlayerDeath2.mp3",
           "sounds/plants/aloeVera/click.wav", "sounds/plants/aloeVera/clickLore.wav",
           "sounds/plants/aloeVera/decay.wav", "sounds/plants/aloeVera/decayLore.wav",
           "sounds/plants/aloeVera/destroy.wav", "sounds/plants/aloeVera/destroyLore.wav",
@@ -582,6 +585,13 @@ public class SpaceGameArea extends GameArea {
     effects.add(EffectSoundFile.ATTACK_MISS);
     effects.add(EffectSoundFile.ATTACK_HIT);
     effects.add(EffectSoundFile.GUN_ATTACK);
+    effects.add(EffectSoundFile.OXYGEN_EAT_DEATH);
+    effects.add(EffectSoundFile.DRAGONFLY_DEATH);
+    effects.add(EffectSoundFile.DEATH_BATS);
+    effects.add(EffectSoundFile.CHICKEN_DEATH);
+    effects.add(EffectSoundFile.PLAYER_DEATH);
+    effects.add(EffectSoundFile.PLAYER_DEATH2);
+    effects.add(EffectSoundFile.COW_DEATH);
 
     try {
       ServiceLocator.getSoundService().getEffectsMusicService().loadSounds(effects);

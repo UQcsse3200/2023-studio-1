@@ -4,6 +4,7 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.services.sound.EffectSoundFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -117,7 +118,43 @@ public class CombatStatsComponent extends Component {
 
   @Override
   public void earlyUpdate() {
+    boolean playerDeath = false;
     if (isDead()) {
+
+      EntityType type = entity.getType();
+      EffectSoundFile effect;
+      EffectSoundFile effect2 = null;
+
+      switch(type) {
+        case CHICKEN:
+          effect = EffectSoundFile.CHICKEN_DEATH;
+          break;
+        case COW:
+          effect = EffectSoundFile.COW_DEATH;
+          break;
+        case OXYGEN_EATER:
+          effect = EffectSoundFile.OXYGEN_EAT_DEATH;
+          break;
+        case BAT:
+          effect = EffectSoundFile.DEATH_BATS;
+          break;
+        case DRAGONFLY:
+          effect = EffectSoundFile.DRAGONFLY_DEATH;
+          break;
+        default:
+          playerDeath = true;
+          effect = EffectSoundFile.PLAYER_DEATH2;
+          effect2 = EffectSoundFile.PLAYER_DEATH;
+      }
+      try {
+        ServiceLocator.getSoundService().getEffectsMusicService().play(effect);
+        if (playerDeath) {
+          ServiceLocator.getSoundService().getEffectsMusicService().play(effect2);
+        }
+        Thread.sleep(100);
+      } catch (Exception e) {
+        logger.error("Failed to play animal sound", e);
+      }
       entity.getEvents().trigger("death");
       handleDeath();
     }

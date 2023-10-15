@@ -21,7 +21,14 @@ public enum EffectSoundFile implements SoundFile {
     CHICKEN_FEED("sounds/animals/ChickenFeed.mp3"),
     COW_FEED("sounds/animals/CowFeed.mp3"),
     ASTROLOTL_FEED("sounds/animals/AstrolotlFeed.mp3"),
-    TAMED_ANIMAL("sounds/animals/TamedAnimal.mp3");
+    TAMED_ANIMAL("sounds/animals/TamedAnimal.mp3"),
+    COW_DEATH("sounds/animals/CowDeath.mp3"),
+    OXYGEN_EAT_DEATH("sounds/animals/DeathOxygenEater.mp3"),
+    DRAGONFLY_DEATH("sounds/animals/DeathDragonFly.mp3"),
+    DEATH_BATS("sounds/animals/DeathBats.mp3"),
+    PLAYER_DEATH("sounds/player/PlayerDeath.mp3"),
+    PLAYER_DEATH2("sounds/player/PlayerDeath2.mp3"),
+    CHICKEN_DEATH("sounds/animals/ChickenDeath.mp3");
 
     private final String filePath;
 
