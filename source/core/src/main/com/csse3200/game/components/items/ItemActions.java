@@ -105,6 +105,7 @@ public class ItemActions extends Component {
     }
     // Add to inventory
     logger.info("Added fish to inventory");
+    ServiceLocator.getGameArea().getPlayer().getEvents().trigger("startEffect", ParticleService.ParticleEffectType.SUCCESS_EFFECT);
     ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class).addItem(item);
   }
 
