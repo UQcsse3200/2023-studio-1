@@ -98,9 +98,9 @@ public class ToolbarDisplay extends UIComponent {
             Texture itemTexture;
             int cur = i + curTab * 10;
 
-            if (inventory != null && inventory.getItem(i) != null) {
+            if (inventory != null && inventory.getItem(cur) != null) {
                 // Since the item isn't null, we want to make sure that the itemSlot at that position is modified
-                item = inventory.getItem(i).getComponent(ItemComponent.class);
+                item = inventory.getItem(cur).getComponent(ItemComponent.class);
                 itemCount = inventory.getItemCount(item.getEntity());
                 itemTexture = item.getItemTexture();
                 ItemSlot curSlot = slots.get(i);
