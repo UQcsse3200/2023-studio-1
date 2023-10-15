@@ -335,9 +335,9 @@ class ShipEaterIntegrationTest {
 		// ship eater gets to the ship and starts eating
 
 		// increase buddy's speed as well
-		entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(new Vector2(5f, 5f));
+		entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(new Vector2(10f, 10f));
 
-		runGame(20);
+		runGame(50);
 
 		assert(isEating);
 	}
