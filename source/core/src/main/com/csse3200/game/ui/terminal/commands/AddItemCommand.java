@@ -7,7 +7,6 @@ import java.util.StringJoiner;
 import java.util.function.Supplier;
 
 import com.csse3200.game.entities.factories.ItemFactory;
-import com.csse3200.game.services.FactoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.components.player.InventoryComponent;
@@ -38,6 +37,7 @@ public class AddItemCommand implements Command {
 			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("hammer flower", ItemFactory::createHammerFlower),
 			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("space snapper seeds", ItemFactory::createSpaceSnapperSeed),
 			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("egg", ItemFactory::createEgg),
+			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("golden egg", ItemFactory::createGoldenEgg),
 			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("milk", ItemFactory::createMilk),
 			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("chest", ItemFactory::createChestItem),
 			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("fence", ItemFactory::createFenceItem),
@@ -47,7 +47,20 @@ public class AddItemCommand implements Command {
 			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("gun", ItemFactory::createGun),
 			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("sword", ItemFactory::createSword),
 			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("pump", ItemFactory::createPumpItem),
-			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("map", ItemFactory::createMapItem));
+			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("ship", ItemFactory::createShipPart),
+			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("fishing rod", ItemFactory::createFishingRod),
+			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("map", ItemFactory::createMapItem),
+			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Netty", ItemFactory::createNetty),
+			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Yak3", ItemFactory::createYak3),
+			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Lola", ItemFactory::createLola),
+			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Larry", ItemFactory::createLarry),
+			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Braydan", ItemFactory::createBraydan),
+			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Harry", ItemFactory::createHarry),
+			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Mr Krabs", ItemFactory::createMrKrabs),
+			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Phar Lap", ItemFactory::createPharLap),
+			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Bryton", ItemFactory::createBryton),
+			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Sanders", ItemFactory::createSanders),
+			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Churchill", ItemFactory::createChurchill));
 
 	/**
 	 * Action a command to add an item to a player's inventory

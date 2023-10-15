@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.AuraLightComponent;
+import com.csse3200.game.entities.factories.ShipFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,8 +25,10 @@ public class ShipLightComponent extends AuraLightComponent {
 	public void create() {
 		unlocked = false;
 
-		entity.getEvents().addListener("progressUpdated", this::progressUpdated);
+
 		entity.getEvents().addListener("toggleLight", this::toggleLight);
+		entity.getEvents().addListener(ShipFactory.events.PROGRESS_UPDATED.name(), this::progressUpdated);
+
 	}
 
 	/**

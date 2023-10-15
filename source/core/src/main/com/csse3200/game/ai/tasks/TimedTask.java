@@ -47,19 +47,11 @@ public class TimedTask extends DefaultTask implements PriorityTask {
     }
 
     /**
-     * Start task, setting current run time to 0.
-     */
-    @Override
-    public void start() {
-        super.start();
-        runningTime = 0f;
-    }
-
-    /**
      * Sets the priority of the task to the active priority when triggered by an event.
      */
     public void triggerActivePriority() {
         this.priority = activePriority;
+        runningTime = 0f;
     }
 
     /**

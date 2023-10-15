@@ -15,6 +15,7 @@ public enum ItemType {
   ANIMAL_FOOD,
   SHIP_PART,
   CLUE_ITEM,
+  FISHING_ROD,
   PLACEABLE // This does not include seeds, only stuff the can be placed on non-tilled
             // ground
 }

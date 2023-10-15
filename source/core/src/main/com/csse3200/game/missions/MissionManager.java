@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.achievements.Achievement;
+import com.csse3200.game.missions.achievements.CollectItemsAchievement;
 import com.csse3200.game.missions.achievements.PlantCropsAchievement;
 import com.csse3200.game.missions.quests.Quest;
 import com.csse3200.game.services.FactoryService;
@@ -38,18 +39,24 @@ public class MissionManager implements Json.Serializable {
 		DEBRIS_CLEARED,
 		// Triggers when a crop is harvested, a single String representing the plant name is provided as an argument
 		HARVEST_CROP,
+		// Triggers on successful water use
+		WATER_CROP,
 		// Triggers when an animal is tamed
 		ANIMAL_TAMED,
 		// Triggers when a reward is collected used for MissionCompleteQuests
 		REWARD_COMPLETE,
-		// Triggers when an animal is defeated in combat, a EntityType enum value is provided representing the type of
-		// entity defeated is provided as an argument
-		ANIMAL_DEFEATED,
+		// Triggers when a CombatStatsController is defeated by having it's health reduced to 0, a EntityType enum value
+		// is provided representing the type of entity defeated is provided as an argument
+		COMBAT_ACTOR_DEFEATED,
 		// Triggers when an animal is eaten by a Space Snapper, a EntityType enum value is provided representing the
 		// type of entity eaten is provided as an argument
 		ANIMAL_EATEN,
 		// Triggers when a ship part is added to the Ship
 		SHIP_PART_ADDED,
+		//Triggers when an item is collected
+		ITEMS_COLLECTED,
+		// Triggers when a fish is caught (includes any item from fishing)
+		FISH,
 	}
 
 	/**
@@ -76,7 +83,10 @@ public class MissionManager implements Json.Serializable {
 	private static final Achievement[] achievements = new Achievement[]{
 			new PlantCropsAchievement("Plant President", 50),
 			new PlantCropsAchievement("Crop Enjoyer", 200),
-			new PlantCropsAchievement("Gardener of the Galaxy", 800)
+			new PlantCropsAchievement("Gardener of the Galaxy", 800),
+			new CollectItemsAchievement("Collector", 10),
+			new CollectItemsAchievement("Item Hoarder", 20),
+			new CollectItemsAchievement("Average Tristan", 50)
 	};
 
 	/**
@@ -188,13 +198,7 @@ public class MissionManager implements Json.Serializable {
 		json.writeObjectEnd();
 	}
 
-	/**
-	 * Method for loading the {@link MissionManager} for the game
-	 * @param json
-	 * @param jsonMap
-	 */
-	@Override
-	public void read(Json json, JsonValue jsonMap) {
+	public void readReal(Json json, JsonValue jsonMap) {
 		JsonValue active = jsonMap.get("ActiveQuests");
 		activeQuests.clear();
 		if (active.has("Quest")) {
@@ -219,5 +223,15 @@ public class MissionManager implements Json.Serializable {
 				a.readProgress(jsonValue.get("progress"));
 			});
 		}
+	}
+
+	/**
+	 * Method for loading the {@link MissionManager} for the game
+	 * @param json
+	 * @param jsonMap
+	 */
+	@Override
+	public void read(Json json, JsonValue jsonMap) {
+		ServiceLocator.getMissionManager().readReal(json, jsonMap);
 	}
 }
