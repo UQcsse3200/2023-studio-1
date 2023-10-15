@@ -238,11 +238,9 @@ class ClimateControllerTest {
 
 	@Test
 	void testUpdateLightingEffect() {
-		ClimateController climateController = new ClimateController();
-		when(gameTime.getTime()).thenReturn(500L);
-		climateController.setLightingEffect(1.0f, t -> Color.RED);
+		when(gameTime.getTime()).thenReturn(3000L);
 		ServiceLocator.getTimeService().getEvents().trigger("minuteUpdate");
-		verify(lightService).setColourOffset(Color.RED);
+		verify(lightService,times(1)).setColourOffset(Color.CLEAR);
 	}
 
 }
