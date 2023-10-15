@@ -88,7 +88,7 @@ public class ShipDisplay extends UIComponent {
         TextButton timeSkipButton = new TextButton("Time skip not unlocked", skin, BACKGROUND_COLOUR);
 
         if (SleepUnlocker){
-            timeSkipButton = new TextButton("Sleep (Time Skip)", skin);
+            timeSkipButton = new TextButton("Sleep (Time Skip)", skin,"orange");
             timeSkipButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent changeEvent, Actor actor) {
@@ -99,7 +99,7 @@ public class ShipDisplay extends UIComponent {
             descriptionLabel = new Label("Congratulations the ship is fully built.", skin, PIXEL_BODY, TEXT_COLOUR);
             descriptionLabel.setAlignment(Align.center);
         }
-        TextButton closeButton = new TextButton("Close", skin);
+        TextButton closeButton = new TextButton("Close", skin,"orange");
         closeButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {

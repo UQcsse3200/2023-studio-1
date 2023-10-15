@@ -75,7 +75,7 @@ public class GameAreaDisplay extends UIComponent {
 
     float buttonHeight = 80f;
 
-    TextButton exitBtn = new TextButton("Exit", skin);
+    TextButton exitBtn = new TextButton("Exit", skin,"orange");
     exitBtn.setSize(386f, buttonHeight);
     exitBtn.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 75);
     exitBtn.addListener(new ChangeListener() {
@@ -97,7 +97,7 @@ public class GameAreaDisplay extends UIComponent {
     resumeMessageLabel.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 500);
     resumeMessageLabel.setVisible(false); // Initially, the label is not visible
     pausingGroup.addActor(resumeMessageLabel);
-    TextButton loadBtn = new TextButton("Load Previous", skin);
+    TextButton loadBtn = new TextButton("Load Previous", skin,"orange");
     loadBtn.setSize(386f, buttonHeight);
     loadBtn.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 175);
     loadBtn.addListener(new ChangeListener() {
@@ -111,7 +111,7 @@ public class GameAreaDisplay extends UIComponent {
     });
     pausingGroup.addActor(loadBtn);
 
-    TextButton saveBtn = new TextButton("Save", skin);
+    TextButton saveBtn = new TextButton("Save", skin,"orange");
     saveBtn.setSize(386f, buttonHeight);
     saveBtn.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 275);
     saveBtn.addListener(new ChangeListener() {
@@ -126,7 +126,7 @@ public class GameAreaDisplay extends UIComponent {
     pausingGroup.addActor(saveBtn);
 
 
-    TextButton resumeBtn = new TextButton("Resume", skin);
+    TextButton resumeBtn = new TextButton("Resume", skin,"orange");
     resumeBtn.setSize(386f, buttonHeight);
     resumeBtn.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 375);
     resumeBtn.addListener(new ChangeListener() {

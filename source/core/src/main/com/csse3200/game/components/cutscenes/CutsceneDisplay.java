@@ -212,7 +212,7 @@ public class CutsceneDisplay extends UIComponent {
     private void spawnContinueButton() {
         logger.debug("Cutscene continue spawned");
 
-        TextButton continueBtn = new TextButton("Continue", skin);
+        TextButton continueBtn = new TextButton("Continue", skin, "orange");
         continueBtn.addListener(
                 new ChangeListener() {
                     @Override

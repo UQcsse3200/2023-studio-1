@@ -173,7 +173,7 @@ public class MissionDisplay extends UIComponent {
         window.clear();
         window.getTitleLabel().setText("Mission Giver");
 
-        TextButton achievementsButton = new TextButton("Achievements", skin);
+        TextButton achievementsButton = new TextButton("Achievements", skin,"orange");
         achievementsButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
@@ -182,7 +182,7 @@ public class MissionDisplay extends UIComponent {
         });
 
 
-        TextButton questsButton = new TextButton("Quests", skin);
+        TextButton questsButton = new TextButton("Quests", skin,"orange");
         questsButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
@@ -192,7 +192,7 @@ public class MissionDisplay extends UIComponent {
 
 
         /* CLOSE MENU BUTTON QUICK FIX */
-        TextButton closeButton = new TextButton("Close", skin);
+        TextButton closeButton = new TextButton("Close", skin,"orange");
         closeButton.addListener(new ChangeListener() {
                                     @Override
                                     public void changed(ChangeEvent event, Actor actor) {

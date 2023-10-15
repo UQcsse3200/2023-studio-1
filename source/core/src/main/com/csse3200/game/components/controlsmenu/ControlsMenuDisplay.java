@@ -80,7 +80,7 @@ public class ControlsMenuDisplay extends UIComponent {
    * Add the UI widgets that form the menu to the stage
    */
   private void addActors() {
-    TextButton returnBtn = new TextButton("Return", skin); // Returns the user to the MainMenu Screen
+    TextButton returnBtn = new TextButton("Return", skin, "orange"); // Returns the user to the MainMenu Screen
 
     // Listen for a button press
     returnBtn.addListener(new ChangeListener() {
