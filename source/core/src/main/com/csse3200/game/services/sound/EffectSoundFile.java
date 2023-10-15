@@ -15,7 +15,10 @@ public enum EffectSoundFile implements SoundFile {
     IMPACT("sounds/Impact4.ogg"),
     INVENTORY_OPEN("sounds/open-bag-sound-effect.mp3"),
     HOTKEY_SELECT("sounds/take-item-sound-effect.mp3"),
-    GOD_DID("sounds/god-did.mp3");
+    GOD_DID("sounds/god-did.mp3"),
+    SHIP_CRASH("sounds/sound-effects/intro-animation/crash.wav"),
+    SHIP_RATTLE("sounds/sound-effects/intro-animation/rattle_short.wav"),
+    LEGO_BREAK("sounds/sound-effects/intro-animation/lego-breaking.wav");
 
     private final String filePath;
 

@@ -1,5 +1,7 @@
 package com.csse3200.game.components.intro;
 
+import com.csse3200.game.services.sound.EffectSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -125,7 +127,7 @@ public class IntroDisplay extends UIComponent {
      */
     private boolean startedWhiteout = false;
     
-    
+    private long rattleID;
     
     public IntroDisplay(GdxGame game) {
         super();
@@ -220,6 +222,14 @@ public class IntroDisplay extends UIComponent {
                     logger.debug("({}, {}) - Cockpit Top", cockpitTopPosition[0], cockpitTopPosition[1]);
                     logger.debug("({}, {}) - Cockpit Bottom", cockpitBottomPosition[0], cockpitBottomPosition[1]);
                     titleSequenceFinished = true;
+                    
+                    try {
+                        rattleID = ServiceLocator.getSoundService().getEffectsMusicService()
+                                .play(EffectSoundFile.SHIP_RATTLE, true);
+                    } catch (InvalidSoundFileException e) {
+                        logger.error("{}", e.toString());
+                    }
+                    
                 }
                 
             }
@@ -383,6 +393,31 @@ public class IntroDisplay extends UIComponent {
                             + cockpitBottom.getY(Align.top), Align.center);
         }
     }
+    
+    private void resizeWhiteout() {
+        if (!startedWhiteout) {
+            crashLight.setWidth(Gdx.graphics.getWidth() * 0.1f);
+            crashLight.setHeight(Gdx.graphics.getHeight() * 0.1f);
+            crashLight.setVisible(true);
+            startedWhiteout = true;
+            
+            SecureRandom random = new SecureRandom();
+            int number = random.nextInt(1000);
+            try {
+                if (number == 42) {
+                    ServiceLocator.getSoundService().getEffectsMusicService()
+                            .play(EffectSoundFile.LEGO_BREAK);
+                } else {
+                    ServiceLocator.getSoundService().getEffectsMusicService()
+                            .play(EffectSoundFile.SHIP_CRASH);
+                }
+            } catch (InvalidSoundFileException e) {
+                logger.error("{}", e.toString());
+            }
+        }
+        crashLight.setWidth(crashLight.getWidth() * 1.15f);
+        crashLight.setHeight(crashLight.getHeight() * 1.15f);
+    }
 
     @Override
     public void update() {
@@ -405,21 +440,21 @@ public class IntroDisplay extends UIComponent {
         } else {
             shake(shakeFactor);
             if (shakeFactor < 70) {
-                if (shakeFactor > 30) {
-                    if (!startedWhiteout) {
-                        crashLight.setWidth(Gdx.graphics.getWidth() * 0.1f);
-                        crashLight.setHeight(Gdx.graphics.getHeight() * 0.1f);
-                        crashLight.setVisible(true);
-                        startedWhiteout = true;
-                    }
-                    crashLight.setWidth(crashLight.getWidth() * 1.1f);
-                    crashLight.setHeight(crashLight.getHeight() * 1.1f);
+                if (shakeFactor > 40) {
+                    resizeWhiteout();
                 }
                 shakeFactor = shakeFactor * 1.01f;
             } else if (!readyToStartGame) {
                 // The maximum amount of shake has been reached, the ship has 'crashed'.
                 // Start clean up and let the display know that its crash animation is complete.
                 logger.debug("Preparing to start game.");
+                try {
+                    ServiceLocator.getSoundService().getEffectsMusicService()
+                            .stop(EffectSoundFile.SHIP_RATTLE, rattleID);
+                } catch (InvalidSoundFileException e) {
+                    logger.error("{}", e.toString());
+                }
+                
                 cockpitTop.setVisible(false);
                 cockpitBottom.setVisible(false);
                 planet.setVisible(false);
