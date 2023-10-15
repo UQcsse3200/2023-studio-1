@@ -50,6 +50,7 @@ public class ParticleService {
 		BLIZZARD(WEATHER_EVENT, "particle-effects/snowEffect.p", 1, 10),
 		SUCCESS_EFFECT(ENTITY_EFFECT, "particle-effects/successEffect.p", 1, 10),
 		ATTACK_EFFECT(ENTITY_EFFECT, "particle-effects/attackEffect.p", 1, 10),
+		FEED_EFFECT(ENTITY_EFFECT, "particle-effects/feedEffect.p", 1, 10),
 		DIRT_EFFECT(ENTITY_EFFECT, "particle-effects/dirtEffect.p", 1, 10);
 
 		private final String category;

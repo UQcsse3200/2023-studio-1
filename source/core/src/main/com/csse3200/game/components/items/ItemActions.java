@@ -105,7 +105,7 @@ public class ItemActions extends Component {
     }
     // Add to inventory
     logger.info("Added fish to inventory");
-    ServiceLocator.getGameArea().getPlayer().getEvents().trigger("startEffect", ParticleService.ParticleEffectType.SUCCESS_EFFECT);
+    ServiceLocator.getGameArea().getPlayer().getEvents().trigger("startVisualEffect", ParticleService.ParticleEffectType.SUCCESS_EFFECT);
     ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class).addItem(item);
   }
 
@@ -496,7 +496,7 @@ public class ItemActions extends Component {
     ServiceLocator.getEntityService().register(cropTile);
     tile.setOccupant(cropTile);
     tile.setOccupied();
-    cropTile.getEvents().trigger("startEffect", ParticleService.ParticleEffectType.DIRT_EFFECT);
+    cropTile.getEvents().trigger("startVisualEffect", ParticleService.ParticleEffectType.DIRT_EFFECT);
     return true;
   }
 
@@ -571,6 +571,7 @@ public class ItemActions extends Component {
     }
 
     entityToFeed.getEvents().trigger("feed");
+    entityToFeed.getEvents().trigger("startVisualEffect", ParticleService.ParticleEffectType.FEED_EFFECT);
     // Feeding animals should remove the food from player inventory
     player.getComponent(InventoryComponent.class).removeItem(entity);
     return true;

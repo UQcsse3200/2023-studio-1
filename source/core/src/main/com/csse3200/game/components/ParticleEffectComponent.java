@@ -25,8 +25,8 @@ public class ParticleEffectComponent extends Component {
 	public void create() {
 		super.create();
 		ServiceLocator.getParticleService().addComponent(this);
-		entity.getEvents().addListener("startEffect", this::startEffect);
-		entity.getEvents().addListener("stopEffect", this::stopEffect);
+		entity.getEvents().addListener("startVisualEffect", this::startEffect);
+		entity.getEvents().addListener("stopVisualEffect", this::stopEffect);
 	}
 
 	public void render(SpriteBatch batch, float delta) {

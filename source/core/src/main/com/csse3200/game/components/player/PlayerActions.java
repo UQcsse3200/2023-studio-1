@@ -203,7 +203,7 @@ public class PlayerActions extends Component {
     body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
 
     if (impulse.len() > 4) {
-      entity.getEvents().trigger("startEffect", ParticleService.ParticleEffectType.DIRT_EFFECT);
+      entity.getEvents().trigger("startVisualEffect", ParticleService.ParticleEffectType.DIRT_EFFECT);
     }
   }
 
