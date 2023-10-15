@@ -270,6 +270,10 @@ public class ItemActions extends Component {
     return false;
   }
 
+  /**
+   * Eats a given food item or power modifier
+   * @param player the player entity
+   */
   public void eat(Entity player) {
     ItemComponent type = entity.getComponent(ItemComponent.class);
     // Wasn't an item or did not have ItemComponent class
