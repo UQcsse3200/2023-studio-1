@@ -112,7 +112,7 @@ public class GdxGame extends Game {
   }
 
   private void updateDiscord(String activity) {
-    if (!System.getProperty("os.name").contains("Mac")) {
+    if (discordActivity != null) {
       discordActivity.updateDiscordStatus(activity);
       discordActivity.startTimer();
     }
