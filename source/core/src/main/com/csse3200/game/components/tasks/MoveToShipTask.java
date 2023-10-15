@@ -52,8 +52,19 @@ public class MoveToShipTask extends DefaultTask implements PriorityTask {
         owner.getEntity().getEvents().addListener("eatingUpdated", this::setEating);
     }
 
-    private void setMovement(boolean isMoving) {
-        if (!isMoving) {
+    private void setEating(boolean isEating) {
+        this.isEating = isEating;
+        if (isEating) {
+            owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(false);
+            if (movementTask != null) movementTask.stop();
+        } else {
+            if (movementTask != null) movementTask.start();
+        }
+    }
+
+    private void setHiding(boolean isHiding) {
+        this.isHiding = isHiding;
+        if (isHiding) {
             owner.getEntity().getComponent(ColliderComponent.class).setLayer(PhysicsLayer.NONE);
             owner.getEntity().getComponent(HitboxComponent.class).setLayer(PhysicsLayer.NONE);
             owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(false);
@@ -63,16 +74,6 @@ public class MoveToShipTask extends DefaultTask implements PriorityTask {
             owner.getEntity().getComponent(ColliderComponent.class).setLayer(PhysicsLayer.NPC);
             if (movementTask != null) movementTask.start();
         }
-    }
-
-    private void setEating(boolean isEating) {
-        this.isEating = isEating;
-        setMovement(!isEating);
-    }
-
-    private void setHiding(boolean isHiding) {
-        this.isHiding = isHiding;
-        setMovement(!isHiding);
     }
 
     /**

@@ -27,7 +27,7 @@ class ShipDebrisComponentTest {
 	void setupDummyServices() {
 		ServiceLocator.registerRenderService(new RenderService());
 		ResourceService resourceService = new ResourceService();
-		resourceService.loadTextureAtlases(new String[]{"images/shipeater.atlas"});
+		resourceService.loadTextureAtlases(new String[]{"images/shipeater.atlas", "images/animals/animal_effects.atlas"});
 		resourceService.loadTextures(new String[]{"images/hostile_indicator.png"});
 		resourceService.loadAll();
 		ServiceLocator.registerResourceService(resourceService);
@@ -71,7 +71,7 @@ class ShipDebrisComponentTest {
 
 		// unlock the quest
 
-		mockMissionManager.getEvents().trigger(MissionManager.MissionEvent.MISSION_COMPLETE.name(), ALIENS_ATTACK_QUEST_NAME);
+		mockMissionManager.getEvents().trigger(MissionManager.MissionEvent.QUEST_REWARD_COLLECTED.name(), ALIENS_ATTACK_QUEST_NAME);
 
 		shipDebrisComponent = new ShipDebrisComponent();
 		shipDebrisComponent.setRandomInstance(new Random(12345));

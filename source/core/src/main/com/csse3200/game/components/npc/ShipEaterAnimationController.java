@@ -20,17 +20,14 @@ public class ShipEaterAnimationController extends Component {
 	}
 	void setDigging(boolean isDigging) {
 		this.isDigging = isDigging;
-		System.out.println("isDigging = " + isDigging);
 	}
 
 	void setEating(boolean isEating) {
 		this.isEating = isEating;
-		System.out.println("isEating = " + isEating);
 	}
 
 	void setHiding(boolean isHiding) {
 		this.isHiding = isHiding;
-		System.out.println("isHiding = " + isHiding);
 	}
 
 	@Override

@@ -46,7 +46,7 @@ class ShipEaterIntegrationTest {
 	@BeforeEach
 	void beforeEach() {
 		ResourceService resourceService = new ResourceService();
-		resourceService.loadTextureAtlases(new String[]{"images/shipeater.atlas"});
+		resourceService.loadTextureAtlases(new String[]{"images/shipeater.atlas", "images/animals/animal_effects.atlas"});
 
 		String[] mapTextures = TerrainFactory.getMapTextures();
 		String[] entityTextures = new String[]{

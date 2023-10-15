@@ -27,7 +27,7 @@ public class ShipDebrisComponent extends Component {
 		super.create();
 
 		entity.getEvents().addListener("destroy", this::destroy);
-		ServiceLocator.getMissionManager().getEvents().addListener(MissionManager.MissionEvent.MISSION_COMPLETE.name(), this::checkCanSpawnShipEater);
+		ServiceLocator.getMissionManager().getEvents().addListener(MissionManager.MissionEvent.QUEST_REWARD_COLLECTED.name(), this::checkCanSpawnShipEater);
 	}
 
 	/**
