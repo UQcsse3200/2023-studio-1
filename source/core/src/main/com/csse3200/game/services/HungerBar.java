@@ -29,8 +29,14 @@ public class HungerBar extends UIComponent{
         // Adds a listener to check for hunger updates
         ServiceLocator.getPlayerHungerService().getEvents()
                 .addListener("hungerUpdate", this::updateDisplay);
+        ServiceLocator.getUIService().getEvents()
+                .addListener("toggleUI", this::toggleDisplay);
 
         updateDisplay(30);
+    }
+
+    private void toggleDisplay(boolean isDisplayed) {
+        table1.setVisible(isDisplayed);
     }
 
 	/**

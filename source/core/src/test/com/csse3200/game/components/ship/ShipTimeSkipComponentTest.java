@@ -1,6 +1,7 @@
 package com.csse3200.game.components.ship;
 
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.ShipFactory;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
@@ -52,14 +53,14 @@ class ShipTimeSkipComponentTest {
 		testEntity.create();
 
 		// not unlocked yet, shouldn't do anything
-		testEntity.getEvents().trigger("interact");
+		testEntity.getEvents().trigger("timeSkip");
 		verify(mockTimeSource, times(0)).setTimeScale(200f);
 
 		// unlock the feature
-		testEntity.getEvents().trigger("progressUpdated", 4, new HashSet<>(List.of(ShipProgressComponent.Feature.BED)));
+		testEntity.getEvents().trigger(ShipFactory.events.PROGRESS_UPDATED.name(), 4, new HashSet<>(List.of(ShipProgressComponent.Feature.BED)));
 
 		// should trigger a time change now
-		testEntity.getEvents().trigger("interact");
+		testEntity.getEvents().trigger("timeSkip");
 		verify(mockTimeSource, times(1)).setTimeScale(200f);
 
 		while (!isMorningHour) {

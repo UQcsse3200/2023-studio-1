@@ -116,6 +116,7 @@ Thumbs.db
 
 ## SaveFile
 /core/assets/saves/saveFile.json
+/core/assets/test/files/saveFileTest.json
 
 ##
 /core/assets/*.log

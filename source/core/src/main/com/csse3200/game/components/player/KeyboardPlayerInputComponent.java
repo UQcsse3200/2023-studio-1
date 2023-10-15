@@ -21,7 +21,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private static boolean menuOpened = false;
   private static Enum<MenuTypes> currentMenu = MenuTypes.NONE;
 
-  private boolean showPlantInfoUI = true;
+  private static boolean showPlantInfoUI = true;
+  private boolean showMap = false;
   public enum MenuTypes{
     PAUSEMENU,
     NONE
@@ -60,13 +61,13 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           triggerMoveEvent();
           return true;
         case Keys.SHIFT_LEFT:
-          entity.getEvents().trigger("run");
+          entity.getEvents().trigger(PlayerActions.events.RUN.name());
           return true;
-        case Keys.E: // Potentially also interact button later.
+        case Keys.E:
           entity.getEvents().trigger("interact");
           return true;
         case Keys.I:
-          // inventory tings
+          // inventory things
           entity.getEvents().trigger("toggleInventory");
           return true;
         case Keys.F:
@@ -76,7 +77,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           touchUp(Gdx.input.getX(), Gdx.input.getY(), 0, 0);
           return true;
         case Keys.ESCAPE:
-          entity.getEvents().trigger("escInput");
+          entity.getEvents().trigger(PlayerActions.events.ESC_INPUT.name());
           return true;
         case Keys.NUM_0, Keys.NUM_1, Keys.NUM_2, Keys.NUM_3, Keys.NUM_4, Keys.NUM_5, Keys.NUM_6, Keys.NUM_7, Keys.NUM_8, Keys.NUM_9:
           triggerHotKeySelection(keycode);
@@ -88,8 +89,11 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           showPlantInfoUI = !showPlantInfoUI;
           ServiceLocator.getPlantInfoService().getEvents().trigger("toggleOpen", showPlantInfoUI);
           return true;
+        case Keys.M:
+          showMap = !showMap;
+          ServiceLocator.getPlayerMapService().getEvents().trigger("toggleOpen", showMap);
         case Keys.R:
-          entity.getEvents().trigger("eat", entity.getComponent(InventoryComponent.class).getHeldItem());
+          entity.getEvents().trigger(PlayerActions.events.EAT.name(), entity.getComponent(InventoryComponent.class).getHeldItem());
             return true;
         default:
           return false;
@@ -108,7 +112,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public boolean touchUp(int screenX, int screenY, int pointer, int button) {
     if (!actions.isMuted()) {
       Vector2 mousePos = new Vector2(screenX, screenY);
-      entity.getEvents().trigger("use", mousePos, entity.getComponent(InventoryComponent.class).getHeldItem());
+      entity.getEvents().trigger(PlayerActions.events.USE.name(), mousePos, entity.getComponent(InventoryComponent.class).getHeldItem());
     }
     return false;
   }
@@ -141,7 +145,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           triggerMoveEvent();
           return true;
         case Keys.SHIFT_LEFT:
-          entity.getEvents().trigger("runStop");
+          entity.getEvents().trigger(PlayerActions.events.RUN_STOP.name());
           return true;
         default:
           return false;
@@ -162,15 +166,15 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
   private void triggerMoveEvent() {
     if (moveDirection.epsilonEquals(Vector2.Zero)) {
-      entity.getEvents().trigger("moveStop");
+      entity.getEvents().trigger(PlayerActions.events.MOVE_STOP.name());
     } else {
-      entity.getEvents().trigger("move", moveDirection);
+      entity.getEvents().trigger(PlayerActions.events.MOVE.name(), moveDirection);
     }
   }
 
   private void triggerEnterEvent() {
     logger.info("Entering tractor");
-    entity.getEvents().trigger("enterTractor");
+    entity.getEvents().trigger(PlayerActions.events.ENTER_TRACTOR.name());
   }
 
   public void setActions(PlayerActions actions) {
@@ -195,5 +199,14 @@ public class KeyboardPlayerInputComponent extends InputComponent {
        index = 9;
      }
      entity.getEvents().trigger("hotkeySelection", index);
+   }
+
+  /**
+   * Shows whether the plant info window is currently being displayed
+   *
+   * @return boolean that represents whether plant info was being shown
+   */
+   public static boolean getShowPlantInfoUI() {
+     return showPlantInfoUI;
    }
 }

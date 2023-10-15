@@ -3,7 +3,6 @@ package com.csse3200.game.components.combat;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.BodyUserData;
@@ -22,8 +21,8 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 public class TouchAttackComponent extends Component {
   private short targetLayer;
   private float knockbackForce = 0f;
-  private CombatStatsComponent combatStats;
   private HitboxComponent hitboxComponent;
+  private float stunDuration = 0f;
 
   /**
    * Create a component which attacks entities on collision, without knockback.
@@ -43,10 +42,14 @@ public class TouchAttackComponent extends Component {
     this.knockbackForce = knockback;
   }
 
+  public TouchAttackComponent(short targetLayer, float knockback, float stunDuration) {
+    this(targetLayer, knockback);
+    this.stunDuration = stunDuration;
+  }
+
   @Override
   public void create() {
     entity.getEvents().addListener("collisionStart", this::onCollisionStart);
-    combatStats = entity.getComponent(CombatStatsComponent.class);
     hitboxComponent = entity.getComponent(HitboxComponent.class);
   }
 
@@ -67,24 +70,20 @@ public class TouchAttackComponent extends Component {
 
     // Try to attack target.
     Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
-    CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
-
-    if (targetStats != null && combatStats != null) {
-      targetStats.hit(combatStats);
-    }
 
     // Apply knockback
     ProjectileComponent projectileComponent = entity.getComponent(ProjectileComponent.class);
     PhysicsComponent physicsComponent = target.getComponent(PhysicsComponent.class);
     Vector2 knockBackDirection;
     if (physicsComponent != null && knockbackForce > 0f) {
-      if (projectileComponent != null) { // check is projectile
+      if (projectileComponent != null) {
         knockBackDirection = projectileComponent.getVelocity();
       } else {
         knockBackDirection = target.getCenterPosition().sub(entity.getCenterPosition());
       }
 
       Body targetBody = physicsComponent.getBody();
+      targetBody.setLinearVelocity(0,  0);
       Vector2 impulse = knockBackDirection.setLength(knockbackForce);
       targetBody.applyLinearImpulse(impulse, targetBody.getWorldCenter(), true);
     }
@@ -92,5 +91,9 @@ public class TouchAttackComponent extends Component {
     if (entity.getComponent(ProjectileComponent.class) != null) {
       entity.getEvents().trigger("impactStart");
     }
+
+    target.getEvents().trigger("hit", entity);
+    target.getEvents().trigger("triggerStunDuration", stunDuration);
+    target.getEvents().trigger("panicStart");
   }
 }

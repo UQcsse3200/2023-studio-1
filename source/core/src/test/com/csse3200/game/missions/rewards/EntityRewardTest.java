@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.SpaceGameArea;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.extensions.GameExtension;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,9 +37,11 @@ class EntityRewardTest {
         when(ServiceLocator.getGameArea().getPlayer()).thenReturn(player);
         Vector2 playerPosition = mock(Vector2.class);
         when(ServiceLocator.getGameArea().getPlayer().getPosition()).thenReturn(playerPosition);
+        Entity mockTractor = mock(Entity.class);
+        doReturn(EntityType.TRACTOR).when(mockTractor).getType();
 
         entities1 = List.of(
-                mock(Entity.class),
+                mockTractor,
                 mock(Entity.class),
                 mock(Entity.class)
         );
