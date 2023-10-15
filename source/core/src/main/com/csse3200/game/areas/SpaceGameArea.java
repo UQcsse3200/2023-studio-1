@@ -501,9 +501,13 @@ public class SpaceGameArea extends GameArea {
   private Entity spawnShovel(){
     Entity newShovel = ItemFactory.createShovel();
 
-    spawnEntityAt(newShovel,PLAYER_SPAWN,true,true);
+   Vector2 player = ServiceLocator.getGameArea().getPlayer().getPosition();
+GridPoint2 gridPoint2 = new GridPoint2((int)player.x,(int)player.y);
+    spawnEntityAt(newShovel,gridPoint2,true,true);
     return newShovel;
   }
+
+
   private void spawnQuestgiver() {
     Entity newQuestgiver = QuestgiverFactory.createQuestgiver();
     spawnEntityAt(newQuestgiver, QUESTGIVER_SPAWN, true, true);
