@@ -37,8 +37,7 @@ public class SaveGame {
    * 
    * @param gameState The gameState to store
    */
-  public static void set(GameState gameState) {
-    String path = ROOT_DIR + File.separator + SAVE_FILE;
+  public static void set(GameState gameState, String path) {
     FileLoader.writeClass(gameState, path, Location.LOCAL);
   }
 
