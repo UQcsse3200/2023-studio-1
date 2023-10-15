@@ -306,6 +306,7 @@ public class PlayerActions extends Component {
           if(difference <= 45) {
             combat.addHealth((int) -(swordDamage * damageMultiplier));
             animal.getEvents().trigger("hit", entity);
+            ServiceLocator.getParticleService().startEffectAtPosition(ParticleService.ParticleEffectType.ATTACK_EFFECT, animal.getCenterPosition());
             animal.getEvents().trigger("panicStart");
           }
       }

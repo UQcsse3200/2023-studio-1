@@ -105,6 +105,7 @@ public class ItemActions extends Component {
     }
     // Add to inventory
     logger.info("Added fish to inventory");
+    ServiceLocator.getGameArea().getPlayer().getEvents().trigger("startEffect", ParticleService.ParticleEffectType.SUCCESS_EFFECT);
     ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class).addItem(item);
   }
 
@@ -599,6 +600,8 @@ public class ItemActions extends Component {
     if (ship.getType() == EntityType.SHIP) {
       ship.getEvents().trigger(ShipFactory.events.ADD_PART.name(), 1);
       player.getComponent(InventoryComponent.class).removeItem(entity);
+      ServiceLocator.getParticleService().startEffectAtPosition(ParticleService.ParticleEffectType.SUCCESS_EFFECT, ship.getPosition().cpy().add(1,0));
+      ServiceLocator.getParticleService().startEffectAtPosition(ParticleService.ParticleEffectType.SUCCESS_EFFECT, ship.getPosition().cpy().add(2,0));
       return true;
     }
     return false;
