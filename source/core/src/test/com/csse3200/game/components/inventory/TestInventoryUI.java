@@ -122,79 +122,77 @@ import static org.mockito.Mockito.*;
 						.addComponent(inventoryDisplay)
 						.addComponent(inventory);
 	}
+	@Test
+	void testToggleInventory() {
+		player.create();
+		verify(inventoryDisplay).create();
+		verify(stage).addActor(windowArgument.capture());
+		verify(inventoryDisplay).setDragItems(any(), any());
+		Window window = windowArgument.getValue();
 
-//	@Test
-//	void testToggleInventory() {
-//		player.create();
-//		verify(inventoryDisplay).create();
-//		verify(stage).addActor(windowArgument.capture());
-//		verify(inventoryDisplay).setDragItems(any(), any());
-//		Window window = windowArgument.getValue();
-//
-//		Table inventorySlots = (Table) window.getChildren().begin()[1];
-//		for (Cell<?> cell : inventorySlots.getCells().toArray(Cell.class)) {
-//			assert !(cell.getActor() instanceof ItemSlot) || ((ItemSlot) cell.getActor()).getItemImage() == null;
-//		}
-//
-//		player.getComponent(KeyboardPlayerInputComponent.class).setActions(player.getComponent(PlayerActions.class));
-//		player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.I);
-//
-//		verify(inventoryDisplay).toggleOpen();
-//		window.getChildren().end();
+		Table inventorySlots = (Table) window.getChildren().begin()[1];
+		for (Cell<?> cell : inventorySlots.getCells().toArray(Cell.class)) {
+			assert !(cell.getActor() instanceof ItemSlot) || ((ItemSlot) cell.getActor()).getItemImage() == null;
+		}
+		player.getComponent(KeyboardPlayerInputComponent.class).setActions(player.getComponent(PlayerActions.class));
+		player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.I);
+
+		verify(inventoryDisplay).toggleOpen();
+		window.getChildren().end();
 
 	}
 
-//	@ParameterizedTest()
-//	@MethodSource({"addingItemsShouldAddInventoryImagesParams"})
-//	void addingItemsShouldAddInventoryImages(ItemComponent component, int expected) {
-//		ServiceLocator.registerResourceService(new ResourceService());
-//		ServiceLocator.getResourceService().loadTextures(texturePaths);
-//		ServiceLocator.getResourceService().loadSkins(skinPaths);
-//		ServiceLocator.getResourceService().loadAll();
-//
-//		player.create();
-//		ArgumentCaptor<Window> win = ArgumentCaptor.forClass(Window.class);
-//		verify(stage).addActor(windowArgument.capture());
-//		verify(stage).addActor(win.capture());
-//		Entity i1 = new Entity(EntityType.ITEM).addComponent(component);
-//		inventory.addItem(i1);
-//		inventoryDisplay.toggleOpen();
-//		Window window = win.getValue();
-//		assert (window.getTitleLabel().textEquals("PLAYER Inventory"));
-//		inventoryDisplay.refreshInventory();
-//		Table inventorySlots = (Table) window.getChildren().begin()[1];
-//		Cell<?>[] cells = Arrays.copyOfRange(inventorySlots.getCells().toArray(Cell.class), 0, 30);
-//		Cell<?> deleteButton = Arrays.stream(inventorySlots.getCells().toArray(Cell.class)).toList().get(30);
-//		int i = 0;
-//		assert (deleteButton.getActor()) instanceof Image;
-//		for (Cell<?> slot : cells) {
-//			System.out.println(slot);
-//			assert ((ItemSlot) slot.getActor()).getChild(0) instanceof Image;
-//			assert ((ItemSlot) slot.getActor()).getChild(1) instanceof Stack;
-//			if (i++ <= expected) {
-//				assert ((Stack) ((ItemSlot) slot.getActor()).getChild(1)).getChild(0) instanceof Image;
-//			} else {
-//				assert ((Stack) ((ItemSlot) slot.getActor()).getChild(1)).getChildren().isEmpty();
-//			}
-//		}
-//	}
-//
-//	private static Stream<Arguments> addingItemsShouldAddInventoryImagesParams() {
-//		ServiceLocator.registerResourceService(new ResourceService());
-//		ServiceLocator.getResourceService().loadTextures(texturePaths);
-//		ServiceLocator.getResourceService().loadAll();
-//		return Stream.of(
-//				arguments(new ItemComponent("Hoe", ItemType.HOE, "images/tool_hoe.png"), 0),
-//				arguments(new ItemComponent("Scythe", ItemType.SCYTHE, "images/tool_scythe.png"), 1),
-//				arguments(new ItemComponent("Shovel", ItemType.SHOVEL, "images/tool_shovel.png"), 2),
-//				arguments(new ItemComponent("Item", ItemType.FERTILISER, "images/tool_shovel.png"), 3)
-//		);
-//	}
-//
-//	@AfterEach
-//	public void cleanUp() {
-//		// Clears all loaded services
-//		ServiceLocator.clear();
-//	}
-//}
+	@ParameterizedTest()
+	@MethodSource({"addingItemsShouldAddInventoryImagesParams"})
+	void addingItemsShouldAddInventoryImages(ItemComponent component, int expected) {
+		ServiceLocator.registerResourceService(new ResourceService());
+		ServiceLocator.getResourceService().loadTextures(texturePaths);
+		ServiceLocator.getResourceService().loadSkins(skinPaths);
+		ServiceLocator.getResourceService().loadAll();
+
+		player.create();
+		ArgumentCaptor<Window> win = ArgumentCaptor.forClass(Window.class);
+		verify(stage).addActor(windowArgument.capture());
+		verify(stage).addActor(win.capture());
+		Entity i1 = new Entity(EntityType.ITEM).addComponent(component);
+		inventory.addItem(i1);
+		inventoryDisplay.toggleOpen();
+		Window window = win.getValue();
+		assert (window.getTitleLabel().textEquals("PLAYER Inventory"));
+		inventoryDisplay.refreshInventory();
+		Table inventorySlots = (Table) window.getChildren().begin()[1];
+		Cell<?>[] cells = Arrays.copyOfRange(inventorySlots.getCells().toArray(Cell.class), 0, 30);
+		Cell<?> deleteButton = Arrays.stream(inventorySlots.getCells().toArray(Cell.class)).toList().get(30);
+		int i = 0;
+		assert (deleteButton.getActor()) instanceof Image;
+		for (Cell<?> slot : cells) {
+			System.out.println(slot);
+			assert ((ItemSlot) slot.getActor()).getChild(0) instanceof Image;
+			assert ((ItemSlot) slot.getActor()).getChild(1) instanceof Stack;
+			if (i++ <= expected) {
+				assert ((Stack) ((ItemSlot) slot.getActor()).getChild(1)).getChild(0) instanceof Image;
+			} else {
+				assert ((Stack) ((ItemSlot) slot.getActor()).getChild(1)).getChildren().isEmpty();
+			}
+		}
+	}
+
+	private static Stream<Arguments> addingItemsShouldAddInventoryImagesParams() {
+		ServiceLocator.registerResourceService(new ResourceService());
+		ServiceLocator.getResourceService().loadTextures(texturePaths);
+		ServiceLocator.getResourceService().loadAll();
+		return Stream.of(
+				arguments(new ItemComponent("Hoe", ItemType.HOE, "images/tool_hoe.png"), 0),
+				arguments(new ItemComponent("Scythe", ItemType.SCYTHE, "images/tool_scythe.png"), 1),
+				arguments(new ItemComponent("Shovel", ItemType.SHOVEL, "images/tool_shovel.png"), 2),
+				arguments(new ItemComponent("Item", ItemType.FERTILISER, "images/tool_shovel.png"), 3)
+		);
+	}
+
+	@AfterEach
+	public void cleanUp() {
+		// Clears all loaded services
+		ServiceLocator.clear();
+	}
+}
 

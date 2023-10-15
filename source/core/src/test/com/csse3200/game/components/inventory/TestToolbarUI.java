@@ -67,7 +67,7 @@ class TestToolbarUI {
 	};
 
 	static String[] skinPaths = {
-			"/gardens-of-the-galaxy/gardens-of-the-galaxy.json"
+			"gardens-of-the-galaxy/gardens-of-the-galaxy.json"
 	};
 
 

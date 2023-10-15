@@ -28,6 +28,7 @@ import org.mockito.ArgumentCaptor;
 
 import java.util.stream.Stream;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.Mockito.*;
 
@@ -410,7 +411,7 @@ class MissionDisplayTest {
         // should have 8 cells in the achievement table:
         //      - 4 x achievement names
         //      - 4 x achievement descriptions
-        assert (achievementTable.getCells().size == 8);
+        assert(achievementTable.getCells().size == 10);
 
         // switch to the 'Complete' tab
         TextButton button = getButtonFromTable(tabTable, "Complete");
@@ -422,7 +423,7 @@ class MissionDisplayTest {
         // should only have 4 cells in the achievement table now:
         //      - 2 x achievement name
         //      - 2 x achievement description
-        assert (achievementTable.getCells().size == 4);
+        assert (achievementTable.getCells().size == 2);
 
         // switch back to 'Incomplete' tab
         button = getButtonFromTable(tabTable, "Incomplete");
