@@ -61,7 +61,7 @@ public class RainStormEvent extends WeatherEvent {
 
         // Cancel in-game effects
         climateControllerEvents.trigger("stopWaterLevelEffect");
-        climateControllerEvents.trigger("reigniteFlames");
+        climateControllerEvents.trigger("stopPlacedLightEffects");
 
         // TODO - update effect
         ServiceLocator.getParticleService().stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);

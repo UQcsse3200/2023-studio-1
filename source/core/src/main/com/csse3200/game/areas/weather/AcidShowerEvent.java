@@ -61,7 +61,7 @@ public class AcidShowerEvent extends WeatherEvent {
 
         // Cancel in-game effects
         climateControllerEvents.trigger("stopWaterLevelEffect");
-        climateControllerEvents.trigger("reigniteFlames");
+        climateControllerEvents.trigger("stopPlacedLightEffects");
         climateControllerEvents.cancelEvent(nextAcidBurn);
 
         // Remove particle effects
