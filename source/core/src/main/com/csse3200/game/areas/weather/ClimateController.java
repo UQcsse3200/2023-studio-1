@@ -97,7 +97,7 @@ public class ClimateController implements Json.Serializable {
 	 * @param colourGradient The gradient of colour offsets. It should be a function which accepts a float, and returns
 	 *                       a colour offset.
 	 */
-	private void setLightingEffect(float duration, Function<Float, Color> colourGradient) {
+	public void setLightingEffect(float duration, Function<Float, Color> colourGradient) {
 		currentLightingEffectEndPoint = ServiceLocator.getTimeSource().getTime() + duration * 1000.0f;
 		currentLightingEffectProgress = 0.0f;
 		currentLightingEffectGradient = colourGradient;
