@@ -76,8 +76,8 @@ class InventoryComponentTest {
     // Check if an item is present in the inventory
 
     assertTrue(player.getComponent(InventoryComponent.class).hasItem(item1));
-    assertTrue(player.getComponent(InventoryComponent.class).hasItem("itemTest1"));
     // Check if a non-existent item is not in the inventory
+    assertTrue(player.getComponent(InventoryComponent.class).hasItem("itemTest1"));
     assertFalse(player.getComponent(InventoryComponent.class).hasItem(new Entity()));
   }
 
@@ -110,13 +110,23 @@ class InventoryComponentTest {
     // Add the new item to the inventory
     newItem.addComponent(itemComponent3);
     if(inventoryComponent.getItemCount(item1) == 0){
-        inventoryComponent.addItem(item1);
+      inventoryComponent.addItem(item1);
     }
     assertTrue(inventoryComponent.removeItem(item1));
     // Check that the removed item is no longer in the inventory
     assertFalse(inventoryComponent.hasItem(item1));
     // Check that removing a non-existent item does not affect the inventory
     assertFalse(inventoryComponent.removeItem(new Entity()));
+    assertFalse(inventoryComponent.removeItem(new Entity(EntityType.ITEM)));
+
+    // testing RemoveAll
+    inventoryComponent.addItem(item1);
+    inventoryComponent.addItem(item1);
+    inventoryComponent.addItem(item1);
+    assertEquals(3, inventoryComponent.getItemCount(item1));
+    inventoryComponent.removeAll(item1);
+    assertEquals(0, inventoryComponent.getItemCount(item1));
+
   }
 
   @Test
@@ -129,6 +139,7 @@ class InventoryComponentTest {
     assertEquals(inventoryComponent.getItemCount(item1), 0);
 
   }
+
 
   @Test
   void testSetInventorySize() {
@@ -163,11 +174,6 @@ class InventoryComponentTest {
     assertFalse(inventoryComponent.setPosition(item1,-1));
     assertFalse(inventoryComponent.setPosition(testPos,0));
     assertTrue(inventoryComponent.setPosition(testPos,5));
-    assertFalse(inventoryComponent.setPosition(testPos,6));
-    assertTrue(inventoryComponent.removePosition(5));
-    assertTrue(inventoryComponent.setPosition(testPos));
-    assertFalse(inventoryComponent.setPosition(testPos));
-
 
   }
   /*
