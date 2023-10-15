@@ -22,6 +22,10 @@ import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.ui.UIComponent;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class CutsceneDisplay extends UIComponent {
 
@@ -38,7 +42,7 @@ public class CutsceneDisplay extends UIComponent {
     /**
      * Logger to log events
      */
-    private static final Logger logger = LoggerFactory.getLogger(com.csse3200.game.missions.cutscenes.Cutscene.class);
+    private static final Logger logger = LoggerFactory.getLogger(CutsceneDisplay.class);
     /**
      * Stores the cutscene object that created the cutscene display
      */
@@ -86,12 +90,14 @@ public class CutsceneDisplay extends UIComponent {
 
         if (this.cutsceneType == Cutscene.CutsceneType.ALIEN) {
             dialogueWindow = new Window("Alien Jaleel", skin);
-        } else {
+        } else if (this.cutsceneType == Cutscene.CutsceneType.RADIO){
             dialogueWindow = new Window("Radio", skin);
+        } else if (this.cutsceneType == Cutscene.CutsceneType.PLACEABLE) {
+            dialogueWindow = new Window("DJ Khaled's Ghost", skin);
         }
 
         dialogueWindow.getTitleLabel().setAlignment(Align.center);
-        dialogueWindow.setDebug(true);
+        //dialogueWindow.setDebug(true);
         dialogueWindow.bottom();
         dialogueWindow.setResizable(false);
 
@@ -135,7 +141,7 @@ public class CutsceneDisplay extends UIComponent {
      */
     private void placeSprite(Image sprite, float sizeIncrease) {
         logger.debug("Image spawning");
-        float scaledWidth = (float) (Gdx.graphics.getWidth() * sizeIncrease);
+        float scaledWidth = (Gdx.graphics.getWidth() * sizeIncrease);
         float scaledHeight = scaledWidth * (sprite.getHeight() / sprite.getWidth());
         sprite.setWidth(scaledWidth);
         sprite.setHeight(scaledHeight);
@@ -149,11 +155,15 @@ public class CutsceneDisplay extends UIComponent {
         TextureAtlas.AtlasRegion region;
 
         //Spawn sprite
-        if (this.cutsceneType == Cutscene.CutsceneType.ALIEN) {
+        if (this.cutsceneType == Cutscene.CutsceneType.RADIO) {
             npcAtlas = ServiceLocator.getResourceService()
-                    .getAsset("images/questgiver.atlas", TextureAtlas.class);
+                    .getAsset("images/walkietalkie.atlas", TextureAtlas.class);
             region = npcAtlas.findRegion("default");
-        } else { // NO DIFFERENCE SINCE NO RADIO SPRITE YET
+        } else if (this.cutsceneType == Cutscene.CutsceneType.PLACEABLE) {
+            npcAtlas = ServiceLocator.getResourceService()
+                    .getAsset("images/GOD_IS_game_ver.atlas", TextureAtlas.class);
+            region = npcAtlas.findRegion("default");
+        } else {
             npcAtlas = ServiceLocator.getResourceService()
                     .getAsset("images/questgiver.atlas", TextureAtlas.class);
             region = npcAtlas.findRegion("default");
@@ -172,18 +182,22 @@ public class CutsceneDisplay extends UIComponent {
      */
     private void spawnDialogueBox () {
         logger.debug("Cutscene dialogue spawned");
+        Random random = new Random();
 
         TypingLabel dialogueLabel = new TypingLabel(this.dialogue, skin);
         dialogueLabel.setAlignment(Align.center);
         dialogueLabel.setWrap(true);
-        dialogueLabel.setDefaultToken("{COLOR=BLACK}");
+        dialogueLabel.setDefaultToken("{FAST}{COLOR=BLACK}");
 
         dialogueLabel.setTypingListener(new TypingAdapter() {
             @Override
             public void onChar(Character c) {
-                Sound shortBeep = Gdx.audio.newSound(Gdx.files.internal("sounds/beep.mp3"));
-                long id = shortBeep.play(0.1f);
-                shortBeep.setPitch(id, 0.75f);
+                if (Character.isLetter(c)) {
+                    Sound shortBeep = Gdx.audio.newSound(Gdx.files.internal("sounds/beep.mp3"));
+                    long id = shortBeep.play(0.1f);
+                    List<Float> pitches = Arrays.asList(0.5f, 0.6f, 0.7f, 0.8f);
+                    shortBeep.setPitch(id, pitches.get(random.nextInt(4)));
+                }
             }
         });
 
@@ -196,7 +210,6 @@ public class CutsceneDisplay extends UIComponent {
      * Spawns the continue button
      */
     private void spawnContinueButton() {
-        System.out.println("CUTSCENE CONTINUE SPAWNED");
         logger.debug("Cutscene continue spawned");
 
         TextButton continueBtn = new TextButton("Continue", skin);

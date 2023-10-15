@@ -8,6 +8,7 @@ public class TestGameArea extends GameArea {
 
     @Override
     public void create() {
+        // Not needed since it is a test
     }
 
     @Override
