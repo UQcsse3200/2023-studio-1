@@ -50,6 +50,9 @@ public class PlayerActions extends Component {
   private float damageMultiplier = 1f;
   int swordDamage = 5;
 
+  private float weatherSpeedModifier = 1.0f;
+  private boolean isWeatherAffectingSpeed = false;
+
   private static final String RIGHT_STRING = "right";
 
   @Override
@@ -68,6 +71,10 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("eat", this::eat);
     entity.getEvents().addListener("setSpeedMultiplier", this::setSpeedMultiplier);
     entity.getEvents().addListener("setDamageMultiplier", this::setDamageMultiplier);
+    ServiceLocator.getGameArea().getClimateController().getEvents().addListener(
+            "startPlayerMovementSpeedEffect", this::startPlayerMovementSpeedEffect);
+    ServiceLocator.getGameArea().getClimateController().getEvents().addListener(
+            "stopPlayerMovementSpeedEffect", this::stopPlayerMovementSpeedEffect);
   }
 
   @Override
@@ -134,6 +141,10 @@ public class PlayerActions extends Component {
       // Null check implemented for when the player Entity is moved out of bounds (Tractor spawning with terminal)
       float terrainSpeedModifier = gameMap.getTile(playerVector).getSpeedModifier();
       velocityScale.scl(terrainSpeedModifier);
+    }
+
+    if (isWeatherAffectingSpeed) {
+      velocityScale.scl(weatherSpeedModifier);
     }
 
     velocityScale.scl(speedMultiplier);
@@ -348,4 +359,15 @@ public class PlayerActions extends Component {
   public void setMuted(boolean muted) {
     this.muted = muted;
   }
+
+  private void startPlayerMovementSpeedEffect(float movementMultiplier) {
+    this.weatherSpeedModifier = movementMultiplier;
+    this.isWeatherAffectingSpeed = true;
+  }
+
+  private void stopPlayerMovementSpeedEffect() {
+    this.weatherSpeedModifier = 1.0f;
+    this.isWeatherAffectingSpeed = false;
+  }
+
 }

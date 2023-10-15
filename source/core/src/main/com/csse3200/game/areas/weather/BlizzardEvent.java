@@ -34,6 +34,7 @@ public class BlizzardEvent extends WeatherEvent {
         // Trigger in-game effects
         climateControllerEvents.trigger("startWaterLevelEffect", getDryRate());
         climateControllerEvents.trigger("startPlantAoeEffect", getPlantEffectivenessOffset());
+        climateControllerEvents.trigger("startPlayerMovementSpeedEffect", getPlayerMovementSpeedMultiplier());
         if (!hasSpawnedFireflies && !ServiceLocator.getTimeService().isNight()) {
             climateControllerEvents.trigger("spawnFireflies");
             hasSpawnedFireflies = true;
@@ -60,6 +61,7 @@ public class BlizzardEvent extends WeatherEvent {
         // Cancel in-game effects
         climateControllerEvents.trigger("stopWaterLevelEffect");
         climateControllerEvents.trigger("stopPlantAoeEffect");
+        climateControllerEvents.trigger("stopPlayerMovementSpeedEffect");
 
         // TODO - update effect
         ServiceLocator.getParticleService().stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);
@@ -87,6 +89,10 @@ public class BlizzardEvent extends WeatherEvent {
         } else {
             return -1;
         }
+    }
+
+    private float getPlayerMovementSpeedMultiplier() {
+        return 0.45f + 0.5f * (1.5f - severity) / 1.5f;
     }
 
 }
