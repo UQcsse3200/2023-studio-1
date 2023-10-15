@@ -237,7 +237,7 @@ class QuestFactoryTest {
     @Test
     void testCreateShipRepairsQuest() {
         try (MockedStatic<ItemFactory> itemFactoryMockedStatic = mockStatic(ItemFactory.class)) {
-            itemFactoryMockedStatic.when(ItemFactory::createShipPart).thenReturn(mockEntity);
+            itemFactoryMockedStatic.when(ItemFactory::createClueItem).thenReturn(mockEntity);
 
             Quest quest = QuestFactory.createShipRepairsQuest();
             assertEquals(QuestFactory.SHIP_REPAIRS_QUEST_NAME, quest.getName());

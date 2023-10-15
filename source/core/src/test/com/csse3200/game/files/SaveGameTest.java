@@ -6,15 +6,16 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
-import com.badlogic.gdx.Files;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.headless.HeadlessFiles;
 import com.csse3200.game.areas.SpaceGameArea;
 import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.areas.terrain.TerrainTile;
+import com.csse3200.game.components.placeables.FenceComponent;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
-import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.SaveLoadService;
@@ -232,10 +233,19 @@ public class SaveGameTest {
     GameMap mockMap = mock(GameMap.class);
     doReturn(mockMap).when(mockArea).getMap();
     doReturn(new ClimateController()).when(mockArea).getClimateController();
-    Entity player = new Entity(EntityType.PLAYER).addComponent(new PlayerActions());
+    TerrainTile mockTile = mock(TerrainTile.class);
+    doReturn(mockTile).when(mockMap).getTile(any(Vector2.class));
+    doReturn(null).when(mockTile).getOccupant();
+    Entity player = new Entity(EntityType.PLAYER).addComponent(new InventoryComponent());
+    for (int i = 0; i < 5; i++) {
+      ServiceLocator.getEntityService().register(new Entity(EntityType.PUMP));
+    }
+    for (int i = 0; i < 5; i++) {
+      ServiceLocator.getEntityService().register(new Entity(EntityType.BAT));
+    }
     doReturn(null).when(mockArea).getTractor();
     doReturn(player).when(mockArea).getPlayer();
     Gdx.files = new HeadlessFiles();
-    ServiceLocator.getSaveLoadService().save();
+    ServiceLocator.getSaveLoadService().save("test/files/saveFileTest.json");
   }
 }

@@ -1,5 +1,7 @@
 package com.csse3200.game.entities.factories;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -7,8 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -48,6 +49,9 @@ public class PlaceableFactoryTest {
 
         ResourceService mockResourceService = mock(ResourceService.class);
         when(mockResourceService.getAsset(anyString(), any())).thenReturn(null);
+        TextureAtlas mockTextureAtlas = mock(TextureAtlas.class);
+        when(mockTextureAtlas.findRegion(anyString())).thenReturn(null);
+        when(mockResourceService.getAsset(anyString(), eq(TextureAtlas.class))).thenReturn(mockTextureAtlas);
         ServiceLocator.registerResourceService(mockResourceService);
        
     }

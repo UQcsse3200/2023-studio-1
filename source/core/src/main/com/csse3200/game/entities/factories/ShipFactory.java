@@ -39,6 +39,7 @@ public class ShipFactory {
         .addComponent(new ShipAnimationController())
         .addComponent(new ShipTimeSkipComponent())
         .addComponent(new ShipLightComponent())
+        .addComponent(new ShipDisplay ())
         .addComponent(animator);
 
     ship.getComponent(AnimationRenderComponent.class).scaleEntity();
