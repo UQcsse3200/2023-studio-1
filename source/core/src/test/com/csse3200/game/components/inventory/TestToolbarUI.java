@@ -6,14 +6,9 @@ import static org.mockito.Mockito.*;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.csse3200.game.areas.TestGameArea;
 import com.csse3200.game.areas.terrain.GameMap;
-import com.csse3200.game.areas.terrain.TerrainComponent;
-import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.entities.EntityType;
@@ -89,7 +84,6 @@ class TestToolbarUI {
 		ServiceLocator.getResourceService().loadTextures(texturePaths);
 		ServiceLocator.getResourceService().loadSkins(skinPaths);
 		ServiceLocator.getResourceService().loadAll();
-
 		stage = mock(Stage.class);
 		windowArgument = ArgumentCaptor.forClass(Window.class);
 		RenderService renderService = new RenderService();
@@ -131,10 +125,6 @@ class TestToolbarUI {
 	@ParameterizedTest
 	@MethodSource({"addingItemsShouldAddInventoryImagesParams"})
 	void addingItemsShouldAddInventoryImages(ItemComponent component, int expected) {
-		ServiceLocator.registerResourceService(new ResourceService());
-		ServiceLocator.getResourceService().loadTextures(texturePaths);
-		ServiceLocator.getResourceService().loadSkins(skinPaths);
-		ServiceLocator.getResourceService().loadAll();
 		player.create();
 		ArgumentCaptor<Window> win = ArgumentCaptor.forClass(Window.class);
 		verify(stage).addActor(windowArgument.capture());
