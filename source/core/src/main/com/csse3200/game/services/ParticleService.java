@@ -104,13 +104,14 @@ public class ParticleService {
 
 	/**
 	 * Renders the queued particle effects
+	 *
 	 * @param batch sprite batch used to render effects
 	 * @param delta delta value used to update each particle effect
 	 */
-	public void render (SpriteBatch batch, float delta) {
+	public void render(SpriteBatch batch, float delta) {
 		Vector2 playerPosition = ServiceLocator.getGameArea().getPlayer().getCenterPosition();
 		for (ParticleEffectWrapper wrapper : queuedEffects) {
-			wrapper.getPooledEffect().setPosition(playerPosition.x,playerPosition.y);
+			wrapper.getPooledEffect().setPosition(playerPosition.x, playerPosition.y);
 			wrapper.getPooledEffect().draw(batch, delta);
 			if (wrapper.getPooledEffect().isComplete()) {
 				wrapper.getPooledEffect().reset();
@@ -118,7 +119,7 @@ public class ParticleService {
 		}
 
 		// Render the particle effects attached to specific components
-		for (ParticleEffectComponent component: effectComponents) {
+		for (ParticleEffectComponent component : effectComponents) {
 			component.render(batch, delta);
 		}
 
@@ -138,6 +139,7 @@ public class ParticleService {
 
 	/**
 	 * Starts a particle effect, creating an effect wrapper and adding it to the queue
+	 *
 	 * @param effectType type of effect to start
 	 */
 	public void startEffect(ParticleEffectType effectType) {
@@ -151,6 +153,7 @@ public class ParticleService {
 
 	/**
 	 * Stops a particle effect, freeing the effect and removing it from the queue
+	 *
 	 * @param effectType type of effect to stop
 	 */
 	public void stopEffect(ParticleEffectType effectType) {
@@ -164,6 +167,7 @@ public class ParticleService {
 
 	/**
 	 * Stops all particle effects by category in the render queue
+	 *
 	 * @param category category of particle effects
 	 */
 	public void stopEffectCategory(String category) {
@@ -175,14 +179,30 @@ public class ParticleService {
 		queuedEffects.removeIf(predicate);
 	}
 
+	/**
+	 * Obtains the pooled particle effect for a given {@link ParticleEffectType}
+	 *
+	 * @param effectType The {@link ParticleEffectType} of the
+	 *                   {@link com.badlogic.gdx.graphics.g2d.ParticleEffectPool.PooledEffect} to be obtained
+	 * @return The {@link com.badlogic.gdx.graphics.g2d.ParticleEffectPool.PooledEffect} that is used to render
+	 * the effect
+	 */
 	public ParticleEffectPool.PooledEffect getEffect(ParticleEffectType effectType) {
 		logger.debug("Obtaining effect for type - {}", effectType.name());
 		return particleEffectPools.get(effectType).obtain();
 	}
 
+	/**
+	 * Starts rendering a {@link com.badlogic.gdx.graphics.g2d.ParticleEffectPool.PooledEffect} at a given
+	 * {@link Vector2} position
+	 *
+	 * @param effectType The {@link ParticleEffectType} of the particle to be rendered
+	 * @param position   position to render the particle effect at
+	 */
 	public void startEffectAtPosition(ParticleEffectType effectType, Vector2 position) {
 		// Grabs the effect from the effect pool using the enum
-		ParticleEffectWrapper effectWrapper = new ParticleEffectWrapper(particleEffectPools.get(effectType).obtain(), effectType.category, effectType.name());
+		ParticleEffectWrapper effectWrapper = new ParticleEffectWrapper(particleEffectPools.get(effectType).
+				obtain(), effectType.category, effectType.name());
 		// Adds the effect to the queued effects so the particle service knows to draw it
 		positionalEffects.add(effectWrapper);
 		effectWrapper.getPooledEffect().scaleEffect(0.1f);
@@ -191,10 +211,22 @@ public class ParticleService {
 
 	}
 
+	/**
+	 * Adds a {@link ParticleEffectComponent} to the {@link List} of {@link ParticleEffectComponent}s tracked by the
+	 * {@link ParticleService} so that it can render each individual effect.
+	 *
+	 * @param component component to be added
+	 */
 	public void addComponent(ParticleEffectComponent component) {
 		effectComponents.add(component);
 	}
 
+	/**
+	 * Removes a {@link ParticleEffectComponent} to the {@link List} of {@link ParticleEffectComponent}s tracked by the
+	 * {@link ParticleService} so that it can render each individual effect.
+	 *
+	 * @param component component to be removed
+	 */
 	public void removeComponent(ParticleEffectComponent component) {
 		effectComponents.remove(component);
 	}
