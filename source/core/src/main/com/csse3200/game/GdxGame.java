@@ -28,10 +28,7 @@ public class GdxGame extends Game {
 
     // Sets background to light yellow
     Gdx.gl.glClearColor(0.0f, 0.098f, 0.309f, 1.0f);
-    if (System.getProperty("os.name").contains("mac") || System.getProperty("os.name").contains("Mac")) {
-      System.out.println(System.getProperty("os.name"));
-    } else {
-      System.out.println(System.getProperty("os.name"));
+    if (!System.getProperty("os.name").contains("Mac")) {
       discordActivity = new DiscordActivity();
     }
     setScreen(ScreenType.MAIN_MENU);
@@ -86,21 +83,17 @@ public class GdxGame extends Game {
   private Screen newScreen(ScreenType screenType) {
     switch (screenType) {
       case MAIN_MENU:
-        discordActivity.updateDiscordStatus("Perusing the Main Menu");
-        discordActivity.startTimer();
+        updateDiscord("Perusing the Main Menu");
         return new MainMenuScreen(this);
       case LOAD_GAME:
-        discordActivity.updateDiscordStatus("Planting Crops");
-        discordActivity.startTimer();
+        updateDiscord("Planting Crops");
         setLoadOnStart(true);
         return new MainGameScreen(this);
       case MAIN_GAME:
-        discordActivity.updateDiscordStatus("Planting Crops");
-        discordActivity.startTimer();
+        updateDiscord("Planting Crops");
         return new MainGameScreen(this);
       case SETTINGS:
-        discordActivity.updateDiscordStatus("Changing Settings");
-        discordActivity.startTimer();
+        updateDiscord("Changing Settings");
         return new SettingsScreen(this);
       case CONTROLS:
         return new ControlsScreen(this);
@@ -115,6 +108,13 @@ public class GdxGame extends Game {
         return new WinScreen(this);
       default:
         return null;
+    }
+  }
+
+  private void updateDiscord(String activity) {
+    if (!System.getProperty("os.name").contains("Mac")) {
+      discordActivity.updateDiscordStatus(activity);
+      discordActivity.startTimer();
     }
   }
 
