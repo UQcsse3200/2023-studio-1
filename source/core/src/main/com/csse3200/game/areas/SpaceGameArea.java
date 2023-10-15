@@ -284,7 +284,7 @@ public class SpaceGameArea extends GameArea {
           "sounds/Impact4.ogg", "sounds/car-horn-6408.mp3",
           "sounds/weapons/SwordHitEntity.mp3", "sounds/weapons/SwordSwing.mp3", "sounds/weapons/GunAttack.mp3",
           "sounds/animals/AstrolotlFeed.mp3", "sounds/animals/ChickenFeed.mp3",
-          "sounds/animals/CowFeed.mps", "sounds/animals, TamedAnimal.mp3",
+          "sounds/animals/CowFeed.mp3", "sounds/animals/TamedAnimal.mp3",
           "sounds/plants/aloeVera/click.wav", "sounds/plants/aloeVera/clickLore.wav",
           "sounds/plants/aloeVera/decay.wav", "sounds/plants/aloeVera/decayLore.wav",
           "sounds/plants/aloeVera/destroy.wav", "sounds/plants/aloeVera/destroyLore.wav",

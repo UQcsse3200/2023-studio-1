@@ -3,9 +3,6 @@ package com.csse3200.game.components.tasks;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.services.sound.EffectSoundFile;
-import com.csse3200.game.services.sound.SoundService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -89,6 +86,7 @@ public class RunAwayTask extends ChaseTask {
   @Override
   public void stop() {
     super.stop();
+    logger.info("Run Away Task Stopped");
     this.owner.getEntity().getEvents().trigger("runAwayStop");
     this.owner.getEntity().getEvents().trigger("stopEffect", "runAwayStart");
   }
