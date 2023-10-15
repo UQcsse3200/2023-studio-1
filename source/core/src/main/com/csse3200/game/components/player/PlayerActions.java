@@ -20,7 +20,6 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.sound.EffectSoundFile;
 import com.csse3200.game.services.sound.InvalidSoundFileException;
-import com.csse3200.game.utils.math.Vector2Utils;
 
 import java.security.SecureRandom;
 import java.util.List;
