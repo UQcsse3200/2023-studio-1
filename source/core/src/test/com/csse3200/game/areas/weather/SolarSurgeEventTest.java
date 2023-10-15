@@ -1,18 +1,27 @@
 package com.csse3200.game.areas.weather;
 
 import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.events.EventHandler;
+import com.csse3200.game.services.LightService;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.TimeService;
+import com.csse3200.game.services.sound.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.*;
 
 class SolarSurgeEventTest {
 
     private SolarSurgeEvent solarSurgeEvent1, solarSurgeEvent2, solarSurgeEvent3, solarSurgeEvent4, solarSurgeEvent5;
+    private static final Logger logger = LoggerFactory.getLogger(SolarSurgeEventTest.class);
 
     @BeforeEach
     public void setUp() {
@@ -26,6 +35,23 @@ class SolarSurgeEventTest {
         solarSurgeEvent3 = new SolarSurgeEvent(2, 4, 5, 1.0f);
         solarSurgeEvent4= new SolarSurgeEvent(3, 3, 3, 1.3f);
         solarSurgeEvent5 = new SolarSurgeEvent(5, 5, 1, 1.1f);
+
+        SoundService soundService = mock(SoundService.class);
+        when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
+        java.util.List<SoundFile> effects = new ArrayList<>();
+        effects.add(EffectSoundFile.SOLAR_SURGE);
+        ServiceLocator.registerSoundService(soundService);
+        try {
+            soundService.getEffectsMusicService().loadSounds(effects);
+        } catch (InvalidSoundFileException e) {
+            logger.info("Sound files not loaded");
+        }
+
+        TimeService timeService = mock(TimeService.class);
+        ServiceLocator.registerTimeService(timeService);
+
+        LightService lightService = mock(LightService.class);
+        ServiceLocator.registerLightService(lightService);
     }
 
     @AfterEach
@@ -55,6 +81,25 @@ class SolarSurgeEventTest {
     void testIsActiveButNotIsExpired() {
         assertFalse(solarSurgeEvent1.isExpired());
         assertTrue(solarSurgeEvent1.isActive());
+    }
+
+    @Test
+    void testStartEffect() throws InvalidSoundFileException {
+        solarSurgeEvent1.startEffect();
+        ServiceLocator.getGameArea().getClimateController().getEvents().trigger("startPlantAoeEffect", -2f);
+        solarSurgeEvent2.startEffect();
+        ServiceLocator.getGameArea().getClimateController().getEvents().trigger("startPlantAoeEffect", -2f);
+        solarSurgeEvent3.startEffect();
+        ServiceLocator.getGameArea().getClimateController().getEvents().trigger("startPlantAoeEffect", -2f);
+        verify(ServiceLocator.getLightService(), times(3)).setBrightnessMultiplier(0.0f);
+    }
+
+    @Test
+    void testStopEffect() {
+        solarSurgeEvent1.stopEffect();
+        solarSurgeEvent2.stopEffect();
+        solarSurgeEvent3.stopEffect();
+        verify(ServiceLocator.getLightService(), times(3)).setBrightnessMultiplier(1.0f);
     }
 
 }

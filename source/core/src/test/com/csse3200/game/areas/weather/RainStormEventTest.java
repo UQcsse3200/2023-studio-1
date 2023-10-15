@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 public class RainStormEventTest {
 
     private RainStormEvent rainStormEvent1, rainStormEvent2, rainStormEvent3, rainStormEvent4, rainStormEvent5;
-    private static final Logger logger = LoggerFactory.getLogger(RainStormEvent.class);
+    private static final Logger logger = LoggerFactory.getLogger(RainStormEventTest.class);
 
     @BeforeEach
     public void setUp() {
