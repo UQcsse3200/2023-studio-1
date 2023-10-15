@@ -51,6 +51,7 @@ public class ToolbarDisplay extends UIComponent {
         entity.getEvents().addListener("toggleInventory",this::toggleOpen);
         entity.getEvents().addListener("hotkeySelection",this::updateItemSlot);
         entity.getEvents().addListener("escInput",this::setPause);
+        entity.getEvents().addListener("hideUI", this::hide);
         inventory = entity.getComponent(InventoryComponent.class);
     }
 
@@ -196,6 +197,15 @@ public class ToolbarDisplay extends UIComponent {
             this.window.setVisible(true);
             this.isOpen = true;
         }
+    }
+
+    /**
+     * Hide the toolbar.
+     * But why would you ever want to do that?
+     */
+    public void hide() {
+        this.isOpen = false;
+        window.setVisible(false);
     }
 
     /**

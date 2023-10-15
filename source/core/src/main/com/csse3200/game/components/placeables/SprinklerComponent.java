@@ -76,7 +76,7 @@ public class SprinklerComponent extends Component {
   /**
    * A sprinklers area of effect to water, aoe is circular with radius of 2.
    */
-  private Vector2[] aoe;
+  protected Vector2[] aoe;
 
   /**
    * {@inheritDoc}
@@ -270,7 +270,7 @@ public class SprinklerComponent extends Component {
    * The aoe is relevant to this sprinklers position and looks like:
    * 2 tiles: above, below, left, right.
    */
-  private void sprinkle() {
+  protected void sprinkle() {
     if (!isPowered) return;
     for (Vector2 pos : aoe) {
       TerrainTile tt = ServiceLocator.getGameArea().getMap().getTile(pos);
