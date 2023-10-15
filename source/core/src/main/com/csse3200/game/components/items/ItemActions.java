@@ -558,10 +558,10 @@ public class ItemActions extends Component {
       return false;
     }
 
-    entityToFeed.getEvents().trigger("feed");
     // Feeding animals should remove the food from player inventory if food is their favourite
     if (entityToFeed.getComponent(TamableComponent.class).getFavouriteFood()
             .equals(entity.getComponent(ItemComponent.class).getItemName())) {
+      entityToFeed.getEvents().trigger("feed");
       player.getComponent(InventoryComponent.class).removeItem(entity);
     }
     return true;
