@@ -80,6 +80,11 @@ class ParticleEffectComponentTest {
 		when(iter.hasNext()).thenReturn(true, false);
 		when(iter.next()).thenReturn(wrapper);
 
+		Entity entity = mock(Entity.class);
+		when(entity.getCenterPosition()).thenReturn(new Vector2(1,1));
+		when(entity.getPosition()).thenReturn(new Vector2(0,0));
+		entity.addComponent(component);
+		component.setEntity(entity);
 		component.render(batch, delta);
 
 		verify(pooledEffect, times(1)).draw(batch, delta);
