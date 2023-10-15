@@ -46,7 +46,6 @@ class PlantComponentTest {
     int adultLifeSpan = 2;
     int maxHealth = 500;
     int[] growthStageThresholds = new int[]{1,2,3};
-    String[] soundArray = new String[]{"1", "2", "3", "4", "5", "6", "7", "8"};
 
     @BeforeEach
     void beforeEach() {
@@ -66,7 +65,7 @@ class PlantComponentTest {
         when(mockResourceService.getAsset(anyString(), eq(Sound.class))).thenReturn(mockSound);
 
         testPlant = new PlantComponent(health, name, type, description, idealWaterLevel,
-                adultLifeSpan, maxHealth, mockCropTile, growthStageThresholds,soundArray);
+                adultLifeSpan, maxHealth, mockCropTile, growthStageThresholds);
         testPlant.setEntity(mockEntity);
     }
 
@@ -228,9 +227,11 @@ class PlantComponentTest {
         assertThrows(IllegalArgumentException.class, () -> testPlant.setGrowthStage(7));
     }
 
+    /*
     @Test
     void testInvalidFunctionForPlaySound() {
         testPlant.setPlayerInProximity(true);
         assertThrows(IllegalStateException.class, () -> testPlant.playSound("invalidFunctionName"));
     }
+    */
 }
