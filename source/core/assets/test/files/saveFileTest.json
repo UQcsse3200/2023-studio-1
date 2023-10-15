@@ -1,0 +1,47 @@
+{
+"hour": 6,
+"climate": {
+	"Temp": 6.827673,
+	"Humidity": 0.9232094,
+	"Events": {}
+},
+"missions": {
+	"ActiveQuests": {},
+	"SelectableQuests": {},
+	"Achievements": {
+		"Achievement": {
+			"index": 0,
+			"progress": 50
+		},
+		"Achievement": {
+			"index": 1,
+			"progress": 130
+		},
+		"Achievement": {
+			"index": 2,
+			"progress": 130
+		},
+		"Achievement": {
+			"index": 3,
+			"progress": 10
+		},
+		"Achievement": {
+			"index": 4,
+			"progress": 20
+		},
+		"Achievement": {
+			"index": 5,
+			"progress": 50
+		}
+	}
+},
+"player": {
+	"Entity": "PLAYER",
+	"x": 0,
+	"y": 0,
+	"components": {},
+	"entities": [],
+	"tiles": [],
+	"placeables": []
+}
+}
