@@ -4,6 +4,8 @@ import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.services.LightService;
 import com.csse3200.game.services.ParticleService;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.sound.EffectsMusicService;
+import com.csse3200.game.services.sound.SoundService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,6 +23,10 @@ class AcidShowerEventTest {
         ClimateController climateController = new ClimateController();
         when(gameArea.getClimateController()).thenReturn(climateController);
         ServiceLocator.registerGameArea(gameArea);
+
+        SoundService soundService = mock(SoundService.class);
+        when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
+        ServiceLocator.registerSoundService(soundService);
 
         acidShowerEvent1 = new AcidShowerEvent(0, 9, 1, 1.2f);
         acidShowerEvent2 = new AcidShowerEvent(1, 2, 2, 1.4f);

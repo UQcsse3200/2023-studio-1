@@ -6,6 +6,8 @@ import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.services.*;
+import com.csse3200.game.services.sound.EffectsMusicService;
+import com.csse3200.game.services.sound.SoundService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,6 +52,10 @@ class ClimateControllerTest {
 		when(gameArea.getClimateController()).thenReturn(controller);
 		ServiceLocator.registerGameArea(gameArea);
 
+		SoundService soundService = mock(SoundService.class);
+		when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
+		ServiceLocator.registerSoundService(soundService);
+
 		WeatherEvent event = new AcidShowerEvent(1, 1, 1, 1.3f);
 		controller.addWeatherEvent(event);
 
@@ -81,6 +87,11 @@ class ClimateControllerTest {
 		GameArea gameArea = mock(GameArea.class);
 		when(gameArea.getClimateController()).thenReturn(controller);
 		ServiceLocator.registerGameArea(gameArea);
+
+		SoundService soundService = mock(SoundService.class);
+		when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
+		ServiceLocator.registerSoundService(soundService);
+
 		assertNull(controller.getCurrentWeatherEvent());
 		try (MockedStatic<MathUtils> mathUtils = mockStatic(MathUtils.class)) {
 			mathUtils.when(MathUtils::random).thenReturn(1f);
@@ -101,6 +112,10 @@ class ClimateControllerTest {
 		GameArea gameArea = mock(GameArea.class);
 		when(gameArea.getClimateController()).thenReturn(controller);
 		ServiceLocator.registerGameArea(gameArea);
+
+		SoundService soundService = mock(SoundService.class);
+		when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
+		ServiceLocator.registerSoundService(soundService);
 
 		try (MockedStatic<MathUtils> mathUtils = mockStatic(MathUtils.class)) {
 			mathUtils.when(MathUtils::random).thenReturn(0.5f);
@@ -124,6 +139,10 @@ class ClimateControllerTest {
 		when(gameArea.getClimateController()).thenReturn(controller);
 		ServiceLocator.registerGameArea(gameArea);
 
+		SoundService soundService = mock(SoundService.class);
+		when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
+		ServiceLocator.registerSoundService(soundService);
+
 		WeatherEvent event = new SolarSurgeEvent(1, 1, 1, 1.4f);
 		controller.addWeatherEvent(event);
 
@@ -145,6 +164,10 @@ class ClimateControllerTest {
 		when(gameArea.getClimateController()).thenReturn(controller);
 		ServiceLocator.registerGameArea(gameArea);
 
+		SoundService soundService = mock(SoundService.class);
+		when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
+		ServiceLocator.registerSoundService(soundService);
+
 		AcidShowerEvent event = new AcidShowerEvent(0, 1, 2, 1.5f);
 		controller.addWeatherEvent(event);
 		assertEquals(controller.getCurrentWeatherEvent(), event);
@@ -157,6 +180,10 @@ class ClimateControllerTest {
 		GameArea gameArea = mock(GameArea.class);
 		when(gameArea.getClimateController()).thenReturn(controller);
 		ServiceLocator.registerGameArea(gameArea);
+
+		SoundService soundService = mock(SoundService.class);
+		when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
+		ServiceLocator.registerSoundService(soundService);
 
 		AcidShowerEvent event = new AcidShowerEvent(0, 1, 2, 1.5f);
 		controller.addWeatherEvent(event);
@@ -173,6 +200,10 @@ class ClimateControllerTest {
 		GameArea gameArea = mock(GameArea.class);
 		when(gameArea.getClimateController()).thenReturn(controller);
 		ServiceLocator.registerGameArea(gameArea);
+
+		SoundService soundService = mock(SoundService.class);
+		when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
+		ServiceLocator.registerSoundService(soundService);
 
 		JsonValue jsonData = new JsonValue(JsonValue.ValueType.object);
 		JsonValue events = new JsonValue(JsonValue.ValueType.object);

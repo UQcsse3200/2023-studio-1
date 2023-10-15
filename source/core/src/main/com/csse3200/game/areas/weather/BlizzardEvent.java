@@ -2,10 +2,17 @@ package com.csse3200.game.areas.weather;
 
 import com.csse3200.game.services.ParticleService;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.sound.EffectSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BlizzardEvent extends WeatherEvent {
 
+    private static final Logger logger = LoggerFactory.getLogger(BlizzardEvent.class);
+
     private boolean hasSpawnedFireflies;
+    private long blizzardSoundId;
 
     /**
      * Constructs an {@link WeatherEvent} with a given duration, priority and countdown
@@ -22,8 +29,11 @@ public class BlizzardEvent extends WeatherEvent {
 
     @Override
     public void startEffect() {
+        logger.info("Starting Blizzard effects");
+
+        // Trigger in-game effects
         climateControllerEvents.trigger("startWaterLevelEffect", getDryRate());
-        climateControllerEvents.trigger("startPlantAoeEffect", getPlantEffectivenessMultiplier());
+        climateControllerEvents.trigger("startPlantAoeEffect", getPlantEffectivenessOffset());
         if (!hasSpawnedFireflies && !ServiceLocator.getTimeService().isNight()) {
             climateControllerEvents.trigger("spawnFireflies");
             hasSpawnedFireflies = true;
@@ -34,10 +44,20 @@ public class BlizzardEvent extends WeatherEvent {
 
         // Adjust global lighting
         ServiceLocator.getLightService().setBrightnessMultiplier((1.0f - severity / 1.5f) * 0.2f + 0.5f);
+
+        // Start sound effects
+        try {
+            blizzardSoundId = ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.BLIZZARD, true);
+        } catch (InvalidSoundFileException exception) {
+            logger.error("Failed to play blizzard sound effect", exception);
+        }
     }
 
     @Override
     public void stopEffect() {
+        logger.info("Stopping Blizzard effects");
+
+        // Cancel in-game effects
         climateControllerEvents.trigger("stopWaterLevelEffect");
         climateControllerEvents.trigger("stopPlantAoeEffect");
 
@@ -46,6 +66,13 @@ public class BlizzardEvent extends WeatherEvent {
 
         // Adjust global lighting
         ServiceLocator.getLightService().setBrightnessMultiplier(1.0f);
+
+        // Stop sound effects
+        try {
+            ServiceLocator.getSoundService().getEffectsMusicService().stop(EffectSoundFile.BLIZZARD, blizzardSoundId);
+        } catch (InvalidSoundFileException exception) {
+            logger.error("Failed to stop blizzard sound effect", exception);
+        }
     }
 
     private float getDryRate() {
@@ -54,7 +81,7 @@ public class BlizzardEvent extends WeatherEvent {
         return 0.0005f + 0.0005f * severity / 1.5f;
     }
 
-    private int getPlantEffectivenessMultiplier() {
+    private int getPlantEffectivenessOffset() {
         if (severity > 0.75f) {
             return -2;
         } else {

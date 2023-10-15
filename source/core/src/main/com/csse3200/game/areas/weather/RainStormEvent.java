@@ -5,12 +5,19 @@ import com.badlogic.gdx.math.MathUtils;
 import com.csse3200.game.events.ScheduledEvent;
 import com.csse3200.game.services.ParticleService;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.sound.EffectSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.function.Function;
 
 public class RainStormEvent extends WeatherEvent {
 
+    private static final Logger logger = LoggerFactory.getLogger(RainStormEvent.class);
+
     private ScheduledEvent nextLightningStrike;
+    private long stormSoundId;
 
     /**
      * Constructs an {@link WeatherEvent} with a given duration, priority and countdown
@@ -27,6 +34,9 @@ public class RainStormEvent extends WeatherEvent {
 
     @Override
     public void startEffect() {
+        logger.info("Starting RainStorm effects");
+
+        // Trigger in-game effects
         climateControllerEvents.trigger("startWaterLevelEffect", getDryRate());
 
         // TODO - update effect
@@ -35,10 +45,20 @@ public class RainStormEvent extends WeatherEvent {
         // Add lighting effects
         ServiceLocator.getLightService().setBrightnessMultiplier((1.0f - severity / 1.5f) * 0.3f + 0.6f);
         scheduleNextLightningStrike();
+
+        // Start sound effects
+        try {
+            stormSoundId = ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.STORM, true);
+        } catch (InvalidSoundFileException exception) {
+            logger.error("Failed to play storm sound effect", exception);
+        }
     }
 
     @Override
     public void stopEffect() {
+        logger.info("Stopping RainStorm effects");
+
+        // Cancel in-game effects
         climateControllerEvents.trigger("stopWaterLevelEffect");
 
         // TODO - update effect
@@ -47,6 +67,13 @@ public class RainStormEvent extends WeatherEvent {
         // Remove lighting effects
         ServiceLocator.getLightService().setBrightnessMultiplier(1.0f);
         climateControllerEvents.cancelEvent(nextLightningStrike);
+
+        // Stop sound effects
+        try {
+            ServiceLocator.getSoundService().getEffectsMusicService().stop(EffectSoundFile.STORM, stormSoundId);
+        } catch (InvalidSoundFileException exception) {
+            logger.error("Failed to stop storm sound effect", exception);
+        }
     }
 
     private void scheduleNextLightningStrike() {
@@ -61,6 +88,12 @@ public class RainStormEvent extends WeatherEvent {
     }
 
     private void triggerStrike() {
+        // Play SFX
+        try {
+            ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.LIGHTNING_STRIKE);
+        } catch (InvalidSoundFileException exception) {
+            logger.error("Failed to play lightning strike sound effect", exception);
+        }
         // Trigger animal panic
         climateControllerEvents.trigger("startPanicEffect");
         // Apply the desired lighting effect

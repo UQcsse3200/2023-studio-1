@@ -554,6 +554,12 @@ public class SpaceGameArea extends GameArea {
     effects.add(EffectSoundFile.FISHING_CAST);
     effects.add(EffectSoundFile.FISHING_CATCH);
     effects.add(EffectSoundFile.SCYTHE);
+    effects.add(EffectSoundFile.ACID_BURN);
+    effects.add(EffectSoundFile.BLIZZARD);
+    effects.add(EffectSoundFile.LIGHTNING_STRIKE);
+    effects.add(EffectSoundFile.SOLAR_SURGE);
+    effects.add(EffectSoundFile.STORM);
+    effects.add(EffectSoundFile.SURGE);
 
 
     try {

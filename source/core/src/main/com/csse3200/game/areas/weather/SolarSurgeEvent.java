@@ -4,6 +4,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.csse3200.game.events.ScheduledEvent;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.sound.EffectSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.function.Function;
 
@@ -13,11 +17,15 @@ import java.util.function.Function;
  */
 public class SolarSurgeEvent extends WeatherEvent {
 
+    private static final Logger logger = LoggerFactory.getLogger(SolarSurgeEvent.class);
+
     private ScheduledEvent nextSurge;
 
     private float rOffset;
     private float gOffset;
     private float bOffset;
+
+    private long solarSurgeSoundId;
 
     /**
      * Constructs a SolarSurgeEvent with a given countdown, duration, priority and severity.
@@ -34,10 +42,13 @@ public class SolarSurgeEvent extends WeatherEvent {
 
     @Override
     public void startEffect() {
+        logger.info("Starting SolarSurge effects");
+
+        // Trigger in-game effects
         climateControllerEvents.trigger("startWaterLevelEffect", getDryRate());
         climateControllerEvents.trigger("startPlantAoeEffect", getPlantEffectivenessMultiplier());
 
-        // Apply the desired lighting effect
+        // Apply the desired lighting effects
         ServiceLocator.getLightService().setBrightnessMultiplier(0.0f);
         rOffset = MathUtils.random();
         gOffset = MathUtils.random();
@@ -45,15 +56,33 @@ public class SolarSurgeEvent extends WeatherEvent {
         climateControllerEvents.trigger("lightingEffect", 34.0f,
                 (Function<Float, Color>) this::getAuroraColourOffset);
         scheduleNextSurge();
+
+        // Start sound effects
+        try {
+            solarSurgeSoundId = ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.SOLAR_SURGE, true);
+        } catch (InvalidSoundFileException exception) {
+            logger.error("Failed to play solar surge sound effect", exception);
+        }
     }
 
     @Override
     public void stopEffect() {
+        logger.info("Stopping SolarSurge effects");
+
+        // Cancel in-game effects
         climateControllerEvents.trigger("stopWaterLevelEffect");
         climateControllerEvents.trigger("stopPlantAoeEffect");
 
+        // Remove lighting effects
         ServiceLocator.getLightService().setBrightnessMultiplier(1.0f);
         climateControllerEvents.cancelEvent(nextSurge);
+
+        // Stop sound effects
+        try {
+            ServiceLocator.getSoundService().getEffectsMusicService().stop(EffectSoundFile.SOLAR_SURGE, solarSurgeSoundId);
+        } catch (InvalidSoundFileException exception) {
+            logger.error("Failed to stop solar surge sound effect", exception);
+        }
     }
 
     private void scheduleNextSurge() {
@@ -68,6 +97,12 @@ public class SolarSurgeEvent extends WeatherEvent {
     }
 
     private void triggerSurge() {
+        // Play SFX
+        try {
+            ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.SURGE);
+        } catch (InvalidSoundFileException exception) {
+            logger.error("Failed to play lightning strike sound effect", exception);
+        }
         // Trigger animal panic and damage plants (if sufficiently severe)
         if (severity > 1.2f) {
             climateControllerEvents.trigger("startPanicEffect");
@@ -78,8 +113,8 @@ public class SolarSurgeEvent extends WeatherEvent {
     }
 
     private float getNextTimeToSurge() {
-        float maxTime = 1.4f + 2.4f * (1.5f - severity) / 1.5f;
-        float minTime = 0.0f + 0.8f * (1.5f - severity) / 1.5f;
+        float maxTime = 2.0f + 0.8f * (1.5f - severity) / 1.5f;
+        float minTime = 0.8f + 0.2f * (1.5f - severity) / 1.5f;
         return MathUtils.random(minTime, maxTime);
     }
 

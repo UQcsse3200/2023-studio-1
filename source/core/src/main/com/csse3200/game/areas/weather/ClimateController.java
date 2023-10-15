@@ -210,10 +210,6 @@ public class ClimateController implements Json.Serializable {
 				priority = currentWeatherEvent.getPriority();
 			}
 		}
-		weatherEvents.removeIf(WeatherEvent::isExpired);
-		if (currentWeatherEvent != null) {
-			currentWeatherEvent.startEffect();
-		}
 	}
 
 	@Override
