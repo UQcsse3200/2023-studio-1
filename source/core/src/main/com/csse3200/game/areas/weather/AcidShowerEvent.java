@@ -29,7 +29,7 @@ public class AcidShowerEvent extends WeatherEvent {
      */
     public AcidShowerEvent(int numHoursUntil, int duration, int priority, float severity) {
         super(numHoursUntil, duration, priority, severity);
-        climateControllerEvents.addListener("acidShowerAnimalPanic", this::triggerAcidBurn);
+        climateControllerEvents.addListener("acidBurn", this::triggerAcidBurn);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class AcidShowerEvent extends WeatherEvent {
         // Trigger in-game effects
         climateControllerEvents.trigger("startWaterLevelEffect", getDryRate());
         climateControllerEvents.trigger("douseFlames");
-        triggerAcidBurn();
+        scheduleNextAcidBurn();
 
         // Add particle effects
         ServiceLocator.getParticleService().startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
@@ -63,6 +63,7 @@ public class AcidShowerEvent extends WeatherEvent {
         climateControllerEvents.trigger("stopWaterLevelEffect");
         climateControllerEvents.trigger("stopPlacedLightEffects");
         climateControllerEvents.cancelEvent(nextAcidBurn);
+        nextAcidBurn = null;
 
         // Remove particle effects
         ServiceLocator.getParticleService().stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);
@@ -79,22 +80,25 @@ public class AcidShowerEvent extends WeatherEvent {
     }
 
     private void scheduleNextAcidBurn() {
-        nextAcidBurn = climateControllerEvents.scheduleEvent(4.0f - 2.0f * severity / 1.5f, "acidShowerAnimalPanic");
+        nextAcidBurn = climateControllerEvents.scheduleEvent(4.0f - 2.0f * severity / 1.5f, "acidBurn");
     }
 
     private void triggerAcidBurn() {
-        // Play SFX
-        try {
-            ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.ACID_BURN);
-        } catch (InvalidSoundFileException exception) {
-            logger.error("Failed to play acid burning sound effect", exception);
+        if (nextAcidBurn != null) {
+            logger.info("Triggering acid burn");
+            // Play SFX
+            try {
+                ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.ACID_BURN);
+            } catch (InvalidSoundFileException exception) {
+                logger.error("Failed to play acid burning sound effect", exception);
+            }
+            // Cause animal panic
+            climateControllerEvents.trigger("startPanicEffect");
+            // Damage the plants
+            climateControllerEvents.trigger("damagePlants");
+            // Recursively schedule next burn
+            scheduleNextAcidBurn();
         }
-        // Cause animal panic
-        climateControllerEvents.trigger("startPanicEffect");
-        // Damage the plants
-        climateControllerEvents.trigger("damagePlants");
-        // Recursively schedule next burn
-        scheduleNextAcidBurn();
     }
 
     private float getDryRate() {

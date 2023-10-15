@@ -39,13 +39,13 @@ public class RainStormEvent extends WeatherEvent {
         // Trigger in-game effects
         climateControllerEvents.trigger("startWaterLevelEffect", getDryRate());
         climateControllerEvents.trigger("douseFlames");
+        scheduleNextLightningStrike();
 
         // TODO - update effect
         ServiceLocator.getParticleService().startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
 
         // Add lighting effects
         ServiceLocator.getLightService().setBrightnessMultiplier((1.0f - severity / 1.5f) * 0.3f + 0.6f);
-        scheduleNextLightningStrike();
 
         // Start sound effects
         try {
@@ -62,13 +62,14 @@ public class RainStormEvent extends WeatherEvent {
         // Cancel in-game effects
         climateControllerEvents.trigger("stopWaterLevelEffect");
         climateControllerEvents.trigger("stopPlacedLightEffects");
+        climateControllerEvents.cancelEvent(nextLightningStrike);
+        nextLightningStrike = null;
 
         // TODO - update effect
         ServiceLocator.getParticleService().stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);
 
         // Remove lighting effects
         ServiceLocator.getLightService().setBrightnessMultiplier(1.0f);
-        climateControllerEvents.cancelEvent(nextLightningStrike);
 
         // Stop sound effects
         try {
@@ -90,19 +91,22 @@ public class RainStormEvent extends WeatherEvent {
     }
 
     private void triggerStrike() {
-        // Play SFX
-        try {
-            ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.LIGHTNING_STRIKE);
-        } catch (InvalidSoundFileException exception) {
-            logger.error("Failed to play lightning strike sound effect", exception);
+        if (nextLightningStrike != null) {
+            logger.info("Triggering lightning strike");
+            // Play SFX
+            try {
+                ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.LIGHTNING_STRIKE);
+            } catch (InvalidSoundFileException exception) {
+                logger.error("Failed to play lightning strike sound effect", exception);
+            }
+            // Trigger animal panic
+            climateControllerEvents.trigger("startPanicEffect");
+            // Apply the desired lighting effect
+            climateControllerEvents.trigger("lightingEffect", getNextLightningStrikeDuration(),
+                    (Function<Float, Color>) this::getLightningColourOffset);
+            // Recursively schedule next strike
+            scheduleNextLightningStrike();
         }
-        // Trigger animal panic
-        climateControllerEvents.trigger("startPanicEffect");
-        // Apply the desired lighting effect
-        climateControllerEvents.trigger("lightingEffect", getNextLightningStrikeDuration(),
-                (Function<Float, Color>) this::getLightningColourOffset);
-        // Recursively schedule next strike
-        scheduleNextLightningStrike();
     }
 
     private float getNextTimeToLightningStrike() {
