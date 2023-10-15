@@ -125,11 +125,7 @@ public class InventoryDisplay extends UIComponent {
 				slot = new ItemSlot(false);
 			}
 
-			table.add(slot).width(70).height(70).pad(10, 10, 10, 10);
-			if (entity.getType() == EntityType.PLAYER && i == 9) {
-				Image deleteSlot = new Image(ServiceLocator.getResourceService().getAsset("images/bin.png", Texture.class));
-				table.add(deleteSlot).colspan(2);
-			}
+			table.add(slot).pad(10, 10, 10, 10);
 			if ((i + 1) % rowSize == 0) {
 				table.row();
 			}
@@ -142,15 +138,17 @@ public class InventoryDisplay extends UIComponent {
 		}
 		table.row();
 
+		if (entity.getType() == EntityType.PLAYER) {
+			Image deleteSlot = new Image(ServiceLocator.getResourceService().getAsset("images/bin.png", Texture.class));
+			table.add(deleteSlot).colspan(10);
+		}
+
 		// Create a window for the inventory using the skin
-		window.pad(40, 20, 20, 20);
+		window.pad(40, 5, 5, 5);
 		window.add(table);
 		window.pack();
 		window.setMovable(false);
 		window.setVisible(false);
-		float x = (stage.getWidth() - window.getWidth()) / 2;
-		float y = (stage.getHeight() - window.getHeight()) / 2;
-		window.setPosition(x, y);
 		stage.addActor(window);
 		setDragItems(actors, map);
 	}
@@ -310,7 +308,7 @@ public class InventoryDisplay extends UIComponent {
 	 */
 	@Override
 	public void draw(SpriteBatch batch) {
-		// Handled else where
+		window.setPosition(((stage.getWidth() - window.getWidth()) / 2), ((stage.getHeight() - window.getHeight()) / 2));
 	}
 
 	/**

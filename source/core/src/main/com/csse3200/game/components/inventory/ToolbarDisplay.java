@@ -108,7 +108,7 @@ public class ToolbarDisplay extends UIComponent {
                 idx = 0;
             }
             // Create the label for the item slot
-            Label label = new Label(" " + idx, skin); //please please please work
+            Label label = new Label(" " + idx, skin);
             label.setColor(Color.BLACK);
             label.setAlignment(Align.topLeft);
 
@@ -145,6 +145,7 @@ public class ToolbarDisplay extends UIComponent {
     @Override
     public void draw(SpriteBatch batch)  {
         // Handled else where
+        window.setPosition(stage.getWidth() / 2 - window.getWidth() / 2, 0);
     }
 
     /**
