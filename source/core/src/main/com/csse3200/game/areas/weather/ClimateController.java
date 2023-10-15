@@ -92,7 +92,8 @@ public class ClimateController implements Json.Serializable {
 
 	/**
 	 * Sets the current lighting effect to have the specified duration and colourGradient.
-	 * @param duration The duration of the lighting effect in seconds.
+	 *
+	 * @param duration       The duration of the lighting effect in seconds.
 	 * @param colourGradient The gradient of colour offsets. It should be a function which accepts a float, and returns
 	 *                       a colour offset.
 	 */
@@ -143,20 +144,20 @@ public class ClimateController implements Json.Serializable {
 	private void addDailyEvent() {
 		float eventPossibility = MathUtils.random();
 		// 25% that no weather event is generated
-		if (eventPossibility <= 0.25) {
+		if (eventPossibility <= 0.10) {
 			return;
 		}
-		int eventGenerated = MathUtils.random(0, 3);
+		int eventGenerated = MathUtils.random(0, 9);
 		int numHoursUntil = MathUtils.random(1, 6);
 		int duration = MathUtils.random(2, 5);
 		int priority = MathUtils.random(0, 3);
 		float severity = MathUtils.random();
 		WeatherEvent event;
 		switch (eventGenerated) {
-			case 0 -> event = new AcidShowerEvent(numHoursUntil, duration, priority, severity);
-			case 1 -> event = new RainStormEvent(numHoursUntil, duration, priority, severity);
-			case 2 -> event = new BlizzardEvent(numHoursUntil, duration, priority, severity);
-			case 3 -> event = new SolarSurgeEvent(numHoursUntil, duration, priority, severity);
+			case 0, 1, 2, 3 -> event = new RainStormEvent(numHoursUntil, duration, priority, severity);
+			case 4, 5, 6 -> event = new AcidShowerEvent(numHoursUntil, duration, priority, severity);
+			case 7, 8 -> event = new BlizzardEvent(numHoursUntil, duration, priority, severity);
+			case 9 -> event = new SolarSurgeEvent(numHoursUntil, duration, priority, severity);
 			default -> {
 				return;
 			}
