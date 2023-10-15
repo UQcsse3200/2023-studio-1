@@ -4,8 +4,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.ai.tasks.DefaultTask;
 import com.csse3200.game.ai.tasks.PriorityTask;
+import com.csse3200.game.ai.tasks.TaskRunner;
 import com.csse3200.game.areas.terrain.TerrainTile;
-import com.csse3200.game.components.npc.ShipEaterScareComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -20,18 +20,16 @@ import com.csse3200.game.services.ServiceLocator;
  * Adapted from Team 4's MoveToPlantTask.
  * */
 public class MoveToShipTask extends DefaultTask implements PriorityTask {
-
-    /** The follow task for moving to the ship */
     private MovementTask movementTask;
-    /** Task priority when moving to ship (-1 when no ships exist) */
     private final int priority;
-    /** Speed at which to move to the ship */
-    private Vector2 speed;
-    /** Current target to move towards */
+    private final Vector2 speed;
     private Entity currentTarget;
-    /** Distance to target before stopping */
     private final float stoppingDistance;
-    private boolean diggingUnderObstacle;
+
+    private boolean isDigging;
+    private boolean isHiding;
+    private boolean isEating;
+
     private long startedDiggingAt;
 
     /**
@@ -42,7 +40,39 @@ public class MoveToShipTask extends DefaultTask implements PriorityTask {
         this.priority = priority;
         this.speed = speed;
         this.stoppingDistance = stoppingDistance;
-        this.diggingUnderObstacle = false;
+        this.isDigging = false;
+        this.isHiding = false;
+    }
+
+    @Override
+    public void create(TaskRunner taskRunner) {
+        super.create(taskRunner);
+
+        owner.getEntity().getEvents().addListener("hidingUpdated", this::setHiding);
+        owner.getEntity().getEvents().addListener("eatingUpdated", this::setEating);
+    }
+
+    private void setMovement(boolean isMoving) {
+        if (!isMoving) {
+            owner.getEntity().getComponent(ColliderComponent.class).setLayer(PhysicsLayer.NONE);
+            owner.getEntity().getComponent(HitboxComponent.class).setLayer(PhysicsLayer.NONE);
+            owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(false);
+            if (movementTask != null) movementTask.stop();
+        } else {
+            owner.getEntity().getComponent(HitboxComponent.class).setLayer(PhysicsLayer.NPC);
+            owner.getEntity().getComponent(ColliderComponent.class).setLayer(PhysicsLayer.NPC);
+            if (movementTask != null) movementTask.start();
+        }
+    }
+
+    private void setEating(boolean isEating) {
+        this.isEating = isEating;
+        setMovement(!isEating);
+    }
+
+    private void setHiding(boolean isHiding) {
+        this.isHiding = isHiding;
+        setMovement(!isHiding);
     }
 
     /**
@@ -69,7 +99,7 @@ public class MoveToShipTask extends DefaultTask implements PriorityTask {
             stop();
         } else {
             // Start a movement task towards the ship
-            setMovementTask(new MovementTask(currentTarget.getCenterPosition(), speed, 1.5f));
+            setMovementTask(new MovementTask(currentTarget.getCenterPosition(), speed, stoppingDistance));
             getMovementTask().create(owner);
             getMovementTask().start();
             this.owner.getEntity().getEvents().trigger("moveToShipStart");
@@ -81,18 +111,12 @@ public class MoveToShipTask extends DefaultTask implements PriorityTask {
      */
     @Override
     public void update() {
-        owner.getEntity().getComponent(HitboxComponent.class).setLayer(PhysicsLayer.NPC);
-        owner.getEntity().getComponent(ColliderComponent.class).setLayer(PhysicsLayer.NPC);
-
-        if (movementTask.getStatus() == Status.FINISHED) {
-            status = Status.FINISHED;
+        if (isHiding || isEating) {
             return;
         }
 
-        if (owner.getEntity().getComponent(ShipEaterScareComponent.class).getIsHiding()) {
-            owner.getEntity().getComponent(ColliderComponent.class).setLayer(PhysicsLayer.NONE);
-            owner.getEntity().getComponent(HitboxComponent.class).setLayer(PhysicsLayer.NONE);
-            owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(false);
+        if (movementTask.getStatus() == Status.FINISHED) {
+            status = Status.FINISHED;
             return;
         }
 
@@ -100,26 +124,31 @@ public class MoveToShipTask extends DefaultTask implements PriorityTask {
             // stuck, dig under obstacle
             owner.getEntity().getComponent(ColliderComponent.class).setLayer(PhysicsLayer.NONE);
             movementTask.start();
-            diggingUnderObstacle = true;
+            isDigging = true;
             startedDiggingAt = ServiceLocator.getTimeSource().getTime();
-            owner.getEntity().getEvents().trigger("digging");
+            owner.getEntity().getEvents().trigger("diggingUpdated", true);
             movementTask.update();
             return;
-        } else if (diggingUnderObstacle && ServiceLocator.getTimeSource().getTime() - startedDiggingAt >= 1000L) {
-            TerrainTile tile = ServiceLocator.getGameArea().getMap().getTile(owner.getEntity().getCenterPosition());
-            if (tile.isTraversable() && !tile.isOccupied()) {
-                diggingUnderObstacle = false;
-                owner.getEntity().getEvents().trigger("walkStart");
+        } else if (isDigging && ServiceLocator.getTimeSource().getTime() - startedDiggingAt >= 1000L) {
+            TerrainTile tile = ServiceLocator.getGameArea().getMap().getTile(owner.getEntity().getPosition());
+            if (canStopDiggingOnTile(tile)) {
+                isDigging = false;
+                owner.getEntity().getEvents().trigger("diggingUpdated", false);
             }
             startedDiggingAt = ServiceLocator.getTimeSource().getTime();
-        } else if (!diggingUnderObstacle) {
-            owner.getEntity().getEvents().trigger("walkStart");
         }
 
         float distanceToTarget = owner.getEntity().getCenterPosition().dst(currentTarget.getCenterPosition());
         owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(distanceToTarget > stoppingDistance);
 
         movementTask.update();
+    }
+
+    private boolean canStopDiggingOnTile(TerrainTile tile) {
+        return tile.isTraversable() && (
+                        !tile.isOccupied() ||
+                                (tile.getOccupant() != null && tile.getOccupant().getType() == EntityType.TILE)
+                );
     }
 
     /**

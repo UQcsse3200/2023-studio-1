@@ -21,23 +21,19 @@ public class ShipEaterScareComponent extends Component {
 		entity.getEvents().addListener("entityExitDetected", this::stopHiding);
 	}
 
-	public boolean getIsHiding() {
-		return isHiding;
-	}
-
 	private void hide(Entity entity) {
 		if (entity.getType() != EntityType.PLAYER) {
 			return;
 		}
 
 		isHiding = true;
-		this.entity.getEvents().trigger("runStart");
+		this.entity.getEvents().trigger("hidingUpdated", true);
 	}
 
 	private void stopHiding(Entity entity) {
 		if (isHiding && entity.getType() == EntityType.PLAYER) {
 			isHiding = false;
-			this.entity.getEvents().trigger("attackStart");
+			this.entity.getEvents().trigger("hidingUpdated", false);
 		}
 	}
 }

@@ -1,44 +1,52 @@
 package com.csse3200.game.components.npc;
 
+import com.csse3200.game.components.Component;
+import com.csse3200.game.rendering.AnimationRenderComponent;
+
 import java.util.Objects;
 
-public class ShipEaterAnimationController extends AnimalAnimationController {
+public class ShipEaterAnimationController extends Component {
+	private boolean isDigging;
+	private boolean isHiding;
+	private boolean isEating;
+	private AnimationRenderComponent animator;
 	@Override
 	public void create() {
-		super.create();
+		animator = this.entity.getComponent(AnimationRenderComponent.class);
 
-		entity.getEvents().addListener("attackStart", this::animateAttack);
-		entity.getEvents().addListener("digging", this::digging);
+		entity.getEvents().addListener("eatingUpdated", this::setEating);
+		entity.getEvents().addListener("diggingUpdated", this::setDigging);
+		entity.getEvents().addListener("hidingUpdated", this::setHiding);
 	}
-	void digging() {
-		if (!Objects.equals(animator.getCurrentAnimation(), "digging")) {
-			animator.startAnimation("digging");
-		}
-	}
-
-	void animateAttack() {
-		if (!Objects.equals(animator.getCurrentAnimation(), "eating")) {
-			animator.startAnimation("eating");
-		}
+	void setDigging(boolean isDigging) {
+		this.isDigging = isDigging;
+		System.out.println("isDigging = " + isDigging);
 	}
 
-	@Override
-	protected void animateRun() {
-		if (!Objects.equals(animator.getCurrentAnimation(), "hiding")) {
-			animator.startAnimation("hiding");
-		}
+	void setEating(boolean isEating) {
+		this.isEating = isEating;
+		System.out.println("isEating = " + isEating);
+	}
+
+	void setHiding(boolean isHiding) {
+		this.isHiding = isHiding;
+		System.out.println("isHiding = " + isHiding);
 	}
 
 	@Override
-	protected void animateWalk() {
-		if (!Objects.equals(animator.getCurrentAnimation(), "running")) {
-			animator.startAnimation("running");
+	public void update() {
+		// priorities are hiding > eating > digging > moving
+		String animation = "running";
+		if (isHiding) {
+			animation = "hiding";
+		} else if (isEating) {
+			animation = "eating";
+		} else if (isDigging) {
+			animation = "digging";
 		}
-	}
-	@Override
-	protected void animateIdle() {
-		if (!Objects.equals(animator.getCurrentAnimation(), "running")) {
-			animator.startAnimation("running");
+
+		if (!Objects.equals(animator.getCurrentAnimation(), animation)) {
+			animator.startAnimation(animation);
 		}
 	}
 }
