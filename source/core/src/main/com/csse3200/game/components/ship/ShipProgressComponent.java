@@ -13,7 +13,7 @@ import java.util.Set;
 import static java.lang.Math.min;
 
 public class ShipProgressComponent extends Component {
-	static int maximumRepair = 20;
+	static int maximumRepair = 10;
 	private int progress;
 	private Set<Feature> unlockedFeatures;
 
@@ -21,9 +21,9 @@ public class ShipProgressComponent extends Component {
 	 * Ship features that can be unlocked along by repairing the ship.
 	 */
 	public enum Feature {
-		BED(3),
-		LIGHT(8),
-		STORAGE(15);
+		LIGHT(2),
+		BED(6),
+		TELEPORT(10);
 
 		public final int unlockLevel;
 
