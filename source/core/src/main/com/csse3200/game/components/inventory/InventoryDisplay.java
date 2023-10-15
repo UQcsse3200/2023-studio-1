@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.items.WateringCanLevelComponent;
+import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.ServiceLocator;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -75,7 +76,7 @@ public class InventoryDisplay extends UIComponent {
 		initialiseInventory();
 		entity.getEvents().addListener(openEvent, this::toggleOpen);
 		entity.getEvents().addListener(refreshEvent, this::refreshInventory);
-		entity.getEvents().addListener("escInput",this::setPause);
+		entity.getEvents().addListener(PlayerActions.events.ESC_INPUT.name(), this::setPause);
 		entity.getEvents().addListener("hideUI", this::hide);
 		inventoryDisplayManager.addInventoryDisplay(this);
 	}

@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.WateringCanLevelComponent;
 import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.sound.EffectSoundFile;
 import com.csse3200.game.services.sound.InvalidSoundFileException;
@@ -50,7 +51,7 @@ public class ToolbarDisplay extends UIComponent {
         entity.getEvents().addListener("updateToolbar", this::updateInventory);
         entity.getEvents().addListener("toggleInventory",this::toggleOpen);
         entity.getEvents().addListener("hotkeySelection",this::updateItemSlot);
-        entity.getEvents().addListener("escInput",this::setPause);
+        entity.getEvents().addListener(PlayerActions.events.ESC_INPUT.name(), this::setPause);
         entity.getEvents().addListener("hideUI", this::hide);
         inventory = entity.getComponent(InventoryComponent.class);
     }
