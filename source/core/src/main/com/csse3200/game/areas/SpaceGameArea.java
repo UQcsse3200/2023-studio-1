@@ -571,6 +571,10 @@ public class SpaceGameArea extends GameArea {
     effects.add(EffectSoundFile.FISHING_CAST);
     effects.add(EffectSoundFile.FISHING_CATCH);
     effects.add(EffectSoundFile.SCYTHE);
+    effects.add(EffectSoundFile.COW_FEED);
+    effects.add(EffectSoundFile.ASTROLOTL_FEED);
+    effects.add(EffectSoundFile.CHICKEN_FEED);
+    effects.add(EffectSoundFile.TAMED_ANIMAL);
 
 
     try {

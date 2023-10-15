@@ -122,6 +122,7 @@ public class TamableComponent extends Component {
           if (numTimesFed == tamingThreshold || randomDecimal > tamingProbability) {
               logger.info("Tamed " + name + "!");
               try {
+                  Thread.sleep(100); //Ensures that other audio finishes so this can ne played.
                   ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.TAMED_ANIMAL);
               } catch (Exception e) {
                   logger.error("Failed to play animal sound", e);
