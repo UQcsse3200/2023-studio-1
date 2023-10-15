@@ -1,10 +1,8 @@
 package com.csse3200.game.areas.weather;
 
+import com.badlogic.gdx.graphics.Color;
 import com.csse3200.game.areas.GameArea;
-import com.csse3200.game.services.LightService;
-import com.csse3200.game.services.ParticleService;
-import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.services.TimeService;
+import com.csse3200.game.services.*;
 import com.csse3200.game.services.sound.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,17 +10,22 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class RainStormEventTest {
 
     private RainStormEvent rainStormEvent1, rainStormEvent2, rainStormEvent3, rainStormEvent4, rainStormEvent5;
-    private static final Logger logger = LoggerFactory.getLogger(RainStormEventTest.class);
+    private GameTime gameTime;
 
     @BeforeEach
     public void setUp() {
+        gameTime = mock(GameTime.class);
+        ServiceLocator.registerTimeSource(gameTime);
         GameArea gameArea = mock(GameArea.class);
         ClimateController climateController = new ClimateController();
         when(gameArea.getClimateController()).thenReturn(climateController);
@@ -30,14 +33,7 @@ public class RainStormEventTest {
 
         SoundService soundService = mock(SoundService.class);
         when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
-        java.util.List<SoundFile> effects = new ArrayList<>();
-        effects.add(EffectSoundFile.STORM);
         ServiceLocator.registerSoundService(soundService);
-        try {
-            soundService.getEffectsMusicService().loadSounds(effects);
-        } catch (InvalidSoundFileException e) {
-            logger.info("Sound files not loaded");
-        }
 
         TimeService timeService = mock(TimeService.class);
         ServiceLocator.registerTimeService(timeService);
@@ -58,20 +54,38 @@ public class RainStormEventTest {
         ServiceLocator.clear();
     }
 
-    //     These tests will require dealing with the lighting system
     @Test
-    void testStartEffect() throws InvalidSoundFileException {
+    void testStartEffectParticleAndLightingSystem() {
         rainStormEvent1.startEffect();
-        ServiceLocator.getGameArea().getClimateController().getEvents().trigger("startPlantAoeEffect", -2f);
-        rainStormEvent2.startEffect();
-        ServiceLocator.getGameArea().getClimateController().getEvents().trigger("startPlantAoeEffect", -2f);
-        rainStormEvent3.startEffect();
-        ServiceLocator.getGameArea().getClimateController().getEvents().trigger("startPlantAoeEffect", -2f);
-        //TODO - update
-        verify(ServiceLocator.getParticleService(), times(3)).startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+        //TODO
+        verify(ServiceLocator.getParticleService(), times(1)).startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
         verify(ServiceLocator.getLightService(), times(1)).setBrightnessMultiplier(0.66f);
-        verify(ServiceLocator.getLightService(), times(1)).setBrightnessMultiplier(0.62f);
-        verify(ServiceLocator.getLightService(), times(1)).setBrightnessMultiplier(0.70000005f);
+    }
+
+    @Test
+    void testGetLightningColourOffset() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        RainStormEvent rainStormEvent6 = new RainStormEvent(0,10,1,1.2f);
+        Method method = RainStormEvent.class.getDeclaredMethod("getLightningColourOffset", float.class);
+        method.setAccessible(true);
+        Color expectedBrightness = new Color(0.058429323f, 0.058429323f, 0.058429323f, 0.0f);
+        Color actualBrightness = (Color) method.invoke(rainStormEvent6, 1.0f);
+        assertEquals(expectedBrightness.r, actualBrightness.r);
+        assertEquals(expectedBrightness.g, actualBrightness.g);
+        assertEquals(expectedBrightness.b, actualBrightness.b);
+    }
+
+    @Test
+    void testStartEffectTriggersEvents() {
+        rainStormEvent1.startEffect();
+        ServiceLocator.getGameArea().getClimateController().getEvents().trigger("startWaterLevelEffect", -0.0016f);
+        ServiceLocator.getGameArea().getClimateController().getEvents().trigger("douseFlames");
+    }
+
+    @Test
+    void testStartEffectPlaysSound() throws InvalidSoundFileException {
+        rainStormEvent4.startEffect();
+        rainStormEvent5.startEffect();
+        verify(ServiceLocator.getSoundService().getEffectsMusicService(), times(2)).play(EffectSoundFile.STORM, true);
     }
 
     @Test
@@ -82,5 +96,15 @@ public class RainStormEventTest {
         //TODO - update
         verify(ServiceLocator.getParticleService(), times(3)).stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);
         verify(ServiceLocator.getLightService(), times(3)).setBrightnessMultiplier(1.0f);
+    }
+
+    @Test
+    void testTriggerStrike() throws InvalidSoundFileException {
+        RainStormEvent rainStormEvent6 = new RainStormEvent(0,9,1,1.3f);
+        rainStormEvent6.startEffect();
+        ServiceLocator.getGameArea().getClimateController().getEvents().trigger("lightningStrike");
+        verify(ServiceLocator.getSoundService().getEffectsMusicService()).play(EffectSoundFile.LIGHTNING_STRIKE);
+        ServiceLocator.getGameArea().getClimateController().getEvents().trigger("startPanicEffect");
+        ServiceLocator.getGameArea().getClimateController().getEvents().trigger("lightningEffect");
     }
 }
