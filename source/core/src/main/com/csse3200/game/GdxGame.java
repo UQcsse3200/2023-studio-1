@@ -28,7 +28,11 @@ public class GdxGame extends Game {
 
     // Sets background to light yellow
     Gdx.gl.glClearColor(0.0f, 0.098f, 0.309f, 1.0f);
-    discordActivity = new DiscordActivity();
+    try {
+      discordActivity = new DiscordActivity();
+    } catch (UnsatisfiedLinkError e) {
+      // Mac diff
+    }
     setScreen(ScreenType.MAIN_MENU);
   }
 
