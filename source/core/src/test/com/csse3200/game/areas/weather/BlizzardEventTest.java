@@ -6,6 +6,8 @@ import com.csse3200.game.services.LightService;
 import com.csse3200.game.services.ParticleService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
+import com.csse3200.game.services.sound.EffectsMusicService;
+import com.csse3200.game.services.sound.SoundService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +24,11 @@ public class BlizzardEventTest {
         ClimateController climateController = new ClimateController();
         when(gameArea.getClimateController()).thenReturn(climateController);
         ServiceLocator.registerGameArea(gameArea);
+
+        SoundService soundService = mock(SoundService.class);
+        when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
+        ServiceLocator.registerSoundService(soundService);
+
         TimeService timeService = mock(TimeService.class);
         ServiceLocator.registerTimeService(timeService);
 
