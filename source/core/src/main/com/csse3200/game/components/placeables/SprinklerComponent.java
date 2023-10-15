@@ -276,8 +276,11 @@ public class SprinklerComponent extends Component {
     if (!isPowered) {
       return;
     }
-    water.setCenterPosition(entity.getCenterPosition());
-    water.getComponent(AnimationRenderComponent.class).startAnimation("default");
+    if (water != null) {
+      // Mainly for testing but a good fail safe regardless
+      water.setCenterPosition(entity.getCenterPosition());
+      water.getComponent(AnimationRenderComponent.class).startAnimation("default");
+    }
     for (Vector2 pos : aoe) {
       TerrainTile tt = ServiceLocator.getGameArea().getMap().getTile(pos);
       Entity occupant = tt.getOccupant();
