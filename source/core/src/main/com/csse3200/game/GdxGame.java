@@ -28,10 +28,11 @@ public class GdxGame extends Game {
 
     // Sets background to light yellow
     Gdx.gl.glClearColor(0.0f, 0.098f, 0.309f, 1.0f);
-    try {
+    if (System.getProperty("os.name").contains("mac") || System.getProperty("os.name").contains("Mac")) {
+      System.out.println(System.getProperty("os.name"));
+    } else {
+      System.out.println(System.getProperty("os.name"));
       discordActivity = new DiscordActivity();
-    } catch (Exception e) {
-      // Mac diff
     }
     setScreen(ScreenType.MAIN_MENU);
   }
