@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.components.questgiver.MissionDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.extensions.GameExtension;
@@ -284,6 +285,10 @@ class MissionDisplayTest {
 
     @Test
     void clickingCollectRewardButtonChangesTheRewardState() {
+        GameArea gameArea = mock(GameArea.class);
+        when(gameArea.getPlayer()).thenReturn(new Entity());
+        ServiceLocator.registerGameArea(gameArea);
+
         missionDisplay.openMenu();
         missionDisplay.openQuests();
         verify(stage).addActor(actorCaptor.capture());

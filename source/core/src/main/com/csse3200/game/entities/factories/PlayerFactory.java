@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.combat.CombatStatsComponent;
 import com.csse3200.game.components.InteractionDetector;
+import com.csse3200.game.components.ParticleEffectComponent;
 import com.csse3200.game.components.inventory.InventoryDisplay;
 import com.csse3200.game.components.inventory.ToolbarDisplay;
 import com.csse3200.game.components.maingame.PauseMenuActions;
@@ -71,7 +72,8 @@ public class PlayerFactory {
             .addComponent(new InteractionDetector(2f, new ArrayList<>(Arrays.asList(EntityType.QUESTGIVER, EntityType.GATE, EntityType.CHEST, EntityType.CHICKEN,
                     EntityType.COW, EntityType.ASTROLOTL, EntityType.OXYGEN_EATER, EntityType.SHIP_DEBRIS, EntityType.SHIP, EntityType.GOLDEN_STATUE))))
             .addComponent(new ToolbarDisplay())
-	        .addComponent(new AuraLightComponent(6f))
+          .addComponent(new AuraLightComponent(6f))
+            .addComponent(new ParticleEffectComponent())
             .addComponent(new InventoryDisplay("updateInventory", "toggleInventory", 30, 10, true))
             .addComponent(new BlinkComponent())
             .addComponent(new StunComponent())

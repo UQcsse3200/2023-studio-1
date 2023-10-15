@@ -16,6 +16,7 @@ import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.services.ResourceService;
+import com.csse3200.game.services.TimeService;
 import com.csse3200.game.utils.math.Vector2Utils;
 import jdk.jfr.Event;
 import org.junit.jupiter.api.AfterEach;
@@ -79,6 +80,10 @@ class TamedFollowTaskTest {
     void beforeEach() {
         ServiceLocator.registerResourceService(new ResourceService());
         ServiceLocator.getResourceService().loadTextures(texturePaths);
+        TimeService timeService = mock(TimeService.class);
+        when(timeService.getEvents()).thenReturn(mock(EventHandler.class));
+        ServiceLocator.registerTimeService(timeService);
+        ServiceLocator.registerMissionManager(new MissionManager());
         ServiceLocator.getResourceService().loadAll();
         EventHandler eventHandler = mock(EventHandler.class);
         MissionManager missionManager = mock(MissionManager.class);

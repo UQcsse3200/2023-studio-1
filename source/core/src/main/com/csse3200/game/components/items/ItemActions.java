@@ -11,6 +11,7 @@ import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.factories.ShipFactory;
 import com.csse3200.game.missions.MissionManager;
+import com.csse3200.game.services.ParticleService;
 import com.csse3200.game.services.sound.EffectSoundFile;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.TerrainTile;
@@ -491,6 +492,7 @@ public class ItemActions extends Component {
     ServiceLocator.getEntityService().register(cropTile);
     tile.setOccupant(cropTile);
     tile.setOccupied();
+    cropTile.getEvents().trigger("startEffect", ParticleService.ParticleEffectType.DIRT_EFFECT);
     return true;
   }
 
