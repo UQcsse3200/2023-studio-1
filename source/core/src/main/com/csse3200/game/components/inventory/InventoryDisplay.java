@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.items.WateringCanLevelComponent;
 import com.csse3200.game.components.player.PlayerActions;

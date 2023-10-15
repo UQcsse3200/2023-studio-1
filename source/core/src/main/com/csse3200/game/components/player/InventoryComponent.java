@@ -510,7 +510,7 @@ public class InventoryComponent extends Component {
     public void switchTab() {
         Map<Integer, String> newMap = new HashMap<>();
         for (Map.Entry<Integer,String> e: itemPlace.entrySet()) {
-            newMap.put((e.getKey() + 10) % 30, e.getValue());
+            newMap.put((e.getKey() - 10) % 30, e.getValue());
         }
         itemPlace.clear();
         itemPlace.putAll(newMap);
