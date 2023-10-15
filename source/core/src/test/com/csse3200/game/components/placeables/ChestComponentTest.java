@@ -21,13 +21,5 @@ public class ChestComponentTest {
         Entity chest = new Entity();
         chest.addComponent(new InventoryComponent())
         .addComponent(new ChestComponent());
-        //.addComponent(new InventoryDisplay("refreshChest", "toggleChest", 30, 10, false))
-
-        //InventoryDisplay chestInv = chest.getComponent(InventoryDisplay.class);
-
-        //assertFalse(chestInv.isOpen());     //chest is not opened
-            //trigger the open chest action
-        //chest.getEvents().trigger("interact");
-        //assertTrue(chestInv.isOpen());      //chest is open
     }
 }
