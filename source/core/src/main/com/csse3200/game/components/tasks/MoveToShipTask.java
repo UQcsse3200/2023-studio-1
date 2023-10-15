@@ -93,7 +93,6 @@ public class MoveToShipTask extends DefaultTask implements PriorityTask {
             }
         }
 
-
         // Check if there are any ships in the game
         if (currentTarget == null) {
             stop();
@@ -111,12 +110,16 @@ public class MoveToShipTask extends DefaultTask implements PriorityTask {
      */
     @Override
     public void update() {
-        if (isHiding || isEating) {
+        if (status == Status.INACTIVE || movementTask == null) {
             return;
         }
 
-        if (movementTask.getStatus() == Status.FINISHED) {
-            status = Status.FINISHED;
+        if (isHiding || isEating || movementTask.getStatus() == Status.FINISHED) {
+            status = movementTask.getStatus();
+            if (isDigging) {
+                isDigging = false;
+                owner.getEntity().getEvents().trigger("diggingUpdated", false);
+            }
             return;
         }
 

@@ -73,6 +73,7 @@ public class ShipEaterAttackPattern extends Component {
         float distanceToShip = entity.getCenterPosition().dst(shipEntity.getCenterPosition());
         if (distanceToShip >= 2f) {
             // too far away, don't start eating
+            currentAttackEvent = null;
             return;
         }
 
