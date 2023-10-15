@@ -107,7 +107,7 @@ public class IntroDisplay extends UIComponent {
 
         // The {TOKENS} in the String below are used by TypingLabel to create the requisite animation effects
         String story = """
-                {SLOWER}{WAIT=0.5}15 years ago, humanity fled earth due to a world-ending calamity.
+                {FAST}{WAIT=0.5}15 years ago, humanity fled earth due to a world-ending calamity.
                                 
                 {WAIT}The {COLOR=#3ABE88}MOTHERSHIP{COLOR=WHITE} was the largest vessel of human life which fled Earth, leading the last survivors of your people to {COLOR=#3ABE88}ALPHA CENTAURI{COLOR=WHITE}.
                                 
