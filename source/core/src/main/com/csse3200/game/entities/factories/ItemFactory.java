@@ -632,9 +632,9 @@ return createBaseItem()
 
   public static Entity createTeleportDevice() {
     return createBaseItem()
-            .addComponent(new TextureRenderComponent("images/walkietalkie.png"))
+            .addComponent(new TextureRenderComponent("images/teleporter.png"))
             .addComponent(new ItemComponent("TeleportDevice", ItemType.TELEPORT_DEVICE,
                     "beep boop",
-                    "images/walkietalkie.png"));
+                    "images/teleporter.png"));
   }
 }
