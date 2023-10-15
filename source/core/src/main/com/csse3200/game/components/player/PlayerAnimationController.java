@@ -1,11 +1,14 @@
 package com.csse3200.game.components.player;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.services.ServiceLocator;
+
+import java.util.Objects;
 
 /**
  * This class listens to events relevant to a player entity's state and plays the animation when one
@@ -15,18 +18,57 @@ public class PlayerAnimationController extends Component {
     AnimationRenderComponent animator;
     String animationPrev;
 
+    Entity fishingRod;
+    String fishingDirection;
+
+    public enum events {
+        ANIMATION_WALK_START,
+        ANIMATION_RUN_START,
+        ANIMATION_WALK_STOP,
+        ANIMATION_INTERACT
+    }
+
     @Override
     public void create() {
         super.create();
 
         animator = this.entity.getComponent(AnimationRenderComponent.class);
-        entity.getEvents().addListener("animationWalkStart", this::animationWalkStart);
-        entity.getEvents().addListener("animationRunStart", this::animationRunStart);
-        entity.getEvents().addListener("animationWalkStop", this::animationWalkStop);
-        entity.getEvents().addListener("animationInteract", this::animationInteract);
-        entity.getEvents().addListener("use", this::use);
+        entity.getEvents().addListener(events.ANIMATION_WALK_START.name(), this::animationWalkStart);
+        entity.getEvents().addListener(events.ANIMATION_RUN_START.name(), this::animationRunStart);
+        entity.getEvents().addListener(events.ANIMATION_WALK_STOP.name(), this::animationWalkStop);
+        entity.getEvents().addListener(events.ANIMATION_INTERACT.name(), this::animationInteract);
+        entity.getEvents().addListener(PlayerActions.events.FISH_CAUGHT.name(), this::stopFishing);
+        entity.getEvents().addListener(PlayerActions.events.CAST_FISHING_RODS.name(), this::castFishingRod);
+        entity.getEvents().addListener(PlayerActions.events.USE.name(), this::use);
 
         animator.startAnimation("default");
+    }
+
+    @Override
+    public void update() {
+        fishingRod.setCenterPosition(entity.getCenterPosition());
+        if (fishingDirection != null && fishingRod.getComponent(AnimationRenderComponent.class).isFinished()) {
+            fishingRod.getComponent(AnimationRenderComponent.class).startAnimation(String.format("fishing_%s", fishingDirection));
+            fishingDirection = null;
+        }
+    }
+
+    public void addFishingRodAnimatorEntity(Entity fishingRod) {
+        this.fishingRod = fishingRod;
+        this.fishingRod.create();
+    }
+
+    void stopFishing() {
+        fishingRod.getComponent(AnimationRenderComponent.class).stopAnimation();
+        animator.stopAnimation();
+        fishingDirection = null;
+    }
+
+    void castFishingRod(Vector2 mousePos) {
+        String direction = getDirection(mousePos);
+        fishingRod.getComponent(AnimationRenderComponent.class).startAnimation(String.format("cast_%s", direction));
+        animator.startAnimation(String.format("fishing_%s", direction));
+        fishingDirection = direction;
     }
 
     void use(Vector2 mousePos, Entity itemInHand) {
@@ -34,11 +76,11 @@ public class PlayerAnimationController extends Component {
             String direction = getDirection(mousePos);
             String animation = String.format("%s_%s", itemInHand.getComponent(ItemComponent.class).getItemName().toLowerCase(),
                     direction);
-            if (!animator.getCurrentAnimation().equals(animation)) {
+            if (!Objects.equals(animator.getCurrentAnimation(), animation)) {
                 if (animator.hasAnimation(animation)) {
                     animator.startAnimation(animation);
                 } else {
-                    entity.getEvents().trigger("animationInteract", direction);
+                    entity.getEvents().trigger(events.ANIMATION_INTERACT.name(), direction);
                 }
             }
         }
@@ -51,45 +93,40 @@ public class PlayerAnimationController extends Component {
      * @return a String either up, down, left or right depending on where the mouse is in relation to the player.
      */
     private String getDirection(Vector2 mousePos) {
-        int width = Gdx.graphics.getWidth();
-        int height = Gdx.graphics.getHeight();
+        GameMap map = ServiceLocator.getGameArea().getMap();
+        Vector2 mouseWorldPos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
+        Vector2 adjustedPosition = new Vector2(
+                map.tileCoordinatesToVector(map.vectorToTileCoordinates(new Vector2(mouseWorldPos.x, mouseWorldPos.y))));
 
+        Vector2 playerPosCenter = ServiceLocator.getGameArea().getPlayer().getCenterPosition();
+        playerPosCenter.add(0, -1.0f); // Player entity sprite's feet are located -1.0f below the centre of the entity. ty Hunter
 
-        int playerXPos = width/2;
-        int playerYPos = height/2;
+        playerPosCenter = map.tileCoordinatesToVector(map.vectorToTileCoordinates(playerPosCenter));
 
-        int xDelta = 0;
-
-        if (playerYPos + 48 < mousePos.y) {
-            return "down";
-        } else if (playerYPos - 48 > mousePos.y) {
+        if (adjustedPosition.y - 0.5> playerPosCenter.y) {
             return "up";
-        }
-
-        if (playerXPos - 24 > mousePos.x){
-            xDelta -= 1;
-        } else if (playerXPos + 24 < mousePos.x) {
-            xDelta += 1;
-        }
-
-        if (xDelta == -1) {
-            return "left";
-        } else if (xDelta == 1) {
+        } else if (adjustedPosition.y  + 0.5 < playerPosCenter.y) {
+            return "down";
+        }else if (adjustedPosition.x - 0.5 > playerPosCenter.x) {
             return "right";
+        } else if (adjustedPosition.x + 0.5 < playerPosCenter.x) {
+            return "left";
         }
-        return "up";
+        // Default
+        return "down";
     }
 
     /**
      * Check if the current (non-looping) animation has completed
      */
     public boolean readyToPlay() {
-        if (animator.getCurrentAnimation().contains("interact") || animator.getCurrentAnimation().contains("hoe")
+        if (animator.getCurrentAnimation() == null) {
+            return true;
+        } else if (animator.getCurrentAnimation().contains("interact") || animator.getCurrentAnimation().contains("hoe")
                 || animator.getCurrentAnimation().contains("shovel") || animator.getCurrentAnimation().contains("scythe")
                 || animator.getCurrentAnimation().contains("watering_can")) {
             return animator.isFinished();
-        }
-        return true;
+        } else return !animator.getCurrentAnimation().contains("fishing");
     }
 
     /**
@@ -99,7 +136,7 @@ public class PlayerAnimationController extends Component {
      */
     void animationWalkStart(String direction) {
         String animation = String.format("walk_%s", direction);
-        if (!animator.getCurrentAnimation().equals(animation) || !readyToPlay()) {
+        if (!Objects.equals(animator.getCurrentAnimation(), animation) || !readyToPlay()) {
             animator.startAnimation(animation);
         }
     }
@@ -111,7 +148,7 @@ public class PlayerAnimationController extends Component {
      */
     void animationRunStart(String direction) {
         String animation = String.format("run_%s", direction);
-        if (!animator.getCurrentAnimation().equals(animation) || !readyToPlay()) {
+        if (!Objects.equals(animator.getCurrentAnimation(), animation) || !readyToPlay()) {
             animator.startAnimation(animation);
         }
     }
@@ -137,7 +174,9 @@ public class PlayerAnimationController extends Component {
         String animation = String.format("%s_%s", animationType, direction);
 
 
-        if (!animator.getCurrentAnimation().equals(animation) && animator.isFinished() || testBypass) {
+	    if (animator.getCurrentAnimation() == null
+			    || (!animator.getCurrentAnimation().equals(animation) && animator.isFinished())
+			    || testBypass) {
 
             animator.startAnimation(animation);
             animationPrev = animation;
@@ -150,9 +189,12 @@ public class PlayerAnimationController extends Component {
      * Play the interaction animation
      */
     void animationInteract(String direction) {
+        if (!readyToPlay()) {
+            return;
+        }
         // Get the current animation name to get the facing direction
         String animation = String.format("interact_%s", direction);
-        if (!animator.getCurrentAnimation().equals(animation)) {
+        if (!Objects.equals(animator.getCurrentAnimation(), animation)) {
             animator.startAnimation(animation);
         }
     }

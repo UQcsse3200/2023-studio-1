@@ -42,6 +42,7 @@ public class SettingsMenuDisplay extends UIComponent {
   private CheckBox fullScreenCheck;
   private CheckBox vsyncCheck;
   private Slider uiScaleSlider;
+  private Slider zoomScaleSlider;
   private SelectBox<StringDecorator<DisplayMode>> displayModeSelect;
 
   /**
@@ -163,6 +164,11 @@ public class SettingsMenuDisplay extends UIComponent {
     uiScaleSlider.setValue(settings.uiScale);
     Label uiScaleValue = new Label(String.format("%.2fx", settings.uiScale), skin);
 
+    Label zoomScaleLabel = new Label("Field of View:", skin);
+    zoomScaleSlider = new Slider(0.2f, 3f, 0.1f, false, skin);
+    zoomScaleSlider.setValue(settings.zoomScale);
+    Label zoomScaleValue = new Label(String.format("%.2fx", settings.zoomScale), skin);
+
     Label displayModeLabel = new Label("Resolution:", skin);
     displayModeSelect = new SelectBox<>(skin);
     Monitor selectedMonitor = Gdx.graphics.getMonitor();
@@ -190,6 +196,14 @@ public class SettingsMenuDisplay extends UIComponent {
 
     table.add(uiScaleLabel).right().padRight(15f);
     table.add(uiScaleTable).left();
+    
+    table.row().padTop(10f);
+    Table zoomScaleTable = new Table();
+    zoomScaleTable.add(zoomScaleSlider).width(100).left();
+    zoomScaleTable.add(zoomScaleValue).left().padLeft(5f).expandX();
+
+    table.add(zoomScaleLabel).right().padRight(15f);
+    table.add(zoomScaleTable).left();
 
     table.row().padTop(10f);
     table.add(displayModeLabel).right().padRight(15f);
@@ -202,6 +216,13 @@ public class SettingsMenuDisplay extends UIComponent {
           uiScaleValue.setText(String.format("%.2fx", value));
           return true;
         });
+
+    zoomScaleSlider.addListener(
+            (Event event) -> {
+              float value = zoomScaleSlider.getValue();
+              zoomScaleValue.setText(String.format("%.2fx", value));
+              return true;
+            });
 
     return table;
   }
@@ -273,6 +294,7 @@ public class SettingsMenuDisplay extends UIComponent {
     }
     settings.fullscreen = fullScreenCheck.isChecked();
     settings.uiScale = uiScaleSlider.getValue();
+    settings.zoomScale = zoomScaleSlider.getValue();
     settings.displayMode = new DisplaySettings(displayModeSelect.getSelected().object);
     settings.vsync = vsyncCheck.isChecked();
 

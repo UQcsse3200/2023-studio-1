@@ -6,12 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.inventory.InventoryDisplay;
 import com.csse3200.game.components.AuraLightComponent;
-import com.csse3200.game.components.placeables.ChestComponent;
-import com.csse3200.game.components.placeables.FenceComponent;
-import com.csse3200.game.components.placeables.LightController;
-import com.csse3200.game.components.placeables.PlaceableCategory;
-import com.csse3200.game.components.placeables.PlaceableEvents;
-import com.csse3200.game.components.placeables.SprinklerComponent;
+import com.csse3200.game.components.placeables.*;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
@@ -77,6 +72,7 @@ public class PlaceableFactory {
         type.setPlaceableCategory(PlaceableCategory.SPRINKLERS);
         Entity sprinkler = createBasePlaceable(type)
                 .addComponent(new DynamicTextureRenderComponent("images/placeable/sprinkler/pipe_null.png"));
+                // TODO: add animation render component here.
         // stop from blocking player movement
         sprinkler.getComponent(ColliderComponent.class).setLayer(PhysicsLayer.NONE);
         // add sprinkler component
@@ -132,5 +128,36 @@ public class PlaceableFactory {
                 .addComponent(new LightController())
                 .addComponent(animator);
 
+    }
+
+    public static Entity createGoldenTrophy() {
+        AnimationRenderComponent animator = new AnimationRenderComponent(
+                ServiceLocator.getResourceService().getAsset("images/golden_trophy.atlas", TextureAtlas.class),
+                16f
+        );
+
+        animator.addAnimation("default", 0.5f, Animation.PlayMode.LOOP);
+        animator.startAnimation("default");
+
+        AuraLightComponent lightComponent = new AuraLightComponent();
+        lightComponent.toggleLight();
+        DialogueComponent dialogue = new DialogueComponent();
+
+        Entity goldenFish = createBasePlaceable(EntityType.GOLDEN_STATUE)
+                .addComponent(lightComponent)
+                .addComponent(dialogue)
+                .addComponent(animator);
+
+        dialogue.addCutsceneAnimation(makeCutsceneEntity());
+
+        return goldenFish;
+    }
+
+    private static Entity makeCutsceneEntity() {
+        AnimationRenderComponent animation = new AnimationRenderComponent(
+                ServiceLocator.getResourceService().getAsset("images/cutscene.atlas", TextureAtlas.class), 16f);
+        animation.addAnimation("default", 0.3f, Animation.PlayMode.NORMAL);
+        animation.addAnimation("god_did", 0.3f, Animation.PlayMode.NORMAL);
+        return new Entity().addComponent(animation);
     }
 }

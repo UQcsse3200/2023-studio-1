@@ -16,10 +16,7 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.weather.WeatherEventDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.components.maingame.MainGameActions;
-import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.components.maingame.PauseMenuActions;
-import com.csse3200.game.components.player.PlayerActions;
-import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
@@ -100,7 +97,8 @@ public class MainGameScreen extends ScreenAdapter {
     public enum ScreenType {
         MAIN_GAME,
         WIN,
-        LOSE
+        LOSE,
+        CREDIT
     }
     private ScreenType currentScreenType = ScreenType.MAIN_GAME;
 
@@ -158,6 +156,8 @@ public class MainGameScreen extends ScreenAdapter {
 
         ServiceLocator.getMissionManager().getEvents().addListener("winScreen", this::playWinScreen);
 
+        ServiceLocator.getMissionManager().getEvents().addListener("creditScreen", this::playCreditScreen);
+
         new FireflySpawner();
 
         // if the LoadSaveOnStart value is set true then load entities saved from file
@@ -172,6 +172,13 @@ public class MainGameScreen extends ScreenAdapter {
     public void playLoseScreen(String causeOfDeath) {
         LoseScreenDisplay.setLoseReason(causeOfDeath);
         currentScreenType = ScreenType.LOSE;
+    }
+
+    /**
+     * Switch to the credit screen
+     */
+    public void playCreditScreen() {
+        currentScreenType = ScreenType.CREDIT;
     }
 
     /**
@@ -198,6 +205,7 @@ public class MainGameScreen extends ScreenAdapter {
             }
             case LOSE -> game.setScreen(GdxGame.ScreenType.LOSESCREEN);
             case WIN -> game.setScreen(GdxGame.ScreenType.WINSCREEN);
+            case CREDIT -> game.setScreen(GdxGame.ScreenType.ENDCREDITS);
         }
     }
 
@@ -223,8 +231,9 @@ public class MainGameScreen extends ScreenAdapter {
 
         renderer.dispose();
         unloadAssets();
-
-        ServiceLocator.getEntityService().dispose();
+        if (ServiceLocator.getEntityService() != null) {
+            ServiceLocator.getEntityService().dispose();
+        }
         ServiceLocator.getRenderService().dispose();
         ServiceLocator.getResourceService().dispose();
         ServiceLocator.getSoundService().getEffectsMusicService().dispose();
@@ -261,7 +270,6 @@ public class MainGameScreen extends ScreenAdapter {
         ui.addComponent(new InputDecorator(stage, 10))
                 .addComponent(new PerformanceDisplay())
                 .addComponent(new MainGameActions(this.game))
-                .addComponent(new MainGameExitDisplay())
                 .addComponent(new Terminal())
                 .addComponent(inputComponent)
                 .addComponent(new TerminalDisplay())

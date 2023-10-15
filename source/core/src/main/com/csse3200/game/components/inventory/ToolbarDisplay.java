@@ -3,21 +3,24 @@ package com.csse3200.game.components.inventory;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.items.WateringCanLevelComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.sound.EffectSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 /**
  * Display the UI for the toolbar
@@ -31,6 +34,8 @@ public class ToolbarDisplay extends UIComponent {
     private InventoryComponent inventory;
     private int selectedSlot = -1;
     private final ArrayList<ItemSlot> slots = new ArrayList<>();
+    private final Map<Integer, TextTooltip> tooltips = new HashMap<>();
+    private final InstantTooltipManager instantTooltipManager = new InstantTooltipManager();
 
     /**
      * Creates the event listeners, ui, and gets the UI.
@@ -43,6 +48,7 @@ public class ToolbarDisplay extends UIComponent {
         entity.getEvents().addListener("updateToolbar", this::updateInventory);
         entity.getEvents().addListener("toggleInventory",this::toggleOpen);
         entity.getEvents().addListener("hotkeySelection",this::updateItemSlot);
+        entity.getEvents().addListener("hideUI", this::hide);
         inventory = entity.getComponent(InventoryComponent.class);
     }
 
@@ -74,8 +80,23 @@ public class ToolbarDisplay extends UIComponent {
                 curSlot.setItemImage(new Image(itemTexture));
                 curSlot.setCount(itemCount);
 
-
                 curSlot.add(label);
+                TextTooltip tooltip;
+                if (Objects.equals(item.getItemName(), "watering_can")) {
+                    float level = item.getEntity().getComponent(WateringCanLevelComponent.class).getCurrentLevel();
+                    tooltip = new TextTooltip(item.getItemName() + "\n\nCurrent level is " + level, instantTooltipManager, skin);
+
+                } else {
+                    tooltip = new TextTooltip(item.getItemName() + "\n\n" + item.getItemDescription(), instantTooltipManager, skin);
+                }
+                tooltip.getActor().setAlignment(Align.center);
+                tooltip.setInstant(true);
+                if (tooltips.get(i) != null) {
+                    tooltips.get(i).hide();
+                    curSlot.removeListener(tooltips.get(i));
+                }
+                curSlot.addListener(tooltip);
+                tooltips.put(i, tooltip);
 
                 // Update slots array
                 slots.set(i, curSlot);
@@ -84,6 +105,10 @@ public class ToolbarDisplay extends UIComponent {
                 ItemSlot curSlot = slots.get(i);
                 curSlot.setItemImage(null);
                 curSlot.setCount(0);
+                if (tooltips.get(i) != null) {
+                    curSlot.removeListener(tooltips.get(i));
+                    tooltips.remove(i);
+                }
                 slots.set(i, curSlot);
             }
         }
@@ -112,12 +137,11 @@ public class ToolbarDisplay extends UIComponent {
             ItemSlot item = new ItemSlot(i == selectedSlot);
             item.add(label);
             int finalI = i;
-            item.addListener(new InputListener() {
+            item.addListener(new ClickListener() {
                 @Override
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                public void clicked(InputEvent event, float x, float y) {
                     inventory.setHeldItem(finalI);
                     updateItemSlot(finalI);
-                    return true;
                 }
             });
 
@@ -158,6 +182,15 @@ public class ToolbarDisplay extends UIComponent {
     }
 
     /**
+     * Hide the toolbar.
+     * But why would you ever want to do that?
+     */
+    public void hide() {
+        this.isOpen = false;
+        window.setVisible(false);
+    }
+
+    /**
      * Updates the player's inventory toolbar on the ui.
      */
     public void updateInventory() {
@@ -182,6 +215,13 @@ public class ToolbarDisplay extends UIComponent {
                 curSlot.setSelected();
             }
             slots.set(i, curSlot);
+        }
+
+        //Play the item select sound
+        try {
+            ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.HOTKEY_SELECT);
+        } catch (InvalidSoundFileException e) {
+            logger.info("Hotkey sound not loaded");
         }
     }
 }
