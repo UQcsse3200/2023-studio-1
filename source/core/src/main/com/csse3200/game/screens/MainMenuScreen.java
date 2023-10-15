@@ -137,4 +137,3 @@ public class MainMenuScreen extends ScreenAdapter {
     return transitionTextures;
   }
 }
-

@@ -11,6 +11,7 @@ import com.csse3200.game.missions.cutscenes.Cutscene;
 import com.csse3200.game.missions.rewards.*;
 import com.csse3200.game.services.ServiceLocator;
 
+import java.security.SecureRandom;
 import java.util.*;
 import java.util.function.Supplier;
 
@@ -33,10 +34,13 @@ public class QuestFactory {
     public static final String AIR_AND_ALGAE_QUEST_NAME = "Air and Algae";
     public static final String STRATOSPHERIC_SENTINEL_QUEST_NAME = "Stratospheric Sentinel";
     public static final String ACT_III_MAIN_QUEST_NAME = "Weather the Storm";
-    public static final String TRACTOR_GO_BRRRRRR = "Tractor Go BRRRRRR";
-    public static final String FISHING_QUEST = "BLOP";
+    public static final String TRACTOR_GO_BRRRRRR = "A Special Gift";
+    public static final String FISHING_QUEST = "Pro Fisherman";
     public static final String HABER_HOBBYIST_QUEST_NAME = "Haber Hobbyist";
     public static final String FERTILISER_FANATIC_QUEST_NAME = "Fertiliser Fanatic";
+    public static final String ANIMAL_REPEAT_QUEST = "Animal Lover";
+    public static final String PLANT_REPEAT_QUEST = "Green Thumb";
+    public static final String WATER_REPEAT_QUEST = "Wet roots";
 
     private QuestFactory() {
         // This class should not be instantiated - if it is, do nothing
@@ -133,11 +137,6 @@ public class QuestFactory {
                 """;
 
         MultiReward reward = new MultiReward(List.of(
-                new ItemReward(List.of(
-                        ItemFactory.createSprinklerItem(),
-                        ItemFactory.createSprinklerItem(),
-                        ItemFactory.createPumpItem()
-                )),
                 new QuestReward(new ArrayList<>(), questsToActivate),
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
@@ -151,23 +150,81 @@ public class QuestFactory {
      */
     public static MissionCompleteQuest createTractorQuest() {
         String dialogue = """
-                Traktor Go BRRRR!!!
+                Here's something I found out back, might make it easier to till the ground and harvest your crops!!!
                 """;
         MultiReward reward = new MultiReward(List.of(
                 new EntityReward(List.of(TractorFactory.createTractor())),
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
-        return new MissionCompleteQuest(TRACTOR_GO_BRRRRRR, reward, 1);
+        return new MissionCompleteQuest(TRACTOR_GO_BRRRRRR, reward, 7);
     }
 
     public static FishingQuest createFishingQuest() {
         String dialogue = """
-                Fosh!
+                I am hungers, gimme fods or you = fods!!! >:(
                 """;
         MultiReward reward = new MultiReward(List.of(
+                new QuestReward(List.of(QuestFactory::createFishingQuest), new ArrayList<>()),
+                new ItemReward(List.of(ItemFactory.createLightItem())),
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
         return new FishingQuest(FISHING_QUEST, reward, 5);
+    }
+
+    public static TameAnimalsQuest createRecursiveAnimalQuest() {
+        String dialogue = """
+                You look lonely, maybe get some more animals?!
+                """;
+        List<Entity> items = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            items.add(ItemFactory.createFenceItem());
+        }
+        items.add(ItemFactory.createGateItem());
+        items.add(ItemFactory.createGateItem());
+        MultiReward reward = new MultiReward(List.of(
+                new QuestReward(List.of(QuestFactory::createRecursiveAnimalQuest), new ArrayList<>()),
+                new ItemReward(items),
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
+        ));
+        return new TameAnimalsQuest(ANIMAL_REPEAT_QUEST, reward, 2);
+    }
+
+    public static PlantInteractionQuest createRecursivePlantQuest() {
+        String dialogue = """
+                You look lonely, maybe get some more animals?!
+                """;
+        List<Entity> items = new ArrayList<>();
+        items.add(ItemFactory.createFertiliser());
+        items.add(ItemFactory.createFertiliser());
+        items.add(ItemFactory.createFertiliser());
+        items.add(ItemFactory.createFertiliser());
+        items.add(ItemFactory.createFertiliser());
+        MultiReward reward = new MultiReward(List.of(
+                new QuestReward(List.of(QuestFactory::createRecursivePlantQuest), new ArrayList<>()),
+                new ItemReward(items),
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
+        ));
+        return new PlantInteractionQuest(PLANT_REPEAT_QUEST, reward, MissionManager.MissionEvent.PLANT_CROP,
+                Set.of("Cosmic Cob", "Aloe Vera", "Hammer Plant", "Space Snapper", "Deadly Nightshade", "Atomic Algae"), 15);
+    }
+
+    public static PlantInteractionQuest createRecursiveWaterQuest() {
+        String dialogue = """
+                You look lonely, maybe get some more animals?!
+                """;
+        List<Entity> items = new ArrayList<>();
+        for (int i = 0; i < 8; i++) {
+            items.add(ItemFactory.createSprinklerItem());
+        }
+        items.add(ItemFactory.createPumpItem());
+        items.add(ItemFactory.createPumpItem());
+        MultiReward reward = new MultiReward(List.of(
+                new QuestReward(List.of(QuestFactory::createRecursiveWaterQuest), new ArrayList<>()),
+                new ItemReward(items),
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
+        ));
+        return new PlantInteractionQuest(WATER_REPEAT_QUEST, reward, MissionManager.MissionEvent.WATER_CROP,
+                Set.of("Cosmic Cob", "Aloe Vera", "Hammer Plant", "Space Snapper", "Deadly Nightshade", "Atomic Algae"), 15);
     }
 
     /**
@@ -177,8 +234,6 @@ public class QuestFactory {
     public static TameAnimalsQuest createMakingFriendsQuest() {
         List<Supplier<Quest>> questsToActivate = new ArrayList<>();
         questsToActivate.add(QuestFactory::createFertilisingFiestaQuest);
-//        questsToActivate.add(QuestFactory::createFishingQuest);
-
         String dialogue = """
                 "You are beginning to understand... {WAIT}Treat this planet well, and it will treat you well in return."
                 {WAIT}Memories of a shattered Earth and a sky alight cloud your vision. {WAIT}You snap back to now.
@@ -213,12 +268,6 @@ public class QuestFactory {
         itemRewards.add(ItemFactory.createSword());
         for (int i = 0; i < 5; i++) {
             itemRewards.add(ItemFactory.createSpaceSnapperSeed());
-        }
-        for (int i = 0; i < 20; i++) {
-            itemRewards.add(ItemFactory.createFenceItem());
-        }
-        for (int i = 0; i < 3; i++) {
-            itemRewards.add(ItemFactory.createGateItem());
         }
 
         MultiReward reward = new MultiReward(List.of(
@@ -272,6 +321,11 @@ public class QuestFactory {
         List<Supplier<Quest>> questsToActivate = new ArrayList<>();
         questsToActivate.add(QuestFactory::createConnectionQuest);
         questsToActivate.add(QuestFactory::createTractorQuest);
+        List<Supplier<Quest>> questsToBeSelectable = new ArrayList<>();
+        questsToBeSelectable.add(QuestFactory::createFishingQuest);
+        questsToBeSelectable.add(QuestFactory::createRecursiveAnimalQuest);
+        questsToBeSelectable.add(QuestFactory::createRecursivePlantQuest);
+        questsToBeSelectable.add(QuestFactory::createRecursiveWaterQuest);
 
         String dialogue = """
                 For the first time since your landing, the {COLOR=#76428A}ALIEN CREATURE{COLOR=BLACK}'s vicious scowl fades.
@@ -300,7 +354,7 @@ public class QuestFactory {
 
         MultiReward reward = new MultiReward(List.of(
                 new ItemReward(itemRewards),
-                new QuestReward(new ArrayList<>(), questsToActivate),
+                new QuestReward(questsToBeSelectable, questsToActivate),
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
 
@@ -536,10 +590,7 @@ public class QuestFactory {
                 ItemFactory.createFertiliser(),
                 ItemFactory.createFertiliser(),
                 ItemFactory.createFertiliser(),
-                ItemFactory.createFertiliser(),
-                ItemFactory.createSprinklerItem(),
-                ItemFactory.createSprinklerItem(),
-                ItemFactory.createSprinklerItem()
+                ItemFactory.createFertiliser()
         ));
 
         MultiReward reward = new MultiReward(List.of(
@@ -558,11 +609,6 @@ public class QuestFactory {
                 ItemFactory.createFertiliser(),
                 ItemFactory.createFertiliser(),
                 ItemFactory.createFertiliser(),
-                ItemFactory.createSprinklerItem(),
-                ItemFactory.createSprinklerItem(),
-                ItemFactory.createSprinklerItem(),
-                ItemFactory.createSprinklerItem(),
-                ItemFactory.createSprinklerItem(),
                 ItemFactory.createAtomicAlgaeSeed(),
                 ItemFactory.createAtomicAlgaeSeed()
         ));
