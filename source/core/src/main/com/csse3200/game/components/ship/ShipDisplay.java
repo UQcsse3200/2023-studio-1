@@ -20,9 +20,9 @@ public class ShipDisplay extends UIComponent {
     private boolean isOpen;
     private static final Logger logger = LoggerFactory.getLogger(ShipLightComponent.class);
 
-    private boolean lightUnlocked = true;
+    private boolean lightUnlocked = false;
     private boolean isLightOn = false;
-    private boolean SleepUnlocker = true;
+    private boolean SleepUnlocker = false;
     private static final String TEXT_COLOUR = "black";
     private static final String PIXEL_BODY = "pixel-body";
     private static final String BACKGROUND_COLOUR = "small-grey";
