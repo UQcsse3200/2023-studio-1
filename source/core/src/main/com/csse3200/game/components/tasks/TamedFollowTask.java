@@ -5,6 +5,7 @@ import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.physics.components.PhysicsMovementComponent;
 
 
 public class TamedFollowTask extends FollowTask {

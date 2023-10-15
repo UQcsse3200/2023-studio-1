@@ -91,7 +91,6 @@ public class FollowTask extends ChaseTask {
     super.stop();
     this.owner.getEntity().getEvents().trigger("followStop");
     this.owner.getEntity().getEvents().trigger("stopEffect", "followStart");
-
   }
 
   /**

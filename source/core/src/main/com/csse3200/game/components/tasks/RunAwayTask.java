@@ -3,9 +3,16 @@ package com.csse3200.game.components.tasks;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.sound.EffectSoundFile;
+import com.csse3200.game.services.sound.SoundService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** Runs from a target entity until they get too far away or line of sight is lost */
 public class RunAwayTask extends ChaseTask {
+  private static final Logger logger = LoggerFactory.getLogger(RunAwayTask.class);
+
   /** Maximum distance from the entity while run away before giving up. */
   private final float maxRunDistance;
 
@@ -43,6 +50,7 @@ public class RunAwayTask extends ChaseTask {
    */
   @Override
   public void start() {
+    logger.info("Run away task started!");
     status = Status.ACTIVE;
     Vector2 targetVec = new Vector2();
     targetVec.x = owner.getEntity().getCenterPosition().x +

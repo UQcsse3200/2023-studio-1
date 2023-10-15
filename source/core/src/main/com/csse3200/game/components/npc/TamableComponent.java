@@ -29,7 +29,7 @@ public class TamableComponent extends Component {
   private final Entity player;
   private SecureRandom random = new SecureRandom(); // https://rules.sonarsource.com/java/RSPEC-2119/
   private InventoryComponent playerInventory;
-  private final Logger logger = LoggerFactory.getLogger(ItemActions.class);
+  private final Logger logger = LoggerFactory.getLogger(TamableComponent.class);
 
   /**
    * Constructor for the Tameable Component class

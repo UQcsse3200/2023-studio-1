@@ -216,30 +216,33 @@ public class PlayerActions extends Component {
    * @param mousePos Determine direction of mouse
    */
   void attack(Vector2 mousePos) {
-    Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
-    attackSound.play();
     mousePos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
     List<Entity> areaEntities = ServiceLocator.getGameArea().getAreaEntities();
     for(Entity animal : areaEntities) {
       CombatStatsComponent combat = animal.getComponent(CombatStatsComponent.class);
       if(combat != null && animal != entity && entity.getPosition().dst(animal.getPosition()) < 3) {
-          Vector2 result = new Vector2(0, 0);
-          result.x = animal.getCenterPosition().x - entity.getCenterPosition().x;
-          result.y = animal.getCenterPosition().y - entity.getCenterPosition().y;
-          Vector2 mouseResult = new Vector2(0, 0);
-          mouseResult.x = mousePos.x - entity.getCenterPosition().x;
-          mouseResult.y = mousePos.y - entity.getCenterPosition().y;
-          float resAngle = result.angleDeg();
-          float mouseResAngle = mouseResult.angleDeg();
-          float difference = Math.abs(resAngle - mouseResAngle);
-          difference = difference > 180 ? 360 - difference : difference;
-          if(difference <= 45) {
-            combat.addHealth((int) -(swordDamage * damageMultiplier));
-            animal.getEvents().trigger("hit", entity);
-            animal.getEvents().trigger("panicStart");
-          }
+        Vector2 result = new Vector2(0, 0);
+        result.x = animal.getCenterPosition().x - entity.getCenterPosition().x;
+        result.y = animal.getCenterPosition().y - entity.getCenterPosition().y;
+        Vector2 mouseResult = new Vector2(0, 0);
+        mouseResult.x = mousePos.x - entity.getCenterPosition().x;
+        mouseResult.y = mousePos.y - entity.getCenterPosition().y;
+        float resAngle = result.angleDeg();
+        float mouseResAngle = mouseResult.angleDeg();
+        float difference = Math.abs(resAngle - mouseResAngle);
+        difference = difference > 180 ? 360 - difference : difference;
+        if (difference <= 45) {
+          combat.addHealth((int) -(swordDamage * damageMultiplier));
+          animal.getEvents().trigger("hit", entity);
+          animal.getEvents().trigger("panicStart");
+          Sound attackHit = ServiceLocator.getResourceService().
+                  getAsset("sounds/weapons/SwordHitEntity.mp3", Sound.class);
+          attackHit.play();
+        }
       }
     }
+    Sound attackMiss = ServiceLocator.getResourceService().getAsset("sounds/weapons/SwordSwing.mp3", Sound.class);
+    attackMiss.play();
   }
 
   /**
@@ -248,7 +251,7 @@ public class PlayerActions extends Component {
    * @param mousePos Determine direction of mouse
    */
   void shoot(Vector2 mousePos) {
-    Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
+    Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/weapons/GunAttack.mp3", Sound.class);
     attackSound.play();
     mousePos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
     Entity projectile = ProjectileFactory.createPlayerProjectile();

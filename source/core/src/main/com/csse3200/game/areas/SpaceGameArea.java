@@ -279,8 +279,12 @@ public class SpaceGameArea extends GameArea {
       "images/ship/ship.atlas", "images/light.atlas", "images/projectiles/dragon_fly_projectile.atlas", "images/golden_trophy.atlas",
       "images/player_fishing.atlas", "images/animals/animal_effects.atlas", "images/projectiles/gun_projectile.atlas"
   };
+  //sounds/Impact4.ogg
   private static final String[] soundPaths = {
           "sounds/Impact4.ogg", "sounds/car-horn-6408.mp3",
+          "sounds/weapons/SwordHitEntity.mp3", "sounds/weapons/SwordSwing.mp3", "sounds/weapons/GunAttack.mp3",
+          "sounds/animals/AstrolotlFeed.mp3", "sounds/animals/ChickenFeed.mp3",
+          "sounds/animals/CowFeed.mps", "sounds/animals, TamedAnimal.mp3",
           "sounds/plants/aloeVera/click.wav", "sounds/plants/aloeVera/clickLore.wav",
           "sounds/plants/aloeVera/decay.wav", "sounds/plants/aloeVera/decayLore.wav",
           "sounds/plants/aloeVera/destroy.wav", "sounds/plants/aloeVera/destroyLore.wav",
@@ -575,7 +579,9 @@ public class SpaceGameArea extends GameArea {
     effects.add(EffectSoundFile.ASTROLOTL_FEED);
     effects.add(EffectSoundFile.CHICKEN_FEED);
     effects.add(EffectSoundFile.TAMED_ANIMAL);
-
+    effects.add(EffectSoundFile.ATTACK_MISS);
+    effects.add(EffectSoundFile.ATTACK_HIT);
+    effects.add(EffectSoundFile.GUN_ATTACK);
 
     try {
       ServiceLocator.getSoundService().getEffectsMusicService().loadSounds(effects);
