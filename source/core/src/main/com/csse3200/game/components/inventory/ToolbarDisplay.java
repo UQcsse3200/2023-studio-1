@@ -36,6 +36,8 @@ public class ToolbarDisplay extends UIComponent {
     private final ArrayList<ItemSlot> slots = new ArrayList<>();
     private final Map<Integer, TextTooltip> tooltips = new HashMap<>();
     private final InstantTooltipManager instantTooltipManager = new InstantTooltipManager();
+    private boolean isPause = false;
+    private boolean lastState = false;
 
     /**
      * Creates the event listeners, ui, and gets the UI.
@@ -48,8 +50,21 @@ public class ToolbarDisplay extends UIComponent {
         entity.getEvents().addListener("updateToolbar", this::updateInventory);
         entity.getEvents().addListener("toggleInventory",this::toggleOpen);
         entity.getEvents().addListener("hotkeySelection",this::updateItemSlot);
+        entity.getEvents().addListener("escInput",this::setPause);
         entity.getEvents().addListener("hideUI", this::hide);
         inventory = entity.getComponent(InventoryComponent.class);
+    }
+
+    public void setPause(){
+        isPause = !isPause;
+        if (isPause){
+            lastState = isOpen;
+            isOpen = false;
+            window.setVisible(isOpen);
+        } else {
+            isOpen = lastState;
+            window.setVisible(isOpen);
+        }
     }
 
     /**
@@ -172,6 +187,9 @@ public class ToolbarDisplay extends UIComponent {
      * Toggle Toolbar to open state
      */
     public void toggleOpen(){
+        if (isPause){
+            return;
+        }
         if (this.isOpen) {
             this.window.setVisible(false);
             this.isOpen = false;
