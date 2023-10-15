@@ -14,6 +14,7 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
+import com.csse3200.game.services.sound.EffectSoundFile;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -315,7 +316,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
         for (Entity entityInRange : getEntitiesInRange()) {
 
             if (entityInRange.getType() == EntityType.PLAYER) {
-                entity.getComponent(PlantComponent.class).playSound("nearby");
+                entity.getComponent(PlantComponent.class).playSound(EffectSoundFile.PLANT_NEARBY);
             }
         }
     }

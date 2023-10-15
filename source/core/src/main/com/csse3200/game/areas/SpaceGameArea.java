@@ -540,6 +540,39 @@ public class SpaceGameArea extends GameArea {
     effects.add(EffectSoundFile.FISHING_CAST);
     effects.add(EffectSoundFile.FISHING_CATCH);
     effects.add(EffectSoundFile.SCYTHE);
+    effects.add(EffectSoundFile.PLANT_CLICK);
+    effects.add(EffectSoundFile.PLANT_DECAY);
+    effects.add(EffectSoundFile.PLANT_DESTROY);
+    effects.add(EffectSoundFile.PLANT_NEARBY);
+    effects.add(EffectSoundFile.ALOE_VERA_CLICK_LORE);
+    effects.add(EffectSoundFile.ALOE_VERA_DECAY_LORE);
+    effects.add(EffectSoundFile.ALOE_VERA_DESTROY_LORE);
+    effects.add(EffectSoundFile.ALOE_VERA_NEARBY_LORE);
+    effects.add(EffectSoundFile.COSMIC_COB_CLICK_LORE);
+    effects.add(EffectSoundFile.COSMIC_COB_DECAY_LORE);
+    effects.add(EffectSoundFile.COSMIC_COB_DESTROY_LORE);
+    effects.add(EffectSoundFile.COSMIC_COB_NEARBY_LORE);
+    effects.add(EffectSoundFile.HAMMER_PLANT_CLICK_LORE);
+    effects.add(EffectSoundFile.HAMMER_PLANT_DECAY_LORE);
+    effects.add(EffectSoundFile.HAMMER_PLANT_DESTROY_LORE);
+    effects.add(EffectSoundFile.HAMMER_PLANT_NEARBY_LORE);
+    effects.add(EffectSoundFile.DEADLY_NIGHTSHADE_CLICK_LORE);
+    effects.add(EffectSoundFile.DEADLY_NIGHTSHADE_DECAY_LORE);
+    effects.add(EffectSoundFile.DEADLY_NIGHTSHADE_DESTROY_LORE);
+    effects.add(EffectSoundFile.DEADLY_NIGHTSHADE_NEARBY_LORE);
+    effects.add(EffectSoundFile.SPACE_SNAPPER_CLICK_LORE);
+    effects.add(EffectSoundFile.SPACE_SNAPPER_DECAY_LORE);
+    effects.add(EffectSoundFile.SPACE_SNAPPER_DESTROY_LORE);
+    effects.add(EffectSoundFile.SPACE_SNAPPER_NEARBY_LORE);
+    effects.add(EffectSoundFile.ATOMIC_ALGAE_CLICK_LORE);
+    effects.add(EffectSoundFile.ATOMIC_ALGAE_DECAY_LORE);
+    effects.add(EffectSoundFile.ATOMIC_ALGAE_DESTROY_LORE);
+    effects.add(EffectSoundFile.ATOMIC_ALGAE_NEARBY_LORE);
+
+
+
+
+
 
 
     try {
