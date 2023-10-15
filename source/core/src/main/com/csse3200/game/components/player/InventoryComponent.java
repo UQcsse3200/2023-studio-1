@@ -198,9 +198,6 @@ public class InventoryComponent extends Component {
     }
 
     private void newInventory() {
-        if (entity != null) {
-            entity.getEvents().addListener("switchToolbar",this::switchTab);
-        }
         this.itemPlace = new HashMap<>();
         this.itemCount = new HashMap<>();
         this.heldItemsEntity = new HashMap<>();
