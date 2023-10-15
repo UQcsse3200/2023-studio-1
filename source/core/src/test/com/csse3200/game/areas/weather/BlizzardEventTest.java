@@ -1,12 +1,13 @@
 package com.csse3200.game.areas.weather;
 
 import com.csse3200.game.areas.GameArea;
-import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.services.LightService;
 import com.csse3200.game.services.ParticleService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
+import com.csse3200.game.services.sound.EffectSoundFile;
 import com.csse3200.game.services.sound.EffectsMusicService;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
 import com.csse3200.game.services.sound.SoundService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,6 +38,7 @@ public class BlizzardEventTest {
         blizzardEvent3 = new BlizzardEvent(2, 4, 5, 1.0f);
         blizzardEvent4 = new BlizzardEvent(3, 3, 3, 0.6f);
         blizzardEvent5 = new BlizzardEvent(5, 5, 1, 0.7f);
+
         ParticleService mockParticleService = mock(ParticleService.class);
         ServiceLocator.registerParticleService(mockParticleService);
         LightService lightService = mock(LightService.class);
@@ -48,20 +50,32 @@ public class BlizzardEventTest {
         ServiceLocator.clear();
     }
 
-    //     These tests will require dealing with the lighting system
     @Test
-    void testStartEffect() {
+    void testStartEffectParticleAndLightingSystem() throws InvalidSoundFileException {
         blizzardEvent1.startEffect();
-        ServiceLocator.getGameArea().getClimateController().getEvents().trigger("startPlantAoeEffect", -2f);
         blizzardEvent2.startEffect();
-        ServiceLocator.getGameArea().getClimateController().getEvents().trigger("startPlantAoeEffect", -2f);
         blizzardEvent3.startEffect();
-        ServiceLocator.getGameArea().getClimateController().getEvents().trigger("startPlantAoeEffect", -2f);
-        //TODO - update
         verify(ServiceLocator.getParticleService(), times(3)).startEffect(ParticleService.ParticleEffectType.BLIZZARD);
         verify(ServiceLocator.getLightService(), times(1)).setBrightnessMultiplier(0.54f);
         verify(ServiceLocator.getLightService(), times(1)).setBrightnessMultiplier(0.5133333f);
         verify(ServiceLocator.getLightService(), times(1)).setBrightnessMultiplier(0.56666666f);
+    }
+
+    @Test
+    void testStartEffectTriggersEvents() {
+        blizzardEvent1.startEffect();
+        ServiceLocator.getGameArea().getClimateController().getEvents().trigger("startPlantAoeEffect", -2f);
+        blizzardEvent2.startEffect();
+        ServiceLocator.getGameArea().getClimateController().getEvents().trigger("startPlantAoeEffect", -2f);
+        blizzardEvent4.startEffect();
+        ServiceLocator.getGameArea().getClimateController().getEvents().trigger("startPlantAoeEffect", -1f);
+    }
+
+    @Test
+    void testStartEffectPlaysSound() throws InvalidSoundFileException {
+        blizzardEvent4.startEffect();
+        blizzardEvent5.startEffect();
+        verify(ServiceLocator.getSoundService().getEffectsMusicService(), times(2)).play(EffectSoundFile.BLIZZARD, true);
     }
 
     @Test
