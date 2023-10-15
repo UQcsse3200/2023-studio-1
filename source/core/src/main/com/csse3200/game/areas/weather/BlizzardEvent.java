@@ -63,8 +63,7 @@ public class BlizzardEvent extends WeatherEvent {
         climateControllerEvents.trigger("stopPlantAoeEffect");
         climateControllerEvents.trigger("stopPlayerMovementSpeedEffect");
 
-        // TODO - update effect
-        ServiceLocator.getParticleService().stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+        ServiceLocator.getParticleService().stopEffect(ParticleService.ParticleEffectType.BLIZZARD);
 
         // Adjust global lighting
         ServiceLocator.getLightService().setBrightnessMultiplier(1.0f);

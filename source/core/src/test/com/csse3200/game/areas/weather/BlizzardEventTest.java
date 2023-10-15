@@ -58,7 +58,7 @@ public class BlizzardEventTest {
         blizzardEvent3.startEffect();
         ServiceLocator.getGameArea().getClimateController().getEvents().trigger("startPlantAoeEffect", -2f);
         //TODO - update
-        verify(ServiceLocator.getParticleService(), times(3)).startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+        verify(ServiceLocator.getParticleService(), times(3)).startEffect(ParticleService.ParticleEffectType.BLIZZARD);
         verify(ServiceLocator.getLightService(), times(1)).setBrightnessMultiplier(0.54f);
         verify(ServiceLocator.getLightService(), times(1)).setBrightnessMultiplier(0.5133333f);
         verify(ServiceLocator.getLightService(), times(1)).setBrightnessMultiplier(0.56666666f);
@@ -69,8 +69,7 @@ public class BlizzardEventTest {
         blizzardEvent1.stopEffect();
         blizzardEvent2.stopEffect();
         blizzardEvent3.stopEffect();
-        //TODO - update
-        verify(ServiceLocator.getParticleService(), times(3)).stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+        verify(ServiceLocator.getParticleService(), times(3)).stopEffect(ParticleService.ParticleEffectType.BLIZZARD);
         verify(ServiceLocator.getLightService(), times(3)).setBrightnessMultiplier(1.0f);
     }
 }
