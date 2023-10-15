@@ -40,8 +40,7 @@ public class BlizzardEvent extends WeatherEvent {
             hasSpawnedFireflies = true;
         }
 
-        // TODO - update effect
-        ServiceLocator.getParticleService().startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+        ServiceLocator.getParticleService().startEffect(ParticleService.ParticleEffectType.BLIZZARD);
 
         // Adjust global lighting
         ServiceLocator.getLightService().setBrightnessMultiplier((1.0f - severity / 1.5f) * 0.2f + 0.5f);
