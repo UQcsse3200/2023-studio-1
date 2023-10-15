@@ -61,6 +61,9 @@ public class ProgressBar extends UIComponent {
         }
     }
 
+    /**
+     * Updates which array the images are pulled from based on the progress of the quests
+     */
     public void updateProgressBar(String questName) {
         if (Objects.equals(questName, QuestFactory.FIRST_CONTACT_QUEST_NAME)) {
             updateProgressBarAct1();
@@ -71,18 +74,27 @@ public class ProgressBar extends UIComponent {
         }
     }
 
+    /**
+     * Updates which act is currently and corrects the day count.
+     */
     private void updateProgressBarAct1() {
         this.act = 1;
         this.dayOffset = ServiceLocator.getTimeService().getDay();
         this.updateDisplay();
     }
 
+    /**
+     * Updates which act is currently and corrects the day count.
+     */
     private void updateProgressBarAct2() {
         this.act = 2;
         this.dayOffset = ServiceLocator.getTimeService().getDay();
         this.updateDisplay();
     }
 
+    /**
+     * Updates which act is currently and corrects the day count.
+     */
     private void updateProgressBarAct3() {
         this.act = 3;
         this.dayOffset = ServiceLocator.getTimeService().getDay();
@@ -122,11 +134,7 @@ public class ProgressBar extends UIComponent {
         table.setFillParent(true);
         table.padTop(-30f).padLeft(190f);
 
-
-
         group.addActor(progressionBar);
-
-
         table.add(group).size(200);
         stage.addActor(table);
     }
@@ -138,8 +146,6 @@ public class ProgressBar extends UIComponent {
     @Override
     public void dispose() {
         super.dispose();
-
         progressionBar.remove();
-
     }
 }

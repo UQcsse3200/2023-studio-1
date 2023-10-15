@@ -2,12 +2,15 @@ package com.csse3200.game.components.combat;
 
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.EntityType;
+import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.MissionManager;
+import com.csse3200.game.missions.quests.Quest;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.entities.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -110,6 +113,10 @@ public class CombatStatsComponent extends Component {
   public void handleDeath() {
     if(!Objects.equals(entity.getType(), EntityType.PLAYER)) {
       ServiceLocator.getGameArea().removeEntity(entity);
+    } else {
+      List<Quest> activeQuests = ServiceLocator.getMissionManager().getActiveQuests();
+      Quest mainQuest = activeQuests.get(activeQuests.size()-1);
+      ServiceLocator.getMissionManager().getEvents().trigger("loseScreen", mainQuest.getName());
     }
   }
 
