@@ -70,13 +70,24 @@ public class PlaceableFactory {
     public static Entity createSprinkler() {
         EntityType type = EntityType.SPRINKLER;
         type.setPlaceableCategory(PlaceableCategory.SPRINKLERS);
+
+        Entity water = new Entity();
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(
+                        ServiceLocator.getResourceService().getAsset("images/placeable/sprinkler/sprinkler_animation.atlas", TextureAtlas.class),
+                        16f
+                );
+
+        animator.addAnimation("default", 0.1f, Animation.PlayMode.NORMAL);
+        water.addComponent(animator);
         Entity sprinkler = createBasePlaceable(type)
                 .addComponent(new DynamicTextureRenderComponent("images/placeable/sprinkler/pipe_null.png"));
-                // TODO: add animation render component here.
         // stop from blocking player movement
         sprinkler.getComponent(ColliderComponent.class).setLayer(PhysicsLayer.NONE);
         // add sprinkler component
         sprinkler.addComponent(new SprinklerComponent());
+        water.create();
+        sprinkler.getComponent(SprinklerComponent.class).addWaterAnimator(water);
         return sprinkler;
     }
 
