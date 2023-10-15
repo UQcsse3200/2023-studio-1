@@ -142,13 +142,13 @@ public class ToggleableMap extends UIComponent {
         Vector<GridPoint2> listplayerPos = new Vector<GridPoint2>();
         listplayerPos.add(gpPos);
         listplayerPos.add(new GridPoint2(gpPos.x +1, gpPos.y)); // right
-        listplayerPos.add(new GridPoint2(gpPos.x -1, gpPos.y)); // left
+        //listplayerPos.add(new GridPoint2(gpPos.x -1, gpPos.y)); // left add this to get 3*3
         listplayerPos.add(new GridPoint2(gpPos.x, gpPos.y +1)); // up
-        listplayerPos.add(new GridPoint2(gpPos.x, gpPos.y -1)); // down
+        //listplayerPos.add(new GridPoint2(gpPos.x, gpPos.y -1)); // down add this to get 3*3
         listplayerPos.add(new GridPoint2(gpPos.x +1, gpPos.y +1)); // right up
-        listplayerPos.add(new GridPoint2(gpPos.x -1, gpPos.y -1)); // left down
-        listplayerPos.add(new GridPoint2(gpPos.x +1, gpPos.y -1)); // right down
-        listplayerPos.add(new GridPoint2(gpPos.x -1, gpPos.y +1)); // left up
+        //listplayerPos.add(new GridPoint2(gpPos.x -1, gpPos.y -1)); // left down add this to get 3*3
+        //listplayerPos.add(new GridPoint2(gpPos.x +1, gpPos.y -1)); // right down add this to get 3*3
+        //listplayerPos.add(new GridPoint2(gpPos.x -1, gpPos.y +1)); // left up add this to get 3*3
         return listplayerPos;
     }
     
@@ -174,7 +174,7 @@ public class ToggleableMap extends UIComponent {
         for (Entity entity : entityArray) {
             Vector2 v_pos_entity = entity.getPosition();
             GridPoint2 gpPos_entity = ServiceLocator.getGameArea().getMap().vectorToTileCoordinates(v_pos_entity);
-            gpPos_entity = new GridPoint2(gpPos_entity.x +1, gpPos_entity.y +1);
+            //gpPos_entity = new GridPoint2(gpPos_entity.x +1, gpPos_entity.y +1);
             listEntityPosType.add(new Pair<GridPoint2, EntityType>(gpPos_entity, entity.getType()));
         }
 
