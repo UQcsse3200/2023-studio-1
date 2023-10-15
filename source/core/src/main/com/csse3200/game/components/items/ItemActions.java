@@ -600,7 +600,8 @@ public class ItemActions extends Component {
     if (ship.getType() == EntityType.SHIP) {
       ship.getEvents().trigger(ShipFactory.events.ADD_PART.name(), 1);
       player.getComponent(InventoryComponent.class).removeItem(entity);
-      ship.getEvents().trigger("startEffect", ParticleService.ParticleEffectType.SUCCESS_EFFECT);
+      ServiceLocator.getParticleService().startEffectAtPosition(ParticleService.ParticleEffectType.SUCCESS_EFFECT, ship.getPosition().cpy().add(1,0));
+      ServiceLocator.getParticleService().startEffectAtPosition(ParticleService.ParticleEffectType.SUCCESS_EFFECT, ship.getPosition().cpy().add(2,0));
       return true;
     }
     return false;
