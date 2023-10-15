@@ -38,6 +38,7 @@ public class ParticleEffectComponent extends Component {
 				wrapper.getPooledEffect().free();
 				itr.remove();
 			} else {
+				wrapper.getPooledEffect().setPosition(entity.getCenterPosition().x, entity.getPosition().y);
 				wrapper.getPooledEffect().draw(batch, delta);
 			}
 		}

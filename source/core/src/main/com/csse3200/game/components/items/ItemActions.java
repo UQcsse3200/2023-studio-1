@@ -443,6 +443,7 @@ public class ItemActions extends Component {
     }
     boolean tileHarvestable = isCropTile(tile.getOccupant());
     if (tileHarvestable) {
+      ServiceLocator.getParticleService().startEffectAtPosition(ParticleService.ParticleEffectType.DIRT_EFFECT, tile.getOccupant().getCenterPosition());
       tile.getOccupant().getEvents().trigger("harvest");
       return true;
     }
@@ -463,8 +464,10 @@ public class ItemActions extends Component {
     }
     // If there is something to remove
     if (tile.getOccupant() != null) {
+      Entity occupant = tile.getOccupant();
       // Trigger the destroy method within that occupant
-      tile.getOccupant().getEvents().trigger("destroy", tile);
+      ServiceLocator.getParticleService().startEffectAtPosition(ParticleService.ParticleEffectType.DIRT_EFFECT, occupant.getCenterPosition());
+      occupant.getEvents().trigger("destroy", tile);
       return true;
     }
     return false;
