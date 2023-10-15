@@ -38,6 +38,7 @@ public class RainStormEvent extends WeatherEvent {
 
         // Trigger in-game effects
         climateControllerEvents.trigger("startWaterLevelEffect", getDryRate());
+        climateControllerEvents.trigger("douseFlames");
 
         // TODO - update effect
         ServiceLocator.getParticleService().startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
@@ -60,6 +61,7 @@ public class RainStormEvent extends WeatherEvent {
 
         // Cancel in-game effects
         climateControllerEvents.trigger("stopWaterLevelEffect");
+        climateControllerEvents.trigger("reigniteFlames");
 
         // TODO - update effect
         ServiceLocator.getParticleService().stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);
