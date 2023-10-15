@@ -220,11 +220,6 @@ public class InventoryDisplay extends UIComponent {
 				@Override
 				public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
 					if (target == null) {
-						try {
-							ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.DROP_ITEM);
-						} catch (InvalidSoundFileException e) {
-							logger.error("sound not loaded");
-						}
 						ItemSlot itemSlot = map.get((Stack) getActor());
 						itemSlot.add(getActor());
 						itemSlot.addListener(tooltip);
