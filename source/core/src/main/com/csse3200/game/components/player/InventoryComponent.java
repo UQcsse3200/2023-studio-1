@@ -9,6 +9,8 @@ import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
+
+import java.util.Arrays;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,6 +62,8 @@ public class InventoryComponent extends Component {
      * The maximum size of the inventory.
      */
     private int maxInventorySize = 30; // default size 30
+
+    private final List<String> forbiddenItems = Arrays.asList("shovel","hoe","watering_can","scythe","sword","gun");
 
     /**
      * Creates a new InventoryComponent with a given list of items.
@@ -437,6 +441,10 @@ public class InventoryComponent extends Component {
     public boolean removeItem(String itemName) {
         // Check if item is in inventory
         if (!this.itemCount.containsKey(itemName)) {
+            return false;
+        }
+        // Check if item is forbidden to remove
+        if (forbiddenItems.contains(itemName)) {
             return false;
         }
         // Decrease item count by 1
