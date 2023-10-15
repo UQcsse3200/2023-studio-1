@@ -176,6 +176,16 @@ class InventoryComponentTest {
     assertTrue(inventoryComponent.setPosition(testPos,5));
 
   }
+
+  @Test
+  void testRemoveTools(){
+    Entity itemTest = new Entity(EntityType.ITEM);
+    ItemComponent itemComponent3 = new ItemComponent("shovel", ItemType.SCYTHE,
+            "images/tool_shovel.png"); // Texture is not used...
+    itemTest.addComponent(itemComponent3);
+    inventoryComponent.addItem(itemTest);
+    assertFalse(inventoryComponent.removeItem(itemTest));
+  }
   /*
   @Test
   void testGetItemPosition() {
