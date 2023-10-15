@@ -106,7 +106,7 @@ public class ParticleService {
 	 * Renders the queued particle effects
 	 *
 	 * @param batch sprite batch used to render effects
-	 * @param delta delta value used to update each particle effect
+	 * @param delta delta time value used to update the particle effects
 	 */
 	public void render(SpriteBatch batch, float delta) {
 		Vector2 playerPosition = ServiceLocator.getGameArea().getPlayer().getCenterPosition();
