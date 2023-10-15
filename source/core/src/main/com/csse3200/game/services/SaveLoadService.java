@@ -30,7 +30,7 @@ public class SaveLoadService {
     /**
      * Saves the current state of the game into a GameState
      */
-    public void save() {
+    public void save(String path) {
         // Make a new GameState
         SaveGame.GameState state = new GameState();
 
@@ -49,9 +49,13 @@ public class SaveLoadService {
         state.setPlaceables(ServiceLocator.getEntityService().getEntities());
 
         // Write the state to a file
-        SaveGame.set(state);
+        SaveGame.set(state, path);
 
         logger.debug("The current game state has been saved to the file assets/saves/saveFile.json");
+    }
+
+    public void save() {
+        save(ROOT_DIR + File.separator + SAVE_FILE);
     }
 
     /**

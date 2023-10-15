@@ -77,7 +77,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           touchUp(Gdx.input.getX(), Gdx.input.getY(), 0, 0);
           return true;
         case Keys.ESCAPE:
-          entity.getEvents().trigger("escInput");
+          entity.getEvents().trigger(PlayerActions.events.ESC_INPUT.name());
           return true;
         case Keys.NUM_0, Keys.NUM_1, Keys.NUM_2, Keys.NUM_3, Keys.NUM_4, Keys.NUM_5, Keys.NUM_6, Keys.NUM_7, Keys.NUM_8, Keys.NUM_9:
           triggerHotKeySelection(keycode);
