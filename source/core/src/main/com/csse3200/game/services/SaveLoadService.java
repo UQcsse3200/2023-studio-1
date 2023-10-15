@@ -106,7 +106,7 @@ public class SaveLoadService {
         updateTractor(state);
         // Update Misc
         updateTime(state);
-        updateMissions(state);
+        //updateMissions(state);
     }
 
     /**
@@ -146,7 +146,7 @@ public class SaveLoadService {
             // Set the player inside the tractor
             Entity player = ServiceLocator.getGameArea().getPlayer();
             player.setPosition(tractor.getPosition());              // Teleport the player to the tractor (Needed so that they are in 5 units of each other)
-            player.getEvents().trigger("enterTractor");   // Trigger the enterTractor event
+            player.getEvents().trigger(PlayerActions.events.ENTER_TRACTOR.name());   // Trigger the enterTractor event
             tractor.getComponent(AuraLightComponent.class).toggleLight();
         }
     }
@@ -158,13 +158,5 @@ public class SaveLoadService {
      */
     private void updateTime(GameState state) {
         ServiceLocator.getTimeService().loadTime(state.getDay(), state.getHour(), state.getDay());
-    }
-
-    /**
-     * Updates the missions based off the gamestate
-     * @param state gamestate of the entire game based off safeFile.json
-     */
-    private void updateMissions(GameState state) {
-        ServiceLocator.registerMissionManager(state.getMissions());
     }
 }
