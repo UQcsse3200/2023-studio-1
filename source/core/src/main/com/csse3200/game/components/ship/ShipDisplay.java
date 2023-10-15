@@ -5,15 +5,28 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.csse3200.game.components.ship.ShipTimeSkipComponent;
 import com.csse3200.game.components.ship.ShipLightComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Set;
+
 public class ShipDisplay extends UIComponent {
     private Window window;
     private boolean isOpen;
-    private boolean isLightOn = false;
+    private static final Logger logger = LoggerFactory.getLogger(ShipLightComponent.class);
 
+    private boolean lightUnlocked = true;
+    private boolean isLightOn = false;
+    private boolean SleepUnlocker = true;
+    private static final String TEXT_COLOUR = "black";
+    private static final String PIXEL_BODY = "pixel-body";
+    private static final String BACKGROUND_COLOUR = "small-grey";
+    private static final String SIZE = "small";
     @Override
     public void create() {
         super.create();
@@ -21,6 +34,18 @@ public class ShipDisplay extends UIComponent {
         addActors();
 
         entity.getEvents().addListener("interact", this::toggleOpen);
+        entity.getEvents().addListener("progessUpdate", this::progressUpdated);
+    }
+    private void progressUpdated(int repairsMade, Set<ShipProgressComponent.Feature> unlockedFeatures) {
+        if (unlockedFeatures.contains(ShipProgressComponent.Feature.LIGHT)) {
+            logger.debug("Ship TimeSkip unlocked");
+            lightUnlocked = true;
+        }
+        if (unlockedFeatures.contains(ShipProgressComponent.Feature.BED)) {
+            logger.debug("Ship TimeSkip unlocked");
+            SleepUnlocker = true;
+        }
+
     }
 
     private void addActors() {
@@ -43,25 +68,37 @@ public class ShipDisplay extends UIComponent {
     private void generateShipControls() {
         window.clear();
         window.getTitleLabel().setText("Ship Controls");
+        TextButton toggleLightButton = new TextButton("Ship Light not unlocked", skin, BACKGROUND_COLOUR);
 
-        TextButton toggleLightButton = new TextButton(isLightOn ? "Turn Light Off" : "Turn Light On", skin);
-        toggleLightButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent changeEvent, Actor actor) {
+        Label descriptionLabel = new Label("It seems like the ship needs some improvements.", skin, PIXEL_BODY, TEXT_COLOUR);
+        descriptionLabel.setAlignment(Align.center);
+        if (lightUnlocked) {
 
-                entity.getEvents().trigger("toggleLight");
+            toggleLightButton = new TextButton(isLightOn ? "Turn Light Off" : "Turn Light On", skin);
+            toggleLightButton.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent changeEvent, Actor actor) {
 
+                    isLightOn = !isLightOn;
+                    entity.getEvents().trigger("toggleLight");
+
+                }
+            });
+        }
+        TextButton timeSkipButton = new TextButton("Time skip not unlocked", skin, BACKGROUND_COLOUR);
+
+        if (SleepUnlocker){
+            timeSkipButton = new TextButton("Sleep (Time Skip)", skin);
+            timeSkipButton.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent changeEvent, Actor actor) {
+                    entity.getEvents().trigger("timeSkip");
             }
-        });
-
-        TextButton timeSkipButton = new TextButton("Sleep (Time Skip)", skin);
-        timeSkipButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent changeEvent, Actor actor) {
-                entity.getEvents().trigger("timeSkip");
-            }
-        });
-
+        });}
+        if (SleepUnlocker && lightUnlocked){
+            descriptionLabel = new Label("Congratulations the ship is fully built.", skin, PIXEL_BODY, TEXT_COLOUR);
+            descriptionLabel.setAlignment(Align.center);
+        }
         TextButton closeButton = new TextButton("Close", skin);
         closeButton.addListener(new ChangeListener() {
             @Override
@@ -71,12 +108,16 @@ public class ShipDisplay extends UIComponent {
         });
 
         Table contentTable = new Table();
-        contentTable.defaults().size(500f, 50f).padBottom(10f);
+
+        contentTable.defaults().size(600f, 50f).padBottom(10f);
+        contentTable.row().pad(30f);
+
+        contentTable.add(descriptionLabel).fillX();
         contentTable.row().pad(30f);
         contentTable.add(toggleLightButton).fillX();
-        contentTable.row().pad(30f);
+        contentTable.row().pad(10f);
         contentTable.add(timeSkipButton).fillX();
-        contentTable.row().pad(30f);
+        contentTable.row().pad(10f);
         contentTable.add(closeButton).fillX();
 
         window.add(contentTable).expand().fill();
