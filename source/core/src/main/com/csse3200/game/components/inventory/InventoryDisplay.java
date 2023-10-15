@@ -5,6 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.items.WateringCanLevelComponent;
 import com.csse3200.game.entities.EntityType;
@@ -46,6 +50,7 @@ public class InventoryDisplay extends UIComponent {
 	private final Map<Integer, TextTooltip> tooltips = new HashMap<>();
 	private final InstantTooltipManager instantTooltipManager = new InstantTooltipManager();
 	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(InventoryDisplay.class);
+	private final ArrayList<Label> labels = new ArrayList<>();
 
 	/**
 	 * Constructor for class
@@ -88,9 +93,28 @@ public class InventoryDisplay extends UIComponent {
 		map = new HashMap<>();
 		indexes = new HashMap<>();
 
-		table.defaults().size(64, 64);
+		table.defaults().size(64, 10);
 		table.pad(10);
+		for (int i = 0; i < (rowSize); i++){
+			int idx = i + 1;
+			if (idx == 10) {
+				idx = 0;
+			}
+			// Create the label for the item slot
+			Label label = new Label(" " + idx, skin); //please please please work
+			if (inventory != null && inventory.getHeldIndex() == i) {
+				label.setColor(Color.RED);
+			}
+			else {
+				label.setColor(Color.BLACK);
+			}
+			label.setAlignment(Align.center);
+			table.add(label);
+			labels.add(label);
 
+		}
+		table.row();
+		table.defaults().size(64, 64);
 		// loop through entire table and create itemSlots and add the slots to the stored array
 		for (int i = 0; i < size; i++) {
 			ItemSlot slot;
@@ -102,7 +126,10 @@ public class InventoryDisplay extends UIComponent {
 			}
 
 			table.add(slot).width(70).height(70).pad(10, 10, 10, 10);
-
+			if (entity.getType() == EntityType.PLAYER && i == 9) {
+				Image deleteSlot = new Image(ServiceLocator.getResourceService().getAsset("images/bin.png", Texture.class));
+				table.add(deleteSlot).colspan(2);
+			}
 			if ((i + 1) % rowSize == 0) {
 				table.row();
 			}
@@ -114,10 +141,6 @@ public class InventoryDisplay extends UIComponent {
 			}
 		}
 		table.row();
-		if (entity.getType() == EntityType.PLAYER) {
-			Image deleteSlot = new Image(ServiceLocator.getResourceService().getAsset("images/bin.png", Texture.class));
-			table.add(deleteSlot).colspan(10);
-		}
 
 		// Create a window for the inventory using the skin
 		window.pad(40, 20, 20, 20);
@@ -125,6 +148,9 @@ public class InventoryDisplay extends UIComponent {
 		window.pack();
 		window.setMovable(false);
 		window.setVisible(false);
+		float x = (stage.getWidth() - window.getWidth()) / 2;
+		float y = (stage.getHeight() - window.getHeight()) / 2;
+		window.setPosition(x, y);
 		stage.addActor(window);
 		setDragItems(actors, map);
 	}
@@ -136,6 +162,18 @@ public class InventoryDisplay extends UIComponent {
 	private void updateInventory() {
 		dnd.clear();
 		actors.clear(); // Clear the actors ArrayList
+
+		for (int i = 0; i < (rowSize); i++){
+			Label label = labels.get(i);
+			if (inventory != null && i == inventory.getHeldIndex()) {
+				label.setColor(Color.RED);
+			}
+			else {
+				label.setColor(Color.BLACK);
+			}
+			labels.set(i, label);
+
+		}
 
 		for (int i = 0; i < size; i++) {
 			ItemComponent item;
@@ -164,6 +202,9 @@ public class InventoryDisplay extends UIComponent {
 			}
 
 		}
+		float x = (stage.getWidth() - window.getWidth()) / 2;
+		float y = (stage.getHeight() - window.getHeight()) / 2;
+		window.setPosition(x, y);
 		dnd = new DragAndDrop();
 		setDragItems(actors, map);
 		addTooltips();

@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.items.ItemComponent;
-import com.csse3200.game.components.items.WateringCanLevelComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.sound.EffectSoundFile;
@@ -18,8 +17,6 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
-
 import com.badlogic.gdx.graphics.Texture;
 
 /**
@@ -35,7 +32,6 @@ public class ToolbarDisplay extends UIComponent {
     private int selectedSlot = -1;
     private final ArrayList<ItemSlot> slots = new ArrayList<>();
     private final Map<Integer, TextTooltip> tooltips = new HashMap<>();
-    private final InstantTooltipManager instantTooltipManager = new InstantTooltipManager();
 
     /**
      * Creates the event listeners, ui, and gets the UI.
@@ -63,7 +59,7 @@ public class ToolbarDisplay extends UIComponent {
                 idx = 0;
             }
             Label label = new Label(" " + idx, skin);
-            label.setColor(Color.BLUE);
+            label.setColor(Color.BLACK);
             label.setAlignment(Align.topLeft);
 
             ItemComponent item;
@@ -80,22 +76,6 @@ public class ToolbarDisplay extends UIComponent {
                 curSlot.setCount(itemCount);
 
                 curSlot.add(label);
-                TextTooltip tooltip;
-                if (Objects.equals(item.getItemName(), "watering_can")) {
-                    float level = item.getEntity().getComponent(WateringCanLevelComponent.class).getCurrentLevel();
-                    tooltip = new TextTooltip(item.getItemName() + "\n\nCurrent level is " + level, instantTooltipManager, skin);
-
-                } else {
-                    tooltip = new TextTooltip(item.getItemName() + "\n\n" + item.getItemDescription(), instantTooltipManager, skin);
-                }
-                tooltip.getActor().setAlignment(Align.center);
-                tooltip.setInstant(true);
-                if (tooltips.get(i) != null) {
-                    tooltips.get(i).hide();
-                    curSlot.removeListener(tooltips.get(i));
-                }
-                curSlot.addListener(tooltip);
-                tooltips.put(i, tooltip);
 
                 // Update slots array
                 slots.set(i, curSlot);
@@ -129,7 +109,7 @@ public class ToolbarDisplay extends UIComponent {
             }
             // Create the label for the item slot
             Label label = new Label(" " + idx, skin); //please please please work
-            label.setColor(Color.BLUE);
+            label.setColor(Color.BLACK);
             label.setAlignment(Align.topLeft);
 
             // Check if slot is selected
