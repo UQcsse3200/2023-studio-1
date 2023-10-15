@@ -14,7 +14,8 @@ public enum EffectSoundFile implements SoundFile {
     GATE_INTERACT("sounds/gate-interact.wav"),
     IMPACT("sounds/Impact4.ogg"),
     INVENTORY_OPEN("sounds/open-bag-sound-effect.mp3"),
-    HOTKEY_SELECT("sounds/take-item-sound-effect.mp3");
+    HOTKEY_SELECT("sounds/take-item-sound-effect.mp3"),
+    GOD_DID("sounds/god-did.mp3");
 
     private final String filePath;
 

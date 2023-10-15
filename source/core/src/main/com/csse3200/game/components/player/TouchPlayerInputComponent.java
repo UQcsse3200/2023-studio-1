@@ -84,15 +84,15 @@ public class TouchPlayerInputComponent extends InputComponent {
    */
   @Override
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-    entity.getEvents().trigger("attack");
+    entity.getEvents().trigger(PlayerActions.events.ATTACK.name());
     return true;
   }
 
   private void triggerWalkEvent() {
     if (walkDirection.epsilonEquals(Vector2.Zero)) {
-      entity.getEvents().trigger("walkStop");
+      entity.getEvents().trigger(PlayerActions.events.MOVE_STOP.name());
     } else {
-      entity.getEvents().trigger("walk", walkDirection);
+      entity.getEvents().trigger(PlayerActions.events.MOVE.name(), walkDirection);
     }
   }
 }

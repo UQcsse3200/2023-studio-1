@@ -76,7 +76,7 @@ public class SprinklerComponent extends Component {
   /**
    * A sprinklers area of effect to water, aoe is circular with radius of 2.
    */
-  private Vector2[] aoe;
+  protected Vector2[] aoe;
 
   /**
    * {@inheritDoc}
