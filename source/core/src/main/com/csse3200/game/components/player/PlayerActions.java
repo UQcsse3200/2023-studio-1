@@ -14,6 +14,7 @@ import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
+import com.csse3200.game.components.items.WateringCanLevelComponent;
 import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
 import com.csse3200.game.components.combat.StunComponent;
 import com.csse3200.game.components.tractor.TractorActions;
@@ -297,6 +298,9 @@ public class PlayerActions extends Component {
     if (itemInHand != null && itemInHand.getComponent(ItemActions.class) != null) {
       pauseMoving();
       itemInHand.getComponent(ItemActions.class).use(entity, mousePos);
+      if (itemInHand.getComponent(WateringCanLevelComponent.class) != null) {
+        entity.getEvents().trigger("updateInventory");
+      }
     }
   }
 

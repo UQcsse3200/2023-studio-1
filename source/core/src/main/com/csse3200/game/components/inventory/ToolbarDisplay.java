@@ -92,22 +92,6 @@ public class ToolbarDisplay extends UIComponent {
                 curSlot.setCount(itemCount);
 
                 curSlot.add(label);
-                TextTooltip tooltip;
-                if (Objects.equals(item.getItemName(), "watering_can")) {
-                    float level = item.getEntity().getComponent(WateringCanLevelComponent.class).getCurrentLevel();
-                    tooltip = new TextTooltip(item.getItemName() + "\n\nCurrent level is " + level, instantTooltipManager, skin);
-                } else {
-                    tooltip = new TextTooltip(item.getItemName() + "\n\n" + item.getItemDescription(), instantTooltipManager, skin);
-                }
-                tooltip.getActor().setAlignment(Align.center);
-                tooltip.setInstant(true);
-                if (tooltips.get(i) != null) {
-                    tooltips.get(i).hide();
-                    curSlot.removeListener(tooltips.get(i));
-                }
-                curSlot.addListener(tooltip);
-                tooltips.put(i, tooltip);
-
                 // Update slots array
                 slots.set(i, curSlot);
             }
@@ -115,13 +99,10 @@ public class ToolbarDisplay extends UIComponent {
                 ItemSlot curSlot = slots.get(i);
                 curSlot.setItemImage(null);
                 curSlot.setCount(0);
-                if (tooltips.get(i) != null) {
-                    curSlot.removeListener(tooltips.get(i));
-                    tooltips.remove(i);
-                }
                 slots.set(i, curSlot);
             }
         }
+        addTooltips();
     }
 
     /**
@@ -234,5 +215,36 @@ public class ToolbarDisplay extends UIComponent {
         }
         curTab = (curTab + 1) % 3;
         updateToolbar();
+    }
+    public void addTooltips() {
+        TextTooltip tooltip;
+        int i = 0;
+        for (ItemSlot slot : slots) {
+            if (inventory.getItem(i) != null) {
+                ItemComponent item = inventory.getItem(i).getComponent(ItemComponent.class);
+                if (Objects.equals(item.getItemName(), "watering_can")) {
+                    int level = (int) item.getEntity().getComponent(WateringCanLevelComponent.class).getCurrentLevel();
+                    tooltip = new TextTooltip(item.getItemName() + "\n\nCurrent level is " + level, instantTooltipManager, skin);
+                } else {
+                    tooltip = new TextTooltip(item.getItemName() + "\n\n" + item.getItemDescription(), instantTooltipManager,skin);
+                }
+                if (tooltips.get(i) != null) {
+                    tooltips.get(i).hide();
+                    slot.removeListener(tooltips.get(i));
+                }
+                tooltip.getActor().setAlignment(Align.center);
+                tooltip.setInstant(true);
+                slot.addListener(tooltip);
+                tooltips.put(i, tooltip);
+            }
+            else {
+                if (tooltips.get(i) != null) {
+                    tooltips.get(i).hide();
+                    slot.removeListener(tooltips.get(i));
+                    tooltips.remove(i);
+                }
+            }
+            i++;
+        }
     }
 }

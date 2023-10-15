@@ -367,10 +367,10 @@ public class InventoryDisplay extends UIComponent {
 			if (inventory.getItem(i) != null) {
 				ItemComponent item = inventory.getItem(indexes.get(slot)).getComponent(ItemComponent.class);
 				if (Objects.equals(item.getItemName(), "watering_can")) {
-					float level = item.getEntity().getComponent(WateringCanLevelComponent.class).getCurrentLevel();
-					tooltip = new TextTooltip(item.getItemName() + "\n\nCurrent level is " + level, skin);
+					int level = (int) item.getEntity().getComponent(WateringCanLevelComponent.class).getCurrentLevel();
+					tooltip = new TextTooltip(item.getItemName() + "\n\nCurrent level is " + level, instantTooltipManager, skin);
 				} else {
-					tooltip = new TextTooltip(item.getItemName() + "\n\n" + item.getItemDescription(),instantTooltipManager,skin);
+					tooltip = new TextTooltip(item.getItemName() + "\n\n" + item.getItemDescription(), instantTooltipManager,skin);
 				}
 				if (tooltips.get(i) != null) {
 					tooltips.get(i).hide();
