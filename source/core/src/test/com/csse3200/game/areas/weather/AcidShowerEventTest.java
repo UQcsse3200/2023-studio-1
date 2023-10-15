@@ -1,10 +1,13 @@
 package com.csse3200.game.areas.weather;
 
 import com.csse3200.game.areas.GameArea;
-import com.csse3200.game.services.LightService;
-import com.csse3200.game.services.ParticleService;
-import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.components.tasks.PanicTask;
+import com.csse3200.game.events.ScheduledEvent;
+import com.csse3200.game.events.listeners.EventListener0;
+import com.csse3200.game.services.*;
+import com.csse3200.game.services.sound.EffectSoundFile;
 import com.csse3200.game.services.sound.EffectsMusicService;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
 import com.csse3200.game.services.sound.SoundService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,9 +19,12 @@ import static org.mockito.Mockito.*;
 class AcidShowerEventTest {
 
     private AcidShowerEvent acidShowerEvent1, acidShowerEvent2, acidShowerEvent3, acidShowerEvent4, acidShowerEvent5;
+    private GameTime gameTime;
 
     @BeforeEach
     public void setUp() {
+        gameTime = mock(GameTime.class);
+        ServiceLocator.registerTimeSource(gameTime);
         GameArea gameArea = mock(GameArea.class);
         ClimateController climateController = new ClimateController();
         when(gameArea.getClimateController()).thenReturn(climateController);
@@ -68,7 +74,6 @@ class AcidShowerEventTest {
         assertTrue(acidShowerEvent1.isActive());
     }
 
-//     These tests will require dealing with the lighting system
     @Test
     void testStartEffect() {
         acidShowerEvent1.startEffect();
@@ -89,5 +94,15 @@ class AcidShowerEventTest {
         acidShowerEvent4.stopEffect();
         acidShowerEvent5.stopEffect();
         verify(ServiceLocator.getParticleService(), times(5)).stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+    }
+
+    @Test
+    void testTriggerAcidBurn() throws InvalidSoundFileException {
+        AcidShowerEvent acidShowerEvent6 = new AcidShowerEvent(0,9,1,1.2f);
+        acidShowerEvent6.startEffect();
+        ServiceLocator.getGameArea().getClimateController().getEvents().trigger("acidBurn");
+        verify(ServiceLocator.getSoundService().getEffectsMusicService()).play(EffectSoundFile.ACID_BURN);
+        ServiceLocator.getGameArea().getClimateController().getEvents().trigger("startPanicEffect");
+        ServiceLocator.getGameArea().getClimateController().getEvents().trigger("damagePlants");
     }
 }
