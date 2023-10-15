@@ -62,7 +62,7 @@ public class InventoryComponent extends Component {
      * The maximum size of the inventory.
      */
     private int maxInventorySize = 30; // default size 30
-    private List<String> forbiddenRemove =  Arrays.asList("shovel","hoe","watering_can","scythe","sword","gun");
+    private final List<String> forbiddenRemove =  Arrays.asList("shovel","hoe","watering_can","scythe","sword","gun");
 
     /**
      * Creates a new InventoryComponent with a given list of items.
@@ -427,6 +427,10 @@ public class InventoryComponent extends Component {
     public boolean removeItem(String itemName) {
         // Check if item is in inventory
         if (!this.itemCount.containsKey(itemName)) {
+            return false;
+        }
+        // check item is in forbidden list.
+        if (forbiddenRemove.contains(itemName)) {
             return false;
         }
         // Decrease item count by 1
