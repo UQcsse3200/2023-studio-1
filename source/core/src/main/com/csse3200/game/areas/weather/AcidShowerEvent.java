@@ -38,6 +38,7 @@ public class AcidShowerEvent extends WeatherEvent {
 
         // Trigger in-game effects
         climateControllerEvents.trigger("startWaterLevelEffect", getDryRate());
+        climateControllerEvents.trigger("douseFlames");
         triggerAcidBurn();
 
         // Add particle effects
@@ -60,6 +61,7 @@ public class AcidShowerEvent extends WeatherEvent {
 
         // Cancel in-game effects
         climateControllerEvents.trigger("stopWaterLevelEffect");
+        climateControllerEvents.trigger("reigniteFlames");
         climateControllerEvents.cancelEvent(nextAcidBurn);
 
         // Remove particle effects
