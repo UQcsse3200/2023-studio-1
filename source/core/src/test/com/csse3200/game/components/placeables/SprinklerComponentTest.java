@@ -22,8 +22,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 
-// TODO: the bitmap will have to be tested in connEntityUtil.
-
 @ExtendWith(GameExtension.class)
 public class SprinklerComponentTest {
     private static Entity s1;
@@ -36,13 +34,8 @@ public class SprinklerComponentTest {
     private static GameMap gameMap;
     private static TimeService timeService;
 
-    @BeforeAll
-    public static void config() {
-    }
-
     @BeforeEach
     public void setup() {
-        // TODO could move a lot of this into beforeAll.
         // create game area and map
         gameArea = mock(GameArea.class);
         gameMap = mock(GameMap.class);
@@ -59,10 +52,9 @@ public class SprinklerComponentTest {
          *   x x S P x x
          *   x x x x x x
          *   x x x x x x
-         * with: x = empty, S = sprinkler, P = pump */
+         * with: x = empty tiles, S = sprinkler, P = pump */
         sTile = new TerrainTile(null, TerrainTile.TerrainCategory.DIRT);
         pTile = new TerrainTile(null, TerrainTile.TerrainCategory.DIRT);
-        TerrainTile emptyTile = new TerrainTile(null, TerrainTile.TerrainCategory.DIRT);
         for (int x = 0; x <= 6; x++) {
             for (int y = 0; y <= 5; y++) {
                 Vector2 pos = new Vector2(x, y);
@@ -71,9 +63,8 @@ public class SprinklerComponentTest {
                 } else if (pos.equals(p1_pos)) {
                     when(gameMap.getTile(pos)).thenReturn(pTile);
                 } else {
-                    TerrainTile otherTile = new TerrainTile(null, TerrainTile.TerrainCategory.DIRT);
-                    //when(gameMap.getTile(pos)).thenReturn(emptyTile);
-                    when(gameMap.getTile(pos)).thenReturn(otherTile);
+                    when(gameMap.getTile(pos)).thenReturn(
+                            new TerrainTile(null, TerrainTile.TerrainCategory.DIRT));
                 }
             }
         }
@@ -105,6 +96,8 @@ public class SprinklerComponentTest {
 
     @Test
     public void setPumpTest() {
+        p1.setPosition(p1_pos);
+        p1.create();
         assertTrue(p1.getComponent(SprinklerComponent.class).getPump());
     }
 
