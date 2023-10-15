@@ -210,6 +210,13 @@ public class ItemActions extends Component {
     return playerPosCenter;
   }
 
+  /**
+   * Triggers an event if the tile is a water or lava tiles
+   * Uses the event scheduler to trigger getFish() after a random delay
+   * @param player - the player entity
+   * @param mousePos - the mouse position
+   * @return if successful
+   */
   private boolean fish(Entity player, Vector2 mousePos) {
     Vector2 nullValue = new Vector2(82, 25);
     if (entity.getEvents().getScheduledEventsSize() != 0) {
@@ -220,6 +227,7 @@ public class ItemActions extends Component {
     }
     Integer randomNumber;
     Vector2 pos = getAdjustedPosFish(mousePos);
+    // If null value then fish in spot
     if (pos.equals(nullValue)) {
       randomNumber = random.nextInt(5) + 1;
       logger.info("Fishing occurred");
@@ -243,6 +251,7 @@ public class ItemActions extends Component {
       } catch (Exception e) {
         logger.error("Failed to play fishsound", e);
       }
+      // schedule the event
       player.getEvents().trigger(PlayerActions.events.CAST_FISHING_RODS.name(), mousePos);
       entity.getEvents().scheduleEvent(randomNumber,"fishCaught", "ocean", player);
       return true;
@@ -255,6 +264,7 @@ public class ItemActions extends Component {
       } catch (Exception e) {
         logger.error("Failed to play fishsound", e);
       }
+      // schedule the event
       player.getEvents().trigger(PlayerActions.events.CAST_FISHING_RODS.name(), mousePos);
       entity.getEvents().scheduleEvent(randomNumber,"fishCaught", "lava", player);
       return true;
@@ -262,6 +272,10 @@ public class ItemActions extends Component {
     return false;
   }
 
+  /**
+   * Eats a given food item or power modifier
+   * @param player the player entity
+   */
   public void eat(Entity player) {
     ItemComponent type = entity.getComponent(ItemComponent.class);
     // Wasn't an item or did not have ItemComponent class
@@ -290,6 +304,7 @@ public class ItemActions extends Component {
           player.getComponent(CombatStatsComponent.class).addHealth(100);
           return;
         default:
+          // Any fish
           player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
       }
     } else if (type.getItemType() == ItemType.EGG) {

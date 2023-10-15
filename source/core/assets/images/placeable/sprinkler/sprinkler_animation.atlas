@@ -1,0 +1,82 @@
+sprinkler_animation.png
+size: 880, 80
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+default
+  xy: 0, 0
+  index: 0
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  rotate: false
+default
+  xy: 80, 0
+  index: 1
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  rotate: false
+default
+  xy: 240, 0
+  index: 2
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  rotate: false
+default
+  xy: 320, 0
+  index: 3
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  rotate: false
+default
+  xy: 400, 0
+  index: 4
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  rotate: false
+default
+  xy: 480, 0
+  index: 5
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  rotate: false
+default
+  xy: 560, 0
+  index: 6
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  rotate: false
+default
+  xy: 640, 0
+  index: 7
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  rotate: false
+default
+  xy: 720, 0
+  index: 8
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  rotate: false
+default
+  xy: 800, 0
+  index: 9
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  rotate: false
+default
+  xy: 880, 0
+  index: 10
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  rotate: false
