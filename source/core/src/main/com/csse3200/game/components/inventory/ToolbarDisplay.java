@@ -51,7 +51,7 @@ public class ToolbarDisplay extends UIComponent {
         entity.getEvents().addListener("toggleInventory",this::toggleOpen);
         entity.getEvents().addListener("hotkeySelection",this::updateItemSlot);
         entity.getEvents().addListener("toolbarSwitch",this::switchToolbar);
-
+        entity.getEvents().addListener("hideUI", this::hide);
         inventory = entity.getComponent(InventoryComponent.class);
     }
 
@@ -80,9 +80,9 @@ public class ToolbarDisplay extends UIComponent {
             Texture itemTexture;
             int cur = i + curTab * 10;
 
-            if (inventory != null && inventory.getItem(cur) != null) {
+            if (inventory != null && inventory.getItem(i) != null) {
                 // Since the item isn't null, we want to make sure that the itemSlot at that position is modified
-                item = inventory.getItem(cur).getComponent(ItemComponent.class);
+                item = inventory.getItem(i).getComponent(ItemComponent.class);
                 itemCount = inventory.getItemCount(item.getEntity());
                 itemTexture = item.getItemTexture();
                 ItemSlot curSlot = slots.get(i);
@@ -188,6 +188,15 @@ public class ToolbarDisplay extends UIComponent {
             this.window.setVisible(true);
             this.isOpen = true;
         }
+    }
+
+    /**
+     * Hide the toolbar.
+     * But why would you ever want to do that?
+     */
+    public void hide() {
+        this.isOpen = false;
+        window.setVisible(false);
     }
 
     /**

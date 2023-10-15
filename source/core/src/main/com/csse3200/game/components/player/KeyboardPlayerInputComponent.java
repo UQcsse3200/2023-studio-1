@@ -61,13 +61,13 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           triggerMoveEvent();
           return true;
         case Keys.SHIFT_LEFT:
-          entity.getEvents().trigger("run");
+          entity.getEvents().trigger(PlayerActions.events.RUN.name());
           return true;
-        case Keys.E: // Potentially also interact button later.
+        case Keys.E:
           entity.getEvents().trigger("interact");
           return true;
         case Keys.I:
-          // inventory tings
+          // inventory things
           entity.getEvents().trigger("toggleInventory");
           return true;
         case Keys.F:
@@ -96,7 +96,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           showMap = !showMap;
           ServiceLocator.getPlayerMapService().getEvents().trigger("toggleOpen", showMap);
         case Keys.R:
-          entity.getEvents().trigger("eat", entity.getComponent(InventoryComponent.class).getHeldItem());
+          entity.getEvents().trigger(PlayerActions.events.EAT.name(), entity.getComponent(InventoryComponent.class).getHeldItem());
             return true;
         default:
           return false;
@@ -115,7 +115,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public boolean touchUp(int screenX, int screenY, int pointer, int button) {
     if (!actions.isMuted()) {
       Vector2 mousePos = new Vector2(screenX, screenY);
-      entity.getEvents().trigger("use", mousePos, entity.getComponent(InventoryComponent.class).getHeldItem());
+      entity.getEvents().trigger(PlayerActions.events.USE.name(), mousePos, entity.getComponent(InventoryComponent.class).getHeldItem());
     }
     return false;
   }
@@ -148,7 +148,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           triggerMoveEvent();
           return true;
         case Keys.SHIFT_LEFT:
-          entity.getEvents().trigger("runStop");
+          entity.getEvents().trigger(PlayerActions.events.RUN_STOP.name());
           return true;
         default:
           return false;
@@ -169,16 +169,16 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
   private void triggerMoveEvent() {
     if (moveDirection.epsilonEquals(Vector2.Zero)) {
-      entity.getEvents().trigger("moveStop");
+      entity.getEvents().trigger(PlayerActions.events.MOVE_STOP.name());
     } else {
-      entity.getEvents().trigger("move", moveDirection);
+      entity.getEvents().trigger(PlayerActions.events.MOVE.name(), moveDirection);
     }
   }
 
 
   private void triggerEnterEvent() {
     logger.info("Entering tractor");
-    entity.getEvents().trigger("enterTractor");
+    entity.getEvents().trigger(PlayerActions.events.ENTER_TRACTOR.name());
   }
 
   public void setActions(PlayerActions actions) {

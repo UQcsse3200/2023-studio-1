@@ -72,6 +72,7 @@ public class InventoryDisplay extends UIComponent {
 		initialiseInventory();
 		entity.getEvents().addListener(openEvent, this::toggleOpen);
 		entity.getEvents().addListener(refreshEvent, this::refreshInventory);
+		entity.getEvents().addListener("hideUI", this::hide);
 		inventoryDisplayManager.addInventoryDisplay(this);
 	}
 
@@ -127,7 +128,6 @@ public class InventoryDisplay extends UIComponent {
 		window.setMovable(false);
 		window.setVisible(false);
 		stage.addActor(window);
-		//setDragItems(actors, map);
 	}
 
 	/**
@@ -209,7 +209,6 @@ public class InventoryDisplay extends UIComponent {
 							logger.error("sound not loaded");
 						}
 						ItemSlot itemSlot = map.get((Stack) getActor());
-						//itemSlot.removeActor(getActor());
 						itemSlot.add(getActor());
 						itemSlot.addListener(tooltip);
 					}
@@ -321,6 +320,16 @@ public class InventoryDisplay extends UIComponent {
 		} catch (InvalidSoundFileException e) {
 			logger.info("Inventory open sound not loaded");
 		}
+	}
+
+	/**
+	 * Hide the inventory.
+	 * But why would you ever want to do that?
+	 */
+	public void hide() {
+		isOpen = false;
+		window.setVisible(false);
+		inventoryDisplayManager.updateDisplays();
 	}
 
 	/**

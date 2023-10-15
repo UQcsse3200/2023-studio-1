@@ -3,6 +3,7 @@ package com.csse3200.game;
 import static com.badlogic.gdx.Gdx.app;
 
 import com.csse3200.game.screens.*;
+import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.DiscordActivity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,7 @@ public class GdxGame extends Game {
   public void create() {
     logger.info("Creating game");
     loadSettings();
+    ServiceLocator.registerGame(this);
 
     // Sets background to light yellow
     Gdx.gl.glClearColor(0.0f, 0.098f, 0.309f, 1.0f);
