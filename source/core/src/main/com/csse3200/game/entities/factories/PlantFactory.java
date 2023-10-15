@@ -114,7 +114,7 @@ public class PlantFactory {
 
         AnimationRenderComponent animator = new AnimationRenderComponent(
                 ServiceLocator.getResourceService().getAsset("images/plants/plant_aoe.atlas", TextureAtlas.class),
-                16f);
+                16f, 3);
         animator.addAnimation("default", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("deadly_nightshade_aoe_", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("hammer_plant_aoe_", 0.1f, Animation.PlayMode.LOOP);
