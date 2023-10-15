@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.ServiceLocator;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -57,6 +58,8 @@ public class InventoryDisplay extends UIComponent {
 		inventoryDisplayManager = ServiceLocator.getInventoryDisplayManager();
 	}
 
+
+
 	/**
 	 * Creates reusable ui styles and adds actors to the stage.
 	 */
@@ -68,6 +71,7 @@ public class InventoryDisplay extends UIComponent {
 		entity.getEvents().addListener(refreshEvent, this::refreshInventory);
 		inventoryDisplayManager.addInventoryDisplay(this);
 	}
+
 
 	/**
 	 * Initialises the inventoryDisplay and adds it to the stage.
@@ -190,6 +194,7 @@ public class InventoryDisplay extends UIComponent {
 						ItemSlot itemSlot = map.get((Stack) getActor());
 						itemSlot.removeActor(getActor());
 						itemSlot.add(getActor());
+						ServiceLocator.getGameArea().getPlayer().getEvents().trigger("spawnShovel");
 					}
 				}
 			});
@@ -238,7 +243,9 @@ public class InventoryDisplay extends UIComponent {
 				});
 			}
 		}
+
 	}
+
 
 	/**
 	 * Get the current window
@@ -309,5 +316,4 @@ public class InventoryDisplay extends UIComponent {
 	public DragAndDrop getDnd() {
 		return dnd;
 
-	}
-}
+	} }

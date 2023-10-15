@@ -494,9 +494,16 @@ public class SpaceGameArea extends GameArea {
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
+    newPlayer.getEvents().addListener("spawnShovel",this::spawnShovel);
     return newPlayer;
   }
 
+  private Entity spawnShovel(){
+    Entity newShovel = ItemFactory.createShovel();
+
+    spawnEntityAt(newShovel,PLAYER_SPAWN,true,true);
+    return newShovel;
+  }
   private void spawnQuestgiver() {
     Entity newQuestgiver = QuestgiverFactory.createQuestgiver();
     spawnEntityAt(newQuestgiver, QUESTGIVER_SPAWN, true, true);
