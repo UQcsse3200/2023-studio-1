@@ -1,0 +1,110 @@
+shipeater.png
+size: 90, 32
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+running
+  xy: 0, 0
+  index: 0
+  size: 18, 16
+  orig: 18, 16
+  offset: 0, 0
+  rotate: false
+running
+  xy: 18, 0
+  index: 1
+  size: 18, 16
+  orig: 18, 16
+  offset: 0, 0
+  rotate: false
+hiding
+  xy: 36, 0
+  index: 0
+  size: 18, 16
+  orig: 18, 16
+  offset: 0, 0
+  rotate: false
+hiding
+  xy: 36, 0
+  index: 1
+  size: 18, 16
+  orig: 18, 16
+  offset: 0, 0
+  rotate: false
+hiding
+  xy: 36, 0
+  index: 2
+  size: 18, 16
+  orig: 18, 16
+  offset: 0, 0
+  rotate: false
+hiding
+  xy: 36, 0
+  index: 3
+  size: 18, 16
+  orig: 18, 16
+  offset: 0, 0
+  rotate: false
+hiding
+  xy: 54, 0
+  index: 4
+  size: 18, 16
+  orig: 18, 16
+  offset: 0, 0
+  rotate: false
+hiding
+  xy: 72, 0
+  index: 5
+  size: 18, 16
+  orig: 18, 16
+  offset: 0, 0
+  rotate: false
+hiding
+  xy: 54, 0
+  index: 6
+  size: 18, 16
+  orig: 18, 16
+  offset: 0, 0
+  rotate: false
+hiding
+  xy: 54, 0
+  index: 7
+  size: 18, 16
+  orig: 18, 16
+  offset: 0, 0
+  rotate: false
+eating
+  xy: 0, 16
+  index: 0
+  size: 18, 16
+  orig: 18, 16
+  offset: 0, 0
+  rotate: false
+eating
+  xy: 18, 16
+  index: 1
+  size: 18, 16
+  orig: 18, 16
+  offset: 0, 0
+  rotate: false
+eating
+  xy: 36, 16
+  index: 2
+  size: 18, 16
+  orig: 18, 16
+  offset: 0, 0
+  rotate: false
+eating
+  xy: 54, 16
+  index: 3
+  size: 18, 16
+  orig: 18, 16
+  offset: 0, 0
+  rotate: false
+digging
+  xy: 72, 16
+  index: 0
+  size: 18, 16
+  orig: 18, 16
+  offset: 0, 0
+  rotate: false

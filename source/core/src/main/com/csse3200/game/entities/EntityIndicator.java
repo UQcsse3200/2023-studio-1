@@ -86,9 +86,6 @@ public class EntityIndicator extends UIComponent{
      * Calculates where the entity should be positioned along the edge of the screen
      */
     public void updateIndicator() {
-        float indicatorPosX;
-        float indicatorPosY;
-
         // Get the latest entity position and transform it to a 3D vector in on-screen units based of the camera view
         Vector2 entityPosition = entityToTractor.getCenterPosition();
         Vector3 entityPos = new Vector3(entityPosition.x, entityPosition.y, 0);

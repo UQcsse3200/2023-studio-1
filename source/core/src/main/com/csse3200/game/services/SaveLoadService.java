@@ -1,16 +1,17 @@
 package com.csse3200.game.services;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.components.AuraLightComponent;
+import com.csse3200.game.components.combat.CombatStatsComponent;
+import com.csse3200.game.components.player.HungerComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.files.SaveGame;
 import com.csse3200.game.files.SaveGame.GameState;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.HashMap;
@@ -37,6 +38,8 @@ public class SaveLoadService {
         state.setDay(ServiceLocator.getTimeService().getDay());
         state.setHour(ServiceLocator.getTimeService().getHour());
         state.setMinute(ServiceLocator.getTimeService().getMinute());
+
+        state.setOxygenLevel(ServiceLocator.getPlanetOxygenService().getOxygen());
 
         state.setClimate(ServiceLocator.getGameArea().getClimateController());
         state.setMissions(ServiceLocator.getMissionManager());
@@ -110,6 +113,7 @@ public class SaveLoadService {
         updateTractor(state);
         // Update Misc
         updateTime(state);
+        updateOxygen(state);
         //updateMissions(state);
     }
 
@@ -128,6 +132,12 @@ public class SaveLoadService {
         HashMap<String, Entity> heldItemsEntity = stateInventory.getHeldItemsEntity();
         HashMap<Integer, String> itemPlace = stateInventory.getItemPlace();
         currentPlayer.getComponent(InventoryComponent.class).loadInventory(itemCount, heldItemsEntity, itemPlace);
+
+        CombatStatsComponent stateCombatStats = state.getPlayer().getComponent(CombatStatsComponent.class);
+        currentPlayer.getComponent(CombatStatsComponent.class).setHealth(stateCombatStats.getHealth());
+
+        HungerComponent stateHungerComponent = state.getPlayer().getComponent(HungerComponent.class);
+        currentPlayer.getComponent(HungerComponent.class).setHungerLevel(stateHungerComponent.getHungerLevel());
     }
 
     /**
@@ -155,12 +165,21 @@ public class SaveLoadService {
         }
     }
 
-    /**''
+    /**
      * Updates the time of the game based off the saved values in the gamestate
      *
      * @param state the state of the saved game
      */
     private void updateTime(GameState state) {
         ServiceLocator.getTimeService().loadTime(state.getDay(), state.getHour(), state.getDay());
+    }
+
+    /**
+     * Updates the oxygen of the game based off the saved values in the gamestate
+     *
+     * @param state the state of the saved game
+     */
+    private void updateOxygen(GameState state) {
+        ServiceLocator.getPlanetOxygenService().setOxygen(state.getOxygenLevel());
     }
 }
