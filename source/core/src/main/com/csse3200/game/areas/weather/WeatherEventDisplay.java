@@ -69,7 +69,7 @@ public class WeatherEventDisplay extends UIComponent {
 		group.clear();
 		table.top().left();
 		table.setFillParent(true);
-		table.padTop(340f).padLeft(-100f);
+		table.padTop(320f).padLeft(-120f);
 
 		group.addActor(clockImage);
 		group.addActor(weatherImage);

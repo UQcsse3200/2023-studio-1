@@ -98,6 +98,8 @@ public class SprinklerComponent extends Component {
     }
     // Update adjacent sprinklers:
     this.connectedEntityUtility.notifyAdjacent();
+    // listener for destroy request:
+    entity.getEvents().addListener("onDestroy", this::onDestroy);
   }
 
   /**
@@ -277,7 +279,7 @@ public class SprinklerComponent extends Component {
       return;
     }
     if (water != null) {
-      // Mainly for testing but a good fail safe regardless
+      // Mainly for testing but a good fail-safe regardless
       water.setCenterPosition(entity.getCenterPosition());
       water.getComponent(AnimationRenderComponent.class).startAnimation("default");
     }
@@ -305,6 +307,14 @@ public class SprinklerComponent extends Component {
 
   public void addWaterAnimator(Entity animator) {
     this.water = animator;
+  }
+
+  /**
+   * Destroys the connections to neighbouring sprinklers
+   */
+  private void onDestroy() {
+    entity.getEvents().trigger("destroyConnections");
+    if (!pump) ServiceLocator.getGameArea().removeEntity(water);
   }
 
 }

@@ -1,9 +1,8 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.events.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.csse3200.game.events.EventHandler;
 
 public class TimeService {
 	private static final Logger logger = LoggerFactory.getLogger(TimeService.class);
@@ -24,7 +23,6 @@ public class TimeService {
 	private static final String MINUTE_UPDATE = "minuteUpdate";
 
 	private static final String HOUR_UPDATE = "hourUpdate";
-
 
 
 	/**
@@ -165,9 +163,9 @@ public class TimeService {
 	 * Sets the in-game hour and minute to the nearest future value passed in.
 	 * Increments the day if necessary, updates the time buffer, and triggers any necessary events.
 	 *
-	 * @param hour in-game hour
+	 * @param hour   in-game hour
 	 * @param minute in-game minute
- 	*/
+	 */
 	public void setNearestTime(int hour, int minute) {
 		if (this.minute > minute) {
 			this.hour += 1;
@@ -264,8 +262,8 @@ public class TimeService {
 	}
 
 	public void loadTime(int day, int hour, int minute) {
-		this.day = day;
-		this.hour = hour;
-		this.minute = minute;
+		setDay(day);
+		setHour(hour);
+		setMinute(minute);
 	}
 }

@@ -69,14 +69,15 @@ public class SettingsMenuDisplay extends UIComponent {
    * The target fps at which the frames should be updated
    */
 
-  private static final int fps = 60;  // Assuming you have a static fps value
+  private static final int FPS = 60;  // Assuming you have a static fps value
 
   /**
    * The duration for which each frame should be displayed
    */
 
-  private static final long frameDuration = 800L / fps;
+  private static final long FRAME_DURATION = 800L / FPS;
 
+  private static final String LABEL_FORMAT = "%.2fx";
 
   public SettingsMenuDisplay(GdxGame game) {
     super();
@@ -162,12 +163,12 @@ public class SettingsMenuDisplay extends UIComponent {
     Label uiScaleLabel = new Label("ui Scale (Unused):", skin);
     uiScaleSlider = new Slider(0.2f, 2f, 0.1f, false, skin);
     uiScaleSlider.setValue(settings.uiScale);
-    Label uiScaleValue = new Label(String.format("%.2fx", settings.uiScale), skin);
+    Label uiScaleValue = new Label(String.format(LABEL_FORMAT, settings.uiScale), skin);
 
     Label zoomScaleLabel = new Label("Field of View:", skin);
     zoomScaleSlider = new Slider(0.2f, 3f, 0.1f, false, skin);
     zoomScaleSlider.setValue(settings.zoomScale);
-    Label zoomScaleValue = new Label(String.format("%.2fx", settings.zoomScale), skin);
+    Label zoomScaleValue = new Label(String.format(LABEL_FORMAT, settings.zoomScale), skin);
 
     Label displayModeLabel = new Label("Resolution:", skin);
     displayModeSelect = new SelectBox<>(skin);
@@ -213,14 +214,14 @@ public class SettingsMenuDisplay extends UIComponent {
     uiScaleSlider.addListener(
         (Event event) -> {
           float value = uiScaleSlider.getValue();
-          uiScaleValue.setText(String.format("%.2fx", value));
+          uiScaleValue.setText(String.format(LABEL_FORMAT, value));
           return true;
         });
 
     zoomScaleSlider.addListener(
             (Event event) -> {
               float value = zoomScaleSlider.getValue();
-              zoomScaleValue.setText(String.format("%.2fx", value));
+              zoomScaleValue.setText(String.format(LABEL_FORMAT, value));
               return true;
             });
 
@@ -321,7 +322,7 @@ public class SettingsMenuDisplay extends UIComponent {
 
   @Override
   public void update() {
-    if (System.currentTimeMillis() - lastFrameTime > frameDuration) {
+    if (System.currentTimeMillis() - lastFrameTime > FRAME_DURATION) {
       updateAnimation();
     }
     stage.act(ServiceLocator.getTimeSource().getDeltaTime());

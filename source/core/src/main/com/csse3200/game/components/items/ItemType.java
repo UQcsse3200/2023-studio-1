@@ -7,6 +7,7 @@ public enum ItemType {
   SCYTHE,
   SWORD,
   GUN,
+  TELEPORT_DEVICE,
   MILK,
   EGG,
   FOOD,

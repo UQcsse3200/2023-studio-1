@@ -15,6 +15,7 @@ import com.csse3200.game.components.combat.TouchAttackComponent;
 import com.csse3200.game.components.combat.attackpatterns.BatAttackPattern;
 import com.csse3200.game.components.combat.attackpatterns.DragonflyAttackPattern;
 import com.csse3200.game.components.combat.attackpatterns.OxygenEaterAttackPattern;
+import com.csse3200.game.components.combat.attackpatterns.ShipEaterAttackPattern;
 import com.csse3200.game.components.npc.*;
 import com.csse3200.game.components.npc.AnimalAnimationController;
 import com.csse3200.game.components.npc.FireflyScareComponent;
@@ -344,6 +345,42 @@ public class NPCFactory {
             // Not actually scaring just dying from daylight (named from previous idea for feature)
             .addComponent(new FireflyScareComponent())
             .addComponent(new PhysicsComponent());
+  }
+
+  /**
+   * Creates a Ship Eater entity.
+   * @return Ship Eater entity
+   */
+  public static Entity createShipEater() {
+
+    AnimationRenderComponent animator = new AnimationRenderComponent(
+            ServiceLocator.getResourceService().getAsset("images/shipeater.atlas", TextureAtlas.class),
+            16f
+    );
+
+    animator.addAnimation("running", 0.5f, Animation.PlayMode.LOOP);
+    animator.addAnimation("eating", 0.5f, Animation.PlayMode.LOOP);
+    animator.addAnimation("hiding", 0.5f, Animation.PlayMode.LOOP);
+    animator.addAnimation("digging", 0.5f, Animation.PlayMode.LOOP);
+    animator.startAnimation("running");
+
+    AITaskComponent aiTaskComponent = new AITaskComponent()
+            .addTask(new MoveToShipTask(5, new Vector2(2f, 2f), 0.5f));
+
+    Entity shipEater = createBaseAnimal(EntityType.SHIP_EATER)
+            .addComponent(new InteractionDetector(3f,
+                    new ArrayList<>(Arrays.asList((EntityType.PLAYER), (EntityType.SHIP)))))
+            .addComponent(animator)
+            .addComponent(new ShipEaterAttackPattern(2f))
+            .addComponent(new ShipEaterAnimationController())
+            .addComponent(new ShipEaterScareComponent())
+            .addComponent(new CombatStatsComponent(50, 0))
+            .addComponent(aiTaskComponent);
+
+    shipEater.getComponent(ColliderComponent.class).setDensity(100);
+
+    shipEater.addComponent(new EntityIndicator(shipEater));
+    return shipEater;
   }
 
   /**
