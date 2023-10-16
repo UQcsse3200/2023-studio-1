@@ -23,7 +23,7 @@ public class SpaceDebrisQuest extends ClearDebrisQuest {
     /**
      * Position to spawn space debris
      */
-    private static final GridPoint2 SPACE_DEBRIS_SPAWN = new GridPoint2(52, 16);
+    private static final GridPoint2 SPACE_DEBRIS_SPAWN = new GridPoint2(53, 14);
 
     /**
      * A Quest where player is required to clear a certain amount of debris.
@@ -38,7 +38,7 @@ public class SpaceDebrisQuest extends ClearDebrisQuest {
 
         /**
          * Registers the Quest with the {@link MissionManager} by listening to the DEBRIS_CLEAR Mission event.
-         * Also spawns in new debris at the specified location. 
+         * Also spawns in new debris at the specified location.
          * @param missionManagerEvents - A reference to the {@link EventHandler} on the
          *                             {@link MissionManager}, with which relevant events should be
          *                             listened to.
@@ -47,8 +47,8 @@ public class SpaceDebrisQuest extends ClearDebrisQuest {
         public void registerMission (EventHandler missionManagerEvents) {
             super.registerMission(missionManagerEvents);
 
-            GridPoint2 maxPos = new GridPoint2(SPACE_DEBRIS_SPAWN.x + 5, SPACE_DEBRIS_SPAWN.y + 5);
-            GridPoint2 minPos = new GridPoint2(SPACE_DEBRIS_SPAWN.x - 5, SPACE_DEBRIS_SPAWN.y - 5);
+            GridPoint2 maxPos = new GridPoint2(SPACE_DEBRIS_SPAWN.x + 4, SPACE_DEBRIS_SPAWN.y + 4);
+            GridPoint2 minPos = new GridPoint2(SPACE_DEBRIS_SPAWN.x - 4, SPACE_DEBRIS_SPAWN.y - 4);
 
             List<GridPoint2> clearedTilesAroundShip = List.of(
                     SPACE_DEBRIS_SPAWN,
