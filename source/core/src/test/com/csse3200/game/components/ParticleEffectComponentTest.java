@@ -9,20 +9,15 @@ import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.rendering.ParticleEffectWrapper;
 import com.csse3200.game.services.ParticleService;
 import com.csse3200.game.services.ServiceLocator;
-import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.platform.commons.util.ReflectionUtils;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.internal.matchers.Any;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -137,8 +132,8 @@ class ParticleEffectComponentTest {
 		ParticleEffectPool.PooledEffect effect = mock(ParticleEffectPool.PooledEffect.class);
 		when(particleService.getEffect(any())).thenReturn(effect);
 
-		component.startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
-		component.startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+		component.startEffect(ParticleService.ParticleEffectType.RAIN);
+		component.startEffect(ParticleService.ParticleEffectType.RAIN);
 
 		verify(effect, times(1)).setPosition(centerPosition.x, position.y);
 		verify(effect, times(1)).start();
@@ -156,9 +151,9 @@ class ParticleEffectComponentTest {
 		ParticleEffectPool.PooledEffect effect = mock(ParticleEffectPool.PooledEffect.class);
 		when(particleService.getEffect(any())).thenReturn(effect);
 
-		component.startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+		component.startEffect(ParticleService.ParticleEffectType.RAIN);
 
-		component.stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+		component.stopEffect(ParticleService.ParticleEffectType.RAIN);
 
 		verify(effect, times(1)).free();
 	}
@@ -175,7 +170,7 @@ class ParticleEffectComponentTest {
 		ParticleEffectPool.PooledEffect effect = mock(ParticleEffectPool.PooledEffect.class);
 		when(particleService.getEffect(any())).thenReturn(effect);
 
-		component.startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+		component.startEffect(ParticleService.ParticleEffectType.RAIN);
 
 		component.stopEffect(ParticleService.ParticleEffectType.SUCCESS_EFFECT);
 
@@ -194,7 +189,7 @@ class ParticleEffectComponentTest {
 		ParticleEffectPool.PooledEffect effect = mock(ParticleEffectPool.PooledEffect.class);
 		when(particleService.getEffect(any())).thenReturn(effect);
 
-		component.startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+		component.startEffect(ParticleService.ParticleEffectType.RAIN);
 
 		component.stopAllEffects();
 
@@ -213,7 +208,7 @@ class ParticleEffectComponentTest {
 		ParticleEffectPool.PooledEffect effect = mock(ParticleEffectPool.PooledEffect.class);
 		when(particleService.getEffect(any())).thenReturn(effect);
 
-		component.startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+		component.startEffect(ParticleService.ParticleEffectType.RAIN);
 		component.stopEffectCategory(ParticleService.ENTITY_EFFECT);
 		verify(effect, times(0)).free();
 
@@ -235,7 +230,7 @@ class ParticleEffectComponentTest {
 		ParticleEffectPool.PooledEffect effect = mock(ParticleEffectPool.PooledEffect.class);
 		when(particleService.getEffect(any())).thenReturn(effect);
 
-		component.startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+		component.startEffect(ParticleService.ParticleEffectType.RAIN);
 	}
 
 	@Test

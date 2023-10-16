@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Pool;
 import com.csse3200.game.components.ParticleEffectComponent;
 import com.csse3200.game.rendering.ParticleEffectWrapper;
 import org.slf4j.Logger;
@@ -46,7 +45,7 @@ public class ParticleService {
 	 * Enum for each type of particle effect known to the particle system
 	 */
 	public enum ParticleEffectType {
-		ACID_RAIN(WEATHER_EVENT, "particle-effects/acidRain.p", 1, 10),
+		RAIN(WEATHER_EVENT, "particle-effects/acidRain.p", 1, 10),
 		BLIZZARD(WEATHER_EVENT, "particle-effects/snowEffect.p", 1, 10),
 		SUCCESS_EFFECT(ENTITY_EFFECT, "particle-effects/successEffect.p", 1, 10),
 		ATTACK_EFFECT(ENTITY_EFFECT, "particle-effects/attackEffect.p", 1, 10),
