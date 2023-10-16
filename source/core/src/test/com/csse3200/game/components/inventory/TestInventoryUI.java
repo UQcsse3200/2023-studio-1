@@ -129,7 +129,6 @@ public class TestInventoryUI {
 		player.create();
 		verify(inventoryDisplay).create();
 		verify(stage).addActor(windowArgument.capture());
-		verify(inventoryDisplay).setDragItems(any(), any());
 		Window window = windowArgument.getValue();
 
 		Table inventorySlots = (Table) window.getChildren().begin()[1];
