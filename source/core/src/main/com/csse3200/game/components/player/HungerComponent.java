@@ -28,11 +28,10 @@ public class HungerComponent extends Component {
 		if (checkIfStarving() && min % 10 == 0) {
 			entity.getComponent(CombatStatsComponent.class).addHealth(-5);
 		}
-		checkIfStarving();
 	}
 
 	public boolean checkIfStarving() {
-		return hungerLevel >= 100;
+		return hungerLevel <= 0;
 	}
 
 	public int getHungerLevel() {
@@ -46,7 +45,7 @@ public class HungerComponent extends Component {
 	}
 
 	public void increaseHungerLevel(int num) {
-		hungerLevel += num;
+		hungerLevel -= num;
 
 		if (hungerLevel <= 0) {
 			hungerLevel = 0;
@@ -57,7 +56,7 @@ public class HungerComponent extends Component {
 		ServiceLocator.getPlayerHungerService().getEvents().trigger("hungerUpdate", hungerLevel);
 
 		// If the players hunger level is below 50%, then the player gains health
-		if (hungerLevel < 50) {
+		if (hungerLevel > 50) {
 			ServiceLocator.getGameArea().getPlayer().getComponent(CombatStatsComponent.class).addHealth(3);
 		}
 	}
