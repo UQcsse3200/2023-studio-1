@@ -15,10 +15,7 @@ import com.csse3200.game.components.npc.AnimalAnimationController;
 import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.npc.TamableComponent;
 import com.csse3200.game.components.player.*;
-import com.csse3200.game.components.ship.ShipAnimationController;
-import com.csse3200.game.components.ship.ShipLightComponent;
-import com.csse3200.game.components.ship.ShipProgressComponent;
-import com.csse3200.game.components.ship.ShipTimeSkipComponent;
+import com.csse3200.game.components.ship.*;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.factories.ShipDebrisFactory;
 import com.csse3200.game.entities.factories.ShipFactory;
@@ -526,6 +523,11 @@ public class Entity implements Json.Serializable {
         JsonValue shipLightComponentJson = jsonMap.get(COMPONENTS_STRING)
                 .get(ShipLightComponent.class.getSimpleName());
         shipLightComponent.read(json, shipLightComponentJson);
+
+        ShipDisplay shipDisplay = ship.getComponent(ShipDisplay.class);
+        JsonValue shipDisplayJson = jsonMap.get(COMPONENTS_STRING)
+                .get(ShipDisplay.class.getSimpleName());
+        shipDisplay.read(json, shipDisplayJson);
 
         ship.setPosition(position);
     }
