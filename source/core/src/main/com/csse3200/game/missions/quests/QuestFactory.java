@@ -1,5 +1,8 @@
 package com.csse3200.game.missions.quests;
 
+import com.csse3200.game.areas.weather.AcidShowerEvent;
+import com.csse3200.game.areas.weather.BlizzardEvent;
+import com.csse3200.game.areas.weather.RainStormEvent;
 import com.csse3200.game.areas.weather.SolarSurgeEvent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
@@ -11,7 +14,6 @@ import com.csse3200.game.missions.cutscenes.Cutscene;
 import com.csse3200.game.missions.rewards.*;
 import com.csse3200.game.services.ServiceLocator;
 
-import java.security.SecureRandom;
 import java.util.*;
 import java.util.function.Supplier;
 
@@ -28,6 +30,8 @@ public class QuestFactory {
     public static final String CONNECTION_QUEST_NAME = "Connection";
     public static final String HOME_SICK_QUEST_NAME = "Home Sick";
     public static final String SHIP_REPAIRS_QUEST_NAME = "Ship Repairs";
+    public static final String PART_FINDER_I_QUEST_NAME = "Part Finder I";
+    public static final String SPACE_DEBRIS_QUEST_NAME = "Space Debris";
     public static final String BRINGING_IT_ALL_TOGETHER_QUEST_NAME = "Bringing It All Together";
     public static final String ACT_II_MAIN_QUEST_NAME = "Making Contact";
     public static final String AN_IMMINENT_THREAT_QUEST_NAME = "An Imminent Threat";
@@ -41,6 +45,12 @@ public class QuestFactory {
     public static final String ANIMAL_REPEAT_QUEST = "Animal Lover";
     public static final String PLANT_REPEAT_QUEST = "Green Thumb";
     public static final String WATER_REPEAT_QUEST = "Wet roots";
+    public static final String SHIP_PART_REPEAT_QUEST = "No Parts?";
+    public static final String CRAVINGS_I_QUESTS_NAME = "Cravings I";
+    public static final String CRAVINGS_II_QUESTS_NAME = "Cravings II";
+    public static final String THE_THUNDERLORDS_BLESSING_QUEST_NAME = "The Thunderlord's Blessing";
+    public static final String ITS_COLD_OUTSIDE_QUEST_NAME = "It's Cold Outside";
+    public static final String ACID_RAIN_QUEST_NAME = "Acid Rain!";
 
     private QuestFactory() {
         // This class should not be instantiated - if it is, do nothing
@@ -225,6 +235,25 @@ public class QuestFactory {
         ));
         return new PlantInteractionQuest(WATER_REPEAT_QUEST, reward, MissionManager.MissionEvent.WATER_CROP,
                 Set.of("Cosmic Cob", "Aloe Vera", "Hammer Plant", "Space Snapper", "Deadly Nightshade", "Atomic Algae"), 15);
+    }
+
+    /**
+     * Creates the recursive Ship Part {@link InventoryStateQuest}
+     * @return - the recursive Ship Part Quest
+     */
+    public static InventoryStateQuest createRecursivePartQuest() {
+        String dialogue = """
+                No parts? :(
+                """;
+
+        MultiReward reward = new MultiReward(List.of(
+                new ConsumePlayerItemsReward(Map.of("Hammer Flower", 3)),
+                new QuestReward(List.of(QuestFactory::createRecursivePartQuest), new ArrayList<>()),
+                new ItemReward(List.of(ItemFactory.createShipPart())),
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
+        ));
+
+        return new InventoryStateQuest(SHIP_PART_REPEAT_QUEST, reward, Map.of("Hammer Flower", 3));
     }
 
     /**
@@ -415,7 +444,7 @@ public class QuestFactory {
                         ItemFactory.createShipPart(),
                         ItemFactory.createShipPart()
                 )),
-                new QuestReward(new ArrayList<>(), questsToActivate),
+                new QuestReward(List.of(QuestFactory::createCravingsIQuests), questsToActivate),
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
         return new InventoryStateQuest(HOME_SICK_QUEST_NAME, reward, Map.of("Nightshade Berry", 9));
@@ -427,21 +456,86 @@ public class QuestFactory {
      */
     public static ShipRepairQuest createShipRepairsQuest() {
         List<Supplier<Quest>> questsToActivate = new ArrayList<>();
+        questsToActivate.add(QuestFactory::createPartFinderIQuest);
         questsToActivate.add(QuestFactory::createBringingItAllTogetherQuest);
 
         String dialogue = """
-                "Well done. {WAIT}Now I can get started on repairing your radio.
+                "Well done. {WAIT}Now I can get started on repairing your radio. 
                 {WAIT}Keep repairing the {COLOR=#76428A}SHIP{COLOR=BLACK}, and come to me when you have added enough {COLOR=#76428A}SHIP PARTS{COLOR=BLACK}."
+                {WAIT}By the way, I've found some more stray pieces of debris." 
+                Jarrael takes out a piece of paper with a rough sketch of the nearby area. 
+                {WAIT}"I've marked out the general area, go there and clean up anything you find. You might find more spare parts to repair your ship."
                 """;
 
         MultiReward reward = new MultiReward(List.of(
-                new ItemReward(List.of(
-                        ItemFactory.createShipPart()
-                )),
+                new ClueReward(ItemFactory.createClueItem()),
                 new QuestReward(new ArrayList<>(), questsToActivate),
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
         return new ShipRepairQuest(SHIP_REPAIRS_QUEST_NAME, reward, 3);
+    }
+
+    /**
+     * Creates the Clue {@link ShipRepairQuest}
+     * @return - the Clue Finder Quest
+     */
+    public static ShipRepairQuest createPartFinderIQuest() {
+        List<Supplier<Quest>> questsToActivate = new ArrayList<>();
+        questsToActivate.add(QuestFactory::createSpaceDebrisQuest);
+
+        String dialogue = """
+                As you return to Jarrael, a bright flash in the sky catches your attention. 
+                {WAIT}"Well, it seems like some stray space debris has just broken through the atmosphere..." 
+                {WAIT}Both of you watch as the burning trail of debris slowly descends to the planet's surface in the south. 
+                {WAIT}"What a perfect opportunity! You should go over and check it out. 
+                Bring me back whatever wreckage you can find and I'll try my best to make them usable for repairs."
+                """;
+
+        MultiReward reward = new MultiReward(List.of(
+                //new ClueReward(ItemFactory.createClueItem()),
+                new ItemReward(List.of(ItemFactory.createShipPart())),
+                new QuestReward(new ArrayList<>(), questsToActivate),
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
+        ));
+        return new ShipRepairQuest(PART_FINDER_I_QUEST_NAME, reward, 1);
+    }
+
+    /**
+     * Creates the Space Debris {@link ClearDebrisQuest}
+     * @return - the Space Debris Quest
+     */
+    // TODO: set up debris spawning/tracking. Change to ClearDebrisQuest
+    // PLACEHOLDER ATM JUST SO I DON'T HAVE TO DEAL WITH SO MANY CONFLICTS LATER PLEASE
+    public static ShipRepairQuest createSpaceDebrisQuest() {
+        List<Supplier<Quest>> questsToActivate = new ArrayList<>();
+        questsToActivate.add(QuestFactory::createBringingItAllTogetherQuest);
+
+        List<Supplier<Quest>> questsToBeSelectable = new ArrayList<>();
+        questsToBeSelectable.add(QuestFactory::createRecursivePartQuest);
+
+        String dialogue = """
+                "Lucky for you there's quite a few salvageable pieces from this wreckage. 
+                Here, I've cleaned them up for you. This should help with repairs."
+                {WAIT}The alien hands you a hefty number of ship parts before continuing. 
+                {WAIT}"You might have also noticed some strange creatures appearing from the wreckage. They are SHIP EATERS.
+                They'll start eating away at your ship if you let the get too close. 
+                {WAIT}If they eat too much of your ship, just bring me some HAMMER FLOWERS and I can get you more SHIP PARTS."
+                """;
+
+        MultiReward reward = new MultiReward(List.of(
+                new ItemReward(List.of(
+                        ItemFactory.createShipPart(),
+                        ItemFactory.createShipPart(),
+                        ItemFactory.createShipPart(),
+                        ItemFactory.createShipPart(),
+                        ItemFactory.createShipPart(),
+                        ItemFactory.createShipPart()
+                )),
+                new QuestReward(questsToBeSelectable, questsToActivate),
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
+        ));
+
+        return new ShipRepairQuest(SPACE_DEBRIS_QUEST_NAME, reward, 1);
     }
 
     /**
@@ -455,7 +549,7 @@ public class QuestFactory {
                 """;
 
         DialogueReward reward = new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN);
-        return new ShipRepairQuest(BRINGING_IT_ALL_TOGETHER_QUEST_NAME, reward, 17);
+        return new ShipRepairQuest(BRINGING_IT_ALL_TOGETHER_QUEST_NAME, reward, 7);
     }
 
     /**
@@ -541,7 +635,9 @@ public class QuestFactory {
                 {WAIT}Good luck!"
                 """;
         MultiReward reward = new MultiReward(List.of(
-                new QuestReward(List.of(QuestFactory::createHaberHobbyist), new ArrayList<>()),
+                new QuestReward(List.of(
+                        QuestFactory::createHaberHobbyist,
+                        QuestFactory::createTheThunderlordsBlessingQuests), new ArrayList<>()),
                 new ItemReward(List.of(
                         ItemFactory.createAtomicAlgaeSeed(),
                         ItemFactory.createAtomicAlgaeSeed()
@@ -578,6 +674,206 @@ public class QuestFactory {
 
         WinReward reward = new WinReward();
         return new MainQuest(ACT_III_MAIN_QUEST_NAME, reward, 9, requiredQuests, "weather the incoming storm, provide a haven for humanity");
+    }
+
+    public static AutoQuest createCravingsIQuests() {
+        Supplier<Quest> cravingsQuest = () -> {
+            Map<String, Integer> requiredItems = new HashMap<>();
+            requiredItems.put("Nightshade Berry", 12);
+            requiredItems.put("Ear of Cosmic Cob", 4);
+            requiredItems.put("Hammer Flower", 1);
+            requiredItems.put("milk", 4);
+
+            List<Entity> rewardItems = new ArrayList<>();
+            rewardItems.add(ItemFactory.createLightItem());
+            rewardItems.add(ItemFactory.createLightItem());
+            rewardItems.add(ItemFactory.createLightItem());
+            rewardItems.add(ItemFactory.createSpaceSnapperSeed());
+            rewardItems.add(ItemFactory.createAloeVeraSeed());
+
+            MultiReward reward = new MultiReward(List.of(
+                    new QuestReward(List.of(QuestFactory::createCravingsIIQuests), new ArrayList<>()),
+                    new ConsumePlayerItemsReward(requiredItems),
+                    new ItemReward(rewardItems)
+            ));
+            return new InventoryStateQuest(CRAVINGS_I_QUESTS_NAME, reward, requiredItems);
+        };
+
+        String dialogue = """
+                "Ever since I tasted those berries you harvested for me, I've been craving a dish my parents used to make for me.
+                {WAIT}Would I be able to get some assistance from you? {WAIT}You'll get something in return."
+                """;
+
+        MultiReward reward = new MultiReward(List.of(
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN),
+                new QuestReward(new ArrayList<>(), List.of(cravingsQuest))
+        ));
+        return new AutoQuest(CRAVINGS_I_QUESTS_NAME, reward, "Can you get some items for me?");
+    }
+
+    public static AutoQuest createCravingsIIQuests() {
+        Supplier<Quest> cravingsQuest = () -> {
+            Map<String, Integer> requiredItems = new HashMap<>();
+            requiredItems.put("milk", 6);
+            requiredItems.put("egg", 6);
+            requiredItems.put("Beef", 3);
+            requiredItems.put("Chicken", 2);
+            requiredItems.put("golden egg", 2);
+
+            List<Entity> rewardItems = new ArrayList<>();
+            for (int i = 0; i < 20; i++) {
+                rewardItems.add(ItemFactory.createFenceItem());
+            }
+            rewardItems.add(ItemFactory.createFertiliser());
+            rewardItems.add(ItemFactory.createFertiliser());
+            rewardItems.add(ItemFactory.createFertiliser());
+            rewardItems.add(ItemFactory.createFertiliser());
+            rewardItems.add(ItemFactory.createFertiliser());
+            rewardItems.add(ItemFactory.createHammerPlantSeed());
+            rewardItems.add(ItemFactory.createHammerPlantSeed());
+            rewardItems.add(ItemFactory.createCosmicCobSeed());
+            rewardItems.add(ItemFactory.createCosmicCobSeed());
+
+            MultiReward reward = new MultiReward(List.of(
+                    new QuestReward(List.of(QuestFactory::createCravingsIQuests), new ArrayList<>()),
+                    new ConsumePlayerItemsReward(requiredItems),
+                    new ItemReward(rewardItems)
+            ));
+            return new InventoryStateQuest(CRAVINGS_II_QUESTS_NAME, reward, requiredItems);
+        };
+
+        String dialogue = """
+                "Those items you got me before were top quality!
+                {WAIT}I've thought of another dish I used to enjoy.
+                {WAIT}This one needs a bit more protein.
+                {WAIT}Come back to me when you've collected the ingredients, and you'll get some things in return."
+                """;
+
+        MultiReward reward = new MultiReward(List.of(
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN),
+                new QuestReward(new ArrayList<>(), List.of(cravingsQuest))
+        ));
+        return new AutoQuest(CRAVINGS_II_QUESTS_NAME, reward, "Can you get some items for me?");
+    }
+
+    public static AutoQuest createTheThunderlordsBlessingQuests() {
+        Supplier<Quest> thunderlordsWrathQuest = () -> {
+            List<Entity> rewardItems = new ArrayList<>();
+            rewardItems.add(ItemFactory.createLightItem());
+            rewardItems.add(ItemFactory.createLightItem());
+            rewardItems.add(ItemFactory.createFertiliser());
+            rewardItems.add(ItemFactory.createFertiliser());
+            rewardItems.add(ItemFactory.createFertiliser());
+            rewardItems.add(ItemFactory.createFertiliser());
+            rewardItems.add(ItemFactory.createFertiliser());
+            rewardItems.add(ItemFactory.createAtomicAlgaeSeed());
+
+            MultiReward reward = new MultiReward(List.of(
+                    new QuestReward(List.of(QuestFactory::createItsColdOutsideQuests), new ArrayList<>()),
+                    new ItemReward(rewardItems)
+            ));
+            return new PlantInteractionQuest(THE_THUNDERLORDS_BLESSING_QUEST_NAME, reward, 18,
+                    MissionManager.MissionEvent.HARVEST_CROP, Set.of("Atomic Algae"), 6);
+        };
+
+        String dialogue = """
+                "A storm is coming, it'll be a long one.
+                {WAIT}But this is a good chance to grow some {COLOR=#76428A}ATOMIC ALGAE{COLOR=BLACK} - they love wet weather.
+                {WAIT}Come back to me before the storm passes in {COLOR=#3ABE88}18 HOURS{COLOR=BLACK}, after you've harvested some {COLOR=#76428A}ATOMIC ALGAE{COLOR=BLACK}.
+                {WAIT}I might have something for you."
+                """;
+
+        MultiReward reward = new MultiReward(List.of(
+                new TriggerWeatherReward(List.of(new RainStormEvent(1, 17, 5, 1.4f))),
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN),
+                new QuestReward(new ArrayList<>(), List.of(thunderlordsWrathQuest))
+        ));
+        return new AutoQuest(THE_THUNDERLORDS_BLESSING_QUEST_NAME, reward, "A storm is coming...");
+    }
+
+    public static AutoQuest createItsColdOutsideQuests() {
+        Supplier<Quest> itsColdOutsideQuest = () -> {
+            List<Entity> rewardItems = new ArrayList<>();
+            rewardItems.add(ItemFactory.createBeef());
+            rewardItems.add(ItemFactory.createBeef());
+            rewardItems.add(ItemFactory.createBeef());
+            rewardItems.add(ItemFactory.createBeef());
+            rewardItems.add(ItemFactory.createBeef());
+            rewardItems.add(ItemFactory.createAtomicAlgaeSeed());
+
+            MultiReward reward = new MultiReward(List.of(
+                    new QuestReward(List.of(QuestFactory::createAcidRainQuests), new ArrayList<>()),
+                    new ItemReward(rewardItems)
+            ));
+            return new PlantInteractionQuest(ITS_COLD_OUTSIDE_QUEST_NAME, reward, 18,
+                    MissionManager.MissionEvent.HARVEST_CROP, Set.of("Deadly Nightshade"), 10);
+        };
+
+        String dialogue = """
+                "Do you feel that? {WAIT}A blizzard is approaching.
+                {WAIT}They tend to make some of the more exotic plants less effective, like the {COLOR=#76428A}HAMMER PLANT{COLOR=BLACK}'s healing or the {COLOR=#76428A}NIGHTSHADE{COLOR=BLACK}'s poisoning.
+                {WAIT}The most severe blizzards may also dry out your crops quicker, so be careful.
+                {WAIT}Come back to me before the blizzard passes in {COLOR=#3ABE88}18 HOURS{COLOR=BLACK}, after you've harvested some {COLOR=#76428A}NIGHTSHADE{COLOR=BLACK}.
+                {WAIT}I might have something for you."
+                """;
+
+        MultiReward reward = new MultiReward(List.of(
+                new TriggerWeatherReward(List.of(new BlizzardEvent(1, 17, 5, 1.4f))),
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN),
+                new QuestReward(new ArrayList<>(), List.of(itsColdOutsideQuest))
+        ));
+        return new AutoQuest(ITS_COLD_OUTSIDE_QUEST_NAME, reward, "Who turned the AC on?");
+    }
+
+    public static AutoQuest createAcidRainQuests() {
+        Supplier<Quest> acidRainQuest = () -> {
+            List<Entity> rewardItems = new ArrayList<>();
+            rewardItems.add(ItemFactory.createFertiliser());
+            rewardItems.add(ItemFactory.createFertiliser());
+            rewardItems.add(ItemFactory.createFertiliser());
+            rewardItems.add(ItemFactory.createFertiliser());
+            rewardItems.add(ItemFactory.createFertiliser());
+            rewardItems.add(ItemFactory.createFertiliser());
+            rewardItems.add(ItemFactory.createFertiliser());
+            rewardItems.add(ItemFactory.createFertiliser());
+            rewardItems.add(ItemFactory.createFertiliser());
+            rewardItems.add(ItemFactory.createFertiliser());
+            rewardItems.add(ItemFactory.createAtomicAlgaeSeed());
+            rewardItems.add(ItemFactory.createAtomicAlgaeSeed());
+            rewardItems.add(ItemFactory.createAtomicAlgaeSeed());
+
+            MultiReward reward = new MultiReward(List.of(
+                    new QuestReward(List.of(QuestFactory::createTheThunderlordsBlessingQuests), new ArrayList<>()),
+                    new ItemReward(rewardItems)
+            ));
+            return new PlantInteractionQuest(ACID_RAIN_QUEST_NAME, reward, 18,
+                    MissionManager.MissionEvent.HARVEST_CROP, Set.of("Hammer Plant"), 14);
+        };
+
+        String dialogue = """
+                "Oh no... {WAIT}I sense... {WAIT}something{WAIT} coming.
+                {WAIT}It's a rare occurrence, but this planet is known to have bouts of {COLOR=#3ABE88}ACID SHOWER{COLOR=BLACK}s ever since {COLOR=RED}The Night of the Black Sun{COLOR=BLACK}.
+                {WAIT}They're incredibly dangerous to your plants. {WAIT}Luckily, you have {COLOR=#3ABE88}6 HOURS{COLOR=BLACK} to prepare.
+                {WAIT}Make sure you have {COLOR=#76428A}HAMMER PLANT{COLOR=BLACK}s covering all of your crops.
+                {WAIT}Take some {COLOR=#76428A}SEEDS{COLOR=BLACK}, just to be safe.
+                {WAIT}Come back to me before the acid shower passes in {COLOR=#3ABE88}18 HOURS{COLOR=BLACK}, after you've harvested some {COLOR=#76428A}HAMMER PLANT{COLOR=BLACK}s.
+                {WAIT}I should have something for you."
+                """;
+
+        MultiReward reward = new MultiReward(List.of(
+                new TriggerWeatherReward(List.of(new AcidShowerEvent(6, 12, 5, 1.4f))),
+                new ItemReward(List.of(
+                        ItemFactory.createHammerPlantSeed(),
+                        ItemFactory.createHammerPlantSeed(),
+                        ItemFactory.createHammerPlantSeed(),
+                        ItemFactory.createHammerPlantSeed(),
+                        ItemFactory.createHammerPlantSeed(),
+                        ItemFactory.createHammerPlantSeed()
+                )),
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN),
+                new QuestReward(new ArrayList<>(), List.of(acidRainQuest))
+        ));
+        return new AutoQuest(ACID_RAIN_QUEST_NAME, reward, "Ow! That stings!");
     }
 
     /**

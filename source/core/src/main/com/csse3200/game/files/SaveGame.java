@@ -1,6 +1,5 @@
 package com.csse3200.game.files;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -48,6 +47,7 @@ public class SaveGame {
     private int day;
     private int hour;
     private int minute;
+    private float oxygenLevel;
 
     private ClimateController climate;
 
@@ -97,6 +97,22 @@ public class SaveGame {
     }
 
     /**
+     * Gets the oxygenLevel value stored in the GameState
+     * @return the in game oxygenLevel as an int
+     */
+    public float getOxygenLevel() {
+      return oxygenLevel;
+    }
+
+    /**
+     * Sets the oxygenLevel value stored in the GameState
+     * @param oxygenLevel the oxygenLevel to set GameState to store
+     */
+    public void setOxygenLevel(float oxygenLevel) {
+      this.oxygenLevel = oxygenLevel;
+    }
+
+    /**
      * Gets the player entity stored in the GameState
      * @return the player entity stored in the GameState
      */
@@ -143,7 +159,7 @@ public class SaveGame {
         if (e.getType() == EntityType.ASTROLOTL || e.getType() == EntityType.CHICKEN ||
                 e.getType() == EntityType.COW || e.getType() == EntityType.OXYGEN_EATER ||
                 e.getType() == EntityType.SHIP_DEBRIS || e.getType() == EntityType.FIRE_FLIES ||
-                e.getType() == EntityType.SHIP) {
+                e.getType() == EntityType.SHIP || e.getType() == EntityType.SHIP_EATER) {
           tmp.add(e);
         }
       }
