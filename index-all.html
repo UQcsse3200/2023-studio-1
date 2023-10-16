@@ -66,7 +66,9 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Creates an <a href="com/csse3200/game/missions/achievements/Achievement.html" title="class in com.csse3200.game.missions.achievements"><code>Achievement</code></a> with the given <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link"><code>String</code></a> name.</div>
 </dd>
-<dt><a href="com/csse3200/game/services/ParticleService.ParticleEffectType.html#ACID_RAIN" class="member-name-link">ACID_RAIN</a> - Enum constant in enum class com.csse3200.game.services.<a href="com/csse3200/game/services/ParticleService.ParticleEffectType.html" title="enum class in com.csse3200.game.services">ParticleService.ParticleEffectType</a></dt>
+<dt><a href="com/csse3200/game/services/sound/EffectSoundFile.html#ACID_BURN" class="member-name-link">ACID_BURN</a> - Enum constant in enum class com.csse3200.game.services.sound.<a href="com/csse3200/game/services/sound/EffectSoundFile.html" title="enum class in com.csse3200.game.services.sound">EffectSoundFile</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/missions/quests/QuestFactory.html#ACID_RAIN_QUEST_NAME" class="member-name-link">ACID_RAIN_QUEST_NAME</a> - Static variable in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/QuestFactory.html" title="class in com.csse3200.game.missions.quests">QuestFactory</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/weather/AcidShowerEvent.html" class="type-name-link" title="class in com.csse3200.game.areas.weather">AcidShowerEvent</a> - Class in <a href="com/csse3200/game/areas/weather/package-summary.html">com.csse3200.game.areas.weather</a></dt>
 <dd>
@@ -156,6 +158,11 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/entities/Entity.html#addComponent(com.csse3200.game.components.Component)" class="member-name-link">addComponent(Component)</a> - Method in class com.csse3200.game.entities.<a href="com/csse3200/game/entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></dt>
 <dd>
 <div class="block">Add a component to the entity.</div>
+</dd>
+<dt><a href="com/csse3200/game/services/ParticleService.html#addComponent(com.csse3200.game.components.ParticleEffectComponent)" class="member-name-link">addComponent(ParticleEffectComponent)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ParticleService.html" title="class in com.csse3200.game.services">ParticleService</a></dt>
+<dd>
+<div class="block">Adds a <a href="com/csse3200/game/components/ParticleEffectComponent.html" title="class in com.csse3200.game.components"><code>ParticleEffectComponent</code></a> to the <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link"><code>List</code></a> of <a href="com/csse3200/game/components/ParticleEffectComponent.html" title="class in com.csse3200.game.components"><code>ParticleEffectComponent</code></a>s tracked by the
+ <a href="com/csse3200/game/services/ParticleService.html" title="class in com.csse3200.game.services"><code>ParticleService</code></a> so that it can render each individual effect.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/placeables/DialogueComponent.html#addCutsceneAnimation(com.csse3200.game.entities.Entity)" class="member-name-link">addCutsceneAnimation(Entity)</a> - Method in class com.csse3200.game.components.placeables.<a href="com/csse3200/game/components/placeables/DialogueComponent.html" title="class in com.csse3200.game.components.placeables">DialogueComponent</a></dt>
 <dd>&nbsp;</dd>
@@ -430,6 +437,8 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/components/player/PlayerActions.events.html#ATTACK" class="member-name-link">ATTACK</a> - Enum constant in enum class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/PlayerActions.events.html" title="enum class in com.csse3200.game.components.player">PlayerActions.events</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/services/ParticleService.ParticleEffectType.html#ATTACK_EFFECT" class="member-name-link">ATTACK_EFFECT</a> - Enum constant in enum class com.csse3200.game.services.<a href="com/csse3200/game/services/ParticleService.ParticleEffectType.html" title="enum class in com.csse3200.game.services">ParticleService.ParticleEffectType</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/combat/attackpatterns/AttackPatternComponent.html#attackFrequency" class="member-name-link">attackFrequency</a> - Variable in class com.csse3200.game.components.combat.attackpatterns.<a href="com/csse3200/game/components/combat/attackpatterns/AttackPatternComponent.html" title="class in com.csse3200.game.components.combat.attackpatterns">AttackPatternComponent</a></dt>
 <dd>
 <div class="block">Frequency of attacks in seconds</div>
@@ -537,6 +546,16 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/rendering/BlinkComponent.html#%3Cinit%3E()" class="member-name-link">BlinkComponent()</a> - Constructor for class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/BlinkComponent.html" title="class in com.csse3200.game.rendering">BlinkComponent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/services/ParticleService.ParticleEffectType.html#BLIZZARD" class="member-name-link">BLIZZARD</a> - Enum constant in enum class com.csse3200.game.services.<a href="com/csse3200/game/services/ParticleService.ParticleEffectType.html" title="enum class in com.csse3200.game.services">ParticleService.ParticleEffectType</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/services/sound/EffectSoundFile.html#BLIZZARD" class="member-name-link">BLIZZARD</a> - Enum constant in enum class com.csse3200.game.services.sound.<a href="com/csse3200/game/services/sound/EffectSoundFile.html" title="enum class in com.csse3200.game.services.sound">EffectSoundFile</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/areas/weather/BlizzardEvent.html" class="type-name-link" title="class in com.csse3200.game.areas.weather">BlizzardEvent</a> - Class in <a href="com/csse3200/game/areas/weather/package-summary.html">com.csse3200.game.areas.weather</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/areas/weather/BlizzardEvent.html#%3Cinit%3E(int,int,int,float)" class="member-name-link">BlizzardEvent(int, int, int, float)</a> - Constructor for class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/BlizzardEvent.html" title="class in com.csse3200.game.areas.weather">BlizzardEvent</a></dt>
+<dd>
+<div class="block">Constructs an <a href="com/csse3200/game/areas/weather/WeatherEvent.html" title="class in com.csse3200.game.areas.weather"><code>WeatherEvent</code></a> with a given duration, priority and countdown</div>
+</dd>
 <dt><a href="com/csse3200/game/physics/BodyUserData.html" class="type-name-link" title="class in com.csse3200.game.physics">BodyUserData</a> - Class in <a href="com/csse3200/game/physics/package-summary.html">com.csse3200.game.physics</a></dt>
 <dd>
 <div class="block">POJO which contains the custom data attached to each box2D entity.</div>
@@ -589,6 +608,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/tasks/ChaseTask.html#%3Cinit%3E(com.csse3200.game.entities.Entity,int,float,float,com.badlogic.gdx.math.Vector2,boolean)" class="member-name-link">ChaseTask(Entity, int, float, float, Vector2, boolean)</a> - Constructor for class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/ChaseTask.html" title="class in com.csse3200.game.components.tasks">ChaseTask</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/player/HungerComponent.html#checkIfStarving()" class="member-name-link">checkIfStarving()</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/HungerComponent.html" title="class in com.csse3200.game.components.player">HungerComponent</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/missions/quests/InventoryStateQuest.html#checkPlayerInventoryMissing()" class="member-name-link">checkPlayerInventoryMissing()</a> - Method in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/InventoryStateQuest.html" title="class in com.csse3200.game.missions.quests">InventoryStateQuest</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/EntityType.html#CHEST" class="member-name-link">CHEST</a> - Enum constant in enum class com.csse3200.game.entities.<a href="com/csse3200/game/entities/EntityType.html" title="enum class in com.csse3200.game.entities">EntityType</a></dt>
 <dd>&nbsp;</dd>
@@ -646,6 +667,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Creates a new climate controller that listens to time events and maintains the in-game climate</div>
 </dd>
+<dt><a href="com/csse3200/game/areas/weather/WeatherEvent.html#climateControllerEvents" class="member-name-link">climateControllerEvents</a> - Variable in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/WeatherEvent.html" title="class in com.csse3200.game.areas.weather">WeatherEvent</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/player/OpenPauseComponent.html#closePauseMenu()" class="member-name-link">closePauseMenu()</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/OpenPauseComponent.html" title="class in com.csse3200.game.components.player">OpenPauseComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/items/ItemType.html#CLUE_ITEM" class="member-name-link">CLUE_ITEM</a> - Enum constant in enum class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/ItemType.html" title="enum class in com.csse3200.game.components.items">ItemType</a></dt>
@@ -967,6 +990,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/HungerEntityType.html#COW" class="member-name-link">COW</a> - Enum constant in enum class com.csse3200.game.entities.<a href="com/csse3200/game/entities/HungerEntityType.html" title="enum class in com.csse3200.game.entities">HungerEntityType</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/missions/quests/QuestFactory.html#CRAVINGS_I_QUESTS_NAME" class="member-name-link">CRAVINGS_I_QUESTS_NAME</a> - Static variable in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/QuestFactory.html" title="class in com.csse3200.game.missions.quests">QuestFactory</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/missions/quests/QuestFactory.html#CRAVINGS_II_QUESTS_NAME" class="member-name-link">CRAVINGS_II_QUESTS_NAME</a> - Static variable in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/QuestFactory.html" title="class in com.csse3200.game.missions.quests">QuestFactory</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/ai/tasks/AITaskComponent.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.ai.tasks.<a href="com/csse3200/game/ai/tasks/AITaskComponent.html" title="class in com.csse3200.game.ai.tasks">AITaskComponent</a></dt>
 <dd>
 <div class="block">When component is created, create all tasks.</div>
@@ -988,10 +1015,6 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/TestGameArea.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.areas.<a href="com/csse3200/game/areas/TestGameArea.html" title="class in com.csse3200.game.areas">TestGameArea</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/areas/weather/WeatherEventDisplay.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/WeatherEventDisplay.html" title="class in com.csse3200.game.areas.weather">WeatherEventDisplay</a></dt>
-<dd>
-<div class="block">Initializes the display and listens to the updates in the game hours.</div>
-</dd>
 <dt><a href="com/csse3200/game/components/AuraLightComponent.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/AuraLightComponent.html" title="class in com.csse3200.game.components">AuraLightComponent</a></dt>
 <dd>
 <div class="block">Creates the event listener for the light to enable it to be toggled on and off</div>
@@ -1096,6 +1119,10 @@ loadScripts(document, 'script');</script>
  called
  and the player can observe the effects.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/ParticleEffectComponent.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/ParticleEffectComponent.html" title="class in com.csse3200.game.components">ParticleEffectComponent</a></dt>
+<dd>
+<div class="block">Adds event listeners to the component, allowing for effects to be stopped and started.</div>
+</dd>
 <dt><a href="com/csse3200/game/components/placeables/ChestComponent.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.placeables.<a href="com/csse3200/game/components/placeables/ChestComponent.html" title="class in com.csse3200.game.components.placeables">ChestComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/placeables/DialogueComponent.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.placeables.<a href="com/csse3200/game/components/placeables/DialogueComponent.html" title="class in com.csse3200.game.components.placeables">DialogueComponent</a></dt>
@@ -1104,6 +1131,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Called when the entity is created and registered.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/placeables/LightController.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.placeables.<a href="com/csse3200/game/components/placeables/LightController.html" title="class in com.csse3200.game.components.placeables">LightController</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/placeables/PlaceableEvents.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.placeables.<a href="com/csse3200/game/components/placeables/PlaceableEvents.html" title="class in com.csse3200.game.components.placeables">PlaceableEvents</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/placeables/SprinklerComponent.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.placeables.<a href="com/csse3200/game/components/placeables/SprinklerComponent.html" title="class in com.csse3200.game.components.placeables">SprinklerComponent</a></dt>
@@ -1251,6 +1280,10 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/components/tasks/MoveToShipTask.html#create(com.csse3200.game.ai.tasks.TaskRunner)" class="member-name-link">create(TaskRunner)</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/MoveToShipTask.html" title="class in com.csse3200.game.components.tasks">MoveToShipTask</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/tasks/PanicTask.html#create(com.csse3200.game.ai.tasks.TaskRunner)" class="member-name-link">create(TaskRunner)</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/PanicTask.html" title="class in com.csse3200.game.components.tasks">PanicTask</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/missions/quests/QuestFactory.html#createAcidRainQuests()" class="member-name-link">createAcidRainQuests()</a> - Static method in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/QuestFactory.html" title="class in com.csse3200.game.missions.quests">QuestFactory</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/missions/quests/QuestFactory.html#createActIIIMainQuest()" class="member-name-link">createActIIIMainQuest()</a> - Static method in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/QuestFactory.html" title="class in com.csse3200.game.missions.quests">QuestFactory</a></dt>
 <dd>
 <div class="block">Creates the Act III <a href="com/csse3200/game/missions/quests/MainQuest.html" title="class in com.csse3200.game.missions.quests"><code>MainQuest</code></a></div>
@@ -1389,6 +1422,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Creates a cow entity</div>
 </dd>
+<dt><a href="com/csse3200/game/missions/quests/QuestFactory.html#createCravingsIIQuests()" class="member-name-link">createCravingsIIQuests()</a> - Static method in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/QuestFactory.html" title="class in com.csse3200.game.missions.quests">QuestFactory</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/missions/quests/QuestFactory.html#createCravingsIQuests()" class="member-name-link">createCravingsIQuests()</a> - Static method in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/QuestFactory.html" title="class in com.csse3200.game.missions.quests">QuestFactory</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/factories/PlantFactory.html#createDeadlyNightshade(com.csse3200.game.areas.terrain.CropTileComponent)" class="member-name-link">createDeadlyNightshade(CropTileComponent)</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/PlantFactory.html" title="class in com.csse3200.game.entities.factories">PlantFactory</a></dt>
 <dd>
 <div class="block">Creates a Nightshade entity that is a deadly type plant.</div>
@@ -1533,6 +1570,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Creates an invisible obstacle entity which located onto the non-traversable area of the map.</div>
 </dd>
+<dt><a href="com/csse3200/game/missions/quests/QuestFactory.html#createItsColdOutsideQuests()" class="member-name-link">createItsColdOutsideQuests()</a> - Static method in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/QuestFactory.html" title="class in com.csse3200.game.missions.quests">QuestFactory</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/physics/PhysicsEngine.html#createJoint(com.badlogic.gdx.physics.box2d.JointDef)" class="member-name-link">createJoint(JointDef)</a> - Method in class com.csse3200.game.physics.<a href="com/csse3200/game/physics/PhysicsEngine.html" title="class in com.csse3200.game.physics">PhysicsEngine</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/factories/ItemFactory.html#createLarry()" class="member-name-link">createLarry()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ItemFactory.html" title="class in com.csse3200.game.entities.factories">ItemFactory</a></dt>
@@ -1754,7 +1793,7 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Creates each image as an image object then adds to an array of images for later use</div>
 </dd>
-<dt><a href="com/csse3200/game/areas/weather/WeatherEventDisplay.html#createTextures()" class="member-name-link">createTextures()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/WeatherEventDisplay.html" title="class in com.csse3200.game.areas.weather">WeatherEventDisplay</a></dt>
+<dt><a href="com/csse3200/game/missions/quests/QuestFactory.html#createTheThunderlordsBlessingQuests()" class="member-name-link">createTheThunderlordsBlessingQuests()</a> - Static method in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/QuestFactory.html" title="class in com.csse3200.game.missions.quests">QuestFactory</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/factories/TractorFactory.html#createTractor()" class="member-name-link">createTractor()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/TractorFactory.html" title="class in com.csse3200.game.entities.factories">TractorFactory</a></dt>
 <dd>
@@ -1912,6 +1951,10 @@ loadScripts(document, 'script');</script>
 <div class="block">DialogueReward is a Reward that on collect() will call the correct dialogue display with its
  given dialogue.</div>
 </dd>
+<dt><a href="com/csse3200/game/missions/rewards/DialogueReward.html#%3Cinit%3E(com.csse3200.game.missions.cutscenes.Cutscene)" class="member-name-link">DialogueReward(Cutscene)</a> - Constructor for class com.csse3200.game.missions.rewards.<a href="com/csse3200/game/missions/rewards/DialogueReward.html" title="class in com.csse3200.game.missions.rewards">DialogueReward</a></dt>
+<dd>
+<div class="block">New <a href="com/csse3200/game/missions/rewards/DialogueReward.html" title="class in com.csse3200.game.missions.rewards"><code>DialogueReward</code></a> object</div>
+</dd>
 <dt><a href="com/csse3200/game/missions/rewards/DialogueReward.html#%3Cinit%3E(java.lang.String,com.csse3200.game.missions.cutscenes.Cutscene.CutsceneType)" class="member-name-link">DialogueReward(String, Cutscene.CutsceneType)</a> - Constructor for class com.csse3200.game.missions.rewards.<a href="com/csse3200/game/missions/rewards/DialogueReward.html" title="class in com.csse3200.game.missions.rewards">DialogueReward</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/ui/terminal/commands/DialogueScreenCommand.html" class="type-name-link" title="class in com.csse3200.game.ui.terminal.commands">DialogueScreenCommand</a> - Class in <a href="com/csse3200/game/ui/terminal/commands/package-summary.html">com.csse3200.game.ui.terminal.commands</a></dt>
@@ -1937,6 +1980,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/utils/DirectionUtils.html#%3Cinit%3E()" class="member-name-link">DirectionUtils()</a> - Constructor for class com.csse3200.game.utils.<a href="com/csse3200/game/utils/DirectionUtils.html" title="class in com.csse3200.game.utils">DirectionUtils</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainTile.TerrainCategory.html#DIRT" class="member-name-link">DIRT</a> - Enum constant in enum class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainTile.TerrainCategory.html" title="enum class in com.csse3200.game.areas.terrain">TerrainTile.TerrainCategory</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/services/ParticleService.ParticleEffectType.html#DIRT_EFFECT" class="member-name-link">DIRT_EFFECT</a> - Enum constant in enum class com.csse3200.game.services.<a href="com/csse3200/game/services/ParticleService.ParticleEffectType.html" title="enum class in com.csse3200.game.services">ParticleService.ParticleEffectType</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/input/InputService.html#disableInputType(int)" class="member-name-link">disableInputType(int)</a> - Method in class com.csse3200.game.input.<a href="com/csse3200/game/input/InputService.html" title="class in com.csse3200.game.input">InputService</a></dt>
 <dd>&nbsp;</dd>
@@ -1964,10 +2009,6 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainComponent.html#dispose()" class="member-name-link">dispose()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/areas/weather/WeatherEventDisplay.html#dispose()" class="member-name-link">dispose()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/WeatherEventDisplay.html" title="class in com.csse3200.game.areas.weather">WeatherEventDisplay</a></dt>
-<dd>
-<div class="block">Cleans up assets.</div>
-</dd>
 <dt><a href="com/csse3200/game/components/AuraLightComponent.html#dispose()" class="member-name-link">dispose()</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/AuraLightComponent.html" title="class in com.csse3200.game.components">AuraLightComponent</a></dt>
 <dd>
 <div class="block">Disposes of the light if the entity is disposed</div>
@@ -2006,6 +2047,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/npc/SingleDropHandler.html#dispose()" class="member-name-link">dispose()</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/SingleDropHandler.html" title="class in com.csse3200.game.components.npc">SingleDropHandler</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/ParticleEffectComponent.html#dispose()" class="member-name-link">dispose()</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/ParticleEffectComponent.html" title="class in com.csse3200.game.components">ParticleEffectComponent</a></dt>
+<dd>
+<div class="block">Disposes of the component, freeing all effects and removing the component from the entity.</div>
+</dd>
 <dt><a href="com/csse3200/game/components/placeables/DialogueComponent.html#dispose()" class="member-name-link">dispose()</a> - Method in class com.csse3200.game.components.placeables.<a href="com/csse3200/game/components/placeables/DialogueComponent.html" title="class in com.csse3200.game.components.placeables">DialogueComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/player/PlayerStatsDisplay.html#dispose()" class="member-name-link">dispose()</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/PlayerStatsDisplay.html" title="class in com.csse3200.game.components.player">PlayerStatsDisplay</a></dt>
@@ -2127,10 +2172,6 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainComponent.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/areas/weather/WeatherEventDisplay.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/WeatherEventDisplay.html" title="class in com.csse3200.game.areas.weather">WeatherEventDisplay</a></dt>
-<dd>
-<div class="block">Draw the weather event display.</div>
-</dd>
 <dt><a href="com/csse3200/game/components/controlsmenu/ControlsMenuDisplay.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.csse3200.game.components.controlsmenu.<a href="com/csse3200/game/components/controlsmenu/ControlsMenuDisplay.html" title="class in com.csse3200.game.components.controlsmenu">ControlsMenuDisplay</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/cutscenes/CutsceneDisplay.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/CutsceneDisplay.html" title="class in com.csse3200.game.components.cutscenes">CutsceneDisplay</a></dt>
@@ -2274,6 +2315,11 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/components/player/PlayerActions.events.html#EAT" class="member-name-link">EAT</a> - Enum constant in enum class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/PlayerActions.events.html" title="enum class in com.csse3200.game.components.player">PlayerActions.events</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/ParticleEffectComponent.html#effectExists(com.csse3200.game.services.ParticleService.ParticleEffectType)" class="member-name-link">effectExists(ParticleService.ParticleEffectType)</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/ParticleEffectComponent.html" title="class in com.csse3200.game.components">ParticleEffectComponent</a></dt>
+<dd>
+<div class="block">Determines whether a <code>ParticleEffect</code> is being tracked by this component with the same type as the given
+ <a href="com/csse3200/game/services/ParticleService.ParticleEffectType.html" title="enum class in com.csse3200.game.services"><code>ParticleService.ParticleEffectType</code></a>.</div>
+</dd>
 <dt><a href="com/csse3200/game/services/sound/EffectsMusicService.html" class="type-name-link" title="class in com.csse3200.game.services.sound">EffectsMusicService</a> - Class in <a href="com/csse3200/game/services/sound/package-summary.html">com.csse3200.game.services.sound</a></dt>
 <dd>
 <div class="block">A MusicService that handles playback for short (less than or equal to 5s) sound effects that are played from memory.</div>
@@ -2343,6 +2389,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/entities/Entity.html#%3Cinit%3E()" class="member-name-link">Entity()</a> - Constructor for class com.csse3200.game.entities.<a href="com/csse3200/game/entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/Entity.html#%3Cinit%3E(com.csse3200.game.entities.EntityType)" class="member-name-link">Entity(EntityType)</a> - Constructor for class com.csse3200.game.entities.<a href="com/csse3200/game/entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/services/ParticleService.html#ENTITY_EFFECT" class="member-name-link">ENTITY_EFFECT</a> - Static variable in class com.csse3200.game.services.<a href="com/csse3200/game/services/ParticleService.html" title="class in com.csse3200.game.services">ParticleService</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/EntityIndicator.html" class="type-name-link" title="class in com.csse3200.game.entities">EntityIndicator</a> - Class in <a href="com/csse3200/game/entities/package-summary.html">com.csse3200.game.entities</a></dt>
 <dd>
@@ -2446,6 +2494,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/entities/configs/QuestgiverConfig.html#FAVOURITE_COLOUR" class="member-name-link">FAVOURITE_COLOUR</a> - Static variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/QuestgiverConfig.html" title="class in com.csse3200.game.entities.configs">QuestgiverConfig</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/BaseAnimalConfig.html#favouriteFood" class="member-name-link">favouriteFood</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/BaseAnimalConfig.html" title="class in com.csse3200.game.entities.configs">BaseAnimalConfig</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/services/ParticleService.ParticleEffectType.html#FEED_EFFECT" class="member-name-link">FEED_EFFECT</a> - Enum constant in enum class com.csse3200.game.services.<a href="com/csse3200/game/services/ParticleService.ParticleEffectType.html" title="enum class in com.csse3200.game.services">ParticleService.ParticleEffectType</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/EntityType.html#FENCE" class="member-name-link">FENCE</a> - Enum constant in enum class com.csse3200.game.entities.<a href="com/csse3200/game/entities/EntityType.html" title="enum class in com.csse3200.game.entities">EntityType</a></dt>
 <dd>&nbsp;</dd>
@@ -2813,6 +2863,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Gets the current weather event that is occurring</div>
 </dd>
+<dt><a href="com/csse3200/game/missions/rewards/DialogueReward.html#getCutscene()" class="member-name-link">getCutscene()</a> - Method in class com.csse3200.game.missions.rewards.<a href="com/csse3200/game/missions/rewards/DialogueReward.html" title="class in com.csse3200.game.missions.rewards">DialogueReward</a></dt>
+<dd>
+<div class="block">Getting the cutscene.</div>
+</dd>
 <dt><a href="com/csse3200/game/services/ServiceLocator.html#getCutSceneStatus()" class="member-name-link">getCutSceneStatus()</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
 <dd>
 <div class="block">Gets the cutscene status.</div>
@@ -2907,6 +2961,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/areas/weather/WeatherEvent.html#getDuration()" class="member-name-link">getDuration()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/WeatherEvent.html" title="class in com.csse3200.game.areas.weather">WeatherEvent</a></dt>
 <dd>
 <div class="block">Gets the duration of the weather event</div>
+</dd>
+<dt><a href="com/csse3200/game/services/ParticleService.html#getEffect(com.csse3200.game.services.ParticleService.ParticleEffectType)" class="member-name-link">getEffect(ParticleService.ParticleEffectType)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ParticleService.html" title="class in com.csse3200.game.services">ParticleService</a></dt>
+<dd>
+<div class="block">Obtains the pooled particle effect for a given <a href="com/csse3200/game/services/ParticleService.ParticleEffectType.html" title="enum class in com.csse3200.game.services"><code>ParticleService.ParticleEffectType</code></a></div>
 </dd>
 <dt><a href="com/csse3200/game/services/sound/SoundService.html#getEffectsMusicService()" class="member-name-link">getEffectsMusicService()</a> - Method in class com.csse3200.game.services.sound.<a href="com/csse3200/game/services/sound/SoundService.html" title="class in com.csse3200.game.services.sound">SoundService</a></dt>
 <dd>
@@ -3047,14 +3105,6 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/services/TimeService.html#getHour()" class="member-name-link">getHour()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/TimeService.html" title="class in com.csse3200.game.services">TimeService</a></dt>
 <dd>
 <div class="block">Gets the current in-game hour</div>
-</dd>
-<dt><a href="com/csse3200/game/areas/weather/ClimateController.html#getHumidity()" class="member-name-link">getHumidity()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/ClimateController.html" title="class in com.csse3200.game.areas.weather">ClimateController</a></dt>
-<dd>
-<div class="block">Gets the current humidity of the game world</div>
-</dd>
-<dt><a href="com/csse3200/game/areas/weather/WeatherEvent.html#getHumidityModifier()" class="member-name-link">getHumidityModifier()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/WeatherEvent.html" title="class in com.csse3200.game.areas.weather">WeatherEvent</a></dt>
-<dd>
-<div class="block">Gets the humidity modifier of this weather event</div>
 </dd>
 <dt><a href="com/csse3200/game/components/player/HungerComponent.html#getHungerLevel()" class="member-name-link">getHungerLevel()</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/HungerComponent.html" title="class in com.csse3200.game.components.player">HungerComponent</a></dt>
 <dd>&nbsp;</dd>
@@ -3278,6 +3328,10 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/services/FactoryService.html#getNpcFactories()" class="member-name-link">getNpcFactories()</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/FactoryService.html" title="class in com.csse3200.game.services">FactoryService</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/ParticleEffectComponent.html#getNumEffects()" class="member-name-link">getNumEffects()</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/ParticleEffectComponent.html" title="class in com.csse3200.game.components">ParticleEffectComponent</a></dt>
+<dd>
+<div class="block">Gets the number of effects that are currently being tracked by the component.</div>
+</dd>
 <dt><a href="com/csse3200/game/areas/weather/WeatherEvent.html#getNumHoursUntil()" class="member-name-link">getNumHoursUntil()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/WeatherEvent.html" title="class in com.csse3200.game.areas.weather">WeatherEvent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/plants/PlantComponent.html#getNumOfDaysAsAdult()" class="member-name-link">getNumOfDaysAsAdult()</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
@@ -3635,14 +3689,6 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/physics/components/PhysicsMovementComponent.html#getTarget()" class="member-name-link">getTarget()</a> - Method in class com.csse3200.game.physics.components.<a href="com/csse3200/game/physics/components/PhysicsMovementComponent.html" title="class in com.csse3200.game.physics.components">PhysicsMovementComponent</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/areas/weather/ClimateController.html#getTemperature()" class="member-name-link">getTemperature()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/ClimateController.html" title="class in com.csse3200.game.areas.weather">ClimateController</a></dt>
-<dd>
-<div class="block">Gets the current temperature of the game world</div>
-</dd>
-<dt><a href="com/csse3200/game/areas/weather/WeatherEvent.html#getTemperatureModifier()" class="member-name-link">getTemperatureModifier()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/WeatherEvent.html" title="class in com.csse3200.game.areas.weather">WeatherEvent</a></dt>
-<dd>
-<div class="block">Gets the temperature modifier of this weather event</div>
-</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainTile.html#getTerrainCategory()" class="member-name-link">getTerrainCategory()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></dt>
 <dd>
 <div class="block">Returns the terrain tile's terrain category i.e.</div>
@@ -3923,10 +3969,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Handles each hour trigger - responsible for calling spawnNPC() at correct time</div>
 </dd>
-<dt><a href="com/csse3200/game/areas/weather/WeatherEvent.html#humidityModifier" class="member-name-link">humidityModifier</a> - Variable in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/WeatherEvent.html" title="class in com.csse3200.game.areas.weather">WeatherEvent</a></dt>
-<dd>
-<div class="block">Modifier that is used to calculate the humidity in game</div>
-</dd>
 <dt><a href="com/csse3200/game/services/HungerBar.html" class="type-name-link" title="class in com.csse3200.game.services">HungerBar</a> - Class in <a href="com/csse3200/game/services/package-summary.html">com.csse3200.game.services</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/HungerBar.html#%3Cinit%3E()" class="member-name-link">HungerBar()</a> - Constructor for class com.csse3200.game.services.<a href="com/csse3200/game/services/HungerBar.html" title="class in com.csse3200.game.services">HungerBar</a></dt>
@@ -3991,6 +4033,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/CropTileConfig.html#INITIAL_WATER_CONTENT" class="member-name-link">INITIAL_WATER_CONTENT</a> - Static variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/CropTileConfig.html" title="class in com.csse3200.game.entities.configs">CropTileConfig</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/areas/weather/ClimateController.html#initialiseEvents()" class="member-name-link">initialiseEvents()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/ClimateController.html" title="class in com.csse3200.game.areas.weather">ClimateController</a></dt>
+<dd>
+<div class="block">Initialises the events and listeners for this <a href="com/csse3200/game/areas/weather/ClimateController.html" title="class in com.csse3200.game.areas.weather"><code>ClimateController</code></a>.</div>
+</dd>
 <dt><a href="com/csse3200/game/services/ToggleableMap.html#inPlayerPos(java.util.Vector,com.badlogic.gdx.math.GridPoint2)" class="member-name-link">inPlayerPos(Vector&lt;GridPoint2&gt;, GridPoint2)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ToggleableMap.html" title="class in com.csse3200.game.services">ToggleableMap</a></dt>
 <dd>
 <div class="block">Check if the given position is in the list of player's position</div>
@@ -4411,6 +4457,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/utils/SortedIntMap.html#iterator()" class="member-name-link">iterator()</a> - Method in class com.csse3200.game.utils.<a href="com/csse3200/game/utils/SortedIntMap.html" title="class in com.csse3200.game.utils">SortedIntMap</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/missions/quests/QuestFactory.html#ITS_COLD_OUTSIDE_QUEST_NAME" class="member-name-link">ITS_COLD_OUTSIDE_QUEST_NAME</a> - Static variable in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/QuestFactory.html" title="class in com.csse3200.game.missions.quests">QuestFactory</a></dt>
+<dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:J">J</h2>
 <dl class="index">
@@ -4579,6 +4627,8 @@ loadScripts(document, 'script');</script>
  the rest of my team catches up and finishes their placeables lol</div>
 </dd>
 <dt><a href="com/csse3200/game/components/placeables/LightController.html#%3Cinit%3E()" class="member-name-link">LightController()</a> - Constructor for class com.csse3200.game.components.placeables.<a href="com/csse3200/game/components/placeables/LightController.html" title="class in com.csse3200.game.components.placeables">LightController</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/services/sound/EffectSoundFile.html#LIGHTNING_STRIKE" class="member-name-link">LIGHTNING_STRIKE</a> - Enum constant in enum class com.csse3200.game.services.sound.<a href="com/csse3200/game/services/sound/EffectSoundFile.html" title="enum class in com.csse3200.game.services.sound">EffectSoundFile</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/LightService.html" class="type-name-link" title="class in com.csse3200.game.services">LightService</a> - Class in <a href="com/csse3200/game/services/package-summary.html">com.csse3200.game.services</a></dt>
 <dd>&nbsp;</dd>
@@ -4761,44 +4811,12 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">The amount of fireflies to spawn in</div>
 </dd>
-<dt><a href="com/csse3200/game/areas/weather/AcidShowerEvent.html#MAX_HUMIDITY_MODIFIER" class="member-name-link">MAX_HUMIDITY_MODIFIER</a> - Static variable in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/AcidShowerEvent.html" title="class in com.csse3200.game.areas.weather">AcidShowerEvent</a></dt>
-<dd>
-<div class="block">Maximum modifier that is used when calculating the effect of the weather event on humidity</div>
-</dd>
-<dt><a href="com/csse3200/game/areas/weather/SolarSurgeEvent.html#MAX_HUMIDITY_MODIFIER" class="member-name-link">MAX_HUMIDITY_MODIFIER</a> - Static variable in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/SolarSurgeEvent.html" title="class in com.csse3200.game.areas.weather">SolarSurgeEvent</a></dt>
-<dd>
-<div class="block">Maximum modifier that is used when calculating the effect of the weather event on humidity</div>
-</dd>
-<dt><a href="com/csse3200/game/areas/weather/AcidShowerEvent.html#MAX_TEMPERATURE_MODIFIER" class="member-name-link">MAX_TEMPERATURE_MODIFIER</a> - Static variable in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/AcidShowerEvent.html" title="class in com.csse3200.game.areas.weather">AcidShowerEvent</a></dt>
-<dd>
-<div class="block">Maximum modifier that is used when calculating the effect of the weather event on temperature</div>
-</dd>
-<dt><a href="com/csse3200/game/areas/weather/SolarSurgeEvent.html#MAX_TEMPERATURE_MODIFIER" class="member-name-link">MAX_TEMPERATURE_MODIFIER</a> - Static variable in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/SolarSurgeEvent.html" title="class in com.csse3200.game.areas.weather">SolarSurgeEvent</a></dt>
-<dd>
-<div class="block">Maximum modifier that is used when calculating the effect of the weather event on temperature</div>
-</dd>
 <dt><a href="com/csse3200/game/entities/configs/plants/BasePlantConfig.html#maxHealth" class="member-name-link">maxHealth</a> - Variable in class com.csse3200.game.entities.configs.plants.<a href="com/csse3200/game/entities/configs/plants/BasePlantConfig.html" title="class in com.csse3200.game.entities.configs.plants">BasePlantConfig</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/items/ItemType.html#MILK" class="member-name-link">MILK</a> - Enum constant in enum class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/ItemType.html" title="enum class in com.csse3200.game.components.items">ItemType</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/utils/math/Vector2Utils.html#MIN" class="member-name-link">MIN</a> - Static variable in class com.csse3200.game.utils.math.<a href="com/csse3200/game/utils/math/Vector2Utils.html" title="class in com.csse3200.game.utils.math">Vector2Utils</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/areas/weather/AcidShowerEvent.html#MIN_HUMIDITY_MODIFIER" class="member-name-link">MIN_HUMIDITY_MODIFIER</a> - Static variable in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/AcidShowerEvent.html" title="class in com.csse3200.game.areas.weather">AcidShowerEvent</a></dt>
-<dd>
-<div class="block">Minimum modifier that is used when calculating the effect of the weather event on humidity</div>
-</dd>
-<dt><a href="com/csse3200/game/areas/weather/SolarSurgeEvent.html#MIN_HUMIDITY_MODIFIER" class="member-name-link">MIN_HUMIDITY_MODIFIER</a> - Static variable in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/SolarSurgeEvent.html" title="class in com.csse3200.game.areas.weather">SolarSurgeEvent</a></dt>
-<dd>
-<div class="block">Minimum modifier that is used when calculating the effect of the weather event on humidity</div>
-</dd>
-<dt><a href="com/csse3200/game/areas/weather/AcidShowerEvent.html#MIN_TEMPERATURE_MODIFIER" class="member-name-link">MIN_TEMPERATURE_MODIFIER</a> - Static variable in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/AcidShowerEvent.html" title="class in com.csse3200.game.areas.weather">AcidShowerEvent</a></dt>
-<dd>
-<div class="block">Minimum modifier that is used when calculating the effect of the weather event on temperature</div>
-</dd>
-<dt><a href="com/csse3200/game/areas/weather/SolarSurgeEvent.html#MIN_TEMPERATURE_MODIFIER" class="member-name-link">MIN_TEMPERATURE_MODIFIER</a> - Static variable in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/SolarSurgeEvent.html" title="class in com.csse3200.game.areas.weather">SolarSurgeEvent</a></dt>
-<dd>
-<div class="block">Minimum modifier that is used when calculating the effect of the weather event on temperature</div>
-</dd>
 <dt><a href="com/csse3200/game/components/plants/PlantComponent.html#minuteUpdate()" class="member-name-link">minuteUpdate()</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
 <dd>
 <div class="block">Functionality for the plant that needs to update every minute.</div>
@@ -5062,6 +5080,15 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/missions/quests/QuestFactory.html#PART_FINDER_I_QUEST_NAME" class="member-name-link">PART_FINDER_I_QUEST_NAME</a> - Static variable in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/QuestFactory.html" title="class in com.csse3200.game.missions.quests">QuestFactory</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/ParticleEffectComponent.html" class="type-name-link" title="class in com.csse3200.game.components">ParticleEffectComponent</a> - Class in <a href="com/csse3200/game/components/package-summary.html">com.csse3200.game.components</a></dt>
+<dd>
+<div class="block">Component which can be added to entities allowing them to have <code>ParticleEffect</code> rendering on them and attached
+ to their body.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/ParticleEffectComponent.html#%3Cinit%3E()" class="member-name-link">ParticleEffectComponent()</a> - Constructor for class com.csse3200.game.components.<a href="com/csse3200/game/components/ParticleEffectComponent.html" title="class in com.csse3200.game.components">ParticleEffectComponent</a></dt>
+<dd>
+<div class="block">Creates a new component with an empty list of effects to render.</div>
+</dd>
 <dt><a href="com/csse3200/game/rendering/ParticleEffectWrapper.html" class="type-name-link" title="class in com.csse3200.game.rendering">ParticleEffectWrapper</a> - Class in <a href="com/csse3200/game/rendering/package-summary.html">com.csse3200.game.rendering</a></dt>
 <dd>
 <div class="block">Wrapper for the particle effect so that pooled effects can have a type and a category</div>
@@ -5566,6 +5593,14 @@ loadScripts(document, 'script');</script>
 <dl class="index">
 <dt><a href="com/csse3200/game/missions/cutscenes/Cutscene.CutsceneType.html#RADIO" class="member-name-link">RADIO</a> - Enum constant in enum class com.csse3200.game.missions.cutscenes.<a href="com/csse3200/game/missions/cutscenes/Cutscene.CutsceneType.html" title="enum class in com.csse3200.game.missions.cutscenes">Cutscene.CutsceneType</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/services/ParticleService.ParticleEffectType.html#RAIN" class="member-name-link">RAIN</a> - Enum constant in enum class com.csse3200.game.services.<a href="com/csse3200/game/services/ParticleService.ParticleEffectType.html" title="enum class in com.csse3200.game.services">ParticleService.ParticleEffectType</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/areas/weather/RainStormEvent.html" class="type-name-link" title="class in com.csse3200.game.areas.weather">RainStormEvent</a> - Class in <a href="com/csse3200/game/areas/weather/package-summary.html">com.csse3200.game.areas.weather</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/areas/weather/RainStormEvent.html#%3Cinit%3E(int,int,int,float)" class="member-name-link">RainStormEvent(int, int, int, float)</a> - Constructor for class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/RainStormEvent.html" title="class in com.csse3200.game.areas.weather">RainStormEvent</a></dt>
+<dd>
+<div class="block">Constructs an <a href="com/csse3200/game/areas/weather/WeatherEvent.html" title="class in com.csse3200.game.areas.weather"><code>WeatherEvent</code></a> with a given duration, priority and countdown</div>
+</dd>
 <dt><a href="com/csse3200/game/utils/math/RandomUtils.html#random(com.badlogic.gdx.math.GridPoint2,com.badlogic.gdx.math.GridPoint2)" class="member-name-link">random(GridPoint2, GridPoint2)</a> - Static method in class com.csse3200.game.utils.math.<a href="com/csse3200/game/utils/math/RandomUtils.html" title="class in com.csse3200.game.utils.math">RandomUtils</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/utils/math/RandomUtils.html#random(com.badlogic.gdx.math.Vector2,com.badlogic.gdx.math.Vector2)" class="member-name-link">random(Vector2, Vector2)</a> - Static method in class com.csse3200.game.utils.math.<a href="com/csse3200/game/utils/math/RandomUtils.html" title="class in com.csse3200.game.utils.math">RandomUtils</a></dt>
@@ -5887,6 +5922,11 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Remove an animation from this animator.</div>
 </dd>
+<dt><a href="com/csse3200/game/services/ParticleService.html#removeComponent(com.csse3200.game.components.ParticleEffectComponent)" class="member-name-link">removeComponent(ParticleEffectComponent)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ParticleService.html" title="class in com.csse3200.game.services">ParticleService</a></dt>
+<dd>
+<div class="block">Removes a <a href="com/csse3200/game/components/ParticleEffectComponent.html" title="class in com.csse3200.game.components"><code>ParticleEffectComponent</code></a> to the <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link"><code>List</code></a> of <a href="com/csse3200/game/components/ParticleEffectComponent.html" title="class in com.csse3200.game.components"><code>ParticleEffectComponent</code></a>s tracked by the
+ <a href="com/csse3200/game/services/ParticleService.html" title="class in com.csse3200.game.services"><code>ParticleService</code></a> so that it can render each individual effect.</div>
+</dd>
 <dt><a href="com/csse3200/game/areas/GameArea.html#removeEntity(com.csse3200.game.entities.Entity)" class="member-name-link">removeEntity(Entity)</a> - Method in class com.csse3200.game.areas.<a href="com/csse3200/game/areas/GameArea.html" title="class in com.csse3200.game.areas">GameArea</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/cutscenes/CutsceneDisplay.html#removeExternalUI()" class="member-name-link">removeExternalUI()</a> - Method in class com.csse3200.game.components.cutscenes.<a href="com/csse3200/game/components/cutscenes/CutsceneDisplay.html" title="class in com.csse3200.game.components.cutscenes">CutsceneDisplay</a></dt>
@@ -5958,6 +5998,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/rendering/RenderService.html#render(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">render(SpriteBatch)</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/RenderService.html" title="class in com.csse3200.game.rendering">RenderService</a></dt>
 <dd>
 <div class="block">Trigger rendering on the given batch.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/ParticleEffectComponent.html#render(com.badlogic.gdx.graphics.g2d.SpriteBatch,float)" class="member-name-link">render(SpriteBatch, float)</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/ParticleEffectComponent.html" title="class in com.csse3200.game.components">ParticleEffectComponent</a></dt>
+<dd>
+<div class="block">Renders all the effects that are being managed by the component for this entity.</div>
 </dd>
 <dt><a href="com/csse3200/game/services/ParticleService.html#render(com.badlogic.gdx.graphics.g2d.SpriteBatch,float)" class="member-name-link">render(SpriteBatch, float)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ParticleService.html" title="class in com.csse3200.game.services">ParticleService</a></dt>
 <dd>
@@ -6282,6 +6326,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Set body type</div>
 </dd>
+<dt><a href="com/csse3200/game/services/LightService.html#setBrightnessMultiplier(float)" class="member-name-link">setBrightnessMultiplier(float)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/LightService.html" title="class in com.csse3200.game.services">LightService</a></dt>
+<dd>
+<div class="block">Sets the global ambient brightness multiplier.</div>
+</dd>
 <dt><a href="com/csse3200/game/components/items/WateringCanLevelComponent.html#setCapacity(float)" class="member-name-link">setCapacity(float)</a> - Method in class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/WateringCanLevelComponent.html" title="class in com.csse3200.game.components.items">WateringCanLevelComponent</a></dt>
 <dd>
 <div class="block">Update the max the WateringCan can hold to the parameter
@@ -6307,6 +6355,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/ConeLightComponent.html#setColor(com.badlogic.gdx.graphics.Color)" class="member-name-link">setColor(Color)</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/ConeLightComponent.html" title="class in com.csse3200.game.components">ConeLightComponent</a></dt>
 <dd>
 <div class="block">Sets the color of the light</div>
+</dd>
+<dt><a href="com/csse3200/game/services/LightService.html#setColourOffset(com.badlogic.gdx.graphics.Color)" class="member-name-link">setColourOffset(Color)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/LightService.html" title="class in com.csse3200.game.services">LightService</a></dt>
+<dd>
+<div class="block">Sets the global ambient colour offset.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/ConeLightComponent.html#setConeDegree(float)" class="member-name-link">setConeDegree(float)</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/ConeLightComponent.html" title="class in com.csse3200.game.components">ConeLightComponent</a></dt>
 <dd>
@@ -6456,10 +6508,6 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/services/TimeService.html#setHour(int)" class="member-name-link">setHour(int)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/TimeService.html" title="class in com.csse3200.game.services">TimeService</a></dt>
 <dd>
 <div class="block">Sets the in-game hour to a certain value.</div>
-</dd>
-<dt><a href="com/csse3200/game/areas/weather/ClimateController.html#setHumidity(float)" class="member-name-link">setHumidity(float)</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/ClimateController.html" title="class in com.csse3200.game.areas.weather">ClimateController</a></dt>
-<dd>
-<div class="block">Sets the current humidity of the game world</div>
 </dd>
 <dt><a href="com/csse3200/game/components/player/HungerComponent.html#setHungerLevel(int)" class="member-name-link">setHungerLevel(int)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/HungerComponent.html" title="class in com.csse3200.game.components.player">HungerComponent</a></dt>
 <dd>&nbsp;</dd>
@@ -6756,10 +6804,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Sets the target direction for the projectile and applies velocity to its physics body.</div>
 </dd>
-<dt><a href="com/csse3200/game/areas/weather/ClimateController.html#setTemperature(float)" class="member-name-link">setTemperature(float)</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/ClimateController.html" title="class in com.csse3200.game.areas.weather">ClimateController</a></dt>
-<dd>
-<div class="block">Sets the temperature to a given temperature</div>
-</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainTile.html#setTerrainCategory(com.csse3200.game.areas.terrain.TerrainTile.TerrainCategory)" class="member-name-link">setTerrainCategory(TerrainTile.TerrainCategory)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></dt>
 <dd>
 <div class="block">Sets the terrain category of the terrain tile to the specified terrain
@@ -6998,6 +7042,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainTile.TerrainCategory.html#SNOW" class="member-name-link">SNOW</a> - Enum constant in enum class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainTile.TerrainCategory.html" title="enum class in com.csse3200.game.areas.terrain">TerrainTile.TerrainCategory</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/services/sound/EffectSoundFile.html#SOLAR_SURGE" class="member-name-link">SOLAR_SURGE</a> - Enum constant in enum class com.csse3200.game.services.sound.<a href="com/csse3200/game/services/sound/EffectSoundFile.html" title="enum class in com.csse3200.game.services.sound">EffectSoundFile</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/weather/SolarSurgeEvent.html" class="type-name-link" title="class in com.csse3200.game.areas.weather">SolarSurgeEvent</a> - Class in <a href="com/csse3200/game/areas/weather/package-summary.html">com.csse3200.game.areas.weather</a></dt>
 <dd>
 <div class="block">Represents a heat wave event within the planet's weather system.</div>
@@ -7165,11 +7211,19 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/weather/AcidShowerEvent.html#startEffect()" class="member-name-link">startEffect()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/AcidShowerEvent.html" title="class in com.csse3200.game.areas.weather">AcidShowerEvent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/areas/weather/BlizzardEvent.html#startEffect()" class="member-name-link">startEffect()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/BlizzardEvent.html" title="class in com.csse3200.game.areas.weather">BlizzardEvent</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/areas/weather/RainStormEvent.html#startEffect()" class="member-name-link">startEffect()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/RainStormEvent.html" title="class in com.csse3200.game.areas.weather">RainStormEvent</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/weather/SolarSurgeEvent.html#startEffect()" class="member-name-link">startEffect()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/SolarSurgeEvent.html" title="class in com.csse3200.game.areas.weather">SolarSurgeEvent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/weather/WeatherEvent.html#startEffect()" class="member-name-link">startEffect()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/WeatherEvent.html" title="class in com.csse3200.game.areas.weather">WeatherEvent</a></dt>
 <dd>
 <div class="block">Starts the visual effect for the weather event</div>
+</dd>
+<dt><a href="com/csse3200/game/components/ParticleEffectComponent.html#startEffect(com.csse3200.game.services.ParticleService.ParticleEffectType)" class="member-name-link">startEffect(ParticleService.ParticleEffectType)</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/ParticleEffectComponent.html" title="class in com.csse3200.game.components">ParticleEffectComponent</a></dt>
+<dd>
+<div class="block">Starts a <code>ParticleEffect</code> on an entity, enabling this component to control it throughout its lifecycle</div>
 </dd>
 <dt><a href="com/csse3200/game/services/ParticleService.html#startEffect(com.csse3200.game.services.ParticleService.ParticleEffectType)" class="member-name-link">startEffect(ParticleService.ParticleEffectType)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ParticleService.html" title="class in com.csse3200.game.services">ParticleService</a></dt>
 <dd>
@@ -7177,6 +7231,11 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/components/npc/AnimalEffectsController.html#startEffect(java.lang.String)" class="member-name-link">startEffect(String)</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/AnimalEffectsController.html" title="class in com.csse3200.game.components.npc">AnimalEffectsController</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/services/ParticleService.html#startEffectAtPosition(com.csse3200.game.services.ParticleService.ParticleEffectType,com.badlogic.gdx.math.Vector2)" class="member-name-link">startEffectAtPosition(ParticleService.ParticleEffectType, Vector2)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ParticleService.html" title="class in com.csse3200.game.services">ParticleService</a></dt>
+<dd>
+<div class="block">Starts rendering a <code>ParticleEffectPool.PooledEffect</code> at a given
+ <code>Vector2</code> position</div>
+</dd>
 <dt><a href="com/csse3200/game/entities/EntitiesSpawner.html#startPeriodicSpawning()" class="member-name-link">startPeriodicSpawning()</a> - Method in class com.csse3200.game.entities.<a href="com/csse3200/game/entities/EntitiesSpawner.html" title="class in com.csse3200.game.entities">EntitiesSpawner</a></dt>
 <dd>
 <div class="block">Start periodic spawning for all spawners</div>
@@ -7258,11 +7317,20 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Functionally similar to <a href="com/csse3200/game/services/sound/EffectsMusicService.html#stop(com.csse3200.game.services.sound.SoundFile)"><code>stop(1), but only stops a single instance of a Sound from playing</code></a></div>
 </dd>
+<dt><a href="com/csse3200/game/components/ParticleEffectComponent.html#stopAllEffects()" class="member-name-link">stopAllEffects()</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/ParticleEffectComponent.html" title="class in com.csse3200.game.components">ParticleEffectComponent</a></dt>
+<dd>
+<div class="block">Stops all of the particle effects for this entity, freeing the effects back to their <code>ParticleEffectPool</code>s
+ and removing them from the <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link"><code>List</code></a> of effects being tracked.</div>
+</dd>
 <dt><a href="com/csse3200/game/rendering/AnimationRenderComponent.html#stopAnimation()" class="member-name-link">stopAnimation()</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/AnimationRenderComponent.html" title="class in com.csse3200.game.rendering">AnimationRenderComponent</a></dt>
 <dd>
 <div class="block">Stop the currently running animation.</div>
 </dd>
 <dt><a href="com/csse3200/game/areas/weather/AcidShowerEvent.html#stopEffect()" class="member-name-link">stopEffect()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/AcidShowerEvent.html" title="class in com.csse3200.game.areas.weather">AcidShowerEvent</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/areas/weather/BlizzardEvent.html#stopEffect()" class="member-name-link">stopEffect()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/BlizzardEvent.html" title="class in com.csse3200.game.areas.weather">BlizzardEvent</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/areas/weather/RainStormEvent.html#stopEffect()" class="member-name-link">stopEffect()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/RainStormEvent.html" title="class in com.csse3200.game.areas.weather">RainStormEvent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/weather/SolarSurgeEvent.html#stopEffect()" class="member-name-link">stopEffect()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/SolarSurgeEvent.html" title="class in com.csse3200.game.areas.weather">SolarSurgeEvent</a></dt>
 <dd>&nbsp;</dd>
@@ -7270,9 +7338,17 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Stops the visual effect for the weather event</div>
 </dd>
+<dt><a href="com/csse3200/game/components/ParticleEffectComponent.html#stopEffect(com.csse3200.game.services.ParticleService.ParticleEffectType)" class="member-name-link">stopEffect(ParticleService.ParticleEffectType)</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/ParticleEffectComponent.html" title="class in com.csse3200.game.components">ParticleEffectComponent</a></dt>
+<dd>
+<div class="block">Stops rendering an effect on the entity, freeing the effect and giving it back to the <code>ParticleEffectPool</code>.</div>
+</dd>
 <dt><a href="com/csse3200/game/services/ParticleService.html#stopEffect(com.csse3200.game.services.ParticleService.ParticleEffectType)" class="member-name-link">stopEffect(ParticleService.ParticleEffectType)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ParticleService.html" title="class in com.csse3200.game.services">ParticleService</a></dt>
 <dd>
 <div class="block">Stops a particle effect, freeing the effect and removing it from the queue</div>
+</dd>
+<dt><a href="com/csse3200/game/components/ParticleEffectComponent.html#stopEffectCategory(java.lang.String)" class="member-name-link">stopEffectCategory(String)</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/ParticleEffectComponent.html" title="class in com.csse3200.game.components">ParticleEffectComponent</a></dt>
+<dd>
+<div class="block">Stops all particle effects by category in the entity's list of effects</div>
 </dd>
 <dt><a href="com/csse3200/game/services/ParticleService.html#stopEffectCategory(java.lang.String)" class="member-name-link">stopEffectCategory(String)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ParticleService.html" title="class in com.csse3200.game.services">ParticleService</a></dt>
 <dd>
@@ -7294,6 +7370,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Stop timer for discord activity</div>
 </dd>
+<dt><a href="com/csse3200/game/services/sound/EffectSoundFile.html#STORM" class="member-name-link">STORM</a> - Enum constant in enum class com.csse3200.game.services.sound.<a href="com/csse3200/game/services/sound/EffectSoundFile.html" title="enum class in com.csse3200.game.services.sound">EffectSoundFile</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/missions/quests/QuestFactory.html#STRATOSPHERIC_SENTINEL_QUEST_NAME" class="member-name-link">STRATOSPHERIC_SENTINEL_QUEST_NAME</a> - Static variable in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/QuestFactory.html" title="class in com.csse3200.game.missions.quests">QuestFactory</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/utils/StringDecorator.html" class="type-name-link" title="class in com.csse3200.game.utils">StringDecorator</a>&lt;<a href="com/csse3200/game/utils/StringDecorator.html" title="type parameter in StringDecorator">T</a>&gt; - Class in <a href="com/csse3200/game/utils/package-summary.html">com.csse3200.game.utils</a></dt>
@@ -7307,6 +7385,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/combat/StunComponent.html" class="type-name-link" title="class in com.csse3200.game.components.combat">StunComponent</a> - Class in <a href="com/csse3200/game/components/combat/package-summary.html">com.csse3200.game.components.combat</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/combat/StunComponent.html#%3Cinit%3E()" class="member-name-link">StunComponent()</a> - Constructor for class com.csse3200.game.components.combat.<a href="com/csse3200/game/components/combat/StunComponent.html" title="class in com.csse3200.game.components.combat">StunComponent</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/services/ParticleService.ParticleEffectType.html#SUCCESS_EFFECT" class="member-name-link">SUCCESS_EFFECT</a> - Enum constant in enum class com.csse3200.game.services.<a href="com/csse3200/game/services/ParticleService.ParticleEffectType.html" title="enum class in com.csse3200.game.services">ParticleService.ParticleEffectType</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/services/sound/EffectSoundFile.html#SURGE" class="member-name-link">SURGE</a> - Enum constant in enum class com.csse3200.game.services.sound.<a href="com/csse3200/game/services/sound/EffectSoundFile.html" title="enum class in com.csse3200.game.services.sound">EffectSoundFile</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/player/InventoryComponent.html#swapPosition(int,int)" class="member-name-link">swapPosition(int, int)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a></dt>
 <dd>
@@ -7364,10 +7446,6 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/items/ItemType.html#TELEPORT_DEVICE" class="member-name-link">TELEPORT_DEVICE</a> - Enum constant in enum class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/ItemType.html" title="enum class in com.csse3200.game.components.items">ItemType</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/areas/weather/WeatherEvent.html#temperatureModifier" class="member-name-link">temperatureModifier</a> - Variable in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/WeatherEvent.html" title="class in com.csse3200.game.areas.weather">WeatherEvent</a></dt>
-<dd>
-<div class="block">Modifier used to calculate the temperature in game</div>
-</dd>
 <dt><a href="com/csse3200/game/ui/terminal/Terminal.html" class="type-name-link" title="class in com.csse3200.game.ui.terminal">Terminal</a> - Class in <a href="com/csse3200/game/ui/terminal/package-summary.html">com.csse3200.game.ui.terminal</a></dt>
 <dd>
 <div class="block">State tracker for a debug terminal.</div>
@@ -7432,6 +7510,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/rendering/TextureRenderComponent.html#%3Cinit%3E(com.badlogic.gdx.graphics.Texture)" class="member-name-link">TextureRenderComponent(Texture)</a> - Constructor for class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/TextureRenderComponent.html" title="class in com.csse3200.game.rendering">TextureRenderComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/rendering/TextureRenderComponent.html#%3Cinit%3E(java.lang.String)" class="member-name-link">TextureRenderComponent(String)</a> - Constructor for class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/TextureRenderComponent.html" title="class in com.csse3200.game.rendering">TextureRenderComponent</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/missions/quests/QuestFactory.html#THE_THUNDERLORDS_BLESSING_QUEST_NAME" class="member-name-link">THE_THUNDERLORDS_BLESSING_QUEST_NAME</a> - Static variable in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/QuestFactory.html" title="class in com.csse3200.game.missions.quests">QuestFactory</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/EntityType.html#TILE" class="member-name-link">TILE</a> - Enum constant in enum class com.csse3200.game.entities.<a href="com/csse3200/game/entities/EntityType.html" title="enum class in com.csse3200.game.entities">EntityType</a></dt>
 <dd>&nbsp;</dd>
@@ -7905,13 +7985,13 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">String representing the event that the inventory has been updated</div>
 </dd>
+<dt><a href="com/csse3200/game/areas/weather/ClimateController.html#updateClimate()" class="member-name-link">updateClimate()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/ClimateController.html" title="class in com.csse3200.game.areas.weather">ClimateController</a></dt>
+<dd>
+<div class="block">Updates the values of the game's climate based on current weather events.</div>
+</dd>
 <dt><a href="com/csse3200/game/utils/DiscordActivity.html#updateDiscordStatus(java.lang.String)" class="member-name-link">updateDiscordStatus(String)</a> - Method in class com.csse3200.game.utils.<a href="com/csse3200/game/utils/DiscordActivity.html" title="class in com.csse3200.game.utils">DiscordActivity</a></dt>
 <dd>
 <div class="block">Update discord status message</div>
-</dd>
-<dt><a href="com/csse3200/game/areas/weather/WeatherEventDisplay.html#updateDisplay()" class="member-name-link">updateDisplay()</a> - Method in class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/WeatherEventDisplay.html" title="class in com.csse3200.game.areas.weather">WeatherEventDisplay</a></dt>
-<dd>
-<div class="block">Updates the displayed image based on the current weather event.</div>
 </dd>
 <dt><a href="com/csse3200/game/services/GameTimeDisplay.html#updateDisplay()" class="member-name-link">updateDisplay()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/GameTimeDisplay.html" title="class in com.csse3200.game.services">GameTimeDisplay</a></dt>
 <dd>
@@ -7979,6 +8059,14 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/utils/DiscordActivity.html#updateSmallImage(java.lang.String)" class="member-name-link">updateSmallImage(String)</a> - Method in class com.csse3200.game.utils.<a href="com/csse3200/game/utils/DiscordActivity.html" title="class in com.csse3200.game.utils">DiscordActivity</a></dt>
 <dd>
 <div class="block">Update discord activity small image</div>
+</dd>
+<dt><a href="com/csse3200/game/missions/achievements/CollectItemsAchievement.html#updateState()" class="member-name-link">updateState()</a> - Method in class com.csse3200.game.missions.achievements.<a href="com/csse3200/game/missions/achievements/CollectItemsAchievement.html" title="class in com.csse3200.game.missions.achievements">CollectItemsAchievement</a></dt>
+<dd>
+<div class="block">Updating the state of the CollectItemsAchievement.</div>
+</dd>
+<dt><a href="com/csse3200/game/missions/achievements/PlantCropsAchievement.html#updateState(java.lang.String)" class="member-name-link">updateState(String)</a> - Method in class com.csse3200.game.missions.achievements.<a href="com/csse3200/game/missions/achievements/PlantCropsAchievement.html" title="class in com.csse3200.game.missions.achievements">PlantCropsAchievement</a></dt>
+<dd>
+<div class="block">Increments the number of plants the player has planted.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/plants/PlantComponent.html#updateTexture()" class="member-name-link">updateTexture()</a> - Method in class com.csse3200.game.components.plants.<a href="com/csse3200/game/components/plants/PlantComponent.html" title="class in com.csse3200.game.components.plants">PlantComponent</a></dt>
 <dd>
@@ -8313,12 +8401,6 @@ the order they are declared.</div>
 <dd>
 <div class="block">Constructs an <a href="com/csse3200/game/areas/weather/WeatherEvent.html" title="class in com.csse3200.game.areas.weather"><code>WeatherEvent</code></a> with a given duration, priority and countdown</div>
 </dd>
-<dt><a href="com/csse3200/game/areas/weather/WeatherEventDisplay.html" class="type-name-link" title="class in com.csse3200.game.areas.weather">WeatherEventDisplay</a> - Class in <a href="com/csse3200/game/areas/weather/package-summary.html">com.csse3200.game.areas.weather</a></dt>
-<dd>
-<div class="block">Displays different images corresponding to the current weather event on the UI.</div>
-</dd>
-<dt><a href="com/csse3200/game/areas/weather/WeatherEventDisplay.html#%3Cinit%3E()" class="member-name-link">WeatherEventDisplay()</a> - Constructor for class com.csse3200.game.areas.weather.<a href="com/csse3200/game/areas/weather/WeatherEventDisplay.html" title="class in com.csse3200.game.areas.weather">WeatherEventDisplay</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/files/UserSettings.DisplaySettings.html#width" class="member-name-link">width</a> - Variable in class com.csse3200.game.files.<a href="com/csse3200/game/files/UserSettings.DisplaySettings.html" title="class in com.csse3200.game.files">UserSettings.DisplaySettings</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/screens/MainGameScreen.ScreenType.html#WIN" class="member-name-link">WIN</a> - Enum constant in enum class com.csse3200.game.screens.<a href="com/csse3200/game/screens/MainGameScreen.ScreenType.html" title="enum class in com.csse3200.game.screens">MainGameScreen.ScreenType</a></dt>

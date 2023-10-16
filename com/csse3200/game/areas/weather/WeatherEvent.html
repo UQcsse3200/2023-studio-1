@@ -76,7 +76,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="AcidShowerEvent.html" title="class in com.csse3200.game.areas.weather">AcidShowerEvent</a></code>, <code><a href="SolarSurgeEvent.html" title="class in com.csse3200.game.areas.weather">SolarSurgeEvent</a></code></dd>
+<dd><code><a href="AcidShowerEvent.html" title="class in com.csse3200.game.areas.weather">AcidShowerEvent</a></code>, <code><a href="BlizzardEvent.html" title="class in com.csse3200.game.areas.weather">BlizzardEvent</a></code>, <code><a href="RainStormEvent.html" title="class in com.csse3200.game.areas.weather">RainStormEvent</a></code>, <code><a href="SolarSurgeEvent.html" title="class in com.csse3200.game.areas.weather">SolarSurgeEvent</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">WeatherEvent</span>
@@ -94,15 +94,13 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>protected int</code></div>
-<div class="col-second even-row-color"><code><a href="#duration" class="member-name-link">duration</a></code></div>
-<div class="col-last even-row-color">
-<div class="block">Number of in-game hours that the <a href="WeatherEvent.html" title="class in com.csse3200.game.areas.weather"><code>WeatherEvent</code></a> can be active for</div>
-</div>
-<div class="col-first odd-row-color"><code>protected float</code></div>
-<div class="col-second odd-row-color"><code><a href="#humidityModifier" class="member-name-link">humidityModifier</a></code></div>
+<div class="col-first even-row-color"><code>protected final <a href="../../events/EventHandler.html" title="class in com.csse3200.game.events">EventHandler</a></code></div>
+<div class="col-second even-row-color"><code><a href="#climateControllerEvents" class="member-name-link">climateControllerEvents</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected int</code></div>
+<div class="col-second odd-row-color"><code><a href="#duration" class="member-name-link">duration</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">Modifier that is used to calculate the humidity in game</div>
+<div class="block">Number of in-game hours that the <a href="WeatherEvent.html" title="class in com.csse3200.game.areas.weather"><code>WeatherEvent</code></a> can be active for</div>
 </div>
 <div class="col-first even-row-color"><code>protected int</code></div>
 <div class="col-second even-row-color"><code><a href="#numHoursUntil" class="member-name-link">numHoursUntil</a></code></div>
@@ -119,11 +117,6 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">The severity of the <a href="WeatherEvent.html" title="class in com.csse3200.game.areas.weather"><code>WeatherEvent</code></a> which can affect the climate modifiers depending on the implementation
  of the <a href="WeatherEvent.html" title="class in com.csse3200.game.areas.weather"><code>WeatherEvent</code></a>.</div>
-</div>
-<div class="col-first odd-row-color"><code>protected float</code></div>
-<div class="col-second odd-row-color"><code><a href="#temperatureModifier" class="member-name-link">temperatureModifier</a></code></div>
-<div class="col-last odd-row-color">
-<div class="block">Modifier used to calculate the temperature in game</div>
 </div>
 </div>
 </section>
@@ -164,28 +157,18 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the duration of the weather event</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getHumidityModifier()" class="member-name-link">getHumidityModifier</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Gets the humidity modifier of this weather event</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNumHoursUntil()" class="member-name-link">getNumHoursUntil</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPriority()" class="member-name-link">getPriority</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNumHoursUntil()" class="member-name-link">getNumHoursUntil</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPriority()" class="member-name-link">getPriority</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the priority of the weather event</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSeverity()" class="member-name-link">getSeverity</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Gets the severity of this weather event</div>
-</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTemperatureModifier()" class="member-name-link">getTemperatureModifier</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSeverity()" class="member-name-link">getSeverity</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Gets the temperature modifier of this weather event</div>
+<div class="block">Gets the severity of this weather event</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isActive()" class="member-name-link">isActive</a>()</code></div>
@@ -262,17 +245,9 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="humidityModifier">
-<h3>humidityModifier</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">humidityModifier</span></div>
-<div class="block">Modifier that is used to calculate the humidity in game</div>
-</section>
-</li>
-<li>
-<section class="detail" id="temperatureModifier">
-<h3>temperatureModifier</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">temperatureModifier</span></div>
-<div class="block">Modifier used to calculate the temperature in game</div>
+<section class="detail" id="climateControllerEvents">
+<h3>climateControllerEvents</h3>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="../../events/EventHandler.html" title="class in com.csse3200.game.events">EventHandler</a></span>&nbsp;<span class="element-name">climateControllerEvents</span></div>
 </section>
 </li>
 </ul>
@@ -365,28 +340,6 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>boolean value representing whether the weather event is finished or not</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getHumidityModifier()">
-<h3>getHumidityModifier</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">getHumidityModifier</span>()</div>
-<div class="block">Gets the humidity modifier of this weather event</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>humidity modifier</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getTemperatureModifier()">
-<h3>getTemperatureModifier</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">getTemperatureModifier</span>()</div>
-<div class="block">Gets the temperature modifier of this weather event</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>temperature modifier</dd>
 </dl>
 </section>
 </li>

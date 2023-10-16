@@ -116,6 +116,16 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Renders the lighting involved in the game and sets the ambient light to be based on the time of day</div>
 </div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setBrightnessMultiplier(float)" class="member-name-link">setBrightnessMultiplier</a><wbr>(float&nbsp;brightnessMultiplier)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the global ambient brightness multiplier.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setColourOffset(com.badlogic.gdx.graphics.Color)" class="member-name-link">setColourOffset</a><wbr>(com.badlogic.gdx.graphics.Color&nbsp;colourOffset)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the global ambient colour offset.</div>
+</div>
 </div>
 </div>
 </div>
@@ -163,6 +173,30 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>ray handler instance used for creating lights</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setColourOffset(com.badlogic.gdx.graphics.Color)">
+<h3>setColourOffset</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setColourOffset</span><wbr><span class="parameters">(com.badlogic.gdx.graphics.Color&nbsp;colourOffset)</span></div>
+<div class="block">Sets the global ambient colour offset. This offset will be added to the global ambient lighting (after any
+ brightness multipliers are applied).</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>colourOffset</code> - The global ambient light colour offset. Set to <code>Color.CLEAR</code> for default.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setBrightnessMultiplier(float)">
+<h3>setBrightnessMultiplier</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setBrightnessMultiplier</span><wbr><span class="parameters">(float&nbsp;brightnessMultiplier)</span></div>
+<div class="block">Sets the global ambient brightness multiplier. This multiplier will pre-multiply the global brightness (before
+ any global brightness offsets are added.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>brightnessMultiplier</code> - The global ambient light brightness multiplier. Set to 1 for regular.</dd>
 </dl>
 </section>
 </li>

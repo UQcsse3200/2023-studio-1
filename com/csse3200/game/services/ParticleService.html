@@ -107,8 +107,11 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><code><a href="#WEATHER_EVENT" class="member-name-link">WEATHER_EVENT</a></code></div>
+<div class="col-second even-row-color"><code><a href="#ENTITY_EFFECT" class="member-name-link">ENTITY_EFFECT</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#WEATHER_EVENT" class="member-name-link">WEATHER_EVENT</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -139,15 +142,39 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#render(com.badlogic.gdx.graphics.g2d.SpriteBatch,float)" class="member-name-link">render</a><wbr>(com.badlogic.gdx.graphics.g2d.SpriteBatch&nbsp;batch,
- float&nbsp;delta)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addComponent(com.csse3200.game.components.ParticleEffectComponent)" class="member-name-link">addComponent</a><wbr>(<a href="../components/ParticleEffectComponent.html" title="class in com.csse3200.game.components">ParticleEffectComponent</a>&nbsp;component)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Renders the queued particle effects</div>
+<div class="block">Adds a <a href="../components/ParticleEffectComponent.html" title="class in com.csse3200.game.components"><code>ParticleEffectComponent</code></a> to the <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link"><code>List</code></a> of <a href="../components/ParticleEffectComponent.html" title="class in com.csse3200.game.components"><code>ParticleEffectComponent</code></a>s tracked by the
+ <a href="ParticleService.html" title="class in com.csse3200.game.services"><code>ParticleService</code></a> so that it can render each individual effect.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.graphics.g2d.ParticleEffectPool.PooledEffect</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEffect(com.csse3200.game.services.ParticleService.ParticleEffectType)" class="member-name-link">getEffect</a><wbr>(<a href="ParticleService.ParticleEffectType.html" title="enum class in com.csse3200.game.services">ParticleService.ParticleEffectType</a>&nbsp;effectType)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Obtains the pooled particle effect for a given <a href="ParticleService.ParticleEffectType.html" title="enum class in com.csse3200.game.services"><code>ParticleService.ParticleEffectType</code></a></div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeComponent(com.csse3200.game.components.ParticleEffectComponent)" class="member-name-link">removeComponent</a><wbr>(<a href="../components/ParticleEffectComponent.html" title="class in com.csse3200.game.components">ParticleEffectComponent</a>&nbsp;component)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Removes a <a href="../components/ParticleEffectComponent.html" title="class in com.csse3200.game.components"><code>ParticleEffectComponent</code></a> to the <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link"><code>List</code></a> of <a href="../components/ParticleEffectComponent.html" title="class in com.csse3200.game.components"><code>ParticleEffectComponent</code></a>s tracked by the
+ <a href="ParticleService.html" title="class in com.csse3200.game.services"><code>ParticleService</code></a> so that it can render each individual effect.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#startEffect(com.csse3200.game.services.ParticleService.ParticleEffectType)" class="member-name-link">startEffect</a><wbr>(<a href="ParticleService.ParticleEffectType.html" title="enum class in com.csse3200.game.services">ParticleService.ParticleEffectType</a>&nbsp;effectType)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#render(com.badlogic.gdx.graphics.g2d.SpriteBatch,float)" class="member-name-link">render</a><wbr>(com.badlogic.gdx.graphics.g2d.SpriteBatch&nbsp;batch,
+ float&nbsp;delta)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Renders the queued particle effects</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#startEffect(com.csse3200.game.services.ParticleService.ParticleEffectType)" class="member-name-link">startEffect</a><wbr>(<a href="ParticleService.ParticleEffectType.html" title="enum class in com.csse3200.game.services">ParticleService.ParticleEffectType</a>&nbsp;effectType)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Starts a particle effect, creating an effect wrapper and adding it to the queue</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#startEffectAtPosition(com.csse3200.game.services.ParticleService.ParticleEffectType,com.badlogic.gdx.math.Vector2)" class="member-name-link">startEffectAtPosition</a><wbr>(<a href="ParticleService.ParticleEffectType.html" title="enum class in com.csse3200.game.services">ParticleService.ParticleEffectType</a>&nbsp;effectType,
+ com.badlogic.gdx.math.Vector2&nbsp;position)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Starts rendering a <code>ParticleEffectPool.PooledEffect</code> at a given
+ <code>Vector2</code> position</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stopEffect(com.csse3200.game.services.ParticleService.ParticleEffectType)" class="member-name-link">stopEffect</a><wbr>(<a href="ParticleService.ParticleEffectType.html" title="enum class in com.csse3200.game.services">ParticleService.ParticleEffectType</a>&nbsp;effectType)</code></div>
@@ -190,6 +217,20 @@ loadScripts(document, 'script');</script>
 </dl>
 </section>
 </li>
+<li>
+<section class="detail" id="ENTITY_EFFECT">
+<h3>ENTITY_EFFECT</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">ENTITY_EFFECT</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../constant-values.html#com.csse3200.game.services.ParticleService.ENTITY_EFFECT">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
 </ul>
 </section>
 </li>
@@ -222,7 +263,7 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>batch</code> - sprite batch used to render effects</dd>
-<dd><code>delta</code> - delta value used to update each particle effect</dd>
+<dd><code>delta</code> - delta time value used to update the particle effects</dd>
 </dl>
 </section>
 </li>
@@ -256,6 +297,59 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>category</code> - category of particle effects</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getEffect(com.csse3200.game.services.ParticleService.ParticleEffectType)">
+<h3>getEffect</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.graphics.g2d.ParticleEffectPool.PooledEffect</span>&nbsp;<span class="element-name">getEffect</span><wbr><span class="parameters">(<a href="ParticleService.ParticleEffectType.html" title="enum class in com.csse3200.game.services">ParticleService.ParticleEffectType</a>&nbsp;effectType)</span></div>
+<div class="block">Obtains the pooled particle effect for a given <a href="ParticleService.ParticleEffectType.html" title="enum class in com.csse3200.game.services"><code>ParticleService.ParticleEffectType</code></a></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>effectType</code> - The <a href="ParticleService.ParticleEffectType.html" title="enum class in com.csse3200.game.services"><code>ParticleService.ParticleEffectType</code></a> of the
+                   <code>ParticleEffectPool.PooledEffect</code> to be obtained</dd>
+<dt>Returns:</dt>
+<dd>The <code>ParticleEffectPool.PooledEffect</code> that is used to render
+ the effect</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="startEffectAtPosition(com.csse3200.game.services.ParticleService.ParticleEffectType,com.badlogic.gdx.math.Vector2)">
+<h3>startEffectAtPosition</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">startEffectAtPosition</span><wbr><span class="parameters">(<a href="ParticleService.ParticleEffectType.html" title="enum class in com.csse3200.game.services">ParticleService.ParticleEffectType</a>&nbsp;effectType,
+ com.badlogic.gdx.math.Vector2&nbsp;position)</span></div>
+<div class="block">Starts rendering a <code>ParticleEffectPool.PooledEffect</code> at a given
+ <code>Vector2</code> position</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>effectType</code> - The <a href="ParticleService.ParticleEffectType.html" title="enum class in com.csse3200.game.services"><code>ParticleService.ParticleEffectType</code></a> of the particle to be rendered</dd>
+<dd><code>position</code> - position to render the particle effect at</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="addComponent(com.csse3200.game.components.ParticleEffectComponent)">
+<h3>addComponent</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addComponent</span><wbr><span class="parameters">(<a href="../components/ParticleEffectComponent.html" title="class in com.csse3200.game.components">ParticleEffectComponent</a>&nbsp;component)</span></div>
+<div class="block">Adds a <a href="../components/ParticleEffectComponent.html" title="class in com.csse3200.game.components"><code>ParticleEffectComponent</code></a> to the <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link"><code>List</code></a> of <a href="../components/ParticleEffectComponent.html" title="class in com.csse3200.game.components"><code>ParticleEffectComponent</code></a>s tracked by the
+ <a href="ParticleService.html" title="class in com.csse3200.game.services"><code>ParticleService</code></a> so that it can render each individual effect.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>component</code> - component to be added</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="removeComponent(com.csse3200.game.components.ParticleEffectComponent)">
+<h3>removeComponent</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">removeComponent</span><wbr><span class="parameters">(<a href="../components/ParticleEffectComponent.html" title="class in com.csse3200.game.components">ParticleEffectComponent</a>&nbsp;component)</span></div>
+<div class="block">Removes a <a href="../components/ParticleEffectComponent.html" title="class in com.csse3200.game.components"><code>ParticleEffectComponent</code></a> to the <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link"><code>List</code></a> of <a href="../components/ParticleEffectComponent.html" title="class in com.csse3200.game.components"><code>ParticleEffectComponent</code></a>s tracked by the
+ <a href="ParticleService.html" title="class in com.csse3200.game.services"><code>ParticleService</code></a> so that it can render each individual effect.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>component</code> - component to be removed</dd>
 </dl>
 </section>
 </li>
