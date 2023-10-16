@@ -136,7 +136,7 @@ class TestToolbarUI {
 
 	@ParameterizedTest
 	@MethodSource({"addingItemsShouldAddInventoryImagesParams"})
-	void addingItemsShouldAddInventoryImages(ItemComponent component, int expected) {
+	void addingItemsShouldAddInventoryImages(ItemComponent component) {
 		ServiceLocator.registerTimeService(new TimeService());
 		ServiceLocator.registerMissionManager(new MissionManager());
 		player.create();

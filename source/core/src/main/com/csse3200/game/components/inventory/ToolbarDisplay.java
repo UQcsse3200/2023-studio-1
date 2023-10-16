@@ -35,7 +35,6 @@ public class ToolbarDisplay extends UIComponent {
     private InventoryComponent inventory;
     private int selectedSlot = -1;
     private final ArrayList<ItemSlot> slots = new ArrayList<>();
-    private final Map<Integer, TextTooltip> tooltips = new HashMap<>();
     private final InstantTooltipManager instantTooltipManager = new InstantTooltipManager();
     private boolean isPause = false;
     private boolean lastState = false;
@@ -110,7 +109,6 @@ public class ToolbarDisplay extends UIComponent {
                 slots.set(i, curSlot);
             }
         }
-        addTooltips();
     }
 
     /**
@@ -233,41 +231,6 @@ public class ToolbarDisplay extends UIComponent {
             ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.SWITCH_TOOLBAR);
         } catch (InvalidSoundFileException e) {
             logger.error("sound not loaded");
-        }
-    }
-    public void addTooltips() {
-        tooltips.forEach((index ,tooltip) -> {
-            if (tooltip != null) {
-                tooltip.hide();
-            }});
-        TextTooltip tooltip;
-        int i = 0;
-        for (ItemSlot slot : slots) {
-            if (inventory.getItem(i) != null) {
-                ItemComponent item = inventory.getItem(i).getComponent(ItemComponent.class);
-                if (Objects.equals(item.getItemName(), "watering_can")) {
-                    int level = (int) item.getEntity().getComponent(WateringCanLevelComponent.class).getCurrentLevel();
-                    tooltip = new TextTooltip(item.getItemName() + "\n\nCurrent level is " + level, instantTooltipManager, skin);
-                } else {
-                    tooltip = new TextTooltip(item.getItemName() + "\n\n" + item.getItemDescription(), instantTooltipManager,skin);
-                }
-                if (tooltips.get(i) != null) {
-                    tooltips.get(i).hide();
-                    slot.removeListener(tooltips.get(i));
-                }
-                tooltip.getActor().setAlignment(Align.center);
-                tooltip.setInstant(true);
-                slot.addListener(tooltip);
-                tooltips.put(i, tooltip);
-            }
-            else {
-                if (tooltips.get(i) != null) {
-                    tooltips.get(i).hide();
-                    slot.removeListener(tooltips.get(i));
-                    tooltips.remove(i);
-                }
-            }
-            i++;
         }
     }
 }
