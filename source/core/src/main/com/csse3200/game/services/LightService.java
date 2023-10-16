@@ -75,7 +75,7 @@ public class LightService {
 	private Color getAmbientLight(float timeOfDay) {
 		// Calculate expected brightness
 		float brightness = MathUtils.sin((float) (Math.PI * (timeOfDay - 13.0f) / 24.0f));
-		brightness = 0.92f * brightness * brightness;
+		brightness = 0.8f * brightness * brightness;
 		brightness = 1 - (float) Math.pow(brightness, 1.5f);
 		brightness = (float) Math.pow(brightness, 1.5f);
 
