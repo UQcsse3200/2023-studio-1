@@ -252,7 +252,7 @@ public class ToolbarDisplay extends UIComponent {
         }
     }
     private void switchToolbar() {
-        window.addAction(sequence(scaleTo(1.02f, 1.02f, 0.2f, Interpolation.fade),scaleTo(1, 1, 0.2f, Interpolation.fade)));
+        window.addAction(sequence(scaleTo(1.02f, 1.02f, 0f, Interpolation.fade),scaleTo(1, 1, 0.2f, Interpolation.fade)));
         try {
             ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.SWITCH_TOOLBAR);
         } catch (InvalidSoundFileException e) {
