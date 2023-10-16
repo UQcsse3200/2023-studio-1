@@ -63,7 +63,10 @@ public class InventoryComponent extends Component {
      */
     private int maxInventorySize = 30; // default size 30
 
-    private final List<String> forbiddenItems = Arrays.asList("shovel","hoe","watering_can","scythe","sword","gun","Fishing Rod");
+    private static final List<String> forbiddenItems = Arrays.asList("shovel","hoe","watering_can","scythe","sword","gun","Fishing Rod");
+    public static List<String> getForbiddenItems() {
+        return forbiddenItems;
+    }
 
     /**
      * Creates a new InventoryComponent with a given list of items.
@@ -314,7 +317,7 @@ public class InventoryComponent extends Component {
      * @param entity entity to be added
      * @return boolean representing if the item was added successfully
      */
-    public boolean setPosition(Entity entity){
+    public boolean setPosition(Entity entity) {
         int position = nextAvailablePosition();
         if (position == -1) {
             return false;
@@ -443,10 +446,6 @@ public class InventoryComponent extends Component {
         if (!this.itemCount.containsKey(itemName)) {
             return false;
         }
-        // Check if item is forbidden to remove
-        if (forbiddenItems.contains(itemName)) {
-            return false;
-        }
         // Decrease item count by 1
         this.itemCount.put(itemName, this.itemCount.get(itemName) - 1);
         // If item count is now 0
@@ -492,10 +491,8 @@ public class InventoryComponent extends Component {
      * @param index The index of the item in the inventory to be set as the held item.
      */
     public void setHeldItem(int index) {
-        if (index >= 0 && index < 10) {
             this.heldItem = this.heldItemsEntity.get(this.itemPlace.get(index));
             this.heldIndex = index;
-        }
     }
 
     /**
@@ -523,6 +520,19 @@ public class InventoryComponent extends Component {
      */
     public int getItemCount(Entity item) {
         return this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(), 0);
+    }
+    /**
+     * Switches the 10 item slots in the inventory where the next item is automatically added.
+     */
+    public void switchTab() {
+        Map<Integer, String> newMap = new HashMap<>();
+        for (Map.Entry<Integer,String> e: itemPlace.entrySet()) {
+            newMap.put((e.getKey() + 20) % 30, e.getValue());
+        }
+        itemPlace.clear();
+        itemPlace.putAll(newMap);
+        setHeldItem(heldIndex);
+        entity.getEvents().trigger(UPDATE_INVENTORY);
     }
 
     /**
