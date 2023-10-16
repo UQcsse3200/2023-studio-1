@@ -45,8 +45,10 @@ public class PlayerActions extends Component {
   private float speedMultiplier = 1f;
   private float damageMultiplier = 1f;
   int swordDamage = 5;
-
   private static final String RIGHT_STRING = "right";
+  long coolDown = 2000;
+  long previousShot = 0;
+  int amountBullet = 6;
 
   @Override
   public void create() {
@@ -250,18 +252,24 @@ public class PlayerActions extends Component {
    * @param mousePos Determine direction of mouse
    */
   void shoot(Vector2 mousePos) {
-    Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/weapons/GunAttack.mp3", Sound.class);
-    attackSound.play();
-    mousePos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
-    Entity projectile = ProjectileFactory.createPlayerProjectile();
+    if(amountBullet > 0) {
+      Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/weapons/GunAttack.mp3", Sound.class);
+      attackSound.play();
+      mousePos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
+      Entity projectile = ProjectileFactory.createPlayerProjectile();
 
-    CombatStatsComponent combatStatsComponent = projectile.getComponent(CombatStatsComponent.class);
-    combatStatsComponent.setBaseAttack((int) (combatStatsComponent.getBaseAttack() * damageMultiplier));
-    projectile.setCenterPosition(entity.getCenterPosition());
-    ServiceLocator.getGameArea().spawnEntity(projectile);
-    ProjectileComponent projectileComponent = projectile.getComponent(ProjectileComponent.class);
-    projectileComponent.setSpeed(new Vector2(3f, 3f));
-    projectileComponent.setTargetDirection(mousePos);
+      CombatStatsComponent combatStatsComponent = projectile.getComponent(CombatStatsComponent.class);
+      combatStatsComponent.setBaseAttack((int) (combatStatsComponent.getBaseAttack() * damageMultiplier));
+      projectile.setCenterPosition(entity.getCenterPosition());
+      ServiceLocator.getGameArea().spawnEntity(projectile);
+      ProjectileComponent projectileComponent = projectile.getComponent(ProjectileComponent.class);
+      projectileComponent.setSpeed(new Vector2(3f, 3f));
+      projectileComponent.setTargetDirection(mousePos);
+      amountBullet--;
+      previousShot = System.currentTimeMillis();
+    } else {
+      reload();
+    }
   }
 
   /**
@@ -342,5 +350,15 @@ public class PlayerActions extends Component {
 
   public void setMuted(boolean muted) {
     this.muted = muted;
+  }
+
+  /**
+   * Reloads the Gun after a specified amount of time
+   */
+  void reload(){
+    long currentTime = System.currentTimeMillis();
+    if(currentTime - previousShot > coolDown) {
+      amountBullet = 6;
+    }
   }
 }
