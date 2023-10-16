@@ -1928,31 +1928,3 @@ bye_bye
   orig: 48, 48
   offset: 0, 0
   index: 20
-bye_bye
-  rotate: false
-  xy: 48, 864
-  size: 48, 48
-  orig: 48, 48
-  offset: 0, 0
-  index: 21
-bye_bye
-  rotate: false
-  xy: 96, 864
-  size: 48, 48
-  orig: 48, 48
-  offset: 0, 0
-  index: 22
-bye_bye
-  rotate: false
-  xy: 144, 864
-  size: 48, 48
-  orig: 48, 48
-  offset: 0, 0
-  index: 23
-bye_bye
-  rotate: false
-  xy: 192, 864
-  size: 48, 48
-  orig: 48, 48
-  offset: 0, 0
-  index: 24
