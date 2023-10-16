@@ -1,6 +1,5 @@
 package com.csse3200.game.missions.quests;
 
-import com.csse3200.game.areas.SpaceGameArea;
 import com.csse3200.game.areas.weather.SolarSurgeEvent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;

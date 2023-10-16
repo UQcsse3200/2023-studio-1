@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 /**
- * SpaceDebrisQuest is a Quest that spawns additional debris and monitors and tracks the player clearing debris.
+ * SpaceDebrisQuest is an extension of ClearDebrisQuest that spawns new debris to be cleared
  *
  * Code adopted from spawnShipDebris in SpaceGameArea
  */
@@ -23,7 +23,7 @@ public class SpaceDebrisQuest extends ClearDebrisQuest {
     /**
      * Position to spawn space debris
      */
-    private static final GridPoint2 SPACE_DEBRIS_SPAWN = new GridPoint2(42, 26);
+    private static final GridPoint2 SPACE_DEBRIS_SPAWN = new GridPoint2(52, 16);
 
     /**
      * A Quest where player is required to clear a certain amount of debris.
@@ -38,6 +38,7 @@ public class SpaceDebrisQuest extends ClearDebrisQuest {
 
         /**
          * Registers the Quest with the {@link MissionManager} by listening to the DEBRIS_CLEAR Mission event.
+         * Also spawns in new debris at the specified location. 
          * @param missionManagerEvents - A reference to the {@link EventHandler} on the
          *                             {@link MissionManager}, with which relevant events should be
          *                             listened to.
