@@ -1634,7 +1634,7 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/missions/quests/QuestFactory.html#createPartFinderIQuest()" class="member-name-link">createPartFinderIQuest()</a> - Static method in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/QuestFactory.html" title="class in com.csse3200.game.missions.quests">QuestFactory</a></dt>
 <dd>
-<div class="block">Creates the Clue <a href="com/csse3200/game/missions/quests/ShipRepairQuest.html" title="class in com.csse3200.game.missions.quests"><code>ShipRepairQuest</code></a></div>
+<div class="block">Creates the Part Finder <a href="com/csse3200/game/missions/quests/ShipRepairQuest.html" title="class in com.csse3200.game.missions.quests"><code>ShipRepairQuest</code></a></div>
 </dd>
 <dt><a href="com/csse3200/game/entities/factories/ItemFactory.html#createPharLap()" class="member-name-link">createPharLap()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ItemFactory.html" title="class in com.csse3200.game.entities.factories">ItemFactory</a></dt>
 <dd>
@@ -5905,6 +5905,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Registers <a href="com/csse3200/game/missions/quests/ShipRepairQuest.html" title="class in com.csse3200.game.missions.quests"><code>ShipRepairQuest</code></a> with <a href="com/csse3200/game/missions/MissionManager.html" title="class in com.csse3200.game.missions"><code>MissionManager</code></a> by listening to SHIP_PART_ADDED event</div>
 </dd>
+<dt><a href="com/csse3200/game/missions/quests/SpaceDebrisQuest.html#registerMission(com.csse3200.game.events.EventHandler)" class="member-name-link">registerMission(EventHandler)</a> - Method in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/SpaceDebrisQuest.html" title="class in com.csse3200.game.missions.quests">SpaceDebrisQuest</a></dt>
+<dd>
+<div class="block">Registers the Quest with the <a href="com/csse3200/game/missions/MissionManager.html" title="class in com.csse3200.game.missions"><code>MissionManager</code></a> by listening to the DEBRIS_CLEAR Mission event.</div>
+</dd>
 <dt><a href="com/csse3200/game/missions/quests/TameAnimalsQuest.html#registerMission(com.csse3200.game.events.EventHandler)" class="member-name-link">registerMission(EventHandler)</a> - Method in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/TameAnimalsQuest.html" title="class in com.csse3200.game.missions.quests">TameAnimalsQuest</a></dt>
 <dd>
 <div class="block">Register the <a href="com/csse3200/game/missions/quests/TameAnimalsQuest.html" title="class in com.csse3200.game.missions.quests"><code>TameAnimalsQuest</code></a> with the <a href="com/csse3200/game/missions/MissionManager.html" title="class in com.csse3200.game.missions"><code>MissionManager</code></a> by adding listener to the
@@ -7132,6 +7136,16 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/sound/EffectSoundFile.html#SPACE_SNAPPER_NEARBY_LORE" class="member-name-link">SPACE_SNAPPER_NEARBY_LORE</a> - Enum constant in enum class com.csse3200.game.services.sound.<a href="com/csse3200/game/services/sound/EffectSoundFile.html" title="enum class in com.csse3200.game.services.sound">EffectSoundFile</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/missions/quests/SpaceDebrisQuest.html" class="type-name-link" title="class in com.csse3200.game.missions.quests">SpaceDebrisQuest</a> - Class in <a href="com/csse3200/game/missions/quests/package-summary.html">com.csse3200.game.missions.quests</a></dt>
+<dd>
+<div class="block">SpaceDebrisQuest is an extension of ClearDebrisQuest that spawns new debris to be cleared
+
+ Code adopted from spawnShipDebris in SpaceGameArea</div>
+</dd>
+<dt><a href="com/csse3200/game/missions/quests/SpaceDebrisQuest.html#%3Cinit%3E(java.lang.String,com.csse3200.game.missions.rewards.Reward,int)" class="member-name-link">SpaceDebrisQuest(String, Reward, int)</a> - Constructor for class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/SpaceDebrisQuest.html" title="class in com.csse3200.game.missions.quests">SpaceDebrisQuest</a></dt>
+<dd>
+<div class="block">A Quest where player is required to clear a certain amount of debris.</div>
+</dd>
 <dt><a href="com/csse3200/game/areas/SpaceGameArea.html" class="type-name-link" title="class in com.csse3200.game.areas">SpaceGameArea</a> - Class in <a href="com/csse3200/game/areas/package-summary.html">com.csse3200.game.areas</a></dt>
 <dd>
 <div class="block">SpaceGameArea is the area used for the initial game version</div>
