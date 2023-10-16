@@ -217,7 +217,6 @@ public class ClimateController implements Json.Serializable {
 	@Override
 	public void write(Json json) {
 		json.writeObjectStart("Events");
-		updateWeatherEvent();
 		for (WeatherEvent event : weatherEvents) {
 			event.write(json);
 		}
@@ -252,5 +251,8 @@ public class ClimateController implements Json.Serializable {
 			});
 		}
 		recalculateCurrentWeatherEvent();
+		if (currentWeatherEvent != null) {
+			currentWeatherEvent.startEffect();
+		}
 	}
 }

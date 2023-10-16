@@ -64,10 +64,6 @@ public class CombatStatsComponent extends Component {
     }
     if (entity != null) {
       entity.getEvents().trigger("updateHealth", this.health);
-      if (isDead()) {
-        ServiceLocator.getMissionManager().getEvents().trigger(
-                MissionManager.MissionEvent.COMBAT_ACTOR_DEFEATED.name(), entity.getType());
-      }
     }
   }
 
@@ -124,6 +120,8 @@ public class CombatStatsComponent extends Component {
   public void earlyUpdate() {
     if (isDead()) {
       entity.getEvents().trigger("death");
+      ServiceLocator.getMissionManager().getEvents().trigger(
+              MissionManager.MissionEvent.COMBAT_ACTOR_DEFEATED.name(), entity.getType());
       handleDeath();
     }
   }
