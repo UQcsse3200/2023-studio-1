@@ -26,7 +26,6 @@ public class ItemSlot extends Stack {
 	private Stack draggable;
 	private ItemFrame itemFrame;
 	static int i;
-	private int cur = 0;
 
 
 	/**
@@ -89,7 +88,6 @@ public class ItemSlot extends Stack {
 			draggable.removeActor(label);
 			if (label != null) {
 				this.label = null;
-
 			}
 		}
 	}
@@ -117,7 +115,7 @@ public class ItemSlot extends Stack {
 
 	@Override
 	public String toString() {
-		return super.toString()+cur;
+		return super.toString();
 	}
 
 	/**
@@ -127,7 +125,6 @@ public class ItemSlot extends Stack {
 		if (i <= 0) {
 			i = 0;
 		}
-		cur = i++;
 		draggable = new Stack();
 
 		//Add the selection background if necessary
@@ -172,11 +169,9 @@ public class ItemSlot extends Stack {
 		return draggable;
 	}
 
-	public boolean setDraggable(Stack stack) {
-		boolean ans = false;
-		if (!this.removeActor(this.draggable)) {
-			ans = true;
-		}
+	public void setDraggable(Stack stack) {
+		this.removeActor(this.draggable);
+
 		if (stack != null) {
 			if (stack.getChildren().size == 2) {
 				label = (Label) (stack.getChild(1));
@@ -187,7 +182,6 @@ public class ItemSlot extends Stack {
 			this.draggable = stack;
 			this.add(stack);
 		}
-		return ans;
 	}
 
 	public void setItemImage(Image image) {

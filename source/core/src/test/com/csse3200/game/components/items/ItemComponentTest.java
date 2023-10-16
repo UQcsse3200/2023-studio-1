@@ -58,10 +58,8 @@ class ItemComponentTest {
   @Test
   void createItemComponentConstructorDescription() {
     ItemComponent item = new ItemComponent("test", ItemType.HOE, "test description", "images/tool_shovel.png");
-    ItemComponent item2 = new ItemComponent("test", ItemType.HOE, "test description", true, "images/tool_shovel.png");
-    ItemComponent item3 = new ItemComponent("test", ItemType.HOE, "images/tool_shovel.png", true);
-    assertTrue(item2.isPerishable());
-    assertTrue(item3.isPerishable());
+    ItemComponent item2 = new ItemComponent("test", ItemType.HOE, "test description", "images/tool_shovel.png");
+    ItemComponent item3 = new ItemComponent("test", ItemType.HOE, "images/tool_shovel.png");
     assertEquals("test", item.getItemName());
     assertEquals(0, item.getPrice());
     assertEquals("test description", item.getItemDescription());

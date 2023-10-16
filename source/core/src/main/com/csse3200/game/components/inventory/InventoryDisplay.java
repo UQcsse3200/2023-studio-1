@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.items.WateringCanLevelComponent;
 import com.csse3200.game.components.player.PlayerActions;
@@ -197,13 +199,12 @@ public class InventoryDisplay extends UIComponent {
 				curSlot.setCount(itemCount);
 				map.put(curSlot.getDraggable(), curSlot);
 
-
 				slots.set(i, curSlot);
 			} else {
 				ItemSlot curSlot = slots.get(i);
 				curSlot.setItemImage(null);
+				curSlot.setCount(0);
 				curSlot.getDraggable().clear();
-
 				slots.set(i, curSlot);
 			}
 
@@ -223,6 +224,7 @@ public class InventoryDisplay extends UIComponent {
 	 * @param map    images and their respective item slot
 	 */
 	public void setDragItems(@NotNull ArrayList<Actor> actors, Map<Stack, ItemSlot> map) {
+		final InputListener[] listener = new InputListener[1];
 		for (Actor item : actors) {
 			dnd.addSource(new DragAndDrop.Source(item) {
 				final DragAndDrop.Payload payload = new DragAndDrop.Payload();
@@ -230,24 +232,45 @@ public class InventoryDisplay extends UIComponent {
 
 				@Override
 				public DragAndDrop.Payload dragStart(InputEvent event, float x, float y, int pointer) {
+					try {
+						ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.DRAG_ITEM);
+					} catch (InvalidSoundFileException e) {
+						logger.error("sound not loaded");
+					}
+					// prevent player from toggling off inventory when dragging.
+					listener[0] = new InputListener() {
+						@Override
+						public boolean keyDown(InputEvent event, int keycode) {
+							if (keycode == Input.Keys.I || keycode == Input.Keys.E) {
+								return true;
+							}
+							return super.keyDown(event,keycode);
+						}
+					};
+					stage.addListener(listener[0]);
 					payload.setObject(getActor());
 					payload.setDragActor(getActor());
 					stage.addActor(getActor());
 					dnd.setDragActorPosition(50, -getActor().getHeight() / 2);
-					ItemSlot slot = map.get(getActor());
-					tooltips.get(indexes.get(slot)).hide();
+					ItemSlot slot = map.get( (Stack) getActor());
 					tooltip = tooltips.get(indexes.get(slot));
-					slot.removeListener(tooltips.get(indexes.get(slot)));
+					tooltip.hide();
+					slot.removeListener(tooltip);
+					tooltips.remove(indexes.get(slot));
 					return payload;
 				}
 
 				@Override
 				public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
 					if (target == null) {
-						ItemSlot itemSlot = map.get(getActor());
+						ItemSlot itemSlot = map.get( (Stack) getActor());
 						itemSlot.add(getActor());
-						itemSlot.addListener(tooltip);
+						if (tooltips.get(indexes.get(itemSlot)) == null) {
+							itemSlot.addListener(tooltip);
+							tooltips.put(indexes.get(itemSlot),tooltip);
+						}
 					}
+					stage.removeListener(listener[0]);
 				}
 			});
 		}
@@ -277,13 +300,19 @@ public class InventoryDisplay extends UIComponent {
 						entity.getEvents().trigger("updateToolbar");
 						inventory.setHeldItem(inventory.getHeldIndex());
 						addTooltips();
+						try {
+							ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.DROP_ITEM);
+						} catch (InvalidSoundFileException e) {
+							logger.error("sound not loaded");
+						}
 					}
 				});
 			} else {
 				dnd.addTarget(new DragAndDrop.Target(targetItem.getActor()) {
 					@Override
 					public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-						return true;
+						ItemSlot itemSlot = map.get((Stack) source.getActor());
+						return !InventoryComponent.getForbiddenItems().contains(inventory.getItemPlace().get(indexes.get(itemSlot)));
 					}
 					@Override
 					public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
@@ -292,6 +321,11 @@ public class InventoryDisplay extends UIComponent {
 						itemSlot.add(source.getActor());
 						inventory.removeItem(inventory.getHeldItemsEntity().get(inventory.getItemPlace().get(indexes.get(itemSlot))));
 						addTooltips();
+						try {
+							ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.DELETE_ITEM);
+						} catch (InvalidSoundFileException e) {
+							logger.error("sound not loaded");
+						}
 					}
 				});
 			}
@@ -419,12 +453,12 @@ public class InventoryDisplay extends UIComponent {
 		for (ItemSlot slot : slots) {
 			int i = indexes.get(slot);
 			if (inventory.getItem(i) != null) {
-				ItemComponent item = inventory.getItem(indexes.get(slot)).getComponent(ItemComponent.class);
+				ItemComponent item = inventory.getItem(i).getComponent(ItemComponent.class);
 				if (Objects.equals(item.getItemName(), "watering_can")) {
-					float level = item.getEntity().getComponent(WateringCanLevelComponent.class).getCurrentLevel();
-					tooltip = new TextTooltip(item.getItemName() + "\n\nCurrent level is " + level, skin);
+					int level = (int) item.getEntity().getComponent(WateringCanLevelComponent.class).getCurrentLevel();
+					tooltip = new TextTooltip(item.getItemName() + "\n\nCurrent level is " + level, instantTooltipManager, skin);
 				} else {
-					tooltip = new TextTooltip(item.getItemName() + "\n\n" + item.getItemDescription(),instantTooltipManager,skin);
+					tooltip = new TextTooltip(item.getItemName() + "\n\n" + item.getItemDescription(), instantTooltipManager,skin);
 				}
 				if (tooltips.get(i) != null) {
 					tooltips.get(i).hide();

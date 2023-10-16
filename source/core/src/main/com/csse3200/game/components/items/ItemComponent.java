@@ -33,18 +33,6 @@ public class ItemComponent extends Component {
 	/**
 	 * Constructor for Item
 	 *
-	 * @param itemName user facing name for item
-	 * @param itemType the enum for type of item
-	 * @param perishable whether the item is perishable
-	 * @param texturePath path for the item texture
-	 */
-	public ItemComponent(String itemName, ItemType itemType, String texturePath, boolean perishable) {
-		this(itemName, itemType, "", 0, false, perishable, texturePath);
-	}
-
-	/**
-	 * Constructor for Item
-	 *
 	 * @param itemName user facing name
 	 * @param itemType the enum for type of item
 	 * @param price    sellable price of the item
@@ -66,18 +54,6 @@ public class ItemComponent extends Component {
 		this(itemName, itemType, itemDescription, 0, false, false, texturePath);
 	}
 
-	/**
-	 * Constructor for Item
-	 *
-	 * @param itemName        user facing name for item
-	 * @param itemType        the enum for type of item
-	 * @param itemDescription user facing description for item
-	 * @param perishable whether the item is perishable
-	 * @param texturePath path for the item texture
-	 */
-	public ItemComponent(String itemName, ItemType itemType, String itemDescription, boolean perishable, String texturePath) {
-		this(itemName, itemType, itemDescription, 0, false, perishable, texturePath);
-	}
 
 	/**
 	 * Constructor for Item

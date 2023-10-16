@@ -40,8 +40,13 @@ public class PlayerAnimationController extends Component {
         entity.getEvents().addListener(PlayerActions.events.FISH_CAUGHT.name(), this::stopFishing);
         entity.getEvents().addListener(PlayerActions.events.CAST_FISHING_RODS.name(), this::castFishingRod);
         entity.getEvents().addListener(PlayerActions.events.USE.name(), this::use);
+        entity.getEvents().addListener("bye bye", this::die);
 
         animator.startAnimation("default");
+    }
+
+    private void die() {
+        animator.startAnimation("bye_bye");
     }
 
     @Override
@@ -124,7 +129,7 @@ public class PlayerAnimationController extends Component {
             return true;
         } else if (animator.getCurrentAnimation().contains("interact") || animator.getCurrentAnimation().contains("hoe")
                 || animator.getCurrentAnimation().contains("shovel") || animator.getCurrentAnimation().contains("scythe")
-                || animator.getCurrentAnimation().contains("watering_can")) {
+                || animator.getCurrentAnimation().contains("watering_can") || animator.getCurrentAnimation().contains("bye")) {
             return animator.isFinished();
         } else return !animator.getCurrentAnimation().contains("fishing");
     }

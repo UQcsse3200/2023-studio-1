@@ -2,6 +2,7 @@ package com.csse3200.game.components.inventory;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -18,7 +19,9 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import com.badlogic.gdx.graphics.Texture;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 /**
  * Display the UI for the toolbar
@@ -37,6 +40,7 @@ public class ToolbarDisplay extends UIComponent {
     private boolean isPause = false;
     private boolean lastState = false;
 
+
     /**
      * Creates the event listeners, ui, and gets the UI.
      */
@@ -48,6 +52,7 @@ public class ToolbarDisplay extends UIComponent {
         entity.getEvents().addListener("updateToolbar", this::updateInventory);
         entity.getEvents().addListener("toggleInventory",this::toggleOpen);
         entity.getEvents().addListener("hotkeySelection",this::updateItemSlot);
+        entity.getEvents().addListener("toolbarSwitch",this::switchToolbar);
         entity.getEvents().addListener(PlayerActions.events.ESC_INPUT.name(), this::setPause);
         entity.getEvents().addListener("hideUI", this::hide);
         inventory = entity.getComponent(InventoryComponent.class);
@@ -70,7 +75,7 @@ public class ToolbarDisplay extends UIComponent {
      * @see Table for positioning options
      */
 
-    private void updateToolbar(){
+    private void updateToolbar() {
         for (int i = 0; i < 10; i++){
             int idx = i + 1;
             if (idx == 10) {
@@ -102,13 +107,10 @@ public class ToolbarDisplay extends UIComponent {
                 ItemSlot curSlot = slots.get(i);
                 curSlot.setItemImage(null);
                 curSlot.setCount(0);
-                if (tooltips.get(i) != null) {
-                    curSlot.removeListener(tooltips.get(i));
-                    tooltips.remove(i);
-                }
                 slots.set(i, curSlot);
             }
         }
+        addTooltips();
     }
 
     /**
@@ -223,6 +225,49 @@ public class ToolbarDisplay extends UIComponent {
             ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.HOTKEY_SELECT);
         } catch (InvalidSoundFileException e) {
             logger.info("Hotkey sound not loaded");
+        }
+    }
+    private void switchToolbar() {
+        window.addAction(sequence(scaleTo(1.02f, 1.02f, 0f, Interpolation.fade),scaleTo(1, 1, 0.2f, Interpolation.fade)));
+        try {
+            ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.SWITCH_TOOLBAR);
+        } catch (InvalidSoundFileException e) {
+            logger.error("sound not loaded");
+        }
+    }
+    public void addTooltips() {
+        tooltips.forEach((index ,tooltip) -> {
+            if (tooltip != null) {
+                tooltip.hide();
+            }});
+        TextTooltip tooltip;
+        int i = 0;
+        for (ItemSlot slot : slots) {
+            if (inventory.getItem(i) != null) {
+                ItemComponent item = inventory.getItem(i).getComponent(ItemComponent.class);
+                if (Objects.equals(item.getItemName(), "watering_can")) {
+                    int level = (int) item.getEntity().getComponent(WateringCanLevelComponent.class).getCurrentLevel();
+                    tooltip = new TextTooltip(item.getItemName() + "\n\nCurrent level is " + level, instantTooltipManager, skin);
+                } else {
+                    tooltip = new TextTooltip(item.getItemName() + "\n\n" + item.getItemDescription(), instantTooltipManager,skin);
+                }
+                if (tooltips.get(i) != null) {
+                    tooltips.get(i).hide();
+                    slot.removeListener(tooltips.get(i));
+                }
+                tooltip.getActor().setAlignment(Align.center);
+                tooltip.setInstant(true);
+                slot.addListener(tooltip);
+                tooltips.put(i, tooltip);
+            }
+            else {
+                if (tooltips.get(i) != null) {
+                    tooltips.get(i).hide();
+                    slot.removeListener(tooltips.get(i));
+                    tooltips.remove(i);
+                }
+            }
+            i++;
         }
     }
 }

@@ -76,6 +76,7 @@ public class PlayerFactory {
             .addComponent(new InventoryDisplay("updateInventory", "toggleInventory", 30, 10, true))
             .addComponent(new BlinkComponent())
             .addComponent(new StunComponent())
+            .addComponent(new DimComponent())
             .addComponent(new PauseMenuActions());
 
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
@@ -135,14 +136,22 @@ public class PlayerFactory {
     animator.addAnimation("scythe_left",0.1f,Animation.PlayMode.NORMAL);
     animator.addAnimation("scythe_right",0.1f,Animation.PlayMode.NORMAL);
     animator.addAnimation("scythe_down",0.1f,Animation.PlayMode.NORMAL);
+
     animator.addAnimation("sword_up",0.1f,Animation.PlayMode.NORMAL);
     animator.addAnimation("sword_left",0.1f,Animation.PlayMode.NORMAL);
     animator.addAnimation("sword_right",0.1f,Animation.PlayMode.NORMAL);
     animator.addAnimation("sword_down",0.1f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("gun_up",0.3f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("gun_left",0.3f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("gun_right",0.3f,Animation.PlayMode.NORMAL);
+    animator.addAnimation("gun_down",0.3f,Animation.PlayMode.NORMAL);
+
     animator.addAnimation("fishing_left", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("fishing_right", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("fishing_up", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("fishing_down", 0.1f, Animation.PlayMode.LOOP);
+
+    animator.addAnimation("bye_bye", 0.1f, Animation.PlayMode.NORMAL);
   }
 
   public static Entity createFishingRodAnimatorEntity() {
