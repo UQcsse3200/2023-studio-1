@@ -397,10 +397,18 @@ public class PlayerActions extends Component {
     return stunComponent.isStunned();
   }
 
+  /**
+   * Sets speed multiplier of player to change walking and running speed.
+   * @param multiplier float in which to multiply speed by
+   */
   public void setSpeedMultiplier(float multiplier) {
     this.speedMultiplier = multiplier;
   }
 
+  /**
+   * Sets damage multiplier of player to change sword and gun damage
+   * @param multiplier float in which to multiply damage by
+   */
   public void setDamageMultiplier(float multiplier) {
     this.damageMultiplier = multiplier;
   }
