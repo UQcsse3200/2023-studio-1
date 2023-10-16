@@ -50,7 +50,7 @@ class HungerComponentTest {
 
     @Test
     void checkIfStarving() {
-        hungerComponent.setHungerLevel(100);
+        hungerComponent.setHungerLevel(0);
         assertTrue(hungerComponent.checkIfStarving());
 
         hungerComponent.setHungerLevel(66);
@@ -60,18 +60,18 @@ class HungerComponentTest {
     @Test
     void testIncreaseHungerLevel() {
         hungerComponent.increaseHungerLevel(1);
-        assertEquals(INITIAL_HUNGER_LEVEL + 1, hungerComponent.getHungerLevel());
+        assertEquals(INITIAL_HUNGER_LEVEL - 1, hungerComponent.getHungerLevel());
 
         hungerComponent.setHungerLevel(INITIAL_HUNGER_LEVEL);
         hungerComponent.increaseHungerLevel(-1);
-        assertEquals(INITIAL_HUNGER_LEVEL - 1, hungerComponent.getHungerLevel());
+        assertEquals(INITIAL_HUNGER_LEVEL + 1, hungerComponent.getHungerLevel());
 
         hungerComponent.setHungerLevel(0);
-        hungerComponent.increaseHungerLevel(-1);
+        hungerComponent.increaseHungerLevel(1);
         assertEquals(0, hungerComponent.getHungerLevel());
 
         hungerComponent.setHungerLevel(100);
-        hungerComponent.increaseHungerLevel(1);
+        hungerComponent.increaseHungerLevel(-1);
         assertEquals(100, hungerComponent.getHungerLevel());
     }
 }
