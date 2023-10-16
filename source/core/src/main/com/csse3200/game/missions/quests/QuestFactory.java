@@ -476,8 +476,8 @@ public class QuestFactory {
     }
 
     /**
-     * Creates the Clue {@link ShipRepairQuest}
-     * @return - the Clue Finder Quest
+     * Creates the Part Finder {@link ShipRepairQuest}
+     * @return - the Part Finder Quest
      */
     public static ShipRepairQuest createPartFinderIQuest() {
         List<Supplier<Quest>> questsToActivate = new ArrayList<>();
@@ -492,8 +492,7 @@ public class QuestFactory {
                 """;
 
         MultiReward reward = new MultiReward(List.of(
-                //new ClueReward(ItemFactory.createClueItem()),
-                new ItemReward(List.of(ItemFactory.createShipPart())),
+                new ClueReward(ItemFactory.createClueItem()),
                 new QuestReward(new ArrayList<>(), questsToActivate),
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
@@ -504,12 +503,8 @@ public class QuestFactory {
      * Creates the Space Debris {@link ClearDebrisQuest}
      * @return - the Space Debris Quest
      */
-    // TODO: set up debris spawning/tracking. Change to ClearDebrisQuest
-    // PLACEHOLDER ATM JUST SO I DON'T HAVE TO DEAL WITH SO MANY CONFLICTS LATER PLEASE
-    public static ShipRepairQuest createSpaceDebrisQuest() {
+    public static SpaceDebrisQuest createSpaceDebrisQuest() {
         List<Supplier<Quest>> questsToActivate = new ArrayList<>();
-        questsToActivate.add(QuestFactory::createBringingItAllTogetherQuest);
-
         List<Supplier<Quest>> questsToBeSelectable = new ArrayList<>();
         questsToBeSelectable.add(QuestFactory::createRecursivePartQuest);
 
@@ -518,13 +513,12 @@ public class QuestFactory {
                 Here, I've cleaned them up for you. This should help with repairs."
                 {WAIT}The alien hands you a hefty number of ship parts before continuing. 
                 {WAIT}"You might have also noticed some strange creatures appearing from the wreckage. They are SHIP EATERS.
-                They'll start eating away at your ship if you let the get too close. 
+                They'll start eating away at your ship if you let them get too close. 
                 {WAIT}If they eat too much of your ship, just bring me some HAMMER FLOWERS and I can get you more SHIP PARTS."
                 """;
 
         MultiReward reward = new MultiReward(List.of(
                 new ItemReward(List.of(
-                        ItemFactory.createShipPart(),
                         ItemFactory.createShipPart(),
                         ItemFactory.createShipPart(),
                         ItemFactory.createShipPart(),
@@ -535,7 +529,7 @@ public class QuestFactory {
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
 
-        return new ShipRepairQuest(SPACE_DEBRIS_QUEST_NAME, reward, 1);
+        return new SpaceDebrisQuest(SPACE_DEBRIS_QUEST_NAME, reward, 10);
     }
 
     /**

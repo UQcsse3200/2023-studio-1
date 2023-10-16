@@ -48,7 +48,11 @@ public class PlayerActions extends Component {
   private SecureRandom random = new SecureRandom();
   private float speedMultiplier = 1f;
   private float damageMultiplier = 1f;
-  int swordDamage = 5;
+  private int swordDamage = 5;
+  private static final String RIGHT_STRING = "right";
+  private long coolDown = 2000;
+  private long previousShot = 0;
+  private int amountBullet = 6;
 
   private static float weatherSpeedModifier = 1.0f;
   private static boolean isWeatherAffectingSpeed = false;
@@ -82,6 +86,7 @@ public class PlayerActions extends Component {
     ESC_INPUT,
     CAST_FISHING_RODS
   }
+
 
   @Override
   public void create() {
@@ -293,30 +298,39 @@ public class PlayerActions extends Component {
    * @param mousePos Determine direction of mouse
    */
   void attack(Vector2 mousePos) {
-    Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
-    attackSound.play();
+    boolean hit = false;
     mousePos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
     List<Entity> areaEntities = ServiceLocator.getGameArea().getAreaEntities();
     for(Entity animal : areaEntities) {
       CombatStatsComponent combat = animal.getComponent(CombatStatsComponent.class);
       if(combat != null && animal != entity && entity.getPosition().dst(animal.getPosition()) < 3) {
-          Vector2 result = new Vector2(0, 0);
-          result.x = animal.getCenterPosition().x - entity.getCenterPosition().x;
-          result.y = animal.getCenterPosition().y - entity.getCenterPosition().y;
-          Vector2 mouseResult = new Vector2(0, 0);
-          mouseResult.x = mousePos.x - entity.getCenterPosition().x;
-          mouseResult.y = mousePos.y - entity.getCenterPosition().y;
-          float resAngle = result.angleDeg();
-          float mouseResAngle = mouseResult.angleDeg();
-          float difference = Math.abs(resAngle - mouseResAngle);
-          difference = difference > 180 ? 360 - difference : difference;
-          if(difference <= 45) {
-            combat.addHealth((int) -(swordDamage * damageMultiplier));
-            animal.getEvents().trigger("hit", entity);
-            ServiceLocator.getParticleService().startEffectAtPosition(ParticleService.ParticleEffectType.ATTACK_EFFECT, animal.getCenterPosition());
-            animal.getEvents().trigger("panicStart");
-          }
+        Vector2 result = new Vector2(0, 0);
+        result.x = animal.getCenterPosition().x - entity.getCenterPosition().x;
+        result.y = animal.getCenterPosition().y - entity.getCenterPosition().y;
+        Vector2 mouseResult = new Vector2(0, 0);
+        mouseResult.x = mousePos.x - entity.getCenterPosition().x;
+        mouseResult.y = mousePos.y - entity.getCenterPosition().y;
+        float resAngle = result.angleDeg();
+        float mouseResAngle = mouseResult.angleDeg();
+        float difference = Math.abs(resAngle - mouseResAngle);
+        difference = difference > 180 ? 360 - difference : difference;
+        if (difference <= 45) {
+          hit = true;
+          combat.addHealth((int) -(swordDamage * damageMultiplier));
+          animal.getEvents().trigger("hit", entity);
+          animal.getEvents().trigger("panicStart");
+          Sound attackHit = ServiceLocator.getResourceService().
+                  getAsset("sounds/weapons/SwordHitEntity.mp3", Sound.class);
+          attackHit.play();
+          logger.info("Player sword attack hit");
+        }
       }
+    }
+    if (!hit) {
+      Sound attackMiss = ServiceLocator.getResourceService().
+              getAsset("sounds/weapons/SwordSwing.mp3", Sound.class);
+      attackMiss.play();
+      logger.info("Player sword attack miss");
     }
   }
 
@@ -326,18 +340,31 @@ public class PlayerActions extends Component {
    * @param mousePos Determine direction of mouse
    */
   void shoot(Vector2 mousePos) {
-    Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
-    attackSound.play();
-    mousePos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
-    Entity projectile = ProjectileFactory.createPlayerProjectile();
+    if(amountBullet > 0) {
+      logger.info("Player shot target");
+      Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/weapons/GunAttack.mp3", Sound.class);
+      attackSound.play();
+      mousePos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
+      Entity projectile = ProjectileFactory.createPlayerProjectile();
 
-    CombatStatsComponent combatStatsComponent = projectile.getComponent(CombatStatsComponent.class);
-    combatStatsComponent.setBaseAttack((int) (combatStatsComponent.getBaseAttack() * damageMultiplier));
-    projectile.setCenterPosition(entity.getCenterPosition());
-    ServiceLocator.getGameArea().spawnEntity(projectile);
-    ProjectileComponent projectileComponent = projectile.getComponent(ProjectileComponent.class);
-    projectileComponent.setSpeed(new Vector2(3f, 3f));
-    projectileComponent.setTargetDirection(mousePos);
+      CombatStatsComponent combatStatsComponent = projectile.getComponent(CombatStatsComponent.class);
+      combatStatsComponent.setBaseAttack((int) (combatStatsComponent.getBaseAttack() * damageMultiplier));
+      projectile.setCenterPosition(entity.getCenterPosition());
+      ServiceLocator.getGameArea().spawnEntity(projectile);
+      ProjectileComponent projectileComponent = projectile.getComponent(ProjectileComponent.class);
+      projectileComponent.setSpeed(new Vector2(3f, 3f));
+      projectileComponent.setTargetDirection(mousePos);
+      amountBullet--;
+      previousShot = System.currentTimeMillis();
+    } else {
+      logger.info("Player's gun out of ammo, reloading....");
+      try {
+        ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.GUN_RELOAD);
+      } catch (InvalidSoundFileException e) {
+        logger.error("Failed to play gun reload sound", e);
+      }
+      reload();
+    }
   }
 
   /**
@@ -426,6 +453,16 @@ public class PlayerActions extends Component {
 
   public void setMuted(boolean muted) {
     this.muted = muted;
+  }
+
+  /**
+   * Reloads the Gun after a specified amount of time
+   */
+  void reload(){
+    long currentTime = System.currentTimeMillis();
+    if(currentTime - previousShot > coolDown) {
+      amountBullet = 6;
+    }
   }
 
   private void startPlayerMovementSpeedEffect(float movementMultiplier) {
