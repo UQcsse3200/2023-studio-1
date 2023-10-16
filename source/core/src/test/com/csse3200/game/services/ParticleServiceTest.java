@@ -165,11 +165,11 @@ class ParticleServiceTest {
 		when(mockPools.get(any(ParticleService.ParticleEffectType.class))).thenReturn(pool);
 		when(pool.obtain()).thenReturn(pooledEffect);
 
-		particleService.startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+		particleService.startEffect(ParticleService.ParticleEffectType.SUCCESS_EFFECT);
 		assertFalse(mockQueuedEffects.isEmpty());
 
 
-		particleService.stopEffectCategory(ParticleService.WEATHER_EVENT);
+		particleService.stopEffectCategory(ParticleService.ENTITY_EFFECT);
 		assertEquals(0, mockQueuedEffects.size());
 	}
 
