@@ -48,6 +48,7 @@ public class SaveGame {
     private int day;
     private int hour;
     private int minute;
+    private float oxygenLevel;
 
     private ClimateController climate;
 
@@ -94,6 +95,22 @@ public class SaveGame {
      */
     public void setHour(int hour) {
       this.hour = hour;
+    }
+
+    /**
+     * Gets the oxygenLevel value stored in the GameState
+     * @return the in game oxygenLevel as an int
+     */
+    public float getOxygenLevel() {
+      return oxygenLevel;
+    }
+
+    /**
+     * Sets the oxygenLevel value stored in the GameState
+     * @param oxygenLevel the oxygenLevel to set GameState to store
+     */
+    public void setOxygenLevel(float oxygenLevel) {
+      this.oxygenLevel = oxygenLevel;
     }
 
     /**

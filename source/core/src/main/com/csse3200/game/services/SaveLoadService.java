@@ -39,6 +39,8 @@ public class SaveLoadService {
         state.setHour(ServiceLocator.getTimeService().getHour());
         state.setMinute(ServiceLocator.getTimeService().getMinute());
 
+        state.setOxygenLevel(ServiceLocator.getPlanetOxygenService().getOxygen());
+
         state.setClimate(ServiceLocator.getGameArea().getClimateController());
         state.setMissions(ServiceLocator.getMissionManager());
 
@@ -111,6 +113,7 @@ public class SaveLoadService {
         updateTractor(state);
         // Update Misc
         updateTime(state);
+        updateOxygen(state);
         //updateMissions(state);
     }
 
@@ -162,12 +165,21 @@ public class SaveLoadService {
         }
     }
 
-    /**''
+    /**
      * Updates the time of the game based off the saved values in the gamestate
      *
      * @param state the state of the saved game
      */
     private void updateTime(GameState state) {
         ServiceLocator.getTimeService().loadTime(state.getDay(), state.getHour(), state.getDay());
+    }
+
+    /**
+     * Updates the oxygen of the game based off the saved values in the gamestate
+     *
+     * @param state the state of the saved game
+     */
+    private void updateOxygen(GameState state) {
+        ServiceLocator.getPlanetOxygenService().setOxygen(state.getOxygenLevel());
     }
 }
