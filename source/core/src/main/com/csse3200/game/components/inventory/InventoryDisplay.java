@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.items.WateringCanLevelComponent;
+import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.ServiceLocator;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -46,7 +47,10 @@ public class InventoryDisplay extends UIComponent {
 	private final Map<Integer, TextTooltip> tooltips = new HashMap<>();
 	private final InstantTooltipManager instantTooltipManager = new InstantTooltipManager();
 	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(InventoryDisplay.class);
+	private boolean isPause = false;
+	private boolean lastState = false;
 	private Image bin = null;
+ 
 
 	/**
 	 * Constructor for class
@@ -72,7 +76,21 @@ public class InventoryDisplay extends UIComponent {
 		initialiseInventory();
 		entity.getEvents().addListener(openEvent, this::toggleOpen);
 		entity.getEvents().addListener(refreshEvent, this::refreshInventory);
+		entity.getEvents().addListener(PlayerActions.events.ESC_INPUT.name(), this::setPause);
+		entity.getEvents().addListener("hideUI", this::hide);
 		inventoryDisplayManager.addInventoryDisplay(this);
+	}
+
+	public void setPause(){
+		isPause = !isPause;
+		if (isPause){
+			lastState = isOpen;
+			isOpen = false;
+			window.setVisible(isOpen);
+		} else {
+			isOpen = lastState;
+			window.setVisible(isOpen);
+		}
 	}
 
 	/**
@@ -127,7 +145,6 @@ public class InventoryDisplay extends UIComponent {
 		window.setMovable(false);
 		window.setVisible(false);
 		stage.addActor(window);
-		//setDragItems(actors, map);
 	}
 
 	/**
@@ -154,13 +171,12 @@ public class InventoryDisplay extends UIComponent {
 				curSlot.setCount(itemCount);
 				map.put(curSlot.getDraggable(), curSlot);
 
-
 				slots.set(i, curSlot);
 			} else {
 				ItemSlot curSlot = slots.get(i);
 				curSlot.setItemImage(null);
+				curSlot.setCount(0);
 				curSlot.getDraggable().clear();
-
 				slots.set(i, curSlot);
 			}
 
@@ -203,13 +219,7 @@ public class InventoryDisplay extends UIComponent {
 				@Override
 				public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
 					if (target == null) {
-						try {
-							ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.DROP_ITEM);
-						} catch (InvalidSoundFileException e) {
-							logger.error("sound not loaded");
-						}
 						ItemSlot itemSlot = map.get((Stack) getActor());
-						//itemSlot.removeActor(getActor());
 						itemSlot.add(getActor());
 						itemSlot.addListener(tooltip);
 					}
@@ -312,6 +322,9 @@ public class InventoryDisplay extends UIComponent {
 	 * Toggle the inventory open, and changes the window visibility
 	 */
 	public void toggleOpen() {
+		if (isPause) {
+			return;
+		}
 		isOpen = !isOpen;
 		window.setVisible(isOpen);
 		inventoryDisplayManager.updateDisplays();
@@ -321,6 +334,16 @@ public class InventoryDisplay extends UIComponent {
 		} catch (InvalidSoundFileException e) {
 			logger.info("Inventory open sound not loaded");
 		}
+	}
+
+	/**
+	 * Hide the inventory.
+	 * But why would you ever want to do that?
+	 */
+	public void hide() {
+		isOpen = false;
+		window.setVisible(false);
+		inventoryDisplayManager.updateDisplays();
 	}
 
 	/**
@@ -365,7 +388,7 @@ public class InventoryDisplay extends UIComponent {
 		for (ItemSlot slot : slots) {
 			int i = indexes.get(slot);
 			if (inventory.getItem(i) != null) {
-				ItemComponent item = inventory.getItem(indexes.get(slot)).getComponent(ItemComponent.class);
+				ItemComponent item = inventory.getItem(i).getComponent(ItemComponent.class);
 				if (Objects.equals(item.getItemName(), "watering_can")) {
 					int level = (int) item.getEntity().getComponent(WateringCanLevelComponent.class).getCurrentLevel();
 					tooltip = new TextTooltip(item.getItemName() + "\n\nCurrent level is " + level, instantTooltipManager, skin);
@@ -379,7 +402,7 @@ public class InventoryDisplay extends UIComponent {
 				tooltip.getActor().setAlignment(Align.center);
 				tooltip.setInstant(true);
 				slot.addListener(tooltip);
-				tooltips.put(i, tooltip);
+				tooltips.put((i), tooltip);
 			}
 			else {
 				if (tooltips.get(i) != null) {

@@ -3,15 +3,14 @@ package com.csse3200.game.components.inventory;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.WateringCanLevelComponent;
 import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.sound.EffectSoundFile;
 import com.csse3200.game.services.sound.InvalidSoundFileException;
@@ -39,7 +38,9 @@ public class ToolbarDisplay extends UIComponent {
     private final ArrayList<ItemSlot> slots = new ArrayList<>();
     private final Map<Integer, TextTooltip> tooltips = new HashMap<>();
     private final InstantTooltipManager instantTooltipManager = new InstantTooltipManager();
-    private int curTab = 0;
+    private boolean isPause = false;
+    private boolean lastState = false;
+
 
     /**
      * Creates the event listeners, ui, and gets the UI.
@@ -53,8 +54,21 @@ public class ToolbarDisplay extends UIComponent {
         entity.getEvents().addListener("toggleInventory",this::toggleOpen);
         entity.getEvents().addListener("hotkeySelection",this::updateItemSlot);
         entity.getEvents().addListener("toolbarSwitch",this::switchToolbar);
-
+        entity.getEvents().addListener(PlayerActions.events.ESC_INPUT.name(), this::setPause);
+        entity.getEvents().addListener("hideUI", this::hide);
         inventory = entity.getComponent(InventoryComponent.class);
+    }
+
+    public void setPause(){
+        isPause = !isPause;
+        if (isPause){
+            lastState = isOpen;
+            isOpen = false;
+            window.setVisible(isOpen);
+        } else {
+            isOpen = lastState;
+            window.setVisible(isOpen);
+        }
     }
 
     /**
@@ -80,11 +94,10 @@ public class ToolbarDisplay extends UIComponent {
             ItemComponent item;
             int itemCount;
             Texture itemTexture;
-            int cur = i + curTab * 10;
 
-            if (inventory != null && inventory.getItem(cur) != null) {
+            if (inventory != null && inventory.getItem(i) != null) {
                 // Since the item isn't null, we want to make sure that the itemSlot at that position is modified
-                item = inventory.getItem(cur).getComponent(ItemComponent.class);
+                item = inventory.getItem(i).getComponent(ItemComponent.class);
                 itemCount = inventory.getItemCount(item.getEntity());
                 itemTexture = item.getItemTexture();
                 ItemSlot curSlot = slots.get(i);
@@ -163,6 +176,9 @@ public class ToolbarDisplay extends UIComponent {
      * Toggle Toolbar to open state
      */
     public void toggleOpen(){
+        if (isPause){
+            return;
+        }
         if (this.isOpen) {
             this.window.setVisible(false);
             this.isOpen = false;
@@ -170,6 +186,15 @@ public class ToolbarDisplay extends UIComponent {
             this.window.setVisible(true);
             this.isOpen = true;
         }
+    }
+
+    /**
+     * Hide the toolbar.
+     * But why would you ever want to do that?
+     */
+    public void hide() {
+        this.isOpen = false;
+        window.setVisible(false);
     }
 
     /**
@@ -207,14 +232,12 @@ public class ToolbarDisplay extends UIComponent {
         }
     }
     private void switchToolbar() {
-        window.addAction(sequence(scaleTo(1.02f, 1.02f, 0.2f, Interpolation.fade),scaleTo(1, 1, 0.2f, Interpolation.fade)));
+        window.addAction(sequence(scaleTo(1.02f, 1.02f, 0f, Interpolation.fade),scaleTo(1, 1, 0.2f, Interpolation.fade)));
         try {
             ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.SWITCH_TOOLBAR);
         } catch (InvalidSoundFileException e) {
             logger.error("sound not loaded");
         }
-        curTab = (curTab + 1) % 3;
-        updateToolbar();
     }
     public void addTooltips() {
         TextTooltip tooltip;

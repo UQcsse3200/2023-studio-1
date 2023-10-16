@@ -18,8 +18,8 @@ public enum EffectSoundFile implements SoundFile {
     SWITCH_TOOLBAR("sounds/switchToolbar.wav"),
     DRAG_ITEM("sounds/hold.wav"),
     DROP_ITEM("sounds/drop.wav"),
-    DELETE_ITEM("sounds/bin.wav");
-
+    DELETE_ITEM("sounds/bin.wav"),
+    GOD_DID("sounds/god-did.mp3");
 
     private final String filePath;
 

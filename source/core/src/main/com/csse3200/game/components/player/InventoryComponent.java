@@ -22,7 +22,6 @@ import java.util.List;
  */
 public class InventoryComponent extends Component {
 
-    public int curTab = 0;  // current toolbar tab;
     /**
      * Logger for InventoryComponent
      */
@@ -333,11 +332,6 @@ public class InventoryComponent extends Component {
    */
 
   private int nextAvailablePosition() {
-      for (int i = curTab * 10; i < this.getInventorySize(); i++) {
-          if (this.itemPlace.get(i) == null) {
-              return i;
-          }
-      }
     for (int i = 0; i < this.getInventorySize(); i++) {
       if (this.itemPlace.get(i) == null) {
         return i;
@@ -477,7 +471,7 @@ public class InventoryComponent extends Component {
      * @param index The index of the item in the inventory to be set as the held item.
      */
     public void setHeldItem(int index) {
-            this.heldItem = this.heldItemsEntity.get(this.itemPlace.get(index + 10 * curTab));
+            this.heldItem = this.heldItemsEntity.get(this.itemPlace.get(index));
             this.heldIndex = index;
     }
 
@@ -511,8 +505,14 @@ public class InventoryComponent extends Component {
      * Switches the 10 item slots in the inventory where the next item is automatically added.
      */
     public void switchTab() {
-        this.curTab = (curTab + 1) % 3;
+        Map<Integer, String> newMap = new HashMap<>();
+        for (Map.Entry<Integer,String> e: itemPlace.entrySet()) {
+            newMap.put((e.getKey() + 20) % 30, e.getValue());
+        }
+        itemPlace.clear();
+        itemPlace.putAll(newMap);
         setHeldItem(heldIndex);
+        entity.getEvents().trigger(UPDATE_INVENTORY);
     }
 
     /**
