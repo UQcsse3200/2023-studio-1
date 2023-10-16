@@ -223,19 +223,23 @@ public class InventoryDisplay extends UIComponent {
 					payload.setDragActor(getActor());
 					stage.addActor(getActor());
 					dnd.setDragActorPosition(50, -getActor().getHeight() / 2);
-					ItemSlot slot = map.get(getActor());
-					tooltips.get(indexes.get(slot)).hide();
+					ItemSlot slot = map.get( (Stack) getActor());
 					tooltip = tooltips.get(indexes.get(slot));
-					slot.removeListener(tooltips.get(indexes.get(slot)));
+					tooltip.hide();
+					slot.removeListener(tooltip);
+					tooltips.remove(indexes.get(slot));
 					return payload;
 				}
 
 				@Override
 				public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
 					if (target == null) {
-						ItemSlot itemSlot = map.get(getActor());
+						ItemSlot itemSlot = map.get( (Stack) getActor());
 						itemSlot.add(getActor());
-						itemSlot.addListener(tooltip);
+						if (tooltips.get(indexes.get(itemSlot)) == null) {
+							itemSlot.addListener(tooltip);
+							tooltips.put(indexes.get(itemSlot),tooltip);
+						}
 					}
 					stage.removeListener(listener[0]);
 				}
@@ -418,7 +422,7 @@ public class InventoryDisplay extends UIComponent {
 				tooltip.getActor().setAlignment(Align.center);
 				tooltip.setInstant(true);
 				slot.addListener(tooltip);
-				tooltips.put((i), tooltip);
+				tooltips.put(i, tooltip);
 			}
 			else {
 				if (tooltips.get(i) != null) {
