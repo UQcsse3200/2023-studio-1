@@ -42,8 +42,8 @@ public class ParticleEffectComponent extends Component {
 	public void create() {
 		super.create();
 		ServiceLocator.getParticleService().addComponent(this);
-		entity.getEvents().addListener("startVisualEffect", this::startEffect);
-		entity.getEvents().addListener("stopVisualEffect", this::stopEffect);
+		entity.getEvents().addListener(ParticleService.START_EVENT, this::startEffect);
+		entity.getEvents().addListener(ParticleService.STOP_EVENT, this::stopEffect);
 	}
 
 	/**
