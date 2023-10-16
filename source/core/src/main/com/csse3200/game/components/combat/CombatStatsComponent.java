@@ -35,6 +35,11 @@ public class CombatStatsComponent extends Component {
   @Override
   public void create() {
     entity.getEvents().addListener("hit", this::hitFromEntity);
+    entity.getEvents().addListener("lose", this::lose);
+  }
+
+  private void lose() {
+    ServiceLocator.getMissionManager().getEvents().trigger("loseScreen", "You died");
   }
 
   /**
@@ -126,11 +131,8 @@ public class CombatStatsComponent extends Component {
   private void processDeath() {
     // Takes 0.3f seconds
     entity.getEvents().trigger("blackOut");
-    entity.getEvents().scheduleEvent(0.3f, "bye bye");
-    // Animation is 21 frames at 0.1f per frame so 2.1 seconds plus 0.3 seconds is 2.4
-    List<Quest> activeQuests = ServiceLocator.getMissionManager().getActiveQuests();
-    Quest mainQuest = activeQuests.get(activeQuests.size()-1);
-    ServiceLocator.getMissionManager().getEvents().scheduleEvent(2.4f,"loseScreen", mainQuest.getName());
+    entity.getEvents().scheduleEvent(0.2f, "bye bye");
+    entity.getEvents().scheduleEvent(2, "lose");
   }
 
   public void hitFromEntity(Entity attacker) {
