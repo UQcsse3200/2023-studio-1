@@ -55,6 +55,11 @@ public class HungerComponent extends Component {
 		}
 		// Inform the PlayerHungerService that the hunger has been updated
 		ServiceLocator.getPlayerHungerService().getEvents().trigger("hungerUpdate", hungerLevel);
+
+		// If the players hunger level is below 50%, then the player gains health
+		if (hungerLevel < 50) {
+			ServiceLocator.getGameArea().getPlayer().getComponent(CombatStatsComponent.class).addHealth(3);
+		}
 	}
 
 	@Override
@@ -64,7 +69,7 @@ public class HungerComponent extends Component {
 		json.writeObjectEnd();
 	}
 
-
+	@Override
 	public void read(Json json, JsonValue jsonValue) {
 		jsonValue = jsonValue.get(this.getClass().getSimpleName());
 		int hunger = jsonValue.getInt("hunger");

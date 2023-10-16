@@ -38,7 +38,7 @@ public class KeyboardTractorInputComponentTest {
     @Test
     void constructor() {
         KeyboardTractorInputComponent inputComponent = spy(KeyboardTractorInputComponent.class);
-        assertEquals(inputComponent.getPriority(), 5);
+        assertEquals(5, inputComponent.getPriority());
     }
 
     @Test

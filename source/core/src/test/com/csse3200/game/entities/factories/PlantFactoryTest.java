@@ -91,7 +91,7 @@ class PlantFactoryTest {
                 .addComponent(new PlantMouseHoverComponent())
                 .addComponent(new PlantProximityComponent())
                 .addComponent(new PlantComponent(1,"name", "type", "description", 1, 1, 1,
-                        mockCropTile, new int[]{1, 1, 1}, new String[]{"", "", "", "", "", "", "", ""}));
+                        mockCropTile, new int[]{1, 1, 1}));
     }
 
     /**

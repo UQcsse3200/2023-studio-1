@@ -1,29 +1,23 @@
 package com.csse3200.game.areas.weather;
 
+import com.csse3200.game.events.ScheduledEvent;
 import com.csse3200.game.services.ParticleService;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.sound.EffectSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An acid rain event to occur in game affecting both the temperature and the climate and other surrounding
  * entities.
  */
 public class AcidShowerEvent extends WeatherEvent {
-    /**
-     * Minimum modifier that is used when calculating the effect of the weather event on humidity
-     */
-    protected static final float MIN_HUMIDITY_MODIFIER = 0.05f;
-    /**
-     * Maximum modifier that is used when calculating the effect of the weather event on humidity
-     */
-    protected static final float MAX_HUMIDITY_MODIFIER = 0.2f;
-    /**
-     * Minimum modifier that is used when calculating the effect of the weather event on temperature
-     */
-    protected static final float MIN_TEMPERATURE_MODIFIER = -5f;
-    /**
-     * Maximum modifier that is used when calculating the effect of the weather event on temperature
-     */
-    protected static final float MAX_TEMPERATURE_MODIFIER = -10f;
+
+    private static final Logger logger = LoggerFactory.getLogger(AcidShowerEvent.class);
+
+    private ScheduledEvent nextAcidBurn;
+    private long stormSoundId;
 
     /**
      * Constructs a AcidShowerEvent with a given countdown, duration, priority and severity.
@@ -33,21 +27,84 @@ public class AcidShowerEvent extends WeatherEvent {
      * @param priority      priority of the weather event
      * @param severity      intensity of the weather event, impacting its effects
      */
-
     public AcidShowerEvent(int numHoursUntil, int duration, int priority, float severity) {
         super(numHoursUntil, duration, priority, severity);
-        humidityModifier = MIN_HUMIDITY_MODIFIER + (MAX_HUMIDITY_MODIFIER - MIN_HUMIDITY_MODIFIER) * severity;
-        temperatureModifier = MIN_TEMPERATURE_MODIFIER +
-                (MAX_TEMPERATURE_MODIFIER - MIN_TEMPERATURE_MODIFIER) * severity;
+        climateControllerEvents.addListener("acidBurn", this::triggerAcidBurn);
     }
 
     @Override
     public void startEffect() {
-        ServiceLocator.getParticleService().startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+        logger.info("Starting AcidShower effects");
+
+        // Trigger in-game effects
+        climateControllerEvents.trigger("startWaterLevelEffect", getDryRate());
+        climateControllerEvents.trigger("douseFlames");
+        scheduleNextAcidBurn();
+
+        // Add particle effects
+        ServiceLocator.getParticleService().startEffect(ParticleService.ParticleEffectType.RAIN);
+
+        // Add lighting effects
+        ServiceLocator.getLightService().setBrightnessMultiplier((1.0f - severity / 1.5f) * 0.2f + 0.75f);
+
+        // Start sound effects
+        try {
+            stormSoundId = ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.STORM, true);
+        } catch (InvalidSoundFileException exception) {
+            logger.error("Failed to play storm sound effect", exception);
+        }
     }
 
     @Override
     public void stopEffect() {
-        ServiceLocator.getParticleService().stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+        logger.info("Stopping AcidShower effects");
+
+        // Cancel in-game effects
+        climateControllerEvents.trigger("stopWaterLevelEffect");
+        climateControllerEvents.trigger("stopPlacedLightEffects");
+        climateControllerEvents.cancelEvent(nextAcidBurn);
+        nextAcidBurn = null;
+
+        // Remove particle effects
+        ServiceLocator.getParticleService().stopEffect(ParticleService.ParticleEffectType.RAIN);
+
+        // Remove lighting effects
+        ServiceLocator.getLightService().setBrightnessMultiplier(1.0f);
+
+        // Stop sound effects
+        try {
+            ServiceLocator.getSoundService().getEffectsMusicService().stop(EffectSoundFile.STORM, stormSoundId);
+        } catch (InvalidSoundFileException exception) {
+            logger.error("Failed to stop storm sound effect", exception);
+        }
     }
+
+    private void scheduleNextAcidBurn() {
+        nextAcidBurn = climateControllerEvents.scheduleEvent(4.0f - 2.0f * severity / 1.5f, "acidBurn");
+    }
+
+    private void triggerAcidBurn() {
+        if (nextAcidBurn != null) {
+            logger.info("Triggering acid burn");
+            // Play SFX
+            try {
+                ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.ACID_BURN);
+            } catch (InvalidSoundFileException exception) {
+                logger.error("Failed to play acid burning sound effect", exception);
+            }
+            // Cause animal panic
+            climateControllerEvents.trigger("startPanicEffect");
+            // Damage the plants
+            climateControllerEvents.trigger("damagePlants");
+            // Recursively schedule next burn
+            scheduleNextAcidBurn();
+        }
+    }
+
+    private float getDryRate() {
+        // Lowest severity: Dry at regular rate
+        // Highest severity: Watered at regular dry rate
+        return 0.0005f - 0.001f * severity / 1.5f;
+    }
+
 }
