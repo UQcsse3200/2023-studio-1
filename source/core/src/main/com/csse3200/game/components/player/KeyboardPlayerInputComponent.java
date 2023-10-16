@@ -95,6 +95,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case Keys.M:
           showMap = !showMap;
           ServiceLocator.getPlayerMapService().getEvents().trigger("toggleOpen", showMap);
+          return true;
         case Keys.R:
           entity.getEvents().trigger(PlayerActions.events.EAT.name(), entity.getComponent(InventoryComponent.class).getHeldItem());
             return true;
