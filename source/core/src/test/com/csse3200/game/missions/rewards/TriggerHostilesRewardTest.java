@@ -52,7 +52,7 @@ public class TriggerHostilesRewardTest {
         when(spaceGameArea.getMap()).thenReturn(gameMap);
         terrainTile = mock(TerrainTile.class);
         when(gameMap.getTile(any(GridPoint2.class))).thenReturn(terrainTile);
-        when(terrainTile.isTraversable()).thenReturn(true);
+        when(terrainTile.isTraversable()).thenReturn(false).thenReturn(true);
 
         playerPos = new GridPoint2(0,0);
         when(spaceGameArea.getMap().vectorToTileCoordinates(spaceGameArea.getPlayer().getCenterPosition())).thenReturn(playerPos);

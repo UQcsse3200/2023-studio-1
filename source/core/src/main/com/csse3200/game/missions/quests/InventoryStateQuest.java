@@ -24,7 +24,7 @@ public class InventoryStateQuest extends Quest {
         this.targetQuantities = targetQuantities;
     }
 
-    private boolean checkPlayerInventoryMissing() {
+    protected boolean checkPlayerInventoryMissing() {
         if (playerInventoryComponent == null) {
             playerInventoryComponent = ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class);
             // If the player entity does not have an inventory, just return false
