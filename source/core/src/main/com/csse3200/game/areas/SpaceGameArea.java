@@ -149,18 +149,12 @@ public class SpaceGameArea extends GameArea {
           "images/progress-bar/part1day1.png",
           "images/progress-bar/part1day2.png",
           "images/progress-bar/part1day3.png",
-          "images/progress-bar/part1day4.png",
-          "images/progress-bar/part1day5.png",
           "images/progress-bar/part2day1.png",
           "images/progress-bar/part2day2.png",
           "images/progress-bar/part2day3.png",
           "images/progress-bar/part2day4.png",
           "images/progress-bar/part2day5.png",
           "images/progress-bar/part2day6.png",
-          "images/progress-bar/part2day7.png",
-          "images/progress-bar/part2day8.png",
-          "images/progress-bar/part2day9.png",
-          "images/progress-bar/part2day10.png",
           "images/progress-bar/part3day1.png",
           "images/progress-bar/part3day2.png",
           "images/progress-bar/part3day3.png",
@@ -170,12 +164,6 @@ public class SpaceGameArea extends GameArea {
           "images/progress-bar/part3day7.png",
           "images/progress-bar/part3day8.png",
           "images/progress-bar/part3day9.png",
-          "images/progress-bar/part3day10.png",
-          "images/progress-bar/part3day11.png",
-          "images/progress-bar/part3day12.png",
-          "images/progress-bar/part3day13.png",
-          "images/progress-bar/part3day14.png",
-          "images/progress-bar/part3day15.png",
 
           "images/Player_Hunger/hunger_bar_outline.png",
           "images/Player_Hunger/hunger_bar_fill.png",
@@ -284,7 +272,7 @@ public class SpaceGameArea extends GameArea {
       "images/animals/bat.atlas", "images/projectiles/oxygen_eater_projectile.atlas",
       "images/ship/ship.atlas", "images/light.atlas", "images/projectiles/dragon_fly_projectile.atlas", "images/golden_trophy.atlas",
       "images/player_fishing.atlas", "images/walkietalkie.atlas", "images/animals/animal_effects.atlas", "images/cutscene.atlas",
-      "images/placeable/sprinkler/sprinkler_animation.atlas", "images/shipeater.atlas"
+      "images/placeable/sprinkler/sprinkler_animation.atlas", "images/shipeater.atlas", "images/plants/plant_aoe.atlas"
   };
   private static final String[] soundPaths = {
           "sounds/Impact4.ogg", "sounds/car-horn-6408.mp3",
@@ -565,6 +553,34 @@ public class SpaceGameArea extends GameArea {
     effects.add(EffectSoundFile.FISHING_CAST);
     effects.add(EffectSoundFile.FISHING_CATCH);
     effects.add(EffectSoundFile.SCYTHE);
+    effects.add(EffectSoundFile.PLANT_CLICK);
+    effects.add(EffectSoundFile.PLANT_DECAY);
+    effects.add(EffectSoundFile.PLANT_DESTROY);
+    effects.add(EffectSoundFile.PLANT_NEARBY);
+    effects.add(EffectSoundFile.ALOE_VERA_CLICK_LORE);
+    effects.add(EffectSoundFile.ALOE_VERA_DECAY_LORE);
+    effects.add(EffectSoundFile.ALOE_VERA_DESTROY_LORE);
+    effects.add(EffectSoundFile.ALOE_VERA_NEARBY_LORE);
+    effects.add(EffectSoundFile.COSMIC_COB_CLICK_LORE);
+    effects.add(EffectSoundFile.COSMIC_COB_DECAY_LORE);
+    effects.add(EffectSoundFile.COSMIC_COB_DESTROY_LORE);
+    effects.add(EffectSoundFile.COSMIC_COB_NEARBY_LORE);
+    effects.add(EffectSoundFile.HAMMER_PLANT_CLICK_LORE);
+    effects.add(EffectSoundFile.HAMMER_PLANT_DECAY_LORE);
+    effects.add(EffectSoundFile.HAMMER_PLANT_DESTROY_LORE);
+    effects.add(EffectSoundFile.HAMMER_PLANT_NEARBY_LORE);
+    effects.add(EffectSoundFile.DEADLY_NIGHTSHADE_CLICK_LORE);
+    effects.add(EffectSoundFile.DEADLY_NIGHTSHADE_DECAY_LORE);
+    effects.add(EffectSoundFile.DEADLY_NIGHTSHADE_DESTROY_LORE);
+    effects.add(EffectSoundFile.DEADLY_NIGHTSHADE_NEARBY_LORE);
+    effects.add(EffectSoundFile.SPACE_SNAPPER_CLICK_LORE);
+    effects.add(EffectSoundFile.SPACE_SNAPPER_DECAY_LORE);
+    effects.add(EffectSoundFile.SPACE_SNAPPER_DESTROY_LORE);
+    effects.add(EffectSoundFile.SPACE_SNAPPER_NEARBY_LORE);
+    effects.add(EffectSoundFile.ATOMIC_ALGAE_CLICK_LORE);
+    effects.add(EffectSoundFile.ATOMIC_ALGAE_DECAY_LORE);
+    effects.add(EffectSoundFile.ATOMIC_ALGAE_DESTROY_LORE);
+    effects.add(EffectSoundFile.ATOMIC_ALGAE_NEARBY_LORE);
     effects.add(EffectSoundFile.ACID_BURN);
     effects.add(EffectSoundFile.BLIZZARD);
     effects.add(EffectSoundFile.LIGHTNING_STRIKE);

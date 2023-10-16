@@ -186,11 +186,10 @@ class AttackPatternTest {
         Entity plantTarget = new Entity(EntityType.PLANT);
 
         int[] growthStageThresholds = new int[]{1,2,3};
-        String[] soundArray = new String[]{"1", "2", "3", "4", "5", "6", "7", "8"};
         CropTileComponent mockCropTile = mock(CropTileComponent.class);
 
         PlantComponent plantComponent = new PlantComponent(500, "testPlant", "DEFENCE", "test " +
-                "plant", 1, 2, 1000, mockCropTile, growthStageThresholds, soundArray);
+                "plant", 1, 2, 1000, mockCropTile, growthStageThresholds);
 
         plantTarget.addComponent(plantComponent);
         plantTarget.create();
