@@ -22,7 +22,7 @@
     "baseAttack": 10
   },
   "dragonfly": {
-    "health": 100,
+    "health": 45,
     "baseAttack": 10
   },
   "bat": {

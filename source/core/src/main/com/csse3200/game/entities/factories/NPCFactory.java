@@ -379,7 +379,8 @@ public class NPCFactory {
             .addComponent(animator)
             .addComponent(new HostileAnimationController())
             .addComponent(new EntityIndicator(dragonfly))
-            .addComponent(new DragonflyAttackPattern(1.5f, ProjectileFactory::createDragonflyProjectile))
+            .addComponent(new DragonflyAttackPattern(2f,
+                    ProjectileFactory::createDragonflyProjectile))
             .addComponent(new InteractionDetector(5f,
                     new ArrayList<>(Arrays.asList((EntityType.PLAYER), (EntityType.PLANT)))))
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack));

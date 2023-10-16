@@ -392,6 +392,8 @@ public class SpaceGameArea extends GameArea {
     hostileSpawner.setGameAreas(this);
 
     // TODO: REMOVE THIS TESTING PURPOSES ONLY
+    hostileSpawner.spawnNow();
+
     player.getComponent(InventoryComponent.class).addItem(ItemFactory.createGun());
     player.getComponent(InventoryComponent.class).addItem(ItemFactory.createSword());
     player.getComponent(InventoryComponent.class).addItem(ItemFactory.createCosmicCobEar());
