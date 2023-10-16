@@ -32,9 +32,27 @@ independent: false
 active: false
 independent: false
 - X Offset -
-active: false
+active: true
+lowMin: -7.0
+lowMax: -7.0
+highMin: 0.0
+highMax: 0.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
 - Y Offset -
-active: false
+active: true
+lowMin: 3.0
+lowMax: 3.0
+highMin: 0.0
+highMax: 0.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
 - Spawn Shape -
 shape: line
 - Spawn Width -
