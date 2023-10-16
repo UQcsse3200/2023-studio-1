@@ -25,7 +25,6 @@ public class SpawnCommand implements Command {
 			return false;
 		}
 		Entity entity;
-		Entity player = ServiceLocator.getGameArea().getPlayer();
 		switch (args.get(0)) {
 			case "cow" -> entity = NPCFactory.createCow();
 			case "chicken" -> entity = NPCFactory.createChicken();

@@ -177,11 +177,11 @@ public class ItemFactory {
    *
    * @return Map Item
    */
-  public static Entity createMapItem() {
+  public static Entity createClueItem() {
     ClueComponent clueComponent = new ClueComponent();
     return createBaseItem()
-            .addComponent(new TextureRenderComponent("images/ship/ship_clue.png"))
-            .addComponent(new ItemComponent("map", ItemType.CLUE_ITEM, "images/ship/ship_clue.png"))
+            .addComponent(new TextureRenderComponent("images/ship/clue_item.png"))
+            .addComponent(new ItemComponent("clue", ItemType.CLUE_ITEM, "images/ship/clue_item.png"))
             .addComponent(clueComponent)
             .addComponent(new CoordinatesDisplay(clueComponent));
   }
@@ -322,7 +322,7 @@ return createBaseItem()
     Entity itemDrop = createBaseItem()
             .addComponent(new DynamicTextureRenderComponent("images/plants/hammer_plant/item_drop.png"))
             .addComponent(new ItemComponent("Hammer Flower", ItemType.FOOD,
-                    "Unusually shaped flower that looks like the tool it is named after",
+                    "An unusually shaped flower that looks like the tool it is named after",
                     "images/plants/hammer_plant/item_drop.png"));
     itemDrop.getComponent(DynamicTextureRenderComponent.class).setLayer(3);
     return itemDrop;

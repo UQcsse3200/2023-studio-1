@@ -298,7 +298,8 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
                         entityInRange.getType() == EntityType.DRAGONFLY ||
                         entityInRange.getType() == EntityType.CHICKEN ||
                         entityInRange.getType() == EntityType.OXYGEN_EATER ||
-                        entityInRange.getType() == EntityType.COW) {
+                        entityInRange.getType() == EntityType.COW ||
+                        entityInRange.getType() == EntityType.SHIP_EATER) {
 
                     // If a valid entity is in the area, tell the plant it is eating.
                     entity.getComponent(PlantComponent.class).setIsEating();

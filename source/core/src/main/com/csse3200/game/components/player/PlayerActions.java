@@ -3,10 +3,8 @@ package com.csse3200.game.components.player;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
-import com.csse3200.game.components.*;
 import com.csse3200.game.components.combat.CombatStatsComponent;
 import com.csse3200.game.components.combat.ProjectileComponent;
 import com.csse3200.game.components.Component;
@@ -23,7 +21,6 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.sound.EffectSoundFile;
 import com.csse3200.game.services.sound.InvalidSoundFileException;
-import com.csse3200.game.utils.math.Vector2Utils;
 
 import java.security.SecureRandom;
 import java.util.List;
