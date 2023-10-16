@@ -3,7 +3,11 @@ package com.csse3200.game.components.inventory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
+import com.badlogic.gdx.utils.Align;
+import com.csse3200.game.components.items.WateringCanLevelComponent;
+import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.ServiceLocator;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -40,7 +44,13 @@ public class InventoryDisplay extends UIComponent {
 	private final String refreshEvent;
 	private final String openEvent;
 	private final InventoryDisplayManager inventoryDisplayManager;
+	private final Map<Integer, TextTooltip> tooltips = new HashMap<>();
+	private final InstantTooltipManager instantTooltipManager = new InstantTooltipManager();
 	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(InventoryDisplay.class);
+	private boolean isPause = false;
+	private boolean lastState = false;
+	private Image bin = null;
+ 
 
 	/**
 	 * Constructor for class
@@ -66,7 +76,21 @@ public class InventoryDisplay extends UIComponent {
 		initialiseInventory();
 		entity.getEvents().addListener(openEvent, this::toggleOpen);
 		entity.getEvents().addListener(refreshEvent, this::refreshInventory);
+		entity.getEvents().addListener(PlayerActions.events.ESC_INPUT.name(), this::setPause);
+		entity.getEvents().addListener("hideUI", this::hide);
 		inventoryDisplayManager.addInventoryDisplay(this);
+	}
+
+	public void setPause(){
+		isPause = !isPause;
+		if (isPause){
+			lastState = isOpen;
+			isOpen = false;
+			window.setVisible(isOpen);
+		} else {
+			isOpen = lastState;
+			window.setVisible(isOpen);
+		}
 	}
 
 	/**
@@ -110,8 +134,8 @@ public class InventoryDisplay extends UIComponent {
 		}
 		table.row();
 		if (entity.getType() == EntityType.PLAYER) {
-			Image deleteSlot = new Image(ServiceLocator.getResourceService().getAsset("images/bin.png", Texture.class));
-			table.add(deleteSlot).colspan(10);
+			bin = new Image(ServiceLocator.getResourceService().getAsset("images/bin.png", Texture.class));
+			table.add(bin).colspan(10);
 		}
 
 		// Create a window for the inventory using the skin
@@ -121,7 +145,6 @@ public class InventoryDisplay extends UIComponent {
 		window.setMovable(false);
 		window.setVisible(false);
 		stage.addActor(window);
-		setDragItems(actors, map);
 	}
 
 	/**
@@ -154,13 +177,14 @@ public class InventoryDisplay extends UIComponent {
 				ItemSlot curSlot = slots.get(i);
 				curSlot.setItemImage(null);
 				curSlot.getDraggable().clear();
-				curSlot.setCount(0);
+
 				slots.set(i, curSlot);
 			}
 
 		}
 		dnd = new DragAndDrop();
 		setDragItems(actors, map);
+		addTooltips();
 	}
 
 	/**
@@ -173,6 +197,7 @@ public class InventoryDisplay extends UIComponent {
 		for (Actor item : actors) {
 			dnd.addSource(new DragAndDrop.Source(item) {
 				final DragAndDrop.Payload payload = new DragAndDrop.Payload();
+				TextTooltip tooltip;
 
 				@Override
 				public DragAndDrop.Payload dragStart(InputEvent event, float x, float y, int pointer) {
@@ -180,7 +205,10 @@ public class InventoryDisplay extends UIComponent {
 					payload.setDragActor(getActor());
 					stage.addActor(getActor());
 					dnd.setDragActorPosition(50, -getActor().getHeight() / 2);
-
+					ItemSlot slot = map.get(getActor());
+					tooltips.get(indexes.get(slot)).hide();
+					tooltip = tooltips.get(indexes.get(slot));
+					slot.removeListener(tooltips.get(indexes.get(slot)));
 					return payload;
 				}
 
@@ -188,8 +216,8 @@ public class InventoryDisplay extends UIComponent {
 				public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
 					if (target == null) {
 						ItemSlot itemSlot = map.get((Stack) getActor());
-						itemSlot.removeActor(getActor());
 						itemSlot.add(getActor());
+						itemSlot.addListener(tooltip);
 					}
 				}
 			});
@@ -207,7 +235,7 @@ public class InventoryDisplay extends UIComponent {
 
 					@Override
 					public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-						ItemSlot sourceSlot = map.get(( (Stack) source.getActor()));
+						ItemSlot sourceSlot = map.get(((Stack) source.getActor()));
 
 						inventory.swapPosition(indexes.get(sourceSlot), indexes.get(slot));
 						map.put(slot.getDraggable(), sourceSlot);
@@ -219,6 +247,7 @@ public class InventoryDisplay extends UIComponent {
 
 						entity.getEvents().trigger("updateToolbar");
 						inventory.setHeldItem(inventory.getHeldIndex());
+						addTooltips();
 					}
 				});
 			} else {
@@ -229,15 +258,31 @@ public class InventoryDisplay extends UIComponent {
 					}
 					@Override
 					public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-						ItemSlot itemSlot = map.get( (Stack)source.getActor());
+						ItemSlot itemSlot = map.get((Stack) source.getActor());
 						itemSlot.removeActor(source.getActor());
 						itemSlot.add(source.getActor());
-						ItemSlot sourceSlot = map.get((Stack) (source.getActor()));
-						inventory.removeItem(inventory.getHeldItemsEntity().get(inventory.getItemPlace().get(indexes.get(sourceSlot))));
+						inventory.removeItem(inventory.getHeldItemsEntity().get(inventory.getItemPlace().get(indexes.get(itemSlot))));
+						addTooltips();
 					}
 				});
 			}
 		}
+	}
+
+	public Map<ItemSlot, Integer> getIndexes() {
+		return indexes;
+	}
+
+	public Map<Stack, ItemSlot> getMap() {
+		return map;
+	}
+
+	public Image getBin() {
+		return bin;
+	}
+
+	public ArrayList<ItemSlot> getSlots() {
+		return slots;
 	}
 
 	/**
@@ -263,6 +308,9 @@ public class InventoryDisplay extends UIComponent {
 	 * Toggle the inventory open, and changes the window visibility
 	 */
 	public void toggleOpen() {
+		if (isPause) {
+			return;
+		}
 		isOpen = !isOpen;
 		window.setVisible(isOpen);
 		inventoryDisplayManager.updateDisplays();
@@ -272,6 +320,16 @@ public class InventoryDisplay extends UIComponent {
 		} catch (InvalidSoundFileException e) {
 			logger.info("Inventory open sound not loaded");
 		}
+	}
+
+	/**
+	 * Hide the inventory.
+	 * But why would you ever want to do that?
+	 */
+	public void hide() {
+		isOpen = false;
+		window.setVisible(false);
+		inventoryDisplayManager.updateDisplays();
 	}
 
 	/**
@@ -289,6 +347,7 @@ public class InventoryDisplay extends UIComponent {
 	public void refreshInventory() {
 		this.inventory = entity.getComponent(InventoryComponent.class);
 		updateInventory();
+		inventoryDisplayManager.addTargets();
 		if (this.toolbar) {
 			entity.getEvents().trigger("updateToolbar");
 		}
@@ -308,6 +367,36 @@ public class InventoryDisplay extends UIComponent {
 	}
 	public DragAndDrop getDnd() {
 		return dnd;
+	}
 
+	public void addTooltips() {
+		TextTooltip tooltip;
+		for (ItemSlot slot : slots) {
+			int i = indexes.get(slot);
+			if (inventory.getItem(i) != null) {
+				ItemComponent item = inventory.getItem(indexes.get(slot)).getComponent(ItemComponent.class);
+				if (Objects.equals(item.getItemName(), "watering_can")) {
+					float level = item.getEntity().getComponent(WateringCanLevelComponent.class).getCurrentLevel();
+					tooltip = new TextTooltip(item.getItemName() + "\n\nCurrent level is " + level, skin);
+				} else {
+					tooltip = new TextTooltip(item.getItemName() + "\n\n" + item.getItemDescription(),instantTooltipManager,skin);
+				}
+				if (tooltips.get(i) != null) {
+					tooltips.get(i).hide();
+					slot.removeListener(tooltips.get(i));
+				}
+				tooltip.getActor().setAlignment(Align.center);
+				tooltip.setInstant(true);
+				slot.addListener(tooltip);
+				tooltips.put(i, tooltip);
+			}
+			else {
+				if (tooltips.get(i) != null) {
+					tooltips.get(i).hide();
+					slot.removeListener(tooltips.get(i));
+					tooltips.remove(i);
+				}
+			}
+		}
 	}
 }

@@ -2,14 +2,14 @@ package com.csse3200.game.areas;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.areas.terrain.*;
+import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
-import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.components.player.PlayerActions;
+import com.csse3200.game.entities.EntitiesSpawner;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntitySpawner;
-import com.csse3200.game.entities.EntitiesSpawner;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.missions.quests.QuestFactory;
 import com.csse3200.game.services.ResourceService;
@@ -32,8 +32,6 @@ public class SpaceGameArea extends GameArea {
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(24, 86);
   private static final GridPoint2 QUESTGIVER_SPAWN = new GridPoint2(42, 87);
   private static final GridPoint2 SHIP_SPAWN = new GridPoint2(20,85);
-
-  private static final GridPoint2 TRACTOR_SPAWN = new GridPoint2(15, 15);
 
   private static final float WALL_WIDTH = 0.1f;
   private EntitiesSpawner hostileSpawner;
@@ -74,6 +72,7 @@ public class SpaceGameArea extends GameArea {
           "images/overwatered_cropTile_fertilised.png",
           "images/Temp-Chest.png",
           "images/bin.png",
+          "images/GOD_IS_game_ver.png",
 
           "images/tractor.png",
           "images/fertiliser.png",
@@ -247,12 +246,17 @@ public class SpaceGameArea extends GameArea {
           "images/ship/ship_debris.png",
           "images/ship/ship.png",
           "images/ship/ship_part.png",
-          "images/ship/ship_clue.png",
+          "images/ship/clue_item.png",
+          "images/ship/ship_part_tile.png",
 
           "images/selected.png",
           "images/itemFrame.png",
           "images/PauseMenu/Pause_Overlay.jpg",
           "images/PauseMenu/Pausenew.jpg",
+          "images/miniMap/shipIcon.png",
+          "images/miniMap/playerIcon.png",
+          "images/miniMap/plantIcon.png",
+          "images/miniMap/questGiverIcon.png",
           "images/fish/fish_1.png",
           "images/fish/fish_2.png",
           "images/fish/fish_3.png",
@@ -264,10 +268,11 @@ public class SpaceGameArea extends GameArea {
           "images/fish/fish_9.png",
           "images/fish/fish_10.png",
           "images/fish/fish_11.png",
+          "images/placeable/sprinkler/sprinkler_animation.png",
   };
 
   private static final String[] textureAtlasPaths = {
-      "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
+      "images/terrain_iso_grass.atlas", "images/GOD_IS_game_ver.atlas", "images/ghost.atlas", "images/player.atlas", "images/ghostKing.atlas",
       "images/animals/chicken.atlas", "images/animals/cow.atlas", "images/tractor.atlas",
       "images/animals/astrolotl.atlas", "images/animals/oxygen_eater.atlas", "images/questgiver.atlas",
       "images/missionStatus.atlas", "images/plants/cosmic_cob.atlas", "images/plants/aloe_vera.atlas",
@@ -275,7 +280,8 @@ public class SpaceGameArea extends GameArea {
       "images/plants/deadly_nightshade.atlas", "images/fireflies.atlas", "images/animals/dragonfly.atlas",
       "images/animals/bat.atlas", "images/projectiles/oxygen_eater_projectile.atlas",
       "images/ship/ship.atlas", "images/light.atlas", "images/projectiles/dragon_fly_projectile.atlas", "images/golden_trophy.atlas",
-      "images/player_fishing.atlas"
+      "images/player_fishing.atlas", "images/walkietalkie.atlas", "images/animals/animal_effects.atlas", "images/cutscene.atlas",
+      "images/placeable/sprinkler/sprinkler_animation.atlas", "images/shipeater.atlas"
   };
   private static final String[] soundPaths = {
           "sounds/Impact4.ogg", "sounds/car-horn-6408.mp3",
@@ -405,7 +411,7 @@ public class SpaceGameArea extends GameArea {
 
   private void displayUI() {
     Entity ui = new Entity();
-    ui.addComponent(new GameAreaDisplay("Box Forest"));
+    ui.addComponent(new GameAreaDisplay("Gardens of the Galaxy"));
     spawnEntity(ui);
   }
 
@@ -553,6 +559,7 @@ public class SpaceGameArea extends GameArea {
     effects.add(EffectSoundFile.FISHING_CAST);
     effects.add(EffectSoundFile.FISHING_CATCH);
     effects.add(EffectSoundFile.SCYTHE);
+    effects.add(EffectSoundFile.GOD_DID);
 
 
     try {

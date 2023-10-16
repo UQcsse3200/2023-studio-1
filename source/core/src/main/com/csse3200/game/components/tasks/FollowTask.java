@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 
-
 /** Follows a target entity until they get too far away or line of sight is lost */
 public class FollowTask extends ChaseTask {
   /** Distance to target before stopping. */
@@ -55,6 +54,7 @@ public class FollowTask extends ChaseTask {
     getMovementTask().start();
 
     this.owner.getEntity().getEvents().trigger("followStart");
+    this.owner.getEntity().getEvents().trigger("startEffect", "followStart");
   }
 
   /**
@@ -65,14 +65,15 @@ public class FollowTask extends ChaseTask {
     //Stops follow if entity is too close to target
     if(getDistanceToTarget() <= stoppingDistance) {
       owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(false);
-      status = Status.INACTIVE;
-      owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(true);
-      getMovementTask().setTarget(getTarget().getCenterPosition());
-      getMovementTask().update();
-      if (getMovementTask().getStatus() != Status.ACTIVE) {
-        this.owner.getEntity().getEvents().trigger("followStart");
-        getMovementTask().start();
-      }
+      return;
+    }
+
+    owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(true);
+    getMovementTask().setTarget(getTarget().getCenterPosition());
+    getMovementTask().update();
+    if (getMovementTask().getStatus() != Status.ACTIVE) {
+      this.owner.getEntity().getEvents().trigger("followStart");
+      getMovementTask().start();
     }
   }
 
@@ -84,6 +85,8 @@ public class FollowTask extends ChaseTask {
     owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(true);
     super.stop();
     this.owner.getEntity().getEvents().trigger("followStop");
+    this.owner.getEntity().getEvents().trigger("stopEffect", "followStart");
+
   }
 
   /**
@@ -95,7 +98,7 @@ public class FollowTask extends ChaseTask {
   @Override
   protected int getInactivePriority() {
     float dst = getDistanceToTarget();
-    if (dst < getViewDistance() && isTargetVisible() && dst > stoppingDistance) {
+    if (dst < getViewDistance() && isTargetVisible()) {
       return getRawPriority();
     }
     return -1;

@@ -5,33 +5,50 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.ui.UIComponent;
+import net.dermetfan.utils.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+
 public class ToggleableMap extends UIComponent {
-    
+
+    final private String toggleOpen = "toggleOpen";
     private static final Logger logger = LoggerFactory.getLogger(ToggleableMap.class);
     
     /**
      * The table used to display the map.
      */
-    Table Tmap = new Table();
+    Table tableMap = new Table();
 
+    /**
+     * The size of the map.
+     */
     GridPoint2 mapSize = new GridPoint2(0,0);
-    GridPoint2 g_pos = new GridPoint2(0,0);
-    Boolean Switch = false;
-    //Color prev_color; // can not used this =((
+
+    /**
+     * The position of the player.
+     */
+    GridPoint2 gpPos = new GridPoint2(0,0);
+
+    /**
+     * Whether the map is running or not.
+     */
+    Boolean mapRunning = false;
 
     /**
      * Dimmed screen
@@ -60,7 +77,7 @@ public class ToggleableMap extends UIComponent {
     public void create() {
         super.create();
         logger.debug("Adding listener to toggleOpen event");
-        ServiceLocator.getPlayerMapService().getEvents().addListener("toggleOpen", this::toggleOpen);
+        ServiceLocator.getPlayerMapService().getEvents().addListener(toggleOpen, this::toggleOpen);
         window = new Window("", skin);
         createNewMap();
         //starts closed so no updateDisplay()
@@ -95,58 +112,137 @@ public class ToggleableMap extends UIComponent {
         this.isOpen = isOpen;
         window.setVisible(isOpen);
         transparentRectangle.setVisible(isOpen);
-        if (!isOpen) {
+        if (!Boolean.TRUE.equals(isOpen)) {
             recoverExternalUI();
         } else {
             removeExternalUI();
         }
         mapSize = ServiceLocator.getGameArea().getMap().getMapSize();
-        if (isOpen) {
-            pauseGame();
-            // Draw the player's position dot on the mini-map
-            Vector2 v_pos = ServiceLocator.getGameArea().getPlayer().getPosition();
-            g_pos = ServiceLocator.getGameArea().getMap().vectorToTileCoordinates(v_pos);
-            g_pos = new GridPoint2(g_pos.x +1, g_pos.y +1); // because it takes bottom left corner
-
-            // store the player's position in a temporary variable and change that cell's color
-            //prev_color = Tmap.getChildren().get(g_pos.x + (mapSize.y - (g_pos.y +1)) * mapSize.x).getColor();
-            Tmap.getChildren().get(g_pos.x + (mapSize.y - (g_pos.y +1)) * mapSize.x).setColor(Color.WHITE);
-            Tmap.getChildren().get(g_pos.x + (mapSize.y - (g_pos.y +1)) * mapSize.x).setColor(Color.RED);
-            Switch = true;
-        }
-        else {
-            if(Switch) {
-                //Tmap.getChildren().get(g_pos.x + (mapSize.y - (g_pos.y +1)) * mapSize.x).setColor(prev_color);
-                Switch = false;
-                createMap(); // re-create the map because the position of player is now updated
+        if (Boolean.TRUE.equals(isOpen)) {
+            createMap();
+        } else {
+            if(Boolean.TRUE.equals(mapRunning)) { // if
+                mapRunning = false;
                 unPauseGame();
             }
         }
     }
-    
+
+    /**
+     * Check if the given position is in the list of player's position
+     * @param listPlayerPos list of player's position
+     * @param gpPos position to check
+     * @return true if the given position is in the list of player's position
+     */
+    public boolean inPlayerPos(ArrayList<GridPoint2> listPlayerPos, GridPoint2 gpPos) {
+        for (GridPoint2 pos : listPlayerPos) {
+            if (pos.equals(gpPos)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Get the list of position around the given position
+     * @param gpPos position to get around
+     * @return list of position around the given position
+     */
+    private ArrayList<GridPoint2> cellAround(GridPoint2 gpPos) {
+        ArrayList<GridPoint2> listPlayerPos = new ArrayList<>();
+        listPlayerPos.add(gpPos);
+        listPlayerPos.add(new GridPoint2(gpPos.x +1, gpPos.y)); // right
+        listPlayerPos.add(new GridPoint2(gpPos.x, gpPos.y +1)); // up
+        listPlayerPos.add(new GridPoint2(gpPos.x +1, gpPos.y +1)); // right up
+        return listPlayerPos;
+    }
+
+    /**
+     * Add image to the table
+     * @param xPos x position
+     * @param yPos y position
+     * @param tile tile to add if the position is not in the list of entity's position
+     * @param listEntityPosType list of entity's position
+     * @return true if the image is added to the table
+     */
+    private boolean addImageToTable(int xPos, int yPos, TiledMapTile tile, ArrayList<Pair<GridPoint2, EntityType>> listEntityPosType) {
+        boolean isAdded = false;
+        for (Pair<GridPoint2, EntityType> pair : listEntityPosType) {
+            if (pair.getKey().equals(new GridPoint2(xPos, yPos)) && pair.getValue() != null) {
+                switch (pair.getValue()) {
+                    case PLANT -> {
+                        tableMap.add(new Image(new TextureRegion(ServiceLocator.getResourceService().getAsset("images/miniMap/plantIcon.png", Texture.class))));
+                        logger.info("tile at ({}, {}) is plantIcon", xPos, yPos);
+                        isAdded = true;
+                    }
+                    case QUESTGIVER -> {
+                        tableMap.add(new Image(new TextureRegion(ServiceLocator.getResourceService().getAsset("images/miniMap/questGiverIcon.png", Texture.class))));
+                        logger.info("tile at ({}, {}) is questGiverIcon", xPos, yPos);
+                        isAdded = true;
+                    }
+                    case SHIP -> {
+                        // create new image from "assets/wiki/placeables/fences/f.png"
+                        tableMap.add(new Image(new TextureRegion(ServiceLocator.getResourceService().getAsset("images/miniMap/shipIcon.png", Texture.class))));
+                        logger.info("tile at ({}, {}) is an shipIcon", xPos, yPos);
+                        isAdded = true;
+                    }
+                    default -> {
+                        tableMap.add(new Image(tile.getTextureRegion()));
+                        isAdded = true;
+                    }
+                }
+                break;
+            }
+        }
+        return isAdded;
+    }
+
     /**
      * Creates assets used
      */
     public void createAssets() {
-        GridPoint2 mapSize = ServiceLocator.getGameArea().getMap().getMapSize();
-        Tmap = new Table();
+        mapSize = ServiceLocator.getGameArea().getMap().getMapSize();
+        tableMap = new Table();
         tiledMap = ServiceLocator.getGameArea().getMap().getTiledMap();
         TiledMapTileLayer layer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
-        // interate through the layers and add them to the table (not sure if this works)
+        // iterate through the layers and add them to the table (not sure if this works)
+
+        Vector2 vPos = ServiceLocator.getGameArea().getPlayer().getPosition();
+        gpPos = ServiceLocator.getGameArea().getMap().vectorToTileCoordinates(vPos);
+        gpPos = new GridPoint2(gpPos.x +1, gpPos.y +1);
+        // create array of player's position and all positions around it
+        ArrayList<GridPoint2> listPlayerPos = cellAround(gpPos);
+
+        Array<Entity> entityArray = ServiceLocator.getEntityService().getEntities();
+        // create an (position, type) pair array
+        ArrayList<Pair<GridPoint2, EntityType>> listEntityPosType = new ArrayList<>();
+        for (Entity entity : entityArray) {
+            Vector2 vPosEntity = entity.getPosition();
+            GridPoint2 gpPosEntity = ServiceLocator.getGameArea().getMap().vectorToTileCoordinates(vPosEntity);
+            listEntityPosType.add(new Pair<>(gpPosEntity, entity.getType()));
+        }
 
         for (int yPos = mapSize.x -1; yPos >= 0; yPos --) {
             for (int xPos = 0; xPos <= mapSize.y -1; xPos++) {
                 TiledMapTileLayer.Cell cell = layer.getCell(xPos, yPos);
                 if (cell != null) {
                     TiledMapTile tile = cell.getTile();
-                    if (tile != null) {
-                        Tmap.add(new Image(tile.getTextureRegion()));
+                    // check if the tile is in the list of player's position
+                    if (inPlayerPos(listPlayerPos, new GridPoint2(xPos, yPos))) {
+                        // create new image from "assets/wiki/placeables/fences/f.png"
+                        tableMap.add(new Image(new TextureRegion(ServiceLocator.getResourceService().getAsset("images/miniMap/playerIcon.png", Texture.class))));
+                        logger.info("tile at ({}, {}) is an entity", xPos, yPos);
+                    } else {
+                        // check if the tile is in the list of entity's position
+                        boolean isAdded = addImageToTable(xPos, yPos, tile, listEntityPosType);
+                        if (!isAdded) {
+                            tableMap.add(new Image(tile.getTextureRegion()));
+                        }
                     }
-                    else logger.info("tile at (" + xPos + ", " + yPos + ") is null");
                 }
-                else logger.info("Cell at (" + xPos + ", " + yPos + ") is null");
+                else logger.info("Cell at ({},{}) is null", xPos, yPos);
             }
-            Tmap.row(); // new row
+            tableMap.row(); // new row
         }
     }
 
@@ -154,20 +250,23 @@ public class ToggleableMap extends UIComponent {
      * Create the window used to display the map.
      */
     private void createMap() {
+        pauseGame();
+
         createAssets();
         window.reset();
         window.getTitleLabel().setText("MAP");
         window.setVisible(isOpen);
-        float mapHeight = Tmap.getChild(0).getHeight();
-        float mapWidth = Tmap.getChild(0).getWidth();
+        float mapHeight = tableMap.getChild(0).getHeight();
+        float mapWidth = tableMap.getChild(0).getWidth();
         window.setSize((Gdx.graphics.getHeight() * (mapWidth / mapHeight)),
                 Gdx.graphics.getHeight() * (mapHeight / mapWidth));
         window.padBottom(10f);
-        window.setPosition(Gdx.graphics.getWidth()/5, 20f);
+        window.setPosition((Gdx.graphics.getWidth())/5f, 20f);
         window.setMovable(false);
         window.setResizable(false);
-        window.add(Tmap);
+        window.add(tableMap);
         stage.addActor(window);
+        mapRunning = true;
     }
 
     private void createNewMap() {
@@ -176,18 +275,15 @@ public class ToggleableMap extends UIComponent {
         window.reset();
         window.getTitleLabel().setText("MAP");
         window.setVisible(isOpen);
-        float mapHeight = Tmap.getChild(0).getHeight();
-        float mapWidth = Tmap.getChild(0).getWidth();
+        float mapHeight = tableMap.getChild(0).getHeight();
+        float mapWidth = tableMap.getChild(0).getWidth();
         window.setSize((Gdx.graphics.getHeight() * (mapWidth / mapHeight)),
                 Gdx.graphics.getHeight() * (mapHeight / mapWidth));
         window.padBottom(10f);
-        window.setPosition(Gdx.graphics.getWidth()/5, 20f);
+        window.setPosition((Gdx.graphics.getWidth())/5f, 20f);
         window.setMovable(false);
         window.setResizable(false);
-        window.add(Tmap);
-        //window.add(Tmap).expandX().width((Gdx.graphics.getHeight() * (mapWidth / mapHeight))-20f).
-        //        expandY().height(Gdx.graphics.getHeight() * (mapHeight / mapWidth)-20f);
-        // Add the player's dot to the window's content
+        window.add(tableMap);
 
         stage.addActor(window);
     }
@@ -197,8 +293,8 @@ public class ToggleableMap extends UIComponent {
      * Draws the actors to the game.
      * @param batch Batch to render to.
      */
-    @Override
     public void draw(SpriteBatch batch) {
+        // do nothing because the map is drawn in the stage
     }
 
     public void pauseGame() {
@@ -230,7 +326,7 @@ public class ToggleableMap extends UIComponent {
      * Removes the UI components on the screen so that cutscene is not so cluttered
      */
     public void removeExternalUI() {
-        ServiceLocator.getPlantInfoService().getEvents().trigger("toggleOpen", false);
+        ServiceLocator.getPlantInfoService().getEvents().trigger(toggleOpen, false);
         ServiceLocator.getUIService().getEvents().trigger("toggleUI", false);
     }
 
@@ -239,7 +335,7 @@ public class ToggleableMap extends UIComponent {
      */
     public void recoverExternalUI() {
         ServiceLocator.getPlantInfoService().getEvents().
-                trigger("toggleOpen", KeyboardPlayerInputComponent.getShowPlantInfoUI());
+                trigger(toggleOpen, KeyboardPlayerInputComponent.getShowPlantInfoUI());
         ServiceLocator.getUIService().getEvents().trigger("toggleUI", true);
     }
 }

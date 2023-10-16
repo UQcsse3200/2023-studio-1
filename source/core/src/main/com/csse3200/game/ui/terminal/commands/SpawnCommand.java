@@ -25,12 +25,13 @@ public class SpawnCommand implements Command {
 			return false;
 		}
 		Entity entity;
-		Entity player = ServiceLocator.getGameArea().getPlayer();
 		switch (args.get(0)) {
 			case "cow" -> entity = NPCFactory.createCow();
 			case "chicken" -> entity = NPCFactory.createChicken();
 			case "astrolotl" -> entity = NPCFactory.createAstrolotl();
 			case "oe" -> entity = NPCFactory.createOxygenEater();
+			case "dragonfly" -> entity = NPCFactory.createDragonfly();
+			case "bat" -> entity = NPCFactory.createBat();
 				default -> {
 				logger.debug("Entity argument is not valid");
 				return false;
@@ -50,7 +51,7 @@ public class SpawnCommand implements Command {
 			position = ServiceLocator.getGameArea().getPlayer().getPosition();
 		}
 		entity.setPosition(position);
-		ServiceLocator.getEntityService().register(entity);
+		ServiceLocator.getGameArea().spawnEntity(entity);
 		return true;
 	}
 
