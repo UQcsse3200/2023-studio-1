@@ -153,6 +153,10 @@ public class ItemActions extends Component {
         player.getEvents().trigger(PlayerActions.events.SHOOT.name(), mousePos);
         return true;
       }
+      case TELEPORT_DEVICE -> {
+        teleport(player);
+        return true;
+      }
       case FOOD -> {
         resultStatus = feed(player, mouseWorldPos);
         return resultStatus;
@@ -184,6 +188,11 @@ public class ItemActions extends Component {
         return false;
       }
     }
+  }
+
+  private boolean teleport(Entity player) {
+    player.setPosition(new Vector2(20, 83));
+    return true;
   }
 
   private Vector2 getAdjustedPosFish(Vector2 mousePos) {
