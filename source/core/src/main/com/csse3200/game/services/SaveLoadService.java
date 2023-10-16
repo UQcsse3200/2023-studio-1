@@ -30,7 +30,7 @@ public class SaveLoadService {
     /**
      * Saves the current state of the game into a GameState
      */
-    public void save() {
+    public void save(String path) {
         // Make a new GameState
         SaveGame.GameState state = new GameState();
 
@@ -49,9 +49,13 @@ public class SaveLoadService {
         state.setPlaceables(ServiceLocator.getEntityService().getEntities());
 
         // Write the state to a file
-        SaveGame.set(state);
+        SaveGame.set(state, path);
 
         logger.debug("The current game state has been saved to the file assets/saves/saveFile.json");
+    }
+
+    public void save() {
+        save(ROOT_DIR + File.separator + SAVE_FILE);
     }
 
     /**
@@ -106,7 +110,7 @@ public class SaveLoadService {
         updateTractor(state);
         // Update Misc
         updateTime(state);
-        updateMissions(state);
+        //updateMissions(state);
     }
 
     /**
@@ -146,7 +150,7 @@ public class SaveLoadService {
             // Set the player inside the tractor
             Entity player = ServiceLocator.getGameArea().getPlayer();
             player.setPosition(tractor.getPosition());              // Teleport the player to the tractor (Needed so that they are in 5 units of each other)
-            player.getEvents().trigger("enterTractor");   // Trigger the enterTractor event
+            player.getEvents().trigger(PlayerActions.events.ENTER_TRACTOR.name());   // Trigger the enterTractor event
             tractor.getComponent(AuraLightComponent.class).toggleLight();
         }
     }
@@ -158,13 +162,5 @@ public class SaveLoadService {
      */
     private void updateTime(GameState state) {
         ServiceLocator.getTimeService().loadTime(state.getDay(), state.getHour(), state.getDay());
-    }
-
-    /**
-     * Updates the missions based off the gamestate
-     * @param state gamestate of the entire game based off safeFile.json
-     */
-    private void updateMissions(GameState state) {
-        ServiceLocator.registerMissionManager(state.getMissions());
     }
 }

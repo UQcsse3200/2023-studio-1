@@ -386,6 +386,10 @@ public class Entity implements Json.Serializable {
         json.writeValue("x", posX);
         json.writeValue("y", posY);
         json.writeObjectStart(COMPONENTS_STRING);
+        if (createdComponents == null) {
+            json.writeObjectEnd();
+            return;
+        }
         for (Component c : createdComponents) {
             c.write(json);
         }
@@ -569,19 +573,13 @@ public class Entity implements Json.Serializable {
 
     public void readTractor(JsonValue jsonMap) {
         // Make a new tractor
-        System.out.println("s");
         Entity tractor = TractorFactory.createTractor();
         JsonValue tractorActions = jsonMap.get(COMPONENTS_STRING).get("TractorActions");
-        System.out.println("d");
         tractor.getComponent(TractorActions.class).setMuted(tractorActions.getBoolean("isMuted"));
-        System.out.println("e");
         JsonValue lightJsonMap = jsonMap.get(COMPONENTS_STRING).get("ConeLightComponent");
-        System.out.println("f");
         if (lightJsonMap.getBoolean("isActive")) {
             tractor.getComponent(ConeLightComponent.class).toggleLight();
-            System.out.println("e");
         }
-        System.out.println("read");
         ServiceLocator.getGameArea().setTractor(tractor);
         tractor.setPosition(position);
         ServiceLocator.getGameArea().spawnEntity(tractor);

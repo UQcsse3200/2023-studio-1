@@ -128,13 +128,15 @@ class CropTileComponentTest {
         GameTime gameTime = mock(GameTime.class);
         ServiceLocator.registerTimeSource(gameTime);
         when(gameTime.getDeltaTime()).thenReturn(4000f / 1000);
-        cropTile1.update();
-        cropTile2.update();
-        cropTile3.update();
-        cropTile4.update();
-        cropTile5.update();
-        cropTile6.update();
-        cropTile7.update();
+        for (int i = 0; i < 10; i++) {
+            cropTile1.update();
+            cropTile2.update();
+            cropTile3.update();
+            cropTile4.update();
+            cropTile5.update();
+            cropTile6.update();
+            cropTile7.update();
+        }
         assertEquals(0.49958, cropTile1.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
         assertEquals(0.26197, cropTile2.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
         assertEquals(0.99916, cropTile3.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
@@ -150,13 +152,15 @@ class CropTileComponentTest {
         cropTile6.getEvents().trigger("fertilise");
         cropTile7.getEvents().trigger("fertilise");
         //tests whether getTexturePath() goes down the correct way
-        cropTile1.update();
-        cropTile2.update();
-        cropTile3.update();
-        cropTile4.update();
-        cropTile5.update();
-        cropTile6.update();
-        cropTile7.update();
+        for (int i = 0; i < 10; i++) {
+            cropTile1.update();
+            cropTile2.update();
+            cropTile3.update();
+            cropTile4.update();
+            cropTile5.update();
+            cropTile6.update();
+            cropTile7.update();
+        }
         assertEquals(0.99663, cropTile1.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
         assertEquals(0.49378, cropTile2.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);
         assertEquals(1.99326, cropTile3.getComponent(CropTileComponent.class).getGrowthRate(), 0.00001);

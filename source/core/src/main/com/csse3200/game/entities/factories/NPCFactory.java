@@ -182,10 +182,10 @@ public class NPCFactory {
     List<SingleDropHandler> singleDropHandlers = new ArrayList<>();
     MultiDropComponent multiDropComponent = new MultiDropComponent(singleDropHandlers, true);
     //Cows untamed drop fertiliser
-    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createFertiliser, 24,
+    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createFertiliser, 12,
             ServiceLocator.getTimeService().getEvents()::addListener, "hourUpdate", false));
     //Once tamed, cows drop one extra fertiliser
-    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createFertiliser, 24,
+    singleDropHandlers.add(new SingleDropHandler(ItemFactory::createFertiliser, 6,
             ServiceLocator.getTimeService().getEvents()::addListener, "hourUpdate", true));
     //Once tamed, cows can be fed to drop milk
     singleDropHandlers.add(new SingleDropHandler(ItemFactory::createMilk, 2,
@@ -332,7 +332,7 @@ public class NPCFactory {
             16f
     );
     String animation = "default";
-    if (random.nextInt(10000) == 0) {
+    if (random.nextInt(500) == 0) {
       animation = "DancinInTheMoonlight";
     }
     animator.addAnimation(animation, 0.5f, Animation.PlayMode.LOOP);
