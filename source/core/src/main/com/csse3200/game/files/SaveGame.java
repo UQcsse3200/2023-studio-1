@@ -1,6 +1,5 @@
 package com.csse3200.game.files;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
