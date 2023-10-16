@@ -2,7 +2,6 @@ package com.csse3200.game.entities.factories;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 import java.io.FileInputStream;
@@ -17,12 +16,10 @@ import com.csse3200.game.components.plants.PlantAreaOfEffectComponent;
 import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.components.plants.PlantMouseHoverComponent;
 import com.csse3200.game.components.plants.PlantProximityComponent;
-import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -32,7 +29,6 @@ import org.mockito.MockitoAnnotations;
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.entities.Entity;
@@ -51,7 +47,6 @@ import com.csse3200.game.services.ServiceLocator;
  * This test class aims to test the PlantFactory which is responsible for
  * creating different plants in the game.
  */
-@ExtendWith(GameExtension.class)
 class PlantFactoryTest {
     PlantConfigs stats;
     Entity plant;
@@ -73,8 +68,6 @@ class PlantFactoryTest {
     static CropTileComponent mockCropTile;
     @Mock
     ResourceService mockResourceService;
-    @Mock
-    Texture mockTexture;
     @Mock
     Entity mockEntity;
     @Mock

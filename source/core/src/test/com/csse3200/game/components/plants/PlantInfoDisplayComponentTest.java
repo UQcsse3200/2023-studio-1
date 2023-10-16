@@ -12,7 +12,9 @@ import static org.junit.jupiter.api.Assertions.*;
  * Tests for PlantInfoDisplayComponent
  */
 @ExtendWith(GameExtension.class)
-public class PlantInfoDisplayComponentTest {
+public class
+
+PlantInfoDisplayComponentTest {
     PlantInfoDisplayComponent plantInfoDisplayComponent;
 
     /**
