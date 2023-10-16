@@ -60,6 +60,7 @@ public class LightController extends Component {
     }
 
     private void setWeatherDousingFlames(WeatherEffectState weatherEffectState) {
+        // Not set to static as static methods can't be used in event listeners
         LightController.weatherEffectState = weatherEffectState;
     }
 
