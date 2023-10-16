@@ -22,7 +22,7 @@ class ParticleEffectWrapperTest {
         mockPooledEffect2 = mock(ParticleEffectPool.PooledEffect.class);
         mockPooledEffect3 = mock(ParticleEffectPool.PooledEffect.class);
         category = ParticleService.WEATHER_EVENT;
-        type = ParticleService.ParticleEffectType.ACID_RAIN.name();
+        type = ParticleService.ParticleEffectType.RAIN.name();
         particleEffectWrapper1 = new ParticleEffectWrapper(mockPooledEffect1, category, type);
         particleEffectWrapper2 = new ParticleEffectWrapper(mockPooledEffect2, category, type);
         particleEffectWrapper3 = new ParticleEffectWrapper(mockPooledEffect3, category, type);

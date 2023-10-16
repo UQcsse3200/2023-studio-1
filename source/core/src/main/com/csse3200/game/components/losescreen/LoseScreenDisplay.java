@@ -148,7 +148,7 @@ public class LoseScreenDisplay extends UIComponent {
     public static void setLoseReason(String causeOfDeath) {
         String reason = getString(causeOfDeath);
         losingMessage = """ 
-                {SLOW}Despite your best efforts,
+                {FAST}Despite your best efforts,
                 
                 """
                 + reason +

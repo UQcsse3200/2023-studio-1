@@ -51,26 +51,26 @@ class TerrainTileTest {
 
     @Test
     void testGetTerrainCategory() {
-        assertEquals(pathTerrainTile.getTerrainCategory(), TerrainTile.TerrainCategory.PATH);
-        assertEquals(beachSandTerrainTile.getTerrainCategory(), TerrainTile.TerrainCategory.BEACHSAND);
-        assertEquals(grassTerrainTile.getTerrainCategory(), TerrainTile.TerrainCategory.GRASS);
-        assertEquals(dirtTerrainTile.getTerrainCategory(), TerrainTile.TerrainCategory.DIRT);
-        assertEquals(shallowWaterTerrainTile.getTerrainCategory(), TerrainTile.TerrainCategory.SHALLOWWATER);
-        assertEquals(desertTerrainTile.getTerrainCategory(), TerrainTile.TerrainCategory.DESERT);
-        assertEquals(snowTerrainTile.getTerrainCategory(), TerrainTile.TerrainCategory.SNOW);
-        assertEquals(iceTerrainTile.getTerrainCategory(), TerrainTile.TerrainCategory.ICE);
-        assertEquals(deepwaterTerrainTile.getTerrainCategory(), TerrainTile.TerrainCategory.DEEPWATER);
-        assertEquals(rockTerrainTile.getTerrainCategory(), TerrainTile.TerrainCategory.ROCK);
-        assertEquals(lavaTerrainTile.getTerrainCategory(), TerrainTile.TerrainCategory.LAVA);
-        assertEquals(lavaGroundTerrainTile.getTerrainCategory(), TerrainTile.TerrainCategory.LAVAGROUND);
-        assertEquals(gravelTerrainTile.getTerrainCategory(), TerrainTile.TerrainCategory.GRAVEL);
-        assertEquals(flowingWaterTerrainTile.getTerrainCategory(), TerrainTile.TerrainCategory.FLOWINGWATER);
+        assertEquals(TerrainTile.TerrainCategory.PATH, pathTerrainTile.getTerrainCategory());
+        assertEquals(TerrainTile.TerrainCategory.BEACHSAND, beachSandTerrainTile.getTerrainCategory());
+        assertEquals(TerrainTile.TerrainCategory.GRASS, grassTerrainTile.getTerrainCategory());
+        assertEquals(TerrainTile.TerrainCategory.DIRT, dirtTerrainTile.getTerrainCategory());
+        assertEquals(TerrainTile.TerrainCategory.SHALLOWWATER, shallowWaterTerrainTile.getTerrainCategory());
+        assertEquals(TerrainTile.TerrainCategory.DESERT, desertTerrainTile.getTerrainCategory());
+        assertEquals(TerrainTile.TerrainCategory.SNOW, snowTerrainTile.getTerrainCategory());
+        assertEquals(TerrainTile.TerrainCategory.ICE, iceTerrainTile.getTerrainCategory());
+        assertEquals(TerrainTile.TerrainCategory.DEEPWATER, deepwaterTerrainTile.getTerrainCategory());
+        assertEquals(TerrainTile.TerrainCategory.ROCK, rockTerrainTile.getTerrainCategory());
+        assertEquals(TerrainTile.TerrainCategory.LAVA, lavaTerrainTile.getTerrainCategory());
+        assertEquals(TerrainTile.TerrainCategory.LAVAGROUND, lavaGroundTerrainTile.getTerrainCategory());
+        assertEquals(TerrainTile.TerrainCategory.GRAVEL, gravelTerrainTile.getTerrainCategory());
+        assertEquals(TerrainTile.TerrainCategory.FLOWINGWATER, flowingWaterTerrainTile.getTerrainCategory());
     }
 
     @Test
     void testSetTerrainCategory() {
         basicTestTile.setTerrainCategory(TerrainTile.TerrainCategory.BEACHSAND);
-        assertEquals(basicTestTile.getTerrainCategory(), TerrainTile.TerrainCategory.BEACHSAND);
+        assertEquals(TerrainTile.TerrainCategory.BEACHSAND, basicTestTile.getTerrainCategory());
     }
 
     @Test

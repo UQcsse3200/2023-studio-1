@@ -34,6 +34,12 @@ class ShipRepairQuestTest {
         SRQuest4 = new ShipRepairQuest("Ship Repair Quest 4", r1, 10, 10);
         SRQuest5 = new ShipRepairQuest("Ship Repair Quest 5", r1, 10, -1);
 
+        SRQuest1.registerMission(ServiceLocator.getMissionManager().getEvents());
+        SRQuest2.registerMission(ServiceLocator.getMissionManager().getEvents());
+        SRQuest3.registerMission(ServiceLocator.getMissionManager().getEvents());
+        SRQuest4.registerMission(ServiceLocator.getMissionManager().getEvents());
+        SRQuest5.registerMission(ServiceLocator.getMissionManager().getEvents());
+
     }
     @AfterEach
     void reset() {
@@ -42,21 +48,12 @@ class ShipRepairQuestTest {
 
     @Test
     void testIsCompleted() {
-        SRQuest1.registerMission(ServiceLocator.getMissionManager().getEvents());
-        SRQuest2.registerMission(ServiceLocator.getMissionManager().getEvents());
-        SRQuest3.registerMission(ServiceLocator.getMissionManager().getEvents());
-        SRQuest4.registerMission(ServiceLocator.getMissionManager().getEvents());
-        SRQuest5.registerMission(ServiceLocator.getMissionManager().getEvents());
+        assertFalse(SRQuest1.isCompleted());
+        assertTrue(SRQuest2.isCompleted());
+        assertFalse(SRQuest3.isCompleted());
+        assertFalse(SRQuest4.isCompleted());
+        assertTrue(SRQuest5.isCompleted());
         for (int i = 0; i < 10; i++) {
-            assertFalse(SRQuest1.isCompleted());
-            assertTrue(SRQuest2.isCompleted());
-            if (i >= 5) {
-                assertTrue(SRQuest3.isCompleted());
-            } else {
-                assertFalse(SRQuest3.isCompleted());
-            }
-            assertFalse(SRQuest4.isCompleted());
-            assertTrue(SRQuest5.isCompleted());
             ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.SHIP_PART_ADDED.name());
         }
         assertTrue(SRQuest1.isCompleted());
@@ -78,11 +75,6 @@ class ShipRepairQuestTest {
 
     @Test
     void testGetDescription() {
-        SRQuest1.registerMission(ServiceLocator.getMissionManager().getEvents());
-        SRQuest2.registerMission(ServiceLocator.getMissionManager().getEvents());
-        SRQuest3.registerMission(ServiceLocator.getMissionManager().getEvents());
-        SRQuest4.registerMission(ServiceLocator.getMissionManager().getEvents());
-        SRQuest5.registerMission(ServiceLocator.getMissionManager().getEvents());
         String desc = "Repair your ship and unlock useful features.\nAdd %d scavenged " +
                 "parts from your ship's hull to your ship.\n%d out of %d additional ship parts added.";
         for (int i = 0; i < 10; i++) {

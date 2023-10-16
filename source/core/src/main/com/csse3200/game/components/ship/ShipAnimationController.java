@@ -35,28 +35,27 @@ public class ShipAnimationController extends Component {
 	private void animateShipStage(int progress, Set<Feature> unlockedFeatures) {
 		String animation = "default";
 
-		//TODO change states to match final amount of progress
-		if (progress >= 0 && progress < 3) {
+		if (progress >= 0 && progress < 2) {
 			animation = "ship_0";
 		}
 
-		if (progress >= 3 && progress < 5) {
+		if (progress >= 2 && progress < 4) {
 			animation = "ship_1";
 		}
 
-		if (progress >= 5 && progress < 8) {
+		if (progress >= 4 && progress < 6) {
 			animation = "ship_2";
 		}
 
-		if (progress >= 8 && progress < 15) {
+		if (progress >= 6 && progress < 8) {
 			animation = "ship_3";
 		}
 
-		if (progress >= 15 && progress < 20) {
+		if (progress >= 8 && progress < 10) {
 			animation = "ship_4";
 		}
 
-		if (progress >= 20) {
+		if (progress >= 10) {
 			animation = "ship_5";
 		}
 

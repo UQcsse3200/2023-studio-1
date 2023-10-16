@@ -22,17 +22,11 @@ import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.ui.UIComponent;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 public class CutsceneDisplay extends UIComponent {
-
-    /**
-     * The atlas for the npc sprite.
-     */
-    private TextureAtlas npcAtlas;
 
     /**
      * The Image that contains the npc sprite.
@@ -60,6 +54,8 @@ public class CutsceneDisplay extends UIComponent {
      */
     private  Window dialogueWindow;
     private final Cutscene.CutsceneType cutsceneType;
+
+    private static final String DEFAULT = "default";
 
     /**
      * Creates a cutscene display using the given parameters
@@ -97,7 +93,6 @@ public class CutsceneDisplay extends UIComponent {
         }
 
         dialogueWindow.getTitleLabel().setAlignment(Align.center);
-        //dialogueWindow.setDebug(true);
         dialogueWindow.bottom();
         dialogueWindow.setResizable(false);
 
@@ -152,21 +147,22 @@ public class CutsceneDisplay extends UIComponent {
      * Spawns the Alien sprite
      */
     private void spawnSprite() {
+        TextureAtlas npcAtlas;
         TextureAtlas.AtlasRegion region;
 
         //Spawn sprite
         if (this.cutsceneType == Cutscene.CutsceneType.RADIO) {
             npcAtlas = ServiceLocator.getResourceService()
                     .getAsset("images/walkietalkie.atlas", TextureAtlas.class);
-            region = npcAtlas.findRegion("default");
+            region = npcAtlas.findRegion(DEFAULT);
         } else if (this.cutsceneType == Cutscene.CutsceneType.PLACEABLE) {
             npcAtlas = ServiceLocator.getResourceService()
                     .getAsset("images/GOD_IS_game_ver.atlas", TextureAtlas.class);
-            region = npcAtlas.findRegion("default");
+            region = npcAtlas.findRegion(DEFAULT);
         } else {
             npcAtlas = ServiceLocator.getResourceService()
                     .getAsset("images/questgiver.atlas", TextureAtlas.class);
-            region = npcAtlas.findRegion("default");
+            region = npcAtlas.findRegion(DEFAULT);
         }
 
         if (region == null) {

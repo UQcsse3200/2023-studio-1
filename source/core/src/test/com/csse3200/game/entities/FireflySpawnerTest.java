@@ -6,6 +6,7 @@ import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.SpaceGameArea;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
+import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
@@ -38,6 +39,8 @@ public class FireflySpawnerTest {
     void testSpawnsAtNight() {
         // mocks
         GameArea mockGameArea = mock(SpaceGameArea.class);
+        ClimateController climateController = new ClimateController();
+        doReturn(climateController).when(mockGameArea).getClimateController();
         ServiceLocator.registerGameArea(mockGameArea);
         GameMap mockMap = mock(GameMap.class);
         TerrainTile tile = mock(TerrainTile.class);

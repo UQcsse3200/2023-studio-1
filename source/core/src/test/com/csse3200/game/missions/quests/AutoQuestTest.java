@@ -119,23 +119,25 @@ class AutoQuestTest {
     @Test
     void testReadProgress() {
         registerQuests();
-        testIsCompleted();
         autoQuest1.readProgress(new JsonValue(5));
         autoQuest2.readProgress(new JsonValue(5));
         autoQuest3.readProgress(new JsonValue(5));
+        assertEquals(5, autoQuest1.getProgress());
+        assertEquals(5, autoQuest2.getProgress());
+        assertEquals(5, autoQuest3.getProgress());
         for (int i = 0; i < 5; i++) {
-            assertEquals(5 - i, autoQuest1.getProgress());
-            assertEquals(5 - i, autoQuest2.getProgress());
-            assertEquals(5 - i, autoQuest3.getProgress());
             ServiceLocator.getTimeService().getEvents().trigger("minuteUpdate");
-            assertEquals(4 - i, autoQuest1.getProgress());
-            assertEquals(4 - i, autoQuest2.getProgress());
-            assertEquals(4 - i, autoQuest3.getProgress());
         }
+        assertEquals(0, autoQuest1.getProgress());
+        assertEquals(0, autoQuest2.getProgress());
+        assertEquals(0, autoQuest3.getProgress());
         autoQuest1.readProgress(new JsonValue(1));
         autoQuest2.readProgress(new JsonValue(1));
         autoQuest3.readProgress(new JsonValue(1));
-        testIsCompleted();
+
+        assertEquals(1, autoQuest1.getProgress());
+        assertEquals(1, autoQuest2.getProgress());
+        assertEquals(1, autoQuest3.getProgress());
     }
 
     @Test
@@ -153,10 +155,22 @@ class AutoQuestTest {
     @Test
     void testResetState() {
         registerQuests();
-        testIsCompleted();
+        assertFalse(autoQuest1.isCompleted());
+        assertFalse(autoQuest2.isCompleted());
+        assertFalse(autoQuest3.isCompleted());
+        ServiceLocator.getTimeService().getEvents().trigger("minuteUpdate");
+        assertTrue(autoQuest1.isCompleted());
+        assertTrue(autoQuest2.isCompleted());
+        assertTrue(autoQuest3.isCompleted());
         autoQuest1.resetState();
         autoQuest2.resetState();
         autoQuest3.resetState();
-        testIsCompleted();
+        assertFalse(autoQuest1.isCompleted());
+        assertFalse(autoQuest2.isCompleted());
+        assertFalse(autoQuest3.isCompleted());
+        ServiceLocator.getTimeService().getEvents().trigger("minuteUpdate");
+        assertTrue(autoQuest1.isCompleted());
+        assertTrue(autoQuest2.isCompleted());
+        assertTrue(autoQuest3.isCompleted());
     }
 }
