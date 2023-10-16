@@ -1,5 +1,7 @@
 package com.csse3200.game.screens;
 
+import com.csse3200.game.services.sound.SoundFile;
+import com.csse3200.game.services.sound.SoundService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +19,10 @@ import com.csse3200.game.rendering.Renderer;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.sound.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class IntroScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(IntroScreen.class);
@@ -24,7 +30,9 @@ public class IntroScreen extends ScreenAdapter {
     /**
      * An array of paths to image textures needed for this screen
      */
-    private static final String[] introScreenAssets = {"images/intro_background_v2.png", "images/intro_planet.png"};
+    private static final String[] introScreenAssets = {"images/intro_background_v2.png",
+            "images/intro_planet.png", "images/crash-animation/Cockpit_Bottom.png",
+            "images/crash-animation/Cockpit_Top.png", "images/crash-animation/bright_light.png"};
     private final GdxGame game;
     private final Renderer renderer;
 
@@ -37,6 +45,7 @@ public class IntroScreen extends ScreenAdapter {
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerRenderService(new RenderService());
         ServiceLocator.registerTimeSource(new GameTime());
+        ServiceLocator.registerSoundService(new SoundService());
 
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(5f, 5f);
@@ -75,6 +84,17 @@ public class IntroScreen extends ScreenAdapter {
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(introScreenAssets);
         ServiceLocator.getResourceService().loadAll();
+        
+        // Load sound effects
+        List<SoundFile> effects = new ArrayList<>();
+        effects.add(EffectSoundFile.SHIP_RATTLE);
+        effects.add(EffectSoundFile.SHIP_CRASH);
+        effects.add(EffectSoundFile.LEGO_BREAK);
+        try {
+            ServiceLocator.getSoundService().getEffectsMusicService().loadSounds(effects);
+        } catch (InvalidSoundFileException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

@@ -12,7 +12,12 @@ DISPLAY=:1 xdotool mousemove 640 380 click 1 # Click 'New Game'
 sleep 10
 DISPLAY=:1 xdotool mousemove 640 750 click 1 # Click 'Continue'
 
+sleep 12
+
+DISPLAY=:1 xdotool mousemove 640 512 click 1 # Click 'Awaken'
+
 sleep 35
+
 DISPLAY=:1 xwd -root -out game_launched.xwd
 
 # Clean up 
