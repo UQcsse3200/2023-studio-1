@@ -24,7 +24,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
     /**
      * The radius of the area of effect.
      */
-    private final float radius;
+    private float radius;
 
     /**
      * The type of effect to be implemented.
@@ -53,12 +53,49 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
         this.effectType = effectType;
     }
 
+    public String getEffectType() {
+        return this.effectType;
+    }
+
+    /**
+     * Update the current effect being executed.
+     * @param effectType - The effect to be implemented.
+     */
+    public void setEffectType(String effectType) {
+        this.effectType = effectType;
+    }
+
+    /**
+     * Returns the radius of the area of effect for the plant.
+     * @return The radius of the area of effect.
+     */
+    public float getRadius() {
+        return this.radius;
+    }
+
+    /**
+     * Set the radius of the area.
+     * @param radius - the new radius of the area.
+     */
+    public void setRadius(float radius) {
+        // Currently not in use because changing the radius is causing issues.
+        this.radius = radius;
+    }
+
+    /**
+     * Returns a list of entities within the range.
+     * @return A list of entities within the range.
+     */
+    public List<Entity> getEntitiesInRange() {
+        return new ArrayList<>(entitiesInRange);
+    }
+
     /**
      * Sets up a radius for the collider and listens to relevant services.
      */
     @Override
     public void create() {
-        shape.setRadius(radius);
+        //shape.setRadius(getRadius());
         shape.setPosition(entity.getComponent(PlantComponent.class).getCropTile().getEntity().getScale().scl(0.5f).add(0, -0.5f));
         setShape(shape);
 
@@ -74,7 +111,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
      * Function is triggered every hour of in game time and checks which effects should be executed.
      */
     private void hourlyEffect() {
-        if (this.effectType.equals("Sound")) {
+        if (getEffectType().equals("Sound")) {
             soundEffect();
         }
     }
@@ -86,7 +123,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
         int min = ServiceLocator.getTimeService().getMinute();
 
         if (min % 5 == 0) {
-            switch (this.effectType) {
+            switch (getEffectType()) {
                 case "Decay" -> decayAndDeadEffect();
                 case "Health" -> healthEffect();
                 case "Poison" -> poisonEffect();
@@ -95,7 +132,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
             }
         }
 
-        if (this.effectType.equals("Eat")) {
+        if (getEffectType().equals("Eat")) {
             eatEffect();
         }
 
@@ -109,7 +146,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
      * @param me     The fixture of this component.
      * @param other  The fixture of the colliding entity.
      */
-    private void onCollisionStart(Fixture me, Fixture other) {
+    public void onCollisionStart(Fixture me, Fixture other) {
         if (getFixture() != me) {
             return;
         }
@@ -126,17 +163,13 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
      * @param me    The fixture of this component.
      * @param other  The fixture of the colliding entity.
      */
-    private void onCollisionEnd(Fixture me, Fixture other) {
+    public void onCollisionEnd(Fixture me, Fixture other) {
         if (getFixture() != me) {
             return;
         }
 
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
         entitiesInRange.remove(target);
-    }
-
-    public List<Entity> getEntitiesInRange() {
-        return new ArrayList<>(entitiesInRange);
     }
 
     /**
@@ -295,21 +328,5 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
                 entity.getComponent(PlantComponent.class).playSound("nearby");
             }
         }
-    }
-
-    /**
-     * Update the current effect being executed.
-     * @param effectType - The effect to be implemented.
-     */
-    public void setEffectType(String effectType) {
-        this.effectType = effectType;
-    }
-
-    /**
-     * Set the radius of the area.
-     * @param radius - the new radius of the area.
-     */
-    public void setRadius(float radius) {
-        // Currently not in use because changing the radius is causing issues.
     }
 }
