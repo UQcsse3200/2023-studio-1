@@ -5,6 +5,7 @@ import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
+import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.events.EventHandler;
@@ -195,7 +196,7 @@ public class SprinklerComponentTest {
     }
 
     @Test
-    public void sprinklerWatersAOE() {
+    public void sprinklerWatersCropTiles() {
         s1Tile.setOccupant(s1);
         s1.setPosition(s1_pos);
         s1.create();
@@ -215,6 +216,34 @@ public class SprinklerComponentTest {
             // make sprinkler water
             s1.getComponent(SprinklerComponent.class).sprinkle();
             assertEquals(0.25, cropComp.getWaterContent());
+        }
+    }
+
+    @Test
+    public void sprinklerWatersPlants() {
+        s1Tile.setOccupant(s1);
+        s1.setPosition(s1_pos);
+        s1.create();
+        // set the sprinkler to powered, so it can sprinkle
+        s1.getComponent(SprinklerComponent.class).setPower(true);
+
+        // check that each tile with a plant in the sprinklers AOE gets watered to the amount the plant requires
+        for (Vector2 pos : s1.getComponent(SprinklerComponent.class).aoe) {
+            // generate a cropTile for this position
+            CropTileComponent cropComp = new CropTileComponent(0, 0);
+            Entity cropTile = new Entity(EntityType.TILE).addComponent(cropComp);
+            cropTile.create();
+            // 1 is a reasonable "ideal water level".
+            PlantComponent plant = new PlantComponent(1, "name", "type", "desc", 1, 1, 1, cropComp);
+            Entity plantEntity = new Entity(EntityType.PLANT).addComponent(plant);
+            cropComp.setPlant(plantEntity);
+            ServiceLocator.getGameArea().getMap().getTile(pos).setOccupant(cropTile);
+            // check initial value is 0 / un-watered.
+            assertEquals(0, cropComp.getWaterContent());
+
+            // make sprinkler water the tile with the plant
+            s1.getComponent(SprinklerComponent.class).sprinkle();
+            assertEquals(plant.getIdealWaterLevel(), cropComp.getWaterContent());
         }
     }
 }
