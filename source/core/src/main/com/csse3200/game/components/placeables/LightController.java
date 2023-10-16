@@ -17,7 +17,7 @@ public class LightController extends Component {
         IGNITING
     }
 
-    private WeatherEffectState weatherEffectState = WeatherEffectState.NO_EFFECT;
+    private static WeatherEffectState weatherEffectState = WeatherEffectState.NO_EFFECT;
 
     @Override
     public void create() {
@@ -60,7 +60,7 @@ public class LightController extends Component {
     }
 
     private void setWeatherDousingFlames(WeatherEffectState weatherEffectState) {
-        this.weatherEffectState = weatherEffectState;
+        LightController.weatherEffectState = weatherEffectState;
     }
 
 }

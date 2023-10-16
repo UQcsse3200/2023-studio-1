@@ -43,7 +43,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
 
     private Vector2[] aoeVectors;
 
-    private int plantAoeWeatherModifier;
+    private static int plantAoeWeatherModifier = 0;
 
     /**
      * Constructor for the Area of Effect class.
@@ -53,8 +53,6 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
     public PlantAreaOfEffectComponent(float radius, String effectType) {
         this.radius = radius;
         this.effectType = effectType;
-
-        this.plantAoeWeatherModifier = 0;
     }
 
     /**

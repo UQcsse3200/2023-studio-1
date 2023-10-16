@@ -54,8 +54,8 @@ public class CropTileComponent extends Component {
 	private Entity plant;
 	private DynamicTextureRenderComponent currentTexture;
 
-	private float weatherWaterDelta;
-	private boolean isWaterLevelWeatherEffectActive;
+	private static float weatherWaterDelta = 1.0f;
+	private static boolean isWaterLevelWeatherEffectActive = false;
 
 	/**
 	 * Creates a new crop tile with default values
@@ -65,9 +65,6 @@ public class CropTileComponent extends Component {
 		this.soilQuality = 1;
 		this.isFertilised = false;
 		this.plant = null;
-
-		this.weatherWaterDelta = 0.0f;
-		this.isWaterLevelWeatherEffectActive = false;
 	}
 
 	/**
@@ -93,9 +90,6 @@ public class CropTileComponent extends Component {
 		this.soilQuality = soilQuality;
 		this.isFertilised = false;
 		this.plant = null;
-
-		this.weatherWaterDelta = 0.0f;
-		this.isWaterLevelWeatherEffectActive = false;
 	}
 
 	/**
