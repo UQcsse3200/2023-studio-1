@@ -87,6 +87,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">AnimationEffectsComponent</span>
 <span class="extends-implements">extends <a href="AnimationRenderComponent.html" title="class in com.csse3200.game.rendering">AnimationRenderComponent</a></span></div>
+<div class="block">A component responsible for rendering animation effects using a TextureAtlas.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -111,7 +112,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.badlogic.gdx.graphics.g2d.TextureAtlas)" class="member-name-link">AnimationEffectsComponent</a><wbr>(com.badlogic.gdx.graphics.g2d.TextureAtlas&nbsp;atlas)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Initializes the AnimationEffectsComponent with the given TextureAtlas.</div>
+</div>
 </div>
 </section>
 </li>
@@ -129,17 +132,23 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw</a><wbr>(com.badlogic.gdx.graphics.g2d.SpriteBatch&nbsp;batch)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Draw the renderable.</div>
+<div class="block">Draws the current frame of the animation using the provided SpriteBatch.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.math.Vector2</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getScale()" class="member-name-link">getScale</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the scale used for rendering the animation.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setOffset(com.badlogic.gdx.math.Vector2)" class="member-name-link">setOffset</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;offset)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the offset for adjusting the position of the rendered animation.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setScale(com.badlogic.gdx.math.Vector2)" class="member-name-link">setScale</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;scale)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the scale for adjusting the size of the rendered animation.</div>
+</div>
 </div>
 </div>
 </div>
@@ -170,6 +179,11 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;(com.badlogic.gdx.graphics.g2d.TextureAtlas)">
 <h3>AnimationEffectsComponent</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">AnimationEffectsComponent</span><wbr><span class="parameters">(com.badlogic.gdx.graphics.g2d.TextureAtlas&nbsp;atlas)</span></div>
+<div class="block">Initializes the AnimationEffectsComponent with the given TextureAtlas.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>atlas</code> - The TextureAtlas containing animation frames.</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -184,25 +198,34 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="setOffset(com.badlogic.gdx.math.Vector2)">
 <h3>setOffset</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setOffset</span><wbr><span class="parameters">(com.badlogic.gdx.math.Vector2&nbsp;offset)</span></div>
+<div class="block">Sets the offset for adjusting the position of the rendered animation.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>offset</code> - The Vector2 representing the offset in (x, y) coordinates.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="setScale(com.badlogic.gdx.math.Vector2)">
 <h3>setScale</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setScale</span><wbr><span class="parameters">(com.badlogic.gdx.math.Vector2&nbsp;scale)</span></div>
+<div class="block">Sets the scale for adjusting the size of the rendered animation.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>scale</code> - The Vector2 representing the scale in (x, y) dimensions.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">
 <h3>draw</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">draw</span><wbr><span class="parameters">(com.badlogic.gdx.graphics.g2d.SpriteBatch&nbsp;batch)</span></div>
-<div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="RenderComponent.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">RenderComponent</a></code></span></div>
-<div class="block">Draw the renderable. Should be called only by the renderer, not manually.</div>
+<div class="block">Draws the current frame of the animation using the provided SpriteBatch.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="AnimationRenderComponent.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">draw</a></code>&nbsp;in class&nbsp;<code><a href="AnimationRenderComponent.html" title="class in com.csse3200.game.rendering">AnimationRenderComponent</a></code></dd>
 <dt>Parameters:</dt>
-<dd><code>batch</code> - Batch to render to.</dd>
+<dd><code>batch</code> - The SpriteBatch used for rendering.</dd>
 </dl>
 </section>
 </li>
@@ -210,6 +233,11 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getScale()">
 <h3>getScale</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.math.Vector2</span>&nbsp;<span class="element-name">getScale</span>()</div>
+<div class="block">Gets the scale used for rendering the animation.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>A copy of the Vector2 representing the scale.</dd>
+</dl>
 </section>
 </li>
 </ul>

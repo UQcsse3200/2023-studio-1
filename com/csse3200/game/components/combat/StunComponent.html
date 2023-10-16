@@ -83,6 +83,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">StunComponent</span>
 <span class="extends-implements">extends <a href="../Component.html" title="class in com.csse3200.game.components">Component</a></span></div>
+<div class="block">A component that manages the stun status of an entity in a game.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -122,17 +123,23 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Called when the entity is created and registered.</div>
+<div class="block">Initializes the StunComponent and sets up event listeners for stun-related events.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isStunned()" class="member-name-link">isStunned</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Checks whether the entity is currently stunned.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStun(boolean)" class="member-name-link">setStun</a><wbr>(boolean&nbsp;stunned)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the stun status of the entity.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStunDuration(float)" class="member-name-link">setStunDuration</a><wbr>(float&nbsp;duration)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the stun duration for the entity.</div>
+</div>
 </div>
 </div>
 </div>
@@ -171,9 +178,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="create()">
 <h3>create</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">create</span>()</div>
-<div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="../Component.html#create()">Component</a></code></span></div>
-<div class="block">Called when the entity is created and registered. Initial logic such as calls to GetComponent
- should be made here, not in the constructor which is called before an entity is finished.</div>
+<div class="block">Initializes the StunComponent and sets up event listeners for stun-related events.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="../Component.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../Component.html" title="class in com.csse3200.game.components">Component</a></code></dd>
@@ -184,18 +189,33 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="setStun(boolean)">
 <h3>setStun</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setStun</span><wbr><span class="parameters">(boolean&nbsp;stunned)</span></div>
+<div class="block">Sets the stun status of the entity.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>stunned</code> - <code>true</code> if the entity should be stunned; <code>false</code> to remove stun.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="setStunDuration(float)">
 <h3>setStunDuration</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setStunDuration</span><wbr><span class="parameters">(float&nbsp;duration)</span></div>
+<div class="block">Sets the stun duration for the entity.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>duration</code> - The duration (in seconds) for which the entity should be stunned.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="isStunned()">
 <h3>isStunned</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isStunned</span>()</div>
+<div class="block">Checks whether the entity is currently stunned.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>true</code> if the entity is stunned; <code>false</code> if not stunned.</dd>
+</dl>
 </section>
 </li>
 </ul>
