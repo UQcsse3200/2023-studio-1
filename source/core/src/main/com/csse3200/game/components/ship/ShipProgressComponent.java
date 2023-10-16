@@ -3,6 +3,9 @@ package com.csse3200.game.components.ship;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.entities.factories.ShipFactory;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.services.ServiceLocator;
@@ -60,6 +63,13 @@ public class ShipProgressComponent extends Component {
 			for (Feature feature : Feature.values()) {
 				if (feature.unlockLevel <= this.progress) {
 					unlockedFeatures.add(feature);
+					if (feature == Feature.TELEPORT) {
+						Entity tpDev = ItemFactory.createTeleportDevice();
+						ServiceLocator.getGameArea().spawnEntity(tpDev);
+						ServiceLocator.getGameArea().getPlayer()
+								.getComponent(InventoryComponent.class)
+								.addItem(tpDev);
+					}
 				}
 			}
 

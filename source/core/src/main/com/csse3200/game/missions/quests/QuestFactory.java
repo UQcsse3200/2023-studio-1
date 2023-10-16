@@ -11,8 +11,6 @@ import com.csse3200.game.missions.cutscenes.Cutscene;
 import com.csse3200.game.missions.rewards.*;
 import com.csse3200.game.services.ServiceLocator;
 
-import java.beans.Customizer;
-import java.security.SecureRandom;
 import java.util.*;
 import java.util.function.Supplier;
 

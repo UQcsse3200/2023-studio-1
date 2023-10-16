@@ -22,7 +22,7 @@ public class PlaceableEvents extends Component {
             return;
         }
         // Notify any placeable entities to destroy their connections
-        entity.getEvents().trigger("destroyConnections");
+        entity.getEvents().trigger("onDestroy");
         // Removes references from the tile to the placeable and set it as unoccupied
         tile.removeOccupant();
         // Spawn in the item that corresponds to the removed placeable

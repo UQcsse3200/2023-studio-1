@@ -2,12 +2,14 @@ package com.csse3200.game.areas;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.areas.terrain.*;
+import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
+import com.csse3200.game.entities.EntitiesSpawner;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntitySpawner;
-import com.csse3200.game.entities.EntitiesSpawner;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.missions.quests.QuestFactory;
 import com.csse3200.game.services.ResourceService;
@@ -234,6 +236,9 @@ public class SpaceGameArea extends GameArea {
           "images/ship/ship_part.png",
           "images/ship/clue_item.png",
           "images/ship/ship_part_tile.png",
+          "images/ship/part_tile_indicator.png",
+		  "images/walkietalkie.png",
+		  "images/teleporter.png",
 
           "images/selected.png",
           "images/itemFrame.png",
@@ -268,6 +273,7 @@ public class SpaceGameArea extends GameArea {
       "images/ship/ship.atlas", "images/light.atlas", "images/projectiles/dragon_fly_projectile.atlas", "images/golden_trophy.atlas",
       "images/player_fishing.atlas", "images/walkietalkie.atlas", "images/animals/animal_effects.atlas", "images/cutscene.atlas",
       "images/placeable/sprinkler/sprinkler_animation.atlas", "images/plants/plant_aoe.atlas"
+      "images/placeable/sprinkler/sprinkler_animation.atlas", "images/shipeater.atlas", "images/plants/plant_aoe.atlas"
   };
   private static final String[] soundPaths = {
           "sounds/Impact4.ogg", "sounds/car-horn-6408.mp3",
@@ -396,7 +402,7 @@ public class SpaceGameArea extends GameArea {
 
   private void displayUI() {
     Entity ui = new Entity();
-    ui.addComponent(new GameAreaDisplay("Box Forest"));
+    ui.addComponent(new GameAreaDisplay("Gardens of the Galaxy"));
     spawnEntity(ui);
   }
 

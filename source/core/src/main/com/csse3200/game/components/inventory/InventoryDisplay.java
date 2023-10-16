@@ -205,7 +205,7 @@ public class InventoryDisplay extends UIComponent {
 					payload.setDragActor(getActor());
 					stage.addActor(getActor());
 					dnd.setDragActorPosition(50, -getActor().getHeight() / 2);
-					ItemSlot slot = map.get((Stack)getActor());
+					ItemSlot slot = map.get(getActor());
 					tooltips.get(indexes.get(slot)).hide();
 					tooltip = tooltips.get(indexes.get(slot));
 					slot.removeListener(tooltips.get(indexes.get(slot)));

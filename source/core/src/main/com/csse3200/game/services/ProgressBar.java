@@ -132,7 +132,7 @@ public class ProgressBar extends UIComponent {
         group.clear();
         table.top().left();
         table.setFillParent(true);
-        table.padTop(-30f).padLeft(190f);
+        table.padTop(-95f).padLeft(180f);
 
         group.addActor(progressionBar);
         table.add(group).size(200);

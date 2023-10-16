@@ -3,13 +3,11 @@ package com.csse3200.game.services;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.components.combat.CombatStatsComponent;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -23,13 +21,9 @@ public class HealthDisplay extends UIComponent{
     private static final Logger logger = LoggerFactory.getLogger(HealthDisplay.class);
     Table table = new Table();
     Group group = new Group();
-    private Image healthOutline;
+    private Image healthFrame;
     private Image healthFill;
-    private Image healthNormal;
-    private Image healthDanger;
-    private Array<Label> healthLabels;
-    private Label healthLabel;
-    private int currentHealth;
+    private Image healthIcon;
 
     /**
      * Creates reusable ui styles and adds actors to the stage.
@@ -38,12 +32,14 @@ public class HealthDisplay extends UIComponent{
     public void create() {
         super.create();
 
+        createTexture();
+
         logger.debug("Adding listener to healthUpdate event");
         // Adds a listener to check for health updates
         entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
         ServiceLocator.getGameArea().getPlayer().getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
         ServiceLocator.getUIService().getEvents().addListener("toggleUI", this::toggleDisplay);
-        currentHealth = ServiceLocator.getGameArea().getPlayer().getComponent(CombatStatsComponent.class).getHealth();
+        int currentHealth = ServiceLocator.getGameArea().getPlayer().getComponent(CombatStatsComponent.class).getHealth();
         updatePlayerHealthUI(currentHealth);
 
         // Initial update
@@ -59,60 +55,33 @@ public class HealthDisplay extends UIComponent{
      */
     public void createTexture() {
         logger.debug("Health display texture being created");
-        Skin healthSkin = ServiceLocator.getResourceService().getAsset("flat-earth/skin/flat-earth-ui.json", Skin.class);
 
-        healthOutline = new Image(ServiceLocator.getResourceService().getAsset(
-            "images/bars_ui/bar_outline.png", Texture.class));
-        healthNormal = new Image(ServiceLocator.getResourceService().getAsset(
-            "images/bars_ui/healthy_fill.png", Texture.class));
-        healthDanger = new Image(ServiceLocator.getResourceService().getAsset(
-            "images/bars_ui/danger_fill.png", Texture.class));
+        healthFrame = new Image(ServiceLocator.getResourceService().getAsset(
+            "images/status_ui/status_frame.png", Texture.class));
+        healthFill = new Image(ServiceLocator.getResourceService().getAsset(
+            "images/status_ui/health_fill.png", Texture.class));
+        healthIcon = new Image(ServiceLocator.getResourceService().getAsset(
+            "images/status_ui/health_icon.png", Texture.class));
 
         // Set health fill to the initial starting one
-        healthFill = healthNormal;
-        healthFill.setScaleX(1.0f);
-
-        // Create labels for each percent
-        healthLabels = new Array<>();
-        for (int i = 0; i <= 100; i++) {
-            healthLabels.add(new Label(String.format("Health: %d%%", i), healthSkin));
-        }
+        healthFill.setScaleY(1.0f);
     }
 
     /**
      * Updates the display, showing the health bar in the top of the main game screen.
      */
     public void updatePlayerHealthUI(int health) {
-        boolean switched;
-        if (healthLabels == null) {
-            createTexture();
-        }
+
+        logger.debug("Health display updated");
 
         float scaling = (float) health / 100;
+        float targetY = healthFill.getImageY() + 48 * (1 - scaling);
 
-        // Adjusts the health bar based on the health percent
-        if (health <= 25) {
-            switched = (healthFill != healthDanger);
-            healthFill = healthDanger;
-        } else {
-            switched = (healthFill != healthNormal);
-            healthFill = healthNormal;
-        }
+        // Moves the health filling to the correct position, while it is being scaled to give a nice transition.
+        Action action1 = Actions.moveTo(healthFill.getX(), targetY, 1.0f, Interpolation.pow2InInverse);
+        Action action2 = Actions.scaleTo(1.0f, scaling, 1.0f, Interpolation.pow2InInverse);
 
-        healthFill.setX(healthFill.getImageX() + 14 * (1 - scaling));
-
-        // Ensure that the array is always accessed within bounds
-        if (0 <= health && health <= 100) {
-            logger.debug("Health display updated");
-            healthLabel = healthLabels.get(health);
-            healthLabel.setPosition(healthOutline.getImageX() + 125f, healthOutline.getImageY() + 8.5f);
-        }
-
-        if (!switched) {
-            healthFill.addAction(Actions.scaleTo(scaling, 1.0f, 1.0f, Interpolation.pow2InInverse));
-        } else {
-            healthFill.setScaleX(scaling);
-        }
+        healthFill.addAction(Actions.parallel(action1, action2));
     }
 
     /**
@@ -125,12 +94,11 @@ public class HealthDisplay extends UIComponent{
         group.clear();
         table.top();
         table.setFillParent(true);
-        table.padTop(-130f).padLeft(820f);
+        table.padTop(-50f).padLeft(270f);
 
-
-        group.addActor(healthOutline);
         group.addActor(healthFill);
-        group.addActor(healthLabel);
+        group.addActor(healthFrame);
+        group.addActor(healthIcon);
 
         table.add(group).size(200);
         stage.addActor(table);
@@ -142,8 +110,8 @@ public class HealthDisplay extends UIComponent{
     @Override
     public void dispose() {
         super.dispose();
-        healthOutline.remove();
+        healthFrame.remove();
         healthFill.remove();
-        healthLabel.remove();
+        healthIcon.remove();
     }
 }

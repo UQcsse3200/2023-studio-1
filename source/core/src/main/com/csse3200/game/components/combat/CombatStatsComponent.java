@@ -1,12 +1,14 @@
 package com.csse3200.game.components.combat;
 
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.quests.Quest;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.entities.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -134,4 +136,18 @@ public class CombatStatsComponent extends Component {
       handleDeath();
     }
   }
+
+	@Override
+	public void write(Json json) {
+		json.writeObjectStart(this.getClass().getSimpleName());
+		json.writeValue("health", this.health);
+		json.writeObjectEnd();
+	}
+
+	@Override
+	public void read(Json json, JsonValue jsonValue) {
+		jsonValue = jsonValue.get(this.getClass().getSimpleName());
+		int healthRead = jsonValue.getInt("health");
+		setHealth(healthRead);
+	}
 }
