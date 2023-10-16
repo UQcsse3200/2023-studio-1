@@ -18,6 +18,7 @@ import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ProjectileFactory;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ParticleService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.sound.EffectSoundFile;
@@ -51,6 +52,8 @@ public class PlayerActions extends Component {
 
   private static float weatherSpeedModifier = 1.0f;
   private static boolean isWeatherAffectingSpeed = false;
+
+  boolean waitingForEnd;
 
   enum Direction {
     RIGHT("right"),
@@ -106,6 +109,14 @@ public class PlayerActions extends Component {
 
   @Override
   public void update() {
+    if (!waitingForEnd && entity.getComponent(CombatStatsComponent.class).isDead()) {
+      entity.getEvents().trigger("bye bye");
+      waitingForEnd = true;
+      return;
+    } else if (waitingForEnd && entity.getComponent(AnimationRenderComponent.class).isFinished()) {
+      ServiceLocator.getMissionManager().getEvents().trigger("loseScreen", "You died");
+      return;
+    }
     if (entity.getComponent(PlayerAnimationController.class).readyToPlay()) {
       if (moving && !isStunned() && !frozen) {
         updateSpeed();
@@ -381,7 +392,7 @@ public class PlayerActions extends Component {
 
   /**
    * When in the tractor inputs should be muted, this handles that.
-   * 
+   *
    * @return if the players inputs should be muted
    */
   public boolean isMuted() {

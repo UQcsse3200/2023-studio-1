@@ -76,6 +76,7 @@ public class PlayerFactory {
             .addComponent(new InventoryDisplay("updateInventory", "toggleInventory", 30, 10, true))
             .addComponent(new BlinkComponent())
             .addComponent(new StunComponent())
+            .addComponent(new DimComponent())
             .addComponent(new PauseMenuActions());
 
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
@@ -143,6 +144,8 @@ public class PlayerFactory {
     animator.addAnimation("fishing_right", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("fishing_up", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("fishing_down", 0.1f, Animation.PlayMode.LOOP);
+
+    animator.addAnimation("bye_bye", 0.1f, Animation.PlayMode.NORMAL);
   }
 
   public static Entity createFishingRodAnimatorEntity() {
