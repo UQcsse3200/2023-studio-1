@@ -123,8 +123,8 @@ class ClimateControllerTest {
 		try (MockedStatic<MathUtils> mathUtils = mockStatic(MathUtils.class)) {
 			mathUtils.when(MathUtils::random).thenReturn(0.5f);
 			mathUtils.when(() -> MathUtils.random(0, 9)).thenReturn(0); // weatherEvent - RainStorm
-			mathUtils.when(() -> MathUtils.random(1, 23)).thenReturn(1); // numHoursUntil
-			mathUtils.when(() -> MathUtils.random(1, 8)).thenReturn(4); // duration
+			mathUtils.when(() -> MathUtils.random(1, 20)).thenReturn(1); // numHoursUntil
+			mathUtils.when(() -> MathUtils.random(1, 4)).thenReturn(4); // duration
 			mathUtils.when(() -> MathUtils.random(0, 3)).thenReturn(0); // priority
 
 			ServiceLocator.getTimeService().getEvents().trigger("dayUpdate");
@@ -150,8 +150,8 @@ class ClimateControllerTest {
 		try (MockedStatic<MathUtils> mathUtils = mockStatic(MathUtils.class)) {
 			mathUtils.when(MathUtils::random).thenReturn(0.5f);
 			mathUtils.when(() -> MathUtils.random(0, 9)).thenReturn(4); // weatherEvent - Blizzard
-			mathUtils.when(() -> MathUtils.random(1, 23)).thenReturn(1); // numHoursUntil
-			mathUtils.when(() -> MathUtils.random(1, 8)).thenReturn(4); // duration
+			mathUtils.when(() -> MathUtils.random(1, 20)).thenReturn(1); // numHoursUntil
+			mathUtils.when(() -> MathUtils.random(1, 4)).thenReturn(4); // duration
 			mathUtils.when(() -> MathUtils.random(0, 3)).thenReturn(0); // priority
 
 			ServiceLocator.getTimeService().getEvents().trigger("dayUpdate");
@@ -177,8 +177,8 @@ class ClimateControllerTest {
 		try (MockedStatic<MathUtils> mathUtils = mockStatic(MathUtils.class)) {
 			mathUtils.when(MathUtils::random).thenReturn(0.5f);
 			mathUtils.when(() -> MathUtils.random(0, 9)).thenReturn(7); // weatherEvent - SolarSurge
-			mathUtils.when(() -> MathUtils.random(1, 23)).thenReturn(1); // numHoursUntil
-			mathUtils.when(() -> MathUtils.random(1, 8)).thenReturn(4); // duration
+			mathUtils.when(() -> MathUtils.random(1, 20)).thenReturn(1); // numHoursUntil
+			mathUtils.when(() -> MathUtils.random(1, 4)).thenReturn(4); // duration
 			mathUtils.when(() -> MathUtils.random(0, 3)).thenReturn(0); // priority
 
 			ServiceLocator.getTimeService().getEvents().trigger("dayUpdate");
@@ -204,8 +204,8 @@ class ClimateControllerTest {
 		try (MockedStatic<MathUtils> mathUtils = mockStatic(MathUtils.class)) {
 			mathUtils.when(MathUtils::random).thenReturn(0.5f);
 			mathUtils.when(() -> MathUtils.random(0, 9)).thenReturn(9); // weatherEvent - RainStorm
-			mathUtils.when(() -> MathUtils.random(1, 23)).thenReturn(1); // numHoursUntil
-			mathUtils.when(() -> MathUtils.random(1, 8)).thenReturn(4); // duration
+			mathUtils.when(() -> MathUtils.random(1, 20)).thenReturn(1); // numHoursUntil
+			mathUtils.when(() -> MathUtils.random(1, 4)).thenReturn(4); // duration
 			mathUtils.when(() -> MathUtils.random(0, 3)).thenReturn(0); // priority
 
 			ServiceLocator.getTimeService().getEvents().trigger("dayUpdate");
@@ -223,8 +223,8 @@ class ClimateControllerTest {
 		try (MockedStatic<MathUtils> mathUtils = mockStatic(MathUtils.class)) {
 			mathUtils.when(MathUtils::random).thenReturn(0.5f);
 			mathUtils.when(() -> MathUtils.random(0, 9)).thenReturn(10); // weatherEvent - default
-			mathUtils.when(() -> MathUtils.random(1, 23)).thenReturn(1); // numHoursUntil
-			mathUtils.when(() -> MathUtils.random(1, 8)).thenReturn(4); // duration
+			mathUtils.when(() -> MathUtils.random(1, 20)).thenReturn(1); // numHoursUntil
+			mathUtils.when(() -> MathUtils.random(1, 4)).thenReturn(4); // duration
 			mathUtils.when(() -> MathUtils.random(0, 3)).thenReturn(0); // priority
 
 			ServiceLocator.getTimeService().getEvents().trigger("dayUpdate");
