@@ -20,7 +20,7 @@ import java.util.Set;
 public class ShipDisplay extends UIComponent {
 	private Window window;
 	private boolean isOpen;
-	private static final Logger logger = LoggerFactory.getLogger(ShipLightComponent.class);
+	private static final Logger logger = LoggerFactory.getLogger(ShipDisplay.class);
 
 	private boolean lightUnlocked = false;
 	private boolean sleepUnlocked = false;
@@ -126,6 +126,7 @@ public class ShipDisplay extends UIComponent {
 
 	@Override
 	public void draw(SpriteBatch batch) {
+		// Handled else where
 	}
 
 	public void toggleOpen() {
@@ -145,6 +146,7 @@ public class ShipDisplay extends UIComponent {
 		super.dispose();
 	}
 
+	@Override
 	public void write(Json json) {
 		json.writeObjectStart(this.getClass().getSimpleName());
 		json.writeValue("lightUnlocked", this.lightUnlocked);
@@ -152,6 +154,7 @@ public class ShipDisplay extends UIComponent {
 		json.writeObjectEnd();
 	}
 
+	@Override
 	public void read(Json json, JsonValue jsonValue) {
 		lightUnlocked = jsonValue.getBoolean("lightUnlocked");
 		sleepUnlocked = jsonValue.getBoolean("sleepUnlocked");

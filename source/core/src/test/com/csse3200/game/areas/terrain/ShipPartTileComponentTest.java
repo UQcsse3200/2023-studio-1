@@ -9,6 +9,7 @@ import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.services.GameTime;
+import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,7 @@ class ShipPartTileComponentTest {
         ServiceLocator.registerTimeSource(new GameTime());
         ServiceLocator.registerTimeService(new TimeService());
         ServiceLocator.registerMissionManager(new MissionManager());
+        ServiceLocator.registerResourceService(new ResourceService());
 
         ServiceLocator.registerGameArea(new SpaceGameArea(null));
 

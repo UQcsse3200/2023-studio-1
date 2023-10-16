@@ -14,7 +14,6 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.utils.math.Vector2Utils;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /** Movement controller for a physics-based entity. */

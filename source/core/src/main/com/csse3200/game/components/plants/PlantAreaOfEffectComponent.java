@@ -14,6 +14,7 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
+import com.csse3200.game.services.sound.EffectSoundFile;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +46,8 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
 
     private static int plantAoeWeatherModifier = 0;
 
+    private int numOfPlayer;
+
     /**
      * Constructor for the Area of Effect class.
      * @param radius - The initial radius of the area.
@@ -53,6 +56,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
     public PlantAreaOfEffectComponent(float radius, String effectType) {
         this.radius = radius;
         this.effectType = effectType;
+        this.numOfPlayer = 0;
     }
 
     /**
@@ -120,6 +124,13 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
 
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
         entitiesInRange.add(target);
+
+        if (target.getType() == EntityType.PLAYER) {
+            numOfPlayer += 1;
+            if (numOfPlayer > 3) {
+                numOfPlayer = 3;
+            }
+        }
     }
 
     /**
@@ -137,6 +148,13 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
 
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
         entitiesInRange.remove(target);
+
+        if (target.getType() == EntityType.PLAYER) {
+            numOfPlayer -= 1;
+            if (numOfPlayer < 0) {
+                numOfPlayer = 0;
+            }
+        }
     }
 
     public List<Entity> getEntitiesInRange() {
@@ -223,8 +241,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
         // Health effect for player and animals.
         for (Entity entityInRange : getEntitiesInRange()) {
 
-            if (    entityInRange.getType() == EntityType.PLAYER ||
-                    entityInRange.getType() == EntityType.BAT ||
+            if (    entityInRange.getType() == EntityType.BAT ||
                     entityInRange.getType() == EntityType.ASTROLOTL ||
                     entityInRange.getType() == EntityType.DRAGONFLY ||
                     entityInRange.getType() == EntityType.CHICKEN ||
@@ -232,6 +249,10 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
                     entityInRange.getType() == EntityType.COW
             ) {
                 entityInRange.getComponent(CombatStatsComponent.class).addHealth(4);
+            } else if (entityInRange.getType() == EntityType.PLAYER) {
+                if (numOfPlayer > 2) {
+                    entityInRange.getComponent(CombatStatsComponent.class).addHealth(4);
+                }
             }
         }
     }
@@ -241,16 +262,19 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
      */
     private void poisonEffect() {
         for (Entity entityInRange : getEntitiesInRange()) {
-            if (    entityInRange.getType() == EntityType.PLAYER ||
-                    entityInRange.getType() == EntityType.BAT ||
+            if (    entityInRange.getType() == EntityType.BAT ||
                     entityInRange.getType() == EntityType.ASTROLOTL ||
                     entityInRange.getType() == EntityType.DRAGONFLY ||
                     entityInRange.getType() == EntityType.CHICKEN ||
                     entityInRange.getType() == EntityType.OXYGEN_EATER ||
                     entityInRange.getType() == EntityType.COW
             ) {
+	            entityInRange.getComponent(CombatStatsComponent.class).addHealth(Math.min(-5 - plantAoeWeatherModifier, 0));
+            } else if (entityInRange.getType() == EntityType.PLAYER) {
+            if (numOfPlayer > 2) {
                 entityInRange.getComponent(CombatStatsComponent.class).addHealth(Math.min(-1 - plantAoeWeatherModifier, 0));
             }
+        }
         }
     }
 
@@ -269,7 +293,8 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
                         entityInRange.getType() == EntityType.DRAGONFLY ||
                         entityInRange.getType() == EntityType.CHICKEN ||
                         entityInRange.getType() == EntityType.OXYGEN_EATER ||
-                        entityInRange.getType() == EntityType.COW) {
+                        entityInRange.getType() == EntityType.COW ||
+                        entityInRange.getType() == EntityType.SHIP_EATER) {
 
                     // If a valid entity is in the area, tell the plant it is eating.
                     entity.getComponent(PlantComponent.class).setIsEating();
@@ -296,7 +321,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
         for (Entity entityInRange : getEntitiesInRange()) {
 
             if (entityInRange.getType() == EntityType.PLAYER) {
-                entity.getComponent(PlantComponent.class).playSound("nearby");
+                entity.getComponent(PlantComponent.class).playSound(EffectSoundFile.PLANT_NEARBY);
             }
         }
     }

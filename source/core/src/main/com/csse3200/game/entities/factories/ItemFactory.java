@@ -181,7 +181,7 @@ public class ItemFactory {
     ClueComponent clueComponent = new ClueComponent();
     return createBaseItem()
             .addComponent(new TextureRenderComponent("images/ship/clue_item.png"))
-            .addComponent(new ItemComponent("map", ItemType.CLUE_ITEM, "images/ship/clue_item.png"))
+            .addComponent(new ItemComponent("clue", ItemType.CLUE_ITEM, "images/ship/clue_item.png"))
             .addComponent(clueComponent)
             .addComponent(new CoordinatesDisplay(clueComponent));
   }
@@ -628,5 +628,13 @@ return createBaseItem()
             .addComponent(new ItemComponent("GOLDEN_STATUE", ItemType.PLACEABLE,
                     "A golden fish, the rarest of them all. A placeable collector's item.","images/golden_fish.png"))
             .addComponent(lightComponent);
+  }
+
+  public static Entity createTeleportDevice() {
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/teleporter.png"))
+            .addComponent(new ItemComponent("TeleportDevice", ItemType.TELEPORT_DEVICE,
+                    "beep boop",
+                    "images/teleporter.png"));
   }
 }

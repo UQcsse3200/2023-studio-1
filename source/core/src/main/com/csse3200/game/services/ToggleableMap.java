@@ -139,17 +139,17 @@ public class ToggleableMap extends UIComponent {
      * @return list of position around the given position
      */
     private Vector<GridPoint2> cell_around(GridPoint2 gpPos) {
-        Vector<GridPoint2> listplayerPos = new Vector<GridPoint2>();
-        listplayerPos.add(gpPos);
-        listplayerPos.add(new GridPoint2(gpPos.x +1, gpPos.y)); // right
-        //listplayerPos.add(new GridPoint2(gpPos.x -1, gpPos.y)); // left add this to get 3*3
-        listplayerPos.add(new GridPoint2(gpPos.x, gpPos.y +1)); // up
-        //listplayerPos.add(new GridPoint2(gpPos.x, gpPos.y -1)); // down add this to get 3*3
-        listplayerPos.add(new GridPoint2(gpPos.x +1, gpPos.y +1)); // right up
-        //listplayerPos.add(new GridPoint2(gpPos.x -1, gpPos.y -1)); // left down add this to get 3*3
-        //listplayerPos.add(new GridPoint2(gpPos.x +1, gpPos.y -1)); // right down add this to get 3*3
-        //listplayerPos.add(new GridPoint2(gpPos.x -1, gpPos.y +1)); // left up add this to get 3*3
-        return listplayerPos;
+        Vector<GridPoint2> listPlayerPos = new Vector<GridPoint2>();
+        listPlayerPos.add(gpPos);
+        listPlayerPos.add(new GridPoint2(gpPos.x +1, gpPos.y)); // right
+        //listPlayerPos.add(new GridPoint2(gpPos.x -1, gpPos.y)); // left add this to get 3*3
+        listPlayerPos.add(new GridPoint2(gpPos.x, gpPos.y +1)); // up
+        //listPlayerPos.add(new GridPoint2(gpPos.x, gpPos.y -1)); // down add this to get 3*3
+        listPlayerPos.add(new GridPoint2(gpPos.x +1, gpPos.y +1)); // right up
+        //listPlayerPos.add(new GridPoint2(gpPos.x -1, gpPos.y -1)); // left down add this to get 3*3
+        //listPlayerPos.add(new GridPoint2(gpPos.x +1, gpPos.y -1)); // right down add this to get 3*3
+        //listPlayerPos.add(new GridPoint2(gpPos.x -1, gpPos.y +1)); // left up add this to get 3*3
+        return listPlayerPos;
     }
     
     /**

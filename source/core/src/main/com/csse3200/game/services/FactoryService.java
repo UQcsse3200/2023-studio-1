@@ -25,7 +25,8 @@ public class FactoryService {
 			new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.FIRE_FLIES, NPCFactory::createFireFlies),
 			new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.DRAGONFLY, NPCFactory::createDragonfly),
 			new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.BAT, NPCFactory::createBat),
-			new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.SHIP_DEBRIS, ShipDebrisFactory::createShipDebris));
+			new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.SHIP_DEBRIS, ShipDebrisFactory::createShipDebris),
+			new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.SHIP_EATER, NPCFactory::createShipEater));
 
 	private static final Map<String, Function<CropTileComponent, Entity>> plantFactories = Map.of(
 			"Cosmic Cob", PlantFactory::createCosmicCob,
@@ -72,6 +73,7 @@ public class FactoryService {
 			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("LIGHT", ItemFactory::createLightItem),
 
 			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Ship Part", ItemFactory::createShipPart),
+			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("TeleportDevice", ItemFactory::createTeleportDevice),
 
 			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Fishing Rod", ItemFactory::createFishingRod),
 			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Lava Eel", ItemFactory::createLavaEel),
