@@ -25,7 +25,6 @@ public class HealthDisplay extends UIComponent{
     private Image healthFrame;
     private Image healthFill;
     private Image healthIcon;
-    private int currentHealth;
 
     /**
      * Creates reusable ui styles and adds actors to the stage.
@@ -41,7 +40,7 @@ public class HealthDisplay extends UIComponent{
         entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
         ServiceLocator.getGameArea().getPlayer().getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
         ServiceLocator.getUIService().getEvents().addListener("toggleUI", this::toggleDisplay);
-        currentHealth = ServiceLocator.getGameArea().getPlayer().getComponent(CombatStatsComponent.class).getHealth();
+        int currentHealth = ServiceLocator.getGameArea().getPlayer().getComponent(CombatStatsComponent.class).getHealth();
         updatePlayerHealthUI(currentHealth);
 
         // Initial update

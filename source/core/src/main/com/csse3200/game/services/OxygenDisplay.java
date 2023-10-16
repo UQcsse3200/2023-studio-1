@@ -83,9 +83,6 @@ public class OxygenDisplay extends UIComponent {
 		Action action2 = Actions.scaleTo(1.0f, scaling, 1.0f, Interpolation.pow2InInverse);
 
 		oxygenFill.addAction(Actions.parallel(action1, action2));
-
-		// Uncomment to add oxygen. Can also be set to remove oxygen.
-		// ServiceLocator.getPlanetOxygenService().addOxygen(250);
 	}
 
 	/**
