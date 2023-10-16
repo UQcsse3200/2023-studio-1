@@ -17,6 +17,7 @@ import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.lang.reflect.Field;
+import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -86,7 +87,6 @@ class ClimateControllerTest {
 		}
 	}
 
-	// This test has been removed as it will require updates to deal with lighting effects
 	@Test
 	void testAddedEvent1() {
 		GameArea gameArea = mock(GameArea.class);
@@ -109,7 +109,6 @@ class ClimateControllerTest {
 		}
 	}
 
-//	 These tests will require dealing with the lighting system
 	@Test
 	void testAddDailyEventCase0() {
 		assertNull(controller.getCurrentWeatherEvent());
@@ -161,7 +160,6 @@ class ClimateControllerTest {
 		assertThrows(IllegalArgumentException.class, () -> controller.addWeatherEvent(null));
 	}
 
-	// These tests will require dealing with the lighting system
 	@Test
 	void testAddInstantEvent() {
 		GameArea gameArea = mock(GameArea.class);
@@ -236,10 +234,29 @@ class ClimateControllerTest {
 	}
 
 	@Test
-	void testUpdateLightingEffect() {
+	void testUpdateLightingEffectWhenEventHasCompleted() {
 		when(gameTime.getDeltaTime()).thenReturn(0.05f);
 		controller.updateClimate();
 		verify(lightService,times(1)).setColourOffset(Color.CLEAR);
+	}
+
+	@Test
+	void testUpdateLightingEffectWhenEventIsInProgress() throws NoSuchFieldException, IllegalAccessException {
+		when(gameTime.getDeltaTime()).thenReturn(0.5f);
+
+		Field currentLightingEffectDurationField = controller.getClass().getDeclaredField("currentLightingEffectDuration");
+		Field currentLightingEffectProgressField = controller.getClass().getDeclaredField("currentLightingEffectProgress");
+		Field currentLightingEffectGradientField = controller.getClass().getDeclaredField("currentLightingEffectGradient");
+		currentLightingEffectDurationField.setAccessible(true);
+		currentLightingEffectProgressField.setAccessible(true);
+		currentLightingEffectGradientField.setAccessible(true);
+
+		currentLightingEffectDurationField.setFloat(controller, 2.0f);
+		currentLightingEffectProgressField.setFloat(controller, 1.0f);
+		currentLightingEffectGradientField.set(controller, (Function<Float, Color>) t -> Color.BLUE);
+
+		controller.updateClimate();
+		verify(lightService,times(1)).setColourOffset(Color.BLUE);
 	}
 
 }
