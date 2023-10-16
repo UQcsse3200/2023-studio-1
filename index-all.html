@@ -403,6 +403,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Performs the attack action which involves detecting the player entity if one exists and
  shooting projectiles at them.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/combat/attackpatterns/ShipEaterAttackPattern.html#attack()" class="member-name-link">attack()</a> - Method in class com.csse3200.game.components.combat.attackpatterns.<a href="com/csse3200/game/components/combat/attackpatterns/ShipEaterAttackPattern.html" title="class in com.csse3200.game.components.combat.attackpatterns">ShipEaterAttackPattern</a></dt>
+<dd>
+<div class="block">Performs the attack action, which involves determining the nearest entity, changing direction,
+ triggering attack events, and scheduling the next attack.</div>
+</dd>
 <dt><a href="com/csse3200/game/components/player/PlayerActions.events.html#ATTACK" class="member-name-link">ATTACK</a> - Enum constant in enum class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/PlayerActions.events.html" title="enum class in com.csse3200.game.components.player">PlayerActions.events</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/combat/attackpatterns/AttackPatternComponent.html#attackFrequency" class="member-name-link">attackFrequency</a> - Variable in class com.csse3200.game.components.combat.attackpatterns.<a href="com/csse3200/game/components/combat/attackpatterns/AttackPatternComponent.html" title="class in com.csse3200.game.components.combat.attackpatterns">AttackPatternComponent</a></dt>
@@ -975,6 +980,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Initialises the OxygenEaterAttackPattern component when it is created.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/combat/attackpatterns/ShipEaterAttackPattern.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.combat.attackpatterns.<a href="com/csse3200/game/components/combat/attackpatterns/ShipEaterAttackPattern.html" title="class in com.csse3200.game.components.combat.attackpatterns">ShipEaterAttackPattern</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/combat/CombatStatsComponent.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.combat.<a href="com/csse3200/game/components/combat/CombatStatsComponent.html" title="class in com.csse3200.game.components.combat">CombatStatsComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/combat/ProjectileAnimationController.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.combat.<a href="com/csse3200/game/components/combat/ProjectileAnimationController.html" title="class in com.csse3200.game.components.combat">ProjectileAnimationController</a></dt>
@@ -1050,6 +1057,10 @@ loadScripts(document, 'script');</script>
 <div class="block">Initializes the HostileAnimationController when it is created.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/npc/MultiDropComponent.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/MultiDropComponent.html" title="class in com.csse3200.game.components.npc">MultiDropComponent</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/npc/ShipEaterAnimationController.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/ShipEaterAnimationController.html" title="class in com.csse3200.game.components.npc">ShipEaterAnimationController</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/npc/ShipEaterScareComponent.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/ShipEaterScareComponent.html" title="class in com.csse3200.game.components.npc">ShipEaterScareComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/npc/TamableComponent.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/TamableComponent.html" title="class in com.csse3200.game.components.npc">TamableComponent</a></dt>
 <dd>
@@ -1210,6 +1221,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Retrieves the necessary components and initializes the movement task.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/tasks/MoveToShipTask.html#create(com.csse3200.game.ai.tasks.TaskRunner)" class="member-name-link">create(TaskRunner)</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/MoveToShipTask.html" title="class in com.csse3200.game.components.tasks">MoveToShipTask</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/missions/quests/QuestFactory.html#createActIIIMainQuest()" class="member-name-link">createActIIIMainQuest()</a> - Static method in class com.csse3200.game.missions.quests.<a href="com/csse3200/game/missions/quests/QuestFactory.html" title="class in com.csse3200.game.missions.quests">QuestFactory</a></dt>
 <dd>
 <div class="block">Creates the Act III <a href="com/csse3200/game/missions/quests/MainQuest.html" title="class in com.csse3200.game.missions.quests"><code>MainQuest</code></a></div>
@@ -1607,6 +1620,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/entities/factories/ShipDebrisFactory.html#createShipDebris()" class="member-name-link">createShipDebris()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ShipDebrisFactory.html" title="class in com.csse3200.game.entities.factories">ShipDebrisFactory</a></dt>
 <dd>
 <div class="block">Creates a Ship Debris entity.</div>
+</dd>
+<dt><a href="com/csse3200/game/entities/factories/NPCFactory.html#createShipEater()" class="member-name-link">createShipEater()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/NPCFactory.html" title="class in com.csse3200.game.entities.factories">NPCFactory</a></dt>
+<dd>
+<div class="block">Creates a Ship Eater entity.</div>
 </dd>
 <dt><a href="com/csse3200/game/entities/factories/ItemFactory.html#createShipPart()" class="member-name-link">createShipPart()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ItemFactory.html" title="class in com.csse3200.game.entities.factories">ItemFactory</a></dt>
 <dd>
@@ -3358,6 +3375,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Gets the priority level of the move to plant task.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/tasks/MoveToShipTask.html#getPriority()" class="member-name-link">getPriority()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/MoveToShipTask.html" title="class in com.csse3200.game.components.tasks">MoveToShipTask</a></dt>
+<dd>
+<div class="block">Gets the priority level of the move to ship task.</div>
+</dd>
 <dt><a href="com/csse3200/game/components/tasks/WanderTask.html#getPriority()" class="member-name-link">getPriority()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/WanderTask.html" title="class in com.csse3200.game.components.tasks">WanderTask</a></dt>
 <dd>
 <div class="block">Gets the priority level of the wander task.</div>
@@ -3970,6 +3991,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Entity's interaction detector</div>
 </dd>
+<dt><a href="com/csse3200/game/components/npc/ShipEaterScareComponent.html#interactionDetector" class="member-name-link">interactionDetector</a> - Variable in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/ShipEaterScareComponent.html" title="class in com.csse3200.game.components.npc">ShipEaterScareComponent</a></dt>
+<dd>
+<div class="block">Entity's interaction detector</div>
+</dd>
 <dt><a href="com/csse3200/game/components/InteractionDetector.html" class="type-name-link" title="class in com.csse3200.game.components">InteractionDetector</a> - Class in <a href="com/csse3200/game/components/package-summary.html">com.csse3200.game.components</a></dt>
 <dd>
 <div class="block">Represents a component that handles interaction detection with entities
@@ -4151,6 +4176,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Checks if the inventory is full.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/npc/ShipEaterScareComponent.html#isHiding" class="member-name-link">isHiding</a> - Variable in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/ShipEaterScareComponent.html" title="class in com.csse3200.game.components.npc">ShipEaterScareComponent</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/GdxGame.html#isLoadOnStart()" class="member-name-link">isLoadOnStart()</a> - Method in class com.csse3200.game.<a href="com/csse3200/game/GdxGame.html" title="class in com.csse3200.game">GdxGame</a></dt>
 <dd>
 <div class="block">isLoadOnStart lets the game know if the player wants to load up a saved game
@@ -4803,6 +4830,12 @@ loadScripts(document, 'script');</script>
 <div class="block">The entity finds a living plant and moves towards it</div>
 </dd>
 <dt><a href="com/csse3200/game/components/tasks/MoveToPlantTask.html#%3Cinit%3E(int,com.badlogic.gdx.math.Vector2,float)" class="member-name-link">MoveToPlantTask(int, Vector2, float)</a> - Constructor for class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/MoveToPlantTask.html" title="class in com.csse3200.game.components.tasks">MoveToPlantTask</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/tasks/MoveToShipTask.html" class="type-name-link" title="class in com.csse3200.game.components.tasks">MoveToShipTask</a> - Class in <a href="com/csse3200/game/components/tasks/package-summary.html">com.csse3200.game.components.tasks</a></dt>
+<dd>
+<div class="block">The entity finds a ship and moves towards it.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/tasks/MoveToShipTask.html#%3Cinit%3E(int,com.badlogic.gdx.math.Vector2,float)" class="member-name-link">MoveToShipTask(int, Vector2, float)</a> - Constructor for class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/MoveToShipTask.html" title="class in com.csse3200.game.components.tasks">MoveToShipTask</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/npc/MultiDropComponent.html" class="type-name-link" title="class in com.csse3200.game.components.npc">MultiDropComponent</a> - Class in <a href="com/csse3200/game/components/npc/package-summary.html">com.csse3200.game.components.npc</a></dt>
 <dd>
@@ -6585,6 +6618,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Set the radius of the area.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/ship/ShipDebrisComponent.html#setRandomInstance(java.util.Random)" class="member-name-link">setRandomInstance(Random)</a> - Method in class com.csse3200.game.components.ship.<a href="com/csse3200/game/components/ship/ShipDebrisComponent.html" title="class in com.csse3200.game.components.ship">ShipDebrisComponent</a></dt>
+<dd>
+<div class="block">Sets the random instance to use.</div>
+</dd>
 <dt><a href="com/csse3200/game/physics/components/ColliderComponent.html#setRestitution(float)" class="member-name-link">setRestitution(float)</a> - Method in class com.csse3200.game.physics.components.<a href="com/csse3200/game/physics/components/ColliderComponent.html" title="class in com.csse3200.game.physics.components">ColliderComponent</a></dt>
 <dd>
 <div class="block">Set restitution</div>
@@ -6767,6 +6804,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/HungerEntityType.html#SHIP_DEBRIS" class="member-name-link">SHIP_DEBRIS</a> - Enum constant in enum class com.csse3200.game.entities.<a href="com/csse3200/game/entities/HungerEntityType.html" title="enum class in com.csse3200.game.entities">HungerEntityType</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/entities/EntityType.html#SHIP_EATER" class="member-name-link">SHIP_EATER</a> - Enum constant in enum class com.csse3200.game.entities.<a href="com/csse3200/game/entities/EntityType.html" title="enum class in com.csse3200.game.entities">EntityType</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/items/ItemType.html#SHIP_PART" class="member-name-link">SHIP_PART</a> - Enum constant in enum class com.csse3200.game.components.items.<a href="com/csse3200/game/components/items/ItemType.html" title="enum class in com.csse3200.game.components.items">ItemType</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/missions/MissionManager.MissionEvent.html#SHIP_PART_ADDED" class="member-name-link">SHIP_PART_ADDED</a> - Enum constant in enum class com.csse3200.game.missions.<a href="com/csse3200/game/missions/MissionManager.MissionEvent.html" title="enum class in com.csse3200.game.missions">MissionManager.MissionEvent</a></dt>
@@ -6798,6 +6837,20 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/ship/ShipDisplay.html" class="type-name-link" title="class in com.csse3200.game.components.ship">ShipDisplay</a> - Class in <a href="com/csse3200/game/components/ship/package-summary.html">com.csse3200.game.components.ship</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/ship/ShipDisplay.html#%3Cinit%3E()" class="member-name-link">ShipDisplay()</a> - Constructor for class com.csse3200.game.components.ship.<a href="com/csse3200/game/components/ship/ShipDisplay.html" title="class in com.csse3200.game.components.ship">ShipDisplay</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/npc/ShipEaterAnimationController.html" class="type-name-link" title="class in com.csse3200.game.components.npc">ShipEaterAnimationController</a> - Class in <a href="com/csse3200/game/components/npc/package-summary.html">com.csse3200.game.components.npc</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/npc/ShipEaterAnimationController.html#%3Cinit%3E()" class="member-name-link">ShipEaterAnimationController()</a> - Constructor for class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/ShipEaterAnimationController.html" title="class in com.csse3200.game.components.npc">ShipEaterAnimationController</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/combat/attackpatterns/ShipEaterAttackPattern.html" class="type-name-link" title="class in com.csse3200.game.components.combat.attackpatterns">ShipEaterAttackPattern</a> - Class in <a href="com/csse3200/game/components/combat/attackpatterns/package-summary.html">com.csse3200.game.components.combat.attackpatterns</a></dt>
+<dd>
+<div class="block">The ShipEaterAttackPattern class defines the attack behavior of a ShipEater entity in the game.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/combat/attackpatterns/ShipEaterAttackPattern.html#%3Cinit%3E(float)" class="member-name-link">ShipEaterAttackPattern(float)</a> - Constructor for class com.csse3200.game.components.combat.attackpatterns.<a href="com/csse3200/game/components/combat/attackpatterns/ShipEaterAttackPattern.html" title="class in com.csse3200.game.components.combat.attackpatterns">ShipEaterAttackPattern</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/npc/ShipEaterScareComponent.html" class="type-name-link" title="class in com.csse3200.game.components.npc">ShipEaterScareComponent</a> - Class in <a href="com/csse3200/game/components/npc/package-summary.html">com.csse3200.game.components.npc</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/npc/ShipEaterScareComponent.html#%3Cinit%3E()" class="member-name-link">ShipEaterScareComponent()</a> - Constructor for class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/ShipEaterScareComponent.html" title="class in com.csse3200.game.components.npc">ShipEaterScareComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/factories/ShipFactory.html" class="type-name-link" title="class in com.csse3200.game.entities.factories">ShipFactory</a> - Class in <a href="com/csse3200/game/entities/factories/package-summary.html">com.csse3200.game.entities.factories</a></dt>
 <dd>&nbsp;</dd>
@@ -6999,6 +7052,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Starts the move to plant task by initialising the target plant and triggering the movement
  task.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/tasks/MoveToShipTask.html#start()" class="member-name-link">start()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/MoveToShipTask.html" title="class in com.csse3200.game.components.tasks">MoveToShipTask</a></dt>
+<dd>
+<div class="block">Starts the move to ship task by initialising the target ship and triggering the movement
+ task.</div>
+</dd>
 <dt><a href="com/csse3200/game/components/tasks/PanicTask.html#start()" class="member-name-link">start()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/PanicTask.html" title="class in com.csse3200.game.components.tasks">PanicTask</a></dt>
 <dd>
 <div class="block">Starts the panic task by initializing the movement task and triggering the "runStart" event.</div>
@@ -7018,6 +7076,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/rendering/AnimationRenderComponent.html#startAnimation(java.lang.String)" class="member-name-link">startAnimation(String)</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/AnimationRenderComponent.html" title="class in com.csse3200.game.rendering">AnimationRenderComponent</a></dt>
 <dd>
 <div class="block">Start playback of an animation.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/combat/attackpatterns/ShipEaterAttackPattern.html#startAttack()" class="member-name-link">startAttack()</a> - Method in class com.csse3200.game.components.combat.attackpatterns.<a href="com/csse3200/game/components/combat/attackpatterns/ShipEaterAttackPattern.html" title="class in com.csse3200.game.components.combat.attackpatterns">ShipEaterAttackPattern</a></dt>
+<dd>
+<div class="block">Initiates an attack loop.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/combat/attackpatterns/AttackPatternComponent.html#startAttack(com.csse3200.game.entities.Entity)" class="member-name-link">startAttack(Entity)</a> - Method in class com.csse3200.game.components.combat.attackpatterns.<a href="com/csse3200/game/components/combat/attackpatterns/AttackPatternComponent.html" title="class in com.csse3200.game.components.combat.attackpatterns">AttackPatternComponent</a></dt>
 <dd>
@@ -7093,6 +7155,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/tasks/MoveToPlantTask.html#stop()" class="member-name-link">stop()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/MoveToPlantTask.html" title="class in com.csse3200.game.components.tasks">MoveToPlantTask</a></dt>
 <dd>
 <div class="block">Stops the move to plant task and the associated movement task.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/tasks/MoveToShipTask.html#stop()" class="member-name-link">stop()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/MoveToShipTask.html" title="class in com.csse3200.game.components.tasks">MoveToShipTask</a></dt>
+<dd>
+<div class="block">Stops the move to ship task and the associated movement task.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/tasks/PanicTask.html#stop()" class="member-name-link">stop()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/PanicTask.html" title="class in com.csse3200.game.components.tasks">PanicTask</a></dt>
 <dd>
@@ -7635,6 +7701,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Updates the camera's position based on the tracked entity's position.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/combat/attackpatterns/ShipEaterAttackPattern.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.combat.attackpatterns.<a href="com/csse3200/game/components/combat/attackpatterns/ShipEaterAttackPattern.html" title="class in com.csse3200.game.components.combat.attackpatterns">ShipEaterAttackPattern</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/combat/ProjectileComponent.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.combat.<a href="com/csse3200/game/components/combat/ProjectileComponent.html" title="class in com.csse3200.game.components.combat">ProjectileComponent</a></dt>
 <dd>
 <div class="block">Updates the projectile's behavior, destroying it once its impact animation is finished.</div>
@@ -7663,6 +7731,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Trigger animation when active animation is finished</div>
 </dd>
+<dt><a href="com/csse3200/game/components/npc/ShipEaterAnimationController.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/ShipEaterAnimationController.html" title="class in com.csse3200.game.components.npc">ShipEaterAnimationController</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/placeables/DialogueComponent.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.placeables.<a href="com/csse3200/game/components/placeables/DialogueComponent.html" title="class in com.csse3200.game.components.placeables">DialogueComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/placeables/LightController.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.placeables.<a href="com/csse3200/game/components/placeables/LightController.html" title="class in com.csse3200.game.components.placeables">LightController</a></dt>
@@ -7696,6 +7766,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/tasks/MoveToPlantTask.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/MoveToPlantTask.html" title="class in com.csse3200.game.components.tasks">MoveToPlantTask</a></dt>
 <dd>
 <div class="block">Updates the move to plant task by checking if the current target is dead.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/tasks/MoveToShipTask.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/MoveToShipTask.html" title="class in com.csse3200.game.components.tasks">MoveToShipTask</a></dt>
+<dd>
+<div class="block">Stop moving to the ship if already there.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/tasks/PanicTask.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/PanicTask.html" title="class in com.csse3200.game.components.tasks">PanicTask</a></dt>
 <dd>
