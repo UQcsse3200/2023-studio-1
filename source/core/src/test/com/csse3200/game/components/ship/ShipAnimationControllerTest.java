@@ -57,12 +57,10 @@ class ShipAnimationControllerTest {
 				// (animationEvent, progress, expectedAnimationName)
 				arguments(ShipFactory.events.PROGRESS_UPDATED.name(), -10, "default"),
 				arguments(ShipFactory.events.PROGRESS_UPDATED.name(), 0, "ship_0"),
-				arguments(ShipFactory.events.PROGRESS_UPDATED.name(), 4, "ship_1"),
-				arguments(ShipFactory.events.PROGRESS_UPDATED.name(), 6, "ship_2"),
-				arguments(ShipFactory.events.PROGRESS_UPDATED.name(), 10, "ship_3"),
-				arguments(ShipFactory.events.PROGRESS_UPDATED.name(), 12, "ship_3"),
-				arguments(ShipFactory.events.PROGRESS_UPDATED.name(), 16, "ship_4"),
-				arguments(ShipFactory.events.PROGRESS_UPDATED.name(), 20, "ship_5"),
-				arguments(ShipFactory.events.PROGRESS_UPDATED.name(), 30, "ship_5"));
+				arguments(ShipFactory.events.PROGRESS_UPDATED.name(), 2, "ship_1"),
+				arguments(ShipFactory.events.PROGRESS_UPDATED.name(), 4, "ship_2"),
+				arguments(ShipFactory.events.PROGRESS_UPDATED.name(), 6, "ship_3"),
+				arguments(ShipFactory.events.PROGRESS_UPDATED.name(), 8, "ship_4"),
+				arguments(ShipFactory.events.PROGRESS_UPDATED.name(), 10, "ship_5"));
 	}
 }

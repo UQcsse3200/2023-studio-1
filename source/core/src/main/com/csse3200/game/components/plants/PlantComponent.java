@@ -600,6 +600,10 @@ public class PlantComponent extends Component {
 
         if (newGrowthStage >= 1 && newGrowthStage <= GrowthStage.values().length) {
             this.growthStages = GrowthStage.values()[newGrowthStage - 1];
+
+            if (getGrowthStage().getValue() <= GrowthStage.ADULT.getValue()) {
+                playSound(EffectSoundFile.PLANT_CLICK);
+            }
         } else {
             throw new IllegalArgumentException("Invalid growth stage value.");
         }

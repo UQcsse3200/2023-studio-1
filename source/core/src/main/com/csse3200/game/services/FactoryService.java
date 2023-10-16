@@ -17,6 +17,10 @@ import com.csse3200.game.missions.quests.Quest;
 import com.csse3200.game.missions.quests.QuestFactory;
 
 public class FactoryService {
+    private FactoryService () {
+        throw new IllegalStateException("Util class");
+    }
+
     private static final Map<EntityType, Supplier<Entity>> npcFactories = Map.ofEntries(
             new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.CHICKEN, NPCFactory::createChicken),
             new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.COW, NPCFactory::createCow),
@@ -66,7 +70,8 @@ public class FactoryService {
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Fishing Rod", ItemFactory::createFishingRod),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Lava Eel", ItemFactory::createLavaEel),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Salmon", ItemFactory::createSalmon),
-            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("map", ItemFactory::createMapItem),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("clue", ItemFactory::createClueItem),
+            new AbstractMap.SimpleEntry<String, Supplier<Entity>>("ship part", ItemFactory::createShipPart),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Netty", ItemFactory::createNetty),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Yak3", ItemFactory::createYak3),
             new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Lola", ItemFactory::createLola),
@@ -111,6 +116,9 @@ public class FactoryService {
             new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.HABER_HOBBYIST_QUEST_NAME, QuestFactory::createHaberHobbyist),
             new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.FERTILISER_FANATIC_QUEST_NAME, QuestFactory::createFertiliserFanatic),
             new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.FISHING_QUEST, QuestFactory::createFishingQuest),
+            new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.ANIMAL_REPEAT_QUEST, QuestFactory::createRecursiveAnimalQuest),
+            new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.PLANT_REPEAT_QUEST, QuestFactory::createRecursivePlantQuest),
+            new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.WATER_REPEAT_QUEST, QuestFactory::createRecursiveWaterQuest),
             new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.TRACTOR_GO_BRRRRRR, QuestFactory::createTractorQuest));
 
     public static Map<String, Function<CropTileComponent, Entity>> getPlantFactories() {

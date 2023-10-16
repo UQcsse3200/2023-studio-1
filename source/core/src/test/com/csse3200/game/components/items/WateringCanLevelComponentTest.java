@@ -1,5 +1,7 @@
 package com.csse3200.game.components.items;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
@@ -55,5 +57,21 @@ class WateringCanLevelComponentTest {
         wateringCan.setCurrentLevel(5);
         wateringCan.incrementLevel(-10);
         assertEquals(0, wateringCan.getCurrentLevel());
+    }
+
+    @Test
+    void empty(){
+        WateringCanLevelComponent wateringCan = new WateringCanLevelComponent();
+        wateringCan.empty();
+        assertTrue(wateringCan.isEmpty());
+    }
+
+    @Test
+    void fillToMax(){
+        WateringCanLevelComponent wateringCan = new WateringCanLevelComponent();
+        wateringCan.empty();
+        assertFalse(wateringCan.isFull());
+        wateringCan.fillToMax();
+        assertTrue(wateringCan.isFull());
     }
 }

@@ -25,6 +25,9 @@ public class ItemSlot extends Stack {
 
 	private Label label;
 	private Stack draggable;
+	static int i;
+	private int cur = 0;
+
 
 	/**
 	 * Construct an itemSlot with a texture, count and selected state
@@ -120,13 +123,17 @@ public class ItemSlot extends Stack {
 
 	@Override
 	public String toString() {
-		return super.toString();
+		return super.toString()+cur;
 	}
 
 	/**
 	 * Creates the itemSlot
 	 */
 	private void createItemSlot() {
+		if (i <= 0) {
+			i = 0;
+		}
+		cur = i++;
 		draggable = new Stack();
 
 		//Add the selection background if necessary

@@ -11,6 +11,8 @@ import static org.mockito.Mockito.when;
 
 import com.csse3200.game.services.TimeService;
 import com.csse3200.game.services.plants.PlantInfoService;
+import com.csse3200.game.services.sound.EffectsMusicService;
+import com.csse3200.game.services.sound.SoundService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,9 +36,10 @@ class PlantComponentTest {
     DynamicTextureRenderComponent mockTextureComponent;
     ResourceService mockResourceService;
     Sound mockSound;
-
     PlantAreaOfEffectComponent mockPlantAreaOfEffect;
     PlantInfoService mockPlantInfoService;
+    SoundService mockSoundService;
+
 
     int health = 100;
     String name = "testPlant";
@@ -51,6 +54,10 @@ class PlantComponentTest {
     void beforeEach() {
         ServiceLocator.registerTimeService(mock(TimeService.class));
         when(ServiceLocator.getTimeService().getMinute()).thenReturn(20);
+        mockSoundService = mock(SoundService.class);
+        ServiceLocator.registerSoundService(mockSoundService);
+
+        when(mockSoundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
 
         mockCropTile = mock(CropTileComponent.class);
         mockEntity = mock(Entity.class);

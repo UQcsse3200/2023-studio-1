@@ -32,8 +32,8 @@ public class PlayerHighlightComponent extends Component {
      */
     @Override
     public void create() {
-        entity.getEvents().addListener("enterTractor", this::mute);
-        entity.getEvents().addListener("exitTractor", this::unMute);
+        entity.getEvents().addListener(PlayerActions.events.ENTER_TRACTOR.name(), this::mute);
+        entity.getEvents().addListener(PlayerActions.events.EXIT_TRACTOR.name(), this::unMute);
         currentTexture = entity.getComponent(DynamicTextureRenderComponent.class);
     }
 
