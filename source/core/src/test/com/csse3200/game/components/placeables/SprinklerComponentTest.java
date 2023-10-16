@@ -24,12 +24,15 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(GameExtension.class)
 public class SprinklerComponentTest {
-    private static Entity s1;
     private static Entity p1;
-    private static final Vector2 s1_pos = new Vector2(2, 2);
-    private static final Vector2 p1_pos = new Vector2(3, 2);
-    private static TerrainTile sTile;  // tile where sprinkler is placed
-    private static TerrainTile pTile;  // tile where pump is placed
+    private static Entity s1;
+    private static Entity s2;
+    private static final Vector2 p1_pos = new Vector2(2, 2);
+    private static final Vector2 s1_pos = new Vector2(3, 2);
+    private static final Vector2 s2_pos = new Vector2(4, 2);
+    private static TerrainTile p1Tile;  // tile where pump is placed
+    private static TerrainTile s1Tile;  // tile where sprinkler is placed
+    private static TerrainTile s2Tile;  // tile where sprinkler is placed
     private static GameArea gameArea;
     private static GameMap gameMap;
     private static TimeService timeService;
@@ -47,43 +50,52 @@ public class SprinklerComponentTest {
 
         // Create tiles for test area
         /* We get a test area that looks like this:
-         *   x x x x x x
-         *   x x x x x x
-         *   x x S P x x
-         *   x x x x x x
-         *   x x x x x x
-         * with: x = empty tiles, S = sprinkler, P = pump */
-        sTile = new TerrainTile(null, TerrainTile.TerrainCategory.DIRT);
-        pTile = new TerrainTile(null, TerrainTile.TerrainCategory.DIRT);
+         *   x x x x x x x
+         *   x x x x x x x
+         *   x x P S S x x
+         *   x x x x x x x
+         *   x x x x x x x
+         * with: x = empty tiles, S = will contain sprinkler, P = will contain pump */
+        p1Tile = new TerrainTile(null, TerrainTile.TerrainCategory.DIRT);
+        s1Tile = new TerrainTile(null, TerrainTile.TerrainCategory.DIRT);
+        s2Tile = new TerrainTile(null, TerrainTile.TerrainCategory.DIRT);
         for (int x = 0; x <= 6; x++) {
-            for (int y = 0; y <= 5; y++) {
+            for (int y = 0; y <= 4; y++) {
                 Vector2 pos = new Vector2(x, y);
-                if (pos.equals(s1_pos)) {
-                    when(gameMap.getTile(pos)).thenReturn(sTile);
-                } else if (pos.equals(p1_pos)) {
-                    when(gameMap.getTile(pos)).thenReturn(pTile);
+                if (pos.equals(p1_pos)) {
+                    when(gameMap.getTile(pos)).thenReturn(p1Tile);
+                } else if (pos.equals(s1_pos)) {
+                    when(gameMap.getTile(pos)).thenReturn(s1Tile);
+                } else if (pos.equals(s2_pos)) {
+                    when(gameMap.getTile(pos)).thenReturn(s2Tile);
                 } else {
-                    when(gameMap.getTile(pos)).thenReturn(
-                            new TerrainTile(null, TerrainTile.TerrainCategory.DIRT));
+                    when(gameMap.getTile(pos)).thenReturn(new TerrainTile(null, TerrainTile.TerrainCategory.DIRT));
                 }
             }
         }
 
         // create sprinkler and pump entities.
         DynamicTextureRenderComponent dtrc = mock(DynamicTextureRenderComponent.class);
-        s1 = new Entity(EntityType.SPRINKLER)
-                .addComponent(new SprinklerComponent())
-                .addComponent(dtrc);
 
         p1 = new Entity(EntityType.PUMP)
                 .addComponent(new SprinklerComponent())
                 .addComponent(dtrc);
 
+        s1 = new Entity(EntityType.SPRINKLER)
+                .addComponent(new SprinklerComponent())
+                .addComponent(dtrc);
+
+        s2 = new Entity(EntityType.SPRINKLER)
+                .addComponent(new SprinklerComponent())
+                .addComponent(dtrc);
+
         // before each test, ensure components are not null
-        assertNotNull(s1.getComponent(SprinklerComponent.class));
         assertNotNull(p1.getComponent(SprinklerComponent.class));
-        assertNotNull(s1.getComponent(DynamicTextureRenderComponent.class));
+        assertNotNull(s1.getComponent(SprinklerComponent.class));
+        assertNotNull(s2.getComponent(SprinklerComponent.class));
         assertNotNull(p1.getComponent(DynamicTextureRenderComponent.class));
+        assertNotNull(s1.getComponent(DynamicTextureRenderComponent.class));
+        assertNotNull(s2.getComponent(DynamicTextureRenderComponent.class));
 
         // set p1 as a pump
         p1.getComponent(SprinklerComponent.class).setPump();
@@ -103,7 +115,7 @@ public class SprinklerComponentTest {
 
     @Test
     public void sprinklerNotPowered() {
-        sTile.setOccupant(s1);
+        s1Tile.setOccupant(s1);
         s1.setPosition(s1_pos);
         s1.create();
         assertFalse(s1.getComponent(SprinklerComponent.class).getPowered());
@@ -112,7 +124,7 @@ public class SprinklerComponentTest {
     @Test
     public void pumpIsPowered() {
         // a pump should be powered by default
-        pTile.setOccupant(p1);
+        p1Tile.setOccupant(p1);
         p1.setPosition(p1_pos);
         p1.create();
         assertTrue(p1.getComponent(SprinklerComponent.class).getPowered());
@@ -121,8 +133,8 @@ public class SprinklerComponentTest {
     @Test
     public void pumpPowersSprinkler() {
         // place a pump and sprinkler next to each other, the pump should power the sprinkler.
-        pTile.setOccupant(p1);
-        sTile.setOccupant(s1);
+        p1Tile.setOccupant(p1);
+        s1Tile.setOccupant(s1);
         p1.setPosition(p1_pos);
         s1.setPosition(s1_pos);
         p1.create();
@@ -133,8 +145,8 @@ public class SprinklerComponentTest {
     @Test
     public void sprinklerLosesPower() {
         // remove a pump from a sprinklers vicinity and check it loses power.
-        pTile.setOccupant(p1);
-        sTile.setOccupant(s1);
+        p1Tile.setOccupant(p1);
+        s1Tile.setOccupant(s1);
         p1.setPosition(p1_pos);
         s1.setPosition(s1_pos);
         p1.create();
@@ -142,13 +154,49 @@ public class SprinklerComponentTest {
         assertTrue(s1.getComponent(SprinklerComponent.class).getPowered());
         /* this doesn't remove p1 from the ground, because we don't need to -
             it just tells the adjacent sprinkler it was removed. */
-        p1.getEvents().trigger("destroyConnections");
+        p1.getEvents().trigger("onDestroy");
         assertFalse(s1.getComponent(SprinklerComponent.class).getPowered());
     }
 
     @Test
+    public void sprinklerTransfersPower() {
+        // place a sprinkler next to a powered sprinkler,
+        // the powered sprinkler should power the newly placed sprinkler
+        p1Tile.setOccupant(p1);
+        s1Tile.setOccupant(s1);
+        s2Tile.setOccupant(s2);
+        p1.setPosition(p1_pos);
+        s1.setPosition(s1_pos);
+        s2.setPosition(s2_pos);
+        p1.create();
+        s1.create();
+        s2.create();
+        assertTrue(s1.getComponent(SprinklerComponent.class).getPowered());
+    }
+
+    @Test
+    public void sprinklerStopsTransferPower() {
+        // remove a sprinkler that is providing power to an adjacent sprinkler,
+        // assert the adjacent sprinkler loses power
+        p1Tile.setOccupant(p1);
+        s1Tile.setOccupant(s1);
+        s2Tile.setOccupant(s2);
+        p1.setPosition(p1_pos);
+        s1.setPosition(s1_pos);
+        s2.setPosition(s2_pos);
+        p1.create();
+        s1.create();
+        s2.create();
+        assertTrue(s1.getComponent(SprinklerComponent.class).getPowered());
+        /* this doesn't remove s1 from the ground, because we don't need to -
+            it just tells the adjacent sprinkler it was removed. */
+        s1.getEvents().trigger("onDestroy");
+        assertFalse(s2.getComponent(SprinklerComponent.class).getPowered());
+    }
+
+    @Test
     public void sprinklerWatersAOE() {
-        sTile.setOccupant(s1);
+        s1Tile.setOccupant(s1);
         s1.setPosition(s1_pos);
         s1.create();
         // set the sprinkler to powered, so it can sprinkle
