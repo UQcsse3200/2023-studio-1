@@ -298,7 +298,7 @@ class ClimateControllerTest {
 	}
 
 	@Test
-	void testSetValues() {
+	void testSetValuesAcidShower() {
 		GameArea gameArea = mock(GameArea.class);
 		when(gameArea.getClimateController()).thenReturn(controller);
 		ServiceLocator.registerGameArea(gameArea);
@@ -324,9 +324,121 @@ class ClimateControllerTest {
 		assertNull(controller.getCurrentWeatherEvent());
 
 		ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+		ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
 		assertTrue(controller.getCurrentWeatherEvent() instanceof AcidShowerEvent);
 
 		AcidShowerEvent currentEvent = (AcidShowerEvent) controller.getCurrentWeatherEvent();
+		assertEquals(0, currentEvent.getNumHoursUntil());
+		assertEquals(2, currentEvent.getDuration());
+		assertEquals(1, currentEvent.getPriority());
+		assertEquals(1.5f, currentEvent.getSeverity(), 0.001f);
+	}
+
+	@Test
+	void testSetValuesRainStorm() {
+		GameArea gameArea = mock(GameArea.class);
+		when(gameArea.getClimateController()).thenReturn(controller);
+		ServiceLocator.registerGameArea(gameArea);
+
+		SoundService soundService = mock(SoundService.class);
+		when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
+		ServiceLocator.registerSoundService(soundService);
+
+		JsonValue jsonData = new JsonValue(JsonValue.ValueType.object);
+		JsonValue events = new JsonValue(JsonValue.ValueType.object);
+		JsonValue event = new JsonValue(JsonValue.ValueType.object);
+		event.addChild("name", new JsonValue("RainStormEvent"));
+		event.addChild("hoursUntil", new JsonValue(2));
+		event.addChild("duration", new JsonValue(1));
+		event.addChild("priority", new JsonValue(2));
+		event.addChild("severity", new JsonValue(1.0f));
+		events.addChild("Event", event);
+		jsonData.addChild("Events", events);
+
+		assertNull(controller.getCurrentWeatherEvent());
+
+		controller.setValues(jsonData);
+		assertNull(controller.getCurrentWeatherEvent());
+
+		ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+		ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+		ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+		assertTrue(controller.getCurrentWeatherEvent() instanceof RainStormEvent);
+
+		RainStormEvent currentEvent = (RainStormEvent) controller.getCurrentWeatherEvent();
+		assertEquals(0, currentEvent.getNumHoursUntil());
+		assertEquals(1, currentEvent.getDuration());
+		assertEquals(2, currentEvent.getPriority());
+		assertEquals(1.0f, currentEvent.getSeverity(), 0.001f);
+	}
+
+	@Test
+	void testSetValuesSolarSurge() {
+		GameArea gameArea = mock(GameArea.class);
+		when(gameArea.getClimateController()).thenReturn(controller);
+		ServiceLocator.registerGameArea(gameArea);
+
+		SoundService soundService = mock(SoundService.class);
+		when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
+		ServiceLocator.registerSoundService(soundService);
+
+		JsonValue jsonData = new JsonValue(JsonValue.ValueType.object);
+		JsonValue events = new JsonValue(JsonValue.ValueType.object);
+		JsonValue event = new JsonValue(JsonValue.ValueType.object);
+		event.addChild("name", new JsonValue("SolarSurgeEvent"));
+		event.addChild("hoursUntil", new JsonValue(1));
+		event.addChild("duration", new JsonValue(3));
+		event.addChild("priority", new JsonValue(0));
+		event.addChild("severity", new JsonValue(0.5f));
+		events.addChild("Event", event);
+		jsonData.addChild("Events", events);
+
+		assertNull(controller.getCurrentWeatherEvent());
+
+		controller.setValues(jsonData);
+		assertNull(controller.getCurrentWeatherEvent());
+
+		ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+		ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+		assertTrue(controller.getCurrentWeatherEvent() instanceof SolarSurgeEvent);
+
+		SolarSurgeEvent currentEvent = (SolarSurgeEvent) controller.getCurrentWeatherEvent();
+		assertEquals(0, currentEvent.getNumHoursUntil());
+		assertEquals(3, currentEvent.getDuration());
+		assertEquals(0, currentEvent.getPriority());
+		assertEquals(0.5f, currentEvent.getSeverity(), 0.001f);
+	}
+
+	@Test
+	void testSetValuesForActiveWeatherEventBlizzard() {
+		GameArea gameArea = mock(GameArea.class);
+		when(gameArea.getClimateController()).thenReturn(controller);
+		ServiceLocator.registerGameArea(gameArea);
+
+		SoundService soundService = mock(SoundService.class);
+		when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
+		ServiceLocator.registerSoundService(soundService);
+
+		JsonValue jsonData = new JsonValue(JsonValue.ValueType.object);
+		JsonValue events = new JsonValue(JsonValue.ValueType.object);
+		JsonValue event = new JsonValue(JsonValue.ValueType.object);
+		event.addChild("name", new JsonValue("BlizzardEvent"));
+		event.addChild("hoursUntil", new JsonValue(0));
+		event.addChild("duration", new JsonValue(2));
+		event.addChild("priority", new JsonValue(1));
+		event.addChild("severity", new JsonValue(1.5f));
+		events.addChild("Event", event);
+		jsonData.addChild("Events", events);
+
+		assertNull(controller.getCurrentWeatherEvent());
+
+		controller.setValues(jsonData);
+		assertNotNull(controller.getCurrentWeatherEvent());
+
+		ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+		assertTrue(controller.getCurrentWeatherEvent() instanceof BlizzardEvent);
+
+		BlizzardEvent currentEvent = (BlizzardEvent) controller.getCurrentWeatherEvent();
 		assertEquals(0, currentEvent.getNumHoursUntil());
 		assertEquals(2, currentEvent.getDuration());
 		assertEquals(1, currentEvent.getPriority());
