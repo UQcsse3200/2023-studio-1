@@ -1,6 +1,5 @@
 package com.csse3200.game.components.player;
 
-import com.csse3200.game.services.ParticleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
