@@ -19,7 +19,7 @@ public class BlinkComponent extends Component {
         entity.getEvents().addListener("hit", this::startDamageBlink);
     }
 
-    public void startDamageBlink(Entity entity) {
+    private void startDamageBlink(Entity entity) {
         playTime = 0f;
         isBlinking = true;
         color.a = 1f;
