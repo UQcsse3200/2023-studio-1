@@ -373,7 +373,7 @@ class ClimateControllerTest {
 	}
 
 	@Test
-	void testSetValuesSolarSurge() {
+	void testSetValuesWithOtherWeatherEventsActiveSolarSurge() {
 		GameArea gameArea = mock(GameArea.class);
 		when(gameArea.getClimateController()).thenReturn(controller);
 		ServiceLocator.registerGameArea(gameArea);
@@ -393,7 +393,10 @@ class ClimateControllerTest {
 		events.addChild("Event", event);
 		jsonData.addChild("Events", events);
 
-		assertNull(controller.getCurrentWeatherEvent());
+		controller.addWeatherEvent(new AcidShowerEvent(0, 5, 1, 0.5f));
+		controller.addWeatherEvent(new BlizzardEvent(2, 5, 1, 0.5f));
+		controller.addWeatherEvent(new RainStormEvent(5, 5, 1, 0.5f));
+		assertNotNull(controller.getCurrentWeatherEvent());
 
 		controller.setValues(jsonData);
 		assertNull(controller.getCurrentWeatherEvent());
