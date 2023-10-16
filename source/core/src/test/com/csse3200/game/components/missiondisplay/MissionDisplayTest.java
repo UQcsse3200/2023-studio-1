@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.csse3200.game.components.questgiver.MissionDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.missions.Mission;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.quests.FertiliseCropTilesQuest;
 import com.csse3200.game.missions.quests.Quest;
@@ -26,6 +27,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
 
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -410,10 +412,12 @@ class MissionDisplayTest {
 		Table achievementTable = contentTable.getChildren().toArray()[1].firstAscendant(Table.class);
 		assertNotNull(achievementTable);
 
-		// should have 10 cells in the achievement table:
-		//      - 5 x achievement names
-		//      - 5 x achievement descriptions
-		assertEquals(10, achievementTable.getCells().size);
+		int numExpectedAchievements = (int) Arrays.stream(missionManager.getAchievements()).filter(a -> !a.isCompleted()).count();
+
+		// should have 2 cells per achievement in the achievement table:
+		//      - 1 x achievement name
+		//      - 1 x achievement description
+		assertEquals(numExpectedAchievements * 2, achievementTable.getCells().size);
 
 		// switch to the 'Complete' tab
 		TextButton button = getButtonFromTable(tabTable, "Complete");
@@ -422,10 +426,13 @@ class MissionDisplayTest {
 
 		assertTrue(((Window) actor).getTitleLabel().textEquals("Complete Achievements"));
 
-		// should only have 2 cells in the achievement table now:
+
+		numExpectedAchievements = (int) Arrays.stream(missionManager.getAchievements()).filter(Mission::isCompleted).count();
+
+		// should have 2 cells per achievement in the achievement table:
 		//      - 1 x achievement name
 		//      - 1 x achievement description
-		assertEquals(2, achievementTable.getCells().size);
+		assertEquals(numExpectedAchievements * 2, achievementTable.getCells().size);
 
 		// switch back to 'Incomplete' tab
 		button = getButtonFromTable(tabTable, "Incomplete");
