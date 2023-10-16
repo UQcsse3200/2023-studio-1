@@ -60,6 +60,8 @@ public class CutsceneDisplay extends UIComponent {
     private  Window dialogueWindow;
     private final Cutscene.CutsceneType cutsceneType;
 
+    private static final String DEFAULT = "default";
+
     /**
      * Creates a cutscene display using the given parameters
      *
@@ -157,15 +159,15 @@ public class CutsceneDisplay extends UIComponent {
         if (this.cutsceneType == Cutscene.CutsceneType.RADIO) {
             npcAtlas = ServiceLocator.getResourceService()
                     .getAsset("images/walkietalkie.atlas", TextureAtlas.class);
-            region = npcAtlas.findRegion("default");
+            region = npcAtlas.findRegion(DEFAULT);
         } else if (this.cutsceneType == Cutscene.CutsceneType.PLACEABLE) {
             npcAtlas = ServiceLocator.getResourceService()
                     .getAsset("images/GOD_IS_game_ver.atlas", TextureAtlas.class);
-            region = npcAtlas.findRegion("default");
+            region = npcAtlas.findRegion(DEFAULT);
         } else {
             npcAtlas = ServiceLocator.getResourceService()
                     .getAsset("images/questgiver.atlas", TextureAtlas.class);
-            region = npcAtlas.findRegion("default");
+            region = npcAtlas.findRegion(DEFAULT);
         }
 
         if (region == null) {

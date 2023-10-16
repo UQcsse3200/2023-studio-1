@@ -72,6 +72,7 @@ public class EntitySpawner {
 
     private final Random random = new SecureRandom();
 
+
     /**
      * Constructor for EntitySpawner
      *
