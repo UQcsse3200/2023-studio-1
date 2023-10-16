@@ -96,23 +96,24 @@ public class InventoryDisplay extends UIComponent {
 
 		table.defaults().size(64, 10);
 		table.pad(10);
-		for (int i = 0; i < (rowSize); i++){
-			int idx = i + 1;
-			if (idx == 10) {
-				idx = 0;
-			}
-			// Create the label for the item slot
-			Label label = new Label(" " + idx, skin); //please please please work
-			if (inventory != null && inventory.getHeldIndex() == i) {
-				label.setColor(Color.BLUE);
-			}
-			else {
-				label.setColor(Color.BLACK);
-			}
-			label.setAlignment(Align.center);
-			table.add(label);
-			labels.add(label);
+		if (entity.getType() == EntityType.PLAYER) {
+			for (int i = 0; i < (rowSize); i++) {
+				int idx = i + 1;
+				if (idx == 10) {
+					idx = 0;
+				}
+				// Create the label for the item slot
+				Label label = new Label(" " + idx, skin); //please please please work
+				if (inventory != null && inventory.getHeldIndex() == i) {
+					label.setColor(Color.BLUE);
+				} else {
+					label.setColor(Color.BLACK);
+				}
+				label.setAlignment(Align.center);
+				table.add(label);
+				labels.add(label);
 
+			}
 		}
 		table.row();
 		table.defaults().size(64, 64);
@@ -314,7 +315,6 @@ public class InventoryDisplay extends UIComponent {
 	 */
 	@Override
 	public void draw(SpriteBatch batch) {
-		window.setPosition(((stage.getWidth() - window.getWidth()) / 2), ((stage.getHeight() - window.getHeight()) / 2));
 	}
 
 	/**
