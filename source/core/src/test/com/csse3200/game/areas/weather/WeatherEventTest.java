@@ -139,29 +139,29 @@ class WeatherEventTest {
 
     @Test
     void testGetDuration() {
-        assertEquals(weatherEvent1.getDuration(), 10);
-        assertEquals(weatherEvent2.getDuration(), 2);
-        assertEquals(weatherEvent3.getDuration(), 4);
-        assertEquals(weatherEvent4.getDuration(), 3);
-        assertEquals(weatherEvent5.getDuration(), 5);
+        assertEquals(10, weatherEvent1.getDuration());
+        assertEquals(2, weatherEvent2.getDuration());
+        assertEquals(4, weatherEvent3.getDuration());
+        assertEquals(3, weatherEvent4.getDuration());
+        assertEquals(5, weatherEvent5.getDuration());
     }
 
     @Test
     void testGetNumHoursUntil() {
-        assertEquals(weatherEvent1.getNumHoursUntil(), 0);
-        assertEquals(weatherEvent2.getNumHoursUntil(), 1);
-        assertEquals(weatherEvent3.getNumHoursUntil(), 2);
-        assertEquals(weatherEvent4.getNumHoursUntil(), 3);
-        assertEquals(weatherEvent5.getNumHoursUntil(), 5);
+        assertEquals(0, weatherEvent1.getNumHoursUntil());
+        assertEquals(1, weatherEvent2.getNumHoursUntil());
+        assertEquals(2, weatherEvent3.getNumHoursUntil());
+        assertEquals(3, weatherEvent4.getNumHoursUntil());
+        assertEquals(5, weatherEvent5.getNumHoursUntil());
     }
 
     @Test
     void testGetPriority() {
-        assertEquals(weatherEvent1.getPriority(), 1);
-        assertEquals(weatherEvent2.getPriority(), 2);
-        assertEquals(weatherEvent3.getPriority(), 5);
-        assertEquals(weatherEvent4.getPriority(), 3);
-        assertEquals(weatherEvent5.getPriority(), 1);
+        assertEquals(1, weatherEvent1.getPriority());
+        assertEquals(2, weatherEvent2.getPriority());
+        assertEquals(5, weatherEvent3.getPriority());
+        assertEquals(3, weatherEvent4.getPriority());
+        assertEquals(1, weatherEvent5.getPriority());
     }
 
     @Test
@@ -196,11 +196,11 @@ class WeatherEventTest {
 
     @Test
     void testGetSeverity() {
-        assertEquals(weatherEvent1.getSeverity(), 1.2f);
-        assertEquals(weatherEvent2.getSeverity(), 1.4f);
-        assertEquals(weatherEvent3.getSeverity(), 1.0f);
-        assertEquals(weatherEvent4.getSeverity(), 1.3f);
-        assertEquals(weatherEvent5.getSeverity(), 1.1f);
+        assertEquals(1.2f, weatherEvent1.getSeverity());
+        assertEquals(1.4f, weatherEvent2.getSeverity());
+        assertEquals(1.0f, weatherEvent3.getSeverity());
+        assertEquals(1.3f, weatherEvent4.getSeverity());
+        assertEquals(1.1f, weatherEvent5.getSeverity());
     }
 
     @Test

@@ -130,6 +130,12 @@ public class InventoryStateQuestTest {
         when(player.getComponent(InventoryComponent.class)).thenReturn(null);
         String expected2 = "Error, player inventory not detected!";
         assertEquals(expected2, inventoryStateQuest3.getDescription());
+
+        when(inventory.getItemCount("Item3")).thenReturn(1);
+        String expected3 = "Gather items of all shapes and sizes to improve your efficiency!\n" +
+                "Gather the following items:\n" +
+                "    2 items of type: Item3 (1 collected).\n";
+        assertEquals(expected3, inventoryStateQuest2.getDescription());
     }
 
     @Test
