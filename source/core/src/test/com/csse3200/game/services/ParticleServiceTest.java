@@ -239,4 +239,34 @@ class ParticleServiceTest {
 
 		verify(mockedComponents, times(1)).remove(component);
 	}
+
+	@Test
+	void testStartEffectAtPosition() throws IllegalAccessException {
+		@SuppressWarnings("unchecked")
+		EnumMap<ParticleService.ParticleEffectType, ParticleEffectPool> mockPools = mock(EnumMap.class);
+
+		@SuppressWarnings("unchecked")
+		ArrayList<ParticleEffectWrapper> positionalEffects = mock(ArrayList.class);
+
+		ParticleService particleService = new ParticleService();
+		Field poolsField = ReflectionUtils.findFields(ParticleService.class, f -> f.getName().equals("particleEffectPools"), ReflectionUtils.HierarchyTraversalMode.TOP_DOWN).get(0);
+		Field positionalEffectsField = ReflectionUtils.findFields(ParticleService.class, f -> f.getName().equals("positionalEffects"), ReflectionUtils.HierarchyTraversalMode.TOP_DOWN).get(0);
+
+		poolsField.setAccessible(true);
+		positionalEffectsField.setAccessible(true);
+		poolsField.set(particleService, mockPools);
+		positionalEffectsField.set(particleService, positionalEffects);
+
+		ParticleEffectPool pool = mock(ParticleEffectPool.class);
+		ParticleEffectPool.PooledEffect pooledEffect = mock(ParticleEffectPool.PooledEffect.class);
+		when(mockPools.get(any(ParticleService.ParticleEffectType.class))).thenReturn(pool);
+		when(pool.obtain()).thenReturn(pooledEffect);
+
+		Vector2 position = new Vector2(1,0);
+		particleService.startEffectAtPosition(ParticleService.ParticleEffectType.ACID_RAIN, position);
+
+		verify(pooledEffect, times(1)).setPosition(position.x, position.y);
+		verify(positionalEffects, times(1)).add(any(ParticleEffectWrapper.class));
+		verify(pooledEffect, times(1)).start();
+	}
 }
