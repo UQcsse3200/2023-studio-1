@@ -143,6 +143,8 @@ public class PlayerFactory {
     animator.addAnimation("fishing_right", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("fishing_up", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("fishing_down", 0.1f, Animation.PlayMode.LOOP);
+
+    animator.addAnimation("bye_bye", 0.1f, Animation.PlayMode.NORMAL);
   }
 
   public static Entity createFishingRodAnimatorEntity() {

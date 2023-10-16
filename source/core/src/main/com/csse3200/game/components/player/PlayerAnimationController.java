@@ -46,7 +46,7 @@ public class PlayerAnimationController extends Component {
     }
 
     private void die() {
-        animator.startAnimation("fishing_left");
+        animator.startAnimation("bye_bye");
     }
 
     @Override
