@@ -18,7 +18,6 @@ import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.TimeService;
 import com.csse3200.game.utils.math.Vector2Utils;
-import jdk.jfr.Event;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
