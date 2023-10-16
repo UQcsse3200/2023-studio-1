@@ -263,7 +263,8 @@ public class InventoryDisplay extends UIComponent {
 				dnd.addTarget(new DragAndDrop.Target(targetItem.getActor()) {
 					@Override
 					public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-						return true;
+						ItemSlot itemSlot = map.get((Stack) source.getActor());
+						return !InventoryComponent.getForbiddenItems().contains(inventory.getItemPlace().get(indexes.get(itemSlot)));
 					}
 					@Override
 					public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
