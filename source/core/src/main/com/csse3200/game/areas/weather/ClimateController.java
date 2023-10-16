@@ -185,7 +185,7 @@ public class ClimateController implements Json.Serializable {
 		if (currentWeatherEvent != null) {
 			currentWeatherEvent.stopEffect();
 			// Stop any lighting effects
-			currentLightingEffectProgress = -1.0f;
+			currentLightingEffectDuration = -1.0f;
 		}
 
 		// Update weather event durations
