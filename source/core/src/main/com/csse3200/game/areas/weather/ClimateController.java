@@ -233,30 +233,39 @@ public class ClimateController implements Json.Serializable {
 	}
 
 	public void setValues(JsonValue jsonData) {
+		if (currentWeatherEvent != null) {
+			currentWeatherEvent.stopEffect();
+			// Stop any lighting effects
+			currentLightingEffectDuration = -1.0f;
+			// Set currentWeatherEvent to be null
+			currentWeatherEvent = null;
+		}
 		weatherEvents.clear();
 		jsonData = jsonData.get("Events");
 		if (jsonData.has("Event")) {
 			jsonData.forEach(jsonValue -> {
-				switch (jsonValue.getString("name")) {
-					case ("AcidShowerEvent") -> addWeatherEvent(new AcidShowerEvent(jsonValue.getInt("hoursUntil"),
-							jsonValue.getInt("duration"), jsonValue.getInt("priority"),
-							jsonValue.getFloat("severity")));
-					case ("RainStormEvent") -> addWeatherEvent(new RainStormEvent(jsonValue.getInt("hoursUntil"),
-							jsonValue.getInt("duration"), jsonValue.getInt("priority"),
-							jsonValue.getFloat("severity")));
-					case ("BlizzardEvent") -> addWeatherEvent(new BlizzardEvent(jsonValue.getInt("hoursUntil"),
-							jsonValue.getInt("duration"), jsonValue.getInt("priority"),
-							jsonValue.getFloat("severity")));
-					case ("SolarSurgeEvent") -> addWeatherEvent(new SolarSurgeEvent(jsonValue.getInt("hoursUntil"),
-							jsonValue.getInt("duration"), jsonValue.getInt("priority"),
-							jsonValue.getFloat("severity")));
+				String name = jsonValue.getString("name");
+				float severity = jsonValue.getFloat("severity");
+				int duration = jsonValue.getInt("duration");
+				int hoursUntil = jsonValue.getInt("hoursUntil");
+				int priority = jsonValue.getInt("priority");
+
+				if (hoursUntil == 0) {
+					if (duration > 0) {
+						duration++;
+					}
+				} else {
+					hoursUntil++;
+				}
+
+				switch (name) {
+					case ("AcidShowerEvent") -> addWeatherEvent(new AcidShowerEvent(hoursUntil, duration, priority, severity));
+					case ("RainStormEvent") -> addWeatherEvent(new RainStormEvent(hoursUntil, duration, priority, severity));
+					case ("BlizzardEvent") -> addWeatherEvent(new BlizzardEvent(hoursUntil, duration, priority, severity));
+					case ("SolarSurgeEvent") -> addWeatherEvent(new SolarSurgeEvent(hoursUntil, duration, priority, severity));
 					default -> logger.error("Invalid weather event type while loading");
 				}
 			});
-		}
-		recalculateCurrentWeatherEvent();
-		if (currentWeatherEvent != null) {
-			currentWeatherEvent.startEffect();
 		}
 	}
 }

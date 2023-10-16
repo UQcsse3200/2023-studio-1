@@ -298,11 +298,13 @@ public class CropTileComponent extends Component {
 	}
 
 	private void startWaterLevelWeatherEffect(float waterDelta) {
+		// Not set to static as static methods can't be used in event listeners
 		weatherWaterDelta = waterDelta;
 		isWaterLevelWeatherEffectActive = true;
 	}
 
 	private void stopWaterLevelWeatherEffect() {
+		// Not set to static as static methods can't be used in event listeners
 		weatherWaterDelta = 0.0f;
 		isWaterLevelWeatherEffectActive = false;
 	}
