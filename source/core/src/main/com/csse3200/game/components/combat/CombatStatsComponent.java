@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.sound.EffectSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.quests.Quest;
@@ -108,6 +109,13 @@ public class CombatStatsComponent extends Component {
   }
 
   public void hit(CombatStatsComponent attacker) {
+    if (this.entity.getType().equals(EntityType.PLAYER)) {
+      try {
+        ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.PLAYER_DAMAGE);
+      } catch (InvalidSoundFileException e) {
+        logger.error("Failed to play tractor start up sound", e);
+      }
+    }
     int newHealth = getHealth() - attacker.getBaseAttack();
     setHealth(newHealth);
   }
@@ -131,12 +139,10 @@ public class CombatStatsComponent extends Component {
 
   @Override
   public void earlyUpdate() {
-    boolean playerDeath = false;
     if (isDead()) {
 
       EntityType type = entity.getType();
       EffectSoundFile effect;
-      EffectSoundFile effect2 = null;
 
       switch(type) {
         case CHICKEN:
@@ -155,15 +161,10 @@ public class CombatStatsComponent extends Component {
           effect = EffectSoundFile.DRAGONFLY_DEATH;
           break;
         default:
-          playerDeath = true;
-          effect = EffectSoundFile.PLAYER_DEATH2;
-          effect2 = EffectSoundFile.PLAYER_DEATH;
+          effect = EffectSoundFile.PLAYER_DEATH;
       }
       try {
         ServiceLocator.getSoundService().getEffectsMusicService().play(effect);
-        if (playerDeath) {
-          ServiceLocator.getSoundService().getEffectsMusicService().play(effect2);
-        }
         Thread.sleep(100);
       } catch (Exception e) {
         logger.error("Failed to play animal sound", e);

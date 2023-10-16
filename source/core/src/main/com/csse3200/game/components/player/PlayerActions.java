@@ -270,6 +270,7 @@ public class PlayerActions extends Component {
    * @param mousePos Determine direction of mouse
    */
   void attack(Vector2 mousePos) {
+    boolean hit = false;
     mousePos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
     List<Entity> areaEntities = ServiceLocator.getGameArea().getAreaEntities();
     for(Entity animal : areaEntities) {
@@ -286,17 +287,23 @@ public class PlayerActions extends Component {
         float difference = Math.abs(resAngle - mouseResAngle);
         difference = difference > 180 ? 360 - difference : difference;
         if (difference <= 45) {
+          hit = true;
           combat.addHealth((int) -(swordDamage * damageMultiplier));
           animal.getEvents().trigger("hit", entity);
           animal.getEvents().trigger("panicStart");
           Sound attackHit = ServiceLocator.getResourceService().
                   getAsset("sounds/weapons/SwordHitEntity.mp3", Sound.class);
           attackHit.play();
+          logger.info("Player sword attack hit");
         }
       }
     }
-    Sound attackMiss = ServiceLocator.getResourceService().getAsset("sounds/weapons/SwordSwing.mp3", Sound.class);
-    attackMiss.play();
+    if (!hit) {
+      Sound attackMiss = ServiceLocator.getResourceService().
+              getAsset("sounds/weapons/SwordSwing.mp3", Sound.class);
+      attackMiss.play();
+      logger.info("Player sword attack miss");
+    }
   }
 
   /**
@@ -306,6 +313,7 @@ public class PlayerActions extends Component {
    */
   void shoot(Vector2 mousePos) {
     if(amountBullet > 0) {
+      logger.info("Player shot target");
       Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/weapons/GunAttack.mp3", Sound.class);
       attackSound.play();
       mousePos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
@@ -321,6 +329,12 @@ public class PlayerActions extends Component {
       amountBullet--;
       previousShot = System.currentTimeMillis();
     } else {
+      logger.info("Player's gun out of ammo, reloading....");
+      try {
+        ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.GUN_RELOAD);
+      } catch (InvalidSoundFileException e) {
+        logger.error("Failed to play gun reload sound", e);
+      }
       reload();
     }
   }

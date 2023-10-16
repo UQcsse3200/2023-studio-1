@@ -17,6 +17,8 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
 import com.csse3200.game.services.plants.PlantCommandService;
 import com.csse3200.game.services.plants.PlantInfoService;
+import com.csse3200.game.services.sound.EffectsMusicService;
+import com.csse3200.game.services.sound.SoundService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,6 +37,7 @@ class AttackPatternTest {
     private Entity entity;
     private InteractionDetector interactionDetector;
     private GameTime gameTime;
+    private SoundService mockSound;
 
 
 
@@ -48,6 +51,10 @@ class AttackPatternTest {
         ServiceLocator.registerPhysicsService(new PhysicsService());
         ServiceLocator.registerGameArea(mock(GameArea.class));
         ServiceLocator.registerResourceService(mock(ResourceService.class));
+        mockSound = mock(SoundService.class);
+        ServiceLocator.registerSoundService(mockSound);
+
+        when(mockSound.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
 
         // Plant stuff
         ServiceLocator.registerTimeService(new TimeService());
