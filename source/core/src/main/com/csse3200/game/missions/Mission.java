@@ -81,7 +81,7 @@ public abstract class Mission {
      * If the event has already been triggered on the {@link MissionManager} for this {@link Mission}, it will not
      * re-trigger the event, unless this method detects the {@link Mission} having become incomplete.
      */
-    protected void notifyUpdate() {
+    public void notifyUpdate() {
         if (isQuestGiverNotified && !isCompleted()) {
             isQuestGiverNotified = false;
         }

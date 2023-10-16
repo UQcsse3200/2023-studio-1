@@ -9,6 +9,9 @@ import static org.mockito.Mockito.when;
 
 import java.util.function.Function;
 
+import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.areas.weather.ClimateController;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,6 +33,14 @@ class CropTileComponentTest {
     private Entity cropTile1, cropTile2, cropTile3, cropTile4, cropTile5, cropTile6, cropTile7;
     @BeforeEach
     public void init() {
+        ServiceLocator.registerTimeSource(new GameTime());
+        ServiceLocator.registerTimeService(new TimeService());
+        GameArea gameArea = mock(GameArea.class);
+        ClimateController climateController = new ClimateController();
+        when(gameArea.getClimateController()).thenReturn(climateController);
+        ServiceLocator.registerGameArea(gameArea);
+        MissionManager Mission = new MissionManager();
+        ServiceLocator.registerMissionManager(Mission);
         cropTile1 = new Entity().addComponent(new CropTileComponent(1f, 0.5f));
         cropTile2 = new Entity().addComponent(new CropTileComponent(0.5f, 0.5f));
         cropTile3 = new Entity().addComponent(new CropTileComponent(1f, 1.0f));
@@ -44,10 +55,11 @@ class CropTileComponentTest {
         cropTile5.create();
         cropTile6.create();
         cropTile7.create();
-        ServiceLocator.registerTimeSource(new GameTime());
-        ServiceLocator.registerTimeService(new TimeService());
-        MissionManager Mission = new MissionManager();
-        ServiceLocator.registerMissionManager(Mission);
+    }
+
+    @AfterEach
+    public void finish() {
+        ServiceLocator.clear();
     }
 
     @Test

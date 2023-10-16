@@ -10,22 +10,25 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 
 public class ShipDebrisFactory {
+	private ShipDebrisFactory() {
+		throw new IllegalStateException("Instantiating static util class");
+	}
 
-    /**
-     * Creates a Ship Debris entity.
-     *
-     * @return new Ship Debris Entity.
-     */
-    public static Entity createShipDebris() {
-        Entity shipDebris = new Entity(EntityType.SHIP_DEBRIS)
-                .addComponent(new TextureRenderComponent("images/ship/ship_debris.png"))
-                .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
-                .addComponent(new ColliderComponent())
-                .addComponent(new ShipDebrisComponent())
-                .addComponent(new HitboxComponent());
+	/**
+	 * Creates a Ship Debris entity.
+	 *
+	 * @return new Ship Debris Entity.
+	 */
+	public static Entity createShipDebris() {
+		Entity shipDebris = new Entity(EntityType.SHIP_DEBRIS)
+				.addComponent(new TextureRenderComponent("images/ship/ship_debris.png"))
+				.addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
+				.addComponent(new ColliderComponent())
+				.addComponent(new ShipDebrisComponent())
+				.addComponent(new HitboxComponent());
 
-        shipDebris.setScale(1f, 1f);
+		shipDebris.setScale(1f, 1f);
 
-        return shipDebris;
-    }
+		return shipDebris;
+	}
 }

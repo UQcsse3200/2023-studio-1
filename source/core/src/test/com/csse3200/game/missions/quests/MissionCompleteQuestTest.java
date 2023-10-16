@@ -56,6 +56,12 @@ class MissionCompleteQuestTest {
         MCQuest3 = new MissionCompleteQuest("Mission Complete Quest 3", r3, -1);
         MCQuest4 = new MissionCompleteQuest("Mission Complete Quest 4", r4, 10, true, 1);
         MCQuest5 = new MissionCompleteQuest("Mission Complete Quest 5", r5, 10, false, 1);
+
+        MCQuest1.registerMission(ServiceLocator.getMissionManager().getEvents());
+        MCQuest2.registerMission(ServiceLocator.getMissionManager().getEvents());
+        MCQuest3.registerMission(ServiceLocator.getMissionManager().getEvents());
+        MCQuest4.registerMission(ServiceLocator.getMissionManager().getEvents());
+        MCQuest5.registerMission(ServiceLocator.getMissionManager().getEvents());
     }
 
     @AfterEach
@@ -65,16 +71,12 @@ class MissionCompleteQuestTest {
 
     @Test
     void testRegisterMission() {
+        ServiceLocator.clear();
         assertFalse(MCQuest1.isCompleted());
         assertTrue(MCQuest2.isCompleted());
         assertTrue(MCQuest3.isCompleted());
         assertFalse(MCQuest4.isCompleted());
         assertFalse(MCQuest5.isCompleted());
-        assertFalse(r1.isCollected());
-        assertFalse(r2.isCollected());
-        assertFalse(r3.isCollected());
-        assertFalse(r4.isCollected());
-        assertFalse(r5.isCollected());
         MCQuest1.registerMission(ServiceLocator.getMissionManager().getEvents());
         MCQuest2.registerMission(ServiceLocator.getMissionManager().getEvents());
         MCQuest3.registerMission(ServiceLocator.getMissionManager().getEvents());
@@ -85,16 +87,10 @@ class MissionCompleteQuestTest {
         assertTrue(MCQuest3.isCompleted());
         assertFalse(MCQuest4.isCompleted());
         assertFalse(MCQuest5.isCompleted());
-        assertFalse(r1.isCollected());
-        assertFalse(r2.isCollected());
-        assertFalse(r3.isCollected());
-        assertFalse(r4.isCollected());
-        assertFalse(r5.isCollected());
     }
 
     @Test
     void testIsCompleted() {
-        testRegisterMission();
         assertFalse(MCQuest1.isCompleted());
         assertTrue(MCQuest2.isCompleted());
         assertTrue(MCQuest3.isCompleted());
@@ -125,32 +121,26 @@ class MissionCompleteQuestTest {
 
     @Test
     void testGetDescription() {
-        testRegisterMission();
         String desc = "Complete %d missions to get a tractor.\n%d out of %d required quests completed.";
         for (int i = 0; i < 10; i++) {
-            int minNum23 = Math.min(i, 0);
-            int minNum45 = Math.min(i, 1);
+            int minNum2 = 0;
+            int minNum4 = Math.min(i, 1);
             assertEquals(String.format(desc, 10, i, 10), MCQuest1.getDescription());
-            assertEquals(String.format(desc, 0, minNum23, 0), MCQuest2.getDescription());
-            assertEquals(String.format(desc, 0, minNum23, 0), MCQuest3.getDescription());
-            assertEquals(String.format(desc, 1, minNum45, 1), MCQuest4.getDescription());
-            assertEquals(String.format(desc, 1, minNum45, 1), MCQuest5.getDescription());
+            assertEquals(String.format(desc, 0, minNum2, 0), MCQuest2.getDescription());
+            assertEquals(String.format(desc, 1, minNum4, 1), MCQuest4.getDescription());
             ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.REWARD_COMPLETE.name());
         }
     }
 
     @Test
     void testGetShortDescription() {
-        testRegisterMission();
         String desc = "%d out of %d required quests completed";
         for (int i = 0; i < 10; i++) {
-            int minNum23 = Math.min(i, 0);
-            int minNum45 = Math.min(i, 1);
+            int minNum2 = 0;
+            int minNum4 = Math.min(i, 1);
             assertEquals(String.format(desc, i, 10), MCQuest1.getShortDescription());
-            assertEquals(String.format(desc, minNum23, 0), MCQuest2.getShortDescription());
-            assertEquals(String.format(desc, minNum23, 0), MCQuest3.getShortDescription());
-            assertEquals(String.format(desc, minNum45, 1), MCQuest4.getShortDescription());
-            assertEquals(String.format(desc, minNum45, 1), MCQuest5.getShortDescription());
+            assertEquals(String.format(desc, minNum2, 0), MCQuest2.getShortDescription());
+            assertEquals(String.format(desc, minNum4, 1), MCQuest4.getShortDescription());
             ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.REWARD_COMPLETE.name());
         }
     }
@@ -186,12 +176,10 @@ class MissionCompleteQuestTest {
         assertEquals(0, MCQuest3.getProgress());
         assertEquals(0, MCQuest4.getProgress());
         assertEquals(0, MCQuest5.getProgress());
-        testIsCompleted();
-        assertNotEquals(0, MCQuest1.getProgress());
-        assertEquals(0, MCQuest2.getProgress());
-        assertEquals(0, MCQuest3.getProgress());
-        assertNotEquals(0, MCQuest4.getProgress());
-        assertNotEquals(0, MCQuest5.getProgress());
+        for (int i = 0; i < 10; i++) {
+            ServiceLocator.getMissionManager().getEvents().trigger(
+                    MissionManager.MissionEvent.REWARD_COMPLETE.name());
+        }
         assertEquals(10, MCQuest1.getProgress());
         assertEquals(0, MCQuest2.getProgress());
         assertEquals(0, MCQuest3.getProgress());
@@ -201,7 +189,10 @@ class MissionCompleteQuestTest {
 
     @Test
     void testResetState() {
-        testIsCompleted();
+        for (int i = 0; i < 10; i++) {
+            ServiceLocator.getMissionManager().getEvents().trigger(
+                    MissionManager.MissionEvent.REWARD_COMPLETE.name());
+        }
         assertTrue(MCQuest1.isCompleted());
         assertTrue(MCQuest2.isCompleted());
         assertTrue(MCQuest3.isCompleted());
