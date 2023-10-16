@@ -53,7 +53,6 @@ public class PlayerFactory {
             );
 
     setupPlayerAnimator(animator);
-    //InventoryComponent playerInventory = new InventoryComponent(new ArrayList<>());
 
     Entity player =
         new Entity(EntityType.PLAYER)

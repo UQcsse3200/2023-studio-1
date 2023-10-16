@@ -334,7 +334,7 @@ public class MissionDisplay extends UIComponent {
                 public void changed(ChangeEvent changeEvent, Actor actor) {
                     quest.collectReward();
                     ServiceLocator.getGameArea().getPlayer().getEvents()
-		                    .trigger("startVisualEffect", ParticleService.ParticleEffectType.SUCCESS_EFFECT);
+		                    .trigger(ParticleService.START_EVENT, ParticleService.ParticleEffectType.SUCCESS_EFFECT);
                     generateQuestsMenu();
                 }
             });

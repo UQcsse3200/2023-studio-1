@@ -18,6 +18,8 @@ public class ParticleService {
 
 	public static final String WEATHER_EVENT = "WEATHER_EVENT";
 	public static final String ENTITY_EFFECT = "ENTITY_EFFECT";
+	public static final String START_EVENT = "startVisualEffect";
+	public static final String STOP_EVENT = "stopVisualEffect";
 
 	/**
 	 * All the effects that will be rendered

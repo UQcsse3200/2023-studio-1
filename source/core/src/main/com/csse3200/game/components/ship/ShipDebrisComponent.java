@@ -27,7 +27,7 @@ public class ShipDebrisComponent extends Component {
 		super.create();
 
 		entity.getEvents().addListener("destroy", this::destroy);
-		ServiceLocator.getMissionManager().getEvents().addListener(MissionManager.MissionEvent.QUEST_REWARD_COLLECTED.name(), this::checkCanSpawnShipEater);
+		ServiceLocator.getMissionManager().getEvents().addListener(MissionManager.MissionEvent.QUEST_REWARD_COLLECTED.name(), ShipDebrisComponent::checkCanSpawnShipEater);
 	}
 
 	/**
@@ -36,7 +36,7 @@ public class ShipDebrisComponent extends Component {
 	 *
 	 * @param missionCompleteName name of the mission that triggered the event
 	 */
-	private void checkCanSpawnShipEater(String missionCompleteName) {
+	private static void checkCanSpawnShipEater(String missionCompleteName) {
 		if (Objects.equals(missionCompleteName, ALIENS_ATTACK_QUEST_NAME)) {
 			canSpawnShipEater = true;
 		}
@@ -57,7 +57,7 @@ public class ShipDebrisComponent extends Component {
 	void destroy(TerrainTile tile) {
 		if (    // player must have gotten ranged weapons to defeat a ship eater!
 				canSpawnShipEater
-				&& random.nextInt(2) == 0
+						&& random.nextInt(2) == 0
 		) {
 			// unlucky, shipeater will spawn!
 			Entity shipEater = NPCFactory.createShipEater();
