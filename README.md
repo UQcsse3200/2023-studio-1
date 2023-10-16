@@ -8,16 +8,16 @@ No matter your taste in games, Gardens of the Galaxy will have you hooked. To ge
 
 ## Getting Started
 
-To get started with the game, please follow the outline provided [here](./wiki/Getting-Started). Once this setup is complete, you will be able to both play and edit the game.
+To get started with the game, please follow the outline provided [here](https://github.com/UQcsse3200/2023-studio-1/wiki/Getting-Started). Once this setup is complete, you will be able to both play and edit the game.
 
-*Afraid of jumping straight into Gardens of the Galaxy?* Find the complete game walkthrough guide [here](./wiki/Walkthrough).
+*Afraid of jumping straight into Gardens of the Galaxy?* Find the complete game walkthrough guide [here](https://github.com/UQcsse3200/2023-studio-1/wiki/Walkthrough).
 
 ## Helpful Wiki Links
 
-- [Design Introduction](./wiki/Design-Introduction)
-- [Storyline](./wiki/Storyline)
-- [Game Quests](./wiki/Game-Quests)
-- [Game Wiki](./wiki)
+- [Design Introduction](https://github.com/UQcsse3200/2023-studio-1/wiki/Design-Introduction)
+- [Storyline](https://github.com/UQcsse3200/2023-studio-1/wiki/Storyline)
+- [Game Quests](https://github.com/UQcsse3200/2023-studio-1/wiki/Game-Quests)
+- [Game Wiki](https://github.com/UQcsse3200/2023-studio-1/wiki)
 
 ## Game Engine Description
 
