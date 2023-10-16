@@ -168,7 +168,6 @@ import static org.mockito.Mockito.*;
 		int i = 0;
 		assert (deleteButton.getActor()) instanceof Image;
 		for (Cell<?> slot : cells) {
-			System.out.println(slot);
 			assert ((ItemSlot) slot.getActor()).getChild(0) instanceof Image;
 			assert ((ItemSlot) slot.getActor()).getChild(1) instanceof Stack;
 			if (i++ <= expected) {
