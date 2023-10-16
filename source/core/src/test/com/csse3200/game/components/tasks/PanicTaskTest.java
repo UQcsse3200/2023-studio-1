@@ -9,7 +9,6 @@ import com.csse3200.game.areas.TestGameArea;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.services.ResourceService;
 import org.junit.jupiter.api.AfterEach;
@@ -38,7 +37,7 @@ class PanicTaskTest {
     private PhysicsMovementComponent movementComponent;
     private PanicTask panicTask;
     //TestGameArea to register so GameMap can be accessed through the ServiceLocator
-    private static final TestGameArea gameArea = spy(new TestGameArea());
+    private static final TestGameArea gameArea = new TestGameArea();
 
     @BeforeAll
     static void setupGameAreaAndMap() {
@@ -57,10 +56,6 @@ class PanicTaskTest {
 
         //Sets the GameMap in the TestGameArea
         gameArea.setGameMap(gameMap);
-
-        // Set up climate controller
-        ClimateController climateController = new ClimateController();
-        when(gameArea.getClimateController()).thenReturn(climateController);
 
         //Only needed the assets for the map loading, can be unloaded
         resourceService.unloadAssets(TerrainFactory.getMapTextures());
