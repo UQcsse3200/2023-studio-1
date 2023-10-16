@@ -45,9 +45,7 @@ public class SprinklerComponentTest {
         when(timeService.getEvents()).thenReturn(new EventHandler());
         ServiceLocator.registerGameArea(gameArea);
         ServiceLocator.registerTimeService(timeService);
-        EventHandler eventHandler = mock(EventHandler.class);
-        ClimateController climateController = mock(ClimateController.class);
-        when(climateController.getEvents()).thenReturn(eventHandler);
+        ClimateController climateController = new ClimateController();
         when(gameArea.getClimateController()).thenReturn(climateController);
 
         // Create tiles for test area
