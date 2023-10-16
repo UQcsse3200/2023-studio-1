@@ -124,7 +124,7 @@ public class InventoryStateQuestTest {
         when(inventory.getItemCount("Item3")).thenReturn(2);
         String expected = "Gather items of all shapes and sizes to improve your efficiency!\n" +
                 "Gather the following items:\n" +
-                "    2 items of type: Item3 (2 collected).\n";
+                "    2 items of type: Item3 (done).\n";
         assertEquals(expected, inventoryStateQuest2.getDescription());
 
         when(player.getComponent(InventoryComponent.class)).thenReturn(null);

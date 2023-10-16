@@ -76,8 +76,14 @@ public class InventoryStateQuest extends Quest {
             descriptionBuilder.append(" items of type: ");
             descriptionBuilder.append(targetQuantity.getKey());
             descriptionBuilder.append(" (");
-            descriptionBuilder.append(playerInventoryComponent.getItemCount(targetQuantity.getKey()));
-            descriptionBuilder.append(" collected).\n");
+            int amountCollected = playerInventoryComponent.getItemCount(targetQuantity.getKey());
+            if (amountCollected < targetQuantity.getValue()) {
+                descriptionBuilder.append(amountCollected);
+                descriptionBuilder.append(" collected");
+            } else {
+                descriptionBuilder.append("done");
+            }
+            descriptionBuilder.append(").\n");
         }
         return descriptionBuilder.toString();
     }
@@ -92,7 +98,7 @@ public class InventoryStateQuest extends Quest {
         int numItemsCollected = 0;
         for (Map.Entry<String, Integer> targetQuantity : targetQuantities.entrySet()) {
             numItemsToGet += targetQuantity.getValue();
-            numItemsCollected += playerInventoryComponent.getItemCount(targetQuantity.getKey());
+            numItemsCollected += Math.max(playerInventoryComponent.getItemCount(targetQuantity.getKey()), targetQuantity.getValue());
         }
 
         return Math.min(numItemsCollected, numItemsToGet) + " out of " + numItemsToGet + " required items collected";
