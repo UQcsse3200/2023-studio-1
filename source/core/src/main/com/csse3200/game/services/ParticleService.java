@@ -4,16 +4,14 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Pool;
 import com.csse3200.game.components.ParticleEffectComponent;
 import com.csse3200.game.rendering.ParticleEffectWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.function.Predicate;
 
 public class ParticleService {
@@ -109,9 +107,9 @@ public class ParticleService {
 	 * @param delta delta time value used to update the particle effects
 	 */
 	public void render(SpriteBatch batch, float delta) {
-		Vector2 playerPosition = ServiceLocator.getGameArea().getPlayer().getCenterPosition();
+		Vector3 position = ServiceLocator.getCameraComponent().getCamera().position;
 		for (ParticleEffectWrapper wrapper : queuedEffects) {
-			wrapper.getPooledEffect().setPosition(playerPosition.x, playerPosition.y);
+			wrapper.getPooledEffect().setPosition(position.x, position.y);
 			wrapper.getPooledEffect().draw(batch, delta);
 			if (wrapper.getPooledEffect().isComplete()) {
 				wrapper.getPooledEffect().reset();
