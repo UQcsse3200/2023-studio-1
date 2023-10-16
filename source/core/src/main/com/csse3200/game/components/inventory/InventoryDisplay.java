@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.items.WateringCanLevelComponent;
 import com.csse3200.game.components.player.PlayerActions;
@@ -193,6 +195,7 @@ public class InventoryDisplay extends UIComponent {
 	 * @param map    images and their respective item slot
 	 */
 	public void setDragItems(@NotNull ArrayList<Actor> actors, Map<Stack, ItemSlot> map) {
+		final InputListener[] listener = new InputListener[1];
 		for (Actor item : actors) {
 			dnd.addSource(new DragAndDrop.Source(item) {
 				final DragAndDrop.Payload payload = new DragAndDrop.Payload();
@@ -205,6 +208,17 @@ public class InventoryDisplay extends UIComponent {
 					} catch (InvalidSoundFileException e) {
 						logger.error("sound not loaded");
 					}
+					// prevent player from toggling off inventory when dragging.
+					listener[0] = new InputListener() {
+						@Override
+						public boolean keyDown(InputEvent event, int keycode) {
+							if (keycode == Input.Keys.I || keycode == Input.Keys.E) {
+								return true;
+							}
+							return super.keyDown(event,keycode);
+						}
+					};
+					stage.addListener(listener[0]);
 					payload.setObject(getActor());
 					payload.setDragActor(getActor());
 					stage.addActor(getActor());
@@ -223,6 +237,7 @@ public class InventoryDisplay extends UIComponent {
 						itemSlot.add(getActor());
 						itemSlot.addListener(tooltip);
 					}
+					stage.removeListener(listener[0]);
 				}
 			});
 		}
