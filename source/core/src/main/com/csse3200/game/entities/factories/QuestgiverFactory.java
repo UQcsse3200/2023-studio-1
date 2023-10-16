@@ -6,7 +6,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.questgiver.QuestIndicatorComponent;
 import com.csse3200.game.components.questgiver.MissionDisplay;
-import com.csse3200.game.components.questgiver.QuestIndicatorComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.components.ColliderComponent;
