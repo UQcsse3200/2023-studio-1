@@ -1,10 +1,14 @@
 package com.csse3200.game.services;
 
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.ParticleEffectComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.rendering.ParticleEffectWrapper;
@@ -73,11 +77,11 @@ class ParticleServiceTest {
 		when(iter.hasNext()).thenReturn(true, false);
 		when(iter.next()).thenReturn(wrapper);
 
-		GameArea gameArea = mock(GameArea.class);
-		Entity player = mock(Entity.class);
-		when(player.getCenterPosition()).thenReturn(new Vector2(0, 0));
-		when(gameArea.getPlayer()).thenReturn(player);
-		ServiceLocator.registerGameArea(gameArea);
+		OrthographicCamera camera = new OrthographicCamera();
+		CameraComponent cameraComponent = mock(CameraComponent.class);
+		when(cameraComponent.getCamera()).thenReturn(camera);
+
+		ServiceLocator.registerCameraComponent(cameraComponent);
 
 		particleService.render(mock(SpriteBatch.class), 0f);
 
