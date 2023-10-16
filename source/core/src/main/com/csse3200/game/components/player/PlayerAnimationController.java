@@ -1,6 +1,5 @@
 package com.csse3200.game.components.player;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.components.Component;
@@ -38,9 +37,9 @@ public class PlayerAnimationController extends Component {
         entity.getEvents().addListener(events.ANIMATION_RUN_START.name(), this::animationRunStart);
         entity.getEvents().addListener(events.ANIMATION_WALK_STOP.name(), this::animationWalkStop);
         entity.getEvents().addListener(events.ANIMATION_INTERACT.name(), this::animationInteract);
-        entity.getEvents().addListener("fishCaught", this::stopFishing);
-        entity.getEvents().addListener("castFishingRod", this::castFishingRod);
-        entity.getEvents().addListener("use", this::use);
+        entity.getEvents().addListener(PlayerActions.events.FISH_CAUGHT.name(), this::stopFishing);
+        entity.getEvents().addListener(PlayerActions.events.CAST_FISHING_RODS.name(), this::castFishingRod);
+        entity.getEvents().addListener(PlayerActions.events.USE.name(), this::use);
 
         animator.startAnimation("default");
     }
@@ -127,11 +126,7 @@ public class PlayerAnimationController extends Component {
                 || animator.getCurrentAnimation().contains("shovel") || animator.getCurrentAnimation().contains("scythe")
                 || animator.getCurrentAnimation().contains("watering_can")) {
             return animator.isFinished();
-        } else if (animator.getCurrentAnimation().contains("fishing")) {
-            return false;
-        }
-
-        return true;
+        } else return !animator.getCurrentAnimation().contains("fishing");
     }
 
     /**

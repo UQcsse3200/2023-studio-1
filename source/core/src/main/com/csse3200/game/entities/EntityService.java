@@ -74,6 +74,10 @@ public class EntityService {
     pauseStartFlag = true;
   }
 
+  public void pauseGame2() {
+    paused = true;
+  }
+
   public void unpauseGame() {
     paused = false;
     pauseEndFlag = true;
