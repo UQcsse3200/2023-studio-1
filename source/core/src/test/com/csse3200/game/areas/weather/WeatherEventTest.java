@@ -128,10 +128,11 @@ class WeatherEventTest {
         assertTrue(weatherEventSpy2.isActive());
         verify(weatherEventSpy2, times(1)).isActive();
         verify(weatherEventSpy3, times(0)).isActive();
+        assertFalse(weatherEventSpy3.isActive());
         //Updating time again so that weatherEvent3 becomes active
         weatherEventSpy3.updateTime();
         assertTrue(weatherEventSpy3.isActive());
-        verify(weatherEventSpy3, times(1)).isActive();
+        verify(weatherEventSpy3, times(2)).isActive();
         verify(weatherEventSpy4, times(0)).isActive();
         verify(weatherEventSpy5, times(0)).isActive();
     }

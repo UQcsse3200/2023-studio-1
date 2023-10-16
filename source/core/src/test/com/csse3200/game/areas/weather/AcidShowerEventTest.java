@@ -88,6 +88,7 @@ class AcidShowerEventTest {
         acidShowerEvent1.startEffect();
         ServiceLocator.getGameArea().getClimateController().getEvents().trigger("startWaterLevelEffect", -0.0003f);
         ServiceLocator.getGameArea().getClimateController().getEvents().trigger("douseFlames");
+        verify(ServiceLocator.getParticleService(), times(1)).startEffect(ParticleService.ParticleEffectType.RAIN);
     }
 
     @Test
@@ -142,6 +143,8 @@ class AcidShowerEventTest {
             when(mockSound.getEffectsMusicService()).thenReturn(mockEffect);
             doThrow(InvalidSoundFileException.class).when(mockEffect).stop(EffectSoundFile.STORM, 0);
             exceptionAcidShowerEvent.stopEffect();
+            verify(testLogger, times(3)).error(anyString(), any(InvalidSoundFileException.class));
+            ServiceLocator.getGameArea().getClimateController().getEvents().trigger("acidBurn");
             verify(testLogger, times(3)).error(anyString(), any(InvalidSoundFileException.class));
         } catch (InvalidSoundFileException e) {
             fail();
