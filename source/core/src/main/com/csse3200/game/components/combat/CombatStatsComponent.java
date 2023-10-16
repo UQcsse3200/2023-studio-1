@@ -121,18 +121,7 @@ public class CombatStatsComponent extends Component {
   public void handleDeath() {
     if(!Objects.equals(entity.getType(), EntityType.PLAYER)) {
       ServiceLocator.getGameArea().removeEntity(entity);
-    } else {
-      // Stops flashing
-      health += 1;
-      processDeath();
     }
-  }
-
-  private void processDeath() {
-    // Takes 0.3f seconds
-    //entity.getEvents().trigger("blackOut");
-    entity.getEvents().trigger("bye bye");
-    entity.getEvents().scheduleEvent(2.1f, "lose");
   }
 
   public void hitFromEntity(Entity attacker) {
