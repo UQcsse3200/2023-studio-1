@@ -40,8 +40,13 @@ public class PlayerAnimationController extends Component {
         entity.getEvents().addListener(PlayerActions.events.FISH_CAUGHT.name(), this::stopFishing);
         entity.getEvents().addListener(PlayerActions.events.CAST_FISHING_RODS.name(), this::castFishingRod);
         entity.getEvents().addListener(PlayerActions.events.USE.name(), this::use);
+        entity.getEvents().addListener("bye bye", this::die);
 
         animator.startAnimation("default");
+    }
+
+    private void die() {
+        animator.startAnimation("fishing_left");
     }
 
     @Override

@@ -75,6 +75,7 @@ public class PlayerFactory {
             .addComponent(new InventoryDisplay("updateInventory", "toggleInventory", 30, 10, true))
             .addComponent(new BlinkComponent())
             .addComponent(new StunComponent())
+            .addComponent(new DimComponent())
             .addComponent(new PauseMenuActions());
 
     player.getComponent(ColliderComponent.class).setDensity(1.5f);

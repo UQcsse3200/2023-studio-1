@@ -8,6 +8,7 @@ import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.quests.Quest;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -116,10 +117,20 @@ public class CombatStatsComponent extends Component {
     if(!Objects.equals(entity.getType(), EntityType.PLAYER)) {
       ServiceLocator.getGameArea().removeEntity(entity);
     } else {
-      List<Quest> activeQuests = ServiceLocator.getMissionManager().getActiveQuests();
-      Quest mainQuest = activeQuests.get(activeQuests.size()-1);
-      ServiceLocator.getMissionManager().getEvents().trigger("loseScreen", mainQuest.getName());
+      // Stops flashing
+      health += 1;
+      processDeath();
     }
+  }
+
+  private void processDeath() {
+    // Takes 0.3f seconds
+    entity.getEvents().trigger("blackOut");
+    entity.getEvents().scheduleEvent(0.3f, "bye bye");
+    // Animation is 21 frames at 0.1f per frame so 2.1 seconds plus 0.3 seconds is 2.4
+    List<Quest> activeQuests = ServiceLocator.getMissionManager().getActiveQuests();
+    Quest mainQuest = activeQuests.get(activeQuests.size()-1);
+    ServiceLocator.getMissionManager().getEvents().scheduleEvent(2.4f,"loseScreen", mainQuest.getName());
   }
 
   public void hitFromEntity(Entity attacker) {
