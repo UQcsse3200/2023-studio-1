@@ -50,7 +50,7 @@ public class ItemFactory {
 
 
 	/**
-	 * Create a base item entity with physics, a hitbox, & ItemActions.
+	 * Create a base item entity with physics, a hitbox, and ItemActions.
 	 *
 	 * @return a base item entity
 	 */
