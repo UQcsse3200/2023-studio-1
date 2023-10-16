@@ -11,7 +11,6 @@ import java.util.function.Supplier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.areas.terrain.CropTileComponent;
@@ -298,6 +297,9 @@ public class PlantComponent extends Component {
         ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::hourUpdate);
         ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::dayUpdate);
         ServiceLocator.getPlantCommandService().getEvents().addListener("forceGrowthStage", this::forceGrowthStage);
+        ServiceLocator.getGameArea().getClimateController().getEvents().addListener("damagePlants", () -> {
+            increasePlantHealth(-1);
+        });
 
         ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(1, ALIVE);
         ServiceLocator.getPlantInfoService().increaseSeedsPlanted(1, plantName);
@@ -815,6 +817,8 @@ public class PlantComponent extends Component {
         plantDestroyed = true;
 
         ServiceLocator.getGameArea().removeEntity(entity);
+
+
     }
 
 

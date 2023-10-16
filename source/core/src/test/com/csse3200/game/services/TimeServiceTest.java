@@ -118,7 +118,6 @@ class TimeServiceTest {
 	@Test
 	void testIsDay() {
 		timeService.setHour(2);
-		System.out.println(timeService.getHour());
 		assertFalse(timeService.isDay());
 		assertTrue(timeService.isNight());
 		timeService.setHour(11);

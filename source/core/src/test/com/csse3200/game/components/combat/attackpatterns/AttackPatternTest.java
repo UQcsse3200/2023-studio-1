@@ -2,6 +2,7 @@ package com.csse3200.game.components.combat.attackpatterns;
 
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.terrain.CropTileComponent;
+import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.combat.CombatStatsComponent;
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.combat.ProjectileComponent;
@@ -41,12 +42,17 @@ class AttackPatternTest {
 
     @BeforeEach
     void setUp() {
+        // Set up mock game area and its climate controller
+        GameArea gameArea = mock(GameArea.class);
+        ClimateController climateController = new ClimateController();
+        when(gameArea.getClimateController()).thenReturn(climateController);
+        ServiceLocator.registerGameArea(gameArea);
+
         // Set up game time
         gameTime = mock(GameTime.class);
         when(gameTime.getTime()).thenReturn(0L);
         ServiceLocator.registerTimeSource(gameTime);
         ServiceLocator.registerPhysicsService(new PhysicsService());
-        ServiceLocator.registerGameArea(mock(GameArea.class));
         ServiceLocator.registerResourceService(mock(ResourceService.class));
 
         // Plant stuff

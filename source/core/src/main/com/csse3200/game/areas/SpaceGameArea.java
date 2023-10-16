@@ -325,7 +325,10 @@ public class SpaceGameArea extends GameArea {
   public SpaceGameArea(TerrainFactory terrainFactory) {
     super();
     gameMap = new GameMap(terrainFactory);
+
     climateController = new ClimateController();
+    climateController.initialiseEvents();
+
     ServiceLocator.registerGameArea(this);
   }
 
@@ -376,6 +379,7 @@ public class SpaceGameArea extends GameArea {
             0, 2, 5, 5, 3));
     hostileSpawners.add(new EntitySpawner(7, player1 -> NPCFactory.createBat(),
             0, 1, 5, 5, 2));
+
 
     hostileSpawner = new EntitiesSpawner(hostileSpawners);
     hostileSpawner.setGameAreas(this);
@@ -577,7 +581,14 @@ public class SpaceGameArea extends GameArea {
     effects.add(EffectSoundFile.ATOMIC_ALGAE_DECAY_LORE);
     effects.add(EffectSoundFile.ATOMIC_ALGAE_DESTROY_LORE);
     effects.add(EffectSoundFile.ATOMIC_ALGAE_NEARBY_LORE);
+    effects.add(EffectSoundFile.ACID_BURN);
+    effects.add(EffectSoundFile.BLIZZARD);
+    effects.add(EffectSoundFile.LIGHTNING_STRIKE);
+    effects.add(EffectSoundFile.SOLAR_SURGE);
+    effects.add(EffectSoundFile.STORM);
+    effects.add(EffectSoundFile.SURGE);
     effects.add(EffectSoundFile.GOD_DID);
+
 
     try {
       ServiceLocator.getSoundService().getEffectsMusicService().loadSounds(effects);

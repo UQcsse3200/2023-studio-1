@@ -10,6 +10,7 @@ import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
+import com.csse3200.game.services.ParticleService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
@@ -48,6 +49,8 @@ class ShipDebrisComponentTest {
 
 		MissionManager mockMissionManager = new MissionManager();
 		ServiceLocator.registerMissionManager(mockMissionManager);
+		ParticleService particleService = mock(ParticleService.class);
+		ServiceLocator.registerParticleService(particleService);
 
 		EntityService mockEntityService = spy(EntityService.class);
 		ServiceLocator.registerEntityService(mockEntityService);

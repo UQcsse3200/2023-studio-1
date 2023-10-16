@@ -3,6 +3,7 @@ package com.csse3200.game.entities.factories;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.csse3200.game.components.AuraLightComponent;
 import com.csse3200.game.components.questgiver.QuestIndicatorComponent;
 import com.csse3200.game.components.questgiver.MissionDisplay;
 import com.csse3200.game.entities.Entity;
@@ -30,7 +31,10 @@ public class QuestgiverFactory {
         .addComponent(new ColliderComponent())
         .addComponent(new MissionDisplay())
         .addComponent(new HitboxComponent())
+        .addComponent(new AuraLightComponent(8))
         .addComponent(animator);
+
+    questgiver.getComponent(AuraLightComponent.class).toggleLight();
 
     questgiver.getComponent(AnimationRenderComponent.class).scaleEntity();
     questgiver.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody); // body type to static body so he won't move

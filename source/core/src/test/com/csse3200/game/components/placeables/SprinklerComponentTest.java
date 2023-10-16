@@ -5,6 +5,7 @@ import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
+import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.events.EventHandler;
@@ -47,6 +48,8 @@ public class SprinklerComponentTest {
         when(timeService.getEvents()).thenReturn(new EventHandler());
         ServiceLocator.registerGameArea(gameArea);
         ServiceLocator.registerTimeService(timeService);
+        ClimateController climateController = new ClimateController();
+        when(gameArea.getClimateController()).thenReturn(climateController);
 
         // Create tiles for test area
         /* We get a test area that looks like this:

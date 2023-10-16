@@ -21,10 +21,7 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.rendering.RenderService;
-import com.csse3200.game.services.GameTime;
-import com.csse3200.game.services.ResourceService;
-import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.services.TimeService;
+import com.csse3200.game.services.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
@@ -86,6 +83,7 @@ class ShipEaterIntegrationTest {
 		ServiceLocator.registerEntityService(new EntityService());
 		ServiceLocator.registerTimeService(new TimeService());
 		ServiceLocator.registerGameArea(gameArea);
+		ServiceLocator.registerParticleService(mock(ParticleService.class));
 
 		ship = new Entity(EntityType.SHIP)
 				.addComponent(new PhysicsComponent())
