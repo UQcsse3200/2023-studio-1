@@ -20,7 +20,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
-public class ConsumePlayerItemsRewardTest {
+class ConsumePlayerItemsRewardTest {
 
     ConsumePlayerItemsReward consumePlayerItemsReward;
 
@@ -29,7 +29,7 @@ public class ConsumePlayerItemsRewardTest {
     Entity player;
 
     @BeforeEach
-    public void init() {
+    void init() {
         GameArea gameArea = mock(SpaceGameArea.class);
         ServiceLocator.registerGameArea(gameArea);
 
@@ -46,12 +46,12 @@ public class ConsumePlayerItemsRewardTest {
     }
 
     @AfterEach
-    public void clearServiceLocator() {
+    void clearServiceLocator() {
         ServiceLocator.clear();
     }
 
     @Test
-    public void singleItem() {
+    void singleItem() {
 
         inventoryComponent = mock(InventoryComponent.class);
         when(player.getComponent(InventoryComponent.class)).thenReturn(inventoryComponent);
@@ -66,7 +66,7 @@ public class ConsumePlayerItemsRewardTest {
     }
 
     @Test
-    public void testNoInventoryCollect() {
+    void testNoInventoryCollect() {
         inventoryComponent = null;
         when(player.getComponent(InventoryComponent.class)).thenReturn(inventoryComponent);
 
