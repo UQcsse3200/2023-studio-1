@@ -74,7 +74,7 @@ public class MainMenuDisplay extends UIComponent {
                         entity.getEvents().trigger("load");
                     }
                 });
-        loadBtn.setDisabled(Gdx.files.local("saves/saveFile.json").exists());
+        loadBtn.setDisabled(!Gdx.files.local("saves/saveFile.json").exists());
 
         controlsBtn.addListener(
                 new ChangeListener() {
