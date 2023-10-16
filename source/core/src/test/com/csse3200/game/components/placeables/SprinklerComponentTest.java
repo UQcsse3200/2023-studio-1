@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 
 
 @ExtendWith(GameExtension.class)
-public class SprinklerComponentTest {
+class SprinklerComponentTest {
     private static Entity p1;
     private static Entity s1;
     private static Entity s2;
@@ -39,7 +39,7 @@ public class SprinklerComponentTest {
     private static TimeService timeService;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         // create game area and map
         gameArea = mock(GameArea.class);
         gameMap = mock(GameMap.class);
@@ -110,14 +110,14 @@ public class SprinklerComponentTest {
     }
 
     @Test
-    public void setPumpTest() {
+    void setPumpTest() {
         p1.setPosition(p1_pos);
         p1.create();
         assertTrue(p1.getComponent(SprinklerComponent.class).getPump());
     }
 
     @Test
-    public void sprinklerNotPowered() {
+    void sprinklerNotPowered() {
         s1Tile.setOccupant(s1);
         s1.setPosition(s1_pos);
         s1.create();
@@ -125,7 +125,7 @@ public class SprinklerComponentTest {
     }
 
     @Test
-    public void pumpIsPowered() {
+    void pumpIsPowered() {
         // a pump should be powered by default
         p1Tile.setOccupant(p1);
         p1.setPosition(p1_pos);
@@ -134,7 +134,7 @@ public class SprinklerComponentTest {
     }
 
     @Test
-    public void pumpPowersSprinkler() {
+    void pumpPowersSprinkler() {
         // place a pump and sprinkler next to each other, the pump should power the sprinkler.
         p1Tile.setOccupant(p1);
         s1Tile.setOccupant(s1);
@@ -146,7 +146,7 @@ public class SprinklerComponentTest {
     }
 
     @Test
-    public void sprinklerLosesPower() {
+    void sprinklerLosesPower() {
         // remove a pump from a sprinklers vicinity and check it loses power.
         p1Tile.setOccupant(p1);
         s1Tile.setOccupant(s1);
@@ -162,7 +162,7 @@ public class SprinklerComponentTest {
     }
 
     @Test
-    public void sprinklerTransfersPower() {
+    void sprinklerTransfersPower() {
         // place a sprinkler next to a powered sprinkler,
         // the powered sprinkler should power the newly placed sprinkler
         p1Tile.setOccupant(p1);
@@ -178,7 +178,7 @@ public class SprinklerComponentTest {
     }
 
     @Test
-    public void sprinklerStopsTransferPower() {
+    void sprinklerStopsTransferPower() {
         // remove a sprinkler that is providing power to an adjacent sprinkler,
         // assert the adjacent sprinkler loses power
         p1Tile.setOccupant(p1);
@@ -198,7 +198,7 @@ public class SprinklerComponentTest {
     }
 
     @Test
-    public void sprinklerWatersCropTiles() {
+    void sprinklerWatersCropTiles() {
         s1Tile.setOccupant(s1);
         s1.setPosition(s1_pos);
         s1.create();
@@ -222,7 +222,7 @@ public class SprinklerComponentTest {
     }
 
     @Test
-    public void sprinklerWatersPlants() {
+    void sprinklerWatersPlants() {
         s1Tile.setOccupant(s1);
         s1.setPosition(s1_pos);
         s1.create();

@@ -21,7 +21,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.extensions.GameExtension;
 
 @ExtendWith(GameExtension.class)
-public class GameMapTest {
+class GameMapTest {
     //TestGameArea to register to ServiceLocator so GameMap can be accessed
     private static final TestGameArea gameArea = new TestGameArea();
     //GameMap instance to be set in the gameArea
@@ -69,7 +69,7 @@ public class GameMapTest {
     }
 
     @BeforeEach
-    public void preTest() {
+    void preTest() {
         // Services don't seem to register correctly in the static @BeforeAll method, so done here instead
         ServiceLocator.registerGameArea(gameArea);
     }
@@ -181,7 +181,7 @@ public class GameMapTest {
     }
 
     @AfterEach
-    public void cleanUp() {
+    void cleanUp() {
         // Clears all loaded services
         ServiceLocator.clear();
     }
