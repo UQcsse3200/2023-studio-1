@@ -1,39 +1,28 @@
 package com.csse3200.game.components.plants;
 
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.csse3200.game.areas.terrain.CropTileComponent;
-import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.EntityType;
-import com.csse3200.game.missions.MissionManager;
-import com.csse3200.game.physics.BodyUserData;
-import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.extensions.GameExtension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-
-import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 /**
- * Tests for PlantAreaOfEffectComponent
+ * Tests for PlantAreaOfEffectComponent class
  */
-@ExtendWith({})
+@ExtendWith(GameExtension.class)
 public class PlantAreaOfEffectComponentTest {
     PlantAreaOfEffectComponent plantAreaOfEffectComponent;
-
     Fixture fixture;
     Fixture fixture2;
     Entity entity;
 
+    /**
+     * Sets up the test environment before each test case.
+     */
     @BeforeEach
     public void setUp() {
         plantAreaOfEffectComponent = new PlantAreaOfEffectComponent(1f, "");
@@ -79,6 +68,9 @@ public class PlantAreaOfEffectComponentTest {
         assertEquals(newEffect, plantAreaOfEffectComponent.getEffectType(), "Effect should be equal to 'Fire' after setting");
     }
 
+    /**
+     * Tests the onCollisionStartReturns method when getFixture == me.
+     */
     @Test
     public void testOnCollisionStartReturns() {
         Fixture me = mock(Fixture.class);
@@ -88,6 +80,9 @@ public class PlantAreaOfEffectComponentTest {
         assertEquals(0, plantAreaOfEffectComponent.getEntitiesInRange().size());
     }
 
+    /**
+     * Tests the onCollisionEndReturns method when getFixture == me.
+     */
     @Test
     public void testOnCollisionEndReturns() {
         Fixture me = mock(Fixture.class);

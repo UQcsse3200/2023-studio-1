@@ -10,18 +10,74 @@ import com.csse3200.game.services.ServiceLocator;
  * over a plant.
  */
 public class PlantMouseHoverComponent extends Component {
+    /**
+     * Indicates whether plant information is currently being shown.
+     */
     private boolean showInfo;
+    /**
+     * Indicates whether the associated plant has died.
+     */
     private boolean plantDead;
+    /**
+     * Indicates whether the plant information should no longer be used.
+     */
     private boolean noMoreUse;
+
+    /**
+     * Used to signal when the plant has died.
+     */
+    public void setPlantDied(boolean plantDied) {
+        this.plantDead = plantDied;
+    }
+
+    /**
+     * Checks if the plant is dead.
+     * @return true if the plant is dead, false otherwise.
+     */
+    public boolean isPlantDead() {
+        return this.plantDead;
+    }
+
+    /**
+     * Checks whether plant information is currently being shown.
+     * @return {@code true} if plant information is being shown, {@code false} otherwise.
+     */
+    public boolean isShowInfo() {
+        return showInfo;
+    }
+
+    /**
+     * Sets whether plant information is currently being shown.
+     * @param showInfo {@code true} to indicate that plant information is being shown, {@code false} otherwise.
+     */
+    public void setShowInfo(boolean showInfo) {
+        this.showInfo = showInfo;
+    }
+
+    /**
+     * Checks whether the plant information should no longer be used.
+     * @return {@code true} if the plant information should no longer be used, {@code false} otherwise.
+     */
+    public boolean isNoMoreUse() {
+        return noMoreUse;
+    }
+
+    /**
+     * Sets whether the plant information should no longer be used.
+     * @param noMoreUse {@code true} to indicate that the plant information should no longer be used, {@code false} otherwise.
+     */
+    public void setNoMoreUse(boolean noMoreUse) {
+        this.noMoreUse = noMoreUse;
+    }
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void create() {
-        showInfo = false;
-        plantDead = false;
-        noMoreUse = false;
+        setShowInfo(false);
+        setPlantDied(false);
+        setNoMoreUse(false);
     }
 
     /**
@@ -48,29 +104,18 @@ public class PlantMouseHoverComponent extends Component {
                 String plantName = entity.getComponent(PlantComponent.class).getPlantName();
 
                 ServiceLocator.getPlantInfoService().getEvents().trigger("showPlantInfo", plantName, plantInfo);
-                showInfo = true;
+                setShowInfo(true);
             } else {
-                if (showInfo) {
+                if (isShowInfo()) {
                     ServiceLocator.getPlantInfoService().getEvents().trigger("clearPlantInfo");
-                    showInfo = false;
+                    setShowInfo(false);
                 }
             }
         } else {
-            if (!noMoreUse) {
+            if (!isNoMoreUse()) {
                 ServiceLocator.getPlantInfoService().getEvents().trigger("clearPlantInfo");
-                noMoreUse = true;
+                setNoMoreUse(true);
             }
         }
-    }
-
-    /**
-     * Used to signal when the plant has died.
-     */
-    public void plantDied() {
-        this.plantDead = true;
-    }
-
-    public boolean isPlantDead() {
-        return this.plantDead;
     }
 }

@@ -1,30 +1,42 @@
 package com.csse3200.game.components.plants;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.csse3200.game.extensions.GameExtension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+
 
 /**
  * Tests for PlantInfoDisplayComponent
  */
-@ExtendWith({})
+@ExtendWith(GameExtension.class)
 public class PlantInfoDisplayComponentTest {
     PlantInfoDisplayComponent plantInfoDisplayComponent;
 
+    /**
+     * Sets up the test environment before each test case.
+     */
     @BeforeEach
     public void setUp() {
         plantInfoDisplayComponent = new PlantInfoDisplayComponent();
-
     }
 
+    /**
+     * madeFirstContact should return false by default
+     */
     @Test
-    public void test() {
-        //
+    public void testGetMadeFirstContact_False() {
+        assertFalse(plantInfoDisplayComponent.getMadeFirstContact());
+    }
+
+    /**
+     * Test if getMadeFirstContact returns true when MadeFirstContact is called
+     */
+    @Test
+    public void testMadeFirstContact_True() {
+        plantInfoDisplayComponent.madeFirstContact();
+        assertTrue(plantInfoDisplayComponent.getMadeFirstContact());
     }
 }

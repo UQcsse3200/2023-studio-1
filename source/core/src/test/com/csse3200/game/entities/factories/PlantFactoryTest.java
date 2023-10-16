@@ -3,10 +3,7 @@ package com.csse3200.game.entities.factories;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -20,10 +17,12 @@ import com.csse3200.game.components.plants.PlantAreaOfEffectComponent;
 import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.components.plants.PlantMouseHoverComponent;
 import com.csse3200.game.components.plants.PlantProximityComponent;
+import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -45,7 +44,6 @@ import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -53,8 +51,22 @@ import com.csse3200.game.services.ServiceLocator;
  * This test class aims to test the PlantFactory which is responsible for
  * creating different plants in the game.
  */
+@ExtendWith(GameExtension.class)
 class PlantFactoryTest {
     PlantConfigs stats;
+    Entity plant;
+    int health = 1;
+    String name = "plant";
+    String type = "type";
+    String description = "description";
+    int idealWaterLevel = 1;
+    int adultLifeSpan = 1;
+    int maxHealth = 1;
+    int[] growthStageThresholds = new int[]{1,1,1};
+    String[] soundArray = new String[]{"1", "2", "3", "4", "5", "6", "7", "8"};
+    float xPosition = 1f;
+    float yPosition = 1f;
+    double delta = 0.001;
 
     // Mocked dependencies
     @Mock
@@ -66,13 +78,7 @@ class PlantFactoryTest {
     @Mock
     Entity mockEntity;
     @Mock
-    TextureRenderComponent mockRenderComponent;
-
-    @Mock
     AnimationRenderComponent mockAnimationRenderComponent;
-    @Mock
-    BasePlantConfig mockConfig;
-    Entity plant;
 
     /**
      * Set up required objects and mocked dependencies before each test.
@@ -90,8 +96,13 @@ class PlantFactoryTest {
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
                 .addComponent(new PlantMouseHoverComponent())
                 .addComponent(new PlantProximityComponent())
-                .addComponent(new PlantComponent(1,"name", "type", "description", 1, 1, 1,
-                        mockCropTile, new int[]{1, 1, 1}, new String[]{"", "", "", "", "", "", "", ""}));
+                .addComponent(new PlantComponent(health,name, type, description, idealWaterLevel,
+                        adultLifeSpan, maxHealth, mockCropTile, growthStageThresholds, soundArray));
+
+        plant.setPosition(xPosition,yPosition);
+        plant.getComponent(PlantComponent.class).getCropTile().getEntity().getScale();
+        plant.scaleHeight(yPosition);
+        PhysicsUtils.setScaledCollider(plant, xPosition, yPosition);
     }
 
     /**
@@ -281,6 +292,86 @@ class PlantFactoryTest {
     }
 
     /**
+     * Test to ensure plant has correct health value
+     */
+    @Test
+    void testComponentHealth() {
+        PlantComponent plantComponent = plant.getComponent(PlantComponent.class);
+        assertEquals(health, plantComponent.getPlantHealth());
+    }
+
+    /**
+     * Test to ensure plant has correct name
+     */
+    @Test
+    void testComponentName() {
+        PlantComponent plantComponent = plant.getComponent(PlantComponent.class);
+        assertEquals(name, plantComponent.getPlantName());
+    }
+
+    /**
+     * Test to ensure plant has correct type
+     */
+    @Test
+    void testComponentType() {
+        PlantComponent plantComponent = plant.getComponent(PlantComponent.class);
+        assertEquals(type, plantComponent.getPlantType());
+    }
+
+    /**
+     * Test to ensure plant has correct description
+     */
+    @Test
+    void testComponentDescription() {
+        PlantComponent plantComponent = plant.getComponent(PlantComponent.class);
+        assertEquals(description, plantComponent.getPlantDescription());
+    }
+
+    /**
+     * Test to ensure plant has correct idealWaterLevel
+     */
+    @Test
+    void testComponentIdealWaterLevel() {
+        PlantComponent plantComponent = plant.getComponent(PlantComponent.class);
+        assertEquals(idealWaterLevel, plantComponent.getIdealWaterLevel());
+    }
+
+    /**
+     * Test to ensure plant has correct adultLifeSpan
+     */
+    @Test
+    void testComponentAdultLifeSpan() {
+        PlantComponent plantComponent = plant.getComponent(PlantComponent.class);
+        assertEquals(adultLifeSpan, plantComponent.getAdultLifeSpan());
+    }
+
+    /**
+     * Test to ensure plant has correct maxHealth
+     */
+    @Test
+    void testComponentMaxHealth() {
+        PlantComponent plantComponent = plant.getComponent(PlantComponent.class);
+        assertEquals(maxHealth, plantComponent.getMaxHealth());
+    }
+
+    /**
+     * Tests if the position of the plant is correct.
+     */
+    @Test
+    void testPosition() {
+        assertEquals(xPosition, plant.getPosition().x, delta, "Mismatched value for plant position x");
+        assertEquals(yPosition, plant.getPosition().y, delta, "Mismatched value for plant position y");
+    }
+
+    /**
+     * Tests if the scale of the plant is correct.
+     */
+    @Test
+    void testScale(){
+        assertEquals(yPosition, plant.getScale().y, delta, "Mismatched value for plant scale");
+    }
+
+    /**
      * Tests that the setScaledCollider sets the collider of the plant entity correctly.
      */
     @Test
@@ -294,120 +385,9 @@ class PlantFactoryTest {
 
         Vector2 expectedScale = new Vector2(1f, 0.4f);
         verify(mockCollider, times(1)).setAsBoxAligned(
-                expectedScale,
-                PhysicsComponent.AlignX.CENTER,
-                PhysicsComponent.AlignY.BOTTOM
+                eq(expectedScale),
+                eq(PhysicsComponent.AlignX.CENTER),
+                eq(PhysicsComponent.AlignY.BOTTOM)
         );
     }
-
-    /**
-     * Provides plant statistics for parameterized tests.
-     *
-     * @return Stream of Arguments containing plant data.
-     */
-    /*
-    static Stream<Arguments> plantStatsProvider() {
-        return Stream.of(
-                Arguments.of("cosmicCob", "images/plants/cosmic_cob/4_adult.png",
-                        (Callable<Entity>) () -> PlantFactory.createCosmicCob(mockCropTile)),
-                Arguments.of("aloeVera", "images/plants/cosmic_cob/4_adult.png",
-                        (Callable<Entity>) () -> PlantFactory.createAloeVera(mockCropTile)),
-                Arguments.of("hammerPlant", "images/plants/cosmic_cob/4_adult.png",
-                        (Callable<Entity>) () -> PlantFactory.createHammerPlant(mockCropTile)),
-                Arguments.of("nightshade", "images/plants/cosmic_cob/4_adult.png",
-                        (Callable<Entity>) () -> PlantFactory.createDeadlyNightshade(mockCropTile)),
-                Arguments.of("waterWeed", "images/plants/cosmic_cob/4_adult.png",
-                        (Callable<Entity>) () -> PlantFactory.createAtomicAlgae(mockCropTile)),
-                Arguments.of("venusFlyTrap", "images/plants/cosmic_cob/4_adult.png",
-                        (Callable<Entity>) () -> PlantFactory.createSpaceSnapper(mockCropTile))
-        );
-    }
-
-     */
-
-    /**
-     * Verifies if plants are associated with the correct texture paths.
-     *
-     * @param id      The unique identifier for the plant.
-     * @param path    The path of the plant's texture in the asset directory.
-     * @param createPlant   The method to create the specific plant.
-     * @throws Exception    If there's an error during plant creation or verification.
-     */
-    /*
-    @ParameterizedTest
-    @MethodSource("plantStatsProvider")
-    void verifyPlantTexturePath(String id, String path, Callable<Entity> createPlant)
-            throws Exception {
-        when(mockResourceService.getAsset(path, Texture.class)).thenReturn(mockTexture);
-        assertNotNull(createPlant.call(), id + " entity is null!");
-        verify(mockResourceService).getAsset(path, Texture.class);
-    }
-
-     */
-
-    /**
-     * Tests if the properties of a created plant match expected values.
-     *
-     * @param id   The unique identifier for the plant.
-     * @param path The path of the plant's texture in the asset directory.
-     * @param createPlant The method to create the specific plant.
-     * @throws Exception If there's an error during plant creation or verification.
-     */
-    /*
-    @ParameterizedTest
-    @MethodSource("plantStatsProvider")
-    void plantsShouldSetCorrectProperties(String id, String path, Callable<Entity> createPlant)
-            throws Exception {
-        BasePlantConfig expectedValues = getActualValue(id);
-        String errMsg = "Mismatched value for plant " + id + ": %s";
-
-        when(mockResourceService.getAsset(path, Texture.class)).thenReturn(mockTexture);
-        Entity plant = createPlant.call();
-        PlantComponent plantComponent = plant.getComponent(PlantComponent.class);
-
-        assertEquals(expectedValues.health, plantComponent.getPlantHealth(),
-                String.format(errMsg, "health"));
-        assertEquals(expectedValues.name, plantComponent.getPlantName(),
-                String.format(errMsg, "name"));
-        assertEquals(expectedValues.type, plantComponent.getPlantType(),
-                String.format(errMsg, "type"));
-        assertEquals(expectedValues.description, plantComponent.getPlantDescription(),
-                String.format(errMsg, "description"));
-        assertEquals(expectedValues.idealWaterLevel, plantComponent.getIdealWaterLevel(),
-                String.format(errMsg, "idealWaterLevel"));
-        assertEquals(expectedValues.adultLifeSpan, plantComponent.getAdultLifeSpan(),
-                String.format(errMsg, "adultLifeSpan"));
-        assertEquals(expectedValues.maxHealth, plantComponent.getMaxHealth(),
-                String.format(errMsg, "maxHealth"));
-    }
-
-     */
-
-    /**
-     * Tests if the positions of the created plants are correct.
-     *
-     * @param id   The unique identifier for the plant.
-     * @param path The path of the plant's texture in the asset directory.
-     * @param createPlant The method to create the specific plant.
-     * @throws Exception If there's an error during plant creation or verification.
-     */
-    /*
-    @ParameterizedTest
-    @MethodSource("plantStatsProvider")
-    void shouldSetCorrectPlantPosition(String id, String path, Callable<Entity> createPlant)
-            throws Exception {
-        String errMsg = "Mismatched value for plant " + id + ": %s";
-
-        when(mockResourceService.getAsset(path, Texture.class)).thenReturn(mockTexture);
-        Entity plant = createPlant.call();
-
-        Vector2 expectedPos = new Vector2(5, 5.5f);
-        assertEquals(expectedPos, plant.getPosition(), String.format(errMsg, "position"));
-
-        assertEquals(2f, plant.getScale().y, 0.001, String.format(errMsg, "height"));
-    }
-
-     */
-
-
 }

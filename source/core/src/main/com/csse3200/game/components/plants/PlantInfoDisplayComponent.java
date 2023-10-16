@@ -59,7 +59,15 @@ public class PlantInfoDisplayComponent extends UIComponent {
      * Marks that the first contact has been made with the plant.
      */
     public void madeFirstContact() {
-        madeFirstContact = true;
+        this.madeFirstContact = true;
+    }
+
+    /**
+     * Whether first contact has been made or not
+     * @return True if first contact has been made, false otherwise
+     */
+    public boolean getMadeFirstContact() {
+        return this.madeFirstContact;
     }
 
     /**
@@ -108,7 +116,7 @@ public class PlantInfoDisplayComponent extends UIComponent {
      * Clears the window of any plant information.
      */
     public void clearInfo() {
-        if (madeFirstContact) {
+        if (getMadeFirstContact()) {
             createWindow("Active Quests");
             List<Quest> quests = missionManager.getActiveQuests();
 

@@ -750,7 +750,7 @@ public class PlantComponent extends Component {
 
         entity.getComponent(ColliderComponent.class).dispose();
         entity.getComponent(HitboxComponent.class).dispose();
-        entity.getComponent(PlantMouseHoverComponent.class).plantDied();
+        entity.getComponent(PlantMouseHoverComponent.class).setPlantDied(true);
         entity.getComponent(PlantMouseHoverComponent.class).dispose();
         entity.getComponent(PlantProximityComponent.class).dispose();
         entity.getComponent(PlantComponent.class).dispose();
