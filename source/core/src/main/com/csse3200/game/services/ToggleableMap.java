@@ -35,8 +35,19 @@ public class ToggleableMap extends UIComponent {
      */
     Table tableMap = new Table();
 
+    /**
+     * The size of the map.
+     */
     GridPoint2 mapSize = new GridPoint2(0,0);
+
+    /**
+     * The position of the player.
+     */
     GridPoint2 gpPos = new GridPoint2(0,0);
+
+    /**
+     * Whether the map is running or not.
+     */
     Boolean mapRunning = false;
 
     /**
