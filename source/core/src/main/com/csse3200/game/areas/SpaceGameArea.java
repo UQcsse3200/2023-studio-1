@@ -272,7 +272,6 @@ public class SpaceGameArea extends GameArea {
       "images/animals/bat.atlas", "images/projectiles/oxygen_eater_projectile.atlas",
       "images/ship/ship.atlas", "images/light.atlas", "images/projectiles/dragon_fly_projectile.atlas", "images/golden_trophy.atlas",
       "images/player_fishing.atlas", "images/walkietalkie.atlas", "images/animals/animal_effects.atlas", "images/cutscene.atlas",
-      "images/placeable/sprinkler/sprinkler_animation.atlas", "images/plants/plant_aoe.atlas"
       "images/placeable/sprinkler/sprinkler_animation.atlas", "images/shipeater.atlas", "images/plants/plant_aoe.atlas"
   };
   private static final String[] soundPaths = {
