@@ -3,9 +3,7 @@ package com.csse3200.game.components.combat.attackpatterns;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.events.ScheduledEvent;
-import com.csse3200.game.services.sound.EffectSoundFile;
 
 /**
  * The AttackPatternComponent is responsible for managing the attack patterns
@@ -53,7 +51,6 @@ public class AttackPatternComponent extends Component {
      */
     protected void attack() {
         // No action by default.
-
         currentAttackEvent = entity.getEvents().scheduleEvent(attackFrequency, "attack");
     }
 }
