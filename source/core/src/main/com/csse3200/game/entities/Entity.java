@@ -1,27 +1,20 @@
 package com.csse3200.game.entities;
 
-import com.csse3200.game.entities.factories.TractorFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
-
 import com.csse3200.game.areas.terrain.*;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ComponentType;
 import com.csse3200.game.components.ConeLightComponent;
+import com.csse3200.game.components.combat.CombatStatsComponent;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.npc.AnimalAnimationController;
 import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.npc.TamableComponent;
-import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.components.player.ItemPickupComponent;
-import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
-import com.csse3200.game.components.player.PlayerAnimationController;
+import com.csse3200.game.components.player.*;
 import com.csse3200.game.components.ship.ShipAnimationController;
 import com.csse3200.game.components.ship.ShipLightComponent;
 import com.csse3200.game.components.ship.ShipProgressComponent;
@@ -29,10 +22,13 @@ import com.csse3200.game.components.ship.ShipTimeSkipComponent;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.factories.ShipDebrisFactory;
 import com.csse3200.game.entities.factories.ShipFactory;
+import com.csse3200.game.entities.factories.TractorFactory;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Core entity class. Entities exist in the game and are updated each frame. All
@@ -476,6 +472,9 @@ public class Entity implements Json.Serializable {
                     if (npc.getComponent(TamableComponent.class) != null) {
                         npc.getComponent(TamableComponent.class).read(json, jsonMap.get(COMPONENTS_STRING));
                     }
+                    if (npc.getComponent(CombatStatsComponent.class) != null) {
+                        npc.getComponent(CombatStatsComponent.class).read(json, jsonMap.get(COMPONENTS_STRING));
+                    }
                     ServiceLocator.getGameArea().spawnEntity(npc);
                     npc.setPosition(position);
                 } else if (FactoryService.getPlaceableFactories().containsKey(type.toString())) {
@@ -495,9 +494,17 @@ public class Entity implements Json.Serializable {
     private void readPlayer(Json json, JsonValue jsonMap) {
         // Does not make a new player, instead just updates the current one
         InventoryComponent inventoryComponent = new InventoryComponent();
-        JsonValue inv = jsonMap.get(COMPONENTS_STRING);
-        inventoryComponent.read(json, inv);
+        JsonValue playerComponents = jsonMap.get(COMPONENTS_STRING);
+        inventoryComponent.read(json, playerComponents);
         this.addComponent(inventoryComponent);
+
+        CombatStatsComponent combatStats = new CombatStatsComponent(0, 0);
+        combatStats.read(json, playerComponents);
+        this.addComponent(combatStats);
+
+        HungerComponent hungerComponent = new HungerComponent(0);
+        hungerComponent.read(json, playerComponents);
+        this.addComponent(hungerComponent);
     }
 
     private void readShip(Json json, JsonValue jsonMap) {

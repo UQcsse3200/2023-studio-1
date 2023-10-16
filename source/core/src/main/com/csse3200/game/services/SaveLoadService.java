@@ -1,16 +1,17 @@
 package com.csse3200.game.services;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.components.AuraLightComponent;
+import com.csse3200.game.components.combat.CombatStatsComponent;
+import com.csse3200.game.components.player.HungerComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.files.SaveGame;
 import com.csse3200.game.files.SaveGame.GameState;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.HashMap;
@@ -128,6 +129,12 @@ public class SaveLoadService {
         HashMap<String, Entity> heldItemsEntity = stateInventory.getHeldItemsEntity();
         HashMap<Integer, String> itemPlace = stateInventory.getItemPlace();
         currentPlayer.getComponent(InventoryComponent.class).loadInventory(itemCount, heldItemsEntity, itemPlace);
+
+        CombatStatsComponent stateCombatStats = state.getPlayer().getComponent(CombatStatsComponent.class);
+        currentPlayer.getComponent(CombatStatsComponent.class).setHealth(stateCombatStats.getHealth());
+
+        HungerComponent stateHungerComponent = state.getPlayer().getComponent(HungerComponent.class);
+        currentPlayer.getComponent(HungerComponent.class).setHungerLevel(stateHungerComponent.getHungerLevel());
     }
 
     /**
