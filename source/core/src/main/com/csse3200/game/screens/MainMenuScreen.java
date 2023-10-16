@@ -35,9 +35,6 @@ public class MainMenuScreen extends ScreenAdapter {
   private static final String[] mainMenuTextures = {"images/galaxy_home_still.png"};
   private static final String[] transitionTextures = new String[FRAME_COUNT];
   private static final String ANIMATION_PREFIX = "images/menu_animations/menu_animations";
-  private Texture backgroundTexture;
-  private SpriteBatch batch;
-
 
   public MainMenuScreen(GdxGame game) {
     this.game = game;
@@ -137,4 +134,3 @@ public class MainMenuScreen extends ScreenAdapter {
     return transitionTextures;
   }
 }
-

@@ -25,8 +25,10 @@ public class ShipLightComponent extends AuraLightComponent {
 	public void create() {
 		unlocked = false;
 
+
+		entity.getEvents().addListener("toggleLight", this::toggleLight);
 		entity.getEvents().addListener(ShipFactory.events.PROGRESS_UPDATED.name(), this::progressUpdated);
-		entity.getEvents().addListener("interact", this::toggleLight);
+
 	}
 
 	/**

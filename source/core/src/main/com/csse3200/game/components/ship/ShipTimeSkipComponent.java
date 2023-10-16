@@ -26,8 +26,10 @@ public class ShipTimeSkipComponent extends Component {
 		unlocked = false;
 		timeSkipInProgress = false;
 
+
+		entity.getEvents().addListener("timeSkip", this::triggerTimeSkip);
 		entity.getEvents().addListener(ShipFactory.events.PROGRESS_UPDATED.name(), this::progressUpdated);
-		entity.getEvents().addListener("interact", this::triggerTimeSkip);
+
 
 		ServiceLocator.getTimeService().getEvents().addListener("morningTime", this::stopTimeSkip);
 	}

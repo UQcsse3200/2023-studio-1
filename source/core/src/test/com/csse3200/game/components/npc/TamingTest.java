@@ -1,17 +1,21 @@
 package com.csse3200.game.components.npc;
 
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.audio.Sound;
 import com.csse3200.game.areas.terrain.GameMap;
+import com.csse3200.game.entities.configs.BaseAnimalConfig;
+import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.missions.MissionManager;
-import com.csse3200.game.services.GameTime;
-import com.csse3200.game.services.ResourceService;
-import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.services.TimeService;
+import com.csse3200.game.services.*;
+import com.csse3200.game.services.sound.EffectsMusicService;
+import com.csse3200.game.services.sound.SoundService;
 import org.junit.After;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,6 +40,7 @@ class TamingTest {
     private Entity foodEntity;
     private Entity nonFood;
     String[] texturePaths = {"images/tool_shovel.png"};
+    SoundService mockSoundService;
 
     @BeforeEach
     void beforeEach() {
@@ -45,6 +50,11 @@ class TamingTest {
         ServiceLocator.registerTimeSource(new GameTime());
         ServiceLocator.registerTimeService(new TimeService());
         ServiceLocator.registerMissionManager(new MissionManager());
+
+        mockSoundService = mock(SoundService.class);
+        ServiceLocator.registerSoundService(mockSoundService);
+
+        when(mockSoundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
 
         playerInventory = new InventoryComponent(new ArrayList<>());
         playerInvSpy = spy(playerInventory);
@@ -128,5 +138,29 @@ class TamingTest {
         animalToTest.getEvents().trigger("feed");
 
         assertFalse(animalToTest.getComponent(TamableComponent.class).isTamed());
+    }
+
+    @Test
+    void testAstrolotlOxygen() {
+        playerInvSpy.setHeldItem(0);
+
+        PlanetOxygenService planetOxygenService = new PlanetOxygenService();
+        ServiceLocator.registerPlanetOxygenService(planetOxygenService);
+
+        float initialOxygen = planetOxygenService.getOxygen();
+
+        TamableComponent toTame = new TamableComponent(player, 2, 1.1,
+                "AFood");
+
+        animalToTest = new Entity(EntityType.ASTROLOTL).addComponent(toTame);
+        animalToTest.create();
+
+        animalToTest.getComponent(TamableComponent.class).setTame(true);
+
+        animalToTest.getEvents().trigger("feed");
+
+        float finalOxygen = planetOxygenService.getOxygen();
+
+        assertTrue(finalOxygen - initialOxygen == 75);
     }
 }

@@ -98,6 +98,12 @@ public class TamableComponent extends Component {
       }
 
       if (isTamed) {
+          // Handle Astrolotl adding oxygen
+          if (animalType == EntityType.ASTROLOTL
+                  && this.playerInventory.getHeldItem().getComponent(ItemComponent.class)
+                  .getItemName().equals(favouriteFood)) {
+              ServiceLocator.getPlanetOxygenService().addOxygen(75);
+          }
           return;
       }
 

@@ -17,6 +17,7 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.sound.EffectSoundFile;
 import java.util.Map;
 
 /**
@@ -44,16 +45,10 @@ public class PlantFactory {
      * @return entity
      */
     public static Entity createBasePlant(BasePlantConfig config, CropTileComponent cropTile) {
+        Entity aoeAnimator = createPlantAoeAnimatorEntity();
         AnimationRenderComponent animator = setupPlantAnimations(config.atlasPath);
 
         int[] growthThresholds = {config.sproutThreshold, config.juvenileThreshold, config.adultThreshold};
-
-        String[] soundsArray =   {
-                config.soundFolderPath + "click.wav", config.soundFolderPath + "clickLore.wav",
-                config.soundFolderPath + "decay.wav", config.soundFolderPath + "decayLore.wav",
-                config.soundFolderPath + "destroy.wav", config.soundFolderPath + "destroyLore.wav",
-                config.soundFolderPath + "nearby.wav", config.soundFolderPath + "nearbyLore.wav",
-        };
 
         Entity plant = new Entity(EntityType.PLANT)
                 .addComponent(animator)
@@ -65,7 +60,10 @@ public class PlantFactory {
                 .addComponent(new PlantProximityComponent())
                 .addComponent(new PlantComponent(config.health, config.name, config.type,
                         config.description, config.idealWaterLevel, config.adultLifeSpan,
-                        config.maxHealth, cropTile, growthThresholds, soundsArray));
+                        config.maxHealth, cropTile, growthThresholds));
+
+        aoeAnimator.setCenterPosition(plant.getComponent(PlantComponent.class).getCropTile().getEntity().getCenterPosition().add(-1.5f, -1.5f));
+        plant.getComponent(PlantComponent.class).addAoeAnimatorEntity(aoeAnimator);
 
         // Set plant position over crop tile.
         var cropTilePosition = cropTile.getEntity().getPosition();
@@ -95,11 +93,31 @@ public class PlantFactory {
         animator.addAnimation("4_adult", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("5_decaying", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("6_dead", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("6_sprout_dead", 0.1f, Animation.PlayMode.LOOP);
+
+        animator.addAnimation("1_seedling_dead", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("2_sprout_dead", 0.1f, Animation.PlayMode.LOOP);
+
 
         animator.startAnimation("1_seedling");
 
         return animator;
+    }
+
+    private static  Entity createPlantAoeAnimatorEntity() {
+        Entity aoeAnimator = new Entity(EntityType.DUMMY);
+
+        AnimationRenderComponent animator = new AnimationRenderComponent(
+                ServiceLocator.getResourceService().getAsset("images/plants/plant_aoe.atlas", TextureAtlas.class),
+                16f, 3);
+        animator.addAnimation("default", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("deadly_nightshade_aoe_", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("hammer_plant_aoe_", 0.1f, Animation.PlayMode.LOOP);
+
+        animator.startAnimation("default");
+
+        aoeAnimator.addComponent(animator);
+
+        return aoeAnimator;
     }
 
     /**
@@ -110,10 +128,15 @@ public class PlantFactory {
      */
     public static Entity createCosmicCob(CropTileComponent cropTile) {
         Entity cosmicCob = createBasePlant(stats.cosmicCob, cropTile);
-        cosmicCob.getComponent(PlantComponent.class).setHarvestYields(Map.of(
+        PlantComponent plantComponent = cosmicCob.getComponent(PlantComponent.class);
+        plantComponent.setHarvestYields(Map.of(
                 "Cosmic Cob Seeds", 2,
                 "Ear of Cosmic Cob", 1
         ));
+        plantComponent.setSounds(EffectSoundFile.PLANT_CLICK, EffectSoundFile.COSMIC_COB_CLICK_LORE,
+                EffectSoundFile.PLANT_DECAY, EffectSoundFile.COSMIC_COB_DECAY_LORE,
+                EffectSoundFile.PLANT_DESTROY, EffectSoundFile.COSMIC_COB_DESTROY_LORE,
+                EffectSoundFile.PLANT_NEARBY, EffectSoundFile.COSMIC_COB_NEARBY_LORE);
         return cosmicCob;
     }
 
@@ -125,10 +148,15 @@ public class PlantFactory {
      */
     public static Entity createAloeVera(CropTileComponent cropTile) {
         Entity aloeVera = createBasePlant(stats.aloeVera, cropTile);
-        aloeVera.getComponent(PlantComponent.class).setHarvestYields(Map.of(
+        PlantComponent plantComponent = aloeVera.getComponent(PlantComponent.class);
+        plantComponent.setHarvestYields(Map.of(
                 "Aloe Vera Seeds", 2,
                 "Aloe Vera Leaf", 1
         ));
+        plantComponent.setSounds(EffectSoundFile.PLANT_CLICK, EffectSoundFile.ALOE_VERA_CLICK_LORE,
+                EffectSoundFile.PLANT_DECAY, EffectSoundFile.ALOE_VERA_DECAY_LORE,
+                EffectSoundFile.PLANT_DESTROY, EffectSoundFile.ALOE_VERA_DESTROY_LORE,
+                EffectSoundFile.PLANT_NEARBY, EffectSoundFile.ALOE_VERA_NEARBY_LORE);
         return aloeVera;
     }
 
@@ -140,10 +168,15 @@ public class PlantFactory {
      */
     public static Entity createHammerPlant(CropTileComponent cropTile) {
         Entity hammerPlant = createBasePlant(stats.hammerPlant, cropTile);
-        hammerPlant.getComponent(PlantComponent.class).setHarvestYields(Map.of(
+        PlantComponent plantComponent = hammerPlant.getComponent(PlantComponent.class);
+        plantComponent.setHarvestYields(Map.of(
                 "Hammer Plant Seeds", 2,
                 "Hammer Flower", 1
         ));
+        plantComponent.setSounds(EffectSoundFile.PLANT_CLICK, EffectSoundFile.HAMMER_PLANT_CLICK_LORE,
+                EffectSoundFile.PLANT_DECAY, EffectSoundFile.HAMMER_PLANT_DECAY_LORE,
+                EffectSoundFile.PLANT_DESTROY, EffectSoundFile.HAMMER_PLANT_DESTROY_LORE,
+                EffectSoundFile.PLANT_NEARBY, EffectSoundFile.HAMMER_PLANT_NEARBY_LORE);
         return hammerPlant;
     }
 
@@ -155,11 +188,16 @@ public class PlantFactory {
      */
     public static Entity createSpaceSnapper(CropTileComponent cropTile) {
         Entity spaceSnapper = createBasePlant(stats.spaceSnapper, cropTile);
-        spaceSnapper.getComponent(AnimationRenderComponent.class).addAnimation("digesting", 0.1f,
-                Animation.PlayMode.LOOP);
-        spaceSnapper.getComponent(PlantComponent.class).setHarvestYields(Map.of(
+        spaceSnapper.getComponent(AnimationRenderComponent.class)
+                .addAnimation("digesting", 0.1f, Animation.PlayMode.LOOP);
+        PlantComponent plantComponent = spaceSnapper.getComponent(PlantComponent.class);
+        plantComponent.setHarvestYields(Map.of(
                 "Space Snapper Seeds", 2
         ));
+        plantComponent.setSounds(EffectSoundFile.PLANT_CLICK, EffectSoundFile.SPACE_SNAPPER_CLICK_LORE,
+                EffectSoundFile.PLANT_DECAY, EffectSoundFile.SPACE_SNAPPER_DECAY_LORE,
+                EffectSoundFile.PLANT_DESTROY, EffectSoundFile.SPACE_SNAPPER_DESTROY_LORE,
+                EffectSoundFile.PLANT_NEARBY, EffectSoundFile.SPACE_SNAPPER_NEARBY_LORE);
         return spaceSnapper;
     }
 
@@ -171,9 +209,14 @@ public class PlantFactory {
      */
     public static Entity createAtomicAlgae(CropTileComponent cropTile) {
         Entity atomicAlgae = createBasePlant(stats.atomicAlgae, cropTile);
-        atomicAlgae.getComponent(PlantComponent.class).setHarvestYields(Map.of(
+        PlantComponent plantComponent = atomicAlgae.getComponent(PlantComponent.class);
+        plantComponent.setHarvestYields(Map.of(
                 "Atomic Algae Seeds", 2
         ));
+        plantComponent.setSounds(EffectSoundFile.PLANT_CLICK, EffectSoundFile.ATOMIC_ALGAE_CLICK_LORE,
+                EffectSoundFile.PLANT_DECAY, EffectSoundFile.ATOMIC_ALGAE_DECAY_LORE,
+                EffectSoundFile.PLANT_DESTROY, EffectSoundFile.ATOMIC_ALGAE_DESTROY_LORE,
+                EffectSoundFile.PLANT_NEARBY, EffectSoundFile.ATOMIC_ALGAE_NEARBY_LORE);
         return atomicAlgae;
     }
 
@@ -185,10 +228,15 @@ public class PlantFactory {
      */
     public static Entity createDeadlyNightshade(CropTileComponent cropTile) {
         Entity deadlyNightshade = createBasePlant(stats.deadlyNightshade, cropTile);
-        deadlyNightshade.getComponent(PlantComponent.class).setHarvestYields(Map.of(
+        PlantComponent plantComponent = deadlyNightshade.getComponent(PlantComponent.class);
+        plantComponent.setHarvestYields(Map.of(
                 "Deadly Nightshade Seeds", 2,
                 "Nightshade Berry", 3
         ));
+        plantComponent.setSounds(EffectSoundFile.PLANT_CLICK, EffectSoundFile.DEADLY_NIGHTSHADE_CLICK_LORE,
+                EffectSoundFile.PLANT_DECAY, EffectSoundFile.DEADLY_NIGHTSHADE_DECAY_LORE,
+                EffectSoundFile.PLANT_DESTROY, EffectSoundFile.DEADLY_NIGHTSHADE_DESTROY_LORE,
+                EffectSoundFile.PLANT_NEARBY, EffectSoundFile.DEADLY_NIGHTSHADE_NEARBY_LORE);
         return deadlyNightshade;
     }
 

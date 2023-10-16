@@ -1,7 +1,6 @@
 package com.csse3200.game.missions.quests;
 
 import com.badlogic.gdx.utils.JsonValue;
-import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.rewards.Reward;
 import com.csse3200.game.services.GameTime;
@@ -45,7 +44,7 @@ class PlantInteractionQuestTest {
 
         MissionManager.MissionEvent plant = MissionManager.MissionEvent.PLANT_CROP;
         MissionManager.MissionEvent harvest = MissionManager.MissionEvent.HARVEST_CROP;
-        MissionManager.MissionEvent bug = MissionManager.MissionEvent.ANIMAL_DEFEATED;
+        MissionManager.MissionEvent bug = MissionManager.MissionEvent.COMBAT_ACTOR_DEFEATED;
 
         PIQuest1 = new PlantInteractionQuest("Plant Interaction Quest 1", r1, plant, plantTypes1, 10);
         PIQuest2 = new PlantInteractionQuest("Plant Interaction Quest 2", r2, plant, plantTypes1, 0);

@@ -177,11 +177,11 @@ public class ItemFactory {
    *
    * @return Map Item
    */
-  public static Entity createMapItem() {
+  public static Entity createClueItem() {
     ClueComponent clueComponent = new ClueComponent();
     return createBaseItem()
-            .addComponent(new TextureRenderComponent("images/ship/ship_clue.png"))
-            .addComponent(new ItemComponent("map", ItemType.CLUE_ITEM, "images/ship/ship_clue.png"))
+            .addComponent(new TextureRenderComponent("images/ship/clue_item.png"))
+            .addComponent(new ItemComponent("clue", ItemType.CLUE_ITEM, "images/ship/clue_item.png"))
             .addComponent(clueComponent)
             .addComponent(new CoordinatesDisplay(clueComponent));
   }
@@ -322,7 +322,7 @@ return createBaseItem()
     Entity itemDrop = createBaseItem()
             .addComponent(new DynamicTextureRenderComponent("images/plants/hammer_plant/item_drop.png"))
             .addComponent(new ItemComponent("Hammer Flower", ItemType.FOOD,
-                    "Unusually shaped flower that looks like the tool it is named after",
+                    "An unusually shaped flower that looks like the tool it is named after",
                     "images/plants/hammer_plant/item_drop.png"));
     itemDrop.getComponent(DynamicTextureRenderComponent.class).setLayer(3);
     return itemDrop;
@@ -434,6 +434,10 @@ return createBaseItem()
 
   }
 
+  /**
+   * Makes a item that when used places a item
+   * @return
+   */
   public static Entity createLightItem() {
 return createBaseItem()
             .addComponent(new TextureRenderComponent("images/plants/misc/aloe_vera_seed.png"))
@@ -456,6 +460,10 @@ return createBaseItem()
                     "images/ship/ship_part.png"));
   }
 
+  /**
+   * Creates a tool that one use can get fish from the ocean or lava
+   * @return a fishing rod
+   */
   public static Entity createFishingRod() {
     return createBaseItem()
             .addComponent(new TextureRenderComponent("images/fishing_rod.png"))
@@ -463,6 +471,10 @@ return createBaseItem()
                     "Used to fish in the ocean, lakes and lava!" , "images/fishing_rod.png"));
   }
 
+  /**
+   * Creates a fish item
+   * @return a lava eel (food item)
+   */
   public static Entity createLavaEel() {
     return createBaseItem()
             .addComponent(new TextureRenderComponent("images/lava_eel.png"))
@@ -470,6 +482,10 @@ return createBaseItem()
                     "Huge eel that dwells in the bottoms of volcano's" , "images/lava_eel.png"));
   }
 
+  /**
+   * Creates a fish item
+   * @return a salmon (food item)
+   */
   public static Entity createSalmon() {
     return createBaseItem()
             .addComponent(new TextureRenderComponent("images/salmon.png"))
@@ -477,6 +493,10 @@ return createBaseItem()
                     "A common fish that lives near the shorelines" , "images/salmon.png"));
   }
 
+  /**
+   * Creates a fish item
+   * @return a yak3 (food item)
+   */
   public static Entity createYak3() {
     return createBaseItem()
             .addComponent(new TextureRenderComponent("images/fish/fish_11.png"))
@@ -484,12 +504,21 @@ return createBaseItem()
                     "BRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" , "images/fish/fish_11.png"));
   }
 
+  /**
+   * Creates a fish item
+   * @return a netty (food item)
+   */
   public static Entity createNetty() {
     return createBaseItem()
             .addComponent(new TextureRenderComponent("images/fish/fish_1.png"))
             .addComponent(new ItemComponent("Netty", ItemType.FOOD,
                     "A thicc fish!" , "images/fish/fish_1.png"));
   }
+
+  /**
+   * Creates a fish item
+   * @return a lola (food item)
+   */
   public static Entity createLola() {
     return createBaseItem()
             .addComponent(new TextureRenderComponent("images/fish/fish_2.png"))
@@ -497,6 +526,10 @@ return createBaseItem()
                     "smash" , "images/fish/fish_2.png"));
   }
 
+  /**
+   * Creates a fish item
+   * @return a larry (food item)
+   */
   public static Entity createLarry() {
     return createBaseItem()
             .addComponent(new TextureRenderComponent("images/fish/fish_3.png"))
@@ -504,6 +537,10 @@ return createBaseItem()
                     "LIGHTWEIGHT BABY!" , "images/fish/fish_3.png"));
   }
 
+  /**
+   * Creates a fish item
+   * @return a Braydan (food item)
+   */
   public static Entity createBraydan() {
     return createBaseItem()
             .addComponent(new TextureRenderComponent("images/fish/fish_4.png"))
@@ -511,6 +548,10 @@ return createBaseItem()
                     "A somewhat thicc fish that loves seaweed" , "images/fish/fish_4.png"));
   }
 
+  /**
+   * Creates a fish item
+   * @return a Harry (food item)
+   */
   public static Entity createHarry() {
     return createBaseItem()
             .addComponent(new TextureRenderComponent("images/fish/fish_5.png"))
@@ -518,6 +559,10 @@ return createBaseItem()
                     "HARRY!" , "images/fish/fish_5.png"));
   }
 
+  /**
+   * Creates a fish item
+   * @return a mr Krabs fish (food item)
+   */
   public static Entity createMrKrabs() {
     return createBaseItem()
             .addComponent(new TextureRenderComponent("images/fish/fish_6.png"))
@@ -525,6 +570,10 @@ return createBaseItem()
                     "A delicate krab that loves money" , "images/fish/fish_6.png"));
   }
 
+  /**
+   * Creates a fish item
+   * @return a Phar Lap (food item)
+   */
   public static Entity createPharLap() {
     return createBaseItem()
             .addComponent(new TextureRenderComponent("images/fish/fish_10.png"))
@@ -532,6 +581,10 @@ return createBaseItem()
                     "Fast asf boi" , "images/fish/fish_10.png"));
   }
 
+  /**
+   * Creates a fish item
+   * @return a Bryton fish (food item)
+   */
   public static Entity createBryton() {
     return createBaseItem()
             .addComponent(new TextureRenderComponent("images/fish/fish_8.png"))
@@ -539,6 +592,10 @@ return createBaseItem()
                     "A easily distracted fish that sometimes struggles." , "images/fish/fish_8.png"));
   }
 
+  /**
+   * Creates a fish item
+   * @return a Sanders (food item)
+   */
   public static Entity createSanders() {
     return createBaseItem()
             .addComponent(new TextureRenderComponent("images/fish/fish_9.png"))
@@ -546,7 +603,10 @@ return createBaseItem()
                     "Tastes like chicken" , "images/fish/fish_9.png"));
   }
 
-
+  /**
+   * Creates a fish item
+   * @return a Winston Churchill (food item)
+   */
   public static Entity createChurchill() {
     return createBaseItem()
             .addComponent(new TextureRenderComponent("images/fish/fish_7.png"))
@@ -555,6 +615,10 @@ return createBaseItem()
                     "images/fish/fish_7.png"));
   }
 
+  /**
+   * Creates a fish item
+   * @return a yellow fish
+   */
   public static Entity createGoldenFish() {
     AuraLightComponent lightComponent = new AuraLightComponent();
     lightComponent.toggleLight();
@@ -564,5 +628,13 @@ return createBaseItem()
             .addComponent(new ItemComponent("GOLDEN_STATUE", ItemType.PLACEABLE,
                     "A golden fish, the rarest of them all. A placeable collector's item.","images/golden_fish.png"))
             .addComponent(lightComponent);
+  }
+
+  public static Entity createTeleportDevice() {
+    return createBaseItem()
+            .addComponent(new TextureRenderComponent("images/teleporter.png"))
+            .addComponent(new ItemComponent("TeleportDevice", ItemType.TELEPORT_DEVICE,
+                    "beep boop",
+                    "images/teleporter.png"));
   }
 }
