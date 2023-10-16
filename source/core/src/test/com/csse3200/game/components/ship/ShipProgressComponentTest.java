@@ -44,20 +44,20 @@ class ShipProgressComponentTest {
 			itemFactory.when(ItemFactory::createTeleportDevice).thenReturn(new Entity());
 
 			ship.getEvents().trigger(ShipFactory.events.ADD_PART.name(), 1);
-			assertEquals(shipProgressComponent.getProgress(), 1);
-			assertEquals(shipProgressComponent.getUnlockedFeatures().size(), 0);
+			assertEquals(1, shipProgressComponent.getProgress());
+			assertEquals(0, shipProgressComponent.getUnlockedFeatures().size());
 
 			ship.getEvents().trigger(ShipFactory.events.ADD_PART.name(), 1);
-			assertEquals(shipProgressComponent.getProgress(), 2);
+			assertEquals(2, shipProgressComponent.getProgress());
 			assertTrue(shipProgressComponent.getUnlockedFeatures().contains(ShipProgressComponent.Feature.LIGHT));
 
 			ship.getEvents().trigger(ShipFactory.events.ADD_PART.name(), 4);
-			assertEquals(shipProgressComponent.getProgress(), 6);
+			assertEquals(6, shipProgressComponent.getProgress());
 			assertTrue(shipProgressComponent.getUnlockedFeatures().contains(ShipProgressComponent.Feature.LIGHT));
 			assertTrue(shipProgressComponent.getUnlockedFeatures().contains(ShipProgressComponent.Feature.BED));
 
 			ship.getEvents().trigger(ShipFactory.events.ADD_PART.name(), 4);
-			assertEquals(shipProgressComponent.getProgress(), 10);
+			assertEquals(10, shipProgressComponent.getProgress());
 			assertTrue(shipProgressComponent.getUnlockedFeatures().contains(ShipProgressComponent.Feature.LIGHT));
 			assertTrue(shipProgressComponent.getUnlockedFeatures().contains(ShipProgressComponent.Feature.BED));
 			assertTrue(shipProgressComponent.getUnlockedFeatures().contains(ShipProgressComponent.Feature.TELEPORT));

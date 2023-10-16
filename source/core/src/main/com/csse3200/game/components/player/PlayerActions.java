@@ -18,6 +18,8 @@ import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ProjectileFactory;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.services.ParticleService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.sound.EffectSoundFile;
 import com.csse3200.game.services.sound.InvalidSoundFileException;
@@ -47,6 +49,11 @@ public class PlayerActions extends Component {
   private float speedMultiplier = 1f;
   private float damageMultiplier = 1f;
   int swordDamage = 5;
+
+  private static float weatherSpeedModifier = 1.0f;
+  private static boolean isWeatherAffectingSpeed = false;
+
+  boolean waitingForEnd;
 
   enum Direction {
     RIGHT("right"),
@@ -94,10 +101,22 @@ public class PlayerActions extends Component {
 	entity.getEvents().addListener(events.UNFREEZE.name(), this::unfreeze);
     entity.getEvents().addListener("setSpeedMultiplier", this::setSpeedMultiplier);
     entity.getEvents().addListener("setDamageMultiplier", this::setDamageMultiplier);
+    ServiceLocator.getGameArea().getClimateController().getEvents().addListener(
+            "startPlayerMovementSpeedEffect", this::startPlayerMovementSpeedEffect);
+    ServiceLocator.getGameArea().getClimateController().getEvents().addListener(
+            "stopPlayerMovementSpeedEffect", this::stopPlayerMovementSpeedEffect);
   }
 
   @Override
   public void update() {
+    if (!waitingForEnd && entity.getComponent(CombatStatsComponent.class).isDead()) {
+      entity.getEvents().trigger("bye bye");
+      waitingForEnd = true;
+      return;
+    } else if (waitingForEnd && entity.getComponent(AnimationRenderComponent.class).isFinished()) {
+      ServiceLocator.getMissionManager().getEvents().trigger("loseScreen", "You died");
+      return;
+    }
     if (entity.getComponent(PlayerAnimationController.class).readyToPlay()) {
       if (moving && !isStunned() && !frozen) {
         updateSpeed();
@@ -178,12 +197,21 @@ public class PlayerActions extends Component {
       velocityScale.scl(terrainSpeedModifier);
     }
 
+    if (isWeatherAffectingSpeed) {
+      velocityScale.scl(weatherSpeedModifier);
+    }
+
     velocityScale.scl(speedMultiplier);
 
     Vector2 desiredVelocity = moveDirection.cpy().scl(velocityScale);
     // impulse = (desiredVel - currentVel) * mass
     Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
+
     body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
+
+    if (impulse.len() > 4) {
+      entity.getEvents().trigger(ParticleService.START_EVENT, ParticleService.ParticleEffectType.DIRT_EFFECT);
+    }
   }
 
   public float getPrevMoveDirection() {
@@ -285,6 +313,7 @@ public class PlayerActions extends Component {
           if(difference <= 45) {
             combat.addHealth((int) -(swordDamage * damageMultiplier));
             animal.getEvents().trigger("hit", entity);
+            ServiceLocator.getParticleService().startEffectAtPosition(ParticleService.ParticleEffectType.ATTACK_EFFECT, animal.getCenterPosition());
             animal.getEvents().trigger("panicStart");
           }
       }
@@ -363,7 +392,7 @@ public class PlayerActions extends Component {
 
   /**
    * When in the tractor inputs should be muted, this handles that.
-   * 
+   *
    * @return if the players inputs should be muted
    */
   public boolean isMuted() {
@@ -379,10 +408,18 @@ public class PlayerActions extends Component {
     return stunComponent.isStunned();
   }
 
+  /**
+   * Sets speed multiplier of player to change walking and running speed.
+   * @param multiplier float in which to multiply speed by
+   */
   public void setSpeedMultiplier(float multiplier) {
     this.speedMultiplier = multiplier;
   }
 
+  /**
+   * Sets damage multiplier of player to change sword and gun damage
+   * @param multiplier float in which to multiply damage by
+   */
   public void setDamageMultiplier(float multiplier) {
     this.damageMultiplier = multiplier;
   }
@@ -390,4 +427,15 @@ public class PlayerActions extends Component {
   public void setMuted(boolean muted) {
     this.muted = muted;
   }
+
+  private void startPlayerMovementSpeedEffect(float movementMultiplier) {
+    weatherSpeedModifier = movementMultiplier;
+    isWeatherAffectingSpeed = true;
+  }
+
+  private void stopPlayerMovementSpeedEffect() {
+    weatherSpeedModifier = 1.0f;
+    isWeatherAffectingSpeed = false;
+  }
+
 }

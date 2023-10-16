@@ -3,13 +3,11 @@ package com.csse3200.game.ui.terminal.commands;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,7 +35,7 @@ class AddWeatherTest {
 	@Test
 	void addSolarSurge() {
 		GameArea gameArea = mock(GameArea.class);
-		ClimateController climateController = mock(ClimateController.class);
+		ClimateController climateController = spy(new ClimateController());
 
 		ServiceLocator.registerGameArea(gameArea);
 		when(gameArea.getClimateController()).thenReturn(climateController);
@@ -55,7 +53,7 @@ class AddWeatherTest {
 	@Test
 	void addAcidShower() {
 		GameArea gameArea = mock(GameArea.class);
-		ClimateController climateController = mock(ClimateController.class);
+		ClimateController climateController = spy(new ClimateController());
 
 		ServiceLocator.registerGameArea(gameArea);
 		when(gameArea.getClimateController()).thenReturn(climateController);
