@@ -193,6 +193,7 @@ public class ItemActions extends Component {
   }
 
   private boolean teleport(Entity player) {
+    player.getEvents().trigger(ParticleService.START_EVENT, ParticleService.ParticleEffectType.TELEPORT_EFFECT);
     player.setPosition(new Vector2(20, 83));
     return true;
   }

@@ -20,14 +20,14 @@ timeline0: 0.0
 - Life -
 lowMin: 0.0
 lowMax: 0.0
-highMin: 250.0
-highMax: 250.0
-relative: false
+highMin: 150.0
+highMax: 150.0
+relative: true
 scalingCount: 1
 scaling0: 1.0
 timelineCount: 1
 timeline0: 0.0
-independent: false
+independent: true
 - Life Offset -
 active: false
 independent: false
