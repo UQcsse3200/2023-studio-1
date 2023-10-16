@@ -142,12 +142,13 @@ class SolarSurgeEventTest {
     @Test
     void testTriggerSurge() throws InvalidSoundFileException {
         initialiseEvents();
+        solarSurgeEvent5.startEffect();
+        ServiceLocator.getGameArea().getClimateController().getEvents().trigger("surge");
+        solarSurgeEvent5.stopEffect();
         SolarSurgeEvent solarSurgeEvent6 = new SolarSurgeEvent(0,9,1,1.3f);
         solarSurgeEvent6.startEffect();
         ServiceLocator.getGameArea().getClimateController().getEvents().trigger("surge");
-        verify(ServiceLocator.getSoundService().getEffectsMusicService()).play(EffectSoundFile.SURGE);
-        ServiceLocator.getGameArea().getClimateController().getEvents().trigger("startPanicEffect");
-        ServiceLocator.getGameArea().getClimateController().getEvents().trigger("damagePlants");
+        verify(ServiceLocator.getSoundService().getEffectsMusicService(), times(2)).play(EffectSoundFile.SURGE);
     }
 
     @Test

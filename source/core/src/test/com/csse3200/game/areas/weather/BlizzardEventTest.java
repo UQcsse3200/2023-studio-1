@@ -1,6 +1,7 @@
 package com.csse3200.game.areas.weather;
 
 import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.services.LightService;
 import com.csse3200.game.services.ParticleService;
 import com.csse3200.game.services.ServiceLocator;
@@ -11,6 +12,7 @@ import org.mockito.MockedStatic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
@@ -61,6 +63,19 @@ class BlizzardEventTest {
         verify(ServiceLocator.getLightService(), times(1)).setBrightnessMultiplier(0.54f);
         verify(ServiceLocator.getLightService(), times(1)).setBrightnessMultiplier(0.5133333f);
         verify(ServiceLocator.getLightService(), times(1)).setBrightnessMultiplier(0.56666666f);
+    }
+
+    @Test
+    void testHasSpawnedFireflies() {
+        GameArea gameArea = mock(GameArea.class);
+        ClimateController mockClimateController = mock(ClimateController.class);
+        when(gameArea.getClimateController()).thenReturn(mockClimateController);
+        when(mockClimateController.getEvents()).thenReturn(mock(EventHandler.class));
+        ServiceLocator.registerGameArea(gameArea);
+        initialiseEvents();
+        blizzardEvent1.startEffect();
+        blizzardEvent1.startEffect();
+        verify(mockClimateController.getEvents()).trigger("spawnFireflies");
     }
 
     @Test
