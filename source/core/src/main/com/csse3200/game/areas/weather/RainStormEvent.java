@@ -80,14 +80,7 @@ public class RainStormEvent extends WeatherEvent {
     }
 
     private void scheduleNextLightningStrike() {
-        float timeToEndOfEvent = ((59 - ServiceLocator.getTimeService().getMinute()) / 60.0f + duration - 1) * 30.0f;
-        float timeToStrike = getNextTimeToLightningStrike();
-
-        if (timeToEndOfEvent < timeToStrike) {
-            return;
-        }
-
-        nextLightningStrike = climateControllerEvents.scheduleEvent(timeToStrike, "lightningStrike");
+        nextLightningStrike = climateControllerEvents.scheduleEvent(getNextTimeToLightningStrike(), "lightningStrike");
     }
 
     private void triggerStrike() {
