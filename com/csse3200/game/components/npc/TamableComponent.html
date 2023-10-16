@@ -130,26 +130,30 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Create the event and add it to the event hashmap so the function can be
- called
- and the player can observe the effects.</div>
+ called and the player can observe the effects.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isTamed()" class="member-name-link">isTamed</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFavouriteFood()" class="member-name-link">getFavouriteFood</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Getter for favourite food</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isTamed()" class="member-name-link">isTamed</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Function is used to check to see if the animal has been tamed.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#read(com.badlogic.gdx.utils.Json,com.badlogic.gdx.utils.JsonValue)" class="member-name-link">read</a><wbr>(com.badlogic.gdx.utils.Json&nbsp;json,
- com.badlogic.gdx.utils.JsonValue&nbsp;jsonMap)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTame(boolean)" class="member-name-link">setTame</a><wbr>(boolean&nbsp;value)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#read(com.badlogic.gdx.utils.Json,com.badlogic.gdx.utils.JsonValue)" class="member-name-link">read</a><wbr>(com.badlogic.gdx.utils.Json&nbsp;json,
+ com.badlogic.gdx.utils.JsonValue&nbsp;jsonMap)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTame(boolean)" class="member-name-link">setTame</a><wbr>(boolean&nbsp;value)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Function is used to set the tame value of the animals.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#write(com.badlogic.gdx.utils.Json)" class="member-name-link">write</a><wbr>(com.badlogic.gdx.utils.Json&nbsp;json)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#write(com.badlogic.gdx.utils.Json)" class="member-name-link">write</a><wbr>(com.badlogic.gdx.utils.Json&nbsp;json)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Writes to the json boolean of tamed.</div>
 </div>
 </div>
@@ -203,8 +207,7 @@ loadScripts(document, 'script');</script>
 <h3>create</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">create</span>()</div>
 <div class="block">Create the event and add it to the event hashmap so the function can be
- called
- and the player can observe the effects.</div>
+ called and the player can observe the effects.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="../Component.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../Component.html" title="class in com.csse3200.game.components">Component</a></code></dd>
@@ -259,6 +262,17 @@ loadScripts(document, 'script');</script>
 <dd><code>read</code>&nbsp;in interface&nbsp;<code>com.badlogic.gdx.utils.Json.Serializable</code></dd>
 <dt>Overrides:</dt>
 <dd><code><a href="../Component.html#read(com.badlogic.gdx.utils.Json,com.badlogic.gdx.utils.JsonValue)">read</a></code>&nbsp;in class&nbsp;<code><a href="../Component.html" title="class in com.csse3200.game.components">Component</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getFavouriteFood()">
+<h3>getFavouriteFood</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getFavouriteFood</span>()</div>
+<div class="block">Getter for favourite food</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>favourite food</dd>
 </dl>
 </section>
 </li>
