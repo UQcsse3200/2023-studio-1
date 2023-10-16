@@ -10,7 +10,7 @@ import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -26,6 +26,8 @@ public class ConsumePlayerItemsRewardTest {
 
     InventoryComponent inventoryComponent;
 
+    Entity player;
+
     @BeforeEach
     public void init() {
         GameArea gameArea = mock(SpaceGameArea.class);
@@ -34,11 +36,13 @@ public class ConsumePlayerItemsRewardTest {
         MissionManager missionManager = mock(MissionManager.class);
         ServiceLocator.registerMissionManager(missionManager);
 
-        Entity player = mock(Entity.class);
+        player = mock(Entity.class);
+        when(ServiceLocator.getGameArea().getPlayer()).thenReturn(player);
 
-
-        when(player.getComponent(InventoryComponent.class)).thenReturn(inventoryComponent);
-
+        Map<String, Integer> items = new HashMap<>();
+        items.put("item1", 2);
+        items.put("item2", 1);
+        consumePlayerItemsReward = new ConsumePlayerItemsReward(items);
     }
 
     @AfterEach
@@ -48,19 +52,7 @@ public class ConsumePlayerItemsRewardTest {
 
     @Test
     public void singleItem() {
-        GameArea gameArea = mock(SpaceGameArea.class);
-        ServiceLocator.registerGameArea(gameArea);
 
-        MissionManager missionManager = mock(MissionManager.class);
-        ServiceLocator.registerMissionManager(missionManager);
-
-        Entity player = mock(Entity.class);
-        when(ServiceLocator.getGameArea().getPlayer()).thenReturn(player);
-
-        Map<String, Integer> items = new HashMap<>();
-        items.put("item1", 2);
-        items.put("item2", 1);
-        consumePlayerItemsReward = new ConsumePlayerItemsReward(items);
         inventoryComponent = mock(InventoryComponent.class);
         when(player.getComponent(InventoryComponent.class)).thenReturn(inventoryComponent);
 
@@ -71,5 +63,15 @@ public class ConsumePlayerItemsRewardTest {
         assertTrue(consumePlayerItemsReward.isCollected());
         verify(inventoryComponent, times(2)).removeItem("item1");
         verify(inventoryComponent, times(1)).removeItem("item2");
+    }
+
+    @Test
+    public void testNoInventoryCollect() {
+        inventoryComponent = null;
+        when(player.getComponent(InventoryComponent.class)).thenReturn(inventoryComponent);
+
+        assertFalse(consumePlayerItemsReward.isCollected());
+        consumePlayerItemsReward.collect();
+        assertFalse(consumePlayerItemsReward.isCollected());
     }
 }
