@@ -9,6 +9,7 @@ import java.io.IOException;
 import com.csse3200.game.components.combat.CombatStatsComponent;
 import com.csse3200.game.components.player.HungerComponent;
 import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.services.PlayerHungerService;
@@ -555,12 +556,18 @@ class ItemActionsTest {
     @ParameterizedTest
     @ValueSource(strings = {"Ear of Cosmic Cob", "Nightshade Berry", "Hammer Flower", "Aloe Vera Leaf", "Lave Eel", "French Fries"})
     void testEat(String name) {
+        PlayerHungerService mockPlayerHungerService;
+        EventHandler mockEventHandler;
+        ServiceLocator.registerGameArea(mock(GameArea.class));
+        mockPlayerHungerService = mock(PlayerHungerService.class);
+        ServiceLocator.registerPlayerHungerService(mockPlayerHungerService);
+        mockEventHandler = mock(EventHandler.class);
+        when(ServiceLocator.getPlayerHungerService().getEvents()).thenReturn(mockEventHandler);
+        when(ServiceLocator.getGameArea().getPlayer()).thenReturn(mock(Entity.class));
+        when(ServiceLocator.getGameArea().getPlayer().getComponent(CombatStatsComponent.class)).thenReturn(mock(CombatStatsComponent.class));
         ServiceLocator.registerPhysicsService(new PhysicsService());
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerRenderService(new RenderService());
-        ServiceLocator.registerPlayerHungerService(new PlayerHungerService());
-        GameArea area = mock(GameArea.class);
-        ServiceLocator.registerGameArea(area);
         ServiceLocator.registerResourceService(mock(ResourceService.class));
         FileLoader fl = new FileLoader();
 
