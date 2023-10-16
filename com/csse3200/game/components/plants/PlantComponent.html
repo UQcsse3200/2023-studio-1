@@ -132,7 +132,7 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Constructor used for plant types that have no extra properties.</div>
 </div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int,java.lang.String,java.lang.String,java.lang.String,float,int,int,com.csse3200.game.areas.terrain.CropTileComponent,int%5B%5D,java.lang.String%5B%5D)" class="member-name-link">PlantComponent</a><wbr>(int&nbsp;health,
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int,java.lang.String,java.lang.String,java.lang.String,float,int,int,com.csse3200.game.areas.terrain.CropTileComponent,int%5B%5D)" class="member-name-link">PlantComponent</a><wbr>(int&nbsp;health,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;plantType,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;plantDescription,
@@ -140,8 +140,7 @@ loadScripts(document, 'script');</script>
  int&nbsp;adultLifeSpan,
  int&nbsp;maxHealth,
  <a href="../../areas/terrain/CropTileComponent.html" title="class in com.csse3200.game.areas.terrain">CropTileComponent</a>&nbsp;cropTile,
- int[]&nbsp;growthStageThresholds,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;soundsArray)</code></div>
+ int[]&nbsp;growthStageThresholds)</code></div>
 <div class="col-last odd-row-color">
 <div class="block">Constructor used for plant types that have growthStageThresholds different from the default
  values.</div>
@@ -161,73 +160,79 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#adultLifeSpanCheck()" class="member-name-link">adultLifeSpanCheck</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addAoeAnimatorEntity(com.csse3200.game.entities.Entity)" class="member-name-link">addAoeAnimatorEntity</a><wbr>(<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;animator)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#adultLifeSpanCheck()" class="member-name-link">adultLifeSpanCheck</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Check if the plant has exceeded its adult lifespan.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Called when the entity is created and registered.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#currentInfo()" class="member-name-link">currentInfo</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#currentInfo()" class="member-name-link">currentInfo</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Return a string will all the relevant information about this plant.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dayUpdate()" class="member-name-link">dayUpdate</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dayUpdate()" class="member-name-link">dayUpdate</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Functionality for the plant that needs to update every day.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#decayCheck()" class="member-name-link">decayCheck</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#decayCheck()" class="member-name-link">decayCheck</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Check if the plant is already decaying and needs to die.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#digestion()" class="member-name-link">digestion</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#digestion()" class="member-name-link">digestion</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Check if the space snapper is currently eating.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#forceAdult()" class="member-name-link">forceAdult</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Function used when debugging.</div>
-</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#forceDead()" class="member-name-link">forceDead</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#forceAdult()" class="member-name-link">forceAdult</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Function used when debugging.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#forceDecay()" class="member-name-link">forceDecay</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#forceDead()" class="member-name-link">forceDead</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Function used when debugging.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#forceGrowthStage(java.lang.String)" class="member-name-link">forceGrowthStage</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;growthStage)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#forceDecay()" class="member-name-link">forceDecay</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Function used when debugging.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#forceJuvenile()" class="member-name-link">forceJuvenile</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#forceGrowthStage(java.lang.String)" class="member-name-link">forceGrowthStage</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;growthStage)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#forceJuvenile()" class="member-name-link">forceJuvenile</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Function used when debugging.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#forceSeedling()" class="member-name-link">forceSeedling</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Function used when debugging.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#forceSeedling()" class="member-name-link">forceSeedling</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#forceSprout()" class="member-name-link">forceSprout</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Function used when debugging.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#forceSprout()" class="member-name-link">forceSprout</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAdultLifeSpan()" class="member-name-link">getAdultLifeSpan</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Function used when debugging.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAdultLifeSpan()" class="member-name-link">getAdultLifeSpan</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">get the adult life span of a plant</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAoeAnimatorEntity()" class="member-name-link">getAoeAnimatorEntity</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../areas/terrain/CropTileComponent.html" title="class in com.csse3200.game.areas.terrain">CropTileComponent</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCropTile()" class="member-name-link">getCropTile</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -327,66 +332,84 @@ loadScripts(document, 'script');</script>
 <div class="block">Functionality for the plant that needs to update every minute.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#playSound(java.lang.String)" class="member-name-link">playSound</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;functionCalled)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#playSound(com.csse3200.game.services.sound.EffectSoundFile)" class="member-name-link">playSound</a><wbr>(<a href="../../services/sound/EffectSoundFile.html" title="enum class in com.csse3200.game.services.sound">EffectSoundFile</a>&nbsp;sound)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Determine what sound needs to be called based on the type of interaction.</div>
+<div class="block">Plays the given sound effect.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#read(com.badlogic.gdx.utils.Json,com.badlogic.gdx.utils.JsonValue)" class="member-name-link">read</a><wbr>(com.badlogic.gdx.utils.Json&nbsp;json,
- com.badlogic.gdx.utils.JsonValue&nbsp;plantData)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setAdultLifeSpan(int)" class="member-name-link">setAdultLifeSpan</a><wbr>(int&nbsp;adultLifeSpan)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Set the adult life span of a plant.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setAreaOfEffectRadius()" class="member-name-link">setAreaOfEffectRadius</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#playSound(com.csse3200.game.services.sound.EffectSoundFile,com.csse3200.game.services.sound.EffectSoundFile)" class="member-name-link">playSound</a><wbr>(<a href="../../services/sound/EffectSoundFile.html" title="enum class in com.csse3200.game.services.sound">EffectSoundFile</a>&nbsp;normalSound,
+ <a href="../../services/sound/EffectSoundFile.html" title="enum class in com.csse3200.game.services.sound">EffectSoundFile</a>&nbsp;loreSound)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Set the area of effect radius based on the type of plant.</div>
+<div class="block">Plays one of the given sound effects.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCurrentAge(float)" class="member-name-link">setCurrentAge</a><wbr>(float&nbsp;age)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#read(com.badlogic.gdx.utils.Json,com.badlogic.gdx.utils.JsonValue)" class="member-name-link">read</a><wbr>(com.badlogic.gdx.utils.Json&nbsp;json,
+ com.badlogic.gdx.utils.JsonValue&nbsp;plantData)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCurrentGrowthLevel(int)" class="member-name-link">setCurrentGrowthLevel</a><wbr>(int&nbsp;currentGrowthLevel)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setAdultLifeSpan(int)" class="member-name-link">setAdultLifeSpan</a><wbr>(int&nbsp;adultLifeSpan)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Set the adult life span of a plant.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setAreaOfEffectRadius()" class="member-name-link">setAreaOfEffectRadius</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Set the area of effect radius based on the type of plant.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCurrentAge(float)" class="member-name-link">setCurrentAge</a><wbr>(float&nbsp;age)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCurrentGrowthLevel(int)" class="member-name-link">setCurrentGrowthLevel</a><wbr>(int&nbsp;currentGrowthLevel)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Set the currentGrowthLevel of the plant.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDecay()" class="member-name-link">setDecay</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDecay()" class="member-name-link">setDecay</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Set the plant to decaying stage.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setGrowthStage(int)" class="member-name-link">setGrowthStage</a><wbr>(int&nbsp;newGrowthStage)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setGrowthStage(int)" class="member-name-link">setGrowthStage</a><wbr>(int&nbsp;newGrowthStage)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Set the growth stage of a plant.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setHarvestYields(java.util.Map)" class="member-name-link">setHarvestYields</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;&nbsp;harvestYields)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setHarvestYields(java.util.Map)" class="member-name-link">setHarvestYields</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;&nbsp;harvestYields)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the harvest yield of this plant.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setIsEating()" class="member-name-link">setIsEating</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setIsEating()" class="member-name-link">setIsEating</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Tell the plant it is now eating an animal.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setNumOfDaysAsAdult(int)" class="member-name-link">setNumOfDaysAsAdult</a><wbr>(int&nbsp;numOfDaysAsAdult)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setNumOfDaysAsAdult(int)" class="member-name-link">setNumOfDaysAsAdult</a><wbr>(int&nbsp;numOfDaysAsAdult)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the number of days the plant has been an adult.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPlantHealth(int)" class="member-name-link">setPlantHealth</a><wbr>(int&nbsp;health)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPlantHealth(int)" class="member-name-link">setPlantHealth</a><wbr>(int&nbsp;health)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Set the current plant health</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPlayerInProximity(boolean)" class="member-name-link">setPlayerInProximity</a><wbr>(boolean&nbsp;bool)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPlayerInProximity(boolean)" class="member-name-link">setPlayerInProximity</a><wbr>(boolean&nbsp;bool)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Indicates when the player is in the plants proximity for playing sounds or not.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setSounds(com.csse3200.game.services.sound.EffectSoundFile,com.csse3200.game.services.sound.EffectSoundFile,com.csse3200.game.services.sound.EffectSoundFile,com.csse3200.game.services.sound.EffectSoundFile,com.csse3200.game.services.sound.EffectSoundFile,com.csse3200.game.services.sound.EffectSoundFile,com.csse3200.game.services.sound.EffectSoundFile,com.csse3200.game.services.sound.EffectSoundFile)" class="member-name-link">setSounds</a><wbr>(<a href="../../services/sound/EffectSoundFile.html" title="enum class in com.csse3200.game.services.sound">EffectSoundFile</a>&nbsp;clickSound,
+ <a href="../../services/sound/EffectSoundFile.html" title="enum class in com.csse3200.game.services.sound">EffectSoundFile</a>&nbsp;clickLoreSound,
+ <a href="../../services/sound/EffectSoundFile.html" title="enum class in com.csse3200.game.services.sound">EffectSoundFile</a>&nbsp;decaySound,
+ <a href="../../services/sound/EffectSoundFile.html" title="enum class in com.csse3200.game.services.sound">EffectSoundFile</a>&nbsp;decayLoreSound,
+ <a href="../../services/sound/EffectSoundFile.html" title="enum class in com.csse3200.game.services.sound">EffectSoundFile</a>&nbsp;destroySound,
+ <a href="../../services/sound/EffectSoundFile.html" title="enum class in com.csse3200.game.services.sound">EffectSoundFile</a>&nbsp;destroyLoreSound,
+ <a href="../../services/sound/EffectSoundFile.html" title="enum class in com.csse3200.game.services.sound">EffectSoundFile</a>&nbsp;nearbySound,
+ <a href="../../services/sound/EffectSoundFile.html" title="enum class in com.csse3200.game.services.sound">EffectSoundFile</a>&nbsp;nearbyLoreSound)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the sound effects this plant will play.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateGrowthStage()" class="member-name-link">updateGrowthStage</a>()</code></div>
@@ -452,7 +475,7 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="&lt;init&gt;(int,java.lang.String,java.lang.String,java.lang.String,float,int,int,com.csse3200.game.areas.terrain.CropTileComponent,int[],java.lang.String[])">
+<section class="detail" id="&lt;init&gt;(int,java.lang.String,java.lang.String,java.lang.String,float,int,int,com.csse3200.game.areas.terrain.CropTileComponent,int[])">
 <h3>PlantComponent</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">PlantComponent</span><wbr><span class="parameters">(int&nbsp;health,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
@@ -462,8 +485,7 @@ loadScripts(document, 'script');</script>
  int&nbsp;adultLifeSpan,
  int&nbsp;maxHealth,
  <a href="../../areas/terrain/CropTileComponent.html" title="class in com.csse3200.game.areas.terrain">CropTileComponent</a>&nbsp;cropTile,
- int[]&nbsp;growthStageThresholds,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;soundsArray)</span></div>
+ int[]&nbsp;growthStageThresholds)</span></div>
 <div class="block">Constructor used for plant types that have growthStageThresholds different from the default
  values.</div>
 <dl class="notes">
@@ -477,7 +499,6 @@ loadScripts(document, 'script');</script>
 <dd><code>maxHealth</code> - - The maximum health a plant can reach as an adult</dd>
 <dd><code>cropTile</code> - - The cropTileComponent where the plant will be located.</dd>
 <dd><code>growthStageThresholds</code> - - A list of three integers that represent the growth thresholds.</dd>
-<dd><code>soundsArray</code> - - A list of all sound files file paths as strings</dd>
 </dl>
 </section>
 </li>
@@ -791,6 +812,31 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="setSounds(com.csse3200.game.services.sound.EffectSoundFile,com.csse3200.game.services.sound.EffectSoundFile,com.csse3200.game.services.sound.EffectSoundFile,com.csse3200.game.services.sound.EffectSoundFile,com.csse3200.game.services.sound.EffectSoundFile,com.csse3200.game.services.sound.EffectSoundFile,com.csse3200.game.services.sound.EffectSoundFile,com.csse3200.game.services.sound.EffectSoundFile)">
+<h3>setSounds</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setSounds</span><wbr><span class="parameters">(<a href="../../services/sound/EffectSoundFile.html" title="enum class in com.csse3200.game.services.sound">EffectSoundFile</a>&nbsp;clickSound,
+ <a href="../../services/sound/EffectSoundFile.html" title="enum class in com.csse3200.game.services.sound">EffectSoundFile</a>&nbsp;clickLoreSound,
+ <a href="../../services/sound/EffectSoundFile.html" title="enum class in com.csse3200.game.services.sound">EffectSoundFile</a>&nbsp;decaySound,
+ <a href="../../services/sound/EffectSoundFile.html" title="enum class in com.csse3200.game.services.sound">EffectSoundFile</a>&nbsp;decayLoreSound,
+ <a href="../../services/sound/EffectSoundFile.html" title="enum class in com.csse3200.game.services.sound">EffectSoundFile</a>&nbsp;destroySound,
+ <a href="../../services/sound/EffectSoundFile.html" title="enum class in com.csse3200.game.services.sound">EffectSoundFile</a>&nbsp;destroyLoreSound,
+ <a href="../../services/sound/EffectSoundFile.html" title="enum class in com.csse3200.game.services.sound">EffectSoundFile</a>&nbsp;nearbySound,
+ <a href="../../services/sound/EffectSoundFile.html" title="enum class in com.csse3200.game.services.sound">EffectSoundFile</a>&nbsp;nearbyLoreSound)</span></div>
+<div class="block">Sets the sound effects this plant will play.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>clickSound</code> - Normal sound effect to play when clicked.</dd>
+<dd><code>clickLoreSound</code> - Lore sound effect to play when clicked.</dd>
+<dd><code>decaySound</code> - Normal sound effect to play when decaying.</dd>
+<dd><code>decayLoreSound</code> - Lore sound effect to play when decaying.</dd>
+<dd><code>destroySound</code> - Normal sound effect to play when destroyed.</dd>
+<dd><code>destroyLoreSound</code> - Lore sound effect to play when destroyed.</dd>
+<dd><code>nearbySound</code> - Normal sound effect to play when nearby.</dd>
+<dd><code>nearbyLoreSound</code> - Lore sound effect to play when nearby.</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="isDead()">
 <h3>isDead</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isDead</span>()</div>
@@ -817,15 +863,27 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="playSound(java.lang.String)">
+<section class="detail" id="playSound(com.csse3200.game.services.sound.EffectSoundFile,com.csse3200.game.services.sound.EffectSoundFile)">
 <h3>playSound</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">playSound</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;functionCalled)</span></div>
-<div class="block">Determine what sound needs to be called based on the type of interaction.
- The sounds are separated into tuple pairs for each event.The sound will only be played if the
- player is close enough to the plant. This is determined by the PlantProximityComponent.</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">playSound</span><wbr><span class="parameters">(<a href="../../services/sound/EffectSoundFile.html" title="enum class in com.csse3200.game.services.sound">EffectSoundFile</a>&nbsp;normalSound,
+ <a href="../../services/sound/EffectSoundFile.html" title="enum class in com.csse3200.game.services.sound">EffectSoundFile</a>&nbsp;loreSound)</span></div>
+<div class="block">Plays one of the given sound effects. The normal sound effects will be played 99% of the
+ time, while the lore sound effect will be played 1% of the time.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>functionCalled</code> - The type of interaction with the plant.</dd>
+<dd><code>normalSound</code> - Normal sound effect to play (99% chance of being played).</dd>
+<dd><code>loreSound</code> - Lore sound effect to play (1% chance of being played).</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="playSound(com.csse3200.game.services.sound.EffectSoundFile)">
+<h3>playSound</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">playSound</span><wbr><span class="parameters">(<a href="../../services/sound/EffectSoundFile.html" title="enum class in com.csse3200.game.services.sound">EffectSoundFile</a>&nbsp;sound)</span></div>
+<div class="block">Plays the given sound effect.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>sound</code> - Sound effect to play.</dd>
 </dl>
 </section>
 </li>
@@ -950,6 +1008,18 @@ loadScripts(document, 'script');</script>
 <dt>Parameters:</dt>
 <dd><code>bool</code> - - If the player is/(is not) in proximity.</dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="addAoeAnimatorEntity(com.csse3200.game.entities.Entity)">
+<h3>addAoeAnimatorEntity</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addAoeAnimatorEntity</span><wbr><span class="parameters">(<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;animator)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getAoeAnimatorEntity()">
+<h3>getAoeAnimatorEntity</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">getAoeAnimatorEntity</span>()</div>
 </section>
 </li>
 <li>
