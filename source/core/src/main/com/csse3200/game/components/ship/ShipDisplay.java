@@ -51,7 +51,7 @@ public class ShipDisplay extends UIComponent {
 	}
 
 	private void addActors() {
-		window = new Window("Ship Control", skin);
+		window = new Window("Ship Control", skin, "wooden");
 		window.setVisible(false);
 		stage.addActor(window);
 	}

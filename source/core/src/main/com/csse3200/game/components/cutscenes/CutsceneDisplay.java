@@ -85,11 +85,11 @@ public class CutsceneDisplay extends UIComponent {
         logger.debug("Cutscene table spawned");
 
         if (this.cutsceneType == Cutscene.CutsceneType.ALIEN) {
-            dialogueWindow = new Window("Alien Jaleel", skin);
+            dialogueWindow = new Window("Alien Jaleel", skin, "wooden");
         } else if (this.cutsceneType == Cutscene.CutsceneType.RADIO){
-            dialogueWindow = new Window("Radio", skin);
+            dialogueWindow = new Window("Radio", skin, "wooden");
         } else if (this.cutsceneType == Cutscene.CutsceneType.PLACEABLE) {
-            dialogueWindow = new Window("DJ Khaled's Ghost", skin);
+            dialogueWindow = new Window("DJ Khaled's Ghost", skin, "wooden");
         }
 
         dialogueWindow.getTitleLabel().setAlignment(Align.center);

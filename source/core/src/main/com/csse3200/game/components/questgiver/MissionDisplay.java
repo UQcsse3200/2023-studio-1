@@ -46,7 +46,7 @@ public class MissionDisplay extends UIComponent {
      * Creates a window for the missions and adds it to the stage.
      */
     private void addActors() {
-        window = new Window("Mission Giver", skin);
+        window = new Window("Mission Giver", skin, "wooden");
         window.setVisible(false);
         stage.addActor(window);
     }

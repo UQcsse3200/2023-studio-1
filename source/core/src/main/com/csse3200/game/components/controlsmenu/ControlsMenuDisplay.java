@@ -104,7 +104,6 @@ public class ControlsMenuDisplay extends UIComponent {
 
     rootTable = new Table();
     rootTable.setFillParent(true); // Make the root table fill the screen
-    rootTable.debug();
 
     rootTable.add(transitionFrames).padBottom(-50f);
 
@@ -177,7 +176,7 @@ public class ControlsMenuDisplay extends UIComponent {
       // Start a new row for each control
       controlsTbl.row();
       // Create a button to represent the key press required
-      TextButton keyButton = new TextButton(control.getKey(), skin);
+      TextButton keyButton = new TextButton(control.getKey(), skin, "orange");
       // Create a button to represent the control's description
       Label descriptionLabel = new Label(control.getValue(), skin);
 
