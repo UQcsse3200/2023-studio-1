@@ -144,7 +144,7 @@ public class CombatStatsComponent extends Component {
     if (isDead()) {
 
       EntityType type = entity.getType();
-      EffectSoundFile effect;
+      EffectSoundFile effect = null;
 
       switch(type) {
         case CHICKEN:
@@ -162,8 +162,11 @@ public class CombatStatsComponent extends Component {
         case DRAGONFLY:
           effect = EffectSoundFile.DRAGONFLY_DEATH;
           break;
-        default:
+        case PLAYER:
           effect = EffectSoundFile.PLAYER_DEATH;
+          break;
+        default:
+          effect = null;
       }
       try {
         ServiceLocator.getSoundService().getEffectsMusicService().play(effect);
