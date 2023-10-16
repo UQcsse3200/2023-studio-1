@@ -55,7 +55,6 @@ public class PlayerActions extends Component {
   private float weatherSpeedModifier = 1.0f;
   private boolean isWeatherAffectingSpeed = false;
 
-  private static final String RIGHT_STRING = "right";
   enum Direction {
     RIGHT("right"),
     LEFT("left"),
