@@ -85,11 +85,6 @@ class TamedFollowTaskTest {
         ServiceLocator.registerTimeService(timeService);
         ServiceLocator.registerMissionManager(new MissionManager());
         ServiceLocator.getResourceService().loadAll();
-        EventHandler eventHandler = mock(EventHandler.class);
-        MissionManager missionManager = mock(MissionManager.class);
-        when(missionManager.getEvents()).thenReturn(eventHandler);
-
-        ServiceLocator.registerMissionManager(missionManager);
 
         targetInventory = new InventoryComponent(new ArrayList<>());
         targetInvSpy = spy(targetInventory);
