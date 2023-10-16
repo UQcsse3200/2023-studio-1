@@ -1,13 +1,8 @@
 package com.csse3200.game.components.tasks;
 
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
-import com.csse3200.game.rendering.AnimationEffectsComponent;
-
-import java.util.Objects;
-
 
 /** Follows a target entity until they get too far away or line of sight is lost */
 public class FollowTask extends ChaseTask {

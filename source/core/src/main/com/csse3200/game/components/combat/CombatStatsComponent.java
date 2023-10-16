@@ -128,15 +128,17 @@ public class CombatStatsComponent extends Component {
 		}
 	}
 
+	@Override
 	public void write(Json json) {
 		json.writeObjectStart(this.getClass().getSimpleName());
 		json.writeValue("health", this.health);
 		json.writeObjectEnd();
 	}
 
+	@Override
 	public void read(Json json, JsonValue jsonValue) {
 		jsonValue = jsonValue.get(this.getClass().getSimpleName());
-		int health = jsonValue.getInt("health");
-		setHealth(health);
+		int healthRead = jsonValue.getInt("health");
+		setHealth(healthRead);
 	}
 }

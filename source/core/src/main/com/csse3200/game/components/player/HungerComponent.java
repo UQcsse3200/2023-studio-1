@@ -25,10 +25,8 @@ public class HungerComponent extends Component {
 		if (min % 20 == 0) {
 			increaseHungerLevel(1);
 		}
-		if (checkIfStarving()) {
-			if (min % 10 == 0) {
-				entity.getComponent(CombatStatsComponent.class).addHealth(-5);
-			}
+		if (checkIfStarving() && min % 10 == 0) {
+			entity.getComponent(CombatStatsComponent.class).addHealth(-5);
 		}
 		checkIfStarving();
 	}
@@ -59,11 +57,13 @@ public class HungerComponent extends Component {
 		ServiceLocator.getPlayerHungerService().getEvents().trigger("hungerUpdate", hungerLevel);
 	}
 
+	@Override
 	public void write(Json json) {
 		json.writeObjectStart(this.getClass().getSimpleName());
 		json.writeValue("hunger", this.hungerLevel);
 		json.writeObjectEnd();
 	}
+
 
 	public void read(Json json, JsonValue jsonValue) {
 		jsonValue = jsonValue.get(this.getClass().getSimpleName());

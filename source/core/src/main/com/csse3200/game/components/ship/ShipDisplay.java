@@ -145,6 +145,7 @@ public class ShipDisplay extends UIComponent {
 		super.dispose();
 	}
 
+	@Override
 	public void write(Json json) {
 		json.writeObjectStart(this.getClass().getSimpleName());
 		json.writeValue("lightUnlocked", this.lightUnlocked);
@@ -152,6 +153,7 @@ public class ShipDisplay extends UIComponent {
 		json.writeObjectEnd();
 	}
 
+	@Override
 	public void read(Json json, JsonValue jsonValue) {
 		lightUnlocked = jsonValue.getBoolean("lightUnlocked");
 		sleepUnlocked = jsonValue.getBoolean("sleepUnlocked");
