@@ -2,14 +2,10 @@ package com.csse3200.game.areas.weather;
 
 import com.badlogic.gdx.graphics.Color;
 import com.csse3200.game.areas.GameArea;
-import com.csse3200.game.services.GameTime;
-import com.csse3200.game.services.LightService;
-import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.services.TimeService;
+import com.csse3200.game.services.*;
 import com.csse3200.game.services.sound.*;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.mockito.MockedStatic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +16,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class SolarSurgeEventTest {
 
     private SolarSurgeEvent solarSurgeEvent1, solarSurgeEvent2, solarSurgeEvent3, solarSurgeEvent4, solarSurgeEvent5;
@@ -34,12 +31,6 @@ class SolarSurgeEventTest {
         ClimateController climateController = new ClimateController();
         when(gameArea.getClimateController()).thenReturn(climateController);
         ServiceLocator.registerGameArea(gameArea);
-
-        solarSurgeEvent1 = new SolarSurgeEvent(0, 9, 1, 1.2f);
-        solarSurgeEvent2= new SolarSurgeEvent(1, 2, 2, 1.4f);
-        solarSurgeEvent3 = new SolarSurgeEvent(2, 4, 5, 1.0f);
-        solarSurgeEvent4= new SolarSurgeEvent(3, 3, 3, 0.6f);
-        solarSurgeEvent5 = new SolarSurgeEvent(5, 5, 1, 0.7f);
 
         SoundService soundService = mock(SoundService.class);
         when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
@@ -63,9 +54,16 @@ class SolarSurgeEventTest {
     public void cleanUp() {
         ServiceLocator.clear();
     }
-
+    public void initialiseEvents() {
+        solarSurgeEvent1 = new SolarSurgeEvent(0, 9, 1, 1.2f);
+        solarSurgeEvent2 = new SolarSurgeEvent(1, 2, 2, 1.4f);
+        solarSurgeEvent3 = new SolarSurgeEvent(2, 4, 5, 1.0f);
+        solarSurgeEvent4 = new SolarSurgeEvent(3, 3, 3, 0.6f);
+        solarSurgeEvent5 = new SolarSurgeEvent(5, 5, 1, 0.7f);
+    }
     @Test
     void testIsExpired() {
+        initialiseEvents();
         // case: numHoursUntil == 0 and duration > 0
         assertFalse(solarSurgeEvent1.isExpired());
         // case: numHoursUntil > 0 and duration > 0
@@ -84,12 +82,14 @@ class SolarSurgeEventTest {
 
     @Test
     void testIsActiveButNotIsExpired() {
+        initialiseEvents();
         assertFalse(solarSurgeEvent1.isExpired());
         assertTrue(solarSurgeEvent1.isActive());
     }
 
     @Test
     void testStartEffectLightingSystem() {
+        initialiseEvents();
         solarSurgeEvent1.startEffect();
         solarSurgeEvent2.startEffect();
         solarSurgeEvent3.startEffect();
@@ -98,6 +98,7 @@ class SolarSurgeEventTest {
 
     @Test
     void testGetAuroraColourOffset() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        initialiseEvents();
         SolarSurgeEvent solarSurgeEvent = new SolarSurgeEvent(0,10,1,1.2f);
         Method method = SolarSurgeEvent.class.getDeclaredMethod("getAuroraColourOffset", float.class);
         method.setAccessible(true);
@@ -111,16 +112,19 @@ class SolarSurgeEventTest {
 
     @Test
     void testStartEffectTriggersEvents() {
+        initialiseEvents();
         solarSurgeEvent1.startEffect();
         ServiceLocator.getGameArea().getClimateController().getEvents().trigger("startWaterLevelEffect", 0.0082f);
         ServiceLocator.getGameArea().getClimateController().getEvents().trigger("startPlantAoeEffect", 2f);
         solarSurgeEvent4.startEffect();
         ServiceLocator.getGameArea().getClimateController().getEvents().trigger("startWaterLevelEffect", 0.0046f);
         ServiceLocator.getGameArea().getClimateController().getEvents().trigger("startPlantAoeEffect", 1f);
+        verify(ServiceLocator.getLightService(), times(2)).setBrightnessMultiplier(0.0f);
     }
 
     @Test
     void testStartEffectPlaysSound() throws InvalidSoundFileException {
+        initialiseEvents();
         solarSurgeEvent4.startEffect();
         solarSurgeEvent5.startEffect();
         verify(ServiceLocator.getSoundService().getEffectsMusicService(), times(2)).play(EffectSoundFile.SOLAR_SURGE, true);
@@ -128,6 +132,7 @@ class SolarSurgeEventTest {
 
     @Test
     void testStopEffect() {
+        initialiseEvents();
         solarSurgeEvent1.stopEffect();
         solarSurgeEvent2.stopEffect();
         solarSurgeEvent3.stopEffect();
@@ -136,12 +141,51 @@ class SolarSurgeEventTest {
 
     @Test
     void testTriggerSurge() throws InvalidSoundFileException {
+        initialiseEvents();
+        solarSurgeEvent5.startEffect();
+        ServiceLocator.getGameArea().getClimateController().getEvents().trigger("surge");
+        solarSurgeEvent5.stopEffect();
         SolarSurgeEvent solarSurgeEvent6 = new SolarSurgeEvent(0,9,1,1.3f);
         solarSurgeEvent6.startEffect();
         ServiceLocator.getGameArea().getClimateController().getEvents().trigger("surge");
-        verify(ServiceLocator.getSoundService().getEffectsMusicService()).play(EffectSoundFile.SURGE);
-        ServiceLocator.getGameArea().getClimateController().getEvents().trigger("startPanicEffect");
-        ServiceLocator.getGameArea().getClimateController().getEvents().trigger("damagePlants");
+        verify(ServiceLocator.getSoundService().getEffectsMusicService(), times(2)).play(EffectSoundFile.SURGE);
+    }
+
+    @Test
+    @Order(1)
+    void testThrowsInvalidSoundFileException() {
+        try (MockedStatic<LoggerFactory> mockedStatic = mockStatic(LoggerFactory.class)) {
+            final Logger testLogger = mock(Logger.class);
+            final Logger fakeLogger = mock(Logger.class);
+            mockedStatic.when(() -> LoggerFactory.getLogger(BackgroundMusicService.class)).thenReturn(fakeLogger);
+            mockedStatic.when(() -> LoggerFactory.getLogger(SoundService.class)).thenReturn(fakeLogger);
+            mockedStatic.when(() -> LoggerFactory.getLogger(SolarSurgeEvent.class)).thenReturn(testLogger);
+            ServiceLocator.registerSoundService(new SoundService());
+            SolarSurgeEvent exceptionSolarSurgeEvent = new testSolarSurgeEvent(5,5,5,5);
+            exceptionSolarSurgeEvent.startEffect();
+            verify(testLogger).error(anyString(), any(InvalidSoundFileException.class));
+            ServiceLocator.getGameArea().getClimateController().getEvents().trigger("surge");
+            verify(testLogger, times(2)).error(anyString(), any(InvalidSoundFileException.class));
+
+            SoundService mockSound = mock(SoundService.class);
+            EffectsMusicService mockEffect = mock(EffectsMusicService.class);
+            ServiceLocator.registerSoundService(mockSound);
+            when(mockSound.getEffectsMusicService()).thenReturn(mockEffect);
+            doThrow(InvalidSoundFileException.class).when(mockEffect).stop(EffectSoundFile.SOLAR_SURGE, 0);
+            exceptionSolarSurgeEvent.stopEffect();
+            verify(testLogger, times(3)).error(anyString(), any(InvalidSoundFileException.class));
+            ServiceLocator.getGameArea().getClimateController().getEvents().trigger("surge");
+            verify(testLogger, times(3)).error(anyString(), any(InvalidSoundFileException.class));
+        } catch (InvalidSoundFileException e) {
+            fail();
+        }
+    }
+
+    public class testSolarSurgeEvent extends SolarSurgeEvent {
+        public Logger logger = LoggerFactory.getLogger(SolarSurgeEvent.class);
+        public testSolarSurgeEvent(int numHoursUntil, int duration, int priority, float severity) {
+            super(numHoursUntil, duration, priority, severity);
+        }
     }
 
 }
