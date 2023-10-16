@@ -8,6 +8,7 @@ import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.quests.Quest;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +35,11 @@ public class CombatStatsComponent extends Component {
   @Override
   public void create() {
     entity.getEvents().addListener("hit", this::hitFromEntity);
+    entity.getEvents().addListener("lose", this::lose);
+  }
+
+  private void lose() {
+    ServiceLocator.getMissionManager().getEvents().trigger("loseScreen", "You died");
   }
 
   /**
@@ -115,10 +121,6 @@ public class CombatStatsComponent extends Component {
   public void handleDeath() {
     if(!Objects.equals(entity.getType(), EntityType.PLAYER)) {
       ServiceLocator.getGameArea().removeEntity(entity);
-    } else {
-      List<Quest> activeQuests = ServiceLocator.getMissionManager().getActiveQuests();
-      Quest mainQuest = activeQuests.get(activeQuests.size()-1);
-      ServiceLocator.getMissionManager().getEvents().trigger("loseScreen", mainQuest.getName());
     }
   }
 
