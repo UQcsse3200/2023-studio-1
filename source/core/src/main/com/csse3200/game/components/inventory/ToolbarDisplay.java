@@ -77,11 +77,6 @@ public class ToolbarDisplay extends UIComponent {
      */
 
     private void updateToolbar() {
-        tooltips.forEach((index ,tooltip) -> {
-            if (tooltip != null) {
-                tooltip.hide();
-            }});
-
         for (int i = 0; i < 10; i++){
             int idx = i + 1;
             if (idx == 10) {
@@ -240,6 +235,10 @@ public class ToolbarDisplay extends UIComponent {
         }
     }
     public void addTooltips() {
+        tooltips.forEach((index ,tooltip) -> {
+            if (tooltip != null) {
+                tooltip.hide();
+            }});
         TextTooltip tooltip;
         int i = 0;
         for (ItemSlot slot : slots) {
