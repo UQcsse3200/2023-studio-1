@@ -100,7 +100,7 @@ public class PlantCropsAchievement extends Achievement {
      * @param ignored The {@link String} representation of the plant type. Irrelevant for this
      *                {@link Achievement}.
      */
-    private void updateState(String ignored) {
+    protected void updateState(String ignored) {
         if (++numberOfCropsPlanted >= target) {
             numberOfCropsPlanted = target;
         }

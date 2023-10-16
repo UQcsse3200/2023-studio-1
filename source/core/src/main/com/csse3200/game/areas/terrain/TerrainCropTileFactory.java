@@ -1,5 +1,6 @@
 package com.csse3200.game.areas.terrain;
 
+import com.csse3200.game.components.ParticleEffectComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,6 +49,7 @@ public class TerrainCropTileFactory {
 				.addComponent(new ColliderComponent().setSensor(true))
 				.addComponent(new PhysicsComponent())
 				.addComponent(renderComponent)
+				.addComponent(new ParticleEffectComponent())
 				.addComponent(new CropTileComponent(CropTileConfig.INITIAL_WATER_CONTENT, CropTileConfig.INITIAL_SOIL_QUALITY));
 
 		tile.setPosition(position);

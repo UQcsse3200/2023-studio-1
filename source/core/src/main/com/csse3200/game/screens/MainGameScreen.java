@@ -13,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.SpaceGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.areas.weather.WeatherEventDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.maingame.PauseMenuActions;
@@ -80,9 +79,13 @@ public class MainGameScreen extends ScreenAdapter {
             "images/time_system_ui/indicator_21.png",
             "images/time_system_ui/indicator_22.png",
             "images/time_system_ui/indicator_23.png",
-            "images/bars_ui/bar_outline.png",
-            "images/bars_ui/healthy_fill.png",
-            "images/bars_ui/danger_fill.png",
+            "images/status_ui/status_frame.png",
+            "images/status_ui/health_fill.png",
+            "images/status_ui/health_icon.png",
+            "images/status_ui/hunger_fill.png",
+            "images/status_ui/hunger_icon.png",
+            "images/status_ui/oxygen_fill.png",
+            "images/status_ui/oxygen_icon.png",
             "images/weather_event/weather-border.png",
             "images/weather_event/acid-rain.png",
             "images/weather_event/solar-flare.png"
@@ -195,6 +198,7 @@ public class MainGameScreen extends ScreenAdapter {
                 if (!ServiceLocator.getTimeService().isPaused()) {
                     physicsEngine.update();
                     ServiceLocator.getEntityService().update();
+                    ServiceLocator.getGameArea().getClimateController().updateClimate();
                 }
                 ServiceLocator.getTimeService().update();
                 renderer.render();
@@ -274,7 +278,6 @@ public class MainGameScreen extends ScreenAdapter {
                 .addComponent(inputComponent)
                 .addComponent(new TerminalDisplay())
                 .addComponent(new PlantInfoDisplayComponent())
-                .addComponent(new WeatherEventDisplay())
             // NOTE: VERY IMPORTANT
             // UI components that require transitions must be added AFTER those that don't, otherwise screen
             // entities added after them will transition even if you don't want them to. Add components with
@@ -285,7 +288,6 @@ public class MainGameScreen extends ScreenAdapter {
                 .addComponent(new HungerBar())
                 .addComponent(new PlantInfoDisplayComponent())
 
-                .addComponent(new WeatherEventDisplay())
                 .addComponent(new HealthDisplay())
                 .addComponent(new ToggleableMap());
 

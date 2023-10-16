@@ -47,7 +47,7 @@ public class CollectItemsAchievement extends Achievement {
      * Updating the state of the CollectItemsAchievement. If called this method will increment the numberOfItemsCollected
      * and then notifyUpdate().
      */
-    private void updateState() {
+    protected void updateState() {
         if (++numberOfItemsCollected >= numberOfItemsToCollect) {
             numberOfItemsCollected = numberOfItemsToCollect;
         }

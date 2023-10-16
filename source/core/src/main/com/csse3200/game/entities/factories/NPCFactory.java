@@ -10,11 +10,13 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.AuraLightComponent;
+import com.csse3200.game.components.ParticleEffectComponent;
 import com.csse3200.game.components.combat.CombatStatsComponent;
 import com.csse3200.game.components.combat.TouchAttackComponent;
 import com.csse3200.game.components.combat.attackpatterns.BatAttackPattern;
 import com.csse3200.game.components.combat.attackpatterns.DragonflyAttackPattern;
 import com.csse3200.game.components.combat.attackpatterns.OxygenEaterAttackPattern;
+import com.csse3200.game.components.combat.attackpatterns.ShipEaterAttackPattern;
 import com.csse3200.game.components.npc.*;
 import com.csse3200.game.components.npc.AnimalAnimationController;
 import com.csse3200.game.components.npc.FireflyScareComponent;
@@ -347,6 +349,42 @@ public class NPCFactory {
   }
 
   /**
+   * Creates a Ship Eater entity.
+   * @return Ship Eater entity
+   */
+  public static Entity createShipEater() {
+
+    AnimationRenderComponent animator = new AnimationRenderComponent(
+            ServiceLocator.getResourceService().getAsset("images/shipeater.atlas", TextureAtlas.class),
+            16f
+    );
+
+    animator.addAnimation("running", 0.5f, Animation.PlayMode.LOOP);
+    animator.addAnimation("eating", 0.5f, Animation.PlayMode.LOOP);
+    animator.addAnimation("hiding", 0.5f, Animation.PlayMode.LOOP);
+    animator.addAnimation("digging", 0.5f, Animation.PlayMode.LOOP);
+    animator.startAnimation("running");
+
+    AITaskComponent aiTaskComponent = new AITaskComponent()
+            .addTask(new MoveToShipTask(5, new Vector2(2f, 2f), 0.5f));
+
+    Entity shipEater = createBaseAnimal(EntityType.SHIP_EATER)
+            .addComponent(new InteractionDetector(3f,
+                    new ArrayList<>(Arrays.asList((EntityType.PLAYER), (EntityType.SHIP)))))
+            .addComponent(animator)
+            .addComponent(new ShipEaterAttackPattern(2f))
+            .addComponent(new ShipEaterAnimationController())
+            .addComponent(new ShipEaterScareComponent())
+            .addComponent(new CombatStatsComponent(50, 0))
+            .addComponent(aiTaskComponent);
+
+    shipEater.getComponent(ColliderComponent.class).setDensity(100);
+
+    shipEater.addComponent(new EntityIndicator(shipEater));
+    return shipEater;
+  }
+
+  /**
    * Creates a Dragonfly entity
    *
    * @return Dragonfly entity
@@ -470,6 +508,7 @@ public class NPCFactory {
             .addComponent(new PhysicsMovementComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
             .addComponent(new BlinkComponent())
+            .addComponent(new ParticleEffectComponent())
             .addComponent(animationEffectsComponent)
             .addComponent(new AnimalEffectsController());
 
@@ -478,29 +517,6 @@ public class NPCFactory {
     }
 
     return animal;
-  }
-
-  /**
-   * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.
-   *
-   * @return entity
-   */
-  private static Entity createBaseNPC(Entity target) {
-    AITaskComponent aiComponent =
-        new AITaskComponent()
-            .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-            .addTask(new ChaseTask(target, 10, 3f, 4f, Vector2Utils.ONE));
-    Entity npc =
-        new Entity()
-            .addComponent(new PhysicsComponent())
-            .addComponent(new PhysicsMovementComponent())
-            .addComponent(new ColliderComponent())
-            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-            .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
-            .addComponent(aiComponent);
-
-    PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
-    return npc;
   }
 
   private NPCFactory() {

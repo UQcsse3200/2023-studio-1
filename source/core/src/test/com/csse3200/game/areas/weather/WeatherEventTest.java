@@ -7,6 +7,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 import com.badlogic.gdx.utils.Json;
+import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.services.ServiceLocator;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,6 +19,11 @@ class WeatherEventTest {
 
     @BeforeEach
     public void setUp() {
+        GameArea gameArea = mock(GameArea.class);
+        ClimateController climateController = new ClimateController();
+        when(gameArea.getClimateController()).thenReturn(climateController);
+        ServiceLocator.registerGameArea(gameArea);
+
         weatherEvent1 = new WeatherEvent(0, 10, 1, 1.2f) {
             @Override
             public void startEffect() {
@@ -25,6 +33,11 @@ class WeatherEventTest {
             @Override
             public void stopEffect() {
 
+            }
+
+            @Override
+            public String toString() {
+                return null;
             }
         };
         weatherEvent2 = new WeatherEvent(1, 2, 2, 1.4f) {
@@ -37,6 +50,11 @@ class WeatherEventTest {
             public void stopEffect() {
 
             }
+
+            @Override
+            public String toString() {
+                return null;
+            }
         };
         weatherEvent3 = new WeatherEvent(2, 4, 5, 1.0f) {
             @Override
@@ -47,6 +65,11 @@ class WeatherEventTest {
             @Override
             public void stopEffect() {
 
+            }
+
+            @Override
+            public String toString() {
+                return null;
             }
         };
         weatherEvent4 = new WeatherEvent(3, 3, 3, 1.3f) {
@@ -59,6 +82,11 @@ class WeatherEventTest {
             public void stopEffect() {
 
             }
+
+            @Override
+            public String toString() {
+                return null;
+            }
         };
         weatherEvent5 = new WeatherEvent(5, 5, 1, 1.1f) {
             @Override
@@ -70,7 +98,17 @@ class WeatherEventTest {
             public void stopEffect() {
 
             }
+
+            @Override
+            public String toString() {
+                return null;
+            }
         };
+    }
+
+    @AfterEach
+    public void cleanUp() {
+        ServiceLocator.clear();
     }
 
     @Test
@@ -100,29 +138,29 @@ class WeatherEventTest {
 
     @Test
     void testGetDuration() {
-        assertEquals(weatherEvent1.getDuration(), 10);
-        assertEquals(weatherEvent2.getDuration(), 2);
-        assertEquals(weatherEvent3.getDuration(), 4);
-        assertEquals(weatherEvent4.getDuration(), 3);
-        assertEquals(weatherEvent5.getDuration(), 5);
+        assertEquals(10, weatherEvent1.getDuration());
+        assertEquals(2, weatherEvent2.getDuration());
+        assertEquals(4, weatherEvent3.getDuration());
+        assertEquals(3, weatherEvent4.getDuration());
+        assertEquals(5, weatherEvent5.getDuration());
     }
 
     @Test
     void testGetNumHoursUntil() {
-        assertEquals(weatherEvent1.getNumHoursUntil(), 0);
-        assertEquals(weatherEvent2.getNumHoursUntil(), 1);
-        assertEquals(weatherEvent3.getNumHoursUntil(), 2);
-        assertEquals(weatherEvent4.getNumHoursUntil(), 3);
-        assertEquals(weatherEvent5.getNumHoursUntil(), 5);
+        assertEquals(0, weatherEvent1.getNumHoursUntil());
+        assertEquals(1, weatherEvent2.getNumHoursUntil());
+        assertEquals(2, weatherEvent3.getNumHoursUntil());
+        assertEquals(3, weatherEvent4.getNumHoursUntil());
+        assertEquals(5, weatherEvent5.getNumHoursUntil());
     }
 
     @Test
     void testGetPriority() {
-        assertEquals(weatherEvent1.getPriority(), 1);
-        assertEquals(weatherEvent2.getPriority(), 2);
-        assertEquals(weatherEvent3.getPriority(), 5);
-        assertEquals(weatherEvent4.getPriority(), 3);
-        assertEquals(weatherEvent5.getPriority(), 1);
+        assertEquals(1, weatherEvent1.getPriority());
+        assertEquals(2, weatherEvent2.getPriority());
+        assertEquals(5, weatherEvent3.getPriority());
+        assertEquals(3, weatherEvent4.getPriority());
+        assertEquals(1, weatherEvent5.getPriority());
     }
 
     @Test
@@ -157,29 +195,11 @@ class WeatherEventTest {
 
     @Test
     void testGetSeverity() {
-        assertEquals(weatherEvent1.getSeverity(), 1.2f);
-        assertEquals(weatherEvent2.getSeverity(), 1.4f);
-        assertEquals(weatherEvent3.getSeverity(), 1.0f);
-        assertEquals(weatherEvent4.getSeverity(), 1.3f);
-        assertEquals(weatherEvent5.getSeverity(), 1.1f);
-    }
-
-    @Test
-    void testWeatherEventGetHumidityModifier() {
-        assertEquals(weatherEvent1.getHumidityModifier(), 1.0f);
-        assertEquals(weatherEvent2.getHumidityModifier(), 1.0f);
-        assertEquals(weatherEvent3.getHumidityModifier(), 1.0f);
-        assertEquals(weatherEvent4.getHumidityModifier(), 1.0f);
-        assertEquals(weatherEvent5.getHumidityModifier(), 1.0f);
-    }
-
-    @Test
-    void testWeatherEventGetTemperatureModifier() {
-        assertEquals(weatherEvent1.getTemperatureModifier(), 1.0f);
-        assertEquals(weatherEvent2.getTemperatureModifier(), 1.0f);
-        assertEquals(weatherEvent3.getTemperatureModifier(), 1.0f);
-        assertEquals(weatherEvent4.getTemperatureModifier(), 1.0f);
-        assertEquals(weatherEvent5.getTemperatureModifier(), 1.0f);
+        assertEquals(1.2f, weatherEvent1.getSeverity());
+        assertEquals(1.4f, weatherEvent2.getSeverity());
+        assertEquals(1.0f, weatherEvent3.getSeverity());
+        assertEquals(1.3f, weatherEvent4.getSeverity());
+        assertEquals(1.1f, weatherEvent5.getSeverity());
     }
 
     @Test
@@ -193,6 +213,11 @@ class WeatherEventTest {
             @Override
             public void stopEffect() {
 
+            }
+
+            @Override
+            public String toString() {
+                return null;
             }
         }, "Priority cannot be less than 0");
     }
@@ -209,6 +234,11 @@ class WeatherEventTest {
             public void stopEffect() {
 
             }
+
+            @Override
+            public String toString() {
+                return null;
+            }
         }, "Duration cannot be 0");
     }
 
@@ -223,6 +253,11 @@ class WeatherEventTest {
             @Override
             public void stopEffect() {
 
+            }
+
+            @Override
+            public String toString() {
+                return null;
             }
         }, "Duration cannot be less than 0");
     }
@@ -239,6 +274,11 @@ class WeatherEventTest {
             public void stopEffect() {
 
             }
+
+            @Override
+            public String toString() {
+                return null;
+            }
         }, "Number of hours until the event occurs cannot be less than 0");
     }
 
@@ -253,6 +293,11 @@ class WeatherEventTest {
             @Override
             public void stopEffect() {
 
+            }
+
+            @Override
+            public String toString() {
+                return null;
             }
         }, "Severity must be greater than 0.");
     }
