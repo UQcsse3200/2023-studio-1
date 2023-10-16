@@ -234,7 +234,7 @@ class AttackPatternTest {
         // check attack starts before shoot
         verify(attackPatternComponent, times(1)).attack();
 
-        assertEquals(target.getComponent(CombatStatsComponent.class).getHealth(), 90);
+        assertEquals(90, target.getComponent(CombatStatsComponent.class).getHealth());
 
         when(interactionDetector.getEntitiesInRange()).thenReturn(new ArrayList<>());
 

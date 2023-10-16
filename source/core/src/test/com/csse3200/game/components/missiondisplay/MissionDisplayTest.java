@@ -57,6 +57,8 @@ class MissionDisplayTest {
 
 	@BeforeEach
 	void beforeEach() {
+		ServiceLocator.clear();
+
 		actorCaptor = ArgumentCaptor.forClass(Actor.class);
 
 		stage = mock(Stage.class);

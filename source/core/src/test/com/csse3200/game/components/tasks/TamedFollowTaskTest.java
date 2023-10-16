@@ -106,6 +106,8 @@ class TamedFollowTaskTest {
         ServiceLocator.registerPhysicsService(new PhysicsService());
 
         ServiceLocator.registerGameArea(gameArea);
+        ServiceLocator.registerTimeService(new TimeService());
+        ServiceLocator.registerMissionManager(new MissionManager());
     }
 
     @Test
