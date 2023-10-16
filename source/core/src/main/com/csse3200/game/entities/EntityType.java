@@ -33,6 +33,7 @@ public enum EntityType {
     SHIP(0),
     SHIP_DEBRIS(0),
     SHIP_PART_TILE(0),
+    SHIP_EATER(0),
     DUMMY(0), // Used for testing
     FIRE_FLIES(0),
     GOLDEN_STATUE(0);

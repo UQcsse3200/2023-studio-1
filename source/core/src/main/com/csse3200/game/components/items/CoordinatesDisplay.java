@@ -43,8 +43,7 @@ public class CoordinatesDisplay extends UIComponent {
 	private void addActors() {
 		window = new Window("Ship Part Clue", skin);
 
-		Vector2 clueLocation = clueComponent.getCurrentBaseLocation();
-		Label coordinatesLabel = new Label("Search around here...\nX: " + clueLocation.x + "\nY: " + clueLocation.y, skin);
+		Label coordinatesLabel = new Label("Looks like there's something\nhidden in the dirt...\nFollow the blue indicator\nto find out!", skin);
 		coordinatesLabel.setColor(Color.BROWN);
 		coordinatesLabel.setAlignment(Align.center);
 
