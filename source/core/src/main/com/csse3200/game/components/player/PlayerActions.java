@@ -52,8 +52,8 @@ public class PlayerActions extends Component {
   private float damageMultiplier = 1f;
   int swordDamage = 5;
 
-  private float weatherSpeedModifier = 1.0f;
-  private boolean isWeatherAffectingSpeed = false;
+  private static float weatherSpeedModifier = 1.0f;
+  private static boolean isWeatherAffectingSpeed = false;
 
   enum Direction {
     RIGHT("right"),
@@ -413,13 +413,13 @@ public class PlayerActions extends Component {
   }
 
   private void startPlayerMovementSpeedEffect(float movementMultiplier) {
-    this.weatherSpeedModifier = movementMultiplier;
-    this.isWeatherAffectingSpeed = true;
+    weatherSpeedModifier = movementMultiplier;
+    isWeatherAffectingSpeed = true;
   }
 
   private void stopPlayerMovementSpeedEffect() {
-    this.weatherSpeedModifier = 1.0f;
-    this.isWeatherAffectingSpeed = false;
+    weatherSpeedModifier = 1.0f;
+    isWeatherAffectingSpeed = false;
   }
 
 }
