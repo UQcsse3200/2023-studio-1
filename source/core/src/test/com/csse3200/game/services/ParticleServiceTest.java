@@ -111,7 +111,7 @@ class ParticleServiceTest {
 		when(mockPools.get(any(ParticleService.ParticleEffectType.class))).thenReturn(pool);
 		when(pool.obtain()).thenReturn(pooledEffect);
 
-		particleService.startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+		particleService.startEffect(ParticleService.ParticleEffectType.RAIN);
 
 		verify(mockQueuedEffects, times(1)).add(any(ParticleEffectWrapper.class));
 		verify(pooledEffect, times(1)).start();
@@ -139,11 +139,11 @@ class ParticleServiceTest {
 		when(mockPools.get(any(ParticleService.ParticleEffectType.class))).thenReturn(pool);
 		when(pool.obtain()).thenReturn(pooledEffect);
 
-		particleService.startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+		particleService.startEffect(ParticleService.ParticleEffectType.RAIN);
 		assertFalse(mockQueuedEffects.isEmpty());
 
 
-		particleService.stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+		particleService.stopEffect(ParticleService.ParticleEffectType.RAIN);
 		assertEquals(0, mockQueuedEffects.size());
 	}
 
@@ -179,7 +179,7 @@ class ParticleServiceTest {
 
 	@Test
 	void testGetCategory() {
-		ParticleService.ParticleEffectType particleEffectType = ParticleService.ParticleEffectType.ACID_RAIN;
+		ParticleService.ParticleEffectType particleEffectType = ParticleService.ParticleEffectType.RAIN;
 		assertEquals(ParticleService.WEATHER_EVENT, particleEffectType.getCategory());
 	}
 
@@ -202,7 +202,7 @@ class ParticleServiceTest {
 		when(mockPools.get(any(ParticleService.ParticleEffectType.class))).thenReturn(pool);
 		when(pool.obtain()).thenReturn(pooledEffect);
 
-		assertEquals(pooledEffect, particleService.getEffect(ParticleService.ParticleEffectType.ACID_RAIN));
+		assertEquals(pooledEffect, particleService.getEffect(ParticleService.ParticleEffectType.RAIN));
 	}
 
 
@@ -267,7 +267,7 @@ class ParticleServiceTest {
 		when(pool.obtain()).thenReturn(pooledEffect);
 
 		Vector2 position = new Vector2(1,0);
-		particleService.startEffectAtPosition(ParticleService.ParticleEffectType.ACID_RAIN, position);
+		particleService.startEffectAtPosition(ParticleService.ParticleEffectType.RAIN, position);
 
 		verify(pooledEffect, times(1)).setPosition(position.x, position.y);
 		verify(positionalEffects, times(1)).add(any(ParticleEffectWrapper.class));

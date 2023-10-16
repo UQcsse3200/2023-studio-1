@@ -41,8 +41,8 @@ public class RainStormEvent extends WeatherEvent {
         climateControllerEvents.trigger("douseFlames");
         scheduleNextLightningStrike();
 
-        // TODO - update effect
-        ServiceLocator.getParticleService().startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+        // Add particle effects
+        ServiceLocator.getParticleService().startEffect(ParticleService.ParticleEffectType.RAIN);
 
         // Add lighting effects
         ServiceLocator.getLightService().setBrightnessMultiplier((1.0f - severity / 1.5f) * 0.3f + 0.6f);
@@ -65,8 +65,8 @@ public class RainStormEvent extends WeatherEvent {
         climateControllerEvents.cancelEvent(nextLightningStrike);
         nextLightningStrike = null;
 
-        // TODO - update effect
-        ServiceLocator.getParticleService().stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+        // Remove particle effects
+        ServiceLocator.getParticleService().stopEffect(ParticleService.ParticleEffectType.RAIN);
 
         // Remove lighting effects
         ServiceLocator.getLightService().setBrightnessMultiplier(1.0f);
