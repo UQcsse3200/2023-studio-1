@@ -2,10 +2,14 @@ package com.csse3200.game.components.combat.attackpatterns;
 
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.combat.ProjectileComponent;
+import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.sound.EffectSoundFile;
 import com.csse3200.game.utils.DirectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.security.SecureRandom;
 import java.util.List;
@@ -18,6 +22,8 @@ import java.util.function.Supplier;
  */
 public class
 DragonflyAttackPattern extends AttackPatternComponent {
+    private final Logger logger = LoggerFactory.getLogger(DragonflyAttackPattern.class);
+
     /** Supplies the projectile to be shot by the dragonfly. */
     private final Supplier<Entity> projectileSupplier;
 
@@ -115,7 +121,11 @@ DragonflyAttackPattern extends AttackPatternComponent {
         entity.getEvents().trigger("directionChange", attackDirection);
         entity.getEvents().trigger("attackStart");
         entity.getEvents().trigger("startEffect", "attack"); // if no player found, stop effect
-
+        try {
+            ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.DRAGONFLY_ATTACK_PLAYER);
+        } catch (Exception e) {
+            logger.error("Failed to play dragonfly attack player sound", e);
+        }
 
         // Shoot projectiles with delay after entity's attack animation
         entity.getEvents().scheduleEvent(0.2f, SHOOTER, nearestEntityPosition);
@@ -136,7 +146,11 @@ DragonflyAttackPattern extends AttackPatternComponent {
         // Trigger events for direction change and attack animation
         entity.getEvents().trigger("directionChange", attackDirection);
         entity.getEvents().trigger("attackStart");
-
+        try {
+            ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.DRAGONFLY_ATTACK_PLANT);
+        } catch (Exception e) {
+            logger.error("Failed to play dragonfly attack plant sound", e);
+        }
         // Attack the plant
         plant.getEvents().trigger("attack");
 

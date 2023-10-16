@@ -279,15 +279,15 @@ public class SpaceGameArea extends GameArea {
       "images/ship/ship.atlas", "images/light.atlas", "images/projectiles/dragon_fly_projectile.atlas", "images/golden_trophy.atlas",
       "images/player_fishing.atlas", "images/animals/animal_effects.atlas", "images/projectiles/gun_projectile.atlas"
   };
-  //sounds/Impact4.ogg
+
   private static final String[] soundPaths = {
           "sounds/Impact4.ogg", "sounds/car-horn-6408.mp3",
-          "sounds/weapons/SwordHitEntity.mp3", "sounds/weapons/SwordSwing.mp3", "sounds/weapons/GunAttack.mp3",
-          "sounds/animals/AstrolotlFeed.mp3", "sounds/animals/ChickenFeed.mp3",
-          "sounds/animals/CowFeed.mp3", "sounds/animals/TamedAnimal.mp3", "sounds/animals/CowDeath.mp3",
-          "sounds/animals/ChickenDeath.mp3", "sounds/animals/DeathOxygenEater.mp3",
-          "sounds/animals/DeathDragonFly.mp3", "sounds/animals/DeathBats.mp3",
-          "sounds/player/PlayerDeath.mp3", "sounds/player/PlayerDeath2.mp3",
+          "sounds/animals/AstrolotlFeed.mp3",  "sounds/animals/BatAttack.mp3", "sounds/animals/ChickenFeed.mp3",
+          "sounds/animals/ChickenDeath.mp3", "sounds/animals/CowFeed.mp3",
+          "sounds/animals/CowDeath.mp3",  "sounds/animals/DeathOxygenEater.mp3",
+          "sounds/animals/DeathBats.mp3", "sounds/animals/DragonflyAttackPlant.mp3",
+          "sounds/animals/DragonFlyAttackPlayer.mp3",
+          "sounds/animals/OxygenEaterAttack.mp3", "sounds/animals/TamedAnimal.mp3",
           "sounds/plants/aloeVera/click.wav", "sounds/plants/aloeVera/clickLore.wav",
           "sounds/plants/aloeVera/decay.wav", "sounds/plants/aloeVera/decayLore.wav",
           "sounds/plants/aloeVera/destroy.wav", "sounds/plants/aloeVera/destroyLore.wav",
@@ -312,6 +312,9 @@ public class SpaceGameArea extends GameArea {
           "sounds/plants/waterWeed/decay.wav", "sounds/plants/waterWeed/decayLore.wav",
           "sounds/plants/waterWeed/destroy.wav", "sounds/plants/waterWeed/destroyLore.wav",
           "sounds/plants/waterWeed/nearby.wav", "sounds/plants/waterWeed/nearbyLore.wav",
+          "sounds/player/PlayerDeath.mp3", "sounds/player/PlayerGetsHit.mp3",
+          "sounds/weapons/GunAttack.mp3",  "sounds/weapons/GunReload.mp3",
+          "sounds/weapons/SwordHitEntity.mp3", "sounds/weapons/SwordSwing.mp3",
           "sounds/gate-interact.wav","sounds/tractor-start-up.wav", "sounds/shovel.wav",
           "sounds/hoe.wav", "sounds/watering-can.wav", "sounds/place.wav", "sounds/fishing-cast.wav",
           "sounds/applause.wav"
@@ -590,8 +593,13 @@ public class SpaceGameArea extends GameArea {
     effects.add(EffectSoundFile.DEATH_BATS);
     effects.add(EffectSoundFile.CHICKEN_DEATH);
     effects.add(EffectSoundFile.PLAYER_DEATH);
-    effects.add(EffectSoundFile.PLAYER_DEATH2);
+    effects.add(EffectSoundFile.GUN_RELOAD);
     effects.add(EffectSoundFile.COW_DEATH);
+    effects.add(EffectSoundFile.PLAYER_DAMAGE);
+    effects.add(EffectSoundFile.BAT_ATTACK);
+    effects.add(EffectSoundFile.OXYGEN_ATTACK);
+    effects.add(EffectSoundFile.DRAGONFLY_ATTACK_PLAYER);
+    effects.add(EffectSoundFile.DRAGONFLY_ATTACK_PLANT);
 
     try {
       ServiceLocator.getSoundService().getEffectsMusicService().loadSounds(effects);

@@ -27,7 +27,12 @@ public enum EffectSoundFile implements SoundFile {
     DRAGONFLY_DEATH("sounds/animals/DeathDragonFly.mp3"),
     DEATH_BATS("sounds/animals/DeathBats.mp3"),
     PLAYER_DEATH("sounds/player/PlayerDeath.mp3"),
-    PLAYER_DEATH2("sounds/player/PlayerDeath2.mp3"),
+    GUN_RELOAD("sounds/weapons/GunReload.mp3"),
+    PLAYER_DAMAGE("sounds/player/PlayerGetsHit.mp3"),
+    BAT_ATTACK("sounds/animals/BatAttack.mp3"),
+    OXYGEN_ATTACK("sounds/animals/OxygenEaterAttack.mp3"),
+    DRAGONFLY_ATTACK_PLANT("sounds/animals/DragonflyAttackPlant.mp3"),
+    DRAGONFLY_ATTACK_PLAYER("sounds/animals/DragonFlyAttackPlayer.mp3"),
     CHICKEN_DEATH("sounds/animals/ChickenDeath.mp3");
 
     private final String filePath;
