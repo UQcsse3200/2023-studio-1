@@ -132,7 +132,7 @@ public class CombatStatsComponent extends Component {
     // Takes 0.3f seconds
     //entity.getEvents().trigger("blackOut");
     entity.getEvents().trigger("bye bye");
-    entity.getEvents().scheduleEvent(2, "lose");
+    entity.getEvents().scheduleEvent(2.1f, "lose");
   }
 
   public void hitFromEntity(Entity attacker) {
