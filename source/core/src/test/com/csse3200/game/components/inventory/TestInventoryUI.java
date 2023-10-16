@@ -5,9 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.csse3200.game.areas.TestGameArea;
 import com.csse3200.game.areas.terrain.GameMap;
-import com.csse3200.game.areas.terrain.TerrainComponent;
-import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
@@ -17,9 +14,11 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.input.InputService;
+import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.TimeService;
 import com.csse3200.game.services.sound.EffectSoundFile;
 import com.csse3200.game.services.sound.InvalidSoundFileException;
 import com.csse3200.game.services.sound.SoundFile;
@@ -127,7 +126,6 @@ public class TestInventoryUI {
 		player.create();
 		verify(inventoryDisplay).create();
 		verify(stage).addActor(windowArgument.capture());
-		verify(inventoryDisplay).setDragItems(any(), any());
 		Window window = windowArgument.getValue();
 
 		Table inventorySlots = (Table) window.getChildren().begin()[1];
@@ -149,6 +147,8 @@ public class TestInventoryUI {
 		ServiceLocator.getResourceService().loadTextures(texturePaths);
 		ServiceLocator.getResourceService().loadSkins(skinPaths);
 		ServiceLocator.getResourceService().loadAll();
+		ServiceLocator.registerTimeService(new TimeService());
+		ServiceLocator.registerMissionManager(new MissionManager());
 
 		player.create();
 		ArgumentCaptor<Window> win = ArgumentCaptor.forClass(Window.class);

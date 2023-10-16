@@ -7,8 +7,11 @@ import java.util.*;
 import java.util.function.Supplier;
 
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.factories.ShipFactory;
+import com.csse3200.game.missions.MissionManager;
+import com.csse3200.game.services.ParticleService;
 import com.csse3200.game.services.sound.EffectSoundFile;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.TerrainTile;
@@ -63,7 +66,7 @@ public class ItemActions extends Component {
   }
 
   private void getFish(String place, Entity player) {
-    player.getEvents().trigger("fishCaught");
+    player.getEvents().trigger(PlayerActions.events.FISH_CAUGHT.name());
     Entity item;
     logger.info("Fish caught!");
     try {
@@ -102,6 +105,7 @@ public class ItemActions extends Component {
     }
     // Add to inventory
     logger.info("Added fish to inventory");
+    ServiceLocator.getGameArea().getPlayer().getEvents().trigger("startVisualEffect", ParticleService.ParticleEffectType.SUCCESS_EFFECT);
     ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class).addItem(item);
   }
 
@@ -144,11 +148,15 @@ public class ItemActions extends Component {
         return resultStatus;
       }
       case SWORD -> {
-        player.getEvents().trigger("attack", mousePos);
+        player.getEvents().trigger(PlayerActions.events.ATTACK.name(), mousePos);
         return true;
       }
       case GUN -> {
-        player.getEvents().trigger("shoot", mousePos);
+        player.getEvents().trigger(PlayerActions.events.SHOOT.name(), mousePos);
+        return true;
+      }
+      case TELEPORT_DEVICE -> {
+        teleport(player);
         return true;
       }
       case FOOD -> {
@@ -184,6 +192,11 @@ public class ItemActions extends Component {
     }
   }
 
+  private boolean teleport(Entity player) {
+    player.setPosition(new Vector2(20, 83));
+    return true;
+  }
+
   private Vector2 getAdjustedPosFish(Vector2 mousePos) {
     Vector2 mouseWorldPos = ServiceLocator.getCameraComponent().screenPositionToWorldPosition(mousePos);
     Vector2 adjustedPosition = new Vector2(
@@ -206,16 +219,24 @@ public class ItemActions extends Component {
     return playerPosCenter;
   }
 
+  /**
+   * Triggers an event if the tile is a water or lava tiles
+   * Uses the event scheduler to trigger getFish() after a random delay
+   * @param player - the player entity
+   * @param mousePos - the mouse position
+   * @return if successful
+   */
   private boolean fish(Entity player, Vector2 mousePos) {
     Vector2 nullValue = new Vector2(82, 25);
     if (entity.getEvents().getScheduledEventsSize() != 0) {
-      player.getEvents().trigger("fishCaught");
+      player.getEvents().trigger(PlayerActions.events.FISH_CAUGHT.name());
       entity.getEvents().cancelAllEvents();
       logger.info("Fishing cancelled");
       return false;
     }
     Integer randomNumber;
     Vector2 pos = getAdjustedPosFish(mousePos);
+    // If null value then fish in spot
     if (pos.equals(nullValue)) {
       randomNumber = random.nextInt(5) + 1;
       logger.info("Fishing occurred");
@@ -224,7 +245,7 @@ public class ItemActions extends Component {
       } catch (Exception e) {
         logger.error("Failed to play fishsound", e);
       }
-      player.getEvents().trigger("castFishingRod", mousePos);
+      player.getEvents().trigger(PlayerActions.events.CAST_FISHING_RODS.name(), mousePos);
       entity.getEvents().scheduleEvent(randomNumber, "fishCaught", "ḓ̸̺̯̰͍͇̫̻͔̜̮͔̫̘̮̆͗̏͛̃͐̓̓̈́̉͋͒j̴͇̗̱̝̜͌̃ ̷̨̠̝̲͍͚̥̭̪͕̜̯̔̉̑k̷̮̤̺̎͑͊̓̈̽̈́̃̿̐̐͛͘͝h̵͍̳̲̟̝̀̐͗͌̄̔a̶̢̧̛̫̥̙͈̪̲͇̿͒̇́͋̈́̄̉͗̕͜ͅl̷̨͎̻͇̞̩̪̪̦͙̹̳͚̜̍͌͋̀ͅḗ̵̪͕̰̥̊̓̅͌́͠d̶͕͚̦̽̄̏̍͘", player);
       return true;
     }
@@ -239,7 +260,8 @@ public class ItemActions extends Component {
       } catch (Exception e) {
         logger.error("Failed to play fishsound", e);
       }
-      player.getEvents().trigger("castFishingRod", mousePos);
+      // schedule the event
+      player.getEvents().trigger(PlayerActions.events.CAST_FISHING_RODS.name(), mousePos);
       entity.getEvents().scheduleEvent(randomNumber,"fishCaught", "ocean", player);
       return true;
     } else if (tile.getTerrainCategory() == TerrainTile.TerrainCategory.LAVA) {
@@ -251,13 +273,18 @@ public class ItemActions extends Component {
       } catch (Exception e) {
         logger.error("Failed to play fishsound", e);
       }
-      player.getEvents().trigger("castFishingRod", mousePos);
+      // schedule the event
+      player.getEvents().trigger(PlayerActions.events.CAST_FISHING_RODS.name(), mousePos);
       entity.getEvents().scheduleEvent(randomNumber,"fishCaught", "lava", player);
       return true;
     }
     return false;
   }
 
+  /**
+   * Eats a given food item or power modifier
+   * @param player the player entity
+   */
   public void eat(Entity player) {
     ItemComponent type = entity.getComponent(ItemComponent.class);
     // Wasn't an item or did not have ItemComponent class
@@ -269,6 +296,7 @@ public class ItemActions extends Component {
       switch (type.getItemName()) {
         case "Ear of Cosmic Cob":
           player.getComponent(HungerComponent.class).increaseHungerLevel(-10);
+          player.getComponent(CombatStatsComponent.class).addHealth(5);
           return;
         case "Nightshade Berry":
           player.getComponent(CombatStatsComponent.class).addHealth(-10);
@@ -276,6 +304,7 @@ public class ItemActions extends Component {
           return;
         case "Hammer Flower":
           player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
+          player.getComponent(CombatStatsComponent.class).addHealth(5);
           return;
         case "Aloe Vera Leaf":
           player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
@@ -284,9 +313,13 @@ public class ItemActions extends Component {
         case "Lave Eel":
           player.getComponent(HungerComponent.class).increaseHungerLevel(-50);
           player.getComponent(CombatStatsComponent.class).addHealth(100);
+          return;
         case "Salmon":
           player.getComponent(HungerComponent.class).increaseHungerLevel(-10);
+          player.getComponent(CombatStatsComponent.class).addHealth(5);
+          return;
         default:
+          // Any fish
           player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
       }
     } else if (type.getItemType() == ItemType.EGG) {
@@ -299,6 +332,8 @@ public class ItemActions extends Component {
     } else if (type.getItemType() == ItemType.MILK) {
       player.getComponent(PlayerActions.class).setDamageMultiplier(5f);
       player.getEvents().scheduleEvent(5f, "setDamageMultiplier", 1f);
+      player.getComponent(CombatStatsComponent.class).addHealth(5);
+      player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
     }
 
   }
@@ -411,14 +446,19 @@ public class ItemActions extends Component {
     }
 
     boolean tileWaterable = isCropTile(tile.getOccupant());
-    entity.getComponent(WateringCanLevelComponent.class).incrementLevel(-5);  //decrease the water level by 5 units
+    entity.getComponent(WateringCanLevelComponent.class).incrementLevel(-2);  //decrease the water level by 5 units
     
     if (!tileWaterable) {
       return false;
     }
 
-    // A water amount of 0.5 was recommended by team 7
-    tile.getOccupant().getEvents().trigger("water", 0.5f);
+    // A water amount of 0.2
+    tile.getOccupant().getEvents().trigger("water", 0.2f);
+    if (tile.getOccupant().getComponent(CropTileComponent.class).getPlant() != null) {
+      ServiceLocator.getMissionManager().getEvents().trigger(
+              MissionManager.MissionEvent.WATER_CROP.name(),
+              tile.getOccupant().getComponent(CropTileComponent.class).getPlant().getComponent(PlantComponent.class).getPlantType());
+    }
     return true;
   }
 
@@ -436,6 +476,7 @@ public class ItemActions extends Component {
     }
     boolean tileHarvestable = isCropTile(tile.getOccupant());
     if (tileHarvestable) {
+      ServiceLocator.getParticleService().startEffectAtPosition(ParticleService.ParticleEffectType.DIRT_EFFECT, tile.getOccupant().getCenterPosition());
       tile.getOccupant().getEvents().trigger("harvest");
       return true;
     }
@@ -456,8 +497,10 @@ public class ItemActions extends Component {
     }
     // If there is something to remove
     if (tile.getOccupant() != null) {
+      Entity occupant = tile.getOccupant();
       // Trigger the destroy method within that occupant
-      tile.getOccupant().getEvents().trigger("destroy", tile);
+      ServiceLocator.getParticleService().startEffectAtPosition(ParticleService.ParticleEffectType.DIRT_EFFECT, occupant.getCenterPosition());
+      occupant.getEvents().trigger("destroy", tile);
       return true;
     }
     return false;
@@ -485,6 +528,7 @@ public class ItemActions extends Component {
     ServiceLocator.getEntityService().register(cropTile);
     tile.setOccupant(cropTile);
     tile.setOccupied();
+    cropTile.getEvents().trigger("startVisualEffect", ParticleService.ParticleEffectType.DIRT_EFFECT);
     return true;
   }
 
@@ -559,6 +603,7 @@ public class ItemActions extends Component {
     }
 
     entityToFeed.getEvents().trigger("feed");
+    entityToFeed.getEvents().trigger("startVisualEffect", ParticleService.ParticleEffectType.FEED_EFFECT);
     // Feeding animals should remove the food from player inventory
     player.getComponent(InventoryComponent.class).removeItem(entity);
     return true;
@@ -588,6 +633,8 @@ public class ItemActions extends Component {
     if (ship.getType() == EntityType.SHIP) {
       ship.getEvents().trigger(ShipFactory.events.ADD_PART.name(), 1);
       player.getComponent(InventoryComponent.class).removeItem(entity);
+      ServiceLocator.getParticleService().startEffectAtPosition(ParticleService.ParticleEffectType.SUCCESS_EFFECT, ship.getPosition().cpy().add(1,0));
+      ServiceLocator.getParticleService().startEffectAtPosition(ParticleService.ParticleEffectType.SUCCESS_EFFECT, ship.getPosition().cpy().add(2,0));
       return true;
     }
     return false;

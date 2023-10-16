@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.items.WateringCanLevelComponent;
+import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.ServiceLocator;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -51,6 +52,10 @@ public class InventoryDisplay extends UIComponent {
 	private final InstantTooltipManager instantTooltipManager = new InstantTooltipManager();
 	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(InventoryDisplay.class);
 	private final ArrayList<Label> labels = new ArrayList<>();
+	private boolean isPause = false;
+	private boolean lastState = false;
+	private Image bin = null;
+ 
 
 	/**
 	 * Constructor for class
@@ -77,7 +82,21 @@ public class InventoryDisplay extends UIComponent {
 		entity.getEvents().addListener(openEvent, this::toggleOpen);
 		entity.getEvents().addListener(refreshEvent, this::refreshInventory);
 		entity.getEvents().addListener("hotkeySelection",this::updateSelected);
+		entity.getEvents().addListener(PlayerActions.events.ESC_INPUT.name(), this::setPause);
+		entity.getEvents().addListener("hideUI", this::hide);
 		inventoryDisplayManager.addInventoryDisplay(this);
+	}
+
+	public void setPause(){
+		isPause = !isPause;
+		if (isPause){
+			lastState = isOpen;
+			isOpen = false;
+			window.setVisible(isOpen);
+		} else {
+			isOpen = lastState;
+			window.setVisible(isOpen);
+		}
 	}
 
 	/**
@@ -141,8 +160,8 @@ public class InventoryDisplay extends UIComponent {
 		table.row();
 
 		if (entity.getType() == EntityType.PLAYER) {
-			Image deleteSlot = new Image(ServiceLocator.getResourceService().getAsset("images/bin.png", Texture.class));
-			table.add(deleteSlot).colspan(10);
+			bin = new Image(ServiceLocator.getResourceService().getAsset("images/bin.png", Texture.class));
+			table.add(bin).colspan(10);
 		}
 
 		// Create a window for the inventory using the skin
@@ -152,7 +171,6 @@ public class InventoryDisplay extends UIComponent {
 		window.setMovable(false);
 		window.setVisible(false);
 		stage.addActor(window);
-		setDragItems(actors, map);
 	}
 
 	/**
@@ -216,7 +234,7 @@ public class InventoryDisplay extends UIComponent {
 					payload.setDragActor(getActor());
 					stage.addActor(getActor());
 					dnd.setDragActorPosition(50, -getActor().getHeight() / 2);
-					ItemSlot slot = map.get((Stack)getActor());
+					ItemSlot slot = map.get(getActor());
 					tooltips.get(indexes.get(slot)).hide();
 					tooltip = tooltips.get(indexes.get(slot));
 					slot.removeListener(tooltips.get(indexes.get(slot)));
@@ -226,8 +244,7 @@ public class InventoryDisplay extends UIComponent {
 				@Override
 				public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
 					if (target == null) {
-						ItemSlot itemSlot = map.get((Stack) getActor());
-						itemSlot.removeActor(getActor());
+						ItemSlot itemSlot = map.get(getActor());
 						itemSlot.add(getActor());
 						itemSlot.addListener(tooltip);
 					}
@@ -273,13 +290,28 @@ public class InventoryDisplay extends UIComponent {
 						ItemSlot itemSlot = map.get((Stack) source.getActor());
 						itemSlot.removeActor(source.getActor());
 						itemSlot.add(source.getActor());
-						ItemSlot sourceSlot = map.get(((Stack) source.getActor()));
-						inventory.removeItem(inventory.getHeldItemsEntity().get(inventory.getItemPlace().get(indexes.get(sourceSlot))));
+						inventory.removeItem(inventory.getHeldItemsEntity().get(inventory.getItemPlace().get(indexes.get(itemSlot))));
 						addTooltips();
 					}
 				});
 			}
 		}
+	}
+
+	public Map<ItemSlot, Integer> getIndexes() {
+		return indexes;
+	}
+
+	public Map<Stack, ItemSlot> getMap() {
+		return map;
+	}
+
+	public Image getBin() {
+		return bin;
+	}
+
+	public ArrayList<ItemSlot> getSlots() {
+		return slots;
 	}
 
 	/**
@@ -321,6 +353,9 @@ public class InventoryDisplay extends UIComponent {
 	 * Toggle the inventory open, and changes the window visibility
 	 */
 	public void toggleOpen() {
+		if (isPause) {
+			return;
+		}
 		isOpen = !isOpen;
 		window.setVisible(isOpen);
 		inventoryDisplayManager.updateDisplays();
@@ -330,6 +365,16 @@ public class InventoryDisplay extends UIComponent {
 		} catch (InvalidSoundFileException e) {
 			logger.info("Inventory open sound not loaded");
 		}
+	}
+
+	/**
+	 * Hide the inventory.
+	 * But why would you ever want to do that?
+	 */
+	public void hide() {
+		isOpen = false;
+		window.setVisible(false);
+		inventoryDisplayManager.updateDisplays();
 	}
 
 	/**
@@ -347,6 +392,7 @@ public class InventoryDisplay extends UIComponent {
 	public void refreshInventory() {
 		this.inventory = entity.getComponent(InventoryComponent.class);
 		updateInventory();
+		inventoryDisplayManager.addTargets();
 		if (this.toolbar) {
 			entity.getEvents().trigger("updateToolbar");
 		}

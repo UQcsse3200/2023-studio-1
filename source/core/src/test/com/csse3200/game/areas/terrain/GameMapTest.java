@@ -177,7 +177,7 @@ public class GameMapTest {
     void testGetNonTraversableTileCoordinates() {
         ArrayList<GridPoint2> arrayList = (ArrayList<GridPoint2>) gameMap.getNonTraversableTileCoordinates();
 
-        assertEquals(arrayList, nonTraversableTilesList);
+        assertEquals(nonTraversableTilesList, arrayList);
     }
 
     @AfterEach

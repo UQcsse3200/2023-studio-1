@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.sound.EffectSoundFile;
 import com.csse3200.game.services.sound.InvalidSoundFileException;
@@ -32,6 +33,9 @@ public class ToolbarDisplay extends UIComponent {
     private int selectedSlot = -1;
     private final ArrayList<ItemSlot> slots = new ArrayList<>();
     private final Map<Integer, TextTooltip> tooltips = new HashMap<>();
+    private final InstantTooltipManager instantTooltipManager = new InstantTooltipManager();
+    private boolean isPause = false;
+    private boolean lastState = false;
 
     /**
      * Creates the event listeners, ui, and gets the UI.
@@ -44,7 +48,21 @@ public class ToolbarDisplay extends UIComponent {
         entity.getEvents().addListener("updateToolbar", this::updateInventory);
         entity.getEvents().addListener("toggleInventory",this::toggleOpen);
         entity.getEvents().addListener("hotkeySelection",this::updateItemSlot);
+        entity.getEvents().addListener(PlayerActions.events.ESC_INPUT.name(), this::setPause);
+        entity.getEvents().addListener("hideUI", this::hide);
         inventory = entity.getComponent(InventoryComponent.class);
+    }
+
+    public void setPause(){
+        isPause = !isPause;
+        if (isPause){
+            lastState = isOpen;
+            isOpen = false;
+            window.setVisible(isOpen);
+        } else {
+            isOpen = lastState;
+            window.setVisible(isOpen);
+        }
     }
 
     /**
@@ -152,6 +170,9 @@ public class ToolbarDisplay extends UIComponent {
      * Toggle Toolbar to open state
      */
     public void toggleOpen(){
+        if (isPause){
+            return;
+        }
         if (this.isOpen) {
             this.window.setVisible(false);
             this.isOpen = false;
@@ -159,6 +180,15 @@ public class ToolbarDisplay extends UIComponent {
             this.window.setVisible(true);
             this.isOpen = true;
         }
+    }
+
+    /**
+     * Hide the toolbar.
+     * But why would you ever want to do that?
+     */
+    public void hide() {
+        this.isOpen = false;
+        window.setVisible(false);
     }
 
     /**
