@@ -17,6 +17,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.Mockito.*;
 
@@ -67,7 +68,7 @@ class ShipTimeSkipComponentTest {
 			timeService.update();
 		}
 
-		assert timeService.getDay() == expectedDay;
+		assertEquals(timeService.getDay(), expectedDay);
 		verify(mockTimeSource, times(1)).setTimeScale(1f);
 	}
 
