@@ -273,6 +273,13 @@
 		"up": "red",
 		"down": "red_pressed"
 	},
+	"small": {
+		"font": "pixel-body",
+		"fontColor": "white",
+		"downFontColor": "lightGrey",
+		"up": "red",
+		"down": "red_pressed"
+	},
 	"small-grey": {
 		"font": "pixel-body",
 		"fontColor": "black",
