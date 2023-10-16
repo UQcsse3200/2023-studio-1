@@ -116,7 +116,6 @@ public class MoveToShipTask extends DefaultTask implements PriorityTask {
         }
 
         if (isHiding || isEating || movementTask.getStatus() == Status.FINISHED) {
-            status = movementTask.getStatus();
             if (isDigging) {
                 isDigging = false;
                 owner.getEntity().getEvents().trigger("diggingUpdated", false);
