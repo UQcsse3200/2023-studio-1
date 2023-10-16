@@ -1,21 +1,17 @@
 package com.csse3200.game.areas.weather;
 
 import com.csse3200.game.areas.GameArea;
-import com.csse3200.game.components.tasks.PanicTask;
-import com.csse3200.game.events.ScheduledEvent;
-import com.csse3200.game.events.listeners.EventListener0;
 import com.csse3200.game.services.*;
-import com.csse3200.game.services.sound.EffectSoundFile;
-import com.csse3200.game.services.sound.EffectsMusicService;
-import com.csse3200.game.services.sound.InvalidSoundFileException;
-import com.csse3200.game.services.sound.SoundService;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import com.csse3200.game.services.sound.*;
+import org.junit.jupiter.api.*;
+import org.mockito.MockedStatic;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class AcidShowerEventTest {
 
     private AcidShowerEvent acidShowerEvent1, acidShowerEvent2, acidShowerEvent3, acidShowerEvent4, acidShowerEvent5;
@@ -33,12 +29,6 @@ class AcidShowerEventTest {
         SoundService soundService = mock(SoundService.class);
         when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
         ServiceLocator.registerSoundService(soundService);
-
-        acidShowerEvent1 = new AcidShowerEvent(0, 9, 1, 1.2f);
-        acidShowerEvent2 = new AcidShowerEvent(1, 2, 2, 1.4f);
-        acidShowerEvent3 = new AcidShowerEvent(2, 4, 5, 1.0f);
-        acidShowerEvent4 = new AcidShowerEvent(3, 3, 3, 1.3f);
-        acidShowerEvent5 = new AcidShowerEvent(5, 5, 1, 1.1f);
         ParticleService mockParticleService = mock(ParticleService.class);
         ServiceLocator.registerParticleService(mockParticleService);
         LightService lightService = mock(LightService.class);
@@ -50,8 +40,17 @@ class AcidShowerEventTest {
         ServiceLocator.clear();
     }
 
+    public void initialiseEvents() {
+        acidShowerEvent1 = new AcidShowerEvent(0, 9, 1, 1.2f);
+        acidShowerEvent2 = new AcidShowerEvent(1, 2, 2, 1.4f);
+        acidShowerEvent3 = new AcidShowerEvent(2, 4, 5, 1.0f);
+        acidShowerEvent4 = new AcidShowerEvent(3, 3, 3, 1.3f);
+        acidShowerEvent5 = new AcidShowerEvent(5, 5, 1, 1.1f);
+    }
+
     @Test
     void testIsExpired() {
+        initialiseEvents();
         // case: numHoursUntil == 0 and duration > 0
         assertFalse(acidShowerEvent1.isExpired());
         // case: numHoursUntil > 0 and duration > 0
@@ -70,12 +69,14 @@ class AcidShowerEventTest {
 
     @Test
     void testIsActiveButNotIsExpired() {
+        initialiseEvents();
         assertFalse(acidShowerEvent1.isExpired());
         assertTrue(acidShowerEvent1.isActive());
     }
 
     @Test
     void testStartEffectParticleAndLightingSystem() {
+        initialiseEvents();
         acidShowerEvent1.startEffect();
         verify(ServiceLocator.getParticleService(), times(1)).startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
         verify(ServiceLocator.getLightService(), times(1)).setBrightnessMultiplier(0.79f);
@@ -83,6 +84,7 @@ class AcidShowerEventTest {
 
     @Test
     void testStartEffectTriggersEvents() {
+        initialiseEvents();
         acidShowerEvent1.startEffect();
         ServiceLocator.getGameArea().getClimateController().getEvents().trigger("startWaterLevelEffect", -0.0003f);
         ServiceLocator.getGameArea().getClimateController().getEvents().trigger("douseFlames");
@@ -90,6 +92,7 @@ class AcidShowerEventTest {
 
     @Test
     void testStartEffectPlaysSound() throws InvalidSoundFileException {
+        initialiseEvents();
         acidShowerEvent4.startEffect();
         acidShowerEvent5.startEffect();
         verify(ServiceLocator.getSoundService().getEffectsMusicService(), times(2)).play(EffectSoundFile.STORM, true);
@@ -97,6 +100,7 @@ class AcidShowerEventTest {
 
     @Test
     void testStopEffect() {
+        initialiseEvents();
         acidShowerEvent1.stopEffect();
         acidShowerEvent2.stopEffect();
         acidShowerEvent3.stopEffect();
@@ -114,5 +118,40 @@ class AcidShowerEventTest {
         verify(ServiceLocator.getSoundService().getEffectsMusicService()).play(EffectSoundFile.ACID_BURN);
         ServiceLocator.getGameArea().getClimateController().getEvents().trigger("startPanicEffect");
         ServiceLocator.getGameArea().getClimateController().getEvents().trigger("damagePlants");
+    }
+
+    @Test
+    @Order(1)
+    void testThrowsInvalidSoundFileException() {
+        try (MockedStatic<LoggerFactory> mockedStatic = mockStatic(LoggerFactory.class)) {
+            final Logger testLogger = mock(Logger.class);
+            final Logger fakeLogger = mock(Logger.class);
+            mockedStatic.when(() -> LoggerFactory.getLogger(BackgroundMusicService.class)).thenReturn(fakeLogger);
+            mockedStatic.when(() -> LoggerFactory.getLogger(SoundService.class)).thenReturn(fakeLogger);
+            mockedStatic.when(() -> LoggerFactory.getLogger(AcidShowerEvent.class)).thenReturn(testLogger);
+            ServiceLocator.registerSoundService(new SoundService());
+            AcidShowerEvent exceptionAcidShowerEvent = new testAcidShowerEvent(5,5,5,5);
+            exceptionAcidShowerEvent.startEffect();
+            verify(testLogger).error(anyString(), any(InvalidSoundFileException.class));
+            ServiceLocator.getGameArea().getClimateController().getEvents().trigger("acidBurn");
+            verify(testLogger, times(2)).error(anyString(), any(InvalidSoundFileException.class));
+
+            SoundService mockSound = mock(SoundService.class);
+            EffectsMusicService mockEffect = mock(EffectsMusicService.class);
+            ServiceLocator.registerSoundService(mockSound);
+            when(mockSound.getEffectsMusicService()).thenReturn(mockEffect);
+            doThrow(InvalidSoundFileException.class).when(mockEffect).stop(EffectSoundFile.STORM, 0);
+            exceptionAcidShowerEvent.stopEffect();
+            verify(testLogger, times(3)).error(anyString(), any(InvalidSoundFileException.class));
+        } catch (InvalidSoundFileException e) {
+            fail();
+        }
+    }
+
+    public class testAcidShowerEvent extends AcidShowerEvent {
+        public Logger logger = LoggerFactory.getLogger(AcidShowerEvent.class);
+        public testAcidShowerEvent(int numHoursUntil, int duration, int priority, float severity) {
+            super(numHoursUntil, duration, priority, severity);
+        }
     }
 }
