@@ -6,24 +6,24 @@ import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.Assert.assertEquals;
 
-public class CollectItemsAchievementTest {
+class CollectItemsAchievementTest {
 
     private CollectItemsAchievement collectItemsAchievement;
 
     @BeforeEach
-    public void init() {
+    void init() {
         collectItemsAchievement = new CollectItemsAchievement("test", 5);
     }
 
     @Test
-    public void testReadProgress() {
+    void testReadProgress() {
         JsonValue jsonValue = new JsonValue(4);
         collectItemsAchievement.readProgress(jsonValue);
         assertEquals(4, collectItemsAchievement.getProgress());
     }
 
     @Test
-    public void testGetProgress() {
+    void testGetProgress() {
         assertEquals(0, collectItemsAchievement.getProgress());
         collectItemsAchievement.updateState();
         assertEquals(1, collectItemsAchievement.getProgress());
@@ -32,7 +32,7 @@ public class CollectItemsAchievementTest {
     }
 
     @Test
-    public void testResetState() {
+    void testResetState() {
         collectItemsAchievement.updateState();
         collectItemsAchievement.updateState();
         assertEquals(2, collectItemsAchievement.getProgress());

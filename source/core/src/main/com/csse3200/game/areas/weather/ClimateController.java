@@ -150,8 +150,8 @@ public class ClimateController implements Json.Serializable {
 			return;
 		}
 		int eventGenerated = MathUtils.random(0, 9);
-		int numHoursUntil = MathUtils.random(1, 23);
-		int duration = MathUtils.random(1, 8);
+		int numHoursUntil = MathUtils.random(1, 20);
+		int duration = MathUtils.random(1, 4);
 		int priority = MathUtils.random(0, 3);
 		// Random weather events should have a severity between 0 and 1.2 (maximum severity is 1.5)
 		float severity = MathUtils.random() * 1.2f;

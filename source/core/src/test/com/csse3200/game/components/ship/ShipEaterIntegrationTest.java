@@ -29,6 +29,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.stream.IntStream;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -295,7 +296,7 @@ class ShipEaterIntegrationTest {
 
 		float updatedDistanceToShip = entity.getPosition().dst(ship.getPosition());
 
-		assertTrue(initialDistanceToShip == updatedDistanceToShip);
+		assertEquals(initialDistanceToShip ,updatedDistanceToShip);
 	}
 
 	@Test

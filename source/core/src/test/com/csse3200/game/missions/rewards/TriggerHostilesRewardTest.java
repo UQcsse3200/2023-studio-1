@@ -25,7 +25,7 @@ import java.util.List;
 
 import static org.mockito.Mockito.*;
 
-public class TriggerHostilesRewardTest {
+class TriggerHostilesRewardTest {
 
     TriggerHostilesReward triggerHostilesReward;
     SpaceGameArea spaceGameArea;

@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
-public class BlinkComponentTest {
+class BlinkComponentTest {
     private BlinkComponent blinkComponent;
     private Entity testEntity;
 

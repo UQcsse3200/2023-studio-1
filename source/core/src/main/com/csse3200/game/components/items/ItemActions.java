@@ -457,7 +457,7 @@ public class ItemActions extends Component {
     if (tile.getOccupant().getComponent(CropTileComponent.class).getPlant() != null) {
       ServiceLocator.getMissionManager().getEvents().trigger(
               MissionManager.MissionEvent.WATER_CROP.name(),
-              tile.getOccupant().getComponent(CropTileComponent.class).getPlant().getComponent(PlantComponent.class).getPlantType());
+              tile.getOccupant().getComponent(CropTileComponent.class).getPlant().getComponent(PlantComponent.class).getPlantName());
     }
     return true;
   }

@@ -9,11 +9,11 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class DialogueRewardTest {
+class DialogueRewardTest {
     DialogueReward dialogueReward, dialogueReward2;
 
     @Test
-    public void testCollect() {
+    void testCollect() {
         Cutscene cutscene = mock(Cutscene.class);
         dialogueReward = new DialogueReward(cutscene);
 
@@ -24,7 +24,7 @@ public class DialogueRewardTest {
     }
 
     @Test
-    public void testGetCutscene() {
+    void testGetCutscene() {
         Cutscene cutscene = mock(Cutscene.class);
         dialogueReward2 = new DialogueReward(cutscene);
 
