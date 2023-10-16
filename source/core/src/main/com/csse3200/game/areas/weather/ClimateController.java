@@ -143,21 +143,22 @@ public class ClimateController implements Json.Serializable {
 	 */
 	private void addDailyEvent() {
 		float eventPossibility = MathUtils.random();
-		// 25% that no weather event is generated
-		if (eventPossibility <= 0.10) {
+		// 7% chance that no weather event is generated on a given day
+		if (eventPossibility <= 0.07) {
 			return;
 		}
 		int eventGenerated = MathUtils.random(0, 9);
-		int numHoursUntil = MathUtils.random(1, 6);
-		int duration = MathUtils.random(2, 5);
+		int numHoursUntil = MathUtils.random(1, 23);
+		int duration = MathUtils.random(1, 8);
 		int priority = MathUtils.random(0, 3);
-		float severity = MathUtils.random();
+		// Random weather events should have a severity between 0 and 1.2 (maximum severity is 1.5)
+		float severity = MathUtils.random() * 1.2f;
 		WeatherEvent event;
 		switch (eventGenerated) {
 			case 0, 1, 2, 3 -> event = new RainStormEvent(numHoursUntil, duration, priority, severity);
-			case 4, 5, 6 -> event = new AcidShowerEvent(numHoursUntil, duration, priority, severity);
-			case 7, 8 -> event = new BlizzardEvent(numHoursUntil, duration, priority, severity);
-			case 9 -> event = new SolarSurgeEvent(numHoursUntil, duration, priority, severity);
+			case 4, 5, 6 -> event = new BlizzardEvent(numHoursUntil, duration, priority, severity);
+			case 7, 8 -> event = new SolarSurgeEvent(numHoursUntil, duration, priority, severity);
+			case 9 -> event = new AcidShowerEvent(numHoursUntil, duration, priority, severity);
 			default -> {
 				return;
 			}

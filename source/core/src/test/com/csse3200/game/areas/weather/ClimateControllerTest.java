@@ -125,10 +125,9 @@ class ClimateControllerTest {
 		try (MockedStatic<MathUtils> mathUtils = mockStatic(MathUtils.class)) {
 			mathUtils.when(MathUtils::random).thenReturn(0.5f);
 			mathUtils.when(() -> MathUtils.random(0, 9)).thenReturn(0); // weatherEvent - RainStorm
-			mathUtils.when(() -> MathUtils.random(1, 6)).thenReturn(1); // numHoursUntil
-			mathUtils.when(() -> MathUtils.random(2, 5)).thenReturn(4); // duration
+			mathUtils.when(() -> MathUtils.random(1, 23)).thenReturn(1); // numHoursUntil
+			mathUtils.when(() -> MathUtils.random(1, 8)).thenReturn(4); // duration
 			mathUtils.when(() -> MathUtils.random(0, 3)).thenReturn(0); // priority
-			mathUtils.when(MathUtils::random).thenReturn(0.7f);          // severity
 
 			ServiceLocator.getTimeService().getEvents().trigger("dayUpdate");
 			// Therefore event should be created
