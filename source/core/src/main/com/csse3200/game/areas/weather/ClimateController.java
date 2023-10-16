@@ -237,6 +237,8 @@ public class ClimateController implements Json.Serializable {
 			currentWeatherEvent.stopEffect();
 			// Stop any lighting effects
 			currentLightingEffectDuration = -1.0f;
+			// Set currentWeatherEvent to be null
+			currentWeatherEvent = null;
 		}
 		weatherEvents.clear();
 		jsonData = jsonData.get("Events");
