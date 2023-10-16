@@ -7,6 +7,7 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.EntitiesSpawner;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntitySpawner;
@@ -167,6 +168,7 @@ public class SpaceGameArea extends GameArea {
           "images/Player_Hunger/hunger_bar_outline.png",
           "images/Player_Hunger/hunger_bar_fill.png",
           "images/projectiles/oxygen_eater_projectile.png",
+          "images/projectiles/gun_projectile.png",
 
           "images/yellowSquare.png",
           "images/yellowCircle.png",
@@ -270,11 +272,19 @@ public class SpaceGameArea extends GameArea {
       "images/plants/deadly_nightshade.atlas", "images/fireflies.atlas", "images/animals/dragonfly.atlas",
       "images/animals/bat.atlas", "images/projectiles/oxygen_eater_projectile.atlas",
       "images/ship/ship.atlas", "images/light.atlas", "images/projectiles/dragon_fly_projectile.atlas", "images/golden_trophy.atlas",
-      "images/player_fishing.atlas", "images/walkietalkie.atlas", "images/animals/animal_effects.atlas", "images/cutscene.atlas",
-      "images/placeable/sprinkler/sprinkler_animation.atlas", "images/shipeater.atlas", "images/plants/plant_aoe.atlas"
+      "images/projectiles/gun_projectile.atlas", "images/player_fishing.atlas", "images/walkietalkie.atlas",
+      "images/animals/animal_effects.atlas", "images/cutscene.atlas", "images/placeable/sprinkler/sprinkler_animation.atlas",
+      "images/shipeater.atlas", "images/plants/plant_aoe.atlas"
   };
+
   private static final String[] soundPaths = {
           "sounds/Impact4.ogg", "sounds/car-horn-6408.mp3",
+          "sounds/animals/AstrolotlFeed.mp3",  "sounds/animals/BatAttack.mp3", "sounds/animals/ChickenFeed.mp3",
+          "sounds/animals/ChickenDeath.mp3", "sounds/animals/CowFeed.mp3",
+          "sounds/animals/CowDeath.mp3",  "sounds/animals/DeathOxygenEater.mp3",
+          "sounds/animals/DeathBats.mp3", "sounds/animals/DragonflyAttackPlant.mp3",
+          "sounds/animals/DragonFlyAttackPlayer.mp3",
+          "sounds/animals/OxygenEaterAttack.mp3", "sounds/animals/TamedAnimal.mp3",
           "sounds/plants/aloeVera/click.wav", "sounds/plants/aloeVera/clickLore.wav",
           "sounds/plants/aloeVera/decay.wav", "sounds/plants/aloeVera/decayLore.wav",
           "sounds/plants/aloeVera/destroy.wav", "sounds/plants/aloeVera/destroyLore.wav",
@@ -299,6 +309,9 @@ public class SpaceGameArea extends GameArea {
           "sounds/plants/waterWeed/decay.wav", "sounds/plants/waterWeed/decayLore.wav",
           "sounds/plants/waterWeed/destroy.wav", "sounds/plants/waterWeed/destroyLore.wav",
           "sounds/plants/waterWeed/nearby.wav", "sounds/plants/waterWeed/nearbyLore.wav",
+          "sounds/player/PlayerDeath.mp3", "sounds/player/PlayerGetsHit.mp3",
+          "sounds/weapons/GunAttack.mp3",  "sounds/weapons/GunReload.mp3",
+          "sounds/weapons/SwordHitEntity.mp3", "sounds/weapons/SwordSwing.mp3",
           "sounds/gate-interact.wav","sounds/tractor-start-up.wav", "sounds/shovel.wav",
           "sounds/hoe.wav", "sounds/watering-can.wav", "sounds/place.wav", "sounds/fishing-cast.wav",
           "sounds/applause.wav"
@@ -357,10 +370,10 @@ public class SpaceGameArea extends GameArea {
     List<EntitySpawner> passiveSpawners = new ArrayList<>();
     passiveSpawners.add(new EntitySpawner(1, player2 -> NPCFactory.createAstrolotl(),
             0, 1, 0, 0, 10));
-    passiveSpawners.add(new EntitySpawner(6, player3 -> NPCFactory.createChicken(),
-            1, 4, 8, 4, 2));
+    passiveSpawners.add(new EntitySpawner(5, player3 -> NPCFactory.createChicken(),
+            1, 3, 8, 4, 1));
     passiveSpawners.add(new EntitySpawner(5, player2 -> NPCFactory.createCow(),
-            1, 3, 12, 4, 1));
+            1, 4, 12, 4, 1));
     EntitiesSpawner passiveSpawner = new EntitiesSpawner(passiveSpawners);
     passiveSpawner.setGameAreas(this);
 
@@ -371,11 +384,11 @@ public class SpaceGameArea extends GameArea {
     //Spawning behaviour for hostiles
     List<EntitySpawner> hostileSpawners = new ArrayList<>();
     hostileSpawners.add(new EntitySpawner(3, player1 -> NPCFactory.createOxygenEater(),
-            0, 1, 5, 5, 2));
-    hostileSpawners.add(new EntitySpawner(5, player1 -> NPCFactory.createDragonfly(),
-            0, 2, 5, 5, 3));
-    hostileSpawners.add(new EntitySpawner(7, player1 -> NPCFactory.createBat(),
-            0, 1, 5, 5, 2));
+            2, 1, 0, 8, 3));
+    hostileSpawners.add(new EntitySpawner(4, player1 -> NPCFactory.createDragonfly(),
+            1, 1, 8, 8, 2));
+    hostileSpawners.add(new EntitySpawner(5, player1 -> NPCFactory.createBat(),
+            1, 1, 16, 8, 1));
 
 
     hostileSpawner = new EntitiesSpawner(hostileSpawners);
@@ -550,6 +563,25 @@ public class SpaceGameArea extends GameArea {
     effects.add(EffectSoundFile.FISHING_CAST);
     effects.add(EffectSoundFile.FISHING_CATCH);
     effects.add(EffectSoundFile.SCYTHE);
+    effects.add(EffectSoundFile.COW_FEED);
+    effects.add(EffectSoundFile.ASTROLOTL_FEED);
+    effects.add(EffectSoundFile.CHICKEN_FEED);
+    effects.add(EffectSoundFile.TAMED_ANIMAL);
+    effects.add(EffectSoundFile.ATTACK_MISS);
+    effects.add(EffectSoundFile.ATTACK_HIT);
+    effects.add(EffectSoundFile.GUN_ATTACK);
+    effects.add(EffectSoundFile.OXYGEN_EAT_DEATH);
+    effects.add(EffectSoundFile.DRAGONFLY_DEATH);
+    effects.add(EffectSoundFile.DEATH_BATS);
+    effects.add(EffectSoundFile.CHICKEN_DEATH);
+    effects.add(EffectSoundFile.PLAYER_DEATH);
+    effects.add(EffectSoundFile.GUN_RELOAD);
+    effects.add(EffectSoundFile.COW_DEATH);
+    effects.add(EffectSoundFile.PLAYER_DAMAGE);
+    effects.add(EffectSoundFile.BAT_ATTACK);
+    effects.add(EffectSoundFile.OXYGEN_ATTACK);
+    effects.add(EffectSoundFile.DRAGONFLY_ATTACK_PLAYER);
+    effects.add(EffectSoundFile.DRAGONFLY_ATTACK_PLANT);
     effects.add(EffectSoundFile.PLANT_CLICK);
     effects.add(EffectSoundFile.PLANT_DECAY);
     effects.add(EffectSoundFile.PLANT_DESTROY);
