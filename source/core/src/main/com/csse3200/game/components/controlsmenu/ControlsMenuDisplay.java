@@ -171,6 +171,7 @@ public class ControlsMenuDisplay extends UIComponent {
     controls.add(new Pair<>("D", "Moves the character downwards"));
     controls.add(new Pair<>("T", "Toggles the player light on and off"));
     controls.add(new Pair<>("R", "Eat food items"));
+    controls.add(new Pair<>("Q", "Toggle Plant information display"));
     controls.add(new Pair<>("Esc", "Toggles the pause game function"));
 
     for (Pair<String, String> control : controls) {

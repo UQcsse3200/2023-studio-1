@@ -4,7 +4,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.combat.ProjectileComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.sound.EffectSoundFile;
 import com.csse3200.game.utils.DirectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.function.Supplier;
 
@@ -13,6 +16,8 @@ import java.util.function.Supplier;
  * allows the OxygenEater to detect the player and attack them when in range.
  */
 public class OxygenEaterAttackPattern extends AttackPatternComponent {
+    private final Logger logger = LoggerFactory.getLogger(OxygenEaterAttackPattern.class);
+
     /** Supplies the projectile to be shot by the oxygen eater. */
     private final Supplier<Entity> projectileSupplier;
 
@@ -70,6 +75,11 @@ public class OxygenEaterAttackPattern extends AttackPatternComponent {
      * @param position The position to which the projectile should be aimed.
      */
     private void shoot(Vector2 position) {
+        try {
+            ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.OXYGEN_ATTACK);
+        } catch (Exception e) {
+            logger.error("Failed to play Oxygen Eater attack player sound", e);
+        }
         Entity projectile = projectileSupplier.get();
 
         projectile.setCenterPosition(entity.getCenterPosition());
