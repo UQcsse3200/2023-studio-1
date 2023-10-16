@@ -130,7 +130,7 @@ public class NPCFactory {
             .addComponent(multiDropComponent)
             .addComponent(animator)
             .addComponent(new AnimalAnimationController())
-            .addComponent(new CombatStatsComponent(10, 0))
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
             .addComponent(new TamableComponent(ServiceLocator.getGameArea().getPlayer(), config.tamingThreshold,
                     config.tamingProbability, config.favouriteFood));
 
@@ -199,7 +199,7 @@ public class NPCFactory {
             .addComponent(aiTaskComponent)
             .addComponent(multiDropComponent)
             .addComponent(animator)
-            .addComponent(new CombatStatsComponent(20, 0))
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
             .addComponent(new AnimalAnimationController())
             .addComponent(new TamableComponent(
                     ServiceLocator.getGameArea().getPlayer(), config.tamingThreshold,
@@ -274,6 +274,7 @@ public class NPCFactory {
    * @return Oxygen Eater entity
    */
   public static Entity createOxygenEater() {
+    BaseAnimalConfig config = configs.oxygenEater;
     Entity oxygenEater = createBaseAnimal(EntityType.OXYGEN_EATER);
 
 
@@ -297,7 +298,7 @@ public class NPCFactory {
             .addComponent(aiTaskComponent)
             .addComponent(animator)
             .addComponent(new EntityIndicator(oxygenEater))
-            .addComponent(new CombatStatsComponent(10, 0))
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
             .addComponent(new HostileAnimationController())
             .addComponent(new OxygenEaterAttackPattern(1.5f, ProjectileFactory::createOxygenEaterProjectile))
             .addComponent(new InteractionDetector(5f, new ArrayList<>(List.of(EntityType.PLAYER))));
@@ -417,7 +418,8 @@ public class NPCFactory {
             .addComponent(animator)
             .addComponent(new HostileAnimationController())
             .addComponent(new EntityIndicator(dragonfly))
-            .addComponent(new DragonflyAttackPattern(1.5f, ProjectileFactory::createDragonflyProjectile))
+            .addComponent(new DragonflyAttackPattern(2f,
+                    ProjectileFactory::createDragonflyProjectile))
             .addComponent(new InteractionDetector(5f,
                     new ArrayList<>(Arrays.asList((EntityType.PLAYER), (EntityType.PLANT)))))
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
@@ -468,8 +470,6 @@ public class NPCFactory {
             .addComponent(new InteractionDetector(1.5f,
                     new ArrayList<>(Arrays.asList(EntityType.PLAYER))))
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
-
-
 
     bat.scaleHeight(1.2f);
 

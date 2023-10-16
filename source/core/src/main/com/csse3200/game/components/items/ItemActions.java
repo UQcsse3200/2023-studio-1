@@ -325,18 +325,17 @@ public class ItemActions extends Component {
       }
     } else if (type.getItemType() == ItemType.EGG) {
         if (type.getItemName().equals("golden egg")) {
-            player.getComponent(PlayerActions.class).setSpeedMultiplier(5f);
-            player.getEvents().scheduleEvent(5f, "setSpeedMultiplier", 1f);
+            player.getComponent(PlayerActions.class).setSpeedMultiplier(1.5f);
+            player.getEvents().scheduleEvent(20f, "setSpeedMultiplier", 1f);
         } else {
             player.getComponent(HungerComponent.class).increaseHungerLevel(-10);
         }
     } else if (type.getItemType() == ItemType.MILK) {
-      player.getComponent(PlayerActions.class).setDamageMultiplier(5f);
+      player.getComponent(PlayerActions.class).setDamageMultiplier(2.5f);
       player.getEvents().scheduleEvent(5f, "setDamageMultiplier", 1f);
       player.getComponent(CombatStatsComponent.class).addHealth(5);
       player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
     }
-
   }
 
   /**
@@ -603,10 +602,15 @@ public class ItemActions extends Component {
       return false;
     }
 
-    entityToFeed.getEvents().trigger("feed");
-    entityToFeed.getEvents().trigger(ParticleService.START_EVENT, ParticleService.ParticleEffectType.FEED_EFFECT);
-    // Feeding animals should remove the food from player inventory
-    player.getComponent(InventoryComponent.class).removeItem(entity);
+
+    // Feeding animals should remove the food from player inventory if food is their favourite
+    if (entityToFeed.getComponent(TamableComponent.class).getFavouriteFood()
+            .equals(entity.getComponent(ItemComponent.class).getItemName())) {
+      entityToFeed.getEvents().trigger("feed");
+      player.getComponent(InventoryComponent.class).removeItem(entity);
+      entityToFeed.getEvents().trigger("startVisualEffect", ParticleService.ParticleEffectType.FEED_EFFECT);
+    }
+
     return true;
   }
 
