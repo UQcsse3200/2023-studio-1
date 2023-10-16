@@ -3,10 +3,8 @@ package com.csse3200.game.components.player;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainTile;
-import com.csse3200.game.components.*;
 import com.csse3200.game.components.combat.CombatStatsComponent;
 import com.csse3200.game.components.combat.ProjectileComponent;
 import com.csse3200.game.components.Component;
@@ -21,10 +19,10 @@ import com.csse3200.game.components.tractor.TractorActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ProjectileFactory;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.services.ParticleService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.sound.EffectSoundFile;
 import com.csse3200.game.services.sound.InvalidSoundFileException;
-import com.csse3200.game.utils.math.Vector2Utils;
 
 import java.security.SecureRandom;
 import java.util.List;
@@ -51,6 +49,9 @@ public class PlayerActions extends Component {
   private float speedMultiplier = 1f;
   private float damageMultiplier = 1f;
   int swordDamage = 5;
+
+  private static float weatherSpeedModifier = 1.0f;
+  private static boolean isWeatherAffectingSpeed = false;
 
   enum Direction {
     RIGHT("right"),
@@ -99,6 +100,10 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("toolbarSwitch", this::toolbarSwitch);
     entity.getEvents().addListener("setSpeedMultiplier", this::setSpeedMultiplier);
     entity.getEvents().addListener("setDamageMultiplier", this::setDamageMultiplier);
+    ServiceLocator.getGameArea().getClimateController().getEvents().addListener(
+            "startPlayerMovementSpeedEffect", this::startPlayerMovementSpeedEffect);
+    ServiceLocator.getGameArea().getClimateController().getEvents().addListener(
+            "stopPlayerMovementSpeedEffect", this::stopPlayerMovementSpeedEffect);
   }
 
   @Override
@@ -183,12 +188,21 @@ public class PlayerActions extends Component {
       velocityScale.scl(terrainSpeedModifier);
     }
 
+    if (isWeatherAffectingSpeed) {
+      velocityScale.scl(weatherSpeedModifier);
+    }
+
     velocityScale.scl(speedMultiplier);
 
     Vector2 desiredVelocity = moveDirection.cpy().scl(velocityScale);
     // impulse = (desiredVel - currentVel) * mass
     Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
+
     body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
+
+    if (impulse.len() > 4) {
+      entity.getEvents().trigger("startVisualEffect", ParticleService.ParticleEffectType.DIRT_EFFECT);
+    }
   }
 
   public float getPrevMoveDirection() {
@@ -290,6 +304,7 @@ public class PlayerActions extends Component {
           if(difference <= 45) {
             combat.addHealth((int) -(swordDamage * damageMultiplier));
             animal.getEvents().trigger("hit", entity);
+            ServiceLocator.getParticleService().startEffectAtPosition(ParticleService.ParticleEffectType.ATTACK_EFFECT, animal.getCenterPosition());
             animal.getEvents().trigger("panicStart");
           }
       }
@@ -404,4 +419,15 @@ public class PlayerActions extends Component {
   public void setMuted(boolean muted) {
     this.muted = muted;
   }
+
+  private void startPlayerMovementSpeedEffect(float movementMultiplier) {
+    weatherSpeedModifier = movementMultiplier;
+    isWeatherAffectingSpeed = true;
+  }
+
+  private void stopPlayerMovementSpeedEffect() {
+    weatherSpeedModifier = 1.0f;
+    isWeatherAffectingSpeed = false;
+  }
+
 }

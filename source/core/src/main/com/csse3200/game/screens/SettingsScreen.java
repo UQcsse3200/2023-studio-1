@@ -28,8 +28,6 @@ public class SettingsScreen extends ScreenAdapter {
   private static final String[] mainMenuTextures = {"images/galaxy_home_still.png"};
   private static String[] transitionTextures = new String[FRAME_COUNT];
   private static final String ANIMATION_PREFIX = "images/menu_animations/menu_animations";
-  private Texture backgroundTexture;
-  private SpriteBatch batch;
   private final GdxGame game;
   private final Renderer renderer;
 

@@ -25,7 +25,8 @@ public class FactoryService {
 			new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.FIRE_FLIES, NPCFactory::createFireFlies),
 			new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.DRAGONFLY, NPCFactory::createDragonfly),
 			new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.BAT, NPCFactory::createBat),
-			new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.SHIP_DEBRIS, ShipDebrisFactory::createShipDebris));
+			new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.SHIP_DEBRIS, ShipDebrisFactory::createShipDebris),
+			new AbstractMap.SimpleEntry<EntityType, Supplier<Entity>>(EntityType.SHIP_EATER, NPCFactory::createShipEater));
 
 	private static final Map<String, Function<CropTileComponent, Entity>> plantFactories = Map.of(
 			"Cosmic Cob", PlantFactory::createCosmicCob,
@@ -72,6 +73,7 @@ public class FactoryService {
 			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("LIGHT", ItemFactory::createLightItem),
 
 			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Ship Part", ItemFactory::createShipPart),
+			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("TeleportDevice", ItemFactory::createTeleportDevice),
 
 			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Fishing Rod", ItemFactory::createFishingRod),
 			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Lava Eel", ItemFactory::createLavaEel),
@@ -126,7 +128,12 @@ public class FactoryService {
 			new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.ANIMAL_REPEAT_QUEST, QuestFactory::createRecursiveAnimalQuest),
 			new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.PLANT_REPEAT_QUEST, QuestFactory::createRecursivePlantQuest),
 			new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.WATER_REPEAT_QUEST, QuestFactory::createRecursiveWaterQuest),
-			new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.SHIP_PART_REPEAT_QUEST, QuestFactory::createRecursivePartQuest));
+			new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.SHIP_PART_REPEAT_QUEST, QuestFactory::createRecursivePartQuest),
+			new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.CRAVINGS_I_QUESTS_NAME, QuestFactory::createCravingsIQuests),
+			new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.CRAVINGS_II_QUESTS_NAME, QuestFactory::createCravingsIIQuests),
+			new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.THE_THUNDERLORDS_BLESSING_QUEST_NAME, QuestFactory::createTheThunderlordsBlessingQuests),
+			new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.ITS_COLD_OUTSIDE_QUEST_NAME, QuestFactory::createItsColdOutsideQuests),
+			new AbstractMap.SimpleEntry<String, Supplier<Quest>>(QuestFactory.ACID_RAIN_QUEST_NAME, QuestFactory::createAcidRainQuests));
 
 	public static Map<String, Function<CropTileComponent, Entity>> getPlantFactories() {
 		return plantFactories;

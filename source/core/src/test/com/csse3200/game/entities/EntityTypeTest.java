@@ -23,7 +23,7 @@ class EntityTypeTest {
     expectedEnumNames = new HashSet<>(Arrays.asList(
         "PLAYER", "TRACTOR", "PLANT", "DECAYING_PLANT", "TILE", "COW",
         "CHICKEN", "ASTROLOTL", "OXYGEN_EATER", "ITEM", "FIRE_FLIES",
-        "QUESTGIVER", "QUESTGIVER_INDICATOR", "SPRINKLER","SHIP", "SHIP_DEBRIS", "SHIP_PART_TILE",
+        "QUESTGIVER", "QUESTGIVER_INDICATOR", "SPRINKLER","SHIP", "SHIP_DEBRIS", "SHIP_PART_TILE", "SHIP_EATER",
             "GATE", "FENCE", "CHEST", "PUMP", "LIGHT", "FIRE_FLIES", "DRAGONFLY", "BAT", "DUMMY", "GOLDEN_STATUE"));
   }
 
@@ -86,16 +86,16 @@ class EntityTypeTest {
 
   @Test
   void testOxygenReturn() {
-    assertEquals(EntityType.COW.getOxygenRate(), 0);
-    assertEquals(EntityType.CHICKEN.getOxygenRate(), 0);
-    assertEquals(EntityType.GATE.getOxygenRate(), 0);
-    assertEquals(EntityType.FENCE.getOxygenRate(), 0);
+    assertEquals(0, EntityType.COW.getOxygenRate());
+    assertEquals(0, EntityType.CHICKEN.getOxygenRate());
+    assertEquals(0, EntityType.GATE.getOxygenRate());
+    assertEquals(0, EntityType.FENCE.getOxygenRate());
   }
 
   @Test
   void testEntityType() {
     EntityType type = EntityType.PLAYER;
-    assertEquals(type, EntityType.PLAYER);
+    assertEquals(EntityType.PLAYER, type);
   }
 
   @Test

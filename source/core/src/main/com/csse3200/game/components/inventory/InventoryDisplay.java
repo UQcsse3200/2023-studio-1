@@ -223,7 +223,7 @@ public class InventoryDisplay extends UIComponent {
 					payload.setDragActor(getActor());
 					stage.addActor(getActor());
 					dnd.setDragActorPosition(50, -getActor().getHeight() / 2);
-					ItemSlot slot = map.get((Stack)getActor());
+					ItemSlot slot = map.get(getActor());
 					tooltips.get(indexes.get(slot)).hide();
 					tooltip = tooltips.get(indexes.get(slot));
 					slot.removeListener(tooltips.get(indexes.get(slot)));
@@ -233,7 +233,7 @@ public class InventoryDisplay extends UIComponent {
 				@Override
 				public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
 					if (target == null) {
-						ItemSlot itemSlot = map.get((Stack) getActor());
+						ItemSlot itemSlot = map.get(getActor());
 						itemSlot.add(getActor());
 						itemSlot.addListener(tooltip);
 					}

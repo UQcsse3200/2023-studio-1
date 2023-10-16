@@ -134,21 +134,21 @@ class InventoryComponentTest {
 
   @Test
   void testGetItemCount() {
-    assertEquals(inventoryComponent.getItemCount(item1), 1);
+    assertEquals(1, inventoryComponent.getItemCount(item1));
     inventoryComponent.addItem(item1);
-    assertEquals(inventoryComponent.getItemCount(item1), 2);
+    assertEquals(2, inventoryComponent.getItemCount(item1));
     inventoryComponent.removeItem(item1);
     inventoryComponent.removeItem(item1);
-    assertEquals(inventoryComponent.getItemCount(item1), 0);
+    assertEquals(0, inventoryComponent.getItemCount(item1));
 
   }
 
 
   @Test
   void testSetInventorySize() {
-    assertEquals(inventoryComponent.getInventorySize(), 30);
+    assertEquals(30, inventoryComponent.getInventorySize());
     assertTrue(inventoryComponent.setInventorySize(10));
-    assertEquals(inventoryComponent.getInventorySize(), 10);
+    assertEquals(10, inventoryComponent.getInventorySize());
     assertFalse(inventoryComponent.setInventorySize(-1));
   }
 

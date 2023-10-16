@@ -1,6 +1,5 @@
 package com.csse3200.game.files;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -160,7 +159,7 @@ public class SaveGame {
         if (e.getType() == EntityType.ASTROLOTL || e.getType() == EntityType.CHICKEN ||
                 e.getType() == EntityType.COW || e.getType() == EntityType.OXYGEN_EATER ||
                 e.getType() == EntityType.SHIP_DEBRIS || e.getType() == EntityType.FIRE_FLIES ||
-                e.getType() == EntityType.SHIP) {
+                e.getType() == EntityType.SHIP || e.getType() == EntityType.SHIP_EATER) {
           tmp.add(e);
         }
       }

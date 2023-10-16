@@ -1,6 +1,8 @@
 package com.csse3200.game.areas.weather;
 
 import com.badlogic.gdx.utils.Json;
+import com.csse3200.game.events.EventHandler;
+import com.csse3200.game.services.ServiceLocator;
 
 /**
  * Represents a Weather Event like Acid Shower or Solar Surge. These are updated based on in-game hours.
@@ -28,15 +30,7 @@ public abstract class WeatherEvent {
 	 */
 	protected final float severity;
 
-	/**
-	 * Modifier that is used to calculate the humidity in game
-	 */
-	protected float humidityModifier;
-
-	/**
-	 * Modifier used to calculate the temperature in game
-	 */
-	protected float temperatureModifier;
+	protected final EventHandler climateControllerEvents;
 
 	/**
 	 * Constructs an {@link WeatherEvent} with a given duration, priority and countdown
@@ -55,12 +49,13 @@ public abstract class WeatherEvent {
 		} else if (severity < 0f) {
 			throw new IllegalArgumentException("Severity must be greater than 0.");
 		}
+
 		this.numHoursUntil = numHoursUntil;
 		this.duration = duration;
 		this.priority = priority;
 		this.severity = severity;
-		this.humidityModifier = 1.0f;
-		this.temperatureModifier = 1.0f;
+
+		this.climateControllerEvents = ServiceLocator.getGameArea().getClimateController().getEvents();
 	}
 
 	/**
@@ -113,25 +108,6 @@ public abstract class WeatherEvent {
 	 */
 	public boolean isExpired() {
 		return numHoursUntil == 0 && duration <= 0;
-	}
-
-
-	/**
-	 * Gets the humidity modifier of this weather event
-	 *
-	 * @return humidity modifier
-	 */
-	public float getHumidityModifier() {
-		return humidityModifier;
-	}
-
-	/**
-	 * Gets the temperature modifier of this weather event
-	 *
-	 * @return temperature modifier
-	 */
-	public float getTemperatureModifier() {
-		return temperatureModifier;
 	}
 
 	/**

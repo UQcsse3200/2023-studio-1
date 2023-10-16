@@ -15,7 +15,7 @@ public class TouchTractorInputComponentTest {
     @Test
     void constructor() {
         TouchTractorInputComponent inputComponent = spy(TouchTractorInputComponent.class);
-        assertEquals(inputComponent.getPriority(), 5);
+        assertEquals(5, inputComponent.getPriority());
     }
 
 

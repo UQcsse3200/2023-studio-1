@@ -47,20 +47,23 @@ public class ProgressBar extends UIComponent {
      * Creates each image as an image object then adds to an array of images for later use
      */
     public void createTexture() {
-        for (int i = 1; i <= 30; i++) {
-            if (i <=5 ) {
+        for (int i = 1; i <= 18; i++) {
+            if (i <=3 ) {
                 progressBarImagesAct1.add(new Image(ServiceLocator.getResourceService().getAsset(
                         String.format("images/progress-bar/part1day%d.png", i), Texture.class)));
-            } else if (i <= 15) {
+            } else if (i <= 9) {
                 progressBarImagesAct2.add(new Image(ServiceLocator.getResourceService().getAsset(
-                        String.format("images/progress-bar/part2day%d.png", i-5), Texture.class)));
+                        String.format("images/progress-bar/part2day%d.png", i-3), Texture.class)));
             } else {
                 progressBarImagesAct3.add(new Image(ServiceLocator.getResourceService().getAsset(
-                        String.format("images/progress-bar/part3day%d.png", i-15), Texture.class)));
+                        String.format("images/progress-bar/part3day%d.png", i-9), Texture.class)));
             }
         }
     }
 
+    /**
+     * Updates which array the images are pulled from based on the progress of the quests
+     */
     public void updateProgressBar(String questName) {
         if (Objects.equals(questName, QuestFactory.FIRST_CONTACT_QUEST_NAME)) {
             updateProgressBarAct1();
@@ -71,18 +74,27 @@ public class ProgressBar extends UIComponent {
         }
     }
 
+    /**
+     * Updates which act is currently and corrects the day count.
+     */
     private void updateProgressBarAct1() {
         this.act = 1;
         this.dayOffset = ServiceLocator.getTimeService().getDay();
         this.updateDisplay();
     }
 
+    /**
+     * Updates which act is currently and corrects the day count.
+     */
     private void updateProgressBarAct2() {
         this.act = 2;
         this.dayOffset = ServiceLocator.getTimeService().getDay();
         this.updateDisplay();
     }
 
+    /**
+     * Updates which act is currently and corrects the day count.
+     */
     private void updateProgressBarAct3() {
         this.act = 3;
         this.dayOffset = ServiceLocator.getTimeService().getDay();
@@ -101,9 +113,9 @@ public class ProgressBar extends UIComponent {
 
         switch (this.act) {
 
-            case 1 -> progressionBar = (day >= 5) ? progressBarImagesAct1.get(4) : progressBarImagesAct1.get(day);
-            case 2 -> progressionBar = (day >= 10) ? progressBarImagesAct2.get(9) : progressBarImagesAct2.get(day);
-            case 3 -> progressionBar = (day >= 15) ? progressBarImagesAct3.get(14) : progressBarImagesAct3.get(day);
+            case 1 -> progressionBar = (day >= 3) ? progressBarImagesAct1.get(2) : progressBarImagesAct1.get(day);
+            case 2 -> progressionBar = (day >= 6) ? progressBarImagesAct2.get(5) : progressBarImagesAct2.get(day);
+            case 3 -> progressionBar = (day >= 9) ? progressBarImagesAct3.get(8) : progressBarImagesAct3.get(day);
             default -> {
                 // Default case should do nothing
             }
@@ -122,11 +134,7 @@ public class ProgressBar extends UIComponent {
         table.setFillParent(true);
         table.padTop(-95f).padLeft(180f);
 
-
-
         group.addActor(progressionBar);
-
-
         table.add(group).size(200);
         stage.addActor(table);
     }
@@ -138,8 +146,6 @@ public class ProgressBar extends UIComponent {
     @Override
     public void dispose() {
         super.dispose();
-
         progressionBar.remove();
-
     }
 }
