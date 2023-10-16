@@ -55,7 +55,7 @@ public class GameAreaDisplay extends UIComponent {
 
   private void addActors() {
     title = new Label(this.gameAreaName, skin, "large");
-    stage.addActor(title);
+    //stage.addActor(title);
   }
 
   public void setPauseMenu() {

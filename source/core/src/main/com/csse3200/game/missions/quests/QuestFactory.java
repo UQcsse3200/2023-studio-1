@@ -11,6 +11,7 @@ import com.csse3200.game.missions.cutscenes.Cutscene;
 import com.csse3200.game.missions.rewards.*;
 import com.csse3200.game.services.ServiceLocator;
 
+import java.beans.Customizer;
 import java.security.SecureRandom;
 import java.util.*;
 import java.util.function.Supplier;
@@ -28,6 +29,8 @@ public class QuestFactory {
     public static final String CONNECTION_QUEST_NAME = "Connection";
     public static final String HOME_SICK_QUEST_NAME = "Home Sick";
     public static final String SHIP_REPAIRS_QUEST_NAME = "Ship Repairs";
+    public static final String PART_FINDER_I_QUEST_NAME = "Part Finder I";
+    public static final String SPACE_DEBRIS_QUEST_NAME = "Space Debris";
     public static final String BRINGING_IT_ALL_TOGETHER_QUEST_NAME = "Bringing It All Together";
     public static final String ACT_II_MAIN_QUEST_NAME = "Making Contact";
     public static final String AN_IMMINENT_THREAT_QUEST_NAME = "An Imminent Threat";
@@ -41,6 +44,7 @@ public class QuestFactory {
     public static final String ANIMAL_REPEAT_QUEST = "Animal Lover";
     public static final String PLANT_REPEAT_QUEST = "Green Thumb";
     public static final String WATER_REPEAT_QUEST = "Wet roots";
+    public static final String SHIP_PART_REPEAT_QUEST = "No Parts?";
 
     private QuestFactory() {
         // This class should not be instantiated - if it is, do nothing
@@ -225,6 +229,25 @@ public class QuestFactory {
         ));
         return new PlantInteractionQuest(WATER_REPEAT_QUEST, reward, MissionManager.MissionEvent.WATER_CROP,
                 Set.of("Cosmic Cob", "Aloe Vera", "Hammer Plant", "Space Snapper", "Deadly Nightshade", "Atomic Algae"), 15);
+    }
+
+    /**
+     * Creates the recursive Ship Part {@link InventoryStateQuest}
+     * @return - the recursive Ship Part Quest
+     */
+    public static InventoryStateQuest createRecursivePartQuest() {
+        String dialogue = """
+                No parts? :(
+                """;
+
+        MultiReward reward = new MultiReward(List.of(
+                new ConsumePlayerItemsReward(Map.of("Hammer Flower", 3)),
+                new QuestReward(List.of(QuestFactory::createRecursivePartQuest), new ArrayList<>()),
+                new ItemReward(List.of(ItemFactory.createShipPart())),
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
+        ));
+
+        return new InventoryStateQuest(SHIP_PART_REPEAT_QUEST, reward, Map.of("Hammer Flower", 3));
     }
 
     /**
@@ -427,21 +450,86 @@ public class QuestFactory {
      */
     public static ShipRepairQuest createShipRepairsQuest() {
         List<Supplier<Quest>> questsToActivate = new ArrayList<>();
+        questsToActivate.add(QuestFactory::createPartFinderIQuest);
         questsToActivate.add(QuestFactory::createBringingItAllTogetherQuest);
 
         String dialogue = """
-                "Well done. {WAIT}Now I can get started on repairing your radio.
+                "Well done. {WAIT}Now I can get started on repairing your radio. 
                 {WAIT}Keep repairing the {COLOR=#76428A}SHIP{COLOR=BLACK}, and come to me when you have added enough {COLOR=#76428A}SHIP PARTS{COLOR=BLACK}."
+                {WAIT}By the way, I've found some more stray pieces of debris." 
+                Jarrael takes out a piece of paper with a rough sketch of the nearby area. 
+                {WAIT}"I've marked out the general area, go there and clean up anything you find. You might find more spare parts to repair your ship."
                 """;
 
         MultiReward reward = new MultiReward(List.of(
-                new ItemReward(List.of(
-                        ItemFactory.createShipPart()
-                )),
+                new ClueReward(ItemFactory.createClueItem()),
                 new QuestReward(new ArrayList<>(), questsToActivate),
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
         ));
         return new ShipRepairQuest(SHIP_REPAIRS_QUEST_NAME, reward, 3);
+    }
+
+    /**
+     * Creates the Clue {@link ShipRepairQuest}
+     * @return - the Clue Finder Quest
+     */
+    public static ShipRepairQuest createPartFinderIQuest() {
+        List<Supplier<Quest>> questsToActivate = new ArrayList<>();
+        questsToActivate.add(QuestFactory::createSpaceDebrisQuest);
+
+        String dialogue = """
+                As you return to Jarrael, a bright flash in the sky catches your attention. 
+                {WAIT}"Well, it seems like some stray space debris has just broken through the atmosphere..." 
+                {WAIT}Both of you watch as the burning trail of debris slowly descends to the planet's surface in the south. 
+                {WAIT}"What a perfect opportunity! You should go over and check it out. 
+                Bring me back whatever wreckage you can find and I'll try my best to make them usable for repairs."
+                """;
+
+        MultiReward reward = new MultiReward(List.of(
+                //new ClueReward(ItemFactory.createClueItem()),
+                new ItemReward(List.of(ItemFactory.createShipPart())),
+                new QuestReward(new ArrayList<>(), questsToActivate),
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
+        ));
+        return new ShipRepairQuest(PART_FINDER_I_QUEST_NAME, reward, 1);
+    }
+
+    /**
+     * Creates the Space Debris {@link ClearDebrisQuest}
+     * @return - the Space Debris Quest
+     */
+    // TODO: set up debris spawning/tracking. Change to ClearDebrisQuest
+    // PLACEHOLDER ATM JUST SO I DON'T HAVE TO DEAL WITH SO MANY CONFLICTS LATER PLEASE
+    public static ShipRepairQuest createSpaceDebrisQuest() {
+        List<Supplier<Quest>> questsToActivate = new ArrayList<>();
+        questsToActivate.add(QuestFactory::createBringingItAllTogetherQuest);
+
+        List<Supplier<Quest>> questsToBeSelectable = new ArrayList<>();
+        questsToBeSelectable.add(QuestFactory::createRecursivePartQuest);
+
+        String dialogue = """
+                "Lucky for you there's quite a few salvageable pieces from this wreckage. 
+                Here, I've cleaned them up for you. This should help with repairs."
+                {WAIT}The alien hands you a hefty number of ship parts before continuing. 
+                {WAIT}"You might have also noticed some strange creatures appearing from the wreckage. They are SHIP EATERS.
+                They'll start eating away at your ship if you let the get too close. 
+                {WAIT}If they eat too much of your ship, just bring me some HAMMER FLOWERS and I can get you more SHIP PARTS."
+                """;
+
+        MultiReward reward = new MultiReward(List.of(
+                new ItemReward(List.of(
+                        ItemFactory.createShipPart(),
+                        ItemFactory.createShipPart(),
+                        ItemFactory.createShipPart(),
+                        ItemFactory.createShipPart(),
+                        ItemFactory.createShipPart(),
+                        ItemFactory.createShipPart()
+                )),
+                new QuestReward(questsToBeSelectable, questsToActivate),
+                new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
+        ));
+
+        return new ShipRepairQuest(SPACE_DEBRIS_QUEST_NAME, reward, 1);
     }
 
     /**
@@ -455,7 +543,7 @@ public class QuestFactory {
                 """;
 
         DialogueReward reward = new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN);
-        return new ShipRepairQuest(BRINGING_IT_ALL_TOGETHER_QUEST_NAME, reward, 17);
+        return new ShipRepairQuest(BRINGING_IT_ALL_TOGETHER_QUEST_NAME, reward, 7);
     }
 
     /**

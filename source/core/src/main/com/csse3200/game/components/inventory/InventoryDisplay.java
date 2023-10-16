@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.items.WateringCanLevelComponent;
+import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.ServiceLocator;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -46,7 +47,10 @@ public class InventoryDisplay extends UIComponent {
 	private final Map<Integer, TextTooltip> tooltips = new HashMap<>();
 	private final InstantTooltipManager instantTooltipManager = new InstantTooltipManager();
 	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(InventoryDisplay.class);
+	private boolean isPause = false;
+	private boolean lastState = false;
 	private Image bin = null;
+ 
 
 	/**
 	 * Constructor for class
@@ -72,8 +76,21 @@ public class InventoryDisplay extends UIComponent {
 		initialiseInventory();
 		entity.getEvents().addListener(openEvent, this::toggleOpen);
 		entity.getEvents().addListener(refreshEvent, this::refreshInventory);
+		entity.getEvents().addListener(PlayerActions.events.ESC_INPUT.name(), this::setPause);
 		entity.getEvents().addListener("hideUI", this::hide);
 		inventoryDisplayManager.addInventoryDisplay(this);
+	}
+
+	public void setPause(){
+		isPause = !isPause;
+		if (isPause){
+			lastState = isOpen;
+			isOpen = false;
+			window.setVisible(isOpen);
+		} else {
+			isOpen = lastState;
+			window.setVisible(isOpen);
+		}
 	}
 
 	/**
@@ -291,6 +308,9 @@ public class InventoryDisplay extends UIComponent {
 	 * Toggle the inventory open, and changes the window visibility
 	 */
 	public void toggleOpen() {
+		if (isPause) {
+			return;
+		}
 		isOpen = !isOpen;
 		window.setVisible(isOpen);
 		inventoryDisplayManager.updateDisplays();
