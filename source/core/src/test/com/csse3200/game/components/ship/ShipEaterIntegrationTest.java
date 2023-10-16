@@ -21,10 +21,7 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.rendering.RenderService;
-import com.csse3200.game.services.GameTime;
-import com.csse3200.game.services.ResourceService;
-import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.services.TimeService;
+import com.csse3200.game.services.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
@@ -32,6 +29,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.stream.IntStream;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
@@ -86,6 +84,7 @@ class ShipEaterIntegrationTest {
 		ServiceLocator.registerEntityService(new EntityService());
 		ServiceLocator.registerTimeService(new TimeService());
 		ServiceLocator.registerGameArea(gameArea);
+		ServiceLocator.registerParticleService(mock(ParticleService.class));
 
 		ship = new Entity(EntityType.SHIP)
 				.addComponent(new PhysicsComponent())
@@ -106,9 +105,11 @@ class ShipEaterIntegrationTest {
 	private void setDigging(boolean digging) {
 		isDigging = digging;
 	}
+
 	private void setEating(boolean eating) {
 		isEating = eating;
 	}
+
 	private void setHiding(boolean hiding) {
 		isHiding = hiding;
 	}
@@ -127,7 +128,7 @@ class ShipEaterIntegrationTest {
 
 		float updatedDistanceToShip = entity.getPosition().dst(ship.getPosition());
 
-		assert (initialDistanceToShip > updatedDistanceToShip);
+		assertTrue(initialDistanceToShip > updatedDistanceToShip);
 	}
 
 	@Test
@@ -138,7 +139,7 @@ class ShipEaterIntegrationTest {
 		 */
 
 		// setup obstacles
-		IntStream.range(7,13).forEach(x -> {
+		IntStream.range(7, 13).forEach(x -> {
 			Entity invisibleObstacle = ObstacleFactory.createInvisibleObstacle();
 			invisibleObstacle.setPosition(new Vector2(x, 5f));
 			ServiceLocator.getGameArea().spawnEntity(invisibleObstacle);
@@ -169,7 +170,7 @@ class ShipEaterIntegrationTest {
 
 		float updatedDistanceToShip = entity.getPosition().dst(ship.getPosition());
 
-		assert (distanceToShipAfterStartDigging > updatedDistanceToShip);
+		assertTrue(distanceToShipAfterStartDigging > updatedDistanceToShip);
 	}
 
 
@@ -181,7 +182,7 @@ class ShipEaterIntegrationTest {
 		 */
 
 		// setup obstacles
-		IntStream.range(7,13).forEach(x -> {
+		IntStream.range(7, 13).forEach(x -> {
 			Entity invisibleObstacle = ObstacleFactory.createInvisibleObstacle();
 			invisibleObstacle.setPosition(new Vector2(x, 9f));
 			ServiceLocator.getGameArea().spawnEntity(invisibleObstacle);
@@ -214,7 +215,7 @@ class ShipEaterIntegrationTest {
 
 		runGame(5);
 
-		assert(isEating);
+		assertTrue(isEating);
 	}
 
 	@Test
@@ -234,14 +235,14 @@ class ShipEaterIntegrationTest {
 
 		runGame(20);
 
-		assert(isEating);
+		assertTrue(isEating);
 
 		player.setPosition(11f, 11f);
 		ServiceLocator.getGameArea().spawnEntity(player);
 
 		runGame(1);
 
-		assert(isHiding);
+		assertTrue(isHiding);
 	}
 
 	@Test
@@ -256,7 +257,7 @@ class ShipEaterIntegrationTest {
 
 		runGame(1);
 
-		assert(isEating);
+		assertTrue(isEating);
 
 		Entity player = new Entity(EntityType.PLAYER)
 				.addComponent(new PhysicsComponent())
@@ -267,14 +268,14 @@ class ShipEaterIntegrationTest {
 
 		runGame(1);
 
-		assert(isHiding);
+		assertTrue(isHiding);
 
 		player.setPosition(1f, 1f);
 
 		runGame(1);
 
-		assert(!isHiding);
-		assert(isEating);
+		assertTrue(!isHiding);
+		assertTrue(isEating);
 
 	}
 
@@ -294,13 +295,13 @@ class ShipEaterIntegrationTest {
 
 		float updatedDistanceToShip = entity.getPosition().dst(ship.getPosition());
 
-		assert(initialDistanceToShip == updatedDistanceToShip);
+		assertTrue(initialDistanceToShip == updatedDistanceToShip);
 	}
 
 	@Test
 	void digForeverrrrrrrr() {
 		// setup obstacles
-		IntStream.range(2,6).forEach(y -> {
+		IntStream.range(2, 6).forEach(y -> {
 			Entity invisibleObstacle = ObstacleFactory.createInvisibleObstacle();
 			invisibleObstacle.setPosition(new Vector2(10f, y));
 			ServiceLocator.getGameArea().spawnEntity(invisibleObstacle);
@@ -339,7 +340,7 @@ class ShipEaterIntegrationTest {
 
 		runGame(50);
 
-		assert(isEating);
+		assertTrue(isEating);
 	}
 
 	private void runGame(int numCycles) {

@@ -34,13 +34,13 @@ public class ConsumePlayerItemsReward extends Reward {
      */
     @Override
     public void collect() {
-        setCollected();
-
         Entity player = ServiceLocator.getGameArea().getPlayer();
         InventoryComponent inventory = player.getComponent(InventoryComponent.class);
         if (inventory == null) {
             return;
         }
+
+        setCollected();
         
         for (Map.Entry<String, Integer> itemQuantity : itemsToRemove.entrySet()) {
             for (int i = 0; i < itemQuantity.getValue(); i++) {

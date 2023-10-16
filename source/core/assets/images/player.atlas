@@ -1,5 +1,5 @@
 player_sprites.png
-size: 960, 864
+size: 960, 912
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
@@ -1783,29 +1783,176 @@ fishing_up
   index: -1
 gun_right
   rotate: false
-  xy: 144, 816
+  xy: 240, 864
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 gun_left
   rotate: false
-  xy: 96, 816
+  xy: 192, 864
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 gun_down
   rotate: false
-  xy: 48, 816
+  xy: 144, 864
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 gun_up
   rotate: false
-  xy: 0, 816
+  xy: 96, 864
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
+bye_bye
+  rotate: false
+  xy: 0, 816
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+bye_bye
+  rotate: false
+  xy: 48, 816
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 1
+bye_bye
+  rotate: false
+  xy: 96, 816
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 2
+bye_bye
+  rotate: false
+  xy: 144, 816
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 3
+bye_bye
+  rotate: false
+  xy: 192, 816
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 4
+bye_bye
+  rotate: false
+  xy: 240, 816
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 5
+bye_bye
+  rotate: false
+  xy: 288, 816
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 6
+bye_bye
+  rotate: false
+  xy: 336, 816
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 7
+bye_bye
+  rotate: false
+  xy: 384, 816
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 8
+bye_bye
+  rotate: false
+  xy: 432, 816
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 9
+bye_bye
+  rotate: false
+  xy: 480, 816
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 10
+bye_bye
+  rotate: false
+  xy: 528, 816
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 11
+bye_bye
+  rotate: false
+  xy: 576, 816
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 12
+bye_bye
+  rotate: false
+  xy: 624, 816
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 13
+bye_bye
+  rotate: false
+  xy: 672, 816
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 14
+bye_bye
+  rotate: false
+  xy: 720, 816
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 15
+bye_bye
+  rotate: false
+  xy: 768, 816
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 16
+bye_bye
+  rotate: false
+  xy: 816, 816
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 17
+bye_bye
+  rotate: false
+  xy: 864, 816
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 18
+bye_bye
+  rotate: false
+  xy: 912, 816
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 19
+bye_bye
+  rotate: false
+  xy: 0, 864
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 20
+

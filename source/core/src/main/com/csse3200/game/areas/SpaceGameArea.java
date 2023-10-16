@@ -338,7 +338,10 @@ public class SpaceGameArea extends GameArea {
   public SpaceGameArea(TerrainFactory terrainFactory) {
     super();
     gameMap = new GameMap(terrainFactory);
+
     climateController = new ClimateController();
+    climateController.initialiseEvents();
+
     ServiceLocator.registerGameArea(this);
   }
 
@@ -364,8 +367,6 @@ public class SpaceGameArea extends GameArea {
 
     spawnShip();
 
-    ServiceLocator.getMissionManager().acceptQuest(QuestFactory.createFirstContactQuest());
-
     //Spawning behaviour for passive animals
     List<EntitySpawner> passiveSpawners = new ArrayList<>();
     passiveSpawners.add(new EntitySpawner(1, player2 -> NPCFactory.createAstrolotl(),
@@ -389,6 +390,7 @@ public class SpaceGameArea extends GameArea {
             1, 1, 8, 8, 2));
     hostileSpawners.add(new EntitySpawner(5, player1 -> NPCFactory.createBat(),
             1, 1, 16, 8, 1));
+
 
     hostileSpawner = new EntitiesSpawner(hostileSpawners);
     hostileSpawner.setGameAreas(this);
@@ -609,6 +611,12 @@ public class SpaceGameArea extends GameArea {
     effects.add(EffectSoundFile.ATOMIC_ALGAE_DECAY_LORE);
     effects.add(EffectSoundFile.ATOMIC_ALGAE_DESTROY_LORE);
     effects.add(EffectSoundFile.ATOMIC_ALGAE_NEARBY_LORE);
+    effects.add(EffectSoundFile.ACID_BURN);
+    effects.add(EffectSoundFile.BLIZZARD);
+    effects.add(EffectSoundFile.LIGHTNING_STRIKE);
+    effects.add(EffectSoundFile.SOLAR_SURGE);
+    effects.add(EffectSoundFile.STORM);
+    effects.add(EffectSoundFile.SURGE);
     effects.add(EffectSoundFile.GOD_DID);
 
 

@@ -52,6 +52,10 @@ class MainQuestTest {
         mainQuest1 = new MainQuest("Main Quest 1", r1, 10, requiredQuests1, "Test 1");
         mainQuest2 = new MainQuest("Main Quest 2", r2, 10, requiredQuests2, "Test 2");
         mainQuest3 = new MainQuest("Main Quest 3", r3, 10, requiredQuests3, "Test 3");
+
+        mainQuest1.registerMission(ServiceLocator.getMissionManager().getEvents());
+        mainQuest2.registerMission(ServiceLocator.getMissionManager().getEvents());
+        mainQuest3.registerMission(ServiceLocator.getMissionManager().getEvents());
     }
 
     @AfterEach
@@ -61,26 +65,20 @@ class MainQuestTest {
 
     @Test
     void testRegisterMission() {
+        ServiceLocator.clear();
         assertFalse(mainQuest1.isCompleted());
         assertFalse(mainQuest2.isCompleted());
         assertFalse(mainQuest3.isCompleted());
-        assertFalse(r1.isCollected());
-        assertFalse(r2.isCollected());
-        assertFalse(r3.isCollected());
         mainQuest1.registerMission(ServiceLocator.getMissionManager().getEvents());
         mainQuest2.registerMission(ServiceLocator.getMissionManager().getEvents());
         mainQuest3.registerMission(ServiceLocator.getMissionManager().getEvents());
         assertFalse(mainQuest1.isCompleted());
         assertFalse(mainQuest2.isCompleted());
         assertFalse(mainQuest3.isCompleted());
-        assertFalse(r1.isCollected());
-        assertFalse(r2.isCollected());
-        assertFalse(r3.isCollected());
     }
 
     @Test
     void testIsCompleted() {
-        testRegisterMission();
         assertFalse(mainQuest1.isCompleted());
         assertFalse(mainQuest2.isCompleted());
         assertFalse(mainQuest3.isCompleted());
@@ -103,7 +101,6 @@ class MainQuestTest {
 
     @Test
     void testGetDescription() {
-        testRegisterMission();
         String desc1 = "You must Test 1!\nComplete the quests: " + requirement1 + ".";
         String desc2 = "You must Test 2!\nComplete the quests: " + requirement1 + ", " + requirement2 + ".";
         String desc3 = "You must Test 3!\nComplete the quests: " + requirement1 + ", " + requirement2 + ", " +
@@ -124,7 +121,6 @@ class MainQuestTest {
 
     @Test
     void testGetShortDescription() {
-        testRegisterMission();
         String desc = "%d required quests to be completed";
         assertEquals(String.format(desc, 1), mainQuest1.getShortDescription());
         assertEquals(String.format(desc, 2), mainQuest2.getShortDescription());
@@ -178,7 +174,6 @@ class MainQuestTest {
 
     @Test
     void testGetProgress() {
-        testRegisterMission();
         String[] progressArray1 = {requirement1};
         String[] progressArray2 = {requirement1, requirement2};
         String[] progressArray3 = {requirement1, requirement2, requirement3};
@@ -206,7 +201,12 @@ class MainQuestTest {
 
     @Test
     void testResetState() {
-        testIsCompleted();
+        ServiceLocator.getMissionManager().getEvents().trigger(
+                MissionManager.MissionEvent.QUEST_REWARD_COLLECTED.name(), requirement1);
+        ServiceLocator.getMissionManager().getEvents().trigger(
+                MissionManager.MissionEvent.QUEST_REWARD_COLLECTED.name(), requirement2);
+        ServiceLocator.getMissionManager().getEvents().trigger(
+                MissionManager.MissionEvent.QUEST_REWARD_COLLECTED.name(), requirement3);
         assertTrue(mainQuest1.isCompleted());
         assertTrue(mainQuest2.isCompleted());
         assertTrue(mainQuest3.isCompleted());

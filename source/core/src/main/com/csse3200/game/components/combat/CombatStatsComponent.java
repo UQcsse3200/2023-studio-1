@@ -9,6 +9,7 @@ import com.csse3200.game.services.sound.InvalidSoundFileException;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.quests.Quest;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +36,11 @@ public class CombatStatsComponent extends Component {
   @Override
   public void create() {
     entity.getEvents().addListener("hit", this::hitFromEntity);
+    entity.getEvents().addListener("lose", this::lose);
+  }
+
+  private void lose() {
+    ServiceLocator.getMissionManager().getEvents().trigger("loseScreen", "You died");
   }
 
   /**
@@ -123,10 +129,6 @@ public class CombatStatsComponent extends Component {
   public void handleDeath() {
     if(!Objects.equals(entity.getType(), EntityType.PLAYER)) {
       ServiceLocator.getGameArea().removeEntity(entity);
-    } else {
-      List<Quest> activeQuests = ServiceLocator.getMissionManager().getActiveQuests();
-      Quest mainQuest = activeQuests.get(activeQuests.size()-1);
-      ServiceLocator.getMissionManager().getEvents().trigger("loseScreen", mainQuest.getName());
     }
   }
 
@@ -170,21 +172,23 @@ public class CombatStatsComponent extends Component {
         logger.error("Failed to play animal sound", e);
       }
       entity.getEvents().trigger("death");
-      handleDeath();
+	    ServiceLocator.getMissionManager().getEvents().trigger(
+			    MissionManager.MissionEvent.COMBAT_ACTOR_DEFEATED.name(), entity.getType());
+	    handleDeath();
     }
   }
 
 	@Override
 	public void write(Json json) {
-      json.writeObjectStart(this.getClass().getSimpleName());
-      json.writeValue("health", this.health);
-      json.writeObjectEnd();
+		json.writeObjectStart(this.getClass().getSimpleName());
+		json.writeValue("health", this.health);
+		json.writeObjectEnd();
 	}
 
 	@Override
 	public void read(Json json, JsonValue jsonValue) {
-      jsonValue = jsonValue.get(this.getClass().getSimpleName());
-      int healthRead = jsonValue.getInt("health");
-      setHealth(healthRead);
+		jsonValue = jsonValue.get(this.getClass().getSimpleName());
+		int healthRead = jsonValue.getInt("health");
+		setHealth(healthRead);
 	}
 }

@@ -44,6 +44,8 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
 
     private Vector2[] aoeVectors;
 
+    private static int plantAoeWeatherModifier = 0;
+
     private int numOfPlayer;
 
     /**
@@ -70,6 +72,8 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
         entity.getEvents().addListener("collisionEnd", this::onCollisionEnd);
         ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::hourlyEffect);
         ServiceLocator.getTimeService().getEvents().addListener("minuteUpdate", this::minuteUpdate);
+        ServiceLocator.getGameArea().getClimateController().getEvents().addListener("startPlantAoeEffect", this::startPlantAoeWeatherEffect);
+        ServiceLocator.getGameArea().getClimateController().getEvents().addListener("stopPlantAoeEffect", this::stopPlantAoeWeatherEffect);
 
         super.create();
     }
@@ -189,7 +193,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
                 if (cropTile != null) {
                     Entity otherPlant = cropTile.getPlant();
                     if (otherPlant != null) {
-                        otherPlant.getComponent(PlantComponent.class).increasePlantHealth(-4);
+                        otherPlant.getComponent(PlantComponent.class).increasePlantHealth(-4 - plantAoeWeatherModifier);
                     }
                 }
             }
@@ -228,7 +232,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
                 if (cropTile != null) {
                     Entity otherPlant = cropTile.getPlant();
                     if (otherPlant != null) {
-                        otherPlant.getComponent(PlantComponent.class).increasePlantHealth(4);
+                        otherPlant.getComponent(PlantComponent.class).increasePlantHealth(4 + plantAoeWeatherModifier);
                     }
                 }
             }
@@ -265,10 +269,10 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
                     entityInRange.getType() == EntityType.OXYGEN_EATER ||
                     entityInRange.getType() == EntityType.COW
             ) {
-                entityInRange.getComponent(CombatStatsComponent.class).addHealth(-5);
+	            entityInRange.getComponent(CombatStatsComponent.class).addHealth(Math.min(-5 - plantAoeWeatherModifier, 0));
             } else if (entityInRange.getType() == EntityType.PLAYER) {
             if (numOfPlayer > 2) {
-                entityInRange.getComponent(CombatStatsComponent.class).addHealth(-1);
+                entityInRange.getComponent(CombatStatsComponent.class).addHealth(Math.min(-1 - plantAoeWeatherModifier, 0));
             }
         }
         }
@@ -337,4 +341,13 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
     public void setRadius(float radius) {
         // Currently not in use because changing the radius is causing issues.
     }
+
+    private void startPlantAoeWeatherEffect(int AoeModifier) {
+        plantAoeWeatherModifier = AoeModifier;
+    }
+
+    private void stopPlantAoeWeatherEffect() {
+        plantAoeWeatherModifier = 0;
+    }
+
 }
