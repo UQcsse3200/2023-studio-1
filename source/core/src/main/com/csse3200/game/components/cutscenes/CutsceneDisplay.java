@@ -29,11 +29,6 @@ import java.util.Random;
 public class CutsceneDisplay extends UIComponent {
 
     /**
-     * The atlas for the npc sprite.
-     */
-    private TextureAtlas npcAtlas;
-
-    /**
      * The Image that contains the npc sprite.
      */
     private Image npcSprite;
@@ -98,7 +93,6 @@ public class CutsceneDisplay extends UIComponent {
         }
 
         dialogueWindow.getTitleLabel().setAlignment(Align.center);
-        //dialogueWindow.setDebug(true);
         dialogueWindow.bottom();
         dialogueWindow.setResizable(false);
 
@@ -153,6 +147,7 @@ public class CutsceneDisplay extends UIComponent {
      * Spawns the Alien sprite
      */
     private void spawnSprite() {
+        TextureAtlas npcAtlas;
         TextureAtlas.AtlasRegion region;
 
         //Spawn sprite

@@ -64,7 +64,7 @@ public class HungerComponent extends Component {
 		json.writeObjectEnd();
 	}
 
-
+	@Override
 	public void read(Json json, JsonValue jsonValue) {
 		jsonValue = jsonValue.get(this.getClass().getSimpleName());
 		int hunger = jsonValue.getInt("hunger");
