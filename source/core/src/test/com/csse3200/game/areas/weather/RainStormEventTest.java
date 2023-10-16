@@ -7,12 +7,9 @@ import com.csse3200.game.services.sound.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -58,7 +55,7 @@ public class RainStormEventTest {
     void testStartEffectParticleAndLightingSystem() {
         rainStormEvent1.startEffect();
         //TODO
-        verify(ServiceLocator.getParticleService(), times(1)).startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+        verify(ServiceLocator.getParticleService(), times(1)).startEffect(ParticleService.ParticleEffectType.RAIN);
         verify(ServiceLocator.getLightService(), times(1)).setBrightnessMultiplier(0.66f);
     }
 
@@ -94,7 +91,7 @@ public class RainStormEventTest {
         rainStormEvent2.stopEffect();
         rainStormEvent3.stopEffect();
         //TODO - update
-        verify(ServiceLocator.getParticleService(), times(3)).stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+        verify(ServiceLocator.getParticleService(), times(3)).stopEffect(ParticleService.ParticleEffectType.RAIN);
         verify(ServiceLocator.getLightService(), times(3)).setBrightnessMultiplier(1.0f);
     }
 

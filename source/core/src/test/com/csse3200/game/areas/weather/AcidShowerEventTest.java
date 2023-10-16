@@ -78,7 +78,7 @@ class AcidShowerEventTest {
     void testStartEffectParticleAndLightingSystem() {
         initialiseEvents();
         acidShowerEvent1.startEffect();
-        verify(ServiceLocator.getParticleService(), times(1)).startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+        verify(ServiceLocator.getParticleService(), times(1)).startEffect(ParticleService.ParticleEffectType.RAIN);
         verify(ServiceLocator.getLightService(), times(1)).setBrightnessMultiplier(0.79f);
     }
 
@@ -104,10 +104,10 @@ class AcidShowerEventTest {
         acidShowerEvent1.stopEffect();
         acidShowerEvent2.stopEffect();
         acidShowerEvent3.stopEffect();
-        verify(ServiceLocator.getParticleService(), times(3)).stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+        verify(ServiceLocator.getParticleService(), times(3)).stopEffect(ParticleService.ParticleEffectType.RAIN);
         acidShowerEvent4.stopEffect();
         acidShowerEvent5.stopEffect();
-        verify(ServiceLocator.getParticleService(), times(5)).stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+        verify(ServiceLocator.getParticleService(), times(5)).stopEffect(ParticleService.ParticleEffectType.RAIN);
     }
 
     @Test

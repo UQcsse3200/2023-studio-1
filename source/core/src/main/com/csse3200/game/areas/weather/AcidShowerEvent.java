@@ -42,7 +42,7 @@ public class AcidShowerEvent extends WeatherEvent {
         scheduleNextAcidBurn();
 
         // Add particle effects
-        ServiceLocator.getParticleService().startEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+        ServiceLocator.getParticleService().startEffect(ParticleService.ParticleEffectType.RAIN);
 
         // Add lighting effects
         ServiceLocator.getLightService().setBrightnessMultiplier((1.0f - severity / 1.5f) * 0.2f + 0.75f);
@@ -66,7 +66,7 @@ public class AcidShowerEvent extends WeatherEvent {
         nextAcidBurn = null;
 
         // Remove particle effects
-        ServiceLocator.getParticleService().stopEffect(ParticleService.ParticleEffectType.ACID_RAIN);
+        ServiceLocator.getParticleService().stopEffect(ParticleService.ParticleEffectType.RAIN);
 
         // Remove lighting effects
         ServiceLocator.getLightService().setBrightnessMultiplier(1.0f);
