@@ -130,8 +130,8 @@ public class CombatStatsComponent extends Component {
 
   private void processDeath() {
     // Takes 0.3f seconds
-    entity.getEvents().trigger("blackOut");
-    entity.getEvents().scheduleEvent(0.2f, "bye bye");
+    //entity.getEvents().trigger("blackOut");
+    entity.getEvents().trigger("bye bye");
     entity.getEvents().scheduleEvent(2, "lose");
   }
 
