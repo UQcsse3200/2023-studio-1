@@ -6,6 +6,7 @@ import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -77,6 +78,7 @@ public class SprinklerComponent extends Component {
    * A sprinklers area of effect to water, aoe is circular with radius of 2.
    */
   protected Vector2[] aoe;
+  private Entity water;
 
   /**
    * {@inheritDoc}
@@ -271,7 +273,14 @@ public class SprinklerComponent extends Component {
    * 2 tiles: above, below, left, right.
    */
   protected void sprinkle() {
-    if (!isPowered) return;
+    if (!isPowered) {
+      return;
+    }
+    if (water != null) {
+      // Mainly for testing but a good fail safe regardless
+      water.setCenterPosition(entity.getCenterPosition());
+      water.getComponent(AnimationRenderComponent.class).startAnimation("default");
+    }
     for (Vector2 pos : aoe) {
       TerrainTile tt = ServiceLocator.getGameArea().getMap().getTile(pos);
       Entity occupant = tt.getOccupant();
@@ -293,4 +302,9 @@ public class SprinklerComponent extends Component {
       }
     }
   }
+
+  public void addWaterAnimator(Entity animator) {
+    this.water = animator;
+  }
+
 }

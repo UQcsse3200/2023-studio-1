@@ -244,7 +244,8 @@ public class SpaceGameArea extends GameArea {
           "images/ship/ship_debris.png",
           "images/ship/ship.png",
           "images/ship/ship_part.png",
-          "images/ship/ship_clue.png",
+          "images/ship/clue_item.png",
+          "images/ship/ship_part_tile.png",
 
           "images/selected.png",
           "images/itemFrame.png",
@@ -265,6 +266,7 @@ public class SpaceGameArea extends GameArea {
           "images/fish/fish_9.png",
           "images/fish/fish_10.png",
           "images/fish/fish_11.png",
+          "images/placeable/sprinkler/sprinkler_animation.png",
   };
 
   private static final String[] textureAtlasPaths = {
@@ -276,7 +278,8 @@ public class SpaceGameArea extends GameArea {
       "images/plants/deadly_nightshade.atlas", "images/fireflies.atlas", "images/animals/dragonfly.atlas",
       "images/animals/bat.atlas", "images/projectiles/oxygen_eater_projectile.atlas",
       "images/ship/ship.atlas", "images/light.atlas", "images/projectiles/dragon_fly_projectile.atlas", "images/golden_trophy.atlas",
-          "images/player_fishing.atlas", "images/walkietalkie.atlas", "images/animals/animal_effects.atlas", "images/cutscene.atlas"
+      "images/player_fishing.atlas", "images/walkietalkie.atlas", "images/animals/animal_effects.atlas", "images/cutscene.atlas",
+      "images/placeable/sprinkler/sprinkler_animation.atlas"
   };
   private static final String[] soundPaths = {
           "sounds/Impact4.ogg", "sounds/car-horn-6408.mp3",
@@ -406,7 +409,7 @@ public class SpaceGameArea extends GameArea {
 
   private void displayUI() {
     Entity ui = new Entity();
-    ui.addComponent(new GameAreaDisplay("Box Forest"));
+    ui.addComponent(new GameAreaDisplay("Gardens of the Galaxy"));
     spawnEntity(ui);
   }
 
