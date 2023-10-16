@@ -11,7 +11,7 @@ public class DialogueReward extends Reward {
     /**
      * The {@link Cutscene} for dialogue to be displayed
      */
-    private Cutscene cutscene;
+    private final Cutscene cutscene;
 
     public DialogueReward(String dialogue, Cutscene.CutsceneType type) {
         super();
