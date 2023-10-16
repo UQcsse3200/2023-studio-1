@@ -7,7 +7,6 @@ import com.csse3200.game.rendering.ParticleEffectWrapper;
 import com.csse3200.game.services.ParticleService;
 import com.csse3200.game.services.ServiceLocator;
 
-import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
