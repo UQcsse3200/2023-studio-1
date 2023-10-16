@@ -17,7 +17,7 @@ import com.csse3200.game.ui.UIComponent;
 
 public class DialogueComponent extends UIComponent {
 
-    private final static String dialogue = """
+    private final static String DIALOGUE = """
             Hey pookie, how are you?
             Hmm, not much of a talker huh?
             You look lost.
@@ -121,7 +121,7 @@ public class DialogueComponent extends UIComponent {
     }
 
     private void talk() {
-        Cutscene cutscene = new Cutscene(dialogue, Cutscene.CutsceneType.PLACEABLE);
+        Cutscene cutscene = new Cutscene(DIALOGUE, Cutscene.CutsceneType.PLACEABLE);
         cutscene.spawnCutscene();
         talked = true;
     }
