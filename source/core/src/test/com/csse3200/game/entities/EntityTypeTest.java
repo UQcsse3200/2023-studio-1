@@ -86,16 +86,16 @@ class EntityTypeTest {
 
   @Test
   void testOxygenReturn() {
-    assertEquals(EntityType.COW.getOxygenRate(), 0);
-    assertEquals(EntityType.CHICKEN.getOxygenRate(), 0);
-    assertEquals(EntityType.GATE.getOxygenRate(), 0);
-    assertEquals(EntityType.FENCE.getOxygenRate(), 0);
+    assertEquals(0, EntityType.COW.getOxygenRate());
+    assertEquals(0, EntityType.CHICKEN.getOxygenRate());
+    assertEquals(0, EntityType.GATE.getOxygenRate());
+    assertEquals(0, EntityType.FENCE.getOxygenRate());
   }
 
   @Test
   void testEntityType() {
     EntityType type = EntityType.PLAYER;
-    assertEquals(type, EntityType.PLAYER);
+    assertEquals(EntityType.PLAYER, type);
   }
 
   @Test

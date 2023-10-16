@@ -21,6 +21,7 @@ import org.mockito.ArgumentCaptor;
 import java.util.Random;
 
 import static com.csse3200.game.missions.quests.QuestFactory.ALIENS_ATTACK_QUEST_NAME;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
@@ -43,6 +44,7 @@ class ShipDebrisComponentTest {
 		Stage stage = mock(Stage.class);
 		ServiceLocator.getRenderService().setStage(stage);
 	}
+
 	@Test
 	void spawnsShipEaterOnlyAfterRangedWeaponsUnlocked() {
 		setupDummyServices();
@@ -92,7 +94,7 @@ class ShipDebrisComponentTest {
 		verify(mockEntityService, times(1)).register(entityCaptor.capture());
 		Entity entity = entityCaptor.getValue();
 
-		assert(entity.getType() == EntityType.SHIP_EATER);
+		assertTrue(entity.getType() == EntityType.SHIP_EATER);
 	}
 
 }

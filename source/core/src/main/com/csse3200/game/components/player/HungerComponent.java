@@ -8,19 +8,19 @@ import com.csse3200.game.services.ServiceLocator;
 
 public class HungerComponent extends Component {
 
-    private int hungerLevel;
+	private int hungerLevel;
 
-    public HungerComponent(int initialHungerLevel) {
-        hungerLevel = initialHungerLevel;
-    }
+	public HungerComponent(int initialHungerLevel) {
+		hungerLevel = initialHungerLevel;
+	}
 
-    @Override
-    public void create() {
-        super.create();
-        ServiceLocator.getTimeService().getEvents().addListener("minuteUpdate", this::minuteUpdate);
-    }
+	@Override
+	public void create() {
+		super.create();
+		ServiceLocator.getTimeService().getEvents().addListener("minuteUpdate", this::minuteUpdate);
+	}
 
-    private void minuteUpdate() {
+	private void minuteUpdate() {
 		int min = ServiceLocator.getTimeService().getMinute();
 		if (min % 20 == 0) {
 			increaseHungerLevel(1);
@@ -31,36 +31,36 @@ public class HungerComponent extends Component {
 		checkIfStarving();
 	}
 
-    public boolean checkIfStarving() {
-        return hungerLevel >= 100;
-    }
+	public boolean checkIfStarving() {
+		return hungerLevel >= 100;
+	}
 
-    public int getHungerLevel() {
-        return hungerLevel;
-    }
+	public int getHungerLevel() {
+		return hungerLevel;
+	}
 
-    public void setHungerLevel(int hungerLevel) {
+	public void setHungerLevel(int hungerLevel) {
 		this.hungerLevel = hungerLevel;
 		// Inform the PlayerHungerService that the hunger has been updated
 		ServiceLocator.getPlayerHungerService().getEvents().trigger("hungerUpdate", hungerLevel);
 	}
 
-    public void increaseHungerLevel(int num) {
-        hungerLevel += num;
+	public void increaseHungerLevel(int num) {
+		hungerLevel += num;
 
-        if (hungerLevel <= 0) {
-            hungerLevel = 0;
-        } else if (hungerLevel >= 100) {
-            hungerLevel = 100;
-        }
-        // Inform the PlayerHungerService that the hunger has been updated
-        ServiceLocator.getPlayerHungerService().getEvents().trigger("hungerUpdate", hungerLevel);
+		if (hungerLevel <= 0) {
+			hungerLevel = 0;
+		} else if (hungerLevel >= 100) {
+			hungerLevel = 100;
+		}
+		// Inform the PlayerHungerService that the hunger has been updated
+		ServiceLocator.getPlayerHungerService().getEvents().trigger("hungerUpdate", hungerLevel);
 
-        // If the players hunger level is below 50%, then the player gains health
-        if (hungerLevel < 50) {
-            ServiceLocator.getGameArea().getPlayer().getComponent(CombatStatsComponent.class).addHealth(3);
-        }
-    }
+		// If the players hunger level is below 50%, then the player gains health
+		if (hungerLevel < 50) {
+			ServiceLocator.getGameArea().getPlayer().getComponent(CombatStatsComponent.class).addHealth(3);
+		}
+	}
 
 	@Override
 	public void write(Json json) {
