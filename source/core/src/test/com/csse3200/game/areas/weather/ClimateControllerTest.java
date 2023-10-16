@@ -51,7 +51,6 @@ class ClimateControllerTest {
 		ServiceLocator.clear();
 	}
 
-	// These tests will require dealing with the lighting system
 	@Test
 	void testAddingEvent() {
 		GameArea gameArea = mock(GameArea.class);
@@ -110,7 +109,7 @@ class ClimateControllerTest {
 	}
 
 	@Test
-	void testAddDailyEventCase0() {
+	void testAddDailyEventCaseRainStormEvent() {
 		assertNull(controller.getCurrentWeatherEvent());
 
 		GameArea gameArea = mock(GameArea.class);
@@ -135,6 +134,107 @@ class ClimateControllerTest {
 			assertTrue(controller.getCurrentWeatherEvent() instanceof RainStormEvent);
 		}
 	}
+
+	@Test
+	void testAddDailyEventCaseBlizzardEvent() {
+		assertNull(controller.getCurrentWeatherEvent());
+
+		GameArea gameArea = mock(GameArea.class);
+		when(gameArea.getClimateController()).thenReturn(controller);
+		ServiceLocator.registerGameArea(gameArea);
+
+		SoundService soundService = mock(SoundService.class);
+		when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
+		ServiceLocator.registerSoundService(soundService);
+
+		try (MockedStatic<MathUtils> mathUtils = mockStatic(MathUtils.class)) {
+			mathUtils.when(MathUtils::random).thenReturn(0.5f);
+			mathUtils.when(() -> MathUtils.random(0, 9)).thenReturn(4); // weatherEvent - Blizzard
+			mathUtils.when(() -> MathUtils.random(1, 23)).thenReturn(1); // numHoursUntil
+			mathUtils.when(() -> MathUtils.random(1, 8)).thenReturn(4); // duration
+			mathUtils.when(() -> MathUtils.random(0, 3)).thenReturn(0); // priority
+
+			ServiceLocator.getTimeService().getEvents().trigger("dayUpdate");
+			// Therefore event should be created
+			ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+			assertNotNull(controller.getCurrentWeatherEvent());
+			assertTrue(controller.getCurrentWeatherEvent() instanceof BlizzardEvent);
+		}
+	}
+
+	@Test
+	void testAddDailyEventCaseSolarSurgeEvent() {
+		assertNull(controller.getCurrentWeatherEvent());
+
+		GameArea gameArea = mock(GameArea.class);
+		when(gameArea.getClimateController()).thenReturn(controller);
+		ServiceLocator.registerGameArea(gameArea);
+
+		SoundService soundService = mock(SoundService.class);
+		when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
+		ServiceLocator.registerSoundService(soundService);
+
+		try (MockedStatic<MathUtils> mathUtils = mockStatic(MathUtils.class)) {
+			mathUtils.when(MathUtils::random).thenReturn(0.5f);
+			mathUtils.when(() -> MathUtils.random(0, 9)).thenReturn(7); // weatherEvent - SolarSurge
+			mathUtils.when(() -> MathUtils.random(1, 23)).thenReturn(1); // numHoursUntil
+			mathUtils.when(() -> MathUtils.random(1, 8)).thenReturn(4); // duration
+			mathUtils.when(() -> MathUtils.random(0, 3)).thenReturn(0); // priority
+
+			ServiceLocator.getTimeService().getEvents().trigger("dayUpdate");
+			// Therefore event should be created
+			ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+			assertNotNull(controller.getCurrentWeatherEvent());
+			assertTrue(controller.getCurrentWeatherEvent() instanceof SolarSurgeEvent);
+		}
+	}
+
+	@Test
+	void testAddDailyEventCaseAcidShowerEvent() {
+		assertNull(controller.getCurrentWeatherEvent());
+
+		GameArea gameArea = mock(GameArea.class);
+		when(gameArea.getClimateController()).thenReturn(controller);
+		ServiceLocator.registerGameArea(gameArea);
+
+		SoundService soundService = mock(SoundService.class);
+		when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
+		ServiceLocator.registerSoundService(soundService);
+
+		try (MockedStatic<MathUtils> mathUtils = mockStatic(MathUtils.class)) {
+			mathUtils.when(MathUtils::random).thenReturn(0.5f);
+			mathUtils.when(() -> MathUtils.random(0, 9)).thenReturn(9); // weatherEvent - RainStorm
+			mathUtils.when(() -> MathUtils.random(1, 23)).thenReturn(1); // numHoursUntil
+			mathUtils.when(() -> MathUtils.random(1, 8)).thenReturn(4); // duration
+			mathUtils.when(() -> MathUtils.random(0, 3)).thenReturn(0); // priority
+
+			ServiceLocator.getTimeService().getEvents().trigger("dayUpdate");
+			// Therefore event should be created
+			ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+			assertNotNull(controller.getCurrentWeatherEvent());
+			assertTrue(controller.getCurrentWeatherEvent() instanceof AcidShowerEvent);
+		}
+	}
+
+	@Test
+	void testAddDailyEventInvalidValueEventGenerated() {
+		assertNull(controller.getCurrentWeatherEvent());
+
+		try (MockedStatic<MathUtils> mathUtils = mockStatic(MathUtils.class)) {
+			mathUtils.when(MathUtils::random).thenReturn(0.5f);
+			mathUtils.when(() -> MathUtils.random(0, 9)).thenReturn(10); // weatherEvent - default
+			mathUtils.when(() -> MathUtils.random(1, 23)).thenReturn(1); // numHoursUntil
+			mathUtils.when(() -> MathUtils.random(1, 8)).thenReturn(4); // duration
+			mathUtils.when(() -> MathUtils.random(0, 3)).thenReturn(0); // priority
+
+			ServiceLocator.getTimeService().getEvents().trigger("dayUpdate");
+			// Therefore event should be created
+			ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+			assertNull(controller.getCurrentWeatherEvent());
+		}
+	}
+
+
 
 	@Test
 	void testExpiringEvent() {
