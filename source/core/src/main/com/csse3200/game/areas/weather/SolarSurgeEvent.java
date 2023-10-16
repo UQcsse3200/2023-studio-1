@@ -111,9 +111,9 @@ public class SolarSurgeEvent extends WeatherEvent {
     }
 
     private Color getAuroraColourOffset(float t) {
-        float r = MathUtils.sin((float) (Math.PI * (t + rOffset)));
-        float g = MathUtils.sin((float) (Math.PI * 0.8f * (t + gOffset)));
-        float b = MathUtils.sin((float) (Math.PI * 0.6f * (t + bOffset)));
+        float r = MathUtils.sin((float) (Math.PI * 30.0f * (t + rOffset)));
+        float g = MathUtils.sin((float) (Math.PI * 22.0f * (t + gOffset)));
+        float b = MathUtils.sin((float) (Math.PI * 14.0f * (t + bOffset)));
 
         float multiplier = 0.05f + 0.15f * severity / 1.5f;
         r = multiplier * r * r + (1 - multiplier);

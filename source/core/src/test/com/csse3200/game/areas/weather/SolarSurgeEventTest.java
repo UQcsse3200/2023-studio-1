@@ -101,7 +101,7 @@ class SolarSurgeEventTest {
         SolarSurgeEvent solarSurgeEvent = new SolarSurgeEvent(0,10,1,1.2f);
         Method method = SolarSurgeEvent.class.getDeclaredMethod("getAuroraColourOffset", float.class);
         method.setAccessible(true);
-        Color expectedColour = new Color(0.83f, 0.8887397f, 0.98375493f, 0.0f);
+        Color expectedColour = new Color(0.83f, 0.83f, 0.83f, 0.0f);
         Color actualColour = (Color) method.invoke(solarSurgeEvent, 1.0f);
         assertEquals(expectedColour.r, actualColour.r);
         assertEquals(expectedColour.g, actualColour.g);

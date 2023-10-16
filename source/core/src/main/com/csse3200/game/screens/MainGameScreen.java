@@ -194,6 +194,7 @@ public class MainGameScreen extends ScreenAdapter {
                 if (!ServiceLocator.getTimeService().isPaused()) {
                     physicsEngine.update();
                     ServiceLocator.getEntityService().update();
+                    ServiceLocator.getGameArea().getClimateController().updateClimate();
                 }
                 ServiceLocator.getTimeService().update();
                 renderer.render();

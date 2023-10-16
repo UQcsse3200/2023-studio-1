@@ -237,8 +237,8 @@ class ClimateControllerTest {
 
 	@Test
 	void testUpdateLightingEffect() {
-		when(gameTime.getTime()).thenReturn(3000L);
-		ServiceLocator.getTimeService().getEvents().trigger("minuteUpdate");
+		when(gameTime.getDeltaTime()).thenReturn(0.05f);
+		controller.updateClimate();
 		verify(lightService,times(1)).setColourOffset(Color.CLEAR);
 	}
 

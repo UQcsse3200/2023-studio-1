@@ -67,7 +67,7 @@ public class RainStormEventTest {
         RainStormEvent rainStormEvent6 = new RainStormEvent(0,10,1,1.2f);
         Method method = RainStormEvent.class.getDeclaredMethod("getLightningColourOffset", float.class);
         method.setAccessible(true);
-        Color expectedBrightness = new Color(0.058429323f, 0.058429323f, 0.058429323f, 0.0f);
+        Color expectedBrightness = new Color(0.032f, 0.032f, 0.032f, 0.0f);
         Color actualBrightness = (Color) method.invoke(rainStormEvent6, 1.0f);
         assertEquals(expectedBrightness.r, actualBrightness.r);
         assertEquals(expectedBrightness.g, actualBrightness.g);

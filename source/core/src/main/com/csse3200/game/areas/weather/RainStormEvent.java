@@ -116,13 +116,13 @@ public class RainStormEvent extends WeatherEvent {
     }
 
     private float getNextLightningStrikeDuration() {
-        float maxTime = 1.8f + 2.0f * severity / 1.5f;
-        float minTime = 0.6f + 0.6f * severity / 1.5f;
+        float maxTime = 0.8f + 0.4f * severity / 1.5f;
+        float minTime = 0.2f + 0.2f * severity / 1.5f;
         return MathUtils.random(minTime, maxTime);
     }
 
     private Color getLightningColourOffset(float t) {
-        float brightness = 0.8f * MathUtils.sin((float) (Math.PI * t * (severity / 1.5f + 1.0f))) + 0.2f;
+        float brightness = 0.8f * MathUtils.sin((float) (Math.PI * t)) + 0.2f;
         brightness *= brightness * 0.8f;
         return new Color(brightness, brightness, brightness, 0.0f);
     }
