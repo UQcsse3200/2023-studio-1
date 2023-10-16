@@ -9,6 +9,8 @@ import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
+
+import java.util.Arrays;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,13 +63,15 @@ public class InventoryComponent extends Component {
      */
     private int maxInventorySize = 30; // default size 30
 
+    private final List<String> forbiddenItems = Arrays.asList("shovel","hoe","watering_can","scythe","sword","gun","Fishing Rod");
+
     /**
      * Creates a new InventoryComponent with a given list of items.
      * @param items List of Entities to be added to inventory
      */
-  public InventoryComponent(List<Entity> items) {
-    setInventory(items);
-  }
+    public InventoryComponent(List<Entity> items) {
+        setInventory(items);
+    }
 
     /**
      * Creates a new InventoryComponent with a given maximum size.
@@ -218,28 +222,28 @@ public class InventoryComponent extends Component {
      * @param items List of Entities to be added to inventory
      */
 
-  public void setInventory(List<Entity> items) {
-    newInventory();
-    logger.debug("Setting inventory started");
-    for (Entity item : items) {
-        if (item.getComponent(ItemComponent.class) == null) {
-            logger.info("Not an Item");
-            continue;
+    public void setInventory(List<Entity> items) {
+        newInventory();
+        logger.debug("Setting inventory started");
+        for (Entity item : items) {
+            if (item.getComponent(ItemComponent.class) == null) {
+                logger.info("Not an Item");
+                continue;
+            }
+            // Add to Entity against Item Type for setting Held Item
+            this.heldItemsEntity.put(item.getComponent(ItemComponent.class).getItemName(),item);
+            // Update the count against Item Type
+            if (itemCount.containsKey(item.getComponent(ItemComponent.class).getItemName())) {
+                // Item exists in inventory, increase count
+                this.itemCount.put(item.getComponent(ItemComponent.class).getItemName(), itemCount.get(item.getComponent(ItemComponent.class).getItemName()) + 1);
+            } else {
+                // Item does not exist in inventory, add to inventory
+                this.itemCount.put(item.getComponent(ItemComponent.class).getItemName(), 1); // Setting initial count as 1
+                this.setPosition(item); // Setting position of item to next available position
+            }
+            logger.debug("Setting inventory Completed");
         }
-      // Add to Entity against Item Type for setting Held Item
-      this.heldItemsEntity.put(item.getComponent(ItemComponent.class).getItemName(),item);
-      // Update the count against Item Type
-      if (itemCount.containsKey(item.getComponent(ItemComponent.class).getItemName())) {
-        // Item exists in inventory, increase count
-        this.itemCount.put(item.getComponent(ItemComponent.class).getItemName(), itemCount.get(item.getComponent(ItemComponent.class).getItemName()) + 1);
-      } else {
-        // Item does not exist in inventory, add to inventory
-        this.itemCount.put(item.getComponent(ItemComponent.class).getItemName(), 1); // Setting initial count as 1
-        this.setPosition(item); // Setting position of item to next available position
-      }
-      logger.debug("Setting inventory Completed");
     }
-  }
 
     /**
      * Function to get the item of a specific position in Inventory.
@@ -326,30 +330,43 @@ public class InventoryComponent extends Component {
         }
     }
 
-  /**
-   * Get the next available position in the inventory
-   * @return integer representing the next available position
-   */
-
-  private int nextAvailablePosition() {
-    for (int i = 0; i < this.getInventorySize(); i++) {
-      if (this.itemPlace.get(i) == null) {
-        return i;
-      }
+    public boolean removePosition(int position) {
+        if (position >= this.getInventorySize() || position < 0) {
+            logger.info("Set Position is out of bounds");
+            return false;
+        } else if (this.itemPlace.get(position) == null) {
+            logger.info("Set Position is already empty");
+            return false;
+        } else {
+            this.itemPlace.remove(position);
+            return true;
+        }
     }
-    return -1;
-  }
+
+    /**
+     * Get the next available position in the inventory
+     * @return integer representing the next available position
+     */
+
+    private int nextAvailablePosition() {
+        for (int i = 0; i < this.getInventorySize(); i++) {
+            if (this.itemPlace.get(i) == null) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
     /**
      * Adds an item to the Player's inventory
      * @param itemComponent ItemComponent to be added
      * @return boolean representing if the item was added successfully
      */
-  public boolean addItem(ItemComponent itemComponent){
-    Entity item = new Entity(EntityType.ITEM);
-    item.addComponent(itemComponent);
-    return addItem(item);
-  }
+    public boolean addItem(ItemComponent itemComponent){
+        Entity item = new Entity(EntityType.ITEM);
+        item.addComponent(itemComponent);
+        return addItem(item);
+    }
 
     /**
      * Adds an item to the Player's inventory
@@ -357,12 +374,15 @@ public class InventoryComponent extends Component {
      * @param item ItemComponent to be added
      * @return boolean representing if the item was added successfully
      */
-  public boolean addMultipleItem(int count, Entity item) {
-    for (int i = 0; i < count; i++) {
-      addItem(item);
+    public boolean addMultipleItem(int count, Entity item, int place) {
+        if (itemCount.get(item.getComponent(ItemComponent.class).getItemName()) == null) {
+            itemPlace.put(place, item.getComponent(ItemComponent.class).getItemName());
+        }
+        for (int i = 0; i < count; i++) {
+            addItem(item);
+        }
+        return true;
     }
-    return true;
-  }
 
     /**
      * Adds an item to the Player's inventory
@@ -405,16 +425,34 @@ public class InventoryComponent extends Component {
             logger.info("To be removed Entity is not an item");
             return false;
         }
+        if (item.getComponent(ItemComponent.class) == null) {
+            logger.info("To be removed Entity does not have an ItemComponent");
+            return false;
+        }
+        return removeItem(item.getComponent(ItemComponent.class).getItemName());
+    }
+
+    /**
+     * Removes an item from the Player's Inventory with the given {@link String} name.
+     *
+     * @param itemName the name of the item to be removed
+     * @return boolean representing if the item was removed successfully
+     */
+    public boolean removeItem(String itemName) {
         // Check if item is in inventory
-        if (!this.itemCount.containsKey(item.getComponent(ItemComponent.class).getItemName())) {
+        if (!this.itemCount.containsKey(itemName)) {
+            return false;
+        }
+        // Check if item is forbidden to remove
+        if (forbiddenItems.contains(itemName)) {
             return false;
         }
         // Decrease item count by 1
-        this.itemCount.put(item.getComponent(ItemComponent.class).getItemName(), this.itemCount.get(item.getComponent(ItemComponent.class).getItemName()) - 1);
+        this.itemCount.put(itemName, this.itemCount.get(itemName) - 1);
         // If item count is now 0
-        if (this.itemCount.get(item.getComponent(ItemComponent.class).getItemName()).equals(0)) {
+        if (this.itemCount.get(itemName).equals(0)) {
             // Remove it from the item count
-            this.itemCount.remove(item.getComponent(ItemComponent.class).getItemName());
+            this.itemCount.remove(itemName);
             // Find the position of the item and remove the item from the position
             for (Map.Entry<Integer, String> placeEntry : itemPlace.entrySet()) {
                 if (placeEntry.getValue() == null) {
@@ -422,7 +460,7 @@ public class InventoryComponent extends Component {
                     continue;
                 }
                 // Remove the item from item place
-                if (placeEntry.getValue().equals(item.getComponent(ItemComponent.class).getItemName())) {
+                if (placeEntry.getValue().equals(itemName)) {
                     itemPlace.remove(placeEntry.getKey());
                     // If it was the held item set held item to null
                     if (this.heldIndex == placeEntry.getKey()) {
@@ -434,9 +472,18 @@ public class InventoryComponent extends Component {
             }
         }
         entity.getEvents().trigger(UPDATE_INVENTORY);
-        logger.info("Removing item from inventory - {}, new count {}", item.getComponent(ItemComponent.class).getItemName(),
-                this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(), 0));
+        logger.info("Removing item from inventory - {}, new count {}", itemName,
+                this.itemCount.getOrDefault(itemName, 0));
         return true;
+    }
+    public void removeAll(Entity item) {
+        if(item.getType() != EntityType.ITEM) {
+            logger.info("To be removed Entity is not an item");
+            return;
+        }
+        while ((this.itemCount.getOrDefault(item.getComponent(ItemComponent.class).getItemName(),0) > 0)) {
+            removeItem(item);
+        }
     }
 
     /**

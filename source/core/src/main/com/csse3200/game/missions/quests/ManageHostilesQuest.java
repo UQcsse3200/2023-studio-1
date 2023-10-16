@@ -76,7 +76,7 @@ public class ManageHostilesQuest extends Quest {
      */
     @Override
     public void registerMission(EventHandler missionManagerEvents) {
-        missionManagerEvents.addListener(MissionManager.MissionEvent.ANIMAL_DEFEATED.name(), this::updateState);
+        missionManagerEvents.addListener(MissionManager.MissionEvent.COMBAT_ACTOR_DEFEATED.name(), this::updateState);
         missionManagerEvents.addListener(MissionManager.MissionEvent.ANIMAL_EATEN.name(), this::updateState);
     }
 

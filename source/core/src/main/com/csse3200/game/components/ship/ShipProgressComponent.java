@@ -3,6 +3,9 @@ package com.csse3200.game.components.ship;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.entities.factories.ShipFactory;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.services.ServiceLocator;
@@ -13,7 +16,7 @@ import java.util.Set;
 import static java.lang.Math.min;
 
 public class ShipProgressComponent extends Component {
-	static int maximumRepair = 20;
+	static int maximumRepair = 10;
 	private int progress;
 	private Set<Feature> unlockedFeatures;
 
@@ -21,9 +24,9 @@ public class ShipProgressComponent extends Component {
 	 * Ship features that can be unlocked along by repairing the ship.
 	 */
 	public enum Feature {
-		BED(3),
-		LIGHT(8),
-		STORAGE(15);
+		LIGHT(2),
+		BED(6),
+		TELEPORT(10);
 
 		public final int unlockLevel;
 
@@ -60,6 +63,13 @@ public class ShipProgressComponent extends Component {
 			for (Feature feature : Feature.values()) {
 				if (feature.unlockLevel <= this.progress) {
 					unlockedFeatures.add(feature);
+					if (feature == Feature.TELEPORT) {
+						Entity tpDev = ItemFactory.createTeleportDevice();
+						ServiceLocator.getGameArea().spawnEntity(tpDev);
+						ServiceLocator.getGameArea().getPlayer()
+								.getComponent(InventoryComponent.class)
+								.addItem(tpDev);
+					}
 				}
 			}
 

@@ -9,19 +9,21 @@ import com.csse3200.game.missions.cutscenes.Cutscene;
 public class DialogueReward extends Reward {
 
     /**
-     * The {@link String} dialogue to be displayed
+     * The {@link Cutscene} for dialogue to be displayed
      */
-    private String dialogue;
-
-    /**
-     * The type of dialogue screen the dialogue will be shown on.
-     */
-    private Cutscene.CutsceneType type;
+    private final Cutscene cutscene;
 
     public DialogueReward(String dialogue, Cutscene.CutsceneType type) {
         super();
-        this.dialogue = dialogue;
-        this.type = type;
+        this.cutscene = new Cutscene(dialogue, type);
+    }
+
+    /**
+     * New {@link DialogueReward} object
+     * @param cutscene For collect method
+     */
+    public DialogueReward(Cutscene cutscene) {
+        this.cutscene = cutscene;
     }
 
     /**
@@ -30,7 +32,13 @@ public class DialogueReward extends Reward {
     @Override
     public void collect() {
         setCollected();
-        Cutscene cutscene = new Cutscene(dialogue, type);
         cutscene.spawnCutscene();
+    }
+
+    /**
+     * Getting the cutscene.
+     */
+    protected Cutscene getCutscene() {
+        return this.cutscene;
     }
 }

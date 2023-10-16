@@ -30,7 +30,7 @@ public class CropTileComponent extends Component {
 	/**
 	 * Default rate that a tile's water level decreases
 	 */
-	private static final float WATER_DECREASE_RATE = 0.005f;
+	private static final float WATER_DECREASE_RATE = 0.0005f;
 
 	/**
 	 * Ideal water fall off sharpness to calculate growth rate
@@ -53,6 +53,9 @@ public class CropTileComponent extends Component {
 	private boolean isFertilised;
 	private Entity plant;
 	private DynamicTextureRenderComponent currentTexture;
+
+	private static float weatherWaterDelta = 1.0f;
+	private static boolean isWaterLevelWeatherEffectActive = false;
 
 	/**
 	 * Creates a new crop tile with default values
@@ -100,6 +103,10 @@ public class CropTileComponent extends Component {
 		entity.getEvents().addListener("destroy", this::destroyTile);
 		entity.getEvents().addListener("harvest", this::harvestCrop);
 		currentTexture = entity.getComponent(DynamicTextureRenderComponent.class);
+		ServiceLocator.getGameArea().getClimateController().getEvents().addListener("startWaterLevelEffect",
+				this::startWaterLevelWeatherEffect);
+		ServiceLocator.getGameArea().getClimateController().getEvents().addListener("stopWaterLevelEffect",
+				this::stopWaterLevelWeatherEffect);
 	}
 
 	/**
@@ -107,7 +114,7 @@ public class CropTileComponent extends Component {
 	 */
 	@Override
 	public void update() {
-		waterContent -= WATER_DECREASE_RATE * ServiceLocator.getTimeSource().getDeltaTime();
+		waterContent -= (isWaterLevelWeatherEffectActive ? weatherWaterDelta : WATER_DECREASE_RATE) * ServiceLocator.getTimeSource().getDeltaTime();
 		if (waterContent < 0) {
 			waterContent = 0;
 		} else if (waterContent > 2) {
@@ -290,6 +297,16 @@ public class CropTileComponent extends Component {
 		this.plant = plant;
 	}
 
+	private void startWaterLevelWeatherEffect(float waterDelta) {
+		weatherWaterDelta = waterDelta;
+		isWaterLevelWeatherEffectActive = true;
+	}
+
+	private void stopWaterLevelWeatherEffect() {
+		weatherWaterDelta = 0.0f;
+		isWaterLevelWeatherEffectActive = false;
+	}
+
 	/**
 	 * Writes in json summary of croptile state. Writes to json
 	 * the waterContent, soilQuality, isFertilised and plant
@@ -303,6 +320,8 @@ public class CropTileComponent extends Component {
 		json.writeValue("waterContent", waterContent);
 		json.writeValue("soilQuality", soilQuality);
 		json.writeValue("isFertilised", isFertilised);
+		json.writeValue("weatherWaterDelta", weatherWaterDelta);
+		json.writeValue("isWaterLevelWeatherEffectActive", isWaterLevelWeatherEffectActive);
 		json.writeValue(PLANT_STRING, plant);
 		json.writeObjectEnd();
 	}
@@ -313,6 +332,8 @@ public class CropTileComponent extends Component {
 		waterContent = jsonMap.getFloat("waterContent");
 		soilQuality = jsonMap.getFloat("soilQuality");
 		isFertilised = jsonMap.getBoolean("isFertilised");
+		weatherWaterDelta = jsonMap.getFloat("weatherWaterDelta");
+		isWaterLevelWeatherEffectActive = jsonMap.getBoolean("isWaterLevelWeatherEffectActive");
 		JsonValue plantData = jsonMap.get(PLANT_STRING);
 		if (plantData.get("Entity") != null) {
 			plantData = plantData.get("components").get("PlantComponent");

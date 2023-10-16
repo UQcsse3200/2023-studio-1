@@ -37,7 +37,7 @@ import com.csse3200.game.services.ServiceLocator;
  */
 public class AnimationRenderComponent extends RenderComponent {
 
-  private static final int DEFAULT_LAYER = 4;
+  private int DEFAULT_LAYER = 4;
   private static final Logger logger = LoggerFactory.getLogger(AnimationRenderComponent.class);
   protected final GameTime timeSource;
   private final TextureAtlas atlas;
@@ -68,6 +68,14 @@ public class AnimationRenderComponent extends RenderComponent {
     this.animations = new HashMap<>(4);
     this.scaleFactor = scaleFactor;
     timeSource = ServiceLocator.getTimeSource();
+  }
+
+  public AnimationRenderComponent(TextureAtlas atlas, float scaleFactor, int layer) {
+    this.atlas = atlas;
+    this.animations = new HashMap<>(4);
+    this.scaleFactor = scaleFactor;
+    timeSource = ServiceLocator.getTimeSource();
+    DEFAULT_LAYER = layer;
   }
 
   @Override

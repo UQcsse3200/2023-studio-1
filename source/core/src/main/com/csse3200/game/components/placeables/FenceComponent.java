@@ -94,7 +94,8 @@ public class FenceComponent extends Component {
     @Override
     public void create() {
         this.connectedEntityUtility = new ConnectedEntityUtility(entity);
-    
+        entity.getEvents().addListener("onDestroy", this::onDestroy);
+
         if (isGate) {
             configGate();
             entity.getEvents().addListener("interact", this::toggleGate);
@@ -153,5 +154,12 @@ public class FenceComponent extends Component {
         this.entity.getComponent(ColliderComponent.class).setSensor(false);
         // Update our texture accordingly
         configGate();
+    }
+
+    /**
+     * Destroys the connections to neighbouring fences or gates
+     */
+    private void onDestroy() {
+        entity.getEvents().trigger("destroyConnections");
     }
 }
