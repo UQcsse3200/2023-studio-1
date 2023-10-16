@@ -6,6 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.questgiver.MissionDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.extensions.GameExtension;
@@ -60,6 +62,10 @@ class MissionDisplayTest {
 	@BeforeEach
 	void beforeEach() {
 		ServiceLocator.clear();
+
+		GameArea mockGameArea = mock(GameArea.class);
+		when(mockGameArea.getPlayer()).thenReturn(new Entity().addComponent(new InventoryComponent()));
+		ServiceLocator.registerGameArea(mockGameArea);
 
 		actorCaptor = ArgumentCaptor.forClass(Actor.class);
 
