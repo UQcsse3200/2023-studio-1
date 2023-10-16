@@ -44,11 +44,11 @@ public class PlayerActions extends Component {
   private SecureRandom random = new SecureRandom();
   private float speedMultiplier = 1f;
   private float damageMultiplier = 1f;
-  int swordDamage = 5;
+  private int swordDamage = 5;
   private static final String RIGHT_STRING = "right";
-  long coolDown = 2000;
-  long previousShot = 0;
-  int amountBullet = 6;
+  private long coolDown = 2000;
+  private long previousShot = 0;
+  private int amountBullet = 6;
 
   @Override
   public void create() {
