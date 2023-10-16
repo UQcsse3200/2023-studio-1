@@ -117,9 +117,13 @@ public class ClimateController implements Json.Serializable {
 		if (!event.isActive()) {
 			return;
 		}
+		if (currentWeatherEvent != null) {
+			currentWeatherEvent.stopEffect();
+		}
 		if (currentWeatherEvent == null || event.getPriority() > currentWeatherEvent.getPriority()) {
 			currentWeatherEvent = event;
 		}
+		currentWeatherEvent.startEffect();
 	}
 
 	/**
