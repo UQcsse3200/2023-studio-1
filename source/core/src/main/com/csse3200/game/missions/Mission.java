@@ -12,12 +12,19 @@ public abstract class Mission {
     private final String name;
 
     /**
+     * Returns true once a notification of {@link MissionManager.MissionEvent#MISSION_COMPLETE} has been given to the
+     * {@link MissionManager}.
+     */
+    private boolean isQuestGiverNotified;
+
+    /**
      * Creates a {@link Mission} with the given {@link String} name.
      *
      * @param name The {@link String} name of the {@link Mission}, visible to the player in-game.
      */
     protected Mission(String name) {
         this.name = name;
+        this.isQuestGiverNotified = false;
     }
 
     /**
@@ -71,12 +78,19 @@ public abstract class Mission {
     /**
      * Notifies the {@link MissionManager} that this {@link Mission} has been completed if {@link #isCompleted()}
      * returns true, else do nothing. You should call this method whenever you update the state of your {@link Mission}.
+     * If the event has already been triggered on the {@link MissionManager} for this {@link Mission}, it will not
+     * re-trigger the event, unless this method detects the {@link Mission} having become incomplete.
      */
     protected void notifyUpdate() {
-        if (isCompleted()) {
+        if (isQuestGiverNotified && !isCompleted()) {
+            isQuestGiverNotified = false;
+        }
+
+        if (!isQuestGiverNotified && isCompleted()) {
             ServiceLocator.getMissionManager().getEvents().trigger(
                     MissionManager.MissionEvent.MISSION_COMPLETE.name(),
                     getName());
+            isQuestGiverNotified = true;
         }
     }
 

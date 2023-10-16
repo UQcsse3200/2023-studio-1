@@ -17,6 +17,7 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
 import com.csse3200.game.services.plants.PlantCommandService;
 import com.csse3200.game.services.plants.PlantInfoService;
+import com.csse3200.game.services.sound.EffectsMusicService;
 import com.csse3200.game.services.sound.SoundService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,6 +53,8 @@ class AttackPatternTest {
         ServiceLocator.registerResourceService(mock(ResourceService.class));
         mockSound = mock(SoundService.class);
         ServiceLocator.registerSoundService(mockSound);
+
+        when(mockSound.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
 
         // Plant stuff
         ServiceLocator.registerTimeService(new TimeService());
@@ -184,11 +187,10 @@ class AttackPatternTest {
         Entity plantTarget = new Entity(EntityType.PLANT);
 
         int[] growthStageThresholds = new int[]{1,2,3};
-        String[] soundArray = new String[]{"1", "2", "3", "4", "5", "6", "7", "8"};
         CropTileComponent mockCropTile = mock(CropTileComponent.class);
 
         PlantComponent plantComponent = new PlantComponent(500, "testPlant", "DEFENCE", "test " +
-                "plant", 1, 2, 1000, mockCropTile, growthStageThresholds, soundArray);
+                "plant", 1, 2, 1000, mockCropTile, growthStageThresholds);
 
         plantTarget.addComponent(plantComponent);
         plantTarget.create();

@@ -19,11 +19,11 @@ import java.util.List;
  */
 public class ClueReward extends ItemReward {
 
-	private final Entity mapItem;
+	private final Entity clueItem;
 
-	public ClueReward(Entity mapItem) {
-		super(List.of(mapItem));
-		this.mapItem = mapItem;
+	public ClueReward(Entity clueItem) {
+		super(List.of(clueItem));
+		this.clueItem = clueItem;
 	}
 
 	/**
@@ -32,8 +32,8 @@ public class ClueReward extends ItemReward {
 	 */
 	@Override
 	public void collect() {
-		ServiceLocator.getEntityService().register(mapItem);
-		ClueComponent clueComponent = mapItem.getComponent(ClueComponent.class);
+		ServiceLocator.getEntityService().register(clueItem);
+		ClueComponent clueComponent = clueItem.getComponent(ClueComponent.class);
 
 		if (clueComponent != null) {
 			Vector2 location = clueComponent.getCurrentBaseLocation();
@@ -75,7 +75,7 @@ public class ClueReward extends ItemReward {
 		Entity shipDebris = ShipDebrisFactory.createShipDebris();
 
 		partTile.getComponent(ShipPartTileComponent.class).addShipDebris(shipDebris);
-		partTile.getComponent(ShipPartTileComponent.class).addClueItem(mapItem);
+		partTile.getComponent(ShipPartTileComponent.class).addClueItem(clueItem);
 	}
 }
 
