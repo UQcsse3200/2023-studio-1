@@ -14,6 +14,7 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
+import com.csse3200.game.services.sound.EffectSoundFile;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -288,7 +289,8 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
                         entityInRange.getType() == EntityType.DRAGONFLY ||
                         entityInRange.getType() == EntityType.CHICKEN ||
                         entityInRange.getType() == EntityType.OXYGEN_EATER ||
-                        entityInRange.getType() == EntityType.COW) {
+                        entityInRange.getType() == EntityType.COW ||
+                        entityInRange.getType() == EntityType.SHIP_EATER) {
 
                     // If a valid entity is in the area, tell the plant it is eating.
                     entity.getComponent(PlantComponent.class).setIsEating();
@@ -315,7 +317,7 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
         for (Entity entityInRange : getEntitiesInRange()) {
 
             if (entityInRange.getType() == EntityType.PLAYER) {
-                entity.getComponent(PlantComponent.class).playSound("nearby");
+                entity.getComponent(PlantComponent.class).playSound(EffectSoundFile.PLANT_NEARBY);
             }
         }
     }

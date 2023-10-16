@@ -59,6 +59,8 @@ public class TractorAnimationController extends Component {
    * @param direction The direction as a String (values from getDirection() in TractorActions) of the Tractor
    */
   void animateIdle(String direction) {
-    animator.startAnimation(String.format("idle_%s", direction));
+    if (!animator.getCurrentAnimation().equals(String.format("idle_%s", direction))) {
+      animator.startAnimation(String.format("idle_%s", direction));
+    }
   }
 }

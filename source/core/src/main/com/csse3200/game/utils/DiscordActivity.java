@@ -5,17 +5,23 @@ import net.arikia.dev.drpc.DiscordRPC;
 import net.arikia.dev.drpc.DiscordRichPresence;
 
 public class DiscordActivity {
-    private DiscordRichPresence rich;
-    private DiscordEventHandlers handlers;
+    private final DiscordRichPresence rich;
 
+    /**
+     * Constructor for Discord Activity
+     */
     public DiscordActivity() {
-        handlers = new DiscordEventHandlers();
+        DiscordEventHandlers handlers = new DiscordEventHandlers();
         DiscordRPC.discordInitialize("1160854151668957245", handlers, true, "");
-        rich = new DiscordRichPresence.Builder("Gardens of the Galaxy").setDetails("Legend of the AstroHoe").build();
+        rich = new DiscordRichPresence.Builder("Gardens of the Galaxy").build();
         DiscordRPC.discordUpdatePresence(rich);
-        updateLargeImage("https://i.imgur.com/dYNI4Vv.png");
-        updateSmallImage("https://i.imgur.com/Bm3UUxk.png");
+        updateLargeImage("https://raw.githubusercontent.com/UQcsse3200/2023-studio-1/main/source/core/assets/images/game_logo2.png");
     }
+
+    /**
+     * Update discord status message
+     * @param message to update status with
+     */
     public void updateDiscordStatus(String message) {
         if (this.rich != null) {
             rich.state = message;
@@ -23,20 +29,31 @@ public class DiscordActivity {
         }
     }
 
-    public void updateSmallImage(String message) {
+    /**
+     * Update discord activity small image
+     * @param imageUrl to set for small image
+     */
+    public void updateSmallImage(String imageUrl) {
         if (this.rich != null) {
-            rich.smallImageKey = message;
+            rich.smallImageKey = imageUrl;
             DiscordRPC.discordUpdatePresence(rich);
         }
     }
 
-    public void updateLargeImage(String message) {
+    /**
+     * Update discord activity large image
+     * @param imageUrl to set for large image
+     */
+    public void updateLargeImage(String imageUrl) {
         if (this.rich != null) {
-            rich.largeImageKey = message;
+            rich.largeImageKey = imageUrl;
             DiscordRPC.discordUpdatePresence(rich);
         }
     }
 
+    /**
+     * Start timer for discord activity
+     */
     public void startTimer() {
         if (this.rich != null) {
             rich.startTimestamp = System.currentTimeMillis() / 1000;
@@ -44,6 +61,9 @@ public class DiscordActivity {
         }
     }
 
+    /**
+     * Stop timer for discord activity
+     */
     public void stopTimer() {
         if (this.rich != null) {
             rich.startTimestamp = 0;

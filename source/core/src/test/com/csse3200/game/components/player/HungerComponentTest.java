@@ -21,7 +21,6 @@ class HungerComponentTest {
     HungerComponent hungerComponent;
     PlayerHungerService mockPlayerHungerService;
     EventHandler mockEventHandler;
-
     int INITIAL_HUNGER_LEVEL = 30;
     @BeforeEach
     void beforeEach() {

@@ -1,6 +1,8 @@
 package com.csse3200.game.components.plants;
 import static com.badlogic.gdx.math.MathUtils.random;
 
+import com.csse3200.game.services.sound.EffectSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
 import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.Objects;
@@ -107,10 +109,23 @@ public class PlantComponent extends Component {
      */
     private final int[] growthStageThresholds = {0, 0, 0};
 
-    /**
-     * The paths to the sounds associated with the plant.
-     */
-    private String[] sounds;
+    /** Normal sound effect to play when clicked. */
+    private EffectSoundFile clickSound;
+    /** Lore sound effect to play when clicked. */
+    private EffectSoundFile clickLoreSound;
+    /** Normal sound effect to play when decaying. */
+    private EffectSoundFile decaySound;
+    /** Lore sound effect to play when decaying. */
+    private EffectSoundFile decayLoreSound;
+    /** Normal sound effect to play when destroyed. */
+    private EffectSoundFile destroySound;
+    /** Lore sound effect to play when clicked. */
+    private EffectSoundFile destroyLoreSound;
+    /** Normal sound effect to play when nearby. */
+    private EffectSoundFile nearbySound;
+    /** Lore sound effect to play when clicked. */
+    private EffectSoundFile nearbyLoreSound;
+
 
     /**
      * The current max health. This limits the amount of health a plant can have at different growth stages.
@@ -231,12 +246,10 @@ public class PlantComponent extends Component {
      * @param maxHealth - The maximum health a plant can reach as an adult
      * @param cropTile - The cropTileComponent where the plant will be located.
      * @param growthStageThresholds - A list of three integers that represent the growth thresholds.
-     * @param soundsArray - A list of all sound files file paths as strings
      */
     public PlantComponent(int health, String name, String plantType, String plantDescription,
                           float idealWaterLevel, int adultLifeSpan, int maxHealth,
-                          CropTileComponent cropTile, int[] growthStageThresholds,
-                          String[] soundsArray) {
+                          CropTileComponent cropTile, int[] growthStageThresholds) {
         this.plantHealth = health;
         this.plantName = name;
         this.plantType = plantType;
@@ -246,7 +259,6 @@ public class PlantComponent extends Component {
         this.maxHealth = maxHealth;
         this.cropTile = cropTile;
         this.currentGrowthLevel = 1;
-        this.sounds = soundsArray;
         this.growthStages = GrowthStage.SEEDLING;
         this.numOfDaysAsAdult = 0;
         this.currentMaxHealth = maxHealth;
@@ -362,7 +374,7 @@ public class PlantComponent extends Component {
                 entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType(DECAY);
                 entity.getComponent(PlantAreaOfEffectComponent.class).setRadius(2f);
                 setGrowthStage(getGrowthStage().getValue() + 1);
-                playSound(DECAYS);
+                playSound(decaySound, decayLoreSound);
                 updateTexture();
             }
         }
@@ -384,7 +396,7 @@ public class PlantComponent extends Component {
         if (getGrowthStage().getValue() == GrowthStage.DECAYING.getValue()) {
             if (getPlantHealth() <= 0) {
                 setGrowthStage(GrowthStage.DEAD.getValue());
-                playSound(DESTROY);
+                playSound(destroySound, destroyLoreSound);
                 updateTexture();
             }
 
@@ -588,6 +600,10 @@ public class PlantComponent extends Component {
 
         if (newGrowthStage >= 1 && newGrowthStage <= GrowthStage.values().length) {
             this.growthStages = GrowthStage.values()[newGrowthStage - 1];
+
+            if (getGrowthStage().getValue() <= GrowthStage.ADULT.getValue()) {
+                playSound(EffectSoundFile.PLANT_CLICK);
+            }
         } else {
             throw new IllegalArgumentException("Invalid growth stage value.");
         }
@@ -661,6 +677,32 @@ public class PlantComponent extends Component {
      */
     public void setHarvestYields(Map<String, Integer> harvestYields) {
         this.harvestYields = Map.copyOf(harvestYields);
+    }
+
+    /**
+     * Sets the sound effects this plant will play.
+     *
+     * @param clickSound Normal sound effect to play when clicked.
+     * @param clickLoreSound Lore sound effect to play when clicked.
+     * @param decaySound Normal sound effect to play when decaying.
+     * @param decayLoreSound Lore sound effect to play when decaying.
+     * @param destroySound Normal sound effect to play when destroyed.
+     * @param destroyLoreSound Lore sound effect to play when destroyed.
+     * @param nearbySound Normal sound effect to play when nearby.
+     * @param nearbyLoreSound Lore sound effect to play when nearby.
+     */
+    public void setSounds(EffectSoundFile clickSound, EffectSoundFile clickLoreSound,
+            EffectSoundFile decaySound, EffectSoundFile decayLoreSound,
+            EffectSoundFile destroySound, EffectSoundFile destroyLoreSound,
+            EffectSoundFile nearbySound, EffectSoundFile nearbyLoreSound) {
+        this.clickSound = clickSound;
+        this.clickLoreSound = clickLoreSound;
+        this.decaySound = decaySound;
+        this.decayLoreSound = decayLoreSound;
+        this.destroySound = destroySound;
+        this.destroyLoreSound = destroyLoreSound;
+        this.nearbySound = nearbySound;
+        this.nearbyLoreSound = nearbyLoreSound;
     }
 
     /**
@@ -745,6 +787,8 @@ public class PlantComponent extends Component {
         if (getGrowthStage().getValue() < GrowthStage.DEAD.getValue()) {
             ServiceLocator.getPlantInfoService().increasePlantGrowthStageCount(-1, ALIVE);
         }
+
+        playSound(destroySound, destroyLoreSound);
 
         // Spawn a seed item whenever a plant is destroyed.
         String itemName = plantName + " Seeds";
@@ -842,43 +886,29 @@ public class PlantComponent extends Component {
     }
 
     /**
-     * Determine what sound needs to be called based on the type of interaction.
-     * The sounds are separated into tuple pairs for each event.The sound will only be played if the
-     * player is close enough to the plant. This is determined by the PlantProximityComponent.
+     * Plays one of the given sound effects. The normal sound effects will be played 99% of the
+     * time, while the lore sound effect will be played 1% of the time.
      *
-     * @param functionCalled The type of interaction with the plant.
+     * @param normalSound Normal sound effect to play (99% chance of being played).
+     * @param loreSound Lore sound effect to play (1% chance of being played).
      */
-    public void playSound(String functionCalled) {
-        if (!plantDestroyed && playerInProximity) {
-
-            logger.debug("The sound being called: {}", functionCalled);
-
-            switch (functionCalled) {
-                case "click" -> chooseSound(sounds[0], sounds[1]);
-                case DECAYS -> chooseSound(sounds[2], sounds[3]);
-                case DESTROY -> chooseSound(sounds[4], sounds[5]);
-                case "nearby" -> chooseSound(sounds[6], sounds[7]);
-                default -> throw new IllegalStateException("Unexpected function: " + functionCalled);
-            }
-        }
+    public void playSound(EffectSoundFile normalSound, EffectSoundFile loreSound) {
+        // Gives a 1% chance of playing the lore sound.
+        EffectSoundFile chosenSound = random.nextInt(100) == 0 ? loreSound : normalSound;
+        playSound(chosenSound);
     }
 
     /**
-     * Decide what sound to play. There is a small random chance that a lore sound will be selected, otherwise
-     * the normal sound will be played.
-     * @param lore Sound associated with the secret lore
-     * @param notLore Normal sound that the player will be expecting.
+     * Plays the given sound effect.
+     *
+     * @param sound Sound effect to play.
      */
-    void chooseSound(String lore, String notLore) {
-        boolean playLoreSound = random.nextInt(100) <= 0; //Gives 1% chance of being true
-        Sound soundEffect;
-        logger.debug("is the sound lore?: {}", playLoreSound);
-        if (!playLoreSound) {
-            soundEffect = ServiceLocator.getResourceService().getAsset(lore, Sound.class);
-        } else {
-            soundEffect = ServiceLocator.getResourceService().getAsset(notLore, Sound.class);
+    public void playSound(EffectSoundFile sound) {
+        try {
+            ServiceLocator.getSoundService().getEffectsMusicService().play(sound);
+        } catch (InvalidSoundFileException e) {
+            logger.error(String.format("Failed to play plant sound '%s'", sound.name()), e);
         }
-        soundEffect.play();
     }
 
     public void setCurrentAge(float age) {
@@ -1028,7 +1058,7 @@ public class PlantComponent extends Component {
         this.setGrowthStage(GrowthStage.DECAYING.getValue());
         this.setPlantHealth(30);
         entity.getComponent(PlantAreaOfEffectComponent.class).setEffectType("Decay");
-        playSound(DECAYS);
+        playSound(decaySound, decayLoreSound);
         updateTexture();
         updateMaxHealth();
     }
@@ -1051,7 +1081,7 @@ public class PlantComponent extends Component {
         this.setGrowthStage(GrowthStage.DEAD.getValue());
         this.setPlantHealth(0);
         updateTexture();
-        playSound(DESTROY);
+        playSound(destroySound, destroyLoreSound);
         updateMaxHealth();
     }
 

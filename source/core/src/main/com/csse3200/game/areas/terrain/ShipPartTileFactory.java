@@ -2,6 +2,7 @@ package com.csse3200.game.areas.terrain;
 
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityIndicator;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
@@ -32,6 +33,8 @@ public class ShipPartTileFactory {
 				.addComponent(new PhysicsComponent())
 				.addComponent(new ShipPartTileComponent())
 				.addComponent(renderComponent);
+
+		shipPartTile.addComponent(new EntityIndicator(shipPartTile, "images/ship/part_tile_indicator.png"));
 
 		shipPartTile.setPosition(position);
 		return shipPartTile;
