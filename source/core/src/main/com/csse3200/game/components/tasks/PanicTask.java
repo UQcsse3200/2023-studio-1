@@ -22,8 +22,6 @@ public class PanicTask extends TimedTask implements PriorityTask {
     /** Starting position when panic task starts. */
     private Vector2 startPos;
 
-    private boolean isWeatherEventPanicActive;
-
     /**
      * Constructs a PanicTask with the specified parameters.
      *
