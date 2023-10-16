@@ -145,7 +145,47 @@ public class ToggleableMap extends UIComponent {
         listPlayerPos.add(new GridPoint2(gpPos.x +1, gpPos.y +1)); // right up
         return listPlayerPos;
     }
-    
+
+    /**
+     * Add image to the table
+     * @param xPos x position
+     * @param yPos y position
+     * @param tile tile to add if the position is not in the list of entity's position
+     * @param listEntityPosType list of entity's position
+     * @return true if the image is added to the table
+     */
+    private boolean addImageToTable(int xPos, int yPos, TiledMapTile tile, ArrayList<Pair<GridPoint2, EntityType>> listEntityPosType) {
+        boolean isAdded = false;
+        for (Pair<GridPoint2, EntityType> pair : listEntityPosType) {
+            if (pair.getKey().equals(new GridPoint2(xPos, yPos)) && pair.getValue() != null) {
+                switch (pair.getValue()) {
+                    case PLANT -> {
+                        tableMap.add(new Image(new TextureRegion(ServiceLocator.getResourceService().getAsset("images/miniMap/plantIcon.png", Texture.class))));
+                        logger.info("tile at ({}, {}) is plantIcon", xPos, yPos);
+                        isAdded = true;
+                    }
+                    case QUESTGIVER -> {
+                        tableMap.add(new Image(new TextureRegion(ServiceLocator.getResourceService().getAsset("images/miniMap/questGiverIcon.png", Texture.class))));
+                        logger.info("tile at ({}, {}) is questGiverIcon", xPos, yPos);
+                        isAdded = true;
+                    }
+                    case SHIP -> {
+                        // create new image from "assets/wiki/placeables/fences/f.png"
+                        tableMap.add(new Image(new TextureRegion(ServiceLocator.getResourceService().getAsset("images/miniMap/shipIcon.png", Texture.class))));
+                        logger.info("tile at ({}, {}) is an shipIcon", xPos, yPos);
+                        isAdded = true;
+                    }
+                    default -> {
+                        tableMap.add(new Image(tile.getTextureRegion()));
+                        isAdded = true;
+                    }
+                }
+                break;
+            }
+        }
+        return isAdded;
+    }
+
     /**
      * Creates assets used
      */
@@ -183,37 +223,7 @@ public class ToggleableMap extends UIComponent {
                         logger.info("tile at ({}, {}) is an entity", xPos, yPos);
                     } else {
                         // check if the tile is in the list of entity's position
-                        boolean isAdded = false;
-                        for (Pair<GridPoint2, EntityType> pair : listEntityPosType) {
-                            if (pair.getKey().equals(new GridPoint2(xPos, yPos))) {
-                                if (pair.getValue() == null) {
-                                    break;
-                                }
-                                switch (pair.getValue()) {
-                                    case PLANT -> {
-                                        tableMap.add(new Image(new TextureRegion(ServiceLocator.getResourceService().getAsset("images/miniMap/plantIcon.png", Texture.class))));
-                                        logger.info("tile at ({}, {}) is plantIcon", xPos, yPos);
-                                        isAdded = true;
-                                    }
-                                    case QUESTGIVER -> {
-                                        tableMap.add(new Image(new TextureRegion(ServiceLocator.getResourceService().getAsset("images/miniMap/questGiverIcon.png", Texture.class))));
-                                        logger.info("tile at ({}, {}) is questGiverIcon", xPos, yPos);
-                                        isAdded = true;
-                                    }
-                                    case SHIP -> {
-                                        // create new image from "assets/wiki/placeables/fences/f.png"
-                                        tableMap.add(new Image(new TextureRegion(ServiceLocator.getResourceService().getAsset("images/miniMap/shipIcon.png", Texture.class))));
-                                        logger.info("tile at ({}, {}) is an shipIcon", xPos, yPos);
-                                        isAdded = true;
-                                    }
-                                    default -> {
-                                        tableMap.add(new Image(tile.getTextureRegion()));
-                                        isAdded = true;
-                                    }
-                                }
-                                break;
-                            }
-                        }
+                        boolean isAdded = addImageToTable(xPos, yPos, tile, listEntityPosType);
                         if (!isAdded) {
                             tableMap.add(new Image(tile.getTextureRegion()));
                         }
