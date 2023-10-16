@@ -351,8 +351,6 @@ public class SpaceGameArea extends GameArea {
 
     spawnShip();
 
-    ServiceLocator.getMissionManager().acceptQuest(QuestFactory.createFirstContactQuest());
-
     //Spawning behaviour for passive animals
     List<EntitySpawner> passiveSpawners = new ArrayList<>();
     passiveSpawners.add(new EntitySpawner(1, player2 -> NPCFactory.createAstrolotl(),

@@ -1,5 +1,6 @@
 package com.csse3200.game.screens;
 
+import com.csse3200.game.missions.quests.QuestFactory;
 import com.csse3200.game.services.*;
 import com.csse3200.game.components.plants.PlantInfoDisplayComponent;
 import com.csse3200.game.entities.FireflySpawner;
@@ -167,6 +168,8 @@ public class MainGameScreen extends ScreenAdapter {
         // if the LoadSaveOnStart value is set true then load entities saved from file
         if (game.isLoadOnStart()){
             ServiceLocator.getSaveLoadService().load();
+        } else {
+            ServiceLocator.getMissionManager().acceptQuest(QuestFactory.createFirstContactQuest());
         }
     }
 
