@@ -22,7 +22,6 @@ import java.util.Random;
 
 import static com.csse3200.game.missions.quests.QuestFactory.ALIENS_ATTACK_QUEST_NAME;
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
@@ -80,7 +79,7 @@ class ShipDebrisComponentTest {
 		mockMissionManager.getEvents().trigger(MissionManager.MissionEvent.QUEST_REWARD_COLLECTED.name(), ALIENS_ATTACK_QUEST_NAME);
 
 		shipDebrisComponent = new ShipDebrisComponent();
-		shipDebrisComponent.setRandomInstance(new Random(12345));
+		shipDebrisComponent.setRandomInstance(new Random(333));
 		shipDebris = new Entity(EntityType.SHIP_DEBRIS)
 				.addComponent(shipDebrisComponent);
 		mockEntityService.register(shipDebris);

@@ -1,6 +1,7 @@
 package com.csse3200.game.services.plants;
 
 import com.csse3200.game.events.EventHandler;
+import jdk.jfr.Event;
 
 /**
  * Keeps track of all info and stats relating to plants.
@@ -9,7 +10,7 @@ public class PlantInfoService {
     /**
      * Event handler to send and receive events between objects.
      */
-    private final EventHandler events;
+    private EventHandler events;
 
     /**
      * Count of the total number of plants that are currently alive.
@@ -47,10 +48,11 @@ public class PlantInfoService {
      * Constructor for the plant info service. Initialise all counts to zero.
      */
     public PlantInfoService() {
-        events = new EventHandler();
-        alivePlantCount = 0;
-        totalSeedsPlanted = 0;
-        totalPlantHarvestCount = 0;
+        this.events = new EventHandler();
+        this.alivePlantCount = 0;
+        this.totalSeedsPlanted = 0;
+        this.totalPlantHarvestCount = 0;
+        this.decayingPlantCount = 0;
     }
 
     /**
@@ -58,7 +60,55 @@ public class PlantInfoService {
      * @return the event handler.
      */
     public EventHandler getEvents() {
-        return events;
+        return this.events;
+    }
+
+    /**
+     * Setter for the event handler. Used for testing
+     * @param events the event handler.
+     */
+    public void setEvents(EventHandler events) {
+        this.events = events;
+    }
+
+    /**
+     * Gets the number of alive plants
+     * @return the number of alive plants
+     */
+    public int getAlivePlantCount() {
+        return this.alivePlantCount;
+    }
+
+    /**
+     * Gets the total number of seeds planted
+     * @return the total number of seeds planted
+     */
+    public int getTotalSeedsPlanted() {
+        return this.totalSeedsPlanted;
+    }
+
+    /**
+     * Gets the total number plants harvested
+     * @return the total number of plants harvested
+     */
+    public int getTotalPlantHarvestCount() {
+        return this.totalPlantHarvestCount;
+    }
+
+    /**
+     * Gets the total number of decaying plants
+     * @return the total number of decaying plants
+     */
+    public int getDecayingPlantCount() {
+        return this.decayingPlantCount;
+    }
+
+    /**
+     * Sets the decaying plant counter to the number provided
+     * @param num the number to set the decaying plant counter to
+     */
+    public void setDecayingPlantCount(int num) {
+        decayingPlantCount = num;
     }
 
     /**
@@ -132,7 +182,7 @@ public class PlantInfoService {
     /**
      * Trigger the 'clearInfo' event to update the plant info ui.
      */
-    private void updateClearInfo() {
+    public void updateClearInfo() {
         events.trigger("clearPlantInfo");
     }
 
@@ -156,13 +206,5 @@ public class PlantInfoService {
         }
 
         return returnString;
-    }
-
-    public void setDecayingPlantCount(int num) {
-        decayingPlantCount = num;
-    }
-
-    public int getAlivePlantCount() {
-        return alivePlantCount;
     }
 }

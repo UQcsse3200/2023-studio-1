@@ -46,7 +46,7 @@ public class MissionDisplay extends UIComponent {
      * Creates a window for the missions and adds it to the stage.
      */
     private void addActors() {
-        window = new Window("Mission Giver", skin);
+        window = new Window("Mission Giver", skin, "wooden");
         window.setVisible(false);
         stage.addActor(window);
     }
@@ -63,6 +63,7 @@ public class MissionDisplay extends UIComponent {
                 stage.getWidth() / 2 - window.getWidth() / 2,
                 stage.getHeight() / 2 - window.getHeight() / 2
         ); // center on stage
+
     }
 
     /**
@@ -174,7 +175,7 @@ public class MissionDisplay extends UIComponent {
         window.clear();
         window.getTitleLabel().setText("Mission Giver");
 
-        TextButton achievementsButton = new TextButton("Achievements", skin);
+        TextButton achievementsButton = new TextButton("Achievements", skin,"orange");
         achievementsButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
@@ -183,7 +184,7 @@ public class MissionDisplay extends UIComponent {
         });
 
 
-        TextButton questsButton = new TextButton("Quests", skin);
+        TextButton questsButton = new TextButton("Quests", skin,"orange");
         questsButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
@@ -193,7 +194,7 @@ public class MissionDisplay extends UIComponent {
 
 
         /* CLOSE MENU BUTTON QUICK FIX */
-        TextButton closeButton = new TextButton("Close", skin);
+        TextButton closeButton = new TextButton("Close", skin,"orange");
         closeButton.addListener(new ChangeListener() {
                                     @Override
                                     public void changed(ChangeEvent event, Actor actor) {
@@ -640,6 +641,8 @@ public class MissionDisplay extends UIComponent {
 
         window.setVisible(true);
 
+        window.toFront();
+
         isOpen = true;
     }
 
@@ -659,6 +662,11 @@ public class MissionDisplay extends UIComponent {
         if (isOpen) {
             generateAchievements();
         }
+    }
+
+    @Override
+    public void update() {
+        this.updateWindow();
     }
 
     /**

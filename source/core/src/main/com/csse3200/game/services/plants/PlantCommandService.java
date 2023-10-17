@@ -15,7 +15,7 @@ public class PlantCommandService {
      * Constructor for the PlantCommandService.
      */
     public PlantCommandService() {
-        events = new EventHandler();
+        this.events = new EventHandler();
     }
 
     /**
@@ -23,6 +23,6 @@ public class PlantCommandService {
      * @return - event handler.
      */
     public EventHandler getEvents() {
-        return events;
+        return this.events;
     }
 }

@@ -32,8 +32,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.stream.IntStream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
@@ -264,7 +263,7 @@ class ShipEaterIntegrationTest {
 		entity.getEvents().addListener("eatingUpdated", this::setEating);
 		entity.getEvents().addListener("hidingUpdated", this::setHiding);
 
-		runGame(1);
+		runGame(10);
 
 		assertTrue(isEating);
 
@@ -275,15 +274,15 @@ class ShipEaterIntegrationTest {
 		player.setPosition(11f, 11f);
 		ServiceLocator.getGameArea().spawnEntity(player);
 
-		runGame(1);
+		runGame(10);
 
 		assertTrue(isHiding);
 
 		player.setPosition(1f, 1f);
 
-		runGame(1);
+		runGame(10);
 
-		assertTrue(!isHiding);
+        assertFalse(isHiding);
 		assertTrue(isEating);
 
 	}

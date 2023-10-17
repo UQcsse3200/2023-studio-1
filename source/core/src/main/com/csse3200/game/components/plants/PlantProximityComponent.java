@@ -31,6 +31,24 @@ public class PlantProximityComponent extends HitboxComponent {
     }
 
     /**
+     * Gets the radius of the hitbox area.
+     *
+     * @return the radius of the hitbox area.
+     */
+    public float getRadius() {
+        return this.radius;
+    }
+
+    /**
+     * Gets the shape of the hitbox area.
+     *
+     * @return the shape of the hitbox area
+     */
+    public CircleShape getShape() {
+        return this.shape;
+    }
+
+    /**
      * Sets up the radius for the collider and listen for relevant services.
      */
     @Override
@@ -48,16 +66,15 @@ public class PlantProximityComponent extends HitboxComponent {
      * Checks if the entity is the player on collision start. If the entity is the player
      * then tell the plant that the player is in range.
      *
-     * @param me        The fixture of this component.
-     * @param other     The fixture of the colliding entity.
+     * @param me The fixture of this component.
+     * @param other The fixture of the colliding entity.
      */
-    private void onCollisionStart(Fixture me, Fixture other) {
+    public void onCollisionStart(Fixture me, Fixture other) {
         if (getFixture() != me) {
             return;
         }
 
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
-
         if (target.getType() == EntityType.PLAYER) {
             entity.getComponent(PlantComponent.class).setPlayerInProximity(true);
         }
@@ -67,8 +84,9 @@ public class PlantProximityComponent extends HitboxComponent {
     /**
      * Checks if the entity is the player on collision end. If the entity is the player
      * then tell the plant that the player is no longer in range.
-     * @param me        The fixture of this component.
-     * @param other     The fixture of the colliding entity.
+     *
+     * @param me The fixture of this component.
+     * @param other The fixture of the colliding entity.
      */
     private void onCollisionEnd(Fixture me, Fixture other) {
         if (getFixture() != me) {
