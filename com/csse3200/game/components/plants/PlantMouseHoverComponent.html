@@ -126,15 +126,45 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Called when the entity is created and registered.</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isNoMoreUse()" class="member-name-link">isNoMoreUse</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Checks whether the plant information should no longer be used.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isPlantDead()" class="member-name-link">isPlantDead</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Checks if the plant is dead.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isShowInfo()" class="member-name-link">isShowInfo</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Checks whether plant information is currently being shown.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setNoMoreUse(boolean)" class="member-name-link">setNoMoreUse</a><wbr>(boolean&nbsp;noMoreUse)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets whether the plant information should no longer be used.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#plantDied()" class="member-name-link">plantDied</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPlantDied(boolean)" class="member-name-link">setPlantDied</a><wbr>(boolean&nbsp;plantDied)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Used to signal when the plant has died.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setShowInfo(boolean)" class="member-name-link">setShowInfo</a><wbr>(boolean&nbsp;showInfo)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets whether plant information is currently being shown.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Called once per frame of the game, and should be used for most component logic.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateInfo()" class="member-name-link">updateInfo</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Used to update the information being shown in the Plant information widget.</div>
 </div>
 </div>
 </div>
@@ -171,6 +201,68 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="setPlantDied(boolean)">
+<h3>setPlantDied</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setPlantDied</span><wbr><span class="parameters">(boolean&nbsp;plantDied)</span></div>
+<div class="block">Used to signal when the plant has died.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isPlantDead()">
+<h3>isPlantDead</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isPlantDead</span>()</div>
+<div class="block">Checks if the plant is dead.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>true if the plant is dead, false otherwise.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isShowInfo()">
+<h3>isShowInfo</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isShowInfo</span>()</div>
+<div class="block">Checks whether plant information is currently being shown.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>true</code> if plant information is being shown, <code>false</code> otherwise.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setShowInfo(boolean)">
+<h3>setShowInfo</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setShowInfo</span><wbr><span class="parameters">(boolean&nbsp;showInfo)</span></div>
+<div class="block">Sets whether plant information is currently being shown.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>showInfo</code> - <code>true</code> to indicate that plant information is being shown, <code>false</code> otherwise.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isNoMoreUse()">
+<h3>isNoMoreUse</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isNoMoreUse</span>()</div>
+<div class="block">Checks whether the plant information should no longer be used.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>true</code> if the plant information should no longer be used, <code>false</code> otherwise.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setNoMoreUse(boolean)">
+<h3>setNoMoreUse</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setNoMoreUse</span><wbr><span class="parameters">(boolean&nbsp;noMoreUse)</span></div>
+<div class="block">Sets whether the plant information should no longer be used.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>noMoreUse</code> - <code>true</code> to indicate that the plant information should no longer be used, <code>false</code> otherwise.</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="create()">
 <h3>create</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">create</span>()</div>
@@ -195,10 +287,10 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="plantDied()">
-<h3>plantDied</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">plantDied</span>()</div>
-<div class="block">Used to signal when the plant has died.</div>
+<section class="detail" id="updateInfo()">
+<h3>updateInfo</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateInfo</span>()</div>
+<div class="block">Used to update the information being shown in the Plant information widget.</div>
 </section>
 </li>
 </ul>

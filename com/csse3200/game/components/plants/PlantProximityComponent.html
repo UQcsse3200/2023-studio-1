@@ -132,6 +132,22 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets up the radius for the collider and listen for relevant services.</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRadius()" class="member-name-link">getRadius</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the radius of the hitbox area.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.physics.box2d.CircleShape</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getShape()" class="member-name-link">getShape</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the shape of the hitbox area.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onCollisionStart(com.badlogic.gdx.physics.box2d.Fixture,com.badlogic.gdx.physics.box2d.Fixture)" class="member-name-link">onCollisionStart</a><wbr>(com.badlogic.gdx.physics.box2d.Fixture&nbsp;me,
+ com.badlogic.gdx.physics.box2d.Fixture&nbsp;other)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Checks if the entity is the player on collision start.</div>
+</div>
 </div>
 </div>
 </div>
@@ -172,6 +188,28 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="getRadius()">
+<h3>getRadius</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">getRadius</span>()</div>
+<div class="block">Gets the radius of the hitbox area.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the radius of the hitbox area.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getShape()">
+<h3>getShape</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.physics.box2d.CircleShape</span>&nbsp;<span class="element-name">getShape</span>()</div>
+<div class="block">Gets the shape of the hitbox area.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the shape of the hitbox area</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="create()">
 <h3>create</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">create</span>()</div>
@@ -179,6 +217,20 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="../../physics/components/HitboxComponent.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../../physics/components/HitboxComponent.html" title="class in com.csse3200.game.physics.components">HitboxComponent</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="onCollisionStart(com.badlogic.gdx.physics.box2d.Fixture,com.badlogic.gdx.physics.box2d.Fixture)">
+<h3>onCollisionStart</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onCollisionStart</span><wbr><span class="parameters">(com.badlogic.gdx.physics.box2d.Fixture&nbsp;me,
+ com.badlogic.gdx.physics.box2d.Fixture&nbsp;other)</span></div>
+<div class="block">Checks if the entity is the player on collision start. If the entity is the player
+ then tell the plant that the player is in range.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>me</code> - The fixture of this component.</dd>
+<dd><code>other</code> - The fixture of the colliding entity.</dd>
 </dl>
 </section>
 </li>

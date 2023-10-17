@@ -87,6 +87,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">PlantInfoDisplayComponent</span>
 <span class="extends-implements">extends <a href="../../ui/UIComponent.html" title="class in com.csse3200.game.ui">UIComponent</a></span></div>
+<div class="block">A UI component for displaying information about a plant.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -141,10 +142,25 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Has no use in this component but is required by the UIComponent class.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#showPlantInfo(java.lang.String,java.lang.String)" class="member-name-link">showPlantInfo</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;plantName,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;plantInfo)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMadeFirstContact()" class="member-name-link">getMadeFirstContact</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Whether first contact has been made or not</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#madeFirstContact()" class="member-name-link">madeFirstContact</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Marks that the first contact has been made with the plant.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#makeFirstContactWindow()" class="member-name-link">makeFirstContactWindow</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Create and display the window for first contact with the plant.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#showPlantInfo(java.lang.String,java.lang.String)" class="member-name-link">showPlantInfo</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;plantName,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;plantInfo)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Display the string of plant information in the window.</div>
 </div>
 </div>
@@ -206,6 +222,24 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="madeFirstContact()">
+<h3>madeFirstContact</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">madeFirstContact</span>()</div>
+<div class="block">Marks that the first contact has been made with the plant.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getMadeFirstContact()">
+<h3>getMadeFirstContact</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">getMadeFirstContact</span>()</div>
+<div class="block">Whether first contact has been made or not</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>True if first contact has been made, false otherwise</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="showPlantInfo(java.lang.String,java.lang.String)">
 <h3>showPlantInfo</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">showPlantInfo</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;plantName,
@@ -215,6 +249,7 @@ loadScripts(document, 'script');</script>
  player hovers their mouse cursor over a plant.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
+<dd><code>plantName</code> - The name of the plant.</dd>
 <dd><code>plantInfo</code> - - Information about the current state of the plant.</dd>
 </dl>
 </section>
@@ -224,6 +259,13 @@ loadScripts(document, 'script');</script>
 <h3>clearInfo</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">clearInfo</span>()</div>
 <div class="block">Clears the window of any plant information.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="makeFirstContactWindow()">
+<h3>makeFirstContactWindow</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">makeFirstContactWindow</span>()</div>
+<div class="block">Create and display the window for first contact with the plant.</div>
 </section>
 </li>
 <li>

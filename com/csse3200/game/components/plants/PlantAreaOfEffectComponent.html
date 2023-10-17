@@ -132,9 +132,31 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets up a radius for the collider and listens to relevant services.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEntitiesInRange()" class="member-name-link">getEntitiesInRange</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEffectType()" class="member-name-link">getEffectType</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEntitiesInRange()" class="member-name-link">getEntitiesInRange</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns a list of entities within the range.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRadius()" class="member-name-link">getRadius</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the radius of the area of effect for the plant.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onCollisionEnd(com.badlogic.gdx.physics.box2d.Fixture,com.badlogic.gdx.physics.box2d.Fixture)" class="member-name-link">onCollisionEnd</a><wbr>(com.badlogic.gdx.physics.box2d.Fixture&nbsp;me,
+ com.badlogic.gdx.physics.box2d.Fixture&nbsp;other)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Removes entity from entitiesInRange on collision end.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onCollisionStart(com.badlogic.gdx.physics.box2d.Fixture,com.badlogic.gdx.physics.box2d.Fixture)" class="member-name-link">onCollisionStart</a><wbr>(com.badlogic.gdx.physics.box2d.Fixture&nbsp;me,
+ com.badlogic.gdx.physics.box2d.Fixture&nbsp;other)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds entity to entitiesInRange on collision start.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setEffectType(java.lang.String)" class="member-name-link">setEffectType</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;effectType)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -190,20 +212,9 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="create()">
-<h3>create</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">create</span>()</div>
-<div class="block">Sets up a radius for the collider and listens to relevant services.</div>
-<dl class="notes">
-<dt>Overrides:</dt>
-<dd><code><a href="../../physics/components/HitboxComponent.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../../physics/components/HitboxComponent.html" title="class in com.csse3200.game.physics.components">HitboxComponent</a></code></dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getEntitiesInRange()">
-<h3>getEntitiesInRange</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;</span>&nbsp;<span class="element-name">getEntitiesInRange</span>()</div>
+<section class="detail" id="getEffectType()">
+<h3>getEffectType</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getEffectType</span>()</div>
 </section>
 </li>
 <li>
@@ -218,6 +229,17 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="getRadius()">
+<h3>getRadius</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">getRadius</span>()</div>
+<div class="block">Returns the radius of the area of effect for the plant.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The radius of the area of effect.</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="setRadius(float)">
 <h3>setRadius</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setRadius</span><wbr><span class="parameters">(float&nbsp;radius)</span></div>
@@ -225,6 +247,58 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>radius</code> - - the new radius of the area.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getEntitiesInRange()">
+<h3>getEntitiesInRange</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;</span>&nbsp;<span class="element-name">getEntitiesInRange</span>()</div>
+<div class="block">Returns a list of entities within the range.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>A list of entities within the range.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="create()">
+<h3>create</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">create</span>()</div>
+<div class="block">Sets up a radius for the collider and listens to relevant services.</div>
+<dl class="notes">
+<dt>Overrides:</dt>
+<dd><code><a href="../../physics/components/HitboxComponent.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../../physics/components/HitboxComponent.html" title="class in com.csse3200.game.physics.components">HitboxComponent</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="onCollisionStart(com.badlogic.gdx.physics.box2d.Fixture,com.badlogic.gdx.physics.box2d.Fixture)">
+<h3>onCollisionStart</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onCollisionStart</span><wbr><span class="parameters">(com.badlogic.gdx.physics.box2d.Fixture&nbsp;me,
+ com.badlogic.gdx.physics.box2d.Fixture&nbsp;other)</span></div>
+<div class="block">Adds entity to entitiesInRange on collision start.
+ NOTE: This function is copied from the InteractionDetector class, written by
+ someone else.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>me</code> - The fixture of this component.</dd>
+<dd><code>other</code> - The fixture of the colliding entity.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="onCollisionEnd(com.badlogic.gdx.physics.box2d.Fixture,com.badlogic.gdx.physics.box2d.Fixture)">
+<h3>onCollisionEnd</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onCollisionEnd</span><wbr><span class="parameters">(com.badlogic.gdx.physics.box2d.Fixture&nbsp;me,
+ com.badlogic.gdx.physics.box2d.Fixture&nbsp;other)</span></div>
+<div class="block">Removes entity from entitiesInRange on collision end.
+ NOTE: This function is copied from the InteractionDetector class, written by
+ someone else.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>me</code> - The fixture of this component.</dd>
+<dd><code>other</code> - The fixture of the colliding entity.</dd>
 </dl>
 </section>
 </li>
