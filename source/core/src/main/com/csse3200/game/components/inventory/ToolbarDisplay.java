@@ -28,9 +28,9 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
  */
 public class ToolbarDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(ToolbarDisplay.class);
-    private final Skin skin = ServiceLocator.getResourceService().getAsset("gardens-of-the-galaxy/gardens-of-the-galaxy.json", Skin.class);
+    //private final Skin skin = ServiceLocator.getResourceService().getAsset("gardens-of-the-galaxy/gardens-of-the-galaxy.json", Skin.class);
     private final Table table = new Table(skin);
-    private final Window window = new Window("", skin);
+    private final Window window = new Window("   INVENTORY", skin, "wooden");
     private boolean isOpen;
     private InventoryComponent inventory;
     private int selectedSlot = -1;
