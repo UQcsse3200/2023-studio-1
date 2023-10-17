@@ -9,6 +9,8 @@ import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.entities.factories.ShipFactory;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.sound.EffectSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -60,6 +62,8 @@ public class ShipProgressComponent extends Component {
 			// Bound maximum repair state
 			this.progress = min(this.progress + amount, maximumRepair);
 
+			int prevSize = unlockedFeatures.size();
+
 			for (Feature feature : Feature.values()) {
 				if (feature.unlockLevel <= this.progress) {
 					unlockedFeatures.add(feature);
@@ -71,6 +75,17 @@ public class ShipProgressComponent extends Component {
 								.addItem(tpDev);
 					}
 				}
+			}
+
+			try {
+				// Play unlock sound if required, else generic repair sound
+				if (prevSize < unlockedFeatures.size()) {
+					ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.SHIP_FEATURE_UNLOCKED);
+				} else {
+					ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.SHIP_INSTALL_PART);
+				}
+			} catch (InvalidSoundFileException ignored) {
+
 			}
 
 			// Only send progress update if repair actually happened

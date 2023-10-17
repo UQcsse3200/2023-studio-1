@@ -192,6 +192,23 @@ public class PlayerActions extends Component {
   private void updateSpeed() {
     Body body = physicsComponent.getBody();
     Vector2 velocity = body.getLinearVelocity();
+
+    Vector2 desiredVelocity = calculateVelocityVector();
+    Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
+
+    body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
+
+    if (impulse.len() > 4) {
+      entity.getEvents().trigger(ParticleService.START_EVENT, ParticleService.ParticleEffectType.DIRT_EFFECT);
+    }
+  }
+
+  /**
+   * Calculates the desired velocity vector, applying terrain movement modifiers, movement direction, and weather
+   * modifiers.
+   * @return the calculated velocity vector.
+   */
+  protected Vector2 calculateVelocityVector() {
     Vector2 velocityScale = this.running ? MAX_RUN_SPEED.cpy() : MAX_WALK_SPEED.cpy();
 
     // Used to apply the terrainSpeedModifier
@@ -210,15 +227,7 @@ public class PlayerActions extends Component {
 
     velocityScale.scl(speedMultiplier);
 
-    Vector2 desiredVelocity = moveDirection.cpy().scl(velocityScale);
-    // impulse = (desiredVel - currentVel) * mass
-    Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
-
-    body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
-
-    if (impulse.len() > 4) {
-      entity.getEvents().trigger(ParticleService.START_EVENT, ParticleService.ParticleEffectType.DIRT_EFFECT);
-    }
+    return moveDirection.cpy().scl(velocityScale);
   }
 
   public float getPrevMoveDirection() {
@@ -467,6 +476,14 @@ public class PlayerActions extends Component {
   }
 
   /**
+   * Sets the moveDirection with a copy of the provided Vector2 instance
+   * @param vector the Vector2 instance to update the moveDirection to
+   */
+  protected void setMoveDirection(Vector2 vector) {
+    this.moveDirection = vector.cpy();
+  }
+
+  /**
    * Reloads the Gun after a specified amount of time
    */
   void reload(){
@@ -485,5 +502,4 @@ public class PlayerActions extends Component {
     weatherSpeedModifier = 1.0f;
     isWeatherAffectingSpeed = false;
   }
-
 }

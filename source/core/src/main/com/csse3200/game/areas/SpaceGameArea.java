@@ -8,6 +8,7 @@ import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.components.ship.ShipDebrisComponent;
 import com.csse3200.game.entities.EntitiesSpawner;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntitySpawner;
@@ -70,7 +71,6 @@ public class SpaceGameArea extends GameArea {
           "images/watered_cropTile_fertilised.png",
           "images/overwatered_cropTile.png",
           "images/overwatered_cropTile_fertilised.png",
-          "images/Temp-Chest.png",
           "images/bin.png",
           "images/GOD_IS_game_ver.png",
 
@@ -136,15 +136,12 @@ public class SpaceGameArea extends GameArea {
           "images/plants/misc/deadly_nightshade_seed.png",
           "images/plants/misc/hammer_plant_seed.png",
           "images/plants/misc/space_snapper_seed.png",
-
+          "images/plants/misc/atomic_algae_seed.png",
 
           "images/invisible_sprite.png",
 
           "images/Player_Hunger/hunger_bar_outline.png",
           "images/Player_Hunger/hunger_bar_fill.png",
-
-          "images/plants/misc/atomic_algae_seed.png",
-          "images/invisible_sprite.png",
 
           "images/progress-bar/part1day1.png",
           "images/progress-bar/part1day2.png",
@@ -174,6 +171,8 @@ public class SpaceGameArea extends GameArea {
           "images/yellowCircle.png",
 
           /* placeable */
+          "images/placeable/light.png",
+          "images/placeable/chest.png",
           "images/placeable/sprinkler/pipe_null.png",
           "images/placeable/sprinkler/pump.png",
           // sprinklers - on
@@ -381,6 +380,12 @@ public class SpaceGameArea extends GameArea {
 
     hostileSpawner = new EntitiesSpawner(hostileSpawners);
     hostileSpawner.setGameAreas(this);
+
+    // play background music
+    ServiceLocator.getSoundService().getBackgroundMusicService().play(BackgroundMusicType.NORMAL);
+
+    ShipDebrisComponent.clearCanSpawnShipEater();
+
   }
 
   /**
@@ -609,6 +614,12 @@ public class SpaceGameArea extends GameArea {
     effects.add(EffectSoundFile.STORM);
     effects.add(EffectSoundFile.SURGE);
     effects.add(EffectSoundFile.GOD_DID);
+    effects.add(EffectSoundFile.SHIP_CLUE_SOLVED);
+    effects.add(EffectSoundFile.SHIP_INSTALL_PART);
+    effects.add(EffectSoundFile.SHIP_FEATURE_UNLOCKED);
+    effects.add(EffectSoundFile.SHIP_TELEPORT);
+    effects.add(EffectSoundFile.SHIP_EATER_ATTACK);
+    effects.add(EffectSoundFile.SHIP_EATER_HIDE);
 
 
     try {
@@ -627,6 +638,7 @@ public class SpaceGameArea extends GameArea {
     logger.debug("Unloading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.unloadAssets(texturePaths);
+    resourceService.unloadAssets(TerrainFactory.getMapTextures());
     resourceService.unloadAssets(textureAtlasPaths);
     resourceService.unloadAssets(soundPaths);
   }

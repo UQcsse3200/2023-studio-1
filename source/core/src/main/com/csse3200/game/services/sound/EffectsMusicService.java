@@ -107,6 +107,15 @@ public class EffectsMusicService implements MusicService {
 
     @Override
     public void setMuted(boolean muted) {
+        if (muted == false) {
+            for (EffectSoundFile soundFile : this.playingSounds.keySet()) {
+                try {
+                    this.stop(soundFile);
+                } catch (InvalidSoundFileException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
         this.muteStatus = muted;
     }
 
