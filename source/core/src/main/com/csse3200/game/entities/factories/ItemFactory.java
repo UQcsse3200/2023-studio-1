@@ -432,10 +432,10 @@ public class ItemFactory {
 	 */
 	public static Entity createChestItem() {
 		return createBaseItem()
-				.addComponent(new TextureRenderComponent("images/Temp-Chest.png"))
+				.addComponent(new TextureRenderComponent("images/placeable/chest.png"))
 				.addComponent(new ItemComponent("CHEST", ItemType.PLACEABLE,
 						"A storage container to keep your seeds and goodies",
-						"images/Temp-Chest.png"));
+						"images/placeable/chest.png"));
 
 	}
 
@@ -446,10 +446,10 @@ public class ItemFactory {
 	 */
 	public static Entity createLightItem() {
 		return createBaseItem()
-				.addComponent(new TextureRenderComponent("images/plants/misc/aloe_vera_seed.png"))
+				.addComponent(new TextureRenderComponent("images/placeable/light.png"))
 				.addComponent(new ItemComponent("LIGHT", ItemType.PLACEABLE,
 						"A quick and easy fix to being scared of the dark!",
-						"images/plants/misc/aloe_vera_seed.png"));
+						"images/placeable/light.png"));
 
 	}
 
