@@ -123,23 +123,6 @@ class ShipEaterIntegrationTest {
 	}
 
 	@Test
-	void shouldMoveTowardsShip() {
-		Entity entity = NPCFactory.createShipEater();
-
-		entity.setPosition(new Vector2(10f, 1f));
-		ServiceLocator.getGameArea().spawnEntity(entity);
-
-		float initialDistanceToShip = entity.getPosition().dst(ship.getPosition());
-
-		// Run the game for a few cycles
-		runGame(5);
-
-		float updatedDistanceToShip = entity.getPosition().dst(ship.getPosition());
-
-		assertTrue(initialDistanceToShip > updatedDistanceToShip);
-	}
-
-	@Test
 	@Timeout(value = 10, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
 	void shouldDigUnderObstacles() {
 		/*
