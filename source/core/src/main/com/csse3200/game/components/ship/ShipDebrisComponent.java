@@ -43,6 +43,13 @@ public class ShipDebrisComponent extends Component {
 	}
 
 	/**
+	 * Resets spawning of ship eaters
+	 */
+	public static void clearCanSpawnShipEater() {
+		canSpawnShipEater = false;
+	}
+
+	/**
 	 * Sets the random instance to use.
 	 *
 	 * @param randomInstance to use
