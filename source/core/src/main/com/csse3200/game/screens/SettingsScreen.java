@@ -4,13 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.settingsmenu.SettingsMenuDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.components.maingame.mainmenu.MainMenuActions;
+import com.csse3200.game.components.maingame.mainmenu.MainMenuDisplay;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.input.InputDecorator;
 import com.csse3200.game.input.InputService;
@@ -24,23 +24,22 @@ import com.csse3200.game.services.TimeService;
 /** The game screen containing the settings. */
 public class SettingsScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(SettingsScreen.class);
-  public static final int frameCount = 71;
+  public static final int FRAME_COUNT = 64;
   private static final String[] mainMenuTextures = {"images/galaxy_home_still.png"};
-  public static String[] transitionTextures = new String[frameCount];
-  private static final String animationPrefix = "images/menu_animations/menu_animations";
-  private Texture backgroundTexture;
-  private SpriteBatch batch;
+  private static String[] transitionTextures = new String[FRAME_COUNT];
+  private static final String ANIMATION_PREFIX = "images/menuanimate/";
+
   private final GdxGame game;
   private final Renderer renderer;
 
   public SettingsScreen(GdxGame game) {
     this.game = game;
     logger.debug("Initialising settings screen services");
+    ServiceLocator.registerTimeSource(new GameTime());
     ServiceLocator.registerInputService(new InputService());
     ServiceLocator.registerResourceService(new ResourceService());
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
-    ServiceLocator.registerTimeSource(new GameTime());
     ServiceLocator.registerTimeService(new TimeService());
     renderer = RenderFactory.createRenderer();
     renderer.getCamera().getEntity().setPosition(5f, 5f);
@@ -71,6 +70,7 @@ public class SettingsScreen extends ScreenAdapter {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(mainMenuTextures);
+    resourceService.loadTextures(MainMenuScreen.transitionTextures);
     loadFrames();
     ServiceLocator.getResourceService().loadAll();
   }
@@ -79,10 +79,11 @@ public class SettingsScreen extends ScreenAdapter {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
 
-    for (int i = 0; i < frameCount; i++) {
-      transitionTextures[i] = animationPrefix + i + ".png";
+    for (int i = 1; i <= FRAME_COUNT; i++) {
+      String frameNumber = String.format("%05d", i);
+      MainMenuScreen.transitionTextures[i - 1] = ANIMATION_PREFIX + frameNumber + ".png";
     }
-    resourceService.loadTextures(transitionTextures);
+    resourceService.loadTextures(MainMenuScreen.transitionTextures);
     ServiceLocator.getResourceService().loadAll();
   }
 
@@ -103,5 +104,13 @@ public class SettingsScreen extends ScreenAdapter {
     Entity ui = new Entity();
     ui.addComponent(new SettingsMenuDisplay(game)).addComponent(new InputDecorator(stage, 10));
     ServiceLocator.getEntityService().register(ui);
+  }
+
+  /**
+   * Get the transition textures for control screen
+   * @return the transition textures
+   */
+  public static String[] getTransitionTextures() {
+    return transitionTextures;
   }
 }

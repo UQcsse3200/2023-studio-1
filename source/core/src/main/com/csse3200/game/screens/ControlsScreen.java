@@ -31,7 +31,7 @@ public class ControlsScreen extends ScreenAdapter {
   /**
    * A count of the frame in the background animation
    */
-  public static final int frameCount = 71;
+  public static final int FRAME_COUNT = 64;
 
   /**
    * A list of textures that must be loaded for this screen
@@ -41,12 +41,12 @@ public class ControlsScreen extends ScreenAdapter {
   /**
    * A list of textures that must be loaded for the animation
    */
-  public static String[] transitionTextures = new String[frameCount];
+  private static final String[] transitionTextures = new String[FRAME_COUNT];
 
   /**
    * A common name prefix for all the animation textures
    */
-  private static final String animationPrefix = "images/menu_animations/menu_animations";
+  private static final String ANIMATION_PREFIX = "images/menuanimate/";
 
   private SpriteBatch batch;
 
@@ -94,6 +94,7 @@ public class ControlsScreen extends ScreenAdapter {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(mainMenuTextures);
+    resourceService.loadTextures(MainMenuScreen.transitionTextures);
     loadFrames();
     ServiceLocator.getResourceService().loadAll();
   }
@@ -102,14 +103,14 @@ public class ControlsScreen extends ScreenAdapter {
    * Loads the texture frames required for the animation on this screen.
    */
   private void loadFrames() {
-    logger.debug("Loading animation frames");
+    logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
 
-    // Add the name of each animation texture to the transitionTextures array
-    for (int i = 0; i < frameCount; i++) {
-      transitionTextures[i] = animationPrefix + i + ".png";
+    for (int i = 1; i <= FRAME_COUNT; i++) {
+      String frameNumber = String.format("%05d", i);
+      MainMenuScreen.transitionTextures[i - 1] = ANIMATION_PREFIX + frameNumber + ".png";
     }
-    resourceService.loadTextures(transitionTextures);
+    resourceService.loadTextures(MainMenuScreen.transitionTextures);
     ServiceLocator.getResourceService().loadAll();
   }
 
@@ -134,5 +135,13 @@ public class ControlsScreen extends ScreenAdapter {
     ui.addComponent(new ControlsMenuDisplay(game))
             .addComponent(new InputDecorator(stage, 10));
     ServiceLocator.getEntityService().register(ui);
+  }
+
+  /**
+   * Get the transition textures for control screen
+   * @return the transition textures
+   */
+  public static String[] getTransitionTextures() {
+    return transitionTextures;
   }
 }
