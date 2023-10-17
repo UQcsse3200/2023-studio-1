@@ -79,10 +79,10 @@ public class EndCreditsDisplay extends UIComponent {
                 
                 {WAVE}{COLOR=blue} TEAM THREE {CLEARCOLOR}{ENDWAVE}
                
-                Map generation
+                Map generation and design
                 Entity movement modifiers
-                Win and lose conditions
                 Cutscenes
+                Toggleable Map
                 
                 
                 
