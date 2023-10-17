@@ -10,6 +10,8 @@ import com.csse3200.game.components.items.ClueComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ShipDebrisFactory;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.sound.EffectSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
 import com.csse3200.game.utils.math.RandomUtils;
 
 import java.util.List;
@@ -28,7 +30,8 @@ public class ClueReward extends ItemReward {
 
 	/**
 	 * When called, changes the isCollected variable to true and adds the reward items to the player's inventory.
-	 * Also spawns a ShipPartTile and ShipDebris around the base location contained in the Map Item.
+	 * Also spawns a ShipPartTile and ShipDebris around the base location contained in the Map Item. Also plays the
+	 * success sound effect
 	 */
 	@Override
 	public void collect() {
@@ -41,6 +44,12 @@ public class ClueReward extends ItemReward {
 			generateTileAndDebris(location);
 		}
 		super.collect();
+
+		try {
+			ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.SHIP_CLUE_SOLVED);
+		} catch (InvalidSoundFileException ignored) {
+
+		}
 	}
 
 	/**
