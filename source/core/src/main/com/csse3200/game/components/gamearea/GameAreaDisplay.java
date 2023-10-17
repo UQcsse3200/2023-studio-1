@@ -1,7 +1,11 @@
 package com.csse3200.game.components.gamearea;
 
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.inventory.InventoryDisplayManager;
 import com.csse3200.game.components.maingame.MainGameActions;
+import com.csse3200.game.services.sound.BackgroundMusicService;
+import com.csse3200.game.services.sound.EffectsMusicService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.Gdx;
@@ -9,9 +13,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.components.player.OpenPauseComponent;
@@ -25,7 +26,7 @@ public class GameAreaDisplay extends UIComponent {
   private String gameAreaName = "";
   private Label title;
   private static final Logger logger = LoggerFactory.getLogger(GameAreaDisplay.class);
-  private Group pausingGroup = new Group();
+  private Window pausingGroup = new Window("Pause", skin, "wooden");
   private OpenPauseComponent openPauseComponent;
   private Image backgroundOverlay;
   private InventoryDisplayManager inventoryDisplayManager;
@@ -58,25 +59,27 @@ public class GameAreaDisplay extends UIComponent {
   }
 
   public void setPauseMenu() {
+    pausingGroup.setVisible(true);
+    pausingGroup.toFront();
     logger.info("Opening Pause Menu");
     openPauseComponent = ServiceLocator.getGameArea().getPlayer().getComponent(OpenPauseComponent.class);
 
     backgroundOverlay.setVisible(true); // Initially, set it to invisible
 
-
-    Image pauseMenu = new Image(ServiceLocator.getResourceService().getAsset("images/PauseMenu/Pausenew.jpg", Texture.class));
-    pauseMenu.setSize(1300, 700);
-    pauseMenu.setPosition((float) (Gdx.graphics.getWidth() / 2.0 - pauseMenu.getWidth() / 2),
-            (float) (Gdx.graphics.getHeight() / 2.0 - pauseMenu.getHeight() / 2));
-    pausingGroup.addActor(pauseMenu);
+    pausingGroup.setPosition(Gdx.graphics.getWidth() / 2f,
+                 Gdx.graphics.getHeight() / 2f, Align.center);
     stage.addActor(pausingGroup);
-    stage.draw();
+
+    Table buttons = new Table();
+    pausingGroup.add(buttons);
+
+    buttons.defaults().width(386f);
 
     float buttonHeight = 80f;
 
-    TextButton exitBtn = new TextButton("Exit", skin);
+    TextButton exitBtn = new TextButton("Exit", skin,"orange");
     exitBtn.setSize(386f, buttonHeight);
-    exitBtn.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 75);
+    //exitBtn.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 75);
     exitBtn.addListener(new ChangeListener() {
       @Override
       public void changed(ChangeEvent event, Actor actor) {
@@ -86,48 +89,49 @@ public class GameAreaDisplay extends UIComponent {
         MainGameActions.exitToMainMenu();
       }
     });
-    pausingGroup.addActor(exitBtn);
+    buttons.add(exitBtn);
 
-    Label saveMessageLabel = new Label("", skin); // Create an empty label initially
-    saveMessageLabel.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 500);
-    saveMessageLabel.setVisible(false); // Initially, the label is not visible
-    pausingGroup.addActor(saveMessageLabel);
-    Label resumeMessageLabel = new Label("", skin); // Create an empty label initially
-    resumeMessageLabel.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 500);
-    resumeMessageLabel.setVisible(false); // Initially, the label is not visible
-    pausingGroup.addActor(resumeMessageLabel);
-    TextButton loadBtn = new TextButton("Load Previous", skin);
+    buttons.row().padTop(15f);
+
+    Label messageLabel = new Label("", skin); // Create an empty label initially
+    //messageLabel.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 500);
+    messageLabel.setVisible(false); // Initially, the label is not visible
+
+    TextButton loadBtn = new TextButton("Load Previous", skin,"orange");
     loadBtn.setSize(386f, buttonHeight);
-    loadBtn.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 175);
+    //loadBtn.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 175);
     loadBtn.addListener(new ChangeListener() {
       @Override
       public void changed(ChangeEvent event, Actor actor) {
-        saveMessageLabel.setVisible(false);
-        resumeMessageLabel.setText("                    Previous Game Loaded!");
-        resumeMessageLabel.setVisible(true);
+        messageLabel.setVisible(false);
+        messageLabel.setText("                    Previous Game Loaded!");
+        messageLabel.setVisible(true);
         ServiceLocator.getSaveLoadService().load();
       }
     });
-    pausingGroup.addActor(loadBtn);
+    buttons.add(loadBtn);
 
-    TextButton saveBtn = new TextButton("Save", skin);
+    buttons.row().padTop(15f);
+
+    TextButton saveBtn = new TextButton("Save", skin,"orange");
     saveBtn.setSize(386f, buttonHeight);
-    saveBtn.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 275);
+    //saveBtn.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 275);
     saveBtn.addListener(new ChangeListener() {
       @Override
       public void changed(ChangeEvent event, Actor actor) {
-        saveMessageLabel.setText("                      Current Game Saved!");
-        saveMessageLabel.setVisible(true);
-        resumeMessageLabel.setVisible(false);
+        messageLabel.setVisible(false);
+        messageLabel.setText("                      Current Game Saved!");
+        messageLabel.setVisible(true);
         ServiceLocator.getSaveLoadService().save();
       }
     });
-    pausingGroup.addActor(saveBtn);
+    buttons.add(saveBtn);
 
+    buttons.row().padTop(15f);
 
-    TextButton resumeBtn = new TextButton("Resume", skin);
+    TextButton resumeBtn = new TextButton("Resume", skin,"orange");
     resumeBtn.setSize(386f, buttonHeight);
-    resumeBtn.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 375);
+    //resumeBtn.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 375);
     resumeBtn.addListener(new ChangeListener() {
       @Override
       public void changed(ChangeEvent event, Actor actor) {
@@ -135,12 +139,59 @@ public class GameAreaDisplay extends UIComponent {
         KeyboardPlayerInputComponent.incrementPauseCounter();
         KeyboardPlayerInputComponent.clearMenuOpening();
         openPauseComponent.closePauseMenu();
-        saveMessageLabel.setVisible(false);
+        messageLabel.setVisible(false);
       }
     });
-    pausingGroup.addActor(resumeBtn);
+    buttons.add(resumeBtn);
 
-    stage.draw();
+    buttons.row().padTop(15f);
+
+    BackgroundMusicService backgroundMusicService = ServiceLocator.getSoundService().getBackgroundMusicService();
+    TextButton muteMusicButton = new TextButton(backgroundMusicService.isMuted() ? "Music Off" : "Music On", skin,
+            backgroundMusicService.isMuted() ? "grey" : "orange");
+    muteMusicButton.setSize(386f, buttonHeight);
+    muteMusicButton.addListener(new ChangeListener() {
+      @Override
+      public void changed(ChangeEvent event, Actor actor) {
+        logger.debug("Mute music button clicked");
+        if (backgroundMusicService.isMuted()) {
+          ServiceLocator.getSoundService().getBackgroundMusicService().setMuted(false);
+        } else {
+          ServiceLocator.getSoundService().getBackgroundMusicService().setMuted(true);
+        }
+        muteMusicButton.setText(backgroundMusicService.isMuted() ? "Music Off" : "Music On");
+        muteMusicButton.setStyle(skin.get(backgroundMusicService.isMuted() ? "grey" : "orange", TextButton.TextButtonStyle.class));
+      }
+    });
+    buttons.add(muteMusicButton);
+
+    buttons.row().padTop(15f);
+
+    EffectsMusicService effectsMusicService = ServiceLocator.getSoundService().getEffectsMusicService();
+    TextButton muteEffectsButton = new TextButton(effectsMusicService.isMuted() ? "SFX Off" : "SFX On", skin,
+            effectsMusicService.isMuted() ? "grey" : "orange");
+    muteEffectsButton.setSize(386f, buttonHeight);
+    muteEffectsButton.addListener(new ChangeListener() {
+      @Override
+      public void changed(ChangeEvent event, Actor actor) {
+        logger.debug("Mute music button clicked");
+        if (effectsMusicService.isMuted()) {
+          effectsMusicService.setMuted(false);
+        } else {
+          effectsMusicService.setMuted(true);
+        }
+        muteEffectsButton.setText(effectsMusicService.isMuted() ? "SFX Off" : "SFX On");
+        muteEffectsButton.setStyle(skin.get(effectsMusicService.isMuted() ? "grey" : "orange", TextButton.TextButtonStyle.class));
+      }
+    });
+    buttons.add(muteEffectsButton);
+
+    buttons.row().padTop(20f);
+
+    buttons.add(messageLabel);
+
+    pausingGroup.setSize(500, 500);
+
   }
 
   /**
@@ -154,6 +205,7 @@ public class GameAreaDisplay extends UIComponent {
 
   public void disposePauseMenu() {
     backgroundOverlay.setVisible(false);
+    pausingGroup.setVisible(false);
     pausingGroup.clear();
   }
 
@@ -170,5 +222,15 @@ public class GameAreaDisplay extends UIComponent {
   public void dispose() {
     super.dispose();
     title.remove();
+  }
+
+  @Override
+  public void update() {
+    pausingGroup.setPosition(Gdx.graphics.getWidth() / 2f,
+            Gdx.graphics.getHeight() / 2f, Align.center);
+    backgroundOverlay.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    backgroundOverlay.toFront();
+    pausingGroup.toFront();
+
   }
 }

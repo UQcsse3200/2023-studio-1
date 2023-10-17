@@ -3,10 +3,12 @@ package com.csse3200.game.components.plants;
 
 import java.util.List;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.missions.quests.Quest;
 import com.csse3200.game.services.ServiceLocator;
@@ -37,7 +39,7 @@ public class PlantInfoDisplayComponent extends UIComponent {
         ServiceLocator.getPlantInfoService().getEvents().addListener("clearPlantInfo", this::clearInfo);
         ServiceLocator.getPlantInfoService().getEvents().addListener("toggleOpen", this::toggleOpen);
         ServiceLocator.getPlantInfoService().getEvents().addListener("madeFirstContact", this::madeFirstContact);
-        window = new Window("", skin);
+        window = new Window("", skin, "wooden");
         createWindow("");
         makeFirstContactWindow();
         missionManager = ServiceLocator.getMissionManager();
@@ -63,8 +65,8 @@ public class PlantInfoDisplayComponent extends UIComponent {
         window.getTitleLabel().setText(windowName);
         window.setVisible(isOpen);
         window.setSize(450f, 275f);
-        window.padBottom(10f);
-        window.setPosition(20f, 20f);
+        window.padTop(10f);
+        window.setPosition(Gdx.graphics.getWidth() - 20f, Gdx.graphics.getHeight() - 20f, Align.topRight);
         window.setMovable(false);
         stage.addActor(window);
     }
@@ -135,6 +137,11 @@ public class PlantInfoDisplayComponent extends UIComponent {
     @Override
     protected void draw(SpriteBatch batch) {
         // No use but required.
+    }
+
+    @Override
+    public void update() {
+        window.setPosition(Gdx.graphics.getWidth() - 20f, Gdx.graphics.getHeight() - 20f, Align.topRight);
     }
 
 }
