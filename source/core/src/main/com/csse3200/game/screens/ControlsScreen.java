@@ -31,7 +31,7 @@ public class ControlsScreen extends ScreenAdapter {
   /**
    * A count of the frame in the background animation
    */
-  public static final int FRAME_COUNT = 71;
+  public static final int frameCount = 71;
 
   /**
    * A list of textures that must be loaded for this screen
@@ -41,12 +41,12 @@ public class ControlsScreen extends ScreenAdapter {
   /**
    * A list of textures that must be loaded for the animation
    */
-  private static final String[] transitionTextures = new String[FRAME_COUNT];
+  public static String[] transitionTextures = new String[frameCount];
 
   /**
    * A common name prefix for all the animation textures
    */
-  private static final String ANIMATION_PREFIX = "images/menu_animations/menu_animations";
+  private static final String animationPrefix = "images/menu_animations/menu_animations";
 
   private SpriteBatch batch;
 
@@ -106,8 +106,8 @@ public class ControlsScreen extends ScreenAdapter {
     ResourceService resourceService = ServiceLocator.getResourceService();
 
     // Add the name of each animation texture to the transitionTextures array
-    for (int i = 0; i < FRAME_COUNT; i++) {
-      ControlsScreen.transitionTextures[i] = ANIMATION_PREFIX + i + ".png";
+    for (int i = 0; i < frameCount; i++) {
+      transitionTextures[i] = animationPrefix + i + ".png";
     }
     resourceService.loadTextures(transitionTextures);
     ServiceLocator.getResourceService().loadAll();
@@ -134,13 +134,5 @@ public class ControlsScreen extends ScreenAdapter {
     ui.addComponent(new ControlsMenuDisplay(game))
             .addComponent(new InputDecorator(stage, 10));
     ServiceLocator.getEntityService().register(ui);
-  }
-
-  /**
-   * Get the transition textures for control screen
-   * @return the transition textures
-   */
-  public static String[] getTransitionTextures() {
-    return transitionTextures;
   }
 }

@@ -5,10 +5,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.components.maingame.mainmenu.MainMenuActions;
-import com.csse3200.game.components.maingame.mainmenu.MainMenuDisplay;
+import com.csse3200.game.components.mainmenu.MainMenuActions;
+import com.csse3200.game.components.mainmenu.MainMenuDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
@@ -29,10 +31,13 @@ public class MainMenuScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuScreen.class);
   private final GdxGame game;
   private final Renderer renderer;
-  public static final int FRAME_COUNT = 71;
+  public static final int frameCount = 71;
   private static final String[] mainMenuTextures = {"images/galaxy_home_still.png"};
-  private static final String[] transitionTextures = new String[FRAME_COUNT];
-  private static final String ANIMATION_PREFIX = "images/menu_animations/menu_animations";
+  public static String[] transitionTextures = new String[frameCount];
+  private static final String animationPrefix = "images/menu_animations/menu_animations";
+  private Texture backgroundTexture;
+  private SpriteBatch batch;
+
 
   public MainMenuScreen(GdxGame game) {
     this.game = game;
@@ -97,8 +102,8 @@ public class MainMenuScreen extends ScreenAdapter {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
 
-    for (int i = 0; i < FRAME_COUNT; i++) {
-      MainMenuScreen.transitionTextures[i] = ANIMATION_PREFIX + i + ".png";
+    for (int i = 0; i < frameCount; i++) {
+      transitionTextures[i] = animationPrefix + i + ".png";
     }
     resourceService.loadTextures(transitionTextures);
     ServiceLocator.getResourceService().loadAll();
@@ -123,12 +128,5 @@ public class MainMenuScreen extends ScreenAdapter {
             .addComponent(new MainMenuActions(game));
     ServiceLocator.getEntityService().register(ui);
   }
-
-  /**
-   * Get the transition textures for control screen
-   * @return the transition textures
-   */
-  public static String[] getTransitionTextures() {
-    return transitionTextures;
-  }
 }
+
