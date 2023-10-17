@@ -19,6 +19,17 @@ To get started with the game, please follow the outline provided [here](https://
 - [Game Quests](https://github.com/UQcsse3200/2023-studio-1/wiki/Game-Quests)
 - [Game Wiki](https://github.com/UQcsse3200/2023-studio-1/wiki)
 
+## Course Description
+
+This game was developed in just 8 weeks, with work being broken up into 4 different 2-week long sprints. The goals for each sprint were as follows:
+
+- Sprint 1 - Minimum Viable Product
+- Sprint 2 - Core Game Functionality
+- Sprint 3 - Full Game Delivery
+- Sprint 4 - Polished Game
+
+To better manage these sprints and the features introduced in them, students documented their work in this GitHub repository through pull requests and issues.
+
 ## Game Engine Description
 
 This game engine was developed to support studio-based project courses at the [University of Queensland](https://uq.edu.au/ "UQ Home Page"). It provides a fun environment in which students can develop a real game over the duration of the semester. It is based on the [libGDX](https://libgdx.com/ "libGDX Information") framework and is developed in Java. 
