@@ -124,6 +124,18 @@ public class PlayerActions extends Component {
   private void updateSpeed() {
     Body body = physicsComponent.getBody();
     Vector2 velocity = body.getLinearVelocity();
+
+    Vector2 desiredVelocity = calculateVelocityVector();
+    Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
+
+    body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
+  }
+
+  /**
+   * Calculates the desired velocity vector, applying terrain movement modifiers and the movement direction.
+   * @return the calculated velocity vector.
+   */
+  protected Vector2 calculateVelocityVector() {
     Vector2 velocityScale = this.running ? MAX_RUN_SPEED.cpy() : MAX_WALK_SPEED.cpy();
 
     // Used to apply the terrainSpeedModifier
@@ -138,10 +150,7 @@ public class PlayerActions extends Component {
 
     velocityScale.scl(speedMultiplier);
 
-    Vector2 desiredVelocity = moveDirection.cpy().scl(velocityScale);
-    // impulse = (desiredVel - currentVel) * mass
-    Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
-    body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
+    return moveDirection.cpy().scl(velocityScale);
   }
 
   public float getPrevMoveDirection() {
@@ -347,5 +356,13 @@ public class PlayerActions extends Component {
 
   public void setMuted(boolean muted) {
     this.muted = muted;
+  }
+
+  /**
+   * Sets the moveDirection with a copy of the provided Vector2 instance
+   * @param vector the Vector2 instance to update the moveDirection to
+   */
+  protected void setMoveDirection(Vector2 vector) {
+    this.moveDirection = vector.cpy();
   }
 }
