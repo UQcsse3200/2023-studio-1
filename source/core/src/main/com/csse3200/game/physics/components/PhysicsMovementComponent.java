@@ -46,8 +46,9 @@ public class PhysicsMovementComponent extends Component implements MovementContr
         }   
 
         if (movementEnabled && targetPosition != null) {
-            Body body = physicsComponent.getBody();
-            updateDirection(body);
+//            Body body = physicsComponent.getBody();
+//            updateDirection(body);
+            updateSpeed();
         }
     }
 
@@ -65,13 +66,14 @@ public class PhysicsMovementComponent extends Component implements MovementContr
             }
     }
 
-  /**
-   * @return Target position in the world
-   */
-  @Override
-  public Vector2 getTarget() {
-    return targetPosition;
-  }
+    /**
+     * @return Target position in the world
+     */
+    @Override
+    public Vector2 getTarget() {
+        return targetPosition;
+    }
+
     @Override
     public boolean getMoving() {
         return movementEnabled;
@@ -89,7 +91,17 @@ public class PhysicsMovementComponent extends Component implements MovementContr
         this.targetPosition = target;
     }
 
-    private void updateDirection(Body body) {
+    private void updateSpeed() {
+        Body body = physicsComponent.getBody();
+        Vector2 velocity = body.getLinearVelocity();
+
+        Vector2 desiredVelocity = calculateVelocityVector();
+        Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
+
+        body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
+    }
+
+    public Vector2 calculateVelocityVector() {
         Vector2 desiredVelocity = getDirection().scl(maxSpeed);
 
         if (!flyingEntitiesHashSet.contains(entity.getType())) {
@@ -101,7 +113,7 @@ public class PhysicsMovementComponent extends Component implements MovementContr
           desiredVelocity.scl(terrainSpeedModifier);
         }
 
-      setToVelocity(body, desiredVelocity);
+        return desiredVelocity;
     }
 
     private void setToVelocity(Body body, Vector2 desiredVelocity) {
