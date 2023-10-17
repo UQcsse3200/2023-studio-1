@@ -1,14 +1,11 @@
 package com.csse3200.game.components.plants;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.TimeService;
 import com.csse3200.game.services.plants.PlantInfoService;
 import com.csse3200.game.services.sound.EffectsMusicService;
@@ -24,6 +21,10 @@ import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.rendering.DynamicTextureRenderComponent;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import org.mockito.Mock;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Test class for verifying the functionality of PlantComponent.
@@ -50,6 +51,9 @@ public class PlantComponentTest {
     int adultLifeSpan = 2;
     int maxHealth = 500;
     int[] growthStageThresholds = new int[]{1,2,3};
+
+    @Mock
+    Entity entity;
 
     /**
      * Sets up the necessary mock components and initializes the test plant component before each test.
@@ -135,6 +139,32 @@ public class PlantComponentTest {
         assertEquals(name, testPlant.getPlantName());
     }
 
+    @Test
+    void testPlantNameEffect_hammer() {
+        PlantComponent plant = new PlantComponent(health, "Hammer Plant", type, description, idealWaterLevel,
+                adultLifeSpan, maxHealth, mockCropTile, growthStageThresholds);
+        assertEquals("Health", plant.getAdultEffect());
+    }
+
+    @Test
+    void testPlantNameEffect_snapper() {
+        PlantComponent plant = new PlantComponent(health, "Space Snapper", type, description, idealWaterLevel,
+                adultLifeSpan, maxHealth, mockCropTile, growthStageThresholds);
+        assertEquals("Eat", plant.getAdultEffect());
+    }
+
+    @Test
+    void testPlantNameEffect_nightshade() {
+        PlantComponent plant = new PlantComponent(health, "Deadly Nightshade", type, description, idealWaterLevel,
+                adultLifeSpan, maxHealth, mockCropTile, growthStageThresholds);
+        assertEquals("Poison", plant.getAdultEffect());
+    }
+
+    @Test
+    void testPlantNameEffect_other() {
+        assertEquals("Sound", testPlant.getAdultEffect());
+    }
+
     /**
      * Tests if the plant type getter returns the correct value.
      */
@@ -189,8 +219,10 @@ public class PlantComponentTest {
      */
     @Test
     void testSetGrowthStage() {
-        testPlant.setGrowthStage(3);
-        assertEquals(3, testPlant.getGrowthStage().getValue());
+        for (int i = 2; i < 7; i++) {
+            testPlant.setGrowthStage(i);
+            assertEquals(i, testPlant.getGrowthStage().getValue());
+        }
     }
 
     /**
@@ -326,7 +358,7 @@ public class PlantComponentTest {
      * Tests if setting the plant's growth stage correctly updates its max health.
      */
     @Test
-    public void testUpdateMaxHealth_GrowthStage4() {
+    void testUpdateMaxHealth_GrowthStage4() {
         testPlant.setGrowthStage(4);
         testPlant.updateMaxHealth();
         assertEquals(maxHealth, testPlant.getCurrentMaxHealth(), 0.01);
@@ -340,12 +372,178 @@ public class PlantComponentTest {
         assertThrows(IllegalArgumentException.class, () -> testPlant.setGrowthStage(7));
     }
 
-
-    /*
+    /**
+     * test for update methods
+     */
     @Test
-    public void testInvalidFunctionForPlaySound() {
-        testPlant.setPlayerInProximity(true);
-        assertThrows(IllegalStateException.class, () -> testPlant.playSound("invalidFunctionName"));
+    void testUpdate() {
+        testPlant.minuteUpdate();
+        testPlant.hourUpdate();
     }
-    */
+
+    /**
+     * test for day update method
+     */
+    @Test
+    void testDayUpdate() {
+        testPlant.dayUpdate();
+    }
+
+    /**
+     * test adult life not adult
+     */
+    @Test
+    void testAdultLifeSpan_notAdult() {
+        PlantComponent plant = mock(PlantComponent.class);
+        plant.setGrowthStage(1);
+        plant.adultLifeSpanCheck();
+
+        verify(plant, never()).playSound(any(), any());
+        verify(plant, never()).updateTexture();
+    }
+
+    /**
+     * test for adult life adult
+     */
+    @Test
+    void testAdultLifeSpan_Adult() {
+        testPlant.setGrowthStage(4);
+        testPlant.adultLifeSpanCheck();
+
+        assertEquals(4, testPlant.getGrowthStage().getValue());
+        assertEquals(1, testPlant.getNumOfDaysAsAdult());
+    }
+
+    @Test
+    void testSetHarvestYields() {
+        Map<String, Integer> sampleHarvestYields = new HashMap<>();
+        sampleHarvestYields.put("a", 1);
+        sampleHarvestYields.put("b", 2);
+
+        testPlant.setHarvestYields(sampleHarvestYields);
+        Map<String, Integer> internalHarvestYields = testPlant.getHarvestYields();
+
+        assertNotSame(sampleHarvestYields, internalHarvestYields);
+        assertEquals(sampleHarvestYields, internalHarvestYields);
+    }
+
+    /**
+     * test setter for harvest yields 
+     */
+    @Test
+    void testSetHarvestYields_unexpected() {
+        Map<String, Integer> sampleHarvestYields = new HashMap<>();
+        sampleHarvestYields.put("a", 1);
+        sampleHarvestYields.put("b", 2);
+
+        testPlant.setHarvestYields(sampleHarvestYields);
+        Map<String, Integer> internalHarvestYields = testPlant.getHarvestYields();
+
+        assertThrows(UnsupportedOperationException.class, () -> {
+            internalHarvestYields.put("c", 3);
+        });
+    }
+
+    /**
+     * test force seedling
+     */
+    @Test
+    void testForceSeedling() {
+        testPlant.forceSeedling();
+        assertFalse(testPlant.isDead());
+    }
+
+    /**
+     * test force sprout
+     */
+    @Test
+    void testForceSprout() {
+        testPlant.setGrowthStage(2);
+        testPlant.forceSprout();
+        assertFalse(testPlant.isDead());
+    }
+
+    /**
+     * test force juvinile
+     */
+    @Test
+    void testForceJuvenile() {
+        testPlant.setGrowthStage(3);
+        testPlant.forceJuvenile();
+        assertFalse(testPlant.isDead());
+    }
+
+    /**
+     * test force adult
+     */
+    @Test
+    void testForceAdult() {
+        testPlant.setGrowthStage(4);
+        testPlant.forceAdult();
+        assertFalse(testPlant.isDead());
+    }
+
+    /**
+     * test force decay
+     */
+    @Test
+    void testForceDecay() {
+        testPlant.setGrowthStage(5);
+        testPlant.forceDecay();
+        assertFalse(testPlant.isDead());
+    }
+
+    /**
+     * test force dead
+     */
+    @Test
+    void testForceDead() {
+        testPlant.setGrowthStage(6);
+        testPlant.forceDead();
+        assertTrue(testPlant.isDead());
+    }
+
+    /**
+     * test growth stage sprout
+     */
+    @Test
+    void testGrowthStage_2() {
+        testPlant.setGrowthStage(2);
+        testPlant.forceGrowthStage("sprout");
+        assertFalse(testPlant.isDead());
+        assertEquals(2, testPlant.getGrowthStage().getValue());
+    }
+
+    /**
+     * test growth stage juvenile
+     */
+    @Test
+    void testGrowthStage_3() {
+        testPlant.setGrowthStage(3);
+        testPlant.forceGrowthStage("juvenile");
+        assertFalse(testPlant.isDead());
+        assertEquals(3, testPlant.getGrowthStage().getValue());
+    }
+
+    /**
+     * test growth stage decaying
+     */
+    @Test
+    void testGrowthStage_5() {
+        testPlant.setGrowthStage(5);
+        testPlant.forceGrowthStage("decay");
+        assertFalse(testPlant.isDead());
+        assertEquals(5, testPlant.getGrowthStage().getValue());
+    }
+
+    /**
+     * test growth stage dead
+     */
+    @Test
+    void testGrowthStage_6() {
+        testPlant.setGrowthStage(6);
+        testPlant.forceGrowthStage("dead");
+        assertTrue(testPlant.isDead());
+        assertEquals(6, testPlant.getGrowthStage().getValue());
+    }
 }
