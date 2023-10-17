@@ -39,7 +39,7 @@ public class CoordinatesDisplay extends UIComponent {
 	 * Creates a small window containing a label with the coordinates.
 	 */
 	private void addActors() {
-		window = new Window("Ship Part Clue", skin);
+		window = new Window("Ship Part Clue", skin, "wooden");
 
 		Label coordinatesLabel = new Label("Looks like there's something\nhidden in the dirt...\nFollow the blue indicator\nto find out!", skin);
 		coordinatesLabel.setColor(Color.BROWN);

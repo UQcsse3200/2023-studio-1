@@ -53,7 +53,7 @@ public class ShipDisplay extends UIComponent {
 	}
 
 	private void addActors() {
-		window = new Window("Ship Control", skin);
+		window = new Window("Ship Control", skin, "wooden");
 		window.setVisible(false);
 		stage.addActor(window);
 	}
@@ -101,7 +101,7 @@ public class ShipDisplay extends UIComponent {
 			descriptionLabel = new Label("Congratulations the ship is fully built.", skin, PIXEL_BODY, TEXT_COLOUR);
 			descriptionLabel.setAlignment(Align.center);
 		}
-		TextButton closeButton = new TextButton("Close", skin);
+		TextButton closeButton = new TextButton("Close", skin, "orange");
 		closeButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent changeEvent, Actor actor) {
