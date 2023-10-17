@@ -8,6 +8,7 @@ import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.components.ship.ShipDebrisComponent;
 import com.csse3200.game.entities.EntitiesSpawner;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntitySpawner;
@@ -381,6 +382,8 @@ public class SpaceGameArea extends GameArea {
 
     hostileSpawner = new EntitiesSpawner(hostileSpawners);
     hostileSpawner.setGameAreas(this);
+
+    ShipDebrisComponent.clearCanSpawnShipEater();
   }
 
   /**

@@ -43,6 +43,13 @@ public class ShipDebrisComponent extends Component {
 	}
 
 	/**
+	 * Resets spawning of ship eaters
+	 */
+	public static void clearCanSpawnShipEater() {
+		canSpawnShipEater = false;
+	}
+
+	/**
 	 * Sets the random instance to use.
 	 *
 	 * @param randomInstance to use
@@ -57,7 +64,7 @@ public class ShipDebrisComponent extends Component {
 	void destroy(TerrainTile tile) {
 		if (    // player must have gotten ranged weapons to defeat a ship eater!
 				canSpawnShipEater
-						&& random.nextInt(2) == 0
+						&& random.nextInt(3) == 0
 		) {
 			// unlucky, shipeater will spawn!
 			Entity shipEater = NPCFactory.createShipEater();
