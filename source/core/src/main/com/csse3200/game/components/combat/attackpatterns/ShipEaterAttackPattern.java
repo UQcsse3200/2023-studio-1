@@ -4,12 +4,15 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
+import com.csse3200.game.entities.factories.ShipFactory;
 import com.csse3200.game.events.ScheduledEvent;
+import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.sound.EffectSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
 
 /**
  * The ShipEaterAttackPattern class defines the attack behavior of a ShipEater entity in the game.
  * It allows the ShipEater to detect the ship and reduce repair state when in range.
- *
  * Adapted from Team 4's AttackPatternComponent.
  */
 public class ShipEaterAttackPattern extends Component {
@@ -80,7 +83,13 @@ public class ShipEaterAttackPattern extends Component {
         entity.getEvents().trigger("eatingUpdated", true);
 
         // reduce the ship's repair state by 1
-        shipEntity.getEvents().trigger("removePart", 1);
+        shipEntity.getEvents().trigger(ShipFactory.events.REMOVE_PART.name(), 1);
+
+        try {
+            ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.SHIP_EATER_ATTACK);
+        } catch (InvalidSoundFileException ignored) {
+
+        }
 
         currentAttackEvent = entity.getEvents().scheduleEvent(attackFrequency, "attack");
     }

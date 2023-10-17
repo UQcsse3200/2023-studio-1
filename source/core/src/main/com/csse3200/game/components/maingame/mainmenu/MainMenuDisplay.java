@@ -49,12 +49,13 @@ public class MainMenuDisplay extends UIComponent {
         title.setWidth(Gdx.graphics.getWidth());
         title.setHeight(Gdx.graphics.getHeight());
         title.setPosition(0, 0);
-        TextButton startBtn = new TextButton("New Game", skin);
-        TextButton loadBtn = new TextButton("Continue", skin, Gdx.files.local("saves/saveFile.json").exists() ? "default" : "grey");
-        TextButton controlsBtn = new TextButton("Controls", skin);
-        TextButton settingsBtn = new TextButton("Settings", skin);
-        TextButton creditsBtn = new TextButton("Credits", skin);
-        TextButton exitBtn = new TextButton("Exit", skin);
+
+        TextButton startBtn = new TextButton("New Game", skin,"orange");
+        TextButton loadBtn = new TextButton("Continue", skin, Gdx.files.local("saves/saveFile.json").exists() ? "orange" : "grey");
+        TextButton controlsBtn = new TextButton("Controls", skin,"orange");
+        TextButton settingsBtn = new TextButton("Settings", skin,"orange");
+        TextButton creditsBtn = new TextButton("Credits", skin,"orange");
+        TextButton exitBtn = new TextButton("Exit", skin,"orange");
 
         // Triggers an event when the button is pressed
         startBtn.addListener(

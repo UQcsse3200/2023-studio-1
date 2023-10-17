@@ -115,7 +115,6 @@ public class TestInventoryUI {
 		ServiceLocator.getResourceService().loadTextures(texturePaths);
 		ServiceLocator.getResourceService().loadSkins(skinPaths);
 		ServiceLocator.getResourceService().loadAll();
-		System.out.println(ServiceLocator.getResourceService().getAsset("gardens-of-the-galaxy/gardens-of-the-galaxy.json",Skin.class));
 		mockFrame = Mockito.mockConstruction(ItemFrame.class);
 		inventoryDisplay = spy(new InventoryDisplay("updateInventory", "toggleInventory", 30, 10, false));
 		player =

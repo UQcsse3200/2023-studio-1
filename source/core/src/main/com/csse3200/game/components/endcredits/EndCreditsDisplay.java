@@ -173,7 +173,7 @@ public class EndCreditsDisplay extends UIComponent {
         creditsLabel = new TypingLabel(CREDITS, skin);
         creditsLabel.setAlignment(Align.center);
         // Create a "Return" button
-        this.returnButton =  new TextButton("Return to Main Menu", skin);
+        this.returnButton =  new TextButton("Return to Main Menu", skin,"orange");
         // Add a listener to the "Skip" button
         this.returnButton.addListener(new ChangeListener() {
             @Override

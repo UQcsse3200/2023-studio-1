@@ -150,28 +150,28 @@ public class SettingsMenuDisplay extends UIComponent {
 
     // Create components
     Label fpsLabel = new Label("FPS Cap:", skin);
-    fpsText = new TextField(Integer.toString(settings.fps), skin);
+    fpsText = new TextField(Integer.toString(settings.fps), skin, "orange");
 
     Label fullScreenLabel = new Label("Fullscreen:", skin);
-    fullScreenCheck = new CheckBox("", skin);
+    fullScreenCheck = new CheckBox("", skin, "orange");
     fullScreenCheck.setChecked(settings.fullscreen);
 
     Label vsyncLabel = new Label("VSync:", skin);
-    vsyncCheck = new CheckBox("", skin);
+    vsyncCheck = new CheckBox("", skin, "orange");
     vsyncCheck.setChecked(settings.vsync);
 
     Label uiScaleLabel = new Label("ui Scale (Unused):", skin);
-    uiScaleSlider = new Slider(0.2f, 2f, 0.1f, false, skin);
+    uiScaleSlider = new Slider(0.2f, 2f, 0.1f, false, skin, "orange-horizontal");
     uiScaleSlider.setValue(settings.uiScale);
     Label uiScaleValue = new Label(String.format(DECIMAL_FORMAT, settings.uiScale), skin);
 
     Label zoomScaleLabel = new Label("Field of View:", skin);
-    zoomScaleSlider = new Slider(0.2f, 3f, 0.1f, false, skin);
+    zoomScaleSlider = new Slider(0.2f, 3f, 0.1f, false, skin, "orange-horizontal");
     zoomScaleSlider.setValue(settings.zoomScale);
     Label zoomScaleValue = new Label(String.format(DECIMAL_FORMAT, settings.zoomScale), skin);
 
     Label displayModeLabel = new Label("Resolution:", skin);
-    displayModeSelect = new SelectBox<>(skin);
+    displayModeSelect = new SelectBox<>(skin, "orange");
     Monitor selectedMonitor = Gdx.graphics.getMonitor();
     displayModeSelect.setItems(getDisplayModes(selectedMonitor));
     displayModeSelect.setSelected(getActiveMode(displayModeSelect.getItems()));
@@ -258,8 +258,8 @@ public class SettingsMenuDisplay extends UIComponent {
   }
 
   private Table makeMenuBtns() {
-    TextButton exitBtn = new TextButton("Exit", skin);
-    TextButton applyBtn = new TextButton("Apply", skin);
+    TextButton exitBtn = new TextButton("Exit", skin, "orange");
+    TextButton applyBtn = new TextButton("Apply", skin, "orange");
 
     exitBtn.addListener(
         new ChangeListener() {

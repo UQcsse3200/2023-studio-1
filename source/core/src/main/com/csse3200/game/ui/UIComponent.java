@@ -13,7 +13,7 @@ import com.csse3200.game.services.ServiceLocator;
 public abstract class UIComponent extends RenderComponent implements Renderable {
   private static final int UI_LAYER = 2;
   protected static final Skin skin =
-      new Skin(Gdx.files.internal("gardens-of-the-galaxy-v2-orange/gardens-of-the-galaxy-v2-orange.json"));
+      new Skin(Gdx.files.internal("gardens-of-the-galaxy-v3/gardens-of-the-galaxy-v3.json"));
   protected Stage stage;
 
   @Override

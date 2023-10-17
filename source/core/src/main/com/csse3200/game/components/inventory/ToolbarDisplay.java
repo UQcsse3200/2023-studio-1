@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.items.WateringCanLevelComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.services.ServiceLocator;
@@ -28,9 +29,9 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
  */
 public class ToolbarDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(ToolbarDisplay.class);
-    private final Skin skin = ServiceLocator.getResourceService().getAsset("gardens-of-the-galaxy/gardens-of-the-galaxy.json", Skin.class);
+    //private final Skin skin = ServiceLocator.getResourceService().getAsset("gardens-of-the-galaxy/gardens-of-the-galaxy.json", Skin.class);
     private final Table table = new Table(skin);
-    private final Window window = new Window("", skin);
+    private final Window window = new Window("   INVENTORY", skin, "wooden");
     private boolean isOpen;
     private InventoryComponent inventory;
     private int selectedSlot = -1;
@@ -38,6 +39,8 @@ public class ToolbarDisplay extends UIComponent {
     private final InstantTooltipManager instantTooltipManager = new InstantTooltipManager();
     private boolean isPause = false;
     private boolean lastState = false;
+    private final Map<Integer, TextTooltip> tooltips = new HashMap<>();
+
 
 
     /**
@@ -109,6 +112,7 @@ public class ToolbarDisplay extends UIComponent {
                 slots.set(i, curSlot);
             }
         }
+        addTooltips();
     }
 
     /**
@@ -231,6 +235,41 @@ public class ToolbarDisplay extends UIComponent {
             ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.SWITCH_TOOLBAR);
         } catch (InvalidSoundFileException e) {
             logger.error("sound not loaded");
+        }
+    }
+    public void addTooltips() {
+        tooltips.forEach((index ,tooltip) -> {
+            if (tooltip != null) {
+                tooltip.hide();
+            }});
+        TextTooltip tooltip;
+        int i = 0;
+        for (ItemSlot slot : slots) {
+            if (inventory.getItem(i) != null) {
+                ItemComponent item = inventory.getItem(i).getComponent(ItemComponent.class);
+                if (Objects.equals(item.getItemName(), "watering_can")) {
+                    int level = (int) item.getEntity().getComponent(WateringCanLevelComponent.class).getCurrentLevel();
+                    tooltip = new TextTooltip(item.getItemName() + "\n\nCurrent level is " + level, instantTooltipManager, skin);
+                } else {
+                    tooltip = new TextTooltip(item.getItemName() + "\n\n" + item.getItemDescription(), instantTooltipManager,skin);
+                }
+                if (tooltips.get(i) != null) {
+                    tooltips.get(i).hide();
+                    slot.removeListener(tooltips.get(i));
+                }
+                tooltip.getActor().setAlignment(Align.center);
+                tooltip.setInstant(true);
+                slot.addListener(tooltip);
+                tooltips.put(i, tooltip);
+            }
+            else {
+                if (tooltips.get(i) != null) {
+                    tooltips.get(i).hide();
+                    slot.removeListener(tooltips.get(i));
+                    tooltips.remove(i);
+                }
+            }
+            i++;
         }
     }
 }
