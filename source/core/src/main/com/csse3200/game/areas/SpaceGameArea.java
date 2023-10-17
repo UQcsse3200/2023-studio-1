@@ -640,6 +640,7 @@ public class SpaceGameArea extends GameArea {
     logger.debug("Unloading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.unloadAssets(texturePaths);
+    resourceService.unloadAssets(TerrainFactory.getMapTextures());
     resourceService.unloadAssets(textureAtlasPaths);
     resourceService.unloadAssets(soundPaths);
   }
