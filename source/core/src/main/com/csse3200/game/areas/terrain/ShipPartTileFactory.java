@@ -2,6 +2,7 @@ package com.csse3200.game.areas.terrain;
 
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityIndicator;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
@@ -23,8 +24,7 @@ public class ShipPartTileFactory {
 	 * @return Entity shipPartTile
 	 */
 	public static Entity createShipPartTile(Vector2 position) {
-		// TODO: change texture later
-		DynamicTextureRenderComponent renderComponent = new DynamicTextureRenderComponent("images/cropTile.png");
+		DynamicTextureRenderComponent renderComponent = new DynamicTextureRenderComponent("images/ship/ship_part_tile.png");
 		renderComponent.setLayer(1);
 
 		Entity shipPartTile = new Entity(EntityType.SHIP_PART_TILE)
@@ -32,6 +32,8 @@ public class ShipPartTileFactory {
 				.addComponent(new PhysicsComponent())
 				.addComponent(new ShipPartTileComponent())
 				.addComponent(renderComponent);
+
+		shipPartTile.addComponent(new EntityIndicator(shipPartTile, "images/ship/part_tile_indicator.png"));
 
 		shipPartTile.setPosition(position);
 		return shipPartTile;

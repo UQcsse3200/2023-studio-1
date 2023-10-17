@@ -58,7 +58,6 @@ class PlantFactoryTest {
     int adultLifeSpan = 1;
     int maxHealth = 1;
     int[] growthStageThresholds = new int[]{1,1,1};
-    String[] soundArray = new String[]{"1", "2", "3", "4", "5", "6", "7", "8"};
     float xPosition = 1f;
     float yPosition = 1f;
     double delta = 0.001;
@@ -90,7 +89,7 @@ class PlantFactoryTest {
                 .addComponent(new PlantMouseHoverComponent())
                 .addComponent(new PlantProximityComponent())
                 .addComponent(new PlantComponent(health,name, type, description, idealWaterLevel,
-                        adultLifeSpan, maxHealth, mockCropTile, growthStageThresholds, soundArray));
+                        adultLifeSpan, maxHealth, mockCropTile, growthStageThresholds));
 
         plant.setPosition(xPosition,yPosition);
         plant.getComponent(PlantComponent.class).getCropTile().getEntity().getScale();

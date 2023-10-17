@@ -27,7 +27,7 @@ public class PlantProximityComponent extends HitboxComponent {
      * radius of the area. The radius will be the same for all plants.
      */
     public PlantProximityComponent() {
-        this.radius = 5f;
+        this.radius = 8f;
     }
 
     /**

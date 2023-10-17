@@ -14,7 +14,7 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.entities.Entity;
 
 @ExtendWith(GameExtension.class)
-public class ChestComponentTest {
+class ChestComponentTest {
     @Test
     void toggleChest(){
         ServiceLocator.registerResourceService(new ResourceService());

@@ -1,16 +1,14 @@
 package com.csse3200.game.areas.weather;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.*;
-
-import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.JsonValue;
-import com.csse3200.game.services.ParticleService;
+import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.events.EventHandler;
+import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.services.*;
+import com.csse3200.game.services.sound.EffectsMusicService;
+import com.csse3200.game.services.sound.SoundService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,29 +16,34 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.badlogic.gdx.math.MathUtils;
-import com.csse3200.game.events.EventHandler;
-import com.csse3200.game.extensions.GameExtension;
-import com.csse3200.game.services.GameTime;
-import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.services.TimeService;
+import java.lang.reflect.Field;
+import java.util.function.Function;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(GameExtension.class)
 class ClimateControllerTest {
 
 	ClimateController controller;
+	GameTime gameTime;
+	LightService lightService;
 
 	@BeforeEach
 	public void setUp() {
-		GameTime gameTime = mock(GameTime.class);
+		gameTime = mock(GameTime.class);
 		TimeService timeService = mock(TimeService.class);
+		lightService = mock(LightService.class);
 		ServiceLocator.registerTimeSource(gameTime);
 		ServiceLocator.registerTimeService(timeService);
 		ServiceLocator.registerParticleService(mock(ParticleService.class));
+		ServiceLocator.registerLightService(lightService);
 		EventHandler handler = new EventHandler();
 		when(timeService.getEvents()).thenReturn(handler);
 		controller = new ClimateController();
+		controller.initialiseEvents();
 	}
 
 	@AfterEach
@@ -50,6 +53,14 @@ class ClimateControllerTest {
 
 	@Test
 	void testAddingEvent() {
+		GameArea gameArea = mock(GameArea.class);
+		when(gameArea.getClimateController()).thenReturn(controller);
+		ServiceLocator.registerGameArea(gameArea);
+
+		SoundService soundService = mock(SoundService.class);
+		when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
+		ServiceLocator.registerSoundService(soundService);
+
 		WeatherEvent event = new AcidShowerEvent(1, 1, 1, 1.3f);
 		controller.addWeatherEvent(event);
 
@@ -60,26 +71,6 @@ class ClimateControllerTest {
 		ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
 		ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
 		ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
-	}
-
-	@Test
-	void testValidTemperature() {
-		ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
-		float temperature = controller.getTemperature();
-
-		// Temperature has to be within max and min which is 0 and 40 degrees
-		assertTrue(temperature >= 0);
-		assertTrue(temperature <= 40);
-	}
-
-	@Test
-	void testValidHumidity() {
-		ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
-		float humidity = controller.getHumidity();
-
-		// Temperature has to be within max and min which is 0 and 40 degrees
-		assertTrue(humidity >= 0f);
-		assertTrue(humidity <= 1f);
 	}
 
 	@Test
@@ -95,11 +86,16 @@ class ClimateControllerTest {
 		}
 	}
 
-	/**
-	 * Testing the case of SolarSurgeEvent.
-	 */
 	@Test
 	void testAddedEvent1() {
+		GameArea gameArea = mock(GameArea.class);
+		when(gameArea.getClimateController()).thenReturn(controller);
+		ServiceLocator.registerGameArea(gameArea);
+
+		SoundService soundService = mock(SoundService.class);
+		when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
+		ServiceLocator.registerSoundService(soundService);
+
 		assertNull(controller.getCurrentWeatherEvent());
 		try (MockedStatic<MathUtils> mathUtils = mockStatic(MathUtils.class)) {
 			mathUtils.when(MathUtils::random).thenReturn(1f);
@@ -108,24 +104,109 @@ class ClimateControllerTest {
 			// Therefore event should be created
 			ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
 			assertNotNull(controller.getCurrentWeatherEvent());
+			assertTrue(controller.getCurrentWeatherEvent() instanceof RainStormEvent);
+		}
+	}
+
+	@Test
+	void testAddDailyEventCaseRainStormEvent() {
+		assertNull(controller.getCurrentWeatherEvent());
+
+		GameArea gameArea = mock(GameArea.class);
+		when(gameArea.getClimateController()).thenReturn(controller);
+		ServiceLocator.registerGameArea(gameArea);
+
+		SoundService soundService = mock(SoundService.class);
+		when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
+		ServiceLocator.registerSoundService(soundService);
+
+		try (MockedStatic<MathUtils> mathUtils = mockStatic(MathUtils.class)) {
+			mathUtils.when(MathUtils::random).thenReturn(0.5f);
+			mathUtils.when(() -> MathUtils.random(0, 9)).thenReturn(0); // weatherEvent - RainStorm
+			mathUtils.when(() -> MathUtils.random(1, 20)).thenReturn(1); // numHoursUntil
+			mathUtils.when(() -> MathUtils.random(1, 4)).thenReturn(4); // duration
+			mathUtils.when(() -> MathUtils.random(0, 3)).thenReturn(0); // priority
+
+			ServiceLocator.getTimeService().getEvents().trigger("dayUpdate");
+			// Therefore event should be created
+			ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+			assertNotNull(controller.getCurrentWeatherEvent());
+			assertTrue(controller.getCurrentWeatherEvent() instanceof RainStormEvent);
+		}
+	}
+
+	@Test
+	void testAddDailyEventCaseBlizzardEvent() {
+		assertNull(controller.getCurrentWeatherEvent());
+
+		GameArea gameArea = mock(GameArea.class);
+		when(gameArea.getClimateController()).thenReturn(controller);
+		ServiceLocator.registerGameArea(gameArea);
+
+		SoundService soundService = mock(SoundService.class);
+		when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
+		ServiceLocator.registerSoundService(soundService);
+
+		try (MockedStatic<MathUtils> mathUtils = mockStatic(MathUtils.class)) {
+			mathUtils.when(MathUtils::random).thenReturn(0.5f);
+			mathUtils.when(() -> MathUtils.random(0, 9)).thenReturn(4); // weatherEvent - Blizzard
+			mathUtils.when(() -> MathUtils.random(1, 20)).thenReturn(1); // numHoursUntil
+			mathUtils.when(() -> MathUtils.random(1, 4)).thenReturn(4); // duration
+			mathUtils.when(() -> MathUtils.random(0, 3)).thenReturn(0); // priority
+
+			ServiceLocator.getTimeService().getEvents().trigger("dayUpdate");
+			// Therefore event should be created
+			ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+			assertNotNull(controller.getCurrentWeatherEvent());
+			assertTrue(controller.getCurrentWeatherEvent() instanceof BlizzardEvent);
+		}
+	}
+
+	@Test
+	void testAddDailyEventCaseSolarSurgeEvent() {
+		assertNull(controller.getCurrentWeatherEvent());
+
+		GameArea gameArea = mock(GameArea.class);
+		when(gameArea.getClimateController()).thenReturn(controller);
+		ServiceLocator.registerGameArea(gameArea);
+
+		SoundService soundService = mock(SoundService.class);
+		when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
+		ServiceLocator.registerSoundService(soundService);
+
+		try (MockedStatic<MathUtils> mathUtils = mockStatic(MathUtils.class)) {
+			mathUtils.when(MathUtils::random).thenReturn(0.5f);
+			mathUtils.when(() -> MathUtils.random(0, 9)).thenReturn(7); // weatherEvent - SolarSurge
+			mathUtils.when(() -> MathUtils.random(1, 20)).thenReturn(1); // numHoursUntil
+			mathUtils.when(() -> MathUtils.random(1, 4)).thenReturn(4); // duration
+			mathUtils.when(() -> MathUtils.random(0, 3)).thenReturn(0); // priority
+
+			ServiceLocator.getTimeService().getEvents().trigger("dayUpdate");
+			// Therefore event should be created
+			ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+			assertNotNull(controller.getCurrentWeatherEvent());
 			assertTrue(controller.getCurrentWeatherEvent() instanceof SolarSurgeEvent);
 		}
 	}
 
-	/**
-	 * Testing the case of AcidShowerEvent.
-	 */
 	@Test
-	void testAddDailyEventCase0() {
+	void testAddDailyEventCaseAcidShowerEvent() {
 		assertNull(controller.getCurrentWeatherEvent());
+
+		GameArea gameArea = mock(GameArea.class);
+		when(gameArea.getClimateController()).thenReturn(controller);
+		ServiceLocator.registerGameArea(gameArea);
+
+		SoundService soundService = mock(SoundService.class);
+		when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
+		ServiceLocator.registerSoundService(soundService);
 
 		try (MockedStatic<MathUtils> mathUtils = mockStatic(MathUtils.class)) {
 			mathUtils.when(MathUtils::random).thenReturn(0.5f);
-			mathUtils.when(() -> MathUtils.random(0, 1)).thenReturn(0); // weatherEvent - AcidShowerEvent
-			mathUtils.when(() -> MathUtils.random(1, 6)).thenReturn(1); // numHoursUntil
-			mathUtils.when(() -> MathUtils.random(2, 5)).thenReturn(4); // duration
+			mathUtils.when(() -> MathUtils.random(0, 9)).thenReturn(9); // weatherEvent - RainStorm
+			mathUtils.when(() -> MathUtils.random(1, 20)).thenReturn(1); // numHoursUntil
+			mathUtils.when(() -> MathUtils.random(1, 4)).thenReturn(4); // duration
 			mathUtils.when(() -> MathUtils.random(0, 3)).thenReturn(0); // priority
-			mathUtils.when(MathUtils::random).thenReturn(0.7f);          // severity
 
 			ServiceLocator.getTimeService().getEvents().trigger("dayUpdate");
 			// Therefore event should be created
@@ -136,7 +217,35 @@ class ClimateControllerTest {
 	}
 
 	@Test
+	void testAddDailyEventInvalidValueEventGenerated() {
+		assertNull(controller.getCurrentWeatherEvent());
+
+		try (MockedStatic<MathUtils> mathUtils = mockStatic(MathUtils.class)) {
+			mathUtils.when(MathUtils::random).thenReturn(0.5f);
+			mathUtils.when(() -> MathUtils.random(0, 9)).thenReturn(10); // weatherEvent - default
+			mathUtils.when(() -> MathUtils.random(1, 20)).thenReturn(1); // numHoursUntil
+			mathUtils.when(() -> MathUtils.random(1, 4)).thenReturn(4); // duration
+			mathUtils.when(() -> MathUtils.random(0, 3)).thenReturn(0); // priority
+
+			ServiceLocator.getTimeService().getEvents().trigger("dayUpdate");
+			// Therefore event should be created
+			ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+			assertNull(controller.getCurrentWeatherEvent());
+		}
+	}
+
+
+
+	@Test
 	void testExpiringEvent() {
+		GameArea gameArea = mock(GameArea.class);
+		when(gameArea.getClimateController()).thenReturn(controller);
+		ServiceLocator.registerGameArea(gameArea);
+
+		SoundService soundService = mock(SoundService.class);
+		when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
+		ServiceLocator.registerSoundService(soundService);
+
 		WeatherEvent event = new SolarSurgeEvent(1, 1, 1, 1.4f);
 		controller.addWeatherEvent(event);
 
@@ -153,6 +262,14 @@ class ClimateControllerTest {
 
 	@Test
 	void testAddInstantEvent() {
+		GameArea gameArea = mock(GameArea.class);
+		when(gameArea.getClimateController()).thenReturn(controller);
+		ServiceLocator.registerGameArea(gameArea);
+
+		SoundService soundService = mock(SoundService.class);
+		when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
+		ServiceLocator.registerSoundService(soundService);
+
 		AcidShowerEvent event = new AcidShowerEvent(0, 1, 2, 1.5f);
 		controller.addWeatherEvent(event);
 		assertEquals(controller.getCurrentWeatherEvent(), event);
@@ -162,6 +279,14 @@ class ClimateControllerTest {
 
 	@Test
 	void testOverridenEvent() {
+		GameArea gameArea = mock(GameArea.class);
+		when(gameArea.getClimateController()).thenReturn(controller);
+		ServiceLocator.registerGameArea(gameArea);
+
+		SoundService soundService = mock(SoundService.class);
+		when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
+		ServiceLocator.registerSoundService(soundService);
+
 		AcidShowerEvent event = new AcidShowerEvent(0, 1, 2, 1.5f);
 		controller.addWeatherEvent(event);
 		assertEquals(controller.getCurrentWeatherEvent(), event);
@@ -173,13 +298,16 @@ class ClimateControllerTest {
 	}
 
 	@Test
-	void testSetValues() {
-		Json json = new Json();
+	void testSetValuesAcidShower() {
+		GameArea gameArea = mock(GameArea.class);
+		when(gameArea.getClimateController()).thenReturn(controller);
+		ServiceLocator.registerGameArea(gameArea);
+
+		SoundService soundService = mock(SoundService.class);
+		when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
+		ServiceLocator.registerSoundService(soundService);
+
 		JsonValue jsonData = new JsonValue(JsonValue.ValueType.object);
-		jsonData.addChild("Temp", new JsonValue(26.0f));
-		assertEquals(26.0f, jsonData.getFloat("Temp"));
-		jsonData.addChild("Humidity", new JsonValue(1.2f));
-		assertEquals(1.2f, jsonData.getFloat("Humidity"));
 		JsonValue events = new JsonValue(JsonValue.ValueType.object);
 		JsonValue event = new JsonValue(JsonValue.ValueType.object);
 		event.addChild("name", new JsonValue("AcidShowerEvent"));
@@ -189,11 +317,161 @@ class ClimateControllerTest {
 		event.addChild("severity", new JsonValue(1.5f));
 		events.addChild("Event", event);
 		jsonData.addChild("Events", events);
-		assertEquals(events, jsonData.get("Events"));
+
+		assertNull(controller.getCurrentWeatherEvent());
 
 		controller.setValues(jsonData);
+		assertNull(controller.getCurrentWeatherEvent());
 
-		assertEquals(26.0f, controller.getTemperature());
-		assertEquals(1.2f, controller.getHumidity());
+		ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+		ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+		assertTrue(controller.getCurrentWeatherEvent() instanceof AcidShowerEvent);
+
+		AcidShowerEvent currentEvent = (AcidShowerEvent) controller.getCurrentWeatherEvent();
+		assertEquals(0, currentEvent.getNumHoursUntil());
+		assertEquals(2, currentEvent.getDuration());
+		assertEquals(1, currentEvent.getPriority());
+		assertEquals(1.5f, currentEvent.getSeverity(), 0.001f);
 	}
+
+	@Test
+	void testSetValuesRainStorm() {
+		GameArea gameArea = mock(GameArea.class);
+		when(gameArea.getClimateController()).thenReturn(controller);
+		ServiceLocator.registerGameArea(gameArea);
+
+		SoundService soundService = mock(SoundService.class);
+		when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
+		ServiceLocator.registerSoundService(soundService);
+
+		JsonValue jsonData = new JsonValue(JsonValue.ValueType.object);
+		JsonValue events = new JsonValue(JsonValue.ValueType.object);
+		JsonValue event = new JsonValue(JsonValue.ValueType.object);
+		event.addChild("name", new JsonValue("RainStormEvent"));
+		event.addChild("hoursUntil", new JsonValue(2));
+		event.addChild("duration", new JsonValue(1));
+		event.addChild("priority", new JsonValue(2));
+		event.addChild("severity", new JsonValue(1.0f));
+		events.addChild("Event", event);
+		jsonData.addChild("Events", events);
+
+		assertNull(controller.getCurrentWeatherEvent());
+
+		controller.setValues(jsonData);
+		assertNull(controller.getCurrentWeatherEvent());
+
+		ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+		ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+		ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+		assertTrue(controller.getCurrentWeatherEvent() instanceof RainStormEvent);
+
+		RainStormEvent currentEvent = (RainStormEvent) controller.getCurrentWeatherEvent();
+		assertEquals(0, currentEvent.getNumHoursUntil());
+		assertEquals(1, currentEvent.getDuration());
+		assertEquals(2, currentEvent.getPriority());
+		assertEquals(1.0f, currentEvent.getSeverity(), 0.001f);
+	}
+
+	@Test
+	void testSetValuesWithOtherWeatherEventsActiveSolarSurge() {
+		GameArea gameArea = mock(GameArea.class);
+		when(gameArea.getClimateController()).thenReturn(controller);
+		ServiceLocator.registerGameArea(gameArea);
+
+		SoundService soundService = mock(SoundService.class);
+		when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
+		ServiceLocator.registerSoundService(soundService);
+
+		JsonValue jsonData = new JsonValue(JsonValue.ValueType.object);
+		JsonValue events = new JsonValue(JsonValue.ValueType.object);
+		JsonValue event = new JsonValue(JsonValue.ValueType.object);
+		event.addChild("name", new JsonValue("SolarSurgeEvent"));
+		event.addChild("hoursUntil", new JsonValue(1));
+		event.addChild("duration", new JsonValue(3));
+		event.addChild("priority", new JsonValue(0));
+		event.addChild("severity", new JsonValue(0.5f));
+		events.addChild("Event", event);
+		jsonData.addChild("Events", events);
+
+		controller.addWeatherEvent(new AcidShowerEvent(0, 5, 1, 0.5f));
+		controller.addWeatherEvent(new BlizzardEvent(2, 5, 1, 0.5f));
+		controller.addWeatherEvent(new RainStormEvent(5, 5, 1, 0.5f));
+		assertNotNull(controller.getCurrentWeatherEvent());
+
+		controller.setValues(jsonData);
+		assertNull(controller.getCurrentWeatherEvent());
+
+		ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+		ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+		assertTrue(controller.getCurrentWeatherEvent() instanceof SolarSurgeEvent);
+
+		SolarSurgeEvent currentEvent = (SolarSurgeEvent) controller.getCurrentWeatherEvent();
+		assertEquals(0, currentEvent.getNumHoursUntil());
+		assertEquals(3, currentEvent.getDuration());
+		assertEquals(0, currentEvent.getPriority());
+		assertEquals(0.5f, currentEvent.getSeverity(), 0.001f);
+	}
+
+	@Test
+	void testSetValuesForActiveWeatherEventBlizzard() {
+		GameArea gameArea = mock(GameArea.class);
+		when(gameArea.getClimateController()).thenReturn(controller);
+		ServiceLocator.registerGameArea(gameArea);
+
+		SoundService soundService = mock(SoundService.class);
+		when(soundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
+		ServiceLocator.registerSoundService(soundService);
+
+		JsonValue jsonData = new JsonValue(JsonValue.ValueType.object);
+		JsonValue events = new JsonValue(JsonValue.ValueType.object);
+		JsonValue event = new JsonValue(JsonValue.ValueType.object);
+		event.addChild("name", new JsonValue("BlizzardEvent"));
+		event.addChild("hoursUntil", new JsonValue(0));
+		event.addChild("duration", new JsonValue(2));
+		event.addChild("priority", new JsonValue(1));
+		event.addChild("severity", new JsonValue(1.5f));
+		events.addChild("Event", event);
+		jsonData.addChild("Events", events);
+
+		assertNull(controller.getCurrentWeatherEvent());
+
+		controller.setValues(jsonData);
+		assertNotNull(controller.getCurrentWeatherEvent());
+
+		ServiceLocator.getTimeService().getEvents().trigger("hourUpdate");
+		assertTrue(controller.getCurrentWeatherEvent() instanceof BlizzardEvent);
+
+		BlizzardEvent currentEvent = (BlizzardEvent) controller.getCurrentWeatherEvent();
+		assertEquals(0, currentEvent.getNumHoursUntil());
+		assertEquals(2, currentEvent.getDuration());
+		assertEquals(1, currentEvent.getPriority());
+		assertEquals(1.5f, currentEvent.getSeverity(), 0.001f);
+	}
+
+	@Test
+	void testUpdateLightingEffectWhenEventHasCompleted() {
+		when(gameTime.getDeltaTime()).thenReturn(0.05f);
+		controller.updateClimate();
+		verify(lightService,times(1)).setColourOffset(Color.CLEAR);
+	}
+
+	@Test
+	void testUpdateLightingEffectWhenEventIsInProgress() throws NoSuchFieldException, IllegalAccessException {
+		when(gameTime.getDeltaTime()).thenReturn(0.5f);
+
+		Field currentLightingEffectDurationField = controller.getClass().getDeclaredField("currentLightingEffectDuration");
+		Field currentLightingEffectProgressField = controller.getClass().getDeclaredField("currentLightingEffectProgress");
+		Field currentLightingEffectGradientField = controller.getClass().getDeclaredField("currentLightingEffectGradient");
+		currentLightingEffectDurationField.setAccessible(true);
+		currentLightingEffectProgressField.setAccessible(true);
+		currentLightingEffectGradientField.setAccessible(true);
+
+		currentLightingEffectDurationField.setFloat(controller, 2.0f);
+		currentLightingEffectProgressField.setFloat(controller, 1.0f);
+		currentLightingEffectGradientField.set(controller, (Function<Float, Color>) t -> Color.BLUE);
+
+		controller.updateClimate();
+		verify(lightService,times(1)).setColourOffset(Color.BLUE);
+	}
+
 }

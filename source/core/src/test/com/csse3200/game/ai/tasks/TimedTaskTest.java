@@ -73,7 +73,7 @@ class TimedTaskTest {
 
         task.stop();
         assertEquals(task.getPriority(), -1);
-        assertEquals(task.getStatus(), Status.INACTIVE);
+        assertEquals(Status.INACTIVE, task.getStatus());
     }
 
     @Test

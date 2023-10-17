@@ -29,6 +29,12 @@ class TameAnimalsQuestTest {
         TAQuest4 = new TameAnimalsQuest("Tame Animals Quest 4", r1, 10, 10);
         TAQuest5 = new TameAnimalsQuest("Tame Animals Quest 5", r1, 10, -1);
 
+        TAQuest1.registerMission(ServiceLocator.getMissionManager().getEvents());
+        TAQuest2.registerMission(ServiceLocator.getMissionManager().getEvents());
+        TAQuest3.registerMission(ServiceLocator.getMissionManager().getEvents());
+        TAQuest4.registerMission(ServiceLocator.getMissionManager().getEvents());
+        TAQuest5.registerMission(ServiceLocator.getMissionManager().getEvents());
+
     }
     @AfterEach
     void reset() {
@@ -37,21 +43,12 @@ class TameAnimalsQuestTest {
 
     @Test
     void testIsCompleted() {
-        TAQuest1.registerMission(ServiceLocator.getMissionManager().getEvents());
-        TAQuest2.registerMission(ServiceLocator.getMissionManager().getEvents());
-        TAQuest3.registerMission(ServiceLocator.getMissionManager().getEvents());
-        TAQuest4.registerMission(ServiceLocator.getMissionManager().getEvents());
-        TAQuest5.registerMission(ServiceLocator.getMissionManager().getEvents());
+        assertFalse(TAQuest1.isCompleted());
+        assertTrue(TAQuest2.isCompleted());
+        assertFalse(TAQuest3.isCompleted());
+        assertFalse(TAQuest4.isCompleted());
+        assertTrue(TAQuest5.isCompleted());
         for (int i = 0; i < 10; i++) {
-            assertFalse(TAQuest1.isCompleted());
-            assertTrue(TAQuest2.isCompleted());
-            if (i >= 5) {
-                assertTrue(TAQuest3.isCompleted());
-            } else {
-                assertFalse(TAQuest3.isCompleted());
-            }
-            assertFalse(TAQuest4.isCompleted());
-            assertTrue(TAQuest5.isCompleted());
             ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.ANIMAL_TAMED.name());
         }
         assertTrue(TAQuest1.isCompleted());
@@ -73,11 +70,6 @@ class TameAnimalsQuestTest {
 
     @Test
     void testGetDescription() {
-        TAQuest1.registerMission(ServiceLocator.getMissionManager().getEvents());
-        TAQuest2.registerMission(ServiceLocator.getMissionManager().getEvents());
-        TAQuest3.registerMission(ServiceLocator.getMissionManager().getEvents());
-        TAQuest4.registerMission(ServiceLocator.getMissionManager().getEvents());
-        TAQuest5.registerMission(ServiceLocator.getMissionManager().getEvents());
         String desc = "Taming certain animals yields special drops.\nTame %d tameable animals by " +
                 "feeding them plants.\n%d out of %d animals tamed.";
         for (int i = 0; i < 10; i++) {

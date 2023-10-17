@@ -30,6 +30,6 @@ public class PlantProximityComponentTest {
      */
     @Test
     public void testConstructor() {
-        assertEquals(5f, plantProximityComponent.getRadius());
+        assertEquals(8f, plantProximityComponent.getRadius());
     }
 }

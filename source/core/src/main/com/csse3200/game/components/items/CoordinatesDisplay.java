@@ -2,7 +2,6 @@ package com.csse3200.game.components.items;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Align;
@@ -16,10 +15,9 @@ import com.csse3200.game.ui.UIComponent;
 public class CoordinatesDisplay extends UIComponent {
 	private Window window;
 	private boolean isOpen;
-	private final ClueComponent clueComponent;
 
-	public CoordinatesDisplay(ClueComponent clueComponent) {
-		this.clueComponent = clueComponent;
+	public CoordinatesDisplay() {
+
 	}
 
 	@Override
@@ -43,8 +41,7 @@ public class CoordinatesDisplay extends UIComponent {
 	private void addActors() {
 		window = new Window("Ship Part Clue", skin);
 
-		Vector2 clueLocation = clueComponent.getCurrentBaseLocation();
-		Label coordinatesLabel = new Label("Search around here...\nX: " + clueLocation.x + "\nY: " + clueLocation.y, skin);
+		Label coordinatesLabel = new Label("Looks like there's something\nhidden in the dirt...\nFollow the blue indicator\nto find out!", skin);
 		coordinatesLabel.setColor(Color.BROWN);
 		coordinatesLabel.setAlignment(Align.center);
 

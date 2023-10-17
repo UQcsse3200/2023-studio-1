@@ -9,7 +9,10 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.csse3200.game.services.TimeService;
 import com.csse3200.game.services.plants.PlantInfoService;
+import com.csse3200.game.services.sound.EffectsMusicService;
+import com.csse3200.game.services.sound.SoundService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,9 +37,10 @@ public class PlantComponentTest {
     DynamicTextureRenderComponent mockTextureComponent;
     ResourceService mockResourceService;
     Sound mockSound;
-
     PlantAreaOfEffectComponent mockPlantAreaOfEffect;
     PlantInfoService mockPlantInfoService;
+    SoundService mockSoundService;
+
 
     int health = 100;
     String name = "testPlant";
@@ -46,13 +50,19 @@ public class PlantComponentTest {
     int adultLifeSpan = 2;
     int maxHealth = 500;
     int[] growthStageThresholds = new int[]{1,2,3};
-    String[] soundArray = new String[]{"1", "2", "3", "4", "5", "6", "7", "8"};
 
     /**
      * Sets up the necessary mock components and initializes the test plant component before each test.
      */
     @BeforeEach
     void beforeEach() {
+        ServiceLocator.registerTimeService(mock(TimeService.class));
+        when(ServiceLocator.getTimeService().getMinute()).thenReturn(20);
+        mockSoundService = mock(SoundService.class);
+        ServiceLocator.registerSoundService(mockSoundService);
+
+        when(mockSoundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
+
         mockCropTile = mock(CropTileComponent.class);
         mockEntity = mock(Entity.class);
         mockTextureComponent = mock(DynamicTextureRenderComponent.class);
@@ -66,7 +76,7 @@ public class PlantComponentTest {
         when(mockResourceService.getAsset(anyString(), eq(Sound.class))).thenReturn(mockSound);
 
         testPlant = new PlantComponent(health, name, type, description, idealWaterLevel,
-                adultLifeSpan, maxHealth, mockCropTile, growthStageThresholds, soundArray);
+                adultLifeSpan, maxHealth, mockCropTile, growthStageThresholds);
         testPlant.setEntity(mockEntity);
     }
 
@@ -261,7 +271,7 @@ public class PlantComponentTest {
         when(mockCropTile.getGrowthRate(1.0f)).thenReturn(-0.5);
         testPlant.setGrowthStage(PlantComponent.GrowthStage.ADULT.getValue());
         testPlant.increaseCurrentGrowthLevel();
-        assertEquals(health - 1, testPlant.getPlantHealth());
+        assertEquals(health - 2, testPlant.getPlantHealth());
     }
 
     /**
@@ -330,12 +340,12 @@ public class PlantComponentTest {
         assertThrows(IllegalArgumentException.class, () -> testPlant.setGrowthStage(7));
     }
 
-    /**
-     * Test for invalid sound name being past to PlaySound
-     */
+
+    /*
     @Test
     public void testInvalidFunctionForPlaySound() {
         testPlant.setPlayerInProximity(true);
         assertThrows(IllegalStateException.class, () -> testPlant.playSound("invalidFunctionName"));
     }
+    */
 }

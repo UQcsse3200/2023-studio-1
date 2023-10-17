@@ -1,37 +1,21 @@
 package com.csse3200.game.areas.weather;
 
-import java.util.ArrayList;
-
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.function.Function;
 
 public class ClimateController implements Json.Serializable {
 
 
 	private static final Logger logger = LoggerFactory.getLogger(ClimateController.class);
-
-	/**
-	 * In-game humidity
-	 */
-	private float humidity;
-	/**
-	 * In-game temperature
-	 */
-	private float temperature;
-
-	/**
-	 * Minimum temperature possible in the game without the effects of weather events
-	 */
-	private static final float MIN_TEMPERATURE = 0f;
-	/**
-	 * Maximum temperature possible in the game without the effects of weather events
-	 */
-	private static final float MAX_TEMPERATURE = 40f;
 
 	/**
 	 * The weather event that is currently occurring in the game
@@ -40,37 +24,42 @@ public class ClimateController implements Json.Serializable {
 	/**
 	 * List of all weather events that are either occurring or about to occur
 	 */
-	private static final ArrayList<WeatherEvent> weatherEvents = new ArrayList<>();
+	private final ArrayList<WeatherEvent> weatherEvents = new ArrayList<>();
 	/**
 	 * Event handler that other entities can use to trigger weather-based events
 	 */
 	private final EventHandler events;
 
 	/**
+	 * The time specifying when the current lighting effect should stop
+	 */
+	private float currentLightingEffectDuration;
+	/**
+	 * The time specifying when the current lighting effect started
+	 */
+	private float currentLightingEffectProgress;
+	/**
+	 * A function which returns the global colour offset for the lighting effect at some given t value between 0 and 1
+	 * representing how close to finish the lighting effect is (0 being just started, 1 being just finished)
+	 */
+	private Function<Float, Color> currentLightingEffectGradient;
+
+	/**
 	 * Creates a new climate controller that listens to time events and maintains the in-game climate
 	 */
 	public ClimateController() {
 		events = new EventHandler();
+	}
+
+	/**
+	 * Initialises the events and listeners for this {@link ClimateController}.
+	 */
+	public void initialiseEvents() {
 		ServiceLocator.getTimeService().getEvents().addListener("dayUpdate", this::addDailyEvent);
 		ServiceLocator.getTimeService().getEvents().addListener("hourUpdate", this::updateWeatherEvent);
-		ServiceLocator.getTimeService().getEvents().addListener("minuteUpdate", this::updateClimate);
-		updateClimate();
-	}
 
-	/**
-	 * Gets the current humidity of the game world
-	 *
-	 * @return current humidity value between 0 and 1
-	 */
-	public float getHumidity() {
-		return humidity;
-	}
-
-	/**
-	 * Sets the current humidity of the game world
-	 */
-	public void setHumidity(float humidity) {
-		this.humidity = humidity;
+		events.addListener("lightingEffect", this::setLightingEffect);
+		currentLightingEffectDuration = -1.0f;
 	}
 
 	/**
@@ -80,6 +69,37 @@ public class ClimateController implements Json.Serializable {
 	 */
 	public EventHandler getEvents() {
 		return events;
+	}
+
+	/**
+	 * Updates the global lighting based on the current lighting effect
+	 */
+	private void updateLightingEffect() {
+		currentLightingEffectProgress += ServiceLocator.getTimeSource().getDeltaTime();
+		float t = currentLightingEffectProgress / currentLightingEffectDuration;
+
+		if (t < 0.0f || t > 1.0f) {
+			// If the lighting effect has completed, clear any colour offsets
+			ServiceLocator.getLightService().setColourOffset(Color.CLEAR);
+			return;
+		}
+
+		// Apply lighting effect colour to global ambient lighting
+		ServiceLocator.getLightService().setColourOffset(
+				currentLightingEffectGradient.apply(t));
+	}
+
+	/**
+	 * Sets the current lighting effect to have the specified duration and colourGradient.
+	 *
+	 * @param duration       The duration of the lighting effect in seconds.
+	 * @param colourGradient The gradient of colour offsets. It should be a function which accepts a float, and returns
+	 *                       a colour offset.
+	 */
+	private void setLightingEffect(float duration, Function<Float, Color> colourGradient) {
+		currentLightingEffectProgress = 0.0f;
+		currentLightingEffectDuration = duration;
+		currentLightingEffectGradient = colourGradient;
 	}
 
 	/**
@@ -95,9 +115,13 @@ public class ClimateController implements Json.Serializable {
 		if (!event.isActive()) {
 			return;
 		}
+		if (currentWeatherEvent != null) {
+			currentWeatherEvent.stopEffect();
+		}
 		if (currentWeatherEvent == null || event.getPriority() > currentWeatherEvent.getPriority()) {
 			currentWeatherEvent = event;
 		}
+		currentWeatherEvent.startEffect();
 	}
 
 	/**
@@ -117,41 +141,26 @@ public class ClimateController implements Json.Serializable {
 	}
 
 	/**
-	 * Gets the current temperature of the game world
-	 *
-	 * @return current game temperature
-	 */
-	public float getTemperature() {
-		return temperature;
-	}
-
-	/**
-	 * Sets the temperature to a given temperature
-	 *
-	 * @param temperature the temperature to set it to
-	 */
-	public void setTemperature(float temperature) {
-		this.temperature = temperature;
-	}
-
-	/**
 	 * Methods that is run every day to possibly generate a random weather event
 	 */
 	private void addDailyEvent() {
 		float eventPossibility = MathUtils.random();
-		// 25% that no weather event is generated
-		if (eventPossibility <= 0.25) {
+		// 7% chance that no weather event is generated on a given day
+		if (eventPossibility <= 0.07) {
 			return;
 		}
-		int eventGenerated = MathUtils.random(0, 1);
-		int numHoursUntil = MathUtils.random(1, 6);
-		int duration = MathUtils.random(2, 5);
+		int eventGenerated = MathUtils.random(0, 9);
+		int numHoursUntil = MathUtils.random(1, 20);
+		int duration = MathUtils.random(1, 4);
 		int priority = MathUtils.random(0, 3);
-		float severity = MathUtils.random();
+		// Random weather events should have a severity between 0 and 1.2 (maximum severity is 1.5)
+		float severity = MathUtils.random() * 1.2f;
 		WeatherEvent event;
 		switch (eventGenerated) {
-			case 0 -> event = new AcidShowerEvent(numHoursUntil, duration, priority, severity);
-			case 1 -> event = new SolarSurgeEvent(numHoursUntil, duration, priority, severity);
+			case 0, 1, 2, 3 -> event = new RainStormEvent(numHoursUntil, duration, priority, severity);
+			case 4, 5, 6 -> event = new BlizzardEvent(numHoursUntil, duration, priority, severity);
+			case 7, 8 -> event = new SolarSurgeEvent(numHoursUntil, duration, priority, severity);
+			case 9 -> event = new AcidShowerEvent(numHoursUntil, duration, priority, severity);
 			default -> {
 				return;
 			}
@@ -163,69 +172,9 @@ public class ClimateController implements Json.Serializable {
 	 * Updates the values of the game's climate based on current weather events. Factoring in the in-game time and
 	 * the weather event modifiers.
 	 */
-	private void updateClimate() {
-		float time = ServiceLocator.getTimeService().getDay() * 24
-				+ ServiceLocator.getTimeService().getHour()
-				+ (float) ServiceLocator.getTimeService().getMinute() / 60;
-
-
-		float humidityModifier = currentWeatherEvent == null ? 0 : currentWeatherEvent.getHumidityModifier();
-		float temperatureModifier = currentWeatherEvent == null ? 0 : currentWeatherEvent.getTemperatureModifier();
-
-		temperature = (MAX_TEMPERATURE - MIN_TEMPERATURE) * generateClimate(time, 4, 8, 0.24f, 2.8f)
-				+ MIN_TEMPERATURE + temperatureModifier;
-
-		humidity = generateClimate(time, -4, 8, 0.14f, 3.5f) + humidityModifier;
-	}
-
-	/**
-	 * Climate generation algorithm that is inspired by the Perlin noise algorithm. Credit to @Tom-Strooper for the Java
-	 * implementation.
-	 * Inspiration from this <a href="https://github.com/SebLague/Procedural-Landmass-Generation">GitHub Repo</a>
-	 *
-	 * @param time        in-game time value
-	 * @param offset      function offset
-	 * @param octaves     number of noise functions used in the calculation (must be greater than 0)
-	 * @param persistence how much each octave/function contributes to the noise generated
-	 * @param lacunarity  how much each octave increases in frequency
-	 * @return generated noise value used in calculating climate values
-	 */
-	private float generateClimate(
-			float time, float offset, int octaves, float persistence, float lacunarity) {
-		if (octaves <= 0) {
-			throw new IllegalArgumentException("Number of noise functions must be greater than 0");
-		}
-		float maxAmplitude = 0f;
-		float amplitude = 1.0f;
-		float frequency = 1.0f;
-
-		float temperatureNormalised = 0.0f;
-
-		for (int i = 0; i < octaves; i++) {
-			temperatureNormalised += amplitude * getClimateSin((time - offset) * frequency);
-			maxAmplitude += amplitude;
-
-			amplitude *= persistence;
-			frequency *= lacunarity;
-		}
-
-		// To avoid divide by zero
-		if (maxAmplitude == 0) {
-			return 0.5f;
-		}
-
-
-		return temperatureNormalised / maxAmplitude;
-	}
-
-	/**
-	 * Sin function used for calculating climate in the generateClimate() method
-	 *
-	 * @param x function variable
-	 * @return function result
-	 */
-	private float getClimateSin(float x) {
-		return 0.5f * MathUtils.sin((float) ((x - 6) * Math.PI / 12)) + 0.5f;
+	public void updateClimate() {
+		events.update();
+		updateLightingEffect();
 	}
 
 	/**
@@ -235,32 +184,43 @@ public class ClimateController implements Json.Serializable {
 		// Sets initial priority to current weather event or 0 if nothing is happening
 		if (currentWeatherEvent != null) {
 			currentWeatherEvent.stopEffect();
+			// Stop any lighting effects
+			currentLightingEffectDuration = -1.0f;
 		}
-		currentWeatherEvent = null;
-		int priority = -1;
-		// Updates every weather event
+
+		// Update weather event durations
 		for (WeatherEvent event : weatherEvents) {
 			event.updateTime();
-			// Checks whether an event is active and is of higher priority
-			if (event.isActive() && event.getPriority() > priority) {
-				currentWeatherEvent = event;
-				priority = currentWeatherEvent.getPriority();
-				// If the event is expired, remove it from the list
-			}
 		}
+		// Remove inactive events
 		weatherEvents.removeIf(WeatherEvent::isExpired);
+
+		recalculateCurrentWeatherEvent();
+
 		if (currentWeatherEvent != null) {
 			currentWeatherEvent.startEffect();
 		}
 	}
 
+	/**
+	 * Recalculates which {@link WeatherEvent} should be the currentWeatherEvent
+	 */
+	private void recalculateCurrentWeatherEvent() {
+		currentWeatherEvent = null;
+		int priority = -1;
+		// Updates every weather event
+		for (WeatherEvent event : weatherEvents) {
+			// Checks whether an event is active and is of higher priority
+			if (event.isActive() && event.getPriority() > priority) {
+				currentWeatherEvent = event;
+				priority = currentWeatherEvent.getPriority();
+			}
+		}
+	}
 
 	@Override
 	public void write(Json json) {
-		json.writeValue("Temp", getTemperature());
-		json.writeValue("Humidity", getHumidity());
 		json.writeObjectStart("Events");
-		updateWeatherEvent();
 		for (WeatherEvent event : weatherEvents) {
 			event.write(json);
 		}
@@ -272,24 +232,40 @@ public class ClimateController implements Json.Serializable {
 		ServiceLocator.getGameArea().getClimateController().setValues(jsonData);
 	}
 
-
 	public void setValues(JsonValue jsonData) {
-		temperature = jsonData.getFloat("Temp");
-		humidity = jsonData.getFloat("Humidity");
+		if (currentWeatherEvent != null) {
+			currentWeatherEvent.stopEffect();
+			// Stop any lighting effects
+			currentLightingEffectDuration = -1.0f;
+			// Set currentWeatherEvent to be null
+			currentWeatherEvent = null;
+		}
+		weatherEvents.clear();
 		jsonData = jsonData.get("Events");
-		jsonData.forEach(jsonValue -> {
-			if (jsonValue.get("Event") != null) {
-				switch (jsonValue.getString("name")) {
-					case ("AcidShowerEvent") -> addWeatherEvent(new AcidShowerEvent(jsonValue.getInt("hoursUntil"),
-								jsonValue.getInt("duration"), jsonValue.getInt("priority"),
-								jsonValue.getFloat("severity")));
-					case ("SolarSurgeEvent") -> addWeatherEvent(new SolarSurgeEvent(jsonValue.getInt("hoursUntil"),
-								jsonValue.getInt("duration"), jsonValue.getInt("priority"),
-								jsonValue.getFloat("severity")));
+		if (jsonData.has("Event")) {
+			jsonData.forEach(jsonValue -> {
+				String name = jsonValue.getString("name");
+				float severity = jsonValue.getFloat("severity");
+				int duration = jsonValue.getInt("duration");
+				int hoursUntil = jsonValue.getInt("hoursUntil");
+				int priority = jsonValue.getInt("priority");
+
+				if (hoursUntil == 0) {
+					if (duration > 0) {
+						duration++;
+					}
+				} else {
+					hoursUntil++;
+				}
+
+				switch (name) {
+					case ("AcidShowerEvent") -> addWeatherEvent(new AcidShowerEvent(hoursUntil, duration, priority, severity));
+					case ("RainStormEvent") -> addWeatherEvent(new RainStormEvent(hoursUntil, duration, priority, severity));
+					case ("BlizzardEvent") -> addWeatherEvent(new BlizzardEvent(hoursUntil, duration, priority, severity));
+					case ("SolarSurgeEvent") -> addWeatherEvent(new SolarSurgeEvent(hoursUntil, duration, priority, severity));
 					default -> logger.error("Invalid weather event type while loading");
 				}
-			}
-		});
-		updateWeatherEvent();
+			});
+		}
 	}
 }

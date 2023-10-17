@@ -36,7 +36,7 @@ public class HungerBar extends UIComponent{
         ServiceLocator.getUIService().getEvents()
                 .addListener("toggleUI", this::toggleDisplay);
 
-        updateDisplay(100);
+        updateDisplay(30);
     }
 
     private void toggleDisplay(boolean isDisplayed) {
