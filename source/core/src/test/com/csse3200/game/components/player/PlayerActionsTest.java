@@ -2,14 +2,12 @@ package com.csse3200.game.components.player;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.TestGameArea;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.combat.CombatStatsComponent;
 import com.csse3200.game.components.combat.ProjectileComponent;
@@ -17,10 +15,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.ProjectileFactory;
 import com.csse3200.game.extensions.GameExtension;
-import com.csse3200.game.input.InputService;
 import com.csse3200.game.physics.PhysicsService;
-import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -29,11 +24,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -79,7 +72,6 @@ class PlayerActionsTest {
         ServiceLocator.registerEntityService(mock(EntityService.class));
         ServiceLocator.registerTimeService(new TimeService());
 
-        //ServiceLocator.registerGameArea(mock(GameArea.class));
         ServiceLocator.registerGameArea(gameArea);
 
         areaEntities = new ArrayList<>();
@@ -96,7 +88,6 @@ class PlayerActionsTest {
         gameArea.spawnEntity(player);
         gameArea.spawnEntity(chicken);
 
-        //when(ServiceLocator.getGameArea().getAreaEntities()).thenReturn(areaEntities);
         when(ServiceLocator.getResourceService().getAsset(any(), any())).thenReturn(mock(Sound.class));
 
         ServiceLocator.registerCameraComponent(mock(CameraComponent.class));

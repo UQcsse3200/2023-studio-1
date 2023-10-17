@@ -476,7 +476,6 @@ public class PlayerActions extends Component {
   }
 
   /**
-<<<<<<< HEAD
    * Sets the moveDirection with a copy of the provided Vector2 instance
    * @param vector the Vector2 instance to update the moveDirection to
    */
