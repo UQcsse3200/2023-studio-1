@@ -71,6 +71,9 @@ class BlizzardEventTest {
         ClimateController mockClimateController = mock(ClimateController.class);
         when(gameArea.getClimateController()).thenReturn(mockClimateController);
         when(mockClimateController.getEvents()).thenReturn(mock(EventHandler.class));
+        TimeService timeService = mock(TimeService.class);
+        ServiceLocator.registerTimeService(timeService);
+        when(timeService.isNight()).thenReturn(false);
         ServiceLocator.registerGameArea(gameArea);
         initialiseEvents();
         blizzardEvent1.startEffect();
