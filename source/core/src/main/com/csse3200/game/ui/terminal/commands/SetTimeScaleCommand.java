@@ -9,8 +9,6 @@ import java.util.ArrayList;
 public class SetTimeScaleCommand implements Command {
 
 	private static final Logger logger = LoggerFactory.getLogger(SetTimeScaleCommand.class);
-	private static final int MIN_TIME = 0;
-	private static final int MAX_TIME = 23;
 
 	/**
 	 * Adjusts the current game time to the specified value

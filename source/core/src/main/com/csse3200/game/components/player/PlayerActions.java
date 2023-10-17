@@ -12,6 +12,7 @@ import com.csse3200.game.components.InteractionDetector;
 import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
+import com.csse3200.game.components.items.WateringCanLevelComponent;
 import com.csse3200.game.components.tractor.KeyboardTractorInputComponent;
 import com.csse3200.game.components.combat.StunComponent;
 import com.csse3200.game.components.tractor.TractorActions;
@@ -104,6 +105,7 @@ public class PlayerActions extends Component {
 	entity.getEvents().addListener(events.EAT.name(), this::eat);
 	entity.getEvents().addListener(events.FREEZE.name(), this::freeze);
 	entity.getEvents().addListener(events.UNFREEZE.name(), this::unfreeze);
+    entity.getEvents().addListener("toolbarSwitch", this::toolbarSwitch);
     entity.getEvents().addListener("setSpeedMultiplier", this::setSpeedMultiplier);
     entity.getEvents().addListener("setDamageMultiplier", this::setDamageMultiplier);
     ServiceLocator.getGameArea().getClimateController().getEvents().addListener(
@@ -394,6 +396,9 @@ public class PlayerActions extends Component {
     if (itemInHand != null && itemInHand.getComponent(ItemActions.class) != null) {
       pauseMoving();
       itemInHand.getComponent(ItemActions.class).use(entity, mousePos);
+      if (itemInHand.getComponent(WateringCanLevelComponent.class) != null) {
+        entity.getEvents().trigger("updateInventory");
+      }
     }
   }
 
@@ -415,6 +420,12 @@ public class PlayerActions extends Component {
     if (inventoryComponent != null) {
       inventoryComponent.setHeldItem(index);
     }
+  }
+  void toolbarSwitch() {
+    InventoryComponent inventoryComponent = entity.getComponent(InventoryComponent.class);
+    inventoryComponent.switchTab();
+
+    // Make sure its initialised
   }
 
   /**

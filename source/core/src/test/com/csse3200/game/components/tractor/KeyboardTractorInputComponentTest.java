@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
-public class KeyboardTractorInputComponentTest {
+class KeyboardTractorInputComponentTest {
     @BeforeEach
     void setup() {
         Entity tractor = TractorFactory.createTractor();

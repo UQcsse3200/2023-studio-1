@@ -118,6 +118,7 @@ public class PlantInteractionQuest extends Quest {
         switch (interactionType) {
             case PLANT_CROP -> descriptionBuilder.append("Plant ");
             case HARVEST_CROP -> descriptionBuilder.append("Harvest ");
+            case WATER_CROP -> descriptionBuilder.append("Water ");
             default -> {
                 // This should not occur - if it does, do nothing
             }
@@ -150,6 +151,7 @@ public class PlantInteractionQuest extends Quest {
         return numberOfInteractions + " out of " + interactionsTarget + switch (interactionType) {
             case PLANT_CROP -> " crops planted";
             case HARVEST_CROP -> " crops harvested";
+            case WATER_CROP -> " crops watered";
             default -> "";
         };
     }

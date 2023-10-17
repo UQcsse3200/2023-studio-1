@@ -21,7 +21,7 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(GameExtension.class)
-public class TractorAnimationControllerTest {
+class TractorAnimationControllerTest {
     private Entity tractor;
     private AnimationRenderComponent animationRenderComponent;
 
