@@ -4,6 +4,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.inventory.InventoryDisplayManager;
 import com.csse3200.game.components.maingame.MainGameActions;
+import com.csse3200.game.services.sound.BackgroundMusicService;
+import com.csse3200.game.services.sound.EffectsMusicService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.Gdx;
@@ -64,20 +66,14 @@ public class GameAreaDisplay extends UIComponent {
 
     backgroundOverlay.setVisible(true); // Initially, set it to invisible
 
-    //Image pauseMenu = new Image(ServiceLocator.getResourceService().getAsset("images/PauseMenu/Pausenew.jpg", Texture.class));
-    //pauseMenu.setSize(1300, 700);
-    //pauseMenu.setPosition((float) (Gdx.graphics.getWidth() / 2.0 - pauseMenu.getWidth() / 2),
-     //       (float) (Gdx.graphics.getHeight() / 2.0 - pauseMenu.getHeight() / 2));
-    //pausingGroup.addActor(pauseMenu);
-
-    //pausingGroup.setSize(1300, 700);
     pausingGroup.setPosition(Gdx.graphics.getWidth() / 2f,
                  Gdx.graphics.getHeight() / 2f, Align.center);
     stage.addActor(pausingGroup);
-    //stage.draw();
 
     Table buttons = new Table();
     pausingGroup.add(buttons);
+
+    buttons.defaults().width(386f);
 
     float buttonHeight = 80f;
 
@@ -150,11 +146,52 @@ public class GameAreaDisplay extends UIComponent {
 
     buttons.row().padTop(15f);
 
+    BackgroundMusicService backgroundMusicService = ServiceLocator.getSoundService().getBackgroundMusicService();
+    TextButton muteMusicButton = new TextButton(backgroundMusicService.isMuted() ? "Music Off" : "Music On", skin,
+            backgroundMusicService.isMuted() ? "grey" : "orange");
+    muteMusicButton.setSize(386f, buttonHeight);
+    muteMusicButton.addListener(new ChangeListener() {
+      @Override
+      public void changed(ChangeEvent event, Actor actor) {
+        logger.debug("Mute music button clicked");
+        if (backgroundMusicService.isMuted()) {
+          ServiceLocator.getSoundService().getBackgroundMusicService().setMuted(false);
+        } else {
+          ServiceLocator.getSoundService().getBackgroundMusicService().setMuted(true);
+        }
+        muteMusicButton.setText(backgroundMusicService.isMuted() ? "Music Off" : "Music On");
+        muteMusicButton.setStyle(skin.get(backgroundMusicService.isMuted() ? "grey" : "orange", TextButton.TextButtonStyle.class));
+      }
+    });
+    buttons.add(muteMusicButton);
+
+    buttons.row().padTop(15f);
+
+    EffectsMusicService effectsMusicService = ServiceLocator.getSoundService().getEffectsMusicService();
+    TextButton muteEffectsButton = new TextButton(effectsMusicService.isMuted() ? "SFX Off" : "SFX On", skin,
+            effectsMusicService.isMuted() ? "grey" : "orange");
+    muteEffectsButton.setSize(386f, buttonHeight);
+    muteEffectsButton.addListener(new ChangeListener() {
+      @Override
+      public void changed(ChangeEvent event, Actor actor) {
+        logger.debug("Mute music button clicked");
+        if (effectsMusicService.isMuted()) {
+          effectsMusicService.setMuted(false);
+        } else {
+          effectsMusicService.setMuted(true);
+        }
+        muteEffectsButton.setText(effectsMusicService.isMuted() ? "SFX Off" : "SFX On");
+        muteEffectsButton.setStyle(skin.get(effectsMusicService.isMuted() ? "grey" : "orange", TextButton.TextButtonStyle.class));
+      }
+    });
+    buttons.add(muteEffectsButton);
+
+    buttons.row().padTop(20f);
+
     buttons.add(messageLabel);
 
-    pausingGroup.setSize(400, 400);
+    pausingGroup.setSize(500, 500);
 
-    //stage.draw();
   }
 
   /**
@@ -189,11 +226,11 @@ public class GameAreaDisplay extends UIComponent {
 
   @Override
   public void update() {
-    logger.info("blah");
     pausingGroup.setPosition(Gdx.graphics.getWidth() / 2f,
             Gdx.graphics.getHeight() / 2f, Align.center);
     backgroundOverlay.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     backgroundOverlay.toFront();
+    pausingGroup.toFront();
 
   }
 }
