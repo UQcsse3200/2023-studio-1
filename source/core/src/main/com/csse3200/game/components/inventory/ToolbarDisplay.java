@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.items.ItemComponent;
-import com.csse3200.game.components.items.WateringCanLevelComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.services.ServiceLocator;
@@ -36,7 +35,6 @@ public class ToolbarDisplay extends UIComponent {
     private InventoryComponent inventory;
     private int selectedSlot = -1;
     private final ArrayList<ItemSlot> slots = new ArrayList<>();
-    private final Map<Integer, TextTooltip> tooltips = new HashMap<>();
     private final InstantTooltipManager instantTooltipManager = new InstantTooltipManager();
     private boolean isPause = false;
     private boolean lastState = false;
@@ -83,7 +81,7 @@ public class ToolbarDisplay extends UIComponent {
                 idx = 0;
             }
             Label label = new Label(" " + idx, skin);
-            label.setColor(Color.BLUE);
+            label.setColor(Color.BLACK);
             label.setAlignment(Align.topLeft);
 
             ItemComponent item;
@@ -100,6 +98,7 @@ public class ToolbarDisplay extends UIComponent {
                 curSlot.setCount(itemCount);
 
                 curSlot.add(label);
+
                 // Update slots array
                 slots.set(i, curSlot);
             }
@@ -110,7 +109,6 @@ public class ToolbarDisplay extends UIComponent {
                 slots.set(i, curSlot);
             }
         }
-        addTooltips();
     }
 
     /**
@@ -128,8 +126,8 @@ public class ToolbarDisplay extends UIComponent {
                 idx = 0;
             }
             // Create the label for the item slot
-            Label label = new Label(" " + idx, skin); //please please please work
-            label.setColor(Color.BLUE);
+            Label label = new Label(" " + idx, skin);
+            label.setColor(Color.BLACK);
             label.setAlignment(Align.topLeft);
 
             // Check if slot is selected
@@ -165,6 +163,7 @@ public class ToolbarDisplay extends UIComponent {
     @Override
     public void draw(SpriteBatch batch)  {
         // Handled else where
+        window.setPosition(stage.getWidth() / 2 - window.getWidth() / 2, 0);
     }
 
     /**
@@ -232,41 +231,6 @@ public class ToolbarDisplay extends UIComponent {
             ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.SWITCH_TOOLBAR);
         } catch (InvalidSoundFileException e) {
             logger.error("sound not loaded");
-        }
-    }
-    public void addTooltips() {
-        tooltips.forEach((index ,tooltip) -> {
-            if (tooltip != null) {
-                tooltip.hide();
-            }});
-        TextTooltip tooltip;
-        int i = 0;
-        for (ItemSlot slot : slots) {
-            if (inventory.getItem(i) != null) {
-                ItemComponent item = inventory.getItem(i).getComponent(ItemComponent.class);
-                if (Objects.equals(item.getItemName(), "watering_can")) {
-                    int level = (int) item.getEntity().getComponent(WateringCanLevelComponent.class).getCurrentLevel();
-                    tooltip = new TextTooltip(item.getItemName() + "\n\nCurrent level is " + level, instantTooltipManager, skin);
-                } else {
-                    tooltip = new TextTooltip(item.getItemName() + "\n\n" + item.getItemDescription(), instantTooltipManager,skin);
-                }
-                if (tooltips.get(i) != null) {
-                    tooltips.get(i).hide();
-                    slot.removeListener(tooltips.get(i));
-                }
-                tooltip.getActor().setAlignment(Align.center);
-                tooltip.setInstant(true);
-                slot.addListener(tooltip);
-                tooltips.put(i, tooltip);
-            }
-            else {
-                if (tooltips.get(i) != null) {
-                    tooltips.get(i).hide();
-                    slot.removeListener(tooltips.get(i));
-                    tooltips.remove(i);
-                }
-            }
-            i++;
         }
     }
 }

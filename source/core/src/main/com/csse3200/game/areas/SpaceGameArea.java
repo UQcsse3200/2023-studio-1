@@ -240,9 +240,7 @@ public class SpaceGameArea extends GameArea {
           "images/ship/part_tile_indicator.png",
 		  "images/walkietalkie.png",
 		  "images/teleporter.png",
-
-          "images/selected.png",
-          "images/itemFrame.png",
+          
           "images/PauseMenu/Pause_Overlay.jpg",
           "images/PauseMenu/Pausenew.jpg",
           "images/miniMap/shipIcon.png",

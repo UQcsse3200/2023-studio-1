@@ -32,6 +32,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
+import org.mockito.MockedConstruction;
+import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,13 +52,15 @@ import static org.mockito.Mockito.*;
  * the properties stores in 'PlayerConfig'.
  */
 @ExtendWith(GameExtension.class)
-class TestInventoryUI {
+
+public class TestInventoryUI {
 	Entity player;
 	InventoryDisplay inventoryDisplay;
 	static InventoryComponent inventory;
 	Stage stage;
 	InventoryDisplayManager inventoryDisplayManager;
 	ArgumentCaptor<Window> windowArgument;
+	MockedConstruction<ItemFrame> mockFrame;
 	//TestGameArea to register so GameMap can be accessed through the ServiceLocator
 	private static final TestGameArea gameArea = new TestGameArea();
 	private static final Logger logger = LoggerFactory.getLogger(TestInventoryUI.class);
@@ -65,8 +69,6 @@ class TestInventoryUI {
 			"images/tool_shovel.png",
 			"images/tool_hoe.png",
 			"images/tool_scythe.png",
-			"images/selected.png",
-			"images/itemFrame.png",
 			"images/bin.png"
 	};
 
@@ -89,9 +91,7 @@ class TestInventoryUI {
 	@BeforeEach
 	void createPlayer() {
 		ServiceLocator.registerResourceService(new ResourceService());
-		ServiceLocator.getResourceService().loadTextures(texturePaths);
-		ServiceLocator.getResourceService().loadSkins(skinPaths);
-		ServiceLocator.getResourceService().loadAll();
+
 
 		windowArgument = ArgumentCaptor.forClass(Window.class);
 		stage = mock(Stage.class);
@@ -112,7 +112,11 @@ class TestInventoryUI {
 		} catch (InvalidSoundFileException e) {
 			logger.info("Sounds not loaded");
 		}
-
+		ServiceLocator.getResourceService().loadTextures(texturePaths);
+		ServiceLocator.getResourceService().loadSkins(skinPaths);
+		ServiceLocator.getResourceService().loadAll();
+		System.out.println(ServiceLocator.getResourceService().getAsset("gardens-of-the-galaxy/gardens-of-the-galaxy.json",Skin.class));
+		mockFrame = Mockito.mockConstruction(ItemFrame.class);
 		inventoryDisplay = spy(new InventoryDisplay("updateInventory", "toggleInventory", 30, 10, false));
 		player =
 				new Entity(EntityType.PLAYER)
@@ -121,7 +125,6 @@ class TestInventoryUI {
 						.addComponent(inventoryDisplay)
 						.addComponent(inventory);
 	}
-
 	@Test
 	void testToggleInventory() {
 		player.create();
@@ -133,7 +136,6 @@ class TestInventoryUI {
 		for (Cell<?> cell : inventorySlots.getCells().toArray(Cell.class)) {
 			assert !(cell.getActor() instanceof ItemSlot) || ((ItemSlot) cell.getActor()).getItemImage() == null;
 		}
-
 		player.getComponent(KeyboardPlayerInputComponent.class).setActions(player.getComponent(PlayerActions.class));
 		player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.I);
 
@@ -145,10 +147,6 @@ class TestInventoryUI {
 	@ParameterizedTest()
 	@MethodSource({"addingItemsShouldAddInventoryImagesParams"})
 	void addingItemsShouldAddInventoryImages(ItemComponent component, int expected) {
-		ServiceLocator.registerResourceService(new ResourceService());
-		ServiceLocator.getResourceService().loadTextures(texturePaths);
-		ServiceLocator.getResourceService().loadSkins(skinPaths);
-		ServiceLocator.getResourceService().loadAll();
 		ServiceLocator.registerTimeService(new TimeService());
 		ServiceLocator.registerMissionManager(new MissionManager());
 
@@ -163,14 +161,19 @@ class TestInventoryUI {
 		assert (window.getTitleLabel().textEquals("PLAYER Inventory"));
 		inventoryDisplay.refreshInventory();
 		Table inventorySlots = (Table) window.getChildren().begin()[1];
-		Cell<?>[] cells = Arrays.copyOfRange(inventorySlots.getCells().toArray(Cell.class), 0, 30);
-		Cell<?> deleteButton = Arrays.stream(inventorySlots.getCells().toArray(Cell.class)).toList().get(30);
+		Cell<?>[] cells = Arrays.copyOfRange(inventorySlots.getCells().toArray(Cell.class), 0, 40);
+		Cell<?> deleteButton = Arrays.stream(inventorySlots.getCells().toArray(Cell.class)).toList().get(40);
 		int i = 0;
 		assert (deleteButton.getActor()) instanceof Image;
 		for (Cell<?> slot : cells) {
-			assert ((ItemSlot) slot.getActor()).getChild(0) instanceof Image;
+			if (i < 10) {
+				i++;
+				assert ((Label) slot.getActor()).getText().replace(" ","").toString().equals(Integer.toString(i % 10));
+				continue;
+			}
+			assert ((ItemSlot) slot.getActor()).getChild(0) instanceof ItemFrame;
 			assert ((ItemSlot) slot.getActor()).getChild(1) instanceof Stack;
-			if (i++ <= expected) {
+			if (i++ - 10 <= expected) {
 				assert ((Stack) ((ItemSlot) slot.getActor()).getChild(1)).getChild(0) instanceof Image;
 			} else {
 				assert ((Stack) ((ItemSlot) slot.getActor()).getChild(1)).getChildren().isEmpty();
@@ -194,6 +197,6 @@ class TestInventoryUI {
 	public void cleanUp() {
 		// Clears all loaded services
 		ServiceLocator.clear();
+		mockFrame.close();
 	}
 }
-
