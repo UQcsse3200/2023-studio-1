@@ -391,6 +391,9 @@ public class SpaceGameArea extends GameArea {
 
     hostileSpawner = new EntitiesSpawner(hostileSpawners);
     hostileSpawner.setGameAreas(this);
+
+    // play background music
+    ServiceLocator.getSoundService().getBackgroundMusicService().play(BackgroundMusicType.NORMAL);
   }
 
   /**

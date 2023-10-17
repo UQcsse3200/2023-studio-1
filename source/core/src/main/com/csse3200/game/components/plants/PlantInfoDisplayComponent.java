@@ -54,6 +54,7 @@ public class PlantInfoDisplayComponent extends UIComponent {
         this.isOpen = isOpen;
         window.clear();
         window.setVisible(isOpen);
+        window.toFront();
         clearInfo();
     }
 
@@ -65,10 +66,11 @@ public class PlantInfoDisplayComponent extends UIComponent {
         window.getTitleLabel().setText(windowName);
         window.setVisible(isOpen);
         window.setSize(450f, 275f);
-        window.padTop(10f);
+        //window.padTop(10f);
         window.setPosition(Gdx.graphics.getWidth() - 20f, Gdx.graphics.getHeight() - 20f, Align.topRight);
         window.setMovable(false);
         stage.addActor(window);
+        window.toFront();
     }
 
     /**
@@ -142,6 +144,7 @@ public class PlantInfoDisplayComponent extends UIComponent {
     @Override
     public void update() {
         window.setPosition(Gdx.graphics.getWidth() - 20f, Gdx.graphics.getHeight() - 20f, Align.topRight);
+        window.toFront();
     }
 
 }

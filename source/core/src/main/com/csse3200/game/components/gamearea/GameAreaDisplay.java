@@ -77,57 +77,8 @@ public class GameAreaDisplay extends UIComponent {
 
     float buttonHeight = 80f;
 
-    TextButton exitBtn = new TextButton("Exit", skin,"orange");
-    exitBtn.setSize(386f, buttonHeight);
-    //exitBtn.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 75);
-    exitBtn.addListener(new ChangeListener() {
-      @Override
-      public void changed(ChangeEvent event, Actor actor) {
-        logger.debug("Exit button clicked");
-        KeyboardPlayerInputComponent.incrementPauseCounter();
-        KeyboardPlayerInputComponent.clearMenuOpening();
-        MainGameActions.exitToMainMenu();
-      }
-    });
-    buttons.add(exitBtn);
-
-    buttons.row().padTop(15f);
-
     Label messageLabel = new Label("", skin); // Create an empty label initially
-    //messageLabel.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 500);
     messageLabel.setVisible(false); // Initially, the label is not visible
-
-    TextButton loadBtn = new TextButton("Load Previous", skin,"orange");
-    loadBtn.setSize(386f, buttonHeight);
-    //loadBtn.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 175);
-    loadBtn.addListener(new ChangeListener() {
-      @Override
-      public void changed(ChangeEvent event, Actor actor) {
-        messageLabel.setVisible(false);
-        messageLabel.setText("                    Previous Game Loaded!");
-        messageLabel.setVisible(true);
-        ServiceLocator.getSaveLoadService().load();
-      }
-    });
-    buttons.add(loadBtn);
-
-    buttons.row().padTop(15f);
-
-    TextButton saveBtn = new TextButton("Save", skin,"orange");
-    saveBtn.setSize(386f, buttonHeight);
-    //saveBtn.setPosition(pauseMenu.getX() + 450f, pauseMenu.getY() + 275);
-    saveBtn.addListener(new ChangeListener() {
-      @Override
-      public void changed(ChangeEvent event, Actor actor) {
-        messageLabel.setVisible(false);
-        messageLabel.setText("                      Current Game Saved!");
-        messageLabel.setVisible(true);
-        ServiceLocator.getSaveLoadService().save();
-      }
-    });
-    buttons.add(saveBtn);
-
-    buttons.row().padTop(15f);
 
     TextButton resumeBtn = new TextButton("Resume", skin,"orange");
     resumeBtn.setSize(386f, buttonHeight);
@@ -143,6 +94,36 @@ public class GameAreaDisplay extends UIComponent {
       }
     });
     buttons.add(resumeBtn);
+
+    buttons.row().padTop(15f);
+
+    TextButton saveBtn = new TextButton("Save", skin,"orange");
+    saveBtn.setSize(386f, buttonHeight);
+    saveBtn.addListener(new ChangeListener() {
+      @Override
+      public void changed(ChangeEvent event, Actor actor) {
+        messageLabel.setVisible(false);
+        messageLabel.setText("                      Current Game Saved!");
+        messageLabel.setVisible(true);
+        ServiceLocator.getSaveLoadService().save();
+      }
+    });
+    buttons.add(saveBtn);
+
+    buttons.row().padTop(15f);
+
+    TextButton loadBtn = new TextButton("Load Previous", skin,"orange");
+    loadBtn.setSize(386f, buttonHeight);
+    loadBtn.addListener(new ChangeListener() {
+      @Override
+      public void changed(ChangeEvent event, Actor actor) {
+        messageLabel.setVisible(false);
+        messageLabel.setText("                    Previous Game Loaded!");
+        messageLabel.setVisible(true);
+        ServiceLocator.getSaveLoadService().load();
+      }
+    });
+    buttons.add(loadBtn);
 
     buttons.row().padTop(15f);
 
@@ -185,6 +166,21 @@ public class GameAreaDisplay extends UIComponent {
       }
     });
     buttons.add(muteEffectsButton);
+
+    buttons.row().padTop(15f);
+
+    TextButton exitBtn = new TextButton("Exit", skin,"orange");
+    exitBtn.setSize(386f, buttonHeight);
+    exitBtn.addListener(new ChangeListener() {
+      @Override
+      public void changed(ChangeEvent event, Actor actor) {
+        logger.debug("Exit button clicked");
+        KeyboardPlayerInputComponent.incrementPauseCounter();
+        KeyboardPlayerInputComponent.clearMenuOpening();
+        MainGameActions.exitToMainMenu();
+      }
+    });
+    buttons.add(exitBtn);
 
     buttons.row().padTop(20f);
 
