@@ -69,13 +69,12 @@ public class PlantProximityComponent extends HitboxComponent {
      * @param me The fixture of this component.
      * @param other The fixture of the colliding entity.
      */
-    private void onCollisionStart(Fixture me, Fixture other) {
+    public void onCollisionStart(Fixture me, Fixture other) {
         if (getFixture() != me) {
             return;
         }
 
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
-
         if (target.getType() == EntityType.PLAYER) {
             entity.getComponent(PlantComponent.class).setPlayerInProximity(true);
         }
