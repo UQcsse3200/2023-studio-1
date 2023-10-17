@@ -12,6 +12,7 @@ import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
 import com.csse3200.game.services.TimeService;
+import com.csse3200.game.services.sound.SoundService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -46,6 +47,8 @@ class OpenPauseComponentTest {
         ServiceLocator.registerGameArea(gameArea);
         ServiceLocator.registerRenderService(renderService);
         playerGuidArea.create();
+        SoundService soundService = new SoundService();
+        ServiceLocator.registerSoundService(soundService);
         player = new Entity();
         openPauseComponent = new OpenPauseComponent();
         player.addComponent(openPauseComponent);
