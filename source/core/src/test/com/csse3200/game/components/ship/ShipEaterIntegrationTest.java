@@ -1,5 +1,6 @@
 package com.csse3200.game.components.ship;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.areas.TestGameArea;
@@ -22,6 +23,8 @@ import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.*;
+import com.csse3200.game.services.sound.EffectsMusicService;
+import com.csse3200.game.services.sound.SoundService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
@@ -31,12 +34,12 @@ import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
 class ShipEaterIntegrationTest {
 	private static final TestGameArea gameArea = new TestGameArea();
+	private SoundService mockSoundService;
 	private Entity ship;
 	private boolean isDigging;
 	private boolean isHiding;
@@ -46,6 +49,11 @@ class ShipEaterIntegrationTest {
 	void beforeEach() {
 		ResourceService resourceService = new ResourceService();
 		resourceService.loadTextureAtlases(new String[]{"images/shipeater.atlas", "images/animals/animal_effects.atlas"});
+
+		mockSoundService = mock(SoundService.class);
+		ServiceLocator.registerSoundService(mockSoundService);
+
+		when(mockSoundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
 
 		String[] mapTextures = TerrainFactory.getMapTextures();
 		String[] entityTextures = new String[]{
