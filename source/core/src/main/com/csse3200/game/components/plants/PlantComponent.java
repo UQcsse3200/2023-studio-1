@@ -48,9 +48,24 @@ public class PlantComponent extends Component {
      */
     private final String plantType;
 
+    /**
+     * The alive growth stage of the plant
+     */
     private static final String ALIVE = "ALIVE";
+
+    /**
+     * The decaying growth stage of the plant
+     */
     private static final String DECAY = "decay";
+
+    /**
+     * The decaying growth stage of the plant
+     */
     private static final String DECAYS = DECAY + "s";
+
+    /**
+     * The destroyed growth stage of the plant
+     */
     private static final String DESTROY = "destroy";
 
 
@@ -86,6 +101,9 @@ public class PlantComponent extends Component {
         }
     }
 
+    /**
+     * The growth stage of the plant
+     */
     private GrowthStage growthStages;
 
     /**
@@ -173,6 +191,9 @@ public class PlantComponent extends Component {
      */
     private int countMinutesOfDigestion;
 
+    /**
+     * PlantComponent logger for debugging
+     */
     private static final Logger logger = LoggerFactory.getLogger(PlantComponent.class);
 
     /**
@@ -180,11 +201,34 @@ public class PlantComponent extends Component {
      */
     private boolean playerInProximity;
 
+    /**
+     * Indicates whether the plant is destroyed
+     */
     private boolean plantDestroyed = false;
+
+    /**
+     * Indicates whether the plant is dead before it reaches maturity
+     */
     private boolean deadBeforeMaturity = false;
+
+    /**
+     * Indicates whether the plant died as a seedling
+     */
     private boolean deadSeedling = false;
+
+    /**
+     * Entity for area of effect animations
+     */
     private Entity aoeAnimations;
+
+    /**
+     * The current are of effect animation
+     */
     private String currentAoeAnimation = "default";
+
+    /**
+     * Indicates whether the plant has been forced to change growth stage
+     */
     private boolean forced = false;
 
     /**
@@ -473,7 +517,6 @@ public class PlantComponent extends Component {
 
     /**
      * Returns the current plant health
-     *
      * @return current plant health
      */
     public int getPlantHealth() {
@@ -490,7 +533,6 @@ public class PlantComponent extends Component {
 
     /**
      * Returns the max health of the plant
-     *
      * @return current max health
      */
 
@@ -526,7 +568,6 @@ public class PlantComponent extends Component {
 
     /**
      * Returns the name of the plant
-     *
      * @return name of the plant
      */
     public String getPlantName() {
@@ -535,7 +576,6 @@ public class PlantComponent extends Component {
 
     /**
      * Returns the type of the plant
-     *
      * @return type of the plant
      */
     public String getPlantType() {
@@ -544,7 +584,6 @@ public class PlantComponent extends Component {
 
     /**
      * Returns the plant description
-     *
      * @return plant description
      */
     public String getPlantDescription() {
@@ -584,7 +623,6 @@ public class PlantComponent extends Component {
 
     /**
      * Set the growth stage of a plant.
-     *
      * @param newGrowthStage - The updated growth stage of the plant, between 1 and 6.
      */
     public void setGrowthStage(int newGrowthStage) {
@@ -612,8 +650,7 @@ public class PlantComponent extends Component {
     }
 
     /**
-     * get the adult life span of a plant
-     *
+     * Get the adult life span of a plant
      * @return adult life span
      */
     public int getAdultLifeSpan() {
@@ -804,10 +841,9 @@ public class PlantComponent extends Component {
         aoeAnimations.dispose();
 
         entity.getComponent(PlantAreaOfEffectComponent.class).dispose();
-
         entity.getComponent(ColliderComponent.class).dispose();
         entity.getComponent(HitboxComponent.class).dispose();
-        entity.getComponent(PlantMouseHoverComponent.class).plantDied();
+        entity.getComponent(PlantMouseHoverComponent.class).setPlantDied(true);
         entity.getComponent(PlantMouseHoverComponent.class).dispose();
         entity.getComponent(PlantProximityComponent.class).dispose();
         entity.getComponent(PlantComponent.class).dispose();
@@ -817,10 +853,7 @@ public class PlantComponent extends Component {
         plantDestroyed = true;
 
         ServiceLocator.getGameArea().removeEntity(entity);
-
-
     }
-
 
     /**
      * To attack plants and damage their health.
@@ -1089,6 +1122,10 @@ public class PlantComponent extends Component {
         updateMaxHealth();
     }
 
+    /**
+     * For debugging. Changes the plants growth stage by force.
+     * @param growthStage the current growth stage of the plant
+     */
     public void forceGrowthStage(String growthStage) {
         if (!plantDestroyed) {
             switch (growthStage) {
@@ -1158,14 +1195,26 @@ public class PlantComponent extends Component {
         this.playerInProximity = bool;
     }
 
+    /**
+     * add animations for area of effect
+     * @param animator area of effect animations
+     */
     public void addAoeAnimatorEntity(Entity animator) {
         this.aoeAnimations = animator;
         this.aoeAnimations.create();
     }
+
+    /**
+     * Getter for the area of effect animations
+     * @return area of effect animations
+     */
     public Entity getAoeAnimatorEntity() {
         return aoeAnimations;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void write(Json json) {
         json.writeObjectStart(this.getClass().getSimpleName());
@@ -1184,6 +1233,9 @@ public class PlantComponent extends Component {
         json.writeObjectEnd();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void read(Json json, JsonValue plantData) {
         ServiceLocator.getGameArea().spawnEntity(entity);
