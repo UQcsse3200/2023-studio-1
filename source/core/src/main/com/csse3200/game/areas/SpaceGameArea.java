@@ -495,18 +495,47 @@ public class SpaceGameArea extends GameArea {
     Entity newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     newPlayer.getEvents().addListener("spawnShovel",this::spawnShovel);
+    newPlayer.getEvents().addListener("spawnHoe",this::spawnHoe);
     return newPlayer;
   }
-
+float x,y;
   private Entity spawnShovel(){
     Entity newShovel = ItemFactory.createShovel();
+
+    Vector2 tilePosition = screenToTile(x, y);
+
+    GridPoint2 gridTilePosition = new GridPoint2((int)tilePosition.x, (int)tilePosition.y);
+
 
    Vector2 player = ServiceLocator.getGameArea().getPlayer().getPosition();
 GridPoint2 gridPoint2 = new GridPoint2((int)player.x,(int)player.y);
     spawnEntityAt(newShovel,gridPoint2,true,true);
+
+
     return newShovel;
   }
 
+  public float tileSize;
+TerrainComponent terrainComponent =new TerrainComponent(tileSize);
+  private Vector2 screenToTile(float x, float y) {
+    // Here, you need a method to convert screen coordinates to tile coordinates
+    // This is a simple approximation, and might require adjustments
+    return new Vector2((int)(x / terrainComponent.getTileSize()), (int)(y / terrainComponent.getTileSize()));
+  }
+
+
+  private Entity spawnHoe(){
+    Entity newHoe = ItemFactory.createHoe();
+
+
+
+    Vector2 player = ServiceLocator.getGameArea().getPlayer().getPosition();
+    GridPoint2 gridPoint2 = new GridPoint2((int)player.x,(int)player.y);
+    spawnEntityAt(newHoe,gridPoint2,true,true);
+
+
+    return newHoe;
+  }
 
   private void spawnQuestgiver() {
     Entity newQuestgiver = QuestgiverFactory.createQuestgiver();

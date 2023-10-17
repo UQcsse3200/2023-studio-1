@@ -30,6 +30,8 @@ public class GameAreaDisplay extends UIComponent {
   private Image backgroundOverlay;
   private InventoryDisplayManager inventoryDisplayManager;
 
+
+
   @Override
   public void create() {
     super.create();

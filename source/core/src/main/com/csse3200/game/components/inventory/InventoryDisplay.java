@@ -4,7 +4,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.areas.terrain.TerrainComponent;
+import com.csse3200.game.areas.terrain.TerrainTile;
+import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityIndicator;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.services.ServiceLocator;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -33,6 +49,15 @@ public class InventoryDisplay extends UIComponent {
 	private boolean isOpen = false;
 	private DragAndDrop dnd;
 	private ArrayList<Actor> actors;
+	private final ArrayList<EntityIndicator> entityIndicators = new ArrayList<>();
+
+	// In your InventoryDisplay class:
+
+	// A function to add the association:
+	private TerrainComponent terrainComponent;
+
+	private Map<Actor, Entity> actorToEntityMap = new HashMap<>();
+
 	private Map<Stack, ItemSlot> map;
 	private Map<ItemSlot, Integer> indexes;
 	private final Integer size;
@@ -42,6 +67,19 @@ public class InventoryDisplay extends UIComponent {
 	private final String openEvent;
 	private final InventoryDisplayManager inventoryDisplayManager;
 	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(InventoryDisplay.class);
+
+	public void associateActorWithEntity(Actor actor, Entity entity) {
+		actorToEntityMap.put(actor, entity);
+	}
+
+	// Method to get the Entity based on the given Actor
+	public Entity getEntityFromActor(Actor actor) {
+		return actorToEntityMap.get(actor);
+	}
+	private  TerrainTile getTileAtPosition(Vector2 mousePos) {
+		Vector2 pos = ItemActions.getAdjustedPos(mousePos);
+		return ServiceLocator.getGameArea().getMap().getTile(pos);
+	}
 
 	/**
 	 * Constructor for class
@@ -59,7 +97,6 @@ public class InventoryDisplay extends UIComponent {
 	}
 
 
-
 	/**
 	 * Creates reusable ui styles and adds actors to the stage.
 	 */
@@ -71,7 +108,6 @@ public class InventoryDisplay extends UIComponent {
 		entity.getEvents().addListener(refreshEvent, this::refreshInventory);
 		inventoryDisplayManager.addInventoryDisplay(this);
 	}
-
 
 	/**
 	 * Initialises the inventoryDisplay and adds it to the stage.
@@ -175,6 +211,7 @@ public class InventoryDisplay extends UIComponent {
 	 */
 	public void setDragItems(@NotNull ArrayList<Actor> actors, Map<Stack, ItemSlot> map) {
 		for (Actor item : actors) {
+
 			dnd.addSource(new DragAndDrop.Source(item) {
 				final DragAndDrop.Payload payload = new DragAndDrop.Payload();
 
@@ -184,19 +221,65 @@ public class InventoryDisplay extends UIComponent {
 					payload.setDragActor(getActor());
 					stage.addActor(getActor());
 					dnd.setDragActorPosition(50, -getActor().getHeight() / 2);
-
 					return payload;
 				}
 
+
 				@Override
 				public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
-					if (target == null) {
-						ItemSlot itemSlot = map.get((Stack) getActor());
-						itemSlot.removeActor(getActor());
-						itemSlot.add(getActor());
-						ServiceLocator.getGameArea().getPlayer().getEvents().trigger("spawnShovel");
+					Actor draggedActor = (Actor) payload.getDragActor();
+					if (draggedActor instanceof Stack) {
+						ItemSlot itemSlot = map.get((Stack) draggedActor);
+						if (itemSlot != null) {
+							Image image = itemSlot.getItemImage();
+							Drawable drawable = image.getDrawable();
+							TextureRegion region = null;
+							Image spawnedItemImage = new Image(region);
+
+							if (drawable instanceof TextureRegionDrawable) {
+								region = ((TextureRegionDrawable) drawable).getRegion();
+							}
+
+							Vector2 stageCoordinates = window.getStage().screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+
+							System.out.println("Stage Coordinates: " + stageCoordinates); // Debug statement 1
+
+							float windowStartX = 0.0f;
+							float windowStartY = 0.0f;
+							float windowEndX = windowStartX + 960.0f;
+							float windowEndY = windowStartY + 414.0f;
+
+							if (stageCoordinates.x < windowStartX || stageCoordinates.x > windowEndX || stageCoordinates.y < windowStartY || stageCoordinates.y > windowEndY) {
+								TerrainTile tileAtDropPosition = getTileAtPosition(stageCoordinates);
+
+								System.out.println("Tile at Drop Position: " + tileAtDropPosition); // Debug statement 2
+
+								if (tileAtDropPosition != null && tileAtDropPosition.isTraversable()) {
+									inventory.removeItem(inventory.getHeldItemsEntity().get(inventory.getItemPlace().get(indexes.get(itemSlot))));
+//									draggedActor.remove();
+
+									Vector2 playerPosition = ServiceLocator.getGameArea().getPlayer().getPosition();
+
+									System.out.println("Player Position: " + playerPosition); // Debug statement 3
+
+									GridPoint2 gridTilePosition = new GridPoint2((int) playerPosition.x + 1, (int) playerPosition.y);
+									GridPoint2 spawnPosition = new GridPoint2(gridTilePosition.x + 1, gridTilePosition.y);
+
+									System.out.println("Spawn Position: " + spawnPosition); // Debug statement 4
+
+									spawnedItemImage.setSize(64, 64);
+									spawnedItemImage.setPosition(gridTilePosition.x, gridTilePosition.y);
+									TerrainComponent terrain = ServiceLocator.getGameArea().getTerrain(); // hypothetical method, ensure you have a getTerrain() or equivalent in your ServiceLocator's GameArea.
+									/* Terrain need to be set before spawning */
+
+								//	ServiceLocator.getGameArea().spawnEntityAt(entity, spawnPosition, true, true);
+								}
+							}
+						}
 					}
 				}
+
+
 			});
 		}
 
@@ -212,7 +295,7 @@ public class InventoryDisplay extends UIComponent {
 
 					@Override
 					public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-						ItemSlot sourceSlot = map.get(( (Stack) source.getActor()));
+						ItemSlot sourceSlot = map.get(((Stack) source.getActor()));
 
 						inventory.swapPosition(indexes.get(sourceSlot), indexes.get(slot));
 						map.put(slot.getDraggable(), sourceSlot);
@@ -232,20 +315,21 @@ public class InventoryDisplay extends UIComponent {
 					public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
 						return true;
 					}
+
 					@Override
 					public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-						ItemSlot itemSlot = map.get( (Stack)source.getActor());
+
+						ItemSlot itemSlot = map.get((Stack) source.getActor());
 						itemSlot.removeActor(source.getActor());
 						itemSlot.add(source.getActor());
 						ItemSlot sourceSlot = map.get((Stack) (source.getActor()));
 						inventory.removeItem(inventory.getHeldItemsEntity().get(inventory.getItemPlace().get(indexes.get(sourceSlot))));
+
 					}
 				});
 			}
 		}
-
 	}
-
 
 	/**
 	 * Get the current window
@@ -316,4 +400,5 @@ public class InventoryDisplay extends UIComponent {
 	public DragAndDrop getDnd() {
 		return dnd;
 
-	} }
+	}
+}
