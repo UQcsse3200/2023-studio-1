@@ -92,7 +92,7 @@ public class PlantInfoDisplayComponent extends UIComponent {
         window.reset();
         window.getTitleLabel().setText(windowName);
         window.setVisible(isOpen);
-        window.setSize(450f, 275f);
+        window.setSize(470f, 275f);
         //window.padTop(10f);
         window.setPosition(Gdx.graphics.getWidth() - 20f, Gdx.graphics.getHeight() - 20f, Align.topRight);
         window.setMovable(false);
@@ -110,7 +110,7 @@ public class PlantInfoDisplayComponent extends UIComponent {
     public void showPlantInfo(String plantName, String plantInfo) {
         createWindow(plantName);
         label = new Label(plantInfo, skin);
-        label.setFontScale(1.4f);
+        label.setFontScale(1.3f);
         label.setColor(Color.BROWN);
         window.add(label);
         stage.addActor(window);
@@ -141,7 +141,7 @@ public class PlantInfoDisplayComponent extends UIComponent {
             }
 
             label = new Label(activeQuestsString.toString(), skin);
-            label.setFontScale(1.4f);
+            label.setFontScale(1.3f);
             label.setColor(Color.BROWN);
             window.add(label);
             stage.addActor(window);
