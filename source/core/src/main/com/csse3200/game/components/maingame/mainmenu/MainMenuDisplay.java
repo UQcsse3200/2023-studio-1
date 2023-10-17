@@ -1,4 +1,4 @@
-package com.csse3200.game.components.mainmenu;
+package com.csse3200.game.components.maingame.mainmenu;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,11 +24,11 @@ public class MainMenuDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(MainMenuDisplay.class);
     private static final float Z_INDEX = 2f;
     private Table table;
-    public static int frame;
+    private int frame;
     private Image transitionFrames;
     private long lastFrameTime;
-    private int fps = 15;
-    private final long frameDuration =  (long)(800 / fps);
+    private static int fps = 15;
+    private static final long FRAME_DURATION = (800 / fps);
 
     @Override
     public void create() {
@@ -49,11 +49,13 @@ public class MainMenuDisplay extends UIComponent {
         title.setWidth(Gdx.graphics.getWidth());
         title.setHeight(Gdx.graphics.getHeight());
         title.setPosition(0, 0);
-        TextButton startBtn = new TextButton("New Game", skin);
-        TextButton loadBtn = new TextButton("Continue", skin);
-        TextButton controlsBtn = new TextButton("Controls", skin);
-        TextButton settingsBtn = new TextButton("Settings", skin);
-        TextButton exitBtn = new TextButton("Exit", skin);
+
+        TextButton startBtn = new TextButton("New Game", skin,"orange");
+        TextButton loadBtn = new TextButton("Continue", skin, Gdx.files.local("saves/saveFile.json").exists() ? "orange" : "grey");
+        TextButton controlsBtn = new TextButton("Controls", skin,"orange");
+        TextButton settingsBtn = new TextButton("Settings", skin,"orange");
+        TextButton creditsBtn = new TextButton("Credits", skin,"orange");
+        TextButton exitBtn = new TextButton("Exit", skin,"orange");
 
         // Triggers an event when the button is pressed
         startBtn.addListener(
@@ -73,6 +75,7 @@ public class MainMenuDisplay extends UIComponent {
                         entity.getEvents().trigger("load");
                     }
                 });
+        loadBtn.setDisabled(!Gdx.files.local("saves/saveFile.json").exists());
 
         controlsBtn.addListener(
                 new ChangeListener() {
@@ -89,6 +92,16 @@ public class MainMenuDisplay extends UIComponent {
                     public void changed(ChangeEvent changeEvent, Actor actor) {
                         logger.debug("Settings button clicked");
                         entity.getEvents().trigger("settings");
+                    }
+                });
+
+        creditsBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+
+                        logger.debug("Credits button clicked");
+                        entity.getEvents().trigger("credits");
                     }
                 });
 
@@ -112,8 +125,11 @@ public class MainMenuDisplay extends UIComponent {
         table.row();
         table.add(settingsBtn).padTop(15f);
         table.row();
+        table.add(creditsBtn).padTop(15f);
+        table.row();
         table.add(exitBtn).padTop(15f);
         stage.addActor(title);
+
         updateAnimation();
 
         stage.addActor(transitionFrames);
@@ -121,9 +137,9 @@ public class MainMenuDisplay extends UIComponent {
     }
 
     private void updateAnimation() {
-        if (frame < MainMenuScreen.frameCount) {
+        if (frame < MainMenuScreen.FRAME_COUNT) {
             transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
-                    .getAsset(MainMenuScreen.transitionTextures[frame], Texture.class))));
+                    .getAsset(MainMenuScreen.getTransitionTextures()[frame], Texture.class))));
             transitionFrames.setWidth(Gdx.graphics.getWidth());
             transitionFrames.setHeight(Gdx.graphics.getHeight() / (float)2); //https://rules.sonarsource.com/java/tag/overflow/RSPEC-2184/
             transitionFrames.setPosition(0, Gdx.graphics.getHeight() / (float)2 + 15); //https://rules.sonarsource.com/java/tag/overflow/RSPEC-2184/
@@ -136,7 +152,7 @@ public class MainMenuDisplay extends UIComponent {
 
     @Override
     public void update() {
-        if (System.currentTimeMillis() - lastFrameTime > frameDuration) {
+        if (System.currentTimeMillis() - lastFrameTime > FRAME_DURATION) {
             updateAnimation();
         }
     }
