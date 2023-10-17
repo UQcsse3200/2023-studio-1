@@ -92,7 +92,7 @@ public class PlantInfoDisplayComponent extends UIComponent {
         window.reset();
         window.getTitleLabel().setText(windowName);
         window.setVisible(isOpen);
-        window.setSize(450f, 275f);
+        window.setSize(470f, 275f);
         //window.padTop(10f);
         window.setPosition(Gdx.graphics.getWidth() - 20f, Gdx.graphics.getHeight() - 20f, Align.topRight);
         window.setMovable(false);
