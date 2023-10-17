@@ -179,7 +179,7 @@ public class PlantComponent extends Component {
     /**
      * The effect a plant has when it is an adult.
      */
-    private final String adultEffect;
+    private String adultEffect;
 
     /**
      * Indicated whether a plant is eating. Can only be true if the plant is a space snapper.
@@ -707,6 +707,14 @@ public class PlantComponent extends Component {
     }
 
     /**
+     * Getter for adultEffect
+     * @return the adult effect
+     */
+    public String getAdultEffect() {
+        return this.adultEffect;
+    }
+
+    /**
      * Sets the harvest yield of this plant.
      *
      * <p>This will store an unmodifiable copy of the given map. Modifications made to the given
@@ -716,6 +724,14 @@ public class PlantComponent extends Component {
      */
     public void setHarvestYields(Map<String, Integer> harvestYields) {
         this.harvestYields = Map.copyOf(harvestYields);
+    }
+
+    /**
+     * Gets the harvest yield of this plant.
+     * @return Map of item names to drop quantities.
+     */
+    public Map<String, Integer> getHarvestYields() {
+        return this.harvestYields;
     }
 
     /**
@@ -915,11 +931,7 @@ public class PlantComponent extends Component {
                     aoeAnimations.getComponent(AnimationRenderComponent.class).startAnimation(currentAoeAnimation);
                 }
             }
-
-
         }
-
-
     }
 
     /**
