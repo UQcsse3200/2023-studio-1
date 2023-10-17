@@ -76,7 +76,12 @@ public enum EffectSoundFile implements SoundFile {
     ATOMIC_ALGAE_DECAY_LORE("sounds/plants/atomicAlgae/decayLore.wav"),
     ATOMIC_ALGAE_DESTROY_LORE("sounds/plants/atomicAlgae/destroyLore.wav"),
     ATOMIC_ALGAE_NEARBY_LORE("sounds/plants/atomicAlgae/nearbyLore.wav"),
-    ;
+    SHIP_CLUE_SOLVED("sounds/ship-clue-solved.wav"),
+    SHIP_INSTALL_PART("sounds/install-ship-part.wav"),
+    SHIP_FEATURE_UNLOCKED("sounds/ship-feature-unlocked.wav"),
+    SHIP_TELEPORT("sounds/ship-teleport.wav"),
+    SHIP_EATER_ATTACK("sounds/ship-eater-attack.wav"),
+    SHIP_EATER_HIDE("sounds/ship-eater-hide.wav");
 
     private final String filePath;
 

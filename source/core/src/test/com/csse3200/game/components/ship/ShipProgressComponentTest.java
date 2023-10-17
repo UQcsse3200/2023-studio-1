@@ -9,6 +9,8 @@ import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TimeService;
+import com.csse3200.game.services.sound.EffectsMusicService;
+import com.csse3200.game.services.sound.SoundService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,12 +23,18 @@ import static org.mockito.Mockito.*;
 @ExtendWith(GameExtension.class)
 class ShipProgressComponentTest {
 	private Entity ship;
+
 	private ShipProgressComponent shipProgressComponent;
 
 	@BeforeEach
 	void initialiseTest() {
 		ServiceLocator.registerTimeService(new TimeService());
 		ServiceLocator.registerMissionManager(new MissionManager());
+
+		SoundService mockSoundService = mock(SoundService.class);
+		ServiceLocator.registerSoundService(mockSoundService);
+
+		when(mockSoundService.getEffectsMusicService()).thenReturn(mock(EffectsMusicService.class));
 
 		GameArea mockGameArea = mock(GameArea.class);
 		when(mockGameArea.getPlayer()).thenReturn(new Entity().addComponent(new InventoryComponent()));
