@@ -113,16 +113,20 @@ public class ToggleableMap extends UIComponent {
         window.setVisible(isOpen);
         transparentRectangle.setVisible(isOpen);
         if (!Boolean.TRUE.equals(isOpen)) {
+            logger.debug("Recover external UI");
             recoverExternalUI();
         } else {
+            logger.debug("Remove external UI");
             removeExternalUI();
         }
         mapSize = ServiceLocator.getGameArea().getMap().getMapSize();
         if (Boolean.TRUE.equals(isOpen)) {
+            logger.debug("Create toggleable map");
             createMap();
         } else {
             if(Boolean.TRUE.equals(mapRunning)) { // if
                 mapRunning = false;
+                logger.debug("Unpause the game");
                 unPauseGame();
             }
         }
@@ -149,6 +153,7 @@ public class ToggleableMap extends UIComponent {
      * @return list of position around the given position
      */
     private ArrayList<GridPoint2> cellAround(GridPoint2 gpPos) {
+        logger.debug("Retrieving cells surrounding player position");
         ArrayList<GridPoint2> listPlayerPos = new ArrayList<>();
         listPlayerPos.add(gpPos);
         listPlayerPos.add(new GridPoint2(gpPos.x +1, gpPos.y)); // right
@@ -251,7 +256,9 @@ public class ToggleableMap extends UIComponent {
      */
     private void createMap() {
         pauseGame();
+        logger.debug("Pause game for toggleable map");
 
+        logger.debug("Creating toggleable map");
         createAssets();
         window.reset();
         window.getTitleLabel().setText("MAP");
@@ -270,6 +277,7 @@ public class ToggleableMap extends UIComponent {
     }
 
     private void createNewMap() {
+        logger.debug("Creating NEW toggleable map");
         createAssets();
         dimScreen();
         window.reset();
