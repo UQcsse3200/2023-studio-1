@@ -553,6 +553,12 @@ public class SpaceGameArea extends GameArea {
     effects.add(EffectSoundFile.FISHING_CAST);
     effects.add(EffectSoundFile.FISHING_CATCH);
     effects.add(EffectSoundFile.SCYTHE);
+    effects.add(EffectSoundFile.SHIP_CLUE_SOLVED);
+    effects.add(EffectSoundFile.SHIP_INSTALL_PART);
+    effects.add(EffectSoundFile.SHIP_FEATURE_UNLOCKED);
+    effects.add(EffectSoundFile.SHIP_TELEPORT);
+    effects.add(EffectSoundFile.SHIP_EATER_ATTACK);
+    effects.add(EffectSoundFile.SHIP_EATER_HIDE);
 
 
     try {
