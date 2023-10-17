@@ -21,6 +21,7 @@ import org.mockito.ArgumentCaptor;
 import java.util.Random;
 
 import static com.csse3200.game.missions.quests.QuestFactory.ALIENS_ATTACK_QUEST_NAME;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
@@ -94,7 +95,7 @@ class ShipDebrisComponentTest {
 		verify(mockEntityService, times(1)).register(entityCaptor.capture());
 		Entity entity = entityCaptor.getValue();
 
-		assertTrue(entity.getType() == EntityType.SHIP_EATER);
+		assertSame(entity.getType(), EntityType.SHIP_EATER);
 	}
 
 }

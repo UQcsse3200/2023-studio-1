@@ -52,6 +52,7 @@ import static org.mockito.Mockito.*;
  * the properties stores in 'PlayerConfig'.
  */
 @ExtendWith(GameExtension.class)
+
 public class TestInventoryUI {
 	Entity player;
 	InventoryDisplay inventoryDisplay;

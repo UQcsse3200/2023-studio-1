@@ -20,7 +20,7 @@ import java.util.Map;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-public class InventoryStateQuestTest {
+class InventoryStateQuestTest {
     private InventoryStateQuest inventoryStateQuest1, inventoryStateQuest2, inventoryStateQuest3;
     private InventoryComponent inventory;
     private SpaceGameArea spaceGameArea;
@@ -28,7 +28,7 @@ public class InventoryStateQuestTest {
     private EventHandler eventHandler;
 
     @BeforeEach
-    public void init() {
+    void init() {
         inventory = mock(InventoryComponent.class);
 
         inventoryStateQuest1 = new InventoryStateQuest("Test", mock(Reward.class), Map.of("Item1", 3, "Item2", 2));
@@ -55,12 +55,12 @@ public class InventoryStateQuestTest {
     }
 
     @AfterEach
-    public void after() {
+    void after() {
         ServiceLocator.clear();
     }
 
     @Test
-    public void testInventoryIsMissing() {
+    void testInventoryIsMissing() {
         inventory = null;
         assertFalse(inventoryStateQuest1.isCompleted());
         // initially missing then gets inventory
@@ -68,19 +68,19 @@ public class InventoryStateQuestTest {
     }
 
     @Test
-    public void testInventoryNotMissing() {
+    void testInventoryNotMissing() {
         assertFalse(inventoryStateQuest1.checkPlayerInventoryMissing());
     }
 
     @Test
-    public void completeWhenItemsCollected() {
+    void completeWhenItemsCollected() {
         when(inventory.getItemCount("Item1")).thenReturn(3);
         when(inventory.getItemCount("Item2")).thenReturn(2);
         assertTrue(inventoryStateQuest1.isCompleted());
     }
 
     @Test
-    public void notCompleteWhenAllItemsNotCollected() {
+    void notCompleteWhenAllItemsNotCollected() {
         when(inventory.getItemCount("Item1")).thenReturn(2);
         when(inventory.getItemCount("Item2")).thenReturn(1);
         assertFalse(inventoryStateQuest1.isCompleted());
@@ -89,7 +89,7 @@ public class InventoryStateQuestTest {
 
 
     @Test
-    public void testGetShortDescription() {
+    void testGetShortDescription() {
         when(inventory.getItemCount("Item1")).thenReturn(3);
         when(inventory.getItemCount("Item2")).thenReturn(2);
         String expected = "5 out of 5 required items collected";
@@ -102,7 +102,7 @@ public class InventoryStateQuestTest {
     }
 
     @Test
-    public void testRegisterMission() {
+    void testRegisterMission() {
         TimeService timeService = mock(TimeService.class);
         ServiceLocator.registerTimeService(timeService);
         when(ServiceLocator.getTimeService().getEvents()).thenReturn(eventHandler);
@@ -112,7 +112,7 @@ public class InventoryStateQuestTest {
     }
 
     @Test
-    public void testIsComplete() {
+    void testIsComplete() {
         assertTrue(inventoryStateQuest2.isCompleted());
 
         when(player.getComponent(InventoryComponent.class)).thenReturn(null);
@@ -120,7 +120,7 @@ public class InventoryStateQuestTest {
     }
 
     @Test
-    public void testGetDescription() {
+    void testGetDescription() {
         when(inventory.getItemCount("Item3")).thenReturn(2);
         String expected = "Gather items of all shapes and sizes to improve your efficiency!\n" +
                 "Gather the following items:\n" +
@@ -139,12 +139,12 @@ public class InventoryStateQuestTest {
     }
 
     @Test
-    public void testProgress() {
+    void testProgress() {
         assertEquals(0, inventoryStateQuest1.getProgress());
     }
 
     @Test
-    public void testEmptyMethods() {
+    void testEmptyMethods() {
         boolean isCompleted = inventoryStateQuest2.isCompleted();
         inventoryStateQuest2.readProgress(new JsonValue(0));
         inventoryStateQuest2.resetState();

@@ -30,10 +30,6 @@ public class Renderer implements Disposable{
   private RenderService renderService;
   private DebugRenderer debugRenderer;
 
-  // Testing
-  private ParticleEffect particleEffect;
-  private ParticleEffectPool particleEffectPool;
-
   /**
    * Create a new renderer with default settings
    * @param camera camera to render to

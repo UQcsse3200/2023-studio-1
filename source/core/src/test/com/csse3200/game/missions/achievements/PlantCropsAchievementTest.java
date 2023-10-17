@@ -17,13 +17,13 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
-public class PlantCropsAchievementTest {
+class PlantCropsAchievementTest {
 
     PlantCropsAchievement plantCropsAchievement;
     EventHandler eventHandler;
 
     @BeforeEach
-    public void init() {
+    void init() {
         plantCropsAchievement = new PlantCropsAchievement("test", 1);
 
         MissionManager missionManager = mock(MissionManager.class);
@@ -33,44 +33,44 @@ public class PlantCropsAchievementTest {
     }
 
     @AfterEach
-    public void after() {
+    void after() {
         ServiceLocator.clear();
     }
 
     @Test
-    public void testShortDescription() {
+    void testShortDescription() {
         String expected = "0 out of 1 crops planted";
         assertEquals(expected, plantCropsAchievement.getShortDescription());
     }
 
     @Test
-    public void testGetProgress() {
+    void testGetProgress() {
         assertEquals(0, plantCropsAchievement.getProgress());
     }
 
     @Test
-    public void testReadProgress() {
+    void testReadProgress() {
         JsonValue jsonValue = new JsonValue(3);
         plantCropsAchievement.readProgress(jsonValue);
         assertEquals(3, plantCropsAchievement.getProgress());
     }
 
     @Test
-    public void testIsComplete() {
+    void testIsComplete() {
         assertFalse(plantCropsAchievement.isCompleted());
         plantCropsAchievement.updateState("");
         assertTrue(plantCropsAchievement.isCompleted());
     }
 
     @Test
-    public void testGetDescription() {
+    void testGetDescription() {
         String expected = "Become a test, plant 1 crops on crop tiles!\n"
                 + "0 out of 1 crops planted!";
         assertEquals(expected, plantCropsAchievement.getDescription());
     }
 
     @Test
-    public void testRegisterMission() {
+    void testRegisterMission() {
         plantCropsAchievement.registerMission(eventHandler);
         verify(eventHandler).addListener(eq("PLANT_CROP"), any(EventListener1.class));
     }

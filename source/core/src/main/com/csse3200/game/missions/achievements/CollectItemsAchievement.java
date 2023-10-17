@@ -4,7 +4,6 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.missions.Mission;
 import com.csse3200.game.missions.MissionManager;
-import com.csse3200.game.missions.rewards.Reward;
 
 /**
  * An {@link Achievement} completed by collecting a certain number of items

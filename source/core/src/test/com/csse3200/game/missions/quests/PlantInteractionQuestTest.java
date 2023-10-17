@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 class PlantInteractionQuestTest {
-    private PlantInteractionQuest PIQuest1, PIQuest2, PIQuest3, PIQuest4, PIQuest5, PIQuest6, PIQuest7, PIQuest8;
+    private PlantInteractionQuest PIQuest1, PIQuest2, PIQuest3, PIQuest4, PIQuest5, PIQuest6, PIQuest7, PIQuest8, PIQuest9;
     private Reward r1, r2, r3, r4, r5, r6, r7;
 
     @BeforeEach
@@ -44,6 +44,7 @@ class PlantInteractionQuestTest {
 
         MissionManager.MissionEvent plant = MissionManager.MissionEvent.PLANT_CROP;
         MissionManager.MissionEvent harvest = MissionManager.MissionEvent.HARVEST_CROP;
+        MissionManager.MissionEvent water = MissionManager.MissionEvent.WATER_CROP;
         MissionManager.MissionEvent bug = MissionManager.MissionEvent.COMBAT_ACTOR_DEFEATED;
 
         PIQuest1 = new PlantInteractionQuest("Plant Interaction Quest 1", r1, plant, plantTypes1, 10);
@@ -54,6 +55,7 @@ class PlantInteractionQuestTest {
         PIQuest6 = new PlantInteractionQuest("Plant Interaction Quest 6", r6,10, harvest, plantTypes2, 3);
         PIQuest7 = new PlantInteractionQuest("Plant Interaction Quest 7", r7, 10, plant, plantTypes2, 3);
         PIQuest8 = new PlantInteractionQuest("Plant Interaction Quest 8", r7, 10, bug, plantTypes1, 3);
+        PIQuest9 = new PlantInteractionQuest("Plant Interaction Quest 9", r7, 10, water, plantTypes1, 3);
 
         PIQuest1.registerMission(ServiceLocator.getMissionManager().getEvents());
         PIQuest2.registerMission(ServiceLocator.getMissionManager().getEvents());
@@ -62,6 +64,7 @@ class PlantInteractionQuestTest {
         PIQuest5.registerMission(ServiceLocator.getMissionManager().getEvents());
         PIQuest6.registerMission(ServiceLocator.getMissionManager().getEvents());
         PIQuest7.registerMission(ServiceLocator.getMissionManager().getEvents());
+        PIQuest9.registerMission(ServiceLocator.getMissionManager().getEvents());
 
     }
 
@@ -166,6 +169,16 @@ class PlantInteractionQuestTest {
     }
 
     @Test
+    void testWaterIsCompleted() {
+        assertFalse(PIQuest9.isCompleted());
+        for (int i = 0; i < 3; i++) {
+            ServiceLocator.getMissionManager().getEvents().trigger(MissionManager.MissionEvent.WATER_CROP.name(),
+                    "Cosmic Cob");
+        }
+        assertTrue(PIQuest9.isCompleted());
+    }
+
+    @Test
     void testPlantGetDescription() {
         String desc1 = "Plant %d crops of type Cosmic Cob.\n%d out of %d crops planted.";
         String desc2 = "Plant %d crops of type Aloe Vera, Cosmic Cob.\n%d out of %d crops planted.";
@@ -236,6 +249,18 @@ class PlantInteractionQuestTest {
             assertEquals(formatted6, PIQuest6.getDescription());
             ServiceLocator.getMissionManager().getEvents().trigger(
                     MissionManager.MissionEvent.HARVEST_CROP.name(), "Cosmic Cob");
+        }
+    }
+
+    @Test
+    void testWaterGetDescription() {
+        String desc5 = "Water %d crops of type Cosmic Cob.\n%d out of %d crops watered.";
+
+        for (int i = 0; i < 3; i++) {
+            String formatted = String.format(desc5, 3, i, 3);
+            assertEquals(formatted, PIQuest9.getDescription());
+            ServiceLocator.getMissionManager().getEvents().trigger(
+                    MissionManager.MissionEvent.WATER_CROP.name(), "Cosmic Cob");
         }
     }
 
@@ -369,6 +394,17 @@ class PlantInteractionQuestTest {
             assertEquals(formatted6, PIQuest6.getShortDescription());
             ServiceLocator.getMissionManager().getEvents().trigger(
                     MissionManager.MissionEvent.HARVEST_CROP.name(), "Cosmic Cob");
+        }
+    }
+    @Test
+    void testWaterGetShortDescription() {
+        String desc5 = "%d out of %d crops watered";
+
+        for (int i = 0; i < 3; i++) {
+            String formatted = String.format(desc5, i, 3);
+            assertEquals(formatted, PIQuest9.getShortDescription());
+            ServiceLocator.getMissionManager().getEvents().trigger(
+                    MissionManager.MissionEvent.WATER_CROP.name(), "Cosmic Cob");
         }
     }
 

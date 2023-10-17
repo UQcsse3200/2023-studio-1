@@ -605,10 +605,10 @@ public class QuestFactory {
                         ItemFactory.createAtomicAlgaeSeed()
                 )),
                 new TriggerWeatherReward(List.of(
-                        new SolarSurgeEvent(0, 2, 100, 1.25f),
-                        new SolarSurgeEvent(120, 2, 100, 1.4f),
-                        new SolarSurgeEvent(240, 2, 100, 1.5f),
-                        new SolarSurgeEvent(312, 2, 100, 1.5f)
+                        new SolarSurgeEvent(0, 1, 100, 1.25f),
+                        new SolarSurgeEvent(48, 2, 100, 1.4f),
+                        new SolarSurgeEvent(96, 2, 100, 1.5f),
+                        new SolarSurgeEvent(144, 3, 100, 1.5f)
                 )),
                 new QuestReward(new ArrayList<>(), questsToActivate),
                 new DialogueReward(dialogue, Cutscene.CutsceneType.ALIEN)
@@ -840,7 +840,7 @@ public class QuestFactory {
                     new QuestReward(List.of(QuestFactory::createTheThunderlordsBlessingQuests), new ArrayList<>()),
                     new ItemReward(rewardItems)
             ));
-            return new PlantInteractionQuest(ACID_RAIN_QUEST_NAME, reward, 18,
+            return new PlantInteractionQuest(ACID_RAIN_QUEST_NAME, reward, 12,
                     MissionManager.MissionEvent.HARVEST_CROP, Set.of("Hammer Plant"), 14);
         };
 
@@ -850,12 +850,12 @@ public class QuestFactory {
                 {WAIT}They're incredibly dangerous to your plants. {WAIT}Luckily, you have {COLOR=#3ABE88}6 HOURS{COLOR=BLACK} to prepare.
                 {WAIT}Make sure you have {COLOR=#76428A}HAMMER PLANT{COLOR=BLACK}s covering all of your crops.
                 {WAIT}Take some {COLOR=#76428A}SEEDS{COLOR=BLACK}, just to be safe.
-                {WAIT}Come back to me before the acid shower passes in {COLOR=#3ABE88}18 HOURS{COLOR=BLACK}, after you've harvested some {COLOR=#76428A}HAMMER PLANT{COLOR=BLACK}s.
+                {WAIT}Come back to me before the acid shower passes in {COLOR=#3ABE88}12 HOURS{COLOR=BLACK}, after you've harvested some {COLOR=#76428A}HAMMER PLANT{COLOR=BLACK}s.
                 {WAIT}I should have something for you."
                 """;
 
         MultiReward reward = new MultiReward(List.of(
-                new TriggerWeatherReward(List.of(new AcidShowerEvent(6, 12, 5, 1.4f))),
+                new TriggerWeatherReward(List.of(new AcidShowerEvent(6, 6, 5, 1.4f))),
                 new ItemReward(List.of(
                         ItemFactory.createHammerPlantSeed(),
                         ItemFactory.createHammerPlantSeed(),

@@ -27,10 +27,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(GameExtension.class)
-public class PlaceableFactoryTest {
+class PlaceableFactoryTest {
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         ServiceLocator.registerPhysicsService(new PhysicsService());
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerRenderService(new RenderService());
@@ -56,13 +56,13 @@ public class PlaceableFactoryTest {
     }
 
     @Test
-    public void shouldCreateBase() {
+    void shouldCreateBase() {
         Entity e = PlaceableFactory.createBasePlaceable(EntityType.TRACTOR);
         this.baseComponentsAssertion(e);
     }
 
     @Test
-    public void shouldCreateFence() {
+    void shouldCreateFence() {
         Entity e = PlaceableFactory.createFence();
 
 	    assertSame(EntityType.FENCE, e.getType());
@@ -71,7 +71,7 @@ public class PlaceableFactoryTest {
     }
 
     @Test
-    public void shouldCreateGate() {
+    void shouldCreateGate() {
         Entity e = PlaceableFactory.createGate();
 
 	    assertSame(EntityType.GATE, e.getType());
@@ -80,7 +80,7 @@ public class PlaceableFactoryTest {
     }
 
     @Test
-    public void shouldCreateSprinkler() {
+    void shouldCreateSprinkler() {
         Entity e = PlaceableFactory.createSprinkler();
 
 	    assertSame(EntityType.SPRINKLER, e.getType());
@@ -89,7 +89,7 @@ public class PlaceableFactoryTest {
     }
 
     @Test
-    public void shouldCreatePump() {
+    void shouldCreatePump() {
         Entity e = PlaceableFactory.createPump();
 
 	    assertSame(EntityType.PUMP, e.getType());
