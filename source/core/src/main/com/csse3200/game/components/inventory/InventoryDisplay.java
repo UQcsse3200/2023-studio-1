@@ -209,9 +209,6 @@ public class InventoryDisplay extends UIComponent {
 			}
 
 		}
-		float x = (stage.getWidth() - window.getWidth()) / 2;
-		float y = (stage.getHeight() - window.getHeight()) / 2;
-		window.setPosition(x, y);
 		dnd = new DragAndDrop();
 		setDragItems(actors, map);
 		addTooltips();
