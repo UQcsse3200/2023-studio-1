@@ -1,0 +1,286 @@
+
+gardens-of-the-galaxy-v3.png
+size: 1024, 1024
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+white-pixel
+  rotate: false
+  xy: 1016, 1014
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+pixel-body
+  rotate: false
+  xy: 509, 934
+  size: 505, 81
+  orig: 505, 81
+  offset: 0, 0
+  index: -1
+pixel-mid
+  rotate: false
+  xy: 1, 879
+  size: 506, 136
+  orig: 506, 136
+  offset: 0, 0
+  index: -1
+pixel-title
+  rotate: false
+  xy: 1, 620
+  size: 505, 257
+  orig: 505, 257
+  offset: 0, 0
+  index: -1
+blue
+  rotate: false
+  xy: 1, 314
+  size: 48, 48
+  split: 3, 3, 3, 5
+  pad: 12, 12, 12, 12
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+blue_pressed
+  rotate: false
+  xy: 105, 523
+  size: 48, 48
+  split: 2, 2, 2, 2
+  pad: 12, 12, 12, 12
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+grey
+  rotate: false
+  xy: 51, 364
+  size: 48, 48
+  split: 3, 3, 3, 5
+  pad: 12, 12, 12, 12
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+red
+  rotate: false
+  xy: 1, 364
+  size: 48, 48
+  split: 3, 3, 3, 5
+  pad: 12, 12, 12, 12
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+red_pressed
+  rotate: false
+  xy: 560, 884
+  size: 48, 48
+  split: 2, 2, 2, 2
+  pad: 12, 12, 12, 12
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+blueOutline
+  rotate: false
+  xy: 51, 314
+  size: 48, 48
+  split: 3, 3, 3, 5
+  pad: 12, 12, 12, 12
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+redOutline
+  rotate: false
+  xy: 1, 246
+  size: 48, 48
+  split: 3, 3, 3, 5
+  pad: 12, 12, 12, 12
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+black_check
+  rotate: false
+  xy: 156, 582
+  size: 18, 18
+  split: 1, 3, 1, 3
+  pad: 9, 8, 9, 8
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+blankProgress
+  rotate: false
+  xy: 156, 602
+  size: 48, 16
+  split: 3, 3, 3, 10
+  pad: 3, 3, 7, 5
+  orig: 48, 16
+  offset: 0, 0
+  index: -1
+blankProgressV
+  rotate: false
+  xy: 1, 176
+  size: 16, 48
+  split: 7, 5, 3, 3
+  pad: 3, 10, 3, 3
+  orig: 16, 48
+  offset: 0, 0
+  index: -1
+blueProgress
+  rotate: false
+  xy: 610, 916
+  size: 48, 16
+  split: 3, 3, 3, 10
+  pad: 3, 3, 7, 5
+  orig: 48, 16
+  offset: 0, 0
+  index: -1
+blueProgressV
+  rotate: false
+  xy: 1, 126
+  size: 16, 48
+  split: 7, 5, 3, 3
+  pad: 3, 10, 3, 3
+  orig: 16, 48
+  offset: 0, 0
+  index: -1
+blue_check.9
+  rotate: false
+  xy: 630, 896
+  size: 18, 18
+  split: 1, 3, 1, 3
+  pad: 9, 8, 9, 8
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+knobBlue
+  rotate: false
+  xy: 51, 274
+  size: 16, 18
+  split: 1, 1, 1, 3
+  pad: 6, 6, 6, 8
+  orig: 16, 18
+  offset: 0, 0
+  index: -1
+knobRed
+  rotate: false
+  xy: 51, 294
+  size: 18, 18
+  split: 1, 3, 1, 3
+  pad: 6, 8, 6, 8
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+minusBlue
+  rotate: false
+  xy: 21, 226
+  size: 16, 18
+  split: 1, 1, 1, 3
+  pad: 0, 0, 0, 0
+  orig: 16, 18
+  offset: 0, 0
+  index: -1
+minusRed
+  rotate: false
+  xy: 176, 582
+  size: 18, 18
+  split: 1, 3, 1, 3
+  pad: 0, 0, 0, 0
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+orangeProgress
+  rotate: false
+  xy: 1, 296
+  size: 48, 16
+  split: 3, 3, 3, 10
+  pad: 3, 3, 7, 5
+  orig: 48, 16
+  offset: 0, 0
+  index: -1
+orangeProgressV
+  rotate: false
+  xy: 1, 76
+  size: 16, 48
+  split: 7, 5, 3, 3
+  pad: 3, 10, 3, 3
+  orig: 16, 48
+  offset: 0, 0
+  index: -1
+plusBlue
+  rotate: false
+  xy: 71, 294
+  size: 16, 18
+  split: 1, 3, 1, 3
+  pad: 3, 7, 9, 8
+  orig: 16, 18
+  offset: 0, 0
+  index: -1
+plusOrange.9
+  rotate: false
+  xy: 1, 226
+  size: 18, 18
+  split: 1, 3, 1, 3
+  pad: 3, 7, 9, 8
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+red_check
+  rotate: false
+  xy: 610, 896
+  size: 18, 18
+  split: 1, 3, 1, 3
+  pad: 9, 8, 9, 8
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+metalPanel
+  rotate: false
+  xy: 1, 414
+  size: 100, 100
+  split: 10, 10, 10, 10
+  pad: 18, 18, 64, 18
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+grey_button12
+  rotate: false
+  xy: 509, 883
+  size: 49, 49
+  split: 6, 6, 24, 22
+  pad: 12, 12, 12, 12
+  orig: 49, 49
+  offset: 0, 0
+  index: -1
+grey_button13
+  rotate: false
+  xy: 105, 573
+  size: 49, 45
+  split: 6, 6, 22, 20
+  pad: 12, 12, 12, 12
+  orig: 49, 45
+  offset: 0, 0
+  index: -1
+wood_window
+  rotate: false
+  xy: 1, 516
+  size: 102, 102
+  split: 12, 12, 12, 12
+  pad: 16, 16, 40, 16
+  orig: 102, 102
+  offset: 0, 0
+  index: -1
+wood_window1.9
+  rotate: false
+  xy: 1, 516
+  size: 102, 102
+  split: 11, 11, 11, 11
+  pad: 16, 16, 60, 16
+  orig: 102, 102
+  offset: 0, 0
+  index: -1
+wood_window2.9
+  rotate: false
+  xy: 1, 516
+  size: 102, 102
+  split: 11, 11, 11, 11
+  pad: 24, 24, 60, 24
+  orig: 102, 102
+  offset: 0, 0
+  index: -1

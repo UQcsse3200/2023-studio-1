@@ -1,0 +1,349 @@
+{
+"BitmapFont": {
+	"pixel-body": {
+		"file": "pixel-body.fnt",
+		"scaledSize": -1,
+		"markupEnabled": false,
+		"flip": false
+	},
+	"pixel-mid": {
+		"file": "pixel-mid.fnt",
+		"scaledSize": -1,
+		"markupEnabled": false,
+		"flip": false
+	},
+	"pixel-title": {
+		"file": "pixel-title.fnt",
+		"scaledSize": -1,
+		"markupEnabled": false,
+		"flip": false
+	}
+},
+"Color": {
+	"black": {
+		"hex": "000000ff"
+	},
+	"blue": {
+		"hex": "1ea7e1ff"
+	},
+	"brown": {
+		"hex": "58331eff"
+	},
+	"darkGrey": {
+		"hex": "4d5153ff"
+	},
+	"lightGrey": {
+		"hex": "f1f7f9ff"
+	},
+	"orange": {
+		"hex": "e86a17ff"
+	},
+	"white": {
+		"hex": "fbffffff"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable": {
+	"black_check": {
+		"patch": "black_check",
+		"minWidth": 24,
+		"minHeight": 24,
+		"leftWidth": 9,
+		"rightWidth": 8,
+		"topHeight": 9,
+		"bottomHeight": 8
+	},
+	"red_check": {
+		"patch": "red_check",
+		"minWidth": 24,
+		"minHeight": 24,
+		"leftWidth": 9,
+		"rightWidth": 8,
+		"topHeight": 9,
+		"bottomHeight": 8
+	},
+	"knobRed": {
+		"patch": "knobRed",
+		"minWidth": 24,
+		"minHeight": 24,
+		"leftWidth": 6,
+		"rightWidth": 8,
+		"topHeight": 6,
+		"bottomHeight": 8
+	},
+	"knobBlue.9": {
+		"patch": "knobBlue",
+		"minWidth": 24,
+		"minHeight": 24,
+		"leftWidth": 6,
+		"rightWidth": 6,
+		"topHeight": 6,
+		"bottomHeight": 8
+	}
+},
+"TintedDrawable": {
+	"orange_cursor": {
+		"name": "white-pixel",
+		"color": "orange",
+		"minWidth": 2,
+		"minHeight": 16
+	},
+	"blue_cursor": {
+		"name": "white-pixel",
+		"color": "blue",
+		"minWidth": 2,
+		"minHeight": 16
+	}
+},
+"ButtonStyle": {
+	"default": {
+		"up": "blue",
+		"down": "blue_pressed"
+	},
+	"orange": {
+		"up": "red",
+		"down": "red_pressed"
+	}
+},
+"CheckBoxStyle": {
+	"default": {
+		"checkboxOn": "blue_check.9",
+		"checkboxOff": "black_check",
+		"font": "pixel-body",
+		"fontColor": "black"
+	},
+	"orange": {
+		"checkboxOn": "red_check",
+		"checkboxOff": "black_check",
+		"font": "pixel-body",
+		"fontColor": "black"
+	}
+},
+"ImageButtonStyle": {
+	"default": {
+		"up": "blue",
+		"down": "blue_pressed"
+	},
+	"orange": {
+		"up": "red",
+		"down": "red_pressed"
+	}
+},
+"ImageTextButtonStyle": {
+	"default": {
+		"font": "pixel-body",
+		"fontColor": "white",
+		"downFontColor": "lightGrey",
+		"up": "blue",
+		"down": "blue_pressed"
+	},
+	"orange": {
+		"font": "pixel-body",
+		"fontColor": "white",
+		"downFontColor": "lightGrey",
+		"up": "red",
+		"down": "red_pressed"
+	}
+},
+"LabelStyle": {
+	"default": {
+		"font": "pixel-body"
+	},
+	"small": {
+		"font": "pixel-body"
+	},
+	"large": {
+		"font": "pixel-mid"
+	},
+	"title": {
+		"font": "pixel-title"
+	}
+},
+"ListStyle": {
+	"default": {
+		"font": "pixel-body",
+		"fontColorSelected": "white",
+		"fontColorUnselected": "darkGrey",
+		"selection": "blue"
+	},
+	"orange": {
+		"font": "pixel-body",
+		"fontColorSelected": "white",
+		"fontColorUnselected": "darkGrey",
+		"selection": "red"
+	}
+},
+"ProgressBarStyle": {
+	"default-horizontal": {
+		"background": "blankProgress",
+		"knobBefore": "blueProgress"
+	},
+	"default-vertical": {
+		"background": "blankProgressV",
+		"knobBefore": "blueProgressV"
+	},
+	"orange-horizontal": {
+		"background": "blankProgress",
+		"knobBefore": "orangeProgress"
+	},
+	"orange-vertical": {
+		"background": "blankProgressV",
+		"knobBefore": "orangeProgressV"
+	}
+},
+"ScrollPaneStyle": {
+	"default": {
+		"background": "grey",
+		"hScroll": "blankProgress",
+		"hScrollKnob": "blueProgress",
+		"vScroll": "blankProgressV",
+		"vScrollKnob": "blueProgressV"
+	},
+	"orange": {
+		"background": "grey",
+		"hScroll": "blankProgress",
+		"hScrollKnob": "orangeProgress",
+		"vScroll": "blankProgressV",
+		"vScrollKnob": "orangeProgressV"
+	}
+},
+"SelectBoxStyle": {
+	"default": {
+		"font": "pixel-body",
+		"fontColor": "black",
+		"overFontColor": "white",
+		"background": "blueOutline",
+		"scrollStyle": "default",
+		"listStyle": "default",
+		"backgroundOver": "blue",
+		"backgroundOpen": "blue"
+	},
+	"orange": {
+		"font": "pixel-body",
+		"fontColor": "black",
+		"overFontColor": "white",
+		"background": "redOutline",
+		"scrollStyle": "orange",
+		"listStyle": "orange",
+		"backgroundOver": "red",
+		"backgroundOpen": "red"
+	}
+},
+"SliderStyle": {
+	"default-horizontal": {
+		"background": "blankProgress",
+		"knob": "knobBlue.9",
+		"knobBefore": "blueProgress"
+	},
+	"default-vertical": {
+		"background": "blankProgressV",
+		"knob": "knobBlue.9",
+		"knobBefore": "blueProgressV"
+	},
+	"orange-horizontal": {
+		"background": "blankProgress",
+		"knob": "knobRed",
+		"knobBefore": "orangeProgress"
+	},
+	"orange-vertical": {
+		"background": "blankProgressV",
+		"knob": "knobRed",
+		"knobBefore": "orangeProgressV"
+	}
+},
+"SplitPaneStyle": {
+	"default-horizontal": {
+		"handle": "blankProgressV"
+	},
+	"default-vertical": {
+		"handle": "blankProgress"
+	}
+},
+"TextButtonStyle": {
+	"default": {
+		"font": "pixel-body",
+		"fontColor": "white",
+		"downFontColor": "lightGrey",
+		"up": "blue",
+		"down": "blue_pressed"
+	},
+	"orange": {
+		"font": "pixel-body",
+		"fontColor": "white",
+		"downFontColor": "lightGrey",
+		"up": "red",
+		"down": "red_pressed"
+	},
+	"small": {
+		"font": "pixel-body",
+		"fontColor": "white",
+		"downFontColor": "lightGrey",
+		"up": "red",
+		"down": "red_pressed"
+	},
+	"small-grey": {
+		"font": "pixel-body",
+		"fontColor": "black",
+		"downFontColor": "darkGrey",
+		"up": "grey_button12",
+		"down": "grey_button13"
+	},
+	"grey": {
+		"font": "pixel-body",
+		"fontColor": "black",
+		"downFontColor": "darkGrey",
+		"up": "grey_button12",
+		"down": "grey_button13"
+	}
+},
+"TextFieldStyle": {
+	"default": {
+		"font": "pixel-body",
+		"fontColor": "black",
+		"background": "grey",
+		"focusedBackground": "blueOutline",
+		"cursor": "blue_cursor",
+		"selection": "blue_cursor"
+	},
+	"orange": {
+		"font": "pixel-body",
+		"fontColor": "black",
+		"background": "grey",
+		"focusedBackground": "redOutline",
+		"cursor": "orange_cursor",
+		"selection": "orange_cursor"
+	}
+},
+"TextTooltipStyle": {
+	"default": {
+		"label": {"font": "pixel-body","fontColor": "black"},
+		"background": "wood_window",
+		"wrapWidth": 300
+	},
+	"orange": {
+		"label": "default",
+		"background": "red"
+	}
+},
+"TreeStyle": {
+	"default": {
+		"plus": "plusBlue",
+		"minus": "minusBlue"
+	},
+	"orange": {
+		"plus": "plusOrange.9",
+		"minus": "minusRed"
+	}
+},
+"WindowStyle": {
+	"default": {
+		"background": "metalPanel",
+		"titleFont": "pixel-mid",
+		"titleFontColor": "darkGrey"
+	},
+	"wooden": {
+		"background": "wood_window2.9",
+		"titleFont": "pixel-mid",
+		"titleFontColor": "brown"
+	}
+}
+}

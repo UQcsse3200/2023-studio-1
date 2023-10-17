@@ -78,7 +78,7 @@ public class ToggleableMap extends UIComponent {
         super.create();
         logger.debug("Adding listener to toggleOpen event");
         ServiceLocator.getPlayerMapService().getEvents().addListener(toggleOpen, this::toggleOpen);
-        window = new Window("", skin);
+        window = new Window("", skin, "wooden");
         createNewMap();
         //starts closed so no updateDisplay()
         tiledMap = ServiceLocator.getGameArea().getMap().getTiledMap();

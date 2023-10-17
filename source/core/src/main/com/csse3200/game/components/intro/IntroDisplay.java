@@ -195,7 +195,8 @@ public class IntroDisplay extends UIComponent {
         storyLabel.setDefaultToken(defaultTokens);
         storyLabel.setAlignment(Align.center); // Center align the text
 
-        continueButton = new TextButton("Continue", skin);
+        continueButton = new TextButton("Continue", skin,"orange");
+
 
         continueButton.setVisible(true); // Make the continue button invisible
 
@@ -462,6 +463,7 @@ public class IntroDisplay extends UIComponent {
             } else {
                 // Cleanup of crash animation has begun, reposition Awaken button to
                 // front centre.
+                logger.info("Position set");
                 continueButton.setPosition(Gdx.graphics.getWidth() / 2f,
                         Gdx.graphics.getHeight() / 2f, Align.center);
                 continueButton.toFront();
