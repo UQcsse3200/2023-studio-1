@@ -626,6 +626,7 @@ public class SpaceGameArea extends GameArea {
     effects.add(EffectSoundFile.SHIP_EATER_ATTACK);
     effects.add(EffectSoundFile.SHIP_EATER_HIDE);
 
+
     try {
       ServiceLocator.getSoundService().getEffectsMusicService().loadSounds(effects);
     } catch (InvalidSoundFileException e) {
