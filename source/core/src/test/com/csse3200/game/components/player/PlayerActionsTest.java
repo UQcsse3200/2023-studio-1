@@ -103,9 +103,15 @@ class PlayerActionsTest {
         when(ServiceLocator.getCameraComponent().screenPositionToWorldPosition(any())).thenReturn(new Vector2(2, 2));
     }
 
+    @AfterEach
+    void clear() {
+        ServiceLocator.clear();
+    }
+
     @Test
     void playerShouldAttackNPC() {
         PlayerActions playerActions = player.getComponent(PlayerActions.class);
+        ServiceLocator.registerParticleService(mock(ParticleService.class));
         playerActions.attack(new Vector2(2,2));
         assertEquals(5, areaEntities.get(1).getComponent(CombatStatsComponent.class).getHealth());
     }

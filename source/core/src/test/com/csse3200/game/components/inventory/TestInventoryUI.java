@@ -5,9 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.csse3200.game.areas.TestGameArea;
 import com.csse3200.game.areas.terrain.GameMap;
-import com.csse3200.game.areas.terrain.TerrainComponent;
-import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.items.ItemType;
 import com.csse3200.game.components.player.InventoryComponent;
@@ -17,9 +14,11 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.input.InputService;
+import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.TimeService;
 import com.csse3200.game.services.sound.EffectSoundFile;
 import com.csse3200.game.services.sound.InvalidSoundFileException;
 import com.csse3200.game.services.sound.SoundFile;
@@ -33,6 +32,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
+import org.mockito.MockedConstruction;
+import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,13 +52,15 @@ import static org.mockito.Mockito.*;
  * the properties stores in 'PlayerConfig'.
  */
 @ExtendWith(GameExtension.class)
- public class TestInventoryUI {
+
+public class TestInventoryUI {
 	Entity player;
 	InventoryDisplay inventoryDisplay;
 	static InventoryComponent inventory;
 	Stage stage;
 	InventoryDisplayManager inventoryDisplayManager;
 	ArgumentCaptor<Window> windowArgument;
+	MockedConstruction<ItemFrame> mockFrame;
 	//TestGameArea to register so GameMap can be accessed through the ServiceLocator
 	private static final TestGameArea gameArea = new TestGameArea();
 	private static final Logger logger = LoggerFactory.getLogger(TestInventoryUI.class);
@@ -66,8 +69,6 @@ import static org.mockito.Mockito.*;
 			"images/tool_shovel.png",
 			"images/tool_hoe.png",
 			"images/tool_scythe.png",
-			"images/selected.png",
-			"images/itemFrame.png",
 			"images/bin.png"
 	};
 
@@ -90,9 +91,7 @@ import static org.mockito.Mockito.*;
 	@BeforeEach
 	void createPlayer() {
 		ServiceLocator.registerResourceService(new ResourceService());
-		ServiceLocator.getResourceService().loadTextures(texturePaths);
-		ServiceLocator.getResourceService().loadSkins(skinPaths);
-		ServiceLocator.getResourceService().loadAll();
+
 
 		windowArgument = ArgumentCaptor.forClass(Window.class);
 		stage = mock(Stage.class);
@@ -113,7 +112,11 @@ import static org.mockito.Mockito.*;
 		} catch (InvalidSoundFileException e) {
 			logger.info("Sounds not loaded");
 		}
-
+		ServiceLocator.getResourceService().loadTextures(texturePaths);
+		ServiceLocator.getResourceService().loadSkins(skinPaths);
+		ServiceLocator.getResourceService().loadAll();
+		System.out.println(ServiceLocator.getResourceService().getAsset("gardens-of-the-galaxy/gardens-of-the-galaxy.json",Skin.class));
+		mockFrame = Mockito.mockConstruction(ItemFrame.class);
 		inventoryDisplay = spy(new InventoryDisplay("updateInventory", "toggleInventory", 30, 10, false));
 		player =
 				new Entity(EntityType.PLAYER)
@@ -122,20 +125,17 @@ import static org.mockito.Mockito.*;
 						.addComponent(inventoryDisplay)
 						.addComponent(inventory);
 	}
-
 	@Test
 	void testToggleInventory() {
 		player.create();
 		verify(inventoryDisplay).create();
 		verify(stage).addActor(windowArgument.capture());
-		verify(inventoryDisplay).setDragItems(any(), any());
 		Window window = windowArgument.getValue();
 
 		Table inventorySlots = (Table) window.getChildren().begin()[1];
 		for (Cell<?> cell : inventorySlots.getCells().toArray(Cell.class)) {
 			assert !(cell.getActor() instanceof ItemSlot) || ((ItemSlot) cell.getActor()).getItemImage() == null;
 		}
-
 		player.getComponent(KeyboardPlayerInputComponent.class).setActions(player.getComponent(PlayerActions.class));
 		player.getComponent(KeyboardPlayerInputComponent.class).keyDown(Input.Keys.I);
 
@@ -147,10 +147,8 @@ import static org.mockito.Mockito.*;
 	@ParameterizedTest()
 	@MethodSource({"addingItemsShouldAddInventoryImagesParams"})
 	void addingItemsShouldAddInventoryImages(ItemComponent component, int expected) {
-		ServiceLocator.registerResourceService(new ResourceService());
-		ServiceLocator.getResourceService().loadTextures(texturePaths);
-		ServiceLocator.getResourceService().loadSkins(skinPaths);
-		ServiceLocator.getResourceService().loadAll();
+		ServiceLocator.registerTimeService(new TimeService());
+		ServiceLocator.registerMissionManager(new MissionManager());
 
 		player.create();
 		ArgumentCaptor<Window> win = ArgumentCaptor.forClass(Window.class);
@@ -163,15 +161,19 @@ import static org.mockito.Mockito.*;
 		assert (window.getTitleLabel().textEquals("PLAYER Inventory"));
 		inventoryDisplay.refreshInventory();
 		Table inventorySlots = (Table) window.getChildren().begin()[1];
-		Cell<?>[] cells = Arrays.copyOfRange(inventorySlots.getCells().toArray(Cell.class), 0, 30);
-		Cell<?> deleteButton = Arrays.stream(inventorySlots.getCells().toArray(Cell.class)).toList().get(30);
+		Cell<?>[] cells = Arrays.copyOfRange(inventorySlots.getCells().toArray(Cell.class), 0, 40);
+		Cell<?> deleteButton = Arrays.stream(inventorySlots.getCells().toArray(Cell.class)).toList().get(40);
 		int i = 0;
 		assert (deleteButton.getActor()) instanceof Image;
 		for (Cell<?> slot : cells) {
-			System.out.println(slot);
-			assert ((ItemSlot) slot.getActor()).getChild(0) instanceof Image;
+			if (i < 10) {
+				i++;
+				assert ((Label) slot.getActor()).getText().replace(" ","").toString().equals(Integer.toString(i % 10));
+				continue;
+			}
+			assert ((ItemSlot) slot.getActor()).getChild(0) instanceof ItemFrame;
 			assert ((ItemSlot) slot.getActor()).getChild(1) instanceof Stack;
-			if (i++ <= expected) {
+			if (i++ - 10 <= expected) {
 				assert ((Stack) ((ItemSlot) slot.getActor()).getChild(1)).getChild(0) instanceof Image;
 			} else {
 				assert ((Stack) ((ItemSlot) slot.getActor()).getChild(1)).getChildren().isEmpty();
@@ -195,6 +197,6 @@ import static org.mockito.Mockito.*;
 	public void cleanUp() {
 		// Clears all loaded services
 		ServiceLocator.clear();
+		mockFrame.close();
 	}
 }
-

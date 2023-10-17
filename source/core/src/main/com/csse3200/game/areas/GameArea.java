@@ -34,7 +34,7 @@ public abstract class GameArea implements Disposable {
           EntityType.COW, EntityType.CHICKEN, EntityType.ASTROLOTL, EntityType.PLANT,
           EntityType.OXYGEN_EATER, EntityType.SHIP_DEBRIS, EntityType.SHIP, EntityType.SHIP_PART_TILE,
 		  EntityType.SPRINKLER, EntityType.PUMP, EntityType.FENCE, EntityType.LIGHT, EntityType.GATE, EntityType.CHEST,
-          EntityType.DRAGONFLY, EntityType.BAT, EntityType.TRACTOR, EntityType.GOLDEN_STATUE));
+          EntityType.DRAGONFLY, EntityType.BAT, EntityType.TRACTOR, EntityType.GOLDEN_STATUE, EntityType.SHIP_EATER, EntityType.FIRE_FLIES));
 
   protected GameArea() {
     areaEntities = new ArrayList<>();
@@ -110,7 +110,7 @@ public abstract class GameArea implements Disposable {
     logger.debug("Removing all loadable entities");
     ArrayList<EntityType> placeableTypes = new ArrayList<>(Arrays.asList(EntityType.TILE, EntityType.CHEST,
             EntityType.FENCE, EntityType.LIGHT, EntityType.GATE, EntityType.SPRINKLER, EntityType.SHIP_DEBRIS,
-            EntityType.SHIP_PART_TILE, EntityType.PUMP, EntityType.GOLDEN_STATUE));
+            EntityType.SHIP_PART_TILE, EntityType.PUMP, EntityType.GOLDEN_STATUE, EntityType.SHIP_EATER));
     for (Entity e : entities) {
       if (loadableTypes.contains(e.getType())) {
         if (placeableTypes.contains(e.getType()) && getMap() != null) {

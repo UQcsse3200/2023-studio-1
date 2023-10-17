@@ -1,10 +1,14 @@
 package com.csse3200.game.components.combat;
 
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.services.sound.EffectSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
 import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.missions.MissionManager;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.entities.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +33,11 @@ public class CombatStatsComponent extends Component {
   @Override
   public void create() {
     entity.getEvents().addListener("hit", this::hitFromEntity);
+    entity.getEvents().addListener("lose", this::lose);
+  }
+
+  private void lose() {
+    ServiceLocator.getMissionManager().getEvents().trigger("loseScreen", "You died");
   }
 
   /**
@@ -103,6 +112,13 @@ public class CombatStatsComponent extends Component {
   }
 
   public void hit(CombatStatsComponent attacker) {
+    if (this.entity.getType().equals(EntityType.PLAYER)) {
+      try {
+        ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.PLAYER_DAMAGE);
+      } catch (InvalidSoundFileException e) {
+        logger.error("Failed to play tractor start up sound", e);
+      }
+    }
     int newHealth = getHealth() - attacker.getBaseAttack();
     setHealth(newHealth);
   }
@@ -123,8 +139,56 @@ public class CombatStatsComponent extends Component {
   @Override
   public void earlyUpdate() {
     if (isDead()) {
+
+      EntityType type = entity.getType();
+      EffectSoundFile effect = null;
+
+      switch(type) {
+        case CHICKEN:
+          effect = EffectSoundFile.CHICKEN_DEATH;
+          break;
+        case COW:
+          effect = EffectSoundFile.COW_DEATH;
+          break;
+        case OXYGEN_EATER:
+          effect = EffectSoundFile.OXYGEN_EAT_DEATH;
+          break;
+        case BAT:
+          effect = EffectSoundFile.DEATH_BATS;
+          break;
+        case DRAGONFLY:
+          effect = EffectSoundFile.DRAGONFLY_DEATH;
+          break;
+        case PLAYER:
+          effect = EffectSoundFile.PLAYER_DEATH;
+          break;
+        default:
+          effect = null;
+      }
+      try {
+        ServiceLocator.getSoundService().getEffectsMusicService().play(effect);
+        Thread.sleep(100);
+      } catch (Exception e) {
+        logger.error("Failed to play animal sound", e);
+      }
       entity.getEvents().trigger("death");
-      handleDeath();
+	    ServiceLocator.getMissionManager().getEvents().trigger(
+			    MissionManager.MissionEvent.COMBAT_ACTOR_DEFEATED.name(), entity.getType());
+	    handleDeath();
     }
   }
+
+	@Override
+	public void write(Json json) {
+		json.writeObjectStart(this.getClass().getSimpleName());
+		json.writeValue("health", this.health);
+		json.writeObjectEnd();
+	}
+
+	@Override
+	public void read(Json json, JsonValue jsonValue) {
+		jsonValue = jsonValue.get(this.getClass().getSimpleName());
+		int healthRead = jsonValue.getInt("health");
+		setHealth(healthRead);
+	}
 }

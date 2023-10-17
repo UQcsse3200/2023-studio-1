@@ -50,77 +50,98 @@ public class EndCreditsDisplay extends UIComponent {
     private TypingLabel creditsLabel;
 
     private static final  String CREDITS = """
-                    {SLOW}
-                    {RAINBOW}GARDENERS OF THE GALAXY: LEGEND OF THE ASTROHOE {ENDRAINBOW}
-                    
-                    Developed by Studio One
-                      
-                      
-                    
-                    {WAVE}{COLOR=red} TEAM ONE {CLEARCOLOR}{ENDWAVE}
-                                   
-                    Farming tools (Traktor)
-                    Saving and Loading
-                    Pausing Mechanics
-                    Fences and Sprinklers
-                        
-                        
-                        
-                    {WAVE}{COLOR=green} TEAM TWO {CLEARCOLOR}{ENDWAVE}
-                   
-                    Player movement animations
-                    Player quests and story progression
-                    Ship and player artifacts
-        
-        
-        
-                    {WAVE}{COLOR=blue} TEAM THREE {CLEARCOLOR}{ENDWAVE}
-                   
-                    Map generation
-                    Entity movement mechanics
-                    Win and lose conditions
+                {SLOW}
+                {RAINBOW}GARDENERS OF THE GALAXY: LEGEND OF THE ASTROHOE {ENDRAINBOW}
+                
+                Developed by Studio One
+                  
+                  
+                
+                {WAVE}{COLOR=red} TEAM ONE {CLEARCOLOR}{ENDWAVE}
+                               
+                Items
+                Tractor
+                Saving and Loading
+                Placeable objects
+                Fireflies
+                Fishing
                     
                     
-                    
-                    {WAVE}{COLOR=gray} TEAM FOUR {CLEARCOLOR}{ENDWAVE}
-                   
-                    Farming animal animations and mechanics
-                    Hostile animals
-                    Weapons system
-        
-        
-        
-                    {WAVE}{COLOR=yellow} TEAM FIVE {CLEARCOLOR}{ENDWAVE}
-                   
-                    Screen and menu design
-                    Time system
-                    Oxygen system
-                    Sound system
-        
-        
-        
-                    {WAVE}{COLOR=orange} TEAM SIX {CLEARCOLOR}{ENDWAVE}
-                   
-                    Plant design
-                    Plant growth mechanics
-                    Harvesting mechanics
-                    
-                    
-                    
-                    {WAVE}{COLOR=purple} TEAM SEVEN {CLEARCOLOR}{ENDWAVE}
-                   
-                    Tile system
-                    Weather system
-                    Seeds and fertiliser
-                    Day and night cycle
-        
-        
-        
-                    {WAVE}{COLOR=pink} TEAM EIGHT {CLEARCOLOR}{ENDWAVE}
-                   
-                    Player inventory system
-                    Generic inventory system
-                    Win and loss screens""";
+                {WAVE}{COLOR=green} TEAM TWO {CLEARCOLOR}{ENDWAVE}
+               
+                Player movement animations
+                Alien quest giver & mission UI
+                Ship and player artifacts
+                Ship Eaters
+                Fish
+                
+                
+                
+                {WAVE}{COLOR=blue} TEAM THREE {CLEARCOLOR}{ENDWAVE}
+               
+                Map generation
+                Entity movement modifiers
+                Win and lose conditions
+                Cutscenes
+                
+                
+                
+                {WAVE}{COLOR=gray} TEAM FOUR {CLEARCOLOR}{ENDWAVE}
+               
+                Farm animals
+                Hostile animals
+                Weapons system
+                
+                
+                
+                {WAVE}{COLOR=yellow} TEAM FIVE {CLEARCOLOR}{ENDWAVE}
+               
+                Screen and menu design
+                Time system
+                Oxygen system
+                Sound system
+                
+                
+                
+                {WAVE}{COLOR=orange} TEAM SIX {CLEARCOLOR}{ENDWAVE}
+               
+                Plant design
+                Plant growth mechanics
+                
+                
+                
+                {WAVE}{COLOR=purple} TEAM SEVEN {CLEARCOLOR}{ENDWAVE}
+               
+                Tile system
+                Time system
+                Day and night cycle
+                Missions and Quests system
+                Weather system
+                Seeds and fertiliser
+                Game commands
+                Main game storyline and dialogue
+                Lighting system
+                Particle system and particles
+                
+                
+                
+                {WAVE}{COLOR=pink} TEAM EIGHT {CLEARCOLOR}{ENDWAVE}
+               
+                Player inventory system
+                Generic inventory system
+                Win and loss screens
+                This
+
+
+
+
+
+
+                
+                {RAINBOW}Secret Khaled System™ {ENDRAINBOW}
+                Team 1 and Team 2 
+               
+                """;
 
     /**
      * Creates a new EndCreditsDisplay instance.

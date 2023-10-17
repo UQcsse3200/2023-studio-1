@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
 import com.csse3200.game.areas.SpaceGameArea;
+import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ItemFactory;
@@ -57,6 +58,9 @@ class QuestFactoryTest {
         ServiceLocator.registerPhysicsService(new PhysicsService());
         ServiceLocator.registerResourceService(mockResourceService);
         ServiceLocator.registerGameArea(mockGameArea);
+
+        ClimateController climateController = new ClimateController();
+        when(mockGameArea.getClimateController()).thenReturn(climateController);
 
         when(mockResourceService.getAsset(any(), any())).thenReturn(mockTexture);
 
@@ -237,10 +241,36 @@ class QuestFactoryTest {
     @Test
     void testCreateShipRepairsQuest() {
         try (MockedStatic<ItemFactory> itemFactoryMockedStatic = mockStatic(ItemFactory.class)) {
-            itemFactoryMockedStatic.when(ItemFactory::createShipPart).thenReturn(mockEntity);
+            itemFactoryMockedStatic.when(ItemFactory::createClueItem).thenReturn(mockEntity);
 
             Quest quest = QuestFactory.createShipRepairsQuest();
             assertEquals(QuestFactory.SHIP_REPAIRS_QUEST_NAME, quest.getName());
+            assertFalse(quest.isCompleted());
+        } catch (Exception ignored) {
+            fail();
+        }
+    }
+
+    @Test
+    void testCreatePartFinderIQuest() {
+        try (MockedStatic<ItemFactory> itemFactoryMockedStatic = mockStatic(ItemFactory.class)) {
+            itemFactoryMockedStatic.when(ItemFactory::createClueItem).thenReturn(mockEntity);
+
+            Quest quest = QuestFactory.createPartFinderIQuest();
+            assertEquals(QuestFactory.PART_FINDER_I_QUEST_NAME, quest.getName());
+            assertFalse(quest.isCompleted());
+        } catch (Exception ignored) {
+            fail();
+        }
+    }
+
+    @Test
+    void testCreateSpaceDebrisQuest() {
+        try (MockedStatic<ItemFactory> itemFactoryMockedStatic = mockStatic(ItemFactory.class)) {
+            itemFactoryMockedStatic.when(ItemFactory::createShipPart).thenReturn(mockEntity);
+
+            Quest quest = QuestFactory.createSpaceDebrisQuest();
+            assertEquals(QuestFactory.SPACE_DEBRIS_QUEST_NAME, quest.getName());
             assertFalse(quest.isCompleted());
         } catch (Exception ignored) {
             fail();

@@ -17,6 +17,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.Mockito.*;
 
@@ -53,21 +54,21 @@ class ShipTimeSkipComponentTest {
 		testEntity.create();
 
 		// not unlocked yet, shouldn't do anything
-		testEntity.getEvents().trigger("interact");
+		testEntity.getEvents().trigger("timeSkip");
 		verify(mockTimeSource, times(0)).setTimeScale(200f);
 
 		// unlock the feature
 		testEntity.getEvents().trigger(ShipFactory.events.PROGRESS_UPDATED.name(), 4, new HashSet<>(List.of(ShipProgressComponent.Feature.BED)));
 
 		// should trigger a time change now
-		testEntity.getEvents().trigger("interact");
+		testEntity.getEvents().trigger("timeSkip");
 		verify(mockTimeSource, times(1)).setTimeScale(200f);
 
 		while (!isMorningHour) {
 			timeService.update();
 		}
 
-		assert timeService.getDay() == expectedDay;
+		assertEquals(timeService.getDay(), expectedDay);
 		verify(mockTimeSource, times(1)).setTimeScale(1f);
 	}
 

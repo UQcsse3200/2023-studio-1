@@ -99,7 +99,8 @@ public class ProjectileFactory {
         Entity projectile = createBaseProjectile();
 
         AnimationRenderComponent animator = new AnimationRenderComponent(
-                ServiceLocator.getResourceService().getAsset("images/projectiles/oxygen_eater_projectile.atlas",
+                ServiceLocator.getResourceService().getAsset("images/projectiles/gun_projectile" +
+                                ".atlas",
                         TextureAtlas.class),
                 16f
         );

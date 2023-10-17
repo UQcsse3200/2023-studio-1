@@ -5,8 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.maingame.mainmenu.MainMenuActions;
@@ -35,9 +33,6 @@ public class MainMenuScreen extends ScreenAdapter {
   private static final String[] mainMenuTextures = {"images/galaxy_home_still.png"};
   private static final String[] transitionTextures = new String[FRAME_COUNT];
   private static final String ANIMATION_PREFIX = "images/menu_animations/menu_animations";
-  private Texture backgroundTexture;
-  private SpriteBatch batch;
-
 
   public MainMenuScreen(GdxGame game) {
     this.game = game;
@@ -137,4 +132,3 @@ public class MainMenuScreen extends ScreenAdapter {
     return transitionTextures;
   }
 }
-

@@ -40,6 +40,7 @@ public class FireflySpawner {
         random = new SecureRandom();
 
         ServiceLocator.getTimeService().getEvents().addListener("nightTime", this::startSpawning);
+        ServiceLocator.getGameArea().getClimateController().getEvents().addListener("spawnFireflies", this::startSpawning);
     }
 
     /**

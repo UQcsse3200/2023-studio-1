@@ -8,8 +8,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
+import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.missions.achievements.Achievement;
 import com.csse3200.game.missions.quests.Quest;
+import com.csse3200.game.services.ParticleService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
@@ -331,6 +333,8 @@ public class MissionDisplay extends UIComponent {
                 @Override
                 public void changed(ChangeEvent changeEvent, Actor actor) {
                     quest.collectReward();
+                    ServiceLocator.getGameArea().getPlayer().getEvents()
+		                    .trigger(ParticleService.START_EVENT, ParticleService.ParticleEffectType.SUCCESS_EFFECT);
                     generateQuestsMenu();
                 }
             });
@@ -616,11 +620,14 @@ public class MissionDisplay extends UIComponent {
     public void toggleOpen() {
         ServiceLocator.getPlantInfoService().getEvents().trigger("madeFirstContact");
         ServiceLocator.getPlantInfoService().getEvents().trigger("clearPlantInfo");
-        
+
         if (isOpen) {
             window.setVisible(false);
             isOpen = false;
+            ServiceLocator.getGameArea().getPlayer().getEvents().trigger(PlayerActions.events.UNFREEZE.name());
         } else {
+            // Prevent player from moving - freeze player
+            ServiceLocator.getGameArea().getPlayer().getEvents().trigger(PlayerActions.events.FREEZE.name());
             openMenu();
         }
     }

@@ -148,7 +148,7 @@ public class LoseScreenDisplay extends UIComponent {
     public static void setLoseReason(String causeOfDeath) {
         String reason = getString(causeOfDeath);
         losingMessage = """ 
-                {SLOW}Despite your best efforts,
+                {FAST}Despite your best efforts,
                 
                 """
                 + reason +
@@ -175,6 +175,7 @@ public class LoseScreenDisplay extends UIComponent {
             case QuestFactory.ACT_I_MAIN_QUEST_NAME -> reason = "you failed to gain the Alien's trust in time,\nand so you were removed from the crash landing site.";
             case QuestFactory.ACT_II_MAIN_QUEST_NAME -> reason = "you failed to contact the rest of humanity in time,\nleaving you stranded and alone on an Alien world.";
             case QuestFactory.ACT_III_MAIN_QUEST_NAME -> reason = "you failed to make the planet liveable for humanity,\nleading what remains of the human race to their doom.";
+        case "You died" -> reason = "You tried your best to survive, but this time you failed.\n \"Winning, to me, is easy!\" - DJ Khaled, GOD DID";
             default -> reason = "Error Unknown Reason for Defeat";
         }
         return reason;

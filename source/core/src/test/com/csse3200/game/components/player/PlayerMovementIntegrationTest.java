@@ -1,28 +1,13 @@
 package com.csse3200.game.components.player;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Named.named;
-import static org.junit.jupiter.params.provider.Arguments.arguments;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-
-import java.util.stream.Stream;
-
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.TestGameArea;
 import com.csse3200.game.areas.terrain.GameMap;
 import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.CameraComponent;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.components.combat.CombatStatsComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.extensions.GameExtension;
@@ -33,6 +18,21 @@ import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Named.named;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 
 
 @ExtendWith(GameExtension.class)
@@ -86,7 +86,8 @@ class PlayerMovementIntegrationTest {
                 .addComponent(new PhysicsComponent())
                 .addComponent(new PlayerActions())
                 .addComponent(animator)
-                .addComponent(new PlayerAnimationController());
+                .addComponent(new PlayerAnimationController())
+                .addComponent(new CombatStatsComponent(1, 1));
 
         player.getComponent(AnimationRenderComponent.class).scaleEntity();
         player.create();
@@ -98,8 +99,8 @@ class PlayerMovementIntegrationTest {
         AnimationRenderComponent animationRenderComponent = player.getComponent(AnimationRenderComponent.class);
         PlayerActions playerActionsComponent = player.getComponent(PlayerActions.class);
 
-        if (isRunning) player.getEvents().trigger("run");
-        player.getEvents().trigger("move", moveDirection);
+        if (isRunning) player.getEvents().trigger(PlayerActions.events.RUN.name());
+        player.getEvents().trigger(PlayerActions.events.MOVE.name(), moveDirection);
         playerActionsComponent.update();
         assertEquals(expectedAnimationName, animationRenderComponent.getCurrentAnimation());
     }
@@ -130,7 +131,7 @@ class PlayerMovementIntegrationTest {
     @MethodSource({"shouldReturnToDefaultAnimationOnStopParams"})
     void shouldReturnToDefaultAnimationOnStop(String prevDirection, String expectedAnimation, int randomiser) {
         AnimationRenderComponent animationRenderComponent = player.getComponent(AnimationRenderComponent.class);
-        player.getEvents().trigger("animationWalkStop",prevDirection, randomiser, true );
+        player.getEvents().trigger(PlayerAnimationController.events.ANIMATION_WALK_STOP.name(),prevDirection, randomiser, true );
         assertEquals(expectedAnimation, animationRenderComponent.getCurrentAnimation());
     }
 
