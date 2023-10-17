@@ -18,7 +18,7 @@ public class PlaceableEvents extends Component {
         Entity placedItem = tile.getOccupant();
         // Check if the placeable is a chest and if there is items in that chest
         InventoryComponent chestInventory = placedItem.getComponent(InventoryComponent.class);
-        if (chestInventory != null && chestInventory.getInventorySize() >= 1) {
+        if (chestInventory != null && !chestInventory.getItemCount().isEmpty()) {
             return;
         }
         // Notify any placeable entities to destroy their connections
