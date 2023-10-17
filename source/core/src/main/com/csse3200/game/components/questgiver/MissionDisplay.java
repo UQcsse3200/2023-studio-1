@@ -63,6 +63,7 @@ public class MissionDisplay extends UIComponent {
                 stage.getWidth() / 2 - window.getWidth() / 2,
                 stage.getHeight() / 2 - window.getHeight() / 2
         ); // center on stage
+
     }
 
     /**
@@ -640,6 +641,8 @@ public class MissionDisplay extends UIComponent {
 
         window.setVisible(true);
 
+        window.toFront();
+
         isOpen = true;
     }
 
@@ -659,6 +662,11 @@ public class MissionDisplay extends UIComponent {
         if (isOpen) {
             generateAchievements();
         }
+    }
+
+    @Override
+    public void update() {
+        this.updateWindow();
     }
 
     /**

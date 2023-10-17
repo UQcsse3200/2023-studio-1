@@ -7,11 +7,19 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 
-
+/**
+ * PlantCommand class
+ */
 public class PlantCommand implements Command {
 
+    /**
+     * Logger for PlantCommand class for debugging
+     */
     private static final Logger logger = LoggerFactory.getLogger(PlantCommand.class);
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean action(ArrayList<String> args) {
         if (!isValid(args)) {
