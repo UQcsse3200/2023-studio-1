@@ -110,7 +110,7 @@ public class PlantInfoDisplayComponent extends UIComponent {
     public void showPlantInfo(String plantName, String plantInfo) {
         createWindow(plantName);
         label = new Label(plantInfo, skin);
-        label.setFontScale(1.4f);
+        label.setFontScale(1.3f);
         label.setColor(Color.BROWN);
         window.add(label);
         stage.addActor(window);
@@ -141,7 +141,7 @@ public class PlantInfoDisplayComponent extends UIComponent {
             }
 
             label = new Label(activeQuestsString.toString(), skin);
-            label.setFontScale(1.4f);
+            label.setFontScale(1.3f);
             label.setColor(Color.BROWN);
             window.add(label);
             stage.addActor(window);
