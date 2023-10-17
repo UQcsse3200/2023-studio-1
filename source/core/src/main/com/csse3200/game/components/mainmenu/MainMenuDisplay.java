@@ -28,7 +28,7 @@ public class MainMenuDisplay extends UIComponent {
     private Image transitionFrames;
     private long lastFrameTime;
     private int fps = 15;
-    private final long frameDuration =  (long)(800 / fps);
+    private final long frameDuration =  (long)(400 / fps);
 
     @Override
     public void create() {
@@ -41,21 +41,12 @@ public class MainMenuDisplay extends UIComponent {
     private void addActors() {
         table = new Table();
         table.setFillParent(true);
-        Image title =
-                new Image(
-                        ServiceLocator.getResourceService()
-                                .getAsset("images/galaxy_home_still.png", Texture.class));
-
-        title.setWidth(Gdx.graphics.getWidth());
-        title.setHeight(Gdx.graphics.getHeight());
-        title.setPosition(0, 0);
         TextButton startBtn = new TextButton("New Game", skin);
         TextButton loadBtn = new TextButton("Continue", skin);
         TextButton controlsBtn = new TextButton("Controls", skin);
         TextButton settingsBtn = new TextButton("Settings", skin);
         TextButton exitBtn = new TextButton("Exit", skin);
 
-        // Triggers an event when the button is pressed
         startBtn.addListener(
                 new ChangeListener() {
                     @Override
@@ -102,7 +93,6 @@ public class MainMenuDisplay extends UIComponent {
                     }
                 });
 
-        table.add(title);
         table.row();
         table.add(startBtn).padTop(80f);
         table.row();
@@ -113,25 +103,28 @@ public class MainMenuDisplay extends UIComponent {
         table.add(settingsBtn).padTop(15f);
         table.row();
         table.add(exitBtn).padTop(15f);
-        stage.addActor(title);
         updateAnimation();
-
         stage.addActor(transitionFrames);
         stage.addActor(table);
     }
+
 
     private void updateAnimation() {
         if (frame < MainMenuScreen.frameCount) {
             transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
                     .getAsset(MainMenuScreen.transitionTextures[frame], Texture.class))));
-            transitionFrames.setWidth(Gdx.graphics.getWidth());
-            transitionFrames.setHeight(Gdx.graphics.getHeight() / (float)2); //https://rules.sonarsource.com/java/tag/overflow/RSPEC-2184/
-            transitionFrames.setPosition(0, Gdx.graphics.getHeight() / (float)2 + 15); //https://rules.sonarsource.com/java/tag/overflow/RSPEC-2184/
-            frame++;
-            lastFrameTime = System.currentTimeMillis();
         } else {
-            frame = 1;
+            int descendingFrame = MainMenuScreen.frameCount * 2 - 1 - frame;
+            transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
+                    .getAsset(MainMenuScreen.transitionTextures[descendingFrame], Texture.class))));
         }
+        transitionFrames.setWidth(Gdx.graphics.getWidth());
+        transitionFrames.setHeight(Gdx.graphics.getHeight());
+        frame++;
+        if (frame >= MainMenuScreen.frameCount * 2) {
+            frame = 0;
+        }
+        lastFrameTime = System.currentTimeMillis();
     }
 
     @Override

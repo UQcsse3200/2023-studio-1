@@ -1,5 +1,6 @@
 package com.csse3200.game.components.settingsmenu;
 
+import com.csse3200.game.screens.MainMenuScreen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -77,7 +78,7 @@ public class SettingsMenuDisplay extends UIComponent {
   /**
    * The duration for which each frame should be displayed
    */
-  private final long frameDuration = (long) (800 / fps);
+  private final long frameDuration = (long) (400 / fps);
 
 
   public SettingsMenuDisplay(GdxGame game) {
@@ -103,20 +104,9 @@ public class SettingsMenuDisplay extends UIComponent {
 
     Table settingsTable = makeSettingsTable();
     Table menuBtns = makeMenuBtns();
-
-    Image title = new Image(
-            ServiceLocator.getResourceService()
-                    .getAsset("images/galaxy_home_still.png", Texture.class));
-    title.setWidth(Gdx.graphics.getWidth());
-    title.setHeight(Gdx.graphics.getHeight());
-    title.setPosition(0, 0);
-
     rootTable = new Table();
     rootTable.setFillParent(true);
     rootTable.add(titleContainer).expandX().top();
-    rootTable.add(title);
-    stage.addActor(title);
-
     // Create a container for the settingsTable to prevent shifting
     Table settingsContainer = new Table();
     settingsContainer.add(settingsTable).expandX().expandY();
@@ -132,17 +122,21 @@ public class SettingsMenuDisplay extends UIComponent {
   }
 
   private void updateAnimation() {
-    if (frame < SettingsScreen.frameCount) {
+    if (frame < MainMenuScreen.frameCount) {
       transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
-              .getAsset(SettingsScreen.transitionTextures[frame], Texture.class))));
-      transitionFrames.setWidth(Gdx.graphics.getWidth());
-      transitionFrames.setHeight(Gdx.graphics.getHeight() / (float)2); //https://rules.sonarsource.com/java/RSPEC-2184/
-      transitionFrames.setPosition(0, Gdx.graphics.getHeight() / (float)2 + 15); //https://rules.sonarsource.com/java/RSPEC-2184/
-      frame++;
-      lastFrameTime = System.currentTimeMillis();
+              .getAsset(MainMenuScreen.transitionTextures[frame], Texture.class))));
     } else {
-      frame = 1;
+      int descendingFrame = MainMenuScreen.frameCount * 2 - 1 - frame;
+      transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
+              .getAsset(MainMenuScreen.transitionTextures[descendingFrame], Texture.class))));
     }
+    transitionFrames.setWidth(Gdx.graphics.getWidth());
+    transitionFrames.setHeight(Gdx.graphics.getHeight());
+    frame++;
+    if (frame >= MainMenuScreen.frameCount * 2) {
+      frame = 0;
+    }
+    lastFrameTime = System.currentTimeMillis();
   }
 
   private Table makeSettingsTable() {

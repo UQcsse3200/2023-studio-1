@@ -31,7 +31,7 @@ public class ControlsScreen extends ScreenAdapter {
   /**
    * A count of the frame in the background animation
    */
-  public static final int frameCount = 71;
+  public static final int frameCount = 64;
 
   /**
    * A list of textures that must be loaded for this screen
@@ -46,7 +46,7 @@ public class ControlsScreen extends ScreenAdapter {
   /**
    * A common name prefix for all the animation textures
    */
-  private static final String animationPrefix = "images/menu_animations/menu_animations";
+  private static final String animationPrefix = "images/menuanimate/";
 
   private SpriteBatch batch;
 
@@ -102,12 +102,12 @@ public class ControlsScreen extends ScreenAdapter {
    * Loads the texture frames required for the animation on this screen.
    */
   private void loadFrames() {
-    logger.debug("Loading animation frames");
+    logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
 
-    // Add the name of each animation texture to the transitionTextures array
-    for (int i = 0; i < frameCount; i++) {
-      transitionTextures[i] = animationPrefix + i + ".png";
+    for (int i = 1; i <= frameCount; i++) {
+      String frameNumber = String.format("%05d", i);
+      transitionTextures[i - 1] = animationPrefix + frameNumber + ".png";
     }
     resourceService.loadTextures(transitionTextures);
     ServiceLocator.getResourceService().loadAll();

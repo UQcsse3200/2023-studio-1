@@ -24,10 +24,10 @@ import com.csse3200.game.services.TimeService;
 /** The game screen containing the settings. */
 public class SettingsScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(SettingsScreen.class);
-  public static final int frameCount = 71;
+  public static final int frameCount = 64;
   private static final String[] mainMenuTextures = {"images/galaxy_home_still.png"};
   public static String[] transitionTextures = new String[frameCount];
-  private static final String animationPrefix = "images/menu_animations/menu_animations";
+  private static final String animationPrefix = "images/menuanimate/";
   private Texture backgroundTexture;
   private SpriteBatch batch;
   private final GdxGame game;
@@ -79,12 +79,15 @@ public class SettingsScreen extends ScreenAdapter {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
 
-    for (int i = 0; i < frameCount; i++) {
-      transitionTextures[i] = animationPrefix + i + ".png";
+    for (int i = 1; i <= frameCount; i++) {
+      String frameNumber = String.format("%05d", i);
+      transitionTextures[i - 1] = animationPrefix + frameNumber + ".png";
     }
     resourceService.loadTextures(transitionTextures);
     ServiceLocator.getResourceService().loadAll();
   }
+
+
 
   private void unloadAssets() {
     logger.debug("Unloading assets");

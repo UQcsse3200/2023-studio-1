@@ -2,6 +2,7 @@ package com.csse3200.game.components.controlsmenu;
 
 import java.util.LinkedHashMap;
 
+import com.csse3200.game.screens.MainMenuScreen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,7 +63,7 @@ public class ControlsMenuDisplay extends UIComponent {
   /**
    * The duration for which each frame should be displayed
    */
-  private final long frameDuration = (long) (800 / fps);
+  private final long frameDuration = (long) (400 / fps);
 
   public ControlsMenuDisplay(GdxGame game) {
     super();
@@ -84,8 +85,6 @@ public class ControlsMenuDisplay extends UIComponent {
    */
   private void addActors() {
     TextButton returnBtn = new TextButton("Return", skin); // Returns the user to the MainMenu Screen
-
-    // Listen for a button press
     returnBtn.addListener(new ChangeListener() {
       @Override
       public void changed(ChangeEvent changeEvent, Actor actor) {
@@ -95,15 +94,6 @@ public class ControlsMenuDisplay extends UIComponent {
     });
 
     Table controlsTbl = makeControlsTable(); // generate the table that represents the controls of the game
-
-    // Set the background image
-    Image background = new Image(
-            ServiceLocator.getResourceService().getAsset("images/galaxy_home_still.png", Texture.class));
-    background.setWidth(Gdx.graphics.getWidth());
-    background.setHeight(Gdx.graphics.getHeight());
-    background.setPosition(0, 0);
-    stage.addActor(background);
-
     rootTable = new Table();
     rootTable.setFillParent(true); // Make the root table fill the screen
     rootTable.row().padTop(30f); // Padding ensures that there is always space between table and title
@@ -125,18 +115,21 @@ public class ControlsMenuDisplay extends UIComponent {
    * Update the frame of the background animation
    */
   private void updateAnimation() {
-    if (frame < ControlsScreen.frameCount) {
-      // set the next frame of the animation
+    if (frame < MainMenuScreen.frameCount) {
       transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
-              .getAsset(ControlsScreen.transitionTextures[frame], Texture.class))));
-      transitionFrames.setWidth(Gdx.graphics.getWidth());
-      transitionFrames.setHeight((float)Gdx.graphics.getHeight() / 2);
-      transitionFrames.setPosition(0, (float)Gdx.graphics.getHeight() / 2 + 15);
-      frame++;
-      lastFrameTime = System.currentTimeMillis();
+              .getAsset(MainMenuScreen.transitionTextures[frame], Texture.class))));
     } else {
-      frame = 1;
+      int descendingFrame = MainMenuScreen.frameCount * 2 - 1 - frame;
+      transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
+              .getAsset(MainMenuScreen.transitionTextures[descendingFrame], Texture.class))));
     }
+    transitionFrames.setWidth(Gdx.graphics.getWidth());
+    transitionFrames.setHeight(Gdx.graphics.getHeight());
+    frame++;
+    if (frame >= MainMenuScreen.frameCount * 2) {
+      frame = 0;
+    }
+    lastFrameTime = System.currentTimeMillis();
   }
 
   /**
