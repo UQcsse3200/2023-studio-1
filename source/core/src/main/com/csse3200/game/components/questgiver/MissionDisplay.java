@@ -63,7 +63,7 @@ public class MissionDisplay extends UIComponent {
                 stage.getWidth() / 2 - window.getWidth() / 2,
                 stage.getHeight() / 2 - window.getHeight() / 2
         ); // center on stage
-        window.toFront();
+
     }
 
     /**
@@ -640,6 +640,8 @@ public class MissionDisplay extends UIComponent {
         generateMissionMenu();
 
         window.setVisible(true);
+
+        window.toFront();
 
         isOpen = true;
     }
