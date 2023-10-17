@@ -619,7 +619,12 @@ public class SpaceGameArea extends GameArea {
     effects.add(EffectSoundFile.STORM);
     effects.add(EffectSoundFile.SURGE);
     effects.add(EffectSoundFile.GOD_DID);
-
+    effects.add(EffectSoundFile.SHIP_CLUE_SOLVED);
+    effects.add(EffectSoundFile.SHIP_INSTALL_PART);
+    effects.add(EffectSoundFile.SHIP_FEATURE_UNLOCKED);
+    effects.add(EffectSoundFile.SHIP_TELEPORT);
+    effects.add(EffectSoundFile.SHIP_EATER_ATTACK);
+    effects.add(EffectSoundFile.SHIP_EATER_HIDE);
 
     try {
       ServiceLocator.getSoundService().getEffectsMusicService().loadSounds(effects);
