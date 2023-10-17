@@ -1,5 +1,6 @@
 package com.csse3200.game.screens;
 
+import com.csse3200.game.missions.quests.QuestFactory;
 import com.csse3200.game.services.*;
 import com.csse3200.game.components.plants.PlantInfoDisplayComponent;
 import com.csse3200.game.entities.FireflySpawner;
@@ -13,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.SpaceGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.areas.weather.WeatherEventDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.maingame.PauseMenuActions;
@@ -167,6 +167,8 @@ public class MainGameScreen extends ScreenAdapter {
         // if the LoadSaveOnStart value is set true then load entities saved from file
         if (game.isLoadOnStart()){
             ServiceLocator.getSaveLoadService().load();
+        } else {
+            ServiceLocator.getMissionManager().acceptQuest(QuestFactory.createFirstContactQuest());
         }
     }
 
@@ -199,6 +201,7 @@ public class MainGameScreen extends ScreenAdapter {
                 if (!ServiceLocator.getTimeService().isPaused()) {
                     physicsEngine.update();
                     ServiceLocator.getEntityService().update();
+                    ServiceLocator.getGameArea().getClimateController().updateClimate();
                 }
                 ServiceLocator.getTimeService().update();
                 renderer.render();
@@ -278,7 +281,6 @@ public class MainGameScreen extends ScreenAdapter {
                 .addComponent(inputComponent)
                 .addComponent(new TerminalDisplay())
                 .addComponent(new PlantInfoDisplayComponent())
-                .addComponent(new WeatherEventDisplay())
             // NOTE: VERY IMPORTANT
             // UI components that require transitions must be added AFTER those that don't, otherwise screen
             // entities added after them will transition even if you don't want them to. Add components with
@@ -289,7 +291,6 @@ public class MainGameScreen extends ScreenAdapter {
                 .addComponent(new HungerBar())
                 .addComponent(new PlantInfoDisplayComponent())
 
-                .addComponent(new WeatherEventDisplay())
                 .addComponent(new HealthDisplay())
                 .addComponent(new ToggleableMap());
 

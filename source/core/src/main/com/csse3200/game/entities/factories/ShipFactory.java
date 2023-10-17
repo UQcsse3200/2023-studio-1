@@ -3,6 +3,7 @@ package com.csse3200.game.entities.factories;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.csse3200.game.components.ParticleEffectComponent;
 import com.csse3200.game.components.ship.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityType;
@@ -39,6 +40,7 @@ public class ShipFactory {
         .addComponent(new ShipAnimationController())
         .addComponent(new ShipTimeSkipComponent())
         .addComponent(new ShipLightComponent())
+        .addComponent(new ParticleEffectComponent())
         .addComponent(new ShipDisplay ())
         .addComponent(animator);
 

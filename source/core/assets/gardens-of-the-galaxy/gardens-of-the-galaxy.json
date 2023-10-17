@@ -250,8 +250,9 @@
 "TextTooltipStyle": {
 	"default": {
 		"label": "default",
-		"background": "blue_button05"
-	},
+		"background": "blue_button05",
+		"wrapWidth": 250
+		},
 	"orange": {
 		"label": "default",
 		"background": "red_button05.9"
@@ -272,11 +273,5 @@
 		"background": "metalPanel_red",
 		"titleFont": "thick_white"
 	}
-},
-	"com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle": {
-		"default": {
-			"label": {"font": "thin_white","fontColor": "black"},
-			"background": "metalPanel_blue",
-			"wrapWidth": 300}
-	}
+}
 }

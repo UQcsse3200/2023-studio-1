@@ -20,10 +20,11 @@ import java.util.Set;
 public class ShipDisplay extends UIComponent {
 	private Window window;
 	private boolean isOpen;
-	private static final Logger logger = LoggerFactory.getLogger(ShipLightComponent.class);
+	private static final Logger logger = LoggerFactory.getLogger(ShipDisplay.class);
 
 	private boolean lightUnlocked = false;
 	private boolean sleepUnlocked = false;
+	private int repairsMade = 0;
 	private static final String TEXT_COLOUR = "black";
 	private static final String PIXEL_BODY = "pixel-body";
 	private static final String BACKGROUND_COLOUR = "small-grey";
@@ -39,6 +40,7 @@ public class ShipDisplay extends UIComponent {
 	}
 
 	private void progressUpdated(int repairsMade, Set<ShipProgressComponent.Feature> unlockedFeatures) {
+		this.repairsMade = repairsMade;
 		if (unlockedFeatures.contains(ShipProgressComponent.Feature.LIGHT)) {
 			logger.debug("Ship TimeSkip unlocked");
 			lightUnlocked = true;
@@ -72,7 +74,7 @@ public class ShipDisplay extends UIComponent {
 		window.getTitleLabel().setText("Ship Controls");
 		TextButton toggleLightButton = new TextButton("Ship Light not unlocked", skin, BACKGROUND_COLOUR);
 
-		Label descriptionLabel = new Label("It seems like the ship needs some improvements.", skin, PIXEL_BODY, TEXT_COLOUR);
+		Label descriptionLabel = new Label("It seems like the ship needs some improvements.\n" + repairsMade + " repairs out of 10.", skin, PIXEL_BODY, TEXT_COLOUR);
 		descriptionLabel.setAlignment(Align.center);
 		if (lightUnlocked) {
 
@@ -126,6 +128,7 @@ public class ShipDisplay extends UIComponent {
 
 	@Override
 	public void draw(SpriteBatch batch) {
+		// Handled else where
 	}
 
 	public void toggleOpen() {
@@ -150,6 +153,7 @@ public class ShipDisplay extends UIComponent {
 		json.writeObjectStart(this.getClass().getSimpleName());
 		json.writeValue("lightUnlocked", this.lightUnlocked);
 		json.writeValue("sleepUnlocked", this.sleepUnlocked);
+		json.writeValue("repairs", this.repairsMade);
 		json.writeObjectEnd();
 	}
 
@@ -157,6 +161,7 @@ public class ShipDisplay extends UIComponent {
 	public void read(Json json, JsonValue jsonValue) {
 		lightUnlocked = jsonValue.getBoolean("lightUnlocked");
 		sleepUnlocked = jsonValue.getBoolean("sleepUnlocked");
+		repairsMade = jsonValue.getInt("repairs");
 	}
 
 }

@@ -11,10 +11,29 @@ import com.csse3200.game.services.ServiceLocator;
  */
 public class LightController extends Component {
 
+    private enum WeatherEffectState {
+        NO_EFFECT,
+        DOUSING,
+        IGNITING
+    }
+
+    private static WeatherEffectState weatherEffectState = WeatherEffectState.NO_EFFECT;
+
+    @Override
+    public void create() {
+        ServiceLocator.getGameArea().getClimateController().getEvents().addListener("igniteFlames",
+                () -> setWeatherDousingFlames(WeatherEffectState.IGNITING));
+        ServiceLocator.getGameArea().getClimateController().getEvents().addListener("douseFlames",
+                () -> setWeatherDousingFlames(WeatherEffectState.DOUSING));
+        ServiceLocator.getGameArea().getClimateController().getEvents().addListener("stopPlacedLightEffects",
+                () -> setWeatherDousingFlames(WeatherEffectState.NO_EFFECT));
+    }
+
     @Override
     public void update() {
         // Would've liked to use the events but won't work if you place during the night
-        if (ServiceLocator.getTimeService().isDay()) {
+        if ((ServiceLocator.getTimeService().isDay() && weatherEffectState == WeatherEffectState.NO_EFFECT)
+                || weatherEffectState == WeatherEffectState.DOUSING) {
             turnOff();
         } else {
             turnOn();
@@ -39,4 +58,10 @@ public class LightController extends Component {
         }
         return true;
     }
+
+    private void setWeatherDousingFlames(WeatherEffectState weatherEffectState) {
+        // Not set to static as static methods can't be used in event listeners
+        LightController.weatherEffectState = weatherEffectState;
+    }
+
 }

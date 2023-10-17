@@ -11,6 +11,7 @@ import com.csse3200.game.components.plants.PlantComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.factories.ShipFactory;
 import com.csse3200.game.missions.MissionManager;
+import com.csse3200.game.services.ParticleService;
 import com.csse3200.game.services.sound.EffectSoundFile;
 import com.csse3200.game.areas.terrain.CropTileComponent;
 import com.csse3200.game.areas.terrain.TerrainTile;
@@ -104,6 +105,7 @@ public class ItemActions extends Component {
     }
     // Add to inventory
     logger.info("Added fish to inventory");
+    ServiceLocator.getGameArea().getPlayer().getEvents().trigger(ParticleService.START_EVENT, ParticleService.ParticleEffectType.SUCCESS_EFFECT);
     ServiceLocator.getGameArea().getPlayer().getComponent(InventoryComponent.class).addItem(item);
   }
 
@@ -153,6 +155,10 @@ public class ItemActions extends Component {
         player.getEvents().trigger(PlayerActions.events.SHOOT.name(), mousePos);
         return true;
       }
+      case TELEPORT_DEVICE -> {
+        teleport(player);
+        return true;
+      }
       case FOOD -> {
         resultStatus = feed(player, mouseWorldPos);
         return resultStatus;
@@ -184,6 +190,12 @@ public class ItemActions extends Component {
         return false;
       }
     }
+  }
+
+  private boolean teleport(Entity player) {
+    player.getEvents().trigger(ParticleService.START_EVENT, ParticleService.ParticleEffectType.TELEPORT_EFFECT);
+    player.setPosition(new Vector2(20, 83));
+    return true;
   }
 
   private Vector2 getAdjustedPosFish(Vector2 mousePos) {
@@ -285,6 +297,7 @@ public class ItemActions extends Component {
       switch (type.getItemName()) {
         case "Ear of Cosmic Cob":
           player.getComponent(HungerComponent.class).increaseHungerLevel(-10);
+          player.getComponent(CombatStatsComponent.class).addHealth(5);
           return;
         case "Nightshade Berry":
           player.getComponent(CombatStatsComponent.class).addHealth(-10);
@@ -292,6 +305,7 @@ public class ItemActions extends Component {
           return;
         case "Hammer Flower":
           player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
+          player.getComponent(CombatStatsComponent.class).addHealth(5);
           return;
         case "Aloe Vera Leaf":
           player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
@@ -301,22 +315,27 @@ public class ItemActions extends Component {
           player.getComponent(HungerComponent.class).increaseHungerLevel(-50);
           player.getComponent(CombatStatsComponent.class).addHealth(100);
           return;
+        case "Salmon":
+          player.getComponent(HungerComponent.class).increaseHungerLevel(-10);
+          player.getComponent(CombatStatsComponent.class).addHealth(5);
+          return;
         default:
           // Any fish
           player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
       }
     } else if (type.getItemType() == ItemType.EGG) {
         if (type.getItemName().equals("golden egg")) {
-            player.getComponent(PlayerActions.class).setSpeedMultiplier(5f);
-            player.getEvents().scheduleEvent(5f, "setSpeedMultiplier", 1f);
+            player.getComponent(PlayerActions.class).setSpeedMultiplier(1.5f);
+            player.getEvents().scheduleEvent(20f, "setSpeedMultiplier", 1f);
         } else {
             player.getComponent(HungerComponent.class).increaseHungerLevel(-10);
         }
     } else if (type.getItemType() == ItemType.MILK) {
-      player.getComponent(PlayerActions.class).setDamageMultiplier(5f);
+      player.getComponent(PlayerActions.class).setDamageMultiplier(2.5f);
       player.getEvents().scheduleEvent(5f, "setDamageMultiplier", 1f);
+      player.getComponent(CombatStatsComponent.class).addHealth(5);
+      player.getComponent(HungerComponent.class).increaseHungerLevel(-5);
     }
-
   }
 
   /**
@@ -438,7 +457,7 @@ public class ItemActions extends Component {
     if (tile.getOccupant().getComponent(CropTileComponent.class).getPlant() != null) {
       ServiceLocator.getMissionManager().getEvents().trigger(
               MissionManager.MissionEvent.WATER_CROP.name(),
-              tile.getOccupant().getComponent(CropTileComponent.class).getPlant().getComponent(PlantComponent.class).getPlantType());
+              tile.getOccupant().getComponent(CropTileComponent.class).getPlant().getComponent(PlantComponent.class).getPlantName());
     }
     return true;
   }
@@ -457,6 +476,7 @@ public class ItemActions extends Component {
     }
     boolean tileHarvestable = isCropTile(tile.getOccupant());
     if (tileHarvestable) {
+      ServiceLocator.getParticleService().startEffectAtPosition(ParticleService.ParticleEffectType.DIRT_EFFECT, tile.getOccupant().getCenterPosition());
       tile.getOccupant().getEvents().trigger("harvest");
       return true;
     }
@@ -477,8 +497,10 @@ public class ItemActions extends Component {
     }
     // If there is something to remove
     if (tile.getOccupant() != null) {
+      Entity occupant = tile.getOccupant();
       // Trigger the destroy method within that occupant
-      tile.getOccupant().getEvents().trigger("destroy", tile);
+      ServiceLocator.getParticleService().startEffectAtPosition(ParticleService.ParticleEffectType.DIRT_EFFECT, occupant.getCenterPosition());
+      occupant.getEvents().trigger("destroy", tile);
       return true;
     }
     return false;
@@ -506,6 +528,7 @@ public class ItemActions extends Component {
     ServiceLocator.getEntityService().register(cropTile);
     tile.setOccupant(cropTile);
     tile.setOccupied();
+    cropTile.getEvents().trigger(ParticleService.START_EVENT, ParticleService.ParticleEffectType.DIRT_EFFECT);
     return true;
   }
 
@@ -579,9 +602,15 @@ public class ItemActions extends Component {
       return false;
     }
 
-    entityToFeed.getEvents().trigger("feed");
-    // Feeding animals should remove the food from player inventory
-    player.getComponent(InventoryComponent.class).removeItem(entity);
+
+    // Feeding animals should remove the food from player inventory if food is their favourite
+    if (entityToFeed.getComponent(TamableComponent.class).getFavouriteFood()
+            .equals(entity.getComponent(ItemComponent.class).getItemName())) {
+      entityToFeed.getEvents().trigger("feed");
+      player.getComponent(InventoryComponent.class).removeItem(entity);
+      entityToFeed.getEvents().trigger("startVisualEffect", ParticleService.ParticleEffectType.FEED_EFFECT);
+    }
+
     return true;
   }
 
@@ -609,6 +638,8 @@ public class ItemActions extends Component {
     if (ship.getType() == EntityType.SHIP) {
       ship.getEvents().trigger(ShipFactory.events.ADD_PART.name(), 1);
       player.getComponent(InventoryComponent.class).removeItem(entity);
+      ServiceLocator.getParticleService().startEffectAtPosition(ParticleService.ParticleEffectType.SUCCESS_EFFECT, ship.getPosition().cpy().add(1,0));
+      ServiceLocator.getParticleService().startEffectAtPosition(ParticleService.ParticleEffectType.SUCCESS_EFFECT, ship.getPosition().cpy().add(2,0));
       return true;
     }
     return false;

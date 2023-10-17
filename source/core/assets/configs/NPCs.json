@@ -1,33 +1,36 @@
 {
   "cow": {
-    "health": 50,
+    "health": 100,
     "tamingThreshold": 3,
     "tamingProbability": 0.75,
-    "favouriteFood": "Ear of Cosmic Cob"
+    "favouriteFood": "Ear of Cosmic Cob",
+    "baseAttack": 0
   },
   "chicken": {
-    "health": 10,
+    "health": 20,
     "tamingThreshold": 3,
     "tamingProbability": 0.5,
-    "favouriteFood": "Hammer Flower"
+    "favouriteFood": "Hammer Flower",
+    "baseAttack": 0
   },
   "astrolotl": {
     "health": 5,
     "tamingThreshold": 1,
     "tamingProbability": 0.5,
-    "favouriteFood": "Nightshade Berry"
+    "favouriteFood": "Nightshade Berry",
+    "baseAttack": 0
   },
   "oxygenEater": {
     "health": 100,
     "baseAttack": 10
   },
   "dragonfly": {
-    "health": 100,
+    "health": 45,
     "baseAttack": 10
   },
   "bat": {
-    "health": 100,
-    "baseAttack": 10
+    "health": 70,
+    "baseAttack": 5
   }
 }
 

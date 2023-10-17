@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
-public class KeyboardTractorInputComponentTest {
+class KeyboardTractorInputComponentTest {
     @BeforeEach
     void setup() {
         Entity tractor = TractorFactory.createTractor();
@@ -38,7 +38,7 @@ public class KeyboardTractorInputComponentTest {
     @Test
     void constructor() {
         KeyboardTractorInputComponent inputComponent = spy(KeyboardTractorInputComponent.class);
-        assertEquals(inputComponent.getPriority(), 5);
+        assertEquals(5, inputComponent.getPriority());
     }
 
     @Test

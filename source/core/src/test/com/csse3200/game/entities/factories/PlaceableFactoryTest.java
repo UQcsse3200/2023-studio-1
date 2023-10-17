@@ -1,27 +1,10 @@
 package com.csse3200.game.entities.factories;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.ExtendWith;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import com.csse3200.game.components.AuraLightComponent;
-import com.csse3200.game.components.inventory.InventoryDisplay;
 import com.csse3200.game.components.inventory.InventoryDisplayManager;
-import com.csse3200.game.components.placeables.ChestComponent;
 import com.csse3200.game.components.placeables.FenceComponent;
-import com.csse3200.game.components.placeables.LightController;
 import com.csse3200.game.components.placeables.PlaceableEvents;
 import com.csse3200.game.components.placeables.SprinklerComponent;
-import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.EntityType;
@@ -33,12 +16,21 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(GameExtension.class)
-public class PlaceableFactoryTest {
+class PlaceableFactoryTest {
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         ServiceLocator.registerPhysicsService(new PhysicsService());
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerRenderService(new RenderService());
@@ -64,43 +56,43 @@ public class PlaceableFactoryTest {
     }
 
     @Test
-    public void shouldCreateBase() {
+    void shouldCreateBase() {
         Entity e = PlaceableFactory.createBasePlaceable(EntityType.TRACTOR);
         this.baseComponentsAssertion(e);
     }
 
     @Test
-    public void shouldCreateFence() {
+    void shouldCreateFence() {
         Entity e = PlaceableFactory.createFence();
-        
-        assertTrue(EntityType.FENCE == e.getType());
+
+	    assertSame(EntityType.FENCE, e.getType());
         assertNotNull(e.getComponent(FenceComponent.class));
         this.baseComponentsAssertion(e);
     }
 
     @Test
-    public void shouldCreateGate() {
+    void shouldCreateGate() {
         Entity e = PlaceableFactory.createGate();
-        
-        assertTrue(EntityType.GATE == e.getType());
+
+	    assertSame(EntityType.GATE, e.getType());
         assertNotNull(e.getComponent(FenceComponent.class));
         this.baseComponentsAssertion(e);
     }
 
     @Test
-    public void shouldCreateSprinkler() {
+    void shouldCreateSprinkler() {
         Entity e = PlaceableFactory.createSprinkler();
-        
-        assertTrue(EntityType.SPRINKLER == e.getType());
+
+	    assertSame(EntityType.SPRINKLER, e.getType());
         assertNotNull(e.getComponent(SprinklerComponent.class));
         this.baseComponentsAssertion(e);
     }
 
     @Test
-    public void shouldCreatePump() {
+    void shouldCreatePump() {
         Entity e = PlaceableFactory.createPump();
-        
-        assertTrue(EntityType.PUMP == e.getType());
+
+	    assertSame(EntityType.PUMP, e.getType());
         assertNotNull(e.getComponent(SprinklerComponent.class));
         this.baseComponentsAssertion(e);
     }

@@ -15,13 +15,14 @@ import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ItemFactoryTest {
+class ItemFactoryTest {
 
     @BeforeEach
     void setUp() {
@@ -40,10 +41,10 @@ public class ItemFactoryTest {
         PhysicsService physicsService = new PhysicsService();
         ServiceLocator.registerPhysicsService(physicsService);
         Entity baseItem = ItemFactory.createBaseItem();
-        assert baseItem != null;
-        assert baseItem.getComponent(ItemActions.class) != null;
-        assert baseItem.getComponent(HitboxComponent.class) != null;
-        assert baseItem.getComponent(PhysicsComponent.class) != null;
+        assertNotNull(baseItem);
+        assertNotNull(baseItem.getComponent(ItemActions.class));
+        assertNotNull(baseItem.getComponent(HitboxComponent.class));
+        assertNotNull(baseItem.getComponent(PhysicsComponent.class));
     }
 
     void baseComponentsAssertion(Entity e) {

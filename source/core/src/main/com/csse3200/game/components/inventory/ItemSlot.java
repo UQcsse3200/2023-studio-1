@@ -2,6 +2,8 @@ package com.csse3200.game.components.inventory;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -13,20 +15,17 @@ import com.csse3200.game.services.ServiceLocator;
  * A class used to combine all the data necessary to the individual inventory slots
  */
 public class ItemSlot extends Stack {
-	private static final String SELECTED_PATH = "images/selected.png";
-	private static final String ITEM_FRAME_PATH = "images/itemFrame.png";
 	private Texture itemTexture;
 	private Integer count;
 	private final Skin skin = ServiceLocator.getResourceService().getAsset("gardens-of-the-galaxy/gardens-of-the-galaxy.json", Skin.class);
 	private Image background;
-	private Image frame;
 	private boolean selected;
 	private Image itemImage;
 
 	private Label label;
 	private Stack draggable;
+	private ItemFrame itemFrame;
 	static int i;
-	private int cur = 0;
 
 
 	/**
@@ -39,8 +38,6 @@ public class ItemSlot extends Stack {
 	public ItemSlot(Texture itemTexture, Integer count, boolean selected) {
 		this.itemTexture = itemTexture;
 		this.count = count;
-		this.background = new Image(ServiceLocator.getResourceService().getAsset(SELECTED_PATH, Texture.class));
-		this.frame = new Image(ServiceLocator.getResourceService().getAsset(ITEM_FRAME_PATH, Texture.class));
 		this.selected = selected;
 		this.createItemSlot();
 	}
@@ -54,8 +51,6 @@ public class ItemSlot extends Stack {
 	public ItemSlot(Texture itemTexture, boolean selected) {
 		this.itemTexture = itemTexture;
 		this.count = null;
-		this.background = new Image(ServiceLocator.getResourceService().getAsset(SELECTED_PATH, Texture.class));
-		this.frame = new Image(ServiceLocator.getResourceService().getAsset(ITEM_FRAME_PATH, Texture.class));
 		this.selected = selected;
 		this.createItemSlot();
 	}
@@ -68,8 +63,6 @@ public class ItemSlot extends Stack {
 	public ItemSlot(boolean selected) {
 		this.itemTexture = null;
 		this.count = null;
-		this.background = new Image(ServiceLocator.getResourceService().getAsset(SELECTED_PATH, Texture.class));
-		this.frame = new Image(ServiceLocator.getResourceService().getAsset(ITEM_FRAME_PATH, Texture.class));
 		this.selected = selected;
 		this.createItemSlot();
 
@@ -84,18 +77,17 @@ public class ItemSlot extends Stack {
 		this.count = count;
 		if (this.count > 1) {
 			if (label == null) {
-				label = new Label(this.count +"", this.skin);
+				label = new Label(this.count + "", this.skin);
 				label.setColor(Color.BLACK);
 				label.setAlignment(Align.bottomRight);
 				draggable.add(label);
 			} else {
-				label.setText(this.count+"");
+				label.setText(this.count + " ");
 			}
 		} else {
 			draggable.removeActor(label);
 			if (label != null) {
 				this.label = null;
-
 			}
 		}
 	}
@@ -123,7 +115,7 @@ public class ItemSlot extends Stack {
 
 	@Override
 	public String toString() {
-		return super.toString()+cur;
+		return super.toString();
 	}
 
 	/**
@@ -133,17 +125,11 @@ public class ItemSlot extends Stack {
 		if (i <= 0) {
 			i = 0;
 		}
-		cur = i++;
 		draggable = new Stack();
 
 		//Add the selection background if necessary
-		if (this.selected) {
-			this.add(this.background);
-		}
-
-		//Add the item frame image to the item slot
-		this.add(this.frame);
-
+		this.itemFrame = new ItemFrame(this.selected);
+		this.add(this.itemFrame);
 		//Add the item image to the itemSlot
 		if (this.itemTexture != null) {
 			itemImage = new Image(this.itemTexture);
@@ -153,7 +139,7 @@ public class ItemSlot extends Stack {
 		// Add or update the count label if the number is not 0
 		if (this.count != null && this.count > 1) {
 			if (label == null) {
-				label = new Label(this.count + " ", this.skin);
+				label = new Label(this.count.toString(), this.skin);
 				label.setColor(Color.WHITE);
 				label.setAlignment(Align.bottomRight);
 				draggable.add(label);
@@ -183,11 +169,9 @@ public class ItemSlot extends Stack {
 		return draggable;
 	}
 
-	public boolean setDraggable(Stack stack) {
-		boolean ans = false;
-		if (!this.removeActor(this.draggable)) {
-			ans = true;
-		}
+	public void setDraggable(Stack stack) {
+		this.removeActor(this.draggable);
+
 		if (stack != null) {
 			if (stack.getChildren().size == 2) {
 				label = (Label) (stack.getChild(1));
@@ -198,7 +182,6 @@ public class ItemSlot extends Stack {
 			this.draggable = stack;
 			this.add(stack);
 		}
-		return ans;
 	}
 
 	public void setItemImage(Image image) {
@@ -215,15 +198,13 @@ public class ItemSlot extends Stack {
 	 * Make the slot selected
 	 */
 	public void setSelected() {
-		selected = true;
-		this.addActorAt(0, this.background);
+		this.itemFrame.updateSelected(true);
 	}
 
 	/**
 	 * Make the slot unselected
 	 */
 	public void setUnselected() {
-		selected = false;
-		this.removeActor(this.background);
+		this.itemFrame.updateSelected(false);
 	}
 }

@@ -5,6 +5,7 @@ import com.csse3200.game.areas.weather.ClimateController;
 
 public class TestGameArea extends GameArea {
     private GameMap gameMap;
+    private ClimateController climateController = new ClimateController();
 
     @Override
     public void create() {
@@ -13,7 +14,7 @@ public class TestGameArea extends GameArea {
 
     @Override
     public ClimateController getClimateController() {
-        return null;
+        return climateController;
     }
 
     @Override
