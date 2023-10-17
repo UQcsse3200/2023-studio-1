@@ -98,7 +98,7 @@ public class InventoryStateQuest extends Quest {
         int numItemsCollected = 0;
         for (Map.Entry<String, Integer> targetQuantity : targetQuantities.entrySet()) {
             numItemsToGet += targetQuantity.getValue();
-            numItemsCollected += Math.max(playerInventoryComponent.getItemCount(targetQuantity.getKey()), targetQuantity.getValue());
+            numItemsCollected += Math.min(playerInventoryComponent.getItemCount(targetQuantity.getKey()), targetQuantity.getValue());
         }
 
         return Math.min(numItemsCollected, numItemsToGet) + " out of " + numItemsToGet + " required items collected";

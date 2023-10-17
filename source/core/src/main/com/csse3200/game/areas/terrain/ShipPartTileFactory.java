@@ -24,8 +24,7 @@ public class ShipPartTileFactory {
 	 * @return Entity shipPartTile
 	 */
 	public static Entity createShipPartTile(Vector2 position) {
-		// TODO: change texture later
-		DynamicTextureRenderComponent renderComponent = new DynamicTextureRenderComponent("images/cropTile.png");
+		DynamicTextureRenderComponent renderComponent = new DynamicTextureRenderComponent("images/ship/ship_part_tile.png");
 		renderComponent.setLayer(1);
 
 		Entity shipPartTile = new Entity(EntityType.SHIP_PART_TILE)

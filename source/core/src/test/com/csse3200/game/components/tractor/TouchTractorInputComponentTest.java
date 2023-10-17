@@ -11,7 +11,7 @@ import static org.mockito.Mockito.spy;
 import com.badlogic.gdx.Input;
 
 @ExtendWith(GameExtension.class)
-public class TouchTractorInputComponentTest {
+class TouchTractorInputComponentTest {
     @Test
     void constructor() {
         TouchTractorInputComponent inputComponent = spy(TouchTractorInputComponent.class);

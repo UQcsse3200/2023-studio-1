@@ -49,8 +49,9 @@ public class MainMenuDisplay extends UIComponent {
         title.setWidth(Gdx.graphics.getWidth());
         title.setHeight(Gdx.graphics.getHeight());
         title.setPosition(0, 0);
+
         TextButton startBtn = new TextButton("New Game", skin,"orange");
-        TextButton loadBtn = new TextButton("Continue", skin,"orange");
+        TextButton loadBtn = new TextButton("Continue", skin, Gdx.files.local("saves/saveFile.json").exists() ? "default" : "grey");
         TextButton controlsBtn = new TextButton("Controls", skin,"orange");
         TextButton settingsBtn = new TextButton("Settings", skin,"orange");
         TextButton creditsBtn = new TextButton("Credits", skin,"orange");
@@ -74,6 +75,7 @@ public class MainMenuDisplay extends UIComponent {
                         entity.getEvents().trigger("load");
                     }
                 });
+        loadBtn.setDisabled(!Gdx.files.local("saves/saveFile.json").exists());
 
         controlsBtn.addListener(
                 new ChangeListener() {

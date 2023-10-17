@@ -18,6 +18,8 @@ public class ParticleService {
 
 	public static final String WEATHER_EVENT = "WEATHER_EVENT";
 	public static final String ENTITY_EFFECT = "ENTITY_EFFECT";
+	public static final String START_EVENT = "startVisualEffect";
+	public static final String STOP_EVENT = "stopVisualEffect";
 
 	/**
 	 * All the effects that will be rendered
@@ -46,6 +48,7 @@ public class ParticleService {
 		RAIN(WEATHER_EVENT, "particle-effects/acidRain.p", 1, 10),
 		BLIZZARD(WEATHER_EVENT, "particle-effects/snowEffect.p", 1, 10),
 		SUCCESS_EFFECT(ENTITY_EFFECT, "particle-effects/successEffect.p", 1, 10),
+		TELEPORT_EFFECT(ENTITY_EFFECT, "particle-effects/teleportEffect.p", 1, 10),
 		ATTACK_EFFECT(ENTITY_EFFECT, "particle-effects/attackEffect.p", 1, 10),
 		FEED_EFFECT(ENTITY_EFFECT, "particle-effects/feedEffect.p", 1, 10),
 		DIRT_EFFECT(ENTITY_EFFECT, "particle-effects/dirtEffect.p", 1, 10);

@@ -3,9 +3,14 @@ package com.csse3200.game.components.tasks;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /** Follows a target entity until they get too far away or line of sight is lost */
 public class FollowTask extends ChaseTask {
+  private static final Logger logger = LoggerFactory.getLogger(RunAwayTask.class);
+
   /** Distance to target before stopping. */
   private final float stoppingDistance;
   /** Speed to follow the player. */
@@ -52,7 +57,7 @@ public class FollowTask extends ChaseTask {
     setMovementTask(new MovementTask(getTarget().getCenterPosition(), speed, 1.5f));
     getMovementTask().create(owner);
     getMovementTask().start();
-
+    logger.info("Follow Task Active");
     this.owner.getEntity().getEvents().trigger("followStart");
     this.owner.getEntity().getEvents().trigger("startEffect", "followStart");
   }
@@ -84,9 +89,9 @@ public class FollowTask extends ChaseTask {
   public void stop() {
     owner.getEntity().getComponent(PhysicsMovementComponent.class).setEnabled(true);
     super.stop();
+    logger.info("Follow Task Stopped");
     this.owner.getEntity().getEvents().trigger("followStop");
     this.owner.getEntity().getEvents().trigger("stopEffect", "followStart");
-
   }
 
   /**

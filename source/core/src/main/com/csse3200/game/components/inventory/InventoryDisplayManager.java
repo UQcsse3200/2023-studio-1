@@ -6,6 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.sound.EffectSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -108,7 +111,6 @@ public class InventoryDisplayManager {
                         slotInventory.getEntity().getComponent(InventoryDisplay.class).getMap().put((Stack) source.getActor(), slot);
 
                         slotInventory.getEntity().getComponent(InventoryDisplay.class).getMap().remove(slot.getDraggable());
-
                         sourceInventory.removeAll(item);
                         if (slotInventory.getItem(d2.getIndexes().get(slot)) != null) {
                             Entity destItem = slotInventory.getItem(d2.getIndexes().get(slot));
@@ -127,6 +129,12 @@ public class InventoryDisplayManager {
                         addTarget(d2, d1);
                         addTarget(d1, d2);
 
+                        try {
+                            ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.DROP_ITEM);
+                        } catch (InvalidSoundFileException e) {
+                            logger.error("sound not loaded");
+                        }
+
                     }
                 });
             }
@@ -134,7 +142,8 @@ public class InventoryDisplayManager {
                 dnd.addTarget(new DragAndDrop.Target(d2.getBin()) {
                     @Override
                     public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                        return true;
+                        ItemSlot itemSlot = d1.getMap().get((Stack) source.getActor());
+                        return !InventoryComponent.getForbiddenItems().contains(sourceInventory.getItemPlace().get(d1.getIndexes().get(itemSlot)));
                     }
 
                     @Override
@@ -145,6 +154,11 @@ public class InventoryDisplayManager {
                         sourceInventory.removeItem(sourceInventory.getHeldItemsEntity().get(sourceInventory.getItemPlace().get(d1.getIndexes().get(itemSlot))));
                         d1.refreshInventory();
                         d1.addTooltips();
+                        try {
+                            ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.DELETE_ITEM);
+                        } catch (InvalidSoundFileException e) {
+                            logger.error("sound not loaded");
+                        }
                     }
                 });
             }

@@ -113,9 +113,15 @@ public class EndCreditsDisplay extends UIComponent {
                 {WAVE}{COLOR=purple} TEAM SEVEN {CLEARCOLOR}{ENDWAVE}
                
                 Tile system
+                Time system
+                Day and night cycle
+                Missions and Quests system
                 Weather system
                 Seeds and fertiliser
-                Day and night cycle
+                Game commands
+                Main game storyline and dialogue
+                Lighting system
+                Particle system and particles
                 
                 
                 

@@ -3,6 +3,8 @@ package com.csse3200.game.components.placeables;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.inventory.InventoryDisplay;
 
+import com.csse3200.game.components.player.PlayerActions;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,12 +26,15 @@ public class ChestComponent extends Component  {
 
         entity.getEvents().trigger("toggleChest");      //open up the chest's inventory
         //player.getEvents().trigger("toggleInventory");  //open up the player's inventory
-        
+
         //check to see if the chest is open or not
         if (chestInventory.isOpen()){   
             logger.info("close chest");
+            ServiceLocator.getGameArea().getPlayer().getEvents().trigger(PlayerActions.events.FREEZE.name());
+
             return; 
         }
+        ServiceLocator.getGameArea().getPlayer().getEvents().trigger(PlayerActions.events.UNFREEZE.name());
             
         logger.info("Open chest");
     }
