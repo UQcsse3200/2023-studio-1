@@ -54,7 +54,6 @@ import com.csse3200.game.ui.terminal.TerminalDisplay;
 public class MainGameScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
     private static final String[] mainGameTextures = {
-            //"images/heart.png",
             "images/time_system_ui/clock_frame.png",
             "images/time_system_ui/indicator_0.png",
             "images/time_system_ui/indicator_1.png",
@@ -134,8 +133,6 @@ public class MainGameScreen extends ScreenAdapter {
 
 
         ServiceLocator.registerMissionManager(new MissionManager());
-        // Why does this not exist??
-        //ServiceLocator.registerSoundService(new SoundService());
 
         ServiceLocator.registerMissionManager(new MissionManager());
         renderer = RenderFactory.createRenderer();

@@ -53,7 +53,7 @@ import static org.mockito.Mockito.*;
  */
 @ExtendWith(GameExtension.class)
 
-public class TestInventoryUI {
+class TestInventoryUI {
 	Entity player;
 	InventoryDisplay inventoryDisplay;
 	static InventoryComponent inventory;
@@ -193,7 +193,7 @@ public class TestInventoryUI {
 	}
 
 	@AfterEach
-	public void cleanUp() {
+	void cleanUp() {
 		// Clears all loaded services
 		ServiceLocator.clear();
 		mockFrame.close();

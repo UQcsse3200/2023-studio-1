@@ -12,16 +12,14 @@ import static org.junit.jupiter.api.Assertions.*;
  * Tests for PlantInfoDisplayComponent
  */
 @ExtendWith(GameExtension.class)
-public class
-
-PlantInfoDisplayComponentTest {
+class PlantInfoDisplayComponentTest {
     PlantInfoDisplayComponent plantInfoDisplayComponent;
 
     /**
      * Sets up the test environment before each test case.
      */
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         plantInfoDisplayComponent = new PlantInfoDisplayComponent();
     }
 
@@ -29,7 +27,7 @@ PlantInfoDisplayComponentTest {
      * madeFirstContact should return false by default
      */
     @Test
-    public void testGetMadeFirstContact_False() {
+    void testGetMadeFirstContact_False() {
         assertFalse(plantInfoDisplayComponent.getMadeFirstContact());
     }
 
@@ -37,7 +35,7 @@ PlantInfoDisplayComponentTest {
      * Test if getMadeFirstContact returns true when MadeFirstContact is called
      */
     @Test
-    public void testMadeFirstContact_True() {
+    void testMadeFirstContact_True() {
         plantInfoDisplayComponent.madeFirstContact();
         assertTrue(plantInfoDisplayComponent.getMadeFirstContact());
     }

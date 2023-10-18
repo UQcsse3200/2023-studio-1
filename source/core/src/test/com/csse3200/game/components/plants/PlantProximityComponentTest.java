@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Tests for PlantProximityComponent class
  */
 @ExtendWith(GameExtension.class)
-public class PlantProximityComponentTest {
+class PlantProximityComponentTest {
     PlantProximityComponent plantProximityComponent;
 
     @Mock
@@ -23,7 +23,7 @@ public class PlantProximityComponentTest {
      * Sets up the test environment before each test case.
      */
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         plantProximityComponent = new PlantProximityComponent();
         plantProximityComponent.setEntity(entity);
     }
@@ -32,7 +32,7 @@ public class PlantProximityComponentTest {
      * Checks whether the initial radius is set to the expected value.
      */
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         assertEquals(8f, plantProximityComponent.getRadius());
     }
 }

@@ -51,7 +51,7 @@ public class EndCreditsDisplay extends UIComponent {
 
     private static final  String CREDITS = """
                 {SLOW}
-                {RAINBOW}GARDENERS OF THE GALAXY: LEGEND OF THE ASTROHOE {ENDRAINBOW}
+                {RAINBOW}GARDENS OF THE GALAXY {ENDRAINBOW}
                 
                 Developed by Studio One
                   

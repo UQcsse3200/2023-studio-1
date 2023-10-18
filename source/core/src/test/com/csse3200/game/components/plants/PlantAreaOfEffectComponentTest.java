@@ -14,7 +14,7 @@ import static org.mockito.Mockito.*;
  * Tests for PlantAreaOfEffectComponent class
  */
 @ExtendWith(GameExtension.class)
-public class PlantAreaOfEffectComponentTest {
+class PlantAreaOfEffectComponentTest {
     PlantAreaOfEffectComponent plantAreaOfEffectComponent;
     Fixture fixture;
     Fixture fixture2;
@@ -24,7 +24,7 @@ public class PlantAreaOfEffectComponentTest {
      * Sets up the test environment before each test case.
      */
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         plantAreaOfEffectComponent = new PlantAreaOfEffectComponent(1f, "");
 
         fixture = mock(Fixture.class);
@@ -36,7 +36,7 @@ public class PlantAreaOfEffectComponentTest {
      * Verifies that the returned radius is equal to the expected value.
      */
     @Test
-    public void testGetRadius() {
+    void testGetRadius() {
         assertEquals(1f, plantAreaOfEffectComponent.getRadius(), "Radius should be equal to 1f");
     }
 
@@ -44,7 +44,7 @@ public class PlantAreaOfEffectComponentTest {
      * Verifies that the radius is correctly set and can be retrieved afterwards.
      */
     @Test
-    public void testSetRadius() {
+    void testSetRadius() {
         float newRadius = 2f;
         plantAreaOfEffectComponent.setRadius(newRadius);
         assertEquals(newRadius, plantAreaOfEffectComponent.getRadius(), "Radius should be equal to 2f after setting");
@@ -54,7 +54,7 @@ public class PlantAreaOfEffectComponentTest {
      * Verifies that the returned effect type is equal to the expected value.
      */
     @Test
-    public void testGetEffect() {
+    void testGetEffect() {
         assertEquals("", plantAreaOfEffectComponent.getEffectType(), "Effect should be an empty string");
     }
 
@@ -62,7 +62,7 @@ public class PlantAreaOfEffectComponentTest {
      * Verifies that the effect type is correctly set and can be retrieved afterwards.
      */
     @Test
-    public void testSetEffect() {
+    void testSetEffect() {
         String newEffect = "Fire";
         plantAreaOfEffectComponent.setEffectType(newEffect);
         assertEquals(newEffect, plantAreaOfEffectComponent.getEffectType(), "Effect should be equal to 'Fire' after setting");
@@ -72,7 +72,7 @@ public class PlantAreaOfEffectComponentTest {
      * Tests the onCollisionStartReturns method when getFixture == me.
      */
     @Test
-    public void testOnCollisionStartReturns() {
+    void testOnCollisionStartReturns() {
         Fixture me = mock(Fixture.class);
         Fixture other = mock(Fixture.class);
 
@@ -84,7 +84,7 @@ public class PlantAreaOfEffectComponentTest {
      * Tests the onCollisionEndReturns method when getFixture == me.
      */
     @Test
-    public void testOnCollisionEndReturns() {
+    void testOnCollisionEndReturns() {
         Fixture me = mock(Fixture.class);
         Fixture other = mock(Fixture.class);
 

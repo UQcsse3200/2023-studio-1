@@ -12,6 +12,7 @@ public class PlanetOxygenService implements OxygenLevel {
 	private static final Logger logger = LoggerFactory.getLogger(PlanetOxygenService.class);
 	private static final float DEFAULT_OXYGEN_GOAL = 10000;
 	private static final float DEFAULT_INITIAL_OXYGEN = 1000;
+	private static final String OXYGEN_UPDATE = "oxygenUpdate";
 
 	private float oxygenGoal;
 	private float oxygenPresent;
@@ -50,7 +51,7 @@ public class PlanetOxygenService implements OxygenLevel {
 	@Override
 	public void setOxygen(float oxygen) {
 		this.oxygenPresent = oxygen;
-		eventHandler.trigger("oxygenUpdate");
+		eventHandler.trigger(OXYGEN_UPDATE);
 	}
 
 	@Override
@@ -117,7 +118,7 @@ public class PlanetOxygenService implements OxygenLevel {
 			// No oxygen left - trigger lose screen.
 			logger.debug("No oxygen left, triggering final oxygenUpdate and loseScreen event");
 			oxygenPresent = 0;
-			eventHandler.trigger("oxygenUpdate");
+			eventHandler.trigger(OXYGEN_UPDATE);
 			ServiceLocator.getMissionManager().getEvents().trigger("loseScreen", "oxygen");
 		} else if (oxygenPresent + delta > oxygenGoal) {
 			// Limit the present oxygen to not surpass the oxygen goal.
@@ -128,7 +129,7 @@ public class PlanetOxygenService implements OxygenLevel {
 			oxygenPresent += delta;
 		}
 		logger.debug("Calling oxygenUpdate event");
-		eventHandler.trigger("oxygenUpdate");
+		eventHandler.trigger(OXYGEN_UPDATE);
 	}
 
 	/**
