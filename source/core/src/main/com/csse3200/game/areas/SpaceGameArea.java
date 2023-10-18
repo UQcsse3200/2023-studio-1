@@ -8,6 +8,7 @@ import com.csse3200.game.areas.terrain.TerrainTile;
 import com.csse3200.game.areas.weather.ClimateController;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.components.ship.ShipDebrisComponent;
 import com.csse3200.game.entities.EntitiesSpawner;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntitySpawner;
@@ -70,7 +71,6 @@ public class SpaceGameArea extends GameArea {
           "images/watered_cropTile_fertilised.png",
           "images/overwatered_cropTile.png",
           "images/overwatered_cropTile_fertilised.png",
-          "images/Temp-Chest.png",
           "images/bin.png",
           "images/GOD_IS_game_ver.png",
 
@@ -136,15 +136,12 @@ public class SpaceGameArea extends GameArea {
           "images/plants/misc/deadly_nightshade_seed.png",
           "images/plants/misc/hammer_plant_seed.png",
           "images/plants/misc/space_snapper_seed.png",
-
+          "images/plants/misc/atomic_algae_seed.png",
 
           "images/invisible_sprite.png",
 
           "images/Player_Hunger/hunger_bar_outline.png",
           "images/Player_Hunger/hunger_bar_fill.png",
-
-          "images/plants/misc/atomic_algae_seed.png",
-          "images/invisible_sprite.png",
 
           "images/progress-bar/part1day1.png",
           "images/progress-bar/part1day2.png",
@@ -174,6 +171,8 @@ public class SpaceGameArea extends GameArea {
           "images/yellowCircle.png",
 
           /* placeable */
+          "images/placeable/light.png",
+          "images/placeable/chest.png",
           "images/placeable/sprinkler/pipe_null.png",
           "images/placeable/sprinkler/pump.png",
           // sprinklers - on
@@ -240,9 +239,7 @@ public class SpaceGameArea extends GameArea {
           "images/ship/part_tile_indicator.png",
 		  "images/walkietalkie.png",
 		  "images/teleporter.png",
-
-          "images/selected.png",
-          "images/itemFrame.png",
+          
           "images/PauseMenu/Pause_Overlay.jpg",
           "images/PauseMenu/Pausenew.jpg",
           "images/miniMap/shipIcon.png",
@@ -285,30 +282,20 @@ public class SpaceGameArea extends GameArea {
           "sounds/animals/DeathBats.mp3", "sounds/animals/DragonflyAttackPlant.mp3",
           "sounds/animals/DragonFlyAttackPlayer.mp3",
           "sounds/animals/OxygenEaterAttack.mp3", "sounds/animals/TamedAnimal.mp3",
-          "sounds/plants/aloeVera/click.wav", "sounds/plants/aloeVera/clickLore.wav",
-          "sounds/plants/aloeVera/decay.wav", "sounds/plants/aloeVera/decayLore.wav",
-          "sounds/plants/aloeVera/destroy.wav", "sounds/plants/aloeVera/destroyLore.wav",
-          "sounds/plants/aloeVera/nearby.wav", "sounds/plants/aloeVera/nearbyLore.wav",
-          "sounds/plants/cosmicCob/click.wav", "sounds/plants/cosmicCob/clickLore.wav",
-          "sounds/plants/cosmicCob/decay.wav", "sounds/plants/cosmicCob/decayLore.wav",
-          "sounds/plants/cosmicCob/destroy.wav", "sounds/plants/cosmicCob/destroyLore.wav",
-          "sounds/plants/cosmicCob/nearby.wav", "sounds/plants/cosmicCob/nearbyLore.wav",
-          "sounds/plants/hammerPlant/click.wav", "sounds/plants/hammerPlant/clickLore.wav",
-          "sounds/plants/hammerPlant/decay.wav", "sounds/plants/hammerPlant/decayLore.wav",
-          "sounds/plants/hammerPlant/destroy.wav", "sounds/plants/hammerPlant/destroyLore.wav",
-          "sounds/plants/hammerPlant/nearby.wav", "sounds/plants/hammerPlant/nearbyLore.wav",
-          "sounds/plants/nightshade/click.wav", "sounds/plants/nightshade/clickLore.wav",
-          "sounds/plants/nightshade/decay.wav", "sounds/plants/nightshade/decayLore.wav",
-          "sounds/plants/nightshade/destroy.wav", "sounds/plants/nightshade/destroyLore.wav",
-          "sounds/plants/nightshade/nearby.wav", "sounds/plants/nightshade/nearbyLore.wav",
-          "sounds/plants/venusFlyTrap/click.wav", "sounds/plants/venusFlyTrap/clickLore.wav",
-          "sounds/plants/venusFlyTrap/decay.wav", "sounds/plants/venusFlyTrap/decayLore.wav",
-          "sounds/plants/venusFlyTrap/destroy.wav", "sounds/plants/venusFlyTrap/destroyLore.wav",
-          "sounds/plants/venusFlyTrap/nearby.wav", "sounds/plants/venusFlyTrap/nearbyLore.wav",
-          "sounds/plants/waterWeed/click.wav", "sounds/plants/waterWeed/clickLore.wav",
-          "sounds/plants/waterWeed/decay.wav", "sounds/plants/waterWeed/decayLore.wav",
-          "sounds/plants/waterWeed/destroy.wav", "sounds/plants/waterWeed/destroyLore.wav",
-          "sounds/plants/waterWeed/nearby.wav", "sounds/plants/waterWeed/nearbyLore.wav",
+          "sounds/plants/click.wav", "sounds/plants/decay.wav",
+          "sounds/plants/destroy.wav", "sounds/plants/nearby.wav",
+          "sounds/plants/aloeVera/clickLore.wav", "sounds/plants/aloeVera/decayLore.wav",
+          "sounds/plants/aloeVera/destroyLore.wav", "sounds/plants/aloeVera/nearbyLore.wav",
+          "sounds/plants/cosmicCob/clickLore.wav", "sounds/plants/cosmicCob/decayLore.wav",
+          "sounds/plants/cosmicCob/destroyLore.wav", "sounds/plants/cosmicCob/nearbyLore.wav",
+          "sounds/plants/hammerPlant/clickLore.wav", "sounds/plants/hammerPlant/decayLore.wav",
+          "sounds/plants/hammerPlant/destroyLore.wav", "sounds/plants/hammerPlant/nearbyLore.wav",
+          "sounds/plants/nightshade/clickLore.wav", "sounds/plants/nightshade/decayLore.wav",
+          "sounds/plants/nightshade/destroyLore.wav", "sounds/plants/nightshade/nearbyLore.wav",
+          "sounds/plants/spaceSnapper/clickLore.wav", "sounds/plants/spaceSnapper/decayLore.wav",
+          "sounds/plants/spaceSnapper/destroyLore.wav", "sounds/plants/spaceSnapper/nearbyLore.wav",
+          "sounds/plants/atomicAlgae/clickLore.wav", "sounds/plants/atomicAlgae/decayLore.wav",
+          "sounds/plants/atomicAlgae/destroyLore.wav", "sounds/plants/atomicAlgae/nearbyLore.wav",
           "sounds/player/PlayerDeath.mp3", "sounds/player/PlayerGetsHit.mp3",
           "sounds/weapons/GunAttack.mp3",  "sounds/weapons/GunReload.mp3",
           "sounds/weapons/SwordHitEntity.mp3", "sounds/weapons/SwordSwing.mp3",
@@ -393,6 +380,12 @@ public class SpaceGameArea extends GameArea {
 
     hostileSpawner = new EntitiesSpawner(hostileSpawners);
     hostileSpawner.setGameAreas(this);
+
+    // play background music
+    ServiceLocator.getSoundService().getBackgroundMusicService().play(BackgroundMusicType.NORMAL);
+
+    ShipDebrisComponent.clearCanSpawnShipEater();
+
   }
 
   /**
@@ -621,6 +614,12 @@ public class SpaceGameArea extends GameArea {
     effects.add(EffectSoundFile.STORM);
     effects.add(EffectSoundFile.SURGE);
     effects.add(EffectSoundFile.GOD_DID);
+    effects.add(EffectSoundFile.SHIP_CLUE_SOLVED);
+    effects.add(EffectSoundFile.SHIP_INSTALL_PART);
+    effects.add(EffectSoundFile.SHIP_FEATURE_UNLOCKED);
+    effects.add(EffectSoundFile.SHIP_TELEPORT);
+    effects.add(EffectSoundFile.SHIP_EATER_ATTACK);
+    effects.add(EffectSoundFile.SHIP_EATER_HIDE);
 
 
     try {
@@ -639,6 +638,7 @@ public class SpaceGameArea extends GameArea {
     logger.debug("Unloading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.unloadAssets(texturePaths);
+    resourceService.unloadAssets(TerrainFactory.getMapTextures());
     resourceService.unloadAssets(textureAtlasPaths);
     resourceService.unloadAssets(soundPaths);
   }

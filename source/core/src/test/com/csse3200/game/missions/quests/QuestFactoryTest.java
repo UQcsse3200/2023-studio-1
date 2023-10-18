@@ -252,6 +252,32 @@ class QuestFactoryTest {
     }
 
     @Test
+    void testCreatePartFinderIQuest() {
+        try (MockedStatic<ItemFactory> itemFactoryMockedStatic = mockStatic(ItemFactory.class)) {
+            itemFactoryMockedStatic.when(ItemFactory::createClueItem).thenReturn(mockEntity);
+
+            Quest quest = QuestFactory.createPartFinderIQuest();
+            assertEquals(QuestFactory.PART_FINDER_I_QUEST_NAME, quest.getName());
+            assertFalse(quest.isCompleted());
+        } catch (Exception ignored) {
+            fail();
+        }
+    }
+
+    @Test
+    void testCreateSpaceDebrisQuest() {
+        try (MockedStatic<ItemFactory> itemFactoryMockedStatic = mockStatic(ItemFactory.class)) {
+            itemFactoryMockedStatic.when(ItemFactory::createShipPart).thenReturn(mockEntity);
+
+            Quest quest = QuestFactory.createSpaceDebrisQuest();
+            assertEquals(QuestFactory.SPACE_DEBRIS_QUEST_NAME, quest.getName());
+            assertFalse(quest.isCompleted());
+        } catch (Exception ignored) {
+            fail();
+        }
+    }
+
+    @Test
     void testCreateBringingItAllTogetherQuest() {
         Quest quest = QuestFactory.createBringingItAllTogetherQuest();
         assertEquals(QuestFactory.BRINGING_IT_ALL_TOGETHER_QUEST_NAME, quest.getName());

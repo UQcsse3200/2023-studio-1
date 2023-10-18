@@ -2,7 +2,7 @@
 
 ## Welcome
 
-Gardens of the galaxy is a futuristic space farming game created by the students of Studio 1 for CSSE3200. With other 40 students split up into 8 different teams working on this game, it has been transformed from a barebones game-engine to a fully fledged space farming game, with limitless potential.
+Gardens of the Galaxy is a futuristic space farming game created by the students of Studio 1 for CSSE3200. With other 40 students split up into 8 different teams working on this game, it has been transformed from a barebones game-engine to a fully fledged space farming game, with limitless potential.
 
 No matter your taste in games, Gardens of the Galaxy will have you hooked. To get started with this game's deep lore, start reading [here](https://github.com/UQcsse3200/2023-studio-1/wiki/Storyline).
 
@@ -18,6 +18,17 @@ To get started with the game, please follow the outline provided [here](https://
 - [Storyline](https://github.com/UQcsse3200/2023-studio-1/wiki/Storyline)
 - [Game Quests](https://github.com/UQcsse3200/2023-studio-1/wiki/Game-Quests)
 - [Game Wiki](https://github.com/UQcsse3200/2023-studio-1/wiki)
+
+## Course Description
+
+This game was developed in just 8 weeks, with work being broken up into 4 different 2-week long sprints. The goals for each sprint were as follows:
+
+- Sprint 1 - Minimum Viable Product
+- Sprint 2 - Core Game Functionality
+- Sprint 3 - Full Game Delivery
+- Sprint 4 - Polished Game
+
+To better manage these sprints and the features introduced in them, students documented their work in this GitHub repository through pull requests and issues.
 
 ## Game Engine Description
 

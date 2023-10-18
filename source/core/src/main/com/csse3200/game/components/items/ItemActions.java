@@ -26,6 +26,7 @@ import com.csse3200.game.entities.EntityType;
 import com.csse3200.game.entities.factories.ItemFactory;
 import com.csse3200.game.services.FactoryService;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -195,6 +196,11 @@ public class ItemActions extends Component {
   private boolean teleport(Entity player) {
     player.getEvents().trigger(ParticleService.START_EVENT, ParticleService.ParticleEffectType.TELEPORT_EFFECT);
     player.setPosition(new Vector2(20, 83));
+    try {
+      ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.SHIP_TELEPORT);
+    } catch (InvalidSoundFileException ignored) {
+      
+    }
     return true;
   }
 

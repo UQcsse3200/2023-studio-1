@@ -5,6 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Align;
@@ -31,7 +35,7 @@ import org.slf4j.LoggerFactory;
  */
 public class InventoryDisplay extends UIComponent {
 	private InventoryComponent inventory;
-	private final Skin skin = ServiceLocator.getResourceService().getAsset("gardens-of-the-galaxy/gardens-of-the-galaxy.json", Skin.class);
+	//private final Skin skin = ServiceLocator.getResourceService().getAsset("gardens-of-the-galaxy/gardens-of-the-galaxy.json", Skin.class);
 	private final Table table = new Table(skin);
 	private Window window;
 	private final ArrayList<ItemSlot> slots = new ArrayList<>();
@@ -49,6 +53,7 @@ public class InventoryDisplay extends UIComponent {
 	private final Map<Integer, TextTooltip> tooltips = new HashMap<>();
 	private final InstantTooltipManager instantTooltipManager = new InstantTooltipManager();
 	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(InventoryDisplay.class);
+	private final ArrayList<Label> labels = new ArrayList<>();
 	private boolean isPause = false;
 	private boolean lastState = false;
 	private Image bin = null;
@@ -78,6 +83,7 @@ public class InventoryDisplay extends UIComponent {
 		initialiseInventory();
 		entity.getEvents().addListener(openEvent, this::toggleOpen);
 		entity.getEvents().addListener(refreshEvent, this::refreshInventory);
+		entity.getEvents().addListener("hotkeySelection",this::updateSelected);
 		entity.getEvents().addListener(PlayerActions.events.ESC_INPUT.name(), this::setPause);
 		entity.getEvents().addListener("hideUI", this::hide);
 		inventoryDisplayManager.addInventoryDisplay(this);
@@ -101,7 +107,7 @@ public class InventoryDisplay extends UIComponent {
 	 * @see Table for positioning options
 	 */
 	private void initialiseInventory() {
-		window = new Window(entity.getType() + " Inventory", skin);
+		window = new Window(entity.getType() + " Inventory", skin, "wooden");
 
 		// create variables needed for drag and drop
 		dnd = new DragAndDrop();
@@ -109,9 +115,29 @@ public class InventoryDisplay extends UIComponent {
 		map = new HashMap<>();
 		indexes = new HashMap<>();
 
-		table.defaults().size(64, 64);
+		table.defaults().size(64, 10);
 		table.pad(10);
+		if (entity.getType() == EntityType.PLAYER) {
+			for (int i = 0; i < (rowSize); i++) {
+				int idx = i + 1;
+				if (idx == 10) {
+					idx = 0;
+				}
+				// Create the label for the item slot
+				Label label = new Label(" " + idx, skin); //please please please work
+				if (inventory != null && inventory.getHeldIndex() == i) {
+					label.setColor(Color.BLUE);
+				} else {
+					label.setColor(Color.BLACK);
+				}
+				label.setAlignment(Align.center);
+				table.add(label);
+				labels.add(label);
 
+			}
+		}
+		table.row();
+		table.defaults().size(64, 64);
 		// loop through entire table and create itemSlots and add the slots to the stored array
 		for (int i = 0; i < size; i++) {
 			ItemSlot slot;
@@ -122,8 +148,7 @@ public class InventoryDisplay extends UIComponent {
 				slot = new ItemSlot(false);
 			}
 
-			table.add(slot).width(70).height(70).pad(10, 10, 10, 10);
-
+			table.add(slot).pad(10, 10, 10, 10);
 			if ((i + 1) % rowSize == 0) {
 				table.row();
 			}
@@ -135,13 +160,14 @@ public class InventoryDisplay extends UIComponent {
 			}
 		}
 		table.row();
+
 		if (entity.getType() == EntityType.PLAYER) {
 			bin = new Image(ServiceLocator.getResourceService().getAsset("images/bin.png", Texture.class));
 			table.add(bin).colspan(10);
 		}
 
 		// Create a window for the inventory using the skin
-		window.pad(40, 20, 20, 20);
+		window.pad(40, 5, 5, 5);
 		window.add(table);
 		window.pack();
 		window.setMovable(false);
@@ -320,6 +346,23 @@ public class InventoryDisplay extends UIComponent {
 	}
 
 	/**
+	 * Updates displayed number at top of inventory to represent what slot is selected
+	 * @param slotNum number of slot updated
+	 */
+	public void updateSelected(int slotNum) {
+		for (int i = 0; i < labels.size(); i++) {
+            Label label = labels.get(i);
+            if(slotNum == i) {
+                label.setColor(Color.BLUE);
+            }
+			else {
+                label.setColor(Color.BLACK);
+            }
+            labels.set(i, label);
+        }
+	}
+
+	/**
 	 * Get the current window
 	 *
 	 * @return current window
@@ -335,7 +378,6 @@ public class InventoryDisplay extends UIComponent {
 	 */
 	@Override
 	public void draw(SpriteBatch batch) {
-		// Handled else where
 	}
 
 	/**

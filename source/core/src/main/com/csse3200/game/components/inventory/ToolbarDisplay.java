@@ -29,17 +29,18 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
  */
 public class ToolbarDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(ToolbarDisplay.class);
-    private final Skin skin = ServiceLocator.getResourceService().getAsset("gardens-of-the-galaxy/gardens-of-the-galaxy.json", Skin.class);
+    //private final Skin skin = ServiceLocator.getResourceService().getAsset("gardens-of-the-galaxy/gardens-of-the-galaxy.json", Skin.class);
     private final Table table = new Table(skin);
-    private final Window window = new Window("", skin);
+    private final Window window = new Window("   INVENTORY", skin, "wooden");
     private boolean isOpen;
     private InventoryComponent inventory;
     private int selectedSlot = -1;
     private final ArrayList<ItemSlot> slots = new ArrayList<>();
-    private final Map<Integer, TextTooltip> tooltips = new HashMap<>();
     private final InstantTooltipManager instantTooltipManager = new InstantTooltipManager();
     private boolean isPause = false;
     private boolean lastState = false;
+    private final Map<Integer, TextTooltip> tooltips = new HashMap<>();
+
 
 
     /**
@@ -83,7 +84,7 @@ public class ToolbarDisplay extends UIComponent {
                 idx = 0;
             }
             Label label = new Label(" " + idx, skin);
-            label.setColor(Color.BLUE);
+            label.setColor(Color.BLACK);
             label.setAlignment(Align.topLeft);
 
             ItemComponent item;
@@ -100,6 +101,7 @@ public class ToolbarDisplay extends UIComponent {
                 curSlot.setCount(itemCount);
 
                 curSlot.add(label);
+
                 // Update slots array
                 slots.set(i, curSlot);
             }
@@ -128,8 +130,8 @@ public class ToolbarDisplay extends UIComponent {
                 idx = 0;
             }
             // Create the label for the item slot
-            Label label = new Label(" " + idx, skin); //please please please work
-            label.setColor(Color.BLUE);
+            Label label = new Label(" " + idx, skin);
+            label.setColor(Color.BLACK);
             label.setAlignment(Align.topLeft);
 
             // Check if slot is selected
@@ -165,6 +167,7 @@ public class ToolbarDisplay extends UIComponent {
     @Override
     public void draw(SpriteBatch batch)  {
         // Handled else where
+        window.setPosition(stage.getWidth() / 2 - window.getWidth() / 2, 0);
     }
 
     /**

@@ -115,7 +115,7 @@ public class WinScreenDisplay extends UIComponent {
                 """;
         storyLabel = new TypingLabel(credits, skin); // Create the TypingLabel with the formatted story
         storyLabel.setAlignment(Align.center); // Center align the text
-        this.returnButton = new TextButton("Return To Main Menu", skin);
+        this.returnButton = new TextButton("Return To Main Menu", skin,"orange");
         this.returnButton.setVisible(false); // Make the continue button invisible
         // The return button lets the user proceed to the main menu
         this.returnButton.addListener(new ChangeListener() {

@@ -31,6 +31,7 @@ public class OpenPauseComponent extends Component {
     public void openPauseMenu() {
         logger.info("Opening pause window");
         ServiceLocator.getPauseMenuArea().setPauseMenu();
+        ServiceLocator.getPauseMenuArea().update();
         pauseOpen = true;
         logger.info("Pause status: {} line 35", ServiceLocator.getCutSceneStatus());
         if (!ServiceLocator.getCutSceneStatus()) {
@@ -49,5 +50,10 @@ public class OpenPauseComponent extends Component {
             // temporary neutralise setPause to false while cut screen is running
             ServiceLocator.getTimeService().setPaused(false);
         }
+    }
+
+    @Override
+    public void update() {
+        ServiceLocator.getPauseMenuArea().update();
     }
 }
