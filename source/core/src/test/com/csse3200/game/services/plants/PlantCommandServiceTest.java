@@ -11,12 +11,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  * Tests for PlantCommandService
  */
 @ExtendWith(GameExtension.class)
-public class PlantCommandServiceTest {
+class PlantCommandServiceTest {
     /**
      * Test for getEvents when EventHandler is not null
      */
     @Test
-    public void testGetEvents() {
+    void testGetEvents() {
         PlantCommandService plantCommandService = new PlantCommandService();
         EventHandler event = plantCommandService.getEvents();
         assertNotNull(event);

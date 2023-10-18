@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /** Follows a target entity until they get too far away or line of sight is lost */
 public class FollowTask extends ChaseTask {
-  private static final Logger logger = LoggerFactory.getLogger(RunAwayTask.class);
+  private static final Logger logger = LoggerFactory.getLogger(FollowTask.class);
 
   /** Distance to target before stopping. */
   private final float stoppingDistance;

@@ -16,11 +16,11 @@ import static org.mockito.Mockito.verify;
  * Tests for PlantCommand class
  */
 @ExtendWith({})
-public class PlantCommandTest {
+class PlantCommandTest {
     PlantCommand plantCommand;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         plantCommand = new PlantCommand();
     }
 
@@ -28,7 +28,7 @@ public class PlantCommandTest {
      * test for action method with valid arguments
      */
     @Test
-    public void testActionWithValidArgs() {
+    void testActionWithValidArgs() {
         ArrayList<String> args = new ArrayList<String>();
         args.add("");
 
@@ -39,7 +39,7 @@ public class PlantCommandTest {
      * test for action method with invalid arguments
      */
     @Test
-    public void testActionWithInvalidArgs() {
+    void testActionWithInvalidArgs() {
         ArrayList<String> args = new ArrayList<String>();
         args.add("");
         args.add("");
@@ -51,7 +51,7 @@ public class PlantCommandTest {
      * Test for isValid with valid arguments
      */
     @Test
-    public void testIsValidWithValidArgs() {
+    void testIsValidWithValidArgs() {
         ArrayList<String> args = new ArrayList<String>();
         args.add("");
 
@@ -62,7 +62,7 @@ public class PlantCommandTest {
      * Test for isValid with invalid arguments
      */
     @Test
-    public void testIsValidWithInvalidArgs() {
+    void testIsValidWithInvalidArgs() {
         ArrayList<String> args = new ArrayList<String>();
         args.add("");
         args.add("");

@@ -1,7 +1,6 @@
 package com.csse3200.game.services.plants;
 
 import com.csse3200.game.events.EventHandler;
-import jdk.jfr.Event;
 
 /**
  * Keeps track of all info and stats relating to plants.

@@ -25,7 +25,7 @@ public class PhysicsMovementComponent extends Component implements MovementContr
     private boolean movementEnabled = true;
     private final GameMap gameMap = ServiceLocator.getGameArea().getMap();
 
-    private final static Set<EntityType> flyingEntitiesHashSet = new HashSet<>(
+    private static final Set<EntityType> flyingEntitiesHashSet = new HashSet<>(
           Set.of(
                   EntityType.OXYGEN_EATER,
                   EntityType.DRAGONFLY,
@@ -46,8 +46,6 @@ public class PhysicsMovementComponent extends Component implements MovementContr
         }   
 
         if (movementEnabled && targetPosition != null) {
-//            Body body = physicsComponent.getBody();
-//            updateDirection(body);
             updateSpeed();
         }
     }

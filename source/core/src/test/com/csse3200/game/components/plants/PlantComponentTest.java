@@ -30,7 +30,7 @@ import java.util.Map;
  * Test class for verifying the functionality of PlantComponent.
  */
 @ExtendWith(GameExtension.class)
-public class PlantComponentTest {
+class PlantComponentTest {
 
     PlantComponent testPlant;
     CropTileComponent mockCropTile;

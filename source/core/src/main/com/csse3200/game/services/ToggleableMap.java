@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 public class ToggleableMap extends UIComponent {
 
-    final private String toggleOpen = "toggleOpen";
+    private final String toggleOpen = "toggleOpen";
     private static final Logger logger = LoggerFactory.getLogger(ToggleableMap.class);
     
     /**
