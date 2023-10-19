@@ -36,7 +36,7 @@ jobs:
         run: |
           cd $GRADLE_DIR
           chmod +x ./gradlew
-          ./gradlew --stacktrace build sonarqube dist --info
+          ./gradlew --stacktrace build sonarqube --info
           ls -al
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
