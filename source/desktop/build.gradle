@@ -1,6 +1,9 @@
 import org.gradle.internal.os.OperatingSystem
 OperatingSystem os = OperatingSystem.current()
 
+apply plugin: 'java'
+apply plugin: 'application'
+
 sourceSets.main.java.srcDirs = [ "src/" ]
 sourceSets.main.resources.srcDirs = ["../core/assets"]
 
