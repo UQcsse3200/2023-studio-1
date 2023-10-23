@@ -143,7 +143,6 @@ public class TamableComponent extends Component {
       }
   }
 
-
   /**
    * Function is used to generate a random double decimal when the animal has been
    * fed.
