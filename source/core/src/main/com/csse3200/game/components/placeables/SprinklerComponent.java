@@ -160,6 +160,9 @@ public class SprinklerComponent extends Component {
     }
     // Now set the texture:
     setTexture(this.isPowered, orientation);
+    if (water != null) {
+      water.setCenterPosition(entity.getCenterPosition());
+    }
   }
 
   /**
@@ -307,6 +310,7 @@ public class SprinklerComponent extends Component {
 
   public void addWaterAnimator(Entity animator) {
     this.water = animator;
+    water.setCenterPosition(entity.getCenterPosition());
   }
 
   /**
