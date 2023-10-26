@@ -157,7 +157,7 @@ class TestInventoryUI {
 		inventory.addItem(i1);
 		inventoryDisplay.toggleOpen();
 		Window window = win.getValue();
-		assert (window.getTitleLabel().textEquals("PLAYER Inventory"));
+		assert (window.getTitleLabel().textEquals("   PLAYER Inventory"));
 		inventoryDisplay.refreshInventory();
 		Table inventorySlots = (Table) window.getChildren().begin()[1];
 		Cell<?>[] cells = Arrays.copyOfRange(inventorySlots.getCells().toArray(Cell.class), 0, 40);
