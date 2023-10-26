@@ -106,7 +106,7 @@ public class InventoryDisplay extends UIComponent {
 	 * @see Table for positioning options
 	 */
 	private void initialiseInventory() {
-		window = new Window(entity.getType() + " Inventory", skin, "wooden");
+		window = new Window("   " +entity.getType() + " Inventory", skin, "wooden");
 
 		// create variables needed for drag and drop
 		dnd = new DragAndDrop();
