@@ -63,7 +63,7 @@ public class ServiceLocator {
   public static PlantInfoService getPlantInfoService() {
     return plantInfoService;
   }
-
+  public static boolean god = false;
 
   public static GameArea getGameArea() {
     return gameArea;
