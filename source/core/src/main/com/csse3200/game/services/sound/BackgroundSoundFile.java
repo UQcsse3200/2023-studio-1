@@ -1,7 +1,6 @@
 package com.csse3200.game.services.sound;
 
 public enum BackgroundSoundFile implements SoundFile {
-    // TODO: Add enum declarations for all background sound tracks
     TEST_TRACK_1("sounds/background-music/Alien-Sky.mp3", BackgroundMusicType.NORMAL),
     TEST_TRACK_2("sounds/background-music/Where-The-Waves-Take-Us.mp3", BackgroundMusicType.NORMAL),
     ;

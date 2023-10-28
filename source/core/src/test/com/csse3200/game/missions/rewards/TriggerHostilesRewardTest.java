@@ -40,7 +40,7 @@ class TriggerHostilesRewardTest {
 
 
     @BeforeEach
-    public void init() {
+    void init() {
         spaceGameArea = mock(SpaceGameArea.class);
         ServiceLocator.registerGameArea(spaceGameArea);
 
@@ -72,7 +72,7 @@ class TriggerHostilesRewardTest {
     }
 
     @Test
-    public void testCollect() {
+    void testCollect() {
         triggerHostilesReward.collect();
         SpaceGameArea gameArea = (SpaceGameArea) ServiceLocator.getGameArea();
         SpaceGameArea spaceGameArea = (SpaceGameArea) gameArea;

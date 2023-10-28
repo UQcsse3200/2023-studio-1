@@ -25,6 +25,7 @@ public class LoadCommand implements Command {
     if (args.size() == 1) {
       if (ServiceLocator.getSaveLoadService().validSaveFile(args.get(0))) {
         ServiceLocator.getSaveLoadService().load(args.get(0));
+        return true;
       }
     }
     ServiceLocator.getSaveLoadService().load();

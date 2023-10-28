@@ -170,7 +170,7 @@ class GameMapTest {
     void testGetTraversableTileCoordinates() {
         ArrayList<GridPoint2> arrayList = (ArrayList<GridPoint2>) gameMap.getTraversableTileCoordinates();
 
-        assertEquals(arrayList, traversableTilesList);
+        assertEquals(traversableTilesList, arrayList);
     }
 
     @Test

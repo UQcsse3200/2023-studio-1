@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
  * Tests for PlantMouseHoverComponent class
  */
 @ExtendWith(GameExtension.class)
-public class PlantMouseHoverComponentTest {
+class PlantMouseHoverComponentTest {
     PlantMouseHoverComponent plantMouseHoverComponent;
 
     @Mock
@@ -29,7 +29,7 @@ public class PlantMouseHoverComponentTest {
      * Sets up the test environment before each test case.
      */
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.initMocks(this);
         plantMouseHoverComponent = new PlantMouseHoverComponent();
         plantMouseHoverComponent.setEntity(new Entity());
@@ -41,7 +41,7 @@ public class PlantMouseHoverComponentTest {
      * Test isPlantDead is false by default
      */
     @Test
-    public void testIsPlantDead_False() {
+    void testIsPlantDead_False() {
         assertFalse(plantMouseHoverComponent.isPlantDead());
     }
 
@@ -49,7 +49,7 @@ public class PlantMouseHoverComponentTest {
      * Test isPlantDead is true when setPlantDied is called
      */
     @Test
-    public void testIsPlantDead_True() {
+    void testIsPlantDead_True() {
         plantMouseHoverComponent.setPlantDied(true);
         assertTrue(plantMouseHoverComponent.isPlantDead());
     }
@@ -58,7 +58,7 @@ public class PlantMouseHoverComponentTest {
      * Test isShowInfo is false by default
      */
     @Test
-    public void testIsShowInfo_False() {
+    void testIsShowInfo_False() {
         assertFalse(plantMouseHoverComponent.isShowInfo());
     }
 
@@ -66,7 +66,7 @@ public class PlantMouseHoverComponentTest {
      * Test isShowInfo is true when setShowInfo is called
      */
     @Test
-    public void testIsShowInfo_True() {
+    void testIsShowInfo_True() {
         plantMouseHoverComponent.setShowInfo(true);
         assertTrue(plantMouseHoverComponent.isShowInfo());
     }
@@ -75,7 +75,7 @@ public class PlantMouseHoverComponentTest {
      * Test noMoreUse is false by default
      */
     @Test
-    public void testIsNoMoreUse_False() {
+    void testIsNoMoreUse_False() {
         assertFalse(plantMouseHoverComponent.isNoMoreUse());
     }
 
@@ -83,7 +83,7 @@ public class PlantMouseHoverComponentTest {
      * Test noMoreUse is true when setNoMoreUse is called
      */
     @Test
-    public void testIsNoMoreUse_True() {
+    void testIsNoMoreUse_True() {
         plantMouseHoverComponent.setNoMoreUse(true);
         assertTrue(plantMouseHoverComponent.isNoMoreUse());
     }
@@ -92,7 +92,7 @@ public class PlantMouseHoverComponentTest {
      * Test showInfo, plantDead, and noMoreUse are false when create is called
      */
     @Test
-    public void testCreate() {
+    void testCreate() {
         plantMouseHoverComponent.create();
         assertFalse(plantMouseHoverComponent.isShowInfo());
         assertFalse(plantMouseHoverComponent.isPlantDead());

@@ -35,7 +35,6 @@ import org.slf4j.LoggerFactory;
  */
 public class InventoryDisplay extends UIComponent {
 	private InventoryComponent inventory;
-	//private final Skin skin = ServiceLocator.getResourceService().getAsset("gardens-of-the-galaxy/gardens-of-the-galaxy.json", Skin.class);
 	private final Table table = new Table(skin);
 	private Window window;
 	private final ArrayList<ItemSlot> slots = new ArrayList<>();
@@ -107,7 +106,7 @@ public class InventoryDisplay extends UIComponent {
 	 * @see Table for positioning options
 	 */
 	private void initialiseInventory() {
-		window = new Window(entity.getType() + " Inventory", skin, "wooden");
+		window = new Window("   " +entity.getType() + " Inventory", skin, "wooden");
 
 		// create variables needed for drag and drop
 		dnd = new DragAndDrop();

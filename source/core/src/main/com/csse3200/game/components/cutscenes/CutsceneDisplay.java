@@ -85,7 +85,7 @@ public class CutsceneDisplay extends UIComponent {
         logger.debug("Cutscene table spawned");
 
         if (this.cutsceneType == Cutscene.CutsceneType.ALIEN) {
-            dialogueWindow = new Window("Alien Jaleel", skin, "wooden");
+            dialogueWindow = new Window("Alien Jarrael", skin, "wooden");
         } else if (this.cutsceneType == Cutscene.CutsceneType.RADIO){
             dialogueWindow = new Window("Radio", skin, "wooden");
         } else if (this.cutsceneType == Cutscene.CutsceneType.PLACEABLE) {

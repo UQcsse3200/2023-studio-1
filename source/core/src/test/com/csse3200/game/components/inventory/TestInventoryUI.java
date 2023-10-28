@@ -53,7 +53,7 @@ import static org.mockito.Mockito.*;
  */
 @ExtendWith(GameExtension.class)
 
-public class TestInventoryUI {
+class TestInventoryUI {
 	Entity player;
 	InventoryDisplay inventoryDisplay;
 	static InventoryComponent inventory;
@@ -157,7 +157,7 @@ public class TestInventoryUI {
 		inventory.addItem(i1);
 		inventoryDisplay.toggleOpen();
 		Window window = win.getValue();
-		assert (window.getTitleLabel().textEquals("PLAYER Inventory"));
+		assert (window.getTitleLabel().textEquals("   PLAYER Inventory"));
 		inventoryDisplay.refreshInventory();
 		Table inventorySlots = (Table) window.getChildren().begin()[1];
 		Cell<?>[] cells = Arrays.copyOfRange(inventorySlots.getCells().toArray(Cell.class), 0, 40);
@@ -193,7 +193,7 @@ public class TestInventoryUI {
 	}
 
 	@AfterEach
-	public void cleanUp() {
+	void cleanUp() {
 		// Clears all loaded services
 		ServiceLocator.clear();
 		mockFrame.close();

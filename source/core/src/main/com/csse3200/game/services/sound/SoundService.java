@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SoundService {
-    private static final Logger logger = LoggerFactory.getLogger(SoundService.class);
 
     /**
      * A reference to the game's background music service

@@ -5,7 +5,6 @@ import java.security.SecureRandom;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.items.ItemActions;
 import com.csse3200.game.components.items.ItemComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
@@ -143,7 +142,6 @@ public class TamableComponent extends Component {
           }
       }
   }
-
 
   /**
    * Function is used to generate a random double decimal when the animal has been

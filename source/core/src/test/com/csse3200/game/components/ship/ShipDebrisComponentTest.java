@@ -94,7 +94,7 @@ class ShipDebrisComponentTest {
 		verify(mockEntityService, times(1)).register(entityCaptor.capture());
 		Entity entity = entityCaptor.getValue();
 
-		assertSame(entity.getType(), EntityType.SHIP_EATER);
+		assertSame(EntityType.SHIP_EATER, entity.getType());
 	}
 
 }
