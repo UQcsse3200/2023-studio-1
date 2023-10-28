@@ -104,6 +104,9 @@ project(":core") {
         // Discord RPC
         implementation 'com.github.Vatuu:discord-rpc:1.6.2'
 
+        // StringUtils
+        implementation 'org.apache.commons:commons-lang3:3.0'
+
         // Unit Testing
         testImplementation "org.junit.jupiter:junit-jupiter-api:$junit5Version"
         testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:$junit5Version'
