@@ -1,10 +1,5 @@
 package com.csse3200.game.components.intro;
 
-import com.csse3200.game.services.sound.EffectSoundFile;
-import com.csse3200.game.services.sound.InvalidSoundFileException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -17,8 +12,12 @@ import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.GdxGame.ScreenType;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.sound.EffectSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
 import com.csse3200.game.ui.UIComponent;
 import com.rafaskoberg.gdx.typinglabel.TypingLabel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.security.SecureRandom;
 
@@ -55,19 +54,15 @@ public class IntroDisplay extends UIComponent {
      * The Image that contains the animated planet.
      */
     private Image planet;
-    
+
     private TextButton continueButton;
-    
+
     /**
-     * The Image that contains the top half of the cockpit.
+     * The Image that contains the cockpit.
      */
-    private Image cockpitTop;
-    
-    /**
-     * The Image that contains the bottom half of the cockpit.
-     */
-    private Image cockpitBottom;
-    
+    private Image cockpit;
+
+
     /**
      * The Image to be used as the 'white-out' effect in the crash.
      */
@@ -83,39 +78,35 @@ public class IntroDisplay extends UIComponent {
      * TypingLabel is a superclass of Label, which allows Label text to be animated.
      */
     private TypingLabel storyLabel;
-    
+
     /**
      * Boolean to allow the display to know when the first sequence is finished to begin
      * preparation for the second.
      */
     private boolean titleSequenceFinished = false;
-    
+
+
     /**
-     * Coordinates of cockpit bottom actor.
+     * Coordinates of cockpit actor.
      */
-    private float[] cockpitBottomPosition = {0, 0};
-    
-    /**
-     * Coordinates of cockpit top actor.
-     */
-    private float[] cockpitTopPosition = {0, 0};
-    
+    private float[] cockpitPosition = {0, 0};
+
     /**
      * The current width of the screen.
      */
     private float screenWidth;
-    
+
     /**
      * The current height of the screen.
      */
     private float screenHeight;
-    
+
     /**
      * The multiplier which to apply to the cockpit actor shift in the shake() function.
      * Initially set to 1.0, then gradually increased.
      */
     private float shakeFactor = 1f;
-    
+
     /**
      * A boolean to inform the display of the completion of the crash animation so it
      * knows when to start the main game screen.
@@ -126,9 +117,9 @@ public class IntroDisplay extends UIComponent {
      * in update().
      */
     private boolean startedWhiteout = false;
-    
+
     private long rattleID;
-    
+
     public IntroDisplay(GdxGame game) {
         super();
         this.game = game;
@@ -214,25 +205,22 @@ public class IntroDisplay extends UIComponent {
                     continueButton.setText("Awaken");
                     continueButton.setVisible(false);
                     storyLabel.setVisible(false);
-    
-                    cockpitTop.setVisible(true);
-                    cockpitBottom.setVisible(true);
-    
-                    planet.setPosition(Gdx.graphics.getWidth() / 2f, (cockpitTop.getY(Align.bottom) - cockpitBottom.getY(Align.top)) / 2f);
-    
-                    logger.debug("({}, {}) - Cockpit Top", cockpitTopPosition[0], cockpitTopPosition[1]);
-                    logger.debug("({}, {}) - Cockpit Bottom", cockpitBottomPosition[0], cockpitBottomPosition[1]);
+
+                    cockpit.setVisible(true);
+
+                    planet.setPosition(Gdx.graphics.getWidth() / 2f, (cockpit.getY(Align.bottom)) / 2f);
+
                     titleSequenceFinished = true;
-                    
+
                     try {
                         rattleID = ServiceLocator.getSoundService().getEffectsMusicService()
                                 .play(EffectSoundFile.SHIP_RATTLE, true);
                     } catch (InvalidSoundFileException e) {
                         logger.error("{}", e.toString());
                     }
-                    
+
                 }
-                
+
             }
         });
 
@@ -251,20 +239,15 @@ public class IntroDisplay extends UIComponent {
         stage.addActor(planet);
         stage.addActor(rootTable);
 
-        cockpitTop = new Image(ServiceLocator.getResourceService()
-                .getAsset("images/crash-animation/Cockpit_Top.png", Texture.class));
-        cockpitTop.setVisible(false);
+        cockpit = new Image(ServiceLocator.getResourceService()
+                .getAsset("images/crash-animation/Cockpit.png", Texture.class));
+        cockpit.setVisible(false);
 
-        cockpitBottom = new Image(ServiceLocator.getResourceService()
-                .getAsset("images/crash-animation/Cockpit_Bottom.png", Texture.class));
-        cockpitBottom.setVisible(false);
-        
         crashLight = new Image(ServiceLocator.getResourceService()
                 .getAsset("images/crash-animation/bright_light.png", Texture.class));
         crashLight.setVisible(false);
 
-        stage.addActor(cockpitTop);
-        stage.addActor(cockpitBottom);
+        stage.addActor(cockpit);
         stage.addActor(crashLight);
 
         repositionCockpit();
@@ -300,22 +283,17 @@ public class IntroDisplay extends UIComponent {
             float yMagnitude = random.nextFloat() * (yDirection ? 1f : -1f);
             yMagnitude = yMagnitude * shakeFactor;
 
-            float newCockpitTopX = cockpitTopPosition[0] + xMagnitude;
-            float newCockpitTopY = cockpitTopPosition[1] + yMagnitude;
+            float newCockpitX = cockpitPosition[0] + xMagnitude;
+            float newCockpitY = cockpitPosition[1] + yMagnitude;
 
-            float newCockpitBottomX = cockpitBottomPosition[0] + xMagnitude;
-            float newCockpitBottomY = cockpitBottomPosition[1] + yMagnitude;
 
             // Check that generated shake amounts will not move the actors further than a
             // given distance, ensuring that they do not go too far off-screen.
-            if (Math.abs(cockpitTopPosition[0] - newCockpitTopX) < maxX
-                    && Math.abs(cockpitTopPosition[1] - newCockpitTopY) < maxY
-                    && Math.abs(cockpitBottomPosition[0] - newCockpitBottomX) < maxX
-                    && Math.abs(cockpitBottomPosition[1] - newCockpitBottomY) < maxY) {
+            if (Math.abs(cockpitPosition[0] - newCockpitX) < maxX
+                    && Math.abs(cockpitPosition[1] - newCockpitY) < maxY) {
                 logger.debug("Performing cockpit shake");
                 // Applying the generated shake.
-                cockpitTop.setPosition(newCockpitTopX, newCockpitTopY);
-                cockpitBottom.setPosition(newCockpitBottomX, newCockpitBottomY);
+                cockpit.setPosition(newCockpitX, newCockpitY);
             } else {
                 // Set the cockpit actors back to centre.
                 repositionCockpit();
@@ -329,23 +307,15 @@ public class IntroDisplay extends UIComponent {
         logger.debug("Re-centring cockpit actors");
         // Set sizes of actors to slightly larger than screen size to ensure no gaps
         // appear during shake.
-        cockpitTop.setWidth(Gdx.graphics.getWidth() * 1.2f);
-        cockpitTop.setHeight(Gdx.graphics.getHeight() * 0.4f);
-
-        cockpitBottom.setWidth(Gdx.graphics.getWidth() * 1.2f);
-        cockpitBottom.setHeight(Gdx.graphics.getHeight() * 0.4f);
+        cockpit.setWidth(Gdx.graphics.getWidth() * 1.15f);
+        cockpit.setHeight(Gdx.graphics.getHeight() * 1.15f);
 
         // Set their positions to account for their increased size relative to the
         // screen dimensions.
-        cockpitTop.setPosition( -Gdx.graphics.getWidth() * 0.1f,
+        cockpit.setPosition( -Gdx.graphics.getWidth() * 0.075f,
                 Gdx.graphics.getHeight() * 1.05f, Align.topLeft);
-        cockpitTopPosition[0] = cockpitTop.getX();
-        cockpitTopPosition[1] = cockpitTop.getY();
-
-        cockpitBottom.setPosition(-Gdx.graphics.getWidth() * 0.1f,
-                -Gdx.graphics.getHeight() * 0.05f, Align.bottomLeft);
-        cockpitBottomPosition[0] = cockpitBottom.getX();
-        cockpitBottomPosition[1] = cockpitBottom.getY();
+        cockpitPosition[0] = cockpit.getX();
+        cockpitPosition[1] = cockpit.getY();
     }
 
     private void updateTitleAnimation() {
@@ -390,18 +360,17 @@ public class IntroDisplay extends UIComponent {
 
             // re-center the planet
             planet.setPosition(Gdx.graphics.getWidth() / 2f,
-                    ((cockpitTop.getY(Align.bottom) - cockpitBottom.getY(Align.top)) / 2f)
-                            + cockpitBottom.getY(Align.top), Align.center);
+                    ((cockpit.getY(Align.bottom)) / 2f), Align.center);
         }
     }
-    
+
     private void resizeWhiteout() {
         if (!startedWhiteout) {
             crashLight.setWidth(Gdx.graphics.getWidth() * 0.1f);
             crashLight.setHeight(Gdx.graphics.getHeight() * 0.1f);
             crashLight.setVisible(true);
             startedWhiteout = true;
-            
+
             SecureRandom random = new SecureRandom();
             int number = random.nextInt(1000);
             try {
@@ -455,9 +424,8 @@ public class IntroDisplay extends UIComponent {
                 } catch (InvalidSoundFileException e) {
                     logger.error("{}", e.toString());
                 }
-                
-                cockpitTop.setVisible(false);
-                cockpitBottom.setVisible(false);
+
+                cockpit.setVisible(false);
                 planet.setVisible(false);
                 readyToStartGame = true;
             } else {
@@ -468,10 +436,9 @@ public class IntroDisplay extends UIComponent {
                         Gdx.graphics.getHeight() / 2f, Align.center);
                 continueButton.toFront();
                 continueButton.setVisible(true);
-                
+
                 crashLight.toBack();
-                cockpitTop.toBack();
-                cockpitBottom.toBack();
+                cockpit.toBack();
                 planet.toBack();
                 background.toBack();
             }
@@ -486,8 +453,7 @@ public class IntroDisplay extends UIComponent {
         logger.debug("Disposing IntroDisplay.");
         rootTable.clear();
         planet.clear();
-        cockpitTop.clear();
-        cockpitBottom.clear();
+        cockpit.clear();
         crashLight.clear();
         background.clear();
         storyLabel.clear();
