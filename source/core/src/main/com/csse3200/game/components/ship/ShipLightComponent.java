@@ -18,7 +18,7 @@ public class ShipLightComponent extends AuraLightComponent {
 	private boolean unlocked;
 
 	public ShipLightComponent() {
-		super(30f, Color.WHITE);
+		super(15f, Color.WHITE);
 	}
 
 	@Override

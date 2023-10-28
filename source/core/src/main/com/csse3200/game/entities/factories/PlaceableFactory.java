@@ -133,12 +133,12 @@ public class PlaceableFactory {
         animator.addAnimation("light_on", 0.1f, Animation.PlayMode.LOOP);
 
         animator.startAnimation("light_off");
-
-        return createBasePlaceable(EntityType.LIGHT)
+        Entity light =  createBasePlaceable(EntityType.LIGHT)
                 .addComponent(new AuraLightComponent(4f, Color.TAN))
                 .addComponent(new LightController())
                 .addComponent(animator);
-
+        light.getComponent(ColliderComponent.class).setLayer(PhysicsLayer.NONE);
+        return light;
     }
 
     public static Entity createGoldenTrophy() {
