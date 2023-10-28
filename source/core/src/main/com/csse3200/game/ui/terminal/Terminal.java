@@ -46,6 +46,7 @@ public class Terminal extends Component {
     addCommand("plant", new PlantCommand());
     addCommand("setTimeScale", new SetTimeScaleCommand());
     addCommand("dialogueScreen", new DialogueScreenCommand());
+    addCommand("goddid", new GODDIDCommand());
   }
 
   /** @return message entered by user */

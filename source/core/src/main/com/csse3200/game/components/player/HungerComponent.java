@@ -21,12 +21,14 @@ public class HungerComponent extends Component {
 	}
 
 	private void minuteUpdate() {
-		int min = ServiceLocator.getTimeService().getMinute();
-		if (min % 20 == 0) {
-			increaseHungerLevel(1);
-		}
-		if (checkIfStarving() && min % 10 == 0) {
-			entity.getComponent(CombatStatsComponent.class).addHealth(-5);
+		if (!ServiceLocator.god) {
+			int min = ServiceLocator.getTimeService().getMinute();
+			if (min % 20 == 0) {
+				increaseHungerLevel(1);
+			}
+			if (checkIfStarving() && min % 10 == 0) {
+				entity.getComponent(CombatStatsComponent.class).addHealth(-5);
+			}
 		}
 	}
 

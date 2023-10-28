@@ -197,7 +197,7 @@ public class SettingsMenuDisplay extends UIComponent {
 
     table.add(uiScaleLabel).right().padRight(15f);
     table.add(uiScaleTable).left();
-    
+
     table.row().padTop(10f);
     Table zoomScaleTable = new Table();
     zoomScaleTable.add(zoomScaleSlider).width(100).left();

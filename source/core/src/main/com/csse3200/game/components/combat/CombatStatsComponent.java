@@ -112,15 +112,18 @@ public class CombatStatsComponent extends Component {
   }
 
   public void hit(CombatStatsComponent attacker) {
-    if (this.entity.getType().equals(EntityType.PLAYER)) {
-      try {
-        ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.PLAYER_DAMAGE);
-      } catch (InvalidSoundFileException e) {
-        logger.error("Failed to play tractor start up sound", e);
+    if (!ServiceLocator.god) {
+      if (this.entity.getType().equals(EntityType.PLAYER)) {
+        try {
+          ServiceLocator.getSoundService().getEffectsMusicService().play(EffectSoundFile.PLAYER_DAMAGE);
+        } catch (InvalidSoundFileException e) {
+          // lol imagine copying team 1 code, very sneaky with it too
+          logger.error("Failed to play tractor start up sound", e);
+        }
       }
+      int newHealth = getHealth() - attacker.getBaseAttack();
+      setHealth(newHealth);
     }
-    int newHealth = getHealth() - attacker.getBaseAttack();
-    setHealth(newHealth);
   }
 
   public void handleDeath() {
