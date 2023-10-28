@@ -23,7 +23,7 @@ public class GODDIDCommand implements Command{
         }
         // Do god stuff
         ServiceLocator.god = !ServiceLocator.god;
-        ServiceLocator.getGameArea().getPlayer().getComponent(HungerComponent.class).setHungerLevel(0);
+        ServiceLocator.getGameArea().getPlayer().getComponent(HungerComponent.class).setHungerLevel(100);
         ServiceLocator.getGameArea().getPlayer().getComponent(CombatStatsComponent.class).setHealth(100);
         return true;
     }

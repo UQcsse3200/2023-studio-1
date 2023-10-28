@@ -259,13 +259,15 @@ public class PlantAreaOfEffectComponent extends HitboxComponent {
         // Health effect for adjacent plants.
         for (Vector2 otherPos : aoeVectors) {
             TerrainTile tile = ServiceLocator.getGameArea().getMap().getTile(otherPos);
-            Entity occupant = tile.getOccupant();
-            if (occupant != null) {
-                CropTileComponent cropTile = occupant.getComponent(CropTileComponent.class);
-                if (cropTile != null) {
-                    Entity otherPlant = cropTile.getPlant();
-                    if (otherPlant != null) {
-                        otherPlant.getComponent(PlantComponent.class).increasePlantHealth(4 + plantAoeWeatherModifier);
+            if (tile != null) {
+                Entity occupant = tile.getOccupant();
+                if (occupant != null) {
+                    CropTileComponent cropTile = occupant.getComponent(CropTileComponent.class);
+                    if (cropTile != null) {
+                        Entity otherPlant = cropTile.getPlant();
+                        if (otherPlant != null) {
+                            otherPlant.getComponent(PlantComponent.class).increasePlantHealth(4 + plantAoeWeatherModifier);
+                        }
                     }
                 }
             }

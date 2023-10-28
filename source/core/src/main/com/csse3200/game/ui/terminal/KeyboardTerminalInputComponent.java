@@ -74,7 +74,7 @@ public class KeyboardTerminalInputComponent extends InputComponent {
       }
       terminal.setEnteredMessage("");
       return true;
-    } else if(Character.isLetterOrDigit(character) || character == ' ') {
+    } else if(Character.isLetterOrDigit(character) || character == ' ' || character == '/' || character == '.'|| character == '_') {
       // append character to message
       terminal.appendToMessage(character);
       return true;
