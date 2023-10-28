@@ -125,7 +125,7 @@ public class InventoryDisplay extends UIComponent {
 				// Create the label for the item slot
 				Label label = new Label(" " + idx, skin); //please please please work
 				if (inventory != null && inventory.getHeldIndex() == i) {
-					label.setColor(Color.BLUE);
+					label.setColor(new Color(0x76428aff));
 				} else {
 					label.setColor(Color.BLACK);
 				}
@@ -352,7 +352,7 @@ public class InventoryDisplay extends UIComponent {
 		for (int i = 0; i < labels.size(); i++) {
             Label label = labels.get(i);
             if(slotNum == i) {
-                label.setColor(Color.BLUE);
+                label.setColor(new Color(0x76428aff));
             }
 			else {
                 label.setColor(Color.BLACK);
