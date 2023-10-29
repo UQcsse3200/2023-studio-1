@@ -73,7 +73,7 @@ public class FactoryService {
 			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("LIGHT", ItemFactory::createLightItem),
 
 			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Ship Part", ItemFactory::createShipPart),
-			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("TeleportDevice", ItemFactory::createTeleportDevice),
+			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Teleport Device", ItemFactory::createTeleportDevice),
 
 			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Fishing Rod", ItemFactory::createFishingRod),
 			new AbstractMap.SimpleEntry<String, Supplier<Entity>>("Lava Eel", ItemFactory::createLavaEel),

@@ -1,34 +1,32 @@
 package com.csse3200.game.components.inventory;
 
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+import com.badlogic.gdx.utils.Align;
+import com.csse3200.game.components.items.ItemComponent;
+import com.csse3200.game.components.items.WateringCanLevelComponent;
+import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.components.player.PlayerActions;
+import com.csse3200.game.entities.EntityType;
+import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.sound.EffectSoundFile;
+import com.csse3200.game.services.sound.InvalidSoundFileException;
+import com.csse3200.game.ui.UIComponent;
+import org.apache.commons.lang3.text.WordUtils;
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.utils.Align;
-import com.csse3200.game.components.items.WateringCanLevelComponent;
-import com.csse3200.game.components.player.PlayerActions;
-import com.csse3200.game.entities.EntityType;
-import com.csse3200.game.services.ServiceLocator;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.csse3200.game.services.sound.EffectSoundFile;
-import com.csse3200.game.services.sound.InvalidSoundFileException;
-import org.jetbrains.annotations.NotNull;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
-import com.csse3200.game.components.items.ItemComponent;
-import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.ui.UIComponent;
-import com.badlogic.gdx.graphics.Texture;
-import org.slf4j.LoggerFactory;
 
 /**
  * An ui component for displaying player stats, e.g. health.
@@ -125,7 +123,7 @@ public class InventoryDisplay extends UIComponent {
 				// Create the label for the item slot
 				Label label = new Label(" " + idx, skin); //please please please work
 				if (inventory != null && inventory.getHeldIndex() == i) {
-					label.setColor(Color.BLUE);
+					label.setColor(new Color(0x76428aff));
 				} else {
 					label.setColor(Color.BLACK);
 				}
@@ -352,7 +350,7 @@ public class InventoryDisplay extends UIComponent {
 		for (int i = 0; i < labels.size(); i++) {
             Label label = labels.get(i);
             if(slotNum == i) {
-                label.setColor(Color.BLUE);
+                label.setColor(new Color(0x76428aff));
             }
 			else {
                 label.setColor(Color.BLACK);
@@ -450,11 +448,12 @@ public class InventoryDisplay extends UIComponent {
 			int i = indexes.get(slot);
 			if (inventory.getItem(i) != null) {
 				ItemComponent item = inventory.getItem(i).getComponent(ItemComponent.class);
+				String itemName = WordUtils.capitalizeFully((item.getItemName().replace('_', ' ')));
 				if (Objects.equals(item.getItemName(), "watering_can")) {
 					int level = (int) item.getEntity().getComponent(WateringCanLevelComponent.class).getCurrentLevel();
-					tooltip = new TextTooltip(item.getItemName() + "\n\nCurrent level is " + level, instantTooltipManager, skin);
+					tooltip = new TextTooltip(itemName + "\n\nCurrent level is " + level, instantTooltipManager, skin);
 				} else {
-					tooltip = new TextTooltip(item.getItemName() + "\n\n" + item.getItemDescription(), instantTooltipManager,skin);
+					tooltip = new TextTooltip(itemName + "\n\n" + item.getItemDescription(), instantTooltipManager,skin);
 				}
 				if (tooltips.get(i) != null) {
 					tooltips.get(i).hide();

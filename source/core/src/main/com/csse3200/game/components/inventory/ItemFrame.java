@@ -17,13 +17,14 @@ public class ItemFrame extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.end();
-        Gdx.gl.glLineWidth(2f);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
 
         if (selected) {
-            shapeRenderer.setColor(Color.BLUE);
+            Gdx.gl.glLineWidth(4f);
+            shapeRenderer.setColor(new Color(0x76428aff));
         }
         else {
+            Gdx.gl.glLineWidth(2f);
             shapeRenderer.setColor(Color.BLACK);
         }
 

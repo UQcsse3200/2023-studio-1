@@ -1,6 +1,7 @@
 package com.csse3200.game.components.inventory;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -15,15 +16,17 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.sound.EffectSoundFile;
 import com.csse3200.game.services.sound.InvalidSoundFileException;
 import com.csse3200.game.ui.UIComponent;
+import org.apache.commons.lang3.text.WordUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import com.badlogic.gdx.graphics.Texture;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.scaleTo;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 /**
  * Display the UI for the toolbar
  */
@@ -247,11 +250,12 @@ public class ToolbarDisplay extends UIComponent {
         for (ItemSlot slot : slots) {
             if (inventory.getItem(i) != null) {
                 ItemComponent item = inventory.getItem(i).getComponent(ItemComponent.class);
+                String itemName = WordUtils.capitalizeFully((item.getItemName().replace('_', ' ')));
                 if (Objects.equals(item.getItemName(), "watering_can")) {
                     int level = (int) item.getEntity().getComponent(WateringCanLevelComponent.class).getCurrentLevel();
-                    tooltip = new TextTooltip(item.getItemName() + "\n\nCurrent level is " + level, instantTooltipManager, skin);
+                    tooltip = new TextTooltip(itemName + "\n\nCurrent level is " + level, instantTooltipManager, skin);
                 } else {
-                    tooltip = new TextTooltip(item.getItemName() + "\n\n" + item.getItemDescription(), instantTooltipManager,skin);
+                    tooltip = new TextTooltip(itemName + "\n\n" + item.getItemDescription(), instantTooltipManager,skin);
                 }
                 if (tooltips.get(i) != null) {
                     tooltips.get(i).hide();
