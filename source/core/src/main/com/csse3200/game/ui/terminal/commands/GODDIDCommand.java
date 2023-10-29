@@ -12,7 +12,7 @@ public class GODDIDCommand implements Command{
     private static final Logger logger = LoggerFactory.getLogger(GODDIDCommand.class);
 
     /**
-     * loads game through the SaveLoad service <- imagine copying t1's code right
+     * loads game through the SaveLoad service (imagine copying t1's code right)
      * @param args command arguments
      */
     public boolean action(ArrayList<String> args) {
