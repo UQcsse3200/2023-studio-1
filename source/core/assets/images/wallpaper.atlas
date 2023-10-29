@@ -1,0 +1,341 @@
+wallpaper.png
+size: 1,440, 2,160
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+default
+rotate: false
+xy: 0,0
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 0
+default
+rotate: false
+xy: 360,0
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 1
+default
+rotate: false
+xy: 720,0
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 2
+default
+rotate: false
+xy: 1080,0
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 3
+default
+rotate: false
+xy: 0,180
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 4
+default
+rotate: false
+xy: 360,180
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 5
+default
+rotate: false
+xy: 720,180
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 6
+default
+rotate: false
+xy: 1080,180
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 7
+default
+rotate: false
+xy: 0,360
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 8
+default
+rotate: false
+xy: 360,360
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 9
+default
+rotate: false
+xy: 720,360
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 10
+default
+rotate: false
+xy: 1080,360
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 11
+default
+rotate: false
+xy: 0,540
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 12
+default
+rotate: false
+xy: 360,540
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 13
+default
+rotate: false
+xy: 720,540
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 14
+default
+rotate: false
+xy: 1080,540
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 15
+default
+rotate: false
+xy: 0,720
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 16
+default
+rotate: false
+xy: 360,720
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 17
+default
+rotate: false
+xy: 720,720
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 18
+default
+rotate: false
+xy: 1080,720
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 19
+default
+rotate: false
+xy: 0,900
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 20
+default
+rotate: false
+xy: 360,900
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 21
+default
+rotate: false
+xy: 720,900
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 22
+default
+rotate: false
+xy: 1080,900
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 23
+default
+rotate: false
+xy: 0,1080
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 24
+default
+rotate: false
+xy: 360,1080
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 25
+default
+rotate: false
+xy: 720,1080
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 26
+default
+rotate: false
+xy: 1080,1080
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 27
+default
+rotate: false
+xy: 0,1260
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 28
+default
+rotate: false
+xy: 360,1260
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 29
+default
+rotate: false
+xy: 720,1260
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 30
+default
+rotate: false
+xy: 1080,1260
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 31
+default
+rotate: false
+xy: 0,1440
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 32
+default
+rotate: false
+xy: 360,1440
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 33
+default
+rotate: false
+xy: 720,1440
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 34
+default
+rotate: false
+xy: 1080,1440
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 35
+default
+rotate: false
+xy: 0,1620
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 36
+default
+rotate: false
+xy: 360,1620
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 37
+default
+rotate: false
+xy: 720,1620
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 38
+default
+rotate: false
+xy: 1080,1620
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 39
+default
+rotate: false
+xy: 0,1800
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 40
+default
+rotate: false
+xy: 360,1800
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 41
+default
+rotate: false
+xy: 720,1800
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 42
+default
+rotate: false
+xy: 1080,1800
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 43
+default
+rotate: false
+xy: 0,1980
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 44
+default
+rotate: false
+xy: 360,1980
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 45
+default
+rotate: false
+xy: 720,1980
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 46
+default
+rotate: false
+xy: 1080,1980
+size: 320,180
+orig: 360,180
+offset: 0,0
+index: 47

@@ -1,6 +1,10 @@
 
 package com.csse3200.game.screens;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,9 +33,9 @@ public class MainMenuScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuScreen.class);
   private final GdxGame game;
   private final Renderer renderer;
-  public static final int FRAME_COUNT = 71;
-  private static final String[] mainMenuTextures = {"images/galaxy_home_still.png"};
-  private static final String[] transitionTextures = new String[FRAME_COUNT];
+  public static final int FRAME_COUNT = 48;
+  private static final String[] mainMenuTextures = {"images/wallpaper.png", "images/galaxy_home_still.png"};
+  private static final TextureRegionDrawable[] transitionTextures = new TextureRegionDrawable[FRAME_COUNT];
   private static final String ANIMATION_PREFIX = "images/menu_animations/menu_animations";
 
   public MainMenuScreen(GdxGame game) {
@@ -89,25 +93,31 @@ public class MainMenuScreen extends ScreenAdapter {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(mainMenuTextures);
-    loadFrames();
+    resourceService.loadTextureAtlases(new String[]{"images/wallpaper.atlas"});
     ServiceLocator.getResourceService().loadAll();
-  }
+    TextureAtlas atlas = new TextureAtlas("images/wallpaper.atlas");
 
-  private void loadFrames() {
-    logger.debug("Loading assets");
-    ResourceService resourceService = ServiceLocator.getResourceService();
-
-    for (int i = 0; i < FRAME_COUNT; i++) {
-      MainMenuScreen.transitionTextures[i] = ANIMATION_PREFIX + i + ".png";
+    for (int i = 0; i < FRAME_COUNT; i ++) {
+       transitionTextures[i] = new TextureRegionDrawable(atlas.findRegion("default", i));
     }
-    resourceService.loadTextures(transitionTextures);
-    ServiceLocator.getResourceService().loadAll();
   }
+//
+//  private void loadFrames() {
+//    logger.debug("Loading assets");
+//    ResourceService resourceService = ServiceLocator.getResourceService();
+//
+//    for (int i = 0; i < FRAME_COUNT; i++) {
+//      MainMenuScreen.transitionTextures[i] = ANIMATION_PREFIX + i + ".png";
+//    }
+//    resourceService.loadTextures(transitionTextures);
+//    ServiceLocator.getResourceService().loadAll();
+//  }
 
   private void unloadAssets() {
     logger.debug("Unloading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.unloadAssets(mainMenuTextures);
+    resourceService.unloadAssets(new String[]{"images/wallpaper.atlas"});
   }
 
   /**
@@ -128,7 +138,7 @@ public class MainMenuScreen extends ScreenAdapter {
    * Get the transition textures for control screen
    * @return the transition textures
    */
-  public static String[] getTransitionTextures() {
+  public static TextureRegionDrawable[] getTransitionTextures() {
     return transitionTextures;
   }
 }
