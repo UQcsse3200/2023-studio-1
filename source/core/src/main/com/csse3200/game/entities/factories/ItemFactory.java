@@ -152,7 +152,7 @@ public class ItemFactory {
 				.addComponent(new ItemComponent(
 						"gun",
 						ItemType.GUN,
-						"pew pew pew",
+						"A ranged weapon, be careful how quickly you shoot!",
 						"images/tool_gun.png"));
 	}
 
@@ -250,7 +250,7 @@ public class ItemFactory {
 				.addComponent(new ItemComponent(
 						"Aloe Vera Seeds",
 						ItemType.SEED,
-						"Seeds of Aloe Vera",
+						"Plants an Aloe Vera",
 						"images/plants/aloe_vera/seedbag.png"));
 		seed.getComponent(DynamicTextureRenderComponent.class).setLayer(3);
 		return seed;
@@ -284,7 +284,7 @@ public class ItemFactory {
 				.addComponent(new ItemComponent(
 						"Atomic Algae Seeds",
 						ItemType.SEED,
-						"Seeds of Atomic Algae",
+						"Plants an Atomic Algae",
 						"images/plants/atomic_algae/seedbag.png"));
 		seed.getComponent(DynamicTextureRenderComponent.class).setLayer(3);
 		return seed;
@@ -301,7 +301,7 @@ public class ItemFactory {
 				.addComponent(new ItemComponent(
 						"Cosmic Cob Seeds",
 						ItemType.SEED,
-						"Seeds of Cosmic Cob",
+						"Plants a Cosmic Cob",
 						"images/plants/cosmic_cob/seedbag.png"));
 		seed.getComponent(DynamicTextureRenderComponent.class).setLayer(3);
 		return seed;
@@ -335,7 +335,7 @@ public class ItemFactory {
 				.addComponent(new ItemComponent(
 						"Deadly Nightshade Seeds",
 						ItemType.SEED,
-						"Seeds of Deadly Nightshade",
+						"Plants a Deadly Nightshade",
 						"images/plants/deadly_nightshade/seedbag.png"));
 		seed.getComponent(DynamicTextureRenderComponent.class).setLayer(3);
 		return seed;
@@ -369,7 +369,7 @@ public class ItemFactory {
 				.addComponent(new ItemComponent(
 						"Hammer Plant Seeds",
 						ItemType.SEED,
-						"Seeds of Hammer Plant",
+						"Plants a Hammer Plant",
 						"images/plants/hammer_plant/seedbag.png"));
 		seed.getComponent(DynamicTextureRenderComponent.class).setLayer(3);
 		return seed;
@@ -403,7 +403,8 @@ public class ItemFactory {
 				.addComponent(new ItemComponent(
 						"Space Snapper Seeds",
 						ItemType.SEED,
-						"Seeds of Space Snapper", "images/plants/space_snapper/seedbag.png"));
+						"Plants a Space Snapper",
+						"images/plants/space_snapper/seedbag.png"));
 		seed.getComponent(DynamicTextureRenderComponent.class).setLayer(3);
 		return seed;
 	}
@@ -759,7 +760,7 @@ public class ItemFactory {
 				.addComponent(new ItemComponent(
 						"Churchill",
 						ItemType.FOOD,
-						"This fish won't stop blabbering",
+						"The best argument against democracy is a five-minute conversation with the average voter",
 						"images/fish/fish_7.png"));
 	}
 
@@ -791,9 +792,9 @@ public class ItemFactory {
 		return createBaseItem()
 				.addComponent(new TextureRenderComponent("images/teleporter.png"))
 				.addComponent(new ItemComponent(
-						"TeleportDevice",
+						"Teleport Device",
 						ItemType.TELEPORT_DEVICE,
-						"beep boop",
+						"It feels like home...",
 						"images/teleporter.png"));
 	}
 }
