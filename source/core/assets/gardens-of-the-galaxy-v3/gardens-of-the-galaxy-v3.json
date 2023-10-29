@@ -102,6 +102,10 @@
 	"orange": {
 		"up": "red",
 		"down": "red_pressed"
+	},
+	"transparent_orange": {
+		"up": "transparent_red",
+		"down": "transparent_red_pressed"
 	}
 },
 "CheckBoxStyle": {
@@ -272,6 +276,13 @@
 		"downFontColor": "lightGrey",
 		"up": "red",
 		"down": "red_pressed"
+	},
+	"transparent_orange": {
+		"font": "pixel-body",
+		"fontColor": "white",
+		"downFontColor": "lightGrey",
+		"up": "transparent_red",
+		"down": "transparent_red_pressed"
 	},
 	"small": {
 		"font": "pixel-body",

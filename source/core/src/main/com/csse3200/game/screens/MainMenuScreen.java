@@ -34,7 +34,7 @@ public class MainMenuScreen extends ScreenAdapter {
   private final GdxGame game;
   private final Renderer renderer;
   public static final int FRAME_COUNT = 48;
-  private static final String[] mainMenuTextures = {"images/wallpaper.png", "images/galaxy_home_still.png"};
+  private static final String[] mainMenuTextures = {"images/wallpaper.png", "images/title.png"};
   private static final TextureRegionDrawable[] transitionTextures = new TextureRegionDrawable[FRAME_COUNT];
   private static final String ANIMATION_PREFIX = "images/menu_animations/menu_animations";
 
@@ -101,17 +101,6 @@ public class MainMenuScreen extends ScreenAdapter {
        transitionTextures[i] = new TextureRegionDrawable(atlas.findRegion("default", i));
     }
   }
-//
-//  private void loadFrames() {
-//    logger.debug("Loading assets");
-//    ResourceService resourceService = ServiceLocator.getResourceService();
-//
-//    for (int i = 0; i < FRAME_COUNT; i++) {
-//      MainMenuScreen.transitionTextures[i] = ANIMATION_PREFIX + i + ".png";
-//    }
-//    resourceService.loadTextures(transitionTextures);
-//    ServiceLocator.getResourceService().loadAll();
-//  }
 
   private void unloadAssets() {
     logger.debug("Unloading assets");
