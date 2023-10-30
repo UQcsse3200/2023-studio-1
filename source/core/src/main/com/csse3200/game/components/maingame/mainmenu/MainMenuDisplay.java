@@ -1,5 +1,6 @@
 package com.csse3200.game.components.maingame.mainmenu;
 
+import com.badlogic.gdx.utils.Align;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,9 +27,12 @@ public class MainMenuDisplay extends UIComponent {
     private Table table;
     private int frame;
     private Image transitionFrames;
+    private Image title;
     private long lastFrameTime;
     private static int fps = 15;
-    private static final long FRAME_DURATION = (4800 / fps);
+    private static final long FRAME_DURATION = (3800 / fps);
+    private float titleAspectRatio;
+    private float aniAspectRatio = 0;
 
     @Override
     public void create() {
@@ -41,21 +45,26 @@ public class MainMenuDisplay extends UIComponent {
     private void addActors() {
         table = new Table();
         table.setFillParent(true);
-//        Image title =
-//                new Image(
-//                        ServiceLocator.getResourceService()
-//                                .getAsset("images/galaxy_home_still.png", Texture.class));
+        title =
+                new Image(
+                        ServiceLocator.getResourceService()
+                                .getAsset("images/title.png", Texture.class));
 
-//        title.setWidth(Gdx.graphics.getWidth());
-//        title.setHeight(Gdx.graphics.getHeight());
-//        title.setPosition(0, 0);
+        titleAspectRatio = title.getHeight() / title.getWidth();
+        title.setWidth(0.5f * Gdx.graphics.getWidth());
+        title.setHeight(title.getWidth() * titleAspectRatio);
+        title.setPosition(
+                (float) Gdx.graphics.getWidth() * 0.01f,
+                (float) Gdx.graphics.getHeight() * 0.98f,
+                Align.topLeft
+        );
 
-        TextButton startBtn = new TextButton("New Game", skin,"orange");
-        TextButton loadBtn = new TextButton("Continue", skin, Gdx.files.local("saves/saveFile.json").exists() ? "orange" : "grey");
-        TextButton controlsBtn = new TextButton("Controls", skin,"orange");
-        TextButton settingsBtn = new TextButton("Settings", skin,"orange");
-        TextButton creditsBtn = new TextButton("Credits", skin,"orange");
-        TextButton exitBtn = new TextButton("Exit", skin,"orange");
+        TextButton startBtn = new TextButton("New Game", skin,"transparent_orange");
+        TextButton loadBtn = new TextButton("Continue", skin, Gdx.files.local("saves/saveFile.json").exists() ? "transparent_orange" : "transparent_grey");
+        TextButton controlsBtn = new TextButton("Controls", skin,"transparent_orange");
+        TextButton settingsBtn = new TextButton("Settings", skin,"transparent_orange");
+        TextButton creditsBtn = new TextButton("Credits", skin,"transparent_orange");
+        TextButton exitBtn = new TextButton("Exit", skin,"transparent_orange");
 
         // Triggers an event when the button is pressed
         startBtn.addListener(
@@ -115,38 +124,58 @@ public class MainMenuDisplay extends UIComponent {
                     }
                 });
 
-        //table.add(title);
+        table.row().width(Gdx.graphics.getWidth() * 0.2f);
+        table.add(startBtn).fill();
         table.row();
-        table.add(startBtn).padTop(80f);
+        table.add(loadBtn).padTop(15f).fill();
         table.row();
-        table.add(loadBtn).padTop(15f);
+        table.add(controlsBtn).padTop(15f).fill();
         table.row();
-        table.add(controlsBtn).padTop(15f);
+        table.add(settingsBtn).padTop(15f).fill();
         table.row();
-        table.add(settingsBtn).padTop(15f);
+        table.add(creditsBtn).padTop(15f).fill();
         table.row();
-        table.add(creditsBtn).padTop(15f);
-        table.row();
-        table.add(exitBtn).padTop(15f);
-        //stage.addActor(title);
+        table.add(exitBtn).padTop(15f).fill();
+        table.align(Align.topLeft);
+        table.pad(title.getHeight() * 1.5f, Gdx.graphics.getWidth() * 0.01f, 0, 0);
 
         updateAnimation();
 
         stage.addActor(transitionFrames);
         stage.addActor(table);
+        stage.addActor(title);
     }
 
     private void updateAnimation() {
         if (frame < MainMenuScreen.FRAME_COUNT) {
             transitionFrames.setDrawable(MainMenuScreen.getTransitionTextures()[frame]);
-            transitionFrames.setWidth(Gdx.graphics.getWidth());
-            transitionFrames.setHeight(Gdx.graphics.getHeight()); //https://rules.sonarsource.com/java/tag/overflow/RSPEC-2184/
-            transitionFrames.setPosition(0, 0); //https://rules.sonarsource.com/java/tag/overflow/RSPEC-2184/
+            if (aniAspectRatio == 0) {
+                // awful
+                aniAspectRatio = MainMenuScreen.getTransitionTextures()[frame].getMinWidth() / MainMenuScreen.getTransitionTextures()[frame].getMinHeight();
+                System.out.println(MainMenuScreen.getTransitionTextures()[frame].getMinWidth());
+            }
+            if ((float) Gdx.graphics.getWidth() / Gdx.graphics.getHeight() < aniAspectRatio) {
+                transitionFrames.setHeight(Gdx.graphics.getHeight()); //https://rules.sonarsource.com/java/tag/overflow/RSPEC-2184/
+                transitionFrames.setWidth(transitionFrames.getHeight() * aniAspectRatio);
+            } else {
+                transitionFrames.setWidth(Gdx.graphics.getWidth()); //https://rules.sonarsource.com/java/tag/overflow/RSPEC-2184/
+                transitionFrames.setHeight(transitionFrames.getWidth() / aniAspectRatio);
+            }
+            transitionFrames.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f, Align.center);
             frame++;
             lastFrameTime = System.currentTimeMillis();
         } else {
             frame = 1;
         }
+
+        title.setWidth(0.5f * Gdx.graphics.getWidth());
+        title.setHeight(title.getWidth() * titleAspectRatio);
+        title.setPosition(
+                (float) Gdx.graphics.getWidth() * 0.01f,
+                (float) Gdx.graphics.getHeight() * 0.98f,
+                Align.topLeft
+        );
+        table.pad(title.getHeight() * 1.5f, Gdx.graphics.getWidth() * 0.01f, 0, 0);
     }
 
     @Override

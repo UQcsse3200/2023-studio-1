@@ -23,7 +23,7 @@ import com.csse3200.game.services.TimeService;
 public class SettingsScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(SettingsScreen.class);
   public static final int FRAME_COUNT = 71;
-  private static final String[] mainMenuTextures = {"images/galaxy_home_still.png"};
+  private static final String[] mainMenuTextures = {"images/galaxy_home_still.png", "images/title.png"};
   private static String[] transitionTextures = new String[FRAME_COUNT];
   private static final String ANIMATION_PREFIX = "images/menu_animations/menu_animations";
   private final GdxGame game;
