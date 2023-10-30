@@ -57,6 +57,10 @@ public class LoseScreenDisplay extends UIComponent {
      * The speed at which the losing screen elements move during the animation.
      */
     private float spaceSpeed = 0.33f;
+    /**
+     * The speed at which the planet moves during the animation.
+     */
+    private float planetSpeed = 2f;
 
     /**
      * The image of the planet displayed on the losing screen.
@@ -112,7 +116,7 @@ public class LoseScreenDisplay extends UIComponent {
         // The planet's speed is variable, it adjusts itself to make the planet appear above the text at the right time
         // The planet is placed at some offset above the screen in the center of the screen
         float planetOffset = 2500;
-        planet.setPosition((float)Gdx.graphics.getWidth()/2, planetOffset, Align.center);
+        planet.setPosition((float)Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight() + 100, Align.center);
         if (losingMessage == null) {
             setLoseReason("oxygen");
         }
@@ -204,7 +208,7 @@ public class LoseScreenDisplay extends UIComponent {
         float planetToTextPadding = 100;
         if (!animationFinished) {
             if (planet.getY(Align.center) >= storyLabel.getY(Align.top) + planetToTextPadding) {
-                planet.setY(planet.getY() - spaceSpeed); // Move the planet
+                planet.setY(planet.getY() - planetSpeed); // Move the planet
                 background.setY(background.getY() - spaceSpeed); // Move the background
             } else {
                 // Animation has finished
@@ -223,8 +227,8 @@ public class LoseScreenDisplay extends UIComponent {
         float calculatedSpeed = (planet.getY(Align.center) - storyLabel.getY(Align.top) + planetToTextPadding) /
                 (textAnimationDuration * Gdx.graphics.getFramesPerSecond());
         // The universal speed limit must be enforced
-        spaceSpeed = Math.min(calculatedSpeed, 1.5f);
-        String log = String.format("Space Speed: %s", spaceSpeed);
+        planetSpeed = Math.min(calculatedSpeed, 1.5f);
+        String log = String.format("Space Speed: %s", planetSpeed);
         logger.debug(log);
     }
     @Override

@@ -121,9 +121,13 @@ public class PlayerActions extends Component {
       waitingForEnd = true;
       return;
     } else if (waitingForEnd && entity.getComponent(AnimationRenderComponent.class).isFinished()) {
+      entity.getComponent(AnimationRenderComponent.class).stopAnimation();
       ServiceLocator.getMissionManager().getEvents().trigger("loseScreen", "You died");
       return;
+    } else if (waitingForEnd) {
+      return;
     }
+
     if (entity.getComponent(PlayerAnimationController.class).readyToPlay()) {
       if (moving && !isStunned() && !frozen) {
         updateSpeed();
