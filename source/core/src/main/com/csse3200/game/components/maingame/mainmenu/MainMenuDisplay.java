@@ -60,7 +60,7 @@ public class MainMenuDisplay extends UIComponent {
         );
 
         TextButton startBtn = new TextButton("New Game", skin,"transparent_orange");
-        TextButton loadBtn = new TextButton("Continue", skin, Gdx.files.local("saves/saveFile.json").exists() ? "transparent_orange" : "grey");
+        TextButton loadBtn = new TextButton("Continue", skin, Gdx.files.local("saves/saveFile.json").exists() ? "transparent_orange" : "transparent_grey");
         TextButton controlsBtn = new TextButton("Controls", skin,"transparent_orange");
         TextButton settingsBtn = new TextButton("Settings", skin,"transparent_orange");
         TextButton creditsBtn = new TextButton("Credits", skin,"transparent_orange");

@@ -95,6 +95,24 @@ transparent_red_pressed
   orig: 48, 48
   offset: 0, 0
   index: -1
+transparent_grey
+  rotate: false
+  xy: 105, 423
+  size: 48, 48
+  split: 3, 3, 3, 5
+  pad: 12, 12, 12, 12
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+transparent_grey_pressed
+  rotate: false
+  xy: 154, 423
+  size: 48, 48
+  split: 2, 2, 2, 2
+  pad: 12, 12, 12, 12
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
 blueOutline
   rotate: false
   xy: 51, 314

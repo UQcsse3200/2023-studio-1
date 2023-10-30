@@ -304,6 +304,13 @@
 		"downFontColor": "darkGrey",
 		"up": "grey_button12",
 		"down": "grey_button13"
+	},
+	"transparent_grey": {
+		"font": "pixel-body",
+		"fontColor": "black",
+		"downFontColor": "darkGrey",
+		"up": "transparent_grey",
+		"down": "transparent_grey_pressed"
 	}
 },
 "TextFieldStyle": {
