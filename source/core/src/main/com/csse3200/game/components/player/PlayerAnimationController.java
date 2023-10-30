@@ -81,7 +81,7 @@ public class PlayerAnimationController extends Component {
             String direction = getDirection(mousePos);
             String animation = String.format("%s_%s", itemInHand.getComponent(ItemComponent.class).getItemName().toLowerCase(),
                     direction);
-            if (!Objects.equals(animator.getCurrentAnimation(), animation)) {
+            if (readyToPlay() && !Objects.equals(animator.getCurrentAnimation(), animation)) {
                 if (animator.hasAnimation(animation)) {
                     animator.startAnimation(animation);
                 } else {
@@ -127,9 +127,11 @@ public class PlayerAnimationController extends Component {
     public boolean readyToPlay() {
         if (animator.getCurrentAnimation() == null) {
             return true;
+        } else if (animator.getCurrentAnimation().contains("bye")) {
+            return false;
         } else if (animator.getCurrentAnimation().contains("interact") || animator.getCurrentAnimation().contains("hoe")
                 || animator.getCurrentAnimation().contains("shovel") || animator.getCurrentAnimation().contains("scythe")
-                || animator.getCurrentAnimation().contains("watering_can") || animator.getCurrentAnimation().contains("bye")) {
+                || animator.getCurrentAnimation().contains("watering_can")) {
             return animator.isFinished();
         } else return !animator.getCurrentAnimation().contains("fishing");
     }
