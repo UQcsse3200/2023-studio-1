@@ -30,7 +30,7 @@ public class MainMenuDisplay extends UIComponent {
     private Image title;
     private long lastFrameTime;
     private static int fps = 15;
-    private static final long FRAME_DURATION = (3800 / fps);
+    private static final long FRAME_DURATION = (4500 / fps);
     private float titleAspectRatio;
     private float aniAspectRatio = 0;
 
