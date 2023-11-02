@@ -79,7 +79,7 @@ loadScripts(document, 'script');</script>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block">Provides a global access point for entities to register themselves. This allows for iterating
  over entities to perform updates each loop. All game entities should be registered here.
-
+ <p>
  Avoid adding additional state here! Global access is often the easy but incorrect answer to
  sharing data.</div>
 </section>
@@ -186,6 +186,12 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="pauseCheck()">
+<h3>pauseCheck</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">pauseCheck</span>()</div>
+</section>
+</li>
+<li>
 <section class="detail" id="register(com.csse3200.game.entities.Entity)">
 <h3>register</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">register</span><wbr><span class="parameters">(<a href="Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;entity)</span></div>
@@ -236,12 +242,6 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="unpauseGame()">
 <h3>unpauseGame</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">unpauseGame</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="pauseCheck()">
-<h3>pauseCheck</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">pauseCheck</span>()</div>
 </section>
 </li>
 <li>

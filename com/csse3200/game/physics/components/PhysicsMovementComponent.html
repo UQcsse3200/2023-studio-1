@@ -217,19 +217,6 @@ implements <a href="../../ai/movement/MovementController.html" title="interface 
 </section>
 </li>
 <li>
-<section class="detail" id="setMoving(boolean)">
-<h3>setMoving</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setMoving</span><wbr><span class="parameters">(boolean&nbsp;movementEnabled)</span></div>
-<div class="block">Enable/disable movement for the controller. Disabling will immediately set velocity to 0.</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="../../ai/movement/MovementController.html#setMoving(boolean)">setMoving</a></code>&nbsp;in interface&nbsp;<code><a href="../../ai/movement/MovementController.html" title="interface in com.csse3200.game.ai.movement">MovementController</a></code></dd>
-<dt>Parameters:</dt>
-<dd><code>movementEnabled</code> - true to enable movement, false otherwise</dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="getTarget()">
 <h3>getTarget</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.math.Vector2</span>&nbsp;<span class="element-name">getTarget</span>()</div>
@@ -238,6 +225,20 @@ implements <a href="../../ai/movement/MovementController.html" title="interface 
 <dd><code><a href="../../ai/movement/MovementController.html#getTarget()">getTarget</a></code>&nbsp;in interface&nbsp;<code><a href="../../ai/movement/MovementController.html" title="interface in com.csse3200.game.ai.movement">MovementController</a></code></dd>
 <dt>Returns:</dt>
 <dd>Target position in the world</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setTarget(com.badlogic.gdx.math.Vector2)">
+<h3>setTarget</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTarget</span><wbr><span class="parameters">(com.badlogic.gdx.math.Vector2&nbsp;target)</span></div>
+<div class="block">Set a target to move towards. The entity will be steered towards it in a straight line, not
+ using pathfinding or avoiding other entities.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../ai/movement/MovementController.html#setTarget(com.badlogic.gdx.math.Vector2)">setTarget</a></code>&nbsp;in interface&nbsp;<code><a href="../../ai/movement/MovementController.html" title="interface in com.csse3200.game.ai.movement">MovementController</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>target</code> - target position</dd>
 </dl>
 </section>
 </li>
@@ -254,16 +255,15 @@ implements <a href="../../ai/movement/MovementController.html" title="interface 
 </section>
 </li>
 <li>
-<section class="detail" id="setTarget(com.badlogic.gdx.math.Vector2)">
-<h3>setTarget</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTarget</span><wbr><span class="parameters">(com.badlogic.gdx.math.Vector2&nbsp;target)</span></div>
-<div class="block">Set a target to move towards. The entity will be steered towards it in a straight line, not
- using pathfinding or avoiding other entities.</div>
+<section class="detail" id="setMoving(boolean)">
+<h3>setMoving</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setMoving</span><wbr><span class="parameters">(boolean&nbsp;movementEnabled)</span></div>
+<div class="block">Enable/disable movement for the controller. Disabling will immediately set velocity to 0.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../../ai/movement/MovementController.html#setTarget(com.badlogic.gdx.math.Vector2)">setTarget</a></code>&nbsp;in interface&nbsp;<code><a href="../../ai/movement/MovementController.html" title="interface in com.csse3200.game.ai.movement">MovementController</a></code></dd>
+<dd><code><a href="../../ai/movement/MovementController.html#setMoving(boolean)">setMoving</a></code>&nbsp;in interface&nbsp;<code><a href="../../ai/movement/MovementController.html" title="interface in com.csse3200.game.ai.movement">MovementController</a></code></dd>
 <dt>Parameters:</dt>
-<dd><code>target</code> - target position</dd>
+<dd><code>movementEnabled</code> - true to enable movement, false otherwise</dd>
 </dl>
 </section>
 </li>

@@ -781,6 +781,17 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="setCurrentGrowthLevel(int)">
+<h3>setCurrentGrowthLevel</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setCurrentGrowthLevel</span><wbr><span class="parameters">(int&nbsp;currentGrowthLevel)</span></div>
+<div class="block">Set the currentGrowthLevel of the plant. This is used for testing purposes.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>currentGrowthLevel</code> - - Desired growth level of the plant.</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="getCurrentMaxHealth()">
 <h3>getCurrentMaxHealth</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getCurrentMaxHealth</span>()</div>
@@ -825,6 +836,17 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="getHarvestYields()">
+<h3>getHarvestYields</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</span>&nbsp;<span class="element-name">getHarvestYields</span>()</div>
+<div class="block">Gets the harvest yield of this plant.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>Map of item names to drop quantities.</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="setHarvestYields(java.util.Map)">
 <h3>setHarvestYields</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setHarvestYields</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;&nbsp;harvestYields)</span></div>
@@ -835,17 +857,6 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>harvestYields</code> - Map of item names to drop quantities.</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getHarvestYields()">
-<h3>getHarvestYields</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</span>&nbsp;<span class="element-name">getHarvestYields</span>()</div>
-<div class="block">Gets the harvest yield of this plant.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>Map of item names to drop quantities.</dd>
 </dl>
 </section>
 </li>
@@ -926,15 +937,15 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="setCurrentAge(float)">
-<h3>setCurrentAge</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setCurrentAge</span><wbr><span class="parameters">(float&nbsp;age)</span></div>
-</section>
-</li>
-<li>
 <section class="detail" id="getCurrentAge()">
 <h3>getCurrentAge</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">getCurrentAge</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setCurrentAge(float)">
+<h3>setCurrentAge</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setCurrentAge</span><wbr><span class="parameters">(float&nbsp;age)</span></div>
 </section>
 </li>
 <li>
@@ -1028,17 +1039,6 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>- Formatted string with all relevant information about the plant.</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="setCurrentGrowthLevel(int)">
-<h3>setCurrentGrowthLevel</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setCurrentGrowthLevel</span><wbr><span class="parameters">(int&nbsp;currentGrowthLevel)</span></div>
-<div class="block">Set the currentGrowthLevel of the plant. This is used for testing purposes.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>currentGrowthLevel</code> - - Desired growth level of the plant.</dd>
 </dl>
 </section>
 </li>

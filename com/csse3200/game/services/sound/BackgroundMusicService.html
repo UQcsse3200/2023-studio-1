@@ -242,7 +242,7 @@ implements <a href="MusicService.html" title="interface in com.csse3200.game.ser
 <dd>0 - no play ID is returned for background music instances.</dd>
 <dt>Throws:</dt>
 <dd><code><a href="InvalidSoundFileException.html" title="class in com.csse3200.game.services.sound">InvalidSoundFileException</a></code> - if the given sound file is not an instance of
- BackgroundMusicFile or is unplayable.</dd>
+                                   BackgroundMusicFile or is unplayable.</dd>
 </dl>
 </section>
 </li>
@@ -262,7 +262,7 @@ implements <a href="MusicService.html" title="interface in com.csse3200.game.ser
 <dd>0 - no play ID is returned for background music instances.</dd>
 <dt>Throws:</dt>
 <dd><code><a href="InvalidSoundFileException.html" title="class in com.csse3200.game.services.sound">InvalidSoundFileException</a></code> - if the given sound file is not an instance of
-      * BackgroundMusicFile or is unplayable.</dd>
+                                   * BackgroundMusicFile or is unplayable.</dd>
 </dl>
 </section>
 </li>
@@ -314,20 +314,6 @@ implements <a href="MusicService.html" title="interface in com.csse3200.game.ser
 </section>
 </li>
 <li>
-<section class="detail" id="setMuted(boolean)">
-<h3>setMuted</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setMuted</span><wbr><span class="parameters">(boolean&nbsp;muted)</span></div>
-<div class="block">Sets the mute status of the background music to the given boolean value.
- True being muted.</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="MusicService.html#setMuted(boolean)">setMuted</a></code>&nbsp;in interface&nbsp;<code><a href="MusicService.html" title="interface in com.csse3200.game.services.sound">MusicService</a></code></dd>
-<dt>Parameters:</dt>
-<dd><code>muted</code> - - The boolean state to set</dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="adjustVolume()">
 <h3>adjustVolume</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">adjustVolume</span>()</div>
@@ -347,6 +333,20 @@ implements <a href="MusicService.html" title="interface in com.csse3200.game.ser
 </section>
 </li>
 <li>
+<section class="detail" id="setMuted(boolean)">
+<h3>setMuted</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setMuted</span><wbr><span class="parameters">(boolean&nbsp;muted)</span></div>
+<div class="block">Sets the mute status of the background music to the given boolean value.
+ True being muted.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="MusicService.html#setMuted(boolean)">setMuted</a></code>&nbsp;in interface&nbsp;<code><a href="MusicService.html" title="interface in com.csse3200.game.services.sound">MusicService</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>muted</code> - - The boolean state to set</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="isPlaying(com.csse3200.game.services.sound.SoundFile)">
 <h3>isPlaying</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isPlaying</span><wbr><span class="parameters">(<a href="SoundFile.html" title="interface in com.csse3200.game.services.sound">SoundFile</a>&nbsp;sound)</span>
@@ -361,7 +361,7 @@ implements <a href="MusicService.html" title="interface in com.csse3200.game.ser
 <dd>True if playing, false if not.</dd>
 <dt>Throws:</dt>
 <dd><code><a href="InvalidSoundFileException.html" title="class in com.csse3200.game.services.sound">InvalidSoundFileException</a></code> - if the sound file provided either isn't a
- BackgroundSoundFile or hasn't been loaded.</dd>
+                                   BackgroundSoundFile or hasn't been loaded.</dd>
 </dl>
 </section>
 </li>
@@ -379,7 +379,7 @@ implements <a href="MusicService.html" title="interface in com.csse3200.game.ser
 <dd><code>sounds</code> - - A list of SoundFiles to be loaded into memory</dd>
 <dt>Throws:</dt>
 <dd><code><a href="InvalidSoundFileException.html" title="class in com.csse3200.game.services.sound">InvalidSoundFileException</a></code> - if the provided list contains any non-BackgroundSoundFile
- instances.</dd>
+                                   instances.</dd>
 </dl>
 </section>
 </li>
