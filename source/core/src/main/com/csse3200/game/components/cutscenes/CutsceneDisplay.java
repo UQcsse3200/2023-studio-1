@@ -22,6 +22,8 @@ import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.ui.UIComponent;
+
+import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -178,7 +180,9 @@ public class CutsceneDisplay extends UIComponent {
      */
     private void spawnDialogueBox () {
         logger.debug("Cutscene dialogue spawned");
-        Random random = new Random();
+        SecureRandom random = new SecureRandom();
+        byte[] bytes = new byte[20];
+        random.nextBytes(bytes);
 
         TypingLabel dialogueLabel = new TypingLabel(this.dialogue, skin);
         dialogueLabel.setAlignment(Align.center);
