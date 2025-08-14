@@ -22,14 +22,14 @@ jobs:
         env:
           GRADLE_DIR: 'source' # Modify this to wherever './gradlew' is 
       - name: Archive game screenshot
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: game-screenshot
           path: source/game_launched.xwd
       - name: Archive logs
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: logs
           path: |
