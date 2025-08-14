@@ -11,7 +11,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../script-dir/jquery-ui.min.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../script.js"></script>
-<script type="text/javascript" src="../../../../script-dir/jquery-3.6.1.min.js"></script>
+<script type="text/javascript" src="../../../../script-dir/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="../../../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
@@ -132,8 +132,8 @@ implements com.badlogic.gdx.utils.Disposable</span></div>
 <h2>Method Summary</h2>
 <div id="method-summary-table">
 <div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
-<div id="method-summary-table.tabpanel" role="tabpanel">
-<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+<div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
+<div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
@@ -316,7 +316,7 @@ implements com.badlogic.gdx.utils.Disposable</span></div>
 <h3>removeLoadableEntities</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">removeLoadableEntities</span><wbr><span class="parameters">(com.badlogic.gdx.utils.Array&lt;<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;&nbsp;entities)</span></div>
 <div class="block">Loops through the games npcs and removes them. Removes all
- animals, crop tiles, and plants from the game.</div>
+  animals, crop tiles, and plants from the game.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>entities</code> - Array of entities currently in game.</dd>
@@ -327,12 +327,6 @@ implements com.badlogic.gdx.utils.Disposable</span></div>
 <section class="detail" id="getPlayer()">
 <h3>getPlayer</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">getPlayer</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="setPlayer(com.csse3200.game.entities.Entity)">
-<h3>setPlayer</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setPlayer</span><wbr><span class="parameters">(<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;customPlayer)</span></div>
 </section>
 </li>
 <li>
@@ -348,15 +342,21 @@ implements com.badlogic.gdx.utils.Disposable</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="setTractor(com.csse3200.game.entities.Entity)">
-<h3>setTractor</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTractor</span><wbr><span class="parameters">(<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;tractor)</span></div>
-</section>
-</li>
-<li>
 <section class="detail" id="getMap()">
 <h3>getMap</h3>
 <div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="terrain/GameMap.html" title="class in com.csse3200.game.areas.terrain">GameMap</a></span>&nbsp;<span class="element-name">getMap</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setPlayer(com.csse3200.game.entities.Entity)">
+<h3>setPlayer</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setPlayer</span><wbr><span class="parameters">(<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;customPlayer)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="setTractor(com.csse3200.game.entities.Entity)">
+<h3>setTractor</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTractor</span><wbr><span class="parameters">(<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;tractor)</span></div>
 </section>
 </li>
 <li>

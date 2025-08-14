@@ -11,7 +11,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../script-dir/jquery-3.6.1.min.js"></script>
+<script type="text/javascript" src="../../../../../script-dir/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
@@ -136,8 +136,8 @@ loadScripts(document, 'script');</script>
 <h2>Method Summary</h2>
 <div id="method-summary-table">
 <div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
-<div id="method-summary-table.tabpanel" role="tabpanel">
-<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+<div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
+<div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
@@ -227,36 +227,6 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="incrementPauseCounter()">
-<h3>incrementPauseCounter</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">incrementPauseCounter</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="setCurrentMenu(java.lang.Boolean,com.csse3200.game.components.player.KeyboardPlayerInputComponent.MenuTypes)">
-<h3>setCurrentMenu</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setCurrentMenu</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;opened,
- <a href="KeyboardPlayerInputComponent.MenuTypes.html" title="enum class in com.csse3200.game.components.player">KeyboardPlayerInputComponent.MenuTypes</a>&nbsp;menu)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="clearMenuOpening()">
-<h3>clearMenuOpening</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">clearMenuOpening</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="getShowPlantInfoUI()">
-<h3>getShowPlantInfoUI</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">getShowPlantInfoUI</span>()</div>
-<div class="block">Shows whether the plant info window is currently being displayed</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>boolean that represents whether plant info was being shown</dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="keyDown(int)">
 <h3>keyDown</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">keyDown</span><wbr><span class="parameters">(int&nbsp;keycode)</span></div>
@@ -275,6 +245,12 @@ loadScripts(document, 'script');</script>
 </ul>
 </dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="incrementPauseCounter()">
+<h3>incrementPauseCounter</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">incrementPauseCounter</span>()</div>
 </section>
 </li>
 <li>
@@ -320,6 +296,19 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="setCurrentMenu(java.lang.Boolean,com.csse3200.game.components.player.KeyboardPlayerInputComponent.MenuTypes)">
+<h3>setCurrentMenu</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setCurrentMenu</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;opened,
+ <a href="KeyboardPlayerInputComponent.MenuTypes.html" title="enum class in com.csse3200.game.components.player">KeyboardPlayerInputComponent.MenuTypes</a>&nbsp;menu)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="clearMenuOpening()">
+<h3>clearMenuOpening</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">clearMenuOpening</span>()</div>
+</section>
+</li>
+<li>
 <section class="detail" id="setActions(com.csse3200.game.components.player.PlayerActions)">
 <h3>setActions</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setActions</span><wbr><span class="parameters">(<a href="PlayerActions.html" title="class in com.csse3200.game.components.player">PlayerActions</a>&nbsp;actions)</span></div>
@@ -352,6 +341,17 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="triggerSwitchToolbar()">
 <h3>triggerSwitchToolbar</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">triggerSwitchToolbar</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getShowPlantInfoUI()">
+<h3>getShowPlantInfoUI</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">getShowPlantInfoUI</span>()</div>
+<div class="block">Shows whether the plant info window is currently being displayed</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>boolean that represents whether plant info was being shown</dd>
+</dl>
 </section>
 </li>
 </ul>

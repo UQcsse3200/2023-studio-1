@@ -11,7 +11,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../script-dir/jquery-3.6.1.min.js"></script>
+<script type="text/javascript" src="../../../../../script-dir/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
@@ -102,8 +102,8 @@ loadScripts(document, 'script');</script>
 <h2>Method Summary</h2>
 <div id="method-summary-table">
 <div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
-<div id="method-summary-table.tabpanel" role="tabpanel">
-<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+<div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
+<div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
@@ -319,7 +319,7 @@ loadScripts(document, 'script');</script>
 <dd><code>gridPoint</code> - The GridPoint2 instance representing the target TerrainTile's position.</dd>
 <dt>Returns:</dt>
 <dd>TerrainTile instance at the specified position IF the gridpoint is within the bounds of the map, null
- otherwise</dd>
+         otherwise</dd>
 </dl>
 </section>
 </li>
@@ -330,7 +330,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Gets the TerrainTile at the specified Vector2 position. The x and y float values in the Vector2 class are
  transformed so that they correspond to the integer positions of the TerrainTile in the map layer. (0, 0) is the
  bottom left of the map.
- <p>
+
  If using the Vector2 position variable from the Entity class, it is important to remember that the vector points
  to the bottom left of the entity , not the centre of the entity (This is important to know if the entity uses
  animations since the entity size may be larger than the actual sprite). The Entity class provides the
@@ -340,7 +340,7 @@ loadScripts(document, 'script');</script>
 <dd><code>vector</code> - The Vector2 instance representing the target TerrainTile's position.</dd>
 <dt>Returns:</dt>
 <dd>TerrainTile instance at the specified position IF the vector is within the bounds of the map, null
- otherwise</dd>
+         otherwise</dd>
 </dl>
 </section>
 </li>

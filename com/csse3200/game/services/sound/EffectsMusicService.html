@@ -11,7 +11,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../script-dir/jquery-3.6.1.min.js"></script>
+<script type="text/javascript" src="../../../../../script-dir/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
@@ -108,8 +108,8 @@ implements <a href="MusicService.html" title="interface in com.csse3200.game.ser
 <h2>Method Summary</h2>
 <div id="method-summary-table">
 <div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
-<div id="method-summary-table.tabpanel" role="tabpanel">
-<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+<div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
+<div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
@@ -296,20 +296,6 @@ implements <a href="MusicService.html" title="interface in com.csse3200.game.ser
 </section>
 </li>
 <li>
-<section class="detail" id="isMuted()">
-<h3>isMuted</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isMuted</span>()</div>
-<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="MusicService.html#isMuted()">MusicService</a></code></span></div>
-<div class="block">Check if the current MusicService is currently muted.</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="MusicService.html#isMuted()">isMuted</a></code>&nbsp;in interface&nbsp;<code><a href="MusicService.html" title="interface in com.csse3200.game.services.sound">MusicService</a></code></dd>
-<dt>Returns:</dt>
-<dd>The current mute state of the MusicService</dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="setMuted(boolean)">
 <h3>setMuted</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setMuted</span><wbr><span class="parameters">(boolean&nbsp;muted)</span></div>
@@ -320,6 +306,20 @@ implements <a href="MusicService.html" title="interface in com.csse3200.game.ser
 <dd><code><a href="MusicService.html#setMuted(boolean)">setMuted</a></code>&nbsp;in interface&nbsp;<code><a href="MusicService.html" title="interface in com.csse3200.game.services.sound">MusicService</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>muted</code> - - The boolean state to set</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isMuted()">
+<h3>isMuted</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isMuted</span>()</div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="MusicService.html#isMuted()">MusicService</a></code></span></div>
+<div class="block">Check if the current MusicService is currently muted.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="MusicService.html#isMuted()">isMuted</a></code>&nbsp;in interface&nbsp;<code><a href="MusicService.html" title="interface in com.csse3200.game.services.sound">MusicService</a></code></dd>
+<dt>Returns:</dt>
+<dd>The current mute state of the MusicService</dd>
 </dl>
 </section>
 </li>
