@@ -13,7 +13,7 @@ jobs:
           java-version: '17'
 
       - name: Cache Gradle packages # Allows us to reuse packages between runs
-        uses: actions/cache@v2 # If the files specified in key change we dump old cache else re-use
+        uses: actions/cache@v4 # If the files specified in key change we dump old cache else re-use
         with:
           path: |
             ~/.gradle/caches
